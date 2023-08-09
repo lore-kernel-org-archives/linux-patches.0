@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6276E174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9717C433CA;
-	Wed,  9 Aug 2023 10:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267C0174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF5AC433C8;
+	Wed,  9 Aug 2023 10:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578594;
-	bh=E7QL+viAsCpCXkbNyxQWBw6Q2RMRGSRIMCvTWaVkWkc=;
+	s=korg; t=1691578597;
+	bh=5i2VyFYv+hz667X3iYDfE8amJrEqdi5Klgawjc0BnFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E62qkWexHTeu/2BuXplVDWETS+qXHCbZx6iIYTRFumcOBkvYl3WWaSX+p/ZI2K+hh
-	 0GTJpXx44CbtRJI8yJj7YiF5S21UYWUjfTVH869rkkD4tPnumjr/LJ3rvxr8gQY4wy
-	 FD3STWNUDVdO/2RXiQURKqkFxer5t7bBfu8wmg1Q=
+	b=MlSn8imQTd0/9NReo0vEUJxfIKJ1fhmNwhs7StOk+YKv63TSE2TKVJb4GfiLassBW
+	 XaLkgT+fJ6Eiw/7d04CU3LL7ByWQ31I5TMF81cSCPRrkiX2MgVQqwzaPn84oksSUiE
+	 ZD+D3ZfpvQKd+C/H/B9ThoUDP8OFqdWn9NIcz7xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/127] drm/imx/ipuv3: Fix front porch adjustment upon hactive aligning
-Date: Wed,  9 Aug 2023 12:41:43 +0200
-Message-ID: <20230809103640.450242653@linuxfoundation.org>
+	Harry Wentland <Harry.Wentland@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 117/127] drm/amd/display: Ensure that planes are in the same order
+Date: Wed,  9 Aug 2023 12:41:44 +0200
+Message-ID: <20230809103640.485807800@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,42 +39,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit ee31742bf17636da1304af77b2cb1c29b5dda642 ]
+commit bb46a6a9bab134b9d15043ea8fa9d6c276e938b8 upstream.
 
-When hactive is not aligned to 8 pixels, it is aligned accordingly and
-hfront porch needs to be reduced the same amount. Unfortunately the front
-porch is set to the difference rather than reducing it. There are some
-Samsung TVs which can't cope with a front porch of instead of 70.
+The function dc_update_planes_and_stream handles multiple cases where DC
+needs to remove and add planes in the commit tail phase. After Linux
+started to use this function, some of the IGT kms_plane started to fail;
+one good example to illustrate why the new sequence regressed IGT is the
+subtest plane-position-hole which has the following diagram as a
+template:
 
-Fixes: 94dfec48fca7 ("drm/imx: Add 8 pixel alignment fix")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://lore.kernel.org/r/20230515072137.116211-1-alexander.stein@ew.tq-group.com
-[p.zabel@pengutronix.de: Fixed subject]
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230515072137.116211-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ +--------------------+        +-----------------------+
+ | +-----+            |        | +-----+               |
+ | |     |            |        | | +-----+             |
+ | |  +--+            | ==>    | | |   | |             |
+ | |__|               |        | +-|---+ |             |
+ |                    |        |   +-----+             |
+ |                    |        |                       |
+ +--------------------+        +-----------------------+
+   (a) Final image                (b) Composed image
+
+IGT expects image (a) as the final result of two plane compositions as
+described in figure (b). After the migration to the new sequence, the
+last plane order is changed, and DC generates the following image:
+
++---------------------+
+| +-----+             |
+| |     |             |
+| |     |             |
+| +-----+             |
+|                     |
++---------------------+
+
+Notice that the generated image by DC is different because the small
+square that should be composed on top of the primary plane is below the
+primary plane. For this reason, the CRC will mismatch with the expected
+value. Since the function dc_add_all_planes_for_stream re-append all the
+new planes back to the dc_validation_set, this commit ensures that the
+original sequence is maintained. After this change, all CI tests in all
+ASICs start to pass again.
+
+Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Suggested-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imx/ipuv3-crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3-crtc.c b/drivers/gpu/drm/imx/ipuv3-crtc.c
-index 5f26090b0c985..89585b31b985e 100644
---- a/drivers/gpu/drm/imx/ipuv3-crtc.c
-+++ b/drivers/gpu/drm/imx/ipuv3-crtc.c
-@@ -310,7 +310,7 @@ static void ipu_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 		dev_warn(ipu_crtc->dev, "8-pixel align hactive %d -> %d\n",
- 			 sig_cfg.mode.hactive, new_hactive);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -351,6 +351,19 @@ static inline bool is_dc_timing_adjust_n
+ 		return false;
+ }
  
--		sig_cfg.mode.hfront_porch = new_hactive - sig_cfg.mode.hactive;
-+		sig_cfg.mode.hfront_porch -= new_hactive - sig_cfg.mode.hactive;
- 		sig_cfg.mode.hactive = new_hactive;
- 	}
- 
--- 
-2.40.1
-
++static inline void reverse_planes_order(struct dc_surface_update *array_of_surface_update,
++					int planes_count)
++{
++	int i, j;
++	struct dc_surface_update surface_updates_temp;
++
++	for (i = 0, j = planes_count - 1; i < j; i++, j--) {
++		surface_updates_temp = array_of_surface_update[i];
++		array_of_surface_update[i] = array_of_surface_update[j];
++		array_of_surface_update[j] = surface_updates_temp;
++	}
++}
++
+ /**
+  * update_planes_and_stream_adapter() - Send planes to be updated in DC
+  *
+@@ -367,6 +380,8 @@ static inline bool update_planes_and_str
+ 						    struct dc_stream_update *stream_update,
+ 						    struct dc_surface_update *array_of_surface_update)
+ {
++	reverse_planes_order(array_of_surface_update, planes_count);
++
+ 	/*
+ 	 * Previous frame finished and HW is ready for optimization.
+ 	 */
 
 
