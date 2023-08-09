@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D549D15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554F0C433C7;
-	Wed,  9 Aug 2023 10:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE9315AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA82C433C8;
+	Wed,  9 Aug 2023 10:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577984;
-	bh=pfYc9I8mC54nHGWCQd3JzznCJTCEb5hPpITuOovZFOw=;
+	s=korg; t=1691577987;
+	bh=EwcuVHPAYhXUGh94BAoHXF69v3+qx/4dT04EswxdCVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0FQ6VzmZ/5kTDVEypU/2QA5FUgkq6haiIvP29LXShB8huE+MELYOy+2JDb7/jXHqE
-	 opQa9QoC1VMBU8WPEXidt/JIzo0YKh4kFwnQWxnMUv2DVuKZhMR2exPsuE1+FRmNSK
-	 /zIhrfQOm8ivUy94wYDVXIM2VDZHlLHrlGC/F7y4=
+	b=SHBZv/Lclz6nEy3wBDOALlEaK+WOnltftdyQwfdR0uD5UkGviyGjlwAVtTNE7xe9w
+	 eZjpxgvcXT6Vil6U5kfoJTdo1cHfIvv6FApTp4fxHxDbYTofVDKhT2jSQio29qHGHh
+	 zsdX5ZmQlsTH7ATbPgrVcePVj4CZ+djcOL7xZEc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 035/165] net/mlx5e: Move representor neigh cleanup to profile cleanup_tx
-Date: Wed,  9 Aug 2023 12:39:26 +0200
-Message-ID: <20230809103643.958406116@linuxfoundation.org>
+Subject: [PATCH 6.4 036/165] net/mlx5e: xsk: Fix invalid buffer access for legacy rq
+Date: Wed,  9 Aug 2023 12:39:27 +0200
+Message-ID: <20230809103643.993671236@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,174 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit d03b6e6f31820b84f7449cca022047f36c42bc3f ]
+[ Upstream commit e0f52298fee449fec37e3e3c32df60008b509b16 ]
 
-For IP tunnel encapsulation in ECMP (Equal-Cost Multipath) mode, as
-the flow is duplicated to the peer eswitch, the related neighbour
-information on the peer uplink representor is created as well.
+The below crash can be encountered when using xdpsock in rx mode for
+legacy rq: the buffer gets released in the XDP_REDIRECT path, and then
+once again in the driver. This fix sets the flag to avoid releasing on
+the driver side.
 
-In the cited commit, eswitch devcom unpair is moved to uplink unload
-API, specifically the profile->cleanup_tx. If there is a encap rule
-offloaded in ECMP mode, when one eswitch does unpair (because of
-unloading the driver, for instance), and the peer rule from the peer
-eswitch is going to be deleted, the use-after-free error is triggered
-while accessing neigh info, as it is already cleaned up in uplink's
-profile->disable, which is before its profile->cleanup_tx.
+XSK handling of buffers for legacy rq was relying on the caller to set
+the skip release flag. But the referenced fix started using fragment
+counts for pages instead of the skip flag.
 
-To fix this issue, move the neigh cleanup to profile's cleanup_tx
-callback, and after mlx5e_cleanup_uplink_rep_tx is called. The neigh
-init is moved to init_tx for symmeter.
+Crash log:
+ general protection fault, probably for non-canonical address 0xffff8881217e3a: 0000 [#1] SMP
+ CPU: 0 PID: 14 Comm: ksoftirqd/0 Not tainted 6.5.0-rc1+ #31
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+ RIP: 0010:bpf_prog_03b13f331978c78c+0xf/0x28
+ Code:  ...
+ RSP: 0018:ffff88810082fc98 EFLAGS: 00010246
+ RAX: 0000000000000000 RBX: ffff888138404901 RCX: c0ffffc900027cbc
+ RDX: ffffffffa000b514 RSI: 00ffff8881217e32 RDI: ffff888138404901
+ RBP: ffff88810082fc98 R08: 0000000000091100 R09: 0000000000000006
+ R10: 0000000000000800 R11: 0000000000000800 R12: ffffc9000027a000
+ R13: ffff8881217e2dc0 R14: ffff8881217e2910 R15: ffff8881217e2f00
+ FS:  0000000000000000(0000) GS:ffff88852c800000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000564cb2e2cde0 CR3: 000000010e603004 CR4: 0000000000370eb0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ Call Trace:
+  <TASK>
+  ? die_addr+0x32/0x80
+  ? exc_general_protection+0x192/0x390
+  ? asm_exc_general_protection+0x22/0x30
+  ? 0xffffffffa000b514
+  ? bpf_prog_03b13f331978c78c+0xf/0x28
+  mlx5e_xdp_handle+0x48/0x670 [mlx5_core]
+  ? dev_gro_receive+0x3b5/0x6e0
+  mlx5e_xsk_skb_from_cqe_linear+0x6e/0x90 [mlx5_core]
+  mlx5e_handle_rx_cqe+0x55/0x100 [mlx5_core]
+  mlx5e_poll_rx_cq+0x87/0x6e0 [mlx5_core]
+  mlx5e_napi_poll+0x45e/0x6b0 [mlx5_core]
+  __napi_poll+0x25/0x1a0
+  net_rx_action+0x28a/0x300
+  __do_softirq+0xcd/0x279
+  ? sort_range+0x20/0x20
+  run_ksoftirqd+0x1a/0x20
+  smpboot_thread_fn+0xa2/0x130
+  kthread+0xc9/0xf0
+  ? kthread_complete_and_exit+0x20/0x20
+  ret_from_fork+0x1f/0x30
+  </TASK>
+ Modules linked in: mlx5_ib mlx5_core rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter overlay zram zsmalloc fuse [last unloaded: mlx5_core]
+ ---[ end trace 0000000000000000 ]---
 
-[ 2453.376299] BUG: KASAN: slab-use-after-free in mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
-[ 2453.379125] Read of size 4 at addr ffff888127af9008 by task modprobe/2496
-
-[ 2453.381542] CPU: 7 PID: 2496 Comm: modprobe Tainted: G    B              6.4.0-rc7+ #15
-[ 2453.383386] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-[ 2453.384335] Call Trace:
-[ 2453.384625]  <TASK>
-[ 2453.384891]  dump_stack_lvl+0x33/0x50
-[ 2453.385285]  print_report+0xc2/0x610
-[ 2453.385667]  ? __virt_addr_valid+0xb1/0x130
-[ 2453.386091]  ? mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
-[ 2453.386757]  kasan_report+0xae/0xe0
-[ 2453.387123]  ? mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
-[ 2453.387798]  mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
-[ 2453.388465]  mlx5e_rep_encap_entry_detach+0xa6/0xe0 [mlx5_core]
-[ 2453.389111]  mlx5e_encap_dealloc+0xa7/0x100 [mlx5_core]
-[ 2453.389706]  mlx5e_tc_tun_encap_dests_unset+0x61/0xb0 [mlx5_core]
-[ 2453.390361]  mlx5_free_flow_attr_actions+0x11e/0x340 [mlx5_core]
-[ 2453.391015]  ? complete_all+0x43/0xd0
-[ 2453.391398]  ? free_flow_post_acts+0x38/0x120 [mlx5_core]
-[ 2453.392004]  mlx5e_tc_del_fdb_flow+0x4ae/0x690 [mlx5_core]
-[ 2453.392618]  mlx5e_tc_del_fdb_peers_flow+0x308/0x370 [mlx5_core]
-[ 2453.393276]  mlx5e_tc_clean_fdb_peer_flows+0xf5/0x140 [mlx5_core]
-[ 2453.393925]  mlx5_esw_offloads_unpair+0x86/0x540 [mlx5_core]
-[ 2453.394546]  ? mlx5_esw_offloads_set_ns_peer.isra.0+0x180/0x180 [mlx5_core]
-[ 2453.395268]  ? down_write+0xaa/0x100
-[ 2453.395652]  mlx5_esw_offloads_devcom_event+0x203/0x530 [mlx5_core]
-[ 2453.396317]  mlx5_devcom_send_event+0xbb/0x190 [mlx5_core]
-[ 2453.396917]  mlx5_esw_offloads_devcom_cleanup+0xb0/0xd0 [mlx5_core]
-[ 2453.397582]  mlx5e_tc_esw_cleanup+0x42/0x120 [mlx5_core]
-[ 2453.398182]  mlx5e_rep_tc_cleanup+0x15/0x30 [mlx5_core]
-[ 2453.398768]  mlx5e_cleanup_rep_tx+0x6c/0x80 [mlx5_core]
-[ 2453.399367]  mlx5e_detach_netdev+0xee/0x120 [mlx5_core]
-[ 2453.399957]  mlx5e_netdev_change_profile+0x84/0x170 [mlx5_core]
-[ 2453.400598]  mlx5e_vport_rep_unload+0xe0/0xf0 [mlx5_core]
-[ 2453.403781]  mlx5_eswitch_unregister_vport_reps+0x15e/0x190 [mlx5_core]
-[ 2453.404479]  ? mlx5_eswitch_register_vport_reps+0x200/0x200 [mlx5_core]
-[ 2453.405170]  ? up_write+0x39/0x60
-[ 2453.405529]  ? kernfs_remove_by_name_ns+0xb7/0xe0
-[ 2453.405985]  auxiliary_bus_remove+0x2e/0x40
-[ 2453.406405]  device_release_driver_internal+0x243/0x2d0
-[ 2453.406900]  ? kobject_put+0x42/0x2d0
-[ 2453.407284]  bus_remove_device+0x128/0x1d0
-[ 2453.407687]  device_del+0x240/0x550
-[ 2453.408053]  ? waiting_for_supplier_show+0xe0/0xe0
-[ 2453.408511]  ? kobject_put+0xfa/0x2d0
-[ 2453.408889]  ? __kmem_cache_free+0x14d/0x280
-[ 2453.409310]  mlx5_rescan_drivers_locked.part.0+0xcd/0x2b0 [mlx5_core]
-[ 2453.409973]  mlx5_unregister_device+0x40/0x50 [mlx5_core]
-[ 2453.410561]  mlx5_uninit_one+0x3d/0x110 [mlx5_core]
-[ 2453.411111]  remove_one+0x89/0x130 [mlx5_core]
-[ 2453.411628]  pci_device_remove+0x59/0xf0
-[ 2453.412026]  device_release_driver_internal+0x243/0x2d0
-[ 2453.412511]  ? parse_option_str+0x14/0x90
-[ 2453.412915]  driver_detach+0x7b/0xf0
-[ 2453.413289]  bus_remove_driver+0xb5/0x160
-[ 2453.413685]  pci_unregister_driver+0x3f/0xf0
-[ 2453.414104]  mlx5_cleanup+0xc/0x20 [mlx5_core]
-
-Fixes: 2be5bd42a5bb ("net/mlx5: Handle pairing of E-switch via uplink un/load APIs")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Fixes: 7abd955a58fb ("net/mlx5e: RX, Fix page_pool page fragment tracking for XDP")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rep.c    | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 95d8714765f70..ad63d1f9a611f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -1112,6 +1112,10 @@ static int mlx5e_init_rep_tx(struct mlx5e_priv *priv)
- 		return err;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
+index d97e6df66f454..b8dd744536553 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/rx.c
+@@ -323,8 +323,11 @@ struct sk_buff *mlx5e_xsk_skb_from_cqe_linear(struct mlx5e_rq *rq,
+ 	net_prefetch(mxbuf->xdp.data);
  
-+	err = mlx5e_rep_neigh_init(rpriv);
-+	if (err)
-+		goto err_neigh_init;
-+
- 	if (rpriv->rep->vport == MLX5_VPORT_UPLINK) {
- 		err = mlx5e_init_uplink_rep_tx(rpriv);
- 		if (err)
-@@ -1128,6 +1132,8 @@ static int mlx5e_init_rep_tx(struct mlx5e_priv *priv)
- 	if (rpriv->rep->vport == MLX5_VPORT_UPLINK)
- 		mlx5e_cleanup_uplink_rep_tx(rpriv);
- err_init_tx:
-+	mlx5e_rep_neigh_cleanup(rpriv);
-+err_neigh_init:
- 	mlx5e_destroy_tises(priv);
- 	return err;
- }
-@@ -1141,22 +1147,17 @@ static void mlx5e_cleanup_rep_tx(struct mlx5e_priv *priv)
- 	if (rpriv->rep->vport == MLX5_VPORT_UPLINK)
- 		mlx5e_cleanup_uplink_rep_tx(rpriv);
+ 	prog = rcu_dereference(rq->xdp_prog);
+-	if (likely(prog && mlx5e_xdp_handle(rq, prog, mxbuf)))
++	if (likely(prog && mlx5e_xdp_handle(rq, prog, mxbuf))) {
++		if (likely(__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)))
++			wi->flags |= BIT(MLX5E_WQE_FRAG_SKIP_RELEASE);
+ 		return NULL; /* page/packet was consumed by XDP */
++	}
  
-+	mlx5e_rep_neigh_cleanup(rpriv);
- 	mlx5e_destroy_tises(priv);
- }
- 
- static void mlx5e_rep_enable(struct mlx5e_priv *priv)
- {
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--
- 	mlx5e_set_netdev_mtu_boundaries(priv);
--	mlx5e_rep_neigh_init(rpriv);
- }
- 
- static void mlx5e_rep_disable(struct mlx5e_priv *priv)
- {
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
--
--	mlx5e_rep_neigh_cleanup(rpriv);
- }
- 
- static int mlx5e_update_rep_rx(struct mlx5e_priv *priv)
-@@ -1206,7 +1207,6 @@ static int uplink_rep_async_event(struct notifier_block *nb, unsigned long event
- 
- static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
- {
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
- 	struct net_device *netdev = priv->netdev;
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 	u16 max_mtu;
-@@ -1228,7 +1228,6 @@ static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
- 	mlx5_notifier_register(mdev, &priv->events_nb);
- 	mlx5e_dcbnl_initialize(priv);
- 	mlx5e_dcbnl_init_app(priv);
--	mlx5e_rep_neigh_init(rpriv);
- 	mlx5e_rep_bridge_init(priv);
- 
- 	netdev->wanted_features |= NETIF_F_HW_TC;
-@@ -1243,7 +1242,6 @@ static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
- 
- static void mlx5e_uplink_rep_disable(struct mlx5e_priv *priv)
- {
--	struct mlx5e_rep_priv *rpriv = priv->ppriv;
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 
- 	rtnl_lock();
-@@ -1253,7 +1251,6 @@ static void mlx5e_uplink_rep_disable(struct mlx5e_priv *priv)
- 	rtnl_unlock();
- 
- 	mlx5e_rep_bridge_cleanup(priv);
--	mlx5e_rep_neigh_cleanup(rpriv);
- 	mlx5e_dcbnl_delete_app(priv);
- 	mlx5_notifier_unregister(mdev, &priv->events_nb);
- 	mlx5e_rep_tc_disable(priv);
+ 	/* XDP_PASS: copy the data from the UMEM to a new SKB. The frame reuse
+ 	 * will be handled by mlx5e_free_rx_wqe.
 -- 
 2.40.1
 
