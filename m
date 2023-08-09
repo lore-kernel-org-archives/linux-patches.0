@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B0C1774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475FBC433C8;
-	Wed,  9 Aug 2023 11:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A8C1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06708C433C8;
+	Wed,  9 Aug 2023 11:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579497;
-	bh=Omgf3TMvIvcCXys6p4t3IpxwrIM4ZEU5yexsvosOhio=;
+	s=korg; t=1691579500;
+	bh=7XlnSnM43diEVl2adHQ34/HKjmn8Nocm8fdL1//7Hes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLPYkO55SOGXOwY6N0CBhXper5DLAZhInLjyogrq9ScfcawjVSNxe5W/D/q1CcAfC
-	 o8453ReUzs+/zz3KzZyTyZ2mdX2Cj1qdfipHDNj+YuL3Un0O5W6Pz4Qn4vIwBLdnav
-	 XiUZafQH1l7BeoQRX7Hkm4K8bCBwHEVUyqvhSkN4=
+	b=ZWxTRaMCvgDveCnyV9n/bq+dWrM1AIxYjazMP75fQhqRh7VNbLaCB3uQnTela7/uS
+	 RzNiu7c6M9SVSWHCu+xcHpXBx+IQ7nKzDVOS2BzkCo2QBtVUf1ScWml8yyzfozN2E4
+	 qSRw+M/9mCmPEwtvIFzDtrULGM2PGfa+gbKTJuFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Ilia Mirkin <imirkin@alum.mit.edu>
-Subject: [PATCH 4.19 005/323] drm/edid: Fix uninitialized variable in drm_cvt_modes()
-Date: Wed,  9 Aug 2023 12:37:23 +0200
-Message-ID: <20230809103658.358120071@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 4.19 006/323] scripts/tags.sh: Resolve gtags empty index generation
+Date: Wed,  9 Aug 2023 12:37:24 +0200
+Message-ID: <20230809103658.397159087@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,39 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lyude Paul <lyude@redhat.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-commit 991fcb77f490390bcad89fa67d95763c58cdc04c upstream.
+commit e1b37563caffc410bb4b55f153ccb14dede66815 upstream.
 
-Noticed this when trying to compile with -Wall on a kernel fork. We
-potentially don't set width here, which causes the compiler to complain
-about width potentially being uninitialized in drm_cvt_modes(). So, let's
-fix that.
+gtags considers any file outside of its current working directory
+"outside the source tree" and refuses to index it. For O= kernel builds,
+or when "make" is invoked from a directory other then the kernel source
+tree, gtags ignores the entire kernel source and generates an empty
+index.
 
-Changes since v1:
-* Don't emit an error as this code isn't reachable, just mark it as such
-Changes since v2:
-* Remove now unused variable
+Force-set gtags current working directory to the kernel source tree.
 
-Fixes: 3f649ab728cd ("treewide: Remove uninitialized_var() usage")
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Ilia Mirkin <imirkin@alum.mit.edu>
-Link: https://patchwork.freedesktop.org/patch/msgid/20201105235703.1328115-1-lyude@redhat.com
+Due to commit 9da0763bdd82 ("kbuild: Use relative path when building in
+a subdir of the source tree"), if the kernel build is done in a
+sub-directory of the kernel source tree, the kernel Makefile will set
+the kernel's $srctree to ".." for shorter compile-time and run-time
+warnings. Consequently, the list of files to be indexed will be in the
+"../*" form, rendering all such paths invalid once gtags switches to the
+kernel source tree as its current working directory.
+
+If gtags indexing is requested and the build directory is not the kernel
+source tree, index all files in absolute-path form.
+
+Note, indexing in absolute-path form will not affect the generated
+index, as paths in gtags indices are always relative to the gtags "root
+directory" anyway (as evidenced by "gtags --dump").
+
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_edid.c |    2 ++
- 1 file changed, 2 insertions(+)
+ scripts/tags.sh |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -2798,6 +2798,8 @@ static int drm_cvt_modes(struct drm_conn
- 		case 0x0c:
- 			width = height * 15 / 9;
- 			break;
-+		default:
-+			unreachable();
- 		}
+--- a/scripts/tags.sh
++++ b/scripts/tags.sh
+@@ -28,6 +28,13 @@ fi
+ # ignore userspace tools
+ ignore="$ignore ( -path ${tree}tools ) -prune -o"
  
- 		for (j = 1; j < 5; j++) {
++# gtags(1) refuses to index any file outside of its current working dir.
++# If gtags indexing is requested and the build output directory is not
++# the kernel source tree, index all files in absolute-path form.
++if [[ "$1" == "gtags" && -n "${tree}" ]]; then
++	tree=$(realpath "$tree")/
++fi
++
+ # Detect if ALLSOURCE_ARCHS is set. If not, we assume SRCARCH
+ if [ "${ALLSOURCE_ARCHS}" = "" ]; then
+ 	ALLSOURCE_ARCHS=${SRCARCH}
+@@ -136,7 +143,7 @@ docscope()
+ 
+ dogtags()
+ {
+-	all_target_sources | gtags -i -f -
++	all_target_sources | gtags -i -C "${tree:-.}" -f - "$PWD"
+ }
+ 
+ # Basic regular expressions with an optional /kind-spec/ for ctags and
 
 
