@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B17317AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50754C433C8;
-	Wed,  9 Aug 2023 11:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21517AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5DCC433C7;
+	Wed,  9 Aug 2023 11:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580356;
-	bh=jxqt+v8N2WXKSlw7xr+658KsdcMAfzOU6uRkr4ZFuHk=;
+	s=korg; t=1691580359;
+	bh=cYaSP2DfhiFv8EgyERl99h2EsgBV+APSYi2fASBmTpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIE+ep7pJh0mo1yfONdZsBCBmpTezDVHlzH1Bberof4X0ZQxpqVyAqfXNacsZTlV7
-	 aEmio4Xr4eSyuFo18yOgkHe9bB334kjSdwvO4pwpL4OPxJ+tO2NYnA998GWvERiC27
-	 41L2dn094+Crw3u8oxQbb/pxbPY2fCe7XjNIPo3M=
+	b=nHTmMNos8fFsjEcyktNVN8P/c/hrYqD1+LoJhmU2GSNcd0nxRoxIfoeoNGbqZBYXm
+	 h+gK2B4VAU+7Cwq74lX8iHnT/hf1NabP8wjQhKFpeTRuFXOufSAkyIIoj1V7ZTUzWM
+	 l+5/R9hahEM+XgXAoq/mMp9rdS28Uz7L4jXBke+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 319/323] ARM: dts: imx: add usb alias
-Date: Wed,  9 Aug 2023 12:42:37 +0200
-Message-ID: <20230809103712.675274203@linuxfoundation.org>
+Subject: [PATCH 4.19 320/323] ARM: dts: imx6sll: fixup of operating points
+Date: Wed,  9 Aug 2023 12:42:38 +0200
+Message-ID: <20230809103712.722459687@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,125 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 5c8b3b8a182cbc1ccdfcdeea9b25dd2c12a8148f ]
+[ Upstream commit 1875903019ea6e32e6e544c1631b119e4fd60b20 ]
 
-Add usb alias for bootloader searching the controller in correct order.
+Make operating point definitions comply with binding
+specifications.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Stable-dep-of: ee70b908f77a ("ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6qdl.dtsi | 4 ++++
- arch/arm/boot/dts/imx6sl.dtsi  | 3 +++
- arch/arm/boot/dts/imx6sll.dtsi | 2 ++
- arch/arm/boot/dts/imx6sx.dtsi  | 3 +++
- arch/arm/boot/dts/imx6ul.dtsi  | 2 ++
- arch/arm/boot/dts/imx7d.dtsi   | 6 ++++++
- arch/arm/boot/dts/imx7s.dtsi   | 2 ++
- 7 files changed, 22 insertions(+)
+ arch/arm/boot/dts/imx6sll.dtsi | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
-index d91cc532d0e2c..fcd7e4dc949a1 100644
---- a/arch/arm/boot/dts/imx6qdl.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl.dtsi
-@@ -46,6 +46,10 @@ aliases {
- 		spi1 = &ecspi2;
- 		spi2 = &ecspi3;
- 		spi3 = &ecspi4;
-+		usb0 = &usbotg;
-+		usb1 = &usbh1;
-+		usb2 = &usbh2;
-+		usb3 = &usbh3;
- 		usbphy0 = &usbphy1;
- 		usbphy1 = &usbphy2;
- 	};
-diff --git a/arch/arm/boot/dts/imx6sl.dtsi b/arch/arm/boot/dts/imx6sl.dtsi
-index afde0ed6d71af..b00f791471c66 100644
---- a/arch/arm/boot/dts/imx6sl.dtsi
-+++ b/arch/arm/boot/dts/imx6sl.dtsi
-@@ -32,6 +32,9 @@ aliases {
- 		spi1 = &ecspi2;
- 		spi2 = &ecspi3;
- 		spi3 = &ecspi4;
-+		usb0 = &usbotg1;
-+		usb1 = &usbotg2;
-+		usb2 = &usbh;
- 		usbphy0 = &usbphy1;
- 		usbphy1 = &usbphy2;
- 	};
 diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
-index 8197767de69d7..b519ab87c4596 100644
+index b519ab87c4596..164836fe63cc2 100644
 --- a/arch/arm/boot/dts/imx6sll.dtsi
 +++ b/arch/arm/boot/dts/imx6sll.dtsi
-@@ -36,6 +36,8 @@ aliases {
- 		spi1 = &ecspi2;
- 		spi3 = &ecspi3;
- 		spi4 = &ecspi4;
-+		usb0 = &usbotg1;
-+		usb1 = &usbotg2;
- 		usbphy0 = &usbphy1;
- 		usbphy1 = &usbphy2;
- 	};
-diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
-index b9ab1118be30b..a0c0e631ebbe6 100644
---- a/arch/arm/boot/dts/imx6sx.dtsi
-+++ b/arch/arm/boot/dts/imx6sx.dtsi
-@@ -49,6 +49,9 @@ aliases {
- 		spi2 = &ecspi3;
- 		spi3 = &ecspi4;
- 		spi4 = &ecspi5;
-+		usb0 = &usbotg1;
-+		usb1 = &usbotg2;
-+		usb2 = &usbh;
- 		usbphy0 = &usbphy1;
- 		usbphy1 = &usbphy2;
- 	};
-diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
-index 334638ff50750..dcb187995f760 100644
---- a/arch/arm/boot/dts/imx6ul.dtsi
-+++ b/arch/arm/boot/dts/imx6ul.dtsi
-@@ -47,6 +47,8 @@ aliases {
- 		spi1 = &ecspi2;
- 		spi2 = &ecspi3;
- 		spi3 = &ecspi4;
-+		usb0 = &usbotg1;
-+		usb1 = &usbotg2;
- 		usbphy0 = &usbphy1;
- 		usbphy1 = &usbphy2;
- 	};
-diff --git a/arch/arm/boot/dts/imx7d.dtsi b/arch/arm/boot/dts/imx7d.dtsi
-index 7234e8330a576..34904f7eeb133 100644
---- a/arch/arm/boot/dts/imx7d.dtsi
-+++ b/arch/arm/boot/dts/imx7d.dtsi
-@@ -7,6 +7,12 @@
- #include <dt-bindings/reset/imx7-reset.h>
- 
- / {
-+	aliases {
-+		usb0 = &usbotg1;
-+		usb1 = &usbotg2;
-+		usb2 = &usbh;
-+	};
-+
- 	cpus {
- 		cpu0: cpu@0 {
- 			clock-frequency = <996000000>;
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index 7eaf96b425bed..8a6d698e253d2 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -46,6 +46,8 @@ aliases {
- 		spi1 = &ecspi2;
- 		spi2 = &ecspi3;
- 		spi3 = &ecspi4;
-+		usb0 = &usbotg1;
-+		usb1 = &usbh;
- 	};
- 
- 	cpus {
+@@ -51,20 +51,18 @@ cpu0: cpu@0 {
+ 			device_type = "cpu";
+ 			reg = <0>;
+ 			next-level-cache = <&L2>;
+-			operating-points = <
++			operating-points =
+ 				/* kHz    uV */
+-				996000  1275000
+-				792000  1175000
+-				396000  1075000
+-				198000	975000
+-			>;
+-			fsl,soc-operating-points = <
++				<996000  1275000>,
++				<792000  1175000>,
++				<396000  1075000>,
++				<198000	  975000>;
++			fsl,soc-operating-points =
+ 				/* ARM kHz      SOC-PU uV */
+-				996000          1175000
+-				792000          1175000
+-				396000          1175000
+-				198000		1175000
+-			>;
++				<996000         1175000>,
++				<792000         1175000>,
++				<396000         1175000>,
++				<198000		1175000>;
+ 			clock-latency = <61036>; /* two CLK32 periods */
+ 			clocks = <&clks IMX6SLL_CLK_ARM>,
+ 				 <&clks IMX6SLL_CLK_PLL2_PFD2>,
 -- 
 2.40.1
 
