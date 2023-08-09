@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87005171CC
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F15C433C7;
-	Wed,  9 Aug 2023 11:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E7F171CC
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E301C433C8;
+	Wed,  9 Aug 2023 11:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580290;
-	bh=HeK5GxO+uAoeGEp0zl9W9EPYge1CgkH/9avWRfCvRl0=;
+	s=korg; t=1691580292;
+	bh=kUdY39Vvl+59gv1C/dT/69binvhxB0iX9AyhSAiRqyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PczPYnSbldgoUpRjopiGHlG7EdLjJVLeXqUvIb3ahqU/m4sNMVUj2obgK1KNekOBd
-	 IjtfaG3uONC/C9LN+MJ88jFy8OtGMpwaEdK/fKp8/1JZ20ddMUtArhwdDl70AuxMq3
-	 1lCCQO6jsNz3CS1KNnV8uWib9D7BEkH5E7Zq3pVs=
+	b=lIhgPJwuw8cenUqPQ9KVgCpL9JZru5bEQhbHMiLr8SmGAa3WCaYcPIeKQfdHq7z4Y
+	 NOyCSYEdcI+O/+P2vCDxFVACwcjepRfDwjeN9J/AU7/nHS5TScc3a8tIiv8/nXtIPQ
+	 XTyPKnnK8sljpesMrSOf/VU5bVpQ7t9mkzQTzZOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 295/323] net: add missing data-race annotation for sk_ll_usec
-Date: Wed,  9 Aug 2023 12:42:13 +0200
-Message-ID: <20230809103711.563595137@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 4.19 269/323] Documentation: security-bugs.rst: update preferences when dealing with the linux-distros group
+Date: Wed,  9 Aug 2023 12:41:47 +0200
+Message-ID: <20230809103710.369119739@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,36 +33,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e5f0d2dd3c2faa671711dac6d3ff3cef307bcfe3 ]
+commit 4fee0915e649bd0cea56dece6d96f8f4643df33c upstream.
 
-In a prior commit I forgot that sk_getsockopt() reads
-sk->sk_ll_usec without holding a lock.
+Because the linux-distros group forces reporters to release information
+about reported bugs, and they impose arbitrary deadlines in having those
+bugs fixed despite not actually being kernel developers, the kernel
+security team recommends not interacting with them at all as this just
+causes confusion and the early-release of reported security problems.
 
-Fixes: 0dbffbb5335a ("net: annotate data race around sk_ll_usec")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/2023063020-throat-pantyhose-f110@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/security-bugs.rst |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index f112862fe0682..3e6da3694a5a5 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1349,7 +1349,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
+--- a/Documentation/admin-guide/security-bugs.rst
++++ b/Documentation/admin-guide/security-bugs.rst
+@@ -56,20 +56,18 @@ information submitted to the security li
+ of the report are treated confidentially even after the embargo has been
+ lifted, in perpetuity.
  
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	case SO_BUSY_POLL:
--		v.val = sk->sk_ll_usec;
-+		v.val = READ_ONCE(sk->sk_ll_usec);
- 		break;
- #endif
+-Coordination
+-------------
++Coordination with other groups
++------------------------------
  
--- 
-2.40.1
-
+-Fixes for sensitive bugs, such as those that might lead to privilege
+-escalations, may need to be coordinated with the private
+-<linux-distros@vs.openwall.org> mailing list so that distribution vendors
+-are well prepared to issue a fixed kernel upon public disclosure of the
+-upstream fix. Distros will need some time to test the proposed patch and
+-will generally request at least a few days of embargo, and vendor update
+-publication prefers to happen Tuesday through Thursday. When appropriate,
+-the security team can assist with this coordination, or the reporter can
+-include linux-distros from the start. In this case, remember to prefix
+-the email Subject line with "[vs]" as described in the linux-distros wiki:
+-<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
++The kernel security team strongly recommends that reporters of potential
++security issues NEVER contact the "linux-distros" mailing list until
++AFTER discussing it with the kernel security team.  Do not Cc: both
++lists at once.  You may contact the linux-distros mailing list after a
++fix has been agreed on and you fully understand the requirements that
++doing so will impose on you and the kernel community.
++
++The different lists have different goals and the linux-distros rules do
++not contribute to actually fixing any potential security problems.
+ 
+ CVE assignment
+ --------------
 
 
