@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB8C17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B55C433C8;
-	Wed,  9 Aug 2023 11:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD3E17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E1FC433C8;
+	Wed,  9 Aug 2023 11:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581092;
-	bh=Dlo4/VtsUF8j8PTvpnKOQWjSJO1OQbuhUu4BWvnj+oI=;
+	s=korg; t=1691581095;
+	bh=mK4jzzk1Cxm6X7pkLQWYMyWY1HS0bGMVS3TqrXeCoN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mL5m+XySlY7th0IsDSTbeSV6SGDg4+dTEZz2FNYKCNpDaTUgP+ldftZXYOqJpP6Ef
-	 rgFcMlPxW0ZYkyLgMbdqhu85N/aZvT1RjaEzi5oicu3zTknjG7tLVQWLIoeCxTeob1
-	 Dhme3Fve3ZTG/sV1R2DIgKf8ZV4HU6tfLsI0aAnU=
+	b=YMa6MGf0c3ZyIJZv2u805U0NQMvQc8ej7mJT3mGCgURLT5bLz79onYV7gNtmq1QjI
+	 RnTSWm3mNLXYFHp7Yxa0WJfh3wiESnXEDSB2Ziol1MQgFxvIocxHWbaQb9LRZGFeYz
+	 kOjNAeTV12y47PWigWs3mb7YR2f/8dm1MkIAh1Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 102/201] s390/dasd: fix hanging device after quiesce/resume
-Date: Wed,  9 Aug 2023 12:41:44 +0200
-Message-ID: <20230809103647.229887546@linuxfoundation.org>
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 103/201] ASoC: wm8904: Fill the cache for WM8904_ADC_TEST_0 register
+Date: Wed,  9 Aug 2023 12:41:45 +0200
+Message-ID: <20230809103647.259169133@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,44 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
+commit f061e2be8689057cb4ec0dbffa9f03e1a23cdcb2 upstream.
 
-Quiesce and resume are functions that tell the DASD driver to stop/resume
-issuing I/Os to a specific DASD.
+The WM8904_ADC_TEST_0 register is modified as part of updating the OSR
+controls but does not have a cache default, leading to errors when we try
+to modify these controls in cache only mode with no prior read:
 
-On resume dasd_schedule_block_bh() is called to kick handling of IO
-requests again. This does unfortunately not cover internal requests which
-are used for path verification for example.
+wm8904 3-001a: ASoC: error at snd_soc_component_update_bits on wm8904.3-001a for register: [0x000000c6] -16
 
-This could lead to a hanging device when a path event or anything else
-that triggers internal requests occurs on a quiesced device.
+Add a read of the register to probe() to fill the cache and avoid both the
+error messages and the misconfiguration of the chip which will result.
 
-Fix by also calling dasd_schedule_device_bh() which triggers handling of
-internal requests on resume.
-
-Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
-
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20230723-asoc-fix-wm8904-adc-test-read-v1-1-2cdf2edd83fd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wm8904.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/s390/block/dasd_ioctl.c
-+++ b/drivers/s390/block/dasd_ioctl.c
-@@ -133,6 +133,7 @@ static int dasd_ioctl_resume(struct dasd
- 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
+--- a/sound/soc/codecs/wm8904.c
++++ b/sound/soc/codecs/wm8904.c
+@@ -2306,6 +2306,9 @@ static int wm8904_i2c_probe(struct i2c_c
+ 	regmap_update_bits(wm8904->regmap, WM8904_BIAS_CONTROL_0,
+ 			    WM8904_POBCTRL, 0);
  
- 	dasd_schedule_block_bh(block);
-+	dasd_schedule_device_bh(base);
- 	return 0;
- }
- 
++	/* Fill the cache for the ADC test register */
++	regmap_read(wm8904->regmap, WM8904_ADC_TEST_0, &val);
++
+ 	/* Can leave the device powered off until we need it */
+ 	regcache_cache_only(wm8904->regmap, true);
+ 	regulator_bulk_disable(ARRAY_SIZE(wm8904->supplies), wm8904->supplies);
 
 
