@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC80F17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:07:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE00C433C9;
-	Wed,  9 Aug 2023 11:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6AF17731;
+	Wed,  9 Aug 2023 11:07:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5131C433C8;
+	Wed,  9 Aug 2023 11:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579232;
-	bh=voBZVc5ho4g9F3rUTQ+vg+CRcWntCWG49gESofRyHIY=;
+	s=korg; t=1691579235;
+	bh=SP7FcrL/n/JbIPYcqAj06Y4gPl8RVIcWqAmrAHKcOK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JA4JZz5CX7vKdpbCaRNPFgLkVIjJfMTWNlk52lfsTLRgavGT2e7oOkmE8dwDmGaCI
-	 KQdI/nosCQHJmgECj9bzT/lDi7/e4ZDPc/mRCIQyJIcRurdhcymen6/D7xHRIBhI2U
-	 8WPRZZuHKv3g4izgGrfVolXiQIcDnQbOBt7rtmBY=
+	b=SMoV/HFqqhCVj8b1gMQ3x9AdUk7ya2sGae/9Su6NjtY5S74aEqimQHYIfEznJMhwq
+	 AdWH8huMEXrIWCb41Ny0Nb4rMe2a60/CURjXpLi1JnTuuWY0u3nCNvBRdBZaoTFJoY
+	 03LmrAFbyjOCCLhRR9i8MZPpDufeNvg3DQpEZejk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Richard Genoud <richard.genoud@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.14 123/204] serial: atmel: dont enable IRQs prematurely
-Date: Wed,  9 Aug 2023 12:41:01 +0200
-Message-ID: <20230809103646.722995391@linuxfoundation.org>
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	regressions@lists.linux.dev,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 4.14 124/204] perf probe: Add test for regression introduced by switch to die_get_decl_file()
+Date: Wed,  9 Aug 2023 12:41:02 +0200
+Message-ID: <20230809103646.752555655@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,45 +44,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Georg Müller <georgmueller@gmx.net>
 
-commit 27a826837ec9a3e94cc44bd9328b8289b0fcecd7 upstream.
+commit 56cbeacf143530576905623ac72ae0964f3293a6 upstream.
 
-The atmel_complete_tx_dma() function disables IRQs at the start
-of the function by calling spin_lock_irqsave(&port->lock, flags);
-There is no need to disable them a second time using the
-spin_lock_irq() function and, in fact, doing so is a bug because
-it will enable IRQs prematurely when we call spin_unlock_irq().
+This patch adds a test to validate that 'perf probe' works for binaries
+where DWARF info is split into multiple CUs
 
-Just use spin_lock/unlock() instead without disabling or enabling
-IRQs.
-
-Fixes: 08f738be88bb ("serial: at91: add tx dma support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Acked-by: Richard Genoud <richard.genoud@gmail.com>
-Link: https://lore.kernel.org/r/cb7c39a9-c004-4673-92e1-be4e34b85368@moroto.mountain
-Cc: stable <stable@kernel.org>
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: regressions@lists.linux.dev
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230628084551.1860532-5-georgmueller@gmx.net
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/atmel_serial.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/tests/shell/test_uprobe_from_different_cu.sh |   77 ++++++++++++++++
+ 1 file changed, 77 insertions(+)
+ create mode 100755 tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -798,11 +798,11 @@ static void atmel_complete_tx_dma(void *
- 
- 	port->icount.tx += atmel_port->tx_len;
- 
--	spin_lock_irq(&atmel_port->lock_tx);
-+	spin_lock(&atmel_port->lock_tx);
- 	async_tx_ack(atmel_port->desc_tx);
- 	atmel_port->cookie_tx = -EINVAL;
- 	atmel_port->desc_tx = NULL;
--	spin_unlock_irq(&atmel_port->lock_tx);
-+	spin_unlock(&atmel_port->lock_tx);
- 
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
+--- /dev/null
++++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+@@ -0,0 +1,77 @@
++#!/bin/bash
++# test perf probe of function from different CU
++# SPDX-License-Identifier: GPL-2.0
++
++set -e
++
++temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
++
++cleanup()
++{
++	trap - EXIT TERM INT
++	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
++		echo "--- Cleaning up ---"
++		perf probe -x ${temp_dir}/testfile -d foo
++		rm -f "${temp_dir}/"*
++		rmdir "${temp_dir}"
++	fi
++}
++
++trap_cleanup()
++{
++        cleanup
++        exit 1
++}
++
++trap trap_cleanup EXIT TERM INT
++
++cat > ${temp_dir}/testfile-foo.h << EOF
++struct t
++{
++  int *p;
++  int c;
++};
++
++extern int foo (int i, struct t *t);
++EOF
++
++cat > ${temp_dir}/testfile-foo.c << EOF
++#include "testfile-foo.h"
++
++int
++foo (int i, struct t *t)
++{
++  int j, res = 0;
++  for (j = 0; j < i && j < t->c; j++)
++    res += t->p[j];
++
++  return res;
++}
++EOF
++
++cat > ${temp_dir}/testfile-main.c << EOF
++#include "testfile-foo.h"
++
++static struct t g;
++
++int
++main (int argc, char **argv)
++{
++  int i;
++  int j[argc];
++  g.c = argc;
++  g.p = j;
++  for (i = 0; i < argc; i++)
++    j[i] = (int) argv[i][0];
++  return foo (3, &g);
++}
++EOF
++
++gcc -g -Og -flto -c ${temp_dir}/testfile-foo.c -o ${temp_dir}/testfile-foo.o
++gcc -g -Og -c ${temp_dir}/testfile-main.c -o ${temp_dir}/testfile-main.o
++gcc -g -Og -o ${temp_dir}/testfile ${temp_dir}/testfile-foo.o ${temp_dir}/testfile-main.o
++
++perf probe -x ${temp_dir}/testfile --funcs foo
++perf probe -x ${temp_dir}/testfile foo
++
++cleanup
 
 
