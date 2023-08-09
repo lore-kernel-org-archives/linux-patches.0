@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596DE171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF698C433C8;
-	Wed,  9 Aug 2023 11:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24981171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A93CC433C7;
+	Wed,  9 Aug 2023 11:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578905;
-	bh=t54YheNrO1/pc+CYAuD6vSPYXJKINvSGA+JQ5xf5KV8=;
+	s=korg; t=1691578907;
+	bh=yZ6l8IJB1VpAG3zHoDu9zP78SYwKcEvGisgxfR/ceHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7LGiHT/Uga6pUwmpUnNzeikIeanTWzscYQob3phjGbN/a6009vXx3JKxQ3iYWIKb
-	 T8993trg8s6kldaqbmjIDLYFGC1F6drv2lr5T79PwD+LHi7VLMphRmf1jRVIz7ax4a
-	 ry1rgjRae02Pq2QBrse9Ed3N+tXb9Vsn9d48LVL0=
+	b=2irxW9hA1QKwIg5lhN2RhlIKo7oYr0ueeRQb8Tbb1pkoS692DvKxFz/LdNtpTsp47
+	 xMezpbDXybZA1Nk5m2TFTb9ZsvqIPYBqaV/tin8ikYuSeOw3zdlLlIlArfD1sJPGiF
+	 nfP32lFFdlIhC3uxXxtsJP3e7n2qAEIWCV4d6ek4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rander Wang <rander.wang@linux.intel.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chunfeng Yun <chunfeng.yun@mediatek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 90/92] soundwire: fix enumeration completion
-Date: Wed,  9 Aug 2023 12:42:06 +0200
-Message-ID: <20230809103636.633521003@linuxfoundation.org>
+Subject: [PATCH 5.15 91/92] PM / wakeirq: support enabling wake-up irq after runtime_suspend called
+Date: Wed,  9 Aug 2023 12:42:07 +0200
+Message-ID: <20230809103636.664680698@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -37,73 +35,287 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Chunfeng Yun <chunfeng.yun@mediatek.com>
 
-[ Upstream commit c40d6b3249b11d60e09d81530588f56233d9aa44 ]
+[ Upstream commit 259714100d98b50bf04d36a21bf50ca8b829fc11 ]
 
-The soundwire subsystem uses two completion structures that allow
-drivers to wait for soundwire device to become enumerated on the bus and
-initialised by their drivers, respectively.
+When the dedicated wake IRQ is level trigger, and it uses the
+device's low-power status as the wakeup source, that means if the
+device is not in low-power state, the wake IRQ will be triggered
+if enabled; For this case, need enable the wake IRQ after running
+the device's ->runtime_suspend() which make it enter low-power state.
 
-The code implementing the signalling is currently broken as it does not
-signal all current and future waiters and also uses the wrong
-reinitialisation function, which can potentially lead to memory
-corruption if there are still waiters on the queue.
+e.g.
+Assume the wake IRQ is a low level trigger type, and the wakeup
+signal comes from the low-power status of the device.
+The wakeup signal is low level at running time (0), and becomes
+high level when the device enters low-power state (runtime_suspend
+(1) is called), a wakeup event at (2) make the device exit low-power
+state, then the wakeup signal also becomes low level.
 
-Not signalling future waiters specifically breaks sound card probe
-deferrals as codec drivers can not tell that the soundwire device is
-already attached when being reprobed. Some codec runtime PM
-implementations suffer from similar problems as waiting for enumeration
-during resume can also timeout despite the device already having been
-enumerated.
+                ------------------
+               |           ^     ^|
+----------------           |     | --------------
+ |<---(0)--->|<--(1)--|   (3)   (2)    (4)
 
-Fixes: fb9469e54fa7 ("soundwire: bus: fix race condition with enumeration_complete signaling")
-Fixes: a90def068127 ("soundwire: bus: fix race condition with initialization_complete signaling")
-Cc: stable@vger.kernel.org      # 5.7
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Cc: Rander Wang <rander.wang@linux.intel.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230705123018.30903-2-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+if enable the wake IRQ before running runtime_suspend during (0),
+a wake IRQ will arise, it causes resume immediately;
+it works if enable wake IRQ ( e.g. at (3) or (4)) after running
+->runtime_suspend().
+
+This patch introduces a new status WAKE_IRQ_DEDICATED_REVERSE to
+optionally support enabling wake IRQ after running ->runtime_suspend().
+
+Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 8527beb12087 ("PM: sleep: wakeirq: fix wake irq arming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/bus.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/base/power/power.h   |   7 ++-
+ drivers/base/power/runtime.c |   6 ++-
+ drivers/base/power/wakeirq.c | 101 +++++++++++++++++++++++++++--------
+ include/linux/pm_wakeirq.h   |   9 +++-
+ 4 files changed, 96 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index cc4cca0325b98..230a3250f3154 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -828,8 +828,8 @@ static void sdw_modify_slave_status(struct sdw_slave *slave,
- 			"%s: initializing enumeration and init completion for Slave %d\n",
- 			__func__, slave->dev_num);
+diff --git a/drivers/base/power/power.h b/drivers/base/power/power.h
+index 54292cdd7808b..0eb7f02b3ad59 100644
+--- a/drivers/base/power/power.h
++++ b/drivers/base/power/power.h
+@@ -25,8 +25,10 @@ extern u64 pm_runtime_active_time(struct device *dev);
  
--		init_completion(&slave->enumeration_complete);
--		init_completion(&slave->initialization_complete);
-+		reinit_completion(&slave->enumeration_complete);
-+		reinit_completion(&slave->initialization_complete);
+ #define WAKE_IRQ_DEDICATED_ALLOCATED	BIT(0)
+ #define WAKE_IRQ_DEDICATED_MANAGED	BIT(1)
++#define WAKE_IRQ_DEDICATED_REVERSE	BIT(2)
+ #define WAKE_IRQ_DEDICATED_MASK		(WAKE_IRQ_DEDICATED_ALLOCATED | \
+-					 WAKE_IRQ_DEDICATED_MANAGED)
++					 WAKE_IRQ_DEDICATED_MANAGED | \
++					 WAKE_IRQ_DEDICATED_REVERSE)
  
- 	} else if ((status == SDW_SLAVE_ATTACHED) &&
- 		   (slave->status == SDW_SLAVE_UNATTACHED)) {
-@@ -837,7 +837,7 @@ static void sdw_modify_slave_status(struct sdw_slave *slave,
- 			"%s: signaling enumeration completion for Slave %d\n",
- 			__func__, slave->dev_num);
+ struct wake_irq {
+ 	struct device *dev;
+@@ -39,7 +41,8 @@ extern void dev_pm_arm_wake_irq(struct wake_irq *wirq);
+ extern void dev_pm_disarm_wake_irq(struct wake_irq *wirq);
+ extern void dev_pm_enable_wake_irq_check(struct device *dev,
+ 					 bool can_change_status);
+-extern void dev_pm_disable_wake_irq_check(struct device *dev);
++extern void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable);
++extern void dev_pm_enable_wake_irq_complete(struct device *dev);
  
--		complete(&slave->enumeration_complete);
-+		complete_all(&slave->enumeration_complete);
- 	}
- 	slave->status = status;
- 	mutex_unlock(&bus->bus_lock);
-@@ -1840,7 +1840,7 @@ int sdw_handle_slave_status(struct sdw_bus *bus,
- 				"%s: signaling initialization completion for Slave %d\n",
- 				__func__, slave->dev_num);
+ #ifdef CONFIG_PM_SLEEP
  
--			complete(&slave->initialization_complete);
-+			complete_all(&slave->initialization_complete);
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index c1142a7a4fe65..5824d41a0b745 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -673,6 +673,8 @@ static int rpm_suspend(struct device *dev, int rpmflags)
+ 	if (retval)
+ 		goto fail;
  
- 			/*
- 			 * If the manager became pm_runtime active, the peripherals will be
++	dev_pm_enable_wake_irq_complete(dev);
++
+  no_callback:
+ 	__update_runtime_status(dev, RPM_SUSPENDED);
+ 	pm_runtime_deactivate_timer(dev);
+@@ -718,7 +720,7 @@ static int rpm_suspend(struct device *dev, int rpmflags)
+ 	return retval;
+ 
+  fail:
+-	dev_pm_disable_wake_irq_check(dev);
++	dev_pm_disable_wake_irq_check(dev, true);
+ 	__update_runtime_status(dev, RPM_ACTIVE);
+ 	dev->power.deferred_resume = false;
+ 	wake_up_all(&dev->power.wait_queue);
+@@ -901,7 +903,7 @@ static int rpm_resume(struct device *dev, int rpmflags)
+ 
+ 	callback = RPM_GET_CALLBACK(dev, runtime_resume);
+ 
+-	dev_pm_disable_wake_irq_check(dev);
++	dev_pm_disable_wake_irq_check(dev, false);
+ 	retval = rpm_callback(callback, dev);
+ 	if (retval) {
+ 		__update_runtime_status(dev, RPM_SUSPENDED);
+diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
+index b91a3a9bf9f6d..0004db4a9d3b9 100644
+--- a/drivers/base/power/wakeirq.c
++++ b/drivers/base/power/wakeirq.c
+@@ -142,24 +142,7 @@ static irqreturn_t handle_threaded_wake_irq(int irq, void *_wirq)
+ 	return IRQ_HANDLED;
+ }
+ 
+-/**
+- * dev_pm_set_dedicated_wake_irq - Request a dedicated wake-up interrupt
+- * @dev: Device entry
+- * @irq: Device wake-up interrupt
+- *
+- * Unless your hardware has separate wake-up interrupts in addition
+- * to the device IO interrupts, you don't need this.
+- *
+- * Sets up a threaded interrupt handler for a device that has
+- * a dedicated wake-up interrupt in addition to the device IO
+- * interrupt.
+- *
+- * The interrupt starts disabled, and needs to be managed for
+- * the device by the bus code or the device driver using
+- * dev_pm_enable_wake_irq() and dev_pm_disable_wake_irq()
+- * functions.
+- */
+-int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
++static int __dev_pm_set_dedicated_wake_irq(struct device *dev, int irq, unsigned int flag)
+ {
+ 	struct wake_irq *wirq;
+ 	int err;
+@@ -197,7 +180,7 @@ int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
+ 	if (err)
+ 		goto err_free_irq;
+ 
+-	wirq->status = WAKE_IRQ_DEDICATED_ALLOCATED;
++	wirq->status = WAKE_IRQ_DEDICATED_ALLOCATED | flag;
+ 
+ 	return err;
+ 
+@@ -210,8 +193,57 @@ int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
+ 
+ 	return err;
+ }
++
++
++/**
++ * dev_pm_set_dedicated_wake_irq - Request a dedicated wake-up interrupt
++ * @dev: Device entry
++ * @irq: Device wake-up interrupt
++ *
++ * Unless your hardware has separate wake-up interrupts in addition
++ * to the device IO interrupts, you don't need this.
++ *
++ * Sets up a threaded interrupt handler for a device that has
++ * a dedicated wake-up interrupt in addition to the device IO
++ * interrupt.
++ *
++ * The interrupt starts disabled, and needs to be managed for
++ * the device by the bus code or the device driver using
++ * dev_pm_enable_wake_irq*() and dev_pm_disable_wake_irq*()
++ * functions.
++ */
++int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
++{
++	return __dev_pm_set_dedicated_wake_irq(dev, irq, 0);
++}
+ EXPORT_SYMBOL_GPL(dev_pm_set_dedicated_wake_irq);
+ 
++/**
++ * dev_pm_set_dedicated_wake_irq_reverse - Request a dedicated wake-up interrupt
++ *                                         with reverse enable ordering
++ * @dev: Device entry
++ * @irq: Device wake-up interrupt
++ *
++ * Unless your hardware has separate wake-up interrupts in addition
++ * to the device IO interrupts, you don't need this.
++ *
++ * Sets up a threaded interrupt handler for a device that has a dedicated
++ * wake-up interrupt in addition to the device IO interrupt. It sets
++ * the status of WAKE_IRQ_DEDICATED_REVERSE to tell rpm_suspend()
++ * to enable dedicated wake-up interrupt after running the runtime suspend
++ * callback for @dev.
++ *
++ * The interrupt starts disabled, and needs to be managed for
++ * the device by the bus code or the device driver using
++ * dev_pm_enable_wake_irq*() and dev_pm_disable_wake_irq*()
++ * functions.
++ */
++int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq)
++{
++	return __dev_pm_set_dedicated_wake_irq(dev, irq, WAKE_IRQ_DEDICATED_REVERSE);
++}
++EXPORT_SYMBOL_GPL(dev_pm_set_dedicated_wake_irq_reverse);
++
+ /**
+  * dev_pm_enable_wake_irq - Enable device wake-up interrupt
+  * @dev: Device
+@@ -282,27 +314,54 @@ void dev_pm_enable_wake_irq_check(struct device *dev,
+ 	return;
+ 
+ enable:
+-	enable_irq(wirq->irq);
++	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
++		enable_irq(wirq->irq);
+ }
+ 
+ /**
+  * dev_pm_disable_wake_irq_check - Checks and disables wake-up interrupt
+  * @dev: Device
++ * @cond_disable: if set, also check WAKE_IRQ_DEDICATED_REVERSE
+  *
+  * Disables wake-up interrupt conditionally based on status.
+  * Should be only called from rpm_suspend() and rpm_resume() path.
+  */
+-void dev_pm_disable_wake_irq_check(struct device *dev)
++void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable)
+ {
+ 	struct wake_irq *wirq = dev->power.wakeirq;
+ 
+ 	if (!wirq || !(wirq->status & WAKE_IRQ_DEDICATED_MASK))
+ 		return;
+ 
++	if (cond_disable && (wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
++		return;
++
+ 	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED)
+ 		disable_irq_nosync(wirq->irq);
+ }
+ 
++/**
++ * dev_pm_enable_wake_irq_complete - enable wake IRQ not enabled before
++ * @dev: Device using the wake IRQ
++ *
++ * Enable wake IRQ conditionally based on status, mainly used if want to
++ * enable wake IRQ after running ->runtime_suspend() which depends on
++ * WAKE_IRQ_DEDICATED_REVERSE.
++ *
++ * Should be only called from rpm_suspend() path.
++ */
++void dev_pm_enable_wake_irq_complete(struct device *dev)
++{
++	struct wake_irq *wirq = dev->power.wakeirq;
++
++	if (!wirq || !(wirq->status & WAKE_IRQ_DEDICATED_MASK))
++		return;
++
++	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED &&
++	    wirq->status & WAKE_IRQ_DEDICATED_REVERSE)
++		enable_irq(wirq->irq);
++}
++
+ /**
+  * dev_pm_arm_wake_irq - Arm device wake-up
+  * @wirq: Device wake-up interrupt
+diff --git a/include/linux/pm_wakeirq.h b/include/linux/pm_wakeirq.h
+index cd5b62db90845..e63a63aa47a37 100644
+--- a/include/linux/pm_wakeirq.h
++++ b/include/linux/pm_wakeirq.h
+@@ -17,8 +17,8 @@
+ #ifdef CONFIG_PM
+ 
+ extern int dev_pm_set_wake_irq(struct device *dev, int irq);
+-extern int dev_pm_set_dedicated_wake_irq(struct device *dev,
+-					 int irq);
++extern int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq);
++extern int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq);
+ extern void dev_pm_clear_wake_irq(struct device *dev);
+ extern void dev_pm_enable_wake_irq(struct device *dev);
+ extern void dev_pm_disable_wake_irq(struct device *dev);
+@@ -35,6 +35,11 @@ static inline int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
+ 	return 0;
+ }
+ 
++static inline int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq)
++{
++	return 0;
++}
++
+ static inline void dev_pm_clear_wake_irq(struct device *dev)
+ {
+ }
 -- 
 2.40.1
 
