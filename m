@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0048617FFC
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E134C433C9;
-	Wed,  9 Aug 2023 10:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16940613A
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7902DC433C9;
+	Wed,  9 Aug 2023 10:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578224;
-	bh=jL1leHMJktxPG3/6qS0W6FYTDR3ZCBsU9WeLaaO7vBs=;
+	s=korg; t=1691578227;
+	bh=lb0igJ6ekcNPyY/9qC3alyjtWVuLdfTFXiXOe8e0xgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BIz5z6DDcWfvptsKXXl6BAFI1A3QhhJwhvGiPRkzBy5Y3aAP5bQbTlnq8McudKVh
-	 IOW+4NkCdaXRKHKnqCH5H9JFeRA7gLoj+se3vrAzVJ1NeZPkR6uRtDksoPaW4K+Vqq
-	 QhG/ww2iueG/VQVm7cXOrzd4Ly6mdc5/x2SC2taE=
+	b=fzgN3OGsUknGSK7WOd09VcsS1Zj3nj2uBWsC7TYquGtDzlIf7aFOG3hi58tCjbiVr
+	 EVw7yyyxxzd8c7+RSWoYtVBu200Qbnht9oeobBKDD4F6hckGwNjc0ulg8ejstXt13l
+	 Ibap1sfng7mHwDJ7gPu3XfG0w4dt7aezlq7B1MC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johan Jonker <jbx6244@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 149/165] mtd: rawnand: rockchip: fix oobfree offset and description
-Date: Wed,  9 Aug 2023 12:41:20 +0200
-Message-ID: <20230809103647.657035992@linuxfoundation.org>
+Subject: [PATCH 6.4 150/165] mtd: rawnand: rockchip: Align hwecc vs. raw page helper layouts
+Date: Wed,  9 Aug 2023 12:41:21 +0200
+Message-ID: <20230809103647.686288629@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,61 +37,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit d0ca3b92b7a6f42841ea9da8492aaf649db79780 ]
+[ Upstream commit ea690ad78dd611e3906df5b948a516000b05c1cb ]
+
+Currently, read/write_page_hwecc() and read/write_page_raw() are not
+aligned: there is a mismatch in the OOB bytes which are not
+read/written at the same offset in both cases (raw vs. hwecc).
+
+This is a real problem when relying on the presence of the Page
+Addresses (PA) when using the NAND chip as a boot device, as the
+BootROM expects additional data in the OOB area at specific locations.
 
 Rockchip boot blocks are written per 4 x 512 byte sectors per page.
 Each page with boot blocks must have a page address (PA) pointer in OOB
-to the next page.
+to the next page. Pages are written in a pattern depending on the NAND chip ID.
 
-The currently advertised free OOB area starts at offset 6, like
-if 4 PA bytes were located right after the BBM. This is wrong as the
-PA bytes are located right before the ECC bytes.
+Generate boot block page address and pattern for hwecc in user space
+and copy PA data to/from the already reserved last 4 bytes before ECC
+in the chip->oob_poi data layout.
 
-Fix the layout by allowing access to all bytes between the BBM and the
-PA bytes instead of reserving 4 bytes right after the BBM.
-
-This change breaks existing jffs2 users.
+Align the different helpers. This change breaks existing jffs2 users.
 
 Fixes: 058e0e847d54 ("mtd: rawnand: rockchip: NFC driver for RK3308, RK2928 and others")
 Signed-off-by: Johan Jonker <jbx6244@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/d202f12d-188c-20e8-f2c2-9cc874ad4d22@gmail.com
+Link: https://lore.kernel.org/linux-mtd/5e782c08-862b-51ae-47ff-3299940928ca@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/rockchip-nand-controller.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ .../mtd/nand/raw/rockchip-nand-controller.c   | 34 ++++++++++++-------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/mtd/nand/raw/rockchip-nand-controller.c b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-index 2312e27362cbe..37fc07ba57aab 100644
+index 37fc07ba57aab..5a04680342c32 100644
 --- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
 +++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-@@ -562,9 +562,10 @@ static int rk_nfc_write_page_raw(struct nand_chip *chip, const u8 *buf,
- 		 *    BBM  OOB1 OOB2 OOB3 |......|  PA0  PA1  PA2  PA3
- 		 *
- 		 * The rk_nfc_ooblayout_free() function already has reserved
--		 * these 4 bytes with:
-+		 * these 4 bytes together with 2 bytes for BBM
-+		 * by reducing it's length:
- 		 *
--		 * oob_region->offset = NFC_SYS_DATA_SIZE + 2;
-+		 * oob_region->length = rknand->metadata_size - NFC_SYS_DATA_SIZE - 2;
- 		 */
- 		if (!i)
- 			memcpy(rk_nfc_oob_ptr(chip, i),
-@@ -933,12 +934,8 @@ static int rk_nfc_ooblayout_free(struct mtd_info *mtd, int section,
- 	if (section)
- 		return -ERANGE;
+@@ -598,7 +598,7 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+ 	int pages_per_blk = mtd->erasesize / mtd->writesize;
+ 	int ret = 0, i, boot_rom_mode = 0;
+ 	dma_addr_t dma_data, dma_oob;
+-	u32 reg;
++	u32 tmp;
+ 	u8 *oob;
  
--	/*
--	 * The beginning of the OOB area stores the reserved data for the NFC,
--	 * the size of the reserved data is NFC_SYS_DATA_SIZE bytes.
--	 */
- 	oob_region->length = rknand->metadata_size - NFC_SYS_DATA_SIZE - 2;
--	oob_region->offset = NFC_SYS_DATA_SIZE + 2;
-+	oob_region->offset = 2;
+ 	nand_prog_page_begin_op(chip, page, 0, NULL, 0);
+@@ -625,6 +625,13 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+ 	 *
+ 	 *   0xFF 0xFF 0xFF 0xFF | BBM OOB1 OOB2 OOB3 | ...
+ 	 *
++	 * The code here just swaps the first 4 bytes with the last
++	 * 4 bytes without losing any data.
++	 *
++	 * The chip->oob_poi data layout:
++	 *
++	 *    BBM  OOB1 OOB2 OOB3 |......|  PA0  PA1  PA2  PA3
++	 *
+ 	 * Configure the ECC algorithm supported by the boot ROM.
+ 	 */
+ 	if ((page < (pages_per_blk * rknand->boot_blks)) &&
+@@ -635,21 +642,17 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+ 	}
  
- 	return 0;
- }
+ 	for (i = 0; i < ecc->steps; i++) {
+-		if (!i) {
+-			reg = 0xFFFFFFFF;
+-		} else {
++		if (!i)
++			oob = chip->oob_poi + (ecc->steps - 1) * NFC_SYS_DATA_SIZE;
++		else
+ 			oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
+-			reg = oob[0] | oob[1] << 8 | oob[2] << 16 |
+-			      oob[3] << 24;
+-		}
+ 
+-		if (!i && boot_rom_mode)
+-			reg = (page & (pages_per_blk - 1)) * 4;
++		tmp = oob[0] | oob[1] << 8 | oob[2] << 16 | oob[3] << 24;
+ 
+ 		if (nfc->cfg->type == NFC_V9)
+-			nfc->oob_buf[i] = reg;
++			nfc->oob_buf[i] = tmp;
+ 		else
+-			nfc->oob_buf[i * (oob_step / 4)] = reg;
++			nfc->oob_buf[i * (oob_step / 4)] = tmp;
+ 	}
+ 
+ 	dma_data = dma_map_single(nfc->dev, (void *)nfc->page_buf,
+@@ -812,12 +815,17 @@ static int rk_nfc_read_page_hwecc(struct nand_chip *chip, u8 *buf, int oob_on,
+ 		goto timeout_err;
+ 	}
+ 
+-	for (i = 1; i < ecc->steps; i++) {
+-		oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
++	for (i = 0; i < ecc->steps; i++) {
++		if (!i)
++			oob = chip->oob_poi + (ecc->steps - 1) * NFC_SYS_DATA_SIZE;
++		else
++			oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
++
+ 		if (nfc->cfg->type == NFC_V9)
+ 			tmp = nfc->oob_buf[i];
+ 		else
+ 			tmp = nfc->oob_buf[i * (oob_step / 4)];
++
+ 		*oob++ = (u8)tmp;
+ 		*oob++ = (u8)(tmp >> 8);
+ 		*oob++ = (u8)(tmp >> 16);
 -- 
 2.40.1
 
