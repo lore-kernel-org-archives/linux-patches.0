@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A606174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED96FC433D9;
-	Wed,  9 Aug 2023 11:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4789C174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB72DC433CD;
+	Wed,  9 Aug 2023 11:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579004;
-	bh=KkqpjLlg8MVBheYvhzn2RF14G2iBoE895dphAR2TZ7w=;
+	s=korg; t=1691579007;
+	bh=T/J1WAEOqzayksZ9saLnJHZw+g65Ve8XALJc3hruitg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7ynOnx8qqNfhXe/w9+ufbeE/knJLjzn9EK0MxhDRmWU4cKYKo5d8cU2rm9QVhX1/
-	 h14M+yy4w7tghMUtQdU7e1U9ok6w54qEwiPfK/keGyhl0Faqw3L9geuB8QuNVVQm1R
-	 mZHbLnWQVhExO9DUcXwcxcnwQk/z5TNrtxi7f+ds=
+	b=FeDYwQ5oK6g/9GWPp0YE5LN4Us7sX6dMRekiFtRaVYY+MTc9AvI6IELPS9aoS2Tz2
+	 E+WmkS6wPnSbFNtabRJjYgYktaAVqkeIr0T6zYsyh3hZfeVLkKQU425+wHXJnG7THR
+	 zoHg8QfNwnz9mw5pQ92cvt4+rupybsWd+GYZgcfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gregg Wonderly <greggwonderly@seqtechllc.com>,
+	Peter Seiderer <ps.report@gmx.net>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 040/204] ASoC: es8316: Increment max value for ALC Capture Target Volume control
-Date: Wed,  9 Aug 2023 12:39:38 +0200
-Message-ID: <20230809103643.910794865@linuxfoundation.org>
+Subject: [PATCH 4.14 014/204] wifi: ath9k: fix AR9003 mac hardware hang check register offset calculation
+Date: Wed,  9 Aug 2023 12:39:12 +0200
+Message-ID: <20230809103643.068630236@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,88 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Peter Seiderer <ps.report@gmx.net>
 
-[ Upstream commit 6f073429037cd79d7311cd8236311c53f5ea8f01 ]
+[ Upstream commit 3e56c80931c7615250fe4bf83f93b57881969266 ]
 
-The following error occurs when trying to restore a previously saved
-ALSA mixer state (tested on a Rock 5B board):
+Fix ath9k_hw_verify_hang()/ar9003_hw_detect_mac_hang() register offset
+calculation (do not overflow the shift for the second register/queues
+above five, use the register layout described in the comments above
+ath9k_hw_verify_hang() instead).
 
-  $ alsactl --no-ucm -f /tmp/asound.state store hw:Analog
-  $ alsactl --no-ucm -I -f /tmp/asound.state restore hw:Analog
-  alsactl: set_control:1475: Cannot write control '2:0:0:ALC Capture Target Volume:0' : Invalid argument
+Fixes: 222e04830ff0 ("ath9k: Fix MAC HW hang check for AR9003")
 
-According to ES8316 datasheet, the register at address 0x2B, which is
-related to the above mixer control, contains by default the value 0xB0.
-Considering the corresponding ALC target bits (ALCLVL) are 7:4, the
-control is initialized with 11, which is one step above the maximum
-value allowed by the driver:
-
- ALCLVL | dB gain
- -------+--------
-  0000  |  -16.5
-  0001  |  -15.0
-  0010  |  -13.5
-  ....  |  .....
-  0111  |   -6.0
-  1000  |   -4.5
-  1001  |   -3.0
-  1010  |   -1.5
-  ....  |  .....
-  1111  |   -1.5
-
-The tests performed using the VU meter feature (--vumeter=TYPE) of
-arecord/aplay confirm the specs are correct and there is no measured
-gain if the 1011-1111 range would have been mapped to 0 dB:
-
- dB gain | VU meter %
- --------+-----------
-   -6.0  |  30-31
-   -4.5  |  35-36
-   -3.0  |  42-43
-   -1.5  |  50-51
-    0.0  |  50-51
-
-Increment the max value allowed for ALC Capture Target Volume control,
-so that it matches the hardware default.  Additionally, update the
-related TLV to prevent an artificial extension of the dB gain range.
-
-Fixes: b8b88b70875a ("ASoC: add es8316 codec driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230530181140.483936-2-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Gregg Wonderly <greggwonderly@seqtechllc.com>
+Link: https://lore.kernel.org/linux-wireless/E3A9C354-0CB7-420C-ADEF-F0177FB722F4@seqtechllc.com/
+Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230422212423.26065-1-ps.report@gmx.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8316.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/ar9003_hw.c | 27 ++++++++++++++--------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index 0410f2e5183c3..fad918c44ec97 100644
---- a/sound/soc/codecs/es8316.c
-+++ b/sound/soc/codecs/es8316.c
-@@ -45,7 +45,12 @@ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(dac_vol_tlv, -9600, 50, 1);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(adc_vol_tlv, -9600, 50, 1);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_max_gain_tlv, -650, 150, 0);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_min_gain_tlv, -1200, 150, 0);
--static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_target_tlv, -1650, 150, 0);
-+
-+static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(alc_target_tlv,
-+	0, 10, TLV_DB_SCALE_ITEM(-1650, 150, 0),
-+	11, 11, TLV_DB_SCALE_ITEM(-150, 0, 0),
-+);
-+
- static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(hpmixer_gain_tlv,
- 	0, 4, TLV_DB_SCALE_ITEM(-1200, 150, 0),
- 	8, 11, TLV_DB_SCALE_ITEM(-450, 150, 0),
-@@ -107,7 +112,7 @@ static const struct snd_kcontrol_new es8316_snd_controls[] = {
- 		       alc_max_gain_tlv),
- 	SOC_SINGLE_TLV("ALC Capture Min Volume", ES8316_ADC_ALC2, 0, 28, 0,
- 		       alc_min_gain_tlv),
--	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 10, 0,
-+	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 11, 0,
- 		       alc_target_tlv),
- 	SOC_SINGLE("ALC Capture Hold Time", ES8316_ADC_ALC3, 0, 10, 0),
- 	SOC_SINGLE("ALC Capture Decay Time", ES8316_ADC_ALC4, 4, 10, 0),
+diff --git a/drivers/net/wireless/ath/ath9k/ar9003_hw.c b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+index 2fe12b0de5b4f..dea8a998fb622 100644
+--- a/drivers/net/wireless/ath/ath9k/ar9003_hw.c
++++ b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+@@ -1099,17 +1099,22 @@ static bool ath9k_hw_verify_hang(struct ath_hw *ah, unsigned int queue)
+ {
+ 	u32 dma_dbg_chain, dma_dbg_complete;
+ 	u8 dcu_chain_state, dcu_complete_state;
++	unsigned int dbg_reg, reg_offset;
+ 	int i;
+ 
+-	for (i = 0; i < NUM_STATUS_READS; i++) {
+-		if (queue < 6)
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_4);
+-		else
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_5);
++	if (queue < 6) {
++		dbg_reg = AR_DMADBG_4;
++		reg_offset = queue * 5;
++	} else {
++		dbg_reg = AR_DMADBG_5;
++		reg_offset = (queue - 6) * 5;
++	}
+ 
++	for (i = 0; i < NUM_STATUS_READS; i++) {
++		dma_dbg_chain = REG_READ(ah, dbg_reg);
+ 		dma_dbg_complete = REG_READ(ah, AR_DMADBG_6);
+ 
+-		dcu_chain_state = (dma_dbg_chain >> (5 * queue)) & 0x1f;
++		dcu_chain_state = (dma_dbg_chain >> reg_offset) & 0x1f;
+ 		dcu_complete_state = dma_dbg_complete & 0x3;
+ 
+ 		if ((dcu_chain_state != 0x6) || (dcu_complete_state != 0x1))
+@@ -1128,6 +1133,7 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 	u8 dcu_chain_state, dcu_complete_state;
+ 	bool dcu_wait_frdone = false;
+ 	unsigned long chk_dcu = 0;
++	unsigned int reg_offset;
+ 	unsigned int i = 0;
+ 
+ 	dma_dbg_4 = REG_READ(ah, AR_DMADBG_4);
+@@ -1139,12 +1145,15 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 		goto exit;
+ 
+ 	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
+-		if (i < 6)
++		if (i < 6) {
+ 			chk_dbg = dma_dbg_4;
+-		else
++			reg_offset = i * 5;
++		} else {
+ 			chk_dbg = dma_dbg_5;
++			reg_offset = (i - 6) * 5;
++		}
+ 
+-		dcu_chain_state = (chk_dbg >> (5 * i)) & 0x1f;
++		dcu_chain_state = (chk_dbg >> reg_offset) & 0x1f;
+ 		if (dcu_chain_state == 0x6) {
+ 			dcu_wait_frdone = true;
+ 			chk_dcu |= BIT(i);
 -- 
 2.39.2
 
