@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B76E1774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE51C433C8;
-	Wed,  9 Aug 2023 11:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576291774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB185C433C7;
+	Wed,  9 Aug 2023 11:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579543;
-	bh=795XjNeKTIUuV2hjpNON2NWXeeZ7ellz9oGaPgUy2ug=;
+	s=korg; t=1691579546;
+	bh=yEl9qgBktJrd/5roW7PC8Zb9Uw6dBFZE8tJFHoAQaM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OU7FOpGSlNfVYclQg0iuyr8e6xtvHQZCaVBwvXpE9IeOGNtm8LyhJQ7g+k1XAdzFr
-	 5bUaJdL6iSLEoFZ6X4DvaRrhx9G5t+GcOuQUXWJMlDuGW5gKTB+CzrEk7Y6kw62UtG
-	 M4UAm0rLYGvkZlxMDmB3IFoUHWNuSXlpw0v0lEiU=
+	b=u4t+8EzqhZWu+9UM/gq1YIgHTW0OpQOIDaztsqYy8iHbh91Oow+o9gc4MDoaNhKBe
+	 SP3+1svoejPISbF/6NXA0aDjyyg/zSLGgDJrkXCG/7WsalEnW79CGBQgniWuxuGev8
+	 bIh2HnENPkduqPF3BpAhlQDEro3oxWBRg3Zjvl74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 028/323] wifi: orinoco: Fix an error handling path in orinoco_cs_probe()
-Date: Wed,  9 Aug 2023 12:37:46 +0200
-Message-ID: <20230809103659.404910571@linuxfoundation.org>
+Subject: [PATCH 4.19 029/323] wifi: atmel: Fix an error handling path in atmel_probe()
+Date: Wed,  9 Aug 2023 12:37:47 +0200
+Message-ID: <20230809103659.455346675@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,53 +38,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 67a81d911c01225f426cc6bee2373df044c1a9b7 ]
+[ Upstream commit 6b92e4351a29af52c285fe235e6e4d1a75de04b2 ]
 
-Should orinoco_cs_config() fail, some resources need to be released as
-already done in the remove function.
+Should atmel_config() fail, some resources need to be released as already
+done in the remove function.
 
 While at it, remove a useless and erroneous comment. The probe is
-orinoco_cs_probe(), not orinoco_cs_attach().
+atmel_probe(), not atmel_attach().
 
 Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/e24735ce4d82901d5f7ea08419eea53bfdde3d65.1684568286.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/1e65f174607a83348034197fa7d603bab10ba4a9.1684569156.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/orinoco/orinoco_cs.c | 13 +++++++++++--
+ drivers/net/wireless/atmel/atmel_cs.c | 13 +++++++++++--
  1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intersil/orinoco/orinoco_cs.c b/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
-index a956f965a1e5e..03bfd2482656c 100644
---- a/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
-+++ b/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
-@@ -96,6 +96,7 @@ orinoco_cs_probe(struct pcmcia_device *link)
+diff --git a/drivers/net/wireless/atmel/atmel_cs.c b/drivers/net/wireless/atmel/atmel_cs.c
+index 7afc9c5329fb1..f5fa1a95b0c15 100644
+--- a/drivers/net/wireless/atmel/atmel_cs.c
++++ b/drivers/net/wireless/atmel/atmel_cs.c
+@@ -73,6 +73,7 @@ struct local_info {
+ static int atmel_probe(struct pcmcia_device *p_dev)
  {
- 	struct orinoco_private *priv;
- 	struct orinoco_pccard *card;
+ 	struct local_info *local;
 +	int ret;
  
- 	priv = alloc_orinocodev(sizeof(*card), &link->dev,
- 				orinoco_cs_hard_reset, NULL);
-@@ -107,8 +108,16 @@ orinoco_cs_probe(struct pcmcia_device *link)
- 	card->p_dev = link;
- 	link->priv = priv;
+ 	dev_dbg(&p_dev->dev, "atmel_attach()\n");
  
--	return orinoco_cs_config(link);
--}				/* orinoco_cs_attach */
-+	ret = orinoco_cs_config(link);
+@@ -83,8 +84,16 @@ static int atmel_probe(struct pcmcia_device *p_dev)
+ 
+ 	p_dev->priv = local;
+ 
+-	return atmel_config(p_dev);
+-} /* atmel_attach */
++	ret = atmel_config(p_dev);
 +	if (ret)
-+		goto err_free_orinocodev;
++		goto err_free_priv;
 +
 +	return 0;
 +
-+err_free_orinocodev:
-+	free_orinocodev(priv);
++err_free_priv:
++	kfree(p_dev->priv);
 +	return ret;
 +}
  
- static void orinoco_cs_detach(struct pcmcia_device *link)
+ static void atmel_detach(struct pcmcia_device *link)
  {
 -- 
 2.39.2
