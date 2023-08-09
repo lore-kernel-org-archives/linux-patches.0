@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF3C174F0
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3EFC433C7;
-	Wed,  9 Aug 2023 11:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D5F174F0
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044A2C433C8;
+	Wed,  9 Aug 2023 11:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579563;
-	bh=W6vppn5mqzaw1bxdlNdODlbzM/UCxRD+CneY3nOpXlQ=;
+	s=korg; t=1691579566;
+	bh=OuBl6LeN4vGS+UWo9BMSriApSn3gH5ngsNYxMOTIVzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfFH3KeYwjxY3PZVi5hWsJN+B3UU87Qo8UzTXlBgSbDAa8Si4r9tzTjJ/kw43o0/Z
-	 4KCqBjjLQYifbJtEgHdBBgNs4pxVgEzuUFGNNL41hj88RJP2uAPHCuaBng1cPun4/K
-	 3FhPg6bAthm8Ch/RCWVTY+W62O1Iv37qrLxGq40Y=
+	b=vLBFmPSOMk2V/prsqiUPJGkv9T+3tuILkhezzfPvFY8bh/fG04NfOWSATpwFQpTb9
+	 BIbyYoOwgzF6r5TI8iUQG14daskW4jEpydI4BH1P40snJFgr9vwzKyz42PXxw4o3U/
+	 BZOsuCP4ZqwbsuV7mWw6BKOTd9czW2lOn0Z9DaRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 035/323] wifi: wl3501_cs: Fix an error handling path in wl3501_probe()
-Date: Wed,  9 Aug 2023 12:37:53 +0200
-Message-ID: <20230809103659.719291881@linuxfoundation.org>
+Subject: [PATCH 4.19 036/323] wifi: ray_cs: Utilize strnlen() in parse_addr()
+Date: Wed,  9 Aug 2023 12:37:54 +0200
+Message-ID: <20230809103659.773315333@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,64 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 391af06a02e7642039ac5f6c4b2c034ab0992b5d ]
+[ Upstream commit 9e8e9187673cb24324f9165dd47b2b28f60b0b10 ]
 
-Should wl3501_config() fail, some resources need to be released as already
-done in the remove function.
+Instead of doing simple operations and using an additional variable on stack,
+utilize strnlen() and reuse len variable.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/7cc9c9316489b7d69b36aeb0edd3123538500b41.1684569865.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/20220603164414.48436-1-andriy.shevchenko@linux.intel.com
+Stable-dep-of: 4f8d66a9fb2e ("wifi: ray_cs: Fix an error handling path in ray_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ray_cs.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index 46188a83d8be8..4380c5d8fdd27 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1863,6 +1863,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
+index 8704bae39e1bf..f15714f19d0ff 100644
+--- a/drivers/net/wireless/ray_cs.c
++++ b/drivers/net/wireless/ray_cs.c
+@@ -1651,31 +1651,29 @@ static void authenticate_timeout(struct timer_list *t)
+ /*===========================================================================*/
+ static int parse_addr(char *in_str, UCHAR *out)
  {
- 	struct net_device *dev;
- 	struct wl3501_card *this;
-+	int ret;
++	int i, k;
+ 	int len;
+-	int i, j, k;
+ 	int status;
  
- 	/* The io structure describes IO port mapping */
- 	p_dev->resource[0]->end	= 16;
-@@ -1874,8 +1875,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+ 	if (in_str == NULL)
+ 		return 0;
+-	if ((len = strlen(in_str)) < 2)
++	len = strnlen(in_str, ADDRLEN * 2 + 1) - 1;
++	if (len < 1)
+ 		return 0;
+ 	memset(out, 0, ADDRLEN);
  
- 	dev = alloc_etherdev(sizeof(struct wl3501_card));
- 	if (!dev)
--		goto out_link;
--
-+		return -ENOMEM;
+ 	status = 1;
+-	j = len - 1;
+-	if (j > 12)
+-		j = 12;
+ 	i = 5;
  
- 	dev->netdev_ops		= &wl3501_netdev_ops;
- 	dev->watchdog_timeo	= 5 * HZ;
-@@ -1888,9 +1888,15 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
- 	netif_stop_queue(dev);
- 	p_dev->priv = dev;
+-	while (j > 0) {
+-		if ((k = hex_to_bin(in_str[j--])) != -1)
++	while (len > 0) {
++		if ((k = hex_to_bin(in_str[len--])) != -1)
+ 			out[i] = k;
+ 		else
+ 			return 0;
  
--	return wl3501_config(p_dev);
--out_link:
--	return -ENOMEM;
-+	ret = wl3501_config(p_dev);
-+	if (ret)
-+		goto out_free_etherdev;
-+
-+	return 0;
-+
-+out_free_etherdev:
-+	free_netdev(dev);
-+	return ret;
- }
- 
- static int wl3501_config(struct pcmcia_device *link)
+-		if (j == 0)
++		if (len == 0)
+ 			break;
+-		if ((k = hex_to_bin(in_str[j--])) != -1)
++		if ((k = hex_to_bin(in_str[len--])) != -1)
+ 			out[i] += k << 4;
+ 		else
+ 			return 0;
 -- 
 2.39.2
 
