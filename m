@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD3515AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA55C433C7;
-	Wed,  9 Aug 2023 10:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDEB15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E79C433C8;
+	Wed,  9 Aug 2023 10:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577861;
-	bh=t20SVCcQ7ynoshafSwL+VpYt07roIpHk5jCQAZX6afg=;
+	s=korg; t=1691577864;
+	bh=+iNwGQses/SvbmlJy8x4N/eQpUAviko1J+QkN9HH9vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S75kwOIphDLlLpha/a7o8DsbmxJ+1pBJ9vggjwReWZoOhed7zOFbk5wa06u1B+7ly
-	 hV6ls/VBhOuyhk5XDdFBY/ph/gLevjTh63eUdiuCdKPV/9juW72I2tWDXHLumSm6PY
-	 0i1PZkQYuHCPFel3N/Cc5M9hogRzMlDdkb9uujao=
+	b=FbKg29Ybr8mXAHjBaFM11AM6t9kjpvATDasEo3LNx3kq3GL9GsEKkk/SsoesmJOKN
+	 V0qZjPqvfCEY5BoZIZ8jYzLGX4jaOaNkyKGiWew9IhFgwA4PKQVtVXQSIH09AlHtLz
+	 /YPluVRzHNLfhid/b9UE3b/EciqoK8ZC9x0/eFOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>
-Subject: [PATCH 6.4 003/165] iommu/arm-smmu-v3: Document MMU-700 erratum 2812531
-Date: Wed,  9 Aug 2023 12:38:54 +0200
-Message-ID: <20230809103642.859077937@linuxfoundation.org>
+	Durai Manickam KR <durai.manickamkr@microchip.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 021/165] ARM: dts: at91: sam9x60: fix the SOC detection
+Date: Wed,  9 Aug 2023 12:39:12 +0200
+Message-ID: <20230809103643.485419217@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,100 +35,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Durai Manickam KR <durai.manickamkr@microchip.com>
 
-commit 309a15cb16bb075da1c99d46fb457db6a1a2669e upstream
+[ Upstream commit f6ad3c13f1b8c4e785cb7bd423887197142f47b0 ]
 
-To work around MMU-700 erratum 2812531 we need to ensure that certain
-sequences of commands cannot be issued without an intervening sync. In
-practice this falls out of our current command-batching machinery
-anyway - each batch only contains a single type of invalidation command,
-and ends with a sync. The only exception is when a batch is sufficiently
-large to need issuing across multiple command queue slots, wherein the
-earlier slots will not contain a sync and thus may in theory interleave
-with another batch being issued in parallel to create an affected
-sequence across the slot boundary.
+Remove the dbgu compatible strings in the UART submodule of the
+flexcom for the proper SOC detection.
 
-Since MMU-700 supports range invalidate commands and thus we will prefer
-to use them (which also happens to avoid conditions for other errata),
-I'm not entirely sure it's even possible for a single high-level
-invalidate call to generate a batch of more than 63 commands, but for
-the sake of robustness and documentation, wire up an option to enforce
-that a sync is always inserted for every slot issued.
-
-The other aspect is that the relative order of DVM commands cannot be
-controlled, so DVM cannot be used. Again that is already the status quo,
-but since we have at least defined ARM_SMMU_FEAT_BTM, we can explicitly
-disable it for documentation purposes even if it's not wired up anywhere
-yet.
-
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/330221cdfd0003cd51b6c04e7ff3566741ad8374.1683731256.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 99c808335877 (ARM: dts: at91: sam9x60: Add missing flexcom definitions)
+Signed-off-by: Durai Manickam KR <durai.manickamkr@microchip.com>
+Link: https://lore.kernel.org/r/20230712100042.317856-1-durai.manickamkr@microchip.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.rst      |    2 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   12 ++++++++++++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |    1 +
- 3 files changed, 15 insertions(+)
+ arch/arm/boot/dts/sam9x60.dtsi | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -145,6 +145,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | MMU-600         | #1076982        | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | MMU-700         | #2812531        | N/A                         |
-++----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
- | Broadcom       | Brahma-B53      | N/A             | ARM64_ERRATUM_845719        |
- +----------------+-----------------+-----------------+-----------------------------+
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -894,6 +894,12 @@ static void arm_smmu_cmdq_batch_add(stru
- {
- 	int index;
+diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
+index 8b53997675e75..73d570a172690 100644
+--- a/arch/arm/boot/dts/sam9x60.dtsi
++++ b/arch/arm/boot/dts/sam9x60.dtsi
+@@ -172,7 +172,7 @@
+ 				status = "disabled";
  
-+	if (cmds->num == CMDQ_BATCH_ENTRIES - 1 &&
-+	    (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC)) {
-+		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmds, cmds->num, true);
-+		cmds->num = 0;
-+	}
-+
- 	if (cmds->num == CMDQ_BATCH_ENTRIES) {
- 		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmds, cmds->num, false);
- 		cmds->num = 0;
-@@ -3431,6 +3437,7 @@ static int arm_smmu_device_reset(struct
+ 				uart4: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <13 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -240,7 +240,7 @@
+ 				status = "disabled";
  
- #define IIDR_IMPLEMENTER_ARM		0x43b
- #define IIDR_PRODUCTID_ARM_MMU_600	0x483
-+#define IIDR_PRODUCTID_ARM_MMU_700	0x487
+ 				uart5: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					atmel,usart-mode = <AT91_USART_MODE_SERIAL>;
+ 					interrupts = <14 IRQ_TYPE_LEVEL_HIGH 7>;
+@@ -370,7 +370,7 @@
+ 				status = "disabled";
  
- static void arm_smmu_device_iidr_probe(struct arm_smmu_device *smmu)
- {
-@@ -3451,6 +3458,11 @@ static void arm_smmu_device_iidr_probe(s
- 			if (variant == 0 && revision <= 2)
- 				smmu->features &= ~ARM_SMMU_FEAT_SEV;
- 			break;
-+		case IIDR_PRODUCTID_ARM_MMU_700:
-+			/* Arm erratum 2812531 */
-+			smmu->features &= ~ARM_SMMU_FEAT_BTM;
-+			smmu->options |= ARM_SMMU_OPT_CMDQ_FORCE_SYNC;
-+			break;
- 		}
- 		break;
- 	}
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -650,6 +650,7 @@ struct arm_smmu_device {
- #define ARM_SMMU_OPT_SKIP_PREFETCH	(1 << 0)
- #define ARM_SMMU_OPT_PAGE0_REGS_ONLY	(1 << 1)
- #define ARM_SMMU_OPT_MSIPOLL		(1 << 2)
-+#define ARM_SMMU_OPT_CMDQ_FORCE_SYNC	(1 << 3)
- 	u32				options;
+ 				uart11: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <32 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -419,7 +419,7 @@
+ 				status = "disabled";
  
- 	struct arm_smmu_cmdq		cmdq;
+ 				uart12: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <33 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -576,7 +576,7 @@
+ 				status = "disabled";
+ 
+ 				uart6: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <9 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -625,7 +625,7 @@
+ 				status = "disabled";
+ 
+ 				uart7: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <10 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -674,7 +674,7 @@
+ 				status = "disabled";
+ 
+ 				uart8: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <11 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -723,7 +723,7 @@
+ 				status = "disabled";
+ 
+ 				uart0: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <5 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -791,7 +791,7 @@
+ 				status = "disabled";
+ 
+ 				uart1: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <6 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -859,7 +859,7 @@
+ 				status = "disabled";
+ 
+ 				uart2: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <7 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -927,7 +927,7 @@
+ 				status = "disabled";
+ 
+ 				uart3: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <8 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -1050,7 +1050,7 @@
+ 				status = "disabled";
+ 
+ 				uart9: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <15 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+@@ -1099,7 +1099,7 @@
+ 				status = "disabled";
+ 
+ 				uart10: serial@200 {
+-					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
++					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
+ 					reg = <0x200 0x200>;
+ 					interrupts = <16 IRQ_TYPE_LEVEL_HIGH 7>;
+ 					dmas = <&dma0
+-- 
+2.40.1
+
 
 
