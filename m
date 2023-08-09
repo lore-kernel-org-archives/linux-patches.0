@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ED517AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BBFC433C7;
-	Wed,  9 Aug 2023 11:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013E517AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788C9C433C8;
+	Wed,  9 Aug 2023 11:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581303;
-	bh=lhAByeL4+rirM/cyv6Jo8yjGIYIEqS7+yGGjKizxJJ0=;
+	s=korg; t=1691581305;
+	bh=Vy8WefdgAvU3qw8ZNPVtR8xeNx+NI6DyqCkj9O1bTFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z13TwdM3HEOHEgXaWvbpKs92A+XOsMg7A1PXF8T9zCQOAe1OJlBMM9w4YcgnE47Db
-	 0MOK+HE+ksboKPA6VAxk78USzkE8cSbzY1JMOw0iCSJ0Zl/wlWiZCbapDPhEcmyiEr
-	 z/lsQJmmmgCAkmacmr62p7HQbpxGnT/Bf1G5V8iQ=
+	b=LVSG+atSTUiUn4inApkvISAPKA8HT3VY44J1kqxXtOp3dZJRNnSZvI6sIocKbGKpl
+	 l7pMBqDd41CdahePZykqkQ8jsxYYbcPDGJvn8rL8jT7xJa10ngFZP8tqYKB2qpvHoU
+	 RR2IxPAzYJg91YlHfmn5EmDmJLDG5OFAQd1GvOhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 176/201] file: reinstate f_pos locking optimization for regular files
-Date: Wed,  9 Aug 2023 12:42:58 +0200
-Message-ID: <20230809103649.641898484@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 150/201] net: dcb: choose correct policy to parse DCB_ATTR_BCN
+Date: Wed,  9 Aug 2023 12:42:32 +0200
+Message-ID: <20230809103648.733993699@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,64 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 797964253d358cf8d705614dda394dbe30120223 upstream.
+[ Upstream commit 31d49ba033095f6e8158c60f69714a500922e0c3 ]
 
-In commit 20ea1e7d13c1 ("file: always lock position for
-FMODE_ATOMIC_POS") we ended up always taking the file pos lock, because
-pidfd_getfd() could get a reference to the file even when it didn't have
-an elevated file count due to threading of other sharing cases.
+The dcbnl_bcn_setcfg uses erroneous policy to parse tb[DCB_ATTR_BCN],
+which is introduced in commit 859ee3c43812 ("DCB: Add support for DCB
+BCN"). Please see the comment in below code
 
-But Mateusz Guzik reports that the extra locking is actually measurable,
-so let's re-introduce the optimization, and only force the locking for
-directory traversal.
+static int dcbnl_bcn_setcfg(...)
+{
+  ...
+  ret = nla_parse_nested_deprecated(..., dcbnl_pfc_up_nest, .. )
+  // !!! dcbnl_pfc_up_nest for attributes
+  //  DCB_PFC_UP_ATTR_0 to DCB_PFC_UP_ATTR_ALL in enum dcbnl_pfc_up_attrs
+  ...
+  for (i = DCB_BCN_ATTR_RP_0; i <= DCB_BCN_ATTR_RP_7; i++) {
+  // !!! DCB_BCN_ATTR_RP_0 to DCB_BCN_ATTR_RP_7 in enum dcbnl_bcn_attrs
+    ...
+    value_byte = nla_get_u8(data[i]);
+    ...
+  }
+  ...
+  for (i = DCB_BCN_ATTR_BCNA_0; i <= DCB_BCN_ATTR_RI; i++) {
+  // !!! DCB_BCN_ATTR_BCNA_0 to DCB_BCN_ATTR_RI in enum dcbnl_bcn_attrs
+  ...
+    value_int = nla_get_u32(data[i]);
+  ...
+  }
+  ...
+}
 
-Directories need the lock for correctness reasons, while regular files
-only need it for "POSIX semantics".  Since pidfd_getfd() is about
-debuggers etc special things that are _way_ outside of POSIX, we can
-relax the rules for that case.
+That is, the nla_parse_nested_deprecated uses dcbnl_pfc_up_nest
+attributes to parse nlattr defined in dcbnl_pfc_up_attrs. But the
+following access code fetch each nlattr as dcbnl_bcn_attrs attributes.
+By looking up the associated nla_policy for dcbnl_bcn_attrs. We can find
+the beginning part of these two policies are "same".
 
-Reported-by: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/linux-fsdevel/20230803095311.ijpvhx3fyrbkasul@f/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+static const struct nla_policy dcbnl_pfc_up_nest[...] = {
+        [DCB_PFC_UP_ATTR_0]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_1]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_2]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_3]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_4]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_5]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_6]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_7]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_ALL] = {.type = NLA_FLAG},
+};
+
+static const struct nla_policy dcbnl_bcn_nest[...] = {
+        [DCB_BCN_ATTR_RP_0]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_1]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_2]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_3]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_4]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_5]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_6]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_7]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_ALL]       = {.type = NLA_FLAG},
+        // from here is somewhat different
+        [DCB_BCN_ATTR_BCNA_0]       = {.type = NLA_U32},
+        ...
+        [DCB_BCN_ATTR_ALL]          = {.type = NLA_FLAG},
+};
+
+Therefore, the current code is buggy and this
+nla_parse_nested_deprecated could overflow the dcbnl_pfc_up_nest and use
+the adjacent nla_policy to parse attributes from DCB_BCN_ATTR_BCNA_0.
+
+Hence use the correct policy dcbnl_bcn_nest to parse the nested
+tb[DCB_ATTR_BCN] TLV.
+
+Fixes: 859ee3c43812 ("DCB: Add support for DCB BCN")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230801013248.87240-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ net/dcb/dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1007,12 +1007,28 @@ unsigned long __fdget_raw(unsigned int f
- 	return __fget_light(fd, 0);
- }
+diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
+index 2535d3dfb92c8..c0fb70936ca17 100644
+--- a/net/dcb/dcbnl.c
++++ b/net/dcb/dcbnl.c
+@@ -946,7 +946,7 @@ static int dcbnl_bcn_setcfg(struct net_device *netdev, struct nlmsghdr *nlh,
+ 		return -EOPNOTSUPP;
  
-+/*
-+ * Try to avoid f_pos locking. We only need it if the
-+ * file is marked for FMODE_ATOMIC_POS, and it can be
-+ * accessed multiple ways.
-+ *
-+ * Always do it for directories, because pidfd_getfd()
-+ * can make a file accessible even if it otherwise would
-+ * not be, and for directories this is a correctness
-+ * issue, not a "POSIX requirement".
-+ */
-+static inline bool file_needs_f_pos_lock(struct file *file)
-+{
-+	return (file->f_mode & FMODE_ATOMIC_POS) &&
-+		(file_count(file) > 1 || S_ISDIR(file_inode(file)->i_mode));
-+}
-+
- unsigned long __fdget_pos(unsigned int fd)
- {
- 	unsigned long v = __fdget(fd);
- 	struct file *file = (struct file *)(v & ~3);
- 
--	if (file && (file->f_mode & FMODE_ATOMIC_POS)) {
-+	if (file && file_needs_f_pos_lock(file)) {
- 		v |= FDPUT_POS_UNLOCK;
- 		mutex_lock(&file->f_pos_lock);
- 	}
+ 	ret = nla_parse_nested_deprecated(data, DCB_BCN_ATTR_MAX,
+-					  tb[DCB_ATTR_BCN], dcbnl_pfc_up_nest,
++					  tb[DCB_ATTR_BCN], dcbnl_bcn_nest,
+ 					  NULL);
+ 	if (ret)
+ 		return ret;
+-- 
+2.40.1
+
 
 
