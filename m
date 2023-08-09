@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA0E4680
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38006C433C9;
-	Wed,  9 Aug 2023 11:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8594B4680
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A43CC433CB;
+	Wed,  9 Aug 2023 11:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581342;
-	bh=0Rupoy606xFUvlKDC53dfEa4XJfVfhbgWbRcaTlSyEY=;
+	s=korg; t=1691581345;
+	bh=yM3h/ytfl8HFqQOGWnjQj2o2cTF1i5EP/kxziaCNv5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0q39lO2amCFexG4ly7bSX9nlL/72eXOTpFgJkFVbl6oLvmmyETVAx7BC4zViWELz4
-	 cSlFQQWlb3ZyP+/rOw9HxYkhBUrIN1Amdxa9DMqaaBa9bXe6aSS7LKu1vUCMCME9Zs
-	 hBLv8/DwpUhnLmcskclpf5iqJtyVBrVfzEWXKhV0=
+	b=FYdD7e03xllzBEBFC6dRlWp6Ftnlo6ipad5IW2aQGwTK5G0amW7868tphsjnXrvSx
+	 l3y/lCOzQj+Y8r0SWTfF750eUzu8awFs+80pdJPWnwT86Tsj93xKiGz3oGqqplMryx
+	 fjl6lqG43kGZIwVnjcSITvN6U6FJ6pygi395+gZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hyeongseok Kim <hyeongseok@gmail.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/201] PM: sleep: wakeirq: fix wake irq arming
-Date: Wed,  9 Aug 2023 12:43:14 +0200
-Message-ID: <20230809103650.257248160@linuxfoundation.org>
+Subject: [PATCH 5.10 193/201] exfat: speed up iterate/lookup by fixing start point of traversing cluster chain
+Date: Wed,  9 Aug 2023 12:43:15 +0200
+Message-ID: <20230809103650.303814918@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,93 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Hyeongseok Kim <hyeongseok@gmail.com>
 
-[ Upstream commit 8527beb12087238d4387607597b4020bc393c4b4 ]
+[ Upstream commit c6e2f52e3051e8d898d38840104638ca8bbcdec2 ]
 
-The decision whether to enable a wake irq during suspend can not be done
-based on the runtime PM state directly as a driver may use wake irqs
-without implementing runtime PM. Such drivers specifically leave the
-state set to the default 'suspended' and the wake irq is thus never
-enabled at suspend.
+When directory iterate and lookup is called, there's a buggy rewinding
+of start point for traversing cluster chain to the parent directory
+entry's first cluster. This caused repeated cluster chain traversing
+from the first entry of the parent directory that would show worse
+performance if huge amounts of files exist under the parent directory.
+Fix not to rewind, make continue from currently referenced cluster and
+dir entry.
 
-Add a new wake irq flag to track whether a dedicated wake irq has been
-enabled at runtime suspend and therefore must not be enabled at system
-suspend.
+Tested with 50,000 files under single directory / 256GB sdcard,
+with command "time ls -l > /dev/null",
+Before :     0m08.69s real     0m00.27s user     0m05.91s system
+After  :     0m07.01s real     0m00.25s user     0m04.34s system
 
-Note that pm_runtime_enabled() can not be used as runtime PM is always
-disabled during late suspend.
-
-Fixes: 69728051f5bf ("PM / wakeirq: Fix unbalanced IRQ enable for wakeirq")
-Cc: 4.16+ <stable@vger.kernel.org> # 4.16+
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Hyeongseok Kim <hyeongseok@gmail.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
+Stable-dep-of: d42334578eba ("exfat: check if filename entries exceeds max filename length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/power.h   |  1 +
- drivers/base/power/wakeirq.c | 12 ++++++++----
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ fs/exfat/dir.c      | 19 +++++++++++++------
+ fs/exfat/exfat_fs.h |  2 +-
+ fs/exfat/namei.c    |  9 ++++++++-
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/base/power/power.h b/drivers/base/power/power.h
-index 0eb7f02b3ad59..922ed457db191 100644
---- a/drivers/base/power/power.h
-+++ b/drivers/base/power/power.h
-@@ -29,6 +29,7 @@ extern u64 pm_runtime_active_time(struct device *dev);
- #define WAKE_IRQ_DEDICATED_MASK		(WAKE_IRQ_DEDICATED_ALLOCATED | \
- 					 WAKE_IRQ_DEDICATED_MANAGED | \
- 					 WAKE_IRQ_DEDICATED_REVERSE)
-+#define WAKE_IRQ_DEDICATED_ENABLED	BIT(3)
+diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
+index 093f79ae3c671..0e1886f9a6241 100644
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -148,7 +148,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 					0);
  
- struct wake_irq {
- 	struct device *dev;
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index a6d53f0173d35..aea690c64e394 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -317,8 +317,10 @@ void dev_pm_enable_wake_irq_check(struct device *dev,
- 	return;
+ 			*uni_name.name = 0x0;
+-			exfat_get_uniname_from_ext_entry(sb, &dir, dentry,
++			exfat_get_uniname_from_ext_entry(sb, &clu, i,
+ 				uni_name.name);
+ 			exfat_utf16_to_nls(sb, &uni_name,
+ 				dir_entry->namebuf.lfn,
+@@ -902,14 +902,19 @@ enum {
+ };
  
- enable:
--	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
-+	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE)) {
- 		enable_irq(wirq->irq);
-+		wirq->status |= WAKE_IRQ_DEDICATED_ENABLED;
-+	}
- }
+ /*
+- * return values:
+- *   >= 0	: return dir entiry position with the name in dir
+- *   -ENOENT	: entry with the name does not exist
+- *   -EIO	: I/O error
++ * @ei:         inode info of parent directory
++ * @p_dir:      directory structure of parent directory
++ * @num_entries:entry size of p_uniname
++ * @hint_opt:   If p_uniname is found, filled with optimized dir/entry
++ *              for traversing cluster chain.
++ * @return:
++ *   >= 0:      file directory entry position where the name exists
++ *   -ENOENT:   entry with the name does not exist
++ *   -EIO:      I/O error
+  */
+ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
+ 		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
+-		int num_entries, unsigned int type)
++		int num_entries, unsigned int type, struct exfat_hint *hint_opt)
+ {
+ 	int i, rewind = 0, dentry = 0, end_eidx = 0, num_ext = 0, len;
+ 	int order, step, name_len = 0;
+@@ -986,6 +991,8 @@ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
  
- /**
-@@ -339,8 +341,10 @@ void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable)
- 	if (cond_disable && (wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
- 		return;
+ 			if (entry_type == TYPE_FILE || entry_type == TYPE_DIR) {
+ 				step = DIRENT_STEP_FILE;
++				hint_opt->clu = clu.dir;
++				hint_opt->eidx = i;
+ 				if (type == TYPE_ALL || type == entry_type) {
+ 					num_ext = ep->dentry.file.num_ext;
+ 					step = DIRENT_STEP_STRM;
+diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
+index 07b09af57436f..436683da2515c 100644
+--- a/fs/exfat/exfat_fs.h
++++ b/fs/exfat/exfat_fs.h
+@@ -458,7 +458,7 @@ void exfat_update_dir_chksum_with_entry_set(struct exfat_entry_set_cache *es);
+ int exfat_calc_num_entries(struct exfat_uni_name *p_uniname);
+ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
+ 		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
+-		int num_entries, unsigned int type);
++		int num_entries, unsigned int type, struct exfat_hint *hint_opt);
+ int exfat_alloc_new_dir(struct inode *inode, struct exfat_chain *clu);
+ int exfat_find_location(struct super_block *sb, struct exfat_chain *p_dir,
+ 		int entry, sector_t *sector, int *offset);
+diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
+index 1382d816912c8..bd00afc5e4c16 100644
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -596,6 +596,8 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
+ 	struct exfat_inode_info *ei = EXFAT_I(dir);
+ 	struct exfat_dentry *ep, *ep2;
+ 	struct exfat_entry_set_cache *es;
++	/* for optimized dir & entry to prevent long traverse of cluster chain */
++	struct exfat_hint hint_opt;
  
--	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED)
-+	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED) {
-+		wirq->status &= ~WAKE_IRQ_DEDICATED_ENABLED;
- 		disable_irq_nosync(wirq->irq);
-+	}
- }
+ 	if (qname->len == 0)
+ 		return -ENOENT;
+@@ -619,7 +621,7 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
  
- /**
-@@ -379,7 +383,7 @@ void dev_pm_arm_wake_irq(struct wake_irq *wirq)
+ 	/* search the file name for directories */
+ 	dentry = exfat_find_dir_entry(sb, ei, &cdir, &uni_name,
+-			num_entries, TYPE_ALL);
++			num_entries, TYPE_ALL, &hint_opt);
  
- 	if (device_may_wakeup(wirq->dev)) {
- 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
--		    !pm_runtime_status_suspended(wirq->dev))
-+		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
- 			enable_irq(wirq->irq);
+ 	if (dentry < 0)
+ 		return dentry; /* -error value */
+@@ -628,6 +630,11 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
+ 	info->entry = dentry;
+ 	info->num_subdirs = 0;
  
- 		enable_irq_wake(wirq->irq);
-@@ -402,7 +406,7 @@ void dev_pm_disarm_wake_irq(struct wake_irq *wirq)
- 		disable_irq_wake(wirq->irq);
- 
- 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
--		    !pm_runtime_status_suspended(wirq->dev))
-+		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
- 			disable_irq_nosync(wirq->irq);
- 	}
- }
++	/* adjust cdir to the optimized value */
++	cdir.dir = hint_opt.clu;
++	if (cdir.flags & ALLOC_NO_FAT_CHAIN)
++		cdir.size -= dentry / sbi->dentries_per_clu;
++	dentry = hint_opt.eidx;
+ 	es = exfat_get_dentry_set(sb, &cdir, dentry, ES_2_ENTRIES);
+ 	if (!es)
+ 		return -EIO;
 -- 
 2.40.1
 
