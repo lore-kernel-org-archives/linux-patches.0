@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41CE171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6696BC433C8;
-	Wed,  9 Aug 2023 11:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BD1171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47787C433C7;
+	Wed,  9 Aug 2023 11:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578921;
-	bh=0vIWfL4YBb/DOhwa7H1jBUpkwOSYe1H/k7bcsN3MC5I=;
+	s=korg; t=1691578924;
+	bh=aR2qafydWa2RUIZDD16zu3uN114bm7NQb3ViPEPiPNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=piZTD1It4UTNqwuF6HPCPgEQ1lhhH6lWOHS6oWpFUPZa8/sb7T8wJ1cYzyN2HwaWk
-	 IpdVQhc7PlwZsemDHG8xQZoN3wktQY/SwPSCkdHjf328OysB6+ztaWAqeTw8LXci7U
-	 hsavFfCWcYFH1w/qJHkL6KWmbRh8qSbV63+qWrMQ=
+	b=bCrwK4vi90NfSOI8yZpHloCL2vMijnYJtMbu33Mwl4LLsv4jAsA0ymR4Z0JHTmPOO
+	 3SRsSmxQn9GJSIRdWaAcs5pD5Mu7iG4S0HeDrFIBJJ1cKn+uyssaDiviUbDs0rQ5QD
+	 6vGjLRrtUCmxzQ/SN+kT3nZvPuNxpKwGXu9I8FQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 4.14 003/204] x86/smp: Use dedicated cache-line for mwait_play_dead()
-Date: Wed,  9 Aug 2023 12:39:01 +0200
-Message-ID: <20230809103642.671195573@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.14 004/204] fbdev: imsttfb: Fix use after free bug in imsttfb_probe
+Date: Wed,  9 Aug 2023 12:39:02 +0200
+Message-ID: <20230809103642.700560020@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,91 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
+commit c75f5a55061091030a13fef71b9995b89bc86213 upstream.
 
-Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
-obvious choice as all what is needed is a cache line which is not written
-by other CPUs.
+A use-after-free bug may occur if init_imstt invokes framebuffer_release
+and free the info ptr. The caller, imsttfb_probe didn't notice that and
+still keep the ptr as private data in pdev.
 
-But there is a use case where a "dead" CPU needs to be brought out of
-MWAIT: kexec().
+If we remove the driver which will call imsttfb_remove to make cleanup,
+UAF happens.
 
-This is required as kexec() can overwrite text, pagetables, stacks and the
-monitored cacheline of the original kernel. The latter causes MWAIT to
-resume execution which obviously causes havoc on the kexec kernel which
-results usually in triple faults.
+Fix it by return error code if bad case happens in init_imstt.
 
-Use a dedicated per CPU storage to prepare for that.
-
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ashok Raj <ashok.raj@intel.com>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/video/fbdev/imsttfb.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -94,6 +94,17 @@ DEFINE_PER_CPU_READ_MOSTLY(cpumask_var_t
- DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
- EXPORT_PER_CPU_SYMBOL(cpu_info);
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1348,7 +1348,7 @@ static struct fb_ops imsttfb_ops = {
+ 	.fb_ioctl 	= imsttfb_ioctl,
+ };
  
-+struct mwait_cpu_dead {
-+	unsigned int	control;
-+	unsigned int	status;
-+};
-+
-+/*
-+ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
-+ * that it's unlikely to be touched by other CPUs.
-+ */
-+static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
-+
- /* Logical package management. We might want to allocate that dynamically */
- static int *physical_to_logical_pkg __read_mostly;
- static unsigned long *physical_package_map __read_mostly;;
-@@ -1638,10 +1649,10 @@ static bool wakeup_cpu0(void)
-  */
- static inline void mwait_play_dead(void)
+-static void init_imstt(struct fb_info *info)
++static int init_imstt(struct fb_info *info)
  {
-+	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
- 	unsigned int eax, ebx, ecx, edx;
- 	unsigned int highest_cstate = 0;
- 	unsigned int highest_subcstate = 0;
--	void *mwait_ptr;
- 	int i;
- 
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-@@ -1675,13 +1686,6 @@ static inline void mwait_play_dead(void)
- 			(highest_subcstate - 1);
+ 	struct imstt_par *par = info->par;
+ 	__u32 i, tmp, *ip, *end;
+@@ -1420,7 +1420,7 @@ static void init_imstt(struct fb_info *i
+ 	    || !(compute_imstt_regvals(par, info->var.xres, info->var.yres))) {
+ 		printk("imsttfb: %ux%ux%u not supported\n", info->var.xres, info->var.yres, info->var.bits_per_pixel);
+ 		framebuffer_release(info);
+-		return;
++		return -ENODEV;
  	}
  
--	/*
--	 * This should be a memory location in a cache line which is
--	 * unlikely to be touched by other processors.  The actual
--	 * content is immaterial as it is not actually modified in any way.
--	 */
--	mwait_ptr = &current_thread_info()->flags;
--
- 	wbinvd();
+ 	sprintf(info->fix.id, "IMS TT (%s)", par->ramdac == IBM ? "IBM" : "TVP");
+@@ -1460,12 +1460,13 @@ static void init_imstt(struct fb_info *i
+ 	if (register_framebuffer(info) < 0) {
+ 		fb_dealloc_cmap(&info->cmap);
+ 		framebuffer_release(info);
+-		return;
++		return -ENODEV;
+ 	}
  
- 	while (1) {
-@@ -1693,9 +1697,9 @@ static inline void mwait_play_dead(void)
- 		 * case where we return around the loop.
- 		 */
- 		mb();
--		clflush(mwait_ptr);
-+		clflush(md);
- 		mb();
--		__monitor(mwait_ptr, 0, 0);
-+		__monitor(md, 0, 0);
- 		mb();
- 		__mwait(eax, 0);
- 		/*
+ 	tmp = (read_reg_le32(par->dc_regs, SSTATUS) & 0x0f00) >> 8;
+ 	fb_info(info, "%s frame buffer; %uMB vram; chip version %u\n",
+ 		info->fix.id, info->fix.smem_len >> 20, tmp);
++	return 0;
+ }
+ 
+ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+@@ -1474,7 +1475,8 @@ static int imsttfb_probe(struct pci_dev
+ 	struct imstt_par *par;
+ 	struct fb_info *info;
+ 	struct device_node *dp;
+-	
++	int ret;
++
+ 	dp = pci_device_to_OF_node(pdev);
+ 	if(dp)
+ 		printk(KERN_INFO "%s: OF name %s\n",__func__, dp->name);
+@@ -1525,10 +1527,10 @@ static int imsttfb_probe(struct pci_dev
+ 	par->cmap_regs_phys = addr + 0x840000;
+ 	par->cmap_regs = (__u8 *)ioremap(addr + 0x840000, 0x1000);
+ 	info->pseudo_palette = par->palette;
+-	init_imstt(info);
+-
+-	pci_set_drvdata(pdev, info);
+-	return 0;
++	ret = init_imstt(info);
++	if (!ret)
++		pci_set_drvdata(pdev, info);
++	return ret;
+ }
+ 
+ static void imsttfb_remove(struct pci_dev *pdev)
 
 
