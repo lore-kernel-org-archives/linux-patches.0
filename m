@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC5C14286
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3200FC433C7;
-	Wed,  9 Aug 2023 10:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7E314A8D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0154C433C7;
+	Wed,  9 Aug 2023 10:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577841;
-	bh=+lFRoqUltJpmdAn9VZ07BAf6NuATGqxd7JhU+g1DU+k=;
+	s=korg; t=1691577844;
+	bh=VBuhYHtB02KKxwHx70ljziQTH5+PePzK7p1OymMm1oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4CjTNFS3ez1lKUK9rvSCcCCOo+2IRasBrnnF1z1bmCkmEfxYVs2dDSku4S3KCTxL
-	 8IgGyBUzyQphaBliEDYA3KBnSKU28HAODGEDaxtgWtBwyus5HYzeiO5fnrTZ1d89oF
-	 3ypNcWmEwJ73uIgyDGoALxNNybydNfH7fT9qsSt4=
+	b=nvS9JrRDTOgsizjFTPwGQNtAu75NiF0mHzaOsfQIftt5o1mdLdJITmBHZNHDRHOFa
+	 Rzy3gPanKTstcgFoOT5YTO3Zu2BpYLRgVm0v7gvi4JMCuKZXMWelmXeT/qqom5yuNd
+	 KQBPnMdRZrNjjQacuWikF9eJDGcKxCv/jVGgp1KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 014/165] lib/bitmap: workaround const_eval test build failure
-Date: Wed,  9 Aug 2023 12:39:05 +0200
-Message-ID: <20230809103643.239137468@linuxfoundation.org>
+Subject: [PATCH 6.4 015/165] ARM: dts: nxp/imx: limit sk-imx53 supported frequencies
+Date: Wed,  9 Aug 2023 12:39:06 +0200
+Message-ID: <20230809103643.276652094@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -38,103 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yury Norov <yury.norov@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 2356d198d2b4ddec24efea98271cb3be230bc787 ]
+[ Upstream commit c486762fb17c99fd642beea3e1e4744d093c262a ]
 
-When building with Clang, and when KASAN and GCOV_PROFILE_ALL are both
-enabled, the test fails to build [1]:
+The SK-IMX53 board, bearing i.MX536A CPU, is not stable when running at
+1.2 GHz (default iMX53 maximum). The SoC is only rated up to 800 MHz.
+Disable 1.2 GHz and 1 GHz frequencies.
 
->> lib/test_bitmap.c:920:2: error: call to '__compiletime_assert_239' declared with 'error' attribute: BUILD_BUG_ON failed: !__builtin_constant_p(res)
-           BUILD_BUG_ON(!__builtin_constant_p(res));
-           ^
-   include/linux/build_bug.h:50:2: note: expanded from macro 'BUILD_BUG_ON'
-           BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
-           ^
-   include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
-   #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-                                       ^
-   include/linux/compiler_types.h:352:2: note: expanded from macro 'compiletime_assert'
-           _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-           ^
-   include/linux/compiler_types.h:340:2: note: expanded from macro '_compiletime_assert'
-           __compiletime_assert(condition, msg, prefix, suffix)
-           ^
-   include/linux/compiler_types.h:333:4: note: expanded from macro '__compiletime_assert'
-                           prefix ## suffix();                             \
-                           ^
-   <scratch space>:185:1: note: expanded from here
-   __compiletime_assert_239
-
-Originally it was attributed to s390, which now looks seemingly wrong. The
-issue is not related to bitmap code itself, but it breaks build for a given
-configuration.
-
-Disabling the const_eval test under that config may potentially hide other
-bugs. Instead, workaround it by disabling GCOV for the test_bitmap unless
-the compiler will get fixed.
-
-[1] https://github.com/ClangBuiltLinux/linux/issues/1874
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307171254.yFcH97ej-lkp@intel.com/
-Fixes: dc34d5036692 ("lib: test_bitmap: add compile-time optimization/evaluations assertions")
-Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Fixes: 0b8576d8440a ("ARM: dts: imx: Add support for SK-iMX53 board")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Makefile      | 6 ++++++
- lib/test_bitmap.c | 8 ++++----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/imx53-sk-imx53.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/lib/Makefile b/lib/Makefile
-index 876fcdeae34ec..05d8ec332baac 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -82,7 +82,13 @@ obj-$(CONFIG_TEST_STATIC_KEYS) += test_static_key_base.o
- obj-$(CONFIG_TEST_DYNAMIC_DEBUG) += test_dynamic_debug.o
- obj-$(CONFIG_TEST_PRINTF) += test_printf.o
- obj-$(CONFIG_TEST_SCANF) += test_scanf.o
-+
- obj-$(CONFIG_TEST_BITMAP) += test_bitmap.o
-+ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_KASAN),yy)
-+# FIXME: Clang breaks test_bitmap_const_eval when KASAN and GCOV are enabled
-+GCOV_PROFILE_test_bitmap.o := n
-+endif
-+
- obj-$(CONFIG_TEST_UUID) += test_uuid.o
- obj-$(CONFIG_TEST_XARRAY) += test_xarray.o
- obj-$(CONFIG_TEST_MAPLE_TREE) += test_maple_tree.o
-diff --git a/lib/test_bitmap.c b/lib/test_bitmap.c
-index a8005ad3bd589..37a9108c4f588 100644
---- a/lib/test_bitmap.c
-+++ b/lib/test_bitmap.c
-@@ -1149,6 +1149,10 @@ static void __init test_bitmap_print_buf(void)
- 	}
- }
+diff --git a/arch/arm/boot/dts/imx53-sk-imx53.dts b/arch/arm/boot/dts/imx53-sk-imx53.dts
+index 103e73176e47d..1a00d290092ad 100644
+--- a/arch/arm/boot/dts/imx53-sk-imx53.dts
++++ b/arch/arm/boot/dts/imx53-sk-imx53.dts
+@@ -60,6 +60,16 @@
+ 	status = "okay";
+ };
  
-+/*
-+ * FIXME: Clang breaks compile-time evaluations when KASAN and GCOV are enabled.
-+ * To workaround it, GCOV is force-disabled in Makefile for this configuration.
-+ */
- static void __init test_bitmap_const_eval(void)
- {
- 	DECLARE_BITMAP(bitmap, BITS_PER_LONG);
-@@ -1174,11 +1178,7 @@ static void __init test_bitmap_const_eval(void)
- 	 * the compiler is fixed.
- 	 */
- 	bitmap_clear(bitmap, 0, BITS_PER_LONG);
--#if defined(__s390__) && defined(__clang__)
--	if (!const_test_bit(7, bitmap))
--#else
- 	if (!test_bit(7, bitmap))
--#endif
- 		bitmap_set(bitmap, 5, 2);
- 
- 	/* Equals to `unsigned long bitopvar = BIT(20)` */
++&cpu0 {
++	/* CPU rated to 800 MHz, not the default 1.2GHz. */
++	operating-points = <
++		/* kHz   uV */
++		166666  850000
++		400000  900000
++		800000  1050000
++	>;
++};
++
+ &ecspi1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_ecspi1>;
 -- 
 2.40.1
 
