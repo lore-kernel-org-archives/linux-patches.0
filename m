@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17C517AA6;
-	Wed,  9 Aug 2023 11:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4D2C433C7;
-	Wed,  9 Aug 2023 11:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE18117AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A5EC433CB;
+	Wed,  9 Aug 2023 11:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579554;
-	bh=EooU9pkdh78sepSZ+YKbrwYOxqe0XEKeQ1A7NibNZ6g=;
+	s=korg; t=1691579557;
+	bh=sUg5CXry5bEjhKRRgTCFUx7/5Eb63FZ+581co+x/pbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9feNP2uvndRXRpmTNU2pU5gN2uUWXiOppMLGHGUvxCAGgw9qfGpMR1DmdVbadCSG
-	 BIKcOTkFKC//QdEzVb7IA7MqPZGTOytFKxJjcp1N47YUOTYzUG5MxoNJbJbLd6qMwh
-	 BMT8nyjEeTAkpFAYHT4s/x+QdlnTYplVKEFHGT5k=
+	b=SoSFobW1TGk80P+QGKS8mhNlfNbS9cix0RCEVRbv3YAL0Sbal9boOypn0NgVy4glU
+	 bd7irTFQmVEhkU1Ve/L0nrrl4ext41HfLoFeTEFCg+z/r9bSeuUUpbA1wMcqo1d21I
+	 crO8ICP5s1l3Ve5xp0ZOzt6IUvKLygxF2UR2IrOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@codeaurora.org>,
-	"David S. Miller" <davem@davemloft.net>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Fox Chen <mhchen@golf.ccl.itri.org.tw>,
-	de Melo <acme@conectiva.com.br>,
-	Gustavo Niemeyer <niemeyer@conectiva.com>,
-	linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Lee Jones <lee.jones@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 032/323] wl3501_cs: Fix misspelling and provide missing documentation
-Date: Wed,  9 Aug 2023 12:37:50 +0200
-Message-ID: <20230809103659.588179963@linuxfoundation.org>
+Subject: [PATCH 4.19 033/323] net: create netdev->dev_addr assignment helpers
+Date: Wed,  9 Aug 2023 12:37:51 +0200
+Message-ID: <20230809103659.627722165@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -42,62 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee.jones@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8b8a6f8c3b50193d161c598a6784e721128d6dc3 ]
+[ Upstream commit 48eab831ae8b9f7002a533fa4235eed63ea1f1a3 ]
 
-Fixes the following W=1 kernel build warning(s):
+Recent work on converting address list to a tree made it obvious
+we need an abstraction around writing netdev->dev_addr. Without
+such abstraction updating the main device address is invisible
+to the core.
 
- In file included from drivers/net/wireless/wl3501_cs.c:57:
- drivers/net/wireless/wl3501_cs.c:143: warning: Function parameter or member 'reg_domain' not described in 'iw_valid_channel'
- drivers/net/wireless/wl3501_cs.c:143: warning: Excess function parameter 'reg_comain' description in 'iw_valid_channel'
- drivers/net/wireless/wl3501_cs.c:469: warning: Function parameter or member 'data' not described in 'wl3501_send_pkt'
- drivers/net/wireless/wl3501_cs.c:469: warning: Function parameter or member 'len' not described in 'wl3501_send_pkt'
+Introduce a number of helpers which for now just wrap memcpy()
+but in the future can make necessary changes to the address
+tree.
 
-Cc: Kalle Valo <kvalo@codeaurora.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Fox Chen <mhchen@golf.ccl.itri.org.tw>
-Cc: de Melo <acme@conectiva.com.br>
-Cc: Gustavo Niemeyer <niemeyer@conectiva.com>
-Cc: linux-wireless@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-Link: https://lore.kernel.org/r/20201102112410.1049272-25-lee.jones@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 391af06a02e7 ("wifi: wl3501_cs: Fix an error handling path in wl3501_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ include/linux/etherdevice.h | 12 ++++++++++++
+ include/linux/netdevice.h   | 18 ++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index 5b2383270627c..c6d1a320e244f 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -133,7 +133,7 @@ static const struct {
+diff --git a/include/linux/etherdevice.h b/include/linux/etherdevice.h
+index e1e9eff096d05..2932a40060c1d 100644
+--- a/include/linux/etherdevice.h
++++ b/include/linux/etherdevice.h
+@@ -291,6 +291,18 @@ static inline void ether_addr_copy(u8 *dst, const u8 *src)
+ #endif
+ }
  
++/**
++ * eth_hw_addr_set - Assign Ethernet address to a net_device
++ * @dev: pointer to net_device structure
++ * @addr: address to assign
++ *
++ * Assign given address to the net_device, addr_assign_type is not changed.
++ */
++static inline void eth_hw_addr_set(struct net_device *dev, const u8 *addr)
++{
++	ether_addr_copy(dev->dev_addr, addr);
++}
++
  /**
-  * iw_valid_channel - validate channel in regulatory domain
-- * @reg_comain: regulatory domain
-+ * @reg_domain: regulatory domain
-  * @channel: channel to validate
-  *
-  * Returns 0 if invalid in the specified regulatory domain, non-zero if valid.
-@@ -457,11 +457,9 @@ static int wl3501_pwr_mgmt(struct wl3501_card *this, int suspend)
- /**
-  * wl3501_send_pkt - Send a packet.
-  * @this: Card
-- *
-- * Send a packet.
-- *
-- * data = Ethernet raw frame.  (e.g. data[0] - data[5] is Dest MAC Addr,
-+ * @data: Ethernet raw frame.  (e.g. data[0] - data[5] is Dest MAC Addr,
-  *                                   data[6] - data[11] is Src MAC Addr)
-+ * @len: Packet length
-  * Ref: IEEE 802.11
-  */
- static int wl3501_send_pkt(struct wl3501_card *this, u8 *data, u16 len)
+  * eth_hw_addr_inherit - Copy dev_addr from another net_device
+  * @dst: pointer to net_device to copy dev_addr to
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 90827d85265b0..7e9df3854420a 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -4079,6 +4079,24 @@ void __hw_addr_unsync_dev(struct netdev_hw_addr_list *list,
+ void __hw_addr_init(struct netdev_hw_addr_list *list);
+ 
+ /* Functions used for device addresses handling */
++static inline void
++__dev_addr_set(struct net_device *dev, const u8 *addr, size_t len)
++{
++	memcpy(dev->dev_addr, addr, len);
++}
++
++static inline void dev_addr_set(struct net_device *dev, const u8 *addr)
++{
++	__dev_addr_set(dev, addr, dev->addr_len);
++}
++
++static inline void
++dev_addr_mod(struct net_device *dev, unsigned int offset,
++	     const u8 *addr, size_t len)
++{
++	memcpy(&dev->dev_addr[offset], addr, len);
++}
++
+ int dev_addr_add(struct net_device *dev, const unsigned char *addr,
+ 		 unsigned char addr_type);
+ int dev_addr_del(struct net_device *dev, const unsigned char *addr,
 -- 
 2.39.2
 
