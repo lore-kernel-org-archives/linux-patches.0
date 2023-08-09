@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440AD17AB5
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F75C433C7;
-	Wed,  9 Aug 2023 11:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FD317AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44099C433C8;
+	Wed,  9 Aug 2023 11:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580695;
-	bh=b4tEXfw2Sego/01f9fZM0X7NLRDSgZJZUJvsMBnhA6E=;
+	s=korg; t=1691580698;
+	bh=RfGcBNLXUatWXN/vvSVumUKQEuFso/aO7NQkKmxoKAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzJl0tpQ74o+ZoGn66ZmOPvinIo4cakdb0/w383+qq4gFkTCEaPZH3GvIo736fK87
-	 tjhyFR7VNiorlodS0e9LkWCq8+B7qC4DkTZctS6HA9CEYefebLppLVIV0BgX5/TI1i
-	 59OgnGDq/6rXoR7m9Yh9OHTsrqIm8gFSqHig6CWc=
+	b=iL3H3ba/MfxaHP4DDs8Yf+TWUbbS7VciaNPOQH4l2jlszUALRuoN3+2naIKVxVBwM
+	 xyJtS6rgl/0aLskh2BkAeysKwleBPLnox9ADkSCfhdZBy4uOUQ2MQOFaahYgTdj1C4
+	 J+6IZh0Ve9IIv86CM8LMTfx5Vs+OGbTlXySw1i6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lion <nnamrec@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 5.4 087/154] net/sched: sch_qfq: account for stab overhead in qfq_enqueue
-Date: Wed,  9 Aug 2023 12:41:58 +0200
-Message-ID: <20230809103639.869268488@linuxfoundation.org>
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 078/154] s390/dasd: fix hanging device after quiesce/resume
+Date: Wed,  9 Aug 2023 12:41:49 +0200
+Message-ID: <20230809103639.574368903@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -39,92 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 3e337087c3b5805fe0b8a46ba622a962880b5d64 upstream.
+commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
 
-Lion says:
--------
-In the QFQ scheduler a similar issue to CVE-2023-31436
-persists.
+Quiesce and resume are functions that tell the DASD driver to stop/resume
+issuing I/Os to a specific DASD.
 
-Consider the following code in net/sched/sch_qfq.c:
+On resume dasd_schedule_block_bh() is called to kick handling of IO
+requests again. This does unfortunately not cover internal requests which
+are used for path verification for example.
 
-static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
-                struct sk_buff **to_free)
-{
-     unsigned int len = qdisc_pkt_len(skb), gso_segs;
+This could lead to a hanging device when a path event or anything else
+that triggers internal requests occurs on a quiesced device.
 
-    // ...
+Fix by also calling dasd_schedule_device_bh() which triggers handling of
+internal requests on resume.
 
-     if (unlikely(cl->agg->lmax < len)) {
-         pr_debug("qfq: increasing maxpkt from %u to %u for class %u",
-              cl->agg->lmax, len, cl->common.classid);
-         err = qfq_change_agg(sch, cl, cl->agg->class_weight, len);
-         if (err) {
-             cl->qstats.drops++;
-             return qdisc_drop(skb, sch, to_free);
-         }
+Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
 
-    // ...
-
-     }
-
-Similarly to CVE-2023-31436, "lmax" is increased without any bounds
-checks according to the packet length "len". Usually this would not
-impose a problem because packet sizes are naturally limited.
-
-This is however not the actual packet length, rather the
-"qdisc_pkt_len(skb)" which might apply size transformations according to
-"struct qdisc_size_table" as created by "qdisc_get_stab()" in
-net/sched/sch_api.c if the TCA_STAB option was set when modifying the qdisc.
-
-A user may choose virtually any size using such a table.
-
-As a result the same issue as in CVE-2023-31436 can occur, allowing heap
-out-of-bounds read / writes in the kmalloc-8192 cache.
--------
-
-We can create the issue with the following commands:
-
-tc qdisc add dev $DEV root handle 1: stab mtu 2048 tsize 512 mpu 0 \
-overhead 999999999 linklayer ethernet qfq
-tc class add dev $DEV parent 1: classid 1:1 htb rate 6mbit burst 15k
-tc filter add dev $DEV parent 1: matchall classid 1:1
-ping -I $DEV 1.1.1.2
-
-This is caused by incorrectly assuming that qdisc_pkt_len() returns a
-length within the QFQ_MIN_LMAX < len < QFQ_MAX_LMAX.
-
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Reported-by: Lion <nnamrec@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/s390/block/dasd_ioctl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -375,8 +375,13 @@ static int qfq_change_agg(struct Qdisc *
- 			   u32 lmax)
- {
- 	struct qfq_sched *q = qdisc_priv(sch);
--	struct qfq_aggregate *new_agg = qfq_find_agg(q, lmax, weight);
-+	struct qfq_aggregate *new_agg;
+--- a/drivers/s390/block/dasd_ioctl.c
++++ b/drivers/s390/block/dasd_ioctl.c
+@@ -137,6 +137,7 @@ static int dasd_ioctl_resume(struct dasd
+ 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
  
-+	/* 'lmax' can range from [QFQ_MIN_LMAX, pktlen + stab overhead] */
-+	if (lmax > (1UL << QFQ_MTU_SHIFT))
-+		return -EINVAL;
-+
-+	new_agg = qfq_find_agg(q, lmax, weight);
- 	if (new_agg == NULL) { /* create new aggregate */
- 		new_agg = kzalloc(sizeof(*new_agg), GFP_ATOMIC);
- 		if (new_agg == NULL)
+ 	dasd_schedule_block_bh(block);
++	dasd_schedule_device_bh(base);
+ 	return 0;
+ }
+ 
 
 
