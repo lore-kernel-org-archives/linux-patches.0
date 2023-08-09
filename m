@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69B91FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FB7C433C7;
-	Wed,  9 Aug 2023 10:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85FE1FA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F26C433C7;
+	Wed,  9 Aug 2023 10:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578178;
-	bh=34IZI6J+9VCtP2DJwMSfurinIzc9SPD1ACQoE9wPedw=;
+	s=korg; t=1691578181;
+	bh=8ubs4RcrbBIeXpq2NzUn76EDHrR9zFkXbvjB4VCqmUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=COmtBdXguGazj3uQWmQsBx5QGVGSSRr6/F2QRDb7UOTUo3hnG775sCJhXsG1GztRW
-	 hnBSbZmow64ESfVoOah3F9el83LJX+aOOpbboaaVaoBtVNeslK9fUnjFcI6HNaor00
-	 w2WLf1BW52auUfWJwMLtCo6z+n3tMTlB4W8YF9nY=
+	b=E45eH7rvCwyCoV9PgOXP4u0KGAGlYkWdHbj15Lrw7yzZrsLUI59lZIkdwtNyv9+o6
+	 hy7Tk9ym0DAYoBUc3D+mOZeLpgPgKrW6iDwqmt8dSu94JzyL3t5cQLmo9Gfib+DwKd
+	 l0Es9/1YrDJ9+1N10HU6w+WUCQyX1RT8UNwZeZMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoming <gaoming20@hihonor.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.4 104/165] exfat: use kvmalloc_array/kvfree instead of kmalloc_array/kfree
-Date: Wed,  9 Aug 2023 12:40:35 +0200
-Message-ID: <20230809103646.179080005@linuxfoundation.org>
+	AVKrasnov@sberdevices.ru,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 095/165] test/vsock: remove vsock_perf executable on `make clean`
+Date: Wed,  9 Aug 2023 12:40:26 +0200
+Message-ID: <20230809103645.891726314@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -34,81 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gaoming <gaoming20@hihonor.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit daf60d6cca26e50d65dac374db92e58de745ad26 upstream.
+[ Upstream commit 3c50c8b240390907c9a33c86d25d850520db6dfa ]
 
-The call stack shown below is a scenario in the Linux 4.19 kernel.
-Allocating memory failed where exfat fs use kmalloc_array due to
-system memory fragmentation, while the u-disk was inserted without
-recognition.
-Devices such as u-disk using the exfat file system are pluggable and
-may be insert into the system at any time.
-However, long-term running systems cannot guarantee the continuity of
-physical memory. Therefore, it's necessary to address this issue.
+We forgot to add vsock_perf to the rm command in the `clean`
+target, so now we have a left over after `make clean` in
+tools/testing/vsock.
 
-Binder:2632_6: page allocation failure: order:4,
- mode:0x6040c0(GFP_KERNEL|__GFP_COMP), nodemask=(null)
-Call trace:
-[242178.097582]  dump_backtrace+0x0/0x4
-[242178.097589]  dump_stack+0xf4/0x134
-[242178.097598]  warn_alloc+0xd8/0x144
-[242178.097603]  __alloc_pages_nodemask+0x1364/0x1384
-[242178.097608]  kmalloc_order+0x2c/0x510
-[242178.097612]  kmalloc_order_trace+0x40/0x16c
-[242178.097618]  __kmalloc+0x360/0x408
-[242178.097624]  load_alloc_bitmap+0x160/0x284
-[242178.097628]  exfat_fill_super+0xa3c/0xe7c
-[242178.097635]  mount_bdev+0x2e8/0x3a0
-[242178.097638]  exfat_fs_mount+0x40/0x50
-[242178.097643]  mount_fs+0x138/0x2e8
-[242178.097649]  vfs_kern_mount+0x90/0x270
-[242178.097655]  do_mount+0x798/0x173c
-[242178.097659]  ksys_mount+0x114/0x1ac
-[242178.097665]  __arm64_sys_mount+0x24/0x34
-[242178.097671]  el0_svc_common+0xb8/0x1b8
-[242178.097676]  el0_svc_handler+0x74/0x90
-[242178.097681]  el0_svc+0x8/0x340
-
-By analyzing the exfat code,we found that continuous physical memory
-is not required here,so kvmalloc_array is used can solve this problem.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: gaoming <gaoming20@hihonor.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8abbffd27ced ("test/vsock: vsock_perf utility")
+Cc: AVKrasnov@sberdevices.ru
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Link: https://lore.kernel.org/r/20230803085454.30897-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/vsock/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -69,7 +69,7 @@ static int exfat_allocate_bitmap(struct
- 	}
- 	sbi->map_sectors = ((need_map_size - 1) >>
- 			(sb->s_blocksize_bits)) + 1;
--	sbi->vol_amap = kmalloc_array(sbi->map_sectors,
-+	sbi->vol_amap = kvmalloc_array(sbi->map_sectors,
- 				sizeof(struct buffer_head *), GFP_KERNEL);
- 	if (!sbi->vol_amap)
- 		return -ENOMEM;
-@@ -84,7 +84,7 @@ static int exfat_allocate_bitmap(struct
- 			while (j < i)
- 				brelse(sbi->vol_amap[j++]);
- 
--			kfree(sbi->vol_amap);
-+			kvfree(sbi->vol_amap);
- 			sbi->vol_amap = NULL;
- 			return -EIO;
- 		}
-@@ -138,7 +138,7 @@ void exfat_free_bitmap(struct exfat_sb_i
- 	for (i = 0; i < sbi->map_sectors; i++)
- 		__brelse(sbi->vol_amap[i]);
- 
--	kfree(sbi->vol_amap);
-+	kvfree(sbi->vol_amap);
- }
- 
- int exfat_set_bitmap(struct inode *inode, unsigned int clu, bool sync)
+diff --git a/tools/testing/vsock/Makefile b/tools/testing/vsock/Makefile
+index 43a254f0e14dd..21a98ba565ab5 100644
+--- a/tools/testing/vsock/Makefile
++++ b/tools/testing/vsock/Makefile
+@@ -8,5 +8,5 @@ vsock_perf: vsock_perf.o
+ CFLAGS += -g -O2 -Werror -Wall -I. -I../../include -I../../../usr/include -Wno-pointer-sign -fno-strict-overflow -fno-strict-aliasing -fno-common -MMD -U_FORTIFY_SOURCE -D_GNU_SOURCE
+ .PHONY: all test clean
+ clean:
+-	${RM} *.o *.d vsock_test vsock_diag_test
++	${RM} *.o *.d vsock_test vsock_diag_test vsock_perf
+ -include *.d
+-- 
+2.40.1
+
 
 
