@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA5F17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43351C433C8;
-	Wed,  9 Aug 2023 11:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC3717731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D89C433C9;
+	Wed,  9 Aug 2023 11:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579324;
-	bh=r2g0r+AVtV3T/pFrOS2ua/Wj+0eN1uatMQD/LRAxT8E=;
+	s=korg; t=1691579327;
+	bh=UbrUUWY8XJmLNYjq9stlryEFx2ZahC127QgtOTluVu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9ad+sE/hb1BKs5w0/agVcGEOtjXjvmPSyhyvrv3BWSNPZgzfpvEWIoiMi0qLo2pN
-	 8v0zxRSdeWA3GV3jlXTKwK8EaUZACi+FeL6h1JbL1zb1LPW5YLS1W8Scj0x7234i07
-	 fS0xCzpSVe6weK+pYX+SjwTQSKiRrXZIPrVZb5W0=
+	b=fnq1jaisQuY9fh2IGSKvk7j8E88SEv0a7Tya/QnD7k7YBfgPLAojJtpuUzGFZyL/R
+	 ZXrK1opmyIKQe1krWlpKyUcy+XfRyoqlKQTHhahAZLE/tgsARHNqVKul5gzUTdWH6d
+	 wevgVD+EE9Im41i8+ZiUbP0vqblNTZHt8PGQW1/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Helge Deller <deller@gmx.de>,
+	Matus Gajdos <matuszpd@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 138/204] fbdev: imxfb: warn about invalid left/right margin
-Date: Wed,  9 Aug 2023 12:41:16 +0200
-Message-ID: <20230809103647.197548469@linuxfoundation.org>
+Subject: [PATCH 4.14 156/204] ASoC: fsl_spdif: Silence output on stop
+Date: Wed,  9 Aug 2023 12:41:34 +0200
+Message-ID: <20230809103647.766440468@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,43 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-[ Upstream commit 4e47382fbca916d7db95cbf9e2d7ca2e9d1ca3fe ]
+[ Upstream commit 0e4c2b6b0c4a4b4014d9424c27e5e79d185229c5 ]
 
-Warn about invalid var->left_margin or var->right_margin. Their values
-are read from the device tree.
+Clear TX registers on stop to prevent the SPDIF interface from sending
+last written word over and over again.
 
-We store var->left_margin-3 and var->right_margin-1 in register
-fields. These fields should be >= 0.
-
-Fixes: 7e8549bcee00 ("imxfb: Fix margin settings")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: a2388a498ad2 ("ASoC: fsl: Add S/PDIF CPU DAI driver")
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/r/20230719164729.19969-1-matuszpd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/imxfb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_spdif.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/video/fbdev/imxfb.c b/drivers/video/fbdev/imxfb.c
-index ba82f97fb42b2..a4dc25fbdd1ba 100644
---- a/drivers/video/fbdev/imxfb.c
-+++ b/drivers/video/fbdev/imxfb.c
-@@ -601,10 +601,10 @@ static int imxfb_activate_var(struct fb_var_screeninfo *var, struct fb_info *inf
- 	if (var->hsync_len < 1    || var->hsync_len > 64)
- 		printk(KERN_ERR "%s: invalid hsync_len %d\n",
- 			info->fix.id, var->hsync_len);
--	if (var->left_margin > 255)
-+	if (var->left_margin < 3  || var->left_margin > 255)
- 		printk(KERN_ERR "%s: invalid left_margin %d\n",
- 			info->fix.id, var->left_margin);
--	if (var->right_margin > 255)
-+	if (var->right_margin < 1 || var->right_margin > 255)
- 		printk(KERN_ERR "%s: invalid right_margin %d\n",
- 			info->fix.id, var->right_margin);
- 	if (var->yres < 1 || var->yres > ymax_mask)
+diff --git a/sound/soc/fsl/fsl_spdif.c b/sound/soc/fsl/fsl_spdif.c
+index 7e6cc4da00887..b079754aed409 100644
+--- a/sound/soc/fsl/fsl_spdif.c
++++ b/sound/soc/fsl/fsl_spdif.c
+@@ -618,6 +618,8 @@ static int fsl_spdif_trigger(struct snd_pcm_substream *substream,
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		regmap_update_bits(regmap, REG_SPDIF_SCR, dmaen, 0);
+ 		regmap_update_bits(regmap, REG_SPDIF_SIE, intr, 0);
++		regmap_write(regmap, REG_SPDIF_STL, 0x0);
++		regmap_write(regmap, REG_SPDIF_STR, 0x0);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
-2.39.2
+2.40.1
 
 
 
