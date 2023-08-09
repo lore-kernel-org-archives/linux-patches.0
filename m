@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B361774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7950DC433C8;
-	Wed,  9 Aug 2023 10:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA625154B4
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEC4C433C8;
+	Wed,  9 Aug 2023 10:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578510;
-	bh=HqxHB1BkX3P7VovaGf2jiIVzQKWXw3rhyBzklKdPS1c=;
+	s=korg; t=1691578513;
+	bh=dSIXtpwQccNx6XL9tjwjKF+Q5tQEyFk3ShF24MCk+j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENkSIEEyVJ4WII07AM9swkTKzLs8xTtB1zeV0m4fp1zU64gsvSTZrqnAKsWnGBpa7
-	 fUcRtcoszJ66GJ09rnGlG3Gbqx0IXCmEw6Aa5vgyZUaDZqmb0h6Vtle3L/yvDCYTJA
-	 63siTUGKgfjZ2fT4D45F+ZBcqDEjNHkazgQVAzAs=
+	b=RVcdzTv3dRptOk96+wXZoKPud7pUmBO9d77/NZHubvu8bLQeDJ5qGCgLktWmSo8cw
+	 kOvZXssa/dG/OjFhhib1/LBCz8tMyEUFgV4fveJukueioQg2wCcMQ3wW/YIUim690b
+	 PyIgeTxf9x/vzKG8T+YZKHkc38rzNhAd0nMabspc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/127] tcp_metrics: annotate data-races around tm->tcpm_net
-Date: Wed,  9 Aug 2023 12:40:55 +0200
-Message-ID: <20230809103638.915095159@linuxfoundation.org>
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.1 086/127] x86/hyperv: Disable IBT when hypercall page lacks ENDBR instruction
+Date: Wed,  9 Aug 2023 12:41:13 +0200
+Message-ID: <20230809103639.502150626@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -37,66 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit d5d986ce42c71a7562d32c4e21e026b0f87befec ]
+commit d5ace2a776442d80674eff9ed42e737f7dd95056 upstream.
 
-tm->tcpm_net can be read or written locklessly.
+On hardware that supports Indirect Branch Tracking (IBT), Hyper-V VMs
+with ConfigVersion 9.3 or later support IBT in the guest. However,
+current versions of Hyper-V have a bug in that there's not an ENDBR64
+instruction at the beginning of the hypercall page. Since hypercalls are
+made with an indirect call to the hypercall page, all hypercall attempts
+fail with an exception and Linux panics.
 
-Instead of changing write_pnet() and read_pnet() and potentially
-hurt performance, add the needed READ_ONCE()/WRITE_ONCE()
-in tm_net() and tcpm_new().
+A Hyper-V fix is in progress to add ENDBR64. But guard against the Linux
+panic by clearing X86_FEATURE_IBT if the hypercall page doesn't start
+with ENDBR. The VM will boot and run without IBT.
 
-Fixes: 849e8a0ca8d5 ("tcp_metrics: Add a field tcpm_net and verify it matches on lookup")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230802131500.1478140-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If future Linux 32-bit kernels were to support IBT, additional hypercall
+page hackery would be needed to make IBT work for such kernels in a
+Hyper-V VM.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1690001476-98594-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_metrics.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/hyperv/hv_init.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index fd4ab7a51cef2..4fd274836a48f 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -40,7 +40,7 @@ struct tcp_fastopen_metrics {
- 
- struct tcp_metrics_block {
- 	struct tcp_metrics_block __rcu	*tcpm_next;
--	possible_net_t			tcpm_net;
-+	struct net			*tcpm_net;
- 	struct inetpeer_addr		tcpm_saddr;
- 	struct inetpeer_addr		tcpm_daddr;
- 	unsigned long			tcpm_stamp;
-@@ -51,9 +51,10 @@ struct tcp_metrics_block {
- 	struct rcu_head			rcu_head;
- };
- 
--static inline struct net *tm_net(struct tcp_metrics_block *tm)
-+static inline struct net *tm_net(const struct tcp_metrics_block *tm)
- {
--	return read_pnet(&tm->tcpm_net);
-+	/* Paired with the WRITE_ONCE() in tcpm_new() */
-+	return READ_ONCE(tm->tcpm_net);
- }
- 
- static bool tcp_metric_locked(struct tcp_metrics_block *tm,
-@@ -197,7 +198,9 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
- 		if (!tm)
- 			goto out_unlock;
+--- a/arch/x86/hyperv/hv_init.c
++++ b/arch/x86/hyperv/hv_init.c
+@@ -14,6 +14,7 @@
+ #include <asm/apic.h>
+ #include <asm/desc.h>
+ #include <asm/sev.h>
++#include <asm/ibt.h>
+ #include <asm/hypervisor.h>
+ #include <asm/hyperv-tlfs.h>
+ #include <asm/mshyperv.h>
+@@ -468,6 +469,26 @@ void __init hyperv_init(void)
  	}
--	write_pnet(&tm->tcpm_net, net);
-+	/* Paired with the READ_ONCE() in tm_net() */
-+	WRITE_ONCE(tm->tcpm_net, net);
-+
- 	tm->tcpm_saddr = *saddr;
- 	tm->tcpm_daddr = *daddr;
  
--- 
-2.40.1
-
+ 	/*
++	 * Some versions of Hyper-V that provide IBT in guest VMs have a bug
++	 * in that there's no ENDBR64 instruction at the entry to the
++	 * hypercall page. Because hypercalls are invoked via an indirect call
++	 * to the hypercall page, all hypercall attempts fail when IBT is
++	 * enabled, and Linux panics. For such buggy versions, disable IBT.
++	 *
++	 * Fixed versions of Hyper-V always provide ENDBR64 on the hypercall
++	 * page, so if future Linux kernel versions enable IBT for 32-bit
++	 * builds, additional hypercall page hackery will be required here
++	 * to provide an ENDBR32.
++	 */
++#ifdef CONFIG_X86_KERNEL_IBT
++	if (cpu_feature_enabled(X86_FEATURE_IBT) &&
++	    *(u32 *)hv_hypercall_pg != gen_endbr()) {
++		setup_clear_cpu_cap(X86_FEATURE_IBT);
++		pr_warn("Hyper-V: Disabling IBT because of Hyper-V bug\n");
++	}
++#endif
++
++	/*
+ 	 * hyperv_init() is called before LAPIC is initialized: see
+ 	 * apic_intr_mode_init() -> x86_platform.apic_post_init() and
+ 	 * apic_bsp_setup() -> setup_local_APIC(). The direct-mode STIMER
 
 
