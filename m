@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9FF17756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5F1C433C7;
-	Wed,  9 Aug 2023 11:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F2F17756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23562C433C9;
+	Wed,  9 Aug 2023 11:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580113;
-	bh=eWNKNg3KY6FMiWiNRVAN944rka5vwAWmSdgbiaV70Vg=;
+	s=korg; t=1691580116;
+	bh=g7JKSqivtcA1ZxQt5+G+tLt5Lkt5nQIiMQbb5r9Z4ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNpoUQRoXca2kUxQCmS1YyM50wxe+lYSEh4mmMEAzXrHAXTTs9DdYmj88XC6aTm1R
-	 fQqgMTSZied+1Uomr78vbVA+did12YNPgNu1AIo/n7TadY6fGpfy+sXs6jAfXx8oFv
-	 CwgOQpeT0CIDJErZE1V1Am6rvhN65h0LBTxiSVFk=
+	b=z8vzxpsvSAa9aMDQiPA35h2pooSAYDOnVFVHQnQEd3zbJeEoep1RqzY5zj42GYRxq
+	 zeePvW9fUKLyv04cr7Xn53lTYoY/nNnAIo66XV9xdqQ7cVfT+gEM0PCnSw4lIBWmHV
+	 c2l0US+e85jZA+rzv+tfCZsF/Yckv7RoJhgG81/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abaci Robot <abaci@linux.alibaba.com>,
 	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 231/323] ftrace: Add information on number of page groups allocated
-Date: Wed,  9 Aug 2023 12:41:09 +0200
-Message-ID: <20230809103708.663151839@linuxfoundation.org>
+Subject: [PATCH 4.19 232/323] ftrace: Check if pages were allocated before calling free_pages()
+Date: Wed,  9 Aug 2023 12:41:10 +0200
+Message-ID: <20230809103708.708497295@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,140 +37,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (VMware) <rostedt@goodmis.org>
 
-[ Upstream commit da537f0aef1372c5204356a7df06be8769467b7b ]
+[ Upstream commit 59300b36f85f254260c81d9dd09195fa49eb0f98 ]
 
-Looking for ways to shrink the size of the dyn_ftrace structure, knowing the
-information about how many pages and the number of groups of those pages, is
-useful in working out the best ways to save on memory.
+It is possible that on error pg->size can be zero when getting its order,
+which would return a -1 value. It is dangerous to pass in an order of -1
+to free_pages(). Check if order is greater than or equal to zero before
+calling free_pages().
 
-This adds one info print on how many groups of pages were used to allocate
-the ftrace dyn_ftrace structures, and also shows the number of pages and
-groups in the dyn_ftrace_total_info (which is used for debugging).
+Link: https://lore.kernel.org/lkml/20210330093916.432697c7@gandalf.local.home/
 
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
 Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
 Stable-dep-of: 26efd79c4624 ("ftrace: Fix possible warning on checking all pages used in ftrace_process_locs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c | 14 ++++++++++++++
- kernel/trace/trace.c  | 21 +++++++++++++++------
- kernel/trace/trace.h  |  2 ++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ kernel/trace/ftrace.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index 5c0463dbe16ee..48ab4d750c650 100644
+index 48ab4d750c650..1b92a22086f50 100644
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
-@@ -2915,6 +2915,8 @@ static void ftrace_shutdown_sysctl(void)
- 
- static u64		ftrace_update_time;
- unsigned long		ftrace_update_tot_cnt;
-+unsigned long		ftrace_number_of_pages;
-+unsigned long		ftrace_number_of_groups;
- 
- static inline int ops_traces_mod(struct ftrace_ops *ops)
- {
-@@ -3039,6 +3041,9 @@ static int ftrace_allocate_records(struct ftrace_page *pg, int count)
- 		goto again;
- 	}
- 
-+	ftrace_number_of_pages += 1 << order;
-+	ftrace_number_of_groups++;
-+
- 	cnt = (PAGE_SIZE << order) / ENTRY_SIZE;
- 	pg->size = cnt;
- 
-@@ -3094,6 +3099,8 @@ ftrace_allocate_pages(unsigned long num_to_init)
+@@ -3095,7 +3095,8 @@ ftrace_allocate_pages(unsigned long num_to_init)
+ 	pg = start_pg;
+ 	while (pg) {
+ 		order = get_count_order(pg->size / ENTRIES_PER_PAGE);
+-		free_pages((unsigned long)pg->records, order);
++		if (order >= 0)
++			free_pages((unsigned long)pg->records, order);
  		start_pg = pg->next;
  		kfree(pg);
  		pg = start_pg;
-+		ftrace_number_of_pages -= 1 << order;
-+		ftrace_number_of_groups--;
- 	}
- 	pr_info("ftrace: FAILED to allocate memory for functions\n");
- 	return NULL;
-@@ -5839,6 +5846,8 @@ void ftrace_release_mod(struct module *mod)
- 		free_pages((unsigned long)pg->records, order);
+@@ -5843,7 +5844,8 @@ void ftrace_release_mod(struct module *mod)
+ 		clear_mod_from_hashes(pg);
+ 
+ 		order = get_count_order(pg->size / ENTRIES_PER_PAGE);
+-		free_pages((unsigned long)pg->records, order);
++		if (order >= 0)
++			free_pages((unsigned long)pg->records, order);
  		tmp_page = pg->next;
  		kfree(pg);
-+		ftrace_number_of_pages -= 1 << order;
-+		ftrace_number_of_groups--;
- 	}
- }
- 
-@@ -6184,6 +6193,8 @@ void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
+ 		ftrace_number_of_pages -= 1 << order;
+@@ -6192,7 +6194,8 @@ void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
+ 		if (!pg->index) {
  			*last_pg = pg->next;
  			order = get_count_order(pg->size / ENTRIES_PER_PAGE);
- 			free_pages((unsigned long)pg->records, order);
-+			ftrace_number_of_pages -= 1 << order;
-+			ftrace_number_of_groups--;
+-			free_pages((unsigned long)pg->records, order);
++			if (order >= 0)
++				free_pages((unsigned long)pg->records, order);
+ 			ftrace_number_of_pages -= 1 << order;
+ 			ftrace_number_of_groups--;
  			kfree(pg);
- 			pg = container_of(last_pg, struct ftrace_page, next);
- 			if (!(*last_pg))
-@@ -6239,6 +6250,9 @@ void __init ftrace_init(void)
- 				  __start_mcount_loc,
- 				  __stop_mcount_loc);
- 
-+	pr_info("ftrace: allocated %ld pages with %ld groups\n",
-+		ftrace_number_of_pages, ftrace_number_of_groups);
-+
- 	set_ftrace_early_filters();
- 
- 	return;
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 98abff0462366..9da7b10e56d23 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7107,14 +7107,23 @@ static ssize_t
- tracing_read_dyn_info(struct file *filp, char __user *ubuf,
- 		  size_t cnt, loff_t *ppos)
- {
--	unsigned long *p = filp->private_data;
--	char buf[64]; /* Not too big for a shallow stack */
-+	ssize_t ret;
-+	char *buf;
- 	int r;
- 
--	r = scnprintf(buf, 63, "%ld", *p);
--	buf[r++] = '\n';
-+	/* 256 should be plenty to hold the amount needed */
-+	buf = kmalloc(256, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
- 
--	return simple_read_from_buffer(ubuf, cnt, ppos, buf, r);
-+	r = scnprintf(buf, 256, "%ld pages:%ld groups: %ld\n",
-+		      ftrace_update_tot_cnt,
-+		      ftrace_number_of_pages,
-+		      ftrace_number_of_groups);
-+
-+	ret = simple_read_from_buffer(ubuf, cnt, ppos, buf, r);
-+	kfree(buf);
-+	return ret;
- }
- 
- static const struct file_operations tracing_dyn_info_fops = {
-@@ -8246,7 +8255,7 @@ static __init int tracer_init_tracefs(void)
- 
- #ifdef CONFIG_DYNAMIC_FTRACE
- 	trace_create_file("dyn_ftrace_total_info", 0444, d_tracer,
--			&ftrace_update_tot_cnt, &tracing_dyn_info_fops);
-+			NULL, &tracing_dyn_info_fops);
- #endif
- 
- 	create_trace_instances(d_tracer);
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 0923d1b18d1fb..f4d83b552a477 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -748,6 +748,8 @@ extern void trace_event_follow_fork(struct trace_array *tr, bool enable);
- 
- #ifdef CONFIG_DYNAMIC_FTRACE
- extern unsigned long ftrace_update_tot_cnt;
-+extern unsigned long ftrace_number_of_pages;
-+extern unsigned long ftrace_number_of_groups;
- void ftrace_init_trace_array(struct trace_array *tr);
- #else
- static inline void ftrace_init_trace_array(struct trace_array *tr) { }
 -- 
 2.39.2
 
