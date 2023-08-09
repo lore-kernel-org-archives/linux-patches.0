@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6721D1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAE8C433C8;
-	Wed,  9 Aug 2023 11:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6881773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A17C433C8;
+	Wed,  9 Aug 2023 11:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579893;
-	bh=h3eCyERTzNdjXRZTxvGHXInrl1OBWlykxQMqCXbe1v0=;
+	s=korg; t=1691579896;
+	bh=yHWbn/RL8yIza8MZ9dgybLm6YbLHKM42ZYXuDCIOum4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azkcAwagK8N0y/kNC+SqMDL0zQz7gv2ymgQPmNLtlzQgMmlCLuXS+CbjtbvZLxA+0
-	 JN4msi4XBNX8pc+xdiPvOgnCm4UfkHhsC3eNdQ70/rwd1okptwpsB0cxFXHXPusUOn
-	 oN4w5gGFq9o63jy6SzHqHx+ZoX6IxcfCcN4JXZb8=
+	b=Vo57yCAE5USbyvaxHgKgs1JuhqS+YqeQLjdKGNbXFmW5u7vHpYiK1aX1XnnWnCTgm
+	 G0EKdINtPyqFvx1OZHEEM+vhfzvRBC3qw0bP59y+axuV1ltzjHMO7X8NpsiZ788JqF
+	 FGNKu8d0mMBdju7fG8ZbXVR1zsdDJXXQiBt/t0M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 4.19 153/323] tpm: tpm_vtpm_proxy: fix a race condition in /dev/vtpmx creation
-Date: Wed,  9 Aug 2023 12:39:51 +0200
-Message-ID: <20230809103705.164656827@linuxfoundation.org>
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 154/323] net: bcmgenet: Ensure MDIO unregistration has clocks enabled
+Date: Wed,  9 Aug 2023 12:39:52 +0200
+Message-ID: <20230809103705.205006474@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,80 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit f4032d615f90970d6c3ac1d9c0bce3351eb4445c upstream.
+commit 1b5ea7ffb7a3bdfffb4b7f40ce0d20a3372ee405 upstream.
 
-/dev/vtpmx is made visible before 'workqueue' is initialized, which can
-lead to a memory corruption in the worst case scenario.
+With support for Ethernet PHY LEDs having been added, while
+unregistering a MDIO bus and its child device liks PHYs there may be
+"late" accesses to the MDIO bus. One typical use case is setting the PHY
+LEDs brightness to OFF for instance.
 
-Address this by initializing 'workqueue' as the very first step of the
-driver initialization.
+We need to ensure that the MDIO bus controller remains entirely
+functional since it runs off the main GENET adapter clock.
 
 Cc: stable@vger.kernel.org
-Fixes: 6f99612e2500 ("tpm: Proxy driver for supporting multiple emulated TPMs")
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/all/20230617155500.4005881-1-andrew@lunn.ch/
+Fixes: 9a4e79697009 ("net: bcmgenet: utilize generic Broadcom UniMAC MDIO controller driver")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230622103107.1760280-1-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_vtpm_proxy.c |   30 +++++++-----------------------
- 1 file changed, 7 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmmii.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/char/tpm/tpm_vtpm_proxy.c
-+++ b/drivers/char/tpm/tpm_vtpm_proxy.c
-@@ -700,37 +700,21 @@ static struct miscdevice vtpmx_miscdev =
- 	.fops = &vtpmx_fops,
- };
- 
--static int vtpmx_init(void)
--{
--	return misc_register(&vtpmx_miscdev);
--}
--
--static void vtpmx_cleanup(void)
--{
--	misc_deregister(&vtpmx_miscdev);
--}
--
- static int __init vtpm_module_init(void)
- {
- 	int rc;
- 
--	rc = vtpmx_init();
--	if (rc) {
--		pr_err("couldn't create vtpmx device\n");
--		return rc;
--	}
--
- 	workqueue = create_workqueue("tpm-vtpm");
- 	if (!workqueue) {
- 		pr_err("couldn't create workqueue\n");
--		rc = -ENOMEM;
--		goto err_vtpmx_cleanup;
-+		return -ENOMEM;
- 	}
- 
--	return 0;
--
--err_vtpmx_cleanup:
--	vtpmx_cleanup();
-+	rc = misc_register(&vtpmx_miscdev);
-+	if (rc) {
-+		pr_err("couldn't create vtpmx device\n");
-+		destroy_workqueue(workqueue);
-+	}
- 
- 	return rc;
+--- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
+@@ -620,5 +620,7 @@ void bcmgenet_mii_exit(struct net_device
+ 	if (of_phy_is_fixed_link(dn))
+ 		of_phy_deregister_fixed_link(dn);
+ 	of_node_put(priv->phy_dn);
++	clk_prepare_enable(priv->clk);
+ 	platform_device_unregister(priv->mii_pdev);
++	clk_disable_unprepare(priv->clk);
  }
-@@ -738,7 +722,7 @@ err_vtpmx_cleanup:
- static void __exit vtpm_module_exit(void)
- {
- 	destroy_workqueue(workqueue);
--	vtpmx_cleanup();
-+	misc_deregister(&vtpmx_miscdev);
- }
- 
- module_init(vtpm_module_init);
 
 
