@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CE2174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF7EC433C9;
-	Wed,  9 Aug 2023 10:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D093414F9E
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5533BC433C7;
+	Wed,  9 Aug 2023 10:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578694;
-	bh=VnZkNCnQgVZfEwa3zcGgxEnAaBZe3NW2OiW1UYHsLVc=;
+	s=korg; t=1691578697;
+	bh=TU4uhVCFEplpP9/BkEtmbqqRSYEPyp1V5ZlZa9fBHTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNxpfmAbyQEPeAGDS8SfLywpsnK4X2slUK8BOXSqVD5IKxT2yDt6pAwvPpWPNohaD
-	 9+Q0hbBIieaqM32FJ/1CIfHuNS1X1YqNPeDuchHdCs1Dl7ubed0qtrg/WyNS9/w0+Y
-	 SF7JwTWQdd1rMzo1O2N9eBZCD1iTroIyqTSJHIvc=
+	b=ixr6eWKDB498+GBR5QLyoPsuQDp48jGae2KcTLbFQJWIhD+j8ehFQ/dAdEqaOQgPG
+	 f+FIBZIfdxQ0d5bZIKTaeZ5n3haLVRHOj405GZ0SLhbhpm1PK2BfeBCOGbwWa4pyv7
+	 /U31sFeNB/3u8D9KWOS2zfcCsOsF4JvKydNolMmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolin Chen <nicolinc@nvidia.com>,
 	Will Deacon <will@kernel.org>,
 	Easwar Hariharan <eahariha@linux.microsoft.com>
-Subject: [PATCH 5.15 07/92] iommu/arm-smmu-v3: Document MMU-700 erratum 2812531
-Date: Wed,  9 Aug 2023 12:40:43 +0200
-Message-ID: <20230809103633.794306962@linuxfoundation.org>
+Subject: [PATCH 5.15 08/92] iommu/arm-smmu-v3: Add explicit feature for nesting
+Date: Wed,  9 Aug 2023 12:40:44 +0200
+Message-ID: <20230809103633.829929049@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -38,98 +38,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Murphy <robin.murphy@arm.com>
 
-commit 309a15cb16bb075da1c99d46fb457db6a1a2669e upstream
+commit 1d9777b9f3d55b4b6faf186ba4f1d6fb560c0523 upstream
 
-To work around MMU-700 erratum 2812531 we need to ensure that certain
-sequences of commands cannot be issued without an intervening sync. In
-practice this falls out of our current command-batching machinery
-anyway - each batch only contains a single type of invalidation command,
-and ends with a sync. The only exception is when a batch is sufficiently
-large to need issuing across multiple command queue slots, wherein the
-earlier slots will not contain a sync and thus may in theory interleave
-with another batch being issued in parallel to create an affected
-sequence across the slot boundary.
-
-Since MMU-700 supports range invalidate commands and thus we will prefer
-to use them (which also happens to avoid conditions for other errata),
-I'm not entirely sure it's even possible for a single high-level
-invalidate call to generate a batch of more than 63 commands, but for
-the sake of robustness and documentation, wire up an option to enforce
-that a sync is always inserted for every slot issued.
-
-The other aspect is that the relative order of DVM commands cannot be
-controlled, so DVM cannot be used. Again that is already the status quo,
-but since we have at least defined ARM_SMMU_FEAT_BTM, we can explicitly
-disable it for documentation purposes even if it's not wired up anywhere
-yet.
+In certain cases we may want to refuse to allow nested translation even
+when both stages are implemented, so let's add an explicit feature for
+nesting support which we can control in its own right. For now this
+merely serves as documentation, but it means a nice convenient check
+will be ready and waiting for the future nesting code.
 
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/330221cdfd0003cd51b6c04e7ff3566741ad8374.1683731256.git.robin.murphy@arm.com
+Link: https://lore.kernel.org/r/136c3f4a3a84cc14a5a1978ace57dfd3ed67b688.1683731256.git.robin.murphy@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arm64/silicon-errata.rst      |    2 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   12 ++++++++++++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    4 ++++
  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |    1 +
- 3 files changed, 15 insertions(+)
+ 2 files changed, 5 insertions(+)
 
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -124,6 +124,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | MMU-600         | #1076982        | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | MMU-700         | #2812531        | N/A                         |
-++----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
- | Broadcom       | Brahma-B53      | N/A             | ARM64_ERRATUM_845719        |
- +----------------+-----------------+-----------------+-----------------------------+
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -897,6 +897,12 @@ static void arm_smmu_cmdq_batch_add(stru
- 				    struct arm_smmu_cmdq_batch *cmds,
- 				    struct arm_smmu_cmdq_ent *cmd)
- {
-+	if (cmds->num == CMDQ_BATCH_ENTRIES - 1 &&
-+	    (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC)) {
-+		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmds, cmds->num, true);
-+		cmds->num = 0;
-+	}
+@@ -3703,6 +3703,10 @@ static int arm_smmu_device_hw_probe(stru
+ 
+ 	smmu->ias = max(smmu->ias, smmu->oas);
+ 
++	if ((smmu->features & ARM_SMMU_FEAT_TRANS_S1) &&
++	    (smmu->features & ARM_SMMU_FEAT_TRANS_S2))
++		smmu->features |= ARM_SMMU_FEAT_NESTING;
 +
- 	if (cmds->num == CMDQ_BATCH_ENTRIES) {
- 		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmds, cmds->num, false);
- 		cmds->num = 0;
-@@ -3461,6 +3467,7 @@ static int arm_smmu_device_reset(struct
+ 	arm_smmu_device_iidr_probe(smmu);
  
- #define IIDR_IMPLEMENTER_ARM		0x43b
- #define IIDR_PRODUCTID_ARM_MMU_600	0x483
-+#define IIDR_PRODUCTID_ARM_MMU_700	0x487
- 
- static void arm_smmu_device_iidr_probe(struct arm_smmu_device *smmu)
- {
-@@ -3481,6 +3488,11 @@ static void arm_smmu_device_iidr_probe(s
- 			if (variant == 0 && revision <= 2)
- 				smmu->features &= ~ARM_SMMU_FEAT_SEV;
- 			break;
-+		case IIDR_PRODUCTID_ARM_MMU_700:
-+			/* Arm erratum 2812531 */
-+			smmu->features &= ~ARM_SMMU_FEAT_BTM;
-+			smmu->options |= ARM_SMMU_OPT_CMDQ_FORCE_SYNC;
-+			break;
- 		}
- 		break;
- 	}
+ 	if (arm_smmu_sva_supported(smmu))
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -651,6 +651,7 @@ struct arm_smmu_device {
- #define ARM_SMMU_OPT_SKIP_PREFETCH	(1 << 0)
- #define ARM_SMMU_OPT_PAGE0_REGS_ONLY	(1 << 1)
- #define ARM_SMMU_OPT_MSIPOLL		(1 << 2)
-+#define ARM_SMMU_OPT_CMDQ_FORCE_SYNC	(1 << 3)
- 	u32				options;
+@@ -646,6 +646,7 @@ struct arm_smmu_device {
+ #define ARM_SMMU_FEAT_BTM		(1 << 16)
+ #define ARM_SMMU_FEAT_SVA		(1 << 17)
+ #define ARM_SMMU_FEAT_E2H		(1 << 18)
++#define ARM_SMMU_FEAT_NESTING		(1 << 19)
+ 	u32				features;
  
- 	struct arm_smmu_cmdq		cmdq;
+ #define ARM_SMMU_OPT_SKIP_PREFETCH	(1 << 0)
 
 
