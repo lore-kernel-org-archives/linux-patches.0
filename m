@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576291774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB185C433C7;
-	Wed,  9 Aug 2023 11:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201D417AAB;
+	Wed,  9 Aug 2023 11:12:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3D1C433CA;
+	Wed,  9 Aug 2023 11:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579546;
-	bh=yEl9qgBktJrd/5roW7PC8Zb9Uw6dBFZE8tJFHoAQaM8=;
+	s=korg; t=1691579549;
+	bh=yNkkAd/TOLhU/L4JhK0RzFlNx/oiY0ALWPBkXaq1tWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4t+8EzqhZWu+9UM/gq1YIgHTW0OpQOIDaztsqYy8iHbh91Oow+o9gc4MDoaNhKBe
-	 SP3+1svoejPISbF/6NXA0aDjyyg/zSLGgDJrkXCG/7WsalEnW79CGBQgniWuxuGev8
-	 bIh2HnENPkduqPF3BpAhlQDEro3oxWBRg3Zjvl74=
+	b=NT9EGW6YsFRhe/GSMAnorHibIXn7vT28h2e3uI8mzkuToo7sqTQ0C3II8my3i+K7o
+	 FkPf9Gau2viFev/kAh3DchLvpo0arXuo28CRM/6HAWh2DTx6ziBHVrXJfMC5IzKnEg
+	 pv9zF6iZTpZv7i/2lNWTSOP1wpZYPWf6+kdyStPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kalle Valo <kvalo@codeaurora.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Fox Chen <mhchen@golf.ccl.itri.org.tw>,
+	de Melo <acme@conectiva.com.br>,
+	Gustavo Niemeyer <niemeyer@conectiva.com>,
+	linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org,
+	Lee Jones <lee.jones@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/323] wifi: atmel: Fix an error handling path in atmel_probe()
-Date: Wed,  9 Aug 2023 12:37:47 +0200
-Message-ID: <20230809103659.455346675@linuxfoundation.org>
+Subject: [PATCH 4.19 030/323] wl3501_cs: Fix a bunch of formatting issues related to function docs
+Date: Wed,  9 Aug 2023 12:37:48 +0200
+Message-ID: <20230809103659.504968914@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,57 +42,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Lee Jones <lee.jones@linaro.org>
 
-[ Upstream commit 6b92e4351a29af52c285fe235e6e4d1a75de04b2 ]
+[ Upstream commit 2307d0bc9d8b60299f255d1771ce0d997162a957 ]
 
-Should atmel_config() fail, some resources need to be released as already
-done in the remove function.
+Fixes the following W=1 kernel build warning(s):
 
-While at it, remove a useless and erroneous comment. The probe is
-atmel_probe(), not atmel_attach().
+ In file included from drivers/net/wireless/wl3501_cs.c:57:
+ drivers/net/wireless/wl3501_cs.c:143: warning: Function parameter or member 'reg_domain' not described in 'iw_valid_channel'
+ drivers/net/wireless/wl3501_cs.c:143: warning: Function parameter or member 'channel' not described in 'iw_valid_channel'
+ drivers/net/wireless/wl3501_cs.c:162: warning: Function parameter or member 'reg_domain' not described in 'iw_default_channel'
+ drivers/net/wireless/wl3501_cs.c:248: warning: Function parameter or member 'this' not described in 'wl3501_set_to_wla'
+ drivers/net/wireless/wl3501_cs.c:270: warning: Function parameter or member 'this' not described in 'wl3501_get_from_wla'
+ drivers/net/wireless/wl3501_cs.c:467: warning: Function parameter or member 'this' not described in 'wl3501_send_pkt'
+ drivers/net/wireless/wl3501_cs.c:467: warning: Function parameter or member 'data' not described in 'wl3501_send_pkt'
+ drivers/net/wireless/wl3501_cs.c:467: warning: Function parameter or member 'len' not described in 'wl3501_send_pkt'
+ drivers/net/wireless/wl3501_cs.c:729: warning: Function parameter or member 'this' not described in 'wl3501_block_interrupt'
+ drivers/net/wireless/wl3501_cs.c:746: warning: Function parameter or member 'this' not described in 'wl3501_unblock_interrupt'
+ drivers/net/wireless/wl3501_cs.c:1124: warning: Function parameter or member 'irq' not described in 'wl3501_interrupt'
+ drivers/net/wireless/wl3501_cs.c:1124: warning: Function parameter or member 'dev_id' not described in 'wl3501_interrupt'
+ drivers/net/wireless/wl3501_cs.c:1257: warning: Function parameter or member 'dev' not described in 'wl3501_reset'
+ drivers/net/wireless/wl3501_cs.c:1420: warning: Function parameter or member 'link' not described in 'wl3501_detach'
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1e65f174607a83348034197fa7d603bab10ba4a9.1684569156.git.christophe.jaillet@wanadoo.fr
+Cc: Kalle Valo <kvalo@codeaurora.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Fox Chen <mhchen@golf.ccl.itri.org.tw>
+Cc: de Melo <acme@conectiva.com.br>
+Cc: Gustavo Niemeyer <niemeyer@conectiva.com>
+Cc: linux-wireless@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Link: https://lore.kernel.org/r/20200826093401.1458456-21-lee.jones@linaro.org
+Stable-dep-of: 391af06a02e7 ("wifi: wl3501_cs: Fix an error handling path in wl3501_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/atmel/atmel_cs.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/wl3501_cs.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/atmel/atmel_cs.c b/drivers/net/wireless/atmel/atmel_cs.c
-index 7afc9c5329fb1..f5fa1a95b0c15 100644
---- a/drivers/net/wireless/atmel/atmel_cs.c
-+++ b/drivers/net/wireless/atmel/atmel_cs.c
-@@ -73,6 +73,7 @@ struct local_info {
- static int atmel_probe(struct pcmcia_device *p_dev)
- {
- 	struct local_info *local;
-+	int ret;
+diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
+index cfde9b94b4b60..78c89e6421f97 100644
+--- a/drivers/net/wireless/wl3501_cs.c
++++ b/drivers/net/wireless/wl3501_cs.c
+@@ -133,8 +133,8 @@ static const struct {
  
- 	dev_dbg(&p_dev->dev, "atmel_attach()\n");
+ /**
+  * iw_valid_channel - validate channel in regulatory domain
+- * @reg_comain - regulatory domain
+- * @channel - channel to validate
++ * @reg_comain: regulatory domain
++ * @channel: channel to validate
+  *
+  * Returns 0 if invalid in the specified regulatory domain, non-zero if valid.
+  */
+@@ -153,7 +153,7 @@ static int iw_valid_channel(int reg_domain, int channel)
  
-@@ -83,8 +84,16 @@ static int atmel_probe(struct pcmcia_device *p_dev)
+ /**
+  * iw_default_channel - get default channel for a regulatory domain
+- * @reg_comain - regulatory domain
++ * @reg_domain: regulatory domain
+  *
+  * Returns the default channel for a regulatory domain
+  */
+@@ -236,6 +236,7 @@ static int wl3501_get_flash_mac_addr(struct wl3501_card *this)
  
- 	p_dev->priv = local;
+ /**
+  * wl3501_set_to_wla - Move 'size' bytes from PC to card
++ * @this: Card
+  * @dest: Card addressing space
+  * @src: PC addressing space
+  * @size: Bytes to move
+@@ -258,6 +259,7 @@ static void wl3501_set_to_wla(struct wl3501_card *this, u16 dest, void *src,
  
--	return atmel_config(p_dev);
--} /* atmel_attach */
-+	ret = atmel_config(p_dev);
-+	if (ret)
-+		goto err_free_priv;
-+
-+	return 0;
-+
-+err_free_priv:
-+	kfree(p_dev->priv);
-+	return ret;
-+}
+ /**
+  * wl3501_get_from_wla - Move 'size' bytes from card to PC
++ * @this: Card
+  * @src: Card addressing space
+  * @dest: PC addressing space
+  * @size: Bytes to move
+@@ -454,7 +456,7 @@ static int wl3501_pwr_mgmt(struct wl3501_card *this, int suspend)
  
- static void atmel_detach(struct pcmcia_device *link)
- {
+ /**
+  * wl3501_send_pkt - Send a packet.
+- * @this - card
++ * @this: Card
+  *
+  * Send a packet.
+  *
+@@ -722,7 +724,7 @@ static void wl3501_mgmt_scan_confirm(struct wl3501_card *this, u16 addr)
+ 
+ /**
+  * wl3501_block_interrupt - Mask interrupt from SUTRO
+- * @this - card
++ * @this: Card
+  *
+  * Mask interrupt from SUTRO. (i.e. SUTRO cannot interrupt the HOST)
+  * Return: 1 if interrupt is originally enabled
+@@ -739,7 +741,7 @@ static int wl3501_block_interrupt(struct wl3501_card *this)
+ 
+ /**
+  * wl3501_unblock_interrupt - Enable interrupt from SUTRO
+- * @this - card
++ * @this: Card
+  *
+  * Enable interrupt from SUTRO. (i.e. SUTRO can interrupt the HOST)
+  * Return: 1 if interrupt is originally enabled
+@@ -1113,8 +1115,8 @@ static inline void wl3501_ack_interrupt(struct wl3501_card *this)
+ 
+ /**
+  * wl3501_interrupt - Hardware interrupt from card.
+- * @irq - Interrupt number
+- * @dev_id - net_device
++ * @irq: Interrupt number
++ * @dev_id: net_device
+  *
+  * We must acknowledge the interrupt as soon as possible, and block the
+  * interrupt from the same card immediately to prevent re-entry.
+@@ -1252,7 +1254,7 @@ static int wl3501_close(struct net_device *dev)
+ 
+ /**
+  * wl3501_reset - Reset the SUTRO.
+- * @dev - network device
++ * @dev: network device
+  *
+  * It is almost the same as wl3501_open(). In fact, we may just wl3501_close()
+  * and wl3501_open() again, but I wouldn't like to free_irq() when the driver
+@@ -1415,7 +1417,7 @@ static struct iw_statistics *wl3501_get_wireless_stats(struct net_device *dev)
+ 
+ /**
+  * wl3501_detach - deletes a driver "instance"
+- * @link - FILL_IN
++ * @link: FILL_IN
+  *
+  * This deletes a driver "instance". The device is de-registered with Card
+  * Services. If it has been released, all local data structures are freed.
 -- 
 2.39.2
 
