@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B4F1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E38EC433C7;
-	Wed,  9 Aug 2023 11:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AA5174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC54C433C8;
+	Wed,  9 Aug 2023 11:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579937;
-	bh=IZHb1zt9D0xRB5bklRHdIbvHTe+HbSuKK2gMtrmcaUU=;
+	s=korg; t=1691579940;
+	bh=jGJLnxhojWiKBHQwtvho6VGxFAX1SzaKzKWIpKYVKzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNjeV0vCnE+IpZwynV2A4A6b1O9Oc2HdzaKcDdR8OHDowhcystVuwxqzEokqrTWS5
-	 qMD1dRMXh+CxUEp6ZyzfFRt8+u0BiNTXDBVwVpPeP9K3hx5VbLFsKp4Pg9DtpAJsBH
-	 MqBNaS1jQGnDvqjsiVrBfyRktlG/ZYWu/OHkTc5U=
+	b=pe7KHkRRMmx9AzBgmYA7otxM24G3y+DCSPPbzkqr0XgnjLmK+b7qyNiU/fzfzoRqv
+	 O2O91bexuryY6wQ9KLIecnLW/NQivh0Zm0xkDKCpU3i52gPmtOqo04SzMaKnrVsIW/
+	 YYgVFJrw9EmQbx+FUcG0EU5vKvyAdHYJGVRVFHy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Suryaputra <ssuryaextr@gmail.com>,
-	David Ahern <dsahern@gmail.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 139/323] vrf: Increment Icmp6InMsgs on the original netdev
-Date: Wed,  9 Aug 2023 12:39:37 +0200
-Message-ID: <20230809103704.504527435@linuxfoundation.org>
+Subject: [PATCH 4.19 140/323] icmp6: Fix null-ptr-deref of ip6_null_entry->rt6i_idev in icmp6_dev().
+Date: Wed,  9 Aug 2023 12:39:38 +0200
+Message-ID: <20230809103704.551679210@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,125 +38,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Suryaputra <ssuryaextr@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit e1ae5c2ea4783b1fd87be250f9fcc9d9e1a6ba3f ]
+[ Upstream commit 2aaa8a15de73874847d62eb595c6683bface80fd ]
 
-Get the ingress interface and increment ICMP counters based on that
-instead of skb->dev when the the dev is a VRF device.
+With some IPv6 Ext Hdr (RPL, SRv6, etc.), we can send a packet that
+has the link-local address as src and dst IP and will be forwarded to
+an external IP in the IPv6 Ext Hdr.
 
-This is a follow up on the following message:
-https://www.spinics.net/lists/netdev/msg560268.html
+For example, the script below generates a packet whose src IP is the
+link-local address and dst is updated to 11::.
 
-v2: Avoid changing skb->dev since it has unintended effect for local
-    delivery (David Ahern).
-Signed-off-by: Stephen Suryaputra <ssuryaextr@gmail.com>
-Reviewed-by: David Ahern <dsahern@gmail.com>
+  # for f in $(find /proc/sys/net/ -name *seg6_enabled*); do echo 1 > $f; done
+  # python3
+  >>> from socket import *
+  >>> from scapy.all import *
+  >>>
+  >>> SRC_ADDR = DST_ADDR = "fe80::5054:ff:fe12:3456"
+  >>>
+  >>> pkt = IPv6(src=SRC_ADDR, dst=DST_ADDR)
+  >>> pkt /= IPv6ExtHdrSegmentRouting(type=4, addresses=["11::", "22::"], segleft=1)
+  >>>
+  >>> sk = socket(AF_INET6, SOCK_RAW, IPPROTO_RAW)
+  >>> sk.sendto(bytes(pkt), (DST_ADDR, 0))
+
+For such a packet, we call ip6_route_input() to look up a route for the
+next destination in these three functions depending on the header type.
+
+  * ipv6_rthdr_rcv()
+  * ipv6_rpl_srh_rcv()
+  * ipv6_srh_rcv()
+
+If no route is found, ip6_null_entry is set to skb, and the following
+dst_input(skb) calls ip6_pkt_drop().
+
+Finally, in icmp6_dev(), we dereference skb_rt6_info(skb)->rt6i_idev->dev
+as the input device is the loopback interface.  Then, we have to check if
+skb_rt6_info(skb)->rt6i_idev is NULL or not to avoid NULL pointer deref
+for ip6_null_entry.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+ PF: supervisor read access in kernel mode
+ PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 0 PID: 157 Comm: python3 Not tainted 6.4.0-11996-gb121d614371c #35
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:icmp6_send (net/ipv6/icmp.c:436 net/ipv6/icmp.c:503)
+Code: fe ff ff 48 c7 40 30 c0 86 5d 83 e8 c6 44 1c 00 e9 c8 fc ff ff 49 8b 46 58 48 83 e0 fe 0f 84 4a fb ff ff 48 8b 80 d0 00 00 00 <48> 8b 00 44 8b 88 e0 00 00 00 e9 34 fb ff ff 4d 85 ed 0f 85 69 01
+RSP: 0018:ffffc90000003c70 EFLAGS: 00000286
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 00000000000000e0
+RDX: 0000000000000021 RSI: 0000000000000000 RDI: ffff888006d72a18
+RBP: ffffc90000003d80 R08: 0000000000000000 R09: 0000000000000001
+R10: ffffc90000003d98 R11: 0000000000000040 R12: ffff888006d72a10
+R13: 0000000000000000 R14: ffff8880057fb800 R15: ffffffff835d86c0
+FS:  00007f9dc72ee740(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000057b2000 CR4: 00000000007506f0
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ ip6_pkt_drop (net/ipv6/route.c:4513)
+ ipv6_rthdr_rcv (net/ipv6/exthdrs.c:640 net/ipv6/exthdrs.c:686)
+ ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:437 (discriminator 5))
+ ip6_input_finish (./include/linux/rcupdate.h:781 net/ipv6/ip6_input.c:483)
+ __netif_receive_skb_one_core (net/core/dev.c:5455)
+ process_backlog (./include/linux/rcupdate.h:781 net/core/dev.c:5895)
+ __napi_poll (net/core/dev.c:6460)
+ net_rx_action (net/core/dev.c:6529 net/core/dev.c:6660)
+ __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:554)
+ do_softirq (kernel/softirq.c:454 kernel/softirq.c:441)
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip (kernel/softirq.c:381)
+ __dev_queue_xmit (net/core/dev.c:4231)
+ ip6_finish_output2 (./include/net/neighbour.h:544 net/ipv6/ip6_output.c:135)
+ rawv6_sendmsg (./include/net/dst.h:458 ./include/linux/netfilter.h:303 net/ipv6/raw.c:656 net/ipv6/raw.c:914)
+ sock_sendmsg (net/socket.c:725 net/socket.c:748)
+ __sys_sendto (net/socket.c:2134)
+ __x64_sys_sendto (net/socket.c:2146 net/socket.c:2142 net/socket.c:2142)
+ do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+RIP: 0033:0x7f9dc751baea
+Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+RSP: 002b:00007ffe98712c38 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 00007ffe98712cf8 RCX: 00007f9dc751baea
+RDX: 0000000000000060 RSI: 00007f9dc6460b90 RDI: 0000000000000003
+RBP: 00007f9dc56e8be0 R08: 00007ffe98712d70 R09: 000000000000001c
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: ffffffffc4653600 R14: 0000000000000001 R15: 00007f9dc6af5d1b
+ </TASK>
+Modules linked in:
+CR2: 0000000000000000
+ ---[ end trace 0000000000000000 ]---
+RIP: 0010:icmp6_send (net/ipv6/icmp.c:436 net/ipv6/icmp.c:503)
+Code: fe ff ff 48 c7 40 30 c0 86 5d 83 e8 c6 44 1c 00 e9 c8 fc ff ff 49 8b 46 58 48 83 e0 fe 0f 84 4a fb ff ff 48 8b 80 d0 00 00 00 <48> 8b 00 44 8b 88 e0 00 00 00 e9 34 fb ff ff 4d 85 ed 0f 85 69 01
+RSP: 0018:ffffc90000003c70 EFLAGS: 00000286
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 00000000000000e0
+RDX: 0000000000000021 RSI: 0000000000000000 RDI: ffff888006d72a18
+RBP: ffffc90000003d80 R08: 0000000000000000 R09: 0000000000000001
+R10: ffffc90000003d98 R11: 0000000000000040 R12: ffff888006d72a10
+R13: 0000000000000000 R14: ffff8880057fb800 R15: ffffffff835d86c0
+FS:  00007f9dc72ee740(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000057b2000 CR4: 00000000007506f0
+PKRU: 55555554
+Kernel panic - not syncing: Fatal exception in interrupt
+Kernel Offset: disabled
+
+Fixes: 4832c30d5458 ("net: ipv6: put host and anycast routes on device with address")
+Reported-by: Wang Yufen <wangyufen@huawei.com>
+Closes: https://lore.kernel.org/netdev/c41403a9-c2f6-3b7e-0c96-e1901e605cd0@huawei.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 2aaa8a15de73 ("icmp6: Fix null-ptr-deref of ip6_null_entry->rt6i_idev in icmp6_dev().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h | 16 ++++++++++++++++
- net/ipv6/icmp.c        | 17 +++++++++++------
- net/ipv6/reassembly.c  |  4 ++--
- 3 files changed, 29 insertions(+), 8 deletions(-)
+ net/ipv6/icmp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index db2a87981dd46..9583d3bbab039 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -340,6 +340,22 @@ static inline struct inet6_dev *__in6_dev_get(const struct net_device *dev)
- 	return rcu_dereference_rtnl(dev->ip6_ptr);
- }
- 
-+/**
-+ * __in6_dev_stats_get - get inet6_dev pointer for stats
-+ * @dev: network device
-+ * @skb: skb for original incoming interface if neeeded
-+ *
-+ * Caller must hold rcu_read_lock or RTNL, because this function
-+ * does not take a reference on the inet6_dev.
-+ */
-+static inline struct inet6_dev *__in6_dev_stats_get(const struct net_device *dev,
-+						    const struct sk_buff *skb)
-+{
-+	if (netif_is_l3_master(dev))
-+		dev = dev_get_by_index_rcu(dev_net(dev), inet6_iif(skb));
-+	return __in6_dev_get(dev);
-+}
-+
- /**
-  * __in6_dev_get_safely - get inet6_dev pointer from netdevice
-  * @dev: network device
 diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index fbc8746371b6d..1b86a2e03d049 100644
+index 1b86a2e03d049..bfafd7649ccb3 100644
 --- a/net/ipv6/icmp.c
 +++ b/net/ipv6/icmp.c
-@@ -395,23 +395,28 @@ static struct dst_entry *icmpv6_route_lookup(struct net *net,
- 	return ERR_PTR(err);
- }
- 
--static int icmp6_iif(const struct sk_buff *skb)
-+static struct net_device *icmp6_dev(const struct sk_buff *skb)
- {
--	int iif = skb->dev->ifindex;
-+	struct net_device *dev = skb->dev;
- 
- 	/* for local traffic to local address, skb dev is the loopback
- 	 * device. Check if there is a dst attached to the skb and if so
- 	 * get the real device index. Same is needed for replies to a link
- 	 * local address on a device enslaved to an L3 master device
- 	 */
--	if (unlikely(iif == LOOPBACK_IFINDEX || netif_is_l3_master(skb->dev))) {
-+	if (unlikely(dev->ifindex == LOOPBACK_IFINDEX || netif_is_l3_master(skb->dev))) {
+@@ -407,7 +407,10 @@ static struct net_device *icmp6_dev(const struct sk_buff *skb)
+ 	if (unlikely(dev->ifindex == LOOPBACK_IFINDEX || netif_is_l3_master(skb->dev))) {
  		const struct rt6_info *rt6 = skb_rt6_info(skb);
  
- 		if (rt6)
--			iif = rt6->rt6i_idev->dev->ifindex;
-+			dev = rt6->rt6i_idev->dev;
+-		if (rt6)
++		/* The destination could be an external IP in Ext Hdr (SRv6, RPL, etc.),
++		 * and ip6_null_entry could be set to skb if no route is found.
++		 */
++		if (rt6 && rt6->rt6i_idev)
+ 			dev = rt6->rt6i_idev->dev;
  	}
  
--	return iif;
-+	return dev;
-+}
-+
-+static int icmp6_iif(const struct sk_buff *skb)
-+{
-+	return icmp6_dev(skb)->ifindex;
- }
- 
- /*
-@@ -800,7 +805,7 @@ void icmpv6_notify(struct sk_buff *skb, u8 type, u8 code, __be32 info)
- static int icmpv6_rcv(struct sk_buff *skb)
- {
- 	struct net *net = dev_net(skb->dev);
--	struct net_device *dev = skb->dev;
-+	struct net_device *dev = icmp6_dev(skb);
- 	struct inet6_dev *idev = __in6_dev_get(dev);
- 	const struct in6_addr *saddr, *daddr;
- 	struct icmp6hdr *hdr;
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index 60dfd0d118512..b596727f04978 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -302,7 +302,7 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 			   skb_network_header_len(skb));
- 
- 	rcu_read_lock();
--	__IP6_INC_STATS(net, __in6_dev_get(dev), IPSTATS_MIB_REASMOKS);
-+	__IP6_INC_STATS(net, __in6_dev_stats_get(dev, skb), IPSTATS_MIB_REASMOKS);
- 	rcu_read_unlock();
- 	fq->q.fragments = NULL;
- 	fq->q.rb_fragments = RB_ROOT;
-@@ -317,7 +317,7 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
- 	net_dbg_ratelimited("ip6_frag_reasm: no memory for reassembly\n");
- out_fail:
- 	rcu_read_lock();
--	__IP6_INC_STATS(net, __in6_dev_get(dev), IPSTATS_MIB_REASMFAILS);
-+	__IP6_INC_STATS(net, __in6_dev_stats_get(dev, skb), IPSTATS_MIB_REASMFAILS);
- 	rcu_read_unlock();
- 	inet_frag_kill(&fq->q);
- 	return -1;
 -- 
 2.39.2
 
