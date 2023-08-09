@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3806B17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1DCC433C7;
-	Wed,  9 Aug 2023 11:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB22F17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C17CC433C8;
+	Wed,  9 Aug 2023 11:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580315;
-	bh=werk7RZWHTc0ehFZfT3Fkw2zufSa3dzfdR3lFBoxkak=;
+	s=korg; t=1691580317;
+	bh=4DhusKSN2G+jhIZ0p/wGdwRAM9Ax38fH1UDkqq2F19k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+7AhiyRx8KYqytwlw+MUBKjPEf43O9fPiYr7fEPEk3jbNwQMDSoutUJFaT9potfN
-	 78pvZKPhhQERqKzQvTSezjJPmrgI0GncK2OUqvkFMZ/xPHzdOJPDa85bO+TMnHlonq
-	 h+AsngJUxGwGHiZCF2IIYYnOpyR3I9qwOQtHTkLM=
+	b=qeNCCGwq/YaLfbX7ZTG853P6vKytiaKKwEUJveg3K2se0WZQxYvbbg1KmC9I6hMeO
+	 Em1izfi2ZjgVCmJWaukDNq2NTYALfI4hN0SyZajgkdpi1lW0OZkvGIJLy9sV1jquGl
+	 TZ/IR5YCfPzce6T4cOFHx5AURio1twlJ9H30PBmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Steffen <Alexander.Steffen@infineon.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 4.19 274/323] tpm_tis: Explicitly check for error code
-Date: Wed,  9 Aug 2023 12:41:52 +0200
-Message-ID: <20230809103710.598335731@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 275/323] irq-bcm6345-l1: Do not assume a fixed block to cpu mapping
+Date: Wed,  9 Aug 2023 12:41:53 +0200
+Message-ID: <20230809103710.638145102@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,56 +37,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Steffen <Alexander.Steffen@infineon.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-commit 513253f8c293c0c8bd46d09d337fc892bf8f9f48 upstream.
+[ Upstream commit 55ad24857341c36616ecc1d9580af5626c226cf1 ]
 
-recv_data either returns the number of received bytes, or a negative value
-representing an error code. Adding the return value directly to the total
-number of received bytes therefore looks a little weird, since it might add
-a negative error code to a sum of bytes.
+The irq to block mapping is fixed, and interrupts from the first block
+will always be routed to the first parent IRQ. But the parent interrupts
+themselves can be routed to any available CPU.
 
-The following check for size < expected usually makes the function return
-ETIME in that case, so it does not cause too many problems in practice. But
-to make the code look cleaner and because the caller might still be
-interested in the original error code, explicitly check for the presence of
-an error code and pass that through.
+This is used by the bootloader to map the first parent interrupt to the
+boot CPU, regardless wether the boot CPU is the first one or the second
+one.
 
-Cc: stable@vger.kernel.org
-Fixes: cb5354253af2 ("[PATCH] tpm: spacing cleanups 2")
-Signed-off-by: Alexander Steffen <Alexander.Steffen@infineon.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When booting from the second CPU, the assumption that the first block's
+IRQ is mapped to the first CPU breaks, and the system hangs because
+interrupts do not get routed correctly.
+
+Fix this by passing the appropriate bcm6434_l1_cpu to the interrupt
+handler instead of the chip itself, so the handler always has the right
+block.
+
+Fixes: c7c42ec2baa1 ("irqchips/bmips: Add bcm6345-l1 interrupt controller")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230629072620.62527-1-jonas.gorski@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-bcm6345-l1.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -270,6 +270,7 @@ static int tpm_tis_recv(struct tpm_chip
- 	int size = 0;
- 	int status;
- 	u32 expected;
-+	int rc;
+diff --git a/drivers/irqchip/irq-bcm6345-l1.c b/drivers/irqchip/irq-bcm6345-l1.c
+index 31ea6332ecb83..60dc64b4ac6d2 100644
+--- a/drivers/irqchip/irq-bcm6345-l1.c
++++ b/drivers/irqchip/irq-bcm6345-l1.c
+@@ -85,6 +85,7 @@ struct bcm6345_l1_chip {
+ };
  
- 	if (count < TPM_HEADER_SIZE) {
- 		size = -EIO;
-@@ -289,8 +290,13 @@ static int tpm_tis_recv(struct tpm_chip
- 		goto out;
+ struct bcm6345_l1_cpu {
++	struct bcm6345_l1_chip	*intc;
+ 	void __iomem		*map_base;
+ 	unsigned int		parent_irq;
+ 	u32			enable_cache[];
+@@ -118,17 +119,11 @@ static inline unsigned int cpu_for_irq(struct bcm6345_l1_chip *intc,
+ 
+ static void bcm6345_l1_irq_handle(struct irq_desc *desc)
+ {
+-	struct bcm6345_l1_chip *intc = irq_desc_get_handler_data(desc);
+-	struct bcm6345_l1_cpu *cpu;
++	struct bcm6345_l1_cpu *cpu = irq_desc_get_handler_data(desc);
++	struct bcm6345_l1_chip *intc = cpu->intc;
+ 	struct irq_chip *chip = irq_desc_get_chip(desc);
+ 	unsigned int idx;
+ 
+-#ifdef CONFIG_SMP
+-	cpu = intc->cpus[cpu_logical_map(smp_processor_id())];
+-#else
+-	cpu = intc->cpus[0];
+-#endif
+-
+ 	chained_irq_enter(chip, desc);
+ 
+ 	for (idx = 0; idx < intc->n_words; idx++) {
+@@ -260,6 +255,7 @@ static int __init bcm6345_l1_init_one(struct device_node *dn,
+ 	if (!cpu)
+ 		return -ENOMEM;
+ 
++	cpu->intc = intc;
+ 	cpu->map_base = ioremap(res.start, sz);
+ 	if (!cpu->map_base)
+ 		return -ENOMEM;
+@@ -275,7 +271,7 @@ static int __init bcm6345_l1_init_one(struct device_node *dn,
+ 		return -EINVAL;
  	}
+ 	irq_set_chained_handler_and_data(cpu->parent_irq,
+-						bcm6345_l1_irq_handle, intc);
++						bcm6345_l1_irq_handle, cpu);
  
--	size += recv_data(chip, &buf[TPM_HEADER_SIZE],
--			  expected - TPM_HEADER_SIZE);
-+	rc = recv_data(chip, &buf[TPM_HEADER_SIZE],
-+		       expected - TPM_HEADER_SIZE);
-+	if (rc < 0) {
-+		size = rc;
-+		goto out;
-+	}
-+	size += rc;
- 	if (size < expected) {
- 		dev_err(&chip->dev, "Unable to read remainder of result\n");
- 		size = -ETIME;
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
