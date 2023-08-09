@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DAC171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A38DC433C8;
-	Wed,  9 Aug 2023 10:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726EB171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8962C433C8;
+	Wed,  9 Aug 2023 10:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578741;
-	bh=PAR1NtWvwQLeYgEC0LFyp6voZOAAFNmK+qNEJorTAbo=;
+	s=korg; t=1691578744;
+	bh=9opQW3mhR3qd7E0c/wpJlIun4dCB8V6v/twdVEbfSpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXqN5QVhNB6iGDrFgJ6BwH+lWpAKqHooBGSgAWkha6lV/8IM/fH38hglAtAOF1c5u
-	 +1UKbIKJeQeEUqS7GyiIQvO3QRJBp2XlIVlWPUPQA7QtET4bWWspgJihXUuOx5v+LR
-	 Q++4L4zElfDP0Jz6iYuf72KF5UOzj8EHQewyxw7g=
+	b=fNdwLzxmH/Sv4Z+mXzdd7U04Ic5bBWe4yXJTSnd8s9VWVKF0hsAQnNzE7ynSYCHmD
+	 MRiguQHC6Nj9MzWmE32vwUqKdzgxlsGbTo1+4hJ9LPJalXnIIv/tM2lnb9IdOMxFqP
+	 AH/YRuD7APFUdQQ7L2Vu5VS0CuMczjK/Q+1NlBWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/92] net: netsec: Ignore phy-mode on SynQuacer in DT mode
-Date: Wed,  9 Aug 2023 12:41:16 +0200
-Message-ID: <20230809103635.010347557@linuxfoundation.org>
+Subject: [PATCH 5.15 41/92] net: dcb: choose correct policy to parse DCB_ATTR_BCN
+Date: Wed,  9 Aug 2023 12:41:17 +0200
+Message-ID: <20230809103635.040163170@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -38,59 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit f3bb7759a924713bc54d15f6d0d70733b5935fad ]
+[ Upstream commit 31d49ba033095f6e8158c60f69714a500922e0c3 ]
 
-As documented in acd7aaf51b20 ("netsec: ignore 'phy-mode' device
-property on ACPI systems") the SocioNext SynQuacer platform ships with
-firmware defining the PHY mode as RGMII even though the physical
-configuration of the PHY is for TX and RX delays.  Since bbc4d71d63549bc
-("net: phy: realtek: fix rtl8211e rx/tx delay config") this has caused
-misconfiguration of the PHY, rendering the network unusable.
+The dcbnl_bcn_setcfg uses erroneous policy to parse tb[DCB_ATTR_BCN],
+which is introduced in commit 859ee3c43812 ("DCB: Add support for DCB
+BCN"). Please see the comment in below code
 
-This was worked around for ACPI by ignoring the phy-mode property but
-the system is also used with DT.  For DT instead if we're running on a
-SynQuacer force a working PHY mode, as well as the standard EDK2
-firmware with DT there are also some of these systems that use u-boot
-and might not initialise the PHY if not netbooting.  Newer firmware
-imagaes for at least EDK2 are available from Linaro so print a warning
-when doing this.
+static int dcbnl_bcn_setcfg(...)
+{
+  ...
+  ret = nla_parse_nested_deprecated(..., dcbnl_pfc_up_nest, .. )
+  // !!! dcbnl_pfc_up_nest for attributes
+  //  DCB_PFC_UP_ATTR_0 to DCB_PFC_UP_ATTR_ALL in enum dcbnl_pfc_up_attrs
+  ...
+  for (i = DCB_BCN_ATTR_RP_0; i <= DCB_BCN_ATTR_RP_7; i++) {
+  // !!! DCB_BCN_ATTR_RP_0 to DCB_BCN_ATTR_RP_7 in enum dcbnl_bcn_attrs
+    ...
+    value_byte = nla_get_u8(data[i]);
+    ...
+  }
+  ...
+  for (i = DCB_BCN_ATTR_BCNA_0; i <= DCB_BCN_ATTR_RI; i++) {
+  // !!! DCB_BCN_ATTR_BCNA_0 to DCB_BCN_ATTR_RI in enum dcbnl_bcn_attrs
+  ...
+    value_int = nla_get_u32(data[i]);
+  ...
+  }
+  ...
+}
 
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230731-synquacer-net-v3-1-944be5f06428@kernel.org
+That is, the nla_parse_nested_deprecated uses dcbnl_pfc_up_nest
+attributes to parse nlattr defined in dcbnl_pfc_up_attrs. But the
+following access code fetch each nlattr as dcbnl_bcn_attrs attributes.
+By looking up the associated nla_policy for dcbnl_bcn_attrs. We can find
+the beginning part of these two policies are "same".
+
+static const struct nla_policy dcbnl_pfc_up_nest[...] = {
+        [DCB_PFC_UP_ATTR_0]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_1]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_2]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_3]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_4]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_5]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_6]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_7]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_ALL] = {.type = NLA_FLAG},
+};
+
+static const struct nla_policy dcbnl_bcn_nest[...] = {
+        [DCB_BCN_ATTR_RP_0]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_1]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_2]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_3]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_4]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_5]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_6]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_7]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_ALL]       = {.type = NLA_FLAG},
+        // from here is somewhat different
+        [DCB_BCN_ATTR_BCNA_0]       = {.type = NLA_U32},
+        ...
+        [DCB_BCN_ATTR_ALL]          = {.type = NLA_FLAG},
+};
+
+Therefore, the current code is buggy and this
+nla_parse_nested_deprecated could overflow the dcbnl_pfc_up_nest and use
+the adjacent nla_policy to parse attributes from DCB_BCN_ATTR_BCNA_0.
+
+Hence use the correct policy dcbnl_bcn_nest to parse the nested
+tb[DCB_ATTR_BCN] TLV.
+
+Fixes: 859ee3c43812 ("DCB: Add support for DCB BCN")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230801013248.87240-1-linma@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/dcb/dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index 6b8013fb17c38..eb59e8abe6915 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -1851,6 +1851,17 @@ static int netsec_of_probe(struct platform_device *pdev,
- 		return err;
- 	}
+diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
+index dc4fb699b56c3..d2981e89d3638 100644
+--- a/net/dcb/dcbnl.c
++++ b/net/dcb/dcbnl.c
+@@ -946,7 +946,7 @@ static int dcbnl_bcn_setcfg(struct net_device *netdev, struct nlmsghdr *nlh,
+ 		return -EOPNOTSUPP;
  
-+	/*
-+	 * SynQuacer is physically configured with TX and RX delays
-+	 * but the standard firmware claimed otherwise for a long
-+	 * time, ignore it.
-+	 */
-+	if (of_machine_is_compatible("socionext,developer-box") &&
-+	    priv->phy_interface != PHY_INTERFACE_MODE_RGMII_ID) {
-+		dev_warn(&pdev->dev, "Outdated firmware reports incorrect PHY mode, overriding\n");
-+		priv->phy_interface = PHY_INTERFACE_MODE_RGMII_ID;
-+	}
-+
- 	priv->phy_np = of_parse_phandle(pdev->dev.of_node, "phy-handle", 0);
- 	if (!priv->phy_np) {
- 		dev_err(&pdev->dev, "missing required property 'phy-handle'\n");
+ 	ret = nla_parse_nested_deprecated(data, DCB_BCN_ATTR_MAX,
+-					  tb[DCB_ATTR_BCN], dcbnl_pfc_up_nest,
++					  tb[DCB_ATTR_BCN], dcbnl_bcn_nest,
+ 					  NULL);
+ 	if (ret)
+ 		return ret;
 -- 
 2.40.1
 
