@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C1315AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF3AC433C9;
-	Wed,  9 Aug 2023 10:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE6915AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9F4C433CA;
+	Wed,  9 Aug 2023 10:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577867;
-	bh=jwvgWVtNftjjBSavMJVmhqFPAca+IA7DejtQ3+/t+bc=;
+	s=korg; t=1691577869;
+	bh=5ED8FF5WWz6g2COwBH30fekqIPsl5L9cjALjcG+GOdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCBzq4NHdnmzlwARu9u1MDw8i3My8zwwwrMVbftoSq6ai8EOYykykrs8XgDlHbrL0
-	 dXSjpFm/4hRo2JnqD595wfAakol+UdelPJqO9GiNMn3tXx5/1qn8k96mdueYajm522
-	 rUETdoMl6mm4TFILk7gj8Ap5+VAr6rjLwPq2NcNo=
+	b=2FvYSP2o2kJXfbTa86jFhXB8Mb+ddzAziTrLRGgg7guEd0awk/rswDhMPmD/IZKlV
+	 EQWplSoO0M4wi7/CTUIYTkbmjnkq7sqxYdhaR9dMgFV49fVxfxiyuWsG+CjUytSxil
+	 bb+n0rKsBHUoIb25H7PSmWZbJOpWn9SlLzhFfdyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.4 022/165] word-at-a-time: use the same return type for has_zero regardless of endianness
-Date: Wed,  9 Aug 2023 12:39:13 +0200
-Message-ID: <20230809103643.524583362@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 023/165] s390/vmem: split pages when debug pagealloc is enabled
+Date: Wed,  9 Aug 2023 12:39:14 +0200
+Message-ID: <20230809103643.564517762@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -38,71 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ndesaulniers@google.com <ndesaulniers@google.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 79e8328e5acbe691bbde029a52c89d70dcbc22f3 ]
+[ Upstream commit edc1e4b6e26536868ef819a735e04a5b32c10589 ]
 
-Compiling big-endian targets with Clang produces the diagnostic:
+Since commit bb1520d581a3 ("s390/mm: start kernel with DAT enabled")
+the kernel crashes early during boot when debug pagealloc is enabled:
 
-  fs/namei.c:2173:13: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
-	} while (!(has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
-	          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                               ||
-  fs/namei.c:2173:13: note: cast one or both operands to int to silence this warning
+mem auto-init: stack:off, heap alloc:off, heap free:off
+addressing exception: 0005 ilc:2 [#1] SMP DEBUG_PAGEALLOC
+Modules linked in:
+CPU: 0 PID: 0 Comm: swapper Not tainted 6.5.0-rc3-09759-gc5666c912155 #630
+[..]
+Krnl Code: 00000000001325f6: ec5600248064 cgrj %r5,%r6,8,000000000013263e
+           00000000001325fc: eb880002000c srlg %r8,%r8,2
+          #0000000000132602: b2210051     ipte %r5,%r1,%r0,0
+          >0000000000132606: b90400d1     lgr %r13,%r1
+           000000000013260a: 41605008     la %r6,8(%r5)
+           000000000013260e: a7db1000     aghi %r13,4096
+           0000000000132612: b221006d     ipte %r6,%r13,%r0,0
+           0000000000132616: e3d0d0000171 lay %r13,4096(%r13)
 
-It appears that when has_zero was introduced, two definitions were
-produced with different signatures (in particular different return
-types).
+Call Trace:
+ __kernel_map_pages+0x14e/0x320
+ __free_pages_ok+0x23a/0x5a8)
+ free_low_memory_core_early+0x214/0x2c8
+ memblock_free_all+0x28/0x58
+ mem_init+0xb6/0x228
+ mm_core_init+0xb6/0x3b0
+ start_kernel+0x1d2/0x5a8
+ startup_continue+0x36/0x40
+Kernel panic - not syncing: Fatal exception: panic_on_oops
 
-Looking at the usage in hash_name() in fs/namei.c, I suspect that
-has_zero() is meant to be invoked twice per while loop iteration; using
-logical-or would not update `bdata` when `a` did not have zeros.  So I
-think it's preferred to always return an unsigned long rather than a
-bool than update the while loop in hash_name() to use a logical-or
-rather than bitwise-or.
+This is caused by using large mappings on machines with EDAT1/EDAT2. Add
+the code to split the mappings into 4k pages if debug pagealloc is enabled
+by CONFIG_DEBUG_PAGEALLOC_ENABLE_DEFAULT or the debug_pagealloc kernel
+command line option.
 
-[ Also changed powerpc version to do the same  - Linus ]
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1832
-Link: https://lore.kernel.org/lkml/20230801-bitwise-v1-1-799bec468dc4@google.com/
-Fixes: 36126f8f2ed8 ("word-at-a-time: make the interfaces truly generic")
-Debugged-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: bb1520d581a3 ("s390/mm: start kernel with DAT enabled")
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/word-at-a-time.h | 2 +-
- include/asm-generic/word-at-a-time.h      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/mm/vmem.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/word-at-a-time.h b/arch/powerpc/include/asm/word-at-a-time.h
-index 46c31fb8748d5..30a12d2086871 100644
---- a/arch/powerpc/include/asm/word-at-a-time.h
-+++ b/arch/powerpc/include/asm/word-at-a-time.h
-@@ -34,7 +34,7 @@ static inline long find_zero(unsigned long mask)
- 	return leading_zero_bits >> 3;
- }
+diff --git a/arch/s390/mm/vmem.c b/arch/s390/mm/vmem.c
+index b9dcb4ae6c59a..05f4912380fac 100644
+--- a/arch/s390/mm/vmem.c
++++ b/arch/s390/mm/vmem.c
+@@ -761,6 +761,8 @@ void __init vmem_map_init(void)
+ 	if (static_key_enabled(&cpu_has_bear))
+ 		set_memory_nx(0, 1);
+ 	set_memory_nx(PAGE_SIZE, 1);
++	if (debug_pagealloc_enabled())
++		set_memory_4k(0, ident_map_size >> PAGE_SHIFT);
  
--static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
-+static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
- {
- 	unsigned long rhs = val | c->low_bits;
- 	*data = rhs;
-diff --git a/include/asm-generic/word-at-a-time.h b/include/asm-generic/word-at-a-time.h
-index 20c93f08c9933..95a1d214108a5 100644
---- a/include/asm-generic/word-at-a-time.h
-+++ b/include/asm-generic/word-at-a-time.h
-@@ -38,7 +38,7 @@ static inline long find_zero(unsigned long mask)
- 	return (mask >> 8) ? byte : byte + 1;
- }
- 
--static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
-+static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
- {
- 	unsigned long rhs = val | c->low_bits;
- 	*data = rhs;
+ 	pr_info("Write protected kernel read-only data: %luk\n",
+ 		(unsigned long)(__end_rodata - _stext) >> 10);
 -- 
 2.40.1
 
