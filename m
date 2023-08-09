@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC6117AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D59C433C7;
-	Wed,  9 Aug 2023 11:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632C917AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BC2C433C8;
+	Wed,  9 Aug 2023 11:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581123;
-	bh=1rW1SLtWYeCfO26de2Wl5M45zQ10bYqD50J1yyTPJbQ=;
+	s=korg; t=1691581126;
+	bh=2rbq0vnRLg0p9titIcBt2FZ7Z9yXVrWtZY7aLjEDz1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kq8teSLRT1jWnggqqWG8PepCtUd4zU8yRh3F7keRivZvU5OE1XOc5ErPvTbVuIZgo
-	 R9ryrBP1UGDLEtODxrC50D6OqtmQETRczGEIAUDAPIOhvR0C/5UMAn32UIPC2mP73u
-	 YyEHMvKH3jWE+AHwqWvYptemwcC7t8Zl9wkzIkIY=
+	b=TAiYdVKnB3Py72KRU/+5l/6ysoXoLt2XJfme4mr8/swNIlx93bZji2/rdhkyAtB5o
+	 mBJ8aJ7xbrNskAheWB5VPz74mtt3BWXFz41wfDAbf8ckagUjeJ6SbNS6/guhKe55Sk
+	 T9ftKM+BP2rmjVw4LHJv79qloNA2taVEcilq0Ugo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 112/201] ASoC: cs42l51: fix driver to properly autoload with automatic module loading
-Date: Wed,  9 Aug 2023 12:41:54 +0200
-Message-ID: <20230809103647.537914958@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Li Huafei <lihuafei1@huawei.com>
+Subject: [PATCH 5.10 113/201] kprobes/x86: Fix fall-through warnings for Clang
+Date: Wed,  9 Aug 2023 12:41:55 +0200
+Message-ID: <20230809103647.566643368@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,86 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 
-commit e51df4f81b02bcdd828a04de7c1eb6a92988b61e upstream.
+[ Upstream commit e689b300c99ca2dd80d3f662e19499bba27cda09 ]
 
-In commit 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table
-pointer"), 9 years ago, some random guy fixed the cs42l51 after it was
-split into a core part and an I2C part to properly match based on a
-Device Tree compatible string.
+In preparation to enable -Wimplicit-fallthrough for Clang, fix a warning
+by explicitly adding a break statement instead of just letting the code
+fall through to the next case.
 
-However, the fix in this commit is wrong: the MODULE_DEVICE_TABLE(of,
-....) is in the core part of the driver, not the I2C part. Therefore,
-automatic module loading based on module.alias, based on matching with
-the DT compatible string, loads the core part of the driver, but not
-the I2C part. And threfore, the i2c_driver is not registered, and the
-codec is not known to the system, nor matched with a DT node with the
-corresponding compatible string.
-
-In order to fix that, we move the MODULE_DEVICE_TABLE(of, ...) into
-the I2C part of the driver. The cs42l51_of_match[] array is also moved
-as well, as it is not possible to have this definition in one file,
-and the MODULE_DEVICE_TABLE(of, ...) invocation in another file, due
-to how MODULE_DEVICE_TABLE works.
-
-Thanks to this commit, the I2C part of the driver now properly
-autoloads, and thanks to its dependency on the core part, the core
-part gets autoloaded as well, resulting in a functional sound card
-without having to manually load kernel modules.
-
-Fixes: 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table pointer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-Link: https://lore.kernel.org/r/20230713112112.778576-1-thomas.petazzoni@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://github.com/KSPP/linux/issues/115
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs42l51-i2c.c |    6 ++++++
- sound/soc/codecs/cs42l51.c     |    7 -------
- sound/soc/codecs/cs42l51.h     |    1 -
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ arch/x86/kernel/kprobes/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/cs42l51-i2c.c
-+++ b/sound/soc/codecs/cs42l51-i2c.c
-@@ -19,6 +19,12 @@ static struct i2c_device_id cs42l51_i2c_
- };
- MODULE_DEVICE_TABLE(i2c, cs42l51_i2c_id);
- 
-+const struct of_device_id cs42l51_of_match[] = {
-+	{ .compatible = "cirrus,cs42l51", },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, cs42l51_of_match);
-+
- static int cs42l51_i2c_probe(struct i2c_client *i2c,
- 			     const struct i2c_device_id *id)
- {
---- a/sound/soc/codecs/cs42l51.c
-+++ b/sound/soc/codecs/cs42l51.c
-@@ -825,13 +825,6 @@ int __maybe_unused cs42l51_resume(struct
- }
- EXPORT_SYMBOL_GPL(cs42l51_resume);
- 
--const struct of_device_id cs42l51_of_match[] = {
--	{ .compatible = "cirrus,cs42l51", },
--	{ }
--};
--MODULE_DEVICE_TABLE(of, cs42l51_of_match);
--EXPORT_SYMBOL_GPL(cs42l51_of_match);
--
- MODULE_AUTHOR("Arnaud Patard <arnaud.patard@rtp-net.org>");
- MODULE_DESCRIPTION("Cirrus Logic CS42L51 ALSA SoC Codec Driver");
- MODULE_LICENSE("GPL");
---- a/sound/soc/codecs/cs42l51.h
-+++ b/sound/soc/codecs/cs42l51.h
-@@ -16,7 +16,6 @@ int cs42l51_probe(struct device *dev, st
- int cs42l51_remove(struct device *dev);
- int __maybe_unused cs42l51_suspend(struct device *dev);
- int __maybe_unused cs42l51_resume(struct device *dev);
--extern const struct of_device_id cs42l51_of_match[];
- 
- #define CS42L51_CHIP_ID			0x1B
- #define CS42L51_CHIP_REV_A		0x00
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -880,6 +880,7 @@ static void resume_execution(struct kpro
+ 			p->ainsn.boostable = true;
+ 			goto no_change;
+ 		}
++		break;
+ 	default:
+ 		break;
+ 	}
 
 
