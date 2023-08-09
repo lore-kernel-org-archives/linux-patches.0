@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521B917731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8690C433C7;
-	Wed,  9 Aug 2023 11:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B38117731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CB2C433C8;
+	Wed,  9 Aug 2023 11:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579188;
-	bh=s327MfDf7ncgj3I2dnSkNNBNdztu74kcYOvEJEwQdsk=;
+	s=korg; t=1691579190;
+	bh=XmxzaaER255j+qym9M427F0CRp3DIvbsG7KfgQvarxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAB8O6s5zTYXAGNgUWKJS0cEjNMrceeziCRRhtYNrAhpnOsUk6NXTxzaFi9X6LkSK
-	 xpd8pWErHiMK6MGk7i9dKheWMNV7/7Ix4in3pkLHQPokD80IhKZigPHRvBy2pge6ZW
-	 BTFoFbE0ILyeCDbg5g52GpxuedpSR5oaxQtZ8RRM=
+	b=QVuwRpDg3rMbSf6I9H8Zx/HgCt6i16ryYauCTT3QrrfCU6kGMGzkwL6KCnXyPKgt3
+	 f6R3eF0mKp5poe1G9kBin64fzGuAsX2GnMjM6EdYnwv3jauyk1bmAWxKLjIGOcVVCf
+	 KOer1L1CT2rpOPdOyXQIoObEIZqTDcsLcrhnA+gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Robert Marko <robimarko@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.14 078/204] mmc: core: disable TRIM on Kingston EMMC04G-M627
-Date: Wed,  9 Aug 2023 12:40:16 +0200
-Message-ID: <20230809103645.271587227@linuxfoundation.org>
+Subject: [PATCH 4.14 079/204] mmc: core: disable TRIM on Micron MTFC4GACAJCN-1M
+Date: Wed,  9 Aug 2023 12:40:17 +0200
+Message-ID: <20230809103645.311076520@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,23 +36,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Marko <robimarko@gmail.com>
 
-commit f1738a1f816233e6dfc2407f24a31d596643fd90 upstream.
+commit dbfbddcddcebc9ce8a08757708d4e4a99d238e44 upstream.
 
-It seems that Kingston EMMC04G-M627 despite advertising TRIM support does
+It seems that Micron MTFC4GACAJCN-1M despite advertising TRIM support does
 not work when the core is trying to use REQ_OP_WRITE_ZEROES.
 
-We are seeing I/O errors in OpenWrt under 6.1 on Zyxel NBG7815 that we did
-not previously have and tracked it down to REQ_OP_WRITE_ZEROES.
-
-Trying to use fstrim seems to also throw errors like:
-[93010.835112] I/O error, dev loop0, sector 16902 op 0x3:(DISCARD) flags 0x800 phys_seg 1 prio class 2
+We are seeing the following errors in OpenWrt under 6.1 on Qnap Qhora 301W
+that we did not previously have and tracked it down to REQ_OP_WRITE_ZEROES:
+[   18.085950] I/O error, dev loop0, sector 596 op 0x9:(WRITE_ZEROES) flags 0x800 phys_seg 0 prio class 2
 
 Disabling TRIM makes the error go away, so lets add a quirk for this eMMC
 to disable TRIM.
 
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230619193621.437358-1-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20230530213259.1776512-1-robimarko@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -61,14 +59,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/mmc/core/quirks.h
 +++ b/drivers/mmc/core/quirks.h
-@@ -91,6 +91,13 @@ static const struct mmc_fixup mmc_blk_fi
- 		  MMC_QUIRK_SEC_ERASE_TRIM_BROKEN),
+@@ -98,6 +98,13 @@ static const struct mmc_fixup mmc_blk_fi
+ 		  MMC_QUIRK_TRIM_BROKEN),
  
  	/*
-+	 * Kingston EMMC04G-M627 advertises TRIM but it does not seems to
++	 * Micron MTFC4GACAJCN-1M advertises TRIM but it does not seems to
 +	 * support being used to offload WRITE_ZEROES.
 +	 */
-+	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++	MMC_FIXUP("Q2J54A", CID_MANFID_MICRON, 0x014e, add_quirk_mmc,
 +		  MMC_QUIRK_TRIM_BROKEN),
 +
 +	/*
