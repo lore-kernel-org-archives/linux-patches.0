@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330541773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8CFAC433C8;
-	Wed,  9 Aug 2023 11:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC141773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF95C433C7;
+	Wed,  9 Aug 2023 11:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580013;
-	bh=al7vI0ZCCRCVSzfygOLQwNRKguggLxPLCTCJC9KrEvc=;
+	s=korg; t=1691580015;
+	bh=cpSv4+Lk7XBQmO+cIQVLRwN15733Bhf+ir2o2QpLTRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zgw2//MsfIR11DplMNnzsoA2Nnj6LQ4phFY6AQnB89lyD1wVZkypiliJOUsmUK+57
-	 Igzq9VU0npLTg+5VdX1Fel6GciooffhnkO2sR/Z6TtQ+faTPxAnp4j0VxdBgTm+wB1
-	 h9vh3LjOgH0Q56CFX3ebGyfFeZJ48OVxqhtSNofA=
+	b=bQW6L3hu6a3NBezvh1f1KtX+4LWv561KaMSTw88rbvoKbFX7AZW21Xq0DBjfbFz9j
+	 btCGxjFV+1PwenF0OiM7rD1CMMPTFDNFFlWM2xsy+T4vAL8XDoyI5PXVhMYUeQKrYO
+	 xhustWN2+D8LapjPeGlMHRuMcTquLqKMRpPVDxt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 4.19 169/323] misc: pci_endpoint_test: Re-init completion for every test
-Date: Wed,  9 Aug 2023 12:40:07 +0200
-Message-ID: <20230809103705.882481726@linuxfoundation.org>
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 196/323] sched/fair: Dont balance task to its current running CPU
+Date: Wed,  9 Aug 2023 12:40:34 +0200
+Message-ID: <20230809103707.137007280@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,44 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-commit fb620ae73b70c2f57b9d3e911fc24c024ba2324f upstream.
+[ Upstream commit 0dd37d6dd33a9c23351e6115ae8cdac7863bc7de ]
 
-The irq_raised completion used to detect the end of a test case is
-initialized when the test device is probed, but never reinitialized again
-before a test case. As a result, the irq_raised completion synchronization
-is effective only for the first ioctl test case executed. Any subsequent
-call to wait_for_completion() by another ioctl() call will immediately
-return, potentially too early, leading to false positive failures.
+We've run into the case that the balancer tries to balance a migration
+disabled task and trigger the warning in set_task_cpu() like below:
 
-Fix this by reinitializing the irq_raised completion before starting a new
-ioctl() test command.
+ ------------[ cut here ]------------
+ WARNING: CPU: 7 PID: 0 at kernel/sched/core.c:3115 set_task_cpu+0x188/0x240
+ Modules linked in: hclgevf xt_CHECKSUM ipt_REJECT nf_reject_ipv4 <...snip>
+ CPU: 7 PID: 0 Comm: swapper/7 Kdump: loaded Tainted: G           O       6.1.0-rc4+ #1
+ Hardware name: Huawei TaiShan 2280 V2/BC82AMDC, BIOS 2280-V2 CS V5.B221.01 12/09/2021
+ pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : set_task_cpu+0x188/0x240
+ lr : load_balance+0x5d0/0xc60
+ sp : ffff80000803bc70
+ x29: ffff80000803bc70 x28: ffff004089e190e8 x27: ffff004089e19040
+ x26: ffff007effcabc38 x25: 0000000000000000 x24: 0000000000000001
+ x23: ffff80000803be84 x22: 000000000000000c x21: ffffb093e79e2a78
+ x20: 000000000000000c x19: ffff004089e19040 x18: 0000000000000000
+ x17: 0000000000001fad x16: 0000000000000030 x15: 0000000000000000
+ x14: 0000000000000003 x13: 0000000000000000 x12: 0000000000000000
+ x11: 0000000000000001 x10: 0000000000000400 x9 : ffffb093e4cee530
+ x8 : 00000000fffffffe x7 : 0000000000ce168a x6 : 000000000000013e
+ x5 : 00000000ffffffe1 x4 : 0000000000000001 x3 : 0000000000000b2a
+ x2 : 0000000000000b2a x1 : ffffb093e6d6c510 x0 : 0000000000000001
+ Call trace:
+  set_task_cpu+0x188/0x240
+  load_balance+0x5d0/0xc60
+  rebalance_domains+0x26c/0x380
+  _nohz_idle_balance.isra.0+0x1e0/0x370
+  run_rebalance_domains+0x6c/0x80
+  __do_softirq+0x128/0x3d8
+  ____do_softirq+0x18/0x24
+  call_on_irq_stack+0x2c/0x38
+  do_softirq_own_stack+0x24/0x3c
+  __irq_exit_rcu+0xcc/0xf4
+  irq_exit_rcu+0x18/0x24
+  el1_interrupt+0x4c/0xe4
+  el1h_64_irq_handler+0x18/0x2c
+  el1h_64_irq+0x74/0x78
+  arch_cpu_idle+0x18/0x4c
+  default_idle_call+0x58/0x194
+  do_idle+0x244/0x2b0
+  cpu_startup_entry+0x30/0x3c
+  secondary_start_kernel+0x14c/0x190
+  __secondary_switched+0xb0/0xb4
+ ---[ end trace 0000000000000000 ]---
 
-Link: https://lore.kernel.org/r/20230415023542.77601-16-dlemoal@kernel.org
-Fixes: 2c156ac71c6b ("misc: Add host side PCI driver for PCI test function device")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Further investigation shows that the warning is superfluous, the migration
+disabled task is just going to be migrated to its current running CPU.
+This is because that on load balance if the dst_cpu is not allowed by the
+task, we'll re-select a new_dst_cpu as a candidate. If no task can be
+balanced to dst_cpu we'll try to balance the task to the new_dst_cpu
+instead. In this case when the migration disabled task is not on CPU it
+only allows to run on its current CPU, load balance will select its
+current CPU as new_dst_cpu and later triggers the warning above.
+
+The new_dst_cpu is chosen from the env->dst_grpmask. Currently it
+contains CPUs in sched_group_span() and if we have overlapped groups it's
+possible to run into this case. This patch makes env->dst_grpmask of
+group_balance_mask() which exclude any CPUs from the busiest group and
+solve the issue. For balancing in a domain with no overlapped groups
+the behaviour keeps same as before.
+
+Suggested-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230530082507.10444-1-yangyicong@huawei.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/pci_endpoint_test.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/fair.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -601,6 +601,10 @@ static long pci_endpoint_test_ioctl(stru
- 	struct pci_dev *pdev = test->pdev;
- 
- 	mutex_lock(&test->mutex);
-+
-+	reinit_completion(&test->irq_raised);
-+	test->last_irq = -ENODATA;
-+
- 	switch (cmd) {
- 	case PCITEST_BAR:
- 		bar = arg;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index eb67f42fb96ba..09f82c84474b8 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8721,7 +8721,7 @@ static int load_balance(int this_cpu, struct rq *this_rq,
+ 		.sd		= sd,
+ 		.dst_cpu	= this_cpu,
+ 		.dst_rq		= this_rq,
+-		.dst_grpmask    = sched_group_span(sd->groups),
++		.dst_grpmask    = group_balance_mask(sd->groups),
+ 		.idle		= idle,
+ 		.loop_break	= sched_nr_migrate_break,
+ 		.cpus		= cpus,
+-- 
+2.39.2
+
 
 
