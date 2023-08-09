@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDEB15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E79C433C8;
-	Wed,  9 Aug 2023 10:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C1315AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF3AC433C9;
+	Wed,  9 Aug 2023 10:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577864;
-	bh=+iNwGQses/SvbmlJy8x4N/eQpUAviko1J+QkN9HH9vE=;
+	s=korg; t=1691577867;
+	bh=jwvgWVtNftjjBSavMJVmhqFPAca+IA7DejtQ3+/t+bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbKg29Ybr8mXAHjBaFM11AM6t9kjpvATDasEo3LNx3kq3GL9GsEKkk/SsoesmJOKN
-	 V0qZjPqvfCEY5BoZIZ8jYzLGX4jaOaNkyKGiWew9IhFgwA4PKQVtVXQSIH09AlHtLz
-	 /YPluVRzHNLfhid/b9UE3b/EciqoK8ZC9x0/eFOo=
+	b=vCBzq4NHdnmzlwARu9u1MDw8i3My8zwwwrMVbftoSq6ai8EOYykykrs8XgDlHbrL0
+	 dXSjpFm/4hRo2JnqD595wfAakol+UdelPJqO9GiNMn3tXx5/1qn8k96mdueYajm522
+	 rUETdoMl6mm4TFILk7gj8Ap5+VAr6rjLwPq2NcNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Durai Manickam KR <durai.manickamkr@microchip.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 021/165] ARM: dts: at91: sam9x60: fix the SOC detection
-Date: Wed,  9 Aug 2023 12:39:12 +0200
-Message-ID: <20230809103643.485419217@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.4 022/165] word-at-a-time: use the same return type for has_zero regardless of endianness
+Date: Wed,  9 Aug 2023 12:39:13 +0200
+Message-ID: <20230809103643.524583362@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,143 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Durai Manickam KR <durai.manickamkr@microchip.com>
+From: ndesaulniers@google.com <ndesaulniers@google.com>
 
-[ Upstream commit f6ad3c13f1b8c4e785cb7bd423887197142f47b0 ]
+[ Upstream commit 79e8328e5acbe691bbde029a52c89d70dcbc22f3 ]
 
-Remove the dbgu compatible strings in the UART submodule of the
-flexcom for the proper SOC detection.
+Compiling big-endian targets with Clang produces the diagnostic:
 
-Fixes: 99c808335877 (ARM: dts: at91: sam9x60: Add missing flexcom definitions)
-Signed-off-by: Durai Manickam KR <durai.manickamkr@microchip.com>
-Link: https://lore.kernel.org/r/20230712100042.317856-1-durai.manickamkr@microchip.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+  fs/namei.c:2173:13: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
+	} while (!(has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
+	          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                               ||
+  fs/namei.c:2173:13: note: cast one or both operands to int to silence this warning
+
+It appears that when has_zero was introduced, two definitions were
+produced with different signatures (in particular different return
+types).
+
+Looking at the usage in hash_name() in fs/namei.c, I suspect that
+has_zero() is meant to be invoked twice per while loop iteration; using
+logical-or would not update `bdata` when `a` did not have zeros.  So I
+think it's preferred to always return an unsigned long rather than a
+bool than update the while loop in hash_name() to use a logical-or
+rather than bitwise-or.
+
+[ Also changed powerpc version to do the same  - Linus ]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1832
+Link: https://lore.kernel.org/lkml/20230801-bitwise-v1-1-799bec468dc4@google.com/
+Fixes: 36126f8f2ed8 ("word-at-a-time: make the interfaces truly generic")
+Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/sam9x60.dtsi | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ arch/powerpc/include/asm/word-at-a-time.h | 2 +-
+ include/asm-generic/word-at-a-time.h      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
-index 8b53997675e75..73d570a172690 100644
---- a/arch/arm/boot/dts/sam9x60.dtsi
-+++ b/arch/arm/boot/dts/sam9x60.dtsi
-@@ -172,7 +172,7 @@
- 				status = "disabled";
+diff --git a/arch/powerpc/include/asm/word-at-a-time.h b/arch/powerpc/include/asm/word-at-a-time.h
+index 46c31fb8748d5..30a12d2086871 100644
+--- a/arch/powerpc/include/asm/word-at-a-time.h
++++ b/arch/powerpc/include/asm/word-at-a-time.h
+@@ -34,7 +34,7 @@ static inline long find_zero(unsigned long mask)
+ 	return leading_zero_bits >> 3;
+ }
  
- 				uart4: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <13 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -240,7 +240,7 @@
- 				status = "disabled";
+-static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
++static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+ {
+ 	unsigned long rhs = val | c->low_bits;
+ 	*data = rhs;
+diff --git a/include/asm-generic/word-at-a-time.h b/include/asm-generic/word-at-a-time.h
+index 20c93f08c9933..95a1d214108a5 100644
+--- a/include/asm-generic/word-at-a-time.h
++++ b/include/asm-generic/word-at-a-time.h
+@@ -38,7 +38,7 @@ static inline long find_zero(unsigned long mask)
+ 	return (mask >> 8) ? byte : byte + 1;
+ }
  
- 				uart5: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					atmel,usart-mode = <AT91_USART_MODE_SERIAL>;
- 					interrupts = <14 IRQ_TYPE_LEVEL_HIGH 7>;
-@@ -370,7 +370,7 @@
- 				status = "disabled";
- 
- 				uart11: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <32 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -419,7 +419,7 @@
- 				status = "disabled";
- 
- 				uart12: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <33 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -576,7 +576,7 @@
- 				status = "disabled";
- 
- 				uart6: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <9 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -625,7 +625,7 @@
- 				status = "disabled";
- 
- 				uart7: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <10 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -674,7 +674,7 @@
- 				status = "disabled";
- 
- 				uart8: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <11 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -723,7 +723,7 @@
- 				status = "disabled";
- 
- 				uart0: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <5 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -791,7 +791,7 @@
- 				status = "disabled";
- 
- 				uart1: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <6 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -859,7 +859,7 @@
- 				status = "disabled";
- 
- 				uart2: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <7 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -927,7 +927,7 @@
- 				status = "disabled";
- 
- 				uart3: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <8 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -1050,7 +1050,7 @@
- 				status = "disabled";
- 
- 				uart9: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <15 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
-@@ -1099,7 +1099,7 @@
- 				status = "disabled";
- 
- 				uart10: serial@200 {
--					compatible = "microchip,sam9x60-dbgu", "microchip,sam9x60-usart", "atmel,at91sam9260-dbgu", "atmel,at91sam9260-usart";
-+					compatible = "microchip,sam9x60-usart", "atmel,at91sam9260-usart";
- 					reg = <0x200 0x200>;
- 					interrupts = <16 IRQ_TYPE_LEVEL_HIGH 7>;
- 					dmas = <&dma0
+-static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
++static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+ {
+ 	unsigned long rhs = val | c->low_bits;
+ 	*data = rhs;
 -- 
 2.40.1
 
