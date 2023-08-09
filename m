@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC8D17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BD9C433C8;
-	Wed,  9 Aug 2023 11:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E16F17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D319CC433C8;
+	Wed,  9 Aug 2023 11:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580248;
-	bh=6hIdId1yqY9QBdbekgub2Y2doSMGNu3qzrtXTVKKTDU=;
+	s=korg; t=1691580251;
+	bh=Sa3BukU6kNkCDw15hMlUGK7S1VHMnOS1tI3hAkDUbvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTsxNvbfFzyifoS8idraiBagO46Phfu5jh5Zfjuyn7IwjXpshLXmeir8ohu0J6VOw
-	 1MBw19wJpeZKBn7I4auv2efmxxD8h7dcrPMyCTBsuIaQjevIQzbYL8EA6me63KhZi8
-	 GGIvRQzbnfUEcCbq4qYk9vII9Kpv2zNkegXnKS0E=
+	b=xbJEocZJIXWHX6DInUh0rCSEMqt6oNvM+7r/3QDCKWbu/2iQV9ayM4sEcUo/OvUA5
+	 8NPRNNNyAkf1W9MLdJ3L4FNnADY+vX3jdWMExLPOmFMwU+P+1u+s2aGfSosna5Ce9B
+	 q/udQHkhRRQKwNb3i+3Xlt+L4/oeY2WTasxbYGuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Joe Thornber <ejt@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.19 281/323] dm cache policy smq: ensure IO doesnt prevent cleaner policy progress
-Date: Wed,  9 Aug 2023 12:41:59 +0200
-Message-ID: <20230809103710.900594736@linuxfoundation.org>
+	Zhang Yi <yizhan@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 4.19 282/323] drm/client: Fix memory leak in drm_client_target_cloned
+Date: Wed,  9 Aug 2023 12:42:00 +0200
+Message-ID: <20230809103710.948981242@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,106 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-commit 1e4ab7b4c881cf26c1c72b3f56519e03475486fb upstream.
+commit c2a88e8bdf5f6239948d75283d0ae7e0c7945b03 upstream.
 
-When using the cleaner policy to decommission the cache, there is
-never any writeback started from the cache as it is constantly delayed
-due to normal I/O keeping the device busy. Meaning @idle=false was
-always being passed to clean_target_met()
+dmt_mode is allocated and never freed in this function.
+It was found with the ast driver, but most drivers using generic fbdev
+setup are probably affected.
 
-Fix this by adding a specific 'cleaner' flag that is set when the
-cleaner policy is configured. This flag serves to always allow the
-cleaner's writeback work to be queued until the cache is
-decommissioned (even if the cache isn't idle).
+This fixes the following kmemleak report:
+  backtrace:
+    [<00000000b391296d>] drm_mode_duplicate+0x45/0x220 [drm]
+    [<00000000e45bb5b3>] drm_client_target_cloned.constprop.0+0x27b/0x480 [drm]
+    [<00000000ed2d3a37>] drm_client_modeset_probe+0x6bd/0xf50 [drm]
+    [<0000000010e5cc9d>] __drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
+    [<00000000909f82ca>] drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
+    [<00000000063a69aa>] drm_client_register+0x169/0x240 [drm]
+    [<00000000a8c61525>] ast_pci_probe+0x142/0x190 [ast]
+    [<00000000987f19bb>] local_pci_probe+0xdc/0x180
+    [<000000004fca231b>] work_for_cpu_fn+0x4e/0xa0
+    [<0000000000b85301>] process_one_work+0x8b7/0x1540
+    [<000000003375b17c>] worker_thread+0x70a/0xed0
+    [<00000000b0d43cd9>] kthread+0x29f/0x340
+    [<000000008d770833>] ret_from_fork+0x1f/0x30
+unreferenced object 0xff11000333089a00 (size 128):
 
-Reported-by: David Jeffery <djeffery@redhat.com>
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joe Thornber <ejt@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+cc: <stable@vger.kernel.org>
+Fixes: 1d42bbc8f7f9 ("drm/fbdev: fix cloning on fbcon")
+Reported-by: Zhang Yi <yizhan@redhat.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-2-jfalempe@redhat.com
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-policy-smq.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/drm_fb_helper.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/md/dm-cache-policy-smq.c
-+++ b/drivers/md/dm-cache-policy-smq.c
-@@ -854,7 +854,13 @@ struct smq_policy {
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -2233,6 +2233,9 @@ static bool drm_target_cloned(struct drm
+ 	can_clone = true;
+ 	dmt_mode = drm_mode_find_dmt(fb_helper->dev, 1024, 768, 60, false);
  
- 	struct background_tracker *bg_work;
- 
--	bool migrations_allowed;
-+	bool migrations_allowed:1;
++	if (!dmt_mode)
++		goto fail;
 +
-+	/*
-+	 * If this is set the policy will try and clean the whole cache
-+	 * even if the device is not idle.
-+	 */
-+	bool cleaner:1;
- };
+ 	drm_fb_helper_for_each_connector(fb_helper, i) {
+ 		if (!enabled[i])
+ 			continue;
+@@ -2249,11 +2252,13 @@ static bool drm_target_cloned(struct drm
+ 		if (!modes[i])
+ 			can_clone = false;
+ 	}
++	kfree(dmt_mode);
  
- /*----------------------------------------------------------------*/
-@@ -1133,7 +1139,7 @@ static bool clean_target_met(struct smq_
- 	 * Cache entries may not be populated.  So we cannot rely on the
- 	 * size of the clean queue.
- 	 */
--	if (idle) {
-+	if (idle || mq->cleaner) {
- 		/*
- 		 * We'd like to clean everything.
- 		 */
-@@ -1716,11 +1722,9 @@ static void calc_hotspot_params(sector_t
- 		*hotspot_block_size /= 2u;
+ 	if (can_clone) {
+ 		DRM_DEBUG_KMS("can clone using 1024x768\n");
+ 		return true;
+ 	}
++fail:
+ 	DRM_INFO("kms: can't enable cloning when we probably wanted to.\n");
+ 	return false;
  }
- 
--static struct dm_cache_policy *__smq_create(dm_cblock_t cache_size,
--					    sector_t origin_size,
--					    sector_t cache_block_size,
--					    bool mimic_mq,
--					    bool migrations_allowed)
-+static struct dm_cache_policy *
-+__smq_create(dm_cblock_t cache_size, sector_t origin_size, sector_t cache_block_size,
-+	     bool mimic_mq, bool migrations_allowed, bool cleaner)
- {
- 	unsigned i;
- 	unsigned nr_sentinels_per_queue = 2u * NR_CACHE_LEVELS;
-@@ -1807,6 +1811,7 @@ static struct dm_cache_policy *__smq_cre
- 		goto bad_btracker;
- 
- 	mq->migrations_allowed = migrations_allowed;
-+	mq->cleaner = cleaner;
- 
- 	return &mq->policy;
- 
-@@ -1830,21 +1835,24 @@ static struct dm_cache_policy *smq_creat
- 					  sector_t origin_size,
- 					  sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, true, false);
- }
- 
- static struct dm_cache_policy *mq_create(dm_cblock_t cache_size,
- 					 sector_t origin_size,
- 					 sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, true, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    true, true, false);
- }
- 
- static struct dm_cache_policy *cleaner_create(dm_cblock_t cache_size,
- 					      sector_t origin_size,
- 					      sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, false);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, false, true);
- }
- 
- /*----------------------------------------------------------------*/
 
 
