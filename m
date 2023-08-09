@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1FB174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0A9C433C7;
-	Wed,  9 Aug 2023 11:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BE01773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B6DC433C7;
+	Wed,  9 Aug 2023 11:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579828;
-	bh=FutleaIwIsS7DgTOfN5HB8Zu1BpPa4bDOzb7URiRQ4Y=;
+	s=korg; t=1691579831;
+	bh=ALxGGsVHo2CqY7t069NLXHwh45AekJpFCcPebmJ3uXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXW2JUKxbYymPQCzfYX0Vh1qbSngpa3HpltVDtSToGnfCyLo4llXFwKOj8z4LS+IN
-	 c9CiplGXwT7UF+lAIKnLX17bzbZIEShgRtm20Vpp7pltKjJ/OODrLBQopH1gVQTAyE
-	 ljBW18Xlz7h33U2czi5F6rHUXlh+f6A6++CWJWi0=
+	b=tzObcRm3D6qIgWQAc6zETPMCgeD0z1pp1ErZICc91A9wnMGTNqHSEybpPwoZL3I1d
+	 JgrGUc/hL8T3bMPQqCSBziYsc5a4fhqwLj8jut/vG7Q0vmHogqP8dzKEME8EMaRJ9M
+	 rBdCZQoiIvIrIDSAgtTxDWaIH4wYY9BvF2vWK4CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 130/323] netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain
-Date: Wed,  9 Aug 2023 12:39:28 +0200
-Message-ID: <20230809103704.077981780@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 104/323] f2fs: fix error path handling in truncate_dnode()
+Date: Wed,  9 Aug 2023 12:39:02 +0200
+Message-ID: <20230809103702.827530689@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,98 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Chao Yu <chao@kernel.org>
 
-[ 26b5a5712eb85e253724e56a54c17f8519bd8e4e ]
+[ Upstream commit 0135c482fa97e2fd8245cb462784112a00ed1211 ]
 
-Add a new state to deal with rule expressions deactivation from the
-newrule error path, otherwise the anonymous set remains in the list in
-inactive state for the next generation. Mark the set/chain transaction
-as unbound so the abort path releases this object, set it as inactive in
-the next generation so it is not reachable anymore from this transaction
-and reference counter is dropped.
+If truncate_node() fails in truncate_dnode(), it missed to call
+f2fs_put_page(), fix it.
 
-Fixes: 1240eb93f061 ("netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7735730d39d7 ("f2fs: fix to propagate error from __get_meta_page()")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |    1 +
- net/netfilter/nf_tables_api.c     |   26 ++++++++++++++++++++++----
- 2 files changed, 23 insertions(+), 4 deletions(-)
+ fs/f2fs/node.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -736,6 +736,7 @@ struct nft_expr_type {
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 2c28f488ac2f0..9911f780e0136 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -879,8 +879,10 @@ static int truncate_dnode(struct dnode_of_data *dn)
+ 	dn->ofs_in_node = 0;
+ 	f2fs_truncate_data_blocks(dn);
+ 	err = truncate_node(dn);
+-	if (err)
++	if (err) {
++		f2fs_put_page(page, 1);
+ 		return err;
++	}
  
- enum nft_trans_phase {
- 	NFT_TRANS_PREPARE,
-+	NFT_TRANS_PREPARE_ERROR,
- 	NFT_TRANS_ABORT,
- 	NFT_TRANS_COMMIT,
- 	NFT_TRANS_RELEASE
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -120,7 +120,8 @@ static void nft_trans_destroy(struct nft
- 	kfree(trans);
+ 	return 1;
  }
- 
--static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
-+static void __nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set,
-+				 bool bind)
- {
- 	struct nftables_pernet *nft_net;
- 	struct net *net = ctx->net;
-@@ -134,16 +135,26 @@ static void nft_set_trans_bind(const str
- 		switch (trans->msg_type) {
- 		case NFT_MSG_NEWSET:
- 			if (nft_trans_set(trans) == set)
--				nft_trans_set_bound(trans) = true;
-+				nft_trans_set_bound(trans) = bind;
- 			break;
- 		case NFT_MSG_NEWSETELEM:
- 			if (nft_trans_elem_set(trans) == set)
--				nft_trans_elem_set_bound(trans) = true;
-+				nft_trans_elem_set_bound(trans) = bind;
- 			break;
- 		}
- 	}
- }
- 
-+static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	return __nft_set_trans_bind(ctx, set, true);
-+}
-+
-+static void nft_set_trans_unbind(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	return __nft_set_trans_bind(ctx, set, false);
-+}
-+
- static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *trans)
- {
- 	struct nftables_pernet *nft_net;
-@@ -2784,7 +2795,7 @@ static int nf_tables_newrule(struct net
- 
- 	return 0;
- err2:
--	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE);
-+	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE_ERROR);
- 	nf_tables_rule_destroy(&ctx, rule);
- err1:
- 	for (i = 0; i < n; i++) {
-@@ -3809,6 +3820,13 @@ void nf_tables_deactivate_set(const stru
- 			      enum nft_trans_phase phase)
- {
- 	switch (phase) {
-+	case NFT_TRANS_PREPARE_ERROR:
-+		nft_set_trans_unbind(ctx, set);
-+		if (nft_set_is_anonymous(set))
-+			nft_deactivate_next(ctx->net, set);
-+
-+		set->use--;
-+		break;
- 	case NFT_TRANS_PREPARE:
- 		if (nft_set_is_anonymous(set))
- 			nft_deactivate_next(ctx->net, set);
+-- 
+2.39.2
+
 
 
