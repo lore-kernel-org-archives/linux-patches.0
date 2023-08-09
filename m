@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E21171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7C5C433C8;
-	Wed,  9 Aug 2023 10:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DAC171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A38DC433C8;
+	Wed,  9 Aug 2023 10:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578738;
-	bh=uV45xLpK5Qq4q0FfiZ+9HpKMAuYVCKcqq+Oyat4qdcU=;
+	s=korg; t=1691578741;
+	bh=PAR1NtWvwQLeYgEC0LFyp6voZOAAFNmK+qNEJorTAbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yONno9S3DKjT0Kc1z1/buRy3YP1OEyoigzN6PJjBmTyq1W1guhyUdtXwM0HpYsOl8
-	 BiOdNVB6gDP2PuXuMAbCmVyVioIDazYgMEm++Lls0iiclPHheTQIJaITJ5NSnNMuZC
-	 cor+0YXm7K349MyAVWVxqjUZy1OoS1LRiSvXZSsE=
+	b=gXqN5QVhNB6iGDrFgJ6BwH+lWpAKqHooBGSgAWkha6lV/8IM/fH38hglAtAOF1c5u
+	 +1UKbIKJeQeEUqS7GyiIQvO3QRJBp2XlIVlWPUPQA7QtET4bWWspgJihXUuOx5v+LR
+	 Q++4L4zElfDP0Jz6iYuf72KF5UOzj8EHQewyxw7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/92] mISDN: hfcpci: Fix potential deadlock on &hc->lock
-Date: Wed,  9 Aug 2023 12:40:58 +0200
-Message-ID: <20230809103634.377894282@linuxfoundation.org>
+Subject: [PATCH 5.15 40/92] net: netsec: Ignore phy-mode on SynQuacer in DT mode
+Date: Wed,  9 Aug 2023 12:41:16 +0200
+Message-ID: <20230809103635.010347557@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -35,86 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 56c6be35fcbed54279df0a2c9e60480a61841d6f ]
+[ Upstream commit f3bb7759a924713bc54d15f6d0d70733b5935fad ]
 
-As &hc->lock is acquired by both timer _hfcpci_softirq() and hardirq
-hfcpci_int(), the timer should disable irq before lock acquisition
-otherwise deadlock could happen if the timmer is preemtped by the hadr irq.
+As documented in acd7aaf51b20 ("netsec: ignore 'phy-mode' device
+property on ACPI systems") the SocioNext SynQuacer platform ships with
+firmware defining the PHY mode as RGMII even though the physical
+configuration of the PHY is for TX and RX delays.  Since bbc4d71d63549bc
+("net: phy: realtek: fix rtl8211e rx/tx delay config") this has caused
+misconfiguration of the PHY, rendering the network unusable.
 
-Possible deadlock scenario:
-hfcpci_softirq() (timer)
-    -> _hfcpci_softirq()
-    -> spin_lock(&hc->lock);
-        <irq interruption>
-        -> hfcpci_int()
-        -> spin_lock(&hc->lock); (deadlock here)
+This was worked around for ACPI by ignoring the phy-mode property but
+the system is also used with DT.  For DT instead if we're running on a
+SynQuacer force a working PHY mode, as well as the standard EDK2
+firmware with DT there are also some of these systems that use u-boot
+and might not initialise the PHY if not netbooting.  Newer firmware
+imagaes for at least EDK2 are available from Linaro so print a warning
+when doing this.
 
-This flaw was found by an experimental static analysis tool I am developing
-for irq-related deadlock.
-
-The tentative patch fixes the potential deadlock by spin_lock_irq()
-in timer.
-
-Fixes: b36b654a7e82 ("mISDN: Create /sys/class/mISDN")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230727085619.7419-1-dg573847474@gmail.com
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230731-synquacer-net-v3-1-944be5f06428@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcpci.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/socionext/netsec.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
-index eba58b99cd29d..d6cf01c32a33d 100644
---- a/drivers/isdn/hardware/mISDN/hfcpci.c
-+++ b/drivers/isdn/hardware/mISDN/hfcpci.c
-@@ -839,7 +839,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 		*z1t = cpu_to_le16(new_z1);	/* now send data */
- 		if (bch->tx_idx < bch->tx_skb->len)
- 			return;
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			goto next_t_frame;
- 		return;
-@@ -895,7 +895,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index 6b8013fb17c38..eb59e8abe6915 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -1851,6 +1851,17 @@ static int netsec_of_probe(struct platform_device *pdev,
+ 		return err;
  	}
- 	bz->za[new_f1].z1 = cpu_to_le16(new_z1);	/* for next buffer */
- 	bz->f1 = new_f1;	/* next frame */
--	dev_kfree_skb(bch->tx_skb);
-+	dev_kfree_skb_any(bch->tx_skb);
- 	get_next_bframe(bch);
- }
  
-@@ -1119,7 +1119,7 @@ tx_birq(struct bchannel *bch)
- 	if (bch->tx_skb && bch->tx_idx < bch->tx_skb->len)
- 		hfcpci_fill_fifo(bch);
- 	else {
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			hfcpci_fill_fifo(bch);
- 	}
-@@ -2277,7 +2277,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 		return 0;
- 
- 	if (hc->hw.int_m2 & HFCPCI_IRQ_ENABLE) {
--		spin_lock(&hc->lock);
-+		spin_lock_irq(&hc->lock);
- 		bch = Sel_BCS(hc, hc->hw.bswapped ? 2 : 1);
- 		if (bch && bch->state == ISDN_P_B_RAW) { /* B1 rx&tx */
- 			main_rec_hfcpci(bch);
-@@ -2288,7 +2288,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 			main_rec_hfcpci(bch);
- 			tx_birq(bch);
- 		}
--		spin_unlock(&hc->lock);
-+		spin_unlock_irq(&hc->lock);
- 	}
- 	return 0;
- }
++	/*
++	 * SynQuacer is physically configured with TX and RX delays
++	 * but the standard firmware claimed otherwise for a long
++	 * time, ignore it.
++	 */
++	if (of_machine_is_compatible("socionext,developer-box") &&
++	    priv->phy_interface != PHY_INTERFACE_MODE_RGMII_ID) {
++		dev_warn(&pdev->dev, "Outdated firmware reports incorrect PHY mode, overriding\n");
++		priv->phy_interface = PHY_INTERFACE_MODE_RGMII_ID;
++	}
++
+ 	priv->phy_np = of_parse_phandle(pdev->dev.of_node, "phy-handle", 0);
+ 	if (!priv->phy_np) {
+ 		dev_err(&pdev->dev, "missing required property 'phy-handle'\n");
 -- 
 2.40.1
 
