@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40DE6131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237BCC433C8;
-	Wed,  9 Aug 2023 11:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2A36131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7204C433C8;
+	Wed,  9 Aug 2023 11:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579079;
-	bh=RsoMg+K2J/fBRgIYfizAwc1xLXeJlItwfzoFl2oMbZ8=;
+	s=korg; t=1691579082;
+	bh=OMxmlDIyHCdyVfjS5OeTKFDau1uKl8/EKFdi90vMSlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJ3p1A0hUXk+WXx3inknxWjR6aCXVuZZdJvftNt3IzlSzRe/E1TVNXyOJa5wxO+0X
-	 j0bRYD8QkmWxoC8i1DA5u2QCl4ASxIVqVTSjao3zGtf3HMSJAybfulrMpgPX0NZe02
-	 U3jxUBzo2H7TRBxobVhMsf8fVKhnGWWpPZ4Is3OM=
+	b=GsaRdaagYvD4bKKW50qvpxYA55Nw6+upJNRStiU32domPzO1TfnIUhmSNg4e5DheR
+	 vlbif9DG4IK6HKIw7ZUcXZxXqZ/qVmD7xe+lvAVTt4zzmX6MDZQmbUhZviiIGp1JEL
+	 WriVO6Hdw5FLpMDAfxRDIU+oOmVwApjz5v8uEQ3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 067/204] rtc: st-lpc: Release some resources in st_rtc_probe() in case of error
-Date: Wed,  9 Aug 2023 12:40:05 +0200
-Message-ID: <20230809103644.892506770@linuxfoundation.org>
+Subject: [PATCH 4.14 068/204] sctp: fix potential deadlock on &net->sctp.addr_wq_lock
+Date: Wed,  9 Aug 2023 12:40:06 +0200
+Message-ID: <20230809103644.922049354@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,37 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 06c6e1b01d9261f03629cefd1f3553503291e6cf ]
+[ Upstream commit 6feb37b3b06e9049e20dcf7e23998f92c9c5be9a ]
 
-If an error occurs after clk_get(), the corresponding resources should be
-released.
+As &net->sctp.addr_wq_lock is also acquired by the timer
+sctp_addr_wq_timeout_handler() in protocal.c, the same lock acquisition
+at sctp_auto_asconf_init() seems should disable irq since it is called
+from sctp_accept() under process context.
 
-Use devm_clk_get() to fix it.
+Possible deadlock scenario:
+sctp_accept()
+    -> sctp_sock_migrate()
+    -> sctp_auto_asconf_init()
+    -> spin_lock(&net->sctp.addr_wq_lock)
+        <timer interrupt>
+        -> sctp_addr_wq_timeout_handler()
+        -> spin_lock_bh(&net->sctp.addr_wq_lock); (deadlock here)
 
-Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/866af6adbc7454a7b4505eb6c28fbdc86ccff39e.1686251455.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This flaw was found using an experimental static analysis tool we are
+developing for irq-related deadlock.
+
+The tentative patch fix the potential deadlock by spin_lock_bh().
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Fixes: 34e5b0118685 ("sctp: delay auto_asconf init until binding the first addr")
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230627120340.19432-1-dg573847474@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-st-lpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
-index 6f33e705928f4..9044c2851a1f2 100644
---- a/drivers/rtc/rtc-st-lpc.c
-+++ b/drivers/rtc/rtc-st-lpc.c
-@@ -236,7 +236,7 @@ static int st_rtc_probe(struct platform_device *pdev)
- 	enable_irq_wake(rtc->irq);
- 	disable_irq(rtc->irq);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 8dd368168a84a..9414dcb376d26 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -374,9 +374,9 @@ static void sctp_auto_asconf_init(struct sctp_sock *sp)
+ 	struct net *net = sock_net(&sp->inet.sk);
  
--	rtc->clk = clk_get(&pdev->dev, NULL);
-+	rtc->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(rtc->clk)) {
- 		dev_err(&pdev->dev, "Unable to request clock\n");
- 		return PTR_ERR(rtc->clk);
+ 	if (net->sctp.default_auto_asconf) {
+-		spin_lock(&net->sctp.addr_wq_lock);
++		spin_lock_bh(&net->sctp.addr_wq_lock);
+ 		list_add_tail(&sp->auto_asconf_list, &net->sctp.auto_asconf_splist);
+-		spin_unlock(&net->sctp.addr_wq_lock);
++		spin_unlock_bh(&net->sctp.addr_wq_lock);
+ 		sp->do_auto_asconf = 1;
+ 	}
+ }
 -- 
 2.39.2
 
