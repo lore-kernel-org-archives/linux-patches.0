@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15C817756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C2FC433C7;
-	Wed,  9 Aug 2023 11:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D529D17756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:23:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5420AC433C7;
+	Wed,  9 Aug 2023 11:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580197;
-	bh=4eyCpxDtxDzXa2o9/yM5E6Ee0dEiCEBM6KGRBdAEAS4=;
+	s=korg; t=1691580200;
+	bh=XSkqrTxKqQkGMkAkKQN4ZiC3SRTgzQqK5MO4WCvWMqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWbFL6s+1PWfrMCHLVrRMfiZ1d6VVgnS0xUMb3MVuDn58P4dijZ4xd5vfHMivEtDE
-	 6EUL82JRSDpe23AiVzE6543AvVvQ6L6inezzadr18xRk9VDq/ynuQj1gRkDhEuWzxK
-	 b5P+PUztnRTlcoM4Bq2uiccByYpd7zKN1974wP9Y=
+	b=Au60I3/vdqm/sf8H5yV/BuEmaRFV6XVwyV7fbUMNxJsoyGZc6GTYHCTo79nbl+ypW
+	 4ia53tuUzFOOGF4iSbVUs8IpaujWNPBm/esvju8oVDbE9dJWAgus2mspO/PcXrb61F
+	 1vQxuEoOBlFW4c1r7wEWW3BOeR+8Z6vflVo/r+cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 4.19 262/323] can: gs_usb: gs_can_close(): add missing set of CAN state to CAN_STATE_STOPPED
-Date: Wed,  9 Aug 2023 12:41:40 +0200
-Message-ID: <20230809103710.052001729@linuxfoundation.org>
+	Bikash Hazarika <bhazarika@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 236/323] scsi: qla2xxx: Array index may go out of bound
+Date: Wed,  9 Aug 2023 12:41:14 +0200
+Message-ID: <20230809103708.883072030@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -33,42 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit f8a2da6ec2417cca169fa85a8ab15817bccbb109 upstream.
+[ Upstream commit d721b591b95cf3f290f8a7cbe90aa2ee0368388d ]
 
-After an initial link up the CAN device is in ERROR-ACTIVE mode. Due
-to a missing CAN_STATE_STOPPED in gs_can_close() it doesn't change to
-STOPPED after a link down:
-
-| ip link set dev can0 up
-| ip link set dev can0 down
-| ip --details link show can0
-| 13: can0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
-|     link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-|     can state ERROR-ACTIVE restart-ms 1000
-
-Add missing assignment of CAN_STATE_STOPPED in gs_can_close().
+Klocwork reports array 'vha->host_str' of size 16 may use index value(s)
+16..19.  Use snprintf() instead of sprintf().
 
 Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://lore.kernel.org/all/20230718-gs_usb-fix-can-state-v1-1-f19738ae2c23@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Bikash Hazarika <bhazarika@marvell.com>
+Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230607113843.37185-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_os.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -740,6 +740,8 @@ static int gs_can_close(struct net_devic
- 	usb_kill_anchored_urbs(&dev->tx_submitted);
- 	atomic_set(&dev->active_tx_urbs, 0);
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 73f3e51ce9798..4580774b2c3e7 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4604,7 +4604,8 @@ struct scsi_qla_host *qla2x00_create_host(struct scsi_host_template *sht,
+ 	}
+ 	INIT_DELAYED_WORK(&vha->scan.scan_work, qla_scan_work_fn);
  
-+	dev->can.state = CAN_STATE_STOPPED;
-+
- 	/* reset the device */
- 	rc = gs_cmd_reset(dev);
- 	if (rc < 0)
+-	sprintf(vha->host_str, "%s_%lu", QLA2XXX_DRIVER_NAME, vha->host_no);
++	snprintf(vha->host_str, sizeof(vha->host_str), "%s_%lu",
++		 QLA2XXX_DRIVER_NAME, vha->host_no);
+ 	ql_dbg(ql_dbg_init, vha, 0x0041,
+ 	    "Allocated the host=%p hw=%p vha=%p dev_name=%s",
+ 	    vha->host, vha->hw, vha,
+-- 
+2.39.2
+
 
 
