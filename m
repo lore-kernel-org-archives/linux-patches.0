@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D2917731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982D4C433C8;
-	Wed,  9 Aug 2023 11:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED71017731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC8FC433C8;
+	Wed,  9 Aug 2023 11:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579202;
-	bh=AHAfLPUTCUUHRsnA2xM2PyG6fmI/bjg4m342f+s8WGk=;
+	s=korg; t=1691579204;
+	bh=AiAT+WPUsMAum1DevtoY8XK2rg76+a84niEjuPIIxsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwhPdMZ4DU6JajnwPZqXLuYexAUbieCV1gnkBxeDPYjyaDzm1Hl1JI7CR4VUVGZbP
-	 hUgG5OiaF4Aw4KkUVOgMNXCWQ7wKUvfEE26eSw2KJkMk+I/QeP++mH6huw8JkuApV7
-	 80yKmWthtLDZwIewP/gQTTHN+pbwfgIKTjpKSWq0=
+	b=ivpdZjFTFCs0jT25sgEgcAcnKkQKSGzvCQqbJUTFD98KsaBMPzxtBYcLspUkIABzR
+	 rYqWCqdlgPZ9o0Wovoxcn/qAf878yUsFjFsIqa+nGs7DJESrA9dd7FUkqCvYW+Nzk6
+	 gThsdyICNML+A7OownB8p56uU9l07O8z6kXGqdvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 4.14 083/204] ARM: orion5x: fix d2net gpio initialization
-Date: Wed,  9 Aug 2023 12:40:21 +0200
-Message-ID: <20230809103645.438881209@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 074/204] tcp: annotate data races in __tcp_oow_rate_limited()
+Date: Wed,  9 Aug 2023 12:40:12 +0200
+Message-ID: <20230809103645.118518075@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,55 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Dumazet <edumazet@google.com>
 
-commit f8ef1233939495c405a9faa4bd1ae7d3f581bae4 upstream.
+[ Upstream commit 998127cdb4699b9d470a9348ffe9f1154346be5f ]
 
-The DT version of this board has a custom file with the gpio
-device. However, it does nothing because the d2net_init()
-has no caller or prototype:
+request sockets are lockless, __tcp_oow_rate_limited() could be called
+on the same object from different cpus. This is harmless.
 
-arch/arm/mach-orion5x/board-d2net.c:101:13: error: no previous prototype for 'd2net_init'
+Add READ_ONCE()/WRITE_ONCE() annotations to avoid a KCSAN report.
 
-Call it from the board-dt file as intended.
-
-Fixes: 94b0bd366e36 ("ARM: orion5x: convert d2net to Device Tree")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230516153109.514251-10-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4ce7e93cb3fe ("tcp: rate limit ACK sent by SYN_RECV request sockets")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-orion5x/board-dt.c |    3 +++
- arch/arm/mach-orion5x/common.h   |    6 ++++++
- 2 files changed, 9 insertions(+)
+ net/ipv4/tcp_input.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/arm/mach-orion5x/board-dt.c
-+++ b/arch/arm/mach-orion5x/board-dt.c
-@@ -63,6 +63,9 @@ static void __init orion5x_dt_init(void)
- 	if (of_machine_is_compatible("maxtor,shared-storage-2"))
- 		mss2_init();
- 
-+	if (of_machine_is_compatible("lacie,d2-network"))
-+		d2net_init();
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 87095d5ecf952..444ad17289277 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3447,8 +3447,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
+ static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
+ 				   u32 *last_oow_ack_time)
+ {
+-	if (*last_oow_ack_time) {
+-		s32 elapsed = (s32)(tcp_jiffies32 - *last_oow_ack_time);
++	/* Paired with the WRITE_ONCE() in this function. */
++	u32 val = READ_ONCE(*last_oow_ack_time);
 +
- 	of_platform_default_populate(NULL, orion5x_auxdata_lookup, NULL);
++	if (val) {
++		s32 elapsed = (s32)(tcp_jiffies32 - val);
+ 
+ 		if (0 <= elapsed && elapsed < sysctl_tcp_invalid_ratelimit) {
+ 			NET_INC_STATS(net, mib_idx);
+@@ -3456,7 +3459,10 @@ static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
+ 		}
+ 	}
+ 
+-	*last_oow_ack_time = tcp_jiffies32;
++	/* Paired with the prior READ_ONCE() and with itself,
++	 * as we might be lockless.
++	 */
++	WRITE_ONCE(*last_oow_ack_time, tcp_jiffies32);
+ 
+ 	return false;	/* not rate-limited: go ahead, send dupack now! */
  }
- 
---- a/arch/arm/mach-orion5x/common.h
-+++ b/arch/arm/mach-orion5x/common.h
-@@ -75,6 +75,12 @@ extern void mss2_init(void);
- static inline void mss2_init(void) {}
- #endif
- 
-+#ifdef CONFIG_MACH_D2NET_DT
-+void d2net_init(void);
-+#else
-+static inline void d2net_init(void) {}
-+#endif
-+
- /*****************************************************************************
-  * Helpers to access Orion registers
-  ****************************************************************************/
+-- 
+2.39.2
+
 
 
