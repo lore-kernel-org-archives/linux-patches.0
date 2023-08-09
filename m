@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B835217AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A36AC433C8;
-	Wed,  9 Aug 2023 11:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F9117AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F126AC433C8;
+	Wed,  9 Aug 2023 11:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580390;
-	bh=V3FzVpkdCbIr9BO7MyLoBnq5FGnjJiyDhg6qQJQPq4k=;
+	s=korg; t=1691580393;
+	bh=Kf1jDU1ZbKvV3M/IZU8xHkuinQORvUBH4+dgXzbBN/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbRTKVQRPjx9GkcytDWnZnq9ajJH4oY+HiZPUVWaOv37wD766o43le+J+VLUMXHbu
-	 LzFrhThirgKWBBuhiAqsHPv1lMdlhvMw/EJJ8iWyOsdxMhg3kAJ250hiCi2nQPEkTB
-	 vSNuIPHROW8bo7y71CxZeZEBqMMmJj3i5dcjE028=
+	b=WoVIH5/61jO79V5U5Uodqa95s+TyfiwyRM9cup6b1He3ZiWY9aDlR0x90j7hx0dD4
+	 q5lMRBALYyZqOoxXwPmx0oaewse6lLRyMry+ltvss8vGYlXa7rQWsalQp+Lbh7oU0P
+	 vjfr9yo02LCLRdRi5pxBguMWN25L+qGH06MufogM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xianting Tian <xianting_tian@126.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 299/323] tcp_metrics: fix addr_same() helper
-Date: Wed,  9 Aug 2023 12:42:17 +0200
-Message-ID: <20230809103711.750217726@linuxfoundation.org>
+Subject: [PATCH 5.4 001/154] jbd2: fix incorrect code style
+Date: Wed,  9 Aug 2023 12:40:32 +0200
+Message-ID: <20230809103636.944963015@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
-References: <20230809103658.104386911@linuxfoundation.org>
+In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
+References: <20230809103636.887175326@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,46 +38,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xianting Tian <xianting_tian@126.com>
 
-[ Upstream commit e6638094d7af6c7b9dcca05ad009e79e31b4f670 ]
+[ Upstream commit 60ed633f51d0c675150a117d96a45e78c3613f91 ]
 
-Because v4 and v6 families use separate inetpeer trees (respectively
-net->ipv4.peers and net->ipv6.peers), inetpeer_addr_cmp(a, b) assumes
-a & b share the same family.
+Remove unnecessary blank.
 
-tcp_metrics use a common hash table, where entries can have different
-families.
-
-We must therefore make sure to not call inetpeer_addr_cmp()
-if the families do not match.
-
-Fixes: d39d14ffa24c ("net: Add helper function to compare inetpeer addresses")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230802131500.1478140-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Xianting Tian <xianting_tian@126.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/1595077057-8048-1-git-send-email-xianting_tian@126.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: e34c8dd238d0 ("jbd2: Fix wrongly judgement for buffer head removing while doing checkpoint")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jbd2/journal.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 4960e2b6bd7f7..c3e133c0510ea 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -78,7 +78,7 @@ static void tcp_metric_set(struct tcp_metrics_block *tm,
- static bool addr_same(const struct inetpeer_addr *a,
- 		      const struct inetpeer_addr *b)
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index b7c5819bfc411..1fa88b5bb1cb0 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1266,7 +1266,7 @@ journal_t *jbd2_journal_init_inode(struct inode *inode)
+  * superblock as being NULL to prevent the journal destroy from writing
+  * back a bogus superblock.
+  */
+-static void journal_fail_superblock (journal_t *journal)
++static void journal_fail_superblock(journal_t *journal)
  {
--	return inetpeer_addr_cmp(a, b) == 0;
-+	return (a->family == b->family) && !inetpeer_addr_cmp(a, b);
+ 	struct buffer_head *bh = journal->j_sb_buffer;
+ 	brelse(bh);
+@@ -1780,7 +1780,7 @@ int jbd2_journal_destroy(journal_t *journal)
+ 
+ 
+ /**
+- *int jbd2_journal_check_used_features () - Check if features specified are used.
++ *int jbd2_journal_check_used_features() - Check if features specified are used.
+  * @journal: Journal to check.
+  * @compat: bitmask of compatible features
+  * @ro: bitmask of features that force read-only mount
+@@ -1790,7 +1790,7 @@ int jbd2_journal_destroy(journal_t *journal)
+  * features.  Return true (non-zero) if it does.
+  **/
+ 
+-int jbd2_journal_check_used_features (journal_t *journal, unsigned long compat,
++int jbd2_journal_check_used_features(journal_t *journal, unsigned long compat,
+ 				 unsigned long ro, unsigned long incompat)
+ {
+ 	journal_superblock_t *sb;
+@@ -1825,7 +1825,7 @@ int jbd2_journal_check_used_features (journal_t *journal, unsigned long compat,
+  * all of a given set of features on this journal.  Return true
+  * (non-zero) if it can. */
+ 
+-int jbd2_journal_check_available_features (journal_t *journal, unsigned long compat,
++int jbd2_journal_check_available_features(journal_t *journal, unsigned long compat,
+ 				      unsigned long ro, unsigned long incompat)
+ {
+ 	if (!compat && !ro && !incompat)
+@@ -1847,7 +1847,7 @@ int jbd2_journal_check_available_features (journal_t *journal, unsigned long com
  }
  
- struct tcpm_hash_bucket {
+ /**
+- * int jbd2_journal_set_features () - Mark a given journal feature in the superblock
++ * int jbd2_journal_set_features() - Mark a given journal feature in the superblock
+  * @journal: Journal to act on.
+  * @compat: bitmask of compatible features
+  * @ro: bitmask of features that force read-only mount
+@@ -1858,7 +1858,7 @@ int jbd2_journal_check_available_features (journal_t *journal, unsigned long com
+  *
+  */
+ 
+-int jbd2_journal_set_features (journal_t *journal, unsigned long compat,
++int jbd2_journal_set_features(journal_t *journal, unsigned long compat,
+ 			  unsigned long ro, unsigned long incompat)
+ {
+ #define INCOMPAT_FEATURE_ON(f) \
 -- 
-2.40.1
+2.39.2
 
 
 
