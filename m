@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD107174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA84CC433C8;
-	Wed,  9 Aug 2023 11:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F91174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7167C433C7;
+	Wed,  9 Aug 2023 11:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578970;
-	bh=pBW+oOe6e4eJVE010y3OYFiw37jecJmR7TZfcKIAPFY=;
+	s=korg; t=1691578973;
+	bh=9/bsN4khvngjx1u4nETXNGFdhqaaUrVW69cfik0b2o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ooCtsbwugUyMig6XSQQFRTrRJjwACZi+cL+CQt3PXscyhBX95orruTaNkTCXyPkki
-	 hhxnnNhfxlxU4lrXwptWw+R3wXo2pr0E798F2japnZlo9R9tsM0PWDQDdNLIe1zRe9
-	 9LZIjw1o2wNUYoPNcnqfx3LmwhZ2+51DPxjrgNsU=
+	b=Vjw3vY2c+1mjLGAJ2aWet2exTuzn1l4NtPEa/hkcmnlLnKN06PBZSEIRWNaj/9bv/
+	 PHIQoR84lyO2ImjmAy8+y72B7vmBSLwMUtmbGmWVajMep50/+ADJ8sYDg1LEHAxJUs
+	 Lq4aMS5Gtz94zURjAqCvGOrOBSsEI0gnIHnaR1s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 029/204] netlink: do not hard code device address lenth in fdb dumps
-Date: Wed,  9 Aug 2023 12:39:27 +0200
-Message-ID: <20230809103643.553619651@linuxfoundation.org>
+Subject: [PATCH 4.14 030/204] gtp: Fix use-after-free in __gtp_encap_destroy().
+Date: Wed,  9 Aug 2023 12:39:28 +0200
+Message-ID: <20230809103643.584860595@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -37,155 +37,188 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit aa5406950726e336c5c9585b09799a734b6e77bf ]
+[ Upstream commit ce3aee7114c575fab32a5e9e939d4bbb3dcca79f ]
 
-syzbot reports that some netdev devices do not have a six bytes
-address [1]
+syzkaller reported use-after-free in __gtp_encap_destroy(). [0]
 
-Replace ETH_ALEN by dev->addr_len.
+It shows the same process freed sk and touched it illegally.
 
-[1] (Case of a device where dev->addr_len = 4)
+Commit e198987e7dd7 ("gtp: fix suspicious RCU usage") added lock_sock()
+and release_sock() in __gtp_encap_destroy() to protect sk->sk_user_data,
+but release_sock() is called after sock_put() releases the last refcnt.
 
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-BUG: KMSAN: kernel-infoleak in copyout+0xb8/0x100 lib/iov_iter.c:169
-instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-copyout+0xb8/0x100 lib/iov_iter.c:169
-_copy_to_iter+0x6d8/0x1d00 lib/iov_iter.c:536
-copy_to_iter include/linux/uio.h:206 [inline]
-simple_copy_to_iter+0x68/0xa0 net/core/datagram.c:513
-__skb_datagram_iter+0x123/0xdc0 net/core/datagram.c:419
-skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:527
-skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
-netlink_recvmsg+0x4ae/0x15a0 net/netlink/af_netlink.c:1970
-sock_recvmsg_nosec net/socket.c:1019 [inline]
-sock_recvmsg net/socket.c:1040 [inline]
-____sys_recvmsg+0x283/0x7f0 net/socket.c:2722
-___sys_recvmsg+0x223/0x840 net/socket.c:2764
-do_recvmmsg+0x4f9/0xfd0 net/socket.c:2858
-__sys_recvmmsg net/socket.c:2937 [inline]
-__do_sys_recvmmsg net/socket.c:2960 [inline]
-__se_sys_recvmmsg net/socket.c:2953 [inline]
-__x64_sys_recvmmsg+0x397/0x490 net/socket.c:2953
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[0]:
+BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
+BUG: KASAN: slab-use-after-free in atomic_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:541 [inline]
+BUG: KASAN: slab-use-after-free in queued_spin_lock include/asm-generic/qspinlock.h:111 [inline]
+BUG: KASAN: slab-use-after-free in do_raw_spin_lock include/linux/spinlock.h:186 [inline]
+BUG: KASAN: slab-use-after-free in __raw_spin_lock_bh include/linux/spinlock_api_smp.h:127 [inline]
+BUG: KASAN: slab-use-after-free in _raw_spin_lock_bh+0x75/0xe0 kernel/locking/spinlock.c:178
+Write of size 4 at addr ffff88800dbef398 by task syz-executor.2/2401
 
-Uninit was stored to memory at:
-__nla_put lib/nlattr.c:1009 [inline]
-nla_put+0x1c6/0x230 lib/nlattr.c:1067
-nlmsg_populate_fdb_fill+0x2b8/0x600 net/core/rtnetlink.c:4071
-nlmsg_populate_fdb net/core/rtnetlink.c:4418 [inline]
-ndo_dflt_fdb_dump+0x616/0x840 net/core/rtnetlink.c:4456
-rtnl_fdb_dump+0x14ff/0x1fc0 net/core/rtnetlink.c:4629
-netlink_dump+0x9d1/0x1310 net/netlink/af_netlink.c:2268
-netlink_recvmsg+0xc5c/0x15a0 net/netlink/af_netlink.c:1995
-sock_recvmsg_nosec+0x7a/0x120 net/socket.c:1019
-____sys_recvmsg+0x664/0x7f0 net/socket.c:2720
-___sys_recvmsg+0x223/0x840 net/socket.c:2764
-do_recvmmsg+0x4f9/0xfd0 net/socket.c:2858
-__sys_recvmmsg net/socket.c:2937 [inline]
-__do_sys_recvmmsg net/socket.c:2960 [inline]
-__se_sys_recvmmsg net/socket.c:2953 [inline]
-__x64_sys_recvmmsg+0x397/0x490 net/socket.c:2953
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+CPU: 1 PID: 2401 Comm: syz-executor.2 Not tainted 6.4.0-rc5-01219-gfa0e21fa4443 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x72/0xa0 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:351 [inline]
+ print_report+0xcc/0x620 mm/kasan/report.c:462
+ kasan_report+0xb2/0xe0 mm/kasan/report.c:572
+ check_region_inline mm/kasan/generic.c:181 [inline]
+ kasan_check_range+0x39/0x1c0 mm/kasan/generic.c:187
+ instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
+ atomic_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:541 [inline]
+ queued_spin_lock include/asm-generic/qspinlock.h:111 [inline]
+ do_raw_spin_lock include/linux/spinlock.h:186 [inline]
+ __raw_spin_lock_bh include/linux/spinlock_api_smp.h:127 [inline]
+ _raw_spin_lock_bh+0x75/0xe0 kernel/locking/spinlock.c:178
+ spin_lock_bh include/linux/spinlock.h:355 [inline]
+ release_sock+0x1f/0x1a0 net/core/sock.c:3526
+ gtp_encap_disable_sock drivers/net/gtp.c:651 [inline]
+ gtp_encap_disable+0xb9/0x220 drivers/net/gtp.c:664
+ gtp_dev_uninit+0x19/0x50 drivers/net/gtp.c:728
+ unregister_netdevice_many_notify+0x97e/0x1520 net/core/dev.c:10841
+ rtnl_delete_link net/core/rtnetlink.c:3216 [inline]
+ rtnl_dellink+0x3c0/0xb30 net/core/rtnetlink.c:3268
+ rtnetlink_rcv_msg+0x450/0xb10 net/core/rtnetlink.c:6423
+ netlink_rcv_skb+0x15d/0x450 net/netlink/af_netlink.c:2548
+ netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+ netlink_unicast+0x700/0x930 net/netlink/af_netlink.c:1365
+ netlink_sendmsg+0x91c/0xe30 net/netlink/af_netlink.c:1913
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x1b7/0x200 net/socket.c:747
+ ____sys_sendmsg+0x75a/0x990 net/socket.c:2493
+ ___sys_sendmsg+0x11d/0x1c0 net/socket.c:2547
+ __sys_sendmsg+0xfe/0x1d0 net/socket.c:2576
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f1168b1fe5d
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
+RSP: 002b:00007f1167edccc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007f1168b1fe5d
+RDX: 0000000000000000 RSI: 00000000200002c0 RDI: 0000000000000003
+RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000000b R14: 00007f1168b80530 R15: 0000000000000000
+ </TASK>
 
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:716
-slab_alloc_node mm/slub.c:3451 [inline]
-__kmem_cache_alloc_node+0x4ff/0x8b0 mm/slub.c:3490
-kmalloc_trace+0x51/0x200 mm/slab_common.c:1057
-kmalloc include/linux/slab.h:559 [inline]
-__hw_addr_create net/core/dev_addr_lists.c:60 [inline]
-__hw_addr_add_ex+0x2e5/0x9e0 net/core/dev_addr_lists.c:118
-__dev_mc_add net/core/dev_addr_lists.c:867 [inline]
-dev_mc_add+0x9a/0x130 net/core/dev_addr_lists.c:885
-igmp6_group_added+0x267/0xbc0 net/ipv6/mcast.c:680
-ipv6_mc_up+0x296/0x3b0 net/ipv6/mcast.c:2754
-ipv6_mc_remap+0x1e/0x30 net/ipv6/mcast.c:2708
-addrconf_type_change net/ipv6/addrconf.c:3731 [inline]
-addrconf_notify+0x4d3/0x1d90 net/ipv6/addrconf.c:3699
-notifier_call_chain kernel/notifier.c:93 [inline]
-raw_notifier_call_chain+0xe4/0x430 kernel/notifier.c:461
-call_netdevice_notifiers_info net/core/dev.c:1935 [inline]
-call_netdevice_notifiers_extack net/core/dev.c:1973 [inline]
-call_netdevice_notifiers+0x1ee/0x2d0 net/core/dev.c:1987
-bond_enslave+0xccd/0x53f0 drivers/net/bonding/bond_main.c:1906
-do_set_master net/core/rtnetlink.c:2626 [inline]
-rtnl_newlink_create net/core/rtnetlink.c:3460 [inline]
-__rtnl_newlink net/core/rtnetlink.c:3660 [inline]
-rtnl_newlink+0x378c/0x40e0 net/core/rtnetlink.c:3673
-rtnetlink_rcv_msg+0x16a6/0x1840 net/core/rtnetlink.c:6395
-netlink_rcv_skb+0x371/0x650 net/netlink/af_netlink.c:2546
-rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6413
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0xf28/0x1230 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x122f/0x13d0 net/netlink/af_netlink.c:1913
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0x999/0xd50 net/socket.c:2503
-___sys_sendmsg+0x28d/0x3c0 net/socket.c:2557
-__sys_sendmsg net/socket.c:2586 [inline]
-__do_sys_sendmsg net/socket.c:2595 [inline]
-__se_sys_sendmsg net/socket.c:2593 [inline]
-__x64_sys_sendmsg+0x304/0x490 net/socket.c:2593
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Allocated by task 1483:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ __kasan_slab_alloc+0x59/0x70 mm/kasan/common.c:328
+ kasan_slab_alloc include/linux/kasan.h:186 [inline]
+ slab_post_alloc_hook mm/slab.h:711 [inline]
+ slab_alloc_node mm/slub.c:3451 [inline]
+ slab_alloc mm/slub.c:3459 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3466 [inline]
+ kmem_cache_alloc+0x16d/0x340 mm/slub.c:3475
+ sk_prot_alloc+0x5f/0x280 net/core/sock.c:2073
+ sk_alloc+0x34/0x6c0 net/core/sock.c:2132
+ inet6_create net/ipv6/af_inet6.c:192 [inline]
+ inet6_create+0x2c7/0xf20 net/ipv6/af_inet6.c:119
+ __sock_create+0x2a1/0x530 net/socket.c:1535
+ sock_create net/socket.c:1586 [inline]
+ __sys_socket_create net/socket.c:1623 [inline]
+ __sys_socket_create net/socket.c:1608 [inline]
+ __sys_socket+0x137/0x250 net/socket.c:1651
+ __do_sys_socket net/socket.c:1664 [inline]
+ __se_sys_socket net/socket.c:1662 [inline]
+ __x64_sys_socket+0x72/0xb0 net/socket.c:1662
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Bytes 2856-2857 of 3500 are uninitialized
-Memory access of size 3500 starts at ffff888018d99104
-Data copied to user address 0000000020000480
+Freed by task 2401:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ kasan_save_free_info+0x2e/0x50 mm/kasan/generic.c:521
+ ____kasan_slab_free mm/kasan/common.c:236 [inline]
+ ____kasan_slab_free mm/kasan/common.c:200 [inline]
+ __kasan_slab_free+0x10c/0x1b0 mm/kasan/common.c:244
+ kasan_slab_free include/linux/kasan.h:162 [inline]
+ slab_free_hook mm/slub.c:1781 [inline]
+ slab_free_freelist_hook mm/slub.c:1807 [inline]
+ slab_free mm/slub.c:3786 [inline]
+ kmem_cache_free+0xb4/0x490 mm/slub.c:3808
+ sk_prot_free net/core/sock.c:2113 [inline]
+ __sk_destruct+0x500/0x720 net/core/sock.c:2207
+ sk_destruct+0xc1/0xe0 net/core/sock.c:2222
+ __sk_free+0xed/0x3d0 net/core/sock.c:2233
+ sk_free+0x7c/0xa0 net/core/sock.c:2244
+ sock_put include/net/sock.h:1981 [inline]
+ __gtp_encap_destroy+0x165/0x1b0 drivers/net/gtp.c:634
+ gtp_encap_disable_sock drivers/net/gtp.c:651 [inline]
+ gtp_encap_disable+0xb9/0x220 drivers/net/gtp.c:664
+ gtp_dev_uninit+0x19/0x50 drivers/net/gtp.c:728
+ unregister_netdevice_many_notify+0x97e/0x1520 net/core/dev.c:10841
+ rtnl_delete_link net/core/rtnetlink.c:3216 [inline]
+ rtnl_dellink+0x3c0/0xb30 net/core/rtnetlink.c:3268
+ rtnetlink_rcv_msg+0x450/0xb10 net/core/rtnetlink.c:6423
+ netlink_rcv_skb+0x15d/0x450 net/netlink/af_netlink.c:2548
+ netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+ netlink_unicast+0x700/0x930 net/netlink/af_netlink.c:1365
+ netlink_sendmsg+0x91c/0xe30 net/netlink/af_netlink.c:1913
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x1b7/0x200 net/socket.c:747
+ ____sys_sendmsg+0x75a/0x990 net/socket.c:2493
+ ___sys_sendmsg+0x11d/0x1c0 net/socket.c:2547
+ __sys_sendmsg+0xfe/0x1d0 net/socket.c:2576
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Fixes: d83b06036048 ("net: add fdb generic dump routine")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20230621174720.1845040-1-edumazet@google.com
+The buggy address belongs to the object at ffff88800dbef300
+ which belongs to the cache UDPv6 of size 1344
+The buggy address is located 152 bytes inside of
+ freed 1344-byte region [ffff88800dbef300, ffff88800dbef840)
+
+The buggy address belongs to the physical page:
+page:00000000d31bfed5 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800dbeed40 pfn:0xdbe8
+head:00000000d31bfed5 order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+memcg:ffff888008ee0801
+flags: 0x100000000010200(slab|head|node=0|zone=1)
+page_type: 0xffffffff()
+raw: 0100000000010200 ffff88800c7a3000 dead000000000122 0000000000000000
+raw: ffff88800dbeed40 0000000080160015 00000001ffffffff ffff888008ee0801
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88800dbef280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88800dbef300: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88800dbef380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                            ^
+ ffff88800dbef400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88800dbef480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Fixes: e198987e7dd7 ("gtp: fix suspicious RCU usage")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20230622213231.24651-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/gtp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 738514e5c8ba2..a76f3024687f0 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2976,7 +2976,7 @@ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
- 	ndm->ndm_ifindex = dev->ifindex;
- 	ndm->ndm_state   = ndm_state;
- 
--	if (nla_put(skb, NDA_LLADDR, ETH_ALEN, addr))
-+	if (nla_put(skb, NDA_LLADDR, dev->addr_len, addr))
- 		goto nla_put_failure;
- 	if (vid)
- 		if (nla_put(skb, NDA_VLAN, sizeof(u16), &vid))
-@@ -2990,10 +2990,10 @@ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
- 	return -EMSGSIZE;
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 666f5e5740afc..d7bf8212ff04a 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -301,7 +301,9 @@ static void __gtp_encap_destroy(struct sock *sk)
+ 			gtp->sk1u = NULL;
+ 		udp_sk(sk)->encap_type = 0;
+ 		rcu_assign_sk_user_data(sk, NULL);
++		release_sock(sk);
+ 		sock_put(sk);
++		return;
+ 	}
+ 	release_sock(sk);
  }
- 
--static inline size_t rtnl_fdb_nlmsg_size(void)
-+static inline size_t rtnl_fdb_nlmsg_size(const struct net_device *dev)
- {
- 	return NLMSG_ALIGN(sizeof(struct ndmsg)) +
--	       nla_total_size(ETH_ALEN) +	/* NDA_LLADDR */
-+	       nla_total_size(dev->addr_len) +	/* NDA_LLADDR */
- 	       nla_total_size(sizeof(u16)) +	/* NDA_VLAN */
- 	       0;
- }
-@@ -3005,7 +3005,7 @@ static void rtnl_fdb_notify(struct net_device *dev, u8 *addr, u16 vid, int type,
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
- 
--	skb = nlmsg_new(rtnl_fdb_nlmsg_size(), GFP_ATOMIC);
-+	skb = nlmsg_new(rtnl_fdb_nlmsg_size(dev), GFP_ATOMIC);
- 	if (!skb)
- 		goto errout;
- 
 -- 
 2.39.2
 
