@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A527617AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25494C433C8;
-	Wed,  9 Aug 2023 11:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647CE17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9935C433C8;
+	Wed,  9 Aug 2023 11:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580502;
-	bh=zYbBpl3C+/45YeKEemcPVoWChYo4iY6UjwOzo4mpUgA=;
+	s=korg; t=1691580505;
+	bh=9X6dGSt48HQhRg93b1piqbxRQPQyjkj9oKRBXmYNEcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjHacPpiLeRz/n8rxr5tGMDiOOeUiwAmQ2Hzmw/S5xq1CEJg0aFSkTDIqvOZusyCk
-	 UmnYKDy3A4PYqp+4f20mYjCE3hx6yjxf9Kgi6EMfhqUIOk25B3wcSGpmqGneYHWHPq
-	 13bTe8ScxFMbdykKCiKme3JejjnonYhU+sKv+7KM=
+	b=SoD+4E1RNk6OoCuSAWnKUDGO3N5pWtyg8hYc/P/a9BB4XNhFOSfeRI36UK6y2Qtb6
+	 ex7Vc9is4a0zI2nq6pUM+UBE1BjJhkCoCw/OD4xudTH5dlZxUgIWziOa0AHi/9FEHR
+	 UuRGxsJkaFuzTmx5Vdua/GjviDc1MnsP+hlZDvJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 046/154] drm/msm/dpu: drop enum dpu_core_perf_data_bus_id
-Date: Wed,  9 Aug 2023 12:41:17 +0200
-Message-ID: <20230809103638.537384792@linuxfoundation.org>
+Subject: [PATCH 5.4 019/154] fs: dlm: interrupt posix locks only when process is killed
+Date: Wed,  9 Aug 2023 12:40:50 +0200
+Message-ID: <20230809103637.583458480@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,51 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit e8383f5cf1b3573ce140a80bfbfd809278ab16d6 ]
+[ Upstream commit 59e45c758ca1b9893ac923dd63536da946ac333b ]
 
-Drop the leftover of bus-client -> interconnect conversion, the enum
-dpu_core_perf_data_bus_id.
+If a posix lock request is waiting for a result from user space
+(dlm_controld), do not let it be interrupted unless the process
+is killed. This reverts commit a6b1533e9a57 ("dlm: make posix locks
+interruptible"). The problem with the interruptible change is
+that all locks were cleared on any signal interrupt. If a signal
+was received that did not terminate the process, the process
+could continue running after all its dlm posix locks had been
+cleared. A future patch will add cancelation to allow proper
+interruption.
 
-Fixes: cb88482e2570 ("drm/msm/dpu: clean up references of DPU custom bus scaling")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/546048/
-Link: https://lore.kernel.org/r/20230707193942.3806526-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: stable@vger.kernel.org
+Fixes: a6b1533e9a57 ("dlm: make posix locks interruptible")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 13 -------------
- 1 file changed, 13 deletions(-)
+ fs/dlm/plock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index cf4b9b5964c6c..cd6c3518ba021 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -14,19 +14,6 @@
+diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
+index 01fb7d8c0bca5..f3482e936cc25 100644
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -159,7 +159,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
  
- #define	DPU_PERF_DEFAULT_MAX_CORE_CLK_RATE	412500000
+ 	send_op(op);
  
--/**
-- * enum dpu_core_perf_data_bus_id - data bus identifier
-- * @DPU_CORE_PERF_DATA_BUS_ID_MNOC: DPU/MNOC data bus
-- * @DPU_CORE_PERF_DATA_BUS_ID_LLCC: MNOC/LLCC data bus
-- * @DPU_CORE_PERF_DATA_BUS_ID_EBI: LLCC/EBI data bus
-- */
--enum dpu_core_perf_data_bus_id {
--	DPU_CORE_PERF_DATA_BUS_ID_MNOC,
--	DPU_CORE_PERF_DATA_BUS_ID_LLCC,
--	DPU_CORE_PERF_DATA_BUS_ID_EBI,
--	DPU_CORE_PERF_DATA_BUS_ID_MAX,
--};
--
- /**
-  * struct dpu_core_perf_params - definition of performance parameters
-  * @max_per_pipe_ib: maximum instantaneous bandwidth request
+-	rv = wait_event_interruptible(recv_wq, (op->done != 0));
++	rv = wait_event_killable(recv_wq, (op->done != 0));
+ 	if (rv == -ERESTARTSYS) {
+ 		log_debug(ls, "%s: wait killed %llx", __func__,
+ 			  (unsigned long long)number);
 -- 
-2.40.1
+2.39.2
 
 
 
