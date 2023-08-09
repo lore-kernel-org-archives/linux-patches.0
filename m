@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225FF17744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A67C433C8;
-	Wed,  9 Aug 2023 11:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07FE17744
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62106C433C8;
+	Wed,  9 Aug 2023 11:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580617;
-	bh=AVeDOUDWGSLu12toBHYtubFriRDGhczyHiMbxxOFsZM=;
+	s=korg; t=1691580619;
+	bh=9be2Msyzn0FY9q7rUKK/lLASQ3pcrCS7a1nu7Td4GaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OV9opa6DEfrNDoNu1itJo4mJwP41OqizZh+oq/F+WItFFhQgK4N6xXaChujWBYk5R
-	 /xl8gyhio4gvFFZ+K57m2eXepuGunHkj51CeChi0ku39grPWruQg6ljn5lhjBSEIzG
-	 By8iymYx+HYppBmJMNVAJ79ecj+dn5ucQz8s/dWQ=
+	b=auLST5dJkhWYX/bBZvakp2POH3o1w1dIjkuxDhhEqjxnCtpYkeP3HL2fXNQUXTKue
+	 z19iRmpT7SkuA5xcw/r3+QATqye6g2cmAIzotTlpfW2EyXm1WkOtZJxlm7ix7t6/cz
+	 LelMqQvG9xPvKNCRSXxabuPDTTMpuk/CD4J4bY7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	D Scott Phillips <scott@os.amperecomputing.com>,
-	James Morse <james.morse@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 5.4 089/154] arm64: Add AMPERE1 to the Spectre-BHB affected list
-Date: Wed,  9 Aug 2023 12:42:00 +0200
-Message-ID: <20230809103639.934666719@linuxfoundation.org>
+Subject: [PATCH 5.4 090/154] arm64: Fix bit-shifting UB in the MIDR_CPU_MODEL() macro
+Date: Wed,  9 Aug 2023 12:42:01 +0200
+Message-ID: <20230809103639.969695530@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -38,72 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: D Scott Phillips <scott@os.amperecomputing.com>
 
-commit 0e5d5ae837c8ce04d2ddb874ec5f920118bd9d31 upstream.
+commit 8ec8490a1950efeccb00967698cf7cb2fcd25ca7 upstream.
 
-Per AmpereOne erratum AC03_CPU_12, "Branch history may allow control of
-speculative execution across software contexts," the AMPERE1 core needs the
-bhb clearing loop to mitigate Spectre-BHB, with a loop iteration count of
-11.
+CONFIG_UBSAN_SHIFT with gcc-5 complains that the shifting of
+ARM_CPU_IMP_AMPERE (0xC0) into bits [31:24] by MIDR_CPU_MODEL() is
+undefined behavior. Well, sort of, it actually spells the error as:
 
+ arch/arm64/kernel/proton-pack.c: In function 'spectre_bhb_loop_affected':
+ arch/arm64/include/asm/cputype.h:44:2: error: initializer element is not constant
+   (((imp)   << MIDR_IMPLEMENTOR_SHIFT) | \
+   ^
+
+This isn't an issue for other Implementor codes, as all the other codes
+have zero in the top bit and so are representable as a signed int.
+
+Cast the implementor code to unsigned in MIDR_CPU_MODEL to remove the
+undefined behavior.
+
+Fixes: 0e5d5ae837c8 ("arm64: Add AMPERE1 to the Spectre-BHB affected list")
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/20221011022140.432370-1-scott@os.amperecomputing.com
-Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20221102160106.1096948-1-scott@os.amperecomputing.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    4 ++++
- arch/arm64/kernel/cpu_errata.c   |    6 ++++++
- 2 files changed, 10 insertions(+)
+ arch/arm64/include/asm/cputype.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/arch/arm64/include/asm/cputype.h
 +++ b/arch/arm64/include/asm/cputype.h
-@@ -59,6 +59,7 @@
- #define ARM_CPU_IMP_NVIDIA		0x4E
- #define ARM_CPU_IMP_FUJITSU		0x46
- #define ARM_CPU_IMP_HISI		0x48
-+#define ARM_CPU_IMP_AMPERE		0xC0
+@@ -41,7 +41,7 @@
+ 	(((midr) & MIDR_IMPLEMENTOR_MASK) >> MIDR_IMPLEMENTOR_SHIFT)
  
- #define ARM_CPU_PART_AEM_V8		0xD0F
- #define ARM_CPU_PART_FOUNDATION		0xD00
-@@ -101,6 +102,8 @@
- 
- #define HISI_CPU_PART_TSV110		0xD01
- 
-+#define AMPERE_CPU_PART_AMPERE1		0xAC3
-+
- #define MIDR_CORTEX_A53 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A53)
- #define MIDR_CORTEX_A57 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A57)
- #define MIDR_CORTEX_A72 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A72)
-@@ -131,6 +134,7 @@
- #define MIDR_NVIDIA_CARMEL MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_CARMEL)
- #define MIDR_FUJITSU_A64FX MIDR_CPU_MODEL(ARM_CPU_IMP_FUJITSU, FUJITSU_CPU_PART_A64FX)
- #define MIDR_HISI_TSV110 MIDR_CPU_MODEL(ARM_CPU_IMP_HISI, HISI_CPU_PART_TSV110)
-+#define MIDR_AMPERE1 MIDR_CPU_MODEL(ARM_CPU_IMP_AMPERE, AMPERE_CPU_PART_AMPERE1)
- 
- /* Fujitsu Erratum 010001 affects A64FX 1.0 and 1.1, (v0r0 and v1r0) */
- #define MIDR_FUJITSU_ERRATUM_010001		MIDR_FUJITSU_A64FX
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -1145,6 +1145,10 @@ u8 spectre_bhb_loop_affected(int scope)
- 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
- 			{},
- 		};
-+		static const struct midr_range spectre_bhb_k11_list[] = {
-+			MIDR_ALL_VERSIONS(MIDR_AMPERE1),
-+			{},
-+		};
- 		static const struct midr_range spectre_bhb_k8_list[] = {
- 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
- 			MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
-@@ -1155,6 +1159,8 @@ u8 spectre_bhb_loop_affected(int scope)
- 			k = 32;
- 		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k24_list))
- 			k = 24;
-+		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k11_list))
-+			k = 11;
- 		else if (is_midr_in_range_list(read_cpuid_id(), spectre_bhb_k8_list))
- 			k =  8;
+ #define MIDR_CPU_MODEL(imp, partnum) \
+-	(((imp)			<< MIDR_IMPLEMENTOR_SHIFT) | \
++	((_AT(u32, imp)		<< MIDR_IMPLEMENTOR_SHIFT) | \
+ 	(0xf			<< MIDR_ARCHITECTURE_SHIFT) | \
+ 	((partnum)		<< MIDR_PARTNUM_SHIFT))
  
 
 
