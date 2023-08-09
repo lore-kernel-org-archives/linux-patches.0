@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F11F6131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BFCC433C9;
-	Wed,  9 Aug 2023 11:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4CD53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A4AC433C8;
+	Wed,  9 Aug 2023 11:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578823;
-	bh=v5h+tYdujvm5cFiK8gO0xrMsONU7KRDjBCSvajPtnQQ=;
+	s=korg; t=1691578826;
+	bh=5Mw2TH+xXtczHkcjmnvyk0oSfrqil52hVygfl8miDHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxKZL0aWHXNFr4dGEdVHv6b7MK+GpPVJH0PqRTIYrkn29kCqd9pUnv0CcQvBfWWQv
-	 9W0H1dA51Z7KPj6hpk/qJDra0rpiFmFPMZs+FJLYkxLHLnX74kYQT0k54nTVasWqL1
-	 H/M3EKjlgdESYeDMwGHpAVefS66vjrZb40M3fk4o=
+	b=Cl4KltI5aeKw3wKysQICDqu7UR9cLrxA/Zj0CeIb0ps1PtIzoASqkfnNxS9du+HQR
+	 Bjgp6bUvTY6u1S+w0rZZkuwoQKPrEK+W3xaxGm0Cnlq5X2qThsXmgMMRPbSk7lqarO
+	 N8HnTuFJKuGef9gFinyrnjVFYWlN+wQ+4L6F63gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 70/92] open: make RESOLVE_CACHED correctly test for O_TMPFILE
-Date: Wed,  9 Aug 2023 12:41:46 +0200
-Message-ID: <20230809103635.992572073@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 53/92] tcp_metrics: fix data-race in tcpm_suck_dst() vs fastopen
+Date: Wed,  9 Aug 2023 12:41:29 +0200
+Message-ID: <20230809103635.440383116@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -34,35 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a0fc452a5d7fed986205539259df1d60546f536c upstream.
+[ Upstream commit ddf251fa2bc1d3699eec0bae6ed0bc373b8fda79 ]
 
-O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
-fast-path check for RESOLVE_CACHED would reject all users passing
-O_DIRECTORY with -EAGAIN, when in fact the intended test was to check
-for __O_TMPFILE.
+Whenever tcpm_new() reclaims an old entry, tcpm_suck_dst()
+would overwrite data that could be read from tcp_fastopen_cache_get()
+or tcp_metrics_fill_info().
 
-Cc: stable@vger.kernel.org # v5.12+
-Fixes: 99668f618062 ("fs: expose LOOKUP_CACHED through openat2() RESOLVE_CACHED")
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Message-Id: <20230806-resolve_cached-o_tmpfile-v1-1-7ba16308465e@cyphar.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We need to acquire fastopen_seqlock to maintain consistency.
+
+For newly allocated objects, tcpm_new() can switch to kzalloc()
+to avoid an extra fastopen_seqlock acquisition.
+
+Fixes: 1fe4c481ba63 ("net-tcp: Fast Open client - cookie cache")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yuchung Cheng <ycheng@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/open.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_metrics.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -1126,7 +1126,7 @@ inline int build_open_flags(const struct
- 		lookup_flags |= LOOKUP_IN_ROOT;
- 	if (how->resolve & RESOLVE_CACHED) {
- 		/* Don't bother even trying for create/truncate/tmpfile open */
--		if (flags & (O_TRUNC | O_CREAT | O_TMPFILE))
-+		if (flags & (O_TRUNC | O_CREAT | __O_TMPFILE))
- 			return -EAGAIN;
- 		lookup_flags |= LOOKUP_CACHED;
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 88b0d952a2888..5df97aaac252e 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -93,6 +93,7 @@ static struct tcpm_hash_bucket	*tcp_metrics_hash __read_mostly;
+ static unsigned int		tcp_metrics_hash_log __read_mostly;
+ 
+ static DEFINE_SPINLOCK(tcp_metrics_lock);
++static DEFINE_SEQLOCK(fastopen_seqlock);
+ 
+ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
+ 			  const struct dst_entry *dst,
+@@ -129,11 +130,13 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
+ 	tcp_metric_set(tm, TCP_METRIC_REORDERING,
+ 		       dst_metric_raw(dst, RTAX_REORDERING));
+ 	if (fastopen_clear) {
++		write_seqlock(&fastopen_seqlock);
+ 		tm->tcpm_fastopen.mss = 0;
+ 		tm->tcpm_fastopen.syn_loss = 0;
+ 		tm->tcpm_fastopen.try_exp = 0;
+ 		tm->tcpm_fastopen.cookie.exp = false;
+ 		tm->tcpm_fastopen.cookie.len = 0;
++		write_sequnlock(&fastopen_seqlock);
  	}
+ }
+ 
+@@ -194,7 +197,7 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 		}
+ 		tm = oldest;
+ 	} else {
+-		tm = kmalloc(sizeof(*tm), GFP_ATOMIC);
++		tm = kzalloc(sizeof(*tm), GFP_ATOMIC);
+ 		if (!tm)
+ 			goto out_unlock;
+ 	}
+@@ -204,7 +207,7 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 	tm->tcpm_saddr = *saddr;
+ 	tm->tcpm_daddr = *daddr;
+ 
+-	tcpm_suck_dst(tm, dst, true);
++	tcpm_suck_dst(tm, dst, reclaim);
+ 
+ 	if (likely(!reclaim)) {
+ 		tm->tcpm_next = tcp_metrics_hash[hash].chain;
+@@ -556,8 +559,6 @@ bool tcp_peer_is_proven(struct request_sock *req, struct dst_entry *dst)
+ 	return ret;
+ }
+ 
+-static DEFINE_SEQLOCK(fastopen_seqlock);
+-
+ void tcp_fastopen_cache_get(struct sock *sk, u16 *mss,
+ 			    struct tcp_fastopen_cookie *cookie)
+ {
+-- 
+2.40.1
+
 
 
