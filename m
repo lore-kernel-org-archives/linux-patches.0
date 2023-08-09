@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0235915AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F5BC433C8;
-	Wed,  9 Aug 2023 10:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2832F125D5
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C488C433C9;
+	Wed,  9 Aug 2023 10:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577889;
-	bh=x+6X6Jdft4FF0tkqsNGZ2MCyo210Eu4hV9zaZQGUfhY=;
+	s=korg; t=1691577892;
+	bh=Wqev2yvsXD9BsXqHOKIpKNgDEw1cUm9l3d0JaCPBZdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtahFrcbI3jrmrXXjXqFMRex/yoGPBDkxwpVSIA0qQlvuulV3xDKnXLGhxD05GObj
-	 QW2bUKePxVsS09RFqX6KQoSZBmLvZN+w2+kaPLbw1+PZlGV7SEkS2HaIFFgQdwl1qC
-	 H/D5zQ/3yGPAXfuLV1XhCz8XzlUv7cXQv7XFUz3I=
+	b=zKTN7HPjKN+k0v/9Y58M4sBLag9hg+WhLzH6mlsAMGyXKFNHlI9jfbnGQ+cBbJGdO
+	 xFy/8JYuFc3zgLpAwCG834AEXAuUxVi9Tu4NXifQDrAdRV+WS5qJf7bILow7xPIsmx
+	 iVssuHSo0KDYvdP1k0eWElSg6bU6gkTAxCS2gwzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 030/165] net/mlx5: fix potential memory leak in mlx5e_init_rep_rx
-Date: Wed,  9 Aug 2023 12:39:21 +0200
-Message-ID: <20230809103643.796937137@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>
+Subject: [PATCH 6.4 004/165] iommu/arm-smmu-v3: Add explicit feature for nesting
+Date: Wed,  9 Aug 2023 12:38:55 +0200
+Message-ID: <20230809103642.894016089@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,48 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit c6cf0b6097bf1bf1b2a89b521e9ecd26b581a93a ]
+commit 1d9777b9f3d55b4b6faf186ba4f1d6fb560c0523 upstream
 
-The memory pointed to by the priv->rx_res pointer is not freed in the error
-path of mlx5e_init_rep_rx, which can lead to a memory leak. Fix by freeing
-the memory in the error path, thereby making the error path identical to
-mlx5e_cleanup_rep_rx().
+In certain cases we may want to refuse to allow nested translation even
+when both stages are implemented, so let's add an explicit feature for
+nesting support which we can control in its own right. For now this
+merely serves as documentation, but it means a nice convenient check
+will be ready and waiting for the future nesting code.
 
-Fixes: af8bbf730068 ("net/mlx5e: Convert mlx5e_flow_steering member of mlx5e_priv to pointer")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/136c3f4a3a84cc14a5a1978ace57dfd3ed67b688.1683731256.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    4 ++++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |    1 +
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 3e7041bd5705e..95d8714765f70 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -964,7 +964,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
- 	err = mlx5e_open_drop_rq(priv, &priv->drop_rq);
- 	if (err) {
- 		mlx5_core_err(mdev, "open drop rq failed, %d\n", err);
--		return err;
-+		goto err_rx_res_free;
- 	}
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3674,6 +3674,10 @@ static int arm_smmu_device_hw_probe(stru
  
- 	err = mlx5e_rx_res_init(priv->rx_res, priv->mdev, 0,
-@@ -998,6 +998,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
- 	mlx5e_rx_res_destroy(priv->rx_res);
- err_close_drop_rq:
- 	mlx5e_close_drop_rq(&priv->drop_rq);
-+err_rx_res_free:
- 	mlx5e_rx_res_free(priv->rx_res);
- 	priv->rx_res = NULL;
- err_free_fs:
--- 
-2.40.1
-
+ 	smmu->ias = max(smmu->ias, smmu->oas);
+ 
++	if ((smmu->features & ARM_SMMU_FEAT_TRANS_S1) &&
++	    (smmu->features & ARM_SMMU_FEAT_TRANS_S2))
++		smmu->features |= ARM_SMMU_FEAT_NESTING;
++
+ 	arm_smmu_device_iidr_probe(smmu);
+ 
+ 	if (arm_smmu_sva_supported(smmu))
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -645,6 +645,7 @@ struct arm_smmu_device {
+ #define ARM_SMMU_FEAT_BTM		(1 << 16)
+ #define ARM_SMMU_FEAT_SVA		(1 << 17)
+ #define ARM_SMMU_FEAT_E2H		(1 << 18)
++#define ARM_SMMU_FEAT_NESTING		(1 << 19)
+ 	u32				features;
+ 
+ #define ARM_SMMU_OPT_SKIP_PREFETCH	(1 << 0)
 
 
