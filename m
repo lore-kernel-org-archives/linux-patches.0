@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F3114F9E
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2F2C433C8;
-	Wed,  9 Aug 2023 10:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C890C168B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DE4C433C8;
+	Wed,  9 Aug 2023 10:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578574;
-	bh=bpXMXA0QCGrPTjrHcqAx5CRL6Gp1S6nj4mQzpdSOXqQ=;
+	s=korg; t=1691578577;
+	bh=99FFulc56JrjsOEdxJ3eqkAbwiq9JSrJY6rpjMxyMnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxCpkQi33h7409i0NUt+MgU0kcvRTzxGNBdxqc90tAZZ5mKOw2U3vlX+pcHgYvFul
-	 wrIkZyEBfFVVIkpnGPtU7OEyZm+abEbaOBFl/ZOTOIySeWkvsdXZA31d+mNQx5m7P8
-	 K1MCy7AZEsmIVhg9NbATr19GzA21XvdiW3TSjR30=
+	b=Y2GEKjDaLOZ1oitKbGha6qslQHSZOF4TxoLR521dqOyFfvi9odE3ffnHisxEj0zHA
+	 4GZq/Xlsqn9n20crp+6V/RaFfiBPoSqRexk8GeN6Wur0kAmfsjHlmQiCYHN8SdcxKd
+	 Xd0fgrqoSi9NZ2ElMkmCIhS9DCfbx6p1d2bS1yZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	syzbot+12cb4425b22169b52036@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 109/127] f2fs: fix to do sanity check on direct node in truncate_dnode()
-Date: Wed,  9 Aug 2023 12:41:36 +0200
-Message-ID: <20230809103640.225249360@linuxfoundation.org>
+	syzbot+cb265db2f3f3468ef436@syzkaller.appspotmail.com,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 110/127] io_uring: annotate offset timeout races
+Date: Wed,  9 Aug 2023 12:41:37 +0200
+Message-ID: <20230809103640.255389752@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,144 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit a6ec83786ab9f13f25fb18166dee908845713a95 upstream.
+commit 5498bf28d8f2bd63a46ad40f4427518615fb793f upstream.
 
-syzbot reports below bug:
+It's racy to read ->cached_cq_tail without taking proper measures
+(usually grabbing ->completion_lock) as timeout requests with CQE
+offsets do, however they have never had a good semantics for from
+when they start counting. Annotate racy reads with data_race().
 
-BUG: KASAN: slab-use-after-free in f2fs_truncate_data_blocks_range+0x122a/0x14c0 fs/f2fs/file.c:574
-Read of size 4 at addr ffff88802a25c000 by task syz-executor148/5000
-
-CPU: 1 PID: 5000 Comm: syz-executor148 Not tainted 6.4.0-rc7-syzkaller-00041-ge660abd551f1 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
- print_address_description.constprop.0+0x2c/0x3c0 mm/kasan/report.c:351
- print_report mm/kasan/report.c:462 [inline]
- kasan_report+0x11c/0x130 mm/kasan/report.c:572
- f2fs_truncate_data_blocks_range+0x122a/0x14c0 fs/f2fs/file.c:574
- truncate_dnode+0x229/0x2e0 fs/f2fs/node.c:944
- f2fs_truncate_inode_blocks+0x64b/0xde0 fs/f2fs/node.c:1154
- f2fs_do_truncate_blocks+0x4ac/0xf30 fs/f2fs/file.c:721
- f2fs_truncate_blocks+0x7b/0x300 fs/f2fs/file.c:749
- f2fs_truncate.part.0+0x4a5/0x630 fs/f2fs/file.c:799
- f2fs_truncate include/linux/fs.h:825 [inline]
- f2fs_setattr+0x1738/0x2090 fs/f2fs/file.c:1006
- notify_change+0xb2c/0x1180 fs/attr.c:483
- do_truncate+0x143/0x200 fs/open.c:66
- handle_truncate fs/namei.c:3295 [inline]
- do_open fs/namei.c:3640 [inline]
- path_openat+0x2083/0x2750 fs/namei.c:3791
- do_filp_open+0x1ba/0x410 fs/namei.c:3818
- do_sys_openat2+0x16d/0x4c0 fs/open.c:1356
- do_sys_open fs/open.c:1372 [inline]
- __do_sys_creat fs/open.c:1448 [inline]
- __se_sys_creat fs/open.c:1442 [inline]
- __x64_sys_creat+0xcd/0x120 fs/open.c:1442
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The root cause is, inodeA references inodeB via inodeB's ino, once inodeA
-is truncated, it calls truncate_dnode() to truncate data blocks in inodeB's
-node page, it traverse mapping data from node->i.i_addr[0] to
-node->i.i_addr[ADDRS_PER_BLOCK() - 1], result in out-of-boundary access.
-
-This patch fixes to add sanity check on dnode page in truncate_dnode(),
-so that, it can help to avoid triggering such issue, and once it encounters
-such issue, it will record newly introduced ERROR_INVALID_NODE_REFERENCE
-error into superblock, later fsck can detect such issue and try repairing.
-
-Also, it removes f2fs_truncate_data_blocks() for cleanup due to the
-function has only one caller, and uses f2fs_truncate_data_blocks_range()
-instead.
-
-Reported-and-tested-by: syzbot+12cb4425b22169b52036@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000f3038a05fef867f8@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reported-by: syzbot+cb265db2f3f3468ef436@syzkaller.appspotmail.com
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/4de3685e185832a92a572df2be2c735d2e21a83d.1684506056.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h          |    1 -
- fs/f2fs/file.c          |    5 -----
- fs/f2fs/node.c          |   14 ++++++++++++--
- include/linux/f2fs_fs.h |    1 +
- 4 files changed, 13 insertions(+), 8 deletions(-)
+ io_uring/timeout.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3431,7 +3431,6 @@ static inline bool __is_valid_data_blkad
-  * file.c
-  */
- int f2fs_sync_file(struct file *file, loff_t start, loff_t end, int datasync);
--void f2fs_truncate_data_blocks(struct dnode_of_data *dn);
- int f2fs_do_truncate_blocks(struct inode *inode, u64 from, bool lock);
- int f2fs_truncate_blocks(struct inode *inode, u64 from, bool lock);
- int f2fs_truncate(struct inode *inode);
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -628,11 +628,6 @@ void f2fs_truncate_data_blocks_range(str
- 					 dn->ofs_in_node, nr_free);
- }
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -545,7 +545,7 @@ int io_timeout(struct io_kiocb *req, uns
+ 		goto add;
+ 	}
  
--void f2fs_truncate_data_blocks(struct dnode_of_data *dn)
--{
--	f2fs_truncate_data_blocks_range(dn, ADDRS_PER_BLOCK(dn->inode));
--}
--
- static int truncate_partial_data_page(struct inode *inode, u64 from,
- 								bool cache_only)
- {
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -923,6 +923,7 @@ static int truncate_node(struct dnode_of
+-	tail = ctx->cached_cq_tail - atomic_read(&ctx->cq_timeouts);
++	tail = data_race(ctx->cached_cq_tail) - atomic_read(&ctx->cq_timeouts);
+ 	timeout->target_seq = tail + off;
  
- static int truncate_dnode(struct dnode_of_data *dn)
- {
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(dn->inode);
- 	struct page *page;
- 	int err;
- 
-@@ -930,16 +931,25 @@ static int truncate_dnode(struct dnode_o
- 		return 1;
- 
- 	/* get direct node */
--	page = f2fs_get_node_page(F2FS_I_SB(dn->inode), dn->nid);
-+	page = f2fs_get_node_page(sbi, dn->nid);
- 	if (PTR_ERR(page) == -ENOENT)
- 		return 1;
- 	else if (IS_ERR(page))
- 		return PTR_ERR(page);
- 
-+	if (IS_INODE(page) || ino_of_node(page) != dn->inode->i_ino) {
-+		f2fs_err(sbi, "incorrect node reference, ino: %lu, nid: %u, ino_of_node: %u",
-+				dn->inode->i_ino, dn->nid, ino_of_node(page));
-+		set_sbi_flag(sbi, SBI_NEED_FSCK);
-+		f2fs_handle_error(sbi, ERROR_INVALID_NODE_REFERENCE);
-+		f2fs_put_page(page, 1);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	/* Make dnode_of_data for parameter */
- 	dn->node_page = page;
- 	dn->ofs_in_node = 0;
--	f2fs_truncate_data_blocks(dn);
-+	f2fs_truncate_data_blocks_range(dn, ADDRS_PER_BLOCK(dn->inode));
- 	err = truncate_node(dn);
- 	if (err) {
- 		f2fs_put_page(page, 1);
---- a/include/linux/f2fs_fs.h
-+++ b/include/linux/f2fs_fs.h
-@@ -104,6 +104,7 @@ enum f2fs_error {
- 	ERROR_INCONSISTENT_SIT,
- 	ERROR_CORRUPTED_VERITY_XATTR,
- 	ERROR_CORRUPTED_XATTR,
-+	ERROR_INVALID_NODE_REFERENCE,
- 	ERROR_MAX,
- };
- 
+ 	/* Update the last seq here in case io_flush_timeouts() hasn't.
 
 
