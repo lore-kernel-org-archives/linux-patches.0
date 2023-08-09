@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4139613A
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472C0C433C8;
-	Wed,  9 Aug 2023 10:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A313B53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E8CC433C8;
+	Wed,  9 Aug 2023 10:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578421;
-	bh=epQON+OFentVD/JjSZ9Cz6JatOtbglUbCmCcf0ndNlE=;
+	s=korg; t=1691578424;
+	bh=BWBHVwQ/t7DedSsyjB8g+CDCyBqUUCRriLGgeFsxa88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iYbq4EfRg7aC0UJatzuOrDKEm5SFSIGMRA6+b+zHI8FZkCpmPCcMVYEkfT7bStGWq
-	 Ei22+FWjrUfHW833R1c/ruDndMFxMFZaCofZQlgOB0HAch2wX/6o+OvUYCeypZLY16
-	 Qzc4OgsBBuU0XApUQkED7qzdlEk2ITHxlRAtTQRU=
+	b=ljyb0TmQnRJmN2djzuZ/0sX0aRICp2RMr0SwomMh5X/k/9r+A9y7+4l93dKcrIOkD
+	 pWw1Hv+6WCndmvXNnOAL6ZGxUyhginnAru3BzZ74EkBVL6pucx9ZgfeEc3oMH0Jfq7
+	 H43NETbz1m666V7UA/dIhzBw3wlVNklZsnXAPZeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Akhmat Karakotov <hmukos@yandex-team.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Brown <broonie@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/127] net: annotate data-race around sk->sk_txrehash
-Date: Wed,  9 Aug 2023 12:40:23 +0200
-Message-ID: <20230809103637.849570655@linuxfoundation.org>
+Subject: [PATCH 6.1 054/127] net: netsec: Ignore phy-mode on SynQuacer in DT mode
+Date: Wed,  9 Aug 2023 12:40:41 +0200
+Message-ID: <20230809103638.472736286@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,50 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit c76a0328899bbe226f8adeb88b8da9e4167bd316 ]
+[ Upstream commit f3bb7759a924713bc54d15f6d0d70733b5935fad ]
 
-sk_getsockopt() runs locklessly. This means sk->sk_txrehash
-can be read while other threads are changing its value.
+As documented in acd7aaf51b20 ("netsec: ignore 'phy-mode' device
+property on ACPI systems") the SocioNext SynQuacer platform ships with
+firmware defining the PHY mode as RGMII even though the physical
+configuration of the PHY is for TX and RX delays.  Since bbc4d71d63549bc
+("net: phy: realtek: fix rtl8211e rx/tx delay config") this has caused
+misconfiguration of the PHY, rendering the network unusable.
 
-Other locations were handled in commit cb6cd2cec799
-("tcp: Change SYN ACK retransmit behaviour to account for rehash")
+This was worked around for ACPI by ignoring the phy-mode property but
+the system is also used with DT.  For DT instead if we're running on a
+SynQuacer force a working PHY mode, as well as the standard EDK2
+firmware with DT there are also some of these systems that use u-boot
+and might not initialise the PHY if not netbooting.  Newer firmware
+imagaes for at least EDK2 are available from Linaro so print a warning
+when doing this.
 
-Fixes: 26859240e4ee ("txhash: Add socket option to control TX hash rethink behavior")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Akhmat Karakotov <hmukos@yandex-team.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230731-synquacer-net-v3-1-944be5f06428@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/socionext/netsec.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 9483820833c5b..77abd69c56dde 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1521,7 +1521,9 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 		}
- 		if ((u8)val == SOCK_TXREHASH_DEFAULT)
- 			val = READ_ONCE(sock_net(sk)->core.sysctl_txrehash);
--		/* Paired with READ_ONCE() in tcp_rtx_synack() */
-+		/* Paired with READ_ONCE() in tcp_rtx_synack()
-+		 * and sk_getsockopt().
-+		 */
- 		WRITE_ONCE(sk->sk_txrehash, (u8)val);
- 		break;
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index 9b46579b5a103..b130e978366c1 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -1851,6 +1851,17 @@ static int netsec_of_probe(struct platform_device *pdev,
+ 		return err;
+ 	}
  
-@@ -1927,7 +1929,8 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
- 		break;
- 
- 	case SO_TXREHASH:
--		v.val = sk->sk_txrehash;
-+		/* Paired with WRITE_ONCE() in sk_setsockopt() */
-+		v.val = READ_ONCE(sk->sk_txrehash);
- 		break;
- 
- 	default:
++	/*
++	 * SynQuacer is physically configured with TX and RX delays
++	 * but the standard firmware claimed otherwise for a long
++	 * time, ignore it.
++	 */
++	if (of_machine_is_compatible("socionext,developer-box") &&
++	    priv->phy_interface != PHY_INTERFACE_MODE_RGMII_ID) {
++		dev_warn(&pdev->dev, "Outdated firmware reports incorrect PHY mode, overriding\n");
++		priv->phy_interface = PHY_INTERFACE_MODE_RGMII_ID;
++	}
++
+ 	priv->phy_np = of_parse_phandle(pdev->dev.of_node, "phy-handle", 0);
+ 	if (!priv->phy_np) {
+ 		dev_err(&pdev->dev, "missing required property 'phy-handle'\n");
 -- 
 2.40.1
 
