@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6281FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385A8C433C7;
-	Wed,  9 Aug 2023 10:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8650F14A8D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B9DC433C9;
+	Wed,  9 Aug 2023 10:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578195;
-	bh=UKUEdsspYwOBuFHYxWq3/aW4IdQa46sQ7xP4/TcyL/A=;
+	s=korg; t=1691578198;
+	bh=Z93bfm3pDPyvdWF2aHqETyK0Gb7IKXx6/VPRm98yjJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V95TqQ9yQR2OjzIKkXQAlq6GkDeD4MgefS8nXTquerMEts+ijhUUbo4DS1wp7j+ml
-	 /dypjutOZsAE1A/0Z8/PvKKnbyqxtsNGSEWKgtgw0ubBw+7P//u65VBdL4ZPtftIf0
-	 hBVVEsg9AsQzT05rzJwQJw0HuqRu3yPmAzz/m04w=
+	b=kVBLuGcetzZidm26ZjQHUhXVkcJfcJ0Hc7PkYrdoex6A6Zj0Rk6gnJ6M153HmvpGC
+	 f96YF0DJEhn/Dl/IGMcb9f/eSg8g1TijKl7m2vkRmt7tcgOjK2OyP+zxhiP11TMjfr
+	 KuHLNNIYXaXKHW+Txh+Z39l/w+v47CrKMSpOit+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+7937ba6a50bdd00fffdf@syzkaller.appspotmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Subject: [PATCH 6.4 140/165] debugobjects: Recheck debug_objects_enabled before reporting
-Date: Wed,  9 Aug 2023 12:41:11 +0200
-Message-ID: <20230809103647.388007737@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Oliver Neukum <oneukum@suse.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+63ee658b9a100ffadbe2@syzkaller.appspotmail.com
+Subject: [PATCH 6.4 141/165] net: usbnet: Fix WARNING in usbnet_start_xmit/usb_submit_urb
+Date: Wed,  9 Aug 2023 12:41:12 +0200
+Message-ID: <20230809103647.417011934@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,69 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 8b64d420fe2450f82848178506d3e3a0bd195539 upstream.
+commit 5e1627cb43ddf1b24b92eb26f8d958a3f5676ccb upstream.
 
-syzbot is reporting false a positive ODEBUG message immediately after
-ODEBUG was disabled due to OOM.
+The syzbot fuzzer identified a problem in the usbnet driver:
 
-  [ 1062.309646][T22911] ODEBUG: Out of memory. ODEBUG disabled
-  [ 1062.886755][ T5171] ------------[ cut here ]------------
-  [ 1062.892770][ T5171] ODEBUG: assert_init not available (active state 0) object: ffffc900056afb20 object type: timer_list hint: process_timeout+0x0/0x40
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 0 PID: 754 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+Modules linked in:
+CPU: 0 PID: 754 Comm: kworker/0:2 Not tainted 6.4.0-rc7-syzkaller-00014-g692b7dc87ca6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+Workqueue: mld mld_ifc_work
+RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+Code: 7c 24 18 e8 2c b4 5b fb 48 8b 7c 24 18 e8 42 07 f0 fe 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 a0 c9 fc 8a e8 5a 6f 23 fb <0f> 0b e9 58 f8 ff ff e8 fe b3 5b fb 48 81 c5 c0 05 00 00 e9 84 f7
+RSP: 0018:ffffc9000463f568 EFLAGS: 00010086
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
+RDX: ffff88801eb28000 RSI: ffffffff814c03b7 RDI: 0000000000000001
+RBP: ffff8881443b7190 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000003
+R13: ffff88802a77cb18 R14: 0000000000000003 R15: ffff888018262500
+FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000556a99c15a18 CR3: 0000000028c71000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+ usbnet_start_xmit+0xfe5/0x2190 drivers/net/usb/usbnet.c:1453
+ __netdev_start_xmit include/linux/netdevice.h:4918 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4932 [inline]
+ xmit_one net/core/dev.c:3578 [inline]
+ dev_hard_start_xmit+0x187/0x700 net/core/dev.c:3594
+...
 
-  CPU 0 [ T5171]                CPU 1 [T22911]
-  --------------                --------------
-  debug_object_assert_init() {
-    if (!debug_objects_enabled)
-      return;
-    db = get_bucket(addr);
-                                lookup_object_or_alloc() {
-                                  debug_objects_enabled = 0;
-                                  return NULL;
-                                }
-                                debug_objects_oom() {
-                                  pr_warn("Out of memory. ODEBUG disabled\n");
-                                  // all buckets get emptied here, and
-                                }
-    lookup_object_or_alloc(addr, db, descr, false, true) {
-      // this bucket is already empty.
-      return ERR_PTR(-ENOENT);
-    }
-    // Emits false positive warning.
-    debug_print_object(&o, "assert_init");
-  }
+This bug is caused by the fact that usbnet trusts the bulk endpoint
+addresses its probe routine receives in the driver_info structure, and
+it does not check to see that these endpoints actually exist and have
+the expected type and directions.
 
-Recheck debug_object_enabled in debug_print_object() to avoid that.
+The fix is simply to add such a check.
 
-Reported-by: syzbot <syzbot+7937ba6a50bdd00fffdf@syzkaller.appspotmail.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/492fe2ae-5141-d548-ebd5-62f5fe2e57f7@I-love.SAKURA.ne.jp
-Closes: https://syzkaller.appspot.com/bug?extid=7937ba6a50bdd00fffdf
+Reported-and-tested-by: syzbot+63ee658b9a100ffadbe2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/000000000000a56e9105d0cec021@google.com/
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+CC: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/ea152b6d-44df-4f8a-95c6-4db51143dcc1@rowland.harvard.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/usb/usbnet.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -498,6 +498,15 @@ static void debug_print_object(struct de
- 	const struct debug_obj_descr *descr = obj->descr;
- 	static int limit;
- 
-+	/*
-+	 * Don't report if lookup_object_or_alloc() by the current thread
-+	 * failed because lookup_object_or_alloc()/debug_objects_oom() by a
-+	 * concurrent thread turned off debug_objects_enabled and cleared
-+	 * the hash buckets.
-+	 */
-+	if (!debug_objects_enabled)
-+		return;
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1775,6 +1775,10 @@ usbnet_probe (struct usb_interface *udev
+ 	} else if (!info->in || !info->out)
+ 		status = usbnet_get_endpoints (dev, udev);
+ 	else {
++		u8 ep_addrs[3] = {
++			info->in + USB_DIR_IN, info->out + USB_DIR_OUT, 0
++		};
 +
- 	if (limit < 5 && descr != descr_test) {
- 		void *hint = descr->debug_hint ?
- 			descr->debug_hint(obj->object) : NULL;
+ 		dev->in = usb_rcvbulkpipe (xdev, info->in);
+ 		dev->out = usb_sndbulkpipe (xdev, info->out);
+ 		if (!(info->flags & FLAG_NO_SETINT))
+@@ -1784,6 +1788,8 @@ usbnet_probe (struct usb_interface *udev
+ 		else
+ 			status = 0;
+ 
++		if (status == 0 && !usb_check_bulk_endpoints(udev, ep_addrs))
++			status = -EINVAL;
+ 	}
+ 	if (status >= 0 && dev->status)
+ 		status = init_status (dev, udev);
 
 
