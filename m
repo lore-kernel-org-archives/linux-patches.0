@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3244B17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30ECC433C8;
-	Wed,  9 Aug 2023 11:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A95917AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C60FC433C8;
+	Wed,  9 Aug 2023 11:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580921;
-	bh=NNSGxKrDbuhcyX5wdq1hV2DeSjsnKp+QjZ20Z33GBJQ=;
+	s=korg; t=1691580923;
+	bh=570S7gfmtCZd3rP6drHXGJibYlJ3XFrqiGyiJ+Ip6QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vc602waJgWMdnqYt5TfSaQmffyXQ7BzkRw0tfL7nYmT4diZkgVXjkz2MfmubKWf2
-	 v2l1b46uGau1bGCoDDc2+lzXQYMKrk3XtMCEopNNrwiRAjcCn3rKm2FAbhsIKh2hnZ
-	 2DKpVJ2GoJjo9cVxzxSvuf3iR4NiYV3wOwJUzBvc=
+	b=bLUwo5tZ3ceiwhaFlWo1H/VTF6egBz0PKFTSpf41sP02nUB3rEoxs1JM5IE4hJLAf
+	 FnC4p2eC9stbdbzhpakjHapnHZa2g4QxnyL4lrhIgBX/f2C1V6Qi6qfWJNiERsj2Nk
+	 ynoBrFfQqV6wFJxcp3jb3UlYPZXWUwGfKJMP4Dxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/201] platform/x86: msi-laptop: Fix rfkill out-of-sync on MSI Wind U100
-Date: Wed,  9 Aug 2023 12:40:43 +0200
-Message-ID: <20230809103645.228675325@linuxfoundation.org>
+Subject: [PATCH 5.10 042/201] netfilter: nft_set_rbtree: fix overlap expiration walk
+Date: Wed,  9 Aug 2023 12:40:44 +0200
+Message-ID: <20230809103645.258738566@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,77 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ad084a6d99bc182bf109c190c808e2ea073ec57b ]
+[ Upstream commit f718863aca469a109895cb855e6b81fff4827d71 ]
 
-Only the HW rfkill state is toggled on laptops with quirks->ec_read_only
-(so far only MSI Wind U90/U100). There are, however, a few issues with
-the implementation:
+The lazy gc on insert that should remove timed-out entries fails to release
+the other half of the interval, if any.
 
-1. The initial HW state is always unblocked, regardless of the actual
-   state on boot, because msi_init_rfkill only sets the SW state,
-   regardless of ec_read_only.
+Can be reproduced with tests/shell/testcases/sets/0044interval_overlap_0
+in nftables.git and kmemleak enabled kernel.
 
-2. The initial SW state corresponds to the actual state on boot, but it
-   can't be changed afterwards, because set_device_state returns
-   -EOPNOTSUPP. It confuses the userspace, making Wi-Fi and/or Bluetooth
-   unusable if it was blocked on boot, and breaking the airplane mode if
-   the rfkill was unblocked on boot.
+Second bug is the use of rbe_prev vs. prev pointer.
+If rbe_prev() returns NULL after at least one iteration, rbe_prev points
+to element that is not an end interval, hence it should not be removed.
 
-Address the above issues by properly initializing the HW state on
-ec_read_only laptops and by allowing the userspace to toggle the SW
-state. Don't set the SW state ourselves and let the userspace fully
-control it. Toggling the SW state is a no-op, however, it allows the
-userspace to properly toggle the airplane mode. The actual SW radio
-disablement is handled by the corresponding rtl818x_pci and btusb
-drivers that have their own rfkills.
+Lastly, check the genmask of the end interval if this is active in the
+current generation.
 
-Tested on MSI Wind U100 Plus, BIOS ver 1.0G, EC ver 130.
-
-Fixes: 0816392b97d4 ("msi-laptop: merge quirk tables to one")
-Fixes: 0de6575ad0a8 ("msi-laptop: Add MSI Wind U90/U100 support")
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20230721145423.161057-1-maxtram95@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-laptop.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
-index 0e804b6c2d242..dfb4af759aa75 100644
---- a/drivers/platform/x86/msi-laptop.c
-+++ b/drivers/platform/x86/msi-laptop.c
-@@ -210,7 +210,7 @@ static ssize_t set_device_state(const char *buf, size_t count, u8 mask)
- 		return -EINVAL;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 172b994790a06..eae760adae4d5 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -216,29 +216,37 @@ static void *nft_rbtree_get(const struct net *net, const struct nft_set *set,
  
- 	if (quirks->ec_read_only)
--		return -EOPNOTSUPP;
-+		return 0;
- 
- 	/* read current device state */
- 	result = ec_read(MSI_STANDARD_EC_COMMAND_ADDRESS, &rdata);
-@@ -841,15 +841,15 @@ static bool msi_laptop_i8042_filter(unsigned char data, unsigned char str,
- static void msi_init_rfkill(struct work_struct *ignored)
+ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 			      struct nft_rbtree *priv,
+-			      struct nft_rbtree_elem *rbe)
++			      struct nft_rbtree_elem *rbe,
++			      u8 genmask)
  {
- 	if (rfk_wlan) {
--		rfkill_set_sw_state(rfk_wlan, !wlan_s);
-+		msi_rfkill_set_state(rfk_wlan, !wlan_s);
- 		rfkill_wlan_set(NULL, !wlan_s);
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+-	struct nft_rbtree_elem *rbe_prev = NULL;
++	struct nft_rbtree_elem *rbe_prev;
+ 	struct nft_set_gc_batch *gcb;
+ 
+ 	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
+ 	if (!gcb)
+ 		return -ENOMEM;
+ 
+-	/* search for expired end interval coming before this element. */
++	/* search for end interval coming before this element.
++	 * end intervals don't carry a timeout extension, they
++	 * are coupled with the interval start element.
++	 */
+ 	while (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+-		if (nft_rbtree_interval_end(rbe_prev))
++		if (nft_rbtree_interval_end(rbe_prev) &&
++		    nft_set_elem_active(&rbe_prev->ext, genmask))
+ 			break;
+ 
+ 		prev = rb_prev(prev);
  	}
- 	if (rfk_bluetooth) {
--		rfkill_set_sw_state(rfk_bluetooth, !bluetooth_s);
-+		msi_rfkill_set_state(rfk_bluetooth, !bluetooth_s);
- 		rfkill_bluetooth_set(NULL, !bluetooth_s);
+ 
+-	if (rbe_prev) {
++	if (prev) {
++		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
++
+ 		rb_erase(&rbe_prev->node, &priv->root);
+ 		atomic_dec(&set->nelems);
++		nft_set_gc_batch_add(gcb, rbe_prev);
  	}
- 	if (rfk_threeg) {
--		rfkill_set_sw_state(rfk_threeg, !threeg_s);
-+		msi_rfkill_set_state(rfk_threeg, !threeg_s);
- 		rfkill_threeg_set(NULL, !threeg_s);
- 	}
- }
+ 
+ 	rb_erase(&rbe->node, &priv->root);
+@@ -320,7 +328,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 
+ 		/* perform garbage collection to avoid bogus overlap reports. */
+ 		if (nft_set_elem_expired(&rbe->ext)) {
+-			err = nft_rbtree_gc_elem(set, priv, rbe);
++			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
+ 			if (err < 0)
+ 				return err;
+ 
 -- 
 2.39.2
 
