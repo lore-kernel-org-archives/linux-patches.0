@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B200154B4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F31C433C7;
-	Wed,  9 Aug 2023 11:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10B9154B4
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF09C433C7;
+	Wed,  9 Aug 2023 11:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579569;
-	bh=SGk7053RZ8775LHSIY5pWkrGx0Ox9U/TNZoFnu6Q2pU=;
+	s=korg; t=1691579571;
+	bh=8XUha/L6l7PJlMLVRXRYAMEApGgPwb5/819+3i3R+Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ejh+piDxFRQZ60W5wrHf5Im4aPAIiKSroEzPRZ85nZsYzWoBHLXaAwg3rVSO9AM9k
-	 E24cD5D5U52N+CT7Ft3cz/UUyVQf68yEacrpgOzJPuF9efYrOO3MwL+5pNfu7BWX+L
-	 25MVX3vE7hafBeWmW1Wiov158VDJut6twzjwG4pU=
+	b=vIQ3/NvOIRht6dxCsA0xHItQjmubooxFcpQR5JIso3ppil91upnmKSADy+HnDxwbo
+	 laSl2a0ZO+QZ+k3QdGvkfkQ2MSr8qC0Cz3Retl8EdIqV2EKiVQyBAq1fn1/JORPNgT
+	 vgtOtZsz9rtnV0VLX6kR7Rcg6EUkqq0fnOo85JU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 010/323] md/raid10: fix overflow of md/safe_mode_delay
-Date: Wed,  9 Aug 2023 12:37:28 +0200
-Message-ID: <20230809103658.566251217@linuxfoundation.org>
+Subject: [PATCH 4.19 037/323] wifi: ray_cs: Drop useless status variable in parse_addr()
+Date: Wed,  9 Aug 2023 12:37:55 +0200
+Message-ID: <20230809103659.823714937@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,49 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 6beb489b2eed25978523f379a605073f99240c50 ]
+[ Upstream commit 4dfc63c002a555a2c3c34d89009532ad803be876 ]
 
-There is no input check when echo md/safe_mode_delay in safe_delay_store().
-And msec might also overflow when HZ < 1000 in safe_delay_show(), Fix it by
-checking overflow in safe_delay_store() and use unsigned long conversion in
-safe_delay_show().
+The status variable assigned only once and used also only once.
+Replace it's usage by actual value.
 
-Fixes: 72e02075a33f ("md: factor out parsing of fixed-point numbers")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230522072535.1523740-2-linan666@huaweicloud.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220603164414.48436-2-andriy.shevchenko@linux.intel.com
+Stable-dep-of: 4f8d66a9fb2e ("wifi: ray_cs: Fix an error handling path in ray_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ray_cs.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index f8c111b369928..ad3e666b9d735 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -3671,8 +3671,9 @@ int strict_strtoul_scaled(const char *cp, unsigned long *res, int scale)
- static ssize_t
- safe_delay_show(struct mddev *mddev, char *page)
+diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
+index f15714f19d0ff..e5cdcee04615f 100644
+--- a/drivers/net/wireless/ray_cs.c
++++ b/drivers/net/wireless/ray_cs.c
+@@ -1653,7 +1653,6 @@ static int parse_addr(char *in_str, UCHAR *out)
  {
--	int msec = (mddev->safemode_delay*1000)/HZ;
--	return sprintf(page, "%d.%03d\n", msec/1000, msec%1000);
-+	unsigned int msec = ((unsigned long)mddev->safemode_delay*1000)/HZ;
-+
-+	return sprintf(page, "%u.%03u\n", msec/1000, msec%1000);
- }
- static ssize_t
- safe_delay_store(struct mddev *mddev, const char *cbuf, size_t len)
-@@ -3684,7 +3685,7 @@ safe_delay_store(struct mddev *mddev, const char *cbuf, size_t len)
- 		return -EINVAL;
- 	}
+ 	int i, k;
+ 	int len;
+-	int status;
  
--	if (strict_strtoul_scaled(cbuf, &msec, 3) < 0)
-+	if (strict_strtoul_scaled(cbuf, &msec, 3) < 0 || msec > UINT_MAX / HZ)
- 		return -EINVAL;
- 	if (msec == 0)
- 		mddev->safemode_delay = 0;
+ 	if (in_str == NULL)
+ 		return 0;
+@@ -1662,7 +1661,6 @@ static int parse_addr(char *in_str, UCHAR *out)
+ 		return 0;
+ 	memset(out, 0, ADDRLEN);
+ 
+-	status = 1;
+ 	i = 5;
+ 
+ 	while (len > 0) {
+@@ -1680,7 +1678,7 @@ static int parse_addr(char *in_str, UCHAR *out)
+ 		if (!i--)
+ 			break;
+ 	}
+-	return status;
++	return 1;
+ }
+ 
+ /*===========================================================================*/
 -- 
 2.39.2
 
