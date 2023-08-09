@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B151A17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33904C433C9;
-	Wed,  9 Aug 2023 11:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8099D17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09FBC433C7;
+	Wed,  9 Aug 2023 11:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580273;
-	bh=C+1EicSQJNvZOGbCeipkQKbPcfoFEiSfRLYh9vWU/54=;
+	s=korg; t=1691580276;
+	bh=q1dFmBdX9mZSx1VitoctepFLja5YGhOK6ollODksYHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LW1nB2qCvk52qLOp/bjl/Mbb6iMTRQmUGM1whpA7pcTjC0K79OI1WkFF4+McFhlAC
-	 JNRhnFN88l60JkrcmjLXY9LQ0hxz/jLU/q/vjnosCXMjbmWAGSHOBMvkmAe9Kt3HzZ
-	 lHFspTP31tWf79PlUPar33FAiNL8vTpjZ90kKw8E=
+	b=vvzWcF8UBko6EHdRilMRVxVM1YGmdf1Nrk8979LRLFn1kWQCRPq00JZnXtnoHMBXv
+	 ZXoFr9WnC2GQUcZaAO8pUrqvKbemVEwsXSTftQesrHavemBJpRq9x6b1Adv2W0JPcm
+	 QRKHnwooXrcFm/1tgJ640iuZ+LkQ3pYWFK1VV96U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 4.19 289/323] word-at-a-time: use the same return type for has_zero regardless of endianness
-Date: Wed,  9 Aug 2023 12:42:07 +0200
-Message-ID: <20230809103711.274375212@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 290/323] KVM: s390: fix sthyi error handling
+Date: Wed,  9 Aug 2023 12:42:08 +0200
+Message-ID: <20230809103711.324849485@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -38,71 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ndesaulniers@google.com <ndesaulniers@google.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 79e8328e5acbe691bbde029a52c89d70dcbc22f3 ]
+[ Upstream commit 0c02cc576eac161601927b41634f80bfd55bfa9e ]
 
-Compiling big-endian targets with Clang produces the diagnostic:
+Commit 9fb6c9b3fea1 ("s390/sthyi: add cache to store hypervisor info")
+added cache handling for store hypervisor info. This also changed the
+possible return code for sthyi_fill().
 
-  fs/namei.c:2173:13: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
-	} while (!(has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
-	          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                               ||
-  fs/namei.c:2173:13: note: cast one or both operands to int to silence this warning
+Instead of only returning a condition code like the sthyi instruction would
+do, it can now also return a negative error value (-ENOMEM). handle_styhi()
+was not changed accordingly. In case of an error, the negative error value
+would incorrectly injected into the guest PSW.
 
-It appears that when has_zero was introduced, two definitions were
-produced with different signatures (in particular different return
-types).
+Add proper error handling to prevent this, and update the comment which
+describes the possible return values of sthyi_fill().
 
-Looking at the usage in hash_name() in fs/namei.c, I suspect that
-has_zero() is meant to be invoked twice per while loop iteration; using
-logical-or would not update `bdata` when `a` did not have zeros.  So I
-think it's preferred to always return an unsigned long rather than a
-bool than update the while loop in hash_name() to use a logical-or
-rather than bitwise-or.
-
-[ Also changed powerpc version to do the same  - Linus ]
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1832
-Link: https://lore.kernel.org/lkml/20230801-bitwise-v1-1-799bec468dc4@google.com/
-Fixes: 36126f8f2ed8 ("word-at-a-time: make the interfaces truly generic")
-Debugged-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 9fb6c9b3fea1 ("s390/sthyi: add cache to store hypervisor info")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230727182939.2050744-1-hca@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/word-at-a-time.h | 2 +-
- include/asm-generic/word-at-a-time.h      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/kernel/sthyi.c  | 6 +++---
+ arch/s390/kvm/intercept.c | 9 ++++++---
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/word-at-a-time.h b/arch/powerpc/include/asm/word-at-a-time.h
-index f3f4710d4ff52..99129b0cd8b8a 100644
---- a/arch/powerpc/include/asm/word-at-a-time.h
-+++ b/arch/powerpc/include/asm/word-at-a-time.h
-@@ -34,7 +34,7 @@ static inline long find_zero(unsigned long mask)
- 	return leading_zero_bits >> 3;
- }
- 
--static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
-+static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+diff --git a/arch/s390/kernel/sthyi.c b/arch/s390/kernel/sthyi.c
+index 888cc2f166db7..ce6084e28d904 100644
+--- a/arch/s390/kernel/sthyi.c
++++ b/arch/s390/kernel/sthyi.c
+@@ -460,9 +460,9 @@ static int sthyi_update_cache(u64 *rc)
+  *
+  * Fills the destination with system information returned by the STHYI
+  * instruction. The data is generated by emulation or execution of STHYI,
+- * if available. The return value is the condition code that would be
+- * returned, the rc parameter is the return code which is passed in
+- * register R2 + 1.
++ * if available. The return value is either a negative error value or
++ * the condition code that would be returned, the rc parameter is the
++ * return code which is passed in register R2 + 1.
+  */
+ int sthyi_fill(void *dst, u64 *rc)
  {
- 	unsigned long rhs = val | c->low_bits;
- 	*data = rhs;
-diff --git a/include/asm-generic/word-at-a-time.h b/include/asm-generic/word-at-a-time.h
-index 20c93f08c9933..95a1d214108a5 100644
---- a/include/asm-generic/word-at-a-time.h
-+++ b/include/asm-generic/word-at-a-time.h
-@@ -38,7 +38,7 @@ static inline long find_zero(unsigned long mask)
- 	return (mask >> 8) ? byte : byte + 1;
- }
- 
--static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
-+static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+diff --git a/arch/s390/kvm/intercept.c b/arch/s390/kvm/intercept.c
+index a389fa85cca2d..5450d43d26ea5 100644
+--- a/arch/s390/kvm/intercept.c
++++ b/arch/s390/kvm/intercept.c
+@@ -360,8 +360,8 @@ static int handle_partial_execution(struct kvm_vcpu *vcpu)
+  */
+ int handle_sthyi(struct kvm_vcpu *vcpu)
  {
- 	unsigned long rhs = val | c->low_bits;
- 	*data = rhs;
+-	int reg1, reg2, r = 0;
+-	u64 code, addr, cc = 0, rc = 0;
++	int reg1, reg2, cc = 0, r = 0;
++	u64 code, addr, rc = 0;
+ 	struct sthyi_sctns *sctns = NULL;
+ 
+ 	if (!test_kvm_facility(vcpu->kvm, 74))
+@@ -392,7 +392,10 @@ int handle_sthyi(struct kvm_vcpu *vcpu)
+ 		return -ENOMEM;
+ 
+ 	cc = sthyi_fill(sctns, &rc);
+-
++	if (cc < 0) {
++		free_page((unsigned long)sctns);
++		return cc;
++	}
+ out:
+ 	if (!cc) {
+ 		r = write_guest(vcpu, addr, reg2, sctns, PAGE_SIZE);
 -- 
 2.40.1
 
