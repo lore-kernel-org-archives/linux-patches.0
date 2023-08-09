@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3365A53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55425C433C8;
-	Wed,  9 Aug 2023 10:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4751553B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254DBC433C8;
+	Wed,  9 Aug 2023 10:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578407;
-	bh=G325CJet+jbI17OiqtNBB3U1arVJau4qtIIxqK8iRP4=;
+	s=korg; t=1691578410;
+	bh=sFKst6VTXE5/LB0lT5dyEKomHhHPFCfxRtkHwahovxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aOxXQ0Yn2fIH7kNMi7ITtWm5zMs0erMaYDJCghNoP3YRoBrvyrniE9P2/odXvaEtU
-	 aKh74IEOzSk5n4TIm7CyDN1rOGzGtO5g+TlBVkTUO6MtVJuHUKq8IKDRwfPgbnerHG
-	 7k3czzcgOu13O1v6p88yUCW7gVTcyB0XhHdRN1JU=
+	b=kHD2MRUqDizcBBwtUvMq7tghNntxr0F4E4PeedSstsXBFTGtYm9SjVayFyCbon6fD
+	 1sxN3eu7mhjNooM8dtuFM93uonMlK4QraLD2q2wnFj7aMfqrJRxu7YWBm7Z5zjWdGZ
+	 SICtZtEYEvFf0yyYTvTkeNYS8Bizehc73B13W5Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	M A Ramdhan <ramdhan@starlabs.sg>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/127] net/sched: cls_fw: No longer copy tcf_result on update to avoid use-after-free
-Date: Wed,  9 Aug 2023 12:40:36 +0200
-Message-ID: <20230809103638.306734085@linuxfoundation.org>
+Subject: [PATCH 6.1 050/127] net/sched: cls_route: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed,  9 Aug 2023 12:40:37 +0200
+Message-ID: <20230809103638.336198101@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -42,9 +42,9 @@ Content-Transfer-Encoding: 8bit
 
 From: valis <sec@valis.email>
 
-[ Upstream commit 76e42ae831991c828cffa8c37736ebfb831ad5ec ]
+[ Upstream commit b80b829e9e2c1b3f7aae34855e04d8f6ecaf13c8 ]
 
-When fw_change() is called on an existing filter, the whole
+When route4_change() is called on an existing filter, the whole
 tcf_result struct is always copied into the new instance of the filter.
 
 This causes a problem when updating a filter bound to a class,
@@ -54,7 +54,7 @@ and allowing it to be deleted, leading to a use-after-free.
 
 Fix this by no longer copying the tcf_result struct from the old filter.
 
-Fixes: e35a8ee5993b ("net: sched: fw use RCU")
+Fixes: 1109c00547fc ("net: sched: RCU cls_route")
 Reported-by: valis <sec@valis.email>
 Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
 Signed-off-by: valis <sec@valis.email>
@@ -62,25 +62,25 @@ Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Victor Nogueira <victor@mojatatu.com>
 Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
 Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
-Link: https://lore.kernel.org/r/20230729123202.72406-3-jhs@mojatatu.com
+Link: https://lore.kernel.org/r/20230729123202.72406-4-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_fw.c | 1 -
+ net/sched/cls_route.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index 1212b057b129c..6160ef7d646ac 100644
---- a/net/sched/cls_fw.c
-+++ b/net/sched/cls_fw.c
-@@ -265,7 +265,6 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
- 			return -ENOBUFS;
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 9e43b929d4ca4..306188bf2d1ff 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -511,7 +511,6 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 	if (fold) {
+ 		f->id = fold->id;
+ 		f->iif = fold->iif;
+-		f->res = fold->res;
+ 		f->handle = fold->handle;
  
- 		fnew->id = f->id;
--		fnew->res = f->res;
- 		fnew->ifindex = f->ifindex;
- 		fnew->tp = f->tp;
- 
+ 		f->tp = fold->tp;
 -- 
 2.40.1
 
