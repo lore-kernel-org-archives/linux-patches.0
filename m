@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C84417AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14B8C433C7;
-	Wed,  9 Aug 2023 11:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7886B17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A177FC433C9;
+	Wed,  9 Aug 2023 11:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581030;
-	bh=QhMdq6GsBUCYsRgx77tTtwmBPNjhq1VtDPdyxlTqKHY=;
+	s=korg; t=1691581033;
+	bh=hZp+OfZSYO2mfW41snT6cvFO4hkyAArhPBLfnaVUHno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ovic7cm/I6Chq/SaR/uOPpNQulfRPBvCgzBT6lLQO7rQL3daoh9vJH7M8BMOTCaw
-	 Xy4z7f94N25iWl2OQ65rzGM17kJac4MtyNkAB8vN7WUorqbalNlpvTKy+uarbOXQZL
-	 qv9kgHokHze0klO1P0aYFViqAlzP2AYh5RiboSak=
+	b=mH/QG6qXA27jmyviunHsUfJNfZrrefTRjcYdDdwwld0F8yjI6ymwRveJeKdgqodJA
+	 QJ6AXQlX1/kNZpS27sXTmPh9GweJlq2B8xUqX76NKmUtMU2L+Q76Sa3rMpkPyVEE1y
+	 1O3fmlsyp8G39LouMe+BcOfDimVIh4C4KojV6WaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <lb@semihalf.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 079/201] USB: quirks: add quirk for Focusrite Scarlett
-Date: Wed,  9 Aug 2023 12:41:21 +0200
-Message-ID: <20230809103646.451791558@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zubin Mithra <zsm@chromium.org>,
+	Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH 5.10 080/201] usb: xhci-mtk: set the dma max_seg_size
+Date: Wed,  9 Aug 2023 12:41:22 +0200
+Message-ID: <20230809103646.481356273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,63 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Łukasz Bartosik <lb@semihalf.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 9dc162e22387080e2d06de708b89920c0e158c9a upstream.
+commit 9fd10829a9eb482e192a845675ecc5480e0bfa10 upstream.
 
-The Focusrite Scarlett audio device does not behave correctly during
-resumes. Below is what happens during every resume (captured with
-Beagle 5000):
+Allow devices to have dma operations beyond 64K, and avoid warnings such
+as:
 
-<Suspend>
-<Resume>
-<Reset>/<Chirp J>/<Tiny J>
-<Reset/Target disconnected>
-<High Speed>
+DMA-API: xhci-mtk 11200000.usb: mapping sg segment longer than device claims to support [len=98304] [max=65536]
 
-The Scarlett disconnects and is enumerated again.
-
-However from time to time it drops completely off the USB bus during
-resume. Below is captured occurrence of such an event:
-
-<Suspend>
-<Resume>
-<Reset>/<Chirp J>/<Tiny J>
-<Reset>/<Chirp K>/<Tiny K>
-<High Speed>
-<Corrupted packet>
-<Reset/Target disconnected>
-
-To fix the condition a user has to unplug and plug the device again.
-
-With USB_QUIRK_RESET_RESUME applied ("usbcore.quirks=1235:8211:b")
-for the Scarlett audio device the issue still reproduces.
-
-Applying USB_QUIRK_DISCONNECT_SUSPEND ("usbcore.quirks=1235:8211:m")
-fixed the issue and the Scarlett audio device didn't drop off the USB
-bus for ~5000 suspend/resume cycles where originally issue reproduced in
-~100 or less suspend/resume cycles.
-
-Signed-off-by: Łukasz Bartosik <lb@semihalf.com>
+Fixes: 0cbd4b34cda9 ("xhci: mediatek: support MTK xHCI host controller")
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230724112911.1802577-1-lb@semihalf.com
+Tested-by: Zubin Mithra <zsm@chromium.org>
+Reported-by: Zubin Mithra <zsm@chromium.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20230628-mtk-usb-v2-1-c8c34eb9f229@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci-mtk.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -437,6 +437,10 @@ static const struct usb_device_id usb_qu
- 	/* novation SoundControl XL */
- 	{ USB_DEVICE(0x1235, 0x0061), .driver_info = USB_QUIRK_RESET_RESUME },
+--- a/drivers/usb/host/xhci-mtk.c
++++ b/drivers/usb/host/xhci-mtk.c
+@@ -535,6 +535,7 @@ static int xhci_mtk_probe(struct platfor
+ 	}
  
-+	/* Focusrite Scarlett Solo USB */
-+	{ USB_DEVICE(0x1235, 0x8211), .driver_info =
-+			USB_QUIRK_DISCONNECT_SUSPEND },
-+
- 	/* Huawei 4G LTE module */
- 	{ USB_DEVICE(0x12d1, 0x15bb), .driver_info =
- 			USB_QUIRK_DISCONNECT_SUSPEND },
+ 	device_init_wakeup(dev, true);
++	dma_set_max_seg_size(dev, UINT_MAX);
+ 
+ 	xhci = hcd_to_xhci(hcd);
+ 	xhci->main_hcd = hcd;
 
 
