@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F04B17756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED90C433C7;
-	Wed,  9 Aug 2023 11:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3F117756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F944C433C7;
+	Wed,  9 Aug 2023 11:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580038;
-	bh=l2kX24XkgBp95wGPNETf8ANGpR74OeiNyMb5CiOl4Lw=;
+	s=korg; t=1691580041;
+	bh=201jJYxxD13Lo3iHBMxpxzZcHPgTs9n9hCDf361ujKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzdXvsNHbLjYriRQI6RSoLxH7+/IhEqnrQ6Sc4IQpJl4fNclEFrI8slveO5T6mETt
-	 ZRvXwG/VONtBRofTZOFmxRnh6fjHXtSPOyTEG14JT3D68LnLqSjlCsM1SO0jnHdRg2
-	 GEMXQ8I9pXJtUmwfCfMbEuyJnBA1wPJIxVvOitB8=
+	b=EJXisLmZsMPXVtW3PYMTkaie2u50uSNzG5a79TzpsGbCqVvNjc8kMCem7gM/jIdeS
+	 YOpaldJDulyamI9l0wJhkF0WvAw19yv0Y8oVxyhfwYtxqV0YiJKkbQjb9hGSYbNhcU
+	 5KJOw+kj3AhBdupMo8ybwG7sD7+OhhEJk46EaKxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Stark <GNStark@sberdevices.ru>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 175/323] meson saradc: fix clock divider mask length
-Date: Wed,  9 Aug 2023 12:40:13 +0200
-Message-ID: <20230809103706.141237383@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 4.19 166/323] PCI: rockchip: Fix legacy IRQ generation for RK3399 PCIe endpoint core
+Date: Wed,  9 Aug 2023 12:40:04 +0200
+Message-ID: <20230809103705.744809579@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,37 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Stark <gnstark@sberdevices.ru>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit c57fa0037024c92c2ca34243e79e857da5d2c0a9 upstream.
+commit 166e89d99dd85a856343cca51eee781b793801f2 upstream.
 
-According to the datasheets of supported meson SoCs length of ADC_CLK_DIV
-field is 6-bit. Although all supported SoCs have the register
-with that field documented later SoCs use external clock rather than
-ADC internal clock so this patch affects only meson8 family (S8* SoCs).
+Fix legacy IRQ generation for RK3399 PCIe endpoint core according to
+the technical reference manual (TRM). Assert and deassert legacy
+interrupt (INTx) through the legacy interrupt control register
+("PCIE_CLIENT_LEGACY_INT_CTRL") instead of manually generating a PCIe
+message. The generation of the legacy interrupt was tested and validated
+with the PCIe endpoint test driver.
 
-Fixes: 3adbf3427330 ("iio: adc: add a driver for the SAR ADC found in Amlogic Meson SoCs")
-Signed-off-by: George Stark <GNStark@sberdevices.ru>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20230606165357.42417-1-gnstark@sberdevices.ru
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20230418074700.1083505-8-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/meson_saradc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |   45 +++++++-----------------------
+ drivers/pci/controller/pcie-rockchip.h    |    6 +++-
+ 2 files changed, 16 insertions(+), 35 deletions(-)
 
---- a/drivers/iio/adc/meson_saradc.c
-+++ b/drivers/iio/adc/meson_saradc.c
-@@ -75,7 +75,7 @@
- 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_COUNT_MASK	GENMASK(20, 18)
- 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_FILTER_TB_MASK	GENMASK(17, 16)
- 	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_SHIFT		10
--	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		5
-+	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		6
- 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_SEL_MASK		GENMASK(9, 8)
- 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_MASK		GENMASK(7, 0)
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -346,48 +346,25 @@ static int rockchip_pcie_ep_get_msi(stru
+ }
  
+ static void rockchip_pcie_ep_assert_intx(struct rockchip_pcie_ep *ep, u8 fn,
+-					 u8 intx, bool is_asserted)
++					 u8 intx, bool do_assert)
+ {
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u32 r = ep->max_regions - 1;
+-	u32 offset;
+-	u32 status;
+-	u8 msg_code;
+-
+-	if (unlikely(ep->irq_pci_addr != ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR ||
+-		     ep->irq_pci_fn != fn)) {
+-		rockchip_pcie_prog_ep_ob_atu(rockchip, fn, r,
+-					     AXI_WRAPPER_NOR_MSG,
+-					     ep->irq_phys_addr, 0, 0);
+-		ep->irq_pci_addr = ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR;
+-		ep->irq_pci_fn = fn;
+-	}
+ 
+ 	intx &= 3;
+-	if (is_asserted) {
++
++	if (do_assert) {
+ 		ep->irq_pending |= BIT(intx);
+-		msg_code = ROCKCHIP_PCIE_MSG_CODE_ASSERT_INTA + intx;
++		rockchip_pcie_write(rockchip,
++				    PCIE_CLIENT_INT_IN_ASSERT |
++				    PCIE_CLIENT_INT_PEND_ST_PEND,
++				    PCIE_CLIENT_LEGACY_INT_CTRL);
+ 	} else {
+ 		ep->irq_pending &= ~BIT(intx);
+-		msg_code = ROCKCHIP_PCIE_MSG_CODE_DEASSERT_INTA + intx;
++		rockchip_pcie_write(rockchip,
++				    PCIE_CLIENT_INT_IN_DEASSERT |
++				    PCIE_CLIENT_INT_PEND_ST_NORMAL,
++				    PCIE_CLIENT_LEGACY_INT_CTRL);
+ 	}
+-
+-	status = rockchip_pcie_read(rockchip,
+-				    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+-				    ROCKCHIP_PCIE_EP_CMD_STATUS);
+-	status &= ROCKCHIP_PCIE_EP_CMD_STATUS_IS;
+-
+-	if ((status != 0) ^ (ep->irq_pending != 0)) {
+-		status ^= ROCKCHIP_PCIE_EP_CMD_STATUS_IS;
+-		rockchip_pcie_write(rockchip, status,
+-				    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+-				    ROCKCHIP_PCIE_EP_CMD_STATUS);
+-	}
+-
+-	offset =
+-	   ROCKCHIP_PCIE_MSG_ROUTING(ROCKCHIP_PCIE_MSG_ROUTING_LOCAL_INTX) |
+-	   ROCKCHIP_PCIE_MSG_CODE(msg_code) | ROCKCHIP_PCIE_MSG_NO_DATA;
+-	writel(0, ep->irq_cpu_addr + offset);
+ }
+ 
+ static int rockchip_pcie_ep_send_legacy_irq(struct rockchip_pcie_ep *ep, u8 fn,
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -37,6 +37,11 @@
+ #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
+ #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
+ #define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
++#define PCIE_CLIENT_LEGACY_INT_CTRL	(PCIE_CLIENT_BASE + 0x0c)
++#define   PCIE_CLIENT_INT_IN_ASSERT		HIWORD_UPDATE_BIT(0x0002)
++#define   PCIE_CLIENT_INT_IN_DEASSERT		HIWORD_UPDATE(0x0002, 0)
++#define   PCIE_CLIENT_INT_PEND_ST_PEND		HIWORD_UPDATE_BIT(0x0001)
++#define   PCIE_CLIENT_INT_PEND_ST_NORMAL	HIWORD_UPDATE(0x0001, 0)
+ #define PCIE_CLIENT_SIDE_BAND_STATUS	(PCIE_CLIENT_BASE + 0x20)
+ #define   PCIE_CLIENT_PHY_ST			BIT(12)
+ #define PCIE_CLIENT_DEBUG_OUT_0		(PCIE_CLIENT_BASE + 0x3c)
+@@ -234,7 +239,6 @@
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_ME				BIT(16)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP	BIT(24)
+ #define ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR				0x1
+-#define ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR		0x3
+ #define ROCKCHIP_PCIE_EP_FUNC_BASE(fn)	(((fn) << 12) & GENMASK(19, 12))
+ #define ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR0(fn, bar) \
+ 	(PCIE_RC_RP_ATS_BASE + 0x0840 + (fn) * 0x0040 + (bar) * 0x0008)
 
 
