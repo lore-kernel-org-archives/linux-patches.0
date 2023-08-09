@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FBB17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A512C433C7;
-	Wed,  9 Aug 2023 11:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FC517AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422B4C433C7;
+	Wed,  9 Aug 2023 11:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581111;
-	bh=OZPqh6DPtVNj/6F3HCkbpXeXCAEQ902CoFTvPplyJig=;
+	s=korg; t=1691581114;
+	bh=7T0JucRwyr7f6pc+4XRNiKVYEA/e3rkZKfiDFNsQgM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6RlPG+I6nhxAAgpd8WO91599HH2oheWKCZCHz5UmiopOVtDbIN3O/wtEcOBMBOen
-	 AHOoHzOEjY/pnAKQmTzykoShUM2tFcwY81cDn4O+GzpB3KdIKIHvUzjdRx3xwVKteA
-	 Kegh1j+ptE4/7T/NmSxD4U0mI7Jnju/5iwyOCPtc=
+	b=ruUKf+EdbwQ6BKW6wXiZippZZ4pL54rrpZ72BG8CFNOJp5d+aTsJY7SK/tCv4jUQ1
+	 nuiSCl7j+Gp/jK7YR2J+D/ej7uyUGOQFqJh4sqF8W0kbLrg12agqiWq0BWBspyAJJR
+	 4413fqqH7blpAQz6gVLjHANixYSB86Ums6it3YZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hagar Hemdan <hagarhem@amazon.de>
-Subject: [PATCH 5.10 109/201] cpufreq: intel_pstate: Drop ACPI _PSS states table patching
-Date: Wed,  9 Aug 2023 12:41:51 +0200
-Message-ID: <20230809103647.449848820@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 110/201] selftests: mptcp: depend on SYN_COOKIES
+Date: Wed,  9 Aug 2023 12:41:52 +0200
+Message-ID: <20230809103647.479286395@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,46 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit e8a0e30b742f76ebd0f3b196973df4bf65d8fbbb upstream.
+commit 6c8880fcaa5c45355179b759c1d11737775e31fc upstream.
 
-After making acpi_processor_get_platform_limit() use the "no limit"
-value for its frequency QoS request when _PPC returns 0, it is not
-necessary to replace the frequency corresponding to the first _PSS
-return package entry with the maximum turbo frequency of the given
-CPU in intel_pstate_init_acpi_perf_limits() any more, so drop the
-code doing that along with the comment explaining it.
+MPTCP selftests are using TCP SYN Cookies for quite a while now, since
+v5.9.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Hagar Hemdan <hagarhem@amazon.de>
+Some CIs don't have this config option enabled and this is causing
+issues in the tests:
+
+  # ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP     (duration   167ms) sysctl: cannot stat /proc/sys/net/ipv4/tcp_syncookies: No such file or directory
+  # [ OK ]./mptcp_connect.sh: line 554: [: -eq: unary operator expected
+
+There is no impact in the results but the test is not doing what it is
+supposed to do.
+
+Fixes: fed61c4b584c ("selftests: mptcp: make 2nd net namespace use tcp syn cookies unconditionally")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |   14 --------------
- 1 file changed, 14 deletions(-)
+ tools/testing/selftests/net/mptcp/config |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -443,20 +443,6 @@ static void intel_pstate_init_acpi_perf_
- 			 (u32) cpu->acpi_perf_data.states[i].control);
- 	}
- 
--	/*
--	 * The _PSS table doesn't contain whole turbo frequency range.
--	 * This just contains +1 MHZ above the max non turbo frequency,
--	 * with control value corresponding to max turbo ratio. But
--	 * when cpufreq set policy is called, it will call with this
--	 * max frequency, which will cause a reduced performance as
--	 * this driver uses real max turbo frequency as the max
--	 * frequency. So correct this frequency in _PSS table to
--	 * correct max turbo frequency based on the turbo state.
--	 * Also need to convert to MHz as _PSS freq is in MHz.
--	 */
--	if (!global.turbo_disabled)
--		cpu->acpi_perf_data.states[0].core_frequency =
--					policy->cpuinfo.max_freq / 1000;
- 	cpu->valid_pss_table = true;
- 	pr_debug("_PPC limits will be enforced\n");
- 
+--- a/tools/testing/selftests/net/mptcp/config
++++ b/tools/testing/selftests/net/mptcp/config
+@@ -6,3 +6,4 @@ CONFIG_INET_DIAG=m
+ CONFIG_INET_MPTCP_DIAG=m
+ CONFIG_VETH=y
+ CONFIG_NET_SCH_NETEM=m
++CONFIG_SYN_COOKIES=y
 
 
