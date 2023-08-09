@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC6B17744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:43:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4C4C433C9;
-	Wed,  9 Aug 2023 11:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C78417744
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:43:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A17C433C8;
+	Wed,  9 Aug 2023 11:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581391;
-	bh=vva/hb3ixTg8jmfM+Plf+S54kvTGNDLdObk1XvjQAZI=;
+	s=korg; t=1691581393;
+	bh=dkyT2E/aS0Z6nkugb0/KCXt0ujX2sMIqaUO3hwSpK14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvC3TcJXf9N+ZPlHM8f2uIqSq+1/940h0ARYZW2ghxHK8fxjZ2LmULPI5PavxTgTI
-	 WRYJMeRO2YP2nA7YBnWpt+3MFluA9lNymhndtahuy8Y0ubc6fO6MhEGC+lm/KGtW56
-	 TKbIWGbK2rYoK0aQMiR/Nze9sOWFXBJ43016z650=
+	b=oz83vsiYydYcCb1ndsQbpXXMZG9x0VirkFc6aE0m+k2odPZTzFgYEz9wPZxtNMwC5
+	 YAkoydswAYjvwNDnFwNgZFQALjOllqFjlKxbQCml/71VfNygcyng9Q+7mm6xVzNK+K
+	 dUmmCWqo3aXkUViKiBVvQxY2Q/+owNVTbIrbv8JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Jeanson <mjeanson@efficios.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 186/201] selftests/rseq: check if libc rseq support is registered
-Date: Wed,  9 Aug 2023 12:43:08 +0200
-Message-ID: <20230809103650.035035772@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 177/201] tracing: Fix sleeping while atomic in kdb ftdump
+Date: Wed,  9 Aug 2023 12:42:59 +0200
+Message-ID: <20230809103649.672558211@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,44 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Jeanson <mjeanson@efficios.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit d1a997ba4c1bf65497d956aea90de42a6398f73a ]
+commit 495fcec8648cdfb483b5b9ab310f3839f07cb3b8 upstream.
 
-When checking for libc rseq support in the library constructor, don't
-only depend on the symbols presence, check that the registration was
-completed.
+If you drop into kdb and type "ftdump" you'll get a sleeping while
+atomic warning from memory allocation in trace_find_next_entry().
 
-This targets a scenario where the libc has rseq support but it is not
-wired for the current architecture in 'bits/rseq.h', we want to fallback
-to our internal registration mechanism.
+This appears to have been caused by commit ff895103a84a ("tracing:
+Save off entry when peeking at next entry"), which added the
+allocation in that path. The problematic commit was already fixed by
+commit 8e99cf91b99b ("tracing: Do not allocate buffer in
+trace_find_next_entry() in atomic") but that fix missed the kdb case.
 
-Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/r/20220614154830.1367382-4-mjeanson@efficios.com
-Stable-dep-of: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The fix here is easy: just move the assignment of the static buffer to
+the place where it should have been to begin with:
+trace_init_global_iter(). That function is called in two places, once
+is right before the assignment of the static buffer added by the
+previous fix and once is in kdb.
+
+Note that it appears that there's a second static buffer that we need
+to assign that was added in commit efbbdaa22bb7 ("tracing: Show real
+address for trace event arguments"), so we'll move that too.
+
+Link: https://lkml.kernel.org/r/20220708170919.1.I75844e5038d9425add2ad853a608cb44bb39df40@changeid
+
+Fixes: ff895103a84a ("tracing: Save off entry when peeking at next entry")
+Fixes: efbbdaa22bb7 ("tracing: Show real address for trace event arguments")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/rseq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/rseq/rseq.c b/tools/testing/selftests/rseq/rseq.c
-index 986b9458efb26..4177f9507bbee 100644
---- a/tools/testing/selftests/rseq/rseq.c
-+++ b/tools/testing/selftests/rseq/rseq.c
-@@ -111,7 +111,8 @@ void rseq_init(void)
- 	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
- 	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
- 	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
--	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p) {
-+	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
-+			*libc_rseq_size_p != 0) {
- 		/* rseq registration owned by glibc */
- 		rseq_offset = *libc_rseq_offset_p;
- 		rseq_size = *libc_rseq_size_p;
--- 
-2.40.1
-
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9416,6 +9416,12 @@ void trace_init_global_iter(struct trace
+ 	/* Output in nanoseconds only if we are using a clock in nanoseconds. */
+ 	if (trace_clocks[iter->tr->clock_id].in_ns)
+ 		iter->iter_flags |= TRACE_FILE_TIME_IN_NS;
++
++	/* Can not use kmalloc for iter.temp and iter.fmt */
++	iter->temp = static_temp_buf;
++	iter->temp_size = STATIC_TEMP_BUF_SIZE;
++	iter->fmt = static_fmt_buf;
++	iter->fmt_size = STATIC_FMT_BUF_SIZE;
+ }
+ 
+ void ftrace_dump(enum ftrace_dump_mode oops_dump_mode)
+@@ -9449,11 +9455,6 @@ void ftrace_dump(enum ftrace_dump_mode o
+ 
+ 	/* Simulate the iterator */
+ 	trace_init_global_iter(&iter);
+-	/* Can not use kmalloc for iter.temp and iter.fmt */
+-	iter.temp = static_temp_buf;
+-	iter.temp_size = STATIC_TEMP_BUF_SIZE;
+-	iter.fmt = static_fmt_buf;
+-	iter.fmt_size = STATIC_FMT_BUF_SIZE;
+ 
+ 	for_each_tracing_cpu(cpu) {
+ 		atomic_inc(&per_cpu_ptr(iter.array_buffer->data, cpu)->disabled);
 
 
