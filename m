@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED8B174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C6FC433C8;
-	Wed,  9 Aug 2023 11:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EF6174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3BDC433C7;
+	Wed,  9 Aug 2023 11:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578956;
-	bh=Pg6wQzaebYk/OUXpeziGMaaeM5hwFoBuPiZsFgfA3Dc=;
+	s=korg; t=1691578958;
+	bh=cbszPOScgMv7dTvAKfrpJMZ3J5fwdSsHNmNvFWw+LN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQjaGHX0U8l/iXH2YCgbZdRhAZ6bu1f+Ci3ROrn4S74AJDQMcbCmpXFCFuc/Ry5hY
-	 CaWMAXEwFKZSLAjAfXuNiM3d2MihMSaHO8dZ4ByO0j0vl8qWae4psy5XUA/owOsw1M
-	 tEdLjHgRkBWFP/4kLvNGmNo0O1lmwsqJaMC2hd5g=
+	b=A4+lD3e6ijhC6HYJFT3AHzX+zAE8yVQ0LUzPPoFcMrINsIQQwuztVjQR9IxdBK5xQ
+	 b4XFtAqHk3y/H4YdKFXuz5x+DAGuK3cLib51rulpdAzYNFPscWp27sRcfBSRckACiK
+	 AqekZfiQYjYtCZO9PsP6oHWhFElNFms0WBC7N/5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Baoquan He <bhe@redhat.com>,
-	Cong Wang <amwang@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 024/204] kexec: fix a memory leak in crash_shrink_memory()
-Date: Wed,  9 Aug 2023 12:39:22 +0200
-Message-ID: <20230809103643.376298210@linuxfoundation.org>
+Subject: [PATCH 4.14 025/204] memstick r592: make memstick_debug_get_tpc_name() static
+Date: Wed,  9 Aug 2023 12:39:23 +0200
+Message-ID: <20230809103643.411652659@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -39,91 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1cba6c4309f03de570202c46f03df3f73a0d4c82 ]
+[ Upstream commit 434587df9f7fd68575f99a889cc5f2efc2eaee5e ]
 
-Patch series "kexec: enable kexec_crash_size to support two crash kernel
-regions".
+There are no other files referencing this function, apparently
+it was left global to avoid an 'unused function' warning when
+the only caller is left out. With a 'W=1' build, it causes
+a 'missing prototype' warning though:
 
-When crashkernel=X fails to reserve region under 4G, it will fall back to
-reserve region above 4G and a region of the default size will also be
-reserved under 4G.  Unfortunately, /sys/kernel/kexec_crash_size only
-supports one crash kernel region now, the user cannot sense the low memory
-reserved by reading /sys/kernel/kexec_crash_size.  Also, low memory cannot
-be freed by writing this file.
+drivers/memstick/host/r592.c:47:13: error: no previous prototype for 'memstick_debug_get_tpc_name' [-Werror=missing-prototypes]
 
-For example:
-resource_size(crashk_res) = 512M
-resource_size(crashk_low_res) = 256M
+Annotate the function as 'static __maybe_unused' to avoid both
+problems.
 
-The result of 'cat /sys/kernel/kexec_crash_size' is 512M, but it should be
-768M.  When we execute 'echo 0 > /sys/kernel/kexec_crash_size', the size
-of crashk_res becomes 0 and resource_size(crashk_low_res) is still 256 MB,
-which is incorrect.
-
-Since crashk_res manages the memory with high address and crashk_low_res
-manages the memory with low address, crashk_low_res is shrunken only when
-all crashk_res is shrunken.  And because when there is only one crash
-kernel region, crashk_res is always used.  Therefore, if all crashk_res is
-shrunken and crashk_low_res still exists, swap them.
-
-This patch (of 6):
-
-If the value of parameter 'new_size' is in the semi-open and semi-closed
-interval (crashk_res.end - KEXEC_CRASH_MEM_ALIGN + 1, crashk_res.end], the
-calculation result of ram_res is:
-
-	ram_res->start = crashk_res.end + 1
-	ram_res->end   = crashk_res.end
-
-The operation of insert_resource() fails, and ram_res is not added to
-iomem_resource.  As a result, the memory of the control block ram_res is
-leaked.
-
-In fact, on all architectures, the start address and size of crashk_res
-are already aligned by KEXEC_CRASH_MEM_ALIGN.  Therefore, we do not need
-to round up crashk_res.start again.  Instead, we should round up
-'new_size' in advance.
-
-Link: https://lkml.kernel.org/r/20230527123439.772-1-thunder.leizhen@huawei.com
-Link: https://lkml.kernel.org/r/20230527123439.772-2-thunder.leizhen@huawei.com
-Fixes: 6480e5a09237 ("kdump: add missing RAM resource in crash_shrink_memory()")
-Fixes: 06a7f711246b ("kexec: premit reduction of the reserved memory size")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Cong Wang <amwang@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 926341250102 ("memstick: add driver for Ricoh R5C592 card reader")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230516202714.560929-1-arnd@kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/memstick/host/r592.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index 27cf24e285e0c..3d87dcbb9cbd6 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -1016,6 +1016,7 @@ int crash_shrink_memory(unsigned long new_size)
- 	start = crashk_res.start;
- 	end = crashk_res.end;
- 	old_size = (end == 0) ? 0 : end - start + 1;
-+	new_size = roundup(new_size, KEXEC_CRASH_MEM_ALIGN);
- 	if (new_size >= old_size) {
- 		ret = (new_size == old_size) ? 0 : -EINVAL;
- 		goto unlock;
-@@ -1027,9 +1028,7 @@ int crash_shrink_memory(unsigned long new_size)
- 		goto unlock;
- 	}
- 
--	start = roundup(start, KEXEC_CRASH_MEM_ALIGN);
--	end = roundup(start + new_size, KEXEC_CRASH_MEM_ALIGN);
+diff --git a/drivers/memstick/host/r592.c b/drivers/memstick/host/r592.c
+index d52c89b2a1d58..a2dbf3331689f 100644
+--- a/drivers/memstick/host/r592.c
++++ b/drivers/memstick/host/r592.c
+@@ -47,12 +47,10 @@ static const char *tpc_names[] = {
+  * memstick_debug_get_tpc_name - debug helper that returns string for
+  * a TPC number
+  */
+-const char *memstick_debug_get_tpc_name(int tpc)
++static __maybe_unused const char *memstick_debug_get_tpc_name(int tpc)
+ {
+ 	return tpc_names[tpc-1];
+ }
+-EXPORT_SYMBOL(memstick_debug_get_tpc_name);
 -
-+	end = start + new_size;
- 	crash_free_reserved_phys_range(end, crashk_res.end);
  
- 	if ((start == end) && (crashk_res.parent != NULL))
+ /* Read a register*/
+ static inline u32 r592_read_reg(struct r592_device *dev, int address)
 -- 
 2.39.2
 
