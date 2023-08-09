@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A98C53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF081C433C7;
-	Wed,  9 Aug 2023 10:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0296F847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BFCC433C7;
+	Wed,  9 Aug 2023 10:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578494;
-	bh=8PotWt2WRbU2C8ZpTP2s4gYfkiZfIyyFJ1H8NqhZja8=;
+	s=korg; t=1691578496;
+	bh=HZf9mBn7XGBdhhFooDESb4q+iPzkiKPMUHuXqIYTE1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4TBSubFbj4y/BfkTdnVQhuUAEi3qknATarqlOSLE8kc6WC15Y4f6nkxkEGwudHpZ
-	 JL9l8JjvCeYnmXkuFD4cjx+GQA6fgRMho9EuKrQPMC54PF44aeCKJ/S6HsrhlXZHF+
-	 QOviWP25SzTNzTUd5tQX5C5K7gIeOpDWKXrsP0t0=
+	b=G8WwozjwvHEd732ydG8ChNDeqcpmj8mGN1DaU22+3OYtdFwwa/x042tKSScvWev0U
+	 Kx2rbosVmgf+09B2brLX0aelG39yiRKBW+Gum8uJQGU/5DthCtagQZUewFJSkPI7we
+	 i6rEcE4AjHyb0U/0FtmDaBFbnTIKhfh9xknN0tWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 080/127] mtd: rawnand: meson: fix OOB available bytes for ECC
-Date: Wed,  9 Aug 2023 12:41:07 +0200
-Message-ID: <20230809103639.303372179@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.1 081/127] bpf: Disable preemption in bpf_perf_event_output
+Date: Wed,  9 Aug 2023 12:41:08 +0200
+Message-ID: <20230809103639.333605569@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,44 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 7e6b04f9238eab0f684fafd158c1f32ea65b9eaa upstream.
+commit f2c67a3e60d1071b65848efaa8c3b66c363dd025 upstream.
 
-It is incorrect to calculate number of OOB bytes for ECC engine using
-some "already known" ECC step size (1024 bytes here). Number of such
-bytes for ECC engine must be whole OOB except 2 bytes for bad block
-marker, while proper ECC step size and strength will be selected by
-ECC logic.
+The nesting protection in bpf_perf_event_output relies on disabled
+preemption, which is guaranteed for kprobes and tracepoints.
 
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230705065211.293500-1-AVKrasnov@sberdevices.ru
+However bpf_perf_event_output can be also called from uprobes context
+through bpf_prog_run_array_sleepable function which disables migration,
+but keeps preemption enabled.
+
+This can cause task to be preempted by another one inside the nesting
+protection and lead eventually to two tasks using same perf_sample_data
+buffer and cause crashes like:
+
+  kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
+  BUG: unable to handle page fault for address: ffffffff82be3eea
+  ...
+  Call Trace:
+   ? __die+0x1f/0x70
+   ? page_fault_oops+0x176/0x4d0
+   ? exc_page_fault+0x132/0x230
+   ? asm_exc_page_fault+0x22/0x30
+   ? perf_output_sample+0x12b/0x910
+   ? perf_event_output+0xd0/0x1d0
+   ? bpf_perf_event_output+0x162/0x1d0
+   ? bpf_prog_c6271286d9a4c938_krava1+0x76/0x87
+   ? __uprobe_perf_func+0x12b/0x540
+   ? uprobe_dispatcher+0x2c4/0x430
+   ? uprobe_notify_resume+0x2da/0xce0
+   ? atomic_notifier_call_chain+0x7b/0x110
+   ? exit_to_user_mode_prepare+0x13e/0x290
+   ? irqentry_exit_to_user_mode+0x5/0x30
+   ? asm_exc_int3+0x35/0x40
+
+Fixing this by disabling preemption in bpf_perf_event_output.
+
+Cc: stable@vger.kernel.org
+Fixes: 8c7dcb84e3b7 ("bpf: implement sleepable uprobes by chaining gps")
+Acked-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230725084206.580930-2-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/trace/bpf_trace.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -1184,7 +1184,6 @@ static int meson_nand_attach_chip(struct
- 	struct meson_nfc *nfc = nand_get_controller_data(nand);
- 	struct meson_nfc_nand_chip *meson_chip = to_meson_nand(nand);
- 	struct mtd_info *mtd = nand_to_mtd(nand);
--	int nsectors = mtd->writesize / 1024;
- 	int ret;
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -662,8 +662,7 @@ static DEFINE_PER_CPU(int, bpf_trace_nes
+ BPF_CALL_5(bpf_perf_event_output, struct pt_regs *, regs, struct bpf_map *, map,
+ 	   u64, flags, void *, data, u64, size)
+ {
+-	struct bpf_trace_sample_data *sds = this_cpu_ptr(&bpf_trace_sds);
+-	int nest_level = this_cpu_inc_return(bpf_trace_nest_level);
++	struct bpf_trace_sample_data *sds;
+ 	struct perf_raw_record raw = {
+ 		.frag = {
+ 			.size = size,
+@@ -671,7 +670,11 @@ BPF_CALL_5(bpf_perf_event_output, struct
+ 		},
+ 	};
+ 	struct perf_sample_data *sd;
+-	int err;
++	int nest_level, err;
++
++	preempt_disable();
++	sds = this_cpu_ptr(&bpf_trace_sds);
++	nest_level = this_cpu_inc_return(bpf_trace_nest_level);
  
- 	if (!mtd->name) {
-@@ -1202,7 +1201,7 @@ static int meson_nand_attach_chip(struct
- 	nand->options |= NAND_NO_SUBPAGE_WRITE;
+ 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(sds->sds))) {
+ 		err = -EBUSY;
+@@ -690,9 +693,9 @@ BPF_CALL_5(bpf_perf_event_output, struct
+ 	sd->sample_flags |= PERF_SAMPLE_RAW;
  
- 	ret = nand_ecc_choose_conf(nand, nfc->data->ecc_caps,
--				   mtd->oobsize - 2 * nsectors);
-+				   mtd->oobsize - 2);
- 	if (ret) {
- 		dev_err(nfc->dev, "failed to ECC init\n");
- 		return -EINVAL;
+ 	err = __bpf_perf_event_output(regs, map, flags, sd);
+-
+ out:
+ 	this_cpu_dec(bpf_trace_nest_level);
++	preempt_enable();
+ 	return err;
+ }
+ 
 
 
