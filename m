@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2041774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30341C433C7;
-	Wed,  9 Aug 2023 11:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA25E1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B02C433C8;
+	Wed,  9 Aug 2023 11:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579486;
-	bh=BHnsoVT4HnXAqTRvJjulU+m0HOthvcowuedN+U2N6fw=;
+	s=korg; t=1691579489;
+	bh=a/hVtiNKbZycudapxCjWOXRlXSFotSef36e5yBR+cG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbWgzyOirkdyjPiiVycEUSM2v2pUwdjv9KG2Ua2x3jnccUtk0HJtJhid2DkXeV3SQ
-	 g0pINYPSKqkjv+ATuMKEQWXa/B457eBF6MgXQrLI6jdQsscDlRHP2wDslUeysOnCuQ
-	 Hl+3Qq9VZabknuUVpUK1ISvw2o+0isCZsUfvsgsM=
+	b=A2GNjgu14oQkxKE1IV5CHqUdOEVs+DDGr76ZsnIQbMLyzPBlJdyLBDFmeHB9TiuFV
+	 IP4lGhMHsC6+eTa7dgrXVd+Oyq3iowWtNfhJd3LlCdNHblgnCQXooSHKvzbx6OqmG3
+	 6N30n8RqH0XrPferpn4HBiXEXpMdqNNLBo1Hodw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Lan <lanyang0908@gmail.com>,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Dragos-Marian Panait <dragos.panait@windriver.com>
-Subject: [PATCH 4.19 001/323] gfs2: Dont deref jdesc in evict
-Date: Wed,  9 Aug 2023 12:37:19 +0200
-Message-ID: <20230809103658.178990444@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 4.19 002/323] x86/smp: Use dedicated cache-line for mwait_play_dead()
+Date: Wed,  9 Aug 2023 12:37:20 +0200
+Message-ID: <20230809103658.222886389@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,63 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 upstream.
+commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
 
-On corrupt gfs2 file systems the evict code can try to reference the
-journal descriptor structure, jdesc, after it has been freed and set to
-NULL. The sequence of events is:
+Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
+obvious choice as all what is needed is a cache line which is not written
+by other CPUs.
 
-init_journal()
-...
-fail_jindex:
-   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
-      if (gfs2_holder_initialized(&ji_gh))
-         gfs2_glock_dq_uninit(&ji_gh);
-fail:
-   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
-      evict()
-         gfs2_evict_inode()
-            evict_linked_inode()
-               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
-<------references the now freed/zeroed sd_jdesc pointer.
+But there is a use case where a "dead" CPU needs to be brought out of
+MWAIT: kexec().
 
-The call to gfs2_trans_begin is done because the truncate_inode_pages
-call can cause gfs2 events that require a transaction, such as removing
-journaled data (jdata) blocks from the journal.
+This is required as kexec() can overwrite text, pagetables, stacks and the
+monitored cacheline of the original kernel. The latter causes MWAIT to
+resume execution which obviously causes havoc on the kexec kernel which
+results usually in triple faults.
 
-This patch fixes the problem by adding a check for sdp->sd_jdesc to
-function gfs2_evict_inode. In theory, this should only happen to corrupt
-gfs2 file systems, when gfs2 detects the problem, reports it, then tries
-to evict all the system inodes it has read in up to that point.
+Use a dedicated per CPU storage to prepare for that.
 
-Reported-by: Yang Lan <lanyang0908@gmail.com>
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[DP: adjusted context]
-Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/super.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1586,6 +1586,14 @@ static void gfs2_evict_inode(struct inod
- 	if (inode->i_nlink || sb_rdonly(sb))
- 		goto out;
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -96,6 +96,17 @@ DEFINE_PER_CPU_READ_MOSTLY(cpumask_var_t
+ DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
+ EXPORT_PER_CPU_SYMBOL(cpu_info);
  
-+	/*
-+	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
-+	 * system files without having an active journal to write to.  In that
-+	 * case, skip the filesystem evict.
-+	 */
-+	if (!sdp->sd_jdesc)
-+		goto out;
++struct mwait_cpu_dead {
++	unsigned int	control;
++	unsigned int	status;
++};
 +
- 	if (test_bit(GIF_ALLOC_FAILED, &ip->i_flags)) {
- 		BUG_ON(!gfs2_glock_is_locked_by_me(ip->i_gl));
- 		gfs2_holder_mark_uninitialized(&gh);
++/*
++ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
++ * that it's unlikely to be touched by other CPUs.
++ */
++static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
++
+ /* Logical package management. We might want to allocate that dynamically */
+ unsigned int __max_logical_packages __read_mostly;
+ EXPORT_SYMBOL(__max_logical_packages);
+@@ -1595,10 +1606,10 @@ static bool wakeup_cpu0(void)
+  */
+ static inline void mwait_play_dead(void)
+ {
++	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
+ 	unsigned int eax, ebx, ecx, edx;
+ 	unsigned int highest_cstate = 0;
+ 	unsigned int highest_subcstate = 0;
+-	void *mwait_ptr;
+ 	int i;
+ 
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
+@@ -1632,13 +1643,6 @@ static inline void mwait_play_dead(void)
+ 			(highest_subcstate - 1);
+ 	}
+ 
+-	/*
+-	 * This should be a memory location in a cache line which is
+-	 * unlikely to be touched by other processors.  The actual
+-	 * content is immaterial as it is not actually modified in any way.
+-	 */
+-	mwait_ptr = &current_thread_info()->flags;
+-
+ 	wbinvd();
+ 
+ 	while (1) {
+@@ -1650,9 +1654,9 @@ static inline void mwait_play_dead(void)
+ 		 * case where we return around the loop.
+ 		 */
+ 		mb();
+-		clflush(mwait_ptr);
++		clflush(md);
+ 		mb();
+-		__monitor(mwait_ptr, 0, 0);
++		__monitor(md, 0, 0);
+ 		mb();
+ 		__mwait(eax, 0);
+ 		/*
 
 
