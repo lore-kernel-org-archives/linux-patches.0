@@ -1,78 +1,74 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA041E507
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 23:21:45 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-d63c0a6568fso80635276.0
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 16:21:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9641E507
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 23:22:01 +0000 (UTC)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-d3563cb41e9so312435276.0
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 16:22:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691623304; x=1692228104;
+        d=gmail.com; s=20221208; t=1691623320; x=1692228120;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fqPhSKEhAxdN896thpE1jEBzRUIXHDDDcmy8dPclHgc=;
-        b=YHpB1fM+/bsbFkErDhR9Q+L2r87uw9nADj/lA80maywU1ipSwvMdW0Y0k1MCBNT0hU
-         Vcz1rrWGKw3PjIpf4qV0ai/27TeZvPzJbtIb8n+ejunzudwHGBQMUFBkyjLhI9puH4YV
-         qYi2zuumU9X/ooIlMOY8S9mcC77Pkoq7e5V3U9oPBRzZdf70LGHwbDUhErClH/icDwhO
-         FKeBG5KGrsCnWmfWpGOnDP0lO+bQD7ClaCs39ciIEPsFJUtMe3waiZZPjPoVUyHvEQy/
-         bPQ9v/gyWCWnx7W2mASY8M1gVNnov8hT19t/o/c/rONc+5bl166nnwnG1eN/s3wJ1pvZ
-         pJGQ==
+        bh=HAUCVB9hbx+bm1gCJWJ7NI0D5vTP4KeLZCLHymhDXao=;
+        b=V+ixzXp8y9iFryPiBEr/0UAIfaBTWtRqcmV3Epr223t+BlW+bs9j0UopmLWuAPAjyG
+         qmzAhFYhpoB61/7wMfMHbFx70tFVDNx08ZNekOT8/GE1rKkP2DP+kD3YZlfSP+aUuKqg
+         WTNKlKQmkthTgwEYq6GJNNcoq2gB44mMAJcORwhIWNJXgikdGjUgwaXGLVo4zukDt+zj
+         EjTgO0Dl4Q2drNMKkYtcHmLwVk6UolBPC2g6qumyQKELnmYuHoR58EVEHCiEKXekqzCF
+         d8Vpgh4ueyHv2A0iOYH2PWCnq6UK6RQnzSt1jdOIoRgrHfhW0/+EiMjnGsyzuSHZsQbp
+         Csqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691623304; x=1692228104;
+        d=1e100.net; s=20221208; t=1691623320; x=1692228120;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fqPhSKEhAxdN896thpE1jEBzRUIXHDDDcmy8dPclHgc=;
-        b=lbnJkATBkv9GbIx3SulotkjxvbN25U4snih1ZfFs/B4UyHJhMaEzucGvZG29A8aymZ
-         cPY6Klsnvj4K2rvxk5h5O0Gk92Srd8Zzu4oXk++CUE4awRQdJ41rvCuIXspdSVT9lvxk
-         qxXevReIk4VnSryaQo0tdTCiAoKBxo/7tcJuDiuDAmWNuSdA31nR2Izn7knlyqBrpnMA
-         nyxEn83KEGqJyMfw4MuDYKThdOA22cWLBPxkG8Dhk1DWD0WongvrnjirQEadli92XGFy
-         Hl5gW3hjyNNlEEvmirSKrVHcm0cmSiQCm2Dt2wEQRnC5sQiRvHd3LJIsa0D2qeTRQYAs
-         Ei1g==
-X-Gm-Message-State: AOJu0Yxo6iZW+bLBebNu17e/JfPxWlxR6T8BxrgxzBwddhIJ2imZYJNy
-	ui1gRfqft5P+7vxpYl/LdOuV63s4IP+i5iJFicM=
-X-Google-Smtp-Source: AGHT+IFiyMa/iQ1NyMHGBxBvqSHp3vWMNVT0jkD4qUeKJs5plCuf861SCUO02G9gJm5D36GYtwWy6fs21qFzqzMa7bk=
-X-Received: by 2002:a25:d206:0:b0:d1c:bb1d:238a with SMTP id
- j6-20020a25d206000000b00d1cbb1d238amr965837ybg.52.1691623304316; Wed, 09 Aug
- 2023 16:21:44 -0700 (PDT)
+        bh=HAUCVB9hbx+bm1gCJWJ7NI0D5vTP4KeLZCLHymhDXao=;
+        b=Ch7ZRYN7/81QrtLgpyatvTLjWCzu8gkQKuT8Va5O7HG5xI8Ec14SJXk00tfmTLDYHk
+         qp1TmP0W6uq7aBprSMd90l9mY9u8jkmzB7mhtPu0NOFLJ123wMZ0WEujtlHZbRjwiRUr
+         ZI4DN27TjLSInfsjZ9e+8iA1AAfj+qBN0OB4MzT9ksYy3nalTcwWEfGtQKnF1gT1WSSt
+         liSFZOaII8h1El3fy4VkjSMQknsAiFERH/5+WIyvSlh62DSIaoMw5hmcOjvKjiSDc5wu
+         B6V69kQZOco/XeUvqPAPnYciisOwwzsBPJzJpj+blRsk7wdSOzeHq92ixYOH66LKJ2by
+         KqRQ==
+X-Gm-Message-State: AOJu0Yyum5RONwLHAq25UK5AVhSjpgYT1FAwQr/iRwmSry71MQkhx3SP
+	EJiyC7wKWDSy/8PhUBK8ARaFzh6/ZIjm6Yr7QwI=
+X-Google-Smtp-Source: AGHT+IGplt7IN6NKg9sHyqvgrj1hGD6mus/KNdcOnf0yuldHarmJPd1+ib/dTzvV6O2KSekEQIs3TdDPlbLJu7pVKd4=
+X-Received: by 2002:a25:ad20:0:b0:d19:d73d:7950 with SMTP id
+ y32-20020a25ad20000000b00d19d73d7950mr903429ybi.27.1691623320133; Wed, 09 Aug
+ 2023 16:22:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230614115328.2825961-1-aliceryhl@google.com>
-In-Reply-To: <20230614115328.2825961-1-aliceryhl@google.com>
+References: <20230630150216.109789-1-benno.lossin@proton.me>
+In-Reply-To: <20230630150216.109789-1-benno.lossin@proton.me>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 10 Aug 2023 01:21:33 +0200
-Message-ID: <CANiq72kVzySOqeWpK0+wn3gn-wOHUhm0TcSxdsr71eFsN3bnnA@mail.gmail.com>
-Subject: Re: [PATCH] rust: make `UnsafeCell` the outer type in `Opaque`
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+Date: Thu, 10 Aug 2023 01:21:49 +0200
+Message-ID: <CANiq72kUFSc-iX7r0EQMXAh36Bc-4rWPdLnYO0CYbSCRyzpvXQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: types: make `Opaque` be `!Unpin`
+To: Benno Lossin <benno.lossin@proton.me>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 14, 2023 at 1:53=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> w=
-rote:
+On Fri, Jun 30, 2023 at 5:03=E2=80=AFPM Benno Lossin <benno.lossin@proton.m=
+e> wrote:
 >
-> When combining `UnsafeCell` with `MaybeUninit`, it is idiomatic to use
-> `UnsafeCell` as the outer type. Intuitively, this is because a
-> `MaybeUninit<T>` might not contain a `T`, but we always want the effect
-> of the `UnsafeCell`, even if the inner value is uninitialized.
+> Adds a `PhantomPinned` field to `Opaque<T>`. This removes the last Rust
+> guarantee: the assumption that the type `T` can be freely moved. This is
+> not the case for many types from the C side (e.g. if they contain a
+> `struct list_head`). This change removes the need to add a
+> `PhantomPinned` field manually to Rust structs that contain C structs
+> which must not be moved.
 >
-> Now, strictly speaking, this doesn't really make a difference. The
-> compiler will always apply the `UnsafeCell` effect even if the inner
-> value is uninitialized. But I think we should follow the convention
-> here.
->
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
-Applied to `rust-next`, thanks everyone!
+Applied to `rust-next` -- thanks everyone!
 
 Cheers,
 Miguel
