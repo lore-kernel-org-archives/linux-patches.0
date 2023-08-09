@@ -1,92 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987A31D2E8;
-	Wed,  9 Aug 2023 18:12:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCE1C433C8;
-	Wed,  9 Aug 2023 18:12:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691604737;
-	bh=dQSxAwTg/Ur8+g1iyJEmUIHV6QtyBHM7QCfl22I5E88=;
-	h=From:Date:Subject:To:Cc:From;
-	b=QExAzpIxW8VIhUg0Dx3HmURl8L8cDXikq01/z7xjlsz992JPeLyzHZatsyZdgx8Fe
-	 SD8Jaca7/bbEOVQeWY8qiEF9DyRf6lkHZya2xYqHWJQZ9AAEkKTXQ7lG2YsoiYcl8Q
-	 76wMGGYPqhdnyqpsLlxdglMv9nWYzowNf3LllrA5d/HNTRUnr9UnCbQhLK5wC34dSu
-	 UfPqScmBzgYm68ZLPTVQCa8BzvWtK8SWHZGwk4w2rBG3bChG2LGjWxh4A9RmibSyab
-	 QwEapEYqjVHdo1kvwUIrf/LUQNK+H28VSI4xvdTjvushDEew3K+PsYEsgH3ESQJaE3
-	 xko1vLC9gP0VA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 09 Aug 2023 11:12:07 -0700
-Subject: [PATCH] ASoC: SOF: Intel: Initialize chip in
- hda_sdw_check_wakeen_irq()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724771AA83
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 18:17:46 +0000 (UTC)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-686f38692b3so39463b3a.2
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 11:17:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691605066; x=1692209866;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EJQ7Cy50cBVPoWtJxevAy6xVINQRSlrLcMP3CSFJ0MM=;
+        b=S6GX7kEVUd9BxjShZ+LShn/6Dd0FvN8vTCReO7kF9aFwm5CowNxpSZvLDf7+feMRln
+         afOqtI4Ff6yM5lJRBZBvyLTgONSTDCp51K4KreukoUaF8LnEvTCvF6Y+f7Om0Gp1nbpH
+         FjEmevlgBV7tI3MgAIph26/7jid68ByoYPvxMifFtxqnA+A0NT2hPNmCvGe6VVrvbfy9
+         xrAnyO5OkCkiKnBSzqWu8Jp6GTenzczkyg6Pot/w0yIIVIxtiLpkyqV4JfzpAR6ct8Oq
+         ZhtnukLEeANR6+jZdRCcZW4qokjKlKeoebMHg8ufgubWCwAVXRhxJTUKa1lx2nrnr5j9
+         FsNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691605066; x=1692209866;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EJQ7Cy50cBVPoWtJxevAy6xVINQRSlrLcMP3CSFJ0MM=;
+        b=MEZ0ctFsn3JTiHI0EQAjjro6sYmVmAGifYUpae9VLTqfE5zjpMtvXtthtyuVSX9NUb
+         JTlkFkVcXVGfsJGyhtjOlSCI1mCBY5qCWoiXzM9weeS8g/xB8sWBiS0MaxgKXnCXuEqg
+         nzmXndMJuzr0zgN9A1q1NXJzUnzog/m6+DZmG1CfPxnowkh3UwUr/F/IPQVRVQGgrQJt
+         zgIMM2ibL8g4uT0RdacYlejIcxuI+hrfWs9bkD/rg1kR6fVce1BdeXZbRe0eN4nNx66f
+         He7wFBRDLxwWNZJN4Lt9NjUKWuIEggfOG7SCoC7MNai98caHGDhn0bLCen4LcvVzgkOb
+         xYnw==
+X-Gm-Message-State: AOJu0YwCOJtqz7bI5OwO6+FIsogqqrdYQ9sRYrez+Pb97oJQ2fWVoogH
+	woE400Owr8ioz1l7+RLM1D8=
+X-Google-Smtp-Source: AGHT+IFgz9/M8aPndMwOw9738tQtX1YN6G8+HnGVOxGUusoEeZS5bOxIInyOJszPp7kJj9kO0JJ0qA==
+X-Received: by 2002:a05:6a20:1394:b0:13d:8b58:53ed with SMTP id hn20-20020a056a20139400b0013d8b5853edmr2858507pzc.18.1691605065558;
+        Wed, 09 Aug 2023 11:17:45 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id q24-20020a62e118000000b00679a4b56e41sm10234159pfh.43.2023.08.09.11.17.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 11:17:45 -0700 (PDT)
+Message-ID: <2c9315a6-1e77-288a-226c-a3dd866e5c1b@gmail.com>
+Date: Wed, 9 Aug 2023 11:17:42 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 5.4 000/154] 5.4.253-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230809103636.887175326@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAPbW02QC/x3MQQqDMBBG4avIrB1I1Urbq4iLOJmaH9pUMiKCe
- HdDl99bvINMM9ToVR2UdYPhlwpudUUSfZqVEYqpcU3rHu7JSKt+OAbPX5ghzSwRS8lYOYjIpH3
- b331H5bBkfWP/34fxPC/UGTIgbQAAAA==
-To: broonie@kernel.org, pierre-louis.bossart@linux.intel.com, 
- lgirdwood@gmail.com, peter.ujfalusi@linux.intel.com, 
- yung-chuan.liao@linux.intel.com, ranjani.sridharan@linux.intel.com, 
- daniel.baluta@nxp.com
-Cc: kai.vehmanen@linux.intel.com, ndesaulniers@google.com, trix@redhat.com, 
- rander.wang@intel.com, sound-open-firmware@alsa-project.org, 
- alsa-devel@alsa-project.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1494; i=nathan@kernel.org;
- h=from:subject:message-id; bh=dQSxAwTg/Ur8+g1iyJEmUIHV6QtyBHM7QCfl22I5E88=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCmXrzPYTvdaPP30JJdUySrx88FcXYe+p3ScPHqfSdrV/
- KerY21vRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZgItxwjw6kXaxRKy0pFy15t
- nhx3bf6RacFfap7fl8itvCgl8+Rc+z2GP1w5N62F+FcE1HD3HLvlE+dx4MH1mxsbXsi8YFB5N8d
- akRUA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns (or errors with CONFIG_WERROR):
+On 8/9/23 03:40, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.253 release.
+> There are 154 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.253-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-  sound/soc/sof/intel/hda.c:423:6: error: variable 'chip' is uninitialized when used here [-Werror,-Wuninitialized]
-    423 |         if (chip && chip->check_sdw_wakeen_irq)
-        |             ^~~~
-  sound/soc/sof/intel/hda.c:418:39: note: initialize the variable 'chip' to silence this warning
-    418 |         const struct sof_intel_dsp_desc *chip;
-        |                                              ^
-        |                                               = NULL
-  1 error generated.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Add the missing initialization, following the pattern of the other irq
-functions.
-
-Fixes: 9362ab78f175 ("ASoC: SOF: Intel: add abstraction for SoundWire wake-ups")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/sof/intel/hda.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index 04c748a72b13..15e6779efaa3 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -420,6 +420,7 @@ static bool hda_sdw_check_wakeen_irq(struct snd_sof_dev *sdev)
- 	if (!(interface_mask & BIT(SOF_DAI_INTEL_ALH)))
- 		return false;
- 
-+	chip = get_chip_info(sdev->pdata);
- 	if (chip && chip->check_sdw_wakeen_irq)
- 		return chip->check_sdw_wakeen_irq(sdev);
- 
-
----
-base-commit: 59146c3cd326a622e9041614842346aada11ca99
-change-id: 20230809-intel-hda-missing-chip-init-dcccbe6365a4
-
-Best regards,
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Nathan Chancellor <nathan@kernel.org>
+Florian
 
