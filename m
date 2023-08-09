@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3F6154B4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98433C433C7;
-	Wed,  9 Aug 2023 11:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60CD154B4
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADEDC433C8;
+	Wed,  9 Aug 2023 11:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579600;
-	bh=eoOyEzKrNX+S6302+x4GleKn2BKsZ5aG5EDE41Naojk=;
+	s=korg; t=1691579602;
+	bh=6vGXeVQlHc4YB0qM9k27AkeH/leB3WiFtiewHLBer80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W62fX+7xwIuqnAXmgIGtf3Dg0T5A6ic0Lpgis6IxDGjkuHEzPBGIW8ub7L/nFkYz6
-	 UuZbT15wALT9fnsqxstJjYIbMk62An+G9Xf46HAXLgBVc8duYbTpsfKot7OoT+Hsfm
-	 fiWz2ZBTT9Il/uJFJlALcpbqVwAHdNc/FWsjIsz8=
+	b=yG8cQNSib85fdHomKo4iWC7HKmbkjDXhWsZB0yre4SIJ4T73owx2kwNpIcoPKaOmX
+	 kTvnbsCxhQGSUP3TyB8JKcSpCvYETNfidJUWcPuN3tp36/HzOIbHLJhMQzCX1rbGex
+	 24JaH1XPNL+GtuaAu1DZoIHPnUJVpg7l/IXMFMgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jeremy Sowden <jeremy@azazel.net>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 049/323] gtp: Fix use-after-free in __gtp_encap_destroy().
-Date: Wed,  9 Aug 2023 12:38:07 +0200
-Message-ID: <20230809103700.367631508@linuxfoundation.org>
+Subject: [PATCH 4.19 050/323] lib/ts_bm: reset initial match offset for every block of text
+Date: Wed,  9 Aug 2023 12:38:08 +0200
+Message-ID: <20230809103700.417755763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,188 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit ce3aee7114c575fab32a5e9e939d4bbb3dcca79f ]
+[ Upstream commit 6f67fbf8192da80c4db01a1800c7fceaca9cf1f9 ]
 
-syzkaller reported use-after-free in __gtp_encap_destroy(). [0]
+The `shift` variable which indicates the offset in the string at which
+to start matching the pattern is initialized to `bm->patlen - 1`, but it
+is not reset when a new block is retrieved.  This means the implemen-
+tation may start looking at later and later positions in each successive
+block and miss occurrences of the pattern at the beginning.  E.g.,
+consider a HTTP packet held in a non-linear skb, where the HTTP request
+line occurs in the second block:
 
-It shows the same process freed sk and touched it illegally.
+  [... 52 bytes of packet headers ...]
+  GET /bmtest HTTP/1.1\r\nHost: www.example.com\r\n\r\n
 
-Commit e198987e7dd7 ("gtp: fix suspicious RCU usage") added lock_sock()
-and release_sock() in __gtp_encap_destroy() to protect sk->sk_user_data,
-but release_sock() is called after sock_put() releases the last refcnt.
+and the pattern is "GET /bmtest".
 
-[0]:
-BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
-BUG: KASAN: slab-use-after-free in atomic_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:541 [inline]
-BUG: KASAN: slab-use-after-free in queued_spin_lock include/asm-generic/qspinlock.h:111 [inline]
-BUG: KASAN: slab-use-after-free in do_raw_spin_lock include/linux/spinlock.h:186 [inline]
-BUG: KASAN: slab-use-after-free in __raw_spin_lock_bh include/linux/spinlock_api_smp.h:127 [inline]
-BUG: KASAN: slab-use-after-free in _raw_spin_lock_bh+0x75/0xe0 kernel/locking/spinlock.c:178
-Write of size 4 at addr ffff88800dbef398 by task syz-executor.2/2401
+Once the first block comprising the packet headers has been examined,
+`shift` will be pointing to somewhere near the end of the block, and so
+when the second block is examined the request line at the beginning will
+be missed.
 
-CPU: 1 PID: 2401 Comm: syz-executor.2 Not tainted 6.4.0-rc5-01219-gfa0e21fa4443 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x72/0xa0 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:351 [inline]
- print_report+0xcc/0x620 mm/kasan/report.c:462
- kasan_report+0xb2/0xe0 mm/kasan/report.c:572
- check_region_inline mm/kasan/generic.c:181 [inline]
- kasan_check_range+0x39/0x1c0 mm/kasan/generic.c:187
- instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
- atomic_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:541 [inline]
- queued_spin_lock include/asm-generic/qspinlock.h:111 [inline]
- do_raw_spin_lock include/linux/spinlock.h:186 [inline]
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:127 [inline]
- _raw_spin_lock_bh+0x75/0xe0 kernel/locking/spinlock.c:178
- spin_lock_bh include/linux/spinlock.h:355 [inline]
- release_sock+0x1f/0x1a0 net/core/sock.c:3526
- gtp_encap_disable_sock drivers/net/gtp.c:651 [inline]
- gtp_encap_disable+0xb9/0x220 drivers/net/gtp.c:664
- gtp_dev_uninit+0x19/0x50 drivers/net/gtp.c:728
- unregister_netdevice_many_notify+0x97e/0x1520 net/core/dev.c:10841
- rtnl_delete_link net/core/rtnetlink.c:3216 [inline]
- rtnl_dellink+0x3c0/0xb30 net/core/rtnetlink.c:3268
- rtnetlink_rcv_msg+0x450/0xb10 net/core/rtnetlink.c:6423
- netlink_rcv_skb+0x15d/0x450 net/netlink/af_netlink.c:2548
- netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
- netlink_unicast+0x700/0x930 net/netlink/af_netlink.c:1365
- netlink_sendmsg+0x91c/0xe30 net/netlink/af_netlink.c:1913
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x1b7/0x200 net/socket.c:747
- ____sys_sendmsg+0x75a/0x990 net/socket.c:2493
- ___sys_sendmsg+0x11d/0x1c0 net/socket.c:2547
- __sys_sendmsg+0xfe/0x1d0 net/socket.c:2576
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7f1168b1fe5d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
-RSP: 002b:00007f1167edccc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007f1168b1fe5d
-RDX: 0000000000000000 RSI: 00000000200002c0 RDI: 0000000000000003
-RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007f1168b80530 R15: 0000000000000000
- </TASK>
+Reinitialize the variable for each new block.
 
-Allocated by task 1483:
- kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- __kasan_slab_alloc+0x59/0x70 mm/kasan/common.c:328
- kasan_slab_alloc include/linux/kasan.h:186 [inline]
- slab_post_alloc_hook mm/slab.h:711 [inline]
- slab_alloc_node mm/slub.c:3451 [inline]
- slab_alloc mm/slub.c:3459 [inline]
- __kmem_cache_alloc_lru mm/slub.c:3466 [inline]
- kmem_cache_alloc+0x16d/0x340 mm/slub.c:3475
- sk_prot_alloc+0x5f/0x280 net/core/sock.c:2073
- sk_alloc+0x34/0x6c0 net/core/sock.c:2132
- inet6_create net/ipv6/af_inet6.c:192 [inline]
- inet6_create+0x2c7/0xf20 net/ipv6/af_inet6.c:119
- __sock_create+0x2a1/0x530 net/socket.c:1535
- sock_create net/socket.c:1586 [inline]
- __sys_socket_create net/socket.c:1623 [inline]
- __sys_socket_create net/socket.c:1608 [inline]
- __sys_socket+0x137/0x250 net/socket.c:1651
- __do_sys_socket net/socket.c:1664 [inline]
- __se_sys_socket net/socket.c:1662 [inline]
- __x64_sys_socket+0x72/0xb0 net/socket.c:1662
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Freed by task 2401:
- kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- kasan_save_free_info+0x2e/0x50 mm/kasan/generic.c:521
- ____kasan_slab_free mm/kasan/common.c:236 [inline]
- ____kasan_slab_free mm/kasan/common.c:200 [inline]
- __kasan_slab_free+0x10c/0x1b0 mm/kasan/common.c:244
- kasan_slab_free include/linux/kasan.h:162 [inline]
- slab_free_hook mm/slub.c:1781 [inline]
- slab_free_freelist_hook mm/slub.c:1807 [inline]
- slab_free mm/slub.c:3786 [inline]
- kmem_cache_free+0xb4/0x490 mm/slub.c:3808
- sk_prot_free net/core/sock.c:2113 [inline]
- __sk_destruct+0x500/0x720 net/core/sock.c:2207
- sk_destruct+0xc1/0xe0 net/core/sock.c:2222
- __sk_free+0xed/0x3d0 net/core/sock.c:2233
- sk_free+0x7c/0xa0 net/core/sock.c:2244
- sock_put include/net/sock.h:1981 [inline]
- __gtp_encap_destroy+0x165/0x1b0 drivers/net/gtp.c:634
- gtp_encap_disable_sock drivers/net/gtp.c:651 [inline]
- gtp_encap_disable+0xb9/0x220 drivers/net/gtp.c:664
- gtp_dev_uninit+0x19/0x50 drivers/net/gtp.c:728
- unregister_netdevice_many_notify+0x97e/0x1520 net/core/dev.c:10841
- rtnl_delete_link net/core/rtnetlink.c:3216 [inline]
- rtnl_dellink+0x3c0/0xb30 net/core/rtnetlink.c:3268
- rtnetlink_rcv_msg+0x450/0xb10 net/core/rtnetlink.c:6423
- netlink_rcv_skb+0x15d/0x450 net/netlink/af_netlink.c:2548
- netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
- netlink_unicast+0x700/0x930 net/netlink/af_netlink.c:1365
- netlink_sendmsg+0x91c/0xe30 net/netlink/af_netlink.c:1913
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x1b7/0x200 net/socket.c:747
- ____sys_sendmsg+0x75a/0x990 net/socket.c:2493
- ___sys_sendmsg+0x11d/0x1c0 net/socket.c:2547
- __sys_sendmsg+0xfe/0x1d0 net/socket.c:2576
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-The buggy address belongs to the object at ffff88800dbef300
- which belongs to the cache UDPv6 of size 1344
-The buggy address is located 152 bytes inside of
- freed 1344-byte region [ffff88800dbef300, ffff88800dbef840)
-
-The buggy address belongs to the physical page:
-page:00000000d31bfed5 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800dbeed40 pfn:0xdbe8
-head:00000000d31bfed5 order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-memcg:ffff888008ee0801
-flags: 0x100000000010200(slab|head|node=0|zone=1)
-page_type: 0xffffffff()
-raw: 0100000000010200 ffff88800c7a3000 dead000000000122 0000000000000000
-raw: ffff88800dbeed40 0000000080160015 00000001ffffffff ffff888008ee0801
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88800dbef280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88800dbef300: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff88800dbef380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                            ^
- ffff88800dbef400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88800dbef480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: e198987e7dd7 ("gtp: fix suspicious RCU usage")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://lore.kernel.org/r/20230622213231.24651-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8082e4ed0a61 ("[LIB]: Boyer-Moore extension for textsearch infrastructure strike #2")
+Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1390
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ lib/ts_bm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index e18d06cb2173c..2718b0507f713 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -301,7 +301,9 @@ static void __gtp_encap_destroy(struct sock *sk)
- 			gtp->sk1u = NULL;
- 		udp_sk(sk)->encap_type = 0;
- 		rcu_assign_sk_user_data(sk, NULL);
-+		release_sock(sk);
- 		sock_put(sk);
-+		return;
- 	}
- 	release_sock(sk);
- }
+diff --git a/lib/ts_bm.c b/lib/ts_bm.c
+index 9e66ee4020e90..5de382e79a45a 100644
+--- a/lib/ts_bm.c
++++ b/lib/ts_bm.c
+@@ -64,10 +64,12 @@ static unsigned int bm_find(struct ts_config *conf, struct ts_state *state)
+ 	struct ts_bm *bm = ts_config_priv(conf);
+ 	unsigned int i, text_len, consumed = state->offset;
+ 	const u8 *text;
+-	int shift = bm->patlen - 1, bs;
++	int bs;
+ 	const u8 icase = conf->flags & TS_IGNORECASE;
+ 
+ 	for (;;) {
++		int shift = bm->patlen - 1;
++
+ 		text_len = conf->get_next_block(consumed, &text, conf, state);
+ 
+ 		if (unlikely(text_len == 0))
 -- 
 2.39.2
 
