@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A67171B3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6457CC433C7;
-	Wed,  9 Aug 2023 11:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1084171B3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D45C433C7;
+	Wed,  9 Aug 2023 11:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578998;
-	bh=M+QQcfVUPaaim0/zwLUI2HsCbVQIDioa0gi6DhNPznY=;
+	s=korg; t=1691579001;
+	bh=KZnft3sVw5x33P3BLTN2j1AAlZ2+XyVaeAqZgoxC67k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaMSOtMmMyZieaYGi1qlsJ7DyQ8Sk25L722jWEtVtEOhiqBBPnduIN8/va5VU2Cou
-	 XELQJM2wgYI1/Vc4DpjHxyjtm9APaZOiiRuTrB/JlfhjOPrrAda2oGBQX6ojb1YKcx
-	 2Si7YbsM571B9/vVWbDMJejnUbzSVPT/CluPIW+s=
+	b=PP8H/DUBjcWO76kwIgnHnAvr17D0wC+8aSBrRCKJn6BdqIvfT1uw5CbT0zN7Rmphy
+	 rSLaswOQ2jhHnjCiEnnhY6hwPCM+n2xthyO1AUaeZdoImQhtTu/5U6cSHOiIozu+1w
+	 QXP8giCHLC60E1jn9l4Haf8f9+8KKK9AVQ1ooe48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 038/204] drm/panel: simple: fix active size for Ampire AM-480272H3TMQW-T01H
-Date: Wed,  9 Aug 2023 12:39:36 +0200
-Message-ID: <20230809103643.839824589@linuxfoundation.org>
+Subject: [PATCH 4.14 039/204] ARM: ep93xx: fix missing-prototype warnings
+Date: Wed,  9 Aug 2023 12:39:37 +0200
+Message-ID: <20230809103643.880477584@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,49 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f24b49550814fdee4a98b9552e35e243ccafd4a8 ]
+[ Upstream commit 419013740ea1e4343d8ade535d999f59fa28e460 ]
 
-The previous setting was related to the overall dimension and not to the
-active display area.
-In the "PHYSICAL SPECIFICATIONS" section, the datasheet shows the
-following parameters:
+ep93xx_clocksource_read() is only called from the file it is declared in,
+while ep93xx_timer_init() is declared in a header that is not included here.
 
- ----------------------------------------------------------
-|       Item        |         Specifications        | unit |
- ----------------------------------------------------------
-| Display area      | 98.7 (W) x 57.5 (H)           |  mm  |
- ----------------------------------------------------------
-| Overall dimension | 105.5(W) x 67.2(H) x 4.96(D)  |  mm  |
- ----------------------------------------------------------
+arch/arm/mach-ep93xx/timer-ep93xx.c:120:13: error: no previous prototype for 'ep93xx_timer_init'
+arch/arm/mach-ep93xx/timer-ep93xx.c:63:5: error: no previous prototype for 'ep93xx_clocksource_read'
 
-Fixes: 966fea78adf2 ("drm/panel: simple: Add support for Ampire AM-480272H3TMQW-T01H")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-[narmstrong: fixed Fixes commit id length]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230516085039.3797303-1-dario.binacchi@amarulasolutions.com
+Fixes: 000bc17817bf ("ARM: ep93xx: switch to GENERIC_CLOCKEVENTS")
+Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Link: https://lore.kernel.org/r/20230516153109.514251-3-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-ep93xx/timer-ep93xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 6df312ba1826b..8bee025c0622f 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -407,8 +407,8 @@ static const struct panel_desc ampire_am_480272h3tmqw_t01h = {
- 	.num_modes = 1,
- 	.bpc = 8,
- 	.size = {
--		.width = 105,
--		.height = 67,
-+		.width = 99,
-+		.height = 58,
- 	},
- 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
- };
+diff --git a/arch/arm/mach-ep93xx/timer-ep93xx.c b/arch/arm/mach-ep93xx/timer-ep93xx.c
+index de998830f534f..b07956883e165 100644
+--- a/arch/arm/mach-ep93xx/timer-ep93xx.c
++++ b/arch/arm/mach-ep93xx/timer-ep93xx.c
+@@ -9,6 +9,7 @@
+ #include <linux/io.h>
+ #include <asm/mach/time.h>
+ #include "soc.h"
++#include "platform.h"
+ 
+ /*************************************************************************
+  * Timer handling for EP93xx
+@@ -60,7 +61,7 @@ static u64 notrace ep93xx_read_sched_clock(void)
+ 	return ret;
+ }
+ 
+-u64 ep93xx_clocksource_read(struct clocksource *c)
++static u64 ep93xx_clocksource_read(struct clocksource *c)
+ {
+ 	u64 ret;
+ 
 -- 
 2.39.2
 
