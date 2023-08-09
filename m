@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45AB847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A55C433C7;
-	Wed,  9 Aug 2023 10:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FD4847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89EEC433C7;
+	Wed,  9 Aug 2023 10:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578153;
-	bh=xbsLAV8IujelOUvYIZi8mZE4b77dSNYMERzBEQHt+JM=;
+	s=korg; t=1691578156;
+	bh=sHN2l86ZglHUnKY3f0NpZWlkA6GdjbqanbACEb6wWoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXGLB5hP13wijHxxSu+EPUxMIsAcvZYE7UbpObbMBH0Hn+qRwdSeDpcnOtUvMu2lX
-	 uRw2YXFsCFG3qFMgrKSWAfVLZ/p0RdXifI9o5S+Mq+JhK/lSZMWhF+Dan78/hXgaDZ
-	 OYrGjlswS/XvnV/hR9UqFaReSB/XTB+mSKlQ17E4=
+	b=Icfz8+EU9Uhzgj8MueKL8wKov1aa16AxAVjCAvOckcs6zGkeAdkgZ5sIBI+VXqCka
+	 o8oM4ztxrQRGIeCnXevMmv8ixdT7/VhHF746/b6rO9LDwsT6jjFQIPg/B1qv0VigBM
+	 sTb7Ms/vlGW47UP3EtY7iKLzKLHLvMIkyY+wg2pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.4 124/165] arm64/fpsimd: Sync FPSIMD state with SVE for SME only systems
-Date: Wed,  9 Aug 2023 12:40:55 +0200
-Message-ID: <20230809103646.856394615@linuxfoundation.org>
+	Michael Kelley <mikelley@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 098/165] scsi: storvsc: Limit max_sectors for virtual Fibre Channel devices
+Date: Wed,  9 Aug 2023 12:40:29 +0200
+Message-ID: <20230809103645.990905663@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -34,44 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Michael Kelley <mikelley@microsoft.com>
 
-commit 507ea5dd92d23fcf10e4d1a68a443c86a49753ed upstream.
+commit 010c1e1c5741365dbbf44a5a5bb9f30192875c4c upstream.
 
-Currently we guard FPSIMD/SVE state conversions with a check for the system
-supporting SVE but SME only systems may need to sync streaming mode SVE
-state so add a check for SME support too.  These functions are only used
-by the ptrace code.
+The Hyper-V host is queried to get the max transfer size that it supports,
+and this value is used to set max_sectors for the synthetic SCSI
+controller.  However, this max transfer size may be too large for virtual
+Fibre Channel devices, which are limited to 512 Kbytes.  If a larger
+transfer size is used with a vFC device, Hyper-V always returns an error,
+and storvsc logs a message like this where the SRB status and SCSI status
+are both zero:
 
-Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
-Signed-off-by: Mark Brown <broonie@kernel.org>
+hv_storvsc <GUID>: tag#197 cmd 0x8a status: scsi 0x0 srb 0x0 hv 0xc0000001
+
+Add logic to limit the max transfer size to 512 Kbytes for vFC devices.
+
+Fixes: 1d3e0980782f ("scsi: storvsc: Correct reporting of Hyper-V I/O size limits")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230803-arm64-fix-ptrace-ssve-no-sve-v1-2-49df214bfb3e@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1689887102-32806-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/storvsc_drv.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -679,7 +679,7 @@ static void fpsimd_to_sve(struct task_st
- 	void *sst = task->thread.sve_state;
- 	struct user_fpsimd_state const *fst = &task->thread.uw.fpsimd_state;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -365,6 +365,7 @@ static void storvsc_on_channel_callback(
+ #define STORVSC_FC_MAX_LUNS_PER_TARGET			255
+ #define STORVSC_FC_MAX_TARGETS				128
+ #define STORVSC_FC_MAX_CHANNELS				8
++#define STORVSC_FC_MAX_XFER_SIZE			((u32)(512 * 1024))
  
--	if (!system_supports_sve())
-+	if (!system_supports_sve() && !system_supports_sme())
- 		return;
- 
- 	vq = sve_vq_from_vl(thread_get_cur_vl(&task->thread));
-@@ -705,7 +705,7 @@ static void sve_to_fpsimd(struct task_st
- 	unsigned int i;
- 	__uint128_t const *p;
- 
--	if (!system_supports_sve())
-+	if (!system_supports_sve() && !system_supports_sme())
- 		return;
- 
- 	vl = thread_get_cur_vl(&task->thread);
+ #define STORVSC_IDE_MAX_LUNS_PER_TARGET			64
+ #define STORVSC_IDE_MAX_TARGETS				1
+@@ -2004,6 +2005,9 @@ static int storvsc_probe(struct hv_devic
+ 	 * protecting it from any weird value.
+ 	 */
+ 	max_xfer_bytes = round_down(stor_device->max_transfer_bytes, HV_HYP_PAGE_SIZE);
++	if (is_fc)
++		max_xfer_bytes = min(max_xfer_bytes, STORVSC_FC_MAX_XFER_SIZE);
++
+ 	/* max_hw_sectors_kb */
+ 	host->max_sectors = max_xfer_bytes >> 9;
+ 	/*
 
 
