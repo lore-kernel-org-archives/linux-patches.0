@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DA117731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E33CC433C8;
-	Wed,  9 Aug 2023 11:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06A917731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52216C433C8;
+	Wed,  9 Aug 2023 11:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579282;
-	bh=NdY2GCTYzslb2kzkdaF75jvLETzm7PtGzK29B86froA=;
+	s=korg; t=1691579285;
+	bh=l2kX24XkgBp95wGPNETf8ANGpR74OeiNyMb5CiOl4Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1K4qfxBWgKJjCRBuB9I9kWQgF51L+SkTF+yPl5kJmZDHTz1ytVY8FLs+CIBtPtSzq
-	 6iEs8lEskpXLdGzAd/vmIDC4J81CPPnomvBOtiwJnE2HhWq0Dda0yjPHKDm88YyIBf
-	 YY3To3Q9Bjfv5YF9hjnIfFm0PrOVfKEcto62twOw=
+	b=XmWedrVYDBhn46JLIWa/u75pRLmpHLxlIgixGOu82+JkfZV1gsJDZSzXMoMqjOmCx
+	 iBVeuyose6DlmKe3BrFVaXccKfvyu7T4YBZcIpych2gbMW5azdPuN9AX4ivRwi8xNL
+	 n1S35MWSxzxnpnzejTojar9w9DS11ER52XG1DB5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.14 112/204] hwrng: imx-rngc - fix the timeout for init and self check
-Date: Wed,  9 Aug 2023 12:40:50 +0200
-Message-ID: <20230809103646.354331998@linuxfoundation.org>
+	George Stark <GNStark@sberdevices.ru>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 4.14 113/204] meson saradc: fix clock divider mask length
+Date: Wed,  9 Aug 2023 12:40:51 +0200
+Message-ID: <20230809103646.383009109@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,45 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: George Stark <gnstark@sberdevices.ru>
 
-commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
+commit c57fa0037024c92c2ca34243e79e857da5d2c0a9 upstream.
 
-Fix the timeout that is used for the initialisation and for the self
-test. wait_for_completion_timeout expects a timeout in jiffies, but
-RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
-conversion.
+According to the datasheets of supported meson SoCs length of ADC_CLK_DIV
+field is 6-bit. Although all supported SoCs have the register
+with that field documented later SoCs use external clock rather than
+ADC internal clock so this patch affects only meson8 family (S8* SoCs).
 
-Cc: stable@vger.kernel.org
-Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 3adbf3427330 ("iio: adc: add a driver for the SAR ADC found in Amlogic Meson SoCs")
+Signed-off-by: George Stark <GNStark@sberdevices.ru>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20230606165357.42417-1-gnstark@sberdevices.ru
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/imx-rngc.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/iio/adc/meson_saradc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/hw_random/imx-rngc.c
-+++ b/drivers/char/hw_random/imx-rngc.c
-@@ -104,7 +104,7 @@ static int imx_rngc_self_test(struct imx
- 	cmd = readl(rngc->base + RNGC_COMMAND);
- 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
+--- a/drivers/iio/adc/meson_saradc.c
++++ b/drivers/iio/adc/meson_saradc.c
+@@ -75,7 +75,7 @@
+ 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_COUNT_MASK	GENMASK(20, 18)
+ 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_FILTER_TB_MASK	GENMASK(17, 16)
+ 	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_SHIFT		10
+-	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		5
++	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		6
+ 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_SEL_MASK		GENMASK(9, 8)
+ 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_MASK		GENMASK(7, 0)
  
--	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
-+	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 	if (!ret) {
- 		imx_rngc_irq_mask_clear(rngc);
- 		return -ETIMEDOUT;
-@@ -187,9 +187,7 @@ static int imx_rngc_init(struct hwrng *r
- 		cmd = readl(rngc->base + RNGC_COMMAND);
- 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
- 
--		ret = wait_for_completion_timeout(&rngc->rng_op_done,
--				RNGC_TIMEOUT);
--
-+		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 		if (!ret) {
- 			imx_rngc_irq_mask_clear(rngc);
- 			return -ETIMEDOUT;
 
 
