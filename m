@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673381FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6B5C433C8;
-	Wed,  9 Aug 2023 11:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CA11FA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301E1C433C7;
+	Wed,  9 Aug 2023 11:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579363;
-	bh=OOSNdS5/8Pn3IeKgJvHCYEEHffPgxH40tFv6FIgu2/k=;
+	s=korg; t=1691579366;
+	bh=H0TKRjdDOb6PBxwTn9p9QlwmdCfsVF23J9kHlRFZVtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvBRmmvvCT+dXzkInB12K5QSH3sNxdWdRmwjXqHluvvHymBfxKdZPlIfWNYzapNhl
-	 VId0SWKYdObjhYDryXycyWhuK/IhhVf0sATCaOwoFXcAlIwlVBljmue/bYxSj4Igc9
-	 cwfRkcCXluzZZsWBReJVeiz3r9eReAem9l12ifhM=
+	b=Bj3hQx5qiELIWNzOkyDRIxI8Erx066zHfTg1jQcHTIUd00/K4PsIyZSLOPRUDKqh0
+	 MnEK3LjMeOx7oUlDogRyJDa71HMrBXjqWUIDGWFzfD8BBuirQP+bqxA2WfrzE1q+DG
+	 5PzMiWw6oWtmw8llO66DoJeLsGwNtokVy3IDFsqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Zubin Mithra <zsm@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH 4.14 168/204] usb: xhci-mtk: set the dma max_seg_size
-Date: Wed,  9 Aug 2023 12:41:46 +0200
-Message-ID: <20230809103648.131968339@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 4.14 169/204] Documentation: security-bugs.rst: update preferences when dealing with the linux-distros group
+Date: Wed,  9 Aug 2023 12:41:47 +0200
+Message-ID: <20230809103648.170684536@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,35 +33,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 9fd10829a9eb482e192a845675ecc5480e0bfa10 upstream.
+commit 4fee0915e649bd0cea56dece6d96f8f4643df33c upstream.
 
-Allow devices to have dma operations beyond 64K, and avoid warnings such
-as:
+Because the linux-distros group forces reporters to release information
+about reported bugs, and they impose arbitrary deadlines in having those
+bugs fixed despite not actually being kernel developers, the kernel
+security team recommends not interacting with them at all as this just
+causes confusion and the early-release of reported security problems.
 
-DMA-API: xhci-mtk 11200000.usb: mapping sg segment longer than device claims to support [len=98304] [max=65536]
-
-Fixes: 0cbd4b34cda9 ("xhci: mediatek: support MTK xHCI host controller")
-Cc: stable <stable@kernel.org>
-Tested-by: Zubin Mithra <zsm@chromium.org>
-Reported-by: Zubin Mithra <zsm@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20230628-mtk-usb-v2-1-c8c34eb9f229@chromium.org
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/2023063020-throat-pantyhose-f110@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mtk.c |    1 +
- 1 file changed, 1 insertion(+)
+ Documentation/admin-guide/security-bugs.rst |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/host/xhci-mtk.c
-+++ b/drivers/usb/host/xhci-mtk.c
-@@ -674,6 +674,7 @@ static int xhci_mtk_probe(struct platfor
- 		goto exit_phys;
+--- a/Documentation/admin-guide/security-bugs.rst
++++ b/Documentation/admin-guide/security-bugs.rst
+@@ -42,20 +42,18 @@ disclosure is from immediate (esp. if it
+ to a few weeks.  As a basic default policy, we expect report date to
+ disclosure date to be on the order of 7 days.
  
- 	device_init_wakeup(dev, true);
-+	dma_set_max_seg_size(dev, UINT_MAX);
+-Coordination
+-------------
++Coordination with other groups
++------------------------------
  
- 	xhci = hcd_to_xhci(hcd);
- 	xhci->main_hcd = hcd;
+-Fixes for sensitive bugs, such as those that might lead to privilege
+-escalations, may need to be coordinated with the private
+-<linux-distros@vs.openwall.org> mailing list so that distribution vendors
+-are well prepared to issue a fixed kernel upon public disclosure of the
+-upstream fix. Distros will need some time to test the proposed patch and
+-will generally request at least a few days of embargo, and vendor update
+-publication prefers to happen Tuesday through Thursday. When appropriate,
+-the security team can assist with this coordination, or the reporter can
+-include linux-distros from the start. In this case, remember to prefix
+-the email Subject line with "[vs]" as described in the linux-distros wiki:
+-<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
++The kernel security team strongly recommends that reporters of potential
++security issues NEVER contact the "linux-distros" mailing list until
++AFTER discussing it with the kernel security team.  Do not Cc: both
++lists at once.  You may contact the linux-distros mailing list after a
++fix has been agreed on and you fully understand the requirements that
++doing so will impose on you and the kernel community.
++
++The different lists have different goals and the linux-distros rules do
++not contribute to actually fixing any potential security problems.
+ 
+ CVE assignment
+ --------------
 
 
