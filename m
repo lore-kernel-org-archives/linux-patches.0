@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A46717AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:27:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0139C433CA;
-	Wed,  9 Aug 2023 11:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B9117AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:27:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C19C433C8;
+	Wed,  9 Aug 2023 11:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580441;
-	bh=wY9Exy6ZXrMbZOeytxwMrMZNpHFXqCPPAhBw33iWg1E=;
+	s=korg; t=1691580443;
+	bh=uuL0Tnp+F0egPRq1qTxImzMhl/kJcr01rrNzVlkn6oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tw5V5iHUw5yPmVynCW7dhg7V+eE/8Q6e76l8MI9vNDBVGy64xUStc6s0d7cEO+V7
-	 n9W2yW7jl/jGZDdrDomQkgtwHV9cinctd4Qxnf0bUPuuW1sqY58HEk3a3ISAM02iIC
-	 MJOhSLIZLtD3HTZrwqOO6Hq00hdKO+ujJFdPqKuI=
+	b=MQTIGTWP0K85bmyMDkBBXHbtXK79Qf12sJqVcGgZNc39AG7iOfvVPEdj2fupuMIDF
+	 isI6OLNcEVhLpBB/0ijbEGZ4DEWqHtPM+585oYlO5rediBXbedqPeoxxH2BVfYcbZ4
+	 p5A9Sb9uSlfTcnA3YJmLcZT/6LuD13+PBviEMu2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Hulk Robot <hulkci@huawei.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Ye Bin <yebin10@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/154] pwm: meson: fix handling of period/duty if greater than UINT_MAX
-Date: Wed,  9 Aug 2023 12:40:57 +0200
-Message-ID: <20230809103637.863133710@linuxfoundation.org>
+Subject: [PATCH 5.4 027/154] scsi: qla2xxx: Fix inconsistent format argument type in qla_os.c
+Date: Wed,  9 Aug 2023 12:40:58 +0200
+Message-ID: <20230809103637.894802352@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -37,80 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 87a2cbf02d7701255f9fcca7e5bd864a7bb397cf ]
+[ Upstream commit 250bd00923c72c846092271a9e51ee373db081b6 ]
 
-state->period/duty are of type u64, and if their value is greater than
-UINT_MAX, then the cast to uint will cause problems. Fix this by
-changing the type of the respective local variables to u64.
+Fix the following warnings:
 
-Fixes: b79c3670e120 ("pwm: meson: Don't duplicate the polarity internally")
-Cc: stable@vger.kernel.org
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+[drivers/scsi/qla2xxx/qla_os.c:4882]: (warning) %ld in format string (no. 2)
+	requires 'long' but the argument type is 'unsigned long'.
+[drivers/scsi/qla2xxx/qla_os.c:5011]: (warning) %ld in format string (no. 1)
+	requires 'long' but the argument type is 'unsigned long'.
+
+Link: https://lore.kernel.org/r/20200930022515.2862532-3-yebin10@huawei.com
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Reviewed-by: Nilesh Javali <njavali@marvell.com>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: d721b591b95c ("scsi: qla2xxx: Array index may go out of bound")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
-index d594dac41f6da..768e6e691c7cc 100644
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -163,8 +163,9 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
- 			  const struct pwm_state *state)
- {
- 	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
--	unsigned int duty, period, pre_div, cnt, duty_cnt;
-+	unsigned int pre_div, cnt, duty_cnt;
- 	unsigned long fin_freq;
-+	u64 duty, period;
- 
- 	duty = state->duty_cycle;
- 	period = state->period;
-@@ -186,19 +187,19 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
- 
- 	dev_dbg(meson->chip.dev, "fin_freq: %lu Hz\n", fin_freq);
- 
--	pre_div = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * 0xffffLL);
-+	pre_div = div64_u64(fin_freq * period, NSEC_PER_SEC * 0xffffLL);
- 	if (pre_div > MISC_CLK_DIV_MASK) {
- 		dev_err(meson->chip.dev, "unable to get period pre_div\n");
- 		return -EINVAL;
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 30a5ca9c5a8d4..9bd73a5a722b4 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4831,7 +4831,7 @@ struct scsi_qla_host *qla2x00_create_host(struct scsi_host_template *sht,
  	}
+ 	INIT_DELAYED_WORK(&vha->scan.scan_work, qla_scan_work_fn);
  
--	cnt = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * (pre_div + 1));
-+	cnt = div64_u64(fin_freq * period, NSEC_PER_SEC * (pre_div + 1));
- 	if (cnt > 0xffff) {
- 		dev_err(meson->chip.dev, "unable to get period cnt\n");
- 		return -EINVAL;
- 	}
+-	sprintf(vha->host_str, "%s_%ld", QLA2XXX_DRIVER_NAME, vha->host_no);
++	sprintf(vha->host_str, "%s_%lu", QLA2XXX_DRIVER_NAME, vha->host_no);
+ 	ql_dbg(ql_dbg_init, vha, 0x0041,
+ 	    "Allocated the host=%p hw=%p vha=%p dev_name=%s",
+ 	    vha->host, vha->hw, vha,
+@@ -4961,7 +4961,7 @@ qla2x00_uevent_emit(struct scsi_qla_host *vha, u32 code)
  
--	dev_dbg(meson->chip.dev, "period=%u pre_div=%u cnt=%u\n", period,
-+	dev_dbg(meson->chip.dev, "period=%llu pre_div=%u cnt=%u\n", period,
- 		pre_div, cnt);
- 
- 	if (duty == period) {
-@@ -211,14 +212,13 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
- 		channel->lo = cnt;
- 	} else {
- 		/* Then check is we can have the duty with the same pre_div */
--		duty_cnt = div64_u64(fin_freq * (u64)duty,
--				     NSEC_PER_SEC * (pre_div + 1));
-+		duty_cnt = div64_u64(fin_freq * duty, NSEC_PER_SEC * (pre_div + 1));
- 		if (duty_cnt > 0xffff) {
- 			dev_err(meson->chip.dev, "unable to get duty cycle\n");
- 			return -EINVAL;
- 		}
- 
--		dev_dbg(meson->chip.dev, "duty=%u pre_div=%u duty_cnt=%u\n",
-+		dev_dbg(meson->chip.dev, "duty=%llu pre_div=%u duty_cnt=%u\n",
- 			duty, pre_div, duty_cnt);
- 
- 		channel->pre_div = pre_div;
+ 	switch (code) {
+ 	case QLA_UEVENT_CODE_FW_DUMP:
+-		snprintf(event_string, sizeof(event_string), "FW_DUMP=%ld",
++		snprintf(event_string, sizeof(event_string), "FW_DUMP=%lu",
+ 		    vha->host_no);
+ 		break;
+ 	default:
 -- 
 2.39.2
 
