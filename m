@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D27B53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9C5C433C8;
-	Wed,  9 Aug 2023 11:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AE2174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6524C433C7;
+	Wed,  9 Aug 2023 11:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579702;
-	bh=W9lKpO2hpnjOaCep9TJPM21+VDoQMnHx66l/UlLwexw=;
+	s=korg; t=1691579705;
+	bh=W/tmNFuJWzJqW8xEDAUQYVXsXRRRvsjsr+rXbNE00rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZY5j1N4Lgmavk8n8/aKu4BCH4ORR8dlUhxG9X31UnzEhzIQG5gxZ11FrcmRTtJIsa
-	 +p7YHmVT0TjfgYvGOawi2geHipG8lUFHPGdnYKWSHfQa7+ACmBYG66yPDFOquC/1et
-	 GkIDsbH3fwFsrs6F3keOyy1xq/2LFSXVEbv9YHmw=
+	b=arM+1HQP7HpNu4v6ZamoacUF1xHx98ZBYITD/PpuRnKnm+NhCIQ6v5J/xW1l2ArvU
+	 JVmTSAOrffId4iHwMJzjnk5kAmVYG6Nw1odYEDByyM5Dh6FZUwsS376+a+dKsI7y8Z
+	 PXwIJMIUg+0f/MS+lzNB964HB47udM4+nObD378o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Steigerwald <Martin@lichtvoll.de>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.19 086/323] block: change all __u32 annotations to __be32 in affs_hardblocks.h
-Date: Wed,  9 Aug 2023 12:38:44 +0200
-Message-ID: <20230809103702.039018612@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 087/323] w1: fix loop in w1_fini()
+Date: Wed,  9 Aug 2023 12:38:45 +0200
+Message-ID: <20230809103702.079969366@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,142 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-commit 95a55437dc49fb3342c82e61f5472a71c63d9ed0 upstream.
+[ Upstream commit 83f3fcf96fcc7e5405b37d9424c7ef26bfa203f8 ]
 
-The Amiga partition parser module uses signed int for partition sector
-address and count, which will overflow for disks larger than 1 TB.
+The __w1_remove_master_device() function calls:
 
-Use u64 as type for sector address and size to allow using disks up to
-2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
-format allows to specify disk sizes up to 2^128 bytes (though native
-OS limitations reduce this somewhat, to max 2^68 bytes), so check for
-u64 overflow carefully to protect against overflowing sector_t.
+	list_del(&dev->w1_master_entry);
 
-This bug was reported originally in 2012, and the fix was created by
-the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
-discussed and reviewed on linux-m68k at that time but never officially
-submitted (now resubmitted as patch 1 of this series).
+So presumably this can cause an endless loop.
 
-Patch 3 (this series) adds additional error checking and warning
-messages. One of the error checks now makes use of the previously
-unused rdb_CylBlocks field, which causes a 'sparse' warning
-(cast to restricted __be32).
-
-Annotate all 32 bit fields in affs_hardblocks.h as __be32, as the
-on-disk format of RDB and partition blocks is always big endian.
-
-Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Message-ID: <201206192146.09327.Martin@lichtvoll.de>
-Cc: <stable@vger.kernel.org> # 5.2
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230620201725.7020-3-schmitzmic@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7785925dd8e0 ("[PATCH] w1: cleanups.")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/affs_hardblocks.h |   68 +++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ drivers/w1/w1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/uapi/linux/affs_hardblocks.h
-+++ b/include/uapi/linux/affs_hardblocks.h
-@@ -7,42 +7,42 @@
- /* Just the needed definitions for the RDB of an Amiga HD. */
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index cb3650efc29cd..8db9ca241d99c 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1237,10 +1237,10 @@ static int __init w1_init(void)
  
- struct RigidDiskBlock {
--	__u32	rdb_ID;
-+	__be32	rdb_ID;
- 	__be32	rdb_SummedLongs;
--	__s32	rdb_ChkSum;
--	__u32	rdb_HostID;
-+	__be32	rdb_ChkSum;
-+	__be32	rdb_HostID;
- 	__be32	rdb_BlockBytes;
--	__u32	rdb_Flags;
--	__u32	rdb_BadBlockList;
-+	__be32	rdb_Flags;
-+	__be32	rdb_BadBlockList;
- 	__be32	rdb_PartitionList;
--	__u32	rdb_FileSysHeaderList;
--	__u32	rdb_DriveInit;
--	__u32	rdb_Reserved1[6];
--	__u32	rdb_Cylinders;
--	__u32	rdb_Sectors;
--	__u32	rdb_Heads;
--	__u32	rdb_Interleave;
--	__u32	rdb_Park;
--	__u32	rdb_Reserved2[3];
--	__u32	rdb_WritePreComp;
--	__u32	rdb_ReducedWrite;
--	__u32	rdb_StepRate;
--	__u32	rdb_Reserved3[5];
--	__u32	rdb_RDBBlocksLo;
--	__u32	rdb_RDBBlocksHi;
--	__u32	rdb_LoCylinder;
--	__u32	rdb_HiCylinder;
--	__u32	rdb_CylBlocks;
--	__u32	rdb_AutoParkSeconds;
--	__u32	rdb_HighRDSKBlock;
--	__u32	rdb_Reserved4;
-+	__be32	rdb_FileSysHeaderList;
-+	__be32	rdb_DriveInit;
-+	__be32	rdb_Reserved1[6];
-+	__be32	rdb_Cylinders;
-+	__be32	rdb_Sectors;
-+	__be32	rdb_Heads;
-+	__be32	rdb_Interleave;
-+	__be32	rdb_Park;
-+	__be32	rdb_Reserved2[3];
-+	__be32	rdb_WritePreComp;
-+	__be32	rdb_ReducedWrite;
-+	__be32	rdb_StepRate;
-+	__be32	rdb_Reserved3[5];
-+	__be32	rdb_RDBBlocksLo;
-+	__be32	rdb_RDBBlocksHi;
-+	__be32	rdb_LoCylinder;
-+	__be32	rdb_HiCylinder;
-+	__be32	rdb_CylBlocks;
-+	__be32	rdb_AutoParkSeconds;
-+	__be32	rdb_HighRDSKBlock;
-+	__be32	rdb_Reserved4;
- 	char	rdb_DiskVendor[8];
- 	char	rdb_DiskProduct[16];
- 	char	rdb_DiskRevision[4];
- 	char	rdb_ControllerVendor[8];
- 	char	rdb_ControllerProduct[16];
- 	char	rdb_ControllerRevision[4];
--	__u32	rdb_Reserved5[10];
-+	__be32	rdb_Reserved5[10];
- };
+ static void __exit w1_fini(void)
+ {
+-	struct w1_master *dev;
++	struct w1_master *dev, *n;
  
- #define	IDNAME_RIGIDDISK	0x5244534B	/* "RDSK" */
-@@ -50,16 +50,16 @@ struct RigidDiskBlock {
- struct PartitionBlock {
- 	__be32	pb_ID;
- 	__be32	pb_SummedLongs;
--	__s32	pb_ChkSum;
--	__u32	pb_HostID;
-+	__be32	pb_ChkSum;
-+	__be32	pb_HostID;
- 	__be32	pb_Next;
--	__u32	pb_Flags;
--	__u32	pb_Reserved1[2];
--	__u32	pb_DevFlags;
-+	__be32	pb_Flags;
-+	__be32	pb_Reserved1[2];
-+	__be32	pb_DevFlags;
- 	__u8	pb_DriveName[32];
--	__u32	pb_Reserved2[15];
-+	__be32	pb_Reserved2[15];
- 	__be32	pb_Environment[17];
--	__u32	pb_EReserved[15];
-+	__be32	pb_EReserved[15];
- };
+ 	/* Set netlink removal messages and some cleanup */
+-	list_for_each_entry(dev, &w1_masters, w1_master_entry)
++	list_for_each_entry_safe(dev, n, &w1_masters, w1_master_entry)
+ 		__w1_remove_master_device(dev);
  
- #define	IDNAME_PARTITION	0x50415254	/* "PART" */
+ 	w1_fini_netlink();
+-- 
+2.39.2
+
 
 
