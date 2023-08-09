@@ -1,109 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76A224505;
-	Wed,  9 Aug 2023 19:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465ECC433C8;
-	Wed,  9 Aug 2023 19:02:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691607735;
-	bh=DLaLQ4nsUMcnLJe2hdcXxiDEkHoG+vblKTViNjeTKig=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WsbhmUVDxxUU5AKtdMD+ld8irEp2+G7gGwMG+Jm/l7wEg5dHrvhMEq15+Llc/EpZ1
-	 p4D062pr/7mTSZCfmNcTjTZ+yUEheVFNafMCMV858mlMKUA2uuJfeA7EX2R3TpIIul
-	 vyMSJ5DHoN8DfD/jGXZQEZ4KcEa2lfkrEtWrE/GH2o1QxCa9I2MzMJKtInJQ/ecSY2
-	 dDfbHj8dsaRTvTcYtYmc39Laz9Ka63tuAB1cQA4PvmsmoP4Pu60Xz+/OGRzOB5pd3a
-	 GIce1u/nAXFqQkEBqomqIdqjvuPZCm65jnPGbyN44kacqajdoMQJCBkNC2zUGn8C4t
-	 Sq0SoEWPCVuqA==
-Date: Wed, 9 Aug 2023 12:02:12 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Cc: broonie@kernel.org, lgirdwood@gmail.com, peter.ujfalusi@linux.intel.com,
-	yung-chuan.liao@linux.intel.com, ranjani.sridharan@linux.intel.com,
-	daniel.baluta@nxp.com, kai.vehmanen@linux.intel.com,
-	ndesaulniers@google.com, trix@redhat.com, rander.wang@intel.com,
-	sound-open-firmware@alsa-project.org, alsa-devel@alsa-project.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] ASoC: SOF: Intel: Initialize chip in
- hda_sdw_check_wakeen_irq()
-Message-ID: <20230809190212.GB3355565@dev-arch.thelio-3990X>
-References: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
- <8eed2099-2853-df8d-92db-921d0702f512@linux.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A056624505
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 19:11:33 +0000 (UTC)
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-40fda409ca7so433701cf.3
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 12:11:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691608292; x=1692213092;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=39V1XP/MDO5emu6081lH6KVDmQxsvOMhi6iEGD0/k0U=;
+        b=gjFv26sMM1eHzEtxx2MXwogocNkgovOz8URBxYoYe27GmwXNajwtgSm+orytKW12G1
+         iISROCzHtKwuO8/dJMET4rnSkW/br8jXA2tigNpLSk8jr1sbD5ZcKT1uvIOAJL8a0dYf
+         ZcXa9mrTBECaoh9GN4g6wxHAFGEImOCPfK6fyiOZ8pEDxUPLC87+FVFutkIVCgSPCmcH
+         UBN6vqmqCRGM1HoDLT1pAnJ3ttlFvn+8wQadKZJu2LzO4p/SwT0jPNG/sxbvkYviqgmP
+         2M7BMKBACmbL4CB0olPxXNTysUWXUOlbjxPL2F0OkTei02SBNKeUlVDD3Dj2T1Hd9bP4
+         FQgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691608292; x=1692213092;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=39V1XP/MDO5emu6081lH6KVDmQxsvOMhi6iEGD0/k0U=;
+        b=FKhdO0+MARtcJPWo85DU9K4yUHOvZmIfOY3YZesXQ6hQ+t/b2XkJo8NeapTf5jYB6f
+         SEF4brRap09/93IXwtN9QnABVmh+Cknvs/wukDm8PJw4nSiCxMDo5rU3rqefIg7ukbuN
+         TuW9DsJp+8XakavzV4aWyz1ox86UZp2jcDikUvzOUqFXHkPzlJim936k879w1Fx7Wt4P
+         Syzn4T6FIlke2Ql6s27wSrMt72IA5DVeSkX8M+YccUjsYD4mbDHwuy7H35+MwtMKQNpu
+         OEcXK2rm1VHZVi6hWaSADtGay6L+A+dKA+lzocRndRK3JKHYfgorHJaaAQJdMXHdJsUX
+         9grw==
+X-Gm-Message-State: AOJu0YylLlxdsKbRHUycMk6052NKpKAWWbYGrWSA7DP8upeDUGQu9D5g
+	He7B2HssPKBO5NjpxdYWQtE=
+X-Google-Smtp-Source: AGHT+IEoDHHTd4iwD5s8iqaRVMVdpuvTq6P/qKBXPGbYljLoS6mP0Z9g307sIC3SkJPsJckDQW1L2g==
+X-Received: by 2002:a05:622a:5ce:b0:40f:dc70:fde1 with SMTP id d14-20020a05622a05ce00b0040fdc70fde1mr334170qtb.18.1691608292122;
+        Wed, 09 Aug 2023 12:11:32 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id z23-20020ac84317000000b004100c132990sm2538301qtm.44.2023.08.09.12.11.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 12:11:31 -0700 (PDT)
+Message-ID: <a7457613-7e46-bd41-a825-377fb2266740@gmail.com>
+Date: Wed, 9 Aug 2023 12:11:28 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8eed2099-2853-df8d-92db-921d0702f512@linux.intel.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 5.10 000/201] 5.10.190-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230809103643.799166053@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 09, 2023 at 01:41:18PM -0500, Pierre-Louis Bossart wrote:
+On 8/9/23 03:40, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.190 release.
+> There are 201 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
 > 
-> On 8/9/23 13:12, Nathan Chancellor wrote:
-> > Clang warns (or errors with CONFIG_WERROR):
-> > 
-> >   sound/soc/sof/intel/hda.c:423:6: error: variable 'chip' is uninitialized when used here [-Werror,-Wuninitialized]
-> >     423 |         if (chip && chip->check_sdw_wakeen_irq)
-> >         |             ^~~~
-> >   sound/soc/sof/intel/hda.c:418:39: note: initialize the variable 'chip' to silence this warning
-> >     418 |         const struct sof_intel_dsp_desc *chip;
-> >         |                                              ^
-> >         |                                               = NULL
-> >   1 error generated.
-> > 
-> > Add the missing initialization, following the pattern of the other irq
-> > functions.
-> > 
-> > Fixes: 9362ab78f175 ("ASoC: SOF: Intel: add abstraction for SoundWire wake-ups")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.190-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 > 
-> Indeed, thanks Nathan for flagging this obvious mistake. I must have
-> done something wrong when extracting the patches.
+> thanks,
 > 
-> Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+> greg k-h
 
-Thanks for the quick response!
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-> That said, we DO compile with clang and there was no warning
-> https://github.com/thesofproject/linux/actions/runs/5542372669/job/15010818307
-> 
-> Is this dependent on a specific version of clang? I'd like to make sure
-> our tools and tests are updated.
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-It should not be, I can reproduce it with all the versions of clang that
-the kernel supports (11.x+).
-
-Looking at your GitHub Actions files, I am not sure exporting CC works
-correctly so I don't think you are building with clang. If I do it
-locally:
-
-$ export CC=clang
-
-$ make -j$(nproc) defconfig
-
-$ grep -E 'CONFIG_(CC_IS|CLANG|GCC)' .config
-CONFIG_CC_IS_GCC=y
-CONFIG_GCC_VERSION=130201
-CONFIG_CLANG_VERSION=0
-CONFIG_GCC11_NO_ARRAY_BOUNDS=y
-CONFIG_GCC_PLUGINS=y
-# CONFIG_GCC_PLUGIN_LATENT_ENTROPY is not set
-# CONFIG_GCC_PLUGIN_STACKLEAK is not set
-
-$ make -j$(nproc) sound/soc/sof/intel/hda.o
-
-$ head -1 sound/soc/sof/intel/.hda.o.cmd
-savedcmd_sound/soc/sof/intel/hda.o := gcc ...
-
-This was brought up some time ago and Masahiro made a decent point that
-this might not be a desirable behavior change.
-
-https://lore.kernel.org/CAK7LNAT6Yp3oemUxSst+htnmM-St8WmSv+UZ2x2XF23cw-kU-Q@mail.gmail.com/
-
-Switching to passing CC via the actual make command should fix that.
-
-Cheers,
-Nathan
