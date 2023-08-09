@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9B217744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B060C433C7;
-	Wed,  9 Aug 2023 11:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF3C174F0
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3EFC433C7;
+	Wed,  9 Aug 2023 11:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579560;
-	bh=+VCZI36NglCDwUm2eB5PKHmrF32D8qKV8fDdqkFpHLM=;
+	s=korg; t=1691579563;
+	bh=W6vppn5mqzaw1bxdlNdODlbzM/UCxRD+CneY3nOpXlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U16ZzYjIW2y6/F8RCwRm5WP4CYb1hwyN+f1FfgktnJxJqvXcPfzB78pevoMGl2pNd
-	 bLizDerYS9PmMDIad+7nj6xWyyU7dbc/JCgrvH2elePNWC3rqpdc6L/jL25gUY9Pmo
-	 XPkdz7BYsKUow0DUq+z/+6MEY8a/c+lQhvYM7Ffk=
+	b=CfFH3KeYwjxY3PZVi5hWsJN+B3UU87Qo8UzTXlBgSbDAa8Si4r9tzTjJ/kw43o0/Z
+	 4KCqBjjLQYifbJtEgHdBBgNs4pxVgEzuUFGNNL41hj88RJP2uAPHCuaBng1cPun4/K
+	 3FhPg6bAthm8Ch/RCWVTY+W62O1Iv37qrLxGq40Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Kalle Valo <kvalo@codeaurora.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 034/323] wl3501_cs: use eth_hw_addr_set()
-Date: Wed,  9 Aug 2023 12:37:52 +0200
-Message-ID: <20230809103659.669176325@linuxfoundation.org>
+Subject: [PATCH 4.19 035/323] wifi: wl3501_cs: Fix an error handling path in wl3501_probe()
+Date: Wed,  9 Aug 2023 12:37:53 +0200
+Message-ID: <20230809103659.719291881@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,38 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 18774612246d036c04ce9fee7f67192f96f48725 ]
+[ Upstream commit 391af06a02e7642039ac5f6c4b2c034ab0992b5d ]
 
-Commit 406f42fa0d3c ("net-next: When a bond have a massive amount
-of VLANs...") introduced a rbtree for faster Ethernet address look
-up. To maintain netdev->dev_addr in this tree we need to make all
-the writes to it got through appropriate helpers.
+Should wl3501_config() fail, some resources need to be released as already
+done in the remove function.
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-Link: https://lore.kernel.org/r/20211018235021.1279697-15-kuba@kernel.org
-Stable-dep-of: 391af06a02e7 ("wifi: wl3501_cs: Fix an error handling path in wl3501_probe()")
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/7cc9c9316489b7d69b36aeb0edd3123538500b41.1684569865.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/wl3501_cs.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index c6d1a320e244f..46188a83d8be8 100644
+index 46188a83d8be8..4380c5d8fdd27 100644
 --- a/drivers/net/wireless/wl3501_cs.c
 +++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1946,8 +1946,7 @@ static int wl3501_config(struct pcmcia_device *link)
- 		goto failed;
- 	}
+@@ -1863,6 +1863,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+ {
+ 	struct net_device *dev;
+ 	struct wl3501_card *this;
++	int ret;
  
--	for (i = 0; i < 6; i++)
--		dev->dev_addr[i] = ((char *)&this->mac_addr)[i];
-+	eth_hw_addr_set(dev, this->mac_addr);
+ 	/* The io structure describes IO port mapping */
+ 	p_dev->resource[0]->end	= 16;
+@@ -1874,8 +1875,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
  
- 	/* print probe information */
- 	printk(KERN_INFO "%s: wl3501 @ 0x%3.3x, IRQ %d, "
+ 	dev = alloc_etherdev(sizeof(struct wl3501_card));
+ 	if (!dev)
+-		goto out_link;
+-
++		return -ENOMEM;
+ 
+ 	dev->netdev_ops		= &wl3501_netdev_ops;
+ 	dev->watchdog_timeo	= 5 * HZ;
+@@ -1888,9 +1888,15 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+ 	netif_stop_queue(dev);
+ 	p_dev->priv = dev;
+ 
+-	return wl3501_config(p_dev);
+-out_link:
+-	return -ENOMEM;
++	ret = wl3501_config(p_dev);
++	if (ret)
++		goto out_free_etherdev;
++
++	return 0;
++
++out_free_etherdev:
++	free_netdev(dev);
++	return ret;
+ }
+ 
+ static int wl3501_config(struct pcmcia_device *link)
 -- 
 2.39.2
 
