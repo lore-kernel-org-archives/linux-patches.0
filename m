@@ -1,45 +1,45 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02C31E1D2
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:14:45 +0000 (UTC)
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-686ba29ccb1so788877b3a.1
-        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 09:14:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74151E1D2
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:15:23 +0000 (UTC)
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1bc3bec2c95so15930985ad.0
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 09:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691684085; x=1692288885;
+        d=gmail.com; s=20221208; t=1691684123; x=1692288923;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4WW7xl5RfavY1jtjAqVUV0opgpVMtWFJH0DTTpNeR8g=;
-        b=U6c1d6IfFu/0q/cT8XTEBz4/J6WrJ/1nZBCJFpveWKFv01DrUOALIB9TLTyJ8EBS5i
-         YV2j3OKNSgzoqqbTjAi/Y3lrE6Suhrwgf9MwSpBUqsquC94Bx5r5bFSj9OmEDQFjR08n
-         eyXlECqY4uuy/7eQWLsxke5WgG8fu/8Mqmk7Qh6IuCZuhsqZxZQb1P4Fh1sQPuclRJfD
-         8r8QG4cFpUI3i+y3dXU0KeoUfw8fu1jydE4t1/jayWcD1L0HrgDZGbdjTTScG9iRsaYm
-         yL4dofSR9eLkMXVk4S7FAtYPSlyd1AAq9XcKj2asZGxecyd0u//RwIwop0kTl7Ip8DZP
-         thCw==
+        bh=ZVqbHV+QG5GsPVQyZyu89m2UgvCEHBysqsbECKUvsgM=;
+        b=VwzCKhaPMwglG5KggDpTUmyhicW2VNofcGN0/8+GUvXD8mnw2q8UG219D52DCMxIZb
+         9sscV2l8e1CL429IVvICiz9LQfhRfjIQgV4cxPkz89gw1kcR7lL+YdcPUGHnS0uX3H/u
+         8lXDHXLey+VJNEERD5qbDg65u78bHoq/cHP4ed2IAljq2JWAhXCY0qXmxEvUX0CRFgz/
+         3KzqD48KU99lSbwL5nCqWslPv6VDP3vo4hqgtpIOIFUkS48n5/eoy1F2R/+r+TyV0uPy
+         h7gYiYggyONGtlUEVOQCVkvzsNeb1/20NNPZjx88TseY/1G52GldN+LPferx0Ia17ujM
+         E7dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691684085; x=1692288885;
+        d=1e100.net; s=20221208; t=1691684123; x=1692288923;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4WW7xl5RfavY1jtjAqVUV0opgpVMtWFJH0DTTpNeR8g=;
-        b=PjfCZ1cO8aTJ2T0PqL5GsGRuvqFe7filxuJodbq0dFAox6OBtlILZHoB+R09bEyep/
-         /1bzCwAoGCqDCS/AZOgamrf6Ybgo4De79PAoOhFkM2qW3Pq1iQtsm7frs5hKP5pjenl2
-         FNH1FiIpy0q0Deh5i5cWTMuygvlk/kz8Z+ntVc1ce4/ttZZo19BXz/iPlXqUleEfoXY6
-         qYMM7+Xqp1kgi70ew905r2wMYwQ+OFan+4jLT6TfWDpU3xwqI0QYUDLOb/HEj9/a9y3I
-         XkwZLqa9Bv4fsYpbk9UJHlcGlG+cyHP5/bptpWYYaa3gYCLRtJFLKMV9iOhKKLZtx6pK
-         cXyg==
-X-Gm-Message-State: AOJu0Yw9wpedX71tvwVtk4LlpoylZcKoC6QtqtyuUcoOiRXWjYXpPcaH
-	edJ52rtWgkbR9VLyHlUE0Uw=
-X-Google-Smtp-Source: AGHT+IHfBKBXihlTWr0wq5ROJdmyqocaQiRSYDUdVo/El5ivmKdKqviKNuiYo8DgaZ6ARMrGf6EgIg==
-X-Received: by 2002:a05:6a00:803:b0:67f:830f:b809 with SMTP id m3-20020a056a00080300b0067f830fb809mr3329046pfk.3.1691684084979;
-        Thu, 10 Aug 2023 09:14:44 -0700 (PDT)
+        bh=ZVqbHV+QG5GsPVQyZyu89m2UgvCEHBysqsbECKUvsgM=;
+        b=jnW/yYg20M7HGGdYZoRTWg1b6O2kHdUQmGJJk1eQ6IWomtLXnrrWc5YkGWwbr/7CZ+
+         6jcdd/m3zfzMpwpQ8ArKzcfoYSRDRED6q4x0lmVfZ8zN0AEF3j4Mq8IWBifOEivPHEsz
+         p7QLQG/pMyklFUxWwdrjZRUf9MbQevcMFLlxNqHX3odD+Q1SAk/gaDqCbEIXAYHCNuAg
+         msqNadHmvpcx8UXfNtc25qLLcITgLNEMZyTyQMB2A774FbgyXXILtbncdlRYlYgAyvtq
+         wPWAW6XcX/eY+ddbIaBKWMaDMHdQ5qp7uS/XBuRNFFQqYqGoqMAtd0XF6R2skvp+RdED
+         OZ9w==
+X-Gm-Message-State: AOJu0Ywb60VDKtg97VlPVuLo8aXWdpoqaiFDIxY0We2chEXVgyR3NMoG
+	Dd1r8zT+5NDp+JaOUzUIXFw=
+X-Google-Smtp-Source: AGHT+IHX/AxNqI+XLXc2Gd770eCbj0++Kc5KbY5XG3Wg/eCIjosP5SBsbkuvKoQ00716dbJaa2oq7A==
+X-Received: by 2002:a17:902:ce8f:b0:1bc:7312:78e2 with SMTP id f15-20020a170902ce8f00b001bc731278e2mr3226286plg.5.1691684122928;
+        Thu, 10 Aug 2023 09:15:22 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id bm16-20020a056a00321000b0063f0068cf6csm1708556pfb.198.2023.08.10.09.14.44
+        by smtp.gmail.com with ESMTPSA id c1-20020a170902b68100b001b53be3d942sm1957928pls.232.2023.08.10.09.15.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 09:14:44 -0700 (PDT)
+        Thu, 10 Aug 2023 09:15:22 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 10 Aug 2023 09:14:43 -0700
+Date: Thu, 10 Aug 2023 09:15:21 -0700
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -48,9 +48,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
-Message-ID: <a800f7e3-5a59-4dba-afc8-d3ae5f39b058@roeck-us.net>
-References: <20230809103636.615294317@linuxfoundation.org>
+Subject: Re: [PATCH 6.4 000/165] 6.4.10-rc1 review
+Message-ID: <f110a9c9-5be2-447a-b8b8-be79a078426e@roeck-us.net>
+References: <20230809103642.720851262@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,11 +59,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 
-On Wed, Aug 09, 2023 at 12:39:47PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.45 release.
-> There are 127 patches in this series, all will be posted as a response
+On Wed, Aug 09, 2023 at 12:38:51PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.10 release.
+> There are 165 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,31 +72,10 @@ On Wed, Aug 09, 2023 at 12:39:47PM +0200, Greg Kroah-Hartman wrote:
 > 
 
 Build results:
-	total: 157 pass: 153 fail: 4
-Failed builds:
-	loongarch:defconfig
-	loongarch:allnoconfig
-	loongarch:tinyconfig
-	loongarch:allmodconfig
+	total: 157 pass: 157 fail: 0
 Qemu test results:
-	total: 521 pass: 513 fail: 8
-Failed tests:
-	arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:rootfs
-	arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:rootfs
-	<all loongarch>
+	total: 522 pass: 522 fail: 0
 
-loongarch failures as already reported, introduced with v6.1.44.
-
-The failed arm tests crash in f2fs (again - previously reported
-against the v6.1.43 release candidate).
-
-[    6.685458] 8<--- cut here ---
-[    6.685593] Unable to handle kernel NULL pointer dereference at virtual address 00000034
-[    6.685725] [00000034] *pgd=00000000
-[    6.686010] Internal error: Oops: 5 [#1] SMP ARM
-[    6.686209] CPU: 0 PID: 194 Comm: seedrng Not tainted 6.1.45-rc1-00128-g02a4c6c322d1 #1
-[    6.686350] Hardware name: Generic DT based system
-[    6.686467] PC is at f2fs_issue_flush+0x160/0x210
-[    6.686821] LR is at f2fs_do_sync_file+0x7c8/0xaa8
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
 Guenter
