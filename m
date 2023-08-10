@@ -1,55 +1,62 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6DC20CA8
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 19:28:57 +0000 (UTC)
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-5654051b27fso998305a12.0
-        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 12:28:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B20122F08
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 19:37:01 +0000 (UTC)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-99bed101b70so177917266b.3
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 12:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691695736; x=1692300536;
+        d=linux-foundation.org; s=google; t=1691696219; x=1692301019;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7LKXLnqK7mLXxFGBNP/mSfzDoE34EJtJtYOY6V+pFjw=;
-        b=Vy6MwqMZHUwHzHqu0oLi2djO4Byo74KF00zJZc2rlHedIwBNKf7hKh+pgYZHUrYT6f
-         AUrlAPL8z4N6upJx3SS+DHBwUZUS9nyI3KHqGXxX6TlCHbPFHr7/9S0yjBC2BKfgapCJ
-         g9C4r68KWgVvAdtG0eWOTFph4rzQY39GNXXaV8M/Yf6pvvBqIdZr/tL6pX7TZbpVYqK5
-         utTy5umNZEYo6b7W/QfDzeKmBIeffFbM47UaZWsRcIFObQ9HJLHz8/aMFDY2O0J3XW27
-         9UpZaD4oDu0nWJWRvYCIzIjL0+Ls2gx+8fjpye3KmhXwCxXid+tPBWhlgFxhBIvkf/JT
-         hHcw==
+        bh=bxXYghb+eoRa0mcUhOiyjnEloU2cZwSMtKrX/TWEnDU=;
+        b=he8HYHSJPSdntzb4i8YGrAwjyffGuiKA+woE/714lov/drFNz+XV9rfgGmQoP63wvn
+         i3r2sKG8MCblRLEmyec50FnSvn5r7WMkU7Obv2t5smvlh1zTuVe+65A7hwv/VRCORTOm
+         7LYPAzk87JhYV0o+MGL4GYOvaRAJbRm3vBfmg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691695736; x=1692300536;
+        d=1e100.net; s=20221208; t=1691696219; x=1692301019;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7LKXLnqK7mLXxFGBNP/mSfzDoE34EJtJtYOY6V+pFjw=;
-        b=X2M5ceMylylRiRj5rg+/ujywi3QJlhlIK1oQ90b2gZu7Q1LDFy/R3XcgK2xDXBdJqu
-         zADNu9/WbAkRuoR0WKJqpWMc1p9waq1lBdVV3uwUZH/MhoL0XmGHZJif794u8rcqfUfZ
-         txr7HvC7ey7Tl6QTJrxCgLdTxD6x5F/hWleTBeLVXne0+sHL3veEX/lqh/TsriJjbSnI
-         cHfIJwpV0iSm/gWkhvpprzRcJa5JP718S7eDXua8ZmcfzlWPQZuVx5vTFYi1P7B/c1QC
-         a5P7wCkntWTDICVKVtALVoyu/OemhpUaLif43PkF5kxMoTp1JlTu9PvH6o5TVVKKh89q
-         X9Qg==
-X-Gm-Message-State: AOJu0YzTAjewnfSGGBCggv8eg64K/B6WczifgXlXHc7elmXwMPRJCMFd
-	Hd4RtFidsAhh2YXGf/fXUYdN4hgpRUfhUnmkB4rR0w==
-X-Google-Smtp-Source: AGHT+IG/BAgOkHm5XQDhsD/Oh//+tZl07HXSnzMaYEHIcpqsC6utQkylOcfF3gzZbCmB+Xpb14oXDYXxa7SPcDUJumM=
-X-Received: by 2002:a05:6a21:2789:b0:13b:c4a8:1a68 with SMTP id
- rn9-20020a056a21278900b0013bc4a81a68mr3584038pzb.34.1691695736491; Thu, 10
- Aug 2023 12:28:56 -0700 (PDT)
+        bh=bxXYghb+eoRa0mcUhOiyjnEloU2cZwSMtKrX/TWEnDU=;
+        b=azaUZQNOgOEOT9//NS4O3feUKJfbNaMXK2JVbE0mFcEnZ4JqCO2fQxsVtI+Rli1W0w
+         PJcw8rF9H+XAt+55kKoMr7PdDbHUjvS2xMO3CuG/XL+7YNzxLJn+Dhgv9w7SebRO0a9p
+         YxV7aaGFAQH+CTl9I1bUPyV9ecN6cD6FPKYL4isdefmGmWKcPuxu/+Q8HbmT4se5kqhG
+         Dj9OylC0/0P+9+kT2sCsfbBImtobAjffRXAJuWOZMMAWjvN/FYZbX971VJJVmj77diED
+         SSaqfsFf8gYc2W9MwcUfPHY9EEx4U37bg6y688nWgISQkfbescuWi5ktlsMDIFjrmzUt
+         vn3A==
+X-Gm-Message-State: AOJu0YzvPxEQjeCn0tLT7gZLkg9Z4V35juhoDBs63tm9R8Ne2xxNlRhx
+	5/TAM4UOYNh7aeuAomL4fmusU9FuvbHlVm7bWS+Zh9P9
+X-Google-Smtp-Source: AGHT+IGH7SVEDKjtMfVE8n9+8wXv0Oe6GwBGr/hewPgA1vmIZomds58RVxz9NUGamIkLg03KLIZM1w==
+X-Received: by 2002:a17:906:3ca1:b0:992:91ce:4508 with SMTP id b1-20020a1709063ca100b0099291ce4508mr3017433ejh.53.1691696219098;
+        Thu, 10 Aug 2023 12:36:59 -0700 (PDT)
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com. [209.85.208.45])
+        by smtp.gmail.com with ESMTPSA id v8-20020a1709060b4800b009930308425csm1328737ejg.31.2023.08.10.12.36.58
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Aug 2023 12:36:58 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-523225dd110so1660318a12.0
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 12:36:58 -0700 (PDT)
+X-Received: by 2002:aa7:d0cb:0:b0:523:5012:63d5 with SMTP id
+ u11-20020aa7d0cb000000b00523501263d5mr3095069edo.16.1691696217947; Thu, 10
+ Aug 2023 12:36:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230809103658.104386911@linuxfoundation.org>
-In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
-From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
-Date: Thu, 10 Aug 2023 13:28:44 -0600
-Message-ID: <CAEUSe787p3uDD9Q0wq=Y=PY0-wLxbYY8oY6T24dhm+qgK1MjNw@mail.gmail.com>
+References: <20230809103658.104386911@linuxfoundation.org> <CAEUSe787p3uDD9Q0wq=Y=PY0-wLxbYY8oY6T24dhm+qgK1MjNw@mail.gmail.com>
+In-Reply-To: <CAEUSe787p3uDD9Q0wq=Y=PY0-wLxbYY8oY6T24dhm+qgK1MjNw@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 10 Aug 2023 12:36:41 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wiTzjgRRPmfkwOr89uMuk5wdoG_6edMAnEdubX9bq8OSw@mail.gmail.com>
+Message-ID: <CAHk-=wiTzjgRRPmfkwOr89uMuk5wdoG_6edMAnEdubX9bq8OSw@mail.gmail.com>
 Subject: Re: [PATCH 4.19 000/323] 4.19.291-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+To: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
@@ -57,54 +64,31 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello!
-
-On Wed, 9 Aug 2023 at 05:11, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
-> This is the start of the stable review cycle for the 4.19.291 release.
-> There are 323 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, 10 Aug 2023 at 12:28, Daniel D=C3=ADaz <daniel.diaz@linaro.org> wro=
+te:
 >
-> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> Anything received after that time might be too late.
+> Two new warnings are introduced on x86_64 with GCC-8 (defconfig):
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.19.291-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.19.y
-> and the diffstat can be found below.
+> -----8<-----
+> drivers/gpu/drm/drm_edid.o: warning: objtool:
+> drm_mode_std.isra.34()+0xbc: return with modified stack frame
+> drivers/gpu/drm/drm_edid.o: warning: objtool:
+> drm_mode_std.isra.34()+0x0: stack state mismatch: cfa1=3D7+112 cfa2=3D7+8
+> ----->8-----
 >
-> thanks,
->
-> greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 4.19.291-rc1
-[...]
-> Lyude Paul <lyude@redhat.com>
->     drm/edid: Fix uninitialized variable in drm_cvt_modes()
-[...]
+> Bisection points to the quoted commit ("drm/edid: Fix uninitialized
+> variable in drm_cvt_modes()"), 991fcb77f490 upstream. Reverting makes
+> the warnings disappear.
 
-Two new warnings are introduced on x86_64 with GCC-8 (defconfig):
+Bah. Stable should pick up commit d652d5f1eeeb ("drm/edid: fix objtool
+warning in drm_cvt_modes()") from mainline too.
 
------8<-----
-drivers/gpu/drm/drm_edid.o: warning: objtool:
-drm_mode_std.isra.34()+0xbc: return with modified stack frame
-drivers/gpu/drm/drm_edid.o: warning: objtool:
-drm_mode_std.isra.34()+0x0: stack state mismatch: cfa1=3D7+112 cfa2=3D7+8
------>8-----
+Sadly it didn't have a 'Fixes:' tag, so it didn't get picked up
+automatically. My bad.
 
-Bisection points to the quoted commit ("drm/edid: Fix uninitialized
-variable in drm_cvt_modes()"), 991fcb77f490 upstream. Reverting makes
-the warnings disappear.
+Although it's not like the commits it fixes were actually ever marked
+for stable either. I guess commit 3f649ab728cd ("treewide: Remove
+uninitialized_var() usage") got picked up as some kind of "make it
+easier to apply other patches" thing.
 
-Greetings!
-
-Daniel D=C3=ADaz
-daniel.diaz@linaro.org
+               Linus
