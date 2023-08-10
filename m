@@ -1,105 +1,102 @@
-Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2802F1C28
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 07:26:29 +0000 (UTC)
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id A7E088037D6B
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 07:06:19 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 8C3021003FD34
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 07:06:10 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id TzkIqiNNZMOiZTzkIqAyRQ; Thu, 10 Aug 2023 07:06:10 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=TaZTCTch c=1 sm=1 tr=0 ts=64d48c62
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=UttIx32zK-AA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=PcaoYWpWcllD4NNNClbatCKQYcE+mEs29o4oCA7XY7A=; b=BYZ6lGy4034dcnKu7XYczOmLvR
-	Shpv3HrWtpq7tjoDCpXMxLu3dqbHT/tEcIz+SkGPmn5qbjFA3ukm22vQ2T+eX0k3LtSCPs+S1MyLM
-	Cu/57You1/zE8qFwfOGzKC2vevTAe5d31uFcDGBx3wRdlMdKH5zczxcBmkIgTgIST8DfPdFqmyZC8
-	gcu913xocFA45SckslpxB8S4l/BiAWvVnZHs7/SLOMmCMbkxBwTSMezUkYphDWBrq05uIDrSqIM4S
-	tLC+UiwMJf1g4CJ5vbrdCMQVj3qOCq+YFxMJ+tYF8L3jMlhn0mw0Wi/FK8guImgbtD3vF3s4DvQ5a
-	RxGjKFVA==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:51310 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qTzkH-0045AQ-2E;
-	Thu, 10 Aug 2023 01:06:09 -0600
-Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230809103636.615294317@linuxfoundation.org>
-In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <2292affc-4f34-62ec-3324-18e4c1d7d989@w6rz.net>
-Date: Thu, 10 Aug 2023 00:06:07 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FD536FAF
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 08:45:40 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 30D1AD75;
+	Thu, 10 Aug 2023 01:46:16 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 899C13F59C;
+	Thu, 10 Aug 2023 01:45:32 -0700 (PDT)
+Date: Thu, 10 Aug 2023 09:45:29 +0100
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	Jim Quinlan <james.quinlan@broadcom.com>, patches@lists.linux.dev,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 11/92] firmware: arm_scmi: Fix chan_free cleanup on
+ SMC
+Message-ID: <20230810084529.53thk6dmlejbma3t@bogus>
+References: <20230809103633.485906560@linuxfoundation.org>
+ <20230809103633.950016368@linuxfoundation.org>
+ <cf831d49-ebdc-d132-9b8e-189e9688a9f2@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qTzkH-0045AQ-2E
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:51310
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cf831d49-ebdc-d132-9b8e-189e9688a9f2@gmail.com>
 
-On 8/9/23 3:39 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.45 release.
-> There are 127 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Aug 09, 2023 at 12:33:17PM -0700, Florian Fainelli wrote:
+> On 8/9/23 03:40, Greg Kroah-Hartman wrote:
+> > From: Cristian Marussi <cristian.marussi@arm.com>
+> > 
+> > [ Upstream commit d1ff11d7ad8704f8d615f6446041c221b2d2ec4d ]
+> > 
+> > SCMI transport based on SMC can optionally use an additional IRQ to
+> > signal message completion. The associated interrupt handler is currently
+> > allocated using devres but on shutdown the core SCMI stack will call
+> > .chan_free() well before any managed cleanup is invoked by devres.
+> > As a consequence, the arrival of a late reply to an in-flight pending
+> > transaction could still trigger the interrupt handler well after the
+> > SCMI core has cleaned up the channels, with unpleasant results.
+> > 
+> > Inhibit further message processing on the IRQ path by explicitly freeing
+> > the IRQ inside .chan_free() callback itself.
+> > 
+> > Fixes: dd820ee21d5e ("firmware: arm_scmi: Augment SMC/HVC to allow optional interrupt")
+> > Reported-by: Bjorn Andersson <andersson@kernel.org>
+> > Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+> > Link: https://lore.kernel.org/r/20230719173533.2739319-1-cristian.marussi@arm.com
+> > Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >   drivers/firmware/arm_scmi/smc.c | 17 +++++++++++------
+> >   1 file changed, 11 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+> > index 4effecc3bb463..f529004f1922e 100644
+> > --- a/drivers/firmware/arm_scmi/smc.c
+> > +++ b/drivers/firmware/arm_scmi/smc.c
+> > @@ -21,6 +21,7 @@
+> >   /**
+> >    * struct scmi_smc - Structure representing a SCMI smc transport
+> >    *
+> > + * @irq: An optional IRQ for completion
+> >    * @cinfo: SCMI channel info
+> >    * @shmem: Transmit/Receive shared memory area
+> >    * @shmem_lock: Lock to protect access to Tx/Rx shared memory area
+> > @@ -30,6 +31,7 @@
+> >    */
+> >   struct scmi_smc {
+> > +	int irq;
+> 
+> For this backport to apply as-is and not define a duplicate "int irq" field
+> we need to take in f716cbd33f038af87824c30e165b3b70e4c6be1e ("firmware:
+> arm_scmi: Make smc transport use common completions") which did remove the
+> "int irq" from struct scmi_smc.
+> 
+> Alternatively, we can just omit this hunk adding the "int irq" member from
+> the back port.
 >
-> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.45-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+There is a bit disconnect in the communication here. I didn't see Greg was
+not cc-ed on the earlier email to Sasha[1]. The request to drop it was also
+made here[2].
 
-Tested-by: Ron Economos <re@w6rz.net>
+> This is a 5.15 stable kernel problem only because
+> f716cbd33f038af87824c30e165b3b70e4c6be1e is in v5.18 and newer.
+
+-- 
+Regards,
+Sudeep
+
+[1] https://marc.info/?l=linux-stable-commits&m=169159392424103&w=2
+(couldn't find a lore link for the above)
+[2] https://lore.kernel.org/all/ZNIdrd+SQ0KjYWKA@e120937-lin/
 
