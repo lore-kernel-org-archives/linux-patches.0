@@ -1,41 +1,41 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789F31FB4C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB191FB3B
 	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:36:40 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id F036821878;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 8EF7621873;
 	Thu, 10 Aug 2023 16:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
 	t=1691685392; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=a3DtkVdLGQHDYk90N/OXEPjHa8PNLxLzj/qp7wDJMuQ=;
-	b=izuGpZjTDaa1X7FM+8xTm5XGp80s21t8mw95pR1CYB5uPp0dA8c+tZ0jgOTQBfSnlPUZXc
-	vQiMiGKsA7yQKGOWxzUA/EX95/ge5PmBAW/5TI6OTaJmg4IENCoK0N2z6vsWBJv2ji8loT
-	oEXgrJoEYRtt2UOfw5uspqh2z5YapbY=
+	bh=X+E0unmCYoA/5q96uLhFby2/QU/JbMexzKmCXmErmbw=;
+	b=JWeB4JaUfgHvZaQeMrzQj2VqCapH0EynaaBfufBlIRxTx2ECYhL9B4n2CuXBu6jHkxgffL
+	uVIy1YZx4Q6tJiGJvsrFSVobLMkg9U3vkSz/at4f5HT90qx28+/qHEIJYIHKswNOLrQsr4
+	QED/YEf1+onvGmo/vyJGQ/ZssUBn/y0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
 	s=susede2_ed25519; t=1691685392;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=a3DtkVdLGQHDYk90N/OXEPjHa8PNLxLzj/qp7wDJMuQ=;
-	b=p6eqWXON9YDd4m3Wr/OaVX58a9pQHfuB4SGI9tgsmckkAANRrz+0BOIX9nWMdm6L9jpBej
-	SEImetYJhoV2wgAQ==
+	bh=X+E0unmCYoA/5q96uLhFby2/QU/JbMexzKmCXmErmbw=;
+	b=LJ6qkOJeM0r8nLNtSMjM6Pg9NO37l/Pq3Eu3JIT5fRdJOyJqXGNu1/AgSzrz+6N0a1tK+A
+	kI0gqf+8T9tuSgDg==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C432F139D1;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 61C11139D1;
 	Thu, 10 Aug 2023 16:36:32 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id IMZJLxAS1WSEPQAAMHmgww
+	id CIAVFxAS1WSEPQAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Thu, 10 Aug 2023 16:36:32 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
@@ -51,9 +51,9 @@ Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [RFC v2 3/7] maple_tree: use slub percpu array
-Date: Thu, 10 Aug 2023 18:36:31 +0200
-Message-ID: <20230810163627.6206-12-vbabka@suse.cz>
+Subject: [RFC v2 1/7] mm, slub: fix bulk alloc and free stats
+Date: Thu, 10 Aug 2023 18:36:29 +0200
+Message-ID: <20230810163627.6206-10-vbabka@suse.cz>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230810163627.6206-9-vbabka@suse.cz>
 References: <20230810163627.6206-9-vbabka@suse.cz>
@@ -65,35 +65,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Just make sure the maple_node_cache has a percpu array of size 32.
+The SLUB sysfs stats enabled CONFIG_SLUB_STATS have two deficiencies
+identified wrt bulk alloc/free operations:
 
-Will break with CONFIG_SLAB.
+- Bulk allocations from cpu freelist are not counted. Add the
+  ALLOC_FASTPATH counter there.
+
+- Bulk fastpath freeing will count a list of multiple objects with a
+  single FREE_FASTPATH inc. Add a stat_add() variant to count them all.
+
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- lib/maple_tree.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/slub.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/lib/maple_tree.c b/lib/maple_tree.c
-index 4dd73cf936a6..1196d0a17f03 100644
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -6180,9 +6180,16 @@ bool mas_nomem(struct ma_state *mas, gfp_t gfp)
- 
- void __init maple_tree_init(void)
- {
-+	int ret;
-+
- 	maple_node_cache = kmem_cache_create("maple_node",
- 			sizeof(struct maple_node), sizeof(struct maple_node),
--			SLAB_PANIC, NULL);
-+			SLAB_PANIC | SLAB_NO_MERGE, NULL);
-+
-+	ret = kmem_cache_setup_percpu_array(maple_node_cache, 32);
-+
-+	if (ret)
-+		pr_warn("error %d creating percpu_array for maple_node_cache\n", ret);
+diff --git a/mm/slub.c b/mm/slub.c
+index e3b5d5c0eb3a..a9437d48840c 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -341,6 +341,14 @@ static inline void stat(const struct kmem_cache *s, enum stat_item si)
+ #endif
  }
  
- /**
++static inline void stat_add(const struct kmem_cache *s, enum stat_item si, int v)
++{
++#ifdef CONFIG_SLUB_STATS
++	raw_cpu_add(s->cpu_slab->stat[si], v);
++#endif
++}
++
++
+ /*
+  * Tracks for which NUMA nodes we have kmem_cache_nodes allocated.
+  * Corresponds to node_state[N_NORMAL_MEMORY], but can temporarily
+@@ -3776,7 +3784,7 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
+ 
+ 		local_unlock(&s->cpu_slab->lock);
+ 	}
+-	stat(s, FREE_FASTPATH);
++	stat_add(s, FREE_FASTPATH, cnt);
+ }
+ #else /* CONFIG_SLUB_TINY */
+ static void do_slab_free(struct kmem_cache *s,
+@@ -3978,6 +3986,7 @@ static inline int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
+ 		c->freelist = get_freepointer(s, object);
+ 		p[i] = object;
+ 		maybe_wipe_obj_freeptr(s, p[i]);
++		stat(s, ALLOC_FASTPATH);
+ 	}
+ 	c->tid = next_tid(c->tid);
+ 	local_unlock_irqrestore(&s->cpu_slab->lock, irqflags);
 -- 
 2.41.0
 
