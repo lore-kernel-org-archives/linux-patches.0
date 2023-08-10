@@ -1,47 +1,47 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537241E1AC
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 14:23:03 +0000 (UTC)
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-26854159c05so548840a91.2
-        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 07:23:03 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA80C1E1AC
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 14:24:35 +0000 (UTC)
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1bc65360648so8640395ad.1
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 07:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691677382; x=1692282182;
+        d=gmail.com; s=20221208; t=1691677475; x=1692282275;
         h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=msHL0g14jrk8G1/JTK9Lm9LlFMtaEtngahDCmTUPo1s=;
-        b=brTOiRrvLSbfbJ0fh1nNuJMaik02Rn46Cs0m/eMM2rzWScm/6mh0k195Kg3vibIAJN
-         VwfiswJ4J7tma5sx2PjVjEUfYnOreI3i4K34lKIFPOn49skcQhhp0WZK5hqHq06MjJUM
-         YAD5sifkyU8wbrVTvneb5XUAEx4ydEW6KgiLHLhNst5iIOw0EZ7xwxFSBE/gB/DVh0CS
-         5QFjbr8Tu+EPzbagftn54R1rZb0EcEwbgKwrnZwn7H37l9FZfe6IM/Aust8iTLdnZbfX
-         1Xjnt+zZzwqmCLuM13to/XFOCwrYhKLK+TA7pvKx5i1zYb+hlX0HkkojW++FkhKjHiCs
-         oJeA==
+        bh=g7aVWMgiSCY8pbrReUeQfTDqSM2NOWq1Su86uIhB8xM=;
+        b=ShmnbVqmdpWKk1Bgj5jhiPZZm9hzZaSTST7U59fSdo73Q6AsKb3l3uzMBfg1SHwa4H
+         efQtrx3M6oCkAl1Kcbd2XhjWxPqDp1FmuDFthIlU6GL8OAVc+/W4a4l2RBtvEFL3XVlb
+         xt/nYX4BredPMGzeqm97k1/GuPQ4EbiBqGVxf3rfIAxcc3ipaftpESMGbgFEhmvpcbpl
+         Wp2/O00i11o+vWbxXlC+tkRo79lXtPzwwxXYhSWmQhQjzu6lPi155Iyzypzk4Qami/Y0
+         FzSxDoqIE/j2eN0zG+aqovTnrOHGKS4QhXoXc2yOrPte0TD3vnYzdpTCqCR6DcwTx9nd
+         JHvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691677382; x=1692282182;
+        d=1e100.net; s=20221208; t=1691677475; x=1692282275;
         h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=msHL0g14jrk8G1/JTK9Lm9LlFMtaEtngahDCmTUPo1s=;
-        b=GImsi6XFx35Y0CZeu9/H5m8+4u3yTzhrsoG5+vBfBBhVqsx7Lgr+2qh5OCabMgi1K2
-         r9oMu9gRITU0KunB3qgzMWol69PhutI6TOhcvARZW5FxFT+n/RNwYDERnx+5VCvN2qPl
-         mPzfZ93LWM0+PYQ4tOoP8aJeWHULAtmPNVf+Z1YZneGj5rlWs1Caa4cTghX7pYJrq24b
-         BvDxZIpTo6wMfUkKi7h9sCGClfI7W79UEI6rhch5k5+CaZgbKHC9Gw4maIA8KlZqP6jg
-         gPNTGahF8rNaiH8dlHNjIBfsuNtYBB6psx//9ZDoPLHnLezGDQ8sDZoJhFP2ijC1WY9g
-         dBeQ==
-X-Gm-Message-State: AOJu0YzPTD8a4lc9ieky8FCWHW4hXLu3rtxfbPrzqx8XwRWOSqIaJ3/h
-	hpszHlXwh5fv3wRopRe85Z8=
-X-Google-Smtp-Source: AGHT+IFsDHXk8JYqWSwXQ97oRH5J69hzQj3HGGw7bbihDixPnjvjYKUKPnaVP9ZttWo3x1w3GSja3g==
-X-Received: by 2002:a17:90a:bd17:b0:268:fc26:73a9 with SMTP id y23-20020a17090abd1700b00268fc2673a9mr1899019pjr.40.1691677382551;
-        Thu, 10 Aug 2023 07:23:02 -0700 (PDT)
+        bh=g7aVWMgiSCY8pbrReUeQfTDqSM2NOWq1Su86uIhB8xM=;
+        b=ApFQ1hoX9Vd2Ou6316SyU4fD5K4NjTqRocNoxJgIVEObnmKcRo+qWrgLwbYLNIxFBc
+         yF1gHMoFr5JNzs93FfQ4E2yDGw8IAm/1jQ4T768WH6enUycdm2ILsApnQCz6HtHAbXIc
+         HZScLv5OsYSziaHNqER3vYqUj8Vh1Sc3GYUWreXfaHZaCHtpuVz0ssd0mOpEbrWIb6r6
+         Mm2ZGajKkkT9/hGnQo0p01j7mZXv6vc1TSqMAUfWpLIH1YDqlTjzjFMHUvdsKs/Bo/up
+         cn5v3IOQgjvmYWIyuQefAPdqPvHcqEaaJu9p/Tag9Z8KFXTMjW5qp6AF5d9HWRzl/mKS
+         d7Sg==
+X-Gm-Message-State: AOJu0YydAQZPJhQqOS/vqSai9ZFMvIf1neFkkvPhe82nfI/RRdxB7Xnu
+	E5pXsou7YxB9Wlsg1NYtPCU=
+X-Google-Smtp-Source: AGHT+IH3n1zkaG/y/IW0v36I+eu+pJIzWmUs6Wme5ATrsdqnMBHOIrtY+Pb3D3QfBp+9lBTHE8YmvQ==
+X-Received: by 2002:a17:903:11c9:b0:1bc:48d7:f29b with SMTP id q9-20020a17090311c900b001bc48d7f29bmr3008767plh.27.1691677474846;
+        Thu, 10 Aug 2023 07:24:34 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id a9-20020a170902ee8900b001b1c4d875f5sm1821299pld.44.2023.08.10.07.23.00
+        by smtp.gmail.com with ESMTPSA id t3-20020a170902e84300b001bc59cd718asm1819355plg.278.2023.08.10.07.24.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 07:23:01 -0700 (PDT)
+        Thu, 10 Aug 2023 07:24:34 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <d52167b3-46c3-1c5f-b4ee-5c9da4400284@roeck-us.net>
-Date: Thu, 10 Aug 2023 07:23:00 -0700
+Message-ID: <fff0f61e-4260-f91a-2254-65daaffae45d@roeck-us.net>
+Date: Thu, 10 Aug 2023 07:24:32 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,7 +50,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 4.14 000/204] 4.14.322-rc1 review
+Subject: Re: [PATCH 4.19 000/323] 4.19.291-rc1 review
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
@@ -59,37 +59,44 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-References: <20230809103642.552405807@linuxfoundation.org>
- <9d35afea-e1b4-72d0-9559-1eccdfd069a8@roeck-us.net>
-In-Reply-To: <9d35afea-e1b4-72d0-9559-1eccdfd069a8@roeck-us.net>
+References: <20230809103658.104386911@linuxfoundation.org>
+ <252c7673-53ee-4c4b-e5ef-5bb2c0416154@roeck-us.net>
+In-Reply-To: <252c7673-53ee-4c4b-e5ef-5bb2c0416154@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 8/10/23 06:56, Guenter Roeck wrote:
-> On 8/9/23 03:38, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 4.14.322 release.
->> There are 204 patches in this series, all will be posted as a response
+On 8/10/23 06:55, Guenter Roeck wrote:
+> On 8/9/23 03:37, Greg Kroah-Hartman wrote:
+>> This is the start of the stable review cycle for the 4.19.291 release.
+>> There are 323 patches in this series, all will be posted as a response
 >> to this one.  If anyone has any issues with these being applied, please
 >> let me know.
+>>
+>> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+>> Anything received after that time might be too late.
 >>
 > 
 > Building sparc64:allnoconfig ... failed
 > --------------
 > Error log:
+> <stdin>:1335:2: warning: #warning syscall rseq not implemented [-Wcpp]
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso-note.o: missing .note.GNU-stack section implies executable stack
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso32/vdso-note.o: missing .note.GNU-stack section implies executable stack
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
 > sparc64-linux-ld: init/main.o: in function `start_kernel':
 > main.c:(.init.text+0x77c): undefined reference to `arch_cpu_finalize_init'
-> make[1]: *** [Makefile:1049: vmlinux] Error 1
-> make: *** [Makefile:153: sub-make] Error 2
-> --------------
+> 
 > Building sparc64:tinyconfig ... failed
 > --------------
 > Error log:
+> <stdin>:1335:2: warning: #warning syscall rseq not implemented [-Wcpp]
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso-note.o: missing .note.GNU-stack section implies executable stack
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso32/vdso-note.o: missing .note.GNU-stack section implies executable stack
+> /opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
 > sparc64-linux-ld: init/main.o: in function `start_kernel':
 > main.c:(.init.text+0x764): undefined reference to `arch_cpu_finalize_init'
-> make[1]: *** [Makefile:1049: vmlinux] Error 1
-> make: *** [Makefile:153: sub-make] Error 2
 
-Those build failures were introduced with v4.14.321.
-
-Guenter
+Introduced with v4.19.290.
 
