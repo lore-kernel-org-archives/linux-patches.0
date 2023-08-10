@@ -1,83 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB341DDF0;
-	Thu, 10 Aug 2023 11:39:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16513C433CA;
-	Thu, 10 Aug 2023 11:39:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691667577;
-	bh=PHQToYDN1jJ253CQ1B38WCDAhcL8w2XEWsk0JX64JF0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=iKw0G5u57xT52/doYQByyteDSqEIXToTy58H40JTM9AKefIzbpdknnu96l1NY2FqZ
-	 8f0fA4wFVZ/nsRmOJ9tdrTHQDSQ23sUonoZTfA24FDIPJeUpVoAxWcqkg/UqaQsowy
-	 5QswTGSOgoCvVLQSHoM/m18QMSTfPLlncZSUMGJ5A7eUpvRG68PYipLvdIwgvTGriC
-	 55f83nvabRzEMZLucdbIEt7Q0rZwsoQ0aaZN+IgC1EkZdHOzTVeauuYNa2gK+d0Xqh
-	 sOKabj9U0LKI1TfsSjOwtkrMXxiWr79KIauyzNnoXD/YG26HoBiT+S9ZqgUdRkYpic
-	 UvGxSqZT+jSIg==
-From: Mark Brown <broonie@kernel.org>
-To: pierre-louis.bossart@linux.intel.com, lgirdwood@gmail.com, 
- peter.ujfalusi@linux.intel.com, yung-chuan.liao@linux.intel.com, 
- ranjani.sridharan@linux.intel.com, daniel.baluta@nxp.com, 
- Nathan Chancellor <nathan@kernel.org>
-Cc: kai.vehmanen@linux.intel.com, ndesaulniers@google.com, trix@redhat.com, 
- rander.wang@intel.com, sound-open-firmware@alsa-project.org, 
- alsa-devel@alsa-project.org, llvm@lists.linux.dev, patches@lists.linux.dev
-In-Reply-To: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
-References: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
-Subject: Re: [PATCH] ASoC: SOF: Intel: Initialize chip in
- hda_sdw_check_wakeen_irq()
-Message-Id: <169166757481.31924.7230160819556948759.b4-ty@kernel.org>
-Date: Thu, 10 Aug 2023 12:39:34 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990B11E1B2
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 13:55:10 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-68706d67ed9so675157b3a.2
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 06:55:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691675710; x=1692280510;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=0FFT4Yj3m1Fx8gSEUta6Yy87BbswMA7bP4LX2BOsNOo=;
+        b=HTR4WuxCQgLw34Fu/f7F9IIN7w1GPtSh+s61h0N1iOhtaVSeRutK8QCMjdKTquHWLB
+         CJxvv16tKKNOaEEZ4VKyW8hha/AzG6hzbpnM2bM/9sjmAvKGF9ztZtU3k6xqJ1Q/n2LP
+         C+hEvjDQUHTu6EE8vjZQDWKOvHaM+qwn9Ouxr+zBejIn5FO4P0bbLv53ve5eKB8gmMRG
+         Y4NamyPFTuMcSf4kt6ZRge2J4cxFVFBFM5GMqni75MW8FyeFBTNWdcfxyXaEBuIAYJOR
+         kWPyeZWApPNNU8N07L63RSvqlevyw4Jp8Gpq2NN/eahycBhy4AVZOSho0ksAkwhSHyAJ
+         NQPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691675710; x=1692280510;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0FFT4Yj3m1Fx8gSEUta6Yy87BbswMA7bP4LX2BOsNOo=;
+        b=awwSrk73XcRB/OeGaYP2Ghi6X5laz/pL4CCE/z3bvrCM9N+xz3IdKqvyUw9HrdEDMQ
+         3DHY1ZzTFWTAL+Z7gb1pCvV9on6rglgU7Xg469jYeG/+GwmNQVh4dmfU9zUczN7ke1PQ
+         Ani0fETn+4ejYEldsVuAe5wxqaHv5IIOuknPLDymYg3qPg+MKjwd+1wWKeOKzJuzfW7j
+         HW0IhA43JErRzn6ZdhFsZUewFqPO3O3g7qFQoaivvhiEf81dxHJvMmgpYu54OlUOcQ4X
+         S/HJhxc7fNsbYSE4iSGzdhOxYDeD4UJWOuglv0o7Zq8CLzmm52t6HngU3jGzxrt0pJmO
+         Rcww==
+X-Gm-Message-State: AOJu0YxCZUgQjOXAVd+d4lZnhPT05zNFKuB+jfs3FGhg09ZoSJh4FwMZ
+	DPCpRDOJ6LpVM85VPW4Lrps=
+X-Google-Smtp-Source: AGHT+IGHvjKMCqXkTKHNNLW0ZoM8HQZLa2wjK3Qu3aLpOGqLf8ZY3pHoB5TkPlNQOFbsCueBFpzjmQ==
+X-Received: by 2002:a05:6a20:3d14:b0:140:fab7:4d14 with SMTP id y20-20020a056a203d1400b00140fab74d14mr2832645pzi.15.1691675709742;
+        Thu, 10 Aug 2023 06:55:09 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id h5-20020a62b405000000b00687494a59bfsm1537456pfn.61.2023.08.10.06.55.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Aug 2023 06:55:09 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <252c7673-53ee-4c4b-e5ef-5bb2c0416154@roeck-us.net>
+Date: Thu, 10 Aug 2023 06:55:07 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 4.19 000/323] 4.19.291-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+References: <20230809103658.104386911@linuxfoundation.org>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-034f2
 
-On Wed, 09 Aug 2023 11:12:07 -0700, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR):
+On 8/9/23 03:37, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.291 release.
+> There are 323 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->   sound/soc/sof/intel/hda.c:423:6: error: variable 'chip' is uninitialized when used here [-Werror,-Wuninitialized]
->     423 |         if (chip && chip->check_sdw_wakeen_irq)
->         |             ^~~~
->   sound/soc/sof/intel/hda.c:418:39: note: initialize the variable 'chip' to silence this warning
->     418 |         const struct sof_intel_dsp_desc *chip;
->         |                                              ^
->         |                                               = NULL
->   1 error generated.
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
 > 
-> [...]
 
-Applied to
+Building sparc64:allnoconfig ... failed
+--------------
+Error log:
+<stdin>:1335:2: warning: #warning syscall rseq not implemented [-Wcpp]
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso-note.o: missing .note.GNU-stack section implies executable stack
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso32/vdso-note.o: missing .note.GNU-stack section implies executable stack
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+sparc64-linux-ld: init/main.o: in function `start_kernel':
+main.c:(.init.text+0x77c): undefined reference to `arch_cpu_finalize_init'
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/1] ASoC: SOF: Intel: Initialize chip in hda_sdw_check_wakeen_irq()
-      commit: 9c28423d3caae63e665e2b8d704fa41ac823b2a6
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Building sparc64:tinyconfig ... failed
+--------------
+Error log:
+<stdin>:1335:2: warning: #warning syscall rseq not implemented [-Wcpp]
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso-note.o: missing .note.GNU-stack section implies executable stack
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: warning: arch/sparc/vdso/vdso32/vdso-note.o: missing .note.GNU-stack section implies executable stack
+/opt/kernel/gcc-11.4.0-2.40-nolibc/sparc64-linux/bin/../lib/gcc/sparc64-linux/11.4.0/../../../../sparc64-linux/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+sparc64-linux-ld: init/main.o: in function `start_kernel':
+main.c:(.init.text+0x764): undefined reference to `arch_cpu_finalize_init'
