@@ -1,101 +1,147 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919461E1D2
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:26:03 +0000 (UTC)
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-686e29b058cso829498b3a.1
-        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 09:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691684763; x=1692289563;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eukdoe2Tc680LE21wkxfZgZeWn3/Mo2/aaZLQF0/Kcc=;
-        b=CdxbMIkjrD9v3xssSjgTGp7lTOklgfs5MwmzPqo18t7IM0bfF6dUK1IWVHlI+oGfq9
-         /o8uT9NV0V6+d3gXoisVuowCscXms3f5x/KOl+4NFjTI+RfnzKTIvxaqs+XoqDFrD0QT
-         sO3uoI8er6w2I/9mtgCwUtGq1KSnuYDHvxlTTmvzwzCP8+Aa/ipRvYt36taRDn7yX29y
-         rADZvriSRlD+6+sS5qdsnxryhvY+G9PRqdvZELKZCUFAzytmcj/ihXLXsAEoM286V8HN
-         xWyVaH8T2jNYSPDITNrnOu6JWJSNjfkbLBkxY3OI1lPypJRinu7hjfD9Pm0GAtYJ76AL
-         LOpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691684763; x=1692289563;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eukdoe2Tc680LE21wkxfZgZeWn3/Mo2/aaZLQF0/Kcc=;
-        b=ZGP8T7XTtxnJoumYWppf3UEgwdQ7wgckZlFufoIK/G1hRd3JuVNFbVu1R/0hFYItWY
-         1DAZRBwUqOXc1F5RsTf5FyRqRsUW3DKgbf8wvPaZ35b24lHFtcByVE/wwSPYMq+McQ2e
-         SbW1wwFKzTzEglJJKFqm3ex1VLaFEVqkJCFgiWQYsAqhqsx8Rgjp7d6ifttluyOrwVFZ
-         6Rhq7bTgBNy7tQYTZ7yHMiVuCpbwWRCGMEh7CYpnfzJ9tZo5rqltR5GynmQKuZ1r0pRo
-         73F6yyRWLkdlxH5FFSQUtVa311/gT3CJUkZtoH32zj1ywBofaBFUGbgfNR3ORhyhUR3G
-         cN+A==
-X-Gm-Message-State: AOJu0YyZ/J6cAKXTdV9vzPMZ+qZ9r/FtAZ8uvfiB7FPXW27zUx8msWOg
-	y/0ojcEeUCcQQP1N0A6F+Qw=
-X-Google-Smtp-Source: AGHT+IGVENtRj0Uqvr0eDdi5LcYQATl9QX2SejWqIUO+p4XIqUH4j8jdbtzVjZHFiJ7kbdFl2n0T/w==
-X-Received: by 2002:a05:6a21:1f1c:b0:140:694:cd99 with SMTP id ry28-20020a056a211f1c00b001400694cd99mr2631970pzb.44.1691684762721;
-        Thu, 10 Aug 2023 09:26:02 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id j17-20020a62b611000000b00687f845f41fsm1710112pff.119.2023.08.10.09.25.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 09:26:01 -0700 (PDT)
-Message-ID: <3815ef44-4edd-8d53-14e3-043b26d025f4@gmail.com>
-Date: Thu, 10 Aug 2023 09:25:53 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2587A1F93C
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:36:34 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 614A21F750;
+	Thu, 10 Aug 2023 16:36:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1691685393; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=81VWuf1Jqzz86k9wDN7LrYfBK2s1ZDCqD4SXLtwC3uA=;
+	b=vGJ6/1WteLNGdLHhKpW6hrMYCuWBe6WzoYcWBYsk/0kPZb7z0w1EKu7Caou9OwoQqM0QPD
+	hTllK+yJdN9fv7kLVpgI2tCN5xKxsmExHBA4r/mVMBQaMFAfb4YFTFCu538cEnR6H1DKSn
+	dLBkK+T1U+VHRemqTiutB021iD242/0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1691685393;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=81VWuf1Jqzz86k9wDN7LrYfBK2s1ZDCqD4SXLtwC3uA=;
+	b=9x9XyqLN8gJpEQKeJMyMY/R1t7RGpoiajCpyEbPmS092cPUZLAJeo+as7qvBiBUDFncs97
+	rZ5jw5kHYfhuUuBA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 329D1139D1;
+	Thu, 10 Aug 2023 16:36:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id GPC5CxES1WSEPQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 10 Aug 2023 16:36:33 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [RFC v2 5/7] maple_tree: Remove MA_STATE_PREALLOC
+Date: Thu, 10 Aug 2023 18:36:33 +0200
+Message-ID: <20230810163627.6206-14-vbabka@suse.cz>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230810163627.6206-9-vbabka@suse.cz>
+References: <20230810163627.6206-9-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
-Content-Language: en-US
-To: Guenter Roeck <linux@roeck-us.net>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230809103633.485906560@linuxfoundation.org>
- <9a3b1ff6-d702-6b67-9d9b-5eb1f90b4e50@roeck-us.net>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <9a3b1ff6-d702-6b67-9d9b-5eb1f90b4e50@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 8/10/23 03:24, Guenter Roeck wrote:
-> On 8/9/23 03:40, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 5.15.126 release.
->> There are 92 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
->> Anything received after that time might be too late.
->>
-> Building arm:allmodconfig ... failed
-> --------------
-> Error log:
-> drivers/firmware/arm_scmi/smc.c:39:13: error: duplicate member 'irq'
-> 
-> drivers/firmware/arm_scmi/smc.c: In function 'smc_chan_setup':
-> drivers/firmware/arm_scmi/smc.c:118:34: error: 'irq' undeclared
-> 
-> Building arm64:defconfig ... failed
-> --------------
-> Error log:
-> 
-> drivers/firmware/arm_scmi/smc.c:39:13: error: duplicate member 'irq'
-> 
-> drivers/firmware/arm_scmi/smc.c: In function 'smc_chan_setup':
-> drivers/firmware/arm_scmi/smc.c:118:34: error: 'irq' undeclared
-> 
-> That is because commit d80e159dbdbb ("firmware: arm_scmi: Fix chan
-> free cleanup on SMC") is applied without its dependent commit(s).
+From: "Liam R. Howlett" <Liam.Howlett@oracle.com>
 
-Indeed, we discussed this here: 
-https://lore.kernel.org/all/20230810084529.53thk6dmlejbma3t@bogus/
+MA_SATE_PREALLOC was added to catch any writes that try to allocate when
+the maple state is being used in preallocation mode.  This can safely be
+removed in favour of the percpu array of nodes.
+
+Note that mas_expected_entries() still expects no allocations during
+operation and so MA_STATE_BULK can be used in place of preallocations
+for this case, which is primarily used for forking.
+
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+---
+ lib/maple_tree.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
+
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index 926bee7a274a..8bd4a79537d8 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -68,11 +68,9 @@
+  * Maple state flags
+  * * MA_STATE_BULK		- Bulk insert mode
+  * * MA_STATE_REBALANCE		- Indicate a rebalance during bulk insert
+- * * MA_STATE_PREALLOC		- Preallocated nodes, WARN_ON allocation
+  */
+ #define MA_STATE_BULK		1
+ #define MA_STATE_REBALANCE	2
+-#define MA_STATE_PREALLOC	4
+ 
+ #define ma_parent_ptr(x) ((struct maple_pnode *)(x))
+ #define ma_mnode_ptr(x) ((struct maple_node *)(x))
+@@ -1280,11 +1278,8 @@ static inline void mas_alloc_nodes(struct ma_state *mas, gfp_t gfp)
+ 		return;
+ 
+ 	mas_set_alloc_req(mas, 0);
+-	if (mas->mas_flags & MA_STATE_PREALLOC) {
+-		if (allocated)
+-			return;
+-		WARN_ON(!allocated);
+-	}
++	if (mas->mas_flags & MA_STATE_BULK)
++		return;
+ 
+ 	if (!allocated || mas->alloc->node_count == MAPLE_ALLOC_SLOTS) {
+ 		node = (struct maple_alloc *)mt_alloc_one(gfp);
+@@ -5596,7 +5591,7 @@ void mas_destroy(struct ma_state *mas)
+ 
+ 		mas->mas_flags &= ~MA_STATE_REBALANCE;
+ 	}
+-	mas->mas_flags &= ~(MA_STATE_BULK|MA_STATE_PREALLOC);
++	mas->mas_flags &= ~MA_STATE_BULK;
+ 
+ 	total = mas_allocated(mas);
+ 	while (total) {
+@@ -5645,9 +5640,6 @@ int mas_expected_entries(struct ma_state *mas, unsigned long nr_entries)
+ 	 * of nodes during the operation.
+ 	 */
+ 
+-	/* Optimize splitting for bulk insert in-order */
+-	mas->mas_flags |= MA_STATE_BULK;
+-
+ 	/*
+ 	 * Avoid overflow, assume a gap between each entry and a trailing null.
+ 	 * If this is wrong, it just means allocation can happen during
+@@ -5664,8 +5656,9 @@ int mas_expected_entries(struct ma_state *mas, unsigned long nr_entries)
+ 	/* Add working room for split (2 nodes) + new parents */
+ 	mas_node_count(mas, nr_nodes + 3);
+ 
+-	/* Detect if allocations run out */
+-	mas->mas_flags |= MA_STATE_PREALLOC;
++	/* Optimize splitting for bulk insert in-order */
++	mas->mas_flags |= MA_STATE_BULK;
++
+ 
+ 	if (!mas_is_err(mas))
+ 		return 0;
 -- 
-Florian
+2.41.0
 
