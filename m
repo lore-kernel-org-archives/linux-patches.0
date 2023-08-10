@@ -1,97 +1,98 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749E5A4D
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 04:11:42 +0000 (UTC)
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-56c85b723cfso414357eaf.3
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 21:11:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5324210E1
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 05:13:05 +0000 (UTC)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-99c93638322so103351766b.1
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 22:13:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691640701; x=1692245501;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=o+dip4Mwm48SH8KstKNswZHVM/1cq/fJ+7Qb/RetnO4=;
-        b=KTGjm+5jSsiFQ+DlZOaKRZjnYq+4Qwvoh+IFUr8VINd7glHc3ZqVmiH8Ka1TG8JplX
-         Xnet+c3lqrdrvUyEjEWkPVpJO3ye97AWwu6MLjFG2eK7+JlXea+AhjYLyXRU+INzN4J2
-         bxT2CyorXqYtLhxLGEZo5MtRWFSewGRa7cFVlUbzqHkFOy/rfaefn6ujQQWQ9VrQ5meY
-         zhYR2OT65Smgoy+Sk3goHK4eI0nvvlByvPFcuxa3oTJzKuI3DDabGFwZDJ4XzfiLfdo4
-         N083j+XOvHjTOR+VKcSd3jZFRF9o4GD1rigCYlz7MI2i61NcF0ptyVaFtb0ZnI93DJOD
-         G1NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691640701; x=1692245501;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1691644384; x=1692249184;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o+dip4Mwm48SH8KstKNswZHVM/1cq/fJ+7Qb/RetnO4=;
-        b=dAhYVFKjFC8WQOg9kijqDBeUyAV7FwKpf4x6zMg8Bw3kZtiX9BSzj8FuG7Nvqa2xNr
-         KiTQs6MbQeTT62GkjYAdYk1al3dzqZXSoOFQILF3kn9HbfDcsEpSXAnMN5rdZIw7k4Rl
-         xxPuUvDxfV8CirRnRMSCQwkZV/6JhSCk0TfJmv4m6DwctLbF/vCOvv/gVqAGdR6jQqzQ
-         EIlbyOtArO4hfVMZ3xSVD/BqbteKFju5drHLOprGIEk4mRKf297l2UnIH2eZPgdiYDJS
-         EnE1qM6n2yNkr2onsAg3LYbhY/Jr2hH21dFzcGz+mtbQvGN1urwYJDfdFq7ipi6I2hzk
-         Ibvg==
-X-Gm-Message-State: AOJu0YxQhEIQ2cZCHGmlX7DjuquT223HZ9vTnF4VmPIRM10EPKrPV75b
-	h6xCA4fdSGuZ74PIT8t9Lco=
-X-Google-Smtp-Source: AGHT+IEENb3xfBnVXoWRnAFlS+RjFMQNGEnye47af3gxdc9pzD6pP1qma2dHPwtc73tk/6lA0kTLgw==
-X-Received: by 2002:a05:6808:1453:b0:3a7:6213:6898 with SMTP id x19-20020a056808145300b003a762136898mr1741989oiv.12.1691640701331;
-        Wed, 09 Aug 2023 21:11:41 -0700 (PDT)
-Received: from debian.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id 11-20020a17090a194b00b00268dac826d4sm457675pjh.0.2023.08.09.21.11.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 21:11:40 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id 5BD418196A01; Thu, 10 Aug 2023 11:11:38 +0700 (WIB)
-Date: Thu, 10 Aug 2023 11:11:37 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.4 000/165] 6.4.10-rc1 review
-Message-ID: <ZNRjefQECCD23UbX@debian.me>
-References: <20230809103642.720851262@linuxfoundation.org>
+        bh=pih6LQrUi43YvqWBWRmRVXsCD2JQwVMeHQVeBk6LIdA=;
+        b=wpSX9t1ypn6ykzidyAWLy5+1M19wIoXXTuVSE6eibqFDmLcZDrTRX35J2ixvVm1pAC
+         zIozAX50Q49/ZZ29y/7yBcuCoRkMpWphIODBYbZuQZSW9w1T82gzxcPIH+PW8j3jIskU
+         uKfBj725spyQhr+dQYxYTKGYqLvTY9Lwpb5quE7NODIsGkk6eIo3MGKhZnSBJ0WkNjk2
+         GSpBkhOUXaFiBWwRg8oL1O5elp7YKNfO2byTEvcnOvQfcMab9Moy9HnkRTlFL6G0F/fQ
+         vfXtYG3lg+sHdI76Gj66HxrEx9DW/Fd9qobKNnd6Qzsj45nSsdFq2v7M4jDyRLoaSB3Q
+         /ZXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691644384; x=1692249184;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pih6LQrUi43YvqWBWRmRVXsCD2JQwVMeHQVeBk6LIdA=;
+        b=f0eV2zYs5iGM954JBmxWPPJatKZppomgQWapIV1F8JjVy9ev+WxbfHoI8BQb8llfot
+         r1fGF5XbzqK+MPF84ElzyCAudixbgqCle/H7p1DLJtaJhDtl8hkdAOnpJxDpQjhetV2f
+         VG7TR7P/J5MXCO7OKiOg4pMx0rvdVnpbOR/PW+W01ahVgo7bd0zVYPUpaR+WMLOA4yPj
+         wycBd3Yy+32hzicmMhb9vTCzgGjJx2UtVRtjRs7U8L4Sc5RZZU8ImWnKC9PyN6oG1abO
+         GW5Z2j872g4oyBJTXv+iNXMSY7P035ra7bbQlm6clbAPup/a42Yaz2i2CTPrJFGJSkyz
+         0lPw==
+X-Gm-Message-State: AOJu0Yx5QoZ1MYemjMx8eh83GX6/Hu2WnZLqw7Isn/uNoVZH/lbr23sk
+	nj5AzYOm+iagA4YLRLPlU/RuQcREQ7b6X9QVqc+39g==
+X-Google-Smtp-Source: AGHT+IEzT476nMFdd7oMze+KTEauDI/95cGFT61M2OA3uN2MKjbAjB/QpZvwm8I5fZRM7P4JQbz5EbFgyNlDmJzLP3g=
+X-Received: by 2002:a17:906:3196:b0:988:b61e:4219 with SMTP id
+ 22-20020a170906319600b00988b61e4219mr1253319ejy.29.1691644384092; Wed, 09 Aug
+ 2023 22:13:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Mk1kwhsNNWCwZCAs"
-Content-Disposition: inline
-In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
-
-
---Mk1kwhsNNWCwZCAs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20230809103636.615294317@linuxfoundation.org>
+In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Thu, 10 Aug 2023 14:12:53 +0900
+Message-ID: <CAKL4bV7AtvfB=CT1ie4x3TjE-3jJ0JBi8xPwtkXKgtM84Y1K1w@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 09, 2023 at 12:38:51PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.10 release.
-> There are 165 patches in this series, all will be posted as a response
+Hi Greg
+
+On Wed, Aug 9, 2023 at 7:54=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.45 release.
+> There are 127 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.45-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
+6.1.45-rc1 tested.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
---=20
-An old man doll... just what I always wanted! - Clara
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
---Mk1kwhsNNWCwZCAs
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZNRjawAKCRD2uYlJVVFO
-o5Z8AQCx5BhfcBN2+PuI7lnalUDaqwS/pmXMzH3z97b8yWapBAD+IDLGx4j4/uzC
-9ZqhcsgN9MMOkWXxFnNdSzZhdi9i5wc=
-=y0Xr
------END PGP SIGNATURE-----
-
---Mk1kwhsNNWCwZCAs--
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
