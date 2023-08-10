@@ -1,108 +1,124 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAE21E1DA
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:36:40 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 302EE2187B;
-	Thu, 10 Aug 2023 16:36:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1691685393; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=19h9QNSgdzIWywJanN9veEOMa6s1Xj+q+Cz0v3FP+f4=;
-	b=vzqZq8M1QVHjJzcAciJEyysHegc4ljBQedRS1OxPDkK3CHjdyrBTf+D6vESZxsfkhbcdVL
-	MIoyrdIPrePiMNwI+qW9AoKZpWA5gzajN/uBrziCUIySW9YuqYE3Yf3g2M13Ovrbehg/dr
-	vI+tbRZzkrG3tO2oaTs0iBlNzeiRoys=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1691685393;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=19h9QNSgdzIWywJanN9veEOMa6s1Xj+q+Cz0v3FP+f4=;
-	b=NWWqKFNbDZBln4sSAtj33wuORgNzUuDPhyE63EaKkKg3gsXILvYYR+v0b3lf9S97ya6XCE
-	f5wjW2+XbXSXUoCg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id F1D3C138E0;
-	Thu, 10 Aug 2023 16:36:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id IBVjOhAS1WSEPQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 10 Aug 2023 16:36:32 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [RFC v2 4/7] maple_tree: avoid bulk alloc/free to use percpu array more
-Date: Thu, 10 Aug 2023 18:36:32 +0200
-Message-ID: <20230810163627.6206-13-vbabka@suse.cz>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230810163627.6206-9-vbabka@suse.cz>
-References: <20230810163627.6206-9-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C32120FBF
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 17:55:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A218FC433C7;
+	Thu, 10 Aug 2023 17:55:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1691690116;
+	bh=0oob3MuuVbbSM5jo+74qp2G/ortoaaCy5iGcDUv66KM=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=QC+U6i7Fb9d3h7bvLVMN4/9bt5YLWuYlz8UZ3FNSeu1cH54rZ6gMXB3VZzGos3p0f
+	 XgjlducA/Seta8iOhFfuEC7TpJg9BZ5T4U0FXBzAX8ZT9g5VE4bCXGRjEEhnLAKCr8
+	 P86GS2lDHhmn1iWEhY7VPweh1P8JhmfsLwNUrjYB3XgGYgdEZja/SW9cCWNLuRF7Ps
+	 YJrWXD2KKgobmRb8WnFKxqEON874ebTJiSJ47ZK9o4Y63En6UjEhpFoCO/UUCYqzpU
+	 YjEagz89JM+NiAI7FeQJfBgZcVSwu8AthanOxH5HiGBGGQtMtkCljDJ0ONS9kDFGpS
+	 DXgO7jS4iq6gw==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 3A10DCE0ACC; Thu, 10 Aug 2023 10:55:16 -0700 (PDT)
+Date: Thu, 10 Aug 2023 10:55:16 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Joel Fernandes <joel@joelfernandes.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
+Message-ID: <882a606f-5776-46d1-a423-2c5ea0a1cd8f@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20230809103633.485906560@linuxfoundation.org>
+ <20230809135326.GE3031656@google.com>
+ <f47340c6-3c41-1f91-d0f9-fe0b59a23aac@roeck-us.net>
+ <CAEXW_YQ4GqPwvUF8=8CWmdj=cD56v_eEVK-EirsObQXyBDFVpg@mail.gmail.com>
+ <35e4b770-2ead-4a19-ad01-fa75996adef4@roeck-us.net>
+ <20230809201413.GA3374446@google.com>
+ <6b05a082-41a7-f0cf-c0a4-1cced8d5a230@roeck-us.net>
+ <CAEXW_YT-7epvu4uUS19aDAcM0X63j9_L2aa-XGGFGSLceLu8bA@mail.gmail.com>
+ <4dbe72a3-50ea-051c-96ba-d709b33d3a98@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <4dbe72a3-50ea-051c-96ba-d709b33d3a98@roeck-us.net>
 
-Using bulk alloc/free on a cache with percpu array should not be
-necessary and the bulk alloc actually bypasses the array (the prefill
-functionality currently relies on this).
+On Wed, Aug 09, 2023 at 02:45:44PM -0700, Guenter Roeck wrote:
+> On 8/9/23 13:39, Joel Fernandes wrote:
+> > On Wed, Aug 9, 2023 at 4:38 PM Guenter Roeck <linux@roeck-us.net> wrote:
+> > > 
+> > > On 8/9/23 13:14, Joel Fernandes wrote:
+> > > > On Wed, Aug 09, 2023 at 12:25:48PM -0700, Guenter Roeck wrote:
+> > > > > On Wed, Aug 09, 2023 at 02:35:59PM -0400, Joel Fernandes wrote:
+> > > > > > On Wed, Aug 9, 2023 at 12:18 PM Guenter Roeck <linux@roeck-us.net> wrote:
+> > > > > > > 
+> > > > > > > On 8/9/23 06:53, Joel Fernandes wrote:
+> > > > > > > > On Wed, Aug 09, 2023 at 12:40:36PM +0200, Greg Kroah-Hartman wrote:
+> > > > > > > > > This is the start of the stable review cycle for the 5.15.126 release.
+> > > > > > > > > There are 92 patches in this series, all will be posted as a response
+> > > > > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > > > > let me know.
+> > > > > > > > > 
+> > > > > > > > > Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> > > > > > > > > Anything received after that time might be too late.
+> > > > > > > > > 
+> > > > > > > > > The whole patch series can be found in one patch at:
+> > > > > > > > >        https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
+> > > > > > > > > or in the git tree and branch at:
+> > > > > > > > >        git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > > > > > > > > and the diffstat can be found below.
+> > > > > > > > 
+> > > > > > > > Not necesscarily new with 5.15 stable but 3 of the 19 rcutorture scenarios
+> > > > > > > > hang with this -rc: TREE04, TREE07, TASKS03.
+> > > > > > > > 
+> > > > > > > > 5.15 has a known stop machine issue where it hangs after 1.5 hours with cpu
+> > > > > > > > hotplug rcutorture testing. Me and tglx are continuing to debug this. The
+> > > > > > > > issue does not show up on anything but 5.15 stable kernels and neither on
+> > > > > > > > mainline.
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > Do you by any have a crash pattern that we could possibly use to find the crash
+> > > > > > > in ChromeOS crash logs ? No idea if that would help, but it could provide some
+> > > > > > > additional data points.
+> > > > > > 
+> > > > > > The pattern shows as a hard hang, the system is unresponsive and all CPUs
+> > > > > > are stuck in stop_machine. Sometimes it recovers on its own from the
+> > > > > > hang and then RCU immediately gives stall warnings. It takes 1.5 hour
+> > > > > > to reproduce and sometimes never happens for several hours.
+> > > > > > 
+> > > > > > It appears related to CPU hotplug since gdb showed me most of the CPUs
+> > > > > > are spinning in multi_cpu_stop() / stop machine after the hang.
+> > > > > > 
+> > > > > 
+> > > > > Hmm, we do see lots of soft lockups with multi_cpu_stop() in the backtrace,
+> > > > > but not with v5.15.y but with v5.4.y. The actual hang is in stop_machine_yield().
+> > > > 
+> > > > Interesting. It looks similar as far as the stack dump in gdb goes, here are
+> > > > the stacks I dumped with the hang I referred to:
+> > > > https://paste.debian.net/1288308/
+> > > > 
+> > > 
+> > > That link gives me "Entry not found".
+> > 
+> > Yeah that was weird. Here it is again: https://pastebin.com/raw/L3nv1kH2
+> 
+> I found a couple of crash reports from chromeos-5.10, one of them complaining
+> about RCU issues. I sent you links via IM. Nothing from 5.15 or later, though.
 
-The simplest change for now is just to convert the respective maple tree
-wrappers to do a loop of normal alloc/free. We can optimize later
-versions if needed.
----
- lib/maple_tree.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+Is the crash showing the eternally refiring timer fixed by this commit?
 
-diff --git a/lib/maple_tree.c b/lib/maple_tree.c
-index 1196d0a17f03..926bee7a274a 100644
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -161,12 +161,20 @@ static inline struct maple_node *mt_alloc_one(gfp_t gfp)
- 
- static inline int mt_alloc_bulk(gfp_t gfp, size_t size, void **nodes)
- {
--	return kmem_cache_alloc_bulk(maple_node_cache, gfp, size, nodes);
-+	int i;
-+
-+	for (i = 0; i < size; i++) {
-+		nodes[i] = kmem_cache_alloc(maple_node_cache, gfp);
-+		if (!nodes[i])
-+			break;
-+	}
-+	return i;
- }
- 
- static inline void mt_free_bulk(size_t size, void __rcu **nodes)
- {
--	kmem_cache_free_bulk(maple_node_cache, size, (void **)nodes);
-+	for (size_t i = 0; i < size; i++)
-+		kmem_cache_free(maple_node_cache, nodes[i]);
- }
- 
- static void mt_free_rcu(struct rcu_head *head)
--- 
-2.41.0
+53e87e3cdc15 ("timers/nohz: Last resort update jiffies on nohz_full IRQ entry")
 
+This commit fixed something similar for me in v5.16.
+
+	https://paulmck.livejournal.com/62071.html
+
+							Thanx, Paul
