@@ -1,76 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1543F20CA8
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 19:59:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078CBC433C9;
-	Thu, 10 Aug 2023 19:59:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691697575;
-	bh=HFKdKTvWgmTJ9zRaGAXhGFqBtI9abzBHPJqju93sW88=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=zGZoTZnUcAssR0Tl8d3QKvjObNm8LtePSJif55CNW5b/Y/IUUeax+ZKa1vITgDi5J
-	 VHT3MuUZ6V1EBkJ2BiLcStIodSYbbHdzwVsxb5Qq1e2Kj8M3MQyv44FJ0rQmtoZTnF
-	 1y6zTGgAFm1P4N0Z9RJwI6824TVhiIyQnTx0m5Ik=
-Date: Thu, 10 Aug 2023 21:59:32 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	lyude@redhat.com
-Subject: Re: [PATCH 4.19 000/323] 4.19.291-rc1 review
-Message-ID: <2023081020-graveyard-enjoying-c933@gregkh>
-References: <20230809103658.104386911@linuxfoundation.org>
- <CAEUSe787p3uDD9Q0wq=Y=PY0-wLxbYY8oY6T24dhm+qgK1MjNw@mail.gmail.com>
- <CAHk-=wiTzjgRRPmfkwOr89uMuk5wdoG_6edMAnEdubX9bq8OSw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1135E20F92
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 21:11:08 +0000 (UTC)
+Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
+	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id A152410047C14
+	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 21:11:06 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id UCvyqOVawYYQlUCvyqk76v; Thu, 10 Aug 2023 21:11:06 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=FIree8ks c=1 sm=1 tr=0 ts=64d5526a
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10:nop_charset_1 a=UttIx32zK-AA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Ho8izuK++9WI6DEWTuE76LPICz2+IDyJyMdTPBOc9eM=; b=I4B41HdhYtBLseNU8dV18WD75o
+	fsRN5KkvdAru8lSgzWi/UdNYEshY5g9c4orYli+XoxgRJL00HCW7o8uj4ocrC7SbIl1NSTk5d64fc
+	U+wT+HG2rlbezbr0QdZmgCI91ObdJWVouAH1K/7ZStAv4Wnr+gHCNGjIaNKBpSEzHEraKaEZ1ccsK
+	q1XZd39a0xih9wSL8KnT3XsfzICbJlWB4ltF3a2DXdJt5i0b76I/RBN7kVa8/FbKCU1zcGST0GGcX
+	ceHlL+ELM8a4O9jDnzAU+gw+unKf+GsG9Xitb6SqAdnsdROvGdp65Sew1enS79/Ah/dCMF9ACSNs0
+	gG17pong==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:51382 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qUCvx-000XJB-2Q;
+	Thu, 10 Aug 2023 15:11:05 -0600
+Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230809103633.485906560@linuxfoundation.org>
+In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <f8e42deb-d31f-85b0-23bd-215ece7aa288@w6rz.net>
+Date: Thu, 10 Aug 2023 14:11:03 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wiTzjgRRPmfkwOr89uMuk5wdoG_6edMAnEdubX9bq8OSw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qUCvx-000XJB-2Q
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:51382
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Thu, Aug 10, 2023 at 12:36:41PM -0700, Linus Torvalds wrote:
-> On Thu, 10 Aug 2023 at 12:28, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> >
-> > Two new warnings are introduced on x86_64 with GCC-8 (defconfig):
-> >
-> > -----8<-----
-> > drivers/gpu/drm/drm_edid.o: warning: objtool:
-> > drm_mode_std.isra.34()+0xbc: return with modified stack frame
-> > drivers/gpu/drm/drm_edid.o: warning: objtool:
-> > drm_mode_std.isra.34()+0x0: stack state mismatch: cfa1=7+112 cfa2=7+8
-> > ----->8-----
-> >
-> > Bisection points to the quoted commit ("drm/edid: Fix uninitialized
-> > variable in drm_cvt_modes()"), 991fcb77f490 upstream. Reverting makes
-> > the warnings disappear.
-> 
-> Bah. Stable should pick up commit d652d5f1eeeb ("drm/edid: fix objtool
-> warning in drm_cvt_modes()") from mainline too.
-> 
-> Sadly it didn't have a 'Fixes:' tag, so it didn't get picked up
-> automatically. My bad.
-> 
-> Although it's not like the commits it fixes were actually ever marked
-> for stable either. I guess commit 3f649ab728cd ("treewide: Remove
-> uninitialized_var() usage") got picked up as some kind of "make it
-> easier to apply other patches" thing.
+On 8/9/23 3:40 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.126 release.
+> There are 92 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I applied the uninitialized_var patch here because I was trying to
-attempt to reduce the number of build warnings I am getting using gcc-12
-on 4.19.y  It helped out a tiny bit, but we still have lots of warnings
-left.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-I'll pick up d652d5f1eeeb as well now, thanks for pointing it out.
+Tested-by: Ron Economos <re@w6rz.net>
 
-greg k-h
