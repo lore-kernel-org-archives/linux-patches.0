@@ -1,82 +1,83 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D1F29DF0
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 10:30:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1691663455; x=1723199455;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=K8+CPDli4Ehy/vOFiQqyKURorvhcyrbCWewNPDz4/QA=;
-  b=qGCDFZcXrnQxz4JbX+5Wu/Q1NAHUGxGDX9smF0tyIkzNJo+pK+BqbGE7
-   mpUpXxVxRz65mLNDLgjdW40RMuGg4no+pSbMmMJepIAeOeLHU98a9TxV7
-   Y1TG14mrBKbyzWIeQS3HNMviyXhzTTechB9Oj7j5i0Rb06/sbDzC2hzEn
-   1yynGLUt+0oyBJqiLgy1eaGm3zaMuf+z3fSLvo0Yx+r37jcbVY7LLvaYR
-   hvdUCtSwCRZVtetxso42BGitbGBlpIXzVKTdIZjLCgYWa7QnPRQdPubqF
-   x0PA8yh4/mXl38EJMhqGcVfJsvi//ufHLvVdjo8ZohonT23bmcjUWSJ0E
-   Q==;
-X-IronPort-AV: E=Sophos;i="6.01,162,1684825200"; 
-   d="asc'?scan'208";a="165807604"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 10 Aug 2023 03:30:54 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Thu, 10 Aug 2023 03:30:45 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Thu, 10 Aug 2023 03:30:42 -0700
-Date: Thu, 10 Aug 2023 11:30:05 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
-Subject: Re: [PATCH 6.4 000/165] 6.4.10-rc1 review
-Message-ID: <20230810-shininess-pencil-d32bad9520b4@wendy>
-References: <20230809103642.720851262@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB341DDF0;
+	Thu, 10 Aug 2023 11:39:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16513C433CA;
+	Thu, 10 Aug 2023 11:39:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1691667577;
+	bh=PHQToYDN1jJ253CQ1B38WCDAhcL8w2XEWsk0JX64JF0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=iKw0G5u57xT52/doYQByyteDSqEIXToTy58H40JTM9AKefIzbpdknnu96l1NY2FqZ
+	 8f0fA4wFVZ/nsRmOJ9tdrTHQDSQ23sUonoZTfA24FDIPJeUpVoAxWcqkg/UqaQsowy
+	 5QswTGSOgoCvVLQSHoM/m18QMSTfPLlncZSUMGJ5A7eUpvRG68PYipLvdIwgvTGriC
+	 55f83nvabRzEMZLucdbIEt7Q0rZwsoQ0aaZN+IgC1EkZdHOzTVeauuYNa2gK+d0Xqh
+	 sOKabj9U0LKI1TfsSjOwtkrMXxiWr79KIauyzNnoXD/YG26HoBiT+S9ZqgUdRkYpic
+	 UvGxSqZT+jSIg==
+From: Mark Brown <broonie@kernel.org>
+To: pierre-louis.bossart@linux.intel.com, lgirdwood@gmail.com, 
+ peter.ujfalusi@linux.intel.com, yung-chuan.liao@linux.intel.com, 
+ ranjani.sridharan@linux.intel.com, daniel.baluta@nxp.com, 
+ Nathan Chancellor <nathan@kernel.org>
+Cc: kai.vehmanen@linux.intel.com, ndesaulniers@google.com, trix@redhat.com, 
+ rander.wang@intel.com, sound-open-firmware@alsa-project.org, 
+ alsa-devel@alsa-project.org, llvm@lists.linux.dev, patches@lists.linux.dev
+In-Reply-To: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
+References: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
+Subject: Re: [PATCH] ASoC: SOF: Intel: Initialize chip in
+ hda_sdw_check_wakeen_irq()
+Message-Id: <169166757481.31924.7230160819556948759.b4-ty@kernel.org>
+Date: Thu, 10 Aug 2023 12:39:34 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="sxSleVhRSRfmoBMa"
-Content-Disposition: inline
-In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-034f2
 
---sxSleVhRSRfmoBMa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Wed, 09 Aug 2023 11:12:07 -0700, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR):
+> 
+>   sound/soc/sof/intel/hda.c:423:6: error: variable 'chip' is uninitialized when used here [-Werror,-Wuninitialized]
+>     423 |         if (chip && chip->check_sdw_wakeen_irq)
+>         |             ^~~~
+>   sound/soc/sof/intel/hda.c:418:39: note: initialize the variable 'chip' to silence this warning
+>     418 |         const struct sof_intel_dsp_desc *chip;
+>         |                                              ^
+>         |                                               = NULL
+>   1 error generated.
+> 
+> [...]
 
-On Wed, Aug 09, 2023 at 12:38:51PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.10 release.
-> There are 165 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Applied to
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: SOF: Intel: Initialize chip in hda_sdw_check_wakeen_irq()
+      commit: 9c28423d3caae63e665e2b8d704fa41ac823b2a6
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Conor.
+Mark
 
---sxSleVhRSRfmoBMa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZNS8LQAKCRB4tDGHoIJi
-0mpuAP4lfrQF+M+wLtrvRmu8MfKJX2IAaxZCrsAhQyWhcHVr6QEAk8NooObFnEJd
-HYWMi88u2ahlbgJibZ6YugmXbp0rZwg=
-=tqQ2
------END PGP SIGNATURE-----
-
---sxSleVhRSRfmoBMa--
