@@ -1,78 +1,75 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612371172E
-	for <patches@lists.linux.dev>; Fri, 11 Aug 2023 17:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BC01172E
+	for <patches@lists.linux.dev>; Fri, 11 Aug 2023 17:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691774831; x=1723310831;
+  t=1691774973; x=1723310973;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=1raeBTPSVvDjRXWLp9DACnDvpid5/Ja89KV4WMOz0K4=;
-  b=SKgh/f9bPbGXM5yfnrPamjiua1noVndZNgok0HC2FRb4kkMKw5RgRNxF
-   F7NhnTyjScq53lAX5MWDbKBOr+ntgMeCuJvHoFRMANtD9Zk6mSczqb88q
-   tRGGPZlCXQ85HboAOV6ICP1i0TJjr5lMdi0/RJ93hx70LnraXBAbRtQzL
-   VFaEIkVR7aRLnDLbtQuCfzSh+xXmMCXCVwGtkqMMJBHe4csO8rObBd3gs
-   F0Gt569lDLfZYie96IMDAO9wOLzDW5kVGDcs35D2nRAdvczcb/UYZeDyM
-   bFhYizcPLITKI7T4HoipJKXqxihMMgZfo8BJsAWQBVdx5hoFUF22RNmY3
+  bh=MFaesahTnBNaO7rnp6C9bSA0U8tXJCkU+X/+ndiyFLA=;
+  b=M0Ih1sMLZARc4VYDHLv+0ULjud5K40chxhMTkVaOcX1p3ZTvUElWSz0m
+   TdanfZhgGqNLf6DlR9UsCJntQM3evAIRjVI/tJf7oidbUzY1PVgtUOScP
+   KjWFrIHGQYlLVHKNl5Q7WnGvaB8wmVTHCz2DMSi1YwdzwLXIayFuUEaDh
+   JP2o89ScddheXBJcJLoSQLk85gZl7LA06R7L7U3fYi1ju5TwhHl8sTS9C
+   BFpwcuVLFdnqDAnPsPRX9V8XA8PHUyVUzvdMNrIlNTtKtZ9UX2TdKM5tm
+   CanYrmNJ51ws4TxjBY2ddAxoeSkxtLVv4h+sqhP7Nds3nS8ACspQ2wYod
    g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="402698394"
+X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="374492353"
 X-IronPort-AV: E=Sophos;i="6.01,166,1684825200"; 
-   d="scan'208";a="402698394"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 10:27:10 -0700
+   d="scan'208";a="374492353"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2023 10:29:32 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="735851908"
+X-IronPort-AV: E=McAfee;i="6600,9927,10799"; a="682603142"
 X-IronPort-AV: E=Sophos;i="6.01,166,1684825200"; 
-   d="scan'208";a="735851908"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by fmsmga007.fm.intel.com with ESMTP; 11 Aug 2023 10:27:09 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+   d="scan'208";a="682603142"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by orsmga003.jf.intel.com with ESMTP; 11 Aug 2023 10:29:31 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Fri, 11 Aug 2023 10:27:09 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ 15.1.2507.27; Fri, 11 Aug 2023 10:29:31 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Fri, 11 Aug 2023 10:27:09 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27 via Frontend Transport; Fri, 11 Aug 2023 10:27:09 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.48) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ 15.1.2507.27 via Frontend Transport; Fri, 11 Aug 2023 10:29:31 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.172)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.27; Fri, 11 Aug 2023 10:27:08 -0700
+ 15.1.2507.27; Fri, 11 Aug 2023 10:29:31 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=logARSYI32uKsovq+1OHiPlv4HIxXws3sgtMW2YC2sI2Qw7Nrxvkdlie9bKnwzaDvKyd8D9OPv7kmRkHYyNIV/M20EASWGVnQxzgE5FtpTVhFPW0NBvafg+05GTBXGaXY3+oretKGnJlSp5DRMqUb4zJfQKgEeJjuaSEZA1/qYJuoj+/9OC+febtBZ87yKtC4C7mK4WThBOpYIx8ZVR10KdB02NhUGQoYWUsQzErAvzY3bn65n4Q/oZEu7Tnz3IU1lQLrcFo92dxck2SYxucUmWykL5XG3XDyDaQy4EA/hLaCGoEh6m3R5M1wJkeGpPWHRAx/WjqQiqB7H1eAbP0qw==
+ b=OIJCg1lVbOl4+Jsql5rIqoH7W4y3bvEi6BJUH9jpRyKgeQMUk4tDcdWoMOtyBTCA4ID8SMJ4+JBb0QilAI2tlF/6+MUJqrrnEdlddaLXajErBe2N/KwZLgPimwbFaLItZAC53jp5oZQNyfcbBs8IbzelBwU/3VmPmtasIqKoyXhy4OEpbkqqgSG+hKPgZKW1QI8Axy2+2SG2QTt2z70VzktOFtrfcmLHdE2v+ta1C6Gnlg+HMQGn5i3A0+acOf5sfD8xjjI6tJf5XTicm0hkHXhmDZcdg72RLYD6zP8VD9L0lVocSY0NkWHdOfN+SoylWlRLwmW4uiCBW9/9hX8KHQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e7P1Gz6Hv3+dCpOI2OxxzWor9uCpCimD4NLFHEIjljw=;
- b=KHEjjvd7DX5DXQ0sN7Q5jLQh7DEXm8GFIVUCZOh6kDDfOOfGfoC3/JFJK18N1TGclB3ySW+wcW9oBTr+N+1OaUyKBWT9BkrjcqUCBkYaNeMWGc+cp8b9ebf00VyEGl7nrKR8pWkPHnPQmxResIDUqaF5KGgRsUI8paR2xMRiDCaOXMiccLbKYwIRtDSndb2SEcB4tOus1uSzwkHu8Zq19NPhzFKhrVz+3PEEqjqv7gvT4C71vaCPqMIiqCtENXhh4IEX2yOgAem16UN1DRZkufIW6f5ynTw+6++JYlewr1VR8H4VjgRKUFFCo54LDx2AI2/vgrsUtDx70X8Aaefahg==
+ bh=90gP4thcMJ7bdSs4I1D6/fix5lfouS8xn6mbe7FdiLs=;
+ b=cxxrKxIZtt7YGozskyTzAbtaDoJ+QyiqxgPQ1eB++pWsY2dBb+dbzxPIkDa78qAUJnD4u7WkibhDvaWIrzdOqJEWnW1AbYQ4x5bVDrWiZYeSbhMBF8DgM3YhdrZ5iVLkMQBgkp4/mSsrhRnNETsWpQgoGQoXAmTAL0+dBLwGoK6Kw6y9qF2k9yxbj8LMaNBOyI/9MKkjzBeGr8g3a2o7gEgp2ZTwfZj8NuqI/pReCkX2IHAABPA0zUN5X/zpdfFLkTN7NXfk16iCVMmhyCvuFEnQipw5TErAqrWLrfNUxLAWcGTlMMdXpe60DksOlLpr0Szyk4ivrBvX3PHLEc+QKA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by LV8PR11MB8606.namprd11.prod.outlook.com (2603:10b6:408:1f7::12) with
+ by PH0PR11MB5609.namprd11.prod.outlook.com (2603:10b6:510:e0::24) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.30; Fri, 11 Aug
- 2023 17:27:07 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.20; Fri, 11 Aug
+ 2023 17:29:29 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::47e:3e1f:bef4:20e0]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::47e:3e1f:bef4:20e0%3]) with mapi id 15.20.6652.029; Fri, 11 Aug 2023
- 17:27:07 +0000
-Message-ID: <e350514e-76ed-14ea-3e74-c0852658182f@intel.com>
-Date: Fri, 11 Aug 2023 10:27:04 -0700
+ 17:29:29 +0000
+Message-ID: <cc1a144f-6667-18fb-7fe7-cd15ebfedd08@intel.com>
+Date: Fri, 11 Aug 2023 10:29:25 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Firefox/102.0 Thunderbird/102.14.0
-Subject: Re: [PATCH v4 0/7] Add support for Sub-NUMA cluster (SNC) systems
+Subject: Re: [PATCH v4 1/7] x86/resctrl: Create separate domains for control
+ and monitoring
 Content-Language: en-US
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, "Peter
- Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, "Shuah
- Khan" <skhan@linuxfoundation.org>, <x86@kernel.org>
+ Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah
+ Khan <skhan@linuxfoundation.org>, <x86@kernel.org>
 CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
 	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu Moger
 	<babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
@@ -80,12 +77,13 @@ CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
 	<patches@lists.linux.dev>
 References: <20230713163207.219710-1-tony.luck@intel.com>
  <20230722190740.326190-1-tony.luck@intel.com>
+ <20230722190740.326190-2-tony.luck@intel.com>
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20230722190740.326190-1-tony.luck@intel.com>
+In-Reply-To: <20230722190740.326190-2-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW2PR16CA0047.namprd16.prod.outlook.com
- (2603:10b6:907:1::24) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR03CA0332.namprd03.prod.outlook.com
+ (2603:10b6:303:dc::7) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -94,83 +92,419 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|LV8PR11MB8606:EE_
-X-MS-Office365-Filtering-Correlation-Id: 326015c8-90cf-4d7b-491a-08db9a902fbb
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH0PR11MB5609:EE_
+X-MS-Office365-Filtering-Correlation-Id: 126e8482-a2c9-4518-d2e7-08db9a908461
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: dSVWtjuAS36Yi5iT2+qgMoK6hUPGOIWQLjHWRzpgpUEZkIYqzd7oLU6vhqStCRYpahhQfBDoy725R8PlpeZJuqlA2jrPuJ0L1QuFkFXR57mhw4lGDgB5xQ2L1vwVjv646KrHA30GnlpHcS9L/dRuxmRZOcl4McgcgPt0Bw/zZSrGBGOMDXhaOwfH7yyw8eyuDXWHMxIrjz5BMRzGDRKOvo+o+2L0E5UlmljeVvImb64muLT+g9huL8uZ13RD+h4GQNZG7DhyNH85yv5y3nvVlVzkix6O2ShtmiPWpyXVLrtOwWP88BEEM0oUWIpXigIrlQ6vlrxetYQNhHFL4fza0nUav7DdiEZrOjHobvszwyU/NmuBuMFzWw8bttOcaq4hMENnOe2GomF0Oe0aoLQ9OUQV2beoz+3XYPQVBivCjcRNUwNB1bxiqW0aglZOuqQK4lUaeSnjsVV2TFHZf55HA/zfZL1ofj3Lv4utrSMT3YljsiyDdz7WGOPRwyW5zEA2N1mnu0xTddFwXVjsgsCkR82TxEHBjpCE6NSA9CDTsVTve+gljHIzAphC+Zbq1fIcG96XiRBG/zkoIIIvS9bZ22VBuDGm8+3TLeT5Q2sGqIRSDiaCiD1k5WtHw+PLkTJIPikyFRNRye8OuhVN7UlM1A==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(39860400002)(366004)(396003)(136003)(376002)(346002)(451199021)(186006)(1800799006)(2616005)(478600001)(44832011)(31696002)(86362001)(6512007)(4744005)(36756003)(2906002)(6666004)(6486002)(7416002)(6506007)(26005)(53546011)(83380400001)(54906003)(316002)(66556008)(31686004)(66476007)(38100700002)(4326008)(66946007)(41300700001)(5660300002)(110136005)(8936002)(8676002)(82960400001)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: RDBfX2UZjteRLKgtjph3ljTobEm9lC741gix4RMjmDatuDHPXSwDye37KlBVJmumGv8hdteky841Fbv+JedJ2NZHPqxuFzrnk1HsASe1ObJV9uovV79K756bYHJzpIOAdk7P7CzqUgYM+sgtZFgxdbTPNh6GHSkTJEPubwkiWmWsmYkQaybN62KIMWxAXFno/QL6KzY0T8zyYpS8zglAQZcRxM1JG+3B3q1Mc233YsrT/c+YRQsJxyDF54LTnxweQUqIrVeF/uaQTcl2HU3+AhisEPeTqHhD6hqNbmWP0s0G6Sx4hMkjBTWzRGPIGn0v5h0khipmU0AtBRguvs7Mhr514HJ+BtgzNgCNVf1SgJXn6ykOgKrnVDUs1uAomXnQWbt0oJTUfgfeFV2ATqQkvobMgTJE6kdMST2cdQMTDnBqPsHxBuC7a4fLaeA7CQXcbxnE28oO7IDW+ZUOOe5cIf7/O9vPhk57/6yMWiMTe9R2NFVAq5mK+5cQvCcKjD/TBVc0WbrH4YpXxieN1AeJBKjVDmZpkMFY3Irt86z5OkfaPqGRoNu/ycZa62sgbp90vcPLHXjerIXP1qSoH/IxrFnSp3xm+bx9qzJnrZevR1jdrHaHDt++ER/rhiDoYZP1e8l9ApprYuVTj/y4Ae0hRw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(396003)(346002)(136003)(376002)(39860400002)(366004)(1800799006)(451199021)(186006)(36756003)(31696002)(86362001)(82960400001)(38100700002)(31686004)(110136005)(4326008)(30864003)(8676002)(8936002)(44832011)(6506007)(6666004)(6486002)(478600001)(6512007)(83380400001)(2616005)(26005)(41300700001)(53546011)(2906002)(7416002)(54906003)(66476007)(316002)(66946007)(66556008)(5660300002)(43740500002)(45980500001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MjM5aWZRLzlvMmFIZkJ0MHNiL0ZXdGdzZWVSdGRsN3VYOHc2VFpNS0xkd0x1?=
- =?utf-8?B?bHlObFcxbnpLb0c3VUJZdEdLdml1Z1MvRzZjRXBKTUo1YTB3OXJaUVZkWlpJ?=
- =?utf-8?B?WlZzM0gzZFpqeUpFS1N1Y2FkTjdoZjFWeXkwSDFGYThBK1lBT24vTDhOQUpj?=
- =?utf-8?B?YUxxQ01YeGxnenUzREtoN0p6cTFxOHNKYkZWYkFwaWRvWUtmek5uWko2RnZW?=
- =?utf-8?B?MlhHdjYzMUxsM0pLNE9BUGZPYWw5WlZTUXhoSUxuOVpFek9NdkZQSEQ5eit3?=
- =?utf-8?B?a0dGMTBneFJBanRGczZianpCbmgzM3J2czI0SmxxejFxbzNPSHBRNlRhOVRn?=
- =?utf-8?B?eU5PVGRuRFZBNzB6dzJuYTNZOHhBdjExTXFNQzg4dG4vcW5IWFlZekVYRHM2?=
- =?utf-8?B?Z25lZDRObVppQjF5SUlWeDhJY01VOTNVbnJ4OXF3SFc3WjF3T0ZpNm5ERWRw?=
- =?utf-8?B?eFdja2tlWkdxb3M1MFVJQ2lNYVF1YjA1d0ZvRCt3L21kMjNGTFgzcVhOYmk4?=
- =?utf-8?B?Z0Zjd2gvSDluNlc2VWFBdE9KSDJjbnByS0FTczJpMXhsV01scHhMTjVXQW1t?=
- =?utf-8?B?ZmI4UFlLcDFKZDAweXdZRHVMQk1HSGxEcUtJV0xhS0I2V3lLSTEyMW9jNWd2?=
- =?utf-8?B?YXhaOE0xSHFpeW4ydFFmaVpSNHVYSGVOUzQ0RzVLOXRVQjE5VGdwV1lqWnZS?=
- =?utf-8?B?TDZIUTc1YitiOCtHK01nQWxFeGYydG1GclZJZlNXd0twSThlU1J5NFRqWml2?=
- =?utf-8?B?VXZZQjRGWTNNSU1mTmJONENqWDdpUWJZQkorMStaaTdwcWNRS0txMkpYVGQ5?=
- =?utf-8?B?cE1PQmtYM1RCM3BKM2M4cHJPRVFqMDF4eldBeE5hWjRJWEZzaGlnQkR5UVF4?=
- =?utf-8?B?amdqVVo1eWxJd1ViL25EcDhGWG1NUU9wclJRN20wVkRhQWNZZzVDLzdGaWlk?=
- =?utf-8?B?NGxNYms3R0NTZVBuWUdseGhtMU1rZkhwd1I0bndGdjFkNmV4MGpIS0puakw2?=
- =?utf-8?B?RTliZWRBMWJGVEJkcG5aeU1tdkFxQzhMOXNiZ3N3dldRdkhQOTJLMEt5SmNk?=
- =?utf-8?B?MjVnVHFUZGRFaGU2MzVzVGtzMU9JR2k2aFNYSVBCZnhNU2dTVTNhQ3MycmN2?=
- =?utf-8?B?azFDTVYzcEtVZmVMNEkrcHlFYlZTdkw2bUpzSjJRdmYyTDk5MWl4TlpTMnpD?=
- =?utf-8?B?aWh0N0lXWG5zUmtxVWRxTWljeHhRNzBTNXEzSjdoWDFQM2UzQ0c1eTlnN3pT?=
- =?utf-8?B?TWpDS3hHbnA5eDEwWmlWQXRXQllnbFEyQmt5RFFWb0dQTEZBRWkySUdheWNQ?=
- =?utf-8?B?dUxGNTRueFJIZURWUjV6WUI0enBGazFVOStOYmVCaThMbStGQ2NsOW9ubWVL?=
- =?utf-8?B?RnZOZlpIZ3NkdVZtSm1Yb2dLK1hvcnpWM1RNdlJIWUpMQk9JcUlPQWtqVW8y?=
- =?utf-8?B?WlhwL28xNkQzdDdmVTFZVFBxSGo2R3VldlUyTFg3dzg3SmVLL1lrTmdvQXRm?=
- =?utf-8?B?em5kdm52WkU3c3h6bS84OHF3cFZLVUdHUE0rcFNZQ3NzNjdQaWZXa1pvS2k1?=
- =?utf-8?B?UXJML3pZbndnU21PS2VCT1ExOHpkc0hON0ZjRFRwb1k2OFRYZkp3eG5oVjNL?=
- =?utf-8?B?alM1VlJ5a044MlFCd0JUZm4wWlRSdGd3WURpdzFKL1lvZDd3R0VPakdjVSsv?=
- =?utf-8?B?clZhL0YweVlkbjVtQVJ5UEdXZVVMMHBUSmYyY3VnSGllQlIzR24wYWY3ajJr?=
- =?utf-8?B?OEY0c01nQTZUd3V3N3Evb2l5OXR2TzlMSE9lTS9nN1RpaDR6eUt6LytkWW9V?=
- =?utf-8?B?OHkrT3BMdzR4UjZJMHZXMGpaOEt0b2tPS1ZWT3JGYkhSeTdPV3BubmphR0sy?=
- =?utf-8?B?bVEwZXRtd1lGWFJ0d0FpcmZMYjJURDZNUlFISHZ0bFYrN1JpTGxSYkpxMTZF?=
- =?utf-8?B?dzlGNzFxbVVXa1NYVG5Cc0NKR3RkTkR0L0xwMTg1Tm9NYmhscnR3cS9meEVu?=
- =?utf-8?B?NnBya0FIbTBhazRnQmk0OFNDbk9VOWo3VWMwT05lVGtjcTl0SnVqclB0MVdh?=
- =?utf-8?B?MlVac0o2YkplNytzRDR4dll3SGNyQXFqU3BoVWtSTUp3aDE2V2ZxblZPTzlC?=
- =?utf-8?B?QTRLMEl1WkwreXY4YWYwQ1hzdUhsSDBwbXBpYzdUQUZDTTJNVEZHK1V2WGJW?=
- =?utf-8?B?THc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 326015c8-90cf-4d7b-491a-08db9a902fbb
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SVBvSlY5R0p6clZNaGRtRm1temxvYldwamhyNTlKc09ESjduWGYzaWRRU3o1?=
+ =?utf-8?B?ako1cTh1QzRUb2VRVjJ1N2dNWlcyOGY2bThZVVYvRjVzWTVkN1hkcU9xK0tD?=
+ =?utf-8?B?aGVkRy9mc0hiblZFdUlQQXRuQXd3d0c0RmN1aDdXOE8rNDJ6ZjIxanVFUnRZ?=
+ =?utf-8?B?SVlmbldQa0NibXJBbUJIWHIzcjByazlYNG1tZXJYR1NseGpUTTdUcG1ZS3pR?=
+ =?utf-8?B?RkpVZGRzY0pwd21DZXpxb0lvbTQzeTRVTERFcUd6L3dJQWlOZzRmbmU3SlJn?=
+ =?utf-8?B?K3lraldmUDlTYU4vdU56U0hxU3oySWI1L1RESmo1dkF3NEpyWFBUeFE5dE1O?=
+ =?utf-8?B?WkNYVFcwTHEyZ1BaVko0emxQazgvZHplTkNXV3RRbnBlNDlmc3NuVU5Ld1dL?=
+ =?utf-8?B?RXRKaEE2WCtMRG8ybjFaS1FnSTg1bXZ4NERzQmprRXJGNmNrTEtzQzJseGZY?=
+ =?utf-8?B?WmdMQTZyTG13SnoyeS9OQ3N5MmFRNHRGNEYzRVZOREVmbUlZdUxXYkhoZXFa?=
+ =?utf-8?B?cnVIYk1TR3M2U0pHRXJvY0xBQklFT0REbU9LMHpWNzVIa0NBUU9yQXdISXdl?=
+ =?utf-8?B?bkdQaTNmZWNoYTZRVVN5dDNJTU1sdGZWY25maXJ5ZmREVkhMU3VqWUh4eXRV?=
+ =?utf-8?B?Sngyb0pzS3VTQUlROU9oMHgwM1RZQUhXVysrQkd4K1h0TnQ5TGJYRjhMTlhj?=
+ =?utf-8?B?NmNFWVpxMVZVYmJ4ZkxHSkFsU0c3WHBwdlpseWF6ZmU2dFlaUlVzZytTbFFK?=
+ =?utf-8?B?Yy9kSjQrNjlhcW94R3MzU1QzYlNIaHhmbXd0OEZ4TjV0VG5FQWpyZ3RFZzht?=
+ =?utf-8?B?QkJqb3I5UmFxTFpsckRHNmp5UElTUHJ4ekxrOExpR2dkT1FwMVNvbWVnWWky?=
+ =?utf-8?B?R3cvT0JoNk92Ujk0c05IOTUzUkMwOUtsT3FiKzQ1TW4xdFVTeTJTUWRGYyt2?=
+ =?utf-8?B?Z1dzbE9JMDlkYXhNUVREYkZINFUrdzZXUVdwUXBzekRONDFTZmt5TVhuK3dm?=
+ =?utf-8?B?Wm16SFltR3NOYVpURjlqRUQ4SUxQYklUemp5VXhMdWFBc1dza0RNaFpCZTJt?=
+ =?utf-8?B?cVkrWTJWcUk3QlVUbkRuUFNzNnhDVnBndVJ0ZzBpT21yTnNKVHYxZVVvSmRB?=
+ =?utf-8?B?Yk9GVDdpZm1oNzYvY0h5dW10VFE1VzZYa3RnSVQ2U0xwZ1Q1TTlSMThHRHpS?=
+ =?utf-8?B?cy9YcCtMZ2RkbTJDYlhack5JaDVjN0dZUWVRR0VxcHFuT2NVU2ttNFBXdytN?=
+ =?utf-8?B?RmlBRjBmZzV6YjRha0dSYmFFYitMbEpnZ1B6LzJiY0ZucEdVVklQR2N6bXBS?=
+ =?utf-8?B?UzVWWUZDMkpEdVpYc0c2enNyK2VXam84bERQeFFoNzhoWEFKUGRXZzVETzAv?=
+ =?utf-8?B?VW43NzliQldhbjEySDdxSXlJKzFVTVlWbDBmSVo2aEdSTVljREt6QXY2OWNo?=
+ =?utf-8?B?bStleXJhaXRaT1NKT08yY0dFdXU1SWUzSmpPVjZsK0QybjVYQlRWS0tMNXJR?=
+ =?utf-8?B?ZTRjakJmVE1nOE04MXdnRDdyQmxLZ0s2dDByL1VNUHBlMTRDWFFMbTVEa2o1?=
+ =?utf-8?B?QnhhQnZGaUFGN3RxTVRSeGRHZmZodUlxa2s5M0ppZ0NDU2l3eFZobktib2I1?=
+ =?utf-8?B?d0V3TlFMTkZRN3BSTDBSOTZTWVVKWGNVcjI5K0xlQjFFTFJDWThONVJGdTFS?=
+ =?utf-8?B?UU9VRm01TFpTZzJXd3lVdUNPQmhNMzE3REk1N1ZqNDZaZjNSRmgrTC9VT2N5?=
+ =?utf-8?B?bHcxU0wvckdPTDlva0JsUm9xZGVjSVNBUWVseWtMekJxRnlobFJjc1dvNWRv?=
+ =?utf-8?B?RUQ4ZlFOQ1hWek9qUnIvaEcrRjZRYXlhSlVQRm5CVi9wc3A3UlhBamlFNUgw?=
+ =?utf-8?B?ZnhuSGhqZ0tJS1lQM2J2eXZMdThRekRTNlRrUUZkV3kxMGJUVGdGcUlKcHJk?=
+ =?utf-8?B?T1BFaHhDckFBbUk3SE81QXJmdThVSnNMNEQxV0JxdWZMbUROZlF5SU9zNExo?=
+ =?utf-8?B?Y1doeFM5STdlK3daNmJWa2FLSlJaMTNLUjFCZUxscDFLVzJTdVNHbEdDRElt?=
+ =?utf-8?B?UTZHZ3Iza0ZYQ0ljVGNMYURkRjBCMjQ5SkZnVHA0Y3RLdXlUdDkrSnNZQzc5?=
+ =?utf-8?B?U2NEeE1mRkRLNTJUbXVYcExrMnhOK0haajduZE5RQUgxWXZCVlh2czIxWUM4?=
+ =?utf-8?B?NUE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 126e8482-a2c9-4518-d2e7-08db9a908461
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2023 17:27:07.1858
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2023 17:29:29.1417
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DdNY2dC2e48kFkMuHEqx2mf0YPCEctpT5XXN/HfCz3fCym/2ypo5V7bQyGMrVjqe2qS+DzG71JQGgRTTAo8TBdLPvBx9jEhzrQRSUhJw/Rk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR11MB8606
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0OqFu0gGou93Mlxbi/6x1rNfK/0fuUzVIFSVDKncYLVhJOGILrtja/9kM/zK3wFsGDCvTU/EShUIi3JthsP24Mr8fV+w5oNIh+B8kTii1qs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5609
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 7/22/2023 12:07 PM, Tony Luck wrote:
-> The Sub-NUMA cluster feature on some Intel processors partitions
-> the CPUs that share an L3 cache into two or more sets. This plays
-> havoc with the Resource Director Technology (RDT) monitoring features.
-> Prior to this patch Intel has advised that SNC and RDT are incompatible.
+> First step towards supporting resource control where the scope of
+> control operations is not the same as monitor operations.
+
+Each changelog should stand on its own merit. This changelog
+appears to be written as a continuation of the cover letter.
+
+Please do ensure that each patch first establishes the context
+before it describes the problem and solution. For example,
+as a context this changelog can start by describing what the
+resctrl domains list represents.
+
 > 
-> Some of these CPU support an MSR that can partition the RMID
-> counters in the same way. This allows for monitoring features
-> to be used (with the caveat that memory accesses between different
-> SNC NUMA nodes may still not be counted accuratlely.
+> Add an extra list in the rdt_resource structure. For this will
+> just duplicate the existing list of domains based on the L3 cache
+> scope.
 
-accuratlely. -> accurately).
+The above paragraph does not make this change appealing at all.
 
-Is there any guidance on the scenarios under which memory accesses
-may not be counted accurately, how users can detect when this
-is the case, or any techniques users can use to avoid this?
+> Refactor the domain_add_cpu() and domain_remove() functions to
 
-Since this question has come up during this series I do think it
-will help to document the impact of SNC on CAT.
+domain_remove() -> domain_remove_cpu()
+
+> build separate lists for r->alloc_capable and r->mon_capable
+> resources. Note that only the "L3" domain currently supports
+> both types.
+
+"L3" domain -> "L3" resource?
+
+> 
+> Change all places where monitoring functions walk the list of
+> domains to use the new "mondomains" list instead of the old
+> "domains" list.
+
+I would not refer to it as "the old domains list" as it creates
+impression that this is being replaced. The changelog makes
+no mention that domains list will remain and be dedicated to
+control domains. I think this is important to include in description
+of this change.
+
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  include/linux/resctrl.h                   |  10 +-
+>  arch/x86/kernel/cpu/resctrl/internal.h    |   2 +-
+>  arch/x86/kernel/cpu/resctrl/core.c        | 195 +++++++++++++++-------
+>  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   2 +-
+>  arch/x86/kernel/cpu/resctrl/monitor.c     |   2 +-
+>  arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  30 ++--
+>  6 files changed, 167 insertions(+), 74 deletions(-)
+> 
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index 8334eeacfec5..1267d56f9e76 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -151,9 +151,11 @@ struct resctrl_schema;
+>   * @mon_capable:	Is monitor feature available on this machine
+>   * @num_rmid:		Number of RMIDs available
+>   * @cache_level:	Which cache level defines scope of this resource
+> + * @mon_scope:		Scope of this resource if different from cache_level
+
+I think this addition should be deferred. As it is here it the "if different
+from cache_level" also creates many questions (when will it be different?
+how will it be determined that the scope is different in order to know that
+mon_scope should be used?)
+
+Looking ahead on how mon_scope is used there does not seem to be an "if"
+involved at all ... mon_scope is always the monitoring scope. 
+
+>   * @cache:		Cache allocation related data
+>   * @membw:		If the component has bandwidth controls, their properties.
+>   * @domains:		All domains for this resource
+
+A change to the domains comment would also help - to highlight that it is
+now dedicated to control domains.
+
+> + * @mondomains:		Monitor domains for this resource
+>   * @name:		Name to use in "schemata" file.
+>   * @data_width:		Character width of data when displaying
+>   * @default_ctrl:	Specifies default cache cbm or memory B/W percent.
+> @@ -169,9 +171,11 @@ struct rdt_resource {
+>  	bool			mon_capable;
+>  	int			num_rmid;
+>  	int			cache_level;
+> +	int			mon_scope;
+>  	struct resctrl_cache	cache;
+>  	struct resctrl_membw	membw;
+>  	struct list_head	domains;
+> +	struct list_head	mondomains;
+>  	char			*name;
+>  	int			data_width;
+>  	u32			default_ctrl;
+
+...
+
+> @@ -384,14 +386,15 @@ void rdt_ctrl_update(void *arg)
+>  }
+>  
+>  /*
+> - * rdt_find_domain - Find a domain in a resource that matches input resource id
+> + * rdt_find_domain - Find a domain in one of the lists for a resource that
+> + * matches input resource id
+>   *
+
+This change makes the function more vague. I think original summary is
+still accurate, how the list is used can be describe in the details below.
+I see more changes to this function is upcoming and I will comment more 
+at those sites.
+
+>   * Search resource r's domain list to find the resource id. If the resource
+>   * id is found in a domain, return the domain. Otherwise, if requested by
+>   * caller, return the first domain whose id is bigger than the input id.
+>   * The domain list is sorted by id in ascending order.
+>   */
+> -struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+> +struct rdt_domain *rdt_find_domain(struct list_head *h, int id,
+>  				   struct list_head **pos)
+>  {
+>  	struct rdt_domain *d;
+> @@ -400,7 +403,7 @@ struct rdt_domain *rdt_find_domain(struct rdt_resource *r, int id,
+>  	if (id < 0)
+>  		return ERR_PTR(-ENODEV);
+>  
+> -	list_for_each(l, &r->domains) {
+> +	list_for_each(l, h) {
+>  		d = list_entry(l, struct rdt_domain, list);
+>  		/* When id is found, return its domain. */
+>  		if (id == d->id)
+> @@ -487,6 +490,94 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
+>  	return 0;
+>  }
+>  
+> +static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
+> +{
+> +	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
+> +	struct list_head *add_pos = NULL;
+> +	struct rdt_hw_domain *hw_dom;
+> +	struct rdt_domain *d;
+> +	int err;
+> +
+> +	d = rdt_find_domain(&r->domains, id, &add_pos);
+> +	if (IS_ERR(d)) {
+> +		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+> +		return;
+> +	}
+> +
+> +	if (d) {
+> +		cpumask_set_cpu(cpu, &d->cpu_mask);
+> +		if (r->cache.arch_has_per_cpu_cfg)
+> +			rdt_domain_reconfigure_cdp(r);
+> +		return;
+> +	}
+> +
+> +	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
+> +	if (!hw_dom)
+> +		return;
+> +
+> +	d = &hw_dom->d_resctrl;
+> +	d->id = id;
+> +	cpumask_set_cpu(cpu, &d->cpu_mask);
+> +
+> +	rdt_domain_reconfigure_cdp(r);
+> +
+> +	if (domain_setup_ctrlval(r, d)) {
+> +		domain_free(hw_dom);
+> +		return;
+> +	}
+> +
+> +	list_add_tail(&d->list, add_pos);
+> +
+> +	err = resctrl_online_ctrl_domain(r, d);
+> +	if (err) {
+> +		list_del(&d->list);
+> +		domain_free(hw_dom);
+> +	}
+> +}
+> +
+> +static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+> +{
+> +	int id = get_cpu_cacheinfo_id(cpu, r->mon_scope);
+
+Using a different scope variable but continuing to treat it
+as a cache level creates unnecessary confusion at this point.
+
+> +	struct list_head *add_pos = NULL;
+> +	struct rdt_hw_domain *hw_dom;
+> +	struct rdt_domain *d;
+> +	int err;
+> +
+> +	d = rdt_find_domain(&r->mondomains, id, &add_pos);
+> +	if (IS_ERR(d)) {
+> +		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+
+Note for future change ... this continues to refer to monitor scope as
+a cache id. I did not see this changed in the later patch that actually
+changes how scope is used.
+
+> +		return;
+> +	}
+> +
+> +	if (d) {
+> +		cpumask_set_cpu(cpu, &d->cpu_mask);
+> +		if (r->cache.arch_has_per_cpu_cfg)
+> +			rdt_domain_reconfigure_cdp(r);
+
+Copy & paste error?
+
+> +		return;
+> +	}
+> +
+> +	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
+> +	if (!hw_dom)
+> +		return;
+> +
+> +	d = &hw_dom->d_resctrl;
+> +	d->id = id;
+> +	cpumask_set_cpu(cpu, &d->cpu_mask);
+> +
+> +	if (arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
+> +		domain_free(hw_dom);
+> +		return;
+> +	}
+> +
+> +	list_add_tail(&d->list, add_pos);
+> +
+> +	err = resctrl_online_mon_domain(r, d);
+> +	if (err) {
+> +		list_del(&d->list);
+> +		domain_free(hw_dom);
+> +	}
+> +}
+> +
+>  /*
+>   * domain_add_cpu - Add a cpu to a resource's domain list.
+>   *
+> @@ -502,61 +593,19 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
+>   */
+>  static void domain_add_cpu(int cpu, struct rdt_resource *r)
+>  {
+> -	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
+> -	struct list_head *add_pos = NULL;
+> -	struct rdt_hw_domain *hw_dom;
+> -	struct rdt_domain *d;
+> -	int err;
+> -
+> -	d = rdt_find_domain(r, id, &add_pos);
+> -	if (IS_ERR(d)) {
+> -		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+> -		return;
+> -	}
+> -
+> -	if (d) {
+> -		cpumask_set_cpu(cpu, &d->cpu_mask);
+> -		if (r->cache.arch_has_per_cpu_cfg)
+> -			rdt_domain_reconfigure_cdp(r);
+> -		return;
+> -	}
+> -
+> -	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
+> -	if (!hw_dom)
+> -		return;
+> -
+> -	d = &hw_dom->d_resctrl;
+> -	d->id = id;
+> -	cpumask_set_cpu(cpu, &d->cpu_mask);
+> -
+> -	rdt_domain_reconfigure_cdp(r);
+> -
+> -	if (r->alloc_capable && domain_setup_ctrlval(r, d)) {
+> -		domain_free(hw_dom);
+> -		return;
+> -	}
+> -
+> -	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
+> -		domain_free(hw_dom);
+> -		return;
+> -	}
+> -
+> -	list_add_tail(&d->list, add_pos);
+> -
+> -	err = resctrl_online_domain(r, d);
+> -	if (err) {
+> -		list_del(&d->list);
+> -		domain_free(hw_dom);
+> -	}
+> +	if (r->alloc_capable)
+> +		domain_add_cpu_ctrl(cpu, r);
+> +	if (r->mon_capable)
+> +		domain_add_cpu_mon(cpu, r);
+>  }
+
+A resource could be both alloc and mon capable ... both
+domain_add_cpu_ctrl() and domain_add_cpu_mon() can fail.
+Should domain_add_cpu_mon() still be run for a CPU if
+domain_add_cpu_ctrl() failed? 
+
+Looking ahead the CPU should probably also not be added
+to the default groups mask if a failure occurred.
+
+> -static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+> +static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
+>  {
+>  	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
+>  	struct rdt_hw_domain *hw_dom;
+>  	struct rdt_domain *d;
+>  
+> -	d = rdt_find_domain(r, id, NULL);
+> +	d = rdt_find_domain(&r->domains, id, NULL);
+>  	if (IS_ERR_OR_NULL(d)) {
+>  		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+>  		return;
+> @@ -565,7 +614,7 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+>  
+>  	cpumask_clear_cpu(cpu, &d->cpu_mask);
+>  	if (cpumask_empty(&d->cpu_mask)) {
+> -		resctrl_offline_domain(r, d);
+> +		resctrl_offline_ctrl_domain(r, d);
+>  		list_del(&d->list);
+>  
+>  		/*
+> @@ -578,6 +627,30 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+>  
+>  		return;
+>  	}
+> +}
+> +
+> +static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+> +{
+> +	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
+
+Introducing mon_scope can really be deferred ... here the monitoring code
+is not using mon_scope anyway.
+
+> +	struct rdt_hw_domain *hw_dom;
+> +	struct rdt_domain *d;
+> +
+> +	d = rdt_find_domain(&r->mondomains, id, NULL);
+> +	if (IS_ERR_OR_NULL(d)) {
+> +		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+> +		return;
+> +	}
+> +	hw_dom = resctrl_to_arch_dom(d);
+> +
+> +	cpumask_clear_cpu(cpu, &d->cpu_mask);
+> +	if (cpumask_empty(&d->cpu_mask)) {
+> +		resctrl_offline_mon_domain(r, d);
+> +		list_del(&d->list);
+> +
+> +		domain_free(hw_dom);
+> +
+> +		return;
+> +	}
+>  
+>  	if (r == &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl) {
+>  		if (is_mbm_enabled() && cpu == d->mbm_work_cpu) {
 
 Reinette
