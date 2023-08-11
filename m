@@ -1,189 +1,116 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF0F1877
-	for <patches@lists.linux.dev>; Thu, 10 Aug 2023 23:13:27 +0000 (UTC)
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-64189370a63so4480626d6.1
-        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 16:13:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBD0EA5
+	for <patches@lists.linux.dev>; Fri, 11 Aug 2023 03:22:13 +0000 (UTC)
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-79aeb0a4665so545925241.1
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 20:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google; t=1691709207; x=1692314007;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Py3LrB1MojN9Q2t6wr+fe06uk+Tis0628n4bR/uEwyM=;
-        b=N+pAbOwOSmF3txoS+QlmFeuPQEhKcFVTBKZEh0ZpZtQsXosceQFVYKB6A0hwMyZV0f
-         pe1Us7nQEImCPgsqlOCeOmZlIuPM5AlSkjs2kRbxDWvnb9CF0w9GN6F7LaWyCEb4Lj0Y
-         OoviF08n58C+POC9jqtliEnc4PFxhUJscMnSc=
+        d=linaro.org; s=google; t=1691724132; x=1692328932;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KkEumRtohfNhdpoDJhISnRDZoUTmKUHTcuDpxxAC/Sg=;
+        b=Eo5nhrXDsAnH1q7CsKSmGOuuVDevVflsD5wtRA8azJF2t/k6TG2IiHq8J2hQzNem+D
+         yWipkJzcdPI5UI0uM5M3jBMnJJ4GzDgMIHKCoFZHGv+2TAxecoaMqYY4zmSJ0dFyhvPw
+         cWi1oBa1/J16JenF5yU7gFwxGmVkLi6PlDO7nnUOkF+Mxkc+u9WNLCe0PsdTxP8Ft70y
+         7ksHt0DbT9R1vl2m1AURytAIF+KEMCSC5iGnXQ+09B/z7l0+S8YeUWnkGvrbTFG2/uSo
+         8N0PZv6Ekp0ZdPwKVsTEjpp56aCr1nSjZugxapRQkdeiZBXUnOM9mR09xAT3FQ071f1H
+         D7Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691709207; x=1692314007;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Py3LrB1MojN9Q2t6wr+fe06uk+Tis0628n4bR/uEwyM=;
-        b=LLVuBaayBzCGnpm0mdwa4Pr8IbLnXCDHUKN9ydNcFQxffwS8aBFiVkFMAt9gbQHLUL
-         MEhXMz3fFLlglXVzI51aSZPAX4IUau5vIBHk9q8ZTyGzMbSKeBBFyMKwh+3xoWDd/nYH
-         1TW7a44ANC5XbK8myPxov+vyS5hlpfma1808J1NYNFTw9s+zgAdwQDESYejc3VgnP2Ag
-         BP2LugNPutzyKcaBA0Lt5dguYRsMJ5uhtKtR1xnjXyB7CpfyWpce8KK9EIkW4jno7pQS
-         WwH2a0YqAZpsX7pa1ptew+TSO3egfJ/0mtOci+kHPQKZf+/cUUsMtc5aOJgbh/fUOVaS
-         XRGg==
-X-Gm-Message-State: AOJu0YyxNi5aiKzfnh4RJdwbQLq9cZ1ydf4YEQUmfIYOBIKYPfxar1Oe
-	pwNmBqe8/xLWzgXLKqNX/AcKUtt/lknr5rFsCSY=
-X-Google-Smtp-Source: AGHT+IFXJCmYVsCyFqaIWobn36Jaq8H6Kr7C2eyE60K3klPhT+DWUcg3ramk31+qD1u9fBO18wk6JA==
-X-Received: by 2002:a0c:b218:0:b0:63d:4a1:2f82 with SMTP id x24-20020a0cb218000000b0063d04a12f82mr141758qvd.16.1691709206739;
-        Thu, 10 Aug 2023 16:13:26 -0700 (PDT)
-Received: from smtpclient.apple ([45.85.144.224])
-        by smtp.gmail.com with ESMTPSA id i28-20020a0cab5c000000b0063d35954291sm815512qvb.117.2023.08.10.16.13.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Aug 2023 16:13:26 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Joel Fernandes <joel@joelfernandes.org>
+        d=1e100.net; s=20221208; t=1691724132; x=1692328932;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KkEumRtohfNhdpoDJhISnRDZoUTmKUHTcuDpxxAC/Sg=;
+        b=E+YH5Q9LuwLNbSflSOSMDf9NPjrwkhu76i5Th7cGbqr2V39PJWXmVyOkIz3BsjjZWF
+         KQDu46TRcCN78eXPfIufmaOGf09+r7it2F/egKxQvfffHcUhmw0lu/LeJr4eXQXkiJo8
+         MqikjuOKdqH52b6/DGIN8Cho1i2aoQnNf18/Voqz7CsaHEJcbq/37/gAMZ4JOB1cytHN
+         uShUEbGC4bvfajbjpokdY1KkehEmI0gOoqFEiTSM/9nkZoOvCrSIUVNsoL9rU+lTPBno
+         WD4YVfWB75qwgL/K6PkfOcuQDfblEDkVcJrdb4WjZN/RkwqSwNnHPgR3jWFJrhrJcXVS
+         8+xQ==
+X-Gm-Message-State: AOJu0YwRhqCUPHMRXh3Cti0YGHJ8q+ydiUrN/86chiTeQ4i5TvLe4JO+
+	brLFFf/GWipgSZMvO9dRC6PJRmAl7P5iAX/HW/I3aw==
+X-Google-Smtp-Source: AGHT+IGU2fdD5KxBGFfmZ5YbVmA1pRJtMv3ZrL5R8YMkBxBVSZmyFFNwjjWgXkEN553/+Et76M4Xg8624ZbdFTF4TIY=
+X-Received: by 2002:a05:6102:3d4:b0:447:4b52:5c8 with SMTP id
+ n20-20020a05610203d400b004474b5205c8mr576067vsq.26.1691724132286; Thu, 10 Aug
+ 2023 20:22:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
-Date: Thu, 10 Aug 2023 19:13:14 -0400
-Message-Id: <C45ECBF0-6573-47BC-B127-0B2BEF3E4425@joelfernandes.org>
-References: <3d23da0b-696b-5ace-0ea7-5ac4a38cd46b@roeck-us.net>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-In-Reply-To: <3d23da0b-696b-5ace-0ea7-5ac4a38cd46b@roeck-us.net>
-To: Guenter Roeck <linux@roeck-us.net>
-X-Mailer: iPhone Mail (20B101)
+MIME-Version: 1.0
+References: <20230809103636.615294317@linuxfoundation.org>
+In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 11 Aug 2023 08:52:01 +0530
+Message-ID: <CA+G9fYvQdQqTqCgbS4sit_Y2AtKtDiWMOkGZjoeSEFhc=M_jKw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, clang-built-linux <llvm@lists.linux.dev>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Sven Volkinsfeld <thyrc@gmx.net>, Daniel Kolesa <daniel@octaforge.org>
+Content-Type: text/plain; charset="UTF-8"
+
+On Wed, 9 Aug 2023 at 16:21, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.45 release.
+> There are 127 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.45-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
+While building Linux stable rc 6.1 x86_64 with clang-17 failed due to
+following warnings / errors.
 
-> On Aug 10, 2023, at 6:55 PM, Guenter Roeck <linux@roeck-us.net> wrote:
->=20
-> =EF=BB=BFOn 8/10/23 14:54, Joel Fernandes wrote:
->>> On Thu, Aug 10, 2023 at 10:55:16AM -0700, Paul E. McKenney wrote:
->>> On Wed, Aug 09, 2023 at 02:45:44PM -0700, Guenter Roeck wrote:
->>>> On 8/9/23 13:39, Joel Fernandes wrote:
->>>>> On Wed, Aug 9, 2023 at 4:38=E2=80=AFPM Guenter Roeck <linux@roeck-us.n=
-et> wrote:
->>>>>>=20
->>>>>> On 8/9/23 13:14, Joel Fernandes wrote:
->>>>>>> On Wed, Aug 09, 2023 at 12:25:48PM -0700, Guenter Roeck wrote:
->>>>>>>> On Wed, Aug 09, 2023 at 02:35:59PM -0400, Joel Fernandes wrote:
->>>>>>>>> On Wed, Aug 9, 2023 at 12:18=E2=80=AFPM Guenter Roeck <linux@roeck=
--us.net> wrote:
->>>>>>>>>>=20
->>>>>>>>>> On 8/9/23 06:53, Joel Fernandes wrote:
->>>>>>>>>>> On Wed, Aug 09, 2023 at 12:40:36PM +0200, Greg Kroah-Hartman wro=
-te:
->>>>>>>>>>>> This is the start of the stable review cycle for the 5.15.126 r=
-elease.
->>>>>>>>>>>> There are 92 patches in this series, all will be posted as a re=
-sponse
->>>>>>>>>>>> to this one.  If anyone has any issues with these being applied=
-, please
->>>>>>>>>>>> let me know.
->>>>>>>>>>>>=20
->>>>>>>>>>>> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
->>>>>>>>>>>> Anything received after that time might be too late.
->>>>>>>>>>>>=20
->>>>>>>>>>>> The whole patch series can be found in one patch at:
->>>>>>>>>>>>        https://www.kernel.org/pub/linux/kernel/v5.x/stable-revi=
-ew/patch-5.15.126-rc1.gz
->>>>>>>>>>>> or in the git tree and branch at:
->>>>>>>>>>>>        git://git.kernel.org/pub/scm/linux/kernel/git/stable/lin=
-ux-stable-rc.git linux-5.15.y
->>>>>>>>>>>> and the diffstat can be found below.
->>>>>>>>>>>=20
->>>>>>>>>>> Not necesscarily new with 5.15 stable but 3 of the 19 rcutorture=
- scenarios
->>>>>>>>>>> hang with this -rc: TREE04, TREE07, TASKS03.
->>>>>>>>>>>=20
->>>>>>>>>>> 5.15 has a known stop machine issue where it hangs after 1.5 hou=
-rs with cpu
->>>>>>>>>>> hotplug rcutorture testing. Me and tglx are continuing to debug t=
-his. The
->>>>>>>>>>> issue does not show up on anything but 5.15 stable kernels and n=
-either on
->>>>>>>>>>> mainline.
->>>>>>>>>>>=20
->>>>>>>>>>=20
->>>>>>>>>> Do you by any have a crash pattern that we could possibly use to f=
-ind the crash
->>>>>>>>>> in ChromeOS crash logs ? No idea if that would help, but it could=
- provide some
->>>>>>>>>> additional data points.
->>>>>>>>>=20
->>>>>>>>> The pattern shows as a hard hang, the system is unresponsive and a=
-ll CPUs
->>>>>>>>> are stuck in stop_machine. Sometimes it recovers on its own from t=
-he
->>>>>>>>> hang and then RCU immediately gives stall warnings. It takes 1.5 h=
-our
->>>>>>>>> to reproduce and sometimes never happens for several hours.
->>>>>>>>>=20
->>>>>>>>> It appears related to CPU hotplug since gdb showed me most of the C=
-PUs
->>>>>>>>> are spinning in multi_cpu_stop() / stop machine after the hang.
->>>>>>>>>=20
->>>>>>>>=20
->>>>>>>> Hmm, we do see lots of soft lockups with multi_cpu_stop() in the ba=
-cktrace,
->>>>>>>> but not with v5.15.y but with v5.4.y. The actual hang is in stop_ma=
-chine_yield().
->>>>>>>=20
->>>>>>> Interesting. It looks similar as far as the stack dump in gdb goes, h=
-ere are
->>>>>>> the stacks I dumped with the hang I referred to:
->>>>>>> https://paste.debian.net/1288308/
->>>>>>>=20
->>>>>>=20
->>>>>> That link gives me "Entry not found".
->>>>>=20
->>>>> Yeah that was weird. Here it is again: https://pastebin.com/raw/L3nv1k=
-H2
->>>>=20
->>>> I found a couple of crash reports from chromeos-5.10, one of them compl=
-aining
->>>> about RCU issues. I sent you links via IM. Nothing from 5.15 or later, t=
-hough.
->>>=20
->>> Is the crash showing the eternally refiring timer fixed by this commit?
->>>=20
->>> 53e87e3cdc15 ("timers/nohz: Last resort update jiffies on nohz_full IRQ e=
-ntry")
->> Ah I was just replying, I have been seeing really good results after appl=
-ying
->> the following 3 commits since yesterday:
->> 53e87e3cdc15 ("timers/nohz: Last resort update jiffies on nohz_full IRQ e=
-ntry")
->> 5417ddc1cf1f ("timers/nohz: Switch to ONESHOT_STOPPED in the low-res hand=
-ler when the tick is stopped")
->> a1ff03cd6fb9 ("tick: Detect and fix jiffies update stall")
->=20
-> Would those also apply to v5.10.y, or just 5.15.y ?
+Regressions found on x86_64:
 
-All apply to 5.10 but one. I am currently testing with it more and will post=
- to stable for 5.10 as well.
-
-Thanks,
-
- - Joel
+  - build/clang-nightly-lkftconfig-kselftest
+  - build/clang-nightly-x86_64_defconfig
+  - build/clang-nightly-lkftconfig
+  - build/clang-lkftconfig
+  - build/clang-nightly-allmodconfig
 
 
+Build errors:
+-----
+ld.lld: error: ./arch/x86/kernel/vmlinux.lds:193: at least one side of
+the expression must be absolute
+make[2]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
 
->=20
-> Thanks,
-> Guenter
->=20
->> 5417ddc1cf1f also mentioned a "tick storm" which is exactly what I was
->> seeing.
->> I did a lengthy test and everything is looking good. I'll send these out t=
-o
->> the stable list.
->> thanks,
->>  - Joel
->=20
+
+  Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+upstream report:
+-----
+    - https://lore.kernel.org/llvm/CA+G9fYsdUeNu-gwbs0+T6XHi4hYYk=Y9725-wFhZ7gJMspLDRA@mail.gmail.com/
+
+Proposed fix patch:
+-----
+  [PATCH] x86/srso: fix build breakage for LD=ld.lld
+  - https://lore.kernel.org/lkml/20230809-gds-v1-1-eaac90b0cbcc@google.com/T/
+
+This patch is yet to be backported and CC to stable.
+
+  --
+Linaro LKFT
+https://lkft.linaro.org
