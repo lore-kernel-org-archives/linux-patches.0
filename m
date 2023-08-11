@@ -1,94 +1,220 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3E810E4;
-	Fri, 11 Aug 2023 04:13:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A10C433C8;
-	Fri, 11 Aug 2023 04:13:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691727223;
-	bh=0nMtbzOF+FHXauK0+1lynfoqJs/CmuWuApidsAPL4Yg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QZEPlKVXnMT6PdNqCejEdN8xt8B7ZnRZoyuyAcA5iByxOs2UZyPF0VfY98bo7fvtJ
-	 pwHJpZH7FX6SBz8xgixVRkwWqNZaw8RSEeHkWODws0kwWFG9JV7q61aTb9lJSBC58k
-	 FMuzriXzy/bNzj6kDXPCMk5a46LuWZBSE3m1Zm75fHNq4LjY/gFZKzDo/KaHUkHsRJ
-	 dkuFTt8qQrPepxna1jsNlcBDqVAh6Xp6vWG/cT6F9tdSSsNYyqPJJrTl6dsJ758bud
-	 0L2OX52rG/AB1EA2jfGVfpXRqJbXMTHuAMg5DddCcix1vfatC3DILt9EFnY+4+3O6t
-	 Tp38pzAMu5E/A==
-Date: Thu, 10 Aug 2023 21:13:39 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	clang-built-linux <llvm@lists.linux.dev>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Sven Volkinsfeld <thyrc@gmx.net>,
-	Daniel Kolesa <daniel@octaforge.org>,
-	Borislav Petkov <bp@alien8.de>, x86@kernel.org
-Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
-Message-ID: <20230811041339.GA193223@dev-arch.thelio-3990X>
-References: <20230809103636.615294317@linuxfoundation.org>
- <CA+G9fYvQdQqTqCgbS4sit_Y2AtKtDiWMOkGZjoeSEFhc=M_jKw@mail.gmail.com>
- <078d6e3d-9572-a624-2c5a-e2d58473e6d0@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A554A35
+	for <patches@lists.linux.dev>; Fri, 11 Aug 2023 06:51:52 +0000 (UTC)
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-79a2d0e0ce6so431897241.3
+        for <patches@lists.linux.dev>; Thu, 10 Aug 2023 23:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1691736711; x=1692341511;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zY/LzCXZ73iVJl7kNPvRER0zQHu8w/Xt+sR0t3XrrOg=;
+        b=API77woK9RnaBcyNQdZiMv4bNKCIvxjpu/XKN6ahI7S7h8k1sURM9zlyWLjuRjAQ0h
+         tvs5/p9SjoMo7RsHwjCGtkHSHU78UrxjrIcgunYNGIYFMMuqPtW7EGQOiywJQ1vTgwY3
+         vzDmaDbdqATjbt90gUI70VLCR1H9PkyQHEk3SnAIiDhezM9mkfvL3hJtAwMKwo+PeU8P
+         f2MIxTaDoLRE9pHoTKFx+6v7yPaeUaYyxN5mAroL52TSino30mvyC4JMwi+HTABNE4tm
+         3sA5Ag5H25LNWmjkd6A9NNXksIzxWu5LHH6hQJWB0/2wA7rT1Gi6nmKdLtkeumj3jTUm
+         fd4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691736711; x=1692341511;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zY/LzCXZ73iVJl7kNPvRER0zQHu8w/Xt+sR0t3XrrOg=;
+        b=E1aL4Jt287ynVhRPrhYE/b3IqR5ICCZJbzFRa5IFd1BdfD51/Xcyjxeo70xeC2kDCk
+         vY96cIZetySdiBxOm3tnS+4YQcdV5hUa3GdiLC2UOb26pYa8BBAu99HfiZ7uC9VcjK5z
+         GBjbgcu/gk6bz98ph5LzVAcIxP0nExoAFOaWNq4R2fOJTDTUztLbMwO7V05IS6q5X+co
+         1oTQsXGtczT2+q9soPgNHV63ZDh5nykGgiljOmhV4mlhbPqVc27RHo3JI9fk+mEo8fut
+         Cppq+nZyPYiSP1QWkbsT+DJcqW5MYhBTqvmv+X6Tv90ezk4QO4C5U8yfho5gnKkDyvMS
+         yUag==
+X-Gm-Message-State: AOJu0YxyLPzSuZ4geNkSUx2x/uGlqvq+QZp/l00nLdW36NZpwYNt8rN9
+	PscPVli94NMoq6FCleozsFs5JmDu0MI7XohhuCQLHA==
+X-Google-Smtp-Source: AGHT+IGT/Gmn/nKyP2s4Q2FmIvwk/ZvLbU4GeIcNNXR7OphP4nx2lg1D0mF5MvHg0XvmD8ZKHrlVbB+IDjWeWkE/nd4=
+X-Received: by 2002:a67:ef9b:0:b0:447:68a0:a11a with SMTP id
+ r27-20020a67ef9b000000b0044768a0a11amr320477vsp.2.1691736710984; Thu, 10 Aug
+ 2023 23:51:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <078d6e3d-9572-a624-2c5a-e2d58473e6d0@roeck-us.net>
+References: <20230809103643.799166053@linuxfoundation.org>
+In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 11 Aug 2023 12:21:39 +0530
+Message-ID: <CA+G9fYudnukDs6CB_Y3CGfy8wR+8NMg9+VZQKNYcOPTdu3_pmQ@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/201] 5.10.190-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 10, 2023 at 08:41:42PM -0700, Guenter Roeck wrote:
-> On 8/10/23 20:22, Naresh Kamboju wrote:
-> > Build errors:
-> > -----
-> > ld.lld: error: ./arch/x86/kernel/vmlinux.lds:193: at least one side of
-> > the expression must be absolute
-> > make[2]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
-> > 
-> 
-> We see that with v5.10.y, v5.15.y, and v6.1.y when building ChromeOS images with
-> clang/lld. There are additional problems with LTO and the built-in assembler. See
-> https://www.linuxquestions.org/questions/slackware-14/error-building-kernel-6-1-44-on-current-with-clang-4175727865/
-> for a summary.
+On Wed, 9 Aug 2023 at 17:04, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.190 release.
+> There are 201 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.190-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Yup, we have issues open for all of those:
 
-https://github.com/ClangBuiltLinux/linux/issues/1907
-https://github.com/ClangBuiltLinux/linux/issues/1909
-https://github.com/ClangBuiltLinux/linux/issues/1911
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-1907 is fixed in -tip and I am sure it will make -rc6 [1].
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-1909 is fixed with [2] but it is sitting in x86/core (i.e., slated for
-next merge window). I am guessing at the time it was picked up, it was
-not fixing a noticeable issue, which is obviously not the case now. Nick
-reached out to the -tip folks on IRC to inquire about getting that
-applied to a branch that is going to Linus soon, as it is more of a
-process issue since it has conflicts with SRSO and an separate issue
-that was pointed out post-acceptance (which I addressed and pushed to
-[3] for testing). I never saw a response there (which is understandable,
-it is a busy time...) so looping the -tip folks in now, just to make
-sure it does not get lost (apologies if this is noise).
+## Build
+* kernel: 5.10.190-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.10.y
+* git commit: 0195dc1d1da1c3ea5afb2a07e66d1446ae278243
+* git describe: v5.10.189-202-g0195dc1d1da1
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.189-202-g0195dc1d1da1
 
-1911 is still being investigated (some additional eyes on it would not
-hurt).
+## Test Regressions (compared to v5.10.189)
 
-[1]: https://git.kernel.org/tip/cbe8ded48b939b9d55d2c5589ab56caa7b530709
-[2]: https://git.kernel.org/tip/973ab2d61f33dc85212c486e624af348c4eeb5c9
-[3]: https://github.com/ClangBuiltLinux/linux/commit/150c42407f87463c27a2459e06845965291d9973
+## Metric Regressions (compared to v5.10.189)
 
-> As far as I can see none of those problems has been fixed in the upstream kernel.
+## Test Fixes (compared to v5.10.189)
 
-Indeed, embargos are fun... :)
+## Metric Fixes (compared to v5.10.189)
 
-Cheers,
-Nathan
+## Test result summary
+total: 116372, pass: 94296, fail: 2771, skip: 19188, xfail: 117
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 117 total, 116 passed, 1 failed
+* arm64: 45 total, 45 passed, 0 failed
+* i386: 35 total, 35 passed, 0 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 4 total, 0 passed, 4 failed
+* powerpc: 26 total, 25 passed, 1 failed
+* riscv: 12 total, 11 passed, 1 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 38 total, 29 passed, 9 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
