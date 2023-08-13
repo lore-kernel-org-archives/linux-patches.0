@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD63E9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6799CC433C7;
-	Sun, 13 Aug 2023 21:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBC19446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258EEC433C8;
+	Sun, 13 Aug 2023 21:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962496;
-	bh=Y4ZlPZHJBwFnZkix0rXiDMMLsEtVOyrOMTwhz/E39ts=;
+	s=korg; t=1691962499;
+	bh=Uo4hma2wBF/5S7o+ojQhxCzfga9i2wb+yUzSZRDuFeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbVS349INl5g/FgLIUjLjp4nV+DLv7JkDxyxIj2Q8uLTpZ6rp0aaW3K1+xaKPzzHl
-	 9ktcdA+bHCneragD7v0djR5/Xc/ZErD47fc/afakDFUN81LVCsf+WihsL35C+N6ZYH
-	 k72Ey6lapENL4hO6NYPAV9BHmH5qdEg8leOUi92w=
+	b=hF51f4B2vL7TzyicZHxQXfHiHZnu9xVIRzhw7rmIy4KwLGqeURyFhbu8mnxIBI8te
+	 U4Sjvg5H7/i2MdAfmTXnoH77xVJa7BBqwkF3Y7cnWgyGXUUYoxU339kEFhomvionX5
+	 mRFX3ESMssRJSWzWodLZWWzK288KWsMVQWV5rRf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 050/149] drm/amd/display: trigger timing sync only if TG is running
-Date: Sun, 13 Aug 2023 23:18:15 +0200
-Message-ID: <20230813211720.314143141@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 051/149] io_uring: correct check for O_TMPFILE
+Date: Sun, 13 Aug 2023 23:18:16 +0200
+Message-ID: <20230813211720.341879884@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,43 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 6066aaf74f510fc171dbe9375153aee2d60d37aa upstream
+Commit 72dbde0f2afbe4af8e8595a89c650ae6b9d9c36f upstream.
 
-[Why&How]
-If the timing generator isnt running, it does not make sense to trigger
-a sync on the corresponding OTG. Check this condition before starting.
-Otherwise, this will cause error like:
+O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
+check for whether RESOLVE_CACHED can be used would incorrectly think
+that O_DIRECTORY could not be used with RESOLVE_CACHED.
 
-*ERROR* GSL: Timeout on reset trigger!
-
-Fixes: dc55b106ad47 ("drm/amd/display: Disable phantom OTG after enable for plane disable")
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ NOTE: This is also 5f9f97c02dd2 ("drm/amd/display: trigger timing sync
-  only if TG is running") ]
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org # v5.12+
+Fixes: 3a81fd02045c ("io_uring: enable LOOKUP_CACHED path resolution for filename lookups")
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Link: https://lore.kernel.org/r/20230807-resolve_cached-o_tmpfile-v3-1-e49323e1ef6f@cyphar.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ io_uring/openclose.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-@@ -2284,6 +2284,12 @@ void dcn10_enable_timing_synchronization
- 		opp = grouped_pipes[i]->stream_res.opp;
- 		tg = grouped_pipes[i]->stream_res.tg;
- 		tg->funcs->get_otg_active_size(tg, &width, &height);
-+
-+		if (!tg->funcs->is_tg_enabled(tg)) {
-+			DC_SYNC_INFO("Skipping timing sync on disabled OTG\n");
-+			return;
-+		}
-+
- 		if (opp->funcs->opp_program_dpg_dimensions)
- 			opp->funcs->opp_program_dpg_dimensions(opp, width, 2*(height) + 1);
- 	}
+--- a/io_uring/openclose.c
++++ b/io_uring/openclose.c
+@@ -110,9 +110,11 @@ int io_openat2(struct io_kiocb *req, uns
+ 	if (issue_flags & IO_URING_F_NONBLOCK) {
+ 		/*
+ 		 * Don't bother trying for O_TRUNC, O_CREAT, or O_TMPFILE open,
+-		 * it'll always -EAGAIN
++		 * it'll always -EAGAIN. Note that we test for __O_TMPFILE
++		 * because O_TMPFILE includes O_DIRECTORY, which isn't a flag
++		 * we need to force async for.
+ 		 */
+-		if (open->how.flags & (O_TRUNC | O_CREAT | O_TMPFILE))
++		if (open->how.flags & (O_TRUNC | O_CREAT | __O_TMPFILE))
+ 			return -EAGAIN;
+ 		op.lookup_flags |= LOOKUP_CACHED;
+ 		op.open_flag |= O_NONBLOCK;
 
 
