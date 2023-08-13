@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4FE9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084DCC433C8;
-	Sun, 13 Aug 2023 21:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8967E9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CE0C433C7;
+	Sun, 13 Aug 2023 21:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962322;
-	bh=i/fbtv2MbgcrMOxqDF18c++Ov0hnabskZk5qKFLRyBk=;
+	s=korg; t=1691962325;
+	bh=aYo3nfS70hiuAR6MC1KJQmyn4pU0OCZceC9spGImXIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TwiWbn9UsMOlhDDh6/zTQcEXU2CqpelM+Rd4Ar3nLTZJ6mwhcp1dijQKvJr+21Cq9
-	 h4fNHs2U4thV0rQg2aPJXCDCkkJ3NiXRupB2VNHL2GkOD0lyQuuQ6h/gbfz8YZyng2
-	 BogcQUjEfNgHZ5TWPwmJ7muX5G+H/1+wXAuCS9FI=
+	b=CaDCKOgsPux2cniIT0Mq4jMynwhp0VSx6nxUIm20l1i8MQw4nAMGYrD0VE5os2RvH
+	 h0isSDu+ZY7snE4ea2l7wLjFGhpUcomKeJENnk7gQSucjbO7y6yq7f5xeKbuS94yK9
+	 K9llK8s/8iz1Gbr+8AnlL0wP7cuPirECf/JLbrww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ae97a827ae1c3336bbb4@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 186/206] btrfs: exit gracefully if reloc roots dont match
-Date: Sun, 13 Aug 2023 23:19:16 +0200
-Message-ID: <20230813211730.346855412@linuxfoundation.org>
+	Sesidhar Baddela <sebaddel@cisco.com>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 195/206] scsi: fnic: Replace return codes in fnic_clean_pending_aborts()
+Date: Sun, 13 Aug 2023 23:19:25 +0200
+Message-ID: <20230813211730.600035704@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,116 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Karan Tilak Kumar <kartilak@cisco.com>
 
-commit 05d7ce504545f7874529701664c90814ca645c5d upstream.
+commit 5a43b07a87835660f91d88a4db11abfea8c523b7 upstream.
 
-[BUG]
-Syzbot reported a crash that an ASSERT() got triggered inside
-prepare_to_merge().
+fnic_clean_pending_aborts() was returning a non-zero value irrespective of
+failure or success.  This caused the caller of this function to assume that
+the device reset had failed, even though it would succeed in most cases. As
+a consequence, a successful device reset would escalate to host reset.
 
-[CAUSE]
-The root cause of the triggered ASSERT() is we can have a race between
-quota tree creation and relocation.
-
-This leads us to create a duplicated quota tree in the
-btrfs_read_fs_root() path, and since it's treated as fs tree, it would
-have ROOT_SHAREABLE flag, causing us to create a reloc tree for it.
-
-The bug itself is fixed by a dedicated patch for it, but this already
-taught us the ASSERT() is not something straightforward for
-developers.
-
-[ENHANCEMENT]
-Instead of using an ASSERT(), let's handle it gracefully and output
-extra info about the mismatch reloc roots to help debug.
-
-Also with the above ASSERT() removed, we can trigger ASSERT(0)s inside
-merge_reloc_roots() later.
-Also replace those ASSERT(0)s with WARN_ON()s.
-
-CC: stable@vger.kernel.org # 5.15+
-Reported-by: syzbot+ae97a827ae1c3336bbb4@syzkaller.appspotmail.com
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Sesidhar Baddela <sebaddel@cisco.com>
+Tested-by: Karan Tilak Kumar <kartilak@cisco.com>
+Signed-off-by: Karan Tilak Kumar <kartilak@cisco.com>
+Link: https://lore.kernel.org/r/20230727193919.2519-1-kartilak@cisco.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |   45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ drivers/scsi/fnic/fnic.h      |    2 +-
+ drivers/scsi/fnic/fnic_scsi.c |    6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -1916,7 +1916,39 @@ again:
- 				err = PTR_ERR(root);
- 			break;
- 		}
--		ASSERT(root->reloc_root == reloc_root);
-+
-+		if (unlikely(root->reloc_root != reloc_root)) {
-+			if (root->reloc_root) {
-+				btrfs_err(fs_info,
-+"reloc tree mismatch, root %lld has reloc root key (%lld %u %llu) gen %llu, expect reloc root key (%lld %u %llu) gen %llu",
-+					  root->root_key.objectid,
-+					  root->reloc_root->root_key.objectid,
-+					  root->reloc_root->root_key.type,
-+					  root->reloc_root->root_key.offset,
-+					  btrfs_root_generation(
-+						  &root->reloc_root->root_item),
-+					  reloc_root->root_key.objectid,
-+					  reloc_root->root_key.type,
-+					  reloc_root->root_key.offset,
-+					  btrfs_root_generation(
-+						  &reloc_root->root_item));
-+			} else {
-+				btrfs_err(fs_info,
-+"reloc tree mismatch, root %lld has no reloc root, expect reloc root key (%lld %u %llu) gen %llu",
-+					  root->root_key.objectid,
-+					  reloc_root->root_key.objectid,
-+					  reloc_root->root_key.type,
-+					  reloc_root->root_key.offset,
-+					  btrfs_root_generation(
-+						  &reloc_root->root_item));
-+			}
-+			list_add(&reloc_root->root_list, &reloc_roots);
-+			btrfs_put_root(root);
-+			btrfs_abort_transaction(trans, -EUCLEAN);
-+			if (!err)
-+				err = -EUCLEAN;
-+			break;
-+		}
+--- a/drivers/scsi/fnic/fnic.h
++++ b/drivers/scsi/fnic/fnic.h
+@@ -27,7 +27,7 @@
  
- 		/*
- 		 * set reference count to 1, so btrfs_recover_relocation
-@@ -1989,7 +2021,7 @@ again:
- 		root = btrfs_get_fs_root(fs_info, reloc_root->root_key.offset,
- 					 false);
- 		if (btrfs_root_refs(&reloc_root->root_item) > 0) {
--			if (IS_ERR(root)) {
-+			if (WARN_ON(IS_ERR(root))) {
- 				/*
- 				 * For recovery we read the fs roots on mount,
- 				 * and if we didn't find the root then we marked
-@@ -1998,17 +2030,14 @@ again:
- 				 * memory.  However there's no reason we can't
- 				 * handle the error properly here just in case.
- 				 */
--				ASSERT(0);
- 				ret = PTR_ERR(root);
- 				goto out;
- 			}
--			if (root->reloc_root != reloc_root) {
-+			if (WARN_ON(root->reloc_root != reloc_root)) {
- 				/*
--				 * This is actually impossible without something
--				 * going really wrong (like weird race condition
--				 * or cosmic rays).
-+				 * This can happen if on-disk metadata has some
-+				 * corruption, e.g. bad reloc tree key offset.
- 				 */
--				ASSERT(0);
- 				ret = -EINVAL;
- 				goto out;
- 			}
+ #define DRV_NAME		"fnic"
+ #define DRV_DESCRIPTION		"Cisco FCoE HBA Driver"
+-#define DRV_VERSION		"1.6.0.54"
++#define DRV_VERSION		"1.6.0.55"
+ #define PFX			DRV_NAME ": "
+ #define DFX                     DRV_NAME "%d: "
+ 
+--- a/drivers/scsi/fnic/fnic_scsi.c
++++ b/drivers/scsi/fnic/fnic_scsi.c
+@@ -2139,7 +2139,7 @@ static int fnic_clean_pending_aborts(str
+ 				     bool new_sc)
+ 
+ {
+-	int ret = SUCCESS;
++	int ret = 0;
+ 	struct fnic_pending_aborts_iter_data iter_data = {
+ 		.fnic = fnic,
+ 		.lun_dev = lr_sc->device,
+@@ -2159,9 +2159,11 @@ static int fnic_clean_pending_aborts(str
+ 
+ 	/* walk again to check, if IOs are still pending in fw */
+ 	if (fnic_is_abts_pending(fnic, lr_sc))
+-		ret = FAILED;
++		ret = 1;
+ 
+ clean_pending_aborts_end:
++	FNIC_SCSI_DBG(KERN_INFO, fnic->lport->host,
++			"%s: exit status: %d\n", __func__, ret);
+ 	return ret;
+ }
+ 
 
 
