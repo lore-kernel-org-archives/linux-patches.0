@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB869446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E26C433C8;
-	Sun, 13 Aug 2023 21:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7B19446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F131C433C8;
+	Sun, 13 Aug 2023 21:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963243;
-	bh=Ha50qv6q6E5q6ViIdFSLAQz/O7uNZBMWrQY5OAsjhUg=;
+	s=korg; t=1691963246;
+	bh=kXBFi4hfIk+Q14JW8uzgsf+WK2BtG/zSp8omQa2vUck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPjMCO4JrR3+SSczk2/h/So5G6ZB3G1rdkDiMuNNSc7Ha13aK8t43Cm8oI6oFQUkN
-	 qKdo3hLuyFuWF8v3AHZuquIR/PqgSPDmITFLropBU18KDC7UaxnbCKG9ueRk2njutd
-	 HOxVJpdcVwcZFaSReJ2sluOhGUBsmGG++21c5QlA=
+	b=qJLR/3W7k2tx3IAqObIcGbwfoHXaqr/o/Dm7N8njo7pVPzsiXwD6H/GrIOeXcNYZg
+	 wYW8U+wAXbP1nB9awEJNXwbHffglCSwbrXYuvewKuWBmZp1fk9uMgmE8TyZUskbgWo
+	 Npobm9hoK/k8iZDL7yCrD1I8S/AaDH8pJQux3bYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olaf Skibbe <news@kravcenko.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Karol Herbst <kherbst@redhat.com>
-Subject: [PATCH 5.4 16/39] drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
-Date: Sun, 13 Aug 2023 23:20:07 +0200
-Message-ID: <20230813211705.394206421@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.4 17/39] selftests/rseq: Fix build with undefined __weak
+Date: Sun, 13 Aug 2023 23:20:08 +0200
+Message-ID: <20230813211705.432980232@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -35,40 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit d5712cd22b9cf109fded1b7f178f4c1888c8b84b upstream.
+commit d5ad9aae13dcced333c1a7816ff0a4fbbb052466 upstream.
 
-The original commit adding that check tried to protect the kenrel against
-a potential invalid NULL pointer access.
+Commit 3bcbc20942db ("selftests/rseq: Play nice with binaries statically
+linked against glibc 2.35+") which is now in Linus' tree introduced uses
+of __weak but did nothing to ensure that a definition is provided for it
+resulting in build failures for the rseq tests:
 
-However we call nouveau_connector_detect_depth once without a native_mode
-set on purpose for non LVDS connectors and this broke DP support in a few
-cases.
+rseq.c:41:1: error: unknown type name '__weak'
+__weak ptrdiff_t __rseq_offset;
+^
+rseq.c:41:17: error: expected ';' after top level declarator
+__weak ptrdiff_t __rseq_offset;
+                ^
+                ;
+rseq.c:42:1: error: unknown type name '__weak'
+__weak unsigned int __rseq_size;
+^
+rseq.c:43:1: error: unknown type name '__weak'
+__weak unsigned int __rseq_flags;
 
-Cc: Olaf Skibbe <news@kravcenko.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/238
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/245
-Fixes: 20a2ce87fbaf8 ("drm/nouveau/dp: check for NULL nv_connector->native_mode")
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230805101813.2603989-1-kherbst@redhat.com
+Fix this by using the definition from tools/include compiler.h.
+
+Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Message-Id: <20230804-kselftest-rseq-build-v1-1-015830b66aa9@kernel.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/rseq/Makefile |    4 +++-
+ tools/testing/selftests/rseq/rseq.c   |    2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -955,7 +955,7 @@ nouveau_connector_get_modes(struct drm_c
- 	/* Determine display colour depth for everything except LVDS now,
- 	 * DP requires this before mode_valid() is called.
- 	 */
--	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
-+	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
- 		nouveau_connector_detect_depth(connector);
+--- a/tools/testing/selftests/rseq/Makefile
++++ b/tools/testing/selftests/rseq/Makefile
+@@ -4,8 +4,10 @@ ifneq ($(shell $(CC) --version 2>&1 | he
+ CLANG_FLAGS += -no-integrated-as
+ endif
  
- 	/* Find the native mode if this is a digital panel, if we didn't
++top_srcdir = ../../../..
++
+ CFLAGS += -O2 -Wall -g -I./ -I../../../../usr/include/ -L$(OUTPUT) -Wl,-rpath=./ \
+-	  $(CLANG_FLAGS)
++	  $(CLANG_FLAGS) -I$(top_srcdir)/tools/include
+ LDLIBS += -lpthread -ldl
+ 
+ # Own dependencies because we only want to build against 1st prerequisite, but
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -29,6 +29,8 @@
+ #include <dlfcn.h>
+ #include <stddef.h>
+ 
++#include <linux/compiler.h>
++
+ #include "../kselftest.h"
+ #include "rseq.h"
+ 
 
 
