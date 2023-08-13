@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E029443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EFFC433C7;
-	Sun, 13 Aug 2023 21:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31729443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D6AC433C7;
+	Sun, 13 Aug 2023 21:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961964;
-	bh=fOIHWjLu9LmR/v6ribBYM2rSHkBOLcGfZqYYRkp7Bc0=;
+	s=korg; t=1691961966;
+	bh=xlPU23jxXPMnbzPzWzz2fH7e0311zWj5oUFeQwawzlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9TVasq7lqFeaL9U0kwEMgT62FQCZ9dNqKtOoGsnL7X5tLcBzV/qSGCqceFhGwKtd
-	 BHJcMXRRrDg6LgCVaSZoy1n5TcmFvhz4oBA7pTR+qUeXV2rttv17vb06z9qNAFbkeU
-	 66Gf8WwxT/v8kAhhrvhholnydykKc05P9hrpZn14=
+	b=Hm9UgzOjnmnhT2lQrYyPfiEjPwuph4+zBOEBZDUtq3OOXnfZ/DIRGep3O0LGawSIZ
+	 n2JmiYNjzvt1f8lCLQKEOS6LEGutGuPEQ8SzgrcS/MbGMv1z1/zGCzIUGCdHSK478h
+	 FGvN6BYfejOpINkmcgE5GdSwZDqyegasoQEGQHys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Torsten Duwe <duwe@suse.de>,
-	Petr Tesarik <petr.tesarik.ext@huawei.com>,
-	Li Zhengyu <lizhengyu3@huawei.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	kernel test robot <lkp@intel.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.4 033/206] riscv/kexec: handle R_RISCV_CALL_PLT relocation type
-Date: Sun, 13 Aug 2023 23:16:43 +0200
-Message-ID: <20230813211725.951740218@linuxfoundation.org>
+Subject: [PATCH 6.4 034/206] riscv: mm: fix 2 instances of -Wmissing-variable-declarations
+Date: Sun, 13 Aug 2023 23:16:44 +0200
+Message-ID: <20230813211725.979196124@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -37,50 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Torsten Duwe <duwe@suse.de>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit d0b4f95a51038becce4bdab4789aa7ce59d4ea6e upstream.
+commit d2402048bc8a206a56fde4bc41dd01336c7b5a21 upstream.
 
-R_RISCV_CALL has been deprecated and replaced by R_RISCV_CALL_PLT. See Enum
-18-19 in Table 3. Relocation types here:
+I'm looking to enable -Wmissing-variable-declarations behind W=1. 0day
+bot spotted the following instance in ARCH=riscv builds:
 
-https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc
+  arch/riscv/mm/init.c:276:7: warning: no previous extern declaration
+  for non-static variable 'trampoline_pg_dir'
+  [-Wmissing-variable-declarations]
+  276 | pgd_t trampoline_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
+      |       ^
+  arch/riscv/mm/init.c:276:1: note: declare 'static' if the variable is
+  not intended to be used outside of this translation unit
+  276 | pgd_t trampoline_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
+      | ^
+  arch/riscv/mm/init.c:279:7: warning: no previous extern declaration
+  for non-static variable 'early_pg_dir'
+  [-Wmissing-variable-declarations]
+  279 | pgd_t early_pg_dir[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);
+      |       ^
+  arch/riscv/mm/init.c:279:1: note: declare 'static' if the variable is
+  not intended to be used outside of this translation unit
+  279 | pgd_t early_pg_dir[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);
+      | ^
 
-It was deprecated in ("Deprecated R_RISCV_CALL, prefer R_RISCV_CALL_PLT"):
+These symbols are referenced by more than one translation unit, so make
+sure they're both declared and include the correct header for their
+declarations. Finally, sort the list of includes to help keep them tidy.
 
-https://github.com/riscv-non-isa/riscv-elf-psabi-doc/commit/a0dced85018d7a0ec17023c9389cbd70b1dbc1b0
-
-Recent tools (at least GNU binutils-2.40) already use R_RISCV_CALL_PLT.
-Kernels built with such binutils fail kexec_load_file(2) with:
-
- kexec_image: Unknown rela relocation: 19
- kexec_image: Error loading purgatory ret=-8
-
-The binary code at the call site remains the same, so tell
-arch_kexec_apply_relocations_add() to handle _PLT alike.
-
-Fixes: 838b3e28488f ("RISC-V: Load purgatory in kexec_file")
-Signed-off-by: Torsten Duwe <duwe@suse.de>
-Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
-Cc: Li Zhengyu <lizhengyu3@huawei.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/llvm/202308081000.tTL1ElTr-lkp@intel.com/
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20230808-riscv_static-v2-1-2a1e2d2c7a4f@google.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/all/b046b164af8efd33bbdb7d4003273bdf9196a5b0.1690365011.git.petr.tesarik.ext@huawei.com/
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/elf_kexec.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/include/asm/pgtable.h |    2 ++
+ arch/riscv/mm/init.c             |    9 +++++----
+ arch/riscv/mm/kasan_init.c       |    1 -
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
---- a/arch/riscv/kernel/elf_kexec.c
-+++ b/arch/riscv/kernel/elf_kexec.c
-@@ -425,6 +425,7 @@ int arch_kexec_apply_relocations_add(str
- 		 * sym, instead of searching the whole relsec.
- 		 */
- 		case R_RISCV_PCREL_HI20:
-+		case R_RISCV_CALL_PLT:
- 		case R_RISCV_CALL:
- 			*(u64 *)loc = CLEAN_IMM(UITYPE, *(u64 *)loc) |
- 				 ENCODE_UJTYPE_IMM(val - addr);
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -188,6 +188,8 @@ extern struct pt_alloc_ops pt_ops __init
+ #define PAGE_KERNEL_IO		__pgprot(_PAGE_IOREMAP)
+ 
+ extern pgd_t swapper_pg_dir[];
++extern pgd_t trampoline_pg_dir[];
++extern pgd_t early_pg_dir[];
+ 
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static inline int pmd_present(pmd_t pmd)
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -26,12 +26,13 @@
+ #include <linux/kfence.h>
+ 
+ #include <asm/fixmap.h>
+-#include <asm/tlbflush.h>
+-#include <asm/sections.h>
+-#include <asm/soc.h>
+ #include <asm/io.h>
+-#include <asm/ptdump.h>
+ #include <asm/numa.h>
++#include <asm/pgtable.h>
++#include <asm/ptdump.h>
++#include <asm/sections.h>
++#include <asm/soc.h>
++#include <asm/tlbflush.h>
+ 
+ #include "../kernel/head.h"
+ 
+--- a/arch/riscv/mm/kasan_init.c
++++ b/arch/riscv/mm/kasan_init.c
+@@ -22,7 +22,6 @@
+  * region is not and then we have to go down to the PUD level.
+  */
+ 
+-extern pgd_t early_pg_dir[PTRS_PER_PGD];
+ pgd_t tmp_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
+ p4d_t tmp_p4d[PTRS_PER_P4D] __page_aligned_bss;
+ pud_t tmp_pud[PTRS_PER_PUD] __page_aligned_bss;
 
 
