@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D0D9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58733C433C8;
-	Sun, 13 Aug 2023 21:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901919443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190FFC433C7;
+	Sun, 13 Aug 2023 21:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961817;
-	bh=xxKfQWsqnILrqaaNrVkxhRX6dIs193bUgRXg6XZDEsY=;
+	s=korg; t=1691961820;
+	bh=25zy2sfNmWktLZNtxAWSxp4BB/hpjp8WHHPBl3cyHEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrmP2+dK1+jCq9dXH8OklgeeZHRE5OvXHjxpFhVldsmCkDrYMYJikJik+tj4wsppA
-	 pHPgUwFOfTllVfvsfQkuJlhdYaHWCatvMCL2FwVu6vU3xfUvwEiFQhHdX8V2AMr2JC
-	 D/BD15sl0s27dWqX6VErJHmeG7JZsQ8SbDMo9MeI=
+	b=cSl5bcsr28IBclJg9XuqSJA78FGylYx/82OGDjwP6GtlVxoNGlPikq8DdYjdWcs9v
+	 vaU5O1YopdgovDUx46sh4LjT5cTVNWR/Eyps1drQfhIeuXUec/L6kXzq7rsNGzio4Q
+	 IlIJLUX1lxt9IG2PhbjQjLHULac/46BqbAyYuBK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damian B <bronecki.damian@gmail.com>,
-	Stable@vger.kernel.org,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.4 010/206] wifi: rtw89: fix 8852AE disconnection caused by RX full flags
-Date: Sun, 13 Aug 2023 23:16:20 +0200
-Message-ID: <20230813211725.270005969@linuxfoundation.org>
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 011/206] selftests: forwarding: Set default IPv6 traceroute utility
+Date: Sun, 13 Aug 2023 23:16:21 +0200
+Message-ID: <20230813211725.297822189@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,40 +38,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit b74bb07cdab6859e1a3fc9fe7351052176322ddf upstream.
+commit 38f7c44d6e760a8513557e27340d61b820c91b8f upstream.
 
-RX full flags are raised if certain types of RX FIFO are full, and then
-drop all following MPDU of AMPDU. In order to resume to receive MPDU
-when RX FIFO becomes available, we clear the register bits by the
-commit a0d99ebb3ecd ("wifi: rtw89: initialize DMA of CMAC"). But, 8852AE
-needs more settings to support this. To quickly fix disconnection problem,
-revert the behavior as before.
+The test uses the 'TROUTE6' environment variable to encode the name of
+the IPv6 traceroute utility. By default (without a configuration file),
+this variable is not set, resulting in failures:
 
-Fixes: a0d99ebb3ecd ("wifi: rtw89: initialize DMA of CMAC")
-Reported-by: Damian B <bronecki.damian@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217710
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Damian B <bronecki.damian@gmail.com>
-Link: https://lore.kernel.org/r/20230808005426.5327-1-pkshih@realtek.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+ # ./ip6_forward_instats_vrf.sh
+ TEST: ping6                                                         [ OK ]
+ TEST: Ip6InTooBigErrors                                             [ OK ]
+ TEST: Ip6InHdrErrors                                                [FAIL]
+ TEST: Ip6InAddrErrors                                               [ OK ]
+ TEST: Ip6InDiscards                                                 [ OK ]
+
+Fix by setting a default utility name and skip the test if the utility
+is not present.
+
+Fixes: 0857d6f8c759 ("ipv6: When forwarding count rx stats on the orig netdev")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230808141503.4060661-6-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh |    2 ++
+ tools/testing/selftests/net/forwarding/lib.sh                     |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -2484,7 +2484,7 @@ static int cmac_dma_init(struct rtw89_de
- 	u32 reg;
- 	int ret;
+--- a/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
++++ b/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
+@@ -14,6 +14,8 @@ ALL_TESTS="
+ NUM_NETIFS=4
+ source lib.sh
  
--	if (chip_id != RTL8852A && chip_id != RTL8852B)
-+	if (chip_id != RTL8852B)
- 		return 0;
++require_command $TROUTE6
++
+ h1_create()
+ {
+ 	simple_if_init $h1 2001:1:1::2/64
+--- a/tools/testing/selftests/net/forwarding/lib.sh
++++ b/tools/testing/selftests/net/forwarding/lib.sh
+@@ -30,6 +30,7 @@ REQUIRE_MZ=${REQUIRE_MZ:=yes}
+ REQUIRE_MTOOLS=${REQUIRE_MTOOLS:=no}
+ STABLE_MAC_ADDRS=${STABLE_MAC_ADDRS:=no}
+ TCPDUMP_EXTRA_FLAGS=${TCPDUMP_EXTRA_FLAGS:=}
++TROUTE6=${TROUTE6:=traceroute6}
  
- 	ret = rtw89_mac_check_mac_en(rtwdev, mac_idx, RTW89_CMAC_SEL);
+ relative_path="${BASH_SOURCE%/*}"
+ if [[ "$relative_path" == "${BASH_SOURCE}" ]]; then
 
 
