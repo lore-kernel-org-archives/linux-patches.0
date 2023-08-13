@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00869446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D90C433C7;
-	Sun, 13 Aug 2023 21:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3019446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D07C433C7;
+	Sun, 13 Aug 2023 21:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962788;
-	bh=HykUHpbPs/2YVkHCI8x20/a9KSCSKMkB5Veryj+IJhM=;
+	s=korg; t=1691962791;
+	bh=amwjw9XamkyBWuFCZmLa0aWzXafwZbMjz29nSRQUV0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIRzMqhzsbr86mimkT1V8McqH/rC1q4Z8F7ilyt3UFEFq3AM168JlaqAiZJmkS4Fu
-	 v4fTb94u7PciDMbnotD/OJKXyji/JMTa1a1Rutdpbg+WcFOFVcfary949LoKaRHp3Y
-	 +5DEONLRwe+ayRYpjrskT4Al0DPl62qzVbA1mhDU=
+	b=nOjn77Q9eFNTAeFyJPRum4JnZTv4iNZSDIgxwbwTSH2NYqprtiDKlLNsoibvRrDvf
+	 xXKTWdUhnShUF5A33G4WFxjmjIWX0n1SjT5bifWSd4GnTTPHvOARXTqDusHQiL804x
+	 4glqavIj7ASUE8+zQYd8ROhCOal2PCWXDcZSF0Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 129/149] btrfs: properly clear end of the unreserved range in cow_file_range
-Date: Sun, 13 Aug 2023 23:19:34 +0200
-Message-ID: <20230813211722.581708159@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 01/68] wireguard: allowedips: expand maximum node depth
+Date: Sun, 13 Aug 2023 23:19:02 +0200
+Message-ID: <20230813211708.195399867@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
-References: <20230813211718.757428827@linuxfoundation.org>
+In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
+References: <20230813211708.149630011@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,54 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 12b2d64e591652a2d97dd3afa2b062ca7a4ba352 upstream.
+commit 46622219aae2b67813fe31a7b8cb7da5baff5c8a upstream.
 
-When the call to btrfs_reloc_clone_csums in cow_file_range returns an
-error, we jump to the out_unlock label with the extent_reserved variable
-set to false.   The cleanup at the label will then call
-extent_clear_unlock_delalloc on the range from start to end.  But we've
-already added cur_alloc_size to start before the jump, so there might no
-range be left from the newly incremented start to end.  Move the check for
-'start < end' so that it is reached by also for the !extent_reserved case.
+In the allowedips self-test, nodes are inserted into the tree, but it
+generated an even amount of nodes, but for checking maximum node depth,
+there is of course the root node, which makes the total number
+necessarily odd. With two few nodes added, it never triggered the
+maximum depth check like it should have. So, add 129 nodes instead of
+128 nodes, and do so with a more straightforward scheme, starting with
+all the bits set, and shifting over one each time. Then increase the
+maximum depth to 129, and choose a better name for that variable to
+make it clear that it represents depth as opposed to bits.
 
-CC: stable@vger.kernel.org # 6.1+
-Fixes: a315e68f6e8b ("Btrfs: fix invalid attempt to free reserved space on failure to cow range")
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/r/20230807132146.2191597-2-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireguard/allowedips.c          |    8 ++++----
+ drivers/net/wireguard/selftest/allowedips.c |   16 ++++++++++------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1429,8 +1429,6 @@ out_unlock:
- 					     clear_bits,
- 					     page_ops);
- 		start += cur_alloc_size;
--		if (start >= end)
--			return ret;
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -6,7 +6,7 @@
+ #include "allowedips.h"
+ #include "peer.h"
+ 
+-enum { MAX_ALLOWEDIPS_BITS = 128 };
++enum { MAX_ALLOWEDIPS_DEPTH = 129 };
+ 
+ static struct kmem_cache *node_cache;
+ 
+@@ -42,7 +42,7 @@ static void push_rcu(struct allowedips_n
+ 		     struct allowedips_node __rcu *p, unsigned int *len)
+ {
+ 	if (rcu_access_pointer(p)) {
+-		if (WARN_ON(IS_ENABLED(DEBUG) && *len >= MAX_ALLOWEDIPS_BITS))
++		if (WARN_ON(IS_ENABLED(DEBUG) && *len >= MAX_ALLOWEDIPS_DEPTH))
+ 			return;
+ 		stack[(*len)++] = rcu_dereference_raw(p);
  	}
+@@ -55,7 +55,7 @@ static void node_free_rcu(struct rcu_hea
  
- 	/*
-@@ -1439,9 +1437,11 @@ out_unlock:
- 	 * space_info's bytes_may_use counter, reserved in
- 	 * btrfs_check_data_free_space().
+ static void root_free_rcu(struct rcu_head *rcu)
+ {
+-	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_BITS] = {
++	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
+ 		container_of(rcu, struct allowedips_node, rcu) };
+ 	unsigned int len = 1;
+ 
+@@ -68,7 +68,7 @@ static void root_free_rcu(struct rcu_hea
+ 
+ static void root_remove_peer_lists(struct allowedips_node *root)
+ {
+-	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_BITS] = { root };
++	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = { root };
+ 	unsigned int len = 1;
+ 
+ 	while (len > 0 && (node = stack[--len])) {
+--- a/drivers/net/wireguard/selftest/allowedips.c
++++ b/drivers/net/wireguard/selftest/allowedips.c
+@@ -593,16 +593,20 @@ bool __init wg_allowedips_selftest(void)
+ 	wg_allowedips_remove_by_peer(&t, a, &mutex);
+ 	test_negative(4, a, 192, 168, 0, 1);
+ 
+-	/* These will hit the WARN_ON(len >= MAX_ALLOWEDIPS_BITS) in free_node
++	/* These will hit the WARN_ON(len >= MAX_ALLOWEDIPS_DEPTH) in free_node
+ 	 * if something goes wrong.
  	 */
--	extent_clear_unlock_delalloc(inode, start, end, locked_page,
--				     clear_bits | EXTENT_CLEAR_DATA_RESV,
--				     page_ops);
-+	if (start < end) {
-+		clear_bits |= EXTENT_CLEAR_DATA_RESV;
-+		extent_clear_unlock_delalloc(inode, start, end, locked_page,
-+					     clear_bits, page_ops);
-+	}
- 	return ret;
- }
+-	for (i = 0; i < MAX_ALLOWEDIPS_BITS; ++i) {
+-		part = cpu_to_be64(~(1LLU << (i % 64)));
+-		memset(&ip, 0xff, 16);
+-		memcpy((u8 *)&ip + (i < 64) * 8, &part, 8);
++	for (i = 0; i < 64; ++i) {
++		part = cpu_to_be64(~0LLU << i);
++		memset(&ip, 0xff, 8);
++		memcpy((u8 *)&ip + 8, &part, 8);
++		wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
++		memcpy(&ip, &part, 8);
++		memset((u8 *)&ip + 8, 0, 8);
+ 		wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
+ 	}
+-
++	memset(&ip, 0, 16);
++	wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
+ 	wg_allowedips_free(&t, &mutex);
  
+ 	wg_allowedips_init(&t);
 
 
