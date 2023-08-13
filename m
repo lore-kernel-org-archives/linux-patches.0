@@ -1,41 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACA69443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A371C433C7;
-	Sun, 13 Aug 2023 21:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2179443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A34C433C8;
+	Sun, 13 Aug 2023 21:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961950;
-	bh=atJjrL+ptAlLAYKvgwmhLvnPFN82Hy/vBCI5lb6BTLs=;
+	s=korg; t=1691961953;
+	bh=GZWQy4wMUknFyU1T7CEyqwc2e+Alm6E+Wd3HmcY1kWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZM5AbDNpmweM3JUliu5HZpsYxJRy2A9wVba/xBxPKn1Fpv7mmUDj8E6LxLHE0dyH
-	 tVdipIeD2vMQXinILxic0cHYuSnCoIlADQcdIzH7GQtAV1G2LhtqKfK/JvAQXLd75B
-	 MOYj6rrPDgxxbs6ehiPZc3jxTm2woChPa4vg89bg=
+	b=T9UHdvQHi+SPkcDzKj49T2ABtGedZy33F7mC6z/jWOBA1yWVv8mNw8FQ3HLgdfyAj
+	 HKt8dco4wgSQZfqJ7wB5q4k3CRYs3tB23QJHwdhdslY6Am9CFcGzU4iYqpE3TFH54j
+	 3atmS9GDpSiEEsnMVkf5JU8Z2g+FjFvPK3tDX4kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Jiri Olsa <olsajiri@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Baoquan He <bhe@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Liu Shixin <liushixin2@huawei.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Mike Galbraith <efault@gmx.de>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 056/206] fs/proc/kcore: reinstate bounce buffer for KCORE_TEXT regions
-Date: Sun, 13 Aug 2023 23:17:06 +0200
-Message-ID: <20230813211726.620901350@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	John David Anglin <dave.anglin@bell.net>
+Subject: [PATCH 6.4 029/206] parisc: Fix lightweight spinlock checks to not break futexes
+Date: Sun, 13 Aug 2023 23:16:39 +0200
+Message-ID: <20230813211725.837786672@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -49,117 +34,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Stoakes <lstoakes@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 17457784004c84178798432a029ab20e14f728b1 upstream.
+commit a0f4b7879f2e14986200747d1b545e5daac8c624 upstream.
 
-Some architectures do not populate the entire range categorised by
-KCORE_TEXT, so we must ensure that the kernel address we read from is
-valid.
+The lightweight spinlock checks verify that a spinlock has either value
+0 (spinlock locked) and that not any other bits than in
+__ARCH_SPIN_LOCK_UNLOCKED_VAL is set.
 
-Unfortunately there is no solution currently available to do so with a
-purely iterator solution so reinstate the bounce buffer in this instance
-so we can use copy_from_kernel_nofault() in order to avoid page faults
-when regions are unmapped.
+This breaks the current LWS code, which writes the address of the lock
+into the lock word to unlock it, which was an optimization to save one
+assembler instruction.
 
-This change partly reverts commit 2e1c0170771e ("fs/proc/kcore: avoid
-bounce buffer for ktext data"), reinstating the bounce buffer, but adapts
-the code to continue to use an iterator.
+Fix it by making spinlock_types.h accessible for asm code, change the
+LWS spinlock-unlocking code to write __ARCH_SPIN_LOCK_UNLOCKED_VAL into
+the lock word, and add some missing lightweight spinlock checks to the
+LWS path. Finally, make the spinlock checks dependend on DEBUG_KERNEL.
 
-[lstoakes@gmail.com: correct comment to be strictly correct about reasoning]
-  Link: https://lkml.kernel.org/r/525a3f14-74fa-4c22-9fca-9dab4de8a0c3@lucifer.local
-Link: https://lkml.kernel.org/r/20230731215021.70911-1-lstoakes@gmail.com
-Fixes: 2e1c0170771e ("fs/proc/kcore: avoid bounce buffer for ktext data")
-Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
-Reported-by: Jiri Olsa <olsajiri@gmail.com>
-Closes: https://lore.kernel.org/all/ZHc2fm+9daF6cgCE@krava
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Tested-by: Will Deacon <will@kernel.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Liu Shixin <liushixin2@huawei.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Mike Galbraith <efault@gmx.de>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Noticed-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Tested-by: John David Anglin <dave.anglin@bell.net>
+Cc: stable@vger.kernel.org # v6.4+
+Fixes: 15e64ef6520e ("parisc: Add lightweight spinlock checks")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/kcore.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ arch/parisc/Kconfig.debug                |  2 +-
+ arch/parisc/include/asm/spinlock.h       |  2 --
+ arch/parisc/include/asm/spinlock_types.h |  6 ++++++
+ arch/parisc/kernel/syscall.S             | 23 ++++++++++++++++++++---
+ 4 files changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
-index 9cb32e1a78a0..23fc24d16b31 100644
---- a/fs/proc/kcore.c
-+++ b/fs/proc/kcore.c
-@@ -309,6 +309,8 @@ static void append_kcore_note(char *notes, size_t *i, const char *name,
+diff --git a/arch/parisc/Kconfig.debug b/arch/parisc/Kconfig.debug
+index 1401e4c5fe5f..bf2b21b96f0b 100644
+--- a/arch/parisc/Kconfig.debug
++++ b/arch/parisc/Kconfig.debug
+@@ -2,7 +2,7 @@
+ #
+ config LIGHTWEIGHT_SPINLOCK_CHECK
+ 	bool "Enable lightweight spinlock checks"
+-	depends on SMP && !DEBUG_SPINLOCK
++	depends on DEBUG_KERNEL && SMP && !DEBUG_SPINLOCK
+ 	default y
+ 	help
+ 	  Add checks with low performance impact to the spinlock functions
+diff --git a/arch/parisc/include/asm/spinlock.h b/arch/parisc/include/asm/spinlock.h
+index edfcb9858bcb..0b326e52255e 100644
+--- a/arch/parisc/include/asm/spinlock.h
++++ b/arch/parisc/include/asm/spinlock.h
+@@ -7,8 +7,6 @@
+ #include <asm/processor.h>
+ #include <asm/spinlock_types.h>
  
- static ssize_t read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
+-#define SPINLOCK_BREAK_INSN	0x0000c006	/* break 6,6 */
+-
+ static inline void arch_spin_val_check(int lock_val)
  {
-+	struct file *file = iocb->ki_filp;
-+	char *buf = file->private_data;
- 	loff_t *fpos = &iocb->ki_pos;
- 	size_t phdrs_offset, notes_offset, data_offset;
- 	size_t page_offline_frozen = 1;
-@@ -555,10 +557,21 @@ static ssize_t read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
- 		case KCORE_VMEMMAP:
- 		case KCORE_TEXT:
- 			/*
--			 * We use _copy_to_iter() to bypass usermode hardening
--			 * which would otherwise prevent this operation.
-+			 * Sadly we must use a bounce buffer here to be able to
-+			 * make use of copy_from_kernel_nofault(), as these
-+			 * memory regions might not always be mapped on all
-+			 * architectures.
- 			 */
--			if (_copy_to_iter((char *)start, tsz, iter) != tsz) {
-+			if (copy_from_kernel_nofault(buf, (void *)start, tsz)) {
-+				if (iov_iter_zero(tsz, iter) != tsz) {
-+					ret = -EFAULT;
-+					goto out;
-+				}
-+			/*
-+			 * We know the bounce buffer is safe to copy from, so
-+			 * use _copy_to_iter() directly.
-+			 */
-+			} else if (_copy_to_iter(buf, tsz, iter) != tsz) {
- 				ret = -EFAULT;
- 				goto out;
- 			}
-@@ -595,6 +608,10 @@ static int open_kcore(struct inode *inode, struct file *filp)
- 	if (ret)
- 		return ret;
+ 	if (IS_ENABLED(CONFIG_LIGHTWEIGHT_SPINLOCK_CHECK))
+diff --git a/arch/parisc/include/asm/spinlock_types.h b/arch/parisc/include/asm/spinlock_types.h
+index d65934079ebd..efd06a897c6a 100644
+--- a/arch/parisc/include/asm/spinlock_types.h
++++ b/arch/parisc/include/asm/spinlock_types.h
+@@ -4,6 +4,10 @@
  
-+	filp->private_data = kmalloc(PAGE_SIZE, GFP_KERNEL);
-+	if (!filp->private_data)
-+		return -ENOMEM;
+ #define __ARCH_SPIN_LOCK_UNLOCKED_VAL	0x1a46
+ 
++#define SPINLOCK_BREAK_INSN	0x0000c006	/* break 6,6 */
 +
- 	if (kcore_need_update)
- 		kcore_update_ram();
- 	if (i_size_read(inode) != proc_root_kcore->size) {
-@@ -605,9 +622,16 @@ static int open_kcore(struct inode *inode, struct file *filp)
- 	return 0;
- }
- 
-+static int release_kcore(struct inode *inode, struct file *file)
-+{
-+	kfree(file->private_data);
-+	return 0;
-+}
++#ifndef __ASSEMBLY__
 +
- static const struct proc_ops kcore_proc_ops = {
- 	.proc_read_iter	= read_kcore_iter,
- 	.proc_open	= open_kcore,
-+	.proc_release	= release_kcore,
- 	.proc_lseek	= default_llseek,
- };
+ typedef struct {
+ #ifdef CONFIG_PA20
+ 	volatile unsigned int slock;
+@@ -27,6 +31,8 @@ typedef struct {
+ 	volatile unsigned int	counter;
+ } arch_rwlock_t;
  
++#endif /* __ASSEMBLY__ */
++
+ #define __ARCH_RW_LOCK_UNLOCKED__       0x01000000
+ #define __ARCH_RW_LOCK_UNLOCKED         { .lock_mutex = __ARCH_SPIN_LOCK_UNLOCKED, \
+ 					.counter = __ARCH_RW_LOCK_UNLOCKED__ }
+diff --git a/arch/parisc/kernel/syscall.S b/arch/parisc/kernel/syscall.S
+index 1373e5129868..1f51aa9c8230 100644
+--- a/arch/parisc/kernel/syscall.S
++++ b/arch/parisc/kernel/syscall.S
+@@ -39,6 +39,7 @@ registers).
+ #include <asm/assembly.h>
+ #include <asm/processor.h>
+ #include <asm/cache.h>
++#include <asm/spinlock_types.h>
+ 
+ #include <linux/linkage.h>
+ 
+@@ -66,6 +67,16 @@ registers).
+ 	stw	\reg1, 0(%sr2,\reg2)
+ 	.endm
+ 
++	/* raise exception if spinlock content is not zero or
++	 * __ARCH_SPIN_LOCK_UNLOCKED_VAL */
++	.macro	spinlock_check spin_val,tmpreg
++#ifdef CONFIG_LIGHTWEIGHT_SPINLOCK_CHECK
++	ldi	__ARCH_SPIN_LOCK_UNLOCKED_VAL, \tmpreg
++	andcm,=	\spin_val, \tmpreg, %r0
++	.word	SPINLOCK_BREAK_INSN
++#endif
++	.endm
++
+ 	.text
+ 
+ 	.import syscall_exit,code
+@@ -508,7 +519,8 @@ lws_start:
+ 
+ lws_exit_noerror:
+ 	lws_pagefault_enable	%r1,%r21
+-	stw,ma	%r20, 0(%sr2,%r20)
++	ldi	__ARCH_SPIN_LOCK_UNLOCKED_VAL, %r21
++	stw,ma	%r21, 0(%sr2,%r20)
+ 	ssm	PSW_SM_I, %r0
+ 	b	lws_exit
+ 	copy	%r0, %r21
+@@ -521,7 +533,8 @@ lws_wouldblock:
+ 
+ lws_pagefault:
+ 	lws_pagefault_enable	%r1,%r21
+-	stw,ma	%r20, 0(%sr2,%r20)
++	ldi	__ARCH_SPIN_LOCK_UNLOCKED_VAL, %r21
++	stw,ma	%r21, 0(%sr2,%r20)
+ 	ssm	PSW_SM_I, %r0
+ 	ldo	3(%r0),%r28
+ 	b	lws_exit
+@@ -619,6 +632,7 @@ lws_compare_and_swap:
+ 
+ 	/* Try to acquire the lock */
+ 	LDCW	0(%sr2,%r20), %r28
++	spinlock_check	%r28, %r21
+ 	comclr,<>	%r0, %r28, %r0
+ 	b,n	lws_wouldblock
+ 
+@@ -772,6 +786,7 @@ cas2_lock_start:
+ 
+ 	/* Try to acquire the lock */
+ 	LDCW	0(%sr2,%r20), %r28
++	spinlock_check	%r28, %r21
+ 	comclr,<>	%r0, %r28, %r0
+ 	b,n	lws_wouldblock
+ 
+@@ -1001,6 +1016,7 @@ atomic_xchg_start:
+ 
+ 	/* Try to acquire the lock */
+ 	LDCW	0(%sr2,%r20), %r28
++	spinlock_check	%r28, %r21
+ 	comclr,<>	%r0, %r28, %r0
+ 	b,n	lws_wouldblock
+ 
+@@ -1199,6 +1215,7 @@ atomic_store_start:
+ 
+ 	/* Try to acquire the lock */
+ 	LDCW	0(%sr2,%r20), %r28
++	spinlock_check	%r28, %r21
+ 	comclr,<>	%r0, %r28, %r0
+ 	b,n	lws_wouldblock
+ 
+@@ -1330,7 +1347,7 @@ ENTRY(lws_lock_start)
+ 	/* lws locks */
+ 	.rept 256
+ 	/* Keep locks aligned at 16-bytes */
+-	.word 1
++	.word __ARCH_SPIN_LOCK_UNLOCKED_VAL
+ 	.word 0 
+ 	.word 0
+ 	.word 0
 -- 
 2.41.0
 
