@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C259443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14CFC433C7;
-	Sun, 13 Aug 2023 21:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678AC9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A71C433C8;
+	Sun, 13 Aug 2023 21:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961705;
-	bh=/vy778I+Awk3J4osGPEOleSxsUAMIJ8ZAIcl4mrJOeM=;
+	s=korg; t=1691961709;
+	bh=+Jmxty0KlW7/uvSP6JHa4TnP+hiUxGVi+uMll3ZTEOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3qLbunSW89EhW2Ee8xzs6ysIc6oEk/kHgWFJA/ftnjJWCwP7Y7S7rYbfdw3Bsqdo
-	 +1TIJy3WXognAueB1ipMeGkbCrMyQ3dwkTkpBivBORWi/erwP7W8RBMQGiN0MGKIJV
-	 PF0Pgr765cSDl8hmzE9zRdTsAYkMSSsR4lN62/kc=
+	b=VymHrVj6ktbEmPrlfq9b6Ux+zGS65+aP5VU4u4/+E25R1i5M0ALgXZu2vONYeewtP
+	 qmeNqfAuQRC0N+QZWusIk4ZRhTPJw4rR0uHlPtRlehM0oj7oOSTbQ6+tehqaMBVxTh
+	 0RMOIrevds2bcQcPPQ8oBMkyR6yMX0UHWg1IcJmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Roger Quadros <rogerq@kernel.org>
-Subject: [PATCH 4.14 10/26] usb: dwc3: Properly handle processing of pending events
-Date: Sun, 13 Aug 2023 23:19:03 +0200
-Message-ID: <20230813211703.382011333@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 4.14 01/26] sparc: fix up arch_cpu_finalize_init() build breakage.
+Date: Sun, 13 Aug 2023 23:18:54 +0200
+Message-ID: <20230813211703.032783700@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,56 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elson Roy Serrao <quic_eserrao@quicinc.com>
+In commit 39f0e159b8e8 ("sparc/cpu: Switch to arch_cpu_finalize_init()") the
+check for ARCH_HAS_CPU_FINALIZE_INIT was backported incorrectly to the SPARC
+config option, not SPARC32.  This causes build problems for the sparc64 arch:
 
-commit 3ddaa6a274578e23745b7466346fc2650df8f959 upstream.
+	sparc64-linux-ld: init/main.o: in function `start_kernel':
+	main.c:(.init.text+0x77c): undefined reference to `arch_cpu_finalize_init'
 
-If dwc3 is runtime suspended we defer processing the event buffer
-until resume, by setting the pending_events flag. Set this flag before
-triggering resume to avoid race with the runtime resume callback.
+Fix this up by putting the option in the correct place.
 
-While handling the pending events, in addition to checking the event
-buffer we also need to process it. Handle this by explicitly calling
-dwc3_thread_interrupt(). Also balance the runtime pm get() operation
-that triggered this processing.
-
-Cc: stable@vger.kernel.org
-Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230801192658.19275-1-quic_eserrao@quicinc.com
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/252c7673-53ee-4c4b-e5ef-5bb2c0416154@roeck-us.net
+Fixes: 39f0e159b8e8 ("sparc/cpu: Switch to arch_cpu_finalize_init()")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/sparc/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3172,9 +3172,14 @@ static irqreturn_t dwc3_check_event_buf(
- 	u32 reg;
+--- a/arch/sparc/Kconfig
++++ b/arch/sparc/Kconfig
+@@ -12,7 +12,6 @@ config 64BIT
+ config SPARC
+ 	bool
+ 	default y
+-	select ARCH_HAS_CPU_FINALIZE_INIT if !SMP
+ 	select ARCH_MIGHT_HAVE_PC_PARPORT if SPARC64 && PCI
+ 	select ARCH_MIGHT_HAVE_PC_SERIO
+ 	select OF
+@@ -48,6 +47,7 @@ config SPARC
  
- 	if (pm_runtime_suspended(dwc->dev)) {
-+		dwc->pending_events = true;
-+		/*
-+		 * Trigger runtime resume. The get() function will be balanced
-+		 * after processing the pending events in dwc3_process_pending
-+		 * events().
-+		 */
- 		pm_runtime_get(dwc->dev);
- 		disable_irq_nosync(dwc->irq_gadget);
--		dwc->pending_events = true;
- 		return IRQ_HANDLED;
- 	}
- 
-@@ -3414,6 +3419,8 @@ void dwc3_gadget_process_pending_events(
- {
- 	if (dwc->pending_events) {
- 		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
-+		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
-+		pm_runtime_put(dwc->dev);
- 		dwc->pending_events = false;
- 		enable_irq(dwc->irq_gadget);
- 	}
+ config SPARC32
+ 	def_bool !64BIT
++	select ARCH_HAS_CPU_FINALIZE_INIT if !SMP
+ 	select GENERIC_ATOMIC64
+ 	select CLZ_TAB
+ 	select HAVE_UID16
 
 
