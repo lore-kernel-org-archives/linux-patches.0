@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AD79446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31F3C433C8;
-	Sun, 13 Aug 2023 21:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EDE9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE19C433C7;
+	Sun, 13 Aug 2023 21:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962524;
-	bh=OUPn7ctCCTq07YgomPazDfOkSxh3WUQnOrCfV3BR1dU=;
+	s=korg; t=1691962527;
+	bh=8SOFQyrS2XcR+/jgWBQbvc5B3VtrT921Tk6XIbDWWY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EG3IJf0LphWtO4VOhKTULDqJTlHZXLwgXUpXYPPLTOveeJs9Pd/ay/E+GHaQmmzNl
-	 SjIr4so76luaPLMdlmtn54KS8D43DJpX6fUdG/dIGB5oagi7xp9rwvtgQNmuNLdVAu
-	 G0rfdTrJvCtDbuCIv9b3x1FzvZwInZt8AFpQGtlY=
+	b=vBQcgHTrZuj91Z0UDUypE+5SVzFzWZIYXV9K8NDP1HWb7cA0UzrltZHz5/9o1H7Hd
+	 y9yk/+rWiNqQz5nHRyPkt3Y5c3rMFdAsARCLo6e+03Pa+r0ggTVdaRSz4LSj5xLINs
+	 +VajKk/QN1vfryWMlTxXQ8ULM4Ypu1mzE8kkP5Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamza Mahfooz <Hamza.Mahfooz@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 031/149] drm/amd: Disable S/G for APUs when 64GB or more host memory
-Date: Sun, 13 Aug 2023 23:17:56 +0200
-Message-ID: <20230813211719.738464481@linuxfoundation.org>
+	Andrea Parri <parri.andrea@gmail.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 022/149] riscv,mmio: Fix readX()-to-delay() ordering
+Date: Sun, 13 Aug 2023 23:17:47 +0200
+Message-ID: <20230813211719.462626050@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,95 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit 08fffa74d9772d9538338be3f304006c94dde6f0 upstream.
+commit 4eb2eb1b4c0eb07793c240744843498564a67b83 upstream.
 
-Users report a white flickering screen on multiple systems that
-is tied to having 64GB or more memory.  When S/G is enabled pages
-will get pinned to both VRAM carve out and system RAM leading to
-this.
+Section 2.1 of the Platform Specification [1] states:
 
-Until it can be fixed properly, disable S/G when 64GB of memory or
-more is detected.  This will force pages to be pinned into VRAM.
-This should fix white screen flickers but if VRAM pressure is
-encountered may lead to black screens.  It's a trade-off for now.
+  Unless otherwise specified by a given I/O device, I/O devices are on
+  ordering channel 0 (i.e., they are point-to-point strongly ordered).
 
-Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
-Cc: Hamza Mahfooz <Hamza.Mahfooz@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: <stable@vger.kernel.org> # 6.1.y: bf0207e172703 ("drm/amdgpu: add S/G display parameter")
-Cc: <stable@vger.kernel.org> # 6.4.y
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2735
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+which is not sufficient to guarantee that a readX() by a hart completes
+before a subsequent delay() on the same hart (cf. memory-barriers.txt,
+"Kernel I/O barrier effects").
+
+Set the I(nput) bit in __io_ar() to restore the ordering, align inline
+comments.
+
+[1] https://github.com/riscv/riscv-platform-specs
+
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://lore.kernel.org/r/20230803042738.5937-1-parri.andrea@gmail.com
+Fixes: fab957c11efe ("RISC-V: Atomic and Locking Code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c        |   26 ++++++++++++++++++++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 +---
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/mmio.h |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1263,6 +1263,7 @@ int amdgpu_device_gpu_recover(struct amd
- void amdgpu_device_pci_config_reset(struct amdgpu_device *adev);
- int amdgpu_device_pci_reset(struct amdgpu_device *adev);
- bool amdgpu_device_need_post(struct amdgpu_device *adev);
-+bool amdgpu_sg_display_supported(struct amdgpu_device *adev);
- bool amdgpu_device_pcie_dynamic_switching_supported(void);
- bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev);
- bool amdgpu_device_aspm_support_quirk(void);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1334,6 +1334,32 @@ bool amdgpu_device_need_post(struct amdg
- }
+--- a/arch/riscv/include/asm/mmio.h
++++ b/arch/riscv/include/asm/mmio.h
+@@ -101,9 +101,9 @@ static inline u64 __raw_readq(const vola
+  * Relaxed I/O memory access primitives. These follow the Device memory
+  * ordering rules but do not guarantee any ordering relative to Normal memory
+  * accesses.  These are defined to order the indicated access (either a read or
+- * write) with all other I/O memory accesses. Since the platform specification
+- * defines that all I/O regions are strongly ordered on channel 2, no explicit
+- * fences are required to enforce this ordering.
++ * write) with all other I/O memory accesses to the same peripheral. Since the
++ * platform specification defines that all I/O regions are strongly ordered on
++ * channel 0, no explicit fences are required to enforce this ordering.
+  */
+ /* FIXME: These are now the same as asm-generic */
+ #define __io_rbr()		do {} while (0)
+@@ -125,14 +125,14 @@ static inline u64 __raw_readq(const vola
+ #endif
  
  /*
-+ * On APUs with >= 64GB white flickering has been observed w/ SG enabled.
-+ * Disable S/G on such systems until we have a proper fix.
-+ * https://gitlab.freedesktop.org/drm/amd/-/issues/2354
-+ * https://gitlab.freedesktop.org/drm/amd/-/issues/2735
-+ */
-+bool amdgpu_sg_display_supported(struct amdgpu_device *adev)
-+{
-+	switch (amdgpu_sg_display) {
-+	case -1:
-+		break;
-+	case 0:
-+		return false;
-+	case 1:
-+		return true;
-+	default:
-+		return false;
-+	}
-+	if ((totalram_pages() << (PAGE_SHIFT - 10)) +
-+	    (adev->gmc.real_vram_size / 1024) >= 64000000) {
-+		DRM_WARN("Disabling S/G due to >=64GB RAM\n");
-+		return false;
-+	}
-+	return true;
-+}
-+
-+/*
-  * Intel hosts such as Raptor Lake and Sapphire Rapids don't support dynamic
-  * speed switching. Until we have confirmation from Intel that a specific host
-  * supports it, it's safer that we keep it disabled for all.
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1634,9 +1634,8 @@ static int amdgpu_dm_init(struct amdgpu_
- 		}
- 		break;
- 	}
--	if (init_data.flags.gpu_vm_support &&
--	    (amdgpu_sg_display == 0))
--		init_data.flags.gpu_vm_support = false;
-+	if (init_data.flags.gpu_vm_support)
-+		init_data.flags.gpu_vm_support = amdgpu_sg_display_supported(adev);
+- * I/O memory access primitives. Reads are ordered relative to any
+- * following Normal memory access. Writes are ordered relative to any prior
+- * Normal memory access.  The memory barriers here are necessary as RISC-V
++ * I/O memory access primitives.  Reads are ordered relative to any following
++ * Normal memory read and delay() loop.  Writes are ordered relative to any
++ * prior Normal memory write.  The memory barriers here are necessary as RISC-V
+  * doesn't define any ordering between the memory space and the I/O space.
+  */
+ #define __io_br()	do {} while (0)
+-#define __io_ar(v)	__asm__ __volatile__ ("fence i,r" : : : "memory")
+-#define __io_bw()	__asm__ __volatile__ ("fence w,o" : : : "memory")
++#define __io_ar(v)	({ __asm__ __volatile__ ("fence i,ir" : : : "memory"); })
++#define __io_bw()	({ __asm__ __volatile__ ("fence w,o" : : : "memory"); })
+ #define __io_aw()	mmiowb_set_pending()
  
- 	if (init_data.flags.gpu_vm_support)
- 		adev->mode_info.gpu_vm_support = true;
+ #define readb(c)	({ u8  __v; __io_br(); __v = readb_cpu(c); __io_ar(__v); __v; })
 
 
