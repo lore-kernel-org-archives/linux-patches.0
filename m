@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401EA9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB099C433C7;
-	Sun, 13 Aug 2023 21:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048CF9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2B9C433C7;
+	Sun, 13 Aug 2023 21:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962150;
-	bh=aDr2siSH1z9VTUNpqD4UMAdlp2+30o+fxizMOILr77E=;
+	s=korg; t=1691962152;
+	bh=cvqnIKndd98t4UYY1pzJ5yw7dW7QKqRSe5BdsRiBZdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9LwtdEo4ajTXYumF0eSowa6RSd0WlDKcrA3ZsZcrnn88wh+ZnHRFCC4tcqJiYoMF
-	 JVNzOrhzNotL6M/XWanbzZDYteDMJxzT1rKxTUI2F2X6Xd3X5n5iGymIok1oE3VwDi
-	 ePOPTYR/nq2M4nl0LIMa9SIyEgMFplDZJXUHu32Q=
+	b=UAUtksvA9fZ91CKL6fIafO7P+alEa2QKlMbRAShv6tLkeH7WURe7Rz+Dgf3zKvBv+
+	 U1O8IhQbcQy+yFh8q+g/jpI59Up0PcXuBWhZshgWzsvTiZHM266GbbNt5kMDE+oZNp
+	 HWan8VPI5bkTJroObJWyiyWW+KMBUIpoi7bBxuak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
+	Rob Herring <robh@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 132/206] net/smc: Use correct buffer sizes when switching between TCP and SMC
-Date: Sun, 13 Aug 2023 23:18:22 +0200
-Message-ID: <20230813211728.803378247@linuxfoundation.org>
+Subject: [PATCH 6.4 133/206] PCI: move OF status = "disabled" detection to dev->match_driver
+Date: Sun, 13 Aug 2023 23:18:23 +0200
+Message-ID: <20230813211728.832515996@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,141 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 30c3c4a4497c3765bf6b298f5072c8165aeaf7cc upstream.
+commit 1a8c251cff2052b60009a070173308322e9600d3 upstream.
 
-Tuning of the effective buffer size through setsockopts was working for
-SMC traffic only but not for TCP fall-back connections even before
-commit 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock and
-make them tunable"). That change made it apparent that TCP fall-back
-connections would use net.smc.[rw]mem as buffer size instead of
-net.ipv4_tcp_[rw]mem.
+The blamed commit has broken probing on
+arch/arm64/boot/dts/freescale/fsl-ls1028a.dtsi when &enetc_port0
+(PCI function 0) has status = "disabled".
 
-Amend the code that copies attributes between the (TCP) clcsock and the
-SMC socket and adjust buffer sizes appropriately:
-- Copy over sk_userlocks so that both sockets agree on whether tuning
-  via setsockopt is active.
-- When falling back to TCP use sk_sndbuf or sk_rcvbuf as specified with
-  setsockopt. Otherwise, use the sysctl value for TCP/IPv4.
-- Likewise, use either values from setsockopt or from sysctl for SMC
-  (duplicated) on successful SMC connect.
+Background: pci_scan_slot() has logic to say that if the function 0 of a
+device is absent, the entire device is absent and we can skip the other
+functions entirely. Traditionally, this has meant that
+pci_bus_read_dev_vendor_id() returns an error code for that function.
 
-In smc_tcp_listen_work() drop the explicit copy of buffer sizes as that
-is taken care of by the attribute copy.
+However, since the blamed commit, there is an extra confounding
+condition: function 0 of the device exists and has a valid vendor id,
+but it is disabled in the device tree. In that case, pci_scan_slot()
+would incorrectly skip the entire device instead of just that function.
 
-Fixes: 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock and make them tunable")
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+In the case of NXP LS1028A, status = "disabled" does not mean that the
+PCI function's config space is not available for reading. It is, but the
+Ethernet port is just not functionally useful with a particular SerDes
+protocol configuration (0x9999) due to pinmuxing constraints of the Soc.
+So, pci_scan_slot() skips all other functions on the ENETC ECAM
+(enetc_port1, enetc_port2, enetc_mdio_pf3 etc) when just enetc_port0 had
+to not be probed.
+
+There is an additional regression introduced by the change, caused by
+its fundamental premise. The enetc driver needs to run code for all PCI
+functions, regardless of whether they're enabled or not in the device
+tree. That is no longer possible if the driver's probe function is no
+longer called. But Rob recommends that we move the of_device_is_available()
+detection to dev->match_driver, and this makes the PCI fixups still run
+on all functions, while just probing drivers for those functions that
+are enabled. So, a separate change in the enetc driver will have to move
+the workarounds to a PCI fixup.
+
+Fixes: 6fffbc7ae137 ("PCI: Honor firmware's device disabled status")
+Link: https://lore.kernel.org/netdev/CAL_JsqLsVYiPLx2kcHkDQ4t=hQVCR7NHziDwi9cCFUFhx48Qow@mail.gmail.com/
+Suggested-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/af_smc.c |   73 ++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 51 insertions(+), 22 deletions(-)
+ drivers/pci/bus.c |    4 +++-
+ drivers/pci/of.c  |    5 -----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -436,13 +436,60 @@ out:
- 	return rc;
- }
+--- a/drivers/pci/bus.c
++++ b/drivers/pci/bus.c
+@@ -11,6 +11,7 @@
+ #include <linux/pci.h>
+ #include <linux/errno.h>
+ #include <linux/ioport.h>
++#include <linux/of.h>
+ #include <linux/proc_fs.h>
+ #include <linux/slab.h>
  
-+/* copy only relevant settings and flags of SOL_SOCKET level from smc to
-+ * clc socket (since smc is not called for these options from net/core)
-+ */
-+
-+#define SK_FLAGS_SMC_TO_CLC ((1UL << SOCK_URGINLINE) | \
-+			     (1UL << SOCK_KEEPOPEN) | \
-+			     (1UL << SOCK_LINGER) | \
-+			     (1UL << SOCK_BROADCAST) | \
-+			     (1UL << SOCK_TIMESTAMP) | \
-+			     (1UL << SOCK_DBG) | \
-+			     (1UL << SOCK_RCVTSTAMP) | \
-+			     (1UL << SOCK_RCVTSTAMPNS) | \
-+			     (1UL << SOCK_LOCALROUTE) | \
-+			     (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE) | \
-+			     (1UL << SOCK_RXQ_OVFL) | \
-+			     (1UL << SOCK_WIFI_STATUS) | \
-+			     (1UL << SOCK_NOFCS) | \
-+			     (1UL << SOCK_FILTER_LOCKED) | \
-+			     (1UL << SOCK_TSTAMP_NEW))
-+
-+/* if set, use value set by setsockopt() - else use IPv4 or SMC sysctl value */
-+static void smc_adjust_sock_bufsizes(struct sock *nsk, struct sock *osk,
-+				     unsigned long mask)
-+{
-+	struct net *nnet = sock_net(nsk);
-+
-+	nsk->sk_userlocks = osk->sk_userlocks;
-+	if (osk->sk_userlocks & SOCK_SNDBUF_LOCK) {
-+		nsk->sk_sndbuf = osk->sk_sndbuf;
-+	} else {
-+		if (mask == SK_FLAGS_SMC_TO_CLC)
-+			WRITE_ONCE(nsk->sk_sndbuf,
-+				   READ_ONCE(nnet->ipv4.sysctl_tcp_wmem[1]));
-+		else
-+			WRITE_ONCE(nsk->sk_sndbuf,
-+				   2 * READ_ONCE(nnet->smc.sysctl_wmem));
-+	}
-+	if (osk->sk_userlocks & SOCK_RCVBUF_LOCK) {
-+		nsk->sk_rcvbuf = osk->sk_rcvbuf;
-+	} else {
-+		if (mask == SK_FLAGS_SMC_TO_CLC)
-+			WRITE_ONCE(nsk->sk_rcvbuf,
-+				   READ_ONCE(nnet->ipv4.sysctl_tcp_rmem[1]));
-+		else
-+			WRITE_ONCE(nsk->sk_rcvbuf,
-+				   2 * READ_ONCE(nnet->smc.sysctl_rmem));
-+	}
-+}
-+
- static void smc_copy_sock_settings(struct sock *nsk, struct sock *osk,
- 				   unsigned long mask)
+@@ -332,6 +333,7 @@ void __weak pcibios_bus_add_device(struc
+  */
+ void pci_bus_add_device(struct pci_dev *dev)
  {
- 	/* options we don't get control via setsockopt for */
- 	nsk->sk_type = osk->sk_type;
--	nsk->sk_sndbuf = osk->sk_sndbuf;
--	nsk->sk_rcvbuf = osk->sk_rcvbuf;
- 	nsk->sk_sndtimeo = osk->sk_sndtimeo;
- 	nsk->sk_rcvtimeo = osk->sk_rcvtimeo;
- 	nsk->sk_mark = READ_ONCE(osk->sk_mark);
-@@ -453,26 +500,10 @@ static void smc_copy_sock_settings(struc
++	struct device_node *dn = dev->dev.of_node;
+ 	int retval;
  
- 	nsk->sk_flags &= ~mask;
- 	nsk->sk_flags |= osk->sk_flags & mask;
-+
-+	smc_adjust_sock_bufsizes(nsk, osk, mask);
- }
+ 	/*
+@@ -344,7 +346,7 @@ void pci_bus_add_device(struct pci_dev *
+ 	pci_proc_attach_device(dev);
+ 	pci_bridge_d3_update(dev);
  
--#define SK_FLAGS_SMC_TO_CLC ((1UL << SOCK_URGINLINE) | \
--			     (1UL << SOCK_KEEPOPEN) | \
--			     (1UL << SOCK_LINGER) | \
--			     (1UL << SOCK_BROADCAST) | \
--			     (1UL << SOCK_TIMESTAMP) | \
--			     (1UL << SOCK_DBG) | \
--			     (1UL << SOCK_RCVTSTAMP) | \
--			     (1UL << SOCK_RCVTSTAMPNS) | \
--			     (1UL << SOCK_LOCALROUTE) | \
--			     (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE) | \
--			     (1UL << SOCK_RXQ_OVFL) | \
--			     (1UL << SOCK_WIFI_STATUS) | \
--			     (1UL << SOCK_NOFCS) | \
--			     (1UL << SOCK_FILTER_LOCKED) | \
--			     (1UL << SOCK_TSTAMP_NEW))
--/* copy only relevant settings and flags of SOL_SOCKET level from smc to
-- * clc socket (since smc is not called for these options from net/core)
-- */
- static void smc_copy_sock_settings_to_clc(struct smc_sock *smc)
- {
- 	smc_copy_sock_settings(smc->clcsock->sk, &smc->sk, SK_FLAGS_SMC_TO_CLC);
-@@ -2479,8 +2510,6 @@ static void smc_tcp_listen_work(struct w
- 		sock_hold(lsk); /* sock_put in smc_listen_work */
- 		INIT_WORK(&new_smc->smc_listen_work, smc_listen_work);
- 		smc_copy_sock_settings_to_smc(new_smc);
--		new_smc->sk.sk_sndbuf = lsmc->sk.sk_sndbuf;
--		new_smc->sk.sk_rcvbuf = lsmc->sk.sk_rcvbuf;
- 		sock_hold(&new_smc->sk); /* sock_put in passive closing */
- 		if (!queue_work(smc_hs_wq, &new_smc->smc_listen_work))
- 			sock_put(&new_smc->sk);
+-	dev->match_driver = true;
++	dev->match_driver = !dn || of_device_is_available(dn);
+ 	retval = device_attach(&dev->dev);
+ 	if (retval < 0 && retval != -EPROBE_DEFER)
+ 		pci_warn(dev, "device attach failed (%d)\n", retval);
+--- a/drivers/pci/of.c
++++ b/drivers/pci/of.c
+@@ -34,11 +34,6 @@ int pci_set_of_node(struct pci_dev *dev)
+ 	if (!node)
+ 		return 0;
+ 
+-	if (!of_device_is_available(node)) {
+-		of_node_put(node);
+-		return -ENODEV;
+-	}
+-
+ 	dev->dev.of_node = node;
+ 	dev->dev.fwnode = &node->fwnode;
+ 	return 0;
 
 
