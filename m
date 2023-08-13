@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EDE9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE19C433C7;
-	Sun, 13 Aug 2023 21:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFAC9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52376C433C7;
+	Sun, 13 Aug 2023 21:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962527;
-	bh=8SOFQyrS2XcR+/jgWBQbvc5B3VtrT921Tk6XIbDWWY8=;
+	s=korg; t=1691962529;
+	bh=o5YfiK6t4S8NtYPXrKKLgoKUEkE1Prvv03srNdyjNYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBQcgHTrZuj91Z0UDUypE+5SVzFzWZIYXV9K8NDP1HWb7cA0UzrltZHz5/9o1H7Hd
-	 y9yk/+rWiNqQz5nHRyPkt3Y5c3rMFdAsARCLo6e+03Pa+r0ggTVdaRSz4LSj5xLINs
-	 +VajKk/QN1vfryWMlTxXQ8ULM4Ypu1mzE8kkP5Fs=
+	b=rzTMLnsm4tGHvbJFkzLBwicv7+koDUnSIFa3B4benEweLAMXaKmsJqD8Wh/q2tao3
+	 3NiZRNADDVbBXqs9UX0LX7uVn3Lt9O9apmE3JIT9qHQC+PVj94C9L+sR/jumknbDFe
+	 VKcU5ieQeKKq5DDznRWXSqgRVaCEqJfefGtpZYkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 022/149] riscv,mmio: Fix readX()-to-delay() ordering
-Date: Sun, 13 Aug 2023 23:17:47 +0200
-Message-ID: <20230813211719.462626050@linuxfoundation.org>
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 055/149] iio: adc: ina2xx: avoid NULL pointer dereference on OF device match
+Date: Sun, 13 Aug 2023 23:18:20 +0200
+Message-ID: <20230813211720.458888285@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,68 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Alvin Šipraga <alsi@bang-olufsen.dk>
 
-commit 4eb2eb1b4c0eb07793c240744843498564a67b83 upstream.
+commit a41e19cc0d6b6a445a4133170b90271e4a2553dc upstream.
 
-Section 2.1 of the Platform Specification [1] states:
+The affected lines were resulting in a NULL pointer dereference on our
+platform because the device tree contained the following list of
+compatible strings:
 
-  Unless otherwise specified by a given I/O device, I/O devices are on
-  ordering channel 0 (i.e., they are point-to-point strongly ordered).
+    power-sensor@40 {
+        compatible = "ti,ina232", "ti,ina231";
+        ...
+    };
 
-which is not sufficient to guarantee that a readX() by a hart completes
-before a subsequent delay() on the same hart (cf. memory-barriers.txt,
-"Kernel I/O barrier effects").
+Since the driver doesn't declare a compatible string "ti,ina232", the OF
+matching succeeds on "ti,ina231". But the I2C device ID info is
+populated via the first compatible string, cf. modalias population in
+of_i2c_get_board_info(). Since there is no "ina232" entry in the legacy
+I2C device ID table either, the struct i2c_device_id *id pointer in the
+probe function is NULL.
 
-Set the I(nput) bit in __io_ar() to restore the ordering, align inline
-comments.
+Fix this by using the already populated type variable instead, which
+points to the proper driver data. Since the name is also wanted, add a
+generic one to the ina2xx_config table.
 
-[1] https://github.com/riscv/riscv-platform-specs
-
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://lore.kernel.org/r/20230803042738.5937-1-parri.andrea@gmail.com
-Fixes: fab957c11efe ("RISC-V: Atomic and Locking Code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Fixes: c43a102e67db ("iio: ina2xx: add support for TI INA2xx Power Monitors")
+Link: https://lore.kernel.org/r/20230619141239.2257392-1-alvin@pqrs.dk
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/mmio.h |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/iio/adc/ina2xx-adc.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/riscv/include/asm/mmio.h
-+++ b/arch/riscv/include/asm/mmio.h
-@@ -101,9 +101,9 @@ static inline u64 __raw_readq(const vola
-  * Relaxed I/O memory access primitives. These follow the Device memory
-  * ordering rules but do not guarantee any ordering relative to Normal memory
-  * accesses.  These are defined to order the indicated access (either a read or
-- * write) with all other I/O memory accesses. Since the platform specification
-- * defines that all I/O regions are strongly ordered on channel 2, no explicit
-- * fences are required to enforce this ordering.
-+ * write) with all other I/O memory accesses to the same peripheral. Since the
-+ * platform specification defines that all I/O regions are strongly ordered on
-+ * channel 0, no explicit fences are required to enforce this ordering.
-  */
- /* FIXME: These are now the same as asm-generic */
- #define __io_rbr()		do {} while (0)
-@@ -125,14 +125,14 @@ static inline u64 __raw_readq(const vola
- #endif
+--- a/drivers/iio/adc/ina2xx-adc.c
++++ b/drivers/iio/adc/ina2xx-adc.c
+@@ -124,6 +124,7 @@ static const struct regmap_config ina2xx
+ enum ina2xx_ids { ina219, ina226 };
  
- /*
-- * I/O memory access primitives. Reads are ordered relative to any
-- * following Normal memory access. Writes are ordered relative to any prior
-- * Normal memory access.  The memory barriers here are necessary as RISC-V
-+ * I/O memory access primitives.  Reads are ordered relative to any following
-+ * Normal memory read and delay() loop.  Writes are ordered relative to any
-+ * prior Normal memory write.  The memory barriers here are necessary as RISC-V
-  * doesn't define any ordering between the memory space and the I/O space.
-  */
- #define __io_br()	do {} while (0)
--#define __io_ar(v)	__asm__ __volatile__ ("fence i,r" : : : "memory")
--#define __io_bw()	__asm__ __volatile__ ("fence w,o" : : : "memory")
-+#define __io_ar(v)	({ __asm__ __volatile__ ("fence i,ir" : : : "memory"); })
-+#define __io_bw()	({ __asm__ __volatile__ ("fence w,o" : : : "memory"); })
- #define __io_aw()	mmiowb_set_pending()
+ struct ina2xx_config {
++	const char *name;
+ 	u16 config_default;
+ 	int calibration_value;
+ 	int shunt_voltage_lsb;	/* nV */
+@@ -155,6 +156,7 @@ struct ina2xx_chip_info {
  
- #define readb(c)	({ u8  __v; __io_br(); __v = readb_cpu(c); __io_ar(__v); __v; })
+ static const struct ina2xx_config ina2xx_config[] = {
+ 	[ina219] = {
++		.name = "ina219",
+ 		.config_default = INA219_CONFIG_DEFAULT,
+ 		.calibration_value = 4096,
+ 		.shunt_voltage_lsb = 10000,
+@@ -164,6 +166,7 @@ static const struct ina2xx_config ina2xx
+ 		.chip_id = ina219,
+ 	},
+ 	[ina226] = {
++		.name = "ina226",
+ 		.config_default = INA226_CONFIG_DEFAULT,
+ 		.calibration_value = 2048,
+ 		.shunt_voltage_lsb = 2500,
+@@ -996,7 +999,7 @@ static int ina2xx_probe(struct i2c_clien
+ 	/* Patch the current config register with default. */
+ 	val = chip->config->config_default;
+ 
+-	if (id->driver_data == ina226) {
++	if (type == ina226) {
+ 		ina226_set_average(chip, INA226_DEFAULT_AVG, &val);
+ 		ina226_set_int_time_vbus(chip, INA226_DEFAULT_IT, &val);
+ 		ina226_set_int_time_vshunt(chip, INA226_DEFAULT_IT, &val);
+@@ -1015,7 +1018,7 @@ static int ina2xx_probe(struct i2c_clien
+ 	}
+ 
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+-	if (id->driver_data == ina226) {
++	if (type == ina226) {
+ 		indio_dev->channels = ina226_channels;
+ 		indio_dev->num_channels = ARRAY_SIZE(ina226_channels);
+ 		indio_dev->info = &ina226_info;
+@@ -1024,7 +1027,7 @@ static int ina2xx_probe(struct i2c_clien
+ 		indio_dev->num_channels = ARRAY_SIZE(ina219_channels);
+ 		indio_dev->info = &ina219_info;
+ 	}
+-	indio_dev->name = id->name;
++	indio_dev->name = id ? id->name : chip->config->name;
+ 
+ 	ret = devm_iio_kfifo_buffer_setup(&client->dev, indio_dev,
+ 					  &ina2xx_setup_ops);
 
 
