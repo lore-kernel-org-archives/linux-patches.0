@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F037D9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DCCC433C7;
-	Sun, 13 Aug 2023 21:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCE39446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22665C433C8;
+	Sun, 13 Aug 2023 21:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962540;
-	bh=jMa0yFUyBMoO14cGhZjriSxrKglpiq5ssP1edSCI88E=;
+	s=korg; t=1691962543;
+	bh=A87liQJZt1QETltZwySfFJ9Bx67cktbkLe9ZLwz4Ghs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxgGESpp1cl6Fm/1OlnkDXadSfUZ+ifcSeGUj/95SZUPgTo/F/MoRgz+U5nj7vHRT
-	 twQy71NjoxmnKKjikgUT3XQs5ucENOcrm+S0sK4A4azyj/mgLI517W9bOjN7xyLeVr
-	 Yy8gxNLpkw1Umq4w4aI3Yo7HN3YP7YrEdxJHcy18=
+	b=VYr5ybYxQ7SIlx6+WkN17em9+d1ykr4iAvFx7T5KoRQwNE6u4B66C4r6r6B5kgWlK
+	 XybELEZpxTq5BiBa5gqjZkhSaKGT5Jk06feWid63nBsYmaXb+ZE0jplJWtLlxF+7P0
+	 Yi1QOCeGIdpRl2JX7SM5xYs3hiroq2nwQ6/b5+qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Liu <ltao@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
 	stable@kernel.org
-Subject: [PATCH 6.1 067/149] x86/sev: Do not try to parse for the CC blob on non-AMD hardware
-Date: Sun, 13 Aug 2023 23:18:32 +0200
-Message-ID: <20230813211720.805980913@linuxfoundation.org>
+Subject: [PATCH 6.1 068/149] x86/speculation: Add cpu_show_gds() prototype
+Date: Sun, 13 Aug 2023 23:18:33 +0200
+Message-ID: <20230813211720.833664748@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,118 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit bee6cf1a80b54548a039e224c651bb15b644a480 upstream.
+commit a57c27c7ad85c420b7de44c6ee56692d51709dda upstream.
 
-Tao Liu reported a boot hang on an Intel Atom machine due to an unmapped
-EFI config table. The reason being that the CC blob which contains the
-CPUID page for AMD SNP guests is parsed for before even checking
-whether the machine runs on AMD hardware.
+The newly added function has two definitions but no prototypes:
 
-Usually that's not a problem on !AMD hw - it simply won't find the CC
-blob's GUID and return. However, if any parts of the config table
-pointers array is not mapped, the kernel will #PF very early in the
-decompressor stage without any opportunity to recover.
+drivers/base/cpu.c:605:16: error: no previous prototype for 'cpu_show_gds' [-Werror=missing-prototypes]
 
-Therefore, do a superficial CPUID check before poking for the CC blob.
-This will fix the current issue on real hardware. It would also work as
-a guest on a non-lying hypervisor.
+Add a declaration next to the other ones for this file to avoid the
+warning.
 
-For the lying hypervisor, the check is done again, *after* parsing the
-CC blob as the real CPUID page will be present then.
-
-Clear the #VC handler in case SEV-{ES,SNP} hasn't been detected, as
-a precaution.
-
-Fixes: c01fce9cef84 ("x86/compressed: Add SEV-SNP feature detection/setup")
-Reported-by: Tao Liu <ltao@redhat.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Tested-by: Tao Liu <ltao@redhat.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230601072043.24439-1-ltao@redhat.com
+Fixes: 8974eb588283b ("x86/speculation: Add Gather Data Sampling mitigation")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/all/20230809130530.1913368-1-arnd%40kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/idt_64.c |    9 ++++++++-
- arch/x86/boot/compressed/sev.c    |   37 +++++++++++++++++++++++++++++++++++--
- 2 files changed, 43 insertions(+), 3 deletions(-)
+ include/linux/cpu.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/boot/compressed/idt_64.c
-+++ b/arch/x86/boot/compressed/idt_64.c
-@@ -63,7 +63,14 @@ void load_stage2_idt(void)
- 	set_idt_entry(X86_TRAP_PF, boot_page_fault);
+--- a/include/linux/cpu.h
++++ b/include/linux/cpu.h
+@@ -72,6 +72,8 @@ extern ssize_t cpu_show_retbleed(struct
+ 				 struct device_attribute *attr, char *buf);
+ extern ssize_t cpu_show_spec_rstack_overflow(struct device *dev,
+ 					     struct device_attribute *attr, char *buf);
++extern ssize_t cpu_show_gds(struct device *dev,
++			    struct device_attribute *attr, char *buf);
  
- #ifdef CONFIG_AMD_MEM_ENCRYPT
--	set_idt_entry(X86_TRAP_VC, boot_stage2_vc);
-+	/*
-+	 * Clear the second stage #VC handler in case guest types
-+	 * needing #VC have not been detected.
-+	 */
-+	if (sev_status & BIT(1))
-+		set_idt_entry(X86_TRAP_VC, boot_stage2_vc);
-+	else
-+		set_idt_entry(X86_TRAP_VC, NULL);
- #endif
- 
- 	load_boot_idt(&boot_idt_desc);
---- a/arch/x86/boot/compressed/sev.c
-+++ b/arch/x86/boot/compressed/sev.c
-@@ -355,12 +355,45 @@ void sev_enable(struct boot_params *bp)
- 		bp->cc_blob_address = 0;
- 
- 	/*
-+	 * Do an initial SEV capability check before snp_init() which
-+	 * loads the CPUID page and the same checks afterwards are done
-+	 * without the hypervisor and are trustworthy.
-+	 *
-+	 * If the HV fakes SEV support, the guest will crash'n'burn
-+	 * which is good enough.
-+	 */
-+
-+	/* Check for the SME/SEV support leaf */
-+	eax = 0x80000000;
-+	ecx = 0;
-+	native_cpuid(&eax, &ebx, &ecx, &edx);
-+	if (eax < 0x8000001f)
-+		return;
-+
-+	/*
-+	 * Check for the SME/SEV feature:
-+	 *   CPUID Fn8000_001F[EAX]
-+	 *   - Bit 0 - Secure Memory Encryption support
-+	 *   - Bit 1 - Secure Encrypted Virtualization support
-+	 *   CPUID Fn8000_001F[EBX]
-+	 *   - Bits 5:0 - Pagetable bit position used to indicate encryption
-+	 */
-+	eax = 0x8000001f;
-+	ecx = 0;
-+	native_cpuid(&eax, &ebx, &ecx, &edx);
-+	/* Check whether SEV is supported */
-+	if (!(eax & BIT(1)))
-+		return;
-+
-+	/*
- 	 * Setup/preliminary detection of SNP. This will be sanity-checked
- 	 * against CPUID/MSR values later.
- 	 */
- 	snp = snp_init(bp);
- 
--	/* Check for the SME/SEV support leaf */
-+	/* Now repeat the checks with the SNP CPUID table. */
-+
-+	/* Recheck the SME/SEV support leaf */
- 	eax = 0x80000000;
- 	ecx = 0;
- 	native_cpuid(&eax, &ebx, &ecx, &edx);
-@@ -368,7 +401,7 @@ void sev_enable(struct boot_params *bp)
- 		return;
- 
- 	/*
--	 * Check for the SME/SEV feature:
-+	 * Recheck for the SME/SEV feature:
- 	 *   CPUID Fn8000_001F[EAX]
- 	 *   - Bit 0 - Secure Memory Encryption support
- 	 *   - Bit 1 - Secure Encrypted Virtualization support
+ extern __printf(4, 5)
+ struct device *cpu_device_create(struct device *parent, void *drvdata,
 
 
