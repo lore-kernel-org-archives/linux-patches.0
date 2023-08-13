@@ -1,197 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D697223C8
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:20:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E7EC433C7;
-	Sun, 13 Aug 2023 21:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E06F23C8
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:20:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95283C433C9;
+	Sun, 13 Aug 2023 21:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961646;
-	bh=Jh4KJjsbQaS+JEF+w7qDObZ/RSPYn8hd8PmpmYAz1TE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=buJLSgPRpDUpkwqQX/Q7RqtebFIn3Bp/2tvIXbaakhyT7f9JkdU3ch9jcuCbnbkGC
-	 41jE4qpjKRMP/Ap44BibjL9hGA2wNq7uF58VYk97mAQcLkuDPPBruKvOsAUyXiEdk1
-	 Z15hwoYZujRBs88+wSHcbIkio+RGcawrX5/y4P7Q=
+	s=korg; t=1691961648;
+	bh=EnlOqSZzYVL4gqDBVzyfLjHH9R2SKtoMEjbfxtC1vEs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Z1x77RgxAGVZ0EePv5GQ1QgFGveTc9QzMUpgbmDuhZIZcTYOaGvtxdyuBKYWvAt55
+	 5WESCUUek6NgQFWbxlr22SK3rdHajh56jIVo7ymbzfWdiqOVB6ncBPnHpYu9HXG8K6
+	 NvtGP020x8WelCzi4U3w7A4w2L2atw+Jw8y4vvgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 4.14 00/26] 4.14.323-rc1 review
-Date: Sun, 13 Aug 2023 23:18:53 +0200
-Message-ID: <20230813211702.980427106@linuxfoundation.org>
+	Sergei Antonov <saproj@gmail.com>,
+	Jonas Jensen <jonas.jensen@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.14 02/26] mmc: moxart: read scr register without changing byte order
+Date: Sun, 13 Aug 2023 23:18:55 +0200
+Message-ID: <20230813211703.070587128@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
+References: <20230813211702.980427106@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.323-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.323-rc1
-X-KernelTest-Deadline: 2023-08-15T21:17+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.323 release.
-There are 26 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Sergei Antonov <saproj@gmail.com>
 
-Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
-Anything received after that time might be too late.
+commit d44263222134b5635932974c6177a5cba65a07e8 upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.323-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+Conversion from big-endian to native is done in a common function
+mmc_app_send_scr(). Converting in moxart_transfer_pio() is extra.
+Double conversion on a LE system returns an incorrect SCR value,
+leads to errors:
 
-thanks,
+mmc0: unrecognised SCR structure version 8
 
-greg k-h
+Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
+Signed-off-by: Sergei Antonov <saproj@gmail.com>
+Cc: Jonas Jensen <jonas.jensen@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230627120549.2400325-1-saproj@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/mmc/host/moxart-mmc.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.323-rc1
-
-Masahiro Yamada <masahiroy@kernel.org>
-    alpha: remove __init annotation from exported page_is_ram()
-
-Zhu Wang <wangzhu9@huawei.com>
-    scsi: core: Fix possible memory leak if device_add() fails
-
-Zhu Wang <wangzhu9@huawei.com>
-    scsi: snic: Fix possible memory leak if device_add() fails
-
-Alexandra Diupina <adiupina@astralinux.ru>
-    scsi: 53c700: Check that command slot is not NULL
-
-Michael Kelley <mikelley@microsoft.com>
-    scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
-
-Tony Battersby <tonyb@cybernetics.com>
-    scsi: core: Fix legacy /proc parsing buffer overflow
-
-Pablo Neira Ayuso <pablo@netfilter.org>
-    netfilter: nf_tables: report use refcount overflow
-
-Christoph Hellwig <hch@lst.de>
-    btrfs: don't stop integrity writeback too early
-
-Douglas Miller <doug.miller@cornelisnetworks.com>
-    IB/hfi1: Fix possible panic during hotplug remove
-
-Andrew Kanner <andrew.kanner@gmail.com>
-    drivers: net: prevent tun_build_skb() to exceed the packet size limit
-
-Eric Dumazet <edumazet@google.com>
-    dccp: fix data-race around dp->dccps_mss_cache
-
-Ziyang Xuan <william.xuanziyang@huawei.com>
-    bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-
-Eric Dumazet <edumazet@google.com>
-    net/packet: annotate data-races around tp->status
-
-Karol Herbst <kherbst@redhat.com>
-    drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
-
-Arnd Bergmann <arnd@arndb.de>
-    x86: Move gds_ucode_mitigated() declaration to header
-
-Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-    x86/mm: Fix VDSO and VVAR placement on 5-level paging machines
-
-Elson Roy Serrao <quic_eserrao@quicinc.com>
-    usb: dwc3: Properly handle processing of pending events
-
-Alan Stern <stern@rowland.harvard.edu>
-    usb-storage: alauda: Fix uninit-value in alauda_check_media()
-
-Yiyuan Guo <yguoaz@gmail.com>
-    iio: cros_ec: Fix the allocation size for cros_ec_command
-
-Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-    test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
-
-Colin Ian King <colin.i.king@gmail.com>
-    radix tree test suite: fix incorrect allocation size for pthreads
-
-Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-    dmaengine: pl330: Return DMA_PAUSED when transaction is paused
-
-Maciej Żenczykowski <maze@google.com>
-    ipv6: adjust ndisc_is_useropt() to also return true for PIO
-
-Sergei Antonov <saproj@gmail.com>
-    mmc: moxart: read scr register without changing byte order
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    sparc: fix up arch_cpu_finalize_init() build breakage.
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/alpha/kernel/setup.c                          |   3 +-
- arch/sparc/Kconfig                                 |   2 +-
- arch/x86/entry/vdso/vma.c                          |   4 +-
- arch/x86/include/asm/processor.h                   |   2 +
- arch/x86/kvm/x86.c                                 |   2 -
- drivers/dma/pl330.c                                |  18 ++-
- drivers/gpu/drm/nouveau/nouveau_connector.c        |   2 +-
- .../common/cros_ec_sensors/cros_ec_sensors_core.c  |   2 +-
- drivers/infiniband/hw/hfi1/chip.c                  |   1 +
- drivers/mmc/host/moxart-mmc.c                      |   8 +-
- drivers/net/bonding/bond_main.c                    |   4 +-
- drivers/net/tun.c                                  |   2 +-
- drivers/scsi/53c700.c                              |   2 +-
- drivers/scsi/raid_class.c                          |   1 +
- drivers/scsi/scsi_proc.c                           |  30 +++--
- drivers/scsi/snic/snic_disc.c                      |   1 +
- drivers/scsi/storvsc_drv.c                         |   4 -
- drivers/usb/dwc3/gadget.c                          |   9 +-
- drivers/usb/storage/alauda.c                       |   9 +-
- fs/btrfs/extent_io.c                               |   7 +-
- fs/nilfs2/inode.c                                  |   8 ++
- fs/nilfs2/segment.c                                |   2 +
- fs/nilfs2/the_nilfs.h                              |   2 +
- include/net/netfilter/nf_tables.h                  |  27 +++-
- lib/test_firmware.c                                |   8 +-
- net/dccp/output.c                                  |   2 +-
- net/dccp/proto.c                                   |  10 +-
- net/ipv6/ndisc.c                                   |   3 +-
- net/netfilter/nf_tables_api.c                      | 143 +++++++++++++--------
- net/netfilter/nft_objref.c                         |   8 +-
- net/packet/af_packet.c                             |  16 ++-
- tools/testing/radix-tree/regression1.c             |   2 +-
- 33 files changed, 228 insertions(+), 120 deletions(-)
+--- a/drivers/mmc/host/moxart-mmc.c
++++ b/drivers/mmc/host/moxart-mmc.c
+@@ -339,13 +339,7 @@ static void moxart_transfer_pio(struct m
+ 				return;
+ 			}
+ 			for (len = 0; len < remain && len < host->fifo_width;) {
+-				/* SCR data must be read in big endian. */
+-				if (data->mrq->cmd->opcode == SD_APP_SEND_SCR)
+-					*sgp = ioread32be(host->base +
+-							  REG_DATA_WINDOW);
+-				else
+-					*sgp = ioread32(host->base +
+-							REG_DATA_WINDOW);
++				*sgp = ioread32(host->base + REG_DATA_WINDOW);
+ 				sgp++;
+ 				len += 4;
+ 			}
 
 
