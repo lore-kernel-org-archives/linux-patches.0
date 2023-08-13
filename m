@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BC19443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFE2C433C8;
-	Sun, 13 Aug 2023 21:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D799443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B663C433C7;
+	Sun, 13 Aug 2023 21:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962074;
-	bh=SDZ8x7raN/AlSsbkys9k4iVMnXCk1dURpQpzzmKmKl8=;
+	s=korg; t=1691962076;
+	bh=sVv7R0aC/P2fnboMzPuPKHSrUVP9mpjiJVcakUEUut8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oh9Fe2HnifC92YUb9U3Q3ea2DWR/vldGIDY3vBvFZnIK93yhVy7/l9nPCpoq9ByCU
-	 EshXSUiEy5hlA76AdMMReD9OFzicNWh1YuXZdDYd2Ydmn6W79QICj9mn+udyiS1I7G
-	 vq2l61gpnop21c3X5IsEuord59+ooKLTkA98ohas=
+	b=2vdGzkWS+vQS0BKjYymlyy7SVOlX8q4+vEcZde6o1J2oCOg37qz0SKS2TMv9sBYAt
+	 0dznTtB1RZyww5ZTfNjC/iRUFuJXh2xhV1tlYmXzlAA+X4KubzYWl9ayb5dHieeOuZ
+	 DIwYV7J0+kG9i4hJBdqWrQmqijamXPoYZpFhRtXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 104/206] selftests: forwarding: bridge_mdb: Check iproute2 version
-Date: Sun, 13 Aug 2023 23:17:54 +0200
-Message-ID: <20230813211728.034021166@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.4 105/206] KVM: arm64: Fix hardware enable/disable flows for pKVM
+Date: Sun, 13 Aug 2023 23:17:55 +0200
+Message-ID: <20230813211728.061770860@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -38,62 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Raghavendra Rao Ananta <rananta@google.com>
 
-commit ab2eda04e2c2116910b9d77ccc82e727efa71d49 upstream.
+commit c718ca0e99401d80d2480c08e1b02cf5f7cd7033 upstream.
 
-The selftest relies on iproute2 changes present in version 6.3, but the
-test does not check for it, resulting in error:
+When running in protected mode, the hyp stub is disabled after pKVM is
+initialized, meaning the host cannot enable/disable the hyp at
+runtime. As such, kvm_arm_hardware_enabled is always 1 after
+initialization, and kvm_arch_hardware_enable() never enables the vgic
+maintenance irq or timer irqs.
 
- # ./bridge_mdb.sh
+Unconditionally enable/disable the vgic + timer irqs in the respective
+calls, instead relying on the percpu bookkeeping in the generic code
+to keep track of which cpus have the interrupts unmasked.
 
- INFO: # Host entries configuration tests
- TEST: Common host entries configuration tests (IPv4)                [FAIL]
-         Managed to add IPv4 host entry with a filter mode
- TEST: Common host entries configuration tests (IPv6)                [FAIL]
-         Managed to add IPv6 host entry with a filter mode
- TEST: Common host entries configuration tests (L2)                  [FAIL]
-         Managed to add L2 host entry with a filter mode
-
- INFO: # Port group entries configuration tests - (*, G)
- Command "replace" is unknown, try "bridge mdb help".
- [...]
-
-Fix by skipping the test if iproute2 is too old.
-
-Fixes: b6d00da08610 ("selftests: forwarding: Add bridge MDB test")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/6b04b2ba-2372-6f6b-3ac8-b7cba1cfae83@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-4-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 466d27e48d7c ("KVM: arm64: Simplify the CPUHP logic")
+Reported-by: Oliver Upton <oliver.upton@linux.dev>
+Suggested-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+Link: https://lore.kernel.org/r/20230719175400.647154-1-rananta@google.com
+Acked-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/bridge_mdb.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/kvm/arm.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-index ae3f9462a2b6..6f830b5f03c9 100755
---- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-+++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-@@ -1206,6 +1206,11 @@ ctrl_test()
- 	ctrl_mldv2_is_in_test
- }
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1800,8 +1800,6 @@ static void _kvm_arch_hardware_enable(vo
  
-+if ! bridge mdb help 2>&1 | grep -q "replace"; then
-+	echo "SKIP: iproute2 too old, missing bridge mdb replace support"
-+	exit $ksft_skip
-+fi
-+
- trap cleanup EXIT
+ int kvm_arch_hardware_enable(void)
+ {
+-	int was_enabled;
+-
+ 	/*
+ 	 * Most calls to this function are made with migration
+ 	 * disabled, but not with preemption disabled. The former is
+@@ -1810,13 +1808,10 @@ int kvm_arch_hardware_enable(void)
+ 	 */
+ 	preempt_disable();
  
- setup_prepare
--- 
-2.41.0
-
+-	was_enabled = __this_cpu_read(kvm_arm_hardware_enabled);
+ 	_kvm_arch_hardware_enable(NULL);
+ 
+-	if (!was_enabled) {
+-		kvm_vgic_cpu_up();
+-		kvm_timer_cpu_up();
+-	}
++	kvm_vgic_cpu_up();
++	kvm_timer_cpu_up();
+ 
+ 	preempt_enable();
+ 
+@@ -1833,10 +1828,8 @@ static void _kvm_arch_hardware_disable(v
+ 
+ void kvm_arch_hardware_disable(void)
+ {
+-	if (__this_cpu_read(kvm_arm_hardware_enabled)) {
+-		kvm_timer_cpu_down();
+-		kvm_vgic_cpu_down();
+-	}
++	kvm_timer_cpu_down();
++	kvm_vgic_cpu_down();
+ 
+ 	if (!is_protected_kvm_enabled())
+ 		_kvm_arch_hardware_disable(NULL);
 
 
