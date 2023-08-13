@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C519446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:33:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D5EC433C8;
-	Sun, 13 Aug 2023 21:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B94A9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:33:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BADC433C7;
+	Sun, 13 Aug 2023 21:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962412;
-	bh=S+nnZ7Mif79z4asiwYDbNCCbMlJqrfAlnqdXDpPl11g=;
+	s=korg; t=1691962415;
+	bh=w+nXk+K/LYj7LGjXKl2yw62YVkXRLz1V/RNiGUbzWKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVY1feQnbhqbJdXOPHWryyUM1sumyfycaHGionBGucNgXdUHrSPWTGlPkTJbCUitf
-	 aXnBAxhvoadyhqkcfEE5OAgLIJpZaUPhB3J0dGgi+AHRxtyyeK9mv5t1hDMYHqP0lO
-	 mVBmibDaCDsBkjDepL9QXi6+kY3nGoyNfV47iB2c=
+	b=kTFcq2cyrKPI4arNBhSzHQ8SP9uoyxDEoLRlzGLSjKgV+bed3/+lemBiCehg1GcUu
+	 /YVpXH0eFc9De71leyl28uMfs3oPNUUoArvVBSKNVSneSgv0FU2NZZcCOcsW2fnqFQ
+	 IEsFYS6ExcD4lMTaxEoCtwD8imsJIlti/pHs0bJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Subject: [PATCH 6.1 002/149] Revert "loongarch/cpu: Switch to arch_cpu_finalize_init()"
-Date: Sun, 13 Aug 2023 23:17:27 +0200
-Message-ID: <20230813211718.832873199@linuxfoundation.org>
+	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 020/149] net: mana: Fix MANA VF unload when hardware is unresponsive
+Date: Sun, 13 Aug 2023 23:17:45 +0200
+Message-ID: <20230813211719.403676171@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,67 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
 
-This reverts commit 08e86d42e2c916e362d124e3bc6c824eb1862498 which is
-commit 9841c423164787feb8f1442f922b7d80a70c82f1 upstream.
+commit a7dfeda6fdeccab4c7c3dce9a72c4262b9530c80 upstream.
 
-As Gunter reports:
-	Building loongarch:defconfig ... failed
-	--------------
-	Error log:
-	<stdin>:569:2: warning: #warning syscall fstat not implemented [-Wcpp]
-	arch/loongarch/kernel/setup.c: In function 'arch_cpu_finalize_init':
-	arch/loongarch/kernel/setup.c:86:9: error: implicit declaration of function 'alternative_instructions'
+When unloading the MANA driver, mana_dealloc_queues() waits for the MANA
+hardware to complete any inflight packets and set the pending send count
+to zero. But if the hardware has failed, mana_dealloc_queues()
+could wait forever.
 
-	Actually introduced in v6.1.44 with commit 08e86d42e2c9 ("loongarch/cpu:
-	Switch to arch_cpu_finalize_init()"). Alternative instruction support
-	was only introduced for loongarch in v6.2 with commit 19e5eb15b00c
-	("LoongArch: Add alternative runtime patching mechanism").
+Fix this by adding a timeout to the wait. Set the timeout to 120 seconds,
+which is a somewhat arbitrary value that is more than long enough for
+functional hardware to complete any sends.
 
-So revert it from 6.1.y.
-
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/fcd7b764-9047-22ba-a040-41b6ff99959c@roeck-us.net
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Cc: stable@vger.kernel.org
+Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
+Signed-off-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
+Link: https://lore.kernel.org/r/1691576525-24271-1-git-send-email-schakrabarti@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/Kconfig        |    1 -
- arch/loongarch/kernel/setup.c |    6 ------
- 2 files changed, 7 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   37 +++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -10,7 +10,6 @@ config LOONGARCH
- 	select ARCH_ENABLE_MEMORY_HOTPLUG
- 	select ARCH_ENABLE_MEMORY_HOTREMOVE
- 	select ARCH_HAS_ACPI_TABLE_UPGRADE	if ACPI
--	select ARCH_HAS_CPU_FINALIZE_INIT
- 	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_HAS_TICK_BROADCAST if GENERIC_CLOCKEVENTS_BROADCAST
---- a/arch/loongarch/kernel/setup.c
-+++ b/arch/loongarch/kernel/setup.c
-@@ -12,7 +12,6 @@
-  */
- #include <linux/init.h>
- #include <linux/acpi.h>
--#include <linux/cpu.h>
- #include <linux/dmi.h>
- #include <linux/efi.h>
- #include <linux/export.h>
-@@ -81,11 +80,6 @@ const char *get_system_type(void)
- 	return "generic-loongson-machine";
- }
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -8,6 +8,7 @@
+ #include <linux/ethtool.h>
+ #include <linux/filter.h>
+ #include <linux/mm.h>
++#include <linux/pci.h>
  
--void __init arch_cpu_finalize_init(void)
--{
--	alternative_instructions();
--}
--
- static const char *dmi_string_parse(const struct dmi_header *dm, u8 s)
+ #include <net/checksum.h>
+ #include <net/ip6_checksum.h>
+@@ -1972,9 +1973,12 @@ int mana_attach(struct net_device *ndev)
+ static int mana_dealloc_queues(struct net_device *ndev)
  {
- 	const u8 *bp = ((u8 *) dm) + dm->length;
+ 	struct mana_port_context *apc = netdev_priv(ndev);
++	unsigned long timeout = jiffies + 120 * HZ;
+ 	struct gdma_dev *gd = apc->ac->gdma_dev;
+ 	struct mana_txq *txq;
++	struct sk_buff *skb;
+ 	int i, err;
++	u32 tsleep;
+ 
+ 	if (apc->port_is_up)
+ 		return -EINVAL;
+@@ -1990,15 +1994,40 @@ static int mana_dealloc_queues(struct ne
+ 	 * to false, but it doesn't matter since mana_start_xmit() drops any
+ 	 * new packets due to apc->port_is_up being false.
+ 	 *
+-	 * Drain all the in-flight TX packets
++	 * Drain all the in-flight TX packets.
++	 * A timeout of 120 seconds for all the queues is used.
++	 * This will break the while loop when h/w is not responding.
++	 * This value of 120 has been decided here considering max
++	 * number of queues.
+ 	 */
++
+ 	for (i = 0; i < apc->num_queues; i++) {
+ 		txq = &apc->tx_qp[i].txq;
+-
+-		while (atomic_read(&txq->pending_sends) > 0)
+-			usleep_range(1000, 2000);
++		tsleep = 1000;
++		while (atomic_read(&txq->pending_sends) > 0 &&
++		       time_before(jiffies, timeout)) {
++			usleep_range(tsleep, tsleep + 1000);
++			tsleep <<= 1;
++		}
++		if (atomic_read(&txq->pending_sends)) {
++			err = pcie_flr(to_pci_dev(gd->gdma_context->dev));
++			if (err) {
++				netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
++					   err, atomic_read(&txq->pending_sends),
++					   txq->gdma_txq_id);
++			}
++			break;
++		}
+ 	}
+ 
++	for (i = 0; i < apc->num_queues; i++) {
++		txq = &apc->tx_qp[i].txq;
++		while ((skb = skb_dequeue(&txq->pending_skbs))) {
++			mana_unmap_skb(skb, apc);
++			dev_kfree_skb_any(skb);
++		}
++		atomic_set(&txq->pending_sends, 0);
++	}
+ 	/* We're 100% sure the queues can no longer be woken up, because
+ 	 * we're sure now mana_poll_tx_cq() can't be running.
+ 	 */
 
 
