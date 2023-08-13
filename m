@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74249446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D65C433C8;
-	Sun, 13 Aug 2023 21:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5166C9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9C5C433C7;
+	Sun, 13 Aug 2023 21:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962678;
-	bh=k5ugLlfZRSmCR9LajVGptlVNUxgulYTw2yzMtVVeGLU=;
+	s=korg; t=1691962681;
+	bh=aONwVCsQWoq0pud0HYosuJGYJFqj17q6C3rSVRNixIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wkYAX4KRMfCXNmXIDMCrl8hepXSM8VBGccoF/tTYEUib/UIB7kdAaatlZQxTEhO/H
-	 j5/O3TvSaeLKnnbekJDMNSVP00BudSqC1hPYwZvmh9wt9AnJwpfarK9dZpqFOhjFgY
-	 YgDFp7A0Sfy8WCM8F+xSb4AikX4Md3nSFJXu7PJ4=
+	b=YfRvRh1yEfZTW9hjRGziMctznZauokN8U1g2N7rP5NGNyKHzr3cUGUkS0kXU/BzCP
+	 K/kkajHEaOdmj1ZMKCeDUX4MMB8byi7cPMfquYu8+/cqSfk6aIVgDonUjZLLhfMCHl
+	 1yJ5q9mciDnk7DW60wNAFyBr6seRLXIB9kSkaLv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Jurgens <danielj@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>
-Subject: [PATCH 6.1 116/149] net/mlx5: Allow 0 for total host VFs
-Date: Sun, 13 Aug 2023 23:19:21 +0200
-Message-ID: <20230813211722.214973637@linuxfoundation.org>
+Subject: [PATCH 6.1 117/149] net/mlx5: LAG, Check correct bucket when modifying LAG
+Date: Sun, 13 Aug 2023 23:19:22 +0200
+Message-ID: <20230813211722.244086384@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,33 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Jurgens <danielj@nvidia.com>
+From: Shay Drory <shayd@nvidia.com>
 
-commit 2dc2b3922d3c0f52d3a792d15dcacfbc4cc76b8f upstream.
+commit 86ed7b773c01ba71617538b3b107c33fd9cf90b8 upstream.
 
-When querying eswitch functions 0 is a valid number of host VFs. After
-introducing ARM SRIOV falling through to getting the max value from PCI
-results in using the total VFs allowed on the ARM for the host.
+Cited patch introduced buckets in hash mode, but missed to update
+the ports/bucket check when modifying LAG.
+Fix the check.
 
-Fixes: 86eec50beaf3 ("net/mlx5: Support querying max VFs from device");
-Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
+Fixes: 352899f384d4 ("net/mlx5: Lag, use buckets in hash mode")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/sriov.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/port_sel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
-@@ -264,8 +264,7 @@ static u16 mlx5_get_max_vfs(struct mlx5_
- 		host_total_vfs = MLX5_GET(query_esw_functions_out, out,
- 					  host_params_context.host_total_vfs);
- 		kvfree(out);
--		if (host_total_vfs)
--			return host_total_vfs;
-+		return host_total_vfs;
- 	}
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/port_sel.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/port_sel.c
+@@ -574,7 +574,7 @@ static int __mlx5_lag_modify_definers_de
+ 	for (i = 0; i < ldev->ports; i++) {
+ 		for (j = 0; j < ldev->buckets; j++) {
+ 			idx = i * ldev->buckets + j;
+-			if (ldev->v2p_map[i] == ports[i])
++			if (ldev->v2p_map[idx] == ports[idx])
+ 				continue;
  
- done:
+ 			dest.vport.vhca_id = MLX5_CAP_GEN(ldev->pf[ports[idx] - 1].dev,
 
 
