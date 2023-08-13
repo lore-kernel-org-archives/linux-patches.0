@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62839446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A47C433C7;
-	Sun, 13 Aug 2023 21:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584149446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2175C433C7;
+	Sun, 13 Aug 2023 21:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962893;
-	bh=H8OsNGUikVtkbjDPMqqe4SQtUA0jbXNeF2Cl2cF2yL8=;
+	s=korg; t=1691962896;
+	bh=Q5HJVRS3kW7qHkANCMk6/tQJKNKqS1NHbA6yHTGr/tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVmdjah5OGoxTCL+qugW915a2S6TBKqIpzL/hzJollgnd/qtwqDBuMGWKkkXOY/Xw
-	 mEB2LBw7qzLVj6Trc0DRQoYldpH2zXFYisV9f+go4D4homuuvLy4bZR+gMDZ1KoR4D
-	 lebRCX5//YIoQB6ZceP63qmumQKMFogrKRbN/uBg=
+	b=N38zp7I3m25iVVlZALbWGnoh22cXZfvqkszczbi+j3DBENRWiDLGb8WzVQ11bxJSR
+	 RtqMdEo9krnLPx9XNhB7MB5P1+Wyle8cgD+QSSDkPrHnMgCQuf9V/cft979f2YARgm
+	 JQ7s/DfTOIfvyhhi0gRfvpa0dU6HeJGCNQ12vgyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Miller <doug.miller@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 45/68] IB/hfi1: Fix possible panic during hotplug remove
-Date: Sun, 13 Aug 2023 23:19:46 +0200
-Message-ID: <20230813211709.527238537@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 46/68] wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
+Date: Sun, 13 Aug 2023 23:19:47 +0200
+Message-ID: <20230813211709.555048030@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,33 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Miller <doug.miller@cornelisnetworks.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 4fdfaef71fced490835145631a795497646f4555 upstream.
+commit 5fb9a9fb71a33be61d7d8e8ba4597bfb18d604d0 upstream.
 
-During hotplug remove it is possible that the update counters work
-might be pending, and may run after memory has been freed.
-Cancel the update counters work before freeing memory.
+AP_VLAN interfaces are virtual, so doesn't really exist as a type for
+capabilities. When passed in as a type, AP is the one that's really intended.
 
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
-Signed-off-by: Douglas Miller <doug.miller@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/169099756100.3927190.15284930454106475280.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230622165919.46841-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/chip.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/net/cfg80211.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/infiniband/hw/hfi1/chip.c
-+++ b/drivers/infiniband/hw/hfi1/chip.c
-@@ -12348,6 +12348,7 @@ static void free_cntrs(struct hfi1_devda
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -513,6 +513,9 @@ ieee80211_get_sband_iftype_data(const st
+ 	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
+ 		return NULL;
  
- 	if (dd->synth_stats_timer.function)
- 		del_timer_sync(&dd->synth_stats_timer);
-+	cancel_work_sync(&dd->update_cntr_work);
- 	ppd = (struct hfi1_pportdata *)(dd + 1);
- 	for (i = 0; i < dd->num_pports; i++, ppd++) {
- 		kfree(ppd->cntrs);
++	if (iftype == NL80211_IFTYPE_AP_VLAN)
++		iftype = NL80211_IFTYPE_AP;
++
+ 	for (i = 0; i < sband->n_iftype_data; i++)  {
+ 		const struct ieee80211_sband_iftype_data *data =
+ 			&sband->iftype_data[i];
 
 
