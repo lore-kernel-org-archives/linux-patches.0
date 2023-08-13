@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD14D9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453C9C433C7;
-	Sun, 13 Aug 2023 21:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98C99446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2B4C433C7;
+	Sun, 13 Aug 2023 21:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963120;
-	bh=5SlqA0RwEecPyCzvgDZs3oBAr1u3ypGpfc9v8tMqpWs=;
+	s=korg; t=1691963123;
+	bh=Y7MLSsbTCYLyn45Q2tJ0UVYlAzrXAQZhL3K/5HvB9/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XNsM5d7CnFh6CZzPwh05oH2wBCuZQ/AW29VEPa0GD2SBDBEN1IpQZW3ANoZ1biGe
-	 9IaoNAelElAjV1vOQdcQPNhVJQE5ETgZrnWpd8OROnfOn321hVsKtrwMZbffx7eM2X
-	 9lwhaW7Rw+YduZ8yW85iqfIM5ORIT9cj/G9e4AOA=
+	b=ebcxHt9tlhDzp4+fcBuz2O6RjfMIeVhpK13k+2ogBt34WWiuMte5yzYvGjgRbRxdB
+	 102gfzTHjXapZdYzfOG23J0Ke/ZxjOTMo710yLjwPlaLsqTYxbysX+RLcMaT0yZMA9
+	 4kJJS92205R6+GD4jr4FK2DNLCxso1vf/51mcOSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
 	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 61/89] nexthop: Fix infinite nexthop dump when using maximum nexthop ID
-Date: Sun, 13 Aug 2023 23:19:52 +0200
-Message-ID: <20230813211712.620616955@linuxfoundation.org>
+Subject: [PATCH 5.15 62/89] nexthop: Make nexthop bucket dump more efficient
+Date: Sun, 13 Aug 2023 23:19:53 +0200
+Message-ID: <20230813211712.649058656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -38,117 +38,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-commit 913f60cacda73ccac8eead94983e5884c03e04cd upstream.
+commit f10d3d9df49d9e6ee244fda6ca264f901a9c5d85 upstream.
 
-A netlink dump callback can return a positive number to signal that more
-information needs to be dumped or zero to signal that the dump is
-complete. In the second case, the core netlink code will append the
-NLMSG_DONE message to the skb in order to indicate to user space that
-the dump is complete.
+rtm_dump_nexthop_bucket_nh() is used to dump nexthop buckets belonging
+to a specific resilient nexthop group. The function returns a positive
+return code (the skb length) upon both success and failure.
 
-The nexthop dump callback always returns a positive number if nexthops
-were filled in the provided skb, even if the dump is complete. This
-means that a dump will span at least two recvmsg() calls as long as
-nexthops are present. In the last recvmsg() call the dump callback will
-not fill in any nexthops because the previous call indicated that the
-dump should restart from the last dumped nexthop ID plus one.
+The above behavior is problematic. When a complete nexthop bucket dump
+is requested, the function that walks the different nexthops treats the
+non-zero return code as an error. This causes buckets belonging to
+different resilient nexthop groups to be dumped using different buffers
+even if they can all fit in the same buffer:
 
- # ip nexthop add id 1 blackhole
- # strace -e sendto,recvmsg -s 5 ip nexthop
- sendto(3, [[{nlmsg_len=24, nlmsg_type=RTM_GETNEXTHOP, nlmsg_flags=NLM_F_REQUEST|NLM_F_DUMP, nlmsg_seq=1691394315, nlmsg_pid=0}, {nh_family=AF_UNSPEC, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}], {nlmsg_len=0, nlmsg_type=0 /* NLMSG_??? */, nlmsg_flags=0, nlmsg_seq=0, nlmsg_pid=0}], 152, 0, NULL, 0) = 152
- recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=NULL, iov_len=0}], msg_iovlen=1, msg_controllen=0, msg_flags=MSG_TRUNC}, MSG_PEEK|MSG_TRUNC) = 36
- recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[{nlmsg_len=36, nlmsg_type=RTM_NEWNEXTHOP, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394315, nlmsg_pid=343}, {nh_family=AF_INET, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}, [[{nla_len=8, nla_type=NHA_ID}, 1], {nla_len=4, nla_type=NHA_BLACKHOLE}]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 36
- id 1 blackhole
- recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=NULL, iov_len=0}], msg_iovlen=1, msg_controllen=0, msg_flags=MSG_TRUNC}, MSG_PEEK|MSG_TRUNC) = 20
- recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[{nlmsg_len=20, nlmsg_type=NLMSG_DONE, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394315, nlmsg_pid=343}, 0], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 20
- +++ exited with 0 +++
-
-This behavior is both inefficient and buggy. If the last nexthop to be
-dumped had the maximum ID of 0xffffffff, then the dump will restart from
-0 (0xffffffff + 1) and never end:
-
- # ip nexthop add id $((2**32-1)) blackhole
- # ip nexthop
- id 4294967295 blackhole
- id 4294967295 blackhole
+ # ip link add name dummy1 up type dummy
+ # ip nexthop add id 1 dev dummy1
+ # ip nexthop add id 10 group 1 type resilient buckets 1
+ # ip nexthop add id 20 group 1 type resilient buckets 1
+ # strace -e recvmsg -s 0 ip nexthop bucket
+ [...]
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[...], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 64
+ id 10 index 0 idle_time 10.27 nhid 1
+ [...]
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[...], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 64
+ id 20 index 0 idle_time 6.44 nhid 1
  [...]
 
-Fix by adjusting the dump callback to return zero when the dump is
-complete. After the fix only one recvmsg() call is made and the
-NLMSG_DONE message is appended to the RTM_NEWNEXTHOP response:
+Fix by only returning a non-zero return code when an error occurred and
+restarting the dump from the bucket index we failed to fill in. This
+allows buckets belonging to different resilient nexthop groups to be
+dumped using the same buffer:
 
- # ip nexthop add id $((2**32-1)) blackhole
- # strace -e sendto,recvmsg -s 5 ip nexthop
- sendto(3, [[{nlmsg_len=24, nlmsg_type=RTM_GETNEXTHOP, nlmsg_flags=NLM_F_REQUEST|NLM_F_DUMP, nlmsg_seq=1691394080, nlmsg_pid=0}, {nh_family=AF_UNSPEC, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}], {nlmsg_len=0, nlmsg_type=0 /* NLMSG_??? */, nlmsg_flags=0, nlmsg_seq=0, nlmsg_pid=0}], 152, 0, NULL, 0) = 152
- recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=NULL, iov_len=0}], msg_iovlen=1, msg_controllen=0, msg_flags=MSG_TRUNC}, MSG_PEEK|MSG_TRUNC) = 56
- recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[[{nlmsg_len=36, nlmsg_type=RTM_NEWNEXTHOP, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394080, nlmsg_pid=342}, {nh_family=AF_INET, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}, [[{nla_len=8, nla_type=NHA_ID}, 4294967295], {nla_len=4, nla_type=NHA_BLACKHOLE}]], [{nlmsg_len=20, nlmsg_type=NLMSG_DONE, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394080, nlmsg_pid=342}, 0]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 56
- id 4294967295 blackhole
- +++ exited with 0 +++
-
-Note that if the NLMSG_DONE message cannot be appended because of size
-limitations, then another recvmsg() will be needed, but the core netlink
-code will not invoke the dump callback and simply reply with a
-NLMSG_DONE message since it knows that the callback previously returned
-zero.
-
-Add a test that fails before the fix:
-
- # ./fib_nexthops.sh -t basic
+ # ip link add name dummy1 up type dummy
+ # ip nexthop add id 1 dev dummy1
+ # ip nexthop add id 10 group 1 type resilient buckets 1
+ # ip nexthop add id 20 group 1 type resilient buckets 1
+ # strace -e recvmsg -s 0 ip nexthop bucket
  [...]
- TEST: Maximum nexthop ID dump                                       [FAIL]
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[...], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 128
+ id 10 index 0 idle_time 30.21 nhid 1
+ id 20 index 0 idle_time 26.7 nhid 1
  [...]
 
-And passes after it:
+While this change is more of a performance improvement change than an
+actual bug fix, it is a prerequisite for a subsequent patch that does
+fix a bug.
 
- # ./fib_nexthops.sh -t basic
- [...]
- TEST: Maximum nexthop ID dump                                       [ OK ]
- [...]
-
-Fixes: ab84be7e54fc ("net: Initial nexthop code")
-Reported-by: Petr Machata <petrm@nvidia.com>
-Closes: https://lore.kernel.org/netdev/87sf91enuf.fsf@nvidia.com/
+Fixes: 8a1bbabb034d ("nexthop: Add netlink handlers for bucket dump")
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230808075233.3337922-2-idosch@nvidia.com
+Link: https://lore.kernel.org/r/20230808075233.3337922-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/nexthop.c                          |    6 +-----
- tools/testing/selftests/net/fib_nexthops.sh |    5 +++++
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ net/ipv4/nexthop.c |   16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
 --- a/net/ipv4/nexthop.c
 +++ b/net/ipv4/nexthop.c
-@@ -3222,13 +3222,9 @@ static int rtm_dump_nexthop(struct sk_bu
- 				     &rtm_dump_nexthop_cb, &filter);
- 	if (err < 0) {
- 		if (likely(skb->len))
--			goto out;
--		goto out_err;
-+			err = skb->len;
+@@ -3364,25 +3364,19 @@ static int rtm_dump_nexthop_bucket_nh(st
+ 		    dd->filter.res_bucket_nh_id != nhge->nh->id)
+ 			continue;
+ 
++		dd->ctx->bucket_index = bucket_index;
+ 		err = nh_fill_res_bucket(skb, nh, bucket, bucket_index,
+ 					 RTM_NEWNEXTHOPBUCKET, portid,
+ 					 cb->nlh->nlmsg_seq, NLM_F_MULTI,
+ 					 cb->extack);
+-		if (err < 0) {
+-			if (likely(skb->len))
+-				goto out;
+-			goto out_err;
+-		}
++		if (err)
++			return err;
  	}
+ 
+ 	dd->ctx->done_nh_idx = dd->ctx->nh.idx + 1;
+-	bucket_index = 0;
++	dd->ctx->bucket_index = 0;
  
 -out:
 -	err = skb->len;
 -out_err:
- 	cb->seq = net->nexthop.seq;
- 	nl_dump_check_consistent(cb, nlmsg_hdr(skb));
- 	return err;
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -1917,6 +1917,11 @@ basic()
+-	dd->ctx->bucket_index = bucket_index;
+-	return err;
++	return 0;
+ }
  
- 	run_cmd "$IP link set dev lo up"
- 
-+	# Dump should not loop endlessly when maximum nexthop ID is configured.
-+	run_cmd "$IP nexthop add id $((2**32-1)) blackhole"
-+	run_cmd "timeout 5 $IP nexthop"
-+	log_test $? 0 "Maximum nexthop ID dump"
-+
- 	#
- 	# groups
- 	#
+ static int rtm_dump_nexthop_bucket_cb(struct sk_buff *skb,
 
 
