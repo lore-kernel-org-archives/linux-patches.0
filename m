@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DF19443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D76C433C8;
-	Sun, 13 Aug 2023 21:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A359443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34341C433C7;
+	Sun, 13 Aug 2023 21:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962058;
-	bh=FRK5+h4kK0rghh2JkSuh2FMg4JIcxb7znyzWOoFts8Q=;
+	s=korg; t=1691962060;
+	bh=2+GC0SXWXPkEhJDi62DF/AMmE2fcZDH1TOAC22PSE6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8YmfxGsWICOfScpUvnjRSf6Lm75HtLQl+m9dwY60yAdsTDz9TCMDioRnk2CrJTBc
-	 NZPzO2x5ZZbgVJfnhg6LEJGmcOw/mg57vNFDFxfJIC/gdSuJeqr5a/s/RNNP03M8xv
-	 +4A5G+bQ+d4MCKmbmgiwRSyHg5bVZXWI7YAr35YI=
+	b=uJjKIGGvHM1V+ihBSMe3QbyIcI7tBla4PYTTispHPpywn6C05qQfXzR1mmVAI5IC7
+	 qLaayK+lqL/2iZesIrRzcfvfjby6M81qlvGiaZe53DeYogGFKS8t8lrg/UH4d1UI6v
+	 4btq/bnvo+g00w6/CyZnS4BQjy6T0zFZmrkc9o4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.4 090/206] netfilter: nf_tables: dont skip expired elements during walk
-Date: Sun, 13 Aug 2023 23:17:40 +0200
-Message-ID: <20230813211727.651202695@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 6.4 099/206] interconnect: qcom: sm8450: add enable_mask for bcm nodes
+Date: Sun, 13 Aug 2023 23:17:49 +0200
+Message-ID: <20230813211727.893892806@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,129 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-commit 24138933b97b055d486e8064b4a1721702442a9b upstream.
+commit be02db24cf840bc0fdfbecc78ad803619dd143e6 upstream.
 
-There is an asymmetry between commit/abort and preparation phase if the
-following conditions are met:
+Set the proper enable_mask to nodes requiring such value
+to be used instead of a bandwidth when voting.
 
-1. set is a verdict map ("1.2.3.4 : jump foo")
-2. timeouts are enabled
+The masks were copied from the downstream implementation at [1].
 
-In this case, following sequence is problematic:
+[1] https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/blob/KERNEL.PLATFORM.1.0.r2-05600-WAIPIOLE.0/drivers/interconnect/qcom/waipio.c
 
-1. element E in set S refers to chain C
-2. userspace requests removal of set S
-3. kernel does a set walk to decrement chain->use count for all elements
-   from preparation phase
-4. kernel does another set walk to remove elements from the commit phase
-   (or another walk to do a chain->use increment for all elements from
-    abort phase)
-
-If E has already expired in 1), it will be ignored during list walk, so its use count
-won't have been changed.
-
-Then, when set is culled, ->destroy callback will zap the element via
-nf_tables_set_elem_destroy(), but this function is only safe for
-elements that have been deactivated earlier from the preparation phase:
-lack of earlier deactivate removes the element but leaks the chain use
-count, which results in a WARN splat when the chain gets removed later,
-plus a leak of the nft_chain structure.
-
-Update pipapo_get() not to skip expired elements, otherwise flush
-command reports bogus ENOENT errors.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Fixes: 9d0982927e79 ("netfilter: nft_hash: add support for timeouts")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-2-709474b151cc@linaro.org
+Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c  |    4 ++++
- net/netfilter/nft_set_hash.c   |    2 --
- net/netfilter/nft_set_pipapo.c |   18 ++++++++++++------
- net/netfilter/nft_set_rbtree.c |    2 --
- 4 files changed, 16 insertions(+), 10 deletions(-)
+ drivers/interconnect/qcom/sm8450.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5590,8 +5590,12 @@ static int nf_tables_dump_setelem(const
- 				  const struct nft_set_iter *iter,
- 				  struct nft_set_elem *elem)
- {
-+	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
- 	struct nft_set_dump_args *args;
+--- a/drivers/interconnect/qcom/sm8450.c
++++ b/drivers/interconnect/qcom/sm8450.c
+@@ -1337,6 +1337,7 @@ static struct qcom_icc_node qns_mem_noc_
  
-+	if (nft_set_elem_expired(ext))
-+		return 0;
-+
- 	args = container_of(iter, struct nft_set_dump_args, iter);
- 	return nf_tables_fill_setelem(args->skb, set, elem);
- }
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -278,8 +278,6 @@ static void nft_rhash_walk(const struct
+ static struct qcom_icc_bcm bcm_acv = {
+ 	.name = "ACV",
++	.enable_mask = 0x8,
+ 	.num_nodes = 1,
+ 	.nodes = { &ebi },
+ };
+@@ -1349,6 +1350,7 @@ static struct qcom_icc_bcm bcm_ce0 = {
  
- 		if (iter->count < iter->skip)
- 			goto cont;
--		if (nft_set_elem_expired(&he->ext))
--			goto cont;
- 		if (!nft_set_elem_active(&he->ext, iter->genmask))
- 			goto cont;
+ static struct qcom_icc_bcm bcm_cn0 = {
+ 	.name = "CN0",
++	.enable_mask = 0x1,
+ 	.keepalive = true,
+ 	.num_nodes = 55,
+ 	.nodes = { &qnm_gemnoc_cnoc, &qnm_gemnoc_pcie,
+@@ -1383,6 +1385,7 @@ static struct qcom_icc_bcm bcm_cn0 = {
  
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -566,8 +566,7 @@ next_match:
- 			goto out;
+ static struct qcom_icc_bcm bcm_co0 = {
+ 	.name = "CO0",
++	.enable_mask = 0x1,
+ 	.num_nodes = 2,
+ 	.nodes = { &qxm_nsp, &qns_nsp_gemnoc },
+ };
+@@ -1403,6 +1406,7 @@ static struct qcom_icc_bcm bcm_mm0 = {
  
- 		if (last) {
--			if (nft_set_elem_expired(&f->mt[b].e->ext) ||
--			    (genmask &&
-+			if ((genmask &&
- 			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
- 				goto next_match;
+ static struct qcom_icc_bcm bcm_mm1 = {
+ 	.name = "MM1",
++	.enable_mask = 0x1,
+ 	.num_nodes = 12,
+ 	.nodes = { &qnm_camnoc_hf, &qnm_camnoc_icp,
+ 		   &qnm_camnoc_sf, &qnm_mdp,
+@@ -1445,6 +1449,7 @@ static struct qcom_icc_bcm bcm_sh0 = {
  
-@@ -601,8 +600,17 @@ out:
- static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
- 			    const struct nft_set_elem *elem, unsigned int flags)
- {
--	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
--			  nft_genmask_cur(net));
-+	struct nft_pipapo_elem *ret;
-+
-+	ret = pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+			 nft_genmask_cur(net));
-+	if (IS_ERR(ret))
-+		return ret;
-+
-+	if (nft_set_elem_expired(&ret->ext))
-+		return ERR_PTR(-ENOENT);
-+
-+	return ret;
- }
+ static struct qcom_icc_bcm bcm_sh1 = {
+ 	.name = "SH1",
++	.enable_mask = 0x1,
+ 	.num_nodes = 7,
+ 	.nodes = { &alm_gpu_tcu, &alm_sys_tcu,
+ 		   &qnm_nsp_gemnoc, &qnm_pcie,
+@@ -1461,6 +1466,7 @@ static struct qcom_icc_bcm bcm_sn0 = {
  
- /**
-@@ -2006,8 +2014,6 @@ static void nft_pipapo_walk(const struct
- 			goto cont;
+ static struct qcom_icc_bcm bcm_sn1 = {
+ 	.name = "SN1",
++	.enable_mask = 0x1,
+ 	.num_nodes = 4,
+ 	.nodes = { &qhm_gic, &qxm_pimem,
+ 		   &xm_gic, &qns_gemnoc_gc },
+@@ -1492,6 +1498,7 @@ static struct qcom_icc_bcm bcm_sn7 = {
  
- 		e = f->mt[r].e;
--		if (nft_set_elem_expired(&e->ext))
--			goto cont;
+ static struct qcom_icc_bcm bcm_acv_disp = {
+ 	.name = "ACV",
++	.enable_mask = 0x1,
+ 	.num_nodes = 1,
+ 	.nodes = { &ebi_disp },
+ };
+@@ -1510,6 +1517,7 @@ static struct qcom_icc_bcm bcm_mm0_disp
  
- 		elem.priv = e;
+ static struct qcom_icc_bcm bcm_mm1_disp = {
+ 	.name = "MM1",
++	.enable_mask = 0x1,
+ 	.num_nodes = 3,
+ 	.nodes = { &qnm_mdp_disp, &qnm_rot_disp,
+ 		   &qns_mem_noc_sf_disp },
+@@ -1523,6 +1531,7 @@ static struct qcom_icc_bcm bcm_sh0_disp
  
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -552,8 +552,6 @@ static void nft_rbtree_walk(const struct
- 
- 		if (iter->count < iter->skip)
- 			goto cont;
--		if (nft_set_elem_expired(&rbe->ext))
--			goto cont;
- 		if (!nft_set_elem_active(&rbe->ext, iter->genmask))
- 			goto cont;
- 
+ static struct qcom_icc_bcm bcm_sh1_disp = {
+ 	.name = "SH1",
++	.enable_mask = 0x1,
+ 	.num_nodes = 1,
+ 	.nodes = { &qnm_pcie_disp },
+ };
 
 
