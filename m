@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B94A9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:33:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BADC433C7;
-	Sun, 13 Aug 2023 21:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A623A9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:33:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CA8C433C8;
+	Sun, 13 Aug 2023 21:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962415;
-	bh=w+nXk+K/LYj7LGjXKl2yw62YVkXRLz1V/RNiGUbzWKI=;
+	s=korg; t=1691962418;
+	bh=MllDxO+r2owiIE4X8K95KkvgQFR8co0iOhGwkFgHu8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTFcq2cyrKPI4arNBhSzHQ8SP9uoyxDEoLRlzGLSjKgV+bed3/+lemBiCehg1GcUu
-	 /YVpXH0eFc9De71leyl28uMfs3oPNUUoArvVBSKNVSneSgv0FU2NZZcCOcsW2fnqFQ
-	 IEsFYS6ExcD4lMTaxEoCtwD8imsJIlti/pHs0bJ0=
+	b=XlMDkyjd23PFHlxYcIuFf1quizLsqKF6M78n9zLiAkIdk0WhfoFXmKLopUtydzbx5
+	 tJOQcZqQWtcNfHrXSi9IfJFOuE04xgBdHG+4xamef5+Z+ayZyLBLDBNxtM6PTIubbQ
+	 0nHZMN2evAzETEFdqI+Z7ID8NgGVjKxcmUZr9EmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 020/149] net: mana: Fix MANA VF unload when hardware is unresponsive
-Date: Sun, 13 Aug 2023 23:17:45 +0200
-Message-ID: <20230813211719.403676171@linuxfoundation.org>
+	Torsten Duwe <duwe@suse.de>,
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 021/149] riscv/kexec: load initrd high in available memory
+Date: Sun, 13 Aug 2023 23:17:46 +0200
+Message-ID: <20230813211719.433118263@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,96 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
+From: Torsten Duwe <duwe@suse.de>
 
-commit a7dfeda6fdeccab4c7c3dce9a72c4262b9530c80 upstream.
+commit 49af7a2cd5f678217b8b4f86a29411aebebf3e78 upstream.
 
-When unloading the MANA driver, mana_dealloc_queues() waits for the MANA
-hardware to complete any inflight packets and set the pending send count
-to zero. But if the hardware has failed, mana_dealloc_queues()
-could wait forever.
+When initrd is loaded low, the secondary kernel fails like this:
 
-Fix this by adding a timeout to the wait. Set the timeout to 120 seconds,
-which is a somewhat arbitrary value that is more than long enough for
-functional hardware to complete any sends.
+ INITRD: 0xdc581000+0x00eef000 overlaps in-use memory region
 
+This initrd load address corresponds to the _end symbol, but the
+reservation is aligned on PMD_SIZE, as explained by a comment in
+setup_bootmem().
+
+It is technically possible to align the initrd load address accordingly,
+leaving a hole between the end of kernel and the initrd, but it is much
+simpler to allocate the initrd top-down.
+
+Fixes: 838b3e28488f ("RISC-V: Load purgatory in kexec_file")
+Signed-off-by: Torsten Duwe <duwe@suse.de>
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
 Cc: stable@vger.kernel.org
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Signed-off-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1691576525-24271-1-git-send-email-schakrabarti@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/all/67c8eb9eea25717c2c8208d9bfbfaa39e6e2a1c6.1690365011.git.petr.tesarik.ext@huawei.com/
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |   37 +++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/elf_kexec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -8,6 +8,7 @@
- #include <linux/ethtool.h>
- #include <linux/filter.h>
- #include <linux/mm.h>
-+#include <linux/pci.h>
- 
- #include <net/checksum.h>
- #include <net/ip6_checksum.h>
-@@ -1972,9 +1973,12 @@ int mana_attach(struct net_device *ndev)
- static int mana_dealloc_queues(struct net_device *ndev)
- {
- 	struct mana_port_context *apc = netdev_priv(ndev);
-+	unsigned long timeout = jiffies + 120 * HZ;
- 	struct gdma_dev *gd = apc->ac->gdma_dev;
- 	struct mana_txq *txq;
-+	struct sk_buff *skb;
- 	int i, err;
-+	u32 tsleep;
- 
- 	if (apc->port_is_up)
- 		return -EINVAL;
-@@ -1990,15 +1994,40 @@ static int mana_dealloc_queues(struct ne
- 	 * to false, but it doesn't matter since mana_start_xmit() drops any
- 	 * new packets due to apc->port_is_up being false.
- 	 *
--	 * Drain all the in-flight TX packets
-+	 * Drain all the in-flight TX packets.
-+	 * A timeout of 120 seconds for all the queues is used.
-+	 * This will break the while loop when h/w is not responding.
-+	 * This value of 120 has been decided here considering max
-+	 * number of queues.
- 	 */
-+
- 	for (i = 0; i < apc->num_queues; i++) {
- 		txq = &apc->tx_qp[i].txq;
--
--		while (atomic_read(&txq->pending_sends) > 0)
--			usleep_range(1000, 2000);
-+		tsleep = 1000;
-+		while (atomic_read(&txq->pending_sends) > 0 &&
-+		       time_before(jiffies, timeout)) {
-+			usleep_range(tsleep, tsleep + 1000);
-+			tsleep <<= 1;
-+		}
-+		if (atomic_read(&txq->pending_sends)) {
-+			err = pcie_flr(to_pci_dev(gd->gdma_context->dev));
-+			if (err) {
-+				netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
-+					   err, atomic_read(&txq->pending_sends),
-+					   txq->gdma_txq_id);
-+			}
-+			break;
-+		}
- 	}
- 
-+	for (i = 0; i < apc->num_queues; i++) {
-+		txq = &apc->tx_qp[i].txq;
-+		while ((skb = skb_dequeue(&txq->pending_skbs))) {
-+			mana_unmap_skb(skb, apc);
-+			dev_kfree_skb_any(skb);
-+		}
-+		atomic_set(&txq->pending_sends, 0);
-+	}
- 	/* We're 100% sure the queues can no longer be woken up, because
- 	 * we're sure now mana_poll_tx_cq() can't be running.
- 	 */
+diff --git a/arch/riscv/kernel/elf_kexec.c b/arch/riscv/kernel/elf_kexec.c
+index 38390d3bdcac..c08bb5c3b385 100644
+--- a/arch/riscv/kernel/elf_kexec.c
++++ b/arch/riscv/kernel/elf_kexec.c
+@@ -281,7 +281,7 @@ static void *elf_kexec_load(struct kimage *image, char *kernel_buf,
+ 		kbuf.buffer = initrd;
+ 		kbuf.bufsz = kbuf.memsz = initrd_len;
+ 		kbuf.buf_align = PAGE_SIZE;
+-		kbuf.top_down = false;
++		kbuf.top_down = true;
+ 		kbuf.mem = KEXEC_BUF_MEM_UNKNOWN;
+ 		ret = kexec_add_buffer(&kbuf);
+ 		if (ret)
+-- 
+2.41.0
+
 
 
