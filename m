@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B259446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B957C433C7;
-	Sun, 13 Aug 2023 21:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8879446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5FDC433C8;
+	Sun, 13 Aug 2023 21:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962488;
-	bh=EPmYavWQM+CvgmCbcBm7aPBQpmrKNVRDLUDkolzPP1U=;
+	s=korg; t=1691962491;
+	bh=EmbxsBuCkcU+lYKuhLcxhIQzZy3XmS69MODAfip8cDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqDEMPs3KmD/GxZnz1V6xhc42gGsxnq95pwVMDnR5CxVFSe9qaZawwYbuzBmqmxXP
-	 WM7TnX/EqNZ2wIt9dw1nPV3L/vpER2NYl92Jyt+eLgI/80dS1gEM3uetgWCeDM06Z7
-	 d5BYVQtFP3ar6xVFzhrQ6PPwNpdSNH3h9TmRMjvY=
+	b=lgDEnq7sMuk7D3H2dQx+Ke927XMufWLPCC5Ny86ixpiRcPDMT9RUIRy5XkzkGA4Aw
+	 /Dlr21yBilyGnGevDxqT8Xul6NW6mMdMWtXk6RbyNP35lUvQKnmbg6annQb03NU7ME
+	 imWHQ3ucXyqTZ0tmfT6TiCEOMHyvJNqECZtgXF0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jun Lei <Jun.Lei@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
+	Brian Chang <Brian.Chang@amd.com>,
 	Alvin Lee <Alvin.Lee2@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 047/149] drm/amd/display: Disable phantom OTG after enable for plane disable
-Date: Sun, 13 Aug 2023 23:18:12 +0200
-Message-ID: <20230813211720.224501516@linuxfoundation.org>
+Subject: [PATCH 6.1 048/149] drm/amd/display: Retain phantom plane/stream if validation fails
+Date: Sun, 13 Aug 2023 23:18:13 +0200
+Message-ID: <20230813211720.256674641@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -40,105 +40,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Alvin Lee <Alvin.Lee2@amd.com>
 
-commit dc55b106ad477c67f969f3432d9070c6846fb557 upstream
+commit 9b216b7e38f5381bcc3ad21c5ac614aa577ab8f2 upstream
 
 [Description]
-- Need to disable phantom OTG after it's enabled
-  in order to restore it to it's original state.
-- If it's enabled and then an MCLK switch comes in
-  we may not prefetch the correct data since the phantom
-  OTG could already be in the middle of the frame.
+- If we fail validation, we should retain the phantom
+  stream/planes
+- Full updates assume that phantom pipes will be fully
+  removed, but if validation fails we keep the phantom
+  pipes
+- Therefore we have to retain the plane/stream if validation
+  fails (since the refcount is decremented before validation,
+  and the expectation is that it's fully freed when the  old
+  dc_state is released)
 
 Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Acked-by: Brian Chang <Brian.Chang@amd.com>
 Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c                 |   14 +++++++++++++-
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c        |    8 ++++++++
- drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h |    1 +
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c                |   13 +++++++++
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c   |   22 ++++++++++++++++
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h   |    3 ++
+ drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c |    1 
+ drivers/gpu/drm/amd/display/dc/inc/core_types.h         |    1 
+ 5 files changed, 40 insertions(+)
 
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1079,6 +1079,7 @@ static void disable_dangling_plane(struc
- 	struct dc_state *dangling_context = dc_create_state(dc);
- 	struct dc_state *current_ctx;
- 	struct pipe_ctx *pipe;
-+	struct timing_generator *tg;
+@@ -3149,6 +3149,19 @@ static bool update_planes_and_stream_sta
  
- 	if (dangling_context == NULL)
- 		return;
-@@ -1122,6 +1123,7 @@ static void disable_dangling_plane(struc
- 
- 		if (should_disable && old_stream) {
- 			pipe = &dc->current_state->res_ctx.pipe_ctx[i];
-+			tg = pipe->stream_res.tg;
- 			/* When disabling plane for a phantom pipe, we must turn on the
- 			 * phantom OTG so the disable programming gets the double buffer
- 			 * update. Otherwise the pipe will be left in a partially disabled
-@@ -1129,7 +1131,8 @@ static void disable_dangling_plane(struc
- 			 * again for different use.
- 			 */
- 			if (old_stream->mall_stream_config.type == SUBVP_PHANTOM) {
--				pipe->stream_res.tg->funcs->enable_crtc(pipe->stream_res.tg);
-+				if (tg->funcs->enable_crtc)
-+					tg->funcs->enable_crtc(tg);
- 			}
- 			dc_rem_all_planes_for_stream(dc, old_stream, dangling_context);
- 			disable_all_writeback_pipes_for_stream(dc, old_stream, dangling_context);
-@@ -1146,6 +1149,15 @@ static void disable_dangling_plane(struc
- 				dc->hwss.interdependent_update_lock(dc, dc->current_state, false);
- 				dc->hwss.post_unlock_program_front_end(dc, dangling_context);
- 			}
-+			/* We need to put the phantom OTG back into it's default (disabled) state or we
-+			 * can get corruption when transition from one SubVP config to a different one.
-+			 * The OTG is set to disable on falling edge of VUPDATE so the plane disable
-+			 * will still get it's double buffer update.
+ 	if (update_type == UPDATE_TYPE_FULL) {
+ 		if (!dc->res_pool->funcs->validate_bandwidth(dc, context, false)) {
++			/* For phantom pipes we remove and create a new set of phantom pipes
++			 * for each full update (because we don't know if we'll need phantom
++			 * pipes until after the first round of validation). However, if validation
++			 * fails we need to keep the existing phantom pipes (because we don't update
++			 * the dc->current_state).
++			 *
++			 * The phantom stream/plane refcount is decremented for validation because
++			 * we assume it'll be removed (the free comes when the dc_state is freed),
++			 * but if validation fails we have to increment back the refcount so it's
++			 * consistent.
 +			 */
-+			if (old_stream->mall_stream_config.type == SUBVP_PHANTOM) {
-+				if (tg->funcs->disable_phantom_crtc)
-+					tg->funcs->disable_phantom_crtc(tg);
-+			}
++			if (dc->res_pool->funcs->retain_phantom_pipes)
++				dc->res_pool->funcs->retain_phantom_pipes(dc, dc->current_state);
+ 			BREAK_TO_DEBUGGER();
+ 			goto fail;
  		}
- 	}
- 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-@@ -167,6 +167,13 @@ static void optc32_phantom_crtc_post_ena
- 	REG_WAIT(OTG_CLOCK_CONTROL, OTG_BUSY, 0, 1, 100000);
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1719,6 +1719,27 @@ static struct dc_stream_state *dcn32_ena
+ 	return phantom_stream;
  }
  
-+static void optc32_disable_phantom_otg(struct timing_generator *optc)
++void dcn32_retain_phantom_pipes(struct dc *dc, struct dc_state *context)
 +{
-+	struct optc *optc1 = DCN10TG_FROM_TG(optc);
++	int i;
++	struct dc_plane_state *phantom_plane = NULL;
++	struct dc_stream_state *phantom_stream = NULL;
 +
-+	REG_UPDATE(OTG_CONTROL, OTG_MASTER_EN, 0);
++	for (i = 0; i < dc->res_pool->pipe_count; i++) {
++		struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
++
++		if (!pipe->top_pipe && !pipe->prev_odm_pipe &&
++				pipe->plane_state && pipe->stream &&
++				pipe->stream->mall_stream_config.type == SUBVP_PHANTOM) {
++			phantom_plane = pipe->plane_state;
++			phantom_stream = pipe->stream;
++
++			dc_plane_state_retain(phantom_plane);
++			dc_stream_retain(phantom_stream);
++		}
++	}
 +}
 +
- static void optc32_set_odm_bypass(struct timing_generator *optc,
- 		const struct dc_crtc_timing *dc_crtc_timing)
+ // return true if removed piped from ctx, false otherwise
+ bool dcn32_remove_phantom_pipes(struct dc *dc, struct dc_state *context)
  {
-@@ -260,6 +267,7 @@ static struct timing_generator_funcs dcn
- 		.enable_crtc = optc32_enable_crtc,
- 		.disable_crtc = optc32_disable_crtc,
- 		.phantom_crtc_post_enable = optc32_phantom_crtc_post_enable,
-+		.disable_phantom_crtc = optc32_disable_phantom_otg,
- 		/* used by enable_timing_synchronization. Not need for FPGA */
- 		.is_counter_moving = optc1_is_counter_moving,
- 		.get_position = optc1_get_position,
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h
-@@ -184,6 +184,7 @@ struct timing_generator_funcs {
- 	bool (*disable_crtc)(struct timing_generator *tg);
- #ifdef CONFIG_DRM_AMD_DC_DCN
- 	void (*phantom_crtc_post_enable)(struct timing_generator *tg);
-+	void (*disable_phantom_crtc)(struct timing_generator *tg);
- #endif
- 	bool (*immediate_disable_crtc)(struct timing_generator *tg);
- 	bool (*is_counter_moving)(struct timing_generator *tg);
+@@ -2035,6 +2056,7 @@ static struct resource_funcs dcn32_res_p
+ 	.update_soc_for_wm_a = dcn30_update_soc_for_wm_a,
+ 	.add_phantom_pipes = dcn32_add_phantom_pipes,
+ 	.remove_phantom_pipes = dcn32_remove_phantom_pipes,
++	.retain_phantom_pipes = dcn32_retain_phantom_pipes,
+ };
+ 
+ static uint32_t read_pipe_fuses(struct dc_context *ctx)
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
+@@ -83,6 +83,9 @@ bool dcn32_release_post_bldn_3dlut(
+ bool dcn32_remove_phantom_pipes(struct dc *dc,
+ 		struct dc_state *context);
+ 
++void dcn32_retain_phantom_pipes(struct dc *dc,
++		struct dc_state *context);
++
+ void dcn32_add_phantom_pipes(struct dc *dc,
+ 		struct dc_state *context,
+ 		display_e2e_pipe_params_st *pipes,
+--- a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
+@@ -1619,6 +1619,7 @@ static struct resource_funcs dcn321_res_
+ 	.update_soc_for_wm_a = dcn30_update_soc_for_wm_a,
+ 	.add_phantom_pipes = dcn32_add_phantom_pipes,
+ 	.remove_phantom_pipes = dcn32_remove_phantom_pipes,
++	.retain_phantom_pipes = dcn32_retain_phantom_pipes,
+ };
+ 
+ static uint32_t read_pipe_fuses(struct dc_context *ctx)
+--- a/drivers/gpu/drm/amd/display/dc/inc/core_types.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/core_types.h
+@@ -234,6 +234,7 @@ struct resource_funcs {
+             unsigned int index);
+ 
+ 	bool (*remove_phantom_pipes)(struct dc *dc, struct dc_state *context);
++	void (*retain_phantom_pipes)(struct dc *dc, struct dc_state *context);
+ 	void (*get_panel_config_defaults)(struct dc_panel_config *panel_config);
+ };
+ 
 
 
