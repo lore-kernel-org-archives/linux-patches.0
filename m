@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529F19443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE4EC433C7;
-	Sun, 13 Aug 2023 21:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690679443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BB4C433C7;
+	Sun, 13 Aug 2023 21:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962047;
-	bh=7YC4QTgcXoie0embhnPa9OTF67dJCPBL8DCa1yndnZc=;
+	s=korg; t=1691962049;
+	bh=M1WRojB2UIycePL8gVsWWfGes4fLCEsyOVERe6wxfQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHATUvP2xhZc5oVkDCykDmvQLqvTNVtw5KDxqD+g8N8c+YQbT1oy7B+4sSiL4eahH
-	 Ku7qc+XDEhZ9RE9kc/aVkGb9DkUfgGja8I2/i4Nv/63n59A7fLAe0KZW3+0hc8Syoh
-	 CFhkQgFnn+4+XnqX8Qwi+my5SlwAevivl+InEvs4=
+	b=X0SXkml8OK9tLSmMvr0dV8Qf0voFk7GvYSdOlDBIazJntVF8a4LOH4fXRKH5Ecy0c
+	 j/Qk0EhrLAP0zyJz2oiYy/iYadntEogycr0aXcNW+3NeWSW1PZXWzBUGWHyr+VrQ2v
+	 e0hxZELcW7xoBxv+Nv/Ul28XuCG99Vpu086m22bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.4 064/206] drm/amd/pm: expose swctf threshold setting for legacy powerplay
-Date: Sun, 13 Aug 2023 23:17:14 +0200
-Message-ID: <20230813211726.899062180@linuxfoundation.org>
+Subject: [PATCH 6.4 065/206] drm/amd/pm: avoid unintentional shutdown due to temperature momentary fluctuation
+Date: Sun, 13 Aug 2023 23:17:15 +0200
+Message-ID: <20230813211726.925866975@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -38,143 +38,300 @@ Content-Transfer-Encoding: 8bit
 
 From: Evan Quan <evan.quan@amd.com>
 
-commit 064329c595da56eff6d7a7e7760660c726433139 upstream.
+commit b75efe88b20c2be28b67e2821a794cc183e32374 upstream.
 
-Preparation for coming optimization which eliminates the influence of
-GPU temperature momentary fluctuation.
+An intentional delay is added on soft ctf triggered. Then there will
+be a double check for the GPU temperature before taking further
+action. This can avoid unintended shutdown due to temperature
+momentary fluctuation.
 
 Signed-off-by: Evan Quan <evan.quan@amd.com>
 Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ Hand-modified because XCP support added to amdgpu.h in kernel 6.5
+  and is not necessary for this fix. ]
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1267
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2779
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h                  |    2 ++
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/hardwaremanager.c |    4 +++-
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c      |    2 ++
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c    |   10 ++++++++++
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c    |    4 ++++
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c    |    4 ++++
- drivers/gpu/drm/amd/pm/powerplay/inc/power_state.h       |    1 +
- 7 files changed, 26 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h                 |    3 +
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c    |   48 ++++++++++++++++++++
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c |   27 +++--------
+ drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h        |    2 
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c           |   34 ++++++++++++++
+ drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h       |    2 
+ drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c      |    9 ---
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c      |    9 ---
+ 8 files changed, 102 insertions(+), 32 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-@@ -89,6 +89,8 @@ struct amdgpu_dpm_thermal {
- 	int                max_mem_crit_temp;
- 	/* memory max emergency(shutdown) temp */
- 	int                max_mem_emergency_temp;
-+	/* SWCTF threshold */
-+	int                sw_ctf_threshold;
- 	/* was last interrupt low to high or high to low */
- 	bool               high_to_low;
- 	/* interrupt source */
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hardwaremanager.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hardwaremanager.c
-@@ -241,7 +241,8 @@ int phm_start_thermal_controller(struct
- 		TEMP_RANGE_MAX,
- 		TEMP_RANGE_MIN,
- 		TEMP_RANGE_MAX,
--		TEMP_RANGE_MAX};
-+		TEMP_RANGE_MAX,
-+		0};
- 	struct amdgpu_device *adev = hwmgr->adev;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -282,6 +282,9 @@ extern int amdgpu_sg_display;
+ #define AMDGPU_SMARTSHIFT_MAX_BIAS (100)
+ #define AMDGPU_SMARTSHIFT_MIN_BIAS (-100)
  
- 	if (!hwmgr->not_vf)
-@@ -265,6 +266,7 @@ int phm_start_thermal_controller(struct
- 	adev->pm.dpm.thermal.min_mem_temp = range.mem_min;
- 	adev->pm.dpm.thermal.max_mem_crit_temp = range.mem_crit_max;
- 	adev->pm.dpm.thermal.max_mem_emergency_temp = range.mem_emergency_max;
-+	adev->pm.dpm.thermal.sw_ctf_threshold = range.sw_ctf_threshold;
++/* Extra time delay(in ms) to eliminate the influence of temperature momentary fluctuation */
++#define AMDGPU_SWCTF_EXTRA_DELAY		50
++
+ struct amdgpu_device;
+ struct amdgpu_irq_src;
+ struct amdgpu_fpriv;
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -26,6 +26,7 @@
+ #include <linux/gfp.h>
+ #include <linux/slab.h>
+ #include <linux/firmware.h>
++#include <linux/reboot.h>
+ #include "amd_shared.h"
+ #include "amd_powerplay.h"
+ #include "power_state.h"
+@@ -91,6 +92,45 @@ static int pp_early_init(void *handle)
+ 	return 0;
+ }
  
++static void pp_swctf_delayed_work_handler(struct work_struct *work)
++{
++	struct pp_hwmgr *hwmgr =
++		container_of(work, struct pp_hwmgr, swctf_delayed_work.work);
++	struct amdgpu_device *adev = hwmgr->adev;
++	struct amdgpu_dpm_thermal *range =
++				&adev->pm.dpm.thermal;
++	uint32_t gpu_temperature, size;
++	int ret;
++
++	/*
++	 * If the hotspot/edge temperature is confirmed as below SW CTF setting point
++	 * after the delay enforced, nothing will be done.
++	 * Otherwise, a graceful shutdown will be performed to prevent further damage.
++	 */
++	if (range->sw_ctf_threshold &&
++	    hwmgr->hwmgr_func->read_sensor) {
++		ret = hwmgr->hwmgr_func->read_sensor(hwmgr,
++						     AMDGPU_PP_SENSOR_HOTSPOT_TEMP,
++						     &gpu_temperature,
++						     &size);
++		/*
++		 * For some legacy ASICs, hotspot temperature retrieving might be not
++		 * supported. Check the edge temperature instead then.
++		 */
++		if (ret == -EOPNOTSUPP)
++			ret = hwmgr->hwmgr_func->read_sensor(hwmgr,
++							     AMDGPU_PP_SENSOR_EDGE_TEMP,
++							     &gpu_temperature,
++							     &size);
++		if (!ret && gpu_temperature / 1000 < range->sw_ctf_threshold)
++			return;
++	}
++
++	dev_emerg(adev->dev, "ERROR: GPU over temperature range(SW CTF) detected!\n");
++	dev_emerg(adev->dev, "ERROR: System is going to shutdown due to GPU SW CTF!\n");
++	orderly_poweroff(true);
++}
++
+ static int pp_sw_init(void *handle)
+ {
+ 	struct amdgpu_device *adev = handle;
+@@ -101,6 +141,10 @@ static int pp_sw_init(void *handle)
+ 
+ 	pr_debug("powerplay sw init %s\n", ret ? "failed" : "successfully");
+ 
++	if (!ret)
++		INIT_DELAYED_WORK(&hwmgr->swctf_delayed_work,
++				  pp_swctf_delayed_work_handler);
++
  	return ret;
  }
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5432,6 +5432,8 @@ static int smu7_get_thermal_temperature_
- 		thermal_data->max = data->thermal_temp_setting.temperature_shutdown *
- 			PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
  
-+	thermal_data->sw_ctf_threshold = thermal_data->max;
+@@ -135,6 +179,8 @@ static int pp_hw_fini(void *handle)
+ 	struct amdgpu_device *adev = handle;
+ 	struct pp_hwmgr *hwmgr = adev->powerplay.pp_handle;
+ 
++	cancel_delayed_work_sync(&hwmgr->swctf_delayed_work);
 +
+ 	hwmgr_hw_fini(hwmgr);
+ 
  	return 0;
- }
+@@ -221,6 +267,8 @@ static int pp_suspend(void *handle)
+ 	struct amdgpu_device *adev = handle;
+ 	struct pp_hwmgr *hwmgr = adev->powerplay.pp_handle;
  
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -5241,6 +5241,9 @@ static int vega10_get_thermal_temperatur
- {
- 	struct vega10_hwmgr *data = hwmgr->backend;
- 	PPTable_t *pp_table = &(data->smc_state_table.pp_table);
-+	struct phm_ppt_v2_information *pp_table_info =
-+		(struct phm_ppt_v2_information *)(hwmgr->pptable);
-+	struct phm_tdp_table *tdp_table = pp_table_info->tdp_table;
- 
- 	memcpy(thermal_data, &SMU7ThermalWithDelayPolicy[0], sizeof(struct PP_TemperatureRange));
- 
-@@ -5257,6 +5260,13 @@ static int vega10_get_thermal_temperatur
- 	thermal_data->mem_emergency_max = (pp_table->ThbmLimit + CTF_OFFSET_HBM)*
- 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 
-+	if (tdp_table->usSoftwareShutdownTemp > pp_table->ThotspotLimit &&
-+	    tdp_table->usSoftwareShutdownTemp < VEGA10_THERMAL_MAXIMUM_ALERT_TEMP)
-+		thermal_data->sw_ctf_threshold = tdp_table->usSoftwareShutdownTemp;
-+	else
-+		thermal_data->sw_ctf_threshold = VEGA10_THERMAL_MAXIMUM_ALERT_TEMP;
-+	thermal_data->sw_ctf_threshold *= PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
++	cancel_delayed_work_sync(&hwmgr->swctf_delayed_work);
 +
- 	return 0;
+ 	return hwmgr_suspend(hwmgr);
  }
  
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c
-@@ -2763,6 +2763,8 @@ static int vega12_notify_cac_buffer_info
- static int vega12_get_thermal_temperature_range(struct pp_hwmgr *hwmgr,
- 		struct PP_TemperatureRange *thermal_data)
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu_helper.c
+@@ -603,21 +603,17 @@ int phm_irq_process(struct amdgpu_device
+ 			   struct amdgpu_irq_src *source,
+ 			   struct amdgpu_iv_entry *entry)
  {
-+	struct phm_ppt_v3_information *pptable_information =
-+		(struct phm_ppt_v3_information *)hwmgr->pptable;
- 	struct vega12_hwmgr *data =
- 			(struct vega12_hwmgr *)(hwmgr->backend);
- 	PPTable_t *pp_table = &(data->smc_state_table.pp_table);
-@@ -2781,6 +2783,8 @@ static int vega12_get_thermal_temperatur
- 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 	thermal_data->mem_emergency_max = (pp_table->ThbmLimit + CTF_OFFSET_HBM)*
- 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
-+	thermal_data->sw_ctf_threshold = pptable_information->us_software_shutdown_temp *
-+		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
++	struct pp_hwmgr *hwmgr = adev->powerplay.pp_handle;
+ 	uint32_t client_id = entry->client_id;
+ 	uint32_t src_id = entry->src_id;
  
- 	return 0;
- }
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-@@ -4206,6 +4206,8 @@ static int vega20_notify_cac_buffer_info
- static int vega20_get_thermal_temperature_range(struct pp_hwmgr *hwmgr,
- 		struct PP_TemperatureRange *thermal_data)
- {
-+	struct phm_ppt_v3_information *pptable_information =
-+		(struct phm_ppt_v3_information *)hwmgr->pptable;
- 	struct vega20_hwmgr *data =
- 			(struct vega20_hwmgr *)(hwmgr->backend);
- 	PPTable_t *pp_table = &(data->smc_state_table.pp_table);
-@@ -4224,6 +4226,8 @@ static int vega20_get_thermal_temperatur
- 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 	thermal_data->mem_emergency_max = (pp_table->ThbmLimit + CTF_OFFSET_HBM)*
- 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
-+	thermal_data->sw_ctf_threshold = pptable_information->us_software_shutdown_temp *
-+		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 
- 	return 0;
- }
---- a/drivers/gpu/drm/amd/pm/powerplay/inc/power_state.h
-+++ b/drivers/gpu/drm/amd/pm/powerplay/inc/power_state.h
-@@ -131,6 +131,7 @@ struct PP_TemperatureRange {
- 	int mem_min;
- 	int mem_crit_max;
- 	int mem_emergency_max;
-+	int sw_ctf_threshold;
+ 	if (client_id == AMDGPU_IRQ_CLIENTID_LEGACY) {
+ 		if (src_id == VISLANDS30_IV_SRCID_CG_TSS_THERMAL_LOW_TO_HIGH) {
+-			dev_emerg(adev->dev, "ERROR: GPU over temperature range(SW CTF) detected!\n");
+-			/*
+-			 * SW CTF just occurred.
+-			 * Try to do a graceful shutdown to prevent further damage.
+-			 */
+-			dev_emerg(adev->dev, "ERROR: System is going to shutdown due to GPU SW CTF!\n");
+-			orderly_poweroff(true);
+-		} else if (src_id == VISLANDS30_IV_SRCID_CG_TSS_THERMAL_HIGH_TO_LOW)
++			schedule_delayed_work(&hwmgr->swctf_delayed_work,
++					      msecs_to_jiffies(AMDGPU_SWCTF_EXTRA_DELAY));
++		} else if (src_id == VISLANDS30_IV_SRCID_CG_TSS_THERMAL_HIGH_TO_LOW) {
+ 			dev_emerg(adev->dev, "ERROR: GPU under temperature range detected!\n");
+-		else if (src_id == VISLANDS30_IV_SRCID_GPIO_19) {
++		} else if (src_id == VISLANDS30_IV_SRCID_GPIO_19) {
+ 			dev_emerg(adev->dev, "ERROR: GPU HW Critical Temperature Fault(aka CTF) detected!\n");
+ 			/*
+ 			 * HW CTF just occurred. Shutdown to prevent further damage.
+@@ -626,15 +622,10 @@ int phm_irq_process(struct amdgpu_device
+ 			orderly_poweroff(true);
+ 		}
+ 	} else if (client_id == SOC15_IH_CLIENTID_THM) {
+-		if (src_id == 0) {
+-			dev_emerg(adev->dev, "ERROR: GPU over temperature range(SW CTF) detected!\n");
+-			/*
+-			 * SW CTF just occurred.
+-			 * Try to do a graceful shutdown to prevent further damage.
+-			 */
+-			dev_emerg(adev->dev, "ERROR: System is going to shutdown due to GPU SW CTF!\n");
+-			orderly_poweroff(true);
+-		} else
++		if (src_id == 0)
++			schedule_delayed_work(&hwmgr->swctf_delayed_work,
++					      msecs_to_jiffies(AMDGPU_SWCTF_EXTRA_DELAY));
++		else
+ 			dev_emerg(adev->dev, "ERROR: GPU under temperature range detected!\n");
+ 	} else if (client_id == SOC15_IH_CLIENTID_ROM_SMUIO) {
+ 		dev_emerg(adev->dev, "ERROR: GPU HW Critical Temperature Fault(aka CTF) detected!\n");
+--- a/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
++++ b/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
+@@ -811,6 +811,8 @@ struct pp_hwmgr {
+ 	bool gfxoff_state_changed_by_workload;
+ 	uint32_t pstate_sclk_peak;
+ 	uint32_t pstate_mclk_peak;
++
++	struct delayed_work swctf_delayed_work;
  };
  
- struct PP_StateValidationBlock {
+ int hwmgr_early_init(struct pp_hwmgr *hwmgr);
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -24,6 +24,7 @@
+ 
+ #include <linux/firmware.h>
+ #include <linux/pci.h>
++#include <linux/reboot.h>
+ 
+ #include "amdgpu.h"
+ #include "amdgpu_smu.h"
+@@ -1070,6 +1071,34 @@ static void smu_interrupt_work_fn(struct
+ 		smu->ppt_funcs->interrupt_work(smu);
+ }
+ 
++static void smu_swctf_delayed_work_handler(struct work_struct *work)
++{
++	struct smu_context *smu =
++		container_of(work, struct smu_context, swctf_delayed_work.work);
++	struct smu_temperature_range *range =
++				&smu->thermal_range;
++	struct amdgpu_device *adev = smu->adev;
++	uint32_t hotspot_tmp, size;
++
++	/*
++	 * If the hotspot temperature is confirmed as below SW CTF setting point
++	 * after the delay enforced, nothing will be done.
++	 * Otherwise, a graceful shutdown will be performed to prevent further damage.
++	 */
++	if (range->software_shutdown_temp &&
++	    smu->ppt_funcs->read_sensor &&
++	    !smu->ppt_funcs->read_sensor(smu,
++					 AMDGPU_PP_SENSOR_HOTSPOT_TEMP,
++					 &hotspot_tmp,
++					 &size) &&
++	    hotspot_tmp / 1000 < range->software_shutdown_temp)
++		return;
++
++	dev_emerg(adev->dev, "ERROR: GPU over temperature range(SW CTF) detected!\n");
++	dev_emerg(adev->dev, "ERROR: System is going to shutdown due to GPU SW CTF!\n");
++	orderly_poweroff(true);
++}
++
+ static int smu_sw_init(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+@@ -1112,6 +1141,9 @@ static int smu_sw_init(void *handle)
+ 	smu->smu_dpm.dpm_level = AMD_DPM_FORCED_LEVEL_AUTO;
+ 	smu->smu_dpm.requested_dpm_level = AMD_DPM_FORCED_LEVEL_AUTO;
+ 
++	INIT_DELAYED_WORK(&smu->swctf_delayed_work,
++			  smu_swctf_delayed_work_handler);
++
+ 	ret = smu_smc_table_sw_init(smu);
+ 	if (ret) {
+ 		dev_err(adev->dev, "Failed to sw init smc table!\n");
+@@ -1592,6 +1624,8 @@ static int smu_smc_hw_cleanup(struct smu
+ 		return ret;
+ 	}
+ 
++	cancel_delayed_work_sync(&smu->swctf_delayed_work);
++
+ 	ret = smu_disable_dpms(smu);
+ 	if (ret) {
+ 		dev_err(adev->dev, "Fail to disable dpm features!\n");
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
+@@ -573,6 +573,8 @@ struct smu_context
+ 	u32 debug_param_reg;
+ 	u32 debug_msg_reg;
+ 	u32 debug_resp_reg;
++
++	struct delayed_work		swctf_delayed_work;
+ };
+ 
+ struct i2c_adapter;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
+@@ -1412,13 +1412,8 @@ static int smu_v11_0_irq_process(struct
+ 	if (client_id == SOC15_IH_CLIENTID_THM) {
+ 		switch (src_id) {
+ 		case THM_11_0__SRCID__THM_DIG_THERM_L2H:
+-			dev_emerg(adev->dev, "ERROR: GPU over temperature range(SW CTF) detected!\n");
+-			/*
+-			 * SW CTF just occurred.
+-			 * Try to do a graceful shutdown to prevent further damage.
+-			 */
+-			dev_emerg(adev->dev, "ERROR: System is going to shutdown due to GPU SW CTF!\n");
+-			orderly_poweroff(true);
++			schedule_delayed_work(&smu->swctf_delayed_work,
++					      msecs_to_jiffies(AMDGPU_SWCTF_EXTRA_DELAY));
+ 		break;
+ 		case THM_11_0__SRCID__THM_DIG_THERM_H2L:
+ 			dev_emerg(adev->dev, "ERROR: GPU under temperature range detected\n");
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -1377,13 +1377,8 @@ static int smu_v13_0_irq_process(struct
+ 	if (client_id == SOC15_IH_CLIENTID_THM) {
+ 		switch (src_id) {
+ 		case THM_11_0__SRCID__THM_DIG_THERM_L2H:
+-			dev_emerg(adev->dev, "ERROR: GPU over temperature range(SW CTF) detected!\n");
+-			/*
+-			 * SW CTF just occurred.
+-			 * Try to do a graceful shutdown to prevent further damage.
+-			 */
+-			dev_emerg(adev->dev, "ERROR: System is going to shutdown due to GPU SW CTF!\n");
+-			orderly_poweroff(true);
++			schedule_delayed_work(&smu->swctf_delayed_work,
++					      msecs_to_jiffies(AMDGPU_SWCTF_EXTRA_DELAY));
+ 			break;
+ 		case THM_11_0__SRCID__THM_DIG_THERM_H2L:
+ 			dev_emerg(adev->dev, "ERROR: GPU under temperature range detected\n");
 
 
