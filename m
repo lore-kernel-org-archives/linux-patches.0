@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF889443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FACC433C7;
-	Sun, 13 Aug 2023 21:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3949443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7CBAC433C7;
+	Sun, 13 Aug 2023 21:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962297;
-	bh=mTDpp1s0ntZ4i1Msu9n6PTQL6FDXc4RcjLrdhpP3nKI=;
+	s=korg; t=1691962300;
+	bh=ZRFQgl5AGUt5ob7cXqP9NJEfx27b9+Euvd1vHoKuvBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jmp5FcFhvc84zEP5woKXipJ3mfDuJEGe7eSQ+qkNNhOeWnVF5uLXJNdfmpIEUfZR
-	 /neD6Q1rzIZ7fixzCAmDY4/Tf87VlAza7/YO6TWw5Pm7hDF+kmCoGh4A4Eacp2+oen
-	 tmFHh/cIA1VZSYKPm4moLuO0afw1KJrOHgKaGeJ0=
+	b=OtEtuTSg1fhPyg1NbvzPFCoEFtbFyFoBxk+Nu7B5RW8W33EYDpElw7auTEB1Wc6CW
+	 g9/DxOzkui7wUPTiTKEA9FQ1PFUtY4P62DbrXrkx78t3tOa7SUKkkUw8DWVYNvt2bh
+	 1cCSYG9zh27C025EuVsj8cfSYEYIRKUiJxYaT6eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Christoph Hellwig <hch@lst.de>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 183/206] btrfs: dont stop integrity writeback too early
-Date: Sun, 13 Aug 2023 23:19:13 +0200
-Message-ID: <20230813211730.258850922@linuxfoundation.org>
+Subject: [PATCH 6.4 184/206] btrfs: dont wait for writeback on clean pages in extent_write_cache_pages
+Date: Sun, 13 Aug 2023 23:19:14 +0200
+Message-ID: <20230813211730.290217641@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -37,48 +37,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit effa24f689ce0948f68c754991a445a8d697d3a8 upstream.
+commit 5c25699871112853f231e52d51c576d5c759a020 upstream.
 
-extent_write_cache_pages stops writing pages as soon as nr_to_write hits
-zero.  That is the right thing for opportunistic writeback, but incorrect
-for data integrity writeback, which needs to ensure that no dirty pages
-are left in the range.  Thus only stop the writeback for WB_SYNC_NONE
-if nr_to_write hits 0.
+__extent_writepage could have started on more pages than the one it was
+called for.  This happens regularly for zoned file systems, and in theory
+could happen for compressed I/O if the worker thread was executed very
+quickly. For such pages extent_write_cache_pages waits for writeback
+to complete before moving on to the next page, which is highly inefficient
+as it blocks the flusher thread.
 
-This is a port of write_cache_pages changes in commit 05fe478dd04e
-("mm: write_cache_pages integrity fix").
-
-Note that I've only trigger the problem with other changes to the btrfs
-writeback code, but this condition seems worthwhile fixing anyway.
+Port over the PageDirty check that was added to write_cache_pages in
+commit 515f4a037fb ("mm: write_cache_pages optimise page cleaning") to
+fix this.
 
 CC: stable@vger.kernel.org # 4.14+
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: David Sterba <dsterba@suse.com>
-[ updated comment ]
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/btrfs/extent_io.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/fs/btrfs/extent_io.c
 +++ b/fs/btrfs/extent_io.c
-@@ -2181,11 +2181,12 @@ retry:
+@@ -2345,6 +2345,12 @@ retry:
+ 				continue;
  			}
  
- 			/*
--			 * the filesystem may choose to bump up nr_to_write.
-+			 * The filesystem may choose to bump up nr_to_write.
- 			 * We have to make sure to honor the new nr_to_write
--			 * at any time
-+			 * at any time.
- 			 */
--			nr_to_write_done = wbc->nr_to_write <= 0;
-+			nr_to_write_done = (wbc->sync_mode == WB_SYNC_NONE &&
-+					    wbc->nr_to_write <= 0);
- 		}
- 		folio_batch_release(&fbatch);
- 		cond_resched();
++			if (!folio_test_dirty(folio)) {
++				/* Someone wrote it for us. */
++				folio_unlock(folio);
++				continue;
++			}
++
+ 			if (wbc->sync_mode != WB_SYNC_NONE) {
+ 				if (folio_test_writeback(folio))
+ 					submit_write_bio(bio_ctrl, 0);
 
 
