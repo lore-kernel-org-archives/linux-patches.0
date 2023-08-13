@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901919443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190FFC433C7;
-	Sun, 13 Aug 2023 21:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AACB9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC1BC433C8;
+	Sun, 13 Aug 2023 21:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961820;
-	bh=25zy2sfNmWktLZNtxAWSxp4BB/hpjp8WHHPBl3cyHEY=;
+	s=korg; t=1691961823;
+	bh=amwjw9XamkyBWuFCZmLa0aWzXafwZbMjz29nSRQUV0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSl5bcsr28IBclJg9XuqSJA78FGylYx/82OGDjwP6GtlVxoNGlPikq8DdYjdWcs9v
-	 vaU5O1YopdgovDUx46sh4LjT5cTVNWR/Eyps1drQfhIeuXUec/L6kXzq7rsNGzio4Q
-	 IlIJLUX1lxt9IG2PhbjQjLHULac/46BqbAyYuBK8=
+	b=D+8oCTuNWrveP5jz8G65zdIfnGMmG3ww3aoNvLneAuQ3SlREGGq32vRHLwFlbxICD
+	 FKd2XcVGFLTBjaI9GgoQ9G+Rcp3eSm/vVQPJFIWr1Lp6HspMk/2NlFc1GezD0yCDPI
+	 kecdbkGrRVeAhs51ZBxRhc2qYvTqu3eAwp7FqtZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 011/206] selftests: forwarding: Set default IPv6 traceroute utility
-Date: Sun, 13 Aug 2023 23:16:21 +0200
-Message-ID: <20230813211725.297822189@linuxfoundation.org>
+Subject: [PATCH 6.4 012/206] wireguard: allowedips: expand maximum node depth
+Date: Sun, 13 Aug 2023 23:16:22 +0200
+Message-ID: <20230813211725.326482283@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -38,60 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 38f7c44d6e760a8513557e27340d61b820c91b8f upstream.
+commit 46622219aae2b67813fe31a7b8cb7da5baff5c8a upstream.
 
-The test uses the 'TROUTE6' environment variable to encode the name of
-the IPv6 traceroute utility. By default (without a configuration file),
-this variable is not set, resulting in failures:
+In the allowedips self-test, nodes are inserted into the tree, but it
+generated an even amount of nodes, but for checking maximum node depth,
+there is of course the root node, which makes the total number
+necessarily odd. With two few nodes added, it never triggered the
+maximum depth check like it should have. So, add 129 nodes instead of
+128 nodes, and do so with a more straightforward scheme, starting with
+all the bits set, and shifting over one each time. Then increase the
+maximum depth to 129, and choose a better name for that variable to
+make it clear that it represents depth as opposed to bits.
 
- # ./ip6_forward_instats_vrf.sh
- TEST: ping6                                                         [ OK ]
- TEST: Ip6InTooBigErrors                                             [ OK ]
- TEST: Ip6InHdrErrors                                                [FAIL]
- TEST: Ip6InAddrErrors                                               [ OK ]
- TEST: Ip6InDiscards                                                 [ OK ]
-
-Fix by setting a default utility name and skip the test if the utility
-is not present.
-
-Fixes: 0857d6f8c759 ("ipv6: When forwarding count rx stats on the orig netdev")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-6-idosch@nvidia.com
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/r/20230807132146.2191597-2-Jason@zx2c4.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh |    2 ++
- tools/testing/selftests/net/forwarding/lib.sh                     |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/net/wireguard/allowedips.c          |    8 ++++----
+ drivers/net/wireguard/selftest/allowedips.c |   16 ++++++++++------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
---- a/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
-+++ b/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
-@@ -14,6 +14,8 @@ ALL_TESTS="
- NUM_NETIFS=4
- source lib.sh
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -6,7 +6,7 @@
+ #include "allowedips.h"
+ #include "peer.h"
  
-+require_command $TROUTE6
-+
- h1_create()
+-enum { MAX_ALLOWEDIPS_BITS = 128 };
++enum { MAX_ALLOWEDIPS_DEPTH = 129 };
+ 
+ static struct kmem_cache *node_cache;
+ 
+@@ -42,7 +42,7 @@ static void push_rcu(struct allowedips_n
+ 		     struct allowedips_node __rcu *p, unsigned int *len)
  {
- 	simple_if_init $h1 2001:1:1::2/64
---- a/tools/testing/selftests/net/forwarding/lib.sh
-+++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -30,6 +30,7 @@ REQUIRE_MZ=${REQUIRE_MZ:=yes}
- REQUIRE_MTOOLS=${REQUIRE_MTOOLS:=no}
- STABLE_MAC_ADDRS=${STABLE_MAC_ADDRS:=no}
- TCPDUMP_EXTRA_FLAGS=${TCPDUMP_EXTRA_FLAGS:=}
-+TROUTE6=${TROUTE6:=traceroute6}
+ 	if (rcu_access_pointer(p)) {
+-		if (WARN_ON(IS_ENABLED(DEBUG) && *len >= MAX_ALLOWEDIPS_BITS))
++		if (WARN_ON(IS_ENABLED(DEBUG) && *len >= MAX_ALLOWEDIPS_DEPTH))
+ 			return;
+ 		stack[(*len)++] = rcu_dereference_raw(p);
+ 	}
+@@ -55,7 +55,7 @@ static void node_free_rcu(struct rcu_hea
  
- relative_path="${BASH_SOURCE%/*}"
- if [[ "$relative_path" == "${BASH_SOURCE}" ]]; then
+ static void root_free_rcu(struct rcu_head *rcu)
+ {
+-	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_BITS] = {
++	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
+ 		container_of(rcu, struct allowedips_node, rcu) };
+ 	unsigned int len = 1;
+ 
+@@ -68,7 +68,7 @@ static void root_free_rcu(struct rcu_hea
+ 
+ static void root_remove_peer_lists(struct allowedips_node *root)
+ {
+-	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_BITS] = { root };
++	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = { root };
+ 	unsigned int len = 1;
+ 
+ 	while (len > 0 && (node = stack[--len])) {
+--- a/drivers/net/wireguard/selftest/allowedips.c
++++ b/drivers/net/wireguard/selftest/allowedips.c
+@@ -593,16 +593,20 @@ bool __init wg_allowedips_selftest(void)
+ 	wg_allowedips_remove_by_peer(&t, a, &mutex);
+ 	test_negative(4, a, 192, 168, 0, 1);
+ 
+-	/* These will hit the WARN_ON(len >= MAX_ALLOWEDIPS_BITS) in free_node
++	/* These will hit the WARN_ON(len >= MAX_ALLOWEDIPS_DEPTH) in free_node
+ 	 * if something goes wrong.
+ 	 */
+-	for (i = 0; i < MAX_ALLOWEDIPS_BITS; ++i) {
+-		part = cpu_to_be64(~(1LLU << (i % 64)));
+-		memset(&ip, 0xff, 16);
+-		memcpy((u8 *)&ip + (i < 64) * 8, &part, 8);
++	for (i = 0; i < 64; ++i) {
++		part = cpu_to_be64(~0LLU << i);
++		memset(&ip, 0xff, 8);
++		memcpy((u8 *)&ip + 8, &part, 8);
++		wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
++		memcpy(&ip, &part, 8);
++		memset((u8 *)&ip + 8, 0, 8);
+ 		wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
+ 	}
+-
++	memset(&ip, 0, 16);
++	wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
+ 	wg_allowedips_free(&t, &mutex);
+ 
+ 	wg_allowedips_init(&t);
 
 
