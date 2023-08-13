@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071189443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4A3C433C7;
-	Sun, 13 Aug 2023 21:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B839443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECF8C433C8;
+	Sun, 13 Aug 2023 21:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961722;
-	bh=gDtTrRTXDaqvO08Q5dDjx0g3LOuNedSXkJiI9XSqb74=;
+	s=korg; t=1691961725;
+	bh=g8197a7NRaBT9assOceOLvYEVpbsLclKZcLanVOe73o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PduX5yzmb9nVHyyszhWB2H5hHOwheczXhy7+bB19PpNuM/AxGmtzNvd0lcw1aMM1f
-	 +A26AhOW5gUx/B7YjlMewaPr1ripE8iWQmpGRyeCfsGbrkRlwLEIcQfJ4c0I03XvN0
-	 5c9gitQvUYv3P50ny93MNyHu+dRFh53ZcVkF8kxg=
+	b=lIN/uWYoysy4FCOTSynZwo0m1UN+siy5GPKfg7zp37iJ2l0INGUgx1YUZ7kgL8c1j
+	 4cbl/VT6TXbe9bJEgekChYXqAqCpZ58pdhy82LbBczOK5Em9B+LgTi+nDxdthEY7Rp
+	 B4fxJ6m1YTklGP99lm2JWLdiO9mMrA0kkSmyD7DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 4.19 01/33] sparc: fix up arch_cpu_finalize_init() build breakage.
-Date: Sun, 13 Aug 2023 23:18:55 +0200
-Message-ID: <20230813211703.973125098@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 10/33] usb-storage: alauda: Fix uninit-value in alauda_check_media()
+Date: Sun, 13 Aug 2023 23:19:04 +0200
+Message-ID: <20230813211704.302978443@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,40 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-In commit b698b5d11a16 ("sparc/cpu: Switch to arch_cpu_finalize_init()") the
-check for ARCH_HAS_CPU_FINALIZE_INIT was backported incorrectly to the SPARC
-config option, not SPARC32.  This causes build problems for the sparc64 arch:
+From: Alan Stern <stern@rowland.harvard.edu>
 
-	sparc64-linux-ld: init/main.o: in function `start_kernel':
-	main.c:(.init.text+0x77c): undefined reference to `arch_cpu_finalize_init'
+commit a6ff6e7a9dd69364547751db0f626a10a6d628d2 upstream.
 
-Fix this up by putting the option in the correct place.
+Syzbot got KMSAN to complain about access to an uninitialized value in
+the alauda subdriver of usb-storage:
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/252c7673-53ee-4c4b-e5ef-5bb2c0416154@roeck-us.net
-Fixes: b698b5d11a16 ("sparc/cpu: Switch to arch_cpu_finalize_init()")
+BUG: KMSAN: uninit-value in alauda_transport+0x462/0x57f0
+drivers/usb/storage/alauda.c:1137
+CPU: 0 PID: 12279 Comm: usb-storage Not tainted 5.3.0-rc7+ #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x191/0x1f0 lib/dump_stack.c:113
+  kmsan_report+0x13a/0x2b0 mm/kmsan/kmsan_report.c:108
+  __msan_warning+0x73/0xe0 mm/kmsan/kmsan_instr.c:250
+  alauda_check_media+0x344/0x3310 drivers/usb/storage/alauda.c:460
+
+The problem is that alauda_check_media() doesn't verify that its USB
+transfer succeeded before trying to use the received data.  What
+should happen if the transfer fails isn't entirely clear, but a
+reasonably conservative approach is to pretend that no media is
+present.
+
+A similar problem exists in a usb_stor_dbg() call in
+alauda_get_media_status().  In this case, when an error occurs the
+call is redundant, because usb_stor_ctrl_transfer() already will print
+a debugging message.
+
+Finally, unrelated to the uninitialized memory access, is the fact
+that alauda_check_media() performs DMA to a buffer on the stack.
+Fortunately usb-storage provides a general purpose DMA-able buffer for
+uses like this.  We'll use it instead.
+
+Reported-and-tested-by: syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000007d25ff059457342d@google.com/T/
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/693d5d5e-f09b-42d0-8ed9-1f96cd30bcce@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/alauda.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/arch/sparc/Kconfig
-+++ b/arch/sparc/Kconfig
-@@ -12,7 +12,6 @@ config 64BIT
- config SPARC
- 	bool
- 	default y
--	select ARCH_HAS_CPU_FINALIZE_INIT if !SMP
- 	select ARCH_MIGHT_HAVE_PC_PARPORT if SPARC64 && PCI
- 	select ARCH_MIGHT_HAVE_PC_SERIO
- 	select OF
-@@ -51,6 +50,7 @@ config SPARC
+--- a/drivers/usb/storage/alauda.c
++++ b/drivers/usb/storage/alauda.c
+@@ -317,7 +317,8 @@ static int alauda_get_media_status(struc
+ 	rc = usb_stor_ctrl_transfer(us, us->recv_ctrl_pipe,
+ 		command, 0xc0, 0, 1, data, 2);
  
- config SPARC32
- 	def_bool !64BIT
-+	select ARCH_HAS_CPU_FINALIZE_INIT if !SMP
- 	select ARCH_HAS_SYNC_DMA_FOR_CPU
- 	select DMA_NONCOHERENT_OPS
- 	select GENERIC_ATOMIC64
+-	usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
++	if (rc == USB_STOR_XFER_GOOD)
++		usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
+ 
+ 	return rc;
+ }
+@@ -453,10 +454,14 @@ static int alauda_init_media(struct us_d
+ static int alauda_check_media(struct us_data *us)
+ {
+ 	struct alauda_info *info = (struct alauda_info *) us->extra;
+-	unsigned char status[2];
++	unsigned char *status = us->iobuf;
+ 	int rc;
+ 
+ 	rc = alauda_get_media_status(us, status);
++	if (rc != USB_STOR_XFER_GOOD) {
++		status[0] = 0xF0;	/* Pretend there's no media */
++		status[1] = 0;
++	}
+ 
+ 	/* Check for no media or door open */
+ 	if ((status[0] & 0x80) || ((status[0] & 0x1F) == 0x10)
 
 
