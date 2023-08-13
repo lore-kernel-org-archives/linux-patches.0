@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AED9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:28:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C2BC433C7;
-	Sun, 13 Aug 2023 21:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EA69443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:28:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689DDC433C7;
+	Sun, 13 Aug 2023 21:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962117;
-	bh=UVxGp3CRFkeXOkJPLchRju8knqsrZw0KGCe0MbaLdPU=;
+	s=korg; t=1691962119;
+	bh=JDkWxroUeAhwSJG0BISP+VpwR8m5IcP8SA77rkNUpHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=td395xs77mR9J4dkBD+2Kw3xEPiHSH5QhrI3voFbhUNw2yAhcViQuyEQESWGZMwEx
-	 rYe+Zn0C68okSA9PMUfWENncbngv20OATzRxSqTLc81Qz7MU2Ws3vGOc/M61lMwT73
-	 RWIirMgfvFHF5BVn86BSUDGw6vYG+V9tmFZnSfik=
+	b=FVxZwoHrUbQBY9Vid7snDauSMsROCGoJI50xcQwsfx3cDDzkaENKs3Wo6LlKU1bbM
+	 xwr8RIIBmQbEZJDMpkiPnYU1Rgts0TFiL6VUIQHmKgd/kljzO3JAkyZNbCgpOxXp/s
+	 foep3IlkeIOGvv1hGlhLaxwrMWL0XgdtRN+QLABc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.4 092/206] netfilter: nf_tables: adapt set backend to use GC transaction API
-Date: Sun, 13 Aug 2023 23:17:42 +0200
-Message-ID: <20230813211727.703594244@linuxfoundation.org>
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 119/206] selftests: forwarding: bridge_mdb: Fix failing test with old libnet
+Date: Sun, 13 Aug 2023 23:18:09 +0200
+Message-ID: <20230813211728.446596076@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -33,547 +37,203 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit f6c383b8c31a93752a52697f8430a71dcbc46adf upstream.
+commit e98e195d90cc93b1bf2ad762c7c274a40dab7173 upstream.
 
-Use the GC transaction API to replace the old and buggy gc API and the
-busy mark approach.
+As explained in commit 8bcfb4ae4d97 ("selftests: forwarding: Fix failing
+tests with old libnet"), old versions of libnet (used by mausezahn) do
+not use the "SO_BINDTODEVICE" socket option. For IP unicast packets,
+this can be solved by prefixing mausezahn invocations with "ip vrf
+exec". However, IP multicast packets do not perform routing and simply
+egress the bound device, which does not exist in this case.
 
-No set elements are removed from async garbage collection anymore,
-instead the _DEAD bit is set on so the set element is not visible from
-lookup path anymore. Async GC enqueues transaction work that might be
-aborted and retried later.
+Fix by specifying the source and destination MAC of the packet which
+will cause mausezahn to use a packet socket instead of an IP socket.
 
-rbtree and pipapo set backends does not set on the _DEAD bit from the
-sync GC path since this runs in control plane path where mutex is held.
-In this case, set elements are deactivated, removed and then released
-via RCU callback, sync GC never fails.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Fixes: 9d0982927e79 ("netfilter: nft_hash: add support for timeouts")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b6d00da08610 ("selftests: forwarding: Add bridge MDB test")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230808141503.4060661-16-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c  |    7 -
- net/netfilter/nft_set_hash.c   |   77 +++++++++++++--------
- net/netfilter/nft_set_pipapo.c |   48 ++++++++++---
- net/netfilter/nft_set_rbtree.c |  146 ++++++++++++++++++++++++-----------------
- 4 files changed, 174 insertions(+), 104 deletions(-)
+ .../selftests/net/forwarding/bridge_mdb.sh    | 46 ++++++++++---------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6357,7 +6357,6 @@ static void nft_setelem_activate(struct
- 
- 	if (nft_setelem_is_catchall(set, elem)) {
- 		nft_set_elem_change_active(net, set, ext);
--		nft_set_elem_clear_busy(ext);
- 	} else {
- 		set->ops->activate(net, set, elem);
- 	}
-@@ -6372,8 +6371,7 @@ static int nft_setelem_catchall_deactiva
- 
- 	list_for_each_entry(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
--		if (!nft_is_active(net, ext) ||
--		    nft_set_elem_mark_busy(ext))
-+		if (!nft_is_active(net, ext))
- 			continue;
- 
- 		kfree(elem->priv);
-@@ -7083,8 +7081,7 @@ static int nft_set_catchall_flush(const
- 
- 	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
--		if (!nft_set_elem_active(ext, genmask) ||
--		    nft_set_elem_mark_busy(ext))
-+		if (!nft_set_elem_active(ext, genmask))
- 			continue;
- 
- 		elem.priv = catchall->elem;
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -59,6 +59,8 @@ static inline int nft_rhash_cmp(struct r
- 
- 	if (memcmp(nft_set_ext_key(&he->ext), x->key, x->set->klen))
- 		return 1;
-+	if (nft_set_elem_is_dead(&he->ext))
-+		return 1;
- 	if (nft_set_elem_expired(&he->ext))
- 		return 1;
- 	if (!nft_set_elem_active(&he->ext, x->genmask))
-@@ -188,7 +190,6 @@ static void nft_rhash_activate(const str
- 	struct nft_rhash_elem *he = elem->priv;
- 
- 	nft_set_elem_change_active(net, set, &he->ext);
--	nft_set_elem_clear_busy(&he->ext);
- }
- 
- static bool nft_rhash_flush(const struct net *net,
-@@ -196,12 +197,9 @@ static bool nft_rhash_flush(const struct
+diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
+index 6f830b5f03c9..4853b8e4f8d3 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
+@@ -850,6 +850,7 @@ cfg_test()
+ __fwd_test_host_ip()
  {
- 	struct nft_rhash_elem *he = priv;
+ 	local grp=$1; shift
++	local dmac=$1; shift
+ 	local src=$1; shift
+ 	local mode=$1; shift
+ 	local name
+@@ -872,27 +873,27 @@ __fwd_test_host_ip()
+ 	# Packet should only be flooded to multicast router ports when there is
+ 	# no matching MDB entry. The bridge is not configured as a multicast
+ 	# router port.
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $src -B $grp -t udp -q
+ 	tc_check_packets "dev br0 ingress" 1 0
+ 	check_err $? "Packet locally received after flood"
  
--	if (!nft_set_elem_mark_busy(&he->ext) ||
--	    !nft_is_active(net, &he->ext)) {
--		nft_set_elem_change_active(net, set, &he->ext);
--		return true;
--	}
--	return false;
-+	nft_set_elem_change_active(net, set, &he->ext);
-+
-+	return true;
- }
+ 	# Install a regular port group entry and expect the packet to not be
+ 	# locally received.
+ 	bridge mdb add dev br0 port $swp2 grp $grp temp vid 10
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $src -B $grp -t udp -q
+ 	tc_check_packets "dev br0 ingress" 1 0
+ 	check_err $? "Packet locally received after installing a regular entry"
  
- static void *nft_rhash_deactivate(const struct net *net,
-@@ -218,9 +216,8 @@ static void *nft_rhash_deactivate(const
+ 	# Add a host entry and expect the packet to be locally received.
+ 	bridge mdb add dev br0 port br0 grp $grp temp vid 10
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $src -B $grp -t udp -q
+ 	tc_check_packets "dev br0 ingress" 1 1
+ 	check_err $? "Packet not locally received after adding a host entry"
  
- 	rcu_read_lock();
- 	he = rhashtable_lookup(&priv->ht, &arg, nft_rhash_params);
--	if (he != NULL &&
--	    !nft_rhash_flush(net, set, he))
--		he = NULL;
-+	if (he)
-+		nft_set_elem_change_active(net, set, &he->ext);
+ 	# Remove the host entry and expect the packet to not be locally
+ 	# received.
+ 	bridge mdb del dev br0 port br0 grp $grp vid 10
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $src -B $grp -t udp -q
+ 	tc_check_packets "dev br0 ingress" 1 1
+ 	check_err $? "Packet locally received after removing a host entry"
  
- 	rcu_read_unlock();
+@@ -905,8 +906,8 @@ __fwd_test_host_ip()
  
-@@ -312,25 +309,48 @@ static bool nft_rhash_expr_needs_gc_run(
- 
- static void nft_rhash_gc(struct work_struct *work)
+ fwd_test_host_ip()
  {
-+	struct nftables_pernet *nft_net;
- 	struct nft_set *set;
- 	struct nft_rhash_elem *he;
- 	struct nft_rhash *priv;
--	struct nft_set_gc_batch *gcb = NULL;
- 	struct rhashtable_iter hti;
-+	struct nft_trans_gc *gc;
-+	struct net *net;
-+	u32 gc_seq;
- 
- 	priv = container_of(work, struct nft_rhash, gc_work.work);
- 	set  = nft_set_container_of(priv);
-+	net  = read_pnet(&set->net);
-+	nft_net = nft_pernet(net);
-+	gc_seq = READ_ONCE(nft_net->gc_seq);
-+
-+	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
-+	if (!gc)
-+		goto done;
- 
- 	rhashtable_walk_enter(&priv->ht, &hti);
- 	rhashtable_walk_start(&hti);
- 
- 	while ((he = rhashtable_walk_next(&hti))) {
- 		if (IS_ERR(he)) {
--			if (PTR_ERR(he) != -EAGAIN)
--				break;
-+			if (PTR_ERR(he) != -EAGAIN) {
-+				nft_trans_gc_destroy(gc);
-+				gc = NULL;
-+				goto try_later;
-+			}
- 			continue;
- 		}
- 
-+		/* Ruleset has been updated, try later. */
-+		if (READ_ONCE(nft_net->gc_seq) != gc_seq) {
-+			nft_trans_gc_destroy(gc);
-+			gc = NULL;
-+			goto try_later;
-+		}
-+
-+		if (nft_set_elem_is_dead(&he->ext))
-+			goto dead_elem;
-+
- 		if (nft_set_ext_exists(&he->ext, NFT_SET_EXT_EXPRESSIONS) &&
- 		    nft_rhash_expr_needs_gc_run(set, &he->ext))
- 			goto needs_gc_run;
-@@ -338,26 +358,26 @@ static void nft_rhash_gc(struct work_str
- 		if (!nft_set_elem_expired(&he->ext))
- 			continue;
- needs_gc_run:
--		if (nft_set_elem_mark_busy(&he->ext))
--			continue;
-+		nft_set_elem_dead(&he->ext);
-+dead_elem:
-+		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		if (!gc)
-+			goto try_later;
- 
--		gcb = nft_set_gc_batch_check(set, gcb, GFP_ATOMIC);
--		if (gcb == NULL)
--			break;
--		rhashtable_remove_fast(&priv->ht, &he->node, nft_rhash_params);
--		atomic_dec(&set->nelems);
--		nft_set_gc_batch_add(gcb, he);
-+		nft_trans_gc_elem_add(gc, he);
- 	}
-+
-+	gc = nft_trans_gc_catchall(gc, gc_seq);
-+
-+try_later:
-+	/* catchall list iteration requires rcu read side lock. */
- 	rhashtable_walk_stop(&hti);
- 	rhashtable_walk_exit(&hti);
- 
--	he = nft_set_catchall_gc(set);
--	if (he) {
--		gcb = nft_set_gc_batch_check(set, gcb, GFP_ATOMIC);
--		if (gcb)
--			nft_set_gc_batch_add(gcb, he);
--	}
--	nft_set_gc_batch_complete(gcb);
-+	if (gc)
-+		nft_trans_gc_queue_async_done(gc);
-+
-+done:
- 	queue_delayed_work(system_power_efficient_wq, &priv->gc_work,
- 			   nft_set_gc_interval(set));
- }
-@@ -420,7 +440,6 @@ static void nft_rhash_destroy(const stru
- 	};
- 
- 	cancel_delayed_work_sync(&priv->gc_work);
--	rcu_barrier();
- 	rhashtable_free_and_destroy(&priv->ht, nft_rhash_elem_destroy,
- 				    (void *)&rhash_ctx);
- }
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1537,16 +1537,34 @@ static void pipapo_drop(struct nft_pipap
- 	}
+-	__fwd_test_host_ip "239.1.1.1" "192.0.2.1" "-4"
+-	__fwd_test_host_ip "ff0e::1" "2001:db8:1::1" "-6"
++	__fwd_test_host_ip "239.1.1.1" "01:00:5e:01:01:01" "192.0.2.1" "-4"
++	__fwd_test_host_ip "ff0e::1" "33:33:00:00:00:01" "2001:db8:1::1" "-6"
  }
  
-+static void nft_pipapo_gc_deactivate(struct net *net, struct nft_set *set,
-+				     struct nft_pipapo_elem *e)
-+
-+{
-+	struct nft_set_elem elem = {
-+		.priv	= e,
-+	};
-+
-+	nft_setelem_data_deactivate(net, set, &elem);
-+}
-+
- /**
-  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
-  * @set:	nftables API set representation
-  * @m:		Matching data
-  */
--static void pipapo_gc(const struct nft_set *set, struct nft_pipapo_match *m)
-+static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+ fwd_test_host_l2()
+@@ -966,6 +967,7 @@ fwd_test_host()
+ __fwd_test_port_ip()
  {
-+	struct nft_set *set = (struct nft_set *) _set;
- 	struct nft_pipapo *priv = nft_set_priv(set);
-+	struct net *net = read_pnet(&set->net);
- 	int rules_f0, first_rule = 0;
- 	struct nft_pipapo_elem *e;
-+	struct nft_trans_gc *gc;
-+
-+	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
-+	if (!gc)
-+		return;
+ 	local grp=$1; shift
++	local dmac=$1; shift
+ 	local valid_src=$1; shift
+ 	local invalid_src=$1; shift
+ 	local mode=$1; shift
+@@ -999,43 +1001,43 @@ __fwd_test_port_ip()
+ 		vlan_ethtype $eth_type vlan_id 10 dst_ip $grp \
+ 		src_ip $invalid_src action drop
  
- 	while ((rules_f0 = pipapo_rules_same_key(m->f, first_rule))) {
- 		union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
-@@ -1570,13 +1588,20 @@ static void pipapo_gc(const struct nft_s
- 		f--;
- 		i--;
- 		e = f->mt[rulemap[i].to].e;
--		if (nft_set_elem_expired(&e->ext) &&
--		    !nft_set_elem_mark_busy(&e->ext)) {
-+
-+		/* synchronous gc never fails, there is no need to set on
-+		 * NFT_SET_ELEM_DEAD_BIT.
-+		 */
-+		if (nft_set_elem_expired(&e->ext)) {
- 			priv->dirty = true;
--			pipapo_drop(m, rulemap);
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $valid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $valid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 1 0
+ 	check_err $? "Packet from valid source received on H2 before adding entry"
  
--			rcu_barrier();
--			nft_set_elem_destroy(set, e, true);
-+			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
-+			if (!gc)
-+				break;
-+
-+			nft_pipapo_gc_deactivate(net, set, e);
-+			pipapo_drop(m, rulemap);
-+			nft_trans_gc_elem_add(gc, e);
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 2 0
+ 	check_err $? "Packet from invalid source received on H2 before adding entry"
  
- 			/* And check again current first rule, which is now the
- 			 * first we haven't checked.
-@@ -1586,11 +1611,11 @@ static void pipapo_gc(const struct nft_s
- 		}
- 	}
+ 	bridge mdb add dev br0 port $swp2 grp $grp vid 10 \
+ 		filter_mode $filter_mode source_list $src_list
  
--	e = nft_set_catchall_gc(set);
--	if (e)
--		nft_set_elem_destroy(set, e, true);
--
--	priv->last_gc = jiffies;
-+	gc = nft_trans_gc_catchall(gc, 0);
-+	if (gc) {
-+		nft_trans_gc_queue_sync_done(gc);
-+		priv->last_gc = jiffies;
-+	}
- }
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $valid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $valid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 1 1
+ 	check_err $? "Packet from valid source not received on H2 after adding entry"
  
- /**
-@@ -1715,7 +1740,6 @@ static void nft_pipapo_activate(const st
- 		return;
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 2 0
+ 	check_err $? "Packet from invalid source received on H2 after adding entry"
  
- 	nft_set_elem_change_active(net, set, &e->ext);
--	nft_set_elem_clear_busy(&e->ext);
- }
+ 	bridge mdb replace dev br0 port $swp2 grp $grp vid 10 \
+ 		filter_mode exclude
  
- /**
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -46,6 +46,12 @@ static int nft_rbtree_cmp(const struct n
- 		      set->klen);
- }
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $valid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $valid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 1 2
+ 	check_err $? "Packet from valid source not received on H2 after allowing all sources"
  
-+static bool nft_rbtree_elem_expired(const struct nft_rbtree_elem *rbe)
-+{
-+	return nft_set_elem_expired(&rbe->ext) ||
-+	       nft_set_elem_is_dead(&rbe->ext);
-+}
-+
- static bool __nft_rbtree_lookup(const struct net *net, const struct nft_set *set,
- 				const u32 *key, const struct nft_set_ext **ext,
- 				unsigned int seq)
-@@ -80,7 +86,7 @@ static bool __nft_rbtree_lookup(const st
- 				continue;
- 			}
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 2 1
+ 	check_err $? "Packet from invalid source not received on H2 after allowing all sources"
  
--			if (nft_set_elem_expired(&rbe->ext))
-+			if (nft_rbtree_elem_expired(rbe))
- 				return false;
+ 	bridge mdb del dev br0 port $swp2 grp $grp vid 10
  
- 			if (nft_rbtree_interval_end(rbe)) {
-@@ -98,7 +104,7 @@ static bool __nft_rbtree_lookup(const st
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $valid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $valid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 1 2
+ 	check_err $? "Packet from valid source received on H2 after deleting entry"
  
- 	if (set->flags & NFT_SET_INTERVAL && interval != NULL &&
- 	    nft_set_elem_active(&interval->ext, genmask) &&
--	    !nft_set_elem_expired(&interval->ext) &&
-+	    !nft_rbtree_elem_expired(interval) &&
- 	    nft_rbtree_interval_start(interval)) {
- 		*ext = &interval->ext;
- 		return true;
-@@ -215,6 +221,18 @@ static void *nft_rbtree_get(const struct
- 	return rbe;
- }
+-	$MZ $mode $h1.10 -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
++	$MZ $mode $h1.10 -a own -b $dmac -c 1 -p 128 -A $invalid_src -B $grp -t udp -q
+ 	tc_check_packets "dev $h2 ingress" 2 1
+ 	check_err $? "Packet from invalid source received on H2 after deleting entry"
  
-+static void nft_rbtree_gc_remove(struct net *net, struct nft_set *set,
-+				 struct nft_rbtree *priv,
-+				 struct nft_rbtree_elem *rbe)
-+{
-+	struct nft_set_elem elem = {
-+		.priv	= rbe,
-+	};
-+
-+	nft_setelem_data_deactivate(net, set, &elem);
-+	rb_erase(&rbe->node, &priv->root);
-+}
-+
- static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 			      struct nft_rbtree *priv,
- 			      struct nft_rbtree_elem *rbe,
-@@ -222,11 +240,12 @@ static int nft_rbtree_gc_elem(const stru
+@@ -1047,11 +1049,11 @@ __fwd_test_port_ip()
+ 
+ fwd_test_port_ip()
  {
- 	struct nft_set *set = (struct nft_set *)__set;
- 	struct rb_node *prev = rb_prev(&rbe->node);
-+	struct net *net = read_pnet(&set->net);
- 	struct nft_rbtree_elem *rbe_prev;
--	struct nft_set_gc_batch *gcb;
-+	struct nft_trans_gc *gc;
- 
--	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
--	if (!gcb)
-+	gc = nft_trans_gc_alloc(set, 0, GFP_ATOMIC);
-+	if (!gc)
- 		return -ENOMEM;
- 
- 	/* search for end interval coming before this element.
-@@ -244,17 +263,28 @@ static int nft_rbtree_gc_elem(const stru
- 
- 	if (prev) {
- 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
-+		nft_rbtree_gc_remove(net, set, priv, rbe_prev);
- 
--		rb_erase(&rbe_prev->node, &priv->root);
--		atomic_dec(&set->nelems);
--		nft_set_gc_batch_add(gcb, rbe_prev);
-+		/* There is always room in this trans gc for this element,
-+		 * memory allocation never actually happens, hence, the warning
-+		 * splat in such case. No need to set NFT_SET_ELEM_DEAD_BIT,
-+		 * this is synchronous gc which never fails.
-+		 */
-+		gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
-+		if (WARN_ON_ONCE(!gc))
-+			return -ENOMEM;
-+
-+		nft_trans_gc_elem_add(gc, rbe_prev);
- 	}
- 
--	rb_erase(&rbe->node, &priv->root);
--	atomic_dec(&set->nelems);
-+	nft_rbtree_gc_remove(net, set, priv, rbe);
-+	gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
-+	if (WARN_ON_ONCE(!gc))
-+		return -ENOMEM;
- 
--	nft_set_gc_batch_add(gcb, rbe);
--	nft_set_gc_batch_complete(gcb);
-+	nft_trans_gc_elem_add(gc, rbe);
-+
-+	nft_trans_gc_queue_sync_done(gc);
- 
- 	return 0;
- }
-@@ -482,7 +512,6 @@ static void nft_rbtree_activate(const st
- 	struct nft_rbtree_elem *rbe = elem->priv;
- 
- 	nft_set_elem_change_active(net, set, &rbe->ext);
--	nft_set_elem_clear_busy(&rbe->ext);
+-	__fwd_test_port_ip "239.1.1.1" "192.0.2.1" "192.0.2.2" "-4" "exclude"
+-	__fwd_test_port_ip "ff0e::1" "2001:db8:1::1" "2001:db8:1::2" "-6" \
++	__fwd_test_port_ip "239.1.1.1" "01:00:5e:01:01:01" "192.0.2.1" "192.0.2.2" "-4" "exclude"
++	__fwd_test_port_ip "ff0e::1" "33:33:00:00:00:01" "2001:db8:1::1" "2001:db8:1::2" "-6" \
+ 		"exclude"
+-	__fwd_test_port_ip "239.1.1.1" "192.0.2.1" "192.0.2.2" "-4" "include"
+-	__fwd_test_port_ip "ff0e::1" "2001:db8:1::1" "2001:db8:1::2" "-6" \
++	__fwd_test_port_ip "239.1.1.1" "01:00:5e:01:01:01" "192.0.2.1" "192.0.2.2" "-4" "include"
++	__fwd_test_port_ip "ff0e::1" "33:33:00:00:00:01" "2001:db8:1::1" "2001:db8:1::2" "-6" \
+ 		"include"
  }
  
- static bool nft_rbtree_flush(const struct net *net,
-@@ -490,12 +519,9 @@ static bool nft_rbtree_flush(const struc
- {
- 	struct nft_rbtree_elem *rbe = priv;
+@@ -1127,7 +1129,7 @@ ctrl_igmpv3_is_in_test()
+ 		filter_mode include source_list 192.0.2.1
  
--	if (!nft_set_elem_mark_busy(&rbe->ext) ||
--	    !nft_is_active(net, &rbe->ext)) {
--		nft_set_elem_change_active(net, set, &rbe->ext);
--		return true;
--	}
--	return false;
-+	nft_set_elem_change_active(net, set, &rbe->ext);
-+
-+	return true;
- }
+ 	# IS_IN ( 192.0.2.2 )
+-	$MZ $h1.10 -c 1 -A 192.0.2.1 -B 239.1.1.1 \
++	$MZ $h1.10 -c 1 -a own -b 01:00:5e:01:01:01 -A 192.0.2.1 -B 239.1.1.1 \
+ 		-t ip proto=2,p=$(igmpv3_is_in_get 239.1.1.1 192.0.2.2) -q
  
- static void *nft_rbtree_deactivate(const struct net *net,
-@@ -570,26 +596,40 @@ cont:
+ 	bridge -d mdb show dev br0 vid 10 | grep 239.1.1.1 | grep -q 192.0.2.2
+@@ -1140,7 +1142,7 @@ ctrl_igmpv3_is_in_test()
+ 		filter_mode include source_list 192.0.2.1
  
- static void nft_rbtree_gc(struct work_struct *work)
- {
--	struct nft_rbtree_elem *rbe, *rbe_end = NULL, *rbe_prev = NULL;
--	struct nft_set_gc_batch *gcb = NULL;
-+	struct nft_rbtree_elem *rbe, *rbe_end = NULL;
-+	struct nftables_pernet *nft_net;
- 	struct nft_rbtree *priv;
-+	struct nft_trans_gc *gc;
- 	struct rb_node *node;
- 	struct nft_set *set;
-+	unsigned int gc_seq;
- 	struct net *net;
--	u8 genmask;
+ 	# IS_IN ( 192.0.2.2 )
+-	$MZ $h1.10 -c 1 -A 192.0.2.1 -B 239.1.1.1 \
++	$MZ $h1.10 -a own -b 01:00:5e:01:01:01 -c 1 -A 192.0.2.1 -B 239.1.1.1 \
+ 		-t ip proto=2,p=$(igmpv3_is_in_get 239.1.1.1 192.0.2.2) -q
  
- 	priv = container_of(work, struct nft_rbtree, gc_work.work);
- 	set  = nft_set_container_of(priv);
- 	net  = read_pnet(&set->net);
--	genmask = nft_genmask_cur(net);
-+	nft_net = nft_pernet(net);
-+	gc_seq  = READ_ONCE(nft_net->gc_seq);
-+
-+	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
-+	if (!gc)
-+		goto done;
+ 	bridge -d mdb show dev br0 vid 10 | grep 239.1.1.1 | grep -v "src" | \
+@@ -1167,7 +1169,7 @@ ctrl_mldv2_is_in_test()
  
- 	write_lock_bh(&priv->lock);
- 	write_seqcount_begin(&priv->count);
- 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
-+
-+		/* Ruleset has been updated, try later. */
-+		if (READ_ONCE(nft_net->gc_seq) != gc_seq) {
-+			nft_trans_gc_destroy(gc);
-+			gc = NULL;
-+			goto try_later;
-+		}
-+
- 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+ 	# IS_IN ( 2001:db8:1::2 )
+ 	local p=$(mldv2_is_in_get fe80::1 ff0e::1 2001:db8:1::2)
+-	$MZ -6 $h1.10 -c 1 -A fe80::1 -B ff0e::1 \
++	$MZ -6 $h1.10 -a own -b 33:33:00:00:00:01 -c 1 -A fe80::1 -B ff0e::1 \
+ 		-t ip hop=1,next=0,p="$p" -q
  
--		if (!nft_set_elem_active(&rbe->ext, genmask))
--			continue;
-+		if (nft_set_elem_is_dead(&rbe->ext))
-+			goto dead_elem;
+ 	bridge -d mdb show dev br0 vid 10 | grep ff0e::1 | \
+@@ -1181,7 +1183,7 @@ ctrl_mldv2_is_in_test()
+ 		filter_mode include source_list 2001:db8:1::1
  
- 		/* elements are reversed in the rbtree for historical reasons,
- 		 * from highest to lowest value, that is why end element is
-@@ -602,46 +642,36 @@ static void nft_rbtree_gc(struct work_st
- 		if (!nft_set_elem_expired(&rbe->ext))
- 			continue;
+ 	# IS_IN ( 2001:db8:1::2 )
+-	$MZ -6 $h1.10 -c 1 -A fe80::1 -B ff0e::1 \
++	$MZ -6 $h1.10 -a own -b 33:33:00:00:00:01 -c 1 -A fe80::1 -B ff0e::1 \
+ 		-t ip hop=1,next=0,p="$p" -q
  
--		if (nft_set_elem_mark_busy(&rbe->ext)) {
--			rbe_end = NULL;
-+		nft_set_elem_dead(&rbe->ext);
-+
-+		if (!rbe_end)
- 			continue;
--		}
- 
--		if (rbe_prev) {
--			rb_erase(&rbe_prev->node, &priv->root);
--			rbe_prev = NULL;
--		}
--		gcb = nft_set_gc_batch_check(set, gcb, GFP_ATOMIC);
--		if (!gcb)
--			break;
-+		nft_set_elem_dead(&rbe_end->ext);
- 
--		atomic_dec(&set->nelems);
--		nft_set_gc_batch_add(gcb, rbe);
--		rbe_prev = rbe;
--
--		if (rbe_end) {
--			atomic_dec(&set->nelems);
--			nft_set_gc_batch_add(gcb, rbe_end);
--			rb_erase(&rbe_end->node, &priv->root);
--			rbe_end = NULL;
--		}
--		node = rb_next(node);
--		if (!node)
--			break;
-+		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		if (!gc)
-+			goto try_later;
-+
-+		nft_trans_gc_elem_add(gc, rbe_end);
-+		rbe_end = NULL;
-+dead_elem:
-+		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		if (!gc)
-+			goto try_later;
-+
-+		nft_trans_gc_elem_add(gc, rbe);
- 	}
--	if (rbe_prev)
--		rb_erase(&rbe_prev->node, &priv->root);
-+
-+	gc = nft_trans_gc_catchall(gc, gc_seq);
-+
-+try_later:
- 	write_seqcount_end(&priv->count);
- 	write_unlock_bh(&priv->lock);
- 
--	rbe = nft_set_catchall_gc(set);
--	if (rbe) {
--		gcb = nft_set_gc_batch_check(set, gcb, GFP_ATOMIC);
--		if (gcb)
--			nft_set_gc_batch_add(gcb, rbe);
--	}
--	nft_set_gc_batch_complete(gcb);
--
-+	if (gc)
-+		nft_trans_gc_queue_async_done(gc);
-+done:
- 	queue_delayed_work(system_power_efficient_wq, &priv->gc_work,
- 			   nft_set_gc_interval(set));
- }
+ 	bridge -d mdb show dev br0 vid 10 | grep ff0e::1 | grep -v "src" | \
+-- 
+2.41.0
+
 
 
