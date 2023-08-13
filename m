@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADBD9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24418C433C7;
-	Sun, 13 Aug 2023 21:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501179446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4DAC433C8;
+	Sun, 13 Aug 2023 21:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962587;
-	bh=s7b0HE2BSbuInMhTYrQJ8CfQD1qiStrdX12UqkTTddo=;
+	s=korg; t=1691962590;
+	bh=njk2PxPL5R2Be4lqCjm40bk+UlF9BUA19li5fEx/r2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ItBfl+2orJw+wqKLzbFx4achoF13ItD/7rjHo+vT1b7dCAdfJO4BWeTeuFI0AFXeD
-	 t70Ip6MUI4p97+lBpNMrf9n1wKONOG6d3x7KDVrpmbARw8I7X1pKn0eim4ItsU2bGs
-	 zJeA5AJDK0hRR1FQr6RkUwPv7Z9A5vNce+IN7EzY=
+	b=Jlmt5IpVhsduxa1LXo0qfHirtxbBYKnINBUFl7x9hHJM9kyeenbOvBOEP+1pWL528
+	 Y7E1SWXpY32huEsL0Gd5mUwcHl9mBYN1lhlFLzrqicLUQPd0DS38kBWzKEVMrDTch4
+	 jucxt5H+3fffK19yMHgX4d61IAUXQhwXXsuuiBd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jason Wang <jasowang@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+f817490f5bd20541b90a@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 083/149] net: core: remove unnecessary frame_sz check in bpf_xdp_adjust_tail()
-Date: Sun, 13 Aug 2023 23:18:48 +0200
-Message-ID: <20230813211721.277887207@linuxfoundation.org>
+	Ricky Wu <ricky_wu@realtek.com>
+Subject: [PATCH 6.1 057/149] misc: rtsx: judge ASPM Mode to set PETXCFG Reg
+Date: Sun, 13 Aug 2023 23:18:22 +0200
+Message-ID: <20230813211720.520186679@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -37,80 +33,182 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Ricky WU <ricky_wu@realtek.com>
 
-commit d14eea09edf427fa36bd446f4a3271f99164202f upstream.
+commit 101bd907b4244a726980ee67f95ed9cafab6ff7a upstream.
 
-Syzkaller reported the following issue:
-=======================================
-Too BIG xdp->frame_sz = 131072
-WARNING: CPU: 0 PID: 5020 at net/core/filter.c:4121
-  ____bpf_xdp_adjust_tail net/core/filter.c:4121 [inline]
-WARNING: CPU: 0 PID: 5020 at net/core/filter.c:4121
-  bpf_xdp_adjust_tail+0x466/0xa10 net/core/filter.c:4103
-...
-Call Trace:
- <TASK>
- bpf_prog_4add87e5301a4105+0x1a/0x1c
- __bpf_prog_run include/linux/filter.h:600 [inline]
- bpf_prog_run_xdp include/linux/filter.h:775 [inline]
- bpf_prog_run_generic_xdp+0x57e/0x11e0 net/core/dev.c:4721
- netif_receive_generic_xdp net/core/dev.c:4807 [inline]
- do_xdp_generic+0x35c/0x770 net/core/dev.c:4866
- tun_get_user+0x2340/0x3ca0 drivers/net/tun.c:1919
- tun_chr_write_iter+0xe8/0x210 drivers/net/tun.c:2043
- call_write_iter include/linux/fs.h:1871 [inline]
- new_sync_write fs/read_write.c:491 [inline]
- vfs_write+0x650/0xe40 fs/read_write.c:584
- ksys_write+0x12f/0x250 fs/read_write.c:637
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ASPM Mode is ASPM_MODE_CFG need to judge the value of clkreq_0
+to set HIGH or LOW, if the ASPM Mode is ASPM_MODE_REG
+always set to HIGH during the initialization.
 
-xdp->frame_sz > PAGE_SIZE check was introduced in commit c8741e2bfe87
-("xdp: Allow bpf_xdp_adjust_tail() to grow packet size"). But Jesper
-Dangaard Brouer <jbrouer@redhat.com> noted that after introducing the
-xdp_init_buff() which all XDP driver use - it's safe to remove this
-check. The original intend was to catch cases where XDP drivers have
-not been updated to use xdp.frame_sz, but that is not longer a concern
-(since xdp_init_buff).
-
-Running the initial syzkaller repro it was discovered that the
-contiguous physical memory allocation is used for both xdp paths in
-tun_get_user(), e.g. tun_build_skb() and tun_alloc_skb(). It was also
-stated by Jesper Dangaard Brouer <jbrouer@redhat.com> that XDP can
-work on higher order pages, as long as this is contiguous physical
-memory (e.g. a page).
-
-Reported-and-tested-by: syzbot+f817490f5bd20541b90a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000774b9205f1d8a80d@google.com/T/
-Link: https://syzkaller.appspot.com/bug?extid=f817490f5bd20541b90a
-Link: https://lore.kernel.org/all/20230725155403.796-1-andrew.kanner@gmail.com/T/
-Fixes: 43b5169d8355 ("net, xdp: Introduce xdp_init_buff utility routine")
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/r/20230803190316.2380231-1-andrew.kanner@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/52906c6836374c8cb068225954c5543a@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/misc/cardreader/rts5227.c  |    2 +-
+ drivers/misc/cardreader/rts5228.c  |   18 ------------------
+ drivers/misc/cardreader/rts5249.c  |    3 +--
+ drivers/misc/cardreader/rts5260.c  |   18 ------------------
+ drivers/misc/cardreader/rts5261.c  |   18 ------------------
+ drivers/misc/cardreader/rtsx_pcr.c |    5 ++++-
+ 6 files changed, 6 insertions(+), 58 deletions(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4064,12 +4064,6 @@ BPF_CALL_2(bpf_xdp_adjust_tail, struct x
- 	if (unlikely(data_end > data_hard_end))
- 		return -EINVAL;
+--- a/drivers/misc/cardreader/rts5227.c
++++ b/drivers/misc/cardreader/rts5227.c
+@@ -195,7 +195,7 @@ static int rts5227_extra_init_hw(struct
+ 		}
+ 	}
  
--	/* ALL drivers MUST init xdp->frame_sz, chicken check below */
--	if (unlikely(xdp->frame_sz > PAGE_SIZE)) {
--		WARN_ONCE(1, "Too BIG xdp->frame_sz = %d\n", xdp->frame_sz);
--		return -EINVAL;
--	}
+-	if (option->force_clkreq_0)
++	if (option->force_clkreq_0 && pcr->aspm_mode == ASPM_MODE_CFG)
+ 		rtsx_pci_add_cmd(pcr, WRITE_REG_CMD, PETXCFG,
+ 				FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+ 	else
+--- a/drivers/misc/cardreader/rts5228.c
++++ b/drivers/misc/cardreader/rts5228.c
+@@ -435,17 +435,10 @@ static void rts5228_init_from_cfg(struct
+ 			option->ltr_enabled = false;
+ 		}
+ 	}
 -
- 	if (unlikely(data_end < xdp->data + ETH_HLEN))
- 		return -EINVAL;
+-	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
+-				| PM_L1_1_EN | PM_L1_2_EN))
+-		option->force_clkreq_0 = false;
+-	else
+-		option->force_clkreq_0 = true;
+ }
  
+ static int rts5228_extra_init_hw(struct rtsx_pcr *pcr)
+ {
+-	struct rtsx_cr_option *option = &pcr->option;
+ 
+ 	rtsx_pci_write_register(pcr, RTS5228_AUTOLOAD_CFG1,
+ 			CD_RESUME_EN_MASK, CD_RESUME_EN_MASK);
+@@ -476,17 +469,6 @@ static int rts5228_extra_init_hw(struct
+ 	else
+ 		rtsx_pci_write_register(pcr, PETXCFG, 0x30, 0x00);
+ 
+-	/*
+-	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+-	 * to drive low, and we forcibly request clock.
+-	 */
+-	if (option->force_clkreq_0)
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+-	else
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
+-
+ 	rtsx_pci_write_register(pcr, PWD_SUSPEND_EN, 0xFF, 0xFB);
+ 
+ 	if (pcr->rtd3_en) {
+--- a/drivers/misc/cardreader/rts5249.c
++++ b/drivers/misc/cardreader/rts5249.c
+@@ -327,12 +327,11 @@ static int rts5249_extra_init_hw(struct
+ 		}
+ 	}
+ 
+-
+ 	/*
+ 	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+ 	 * to drive low, and we forcibly request clock.
+ 	 */
+-	if (option->force_clkreq_0)
++	if (option->force_clkreq_0 && pcr->aspm_mode == ASPM_MODE_CFG)
+ 		rtsx_pci_write_register(pcr, PETXCFG,
+ 			FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+ 	else
+--- a/drivers/misc/cardreader/rts5260.c
++++ b/drivers/misc/cardreader/rts5260.c
+@@ -517,17 +517,10 @@ static void rts5260_init_from_cfg(struct
+ 			option->ltr_enabled = false;
+ 		}
+ 	}
+-
+-	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
+-				| PM_L1_1_EN | PM_L1_2_EN))
+-		option->force_clkreq_0 = false;
+-	else
+-		option->force_clkreq_0 = true;
+ }
+ 
+ static int rts5260_extra_init_hw(struct rtsx_pcr *pcr)
+ {
+-	struct rtsx_cr_option *option = &pcr->option;
+ 
+ 	/* Set mcu_cnt to 7 to ensure data can be sampled properly */
+ 	rtsx_pci_write_register(pcr, 0xFC03, 0x7F, 0x07);
+@@ -546,17 +539,6 @@ static int rts5260_extra_init_hw(struct
+ 
+ 	rts5260_init_hw(pcr);
+ 
+-	/*
+-	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+-	 * to drive low, and we forcibly request clock.
+-	 */
+-	if (option->force_clkreq_0)
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+-	else
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
+-
+ 	rtsx_pci_write_register(pcr, pcr->reg_pm_ctrl3, 0x10, 0x00);
+ 
+ 	return 0;
+--- a/drivers/misc/cardreader/rts5261.c
++++ b/drivers/misc/cardreader/rts5261.c
+@@ -498,17 +498,10 @@ static void rts5261_init_from_cfg(struct
+ 			option->ltr_enabled = false;
+ 		}
+ 	}
+-
+-	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
+-				| PM_L1_1_EN | PM_L1_2_EN))
+-		option->force_clkreq_0 = false;
+-	else
+-		option->force_clkreq_0 = true;
+ }
+ 
+ static int rts5261_extra_init_hw(struct rtsx_pcr *pcr)
+ {
+-	struct rtsx_cr_option *option = &pcr->option;
+ 	u32 val;
+ 
+ 	rtsx_pci_write_register(pcr, RTS5261_AUTOLOAD_CFG1,
+@@ -554,17 +547,6 @@ static int rts5261_extra_init_hw(struct
+ 	else
+ 		rtsx_pci_write_register(pcr, PETXCFG, 0x30, 0x00);
+ 
+-	/*
+-	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+-	 * to drive low, and we forcibly request clock.
+-	 */
+-	if (option->force_clkreq_0)
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+-	else
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
+-
+ 	rtsx_pci_write_register(pcr, PWD_SUSPEND_EN, 0xFF, 0xFB);
+ 
+ 	if (pcr->rtd3_en) {
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1326,8 +1326,11 @@ static int rtsx_pci_init_hw(struct rtsx_
+ 			return err;
+ 	}
+ 
+-	if (pcr->aspm_mode == ASPM_MODE_REG)
++	if (pcr->aspm_mode == ASPM_MODE_REG) {
+ 		rtsx_pci_write_register(pcr, ASPM_FORCE_CTL, 0x30, 0x30);
++		rtsx_pci_write_register(pcr, PETXCFG,
++				FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
++	}
+ 
+ 	/* No CD interrupt if probing driver with card inserted.
+ 	 * So we need to initialize pcr->card_exist here.
 
 
