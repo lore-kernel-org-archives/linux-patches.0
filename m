@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556E9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D0DC433C7;
-	Sun, 13 Aug 2023 21:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AECE9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BF5C433C7;
+	Sun, 13 Aug 2023 21:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962822;
-	bh=EnlOqSZzYVL4gqDBVzyfLjHH9R2SKtoMEjbfxtC1vEs=;
+	s=korg; t=1691962824;
+	bh=lFWMpDQgwIvJiCJJuBNvhV/2Nj/FcQMCDIlhL3c7ltc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qlok4vK9rw//wB2peelBDb9dyVOEaDX10LTnOq/oz1n3x1splySI4HOLGdb4B9Sj3
-	 WG9f95C8+WwkEFhYkRZSTGMm0P7JxlHc32Dg7XSIla0h0NU4QMVQc/H+uR/YrU7Ryg
-	 AJv2X3j/RVuaHLsh9Ke7Ziae5TIMWbhYRX/KIXSQ=
+	b=HZHmu89TlMdCntTwD0u+H506Oi5KdNMipV0eZDBZvguGcgix42eM0gUXr9YVx8p46
+	 lyfRlrZhejm3u1P2UdRkNX8vUBqJ1kRCyABntiIYwHLCo8vNwbMtbwMHGiLq4czKgR
+	 xxs01Kcc2FRVjD+tLsKVbj7qQQJh4iiqYQT5J7ZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergei Antonov <saproj@gmail.com>,
-	Jonas Jensen <jonas.jensen@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 02/68] mmc: moxart: read scr register without changing byte order
-Date: Sun, 13 Aug 2023 23:19:03 +0200
-Message-ID: <20230813211708.223822135@linuxfoundation.org>
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Yiyuan Guo <yguoaz@gmail.com>,
+	Stable@vger.kerenl.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 20/68] iio: cros_ec: Fix the allocation size for cros_ec_command
+Date: Sun, 13 Aug 2023 23:19:21 +0200
+Message-ID: <20230813211708.770229193@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,44 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergei Antonov <saproj@gmail.com>
+From: Yiyuan Guo <yguoaz@gmail.com>
 
-commit d44263222134b5635932974c6177a5cba65a07e8 upstream.
+commit 8a4629055ef55177b5b63dab1ecce676bd8cccdd upstream.
 
-Conversion from big-endian to native is done in a common function
-mmc_app_send_scr(). Converting in moxart_transfer_pio() is extra.
-Double conversion on a LE system returns an incorrect SCR value,
-leads to errors:
+The struct cros_ec_command contains several integer fields and a
+trailing array. An allocation size neglecting the integer fields can
+lead to buffer overrun.
 
-mmc0: unrecognised SCR structure version 8
-
-Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
-Signed-off-by: Sergei Antonov <saproj@gmail.com>
-Cc: Jonas Jensen <jonas.jensen@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230627120549.2400325-1-saproj@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Yiyuan Guo <yguoaz@gmail.com>
+Fixes: 974e6f02e27e ("iio: cros_ec_sensors_core: Add common functions for the ChromeOS EC Sensor Hub.")
+Link: https://lore.kernel.org/r/20230630143719.1513906-1-yguoaz@gmail.com
+Cc: <Stable@vger.kerenl.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/moxart-mmc.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/moxart-mmc.c
-+++ b/drivers/mmc/host/moxart-mmc.c
-@@ -339,13 +339,7 @@ static void moxart_transfer_pio(struct m
- 				return;
- 			}
- 			for (len = 0; len < remain && len < host->fifo_width;) {
--				/* SCR data must be read in big endian. */
--				if (data->mrq->cmd->opcode == SD_APP_SEND_SCR)
--					*sgp = ioread32be(host->base +
--							  REG_DATA_WINDOW);
--				else
--					*sgp = ioread32(host->base +
--							REG_DATA_WINDOW);
-+				*sgp = ioread32(host->base + REG_DATA_WINDOW);
- 				sgp++;
- 				len += 4;
- 			}
+--- a/drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c
++++ b/drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c
+@@ -263,7 +263,7 @@ int cros_ec_sensors_core_init(struct pla
+ 	platform_set_drvdata(pdev, indio_dev);
+ 
+ 	state->ec = ec->ec_dev;
+-	state->msg = devm_kzalloc(&pdev->dev,
++	state->msg = devm_kzalloc(&pdev->dev, sizeof(*state->msg) +
+ 				max((u16)sizeof(struct ec_params_motion_sense),
+ 				state->ec->max_response), GFP_KERNEL);
+ 	if (!state->msg)
 
 
