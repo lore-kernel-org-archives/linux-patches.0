@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF1C9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83BFC433C8;
-	Sun, 13 Aug 2023 21:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050A89443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8025EC433C8;
+	Sun, 13 Aug 2023 21:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962158;
-	bh=mQ5NRXZvFY+HN6Rd4xPvUZJ1L/QuP3EgdSYFA9qLev8=;
+	s=korg; t=1691962160;
+	bh=46w7XvagkqAvvT8qpNnWNWgOhOLhGxBE3mt6pa2arKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+6OlPxRtulcg/57lQIJL9A9W05ra7p6Z/ZjkcRpekQy6pSQ1B893MhWuBLTgcUGK
-	 IMeKRDyWF0c+hhATdOil7Xd4cAiG5M9m/LgJY0/lnqqP/Bm7MSHGHwKMxiQPDmqwSs
-	 Slr0tcwpVMMq2XpJyGq7eeXj/NR2s/6e9RmfS2jQ=
+	b=2R+SVqJHL5oq1Dt5l6/sYofX+x+GQUJmd1BrWC7dJ0pkCO1UXuWArG/FH38BPIOi2
+	 v7l9ThakTwcWrsSKELVnkaIlK3p23rbvTxsieHBvgcVml9NyhB1yhVl15FxoGPqQU/
+	 /Lb/Wank/GzsEzga7m0Lj2s8MA1VhZaCl24O0gDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 135/206] tunnels: fix kasan splat when generating ipv4 pmtu error
-Date: Sun, 13 Aug 2023 23:18:25 +0200
-Message-ID: <20230813211728.887074615@linuxfoundation.org>
+	syzbot+8ada0057e69293a05fd4@syzkaller.appspotmail.com,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 6.4 136/206] xsk: fix refcount underflow in error path
+Date: Sun, 13 Aug 2023 23:18:26 +0200
+Message-ID: <20230813211728.914494680@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,48 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Magnus Karlsson <magnus.karlsson@intel.com>
 
-commit 6a7ac3d20593865209dceb554d8b3f094c6bd940 upstream.
+commit 85c2c79a07302fe68a1ad5cc449458cc559e314d upstream.
 
-If we try to emit an icmp error in response to a nonliner skb, we get
+Fix a refcount underflow problem reported by syzbot that can happen
+when a system is running out of memory. If xp_alloc_tx_descs() fails,
+and it can only fail due to not having enough memory, then the error
+path is triggered. In this error path, the refcount of the pool is
+decremented as it has incremented before. However, the reference to
+the pool in the socket was not nulled. This means that when the socket
+is closed later, the socket teardown logic will think that there is a
+pool attached to the socket and try to decrease the refcount again,
+leading to a refcount underflow.
 
-BUG: KASAN: slab-out-of-bounds in ip_compute_csum+0x134/0x220
-Read of size 4 at addr ffff88811c50db00 by task iperf3/1691
-CPU: 2 PID: 1691 Comm: iperf3 Not tainted 6.5.0-rc3+ #309
-[..]
- kasan_report+0x105/0x140
- ip_compute_csum+0x134/0x220
- iptunnel_pmtud_build_icmp+0x554/0x1020
- skb_tunnel_check_pmtu+0x513/0xb80
- vxlan_xmit_one+0x139e/0x2ef0
- vxlan_xmit+0x1867/0x2760
- dev_hard_start_xmit+0x1ee/0x4f0
- br_dev_queue_push_xmit+0x4d1/0x660
- [..]
+I chose this fix as it involved adding just a single line. Another
+option would have been to move xp_get_pool() and the assignment of
+xs->pool to after the if-statement and using xs_umem->pool instead of
+xs->pool in the whole if-statement resulting in somewhat simpler code,
+but this would have led to much more churn in the code base perhaps
+making it harder to backport.
 
-ip_compute_csum() cannot deal with nonlinear skbs, so avoid it.
-After this change, splat is gone and iperf3 is no longer stuck.
-
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20230803152653.29535-2-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ba3beec2ec1d ("xsk: Fix possible crash when multiple sockets are created")
+Reported-by: syzbot+8ada0057e69293a05fd4@syzkaller.appspotmail.com
+Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Link: https://lore.kernel.org/r/20230809142843.13944-1-magnus.karlsson@gmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_tunnel_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xdp/xsk.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -224,7 +224,7 @@ static int iptunnel_pmtud_build_icmp(str
- 		.un.frag.__unused	= 0,
- 		.un.frag.mtu		= htons(mtu),
- 	};
--	icmph->checksum = ip_compute_csum(icmph, len);
-+	icmph->checksum = csum_fold(skb_checksum(skb, 0, len, 0));
- 	skb_reset_transport_header(skb);
- 
- 	niph = skb_push(skb, sizeof(*niph));
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -994,6 +994,7 @@ static int xsk_bind(struct socket *sock,
+ 				err = xp_alloc_tx_descs(xs->pool, xs);
+ 				if (err) {
+ 					xp_put_pool(xs->pool);
++					xs->pool = NULL;
+ 					sockfd_put(sock);
+ 					goto out_unlock;
+ 				}
 
 
