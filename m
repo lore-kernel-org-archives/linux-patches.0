@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B089446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A81CC433C8;
-	Sun, 13 Aug 2023 21:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBDF9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E32AC433C8;
+	Sun, 13 Aug 2023 21:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962952;
-	bh=Chsc79yXdzIJY52AwP9fiZ6ySBL7WQhunvNWMr91WDY=;
+	s=korg; t=1691962955;
+	bh=8hx8A8Q+DaD0IzHdOx+c7EzYr9TfgGLcgjIapBCtGWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTjrRoBpZVExsaXdxlBOQ2GO25fR+8i+2QdewWpfrlZR+Pr4MCFlATAcx6H9tz+eD
-	 7Gcw3RofBMWkAn+B4OFoJTT5DqthV6sZ6SLlg1Q3VmwDJ6fwmUYg4y770FVbpFEy7M
-	 B6/PboynmXC6soWr9Rm0B1keXHIdTCMA7LU0KJP4=
+	b=aidASGcOyik6hREVyndDDOWkU7KCQuZiEluF9yi+G2thogf/juKSOUh4vQNv8gQUU
+	 B4ovA7hRL4S6AC85eKRhO7rPCmWYNYrvid6+GTEnGpQ8jdDlmrdw4snPkW9lOnO+t6
+	 Nho9TAXqCRCddvMAttiD+RrCpV3hADVm++Lm7/wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.10 68/68] sch_netem: fix issues in netem_change() vs get_dist_table()
-Date: Sun, 13 Aug 2023 23:20:09 +0200
-Message-ID: <20230813211710.217026054@linuxfoundation.org>
+	Nick Child <nnac123@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 54/68] ibmvnic: Handle DMA unmapping of login buffs in release functions
+Date: Sun, 13 Aug 2023 23:19:55 +0200
+Message-ID: <20230813211709.787159569@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -39,148 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-commit 11b73313c12403f617b47752db0ab3deef201af7 upstream.
+commit d78a671eb8996af19d6311ecdee9790d2fa479f0 upstream.
 
-In blamed commit, I missed that get_dist_table() was allocating
-memory using GFP_KERNEL, and acquiring qdisc lock to perform
-the swap of newly allocated table with current one.
+Rather than leaving the DMA unmapping of the login buffers to the
+login response handler, move this work into the login release functions.
+Previously, these functions were only used for freeing the allocated
+buffers. This could lead to issues if there are more than one
+outstanding login buffer requests, which is possible if a login request
+times out.
 
-In this patch, get_dist_table() is allocating memory and
-copy user data before we acquire the qdisc lock.
+If a login request times out, then there is another call to send login.
+The send login function makes a call to the login buffer release
+function. In the past, this freed the buffers but did not DMA unmap.
+Therefore, the VIOS could still write to the old login (now freed)
+buffer. It is for this reason that it is a good idea to leave the DMA
+unmap call to the login buffers release function.
 
-Then we perform swap operations while being protected by the lock.
+Since the login buffer release functions now handle DMA unmapping,
+remove the duplicate DMA unmapping in handle_login_rsp().
 
-Note that after this patch netem_change() no longer can do partial changes.
-If an error is returned, qdisc conf is left unchanged.
-
-Fixes: 2174a08db80d ("sch_netem: acquire qdisc lock in netem_change()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230622181503.2327695-1-edumazet@google.com
+Fixes: dff515a3e71d ("ibmvnic: Harden device login requests")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809221038.51296-3-nnac123@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c |   59 +++++++++++++++++++++-----------------------------
- 1 file changed, 25 insertions(+), 34 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -773,12 +773,10 @@ static void dist_free(struct disttable *
-  * signed 16 bit values.
-  */
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -929,12 +929,22 @@ static int ibmvnic_login(struct net_devi
  
--static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
--			  const struct nlattr *attr)
-+static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
+ static void release_login_buffer(struct ibmvnic_adapter *adapter)
  {
- 	size_t n = nla_len(attr)/sizeof(__s16);
- 	const __s16 *data = nla_data(attr);
--	spinlock_t *root_lock;
- 	struct disttable *d;
- 	int i;
- 
-@@ -793,13 +791,7 @@ static int get_dist_table(struct Qdisc *
- 	for (i = 0; i < n; i++)
- 		d->table[i] = data[i];
- 
--	root_lock = qdisc_root_sleeping_lock(sch);
--
--	spin_lock_bh(root_lock);
--	swap(*tbl, d);
--	spin_unlock_bh(root_lock);
--
--	dist_free(d);
-+	*tbl = d;
- 	return 0;
++	if (!adapter->login_buf)
++		return;
++
++	dma_unmap_single(&adapter->vdev->dev, adapter->login_buf_token,
++			 adapter->login_buf_sz, DMA_TO_DEVICE);
+ 	kfree(adapter->login_buf);
+ 	adapter->login_buf = NULL;
  }
  
-@@ -956,6 +948,8 @@ static int netem_change(struct Qdisc *sc
+ static void release_login_rsp_buffer(struct ibmvnic_adapter *adapter)
  {
- 	struct netem_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_NETEM_MAX + 1];
-+	struct disttable *delay_dist = NULL;
-+	struct disttable *slot_dist = NULL;
- 	struct tc_netem_qopt *qopt;
- 	struct clgstate old_clg;
- 	int old_loss_model = CLG_RANDOM;
-@@ -969,6 +963,18 @@ static int netem_change(struct Qdisc *sc
- 	if (ret < 0)
- 		return ret;
- 
-+	if (tb[TCA_NETEM_DELAY_DIST]) {
-+		ret = get_dist_table(&delay_dist, tb[TCA_NETEM_DELAY_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
++	if (!adapter->login_rsp_buf)
++		return;
 +
-+	if (tb[TCA_NETEM_SLOT_DIST]) {
-+		ret = get_dist_table(&slot_dist, tb[TCA_NETEM_SLOT_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
-@@ -978,26 +984,17 @@ static int netem_change(struct Qdisc *sc
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
-+			q->clg = old_clg;
- 			goto unlock;
- 		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
++	dma_unmap_single(&adapter->vdev->dev, adapter->login_rsp_buf_token,
++			 adapter->login_rsp_buf_sz, DMA_FROM_DEVICE);
+ 	kfree(adapter->login_rsp_buf);
+ 	adapter->login_rsp_buf = NULL;
+ }
+@@ -4445,11 +4455,6 @@ static int handle_login_rsp(union ibmvni
  	}
+ 	adapter->login_pending = false;
  
--	if (tb[TCA_NETEM_DELAY_DIST]) {
--		ret = get_dist_table(sch, &q->delay_dist,
--				     tb[TCA_NETEM_DELAY_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
+-	dma_unmap_single(dev, adapter->login_buf_token, adapter->login_buf_sz,
+-			 DMA_TO_DEVICE);
+-	dma_unmap_single(dev, adapter->login_rsp_buf_token,
+-			 adapter->login_rsp_buf_sz, DMA_FROM_DEVICE);
 -
--	if (tb[TCA_NETEM_SLOT_DIST]) {
--		ret = get_dist_table(sch, &q->slot_dist,
--				     tb[TCA_NETEM_SLOT_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
-+	if (delay_dist)
-+		swap(q->delay_dist, delay_dist);
-+	if (slot_dist)
-+		swap(q->slot_dist, slot_dist);
- 	sch->limit = qopt->limit;
- 
- 	q->latency = PSCHED_TICKS2NS(qopt->latency);
-@@ -1047,17 +1044,11 @@ static int netem_change(struct Qdisc *sc
- 
- unlock:
- 	sch_tree_unlock(sch);
--	return ret;
- 
--get_table_failure:
--	/* recover clg and loss_model, in case of
--	 * q->clg and q->loss_model were modified
--	 * in get_loss_clg()
--	 */
--	q->clg = old_clg;
--	q->loss_model = old_loss_model;
--
--	goto unlock;
-+table_free:
-+	dist_free(delay_dist);
-+	dist_free(slot_dist);
-+	return ret;
- }
- 
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+ 	/* If the number of queues requested can't be allocated by the
+ 	 * server, the login response will return with code 1. We will need
+ 	 * to resend the login buffer with fewer queues requested.
 
 
