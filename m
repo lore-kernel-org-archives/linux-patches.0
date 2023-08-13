@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CD79446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8924EC433C7;
-	Sun, 13 Aug 2023 21:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3669446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D28CC433C7;
+	Sun, 13 Aug 2023 21:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962626;
-	bh=KKrJewEweCq+o2GSa2egtb+0QTUA/2SzbvfNEBen7JY=;
+	s=korg; t=1691962629;
+	bh=jWh61egbm5iaxem1aO7UpMlYw7hhO9QsNlSMeDKqx9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yov4tUcnTNZ05XzHn1iToCHGMm6T98wU+8AXf1clIcuLVEekDqoEtj+0guc2O5qEQ
-	 x02JqGjqExW0vA7e53GtcWp26J3xZNSgMmbgscYxV157LHaYrGkbe4owCDYHzX+7iz
-	 1J5s3NkMECNX9g4cmauLuNGUlT2q8G7pn1tnJ3zo=
+	b=spC07d0HO+td1ZEZcFe7bjlmqJsYlCV4GRJMP0ex8NbP0HioK2PsS9MENpac1NuM4
+	 NESt8jP+v+0xCjFUVZk/0vjSUEP9GQs18npD/vqG7CchE841+ziqPDTicHoV2Xb05o
+	 e4Kfc1CQI/oZPQK3ili3ZWzPm8MFXgrnEw8kiPm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
+	RD Babiera <rdbabiera@google.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 062/149] usb: typec: tcpm: Fix response to vsafe0V event
-Date: Sun, 13 Aug 2023 23:18:27 +0200
-Message-ID: <20230813211720.662899320@linuxfoundation.org>
+Subject: [PATCH 6.1 063/149] usb: typec: altmodes/displayport: Signal hpd when configuring pin assignment
+Date: Sun, 13 Aug 2023 23:18:28 +0200
+Message-ID: <20230813211720.692316533@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,55 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: RD Babiera <rdbabiera@google.com>
 
-commit 4270d2b4845e820b274702bfc2a7140f69e4d19d upstream.
+commit 5a5ccd61cfd76156cb3e0373c300c509d05448ce upstream.
 
-Do not transition to SNK_UNATTACHED state when receiving vsafe0v event
-while in SNK_HARD_RESET_WAIT_VBUS. Ignore VBUS off events as well as
-in some platforms VBUS off can be signalled more than once.
+When connecting to some DisplayPort partners, the initial status update
+after entering DisplayPort Alt Mode notifies that the DFP_D/UFP_D is not in
+the connected state. This leads to sending a configure message that keeps
+the device in USB mode. The port partner then sets DFP_D/UFP_D to the
+connected state and HPD to high in the same Attention message. Currently,
+the HPD signal is dropped in order to handle configuration.
 
-[143515.364753] Requesting mux state 1, usb-role 2, orientation 2
-[143515.365520] pending state change SNK_HARD_RESET_SINK_OFF -> SNK_HARD_RESET_SINK_ON @ 650 ms [rev3 HARD_RESET]
-[143515.632281] CC1: 0 -> 0, CC2: 3 -> 0 [state SNK_HARD_RESET_SINK_OFF, polarity 1, disconnected]
-[143515.637214] VBUS on
-[143515.664985] VBUS off
-[143515.664992] state change SNK_HARD_RESET_SINK_OFF -> SNK_HARD_RESET_WAIT_VBUS [rev3 HARD_RESET]
-[143515.665564] VBUS VSAFE0V
-[143515.665566] state change SNK_HARD_RESET_WAIT_VBUS -> SNK_UNATTACHED [rev3 HARD_RESET]
+This patch saves changes to the HPD signal when the device chooses to
+configure during dp_altmode_status_update, and invokes sysfs_notify if
+necessary for HPD after configuring.
 
-Fixes: 28b43d3d746b ("usb: typec: tcpm: Introduce vsafe0v for vbus")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: RD Babiera <rdbabiera@google.com>
 Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230712085722.1414743-1-badhri@google.com
+Link: https://lore.kernel.org/r/20230726020903.1409072-1-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/typec/altmodes/displayport.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5322,6 +5322,10 @@ static void _tcpm_pd_vbus_off(struct tcp
- 		/* Do nothing, vbus drop expected */
- 		break;
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -60,6 +60,7 @@ struct dp_altmode {
  
-+	case SNK_HARD_RESET_WAIT_VBUS:
-+		/* Do nothing, its OK to receive vbus off events */
-+		break;
-+
- 	default:
- 		if (port->pwr_role == TYPEC_SINK && port->attached)
- 			tcpm_set_state(port, SNK_UNATTACHED, tcpm_wait_for_discharge(port));
-@@ -5368,6 +5372,9 @@ static void _tcpm_pd_vbus_vsafe0v(struct
- 	case SNK_DEBOUNCED:
- 		/*Do nothing, still waiting for VSAFE5V for connect */
- 		break;
-+	case SNK_HARD_RESET_WAIT_VBUS:
-+		/* Do nothing, its OK to receive vbus off events */
-+		break;
- 	default:
- 		if (port->pwr_role == TYPEC_SINK && port->auto_vbus_discharge_enabled)
- 			tcpm_set_state(port, SNK_UNATTACHED, 0);
+ 	enum dp_state state;
+ 	bool hpd;
++	bool pending_hpd;
+ 
+ 	struct mutex lock; /* device lock */
+ 	struct work_struct work;
+@@ -144,8 +145,13 @@ static int dp_altmode_status_update(stru
+ 		dp->state = DP_STATE_EXIT;
+ 	} else if (!(con & DP_CONF_CURRENTLY(dp->data.conf))) {
+ 		ret = dp_altmode_configure(dp, con);
+-		if (!ret)
++		if (!ret) {
+ 			dp->state = DP_STATE_CONFIGURE;
++			if (dp->hpd != hpd) {
++				dp->hpd = hpd;
++				dp->pending_hpd = true;
++			}
++		}
+ 	} else {
+ 		if (dp->hpd != hpd) {
+ 			drm_connector_oob_hotplug_event(dp->connector_fwnode);
+@@ -160,6 +166,16 @@ static int dp_altmode_configured(struct
+ {
+ 	sysfs_notify(&dp->alt->dev.kobj, "displayport", "configuration");
+ 	sysfs_notify(&dp->alt->dev.kobj, "displayport", "pin_assignment");
++	/*
++	 * If the DFP_D/UFP_D sends a change in HPD when first notifying the
++	 * DisplayPort driver that it is connected, then we wait until
++	 * configuration is complete to signal HPD.
++	 */
++	if (dp->pending_hpd) {
++		drm_connector_oob_hotplug_event(dp->connector_fwnode);
++		sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
++		dp->pending_hpd = false;
++	}
+ 
+ 	return dp_altmode_notify(dp);
+ }
 
 
