@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13949446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C911C433C8;
-	Sun, 13 Aug 2023 21:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0718D9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C04DC433C7;
+	Sun, 13 Aug 2023 21:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962518;
-	bh=+ecs3ODtgA28oTupRvKUtRFGI+0huETpzyjh51D7gME=;
+	s=korg; t=1691962521;
+	bh=3CXrZMmtM4Xp0zbcOlojaQ+TqZLurmB7IjBVu6NdyVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrMIySH+FeEfmckgm5yEx7gfj7vOCldg/WQ/hoeZ/7E4I8WbACWM/fzQpw1I0ehNx
-	 EvIHM1jVHTSaI//zuVisQuwUX+Ubry6CINDH8Pr5PRr5N7m1kyq/qbGU6myh8Ks6Fd
-	 YsfACEq2AO31Ptk0QqVl/bHJcSNFRfSAkCZKAQ3c=
+	b=Vl3y1hm2JxpwOQPUc/n9Su6ZqKjMtxNSj+oEdlcRqTF3kyd+cpmgXJkA0z3SnDQ1x
+	 jZh8tYkE+iaYRQBEIa27j3sU/nKCrKSK8KsFyq5DroIi/eAoXBQ611ExK6Y26JnbXc
+	 t1Hn5a3TZSqF065trY/9+bvsqX5YGMkYjvcK7MCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
 	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 029/149] drm/amd/display: check attr flag before set cursor degamma on DCN3+
-Date: Sun, 13 Aug 2023 23:17:54 +0200
-Message-ID: <20230813211719.679674863@linuxfoundation.org>
+Subject: [PATCH 6.1 030/149] drm/amdgpu: add S/G display parameter
+Date: Sun, 13 Aug 2023 23:17:55 +0200
+Message-ID: <20230813211719.707861445@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,48 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Melissa Wen <mwen@igalia.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 96b020e2163fb2197266b2f71b1007495206e6bb upstream.
+commit bf0207e1727031798f300afa17f9bbeceac6da87 upstream.
 
-Don't set predefined degamma curve to cursor plane if the cursor
-attribute flag is not set. Applying a degamma curve to the cursor by
-default breaks userspace expectation. Checking the flag before
-performing any color transformation prevents too dark cursor gamma in
-DCN3+ on many Linux desktop environment (KDE Plasma, GNOME,
-wlroots-based, etc.) as reported at:
-- https://gitlab.freedesktop.org/drm/amd/-/issues/1513
+Some users have reported flickerng with S/G display.  We've
+tried extensively to reproduce and debug the issue on a wide
+variety of platform configurations (DRAM bandwidth, etc.) and
+a variety of monitors, but so far have not been able to.  We
+disabled S/G display on a number of platforms to address this
+but that leads to failure to pin framebuffers errors and
+blank displays when there is memory pressure or no displays
+at all on systems with limited carveout (e.g., Chromebooks).
+Add a option to disable this as a debugging option as a
+way for users to disable this, depending on their use case,
+and for us to help debug this further.
 
-This is the same approach followed by DCN2 drivers where the issue is
-not present.
+v2: fix typo
 
-Fixes: 03f54d7d3448 ("drm/amd/display: Add DCN3 DPP")
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1513
-Signed-off-by: Melissa Wen <mwen@igalia.com>
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Tested-by: Alex Hung <alex.hung@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           |   11 +++++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +++
+ 3 files changed, 15 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-@@ -357,8 +357,11 @@ void dpp3_set_cursor_attributes(
- 	int cur_rom_en = 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -242,6 +242,7 @@ extern int amdgpu_num_kcq;
  
- 	if (color_format == CURSOR_MODE_COLOR_PRE_MULTIPLIED_ALPHA ||
--		color_format == CURSOR_MODE_COLOR_UN_PRE_MULTIPLIED_ALPHA)
--		cur_rom_en = 1;
-+		color_format == CURSOR_MODE_COLOR_UN_PRE_MULTIPLIED_ALPHA) {
-+		if (cursor_attributes->attribute_flags.bits.ENABLE_CURSOR_DEGAMMA) {
-+			cur_rom_en = 1;
-+		}
-+	}
+ #define AMDGPU_VCNFW_LOG_SIZE (32 * 1024)
+ extern int amdgpu_vcnfw_log;
++extern int amdgpu_sg_display;
  
- 	REG_UPDATE_3(CURSOR0_CONTROL,
- 			CUR0_MODE, color_format,
+ #define AMDGPU_VM_MAX_NUM_CTX			4096
+ #define AMDGPU_SG_THRESHOLD			(256*1024*1024)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -185,6 +185,7 @@ int amdgpu_num_kcq = -1;
+ int amdgpu_smartshift_bias;
+ int amdgpu_use_xgmi_p2p = 1;
+ int amdgpu_vcnfw_log;
++int amdgpu_sg_display = -1; /* auto */
+ 
+ static void amdgpu_drv_delayed_reset_work_handler(struct work_struct *work);
+ 
+@@ -930,6 +931,16 @@ MODULE_PARM_DESC(vcnfw_log, "Enable vcnf
+ module_param_named(vcnfw_log, amdgpu_vcnfw_log, int, 0444);
+ 
+ /**
++ * DOC: sg_display (int)
++ * Disable S/G (scatter/gather) display (i.e., display from system memory).
++ * This option is only relevant on APUs.  Set this option to 0 to disable
++ * S/G display if you experience flickering or other issues under memory
++ * pressure and report the issue.
++ */
++MODULE_PARM_DESC(sg_display, "S/G Display (-1 = auto (default), 0 = disable)");
++module_param_named(sg_display, amdgpu_sg_display, int, 0444);
++
++/**
+  * DOC: smu_pptable_id (int)
+  * Used to override pptable id. id = 0 use VBIOS pptable.
+  * id > 0 use the soft pptable with specicfied id.
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1634,6 +1634,9 @@ static int amdgpu_dm_init(struct amdgpu_
+ 		}
+ 		break;
+ 	}
++	if (init_data.flags.gpu_vm_support &&
++	    (amdgpu_sg_display == 0))
++		init_data.flags.gpu_vm_support = false;
+ 
+ 	if (init_data.flags.gpu_vm_support)
+ 		adev->mode_info.gpu_vm_support = true;
 
 
