@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA389446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B6C433C8;
-	Sun, 13 Aug 2023 21:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADBD9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24418C433C7;
+	Sun, 13 Aug 2023 21:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962584;
-	bh=au87tlTGG3kVmUHDd/aOS7tzJPnWfRwjIyLp+gnphwI=;
+	s=korg; t=1691962587;
+	bh=s7b0HE2BSbuInMhTYrQJ8CfQD1qiStrdX12UqkTTddo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9bNfuT6F8d2ekEY/o6UJGljV6SMEBvym6OTjkWNXLI4fldKcjCRmr5LWHX8gRp/d
-	 C9qaczDtM5DhVTffeGd9YWrF4BywwaS6AUUibq5kLI8t8sVVmHnzxqKL+TTbcI6TQe
-	 q/HAKn4LuouK6i6MsMRjGszg/28vyn1CeQut20TI=
+	b=ItBfl+2orJw+wqKLzbFx4achoF13ItD/7rjHo+vT1b7dCAdfJO4BWeTeuFI0AFXeD
+	 t70Ip6MUI4p97+lBpNMrf9n1wKONOG6d3x7KDVrpmbARw8I7X1pKn0eim4ItsU2bGs
+	 zJeA5AJDK0hRR1FQr6RkUwPv7Z9A5vNce+IN7EzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 082/149] selftests: forwarding: tc_flower: Relax success criterion
-Date: Sun, 13 Aug 2023 23:18:47 +0200
-Message-ID: <20230813211721.248758881@linuxfoundation.org>
+	Andrew Kanner <andrew.kanner@gmail.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jason Wang <jasowang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+f817490f5bd20541b90a@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 083/149] net: core: remove unnecessary frame_sz check in bpf_xdp_adjust_tail()
+Date: Sun, 13 Aug 2023 23:18:48 +0200
+Message-ID: <20230813211721.277887207@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -38,56 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Andrew Kanner <andrew.kanner@gmail.com>
 
-commit 9ee37e53e7687654b487fc94e82569377272a7a8 upstream.
+commit d14eea09edf427fa36bd446f4a3271f99164202f upstream.
 
-The test checks that filters that match on source or destination MAC
-were only hit once. A host can send more than one packet with a given
-source or destination MAC, resulting in failures.
+Syzkaller reported the following issue:
+=======================================
+Too BIG xdp->frame_sz = 131072
+WARNING: CPU: 0 PID: 5020 at net/core/filter.c:4121
+  ____bpf_xdp_adjust_tail net/core/filter.c:4121 [inline]
+WARNING: CPU: 0 PID: 5020 at net/core/filter.c:4121
+  bpf_xdp_adjust_tail+0x466/0xa10 net/core/filter.c:4103
+...
+Call Trace:
+ <TASK>
+ bpf_prog_4add87e5301a4105+0x1a/0x1c
+ __bpf_prog_run include/linux/filter.h:600 [inline]
+ bpf_prog_run_xdp include/linux/filter.h:775 [inline]
+ bpf_prog_run_generic_xdp+0x57e/0x11e0 net/core/dev.c:4721
+ netif_receive_generic_xdp net/core/dev.c:4807 [inline]
+ do_xdp_generic+0x35c/0x770 net/core/dev.c:4866
+ tun_get_user+0x2340/0x3ca0 drivers/net/tun.c:1919
+ tun_chr_write_iter+0xe8/0x210 drivers/net/tun.c:2043
+ call_write_iter include/linux/fs.h:1871 [inline]
+ new_sync_write fs/read_write.c:491 [inline]
+ vfs_write+0x650/0xe40 fs/read_write.c:584
+ ksys_write+0x12f/0x250 fs/read_write.c:637
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix by relaxing the success criterion and instead check that the filters
-were not hit zero times. Using tc_check_at_least_x_packets() is also an
-option, but it is not available in older kernels.
+xdp->frame_sz > PAGE_SIZE check was introduced in commit c8741e2bfe87
+("xdp: Allow bpf_xdp_adjust_tail() to grow packet size"). But Jesper
+Dangaard Brouer <jbrouer@redhat.com> noted that after introducing the
+xdp_init_buff() which all XDP driver use - it's safe to remove this
+check. The original intend was to catch cases where XDP drivers have
+not been updated to use xdp.frame_sz, but that is not longer a concern
+(since xdp_init_buff).
 
-Fixes: 07e5c75184a1 ("selftests: forwarding: Introduce tc flower matching tests")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-13-idosch@nvidia.com
+Running the initial syzkaller repro it was discovered that the
+contiguous physical memory allocation is used for both xdp paths in
+tun_get_user(), e.g. tun_build_skb() and tun_alloc_skb(). It was also
+stated by Jesper Dangaard Brouer <jbrouer@redhat.com> that XDP can
+work on higher order pages, as long as this is contiguous physical
+memory (e.g. a page).
+
+Reported-and-tested-by: syzbot+f817490f5bd20541b90a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000774b9205f1d8a80d@google.com/T/
+Link: https://syzkaller.appspot.com/bug?extid=f817490f5bd20541b90a
+Link: https://lore.kernel.org/all/20230725155403.796-1-andrew.kanner@gmail.com/T/
+Fixes: 43b5169d8355 ("net, xdp: Introduce xdp_init_buff utility routine")
+Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/r/20230803190316.2380231-1-andrew.kanner@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/tc_flower.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/filter.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/tools/testing/selftests/net/forwarding/tc_flower.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_flower.sh
-@@ -52,8 +52,8 @@ match_dst_mac_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched on a wrong filter"
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4064,12 +4064,6 @@ BPF_CALL_2(bpf_xdp_adjust_tail, struct x
+ 	if (unlikely(data_end > data_hard_end))
+ 		return -EINVAL;
  
--	tc_check_packets "dev $h2 ingress" 102 1
--	check_err $? "Did not match on correct filter"
-+	tc_check_packets "dev $h2 ingress" 102 0
-+	check_fail $? "Did not match on correct filter"
+-	/* ALL drivers MUST init xdp->frame_sz, chicken check below */
+-	if (unlikely(xdp->frame_sz > PAGE_SIZE)) {
+-		WARN_ONCE(1, "Too BIG xdp->frame_sz = %d\n", xdp->frame_sz);
+-		return -EINVAL;
+-	}
+-
+ 	if (unlikely(data_end < xdp->data + ETH_HLEN))
+ 		return -EINVAL;
  
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
-@@ -78,8 +78,8 @@ match_src_mac_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched on a wrong filter"
- 
--	tc_check_packets "dev $h2 ingress" 102 1
--	check_err $? "Did not match on correct filter"
-+	tc_check_packets "dev $h2 ingress" 102 0
-+	check_fail $? "Did not match on correct filter"
- 
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
 
 
