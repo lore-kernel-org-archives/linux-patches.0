@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D809446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F91EC433C8;
-	Sun, 13 Aug 2023 21:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868739446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BA5C433C8;
+	Sun, 13 Aug 2023 21:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963079;
-	bh=+/7OtCizogLxvq732zG/lBkpMzYp7+dmYrChBNo9WwA=;
+	s=korg; t=1691963082;
+	bh=z1bi7sjIe+HcyufpBLtsmTUYkE6/ZIFOj1d7unzD9iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeMaH1SqCOOkkp0kYAy3dwsXuh0rK7svBNTT67cDTbo8f+uA/aAa5qddf0vf/jAYk
-	 DcJRIVn3b0HLasnTYQc/PFMfe/1JusLWW4Z6A/HaYMzulFuOvLFIH2S6iysFgcQvMO
-	 OTotObyGS4Q50hyPxEtnlBnbCLgtuspC/C/+stfI=
+	b=dJgX0hoT6nbyaPLmBB7agHF2f3gsbTNqsvkxkPQwquKZbrpQ6qN4Uk9yTO8kzhni3
+	 o9rY5ghpgm0P3uLVD9OTfIq0LuDQMV06l59J9nipi2bRWQJHQPur7GrVdnLOxfkXDi
+	 fZHwRmOAkP/IZvTYpM5zM020lsa/2eB9vmpNnoJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>
-Subject: [PATCH 5.15 45/89] bpf, sockmap: Fix bug that strp_done cannot be called
-Date: Sun, 13 Aug 2023 23:19:36 +0200
-Message-ID: <20230813211712.142797146@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 46/89] mISDN: Update parameter type of dsp_cmx_send()
+Date: Sun, 13 Aug 2023 23:19:37 +0200
+Message-ID: <20230813211712.171368590@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,71 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 809e4dc71a0f2b8d2836035d98603694fff11d5d upstream.
+commit 1696ec8654016dad3b1baf6c024303e584400453 upstream.
 
-strp_done is only called when psock->progs.stream_parser is not NULL,
-but stream_parser was set to NULL by sk_psock_stop_strp(), called
-by sk_psock_drop() earlier. So, strp_done can never be called.
+When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
+there is a failure when dsp_cmx_send() is called indirectly from
+call_timer_fn():
 
-Introduce SK_PSOCK_RX_ENABLED to mark whether there is strp on psock.
-Change the condition for calling strp_done from judging whether
-stream_parser is set to judging whether this flag is set. This flag is
-only set once when strp_init() succeeds, and will never be cleared later.
+  [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
 
-Fixes: c0d95d3380ee ("bpf, sockmap: Re-evaluate proto ops when psock is removed from sockmap")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230804073740.194770-3-xukuohai@huaweicloud.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+The function pointer prototype that call_timer_fn() expects is
+
+  void (*fn)(struct timer_list *)
+
+whereas dsp_cmx_send() has a parameter type of 'void *', which causes
+the control flow integrity checks to fail because the parameter types do
+not match.
+
+Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
+match the expected prototype. The argument is unused anyways, so this
+has no functional change, aside from avoiding the CFI failure.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Fixes: e313ac12eb13 ("mISDN: Convert timers to use timer_setup()")
+Link: https://lore.kernel.org/r/20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/skmsg.h |    1 +
- net/core/skmsg.c      |   10 ++++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/isdn/mISDN/dsp.h      |    2 +-
+ drivers/isdn/mISDN/dsp_cmx.c  |    2 +-
+ drivers/isdn/mISDN/dsp_core.c |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -63,6 +63,7 @@ struct sk_psock_progs {
+--- a/drivers/isdn/mISDN/dsp.h
++++ b/drivers/isdn/mISDN/dsp.h
+@@ -247,7 +247,7 @@ extern void dsp_cmx_hardware(struct dsp_
+ extern int dsp_cmx_conf(struct dsp *dsp, u32 conf_id);
+ extern void dsp_cmx_receive(struct dsp *dsp, struct sk_buff *skb);
+ extern void dsp_cmx_hdlc(struct dsp *dsp, struct sk_buff *skb);
+-extern void dsp_cmx_send(void *arg);
++extern void dsp_cmx_send(struct timer_list *arg);
+ extern void dsp_cmx_transmit(struct dsp *dsp, struct sk_buff *skb);
+ extern int dsp_cmx_del_conf_member(struct dsp *dsp);
+ extern int dsp_cmx_del_conf(struct dsp_conf *conf);
+--- a/drivers/isdn/mISDN/dsp_cmx.c
++++ b/drivers/isdn/mISDN/dsp_cmx.c
+@@ -1625,7 +1625,7 @@ static u16	dsp_count; /* last sample cou
+ static int	dsp_count_valid; /* if we have last sample count */
  
- enum sk_psock_state_bits {
- 	SK_PSOCK_TX_ENABLED,
-+	SK_PSOCK_RX_STRP_ENABLED,
- };
- 
- struct sk_psock_link {
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1124,13 +1124,19 @@ static void sk_psock_strp_data_ready(str
- 
- int sk_psock_init_strp(struct sock *sk, struct sk_psock *psock)
+ void
+-dsp_cmx_send(void *arg)
++dsp_cmx_send(struct timer_list *arg)
  {
-+	int ret;
-+
- 	static const struct strp_callbacks cb = {
- 		.rcv_msg	= sk_psock_strp_read,
- 		.read_sock_done	= sk_psock_strp_read_done,
- 		.parse_msg	= sk_psock_strp_parse,
- 	};
+ 	struct dsp_conf *conf;
+ 	struct dsp_conf_member *member;
+--- a/drivers/isdn/mISDN/dsp_core.c
++++ b/drivers/isdn/mISDN/dsp_core.c
+@@ -1195,7 +1195,7 @@ static int __init dsp_init(void)
+ 	}
  
--	return strp_init(&psock->strp, sk, &cb);
-+	ret = strp_init(&psock->strp, sk, &cb);
-+	if (!ret)
-+		sk_psock_set_state(psock, SK_PSOCK_RX_STRP_ENABLED);
-+
-+	return ret;
- }
- 
- void sk_psock_start_strp(struct sock *sk, struct sk_psock *psock)
-@@ -1158,7 +1164,7 @@ void sk_psock_stop_strp(struct sock *sk,
- static void sk_psock_done_strp(struct sk_psock *psock)
- {
- 	/* Parser has been stopped */
--	if (psock->progs.stream_parser)
-+	if (sk_psock_test_state(psock, SK_PSOCK_RX_STRP_ENABLED))
- 		strp_done(&psock->strp);
- }
- #else
+ 	/* set sample timer */
+-	timer_setup(&dsp_spl_tl, (void *)dsp_cmx_send, 0);
++	timer_setup(&dsp_spl_tl, dsp_cmx_send, 0);
+ 	dsp_spl_tl.expires = jiffies + dsp_tics;
+ 	dsp_spl_jiffies = dsp_spl_tl.expires;
+ 	add_timer(&dsp_spl_tl);
 
 
