@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EB79443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9A8C433C8;
-	Sun, 13 Aug 2023 21:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5DF9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EB2C433C8;
+	Sun, 13 Aug 2023 21:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962305;
-	bh=b4IPiS6o5lHjzNYLNZcgvpuRvgyOawN94vatG/qa3wg=;
+	s=korg; t=1691962308;
+	bh=uE4JaVpSeZxzPAW9wWotZXradXPcYkxAOtlC5eVGsD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRmtugFSJ2s3To7ESVv5AHLpj+TjC9F6h8BTjK+KZgpgy+qsFOFr830fUX6S+0Lxf
-	 4RCA2wfJogi33NfOh0y2J52f6I/D2/Ywp5+bpx8TLqbTkoRBfNyzzjGb7lDRnUONfp
-	 By19CEj+AKxL27guftX0aYGTHfjn8ZEwnQhQRZs4=
+	b=f3ngpPgwepwI2TV11vcx23/ECxcpnQlsq3XuBCiUP1jgr/ZSeeOCIzFW0gCUKm1yc
+	 +oGXJDo2SoB3H+J7eiAS2ca8zFeNeXdwZl4iQiBDn2Y3OaYa/F95f1IpOxWoLaCAHQ
+	 fT3YMXMr9ZiDMre+pEc7nQm1IS/SdTGhP9wKdQHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 158/206] net: hns3: fix deadlock issue when externel_lb and reset are executed together
-Date: Sun, 13 Aug 2023 23:18:48 +0200
-Message-ID: <20230813211729.549519199@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.4 159/206] net: enetc: reimplement RFS/RSS memory clearing as PCI quirk
+Date: Sun, 13 Aug 2023 23:18:49 +0200
+Message-ID: <20230813211729.577354754@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,84 +35,199 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit ac6257a3ae5db5193b1f19c268e4f72d274ddb88 upstream.
+commit f0168042a21292d20007d24ab2e4fc32f79ebf11 upstream.
 
-When externel_lb and reset are executed together, a deadlock may
-occur:
-[ 3147.217009] INFO: task kworker/u321:0:7 blocked for more than 120 seconds.
-[ 3147.230483] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 3147.238999] task:kworker/u321:0  state:D stack:    0 pid:    7 ppid:     2 flags:0x00000008
-[ 3147.248045] Workqueue: hclge hclge_service_task [hclge]
-[ 3147.253957] Call trace:
-[ 3147.257093]  __switch_to+0x7c/0xbc
-[ 3147.261183]  __schedule+0x338/0x6f0
-[ 3147.265357]  schedule+0x50/0xe0
-[ 3147.269185]  schedule_preempt_disabled+0x18/0x24
-[ 3147.274488]  __mutex_lock.constprop.0+0x1d4/0x5dc
-[ 3147.279880]  __mutex_lock_slowpath+0x1c/0x30
-[ 3147.284839]  mutex_lock+0x50/0x60
-[ 3147.288841]  rtnl_lock+0x20/0x2c
-[ 3147.292759]  hclge_reset_prepare+0x68/0x90 [hclge]
-[ 3147.298239]  hclge_reset_subtask+0x88/0xe0 [hclge]
-[ 3147.303718]  hclge_reset_service_task+0x84/0x120 [hclge]
-[ 3147.309718]  hclge_service_task+0x2c/0x70 [hclge]
-[ 3147.315109]  process_one_work+0x1d0/0x490
-[ 3147.319805]  worker_thread+0x158/0x3d0
-[ 3147.324240]  kthread+0x108/0x13c
-[ 3147.328154]  ret_from_fork+0x10/0x18
+The workaround implemented in commit 3222b5b613db ("net: enetc:
+initialize RFS/RSS memories for unused ports too") is no longer
+effective after commit 6fffbc7ae137 ("PCI: Honor firmware's device
+disabled status"). Thus, it has introduced a regression and we see AER
+errors being reported again:
 
-In externel_lb process, the hns3 driver call napi_disable()
-first, then the reset happen, then the restore process of the
-externel_lb will fail, and will not call napi_enable(). When
-doing externel_lb again, napi_disable() will be double call,
-cause a deadlock of rtnl_lock().
+$ ip link set sw2p0 up && dhclient -i sw2p0 && ip addr show sw2p0
+fsl_enetc 0000:00:00.2 eno2: configuring for fixed/internal link mode
+fsl_enetc 0000:00:00.2 eno2: Link is Up - 2.5Gbps/Full - flow control rx/tx
+mscc_felix 0000:00:00.5 swp2: configuring for fixed/sgmii link mode
+mscc_felix 0000:00:00.5 swp2: Link is Up - 1Gbps/Full - flow control off
+sja1105 spi2.2 sw2p0: configuring for phy/rgmii-id link mode
+sja1105 spi2.2 sw2p0: Link is Up - 1Gbps/Full - flow control off
+pcieport 0000:00:1f.0: AER: Multiple Corrected error received: 0000:00:00.0
+pcieport 0000:00:1f.0: AER: can't find device of ID0000
 
-This patch use the HNS3_NIC_STATE_DOWN state to protect the
-calling of napi_disable() and napi_enable() in externel_lb
-process, just as the usage in ndo_stop() and ndo_start().
+Rob's suggestion is to reimplement the enetc driver workaround as a
+PCI fixup, and to modify the PCI core to run the fixups for all PCI
+functions. This change handles the first part.
 
-Fixes: 04b6ba143521 ("net: hns3: add support for external loopback test")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230807113452.474224-5-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+We refactor the common code in enetc_psi_create() and enetc_psi_destroy(),
+and use the PCI fixup only for those functions for which enetc_pf_probe()
+won't get called. This avoids some work being done twice for the PFs
+which are enabled.
+
+Fixes: 6fffbc7ae137 ("PCI: Honor firmware's device disabled status")
+Link: https://lore.kernel.org/netdev/CAL_JsqLsVYiPLx2kcHkDQ4t=hQVCR7NHziDwi9cCFUFhx48Qow@mail.gmail.com/
+Suggested-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c |  103 +++++++++++++++++-------
+ 1 file changed, 73 insertions(+), 30 deletions(-)
 
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -5854,6 +5854,9 @@ void hns3_external_lb_prepare(struct net
- 	if (!if_running)
- 		return;
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -1222,50 +1222,81 @@ static int enetc_pf_register_with_ierb(s
+ 	return enetc_ierb_register_pf(ierb_pdev, pdev);
+ }
  
-+	if (test_and_set_bit(HNS3_NIC_STATE_DOWN, &priv->state))
+-static int enetc_pf_probe(struct pci_dev *pdev,
+-			  const struct pci_device_id *ent)
++static struct enetc_si *enetc_psi_create(struct pci_dev *pdev)
+ {
+-	struct device_node *node = pdev->dev.of_node;
+-	struct enetc_ndev_priv *priv;
+-	struct net_device *ndev;
+ 	struct enetc_si *si;
+-	struct enetc_pf *pf;
+ 	int err;
+ 
+-	err = enetc_pf_register_with_ierb(pdev);
+-	if (err == -EPROBE_DEFER)
+-		return err;
+-	if (err)
+-		dev_warn(&pdev->dev,
+-			 "Could not register with IERB driver: %pe, please update the device tree\n",
+-			 ERR_PTR(err));
+-
+-	err = enetc_pci_probe(pdev, KBUILD_MODNAME, sizeof(*pf));
+-	if (err)
+-		return dev_err_probe(&pdev->dev, err, "PCI probing failed\n");
++	err = enetc_pci_probe(pdev, KBUILD_MODNAME, sizeof(struct enetc_pf));
++	if (err) {
++		dev_err_probe(&pdev->dev, err, "PCI probing failed\n");
++		goto out;
++	}
+ 
+ 	si = pci_get_drvdata(pdev);
+ 	if (!si->hw.port || !si->hw.global) {
+ 		err = -ENODEV;
+ 		dev_err(&pdev->dev, "could not map PF space, probing a VF?\n");
+-		goto err_map_pf_space;
++		goto out_pci_remove;
+ 	}
+ 
+ 	err = enetc_setup_cbdr(&pdev->dev, &si->hw, ENETC_CBDR_DEFAULT_SIZE,
+ 			       &si->cbd_ring);
+ 	if (err)
+-		goto err_setup_cbdr;
++		goto out_pci_remove;
+ 
+ 	err = enetc_init_port_rfs_memory(si);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to initialize RFS memory\n");
+-		goto err_init_port_rfs;
++		goto out_teardown_cbdr;
+ 	}
+ 
+ 	err = enetc_init_port_rss_memory(si);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to initialize RSS memory\n");
+-		goto err_init_port_rss;
++		goto out_teardown_cbdr;
++	}
++
++	return si;
++
++out_teardown_cbdr:
++	enetc_teardown_cbdr(&si->cbd_ring);
++out_pci_remove:
++	enetc_pci_remove(pdev);
++out:
++	return ERR_PTR(err);
++}
++
++static void enetc_psi_destroy(struct pci_dev *pdev)
++{
++	struct enetc_si *si = pci_get_drvdata(pdev);
++
++	enetc_teardown_cbdr(&si->cbd_ring);
++	enetc_pci_remove(pdev);
++}
++
++static int enetc_pf_probe(struct pci_dev *pdev,
++			  const struct pci_device_id *ent)
++{
++	struct device_node *node = pdev->dev.of_node;
++	struct enetc_ndev_priv *priv;
++	struct net_device *ndev;
++	struct enetc_si *si;
++	struct enetc_pf *pf;
++	int err;
++
++	err = enetc_pf_register_with_ierb(pdev);
++	if (err == -EPROBE_DEFER)
++		return err;
++	if (err)
++		dev_warn(&pdev->dev,
++			 "Could not register with IERB driver: %pe, please update the device tree\n",
++			 ERR_PTR(err));
++
++	si = enetc_psi_create(pdev);
++	if (IS_ERR(si)) {
++		err = PTR_ERR(si);
++		goto err_psi_create;
+ 	}
+ 
+ 	if (node && !of_device_is_available(node)) {
+@@ -1353,15 +1384,10 @@ err_alloc_si_res:
+ 	si->ndev = NULL;
+ 	free_netdev(ndev);
+ err_alloc_netdev:
+-err_init_port_rss:
+-err_init_port_rfs:
+ err_device_disabled:
+ err_setup_mac_addresses:
+-	enetc_teardown_cbdr(&si->cbd_ring);
+-err_setup_cbdr:
+-err_map_pf_space:
+-	enetc_pci_remove(pdev);
+-
++	enetc_psi_destroy(pdev);
++err_psi_create:
+ 	return err;
+ }
+ 
+@@ -1384,12 +1410,29 @@ static void enetc_pf_remove(struct pci_d
+ 	enetc_free_msix(priv);
+ 
+ 	enetc_free_si_resources(priv);
+-	enetc_teardown_cbdr(&si->cbd_ring);
+ 
+ 	free_netdev(si->ndev);
+ 
+-	enetc_pci_remove(pdev);
++	enetc_psi_destroy(pdev);
++}
++
++static void enetc_fixup_clear_rss_rfs(struct pci_dev *pdev)
++{
++	struct device_node *node = pdev->dev.of_node;
++	struct enetc_si *si;
++
++	/* Only apply quirk for disabled functions. For the ones
++	 * that are enabled, enetc_pf_probe() will apply it.
++	 */
++	if (node && of_device_is_available(node))
 +		return;
 +
- 	netif_carrier_off(ndev);
- 	netif_tx_disable(ndev);
++	si = enetc_psi_create(pdev);
++	if (si)
++		enetc_psi_destroy(pdev);
+ }
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_FREESCALE, ENETC_DEV_ID_PF,
++			enetc_fixup_clear_rss_rfs);
  
-@@ -5882,7 +5885,16 @@ void hns3_external_lb_restore(struct net
- 	if (!if_running)
- 		return;
- 
--	hns3_nic_reset_all_ring(priv->ae_handle);
-+	if (hns3_nic_resetting(ndev))
-+		return;
-+
-+	if (!test_bit(HNS3_NIC_STATE_DOWN, &priv->state))
-+		return;
-+
-+	if (hns3_nic_reset_all_ring(priv->ae_handle))
-+		return;
-+
-+	clear_bit(HNS3_NIC_STATE_DOWN, &priv->state);
- 
- 	for (i = 0; i < priv->vector_num; i++)
- 		hns3_vector_enable(&priv->tqp_vector[i]);
+ static const struct pci_device_id enetc_pf_id_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FREESCALE, ENETC_DEV_ID_PF) },
 
 
