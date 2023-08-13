@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3949443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7CBAC433C7;
-	Sun, 13 Aug 2023 21:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF5E9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A784C433C8;
+	Sun, 13 Aug 2023 21:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962300;
-	bh=ZRFQgl5AGUt5ob7cXqP9NJEfx27b9+Euvd1vHoKuvBk=;
+	s=korg; t=1691962302;
+	bh=K35XiHKbW6/O1VkZWxhykHHyBiXHC/XPoPf2n9/ucu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtEtuTSg1fhPyg1NbvzPFCoEFtbFyFoBxk+Nu7B5RW8W33EYDpElw7auTEB1Wc6CW
-	 g9/DxOzkui7wUPTiTKEA9FQ1PFUtY4P62DbrXrkx78t3tOa7SUKkkUw8DWVYNvt2bh
-	 1cCSYG9zh27C025EuVsj8cfSYEYIRKUiJxYaT6eI=
+	b=P9DgT0gEKg48COdeupr15sXPAthGwhjgyItZmnlOPljwqg94Osil+PSgNhMROUWTJ
+	 urgbPdNAuIXFFG/g2y0VaKlzK3TMDrOpVd2yUwGrHo3SZD+Qha42WekbCmekr6z2o8
+	 Ulk4vOYm7Y3icoVwIe6bQGk12O5Htxsm6FdX9cm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 184/206] btrfs: dont wait for writeback on clean pages in extent_write_cache_pages
-Date: Sun, 13 Aug 2023 23:19:14 +0200
-Message-ID: <20230813211730.290217641@linuxfoundation.org>
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 157/206] net: hns3: add wait until mac link down
+Date: Sun, 13 Aug 2023 23:18:47 +0200
+Message-ID: <20230813211729.521409063@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,45 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jie Wang <wangjie125@huawei.com>
 
-commit 5c25699871112853f231e52d51c576d5c759a020 upstream.
+commit 6265e242f7b95f2c1195b42ec912b84ad161470e upstream.
 
-__extent_writepage could have started on more pages than the one it was
-called for.  This happens regularly for zoned file systems, and in theory
-could happen for compressed I/O if the worker thread was executed very
-quickly. For such pages extent_write_cache_pages waits for writeback
-to complete before moving on to the next page, which is highly inefficient
-as it blocks the flusher thread.
+In some configure flow of hns3 driver, for example, change mtu, it will
+disable MAC through firmware before configuration. But firmware disables
+MAC asynchronously. The rx traffic may be not stopped in this case.
 
-Port over the PageDirty check that was added to write_cache_pages in
-commit 515f4a037fb ("mm: write_cache_pages optimise page cleaning") to
-fix this.
+So fixes it by waiting until mac link is down.
 
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: a9775bb64aa7 ("net: hns3: fix set and get link ksettings issue")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230807113452.474224-4-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2345,6 +2345,12 @@ retry:
- 				continue;
- 			}
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -7569,6 +7569,8 @@ static void hclge_enable_fd(struct hnae3
  
-+			if (!folio_test_dirty(folio)) {
-+				/* Someone wrote it for us. */
-+				folio_unlock(folio);
-+				continue;
-+			}
+ static void hclge_cfg_mac_mode(struct hclge_dev *hdev, bool enable)
+ {
++#define HCLGE_LINK_STATUS_WAIT_CNT  3
 +
- 			if (wbc->sync_mode != WB_SYNC_NONE) {
- 				if (folio_test_writeback(folio))
- 					submit_write_bio(bio_ctrl, 0);
+ 	struct hclge_desc desc;
+ 	struct hclge_config_mac_mode_cmd *req =
+ 		(struct hclge_config_mac_mode_cmd *)desc.data;
+@@ -7593,9 +7595,15 @@ static void hclge_cfg_mac_mode(struct hc
+ 	req->txrx_pad_fcs_loop_en = cpu_to_le32(loop_en);
+ 
+ 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
+-	if (ret)
++	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"mac enable fail, ret =%d.\n", ret);
++		return;
++	}
++
++	if (!enable)
++		hclge_mac_link_status_wait(hdev, HCLGE_LINK_STATUS_DOWN,
++					   HCLGE_LINK_STATUS_WAIT_CNT);
+ }
+ 
+ static int hclge_config_switch_param(struct hclge_dev *hdev, int vfid,
 
 
