@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4D79446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3904CC433C7;
-	Sun, 13 Aug 2023 21:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8759446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EE5C433C7;
+	Sun, 13 Aug 2023 21:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963211;
-	bh=Chsc79yXdzIJY52AwP9fiZ6ySBL7WQhunvNWMr91WDY=;
+	s=korg; t=1691963214;
+	bh=KRX/t8PFG6skDqH2WM10mDazglIzsOQBl4IZ2Kzwuqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRw+FU5H6EzS7h7Pgm/x7CY2cEb725lPx6Etnqs1pj9UOcPY8/Zkga3Oo+aRw/cyf
-	 OtaAI6znUspIXhYNGtCYFaB259lzH0Dr29VRWmut2Zgv3B85kIL2Xhcv6qEmaE4+qN
-	 5ysMS4HZ2JxJhRpqEI3GNap4Z/8cGMwhj7H4QbKw=
+	b=L3VgFbiSrR5CFBY2zMw7EwvhkX6KxyyyaHk27de6W3aZtUj9AfyCxB8g4lopXLVSC
+	 Sbsil391QHKrEr+bZPm4zQC9BoS22KPEY9TZenOTaIgb33/+wX30v/rbycF3ySAMgH
+	 sRxIQ28uO6Tso6K3dh84vFgPkg7oB30Hco2Kdvxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.15 86/89] sch_netem: fix issues in netem_change() vs get_dist_table()
-Date: Sun, 13 Aug 2023 23:20:17 +0200
-Message-ID: <20230813211713.340613561@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>
+Subject: [PATCH 5.15 87/89] tick: Detect and fix jiffies update stall
+Date: Sun, 13 Aug 2023 23:20:18 +0200
+Message-ID: <20230813211713.367727818@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -39,148 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 11b73313c12403f617b47752db0ab3deef201af7 upstream.
+[ Upstream commit a1ff03cd6fb9c501fff63a4a2bface9adcfa81cd ]
 
-In blamed commit, I missed that get_dist_table() was allocating
-memory using GFP_KERNEL, and acquiring qdisc lock to perform
-the swap of newly allocated table with current one.
+tick: Detect and fix jiffies update stall
 
-In this patch, get_dist_table() is allocating memory and
-copy user data before we acquire the qdisc lock.
+On some rare cases, the timekeeper CPU may be delaying its jiffies
+update duty for a while. Known causes include:
 
-Then we perform swap operations while being protected by the lock.
+* The timekeeper is waiting on stop_machine in a MULTI_STOP_DISABLE_IRQ
+  or MULTI_STOP_RUN state. Disabled interrupts prevent from timekeeping
+  updates while waiting for the target CPU to complete its
+  stop_machine() callback.
 
-Note that after this patch netem_change() no longer can do partial changes.
-If an error is returned, qdisc conf is left unchanged.
+* The timekeeper vcpu has VMEXIT'ed for a long while due to some overload
+  on the host.
 
-Fixes: 2174a08db80d ("sch_netem: acquire qdisc lock in netem_change()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230622181503.2327695-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Detect and fix these situations with emergency timekeeping catchups.
+
+Original-patch-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c |   59 +++++++++++++++++++++-----------------------------
- 1 file changed, 25 insertions(+), 34 deletions(-)
+ kernel/time/tick-sched.c |   17 +++++++++++++++++
+ kernel/time/tick-sched.h |    4 ++++
+ 2 files changed, 21 insertions(+)
 
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -773,12 +773,10 @@ static void dist_free(struct disttable *
-  * signed 16 bit values.
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -180,6 +180,8 @@ static ktime_t tick_init_jiffy_update(vo
+ 	return period;
+ }
+ 
++#define MAX_STALLED_JIFFIES 5
++
+ static void tick_sched_do_timer(struct tick_sched *ts, ktime_t now)
+ {
+ 	int cpu = smp_processor_id();
+@@ -207,6 +209,21 @@ static void tick_sched_do_timer(struct t
+ 	if (tick_do_timer_cpu == cpu)
+ 		tick_do_update_jiffies64(now);
+ 
++	/*
++	 * If jiffies update stalled for too long (timekeeper in stop_machine()
++	 * or VMEXIT'ed for several msecs), force an update.
++	 */
++	if (ts->last_tick_jiffies != jiffies) {
++		ts->stalled_jiffies = 0;
++		ts->last_tick_jiffies = READ_ONCE(jiffies);
++	} else {
++		if (++ts->stalled_jiffies == MAX_STALLED_JIFFIES) {
++			tick_do_update_jiffies64(now);
++			ts->stalled_jiffies = 0;
++			ts->last_tick_jiffies = READ_ONCE(jiffies);
++		}
++	}
++
+ 	if (ts->inidle)
+ 		ts->got_idle_tick = 1;
+ }
+--- a/kernel/time/tick-sched.h
++++ b/kernel/time/tick-sched.h
+@@ -49,6 +49,8 @@ enum tick_nohz_mode {
+  * @timer_expires_base:	Base time clock monotonic for @timer_expires
+  * @next_timer:		Expiry time of next expiring timer for debugging purpose only
+  * @tick_dep_mask:	Tick dependency mask - is set, if someone needs the tick
++ * @last_tick_jiffies:	Value of jiffies seen on last tick
++ * @stalled_jiffies:	Number of stalled jiffies detected across ticks
   */
+ struct tick_sched {
+ 	struct hrtimer			sched_timer;
+@@ -77,6 +79,8 @@ struct tick_sched {
+ 	u64				next_timer;
+ 	ktime_t				idle_expires;
+ 	atomic_t			tick_dep_mask;
++	unsigned long			last_tick_jiffies;
++	unsigned int			stalled_jiffies;
+ };
  
--static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
--			  const struct nlattr *attr)
-+static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
- {
- 	size_t n = nla_len(attr)/sizeof(__s16);
- 	const __s16 *data = nla_data(attr);
--	spinlock_t *root_lock;
- 	struct disttable *d;
- 	int i;
- 
-@@ -793,13 +791,7 @@ static int get_dist_table(struct Qdisc *
- 	for (i = 0; i < n; i++)
- 		d->table[i] = data[i];
- 
--	root_lock = qdisc_root_sleeping_lock(sch);
--
--	spin_lock_bh(root_lock);
--	swap(*tbl, d);
--	spin_unlock_bh(root_lock);
--
--	dist_free(d);
-+	*tbl = d;
- 	return 0;
- }
- 
-@@ -956,6 +948,8 @@ static int netem_change(struct Qdisc *sc
- {
- 	struct netem_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_NETEM_MAX + 1];
-+	struct disttable *delay_dist = NULL;
-+	struct disttable *slot_dist = NULL;
- 	struct tc_netem_qopt *qopt;
- 	struct clgstate old_clg;
- 	int old_loss_model = CLG_RANDOM;
-@@ -969,6 +963,18 @@ static int netem_change(struct Qdisc *sc
- 	if (ret < 0)
- 		return ret;
- 
-+	if (tb[TCA_NETEM_DELAY_DIST]) {
-+		ret = get_dist_table(&delay_dist, tb[TCA_NETEM_DELAY_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
-+	if (tb[TCA_NETEM_SLOT_DIST]) {
-+		ret = get_dist_table(&slot_dist, tb[TCA_NETEM_SLOT_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
-@@ -978,26 +984,17 @@ static int netem_change(struct Qdisc *sc
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
-+			q->clg = old_clg;
- 			goto unlock;
- 		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
- 	}
- 
--	if (tb[TCA_NETEM_DELAY_DIST]) {
--		ret = get_dist_table(sch, &q->delay_dist,
--				     tb[TCA_NETEM_DELAY_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
--	if (tb[TCA_NETEM_SLOT_DIST]) {
--		ret = get_dist_table(sch, &q->slot_dist,
--				     tb[TCA_NETEM_SLOT_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
-+	if (delay_dist)
-+		swap(q->delay_dist, delay_dist);
-+	if (slot_dist)
-+		swap(q->slot_dist, slot_dist);
- 	sch->limit = qopt->limit;
- 
- 	q->latency = PSCHED_TICKS2NS(qopt->latency);
-@@ -1047,17 +1044,11 @@ static int netem_change(struct Qdisc *sc
- 
- unlock:
- 	sch_tree_unlock(sch);
--	return ret;
- 
--get_table_failure:
--	/* recover clg and loss_model, in case of
--	 * q->clg and q->loss_model were modified
--	 * in get_loss_clg()
--	 */
--	q->clg = old_clg;
--	q->loss_model = old_loss_model;
--
--	goto unlock;
-+table_free:
-+	dist_free(delay_dist);
-+	dist_free(slot_dist);
-+	return ret;
- }
- 
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+ extern struct tick_sched *tick_get_tick_sched(int cpu);
 
 
