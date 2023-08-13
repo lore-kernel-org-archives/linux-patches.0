@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EBA9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF67BC433C7;
-	Sun, 13 Aug 2023 21:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0E49443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31FCC433C8;
+	Sun, 13 Aug 2023 21:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961945;
-	bh=Voc/z56ludH7cMbTRV4Gn8QSgPht4EgCGug6G1acmEQ=;
+	s=korg; t=1691961948;
+	bh=+Su1aaPR8khowXqHITVKYSJp3F2XRYzHxqLfBBuEURQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfPWAuU2c9dBjLVaP7EBz7FQ+2ub8n3qkdctaRGKnWG/3/Y7Q1QIcbUct5+W1WjH/
-	 GAFMqMuJrnck3rbRwfG3+oRaWDbEmjsdQToFsQ8OADEpsOllHXYnuBtZiWZrv9T5P7
-	 74rVX8EnjRZaOZNEBL2tJxThy2mL6l4EmBR4lWlc=
+	b=i4CmcEzMGD2ovMTZ8pElVBjyPs/rf5HeOqJFFgR9IE+SAodLPmmSk8sZfiGOADjj2
+	 iNHQILL7gJtcI5z2OXT+EiB/TPbu/lvRr+5blm7BPHlW8jyRrWX7CHHW1H9xgB1Va1
+	 00MQA+b449IRdceMDOBXTrujLbXIGauTmeLjnOLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 028/206] io_uring/parisc: Adjust pgoff in io_uring mmap() for parisc
-Date: Sun, 13 Aug 2023 23:16:38 +0200
-Message-ID: <20230813211725.807909427@linuxfoundation.org>
+	=?UTF-8?q?Jannik=20Gl=C3=BCckert?= <jannik.glueckert@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.4 055/206] cpufreq: amd-pstate: fix global sysfs attribute type
+Date: Sun, 13 Aug 2023 23:17:05 +0200
+Message-ID: <20230813211726.592598074@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,88 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 56675f8b9f9b15b024b8e3145fa289b004916ab7 upstream.
+commit 5e720f8c8c9d959283c3908bbf32a91a01a86547 upstream.
 
-The changes from commit 32832a407a71 ("io_uring: Fix io_uring mmap() by
-using architecture-provided get_unmapped_area()") to the parisc
-implementation of get_unmapped_area() broke glibc's locale-gen
-executable when running on parisc.
+In commit 3666062b87ec ("cpufreq: amd-pstate: move to use bus_get_dev_root()")
+the "amd_pstate" attributes where moved from a dedicated kobject to the
+cpu root kobject.
 
-This patch reverts those architecture-specific changes, and instead
-adjusts in io_uring_mmu_get_unmapped_area() the pgoff offset which is
-then given to parisc's get_unmapped_area() function.  This is much
-cleaner than the previous approach, and we still will get a coherent
-addresss.
+While the dedicated kobject expects to contain kobj_attributes the root
+kobject needs device_attributes.
 
-This patch has no effect on other architectures (SHM_COLOUR is only
-defined on parisc), and the liburing testcase stil passes on parisc.
+As the changed arguments are not used by the callbacks it works most of
+the time.
+However CFI will detect this issue:
 
-Cc: stable@vger.kernel.org # 6.4
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
-Fixes: 32832a407a71 ("io_uring: Fix io_uring mmap() by using architecture-provided get_unmapped_area()")
-Fixes: d808459b2e31 ("io_uring: Adjust mapping wrt architecture aliasing requirements")
-Link: https://lore.kernel.org/r/ZNEyGV0jyI8kOOfz@p100
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ 4947.849350] CFI failure at dev_attr_show+0x24/0x60 (target: show_status+0x0/0x70; expected type: 0x8651b1de)
+...
+[ 4947.849409] Call Trace:
+[ 4947.849410]  <TASK>
+[ 4947.849411]  ? __warn+0xcf/0x1c0
+[ 4947.849414]  ? dev_attr_show+0x24/0x60
+[ 4947.849415]  ? report_cfi_failure+0x4e/0x60
+[ 4947.849417]  ? handle_cfi_failure+0x14c/0x1d0
+[ 4947.849419]  ? __cfi_show_status+0x10/0x10
+[ 4947.849420]  ? handle_bug+0x4f/0x90
+[ 4947.849421]  ? exc_invalid_op+0x1a/0x60
+[ 4947.849422]  ? asm_exc_invalid_op+0x1a/0x20
+[ 4947.849424]  ? __cfi_show_status+0x10/0x10
+[ 4947.849425]  ? dev_attr_show+0x24/0x60
+[ 4947.849426]  sysfs_kf_seq_show+0xa6/0x110
+[ 4947.849433]  seq_read_iter+0x16c/0x4b0
+[ 4947.849436]  vfs_read+0x272/0x2d0
+[ 4947.849438]  ksys_read+0x72/0xe0
+[ 4947.849439]  do_syscall_64+0x76/0xb0
+[ 4947.849440]  ? do_user_addr_fault+0x252/0x650
+[ 4947.849442]  ? exc_page_fault+0x7a/0x1b0
+[ 4947.849443]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Fixes: 3666062b87ec ("cpufreq: amd-pstate: move to use bus_get_dev_root()")
+Reported-by: Jannik Glückert <jannik.glueckert@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217765
+Link: https://lore.kernel.org/lkml/c7f1bf9b-b183-bf6e-1cbb-d43f72494083@gmail.com/
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/sys_parisc.c |   15 +++++----------
- io_uring/io_uring.c             |    3 +++
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ drivers/cpufreq/amd-pstate.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/parisc/kernel/sys_parisc.c
-+++ b/arch/parisc/kernel/sys_parisc.c
-@@ -26,17 +26,12 @@
- #include <linux/compat.h>
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -986,8 +986,8 @@ static int amd_pstate_update_status(cons
+ 	return 0;
+ }
  
- /*
-- * Construct an artificial page offset for the mapping based on the virtual
-+ * Construct an artificial page offset for the mapping based on the physical
-  * address of the kernel file mapping variable.
-- * If filp is zero the calculated pgoff value aliases the memory of the given
-- * address. This is useful for io_uring where the mapping shall alias a kernel
-- * address and a userspace adress where both the kernel and the userspace
-- * access the same memory region.
-  */
--#define GET_FILP_PGOFF(filp, addr)		\
--	((filp ? (((unsigned long) filp->f_mapping) >> 8)	\
--		 & ((SHM_COLOUR-1) >> PAGE_SHIFT) : 0UL)	\
--	  + (addr >> PAGE_SHIFT))
-+#define GET_FILP_PGOFF(filp)		\
-+	(filp ? (((unsigned long) filp->f_mapping) >> 8)	\
-+		 & ((SHM_COLOUR-1) >> PAGE_SHIFT) : 0UL)
+-static ssize_t show_status(struct kobject *kobj,
+-			   struct kobj_attribute *attr, char *buf)
++static ssize_t status_show(struct device *dev,
++			   struct device_attribute *attr, char *buf)
+ {
+ 	ssize_t ret;
  
- static unsigned long shared_align_offset(unsigned long filp_pgoff,
- 					 unsigned long pgoff)
-@@ -116,7 +111,7 @@ static unsigned long arch_get_unmapped_a
- 	do_color_align = 0;
- 	if (filp || (flags & MAP_SHARED))
- 		do_color_align = 1;
--	filp_pgoff = GET_FILP_PGOFF(filp, addr);
-+	filp_pgoff = GET_FILP_PGOFF(filp);
+@@ -998,7 +998,7 @@ static ssize_t show_status(struct kobjec
+ 	return ret;
+ }
  
- 	if (flags & MAP_FIXED) {
- 		/* Even MAP_FIXED mappings must reside within TASK_SIZE */
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3466,6 +3466,8 @@ static unsigned long io_uring_mmu_get_un
- 	 * - use the kernel virtual address of the shared io_uring context
- 	 *   (instead of the userspace-provided address, which has to be 0UL
- 	 *   anyway).
-+	 * - use the same pgoff which the get_unmapped_area() uses to
-+	 *   calculate the page colouring.
- 	 * For architectures without such aliasing requirements, the
- 	 * architecture will return any suitable mapping because addr is 0.
- 	 */
-@@ -3474,6 +3476,7 @@ static unsigned long io_uring_mmu_get_un
- 	pgoff = 0;	/* has been translated to ptr above */
- #ifdef SHM_COLOUR
- 	addr = (uintptr_t) ptr;
-+	pgoff = addr >> PAGE_SHIFT;
- #else
- 	addr = 0UL;
- #endif
+-static ssize_t store_status(struct kobject *a, struct kobj_attribute *b,
++static ssize_t status_store(struct device *a, struct device_attribute *b,
+ 			    const char *buf, size_t count)
+ {
+ 	char *p = memchr(buf, '\n', count);
+@@ -1017,7 +1017,7 @@ cpufreq_freq_attr_ro(amd_pstate_lowest_n
+ cpufreq_freq_attr_ro(amd_pstate_highest_perf);
+ cpufreq_freq_attr_rw(energy_performance_preference);
+ cpufreq_freq_attr_ro(energy_performance_available_preferences);
+-define_one_global_rw(status);
++static DEVICE_ATTR_RW(status);
+ 
+ static struct freq_attr *amd_pstate_attr[] = {
+ 	&amd_pstate_max_freq,
+@@ -1036,7 +1036,7 @@ static struct freq_attr *amd_pstate_epp_
+ };
+ 
+ static struct attribute *pstate_global_attributes[] = {
+-	&status.attr,
++	&dev_attr_status.attr,
+ 	NULL
+ };
+ 
 
 
