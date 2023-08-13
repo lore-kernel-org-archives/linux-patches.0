@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C969B9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4845BC433C8;
-	Sun, 13 Aug 2023 21:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA279446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DC0C433C7;
+	Sun, 13 Aug 2023 21:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963049;
-	bh=d+FkLG2C+9zt8HdVbBc7KGYM04YWuaOTcYQtocooYaA=;
+	s=korg; t=1691963052;
+	bh=kXBFi4hfIk+Q14JW8uzgsf+WK2BtG/zSp8omQa2vUck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IA2sjrkIFojx6a3V8d4gmej5E8+yqZxKAasbW229In6XMUyRkx08QpH1t9Wh93RSw
-	 k626HYm+SDtD3NjpqXF1c42HuWgqPkmNKjms5FtxG2KfiMl4lZYAAPdJg19OwOXIAA
-	 bFnuXFuQQAoacd6xDlYvB4BHJFcRzvNK9Ia7Fni4=
+	b=u1qCJqxgzQAauMu1Qq3mDBQlevU7a38OCPT8oSWijqiE2upYc2Ld8WuRQisomNnQd
+	 90bqS2bXtjc9Yh+FlPzy3YC+fxJJdUDTIWB526mc3Y0fMfbChNAl6p5gdv+k/GF8Bd
+	 qiVRkKGwuGMFHJCqPT9hYiHhDOKulNlsymNXZi7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 35/89] netfilter: nf_tables: dont skip expired elements during walk
-Date: Sun, 13 Aug 2023 23:19:26 +0200
-Message-ID: <20230813211711.827870166@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 36/89] selftests/rseq: Fix build with undefined __weak
+Date: Sun, 13 Aug 2023 23:19:27 +0200
+Message-ID: <20230813211711.865874226@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -34,129 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Mark Brown <broonie@kernel.org>
 
-commit 24138933b97b055d486e8064b4a1721702442a9b upstream.
+commit d5ad9aae13dcced333c1a7816ff0a4fbbb052466 upstream.
 
-There is an asymmetry between commit/abort and preparation phase if the
-following conditions are met:
+Commit 3bcbc20942db ("selftests/rseq: Play nice with binaries statically
+linked against glibc 2.35+") which is now in Linus' tree introduced uses
+of __weak but did nothing to ensure that a definition is provided for it
+resulting in build failures for the rseq tests:
 
-1. set is a verdict map ("1.2.3.4 : jump foo")
-2. timeouts are enabled
+rseq.c:41:1: error: unknown type name '__weak'
+__weak ptrdiff_t __rseq_offset;
+^
+rseq.c:41:17: error: expected ';' after top level declarator
+__weak ptrdiff_t __rseq_offset;
+                ^
+                ;
+rseq.c:42:1: error: unknown type name '__weak'
+__weak unsigned int __rseq_size;
+^
+rseq.c:43:1: error: unknown type name '__weak'
+__weak unsigned int __rseq_flags;
 
-In this case, following sequence is problematic:
+Fix this by using the definition from tools/include compiler.h.
 
-1. element E in set S refers to chain C
-2. userspace requests removal of set S
-3. kernel does a set walk to decrement chain->use count for all elements
-   from preparation phase
-4. kernel does another set walk to remove elements from the commit phase
-   (or another walk to do a chain->use increment for all elements from
-    abort phase)
-
-If E has already expired in 1), it will be ignored during list walk, so its use count
-won't have been changed.
-
-Then, when set is culled, ->destroy callback will zap the element via
-nf_tables_set_elem_destroy(), but this function is only safe for
-elements that have been deactivated earlier from the preparation phase:
-lack of earlier deactivate removes the element but leaks the chain use
-count, which results in a WARN splat when the chain gets removed later,
-plus a leak of the nft_chain structure.
-
-Update pipapo_get() not to skip expired elements, otherwise flush
-command reports bogus ENOENT errors.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Fixes: 9d0982927e79 ("netfilter: nft_hash: add support for timeouts")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Message-Id: <20230804-kselftest-rseq-build-v1-1-015830b66aa9@kernel.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c  |    4 ++++
- net/netfilter/nft_set_hash.c   |    2 --
- net/netfilter/nft_set_pipapo.c |   18 ++++++++++++------
- net/netfilter/nft_set_rbtree.c |    2 --
- 4 files changed, 16 insertions(+), 10 deletions(-)
+ tools/testing/selftests/rseq/Makefile |    4 +++-
+ tools/testing/selftests/rseq/rseq.c   |    2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5274,8 +5274,12 @@ static int nf_tables_dump_setelem(const
- 				  const struct nft_set_iter *iter,
- 				  struct nft_set_elem *elem)
- {
-+	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
- 	struct nft_set_dump_args *args;
+--- a/tools/testing/selftests/rseq/Makefile
++++ b/tools/testing/selftests/rseq/Makefile
+@@ -4,8 +4,10 @@ ifneq ($(shell $(CC) --version 2>&1 | he
+ CLANG_FLAGS += -no-integrated-as
+ endif
  
-+	if (nft_set_elem_expired(ext))
-+		return 0;
++top_srcdir = ../../../..
 +
- 	args = container_of(iter, struct nft_set_dump_args, iter);
- 	return nf_tables_fill_setelem(args->skb, set, elem);
- }
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -278,8 +278,6 @@ static void nft_rhash_walk(const struct
+ CFLAGS += -O2 -Wall -g -I./ -I../../../../usr/include/ -L$(OUTPUT) -Wl,-rpath=./ \
+-	  $(CLANG_FLAGS)
++	  $(CLANG_FLAGS) -I$(top_srcdir)/tools/include
+ LDLIBS += -lpthread -ldl
  
- 		if (iter->count < iter->skip)
- 			goto cont;
--		if (nft_set_elem_expired(&he->ext))
--			goto cont;
- 		if (!nft_set_elem_active(&he->ext, iter->genmask))
- 			goto cont;
+ # Own dependencies because we only want to build against 1st prerequisite, but
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -29,6 +29,8 @@
+ #include <dlfcn.h>
+ #include <stddef.h>
  
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -566,8 +566,7 @@ next_match:
- 			goto out;
- 
- 		if (last) {
--			if (nft_set_elem_expired(&f->mt[b].e->ext) ||
--			    (genmask &&
-+			if ((genmask &&
- 			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
- 				goto next_match;
- 
-@@ -601,8 +600,17 @@ out:
- static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
- 			    const struct nft_set_elem *elem, unsigned int flags)
- {
--	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
--			  nft_genmask_cur(net));
-+	struct nft_pipapo_elem *ret;
++#include <linux/compiler.h>
 +
-+	ret = pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+			 nft_genmask_cur(net));
-+	if (IS_ERR(ret))
-+		return ret;
-+
-+	if (nft_set_elem_expired(&ret->ext))
-+		return ERR_PTR(-ENOENT);
-+
-+	return ret;
- }
- 
- /**
-@@ -2006,8 +2014,6 @@ static void nft_pipapo_walk(const struct
- 			goto cont;
- 
- 		e = f->mt[r].e;
--		if (nft_set_elem_expired(&e->ext))
--			goto cont;
- 
- 		elem.priv = e;
- 
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -552,8 +552,6 @@ static void nft_rbtree_walk(const struct
- 
- 		if (iter->count < iter->skip)
- 			goto cont;
--		if (nft_set_elem_expired(&rbe->ext))
--			goto cont;
- 		if (!nft_set_elem_active(&rbe->ext, iter->genmask))
- 			goto cont;
+ #include "../kselftest.h"
+ #include "rseq.h"
  
 
 
