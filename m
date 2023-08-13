@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995E19446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21520C433C8;
-	Sun, 13 Aug 2023 21:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D259446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E38C433C8;
+	Sun, 13 Aug 2023 21:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962751;
-	bh=naWNfAgkRIgdAjdS9Hbe7q9+mIzGfemcRBOzIhrh/M8=;
+	s=korg; t=1691962754;
+	bh=OJ8bT55eXcKf6TRMHS0UgRKiTPkMAAoq7xopAVbS/O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X32zWHbSQAMYieApWBYMj8PDC/zbzdHFAAEpC8tyngB/azjlFELFZB6dOmIToLYAK
-	 USEJoWOln8khIIbRxhGBqMmyFxpnfVoS4OkrIQqa8CkYejWaVPQ8yQuJgyRqPseqXM
-	 a+8EvzKK9hGGd5l/6e8VCZZ15MxsKYwroP4zt7WE=
+	b=ThPjZo38IPGxQh7coM6YLh+Efpt7CvePh9Gl7oS4YiMpJMma1k1KaKCn0QtiIikiw
+	 HAAq+KjoUVWFsgC23FlhOMNbtuDuftVJnNg5kmpd5um1hmLz8pqr2gKVuOn5LVYnov
+	 4gOiMmZ9IW2c/SwRdX/3zLIoi+ZI6dYfWzQ2FAGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 144/149] scsi: qedf: Fix firmware halt over suspend and resume
-Date: Sun, 13 Aug 2023 23:19:49 +0200
-Message-ID: <20230813211723.003538088@linuxfoundation.org>
+	David Xu <xuwd1@hotmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.1 145/149] platform/x86: serial-multi-instantiate: Auto detect IRQ resource for CSC3551
+Date: Sun, 13 Aug 2023 23:19:50 +0200
+Message-ID: <20230813211723.032497807@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,71 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nilesh Javali <njavali@marvell.com>
+From: David Xu <xuwd1@hotmail.com>
 
-commit ef222f551e7c4e2008fc442ffc9edcd1a7fd8f63 upstream.
+commit 676b7c5ecab36274442887ceadd6dee8248a244f upstream.
 
-While performing certain power-off sequences, PCI drivers are called to
-suspend and resume their underlying devices through PCI PM (power
-management) interface. However the hardware does not support PCI PM
-suspend/resume operations so system wide suspend/resume leads to bad MFW
-(management firmware) state which causes various follow-up errors in driver
-when communicating with the device/firmware.
+The current code assumes that the CSC3551(multiple cs35l41) always have
+its interrupt pin connected to GPIO thus the IRQ can be acquired with
+acpi_dev_gpio_irq_get. However on some newer laptop models this is no
+longer the case as they have the CSC3551's interrupt pin connected to
+APIC. This causes smi_i2c_probe to fail on these machines.
 
-To fix this driver implements PCI PM suspend handler to indicate
-unsupported operation to the PCI subsystem explicitly, thus avoiding system
-to go into suspended/standby mode.
+To support these machines, a new macro IRQ_RESOURCE_AUTO was introduced
+for cs35l41 smi_node, and smi_get_irq function was modified so it tries
+to get GPIO irq resource first and if failed, tries to get
+APIC irq resource for cs35l41.
 
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230807093725.46829-1-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This patch affects only the cs35l41's probing and brings no negative
+influence on machines that indeed have the cs35l41's interrupt pin
+connected to GPIO.
+
+Signed-off-by: David Xu <xuwd1@hotmail.com>
+Link: https://lore.kernel.org/r/SY4P282MB18350CD8288687B87FFD2243E037A@SY4P282MB1835.AUSP282.PROD.OUTLOOK.COM
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qedf/qedf_main.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/platform/x86/serial-multi-instantiate.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -31,6 +31,7 @@ static void qedf_remove(struct pci_dev *
- static void qedf_shutdown(struct pci_dev *pdev);
- static void qedf_schedule_recovery_handler(void *dev);
- static void qedf_recovery_handler(struct work_struct *work);
-+static int qedf_suspend(struct pci_dev *pdev, pm_message_t state);
+--- a/drivers/platform/x86/serial-multi-instantiate.c
++++ b/drivers/platform/x86/serial-multi-instantiate.c
+@@ -21,6 +21,7 @@
+ #define IRQ_RESOURCE_NONE	0
+ #define IRQ_RESOURCE_GPIO	1
+ #define IRQ_RESOURCE_APIC	2
++#define IRQ_RESOURCE_AUTO   3
  
- /*
-  * Driver module parameters.
-@@ -3276,6 +3277,7 @@ static struct pci_driver qedf_pci_driver
- 	.probe = qedf_probe,
- 	.remove = qedf_remove,
- 	.shutdown = qedf_shutdown,
-+	.suspend = qedf_suspend,
- };
+ enum smi_bus_type {
+ 	SMI_I2C,
+@@ -52,6 +53,18 @@ static int smi_get_irq(struct platform_d
+ 	int ret;
  
- static int __qedf_probe(struct pci_dev *pdev, int mode)
-@@ -4005,6 +4007,22 @@ static void qedf_shutdown(struct pci_dev
- 	__qedf_remove(pdev, QEDF_MODE_NORMAL);
- }
+ 	switch (inst->flags & IRQ_RESOURCE_TYPE) {
++	case IRQ_RESOURCE_AUTO:
++		ret = acpi_dev_gpio_irq_get(adev, inst->irq_idx);
++		if (ret > 0) {
++			dev_dbg(&pdev->dev, "Using gpio irq\n");
++			break;
++		}
++		ret = platform_get_irq(pdev, inst->irq_idx);
++		if (ret > 0) {
++			dev_dbg(&pdev->dev, "Using platform irq\n");
++			break;
++		}
++		break;
+ 	case IRQ_RESOURCE_GPIO:
+ 		ret = acpi_dev_gpio_irq_get(adev, inst->irq_idx);
+ 		break;
+@@ -308,10 +321,10 @@ static const struct smi_node int3515_dat
  
-+static int qedf_suspend(struct pci_dev *pdev, pm_message_t state)
-+{
-+	struct qedf_ctx *qedf;
-+
-+	if (!pdev) {
-+		QEDF_ERR(NULL, "pdev is NULL.\n");
-+		return -ENODEV;
-+	}
-+
-+	qedf = pci_get_drvdata(pdev);
-+
-+	QEDF_ERR(&qedf->dbg_ctx, "%s: Device does not support suspend operation\n", __func__);
-+
-+	return -EPERM;
-+}
-+
- /*
-  * Recovery handler code
-  */
+ static const struct smi_node cs35l41_hda = {
+ 	.instances = {
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
+ 		{}
+ 	},
+ 	.bus_type = SMI_AUTO_DETECT,
 
 
