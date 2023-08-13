@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD6F9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC71C433C7;
-	Sun, 13 Aug 2023 21:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE639443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE96C433C9;
+	Sun, 13 Aug 2023 21:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961758;
-	bh=yVnJI+OiSMTEuFD8U7zjUHfXmUYnBrO/xSzp7kjy6aM=;
+	s=korg; t=1691961761;
+	bh=7mu/si+ElL7c1IyxH0FcP4Ip2pyV83iJYbrmGIKc0ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIpHX25ehY0QeqsfBNPF+32DYqUgLfyk3GGwdJyL68wSX7+6BxPaKvY896CJYOn4h
-	 hSgmXxf1vLa4Dn8tl5TJ5a37OApHZCCdu6G4RA0XacIbiV6U/bp5iZspk0mWyEfJcv
-	 BCVAGt3PazBCw8iQ/dOE6iupcRPK8sSVIoYTtZ6E=
+	b=sF8366mSqcGyqj6lTCNmrbLGC4HQUmDP9/ANQGs+yA0Vybwhj8J3sFAHDj+DGUwB1
+	 InSK8Ws84UP99hj5evdNog904m7xHZlits+oXnFx2sbSRfTm3HO2CkXScoea5HNpM5
+	 Kgl+fya+is7o2r+P5ZBaYjXVgQ185v/bgS5AjwQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Yiyuan Guo <yguoaz@gmail.com>,
-	Stable@vger.kerenl.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 08/33] iio: cros_ec: Fix the allocation size for cros_ec_command
-Date: Sun, 13 Aug 2023 23:19:02 +0200
-Message-ID: <20230813211704.233412292@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.19 09/33] binder: fix memory leak in binder_init()
+Date: Sun, 13 Aug 2023 23:19:03 +0200
+Message-ID: <20230813211704.268520428@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
@@ -36,35 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yiyuan Guo <yguoaz@gmail.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit 8a4629055ef55177b5b63dab1ecce676bd8cccdd upstream.
+commit adb9743d6a08778b78d62d16b4230346d3508986 upstream.
 
-The struct cros_ec_command contains several integer fields and a
-trailing array. An allocation size neglecting the integer fields can
-lead to buffer overrun.
+In binder_init(), the destruction of binder_alloc_shrinker_init() is not
+performed in the wrong path, which will cause memory leaks. So this commit
+introduces binder_alloc_shrinker_exit() and calls it in the wrong path to
+fix that.
 
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Yiyuan Guo <yguoaz@gmail.com>
-Fixes: 974e6f02e27e ("iio: cros_ec_sensors_core: Add common functions for the ChromeOS EC Sensor Hub.")
-Link: https://lore.kernel.org/r/20230630143719.1513906-1-yguoaz@gmail.com
-Cc: <Stable@vger.kerenl.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Fixes: f2517eb76f1f ("android: binder: Add global lru shrinker to binder")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230625154937.64316-1-qi.zheng@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c       |    1 +
+ drivers/android/binder_alloc.c |    6 ++++++
+ drivers/android/binder_alloc.h |    1 +
+ 3 files changed, 8 insertions(+)
 
---- a/drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c
-+++ b/drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c
-@@ -46,7 +46,7 @@ int cros_ec_sensors_core_init(struct pla
- 	platform_set_drvdata(pdev, indio_dev);
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -5742,6 +5742,7 @@ err_init_binder_device_failed:
  
- 	state->ec = ec->ec_dev;
--	state->msg = devm_kzalloc(&pdev->dev,
-+	state->msg = devm_kzalloc(&pdev->dev, sizeof(*state->msg) +
- 				max((u16)sizeof(struct ec_params_motion_sense),
- 				state->ec->max_response), GFP_KERNEL);
- 	if (!state->msg)
+ err_alloc_device_names_failed:
+ 	debugfs_remove_recursive(binder_debugfs_dir_entry_root);
++	binder_alloc_shrinker_exit();
+ 
+ 	return ret;
+ }
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -1033,6 +1033,12 @@ static struct shrinker binder_shrinker =
+ 	.seeks = DEFAULT_SEEKS,
+ };
+ 
++void binder_alloc_shrinker_exit(void)
++{
++	unregister_shrinker(&binder_shrinker);
++	list_lru_destroy(&binder_alloc_lru);
++}
++
+ /**
+  * binder_alloc_init() - called by binder_open() for per-proc initialization
+  * @alloc: binder_alloc for this proc
+--- a/drivers/android/binder_alloc.h
++++ b/drivers/android/binder_alloc.h
+@@ -130,6 +130,7 @@ extern struct binder_buffer *binder_allo
+ 						  int is_async);
+ extern void binder_alloc_init(struct binder_alloc *alloc);
+ extern int binder_alloc_shrinker_init(void);
++extern void binder_alloc_shrinker_exit(void);
+ extern void binder_alloc_vma_close(struct binder_alloc *alloc);
+ extern struct binder_buffer *
+ binder_alloc_prepare_to_free(struct binder_alloc *alloc,
 
 
