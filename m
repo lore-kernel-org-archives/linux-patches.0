@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF3D9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14445C433C7;
-	Sun, 13 Aug 2023 21:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAEA9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78C2C433C8;
+	Sun, 13 Aug 2023 21:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961985;
-	bh=nzNb93PHb1y0Xauhudvav2OfmYKIF2e+VvJGahexFgM=;
+	s=korg; t=1691961988;
+	bh=njk2PxPL5R2Be4lqCjm40bk+UlF9BUA19li5fEx/r2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oV1XLV5f0Veoqw0/L8GtO+0bAVBrMEDiGVDLTVUuwROqDM92ZG2TqVT7Mlkx5OuRL
-	 EcAQXLNYUXEWJK/+2FcGRyu98v6WVqHm+jo3ayc/c0PzYIY5pMaARAhvpwAQdV6aRn
-	 vSYapOAE2CzqPnVA5LEcaFrpODSOCQuAzE4D5sY0=
+	b=DvzvkJnATx7M1AEGcPBcpAcPYRlH8DAwbZr3w8TRL8hVhW/+rgcFwG2czIVfAWXdP
+	 9QvLUTi+XAmLFkDr2Og0KWjDRlI+DTAjNRZKAdikJX8PbvZOgVq/DV3uCEcDDlDRBG
+	 2nN0QZp86RI4/I4kpXdhdr904ctIY1lgwE/cMfPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.4 071/206] binder: fix memory leak in binder_init()
-Date: Sun, 13 Aug 2023 23:17:21 +0200
-Message-ID: <20230813211727.103468890@linuxfoundation.org>
+	Ricky Wu <ricky_wu@realtek.com>
+Subject: [PATCH 6.4 072/206] misc: rtsx: judge ASPM Mode to set PETXCFG Reg
+Date: Sun, 13 Aug 2023 23:17:22 +0200
+Message-ID: <20230813211727.130715945@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,61 +33,182 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Ricky WU <ricky_wu@realtek.com>
 
-commit adb9743d6a08778b78d62d16b4230346d3508986 upstream.
+commit 101bd907b4244a726980ee67f95ed9cafab6ff7a upstream.
 
-In binder_init(), the destruction of binder_alloc_shrinker_init() is not
-performed in the wrong path, which will cause memory leaks. So this commit
-introduces binder_alloc_shrinker_exit() and calls it in the wrong path to
-fix that.
+ASPM Mode is ASPM_MODE_CFG need to judge the value of clkreq_0
+to set HIGH or LOW, if the ASPM Mode is ASPM_MODE_REG
+always set to HIGH during the initialization.
 
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Fixes: f2517eb76f1f ("android: binder: Add global lru shrinker to binder")
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230625154937.64316-1-qi.zheng@linux.dev
+Cc: stable@vger.kernel.org
+Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/52906c6836374c8cb068225954c5543a@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c       |    1 +
- drivers/android/binder_alloc.c |    6 ++++++
- drivers/android/binder_alloc.h |    1 +
- 3 files changed, 8 insertions(+)
+ drivers/misc/cardreader/rts5227.c  |    2 +-
+ drivers/misc/cardreader/rts5228.c  |   18 ------------------
+ drivers/misc/cardreader/rts5249.c  |    3 +--
+ drivers/misc/cardreader/rts5260.c  |   18 ------------------
+ drivers/misc/cardreader/rts5261.c  |   18 ------------------
+ drivers/misc/cardreader/rtsx_pcr.c |    5 ++++-
+ 6 files changed, 6 insertions(+), 58 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -6610,6 +6610,7 @@ err_init_binder_device_failed:
+--- a/drivers/misc/cardreader/rts5227.c
++++ b/drivers/misc/cardreader/rts5227.c
+@@ -195,7 +195,7 @@ static int rts5227_extra_init_hw(struct
+ 		}
+ 	}
  
- err_alloc_device_names_failed:
- 	debugfs_remove_recursive(binder_debugfs_dir_entry_root);
-+	binder_alloc_shrinker_exit();
- 
- 	return ret;
+-	if (option->force_clkreq_0)
++	if (option->force_clkreq_0 && pcr->aspm_mode == ASPM_MODE_CFG)
+ 		rtsx_pci_add_cmd(pcr, WRITE_REG_CMD, PETXCFG,
+ 				FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+ 	else
+--- a/drivers/misc/cardreader/rts5228.c
++++ b/drivers/misc/cardreader/rts5228.c
+@@ -435,17 +435,10 @@ static void rts5228_init_from_cfg(struct
+ 			option->ltr_enabled = false;
+ 		}
+ 	}
+-
+-	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
+-				| PM_L1_1_EN | PM_L1_2_EN))
+-		option->force_clkreq_0 = false;
+-	else
+-		option->force_clkreq_0 = true;
  }
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -1087,6 +1087,12 @@ int binder_alloc_shrinker_init(void)
- 	return ret;
+ 
+ static int rts5228_extra_init_hw(struct rtsx_pcr *pcr)
+ {
+-	struct rtsx_cr_option *option = &pcr->option;
+ 
+ 	rtsx_pci_write_register(pcr, RTS5228_AUTOLOAD_CFG1,
+ 			CD_RESUME_EN_MASK, CD_RESUME_EN_MASK);
+@@ -476,17 +469,6 @@ static int rts5228_extra_init_hw(struct
+ 	else
+ 		rtsx_pci_write_register(pcr, PETXCFG, 0x30, 0x00);
+ 
+-	/*
+-	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+-	 * to drive low, and we forcibly request clock.
+-	 */
+-	if (option->force_clkreq_0)
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+-	else
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
+-
+ 	rtsx_pci_write_register(pcr, PWD_SUSPEND_EN, 0xFF, 0xFB);
+ 
+ 	if (pcr->rtd3_en) {
+--- a/drivers/misc/cardreader/rts5249.c
++++ b/drivers/misc/cardreader/rts5249.c
+@@ -327,12 +327,11 @@ static int rts5249_extra_init_hw(struct
+ 		}
+ 	}
+ 
+-
+ 	/*
+ 	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+ 	 * to drive low, and we forcibly request clock.
+ 	 */
+-	if (option->force_clkreq_0)
++	if (option->force_clkreq_0 && pcr->aspm_mode == ASPM_MODE_CFG)
+ 		rtsx_pci_write_register(pcr, PETXCFG,
+ 			FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+ 	else
+--- a/drivers/misc/cardreader/rts5260.c
++++ b/drivers/misc/cardreader/rts5260.c
+@@ -517,17 +517,10 @@ static void rts5260_init_from_cfg(struct
+ 			option->ltr_enabled = false;
+ 		}
+ 	}
+-
+-	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
+-				| PM_L1_1_EN | PM_L1_2_EN))
+-		option->force_clkreq_0 = false;
+-	else
+-		option->force_clkreq_0 = true;
  }
  
-+void binder_alloc_shrinker_exit(void)
-+{
-+	unregister_shrinker(&binder_shrinker);
-+	list_lru_destroy(&binder_alloc_lru);
-+}
-+
- /**
-  * check_buffer() - verify that buffer/offset is safe to access
-  * @alloc: binder_alloc for this proc
---- a/drivers/android/binder_alloc.h
-+++ b/drivers/android/binder_alloc.h
-@@ -129,6 +129,7 @@ extern struct binder_buffer *binder_allo
- 						  int pid);
- extern void binder_alloc_init(struct binder_alloc *alloc);
- extern int binder_alloc_shrinker_init(void);
-+extern void binder_alloc_shrinker_exit(void);
- extern void binder_alloc_vma_close(struct binder_alloc *alloc);
- extern struct binder_buffer *
- binder_alloc_prepare_to_free(struct binder_alloc *alloc,
+ static int rts5260_extra_init_hw(struct rtsx_pcr *pcr)
+ {
+-	struct rtsx_cr_option *option = &pcr->option;
+ 
+ 	/* Set mcu_cnt to 7 to ensure data can be sampled properly */
+ 	rtsx_pci_write_register(pcr, 0xFC03, 0x7F, 0x07);
+@@ -546,17 +539,6 @@ static int rts5260_extra_init_hw(struct
+ 
+ 	rts5260_init_hw(pcr);
+ 
+-	/*
+-	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+-	 * to drive low, and we forcibly request clock.
+-	 */
+-	if (option->force_clkreq_0)
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+-	else
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
+-
+ 	rtsx_pci_write_register(pcr, pcr->reg_pm_ctrl3, 0x10, 0x00);
+ 
+ 	return 0;
+--- a/drivers/misc/cardreader/rts5261.c
++++ b/drivers/misc/cardreader/rts5261.c
+@@ -498,17 +498,10 @@ static void rts5261_init_from_cfg(struct
+ 			option->ltr_enabled = false;
+ 		}
+ 	}
+-
+-	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
+-				| PM_L1_1_EN | PM_L1_2_EN))
+-		option->force_clkreq_0 = false;
+-	else
+-		option->force_clkreq_0 = true;
+ }
+ 
+ static int rts5261_extra_init_hw(struct rtsx_pcr *pcr)
+ {
+-	struct rtsx_cr_option *option = &pcr->option;
+ 	u32 val;
+ 
+ 	rtsx_pci_write_register(pcr, RTS5261_AUTOLOAD_CFG1,
+@@ -554,17 +547,6 @@ static int rts5261_extra_init_hw(struct
+ 	else
+ 		rtsx_pci_write_register(pcr, PETXCFG, 0x30, 0x00);
+ 
+-	/*
+-	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
+-	 * to drive low, and we forcibly request clock.
+-	 */
+-	if (option->force_clkreq_0)
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
+-	else
+-		rtsx_pci_write_register(pcr, PETXCFG,
+-				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
+-
+ 	rtsx_pci_write_register(pcr, PWD_SUSPEND_EN, 0xFF, 0xFB);
+ 
+ 	if (pcr->rtd3_en) {
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1326,8 +1326,11 @@ static int rtsx_pci_init_hw(struct rtsx_
+ 			return err;
+ 	}
+ 
+-	if (pcr->aspm_mode == ASPM_MODE_REG)
++	if (pcr->aspm_mode == ASPM_MODE_REG) {
+ 		rtsx_pci_write_register(pcr, ASPM_FORCE_CTL, 0x30, 0x30);
++		rtsx_pci_write_register(pcr, PETXCFG,
++				FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
++	}
+ 
+ 	/* No CD interrupt if probing driver with card inserted.
+ 	 * So we need to initialize pcr->card_exist here.
 
 
