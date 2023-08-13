@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579569446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992C3C433C7;
-	Sun, 13 Aug 2023 21:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556E9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D0DC433C7;
+	Sun, 13 Aug 2023 21:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962819;
-	bh=glwGs2Ds+UsIdRROZF3byo+tpr3eM3c/Dgy66IarTIw=;
+	s=korg; t=1691962822;
+	bh=EnlOqSZzYVL4gqDBVzyfLjHH9R2SKtoMEjbfxtC1vEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES0KbyquIM+K3T4uT+hMWUOwvHPhCb6ByO7qPSYX2zmV0o+My880cirRKxsijJNeJ
-	 o5+11vBaqBWXzkN7LNERInoIQlyaZZaR6T+gTsJ46N8+D0a2S7z09nHhcsUOYanr9f
-	 YIiIv1aP4vEJUCTVVfY5KMcnwiIxIMIr44xqJxUA=
+	b=Qlok4vK9rw//wB2peelBDb9dyVOEaDX10LTnOq/oz1n3x1splySI4HOLGdb4B9Sj3
+	 WG9f95C8+WwkEFhYkRZSTGMm0P7JxlHc32Dg7XSIla0h0NU4QMVQc/H+uR/YrU7Ryg
+	 AJv2X3j/RVuaHLsh9Ke7Ziae5TIMWbhYRX/KIXSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 19/68] io_uring: correct check for O_TMPFILE
-Date: Sun, 13 Aug 2023 23:19:20 +0200
-Message-ID: <20230813211708.739189502@linuxfoundation.org>
+	Sergei Antonov <saproj@gmail.com>,
+	Jonas Jensen <jonas.jensen@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 02/68] mmc: moxart: read scr register without changing byte order
+Date: Sun, 13 Aug 2023 23:19:03 +0200
+Message-ID: <20230813211708.223822135@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -34,39 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Sergei Antonov <saproj@gmail.com>
 
-Commit 72dbde0f2afbe4af8e8595a89c650ae6b9d9c36f upstream.
+commit d44263222134b5635932974c6177a5cba65a07e8 upstream.
 
-O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
-check for whether RESOLVE_CACHED can be used would incorrectly think
-that O_DIRECTORY could not be used with RESOLVE_CACHED.
+Conversion from big-endian to native is done in a common function
+mmc_app_send_scr(). Converting in moxart_transfer_pio() is extra.
+Double conversion on a LE system returns an incorrect SCR value,
+leads to errors:
 
-Cc: stable@vger.kernel.org # v5.12+
-Fixes: 3a81fd02045c ("io_uring: enable LOOKUP_CACHED path resolution for filename lookups")
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/r/20230807-resolve_cached-o_tmpfile-v3-1-e49323e1ef6f@cyphar.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+mmc0: unrecognised SCR structure version 8
+
+Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
+Signed-off-by: Sergei Antonov <saproj@gmail.com>
+Cc: Jonas Jensen <jonas.jensen@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230627120549.2400325-1-saproj@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mmc/host/moxart-mmc.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -4229,9 +4229,11 @@ static int io_openat2(struct io_kiocb *r
- 	if (issue_flags & IO_URING_F_NONBLOCK) {
- 		/*
- 		 * Don't bother trying for O_TRUNC, O_CREAT, or O_TMPFILE open,
--		 * it'll always -EAGAIN
-+		 * it'll always -EAGAIN. Note that we test for __O_TMPFILE
-+		 * because O_TMPFILE includes O_DIRECTORY, which isn't a flag
-+		 * we need to force async for.
- 		 */
--		if (req->open.how.flags & (O_TRUNC | O_CREAT | O_TMPFILE))
-+		if (req->open.how.flags & (O_TRUNC | O_CREAT | __O_TMPFILE))
- 			return -EAGAIN;
- 		op.lookup_flags |= LOOKUP_CACHED;
- 		op.open_flag |= O_NONBLOCK;
+--- a/drivers/mmc/host/moxart-mmc.c
++++ b/drivers/mmc/host/moxart-mmc.c
+@@ -339,13 +339,7 @@ static void moxart_transfer_pio(struct m
+ 				return;
+ 			}
+ 			for (len = 0; len < remain && len < host->fifo_width;) {
+-				/* SCR data must be read in big endian. */
+-				if (data->mrq->cmd->opcode == SD_APP_SEND_SCR)
+-					*sgp = ioread32be(host->base +
+-							  REG_DATA_WINDOW);
+-				else
+-					*sgp = ioread32(host->base +
+-							REG_DATA_WINDOW);
++				*sgp = ioread32(host->base + REG_DATA_WINDOW);
+ 				sgp++;
+ 				len += 4;
+ 			}
 
 
