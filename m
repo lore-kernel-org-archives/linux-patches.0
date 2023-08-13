@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAC19446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42458C433C8;
-	Sun, 13 Aug 2023 21:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1669446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E6DC433C7;
+	Sun, 13 Aug 2023 21:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962507;
-	bh=QTxLNMcngBVpCdOAZKLbpaUn7Uz9/rGlb5zm4YXg/aw=;
+	s=korg; t=1691962510;
+	bh=wt2ph5lP1obOq6Vs+Wk31Ce6YRwHXIp1yXypITDjvqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07d47HyY2OT45Yqa9YEiseopXEhQFu0heQEzWg9tEtT4OCSVwP38/uU3llFCLhGDH
-	 UAPVb1mYOd1DxfR+DBBLSmaJsahgEhiWS7q4+lPz++aE6SzP6OII7GOfOwzvIKjKeP
-	 Tu9hPs/g/vHKJkrt6QNk47Za+6VBBmVTAW8GCoh0=
+	b=PmhY78p+7svbU51aUcfAOd4fp3IK70bFSmTr3QUEi9g1n95azUIehYpI52zASwfCh
+	 7kBCPQMyrcuXDJkEvJhpL/87BU4qFHIlScGWJlRJtcDwORit7EPQ3yZTyknTIrXqeJ
+	 CO7amFnZ8nHz7cSEV3HKHbjueuw1exLORG3jjw+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 053/149] iio: frequency: admv1013: propagate errors from regulator_get_voltage()
-Date: Sun, 13 Aug 2023 23:18:18 +0200
-Message-ID: <20230813211720.402350528@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>
+Subject: [PATCH 6.1 026/149] drm/nouveau/nvkm/dp: Add workaround to fix DP 1.3+ DPCD issues
+Date: Sun, 13 Aug 2023 23:17:51 +0200
+Message-ID: <20230813211719.584302341@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,44 +34,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Lyude Paul <lyude@redhat.com>
 
-commit 507397d19b5a296aa339f7a1bd16284f668a1906 upstream.
+commit e4060dad253352382b20420d8ef98daab24dbc17 upstream.
 
-The regulator_get_voltage() function returns negative error codes.
-This function saves it to an unsigned int and then does some range
-checking and, since the error code falls outside the correct range,
-it returns -EINVAL.
+Currently we use the drm_dp_dpcd_read_caps() helper in the DRM side of
+nouveau in order to read the DPCD of a DP connector, which makes sure we do
+the right thing and also check for extended DPCD caps. However, it turns
+out we're not currently doing this on the nvkm side since we don't have
+access to the drm_dp_aux structure there - which means that the DRM side of
+the driver and the NVKM side can end up with different DPCD capabilities
+for the same connector.
 
-Beyond the messiness, this is bad because the regulator_get_voltage()
-function can return -EPROBE_DEFER and it's important to propagate that
-back properly so it can be handled.
+Ideally in order to fix this, we just want to use the
+drm_dp_read_dpcd_caps() helper in nouveau. That's not currently possible
+though, and is going to depend on having a bunch of the DP code moved out
+of nvkm and into the DRM side of things as part of the GSP enablement work.
 
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/ce75aac3-2aba-4435-8419-02e59fdd862b@moroto.mountain
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Until then however, let's workaround this problem by porting a copy of
+drm_dp_read_dpcd_caps() into NVKM - which should fix this issue.
+
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Link: https://gitlab.freedesktop.org/drm/nouveau/-/issues/211
+Link: https://patchwork.freedesktop.org/patch/msgid/20230728225858.350581-1-lyude@redhat.com
+(cherry picked from commit cc4adf3a7323212f303bc9ff0f96346c44fcba06 in drm-misc-next)
+Cc: <stable@vger.kernel.org> # 6.3+
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/dp.c |   48 +++++++++++++++++++++++++-
+ 1 file changed, 47 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -344,9 +344,12 @@ static int admv1013_update_quad_filters(
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/dp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/dp.c
+@@ -26,6 +26,8 @@
+ #include "head.h"
+ #include "ior.h"
  
- static int admv1013_update_mixer_vgate(struct admv1013_state *st)
++#include <drm/display/drm_dp.h>
++
+ #include <subdev/bios.h>
+ #include <subdev/bios/init.h>
+ #include <subdev/gpio.h>
+@@ -474,6 +476,50 @@ nvkm_dp_train(struct nvkm_outp *outp, u3
+ 	return ret;
+ }
+ 
++/* XXX: This is a big fat hack, and this is just drm_dp_read_dpcd_caps()
++ * converted to work inside nvkm. This is a temporary holdover until we start
++ * passing the drm_dp_aux device through NVKM
++ */
++static int
++nvkm_dp_read_dpcd_caps(struct nvkm_outp *outp)
++{
++	struct nvkm_i2c_aux *aux = outp->dp.aux;
++	u8 dpcd_ext[DP_RECEIVER_CAP_SIZE];
++	int ret;
++
++	ret = nvkm_rdaux(aux, DPCD_RC00_DPCD_REV, outp->dp.dpcd, DP_RECEIVER_CAP_SIZE);
++	if (ret < 0)
++		return ret;
++
++	/*
++	 * Prior to DP1.3 the bit represented by
++	 * DP_EXTENDED_RECEIVER_CAP_FIELD_PRESENT was reserved.
++	 * If it is set DP_DPCD_REV at 0000h could be at a value less than
++	 * the true capability of the panel. The only way to check is to
++	 * then compare 0000h and 2200h.
++	 */
++	if (!(outp->dp.dpcd[DP_TRAINING_AUX_RD_INTERVAL] &
++	      DP_EXTENDED_RECEIVER_CAP_FIELD_PRESENT))
++		return 0;
++
++	ret = nvkm_rdaux(aux, DP_DP13_DPCD_REV, dpcd_ext, sizeof(dpcd_ext));
++	if (ret < 0)
++		return ret;
++
++	if (outp->dp.dpcd[DP_DPCD_REV] > dpcd_ext[DP_DPCD_REV]) {
++		OUTP_DBG(outp, "Extended DPCD rev less than base DPCD rev (%d > %d)\n",
++			 outp->dp.dpcd[DP_DPCD_REV], dpcd_ext[DP_DPCD_REV]);
++		return 0;
++	}
++
++	if (!memcmp(outp->dp.dpcd, dpcd_ext, sizeof(dpcd_ext)))
++		return 0;
++
++	memcpy(outp->dp.dpcd, dpcd_ext, sizeof(dpcd_ext));
++
++	return 0;
++}
++
+ void
+ nvkm_dp_disable(struct nvkm_outp *outp, struct nvkm_ior *ior)
  {
--	unsigned int vcm, mixer_vgate;
-+	unsigned int mixer_vgate;
-+	int vcm;
+@@ -630,7 +676,7 @@ nvkm_dp_enable(struct nvkm_outp *outp, b
+ 			memset(outp->dp.lttpr, 0x00, sizeof(outp->dp.lttpr));
+ 		}
  
- 	vcm = regulator_get_voltage(st->reg);
-+	if (vcm < 0)
-+		return vcm;
- 
- 	if (vcm < 1800000)
- 		mixer_vgate = (2389 * vcm / 1000000 + 8100) / 100;
+-		if (!nvkm_rdaux(aux, DPCD_RC00_DPCD_REV, outp->dp.dpcd, sizeof(outp->dp.dpcd))) {
++		if (!nvkm_dp_read_dpcd_caps(outp)) {
+ 			const u8 rates[] = { 0x1e, 0x14, 0x0a, 0x06, 0 };
+ 			const u8 *rate;
+ 			int rate_max;
 
 
