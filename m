@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7489446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F50AC433C7;
-	Sun, 13 Aug 2023 21:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E291C9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674F8C433C8;
+	Sun, 13 Aug 2023 21:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962880;
-	bh=W18NLKY+dTwgkdAYskxCO8TSKrbtqCSffGyB5GheuKE=;
+	s=korg; t=1691962882;
+	bh=AO17ks+BVk7cg90ZOhuVWOIp63tLrMHqP5j2RQYvl7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cg7UID4sU8XrxA5fllPpy6yML+QD9wbNOO7dqBECUGpQhcc9YCzo+zNpjwtRmBO35
-	 fXsEMQvClIRyj13cPGeLCDDkH9GIiQj9phm9MqntQZmARd60LORjHQCuXkgezhJ5pW
-	 B8N08/GhRm7hQn4fvMWjU7C8uvSQ5n0sEjwWFMo8=
+	b=RznHMEW2UPgrGZVWymP1TX5Gs54+jXvTWUJJusMeOM8EgiRWGbnLUde+2zJu7fAqb
+	 gSr71PpnSMyfZ7bZLiz+6kiuphFtPV61D1RRvSOfPRKl51M6OelwkyPnWauIEAZcII
+	 4aXyRM91jIzKKMXbZBuHAzawRpnAFA8d9SyCCTQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 41/68] tunnels: fix kasan splat when generating ipv4 pmtu error
-Date: Sun, 13 Aug 2023 23:19:42 +0200
-Message-ID: <20230813211709.404525368@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 24/68] usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
+Date: Sun, 13 Aug 2023 23:19:25 +0200
+Message-ID: <20230813211708.893665512@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -34,48 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit 6a7ac3d20593865209dceb554d8b3f094c6bd940 upstream.
+commit 8e21a620c7e6e00347ade1a6ed4967b359eada5a upstream.
 
-If we try to emit an icmp error in response to a nonliner skb, we get
+Currently if we bootup a device without cable connected, then
+usb-conn-gpio won't call set_role() because last_role is same
+as current role. This happens since last_role gets initialised
+to zero during the probe.
 
-BUG: KASAN: slab-out-of-bounds in ip_compute_csum+0x134/0x220
-Read of size 4 at addr ffff88811c50db00 by task iperf3/1691
-CPU: 2 PID: 1691 Comm: iperf3 Not tainted 6.5.0-rc3+ #309
-[..]
- kasan_report+0x105/0x140
- ip_compute_csum+0x134/0x220
- iptunnel_pmtud_build_icmp+0x554/0x1020
- skb_tunnel_check_pmtu+0x513/0xb80
- vxlan_xmit_one+0x139e/0x2ef0
- vxlan_xmit+0x1867/0x2760
- dev_hard_start_xmit+0x1ee/0x4f0
- br_dev_queue_push_xmit+0x4d1/0x660
- [..]
+To avoid this, add a new flag initial_detection into struct
+usb_conn_info, which prevents bailing out during initial
+detection.
 
-ip_compute_csum() cannot deal with nonlinear skbs, so avoid it.
-After this change, splat is gone and iperf3 is no longer stuck.
-
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20230803152653.29535-2-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.4
+Fixes: 4602f3bff266 ("usb: common: add USB GPIO based connection detection driver")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/1690880632-12588-1-git-send-email-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_tunnel_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/common/usb-conn-gpio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -224,7 +224,7 @@ static int iptunnel_pmtud_build_icmp(str
- 		.un.frag.__unused	= 0,
- 		.un.frag.mtu		= ntohs(mtu),
- 	};
--	icmph->checksum = ip_compute_csum(icmph, len);
-+	icmph->checksum = csum_fold(skb_checksum(skb, 0, len, 0));
- 	skb_reset_transport_header(skb);
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -42,6 +42,7 @@ struct usb_conn_info {
  
- 	niph = skb_push(skb, sizeof(*niph));
+ 	struct power_supply_desc desc;
+ 	struct power_supply *charger;
++	bool initial_detection;
+ };
+ 
+ /*
+@@ -86,11 +87,13 @@ static void usb_conn_detect_cable(struct
+ 	dev_dbg(info->dev, "role %d/%d, gpios: id %d, vbus %d\n",
+ 		info->last_role, role, id, vbus);
+ 
+-	if (info->last_role == role) {
++	if (!info->initial_detection && info->last_role == role) {
+ 		dev_warn(info->dev, "repeated role: %d\n", role);
+ 		return;
+ 	}
+ 
++	info->initial_detection = false;
++
+ 	if (info->last_role == USB_ROLE_HOST && info->vbus)
+ 		regulator_disable(info->vbus);
+ 
+@@ -277,6 +280,7 @@ static int usb_conn_probe(struct platfor
+ 	platform_set_drvdata(pdev, info);
+ 
+ 	/* Perform initial detection */
++	info->initial_detection = true;
+ 	usb_conn_queue_dwork(info, 0);
+ 
+ 	return 0;
 
 
