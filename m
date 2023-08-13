@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C2A9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3128C433C9;
-	Sun, 13 Aug 2023 21:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3109443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B74C433C7;
+	Sun, 13 Aug 2023 21:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962377;
-	bh=LTLTGtzwLFCfMwDPkwvOE59epzWiH/L6gcAyHUc0PlM=;
+	s=korg; t=1691962379;
+	bh=D/zCZ/lLsKSaKVthLupujWj3giWgIWTGCj6S7xmS6po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9V2qD+lgAVRQTa6t87at4apWORL6r6ie8bK16+UatoYRXS1NXFotRTiWrBeAomez
-	 M4aZnLlCcN5wXL77mI3SoO8pDmEhhTGs7FKSLbnEr0JJuOEtWaOhTN1HxpdW3FAo0Y
-	 a0pZLHUenrFFrbyMgby1YkNw4LcQEtZzJsyhFGn4=
+	b=A7eMI0x2U9r1hzRx8waNcp0uwo3nA6XCsh3Vj+nnyMIJalOFFrjqpj9HrvAmF0aud
+	 z3XW2NIreb/sSWZqfDZQupon97jU5nh5fVj2alKWVCDyLupjOftbb9kGfx91Eao1iv
+	 JJOnyFm1OOsAugdIbIyahg5KpYNJzvjcMUYd01cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 194/206] scsi: core: Fix possible memory leak if device_add() fails
-Date: Sun, 13 Aug 2023 23:19:24 +0200
-Message-ID: <20230813211730.571023040@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.4 185/206] btrfs: properly clear end of the unreserved range in cow_file_range
+Date: Sun, 13 Aug 2023 23:19:15 +0200
+Message-ID: <20230813211730.318215521@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,34 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 04b5b5cb0136ce970333a9c6cec7e46adba1ea3a upstream.
+commit 12b2d64e591652a2d97dd3afa2b062ca7a4ba352 upstream.
 
-If device_add() returns error, the name allocated by dev_set_name() needs
-be freed. As the comment of device_add() says, put_device() should be used
-to decrease the reference count in the error path. So fix this by calling
-put_device(), then the name can be freed in kobject_cleanp().
+When the call to btrfs_reloc_clone_csums in cow_file_range returns an
+error, we jump to the out_unlock label with the extent_reserved variable
+set to false.   The cleanup at the label will then call
+extent_clear_unlock_delalloc on the range from start to end.  But we've
+already added cur_alloc_size to start before the jump, so there might no
+range be left from the newly incremented start to end.  Move the check for
+'start < end' so that it is reached by also for the !extent_reserved case.
 
-Fixes: ee959b00c335 ("SCSI: convert struct class_device to struct device")
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Link: https://lore.kernel.org/r/20230803020230.226903-1-wangzhu9@huawei.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+CC: stable@vger.kernel.org # 6.1+
+Fixes: a315e68f6e8b ("Btrfs: fix invalid attempt to free reserved space on failure to cow range")
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/raid_class.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/inode.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/raid_class.c
-+++ b/drivers/scsi/raid_class.c
-@@ -248,6 +248,7 @@ int raid_component_add(struct raid_templ
- 	return 0;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1453,8 +1453,6 @@ out_unlock:
+ 					     clear_bits,
+ 					     page_ops);
+ 		start += cur_alloc_size;
+-		if (start >= end)
+-			return ret;
+ 	}
  
- err_out:
-+	put_device(&rc->dev);
- 	list_del(&rc->node);
- 	rd->component_count--;
- 	put_device(component_dev);
+ 	/*
+@@ -1463,9 +1461,11 @@ out_unlock:
+ 	 * space_info's bytes_may_use counter, reserved in
+ 	 * btrfs_check_data_free_space().
+ 	 */
+-	extent_clear_unlock_delalloc(inode, start, end, locked_page,
+-				     clear_bits | EXTENT_CLEAR_DATA_RESV,
+-				     page_ops);
++	if (start < end) {
++		clear_bits |= EXTENT_CLEAR_DATA_RESV;
++		extent_clear_unlock_delalloc(inode, start, end, locked_page,
++					     clear_bits, page_ops);
++	}
+ 	return ret;
+ }
+ 
 
 
