@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5429446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDD7C433C8;
-	Sun, 13 Aug 2023 21:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B099446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C943C433C8;
+	Sun, 13 Aug 2023 21:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963313;
-	bh=wu5YlgdflatvhWqqwHRrh3+ChpzUqewkexHXrF5pZy0=;
+	s=korg; t=1691963315;
+	bh=kOwesQghD8KB1xyEtCxF5Trccnygx+HMTCzKo531VD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdPjdreWZ4sKjxvIxKqY2/2LYaR/mDtt4gFz6tcURtPBP/6E9AKD2NARG7gFtY9e6
-	 TJB7o7rPYRkaPOdVFTJGtYQIDhgNddHWSMBD6URGb1/4NEkJlg2ixbSbiQietMlPsx
-	 41ZcxULEoSSiDEjsh8b4Uq5hRkFOEmlQqJ1JWqSk=
+	b=IwlNGa66iPZCyFwkKAv7vG9OWo1ze3HgzxM0Pm/YPNdTFZ59qJUKzBeleFeb5MIrv
+	 CC/ETYDG7m/doOiOs+kepDuuoxUIQEJVtifQe4h052q0ILLbcwuOy/zotKXYUu1kMu
+	 TcFEPvgSUlSfeLAVLNAlXORmVdSG+SJWFrFOtql8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 29/39] btrfs: set cache_block_group_error if we find an error
-Date: Sun, 13 Aug 2023 23:20:20 +0200
-Message-ID: <20230813211705.801302111@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.4 30/39] nvme-tcp: fix potential unbalanced freeze & unfreeze
+Date: Sun, 13 Aug 2023 23:20:21 +0200
+Message-ID: <20230813211705.833757731@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -34,47 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 92fb94b69c6accf1e49fff699640fa0ce03dc910 upstream.
+commit 99dc264014d5aed66ee37ddf136a38b5a2b1b529 upstream.
 
-We set cache_block_group_error if btrfs_cache_block_group() returns an
-error, this is because we could end up not finding space to allocate and
-mistakenly return -ENOSPC, and which could then abort the transaction
-with the incorrect errno, and in the case of ENOSPC result in a
-WARN_ON() that will trip up tests like generic/475.
+Move start_freeze into nvme_tcp_configure_io_queues(), and there is
+at least two benefits:
 
-However there's the case where multiple threads can be racing, one
-thread gets the proper error, and the other thread doesn't actually call
-btrfs_cache_block_group(), it instead sees ->cached ==
-BTRFS_CACHE_ERROR.  Again the result is the same, we fail to allocate
-our space and return -ENOSPC.  Instead we need to set
-cache_block_group_error to -EIO in this case to make sure that if we do
-not make our allocation we get the appropriate error returned back to
-the caller.
+1) fix unbalanced freeze and unfreeze, since re-connection work may
+fail or be broken by removal
 
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+2) IO during error recovery can be failfast quickly because nvme fabrics
+unquiesces queues after teardown.
+
+One side-effect is that !mpath request may timeout during connecting
+because of queue topo change, but that looks not one big deal:
+
+1) same problem exists with current code base
+
+2) compared with !mpath, mpath use case is dominant
+
+Fixes: 2875b0aecabe ("nvme-tcp: fix controller reset hang during traffic")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -3989,8 +3989,11 @@ have_block_group:
- 			ret = 0;
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1707,6 +1707,7 @@ static int nvme_tcp_configure_io_queues(
+ 		goto out_cleanup_connect_q;
+ 
+ 	if (!new) {
++		nvme_start_freeze(ctrl);
+ 		nvme_start_queues(ctrl);
+ 		if (!nvme_wait_freeze_timeout(ctrl, NVME_IO_TIMEOUT)) {
+ 			/*
+@@ -1715,6 +1716,7 @@ static int nvme_tcp_configure_io_queues(
+ 			 * to be safe.
+ 			 */
+ 			ret = -ENODEV;
++			nvme_unfreeze(ctrl);
+ 			goto out_wait_freeze_timed_out;
  		}
- 
--		if (unlikely(block_group->cached == BTRFS_CACHE_ERROR))
-+		if (unlikely(block_group->cached == BTRFS_CACHE_ERROR)) {
-+			if (!cache_block_group_error)
-+				cache_block_group_error = -EIO;
- 			goto loop;
-+		}
- 
- 		/*
- 		 * Ok we want to try and use the cluster allocator, so
+ 		blk_mq_update_nr_hw_queues(ctrl->tagset,
+@@ -1837,7 +1839,6 @@ static void nvme_tcp_teardown_io_queues(
+ 	if (ctrl->queue_count <= 1)
+ 		return;
+ 	blk_mq_quiesce_queue(ctrl->admin_q);
+-	nvme_start_freeze(ctrl);
+ 	nvme_stop_queues(ctrl);
+ 	nvme_sync_io_queues(ctrl);
+ 	nvme_tcp_stop_io_queues(ctrl);
 
 
