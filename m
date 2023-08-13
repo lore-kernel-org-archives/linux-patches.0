@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7740E9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAD2C433C8;
-	Sun, 13 Aug 2023 21:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656A69446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2650C433C7;
+	Sun, 13 Aug 2023 21:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962621;
-	bh=qt6ZrmYX8HKCPGbnKIKdA5lTn+F9u43gARW5IyCoqgQ=;
+	s=korg; t=1691962624;
+	bh=SUzloAaHKebh0i07lhExKnM+0s1HO9wQJ1U8Tc7pdTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkNawtnqVPvtwHNWFQ2QNU5uaV4qLui6cmnt/bwAdWWRRj4qzjNAhnVk1yq4aM0hS
-	 HJ4+oWoaFVpnnS2w7307AWrKz4uHIq07G6z6GJg1WgVV+T/3iu7ofGR86PNyzgrx2K
-	 oUdNYKFwdytqnWIUPRZu1u9YIWzEvb6MVGMNiEYc=
+	b=UDgQlVqL+hN16PUsETzFxvrW2ToN0zfhjBYBGmv6NOaVhiTzZbB6AykioxnVVS5VJ
+	 /uPp0FO6ZG0BZVFnrfeKIilFQMxFpoA/lqeixqpFin4S0mn1sZcNNaHORvGq2EzGpx
+	 WDa2+xME8c6AXvlOI2eGhK6R0nsP1H2ez1/Nbp1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Avichal Rakesh <arakesh@google.com>
-Subject: [PATCH 6.1 060/149] USB: Gadget: core: Help prevent panic during UVC unconfigure
-Date: Sun, 13 Aug 2023 23:18:25 +0200
-Message-ID: <20230813211720.604291804@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 061/149] usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
+Date: Sun, 13 Aug 2023 23:18:26 +0200
+Message-ID: <20230813211720.632394125@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,80 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit 65dadb2beeb7360232b09ebc4585b54475dfee06 upstream.
+commit 8e21a620c7e6e00347ade1a6ed4967b359eada5a upstream.
 
-Avichal Rakesh reported a kernel panic that occurred when the UVC
-gadget driver was removed from a gadget's configuration.  The panic
-involves a somewhat complicated interaction between the kernel driver
-and a userspace component (as described in the Link tag below), but
-the analysis did make one thing clear: The Gadget core should
-accomodate gadget drivers calling usb_gadget_deactivate() as part of
-their unbind procedure.
+Currently if we bootup a device without cable connected, then
+usb-conn-gpio won't call set_role() because last_role is same
+as current role. This happens since last_role gets initialised
+to zero during the probe.
 
-Currently this doesn't work.  gadget_unbind_driver() calls
-driver->unbind() while holding the udc->connect_lock mutex, and
-usb_gadget_deactivate() attempts to acquire that mutex, which will
-result in a deadlock.
+To avoid this, add a new flag initial_detection into struct
+usb_conn_info, which prevents bailing out during initial
+detection.
 
-The simple fix is for gadget_unbind_driver() to release the mutex when
-invoking the ->unbind() callback.  There is no particular reason for
-it to be holding the mutex at that time, and the mutex isn't held
-while the ->bind() callback is invoked.  So we'll drop the mutex
-before performing the unbind callback and reacquire it afterward.
-
-We'll also add a couple of comments to usb_gadget_activate() and
-usb_gadget_deactivate().  Because they run in process context they
-must not be called from a gadget driver's ->disconnect() callback,
-which (according to the kerneldoc for struct usb_gadget_driver in
-include/linux/usb/gadget.h) may run in interrupt context.  This may
-help prevent similar bugs from arising in the future.
-
-Reported-and-tested-by: Avichal Rakesh <arakesh@google.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 286d9975a838 ("usb: gadget: udc: core: Prevent soft_connect_store() race")
-Link: https://lore.kernel.org/linux-usb/4d7aa3f4-22d9-9f5a-3d70-1bd7148ff4ba@google.com/
-Cc: Badhri Jagan Sridharan <badhri@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/48b2f1f1-0639-46bf-bbfc-98cb05a24914@rowland.harvard.edu
+Cc: <stable@vger.kernel.org> # 5.4
+Fixes: 4602f3bff266 ("usb: common: add USB GPIO based connection detection driver")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/1690880632-12588-1-git-send-email-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/common/usb-conn-gpio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -795,6 +795,9 @@ EXPORT_SYMBOL_GPL(usb_gadget_disconnect)
-  * usb_gadget_activate() is called.  For example, user mode components may
-  * need to be activated before the system can talk to hosts.
-  *
-+ * This routine may sleep; it must not be called in interrupt context
-+ * (such as from within a gadget driver's disconnect() callback).
-+ *
-  * Returns zero on success, else negative errno.
-  */
- int usb_gadget_deactivate(struct usb_gadget *gadget)
-@@ -833,6 +836,8 @@ EXPORT_SYMBOL_GPL(usb_gadget_deactivate)
-  * This routine activates gadget which was previously deactivated with
-  * usb_gadget_deactivate() call. It calls usb_gadget_connect() if needed.
-  *
-+ * This routine may sleep; it must not be called in interrupt context.
-+ *
-  * Returns zero on success, else negative errno.
-  */
- int usb_gadget_activate(struct usb_gadget *gadget)
-@@ -1611,7 +1616,11 @@ static void gadget_unbind_driver(struct
- 	usb_gadget_disable_async_callbacks(udc);
- 	if (gadget->irq)
- 		synchronize_irq(gadget->irq);
-+	mutex_unlock(&udc->connect_lock);
-+
- 	udc->driver->unbind(gadget);
-+
-+	mutex_lock(&udc->connect_lock);
- 	usb_gadget_udc_stop_locked(udc);
- 	mutex_unlock(&udc->connect_lock);
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -42,6 +42,7 @@ struct usb_conn_info {
  
+ 	struct power_supply_desc desc;
+ 	struct power_supply *charger;
++	bool initial_detection;
+ };
+ 
+ /*
+@@ -86,11 +87,13 @@ static void usb_conn_detect_cable(struct
+ 	dev_dbg(info->dev, "role %s -> %s, gpios: id %d, vbus %d\n",
+ 		usb_role_string(info->last_role), usb_role_string(role), id, vbus);
+ 
+-	if (info->last_role == role) {
++	if (!info->initial_detection && info->last_role == role) {
+ 		dev_warn(info->dev, "repeated role: %s\n", usb_role_string(role));
+ 		return;
+ 	}
+ 
++	info->initial_detection = false;
++
+ 	if (info->last_role == USB_ROLE_HOST && info->vbus)
+ 		regulator_disable(info->vbus);
+ 
+@@ -258,6 +261,7 @@ static int usb_conn_probe(struct platfor
+ 	device_set_wakeup_capable(&pdev->dev, true);
+ 
+ 	/* Perform initial detection */
++	info->initial_detection = true;
+ 	usb_conn_queue_dwork(info, 0);
+ 
+ 	return 0;
 
 
