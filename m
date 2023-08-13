@@ -1,28 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0E49443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31FCC433C8;
-	Sun, 13 Aug 2023 21:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACA69443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A371C433C7;
+	Sun, 13 Aug 2023 21:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961948;
-	bh=+Su1aaPR8khowXqHITVKYSJp3F2XRYzHxqLfBBuEURQ=;
+	s=korg; t=1691961950;
+	bh=atJjrL+ptAlLAYKvgwmhLvnPFN82Hy/vBCI5lb6BTLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4CmcEzMGD2ovMTZ8pElVBjyPs/rf5HeOqJFFgR9IE+SAodLPmmSk8sZfiGOADjj2
-	 iNHQILL7gJtcI5z2OXT+EiB/TPbu/lvRr+5blm7BPHlW8jyRrWX7CHHW1H9xgB1Va1
-	 00MQA+b449IRdceMDOBXTrujLbXIGauTmeLjnOLw=
+	b=JZM5AbDNpmweM3JUliu5HZpsYxJRy2A9wVba/xBxPKn1Fpv7mmUDj8E6LxLHE0dyH
+	 tVdipIeD2vMQXinILxic0cHYuSnCoIlADQcdIzH7GQtAV1G2LhtqKfK/JvAQXLd75B
+	 MOYj6rrPDgxxbs6ehiPZc3jxTm2woChPa4vg89bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jannik=20Gl=C3=BCckert?= <jannik.glueckert@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.4 055/206] cpufreq: amd-pstate: fix global sysfs attribute type
-Date: Sun, 13 Aug 2023 23:17:05 +0200
-Message-ID: <20230813211726.592598074@linuxfoundation.org>
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Jiri Olsa <olsajiri@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Baoquan He <bhe@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Mike Galbraith <efault@gmx.de>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 056/206] fs/proc/kcore: reinstate bounce buffer for KCORE_TEXT regions
+Date: Sun, 13 Aug 2023 23:17:06 +0200
+Message-ID: <20230813211726.620901350@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,97 +49,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Lorenzo Stoakes <lstoakes@gmail.com>
 
-commit 5e720f8c8c9d959283c3908bbf32a91a01a86547 upstream.
+commit 17457784004c84178798432a029ab20e14f728b1 upstream.
 
-In commit 3666062b87ec ("cpufreq: amd-pstate: move to use bus_get_dev_root()")
-the "amd_pstate" attributes where moved from a dedicated kobject to the
-cpu root kobject.
+Some architectures do not populate the entire range categorised by
+KCORE_TEXT, so we must ensure that the kernel address we read from is
+valid.
 
-While the dedicated kobject expects to contain kobj_attributes the root
-kobject needs device_attributes.
+Unfortunately there is no solution currently available to do so with a
+purely iterator solution so reinstate the bounce buffer in this instance
+so we can use copy_from_kernel_nofault() in order to avoid page faults
+when regions are unmapped.
 
-As the changed arguments are not used by the callbacks it works most of
-the time.
-However CFI will detect this issue:
+This change partly reverts commit 2e1c0170771e ("fs/proc/kcore: avoid
+bounce buffer for ktext data"), reinstating the bounce buffer, but adapts
+the code to continue to use an iterator.
 
-[ 4947.849350] CFI failure at dev_attr_show+0x24/0x60 (target: show_status+0x0/0x70; expected type: 0x8651b1de)
-...
-[ 4947.849409] Call Trace:
-[ 4947.849410]  <TASK>
-[ 4947.849411]  ? __warn+0xcf/0x1c0
-[ 4947.849414]  ? dev_attr_show+0x24/0x60
-[ 4947.849415]  ? report_cfi_failure+0x4e/0x60
-[ 4947.849417]  ? handle_cfi_failure+0x14c/0x1d0
-[ 4947.849419]  ? __cfi_show_status+0x10/0x10
-[ 4947.849420]  ? handle_bug+0x4f/0x90
-[ 4947.849421]  ? exc_invalid_op+0x1a/0x60
-[ 4947.849422]  ? asm_exc_invalid_op+0x1a/0x20
-[ 4947.849424]  ? __cfi_show_status+0x10/0x10
-[ 4947.849425]  ? dev_attr_show+0x24/0x60
-[ 4947.849426]  sysfs_kf_seq_show+0xa6/0x110
-[ 4947.849433]  seq_read_iter+0x16c/0x4b0
-[ 4947.849436]  vfs_read+0x272/0x2d0
-[ 4947.849438]  ksys_read+0x72/0xe0
-[ 4947.849439]  do_syscall_64+0x76/0xb0
-[ 4947.849440]  ? do_user_addr_fault+0x252/0x650
-[ 4947.849442]  ? exc_page_fault+0x7a/0x1b0
-[ 4947.849443]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Fixes: 3666062b87ec ("cpufreq: amd-pstate: move to use bus_get_dev_root()")
-Reported-by: Jannik Glückert <jannik.glueckert@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217765
-Link: https://lore.kernel.org/lkml/c7f1bf9b-b183-bf6e-1cbb-d43f72494083@gmail.com/
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[lstoakes@gmail.com: correct comment to be strictly correct about reasoning]
+  Link: https://lkml.kernel.org/r/525a3f14-74fa-4c22-9fca-9dab4de8a0c3@lucifer.local
+Link: https://lkml.kernel.org/r/20230731215021.70911-1-lstoakes@gmail.com
+Fixes: 2e1c0170771e ("fs/proc/kcore: avoid bounce buffer for ktext data")
+Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
+Reported-by: Jiri Olsa <olsajiri@gmail.com>
+Closes: https://lore.kernel.org/all/ZHc2fm+9daF6cgCE@krava
+Tested-by: Jiri Olsa <jolsa@kernel.org>
+Tested-by: Will Deacon <will@kernel.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Mike Galbraith <efault@gmx.de>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/proc/kcore.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -986,8 +986,8 @@ static int amd_pstate_update_status(cons
+diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
+index 9cb32e1a78a0..23fc24d16b31 100644
+--- a/fs/proc/kcore.c
++++ b/fs/proc/kcore.c
+@@ -309,6 +309,8 @@ static void append_kcore_note(char *notes, size_t *i, const char *name,
+ 
+ static ssize_t read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
+ {
++	struct file *file = iocb->ki_filp;
++	char *buf = file->private_data;
+ 	loff_t *fpos = &iocb->ki_pos;
+ 	size_t phdrs_offset, notes_offset, data_offset;
+ 	size_t page_offline_frozen = 1;
+@@ -555,10 +557,21 @@ static ssize_t read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 		case KCORE_VMEMMAP:
+ 		case KCORE_TEXT:
+ 			/*
+-			 * We use _copy_to_iter() to bypass usermode hardening
+-			 * which would otherwise prevent this operation.
++			 * Sadly we must use a bounce buffer here to be able to
++			 * make use of copy_from_kernel_nofault(), as these
++			 * memory regions might not always be mapped on all
++			 * architectures.
+ 			 */
+-			if (_copy_to_iter((char *)start, tsz, iter) != tsz) {
++			if (copy_from_kernel_nofault(buf, (void *)start, tsz)) {
++				if (iov_iter_zero(tsz, iter) != tsz) {
++					ret = -EFAULT;
++					goto out;
++				}
++			/*
++			 * We know the bounce buffer is safe to copy from, so
++			 * use _copy_to_iter() directly.
++			 */
++			} else if (_copy_to_iter(buf, tsz, iter) != tsz) {
+ 				ret = -EFAULT;
+ 				goto out;
+ 			}
+@@ -595,6 +608,10 @@ static int open_kcore(struct inode *inode, struct file *filp)
+ 	if (ret)
+ 		return ret;
+ 
++	filp->private_data = kmalloc(PAGE_SIZE, GFP_KERNEL);
++	if (!filp->private_data)
++		return -ENOMEM;
++
+ 	if (kcore_need_update)
+ 		kcore_update_ram();
+ 	if (i_size_read(inode) != proc_root_kcore->size) {
+@@ -605,9 +622,16 @@ static int open_kcore(struct inode *inode, struct file *filp)
  	return 0;
  }
  
--static ssize_t show_status(struct kobject *kobj,
--			   struct kobj_attribute *attr, char *buf)
-+static ssize_t status_show(struct device *dev,
-+			   struct device_attribute *attr, char *buf)
- {
- 	ssize_t ret;
- 
-@@ -998,7 +998,7 @@ static ssize_t show_status(struct kobjec
- 	return ret;
- }
- 
--static ssize_t store_status(struct kobject *a, struct kobj_attribute *b,
-+static ssize_t status_store(struct device *a, struct device_attribute *b,
- 			    const char *buf, size_t count)
- {
- 	char *p = memchr(buf, '\n', count);
-@@ -1017,7 +1017,7 @@ cpufreq_freq_attr_ro(amd_pstate_lowest_n
- cpufreq_freq_attr_ro(amd_pstate_highest_perf);
- cpufreq_freq_attr_rw(energy_performance_preference);
- cpufreq_freq_attr_ro(energy_performance_available_preferences);
--define_one_global_rw(status);
-+static DEVICE_ATTR_RW(status);
- 
- static struct freq_attr *amd_pstate_attr[] = {
- 	&amd_pstate_max_freq,
-@@ -1036,7 +1036,7 @@ static struct freq_attr *amd_pstate_epp_
++static int release_kcore(struct inode *inode, struct file *file)
++{
++	kfree(file->private_data);
++	return 0;
++}
++
+ static const struct proc_ops kcore_proc_ops = {
+ 	.proc_read_iter	= read_kcore_iter,
+ 	.proc_open	= open_kcore,
++	.proc_release	= release_kcore,
+ 	.proc_lseek	= default_llseek,
  };
  
- static struct attribute *pstate_global_attributes[] = {
--	&status.attr,
-+	&dev_attr_status.attr,
- 	NULL
- };
- 
+-- 
+2.41.0
+
 
 
