@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA669446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272AAC433C8;
-	Sun, 13 Aug 2023 21:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5894D9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35FBC433C8;
+	Sun, 13 Aug 2023 21:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963022;
-	bh=b5pj1ttmahcvFOhdvyKP86Jh+E/RHuW9h5oh+Z0X+AE=;
+	s=korg; t=1691963025;
+	bh=mCqvZt7xICFCSiofPWOuaRPTwXVLfS4/Q6cFloz4v4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rwq/k7WOYP15WxSJgZqLSGiOpEMcj/dlQHS4WsCJ48C0Xo2V/PWk4jMcGsqlzqUL
-	 Kuqa58+3oue898Uqc125WyZcNquBNazo0xHi31q6rJ8u8uLtgdu/ez0Va8BtWzYHGI
-	 HPgp+eD/JhHKZ6cgwD1qspKLc2u+SAdJBn1WT6xY=
+	b=HBzyXCyOxjLLih0ubKO5rBFdz04bdnFsz9R66wNzMlUaUDJTyHrdPSlFi9ZU2CCOD
+	 cr6Po3zmE6q7T5i+8UoRCdm+MULBPWwNxyumProIL6c5+dHGy7e32erdf5QdCkXcmq
+	 PwnGAgyNGcT5sw4+KPXq3MmNlvWIUF177a1+0vds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jen Linkova <furry@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	David Ahern <dsahern@gmail.com>,
-	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 05/89] ipv6: adjust ndisc_is_useropt() to also return true for PIO
-Date: Sun, 13 Aug 2023 23:18:56 +0200
-Message-ID: <20230813211710.944710051@linuxfoundation.org>
+	Richard Tresidder <rtresidd@electromag.com.au>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 06/89] dmaengine: pl330: Return DMA_PAUSED when transaction is paused
+Date: Sun, 13 Aug 2023 23:18:57 +0200
+Message-ID: <20230813211710.973077723@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -38,54 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 048c796beb6eb4fa3a5a647ee1c81f5c6f0f6a2a upstream.
+commit 8cda3ececf07d374774f6a13e5a94bc2dc04c26c upstream.
 
-The upcoming (and nearly finalized):
-  https://datatracker.ietf.org/doc/draft-collink-6man-pio-pflag/
-will update the IPv6 RA to include a new flag in the PIO field,
-which will serve as a hint to perform DHCPv6-PD.
+pl330_pause() does not set anything to indicate paused condition which
+causes pl330_tx_status() to return DMA_IN_PROGRESS. This breaks 8250
+DMA flush after the fix in commit 57e9af7831dc ("serial: 8250_dma: Fix
+DMA Rx rearm race"). The function comment for pl330_pause() claims
+pause is supported but resume is not which is enough for 8250 DMA flush
+to work as long as DMA status reports DMA_PAUSED when appropriate.
 
-As we don't want DHCPv6 related logic inside the kernel, this piece of
-information needs to be exposed to userspace.  The simplest option is to
-simply expose the entire PIO through the already existing mechanism.
+Add PAUSED state for descriptor and mark BUSY descriptors with PAUSED
+in pl330_pause(). Return DMA_PAUSED from pl330_tx_status() when the
+descriptor is PAUSED.
 
-Even without this new flag, the already existing PIO R (router address)
-flag (from RFC6275) cannot AFAICT be handled entirely in kernel,
-and provides useful information that should be exposed to userspace
-(the router's global address, for use by Mobile IPv6).
-
-Also cc'ing stable@ for inclusion in LTS, as while technically this is
-not quite a bugfix, and instead more of a feature, it is absolutely
-trivial and the alternative is manually cherrypicking into all Android
-Common Kernel trees - and I know Greg will ask for it to be sent in via
-LTS instead...
-
-Cc: Jen Linkova <furry@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: David Ahern <dsahern@gmail.com>
-Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
+Reported-by: Richard Tresidder <rtresidd@electromag.com.au>
+Tested-by: Richard Tresidder <rtresidd@electromag.com.au>
+Fixes: 88987d2c7534 ("dmaengine: pl330: add DMA_PAUSE feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Link: https://lore.kernel.org/r/20230807102533.1147559-1-maze@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/linux-serial/f8a86ecd-64b1-573f-c2fa-59f541083f1a@electromag.com.au/
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230526105434.14959-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/pl330.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -196,7 +196,8 @@ static struct nd_opt_hdr *ndisc_next_opt
- static inline int ndisc_is_useropt(const struct net_device *dev,
- 				   struct nd_opt_hdr *opt)
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -404,6 +404,12 @@ enum desc_status {
+ 	 */
+ 	BUSY,
+ 	/*
++	 * Pause was called while descriptor was BUSY. Due to hardware
++	 * limitations, only termination is possible for descriptors
++	 * that have been paused.
++	 */
++	PAUSED,
++	/*
+ 	 * Sitting on the channel work_list but xfer done
+ 	 * by PL330 core
+ 	 */
+@@ -2041,7 +2047,7 @@ static inline void fill_queue(struct dma
+ 	list_for_each_entry(desc, &pch->work_list, node) {
+ 
+ 		/* If already submitted */
+-		if (desc->status == BUSY)
++		if (desc->status == BUSY || desc->status == PAUSED)
+ 			continue;
+ 
+ 		ret = pl330_submit_req(pch->thread, desc);
+@@ -2326,6 +2332,7 @@ static int pl330_pause(struct dma_chan *
  {
--	return opt->nd_opt_type == ND_OPT_RDNSS ||
-+	return opt->nd_opt_type == ND_OPT_PREFIX_INFO ||
-+		opt->nd_opt_type == ND_OPT_RDNSS ||
- 		opt->nd_opt_type == ND_OPT_DNSSL ||
- 		opt->nd_opt_type == ND_OPT_CAPTIVE_PORTAL ||
- 		opt->nd_opt_type == ND_OPT_PREF64 ||
+ 	struct dma_pl330_chan *pch = to_pchan(chan);
+ 	struct pl330_dmac *pl330 = pch->dmac;
++	struct dma_pl330_desc *desc;
+ 	unsigned long flags;
+ 
+ 	pm_runtime_get_sync(pl330->ddma.dev);
+@@ -2335,6 +2342,10 @@ static int pl330_pause(struct dma_chan *
+ 	_stop(pch->thread);
+ 	spin_unlock(&pl330->lock);
+ 
++	list_for_each_entry(desc, &pch->work_list, node) {
++		if (desc->status == BUSY)
++			desc->status = PAUSED;
++	}
+ 	spin_unlock_irqrestore(&pch->lock, flags);
+ 	pm_runtime_mark_last_busy(pl330->ddma.dev);
+ 	pm_runtime_put_autosuspend(pl330->ddma.dev);
+@@ -2425,7 +2436,7 @@ pl330_tx_status(struct dma_chan *chan, d
+ 		else if (running && desc == running)
+ 			transferred =
+ 				pl330_get_current_xferred_count(pch, desc);
+-		else if (desc->status == BUSY)
++		else if (desc->status == BUSY || desc->status == PAUSED)
+ 			/*
+ 			 * Busy but not running means either just enqueued,
+ 			 * or finished and not yet marked done
+@@ -2442,6 +2453,9 @@ pl330_tx_status(struct dma_chan *chan, d
+ 			case DONE:
+ 				ret = DMA_COMPLETE;
+ 				break;
++			case PAUSED:
++				ret = DMA_PAUSED;
++				break;
+ 			case PREP:
+ 			case BUSY:
+ 				ret = DMA_IN_PROGRESS;
 
 
