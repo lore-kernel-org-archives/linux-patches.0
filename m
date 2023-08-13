@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906019443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:20:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167DAC433C7;
-	Sun, 13 Aug 2023 21:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1269443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:20:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD107C433C8;
+	Sun, 13 Aug 2023 21:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961654;
-	bh=DexnU5Frb6lBjtPhStp0F+tjFQPdAtgwzaD7fXUpvE8=;
+	s=korg; t=1691961657;
+	bh=d/SmMrQo1zjN499ghSAbSRZ9hHgu8GKA2HVi8bdA110=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIdQZPYherTs4Fvs47CzJqzumQna99c3O/BVrj6WJ02hqcSVf6RV0ke6MFUBJOOKP
-	 tMKpnSBTbbPlnvVz6tdmFSuaPLJu139mu53KXJyyyDxQ2TL+vWuDMb8PM0ZZvUOqfG
-	 OEMjjdeE/QPtiEvBppvtWSv9CEEbs1qpBnCr/7hg=
+	b=Jh5m59W8HULxNNqRU4gblkxRU7HPkI7V+7ffrt+Y22kkhYzj4zdif+KVaknvKBbzJ
+	 kLtOklj+h4E12mf5cf/oijFKha/adNepFxLXT++Ssx2vkBzKxJUjLA0hXrGfof78GI
+	 xcdr/KzKbixlQm253UBZn9z0yd/TLocxBGjLppdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 4.14 12/26] x86: Move gds_ucode_mitigated() declaration to header
-Date: Sun, 13 Aug 2023 23:19:05 +0200
-Message-ID: <20230813211703.450901345@linuxfoundation.org>
+	Olaf Skibbe <news@kravcenko.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>
+Subject: [PATCH 4.14 13/26] drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
+Date: Sun, 13 Aug 2023 23:19:06 +0200
+Message-ID: <20230813211703.485579448@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
@@ -36,48 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Karol Herbst <kherbst@redhat.com>
 
-commit eb3515dc99c7c85f4170b50838136b2a193f8012 upstream.
+commit d5712cd22b9cf109fded1b7f178f4c1888c8b84b upstream.
 
-The declaration got placed in the .c file of the caller, but that
-causes a warning for the definition:
+The original commit adding that check tried to protect the kenrel against
+a potential invalid NULL pointer access.
 
-arch/x86/kernel/cpu/bugs.c:682:6: error: no previous prototype for 'gds_ucode_mitigated' [-Werror=missing-prototypes]
+However we call nouveau_connector_detect_depth once without a native_mode
+set on purpose for non LVDS connectors and this broke DP support in a few
+cases.
 
-Move it to a header where both sides can observe it instead.
-
-Fixes: 81ac7e5d74174 ("KVM: Add GDS_NO support to KVM")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/all/20230809130530.1913368-2-arnd%40kernel.org
+Cc: Olaf Skibbe <news@kravcenko.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/238
+Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/245
+Fixes: 20a2ce87fbaf8 ("drm/nouveau/dp: check for NULL nv_connector->native_mode")
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230805101813.2603989-1-kherbst@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/processor.h |    2 ++
- arch/x86/kvm/x86.c               |    2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -992,4 +992,6 @@ enum taa_mitigations {
- 	TAA_MITIGATION_TSX_DISABLED,
- };
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -945,7 +945,7 @@ nouveau_connector_get_modes(struct drm_c
+ 	/* Determine display colour depth for everything except LVDS now,
+ 	 * DP requires this before mode_valid() is called.
+ 	 */
+-	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
++	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
+ 		nouveau_connector_detect_depth(connector);
  
-+extern bool gds_ucode_mitigated(void);
-+
- #endif /* _ASM_X86_PROCESSOR_H */
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -201,8 +201,6 @@ struct kvm_stats_debugfs_item debugfs_en
- 
- u64 __read_mostly host_xcr0;
- 
--extern bool gds_ucode_mitigated(void);
--
- static int emulator_fix_hypercall(struct x86_emulate_ctxt *ctxt);
- 
- static inline void kvm_async_pf_hash_reset(struct kvm_vcpu *vcpu)
+ 	/* Find the native mode if this is a digital panel, if we didn't
 
 
