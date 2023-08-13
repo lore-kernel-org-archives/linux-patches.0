@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A5E9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A42C433C7;
-	Sun, 13 Aug 2023 21:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5499443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32459C433C8;
+	Sun, 13 Aug 2023 21:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962196;
-	bh=NN/eqOZXS7wT3jpbo6YSXlVEQyQHTlH1ly8FxJZOlC0=;
+	s=korg; t=1691962199;
+	bh=1c003UIrmwbmOnqJEoUdtA7kUjJf+M/OnAgg2A3N10A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3aFENxdVHQCWfbBSwUZZ51SL/bRyHpLVQJjMqYVWAoiJnsryVOPTJk5CiGqonnHC
-	 uTPPGQV3SQT8v4A9AnOE0QGL7DnU6RQVXdhXLfXKG2GznvCtnwR0Pn2adRewrVL/zC
-	 VE/wZi2FRVaN2usgiBixS43aFrtnbmJJwThPdXC0=
+	b=nWHpFKr296OQ4LIbhSex2DjVR4BDi21loZ/L0+WHnglNGZW8ddj0PcnsKTZpCQj2c
+	 a+VdbT37doF+P61RRH9vt4enSV681r3zFn0cX/MTwxp3r08zQU9mHPxL4yo/D3CfLg
+	 5lHhqIVhmCY2xDenxPK9JXRGrsjhX2u+vyc6AYAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.4 148/206] wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
-Date: Sun, 13 Aug 2023 23:18:38 +0200
-Message-ID: <20230813211729.270806021@linuxfoundation.org>
+	Artemy Kovalyov <artemyko@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.4 149/206] RDMA/umem: Set iova in ODP flow
+Date: Sun, 13 Aug 2023 23:18:39 +0200
+Message-ID: <20230813211729.297784327@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,33 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-commit 5fb9a9fb71a33be61d7d8e8ba4597bfb18d604d0 upstream.
+commit 186b169cf1e4be85aa212a893ea783a543400979 upstream.
 
-AP_VLAN interfaces are virtual, so doesn't really exist as a type for
-capabilities. When passed in as a type, AP is the one that's really intended.
+Fixing the ODP registration flow to set the iova correctly.
+The calculation in ib_umem_num_dma_blocks() function assumes the iova of
+the umem is set correctly.
 
-Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20230622165919.46841-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+When iova is not set, the calculation in ib_umem_num_dma_blocks() is
+equivalent to length/page_size, which is true only when memory is aligned.
+For unaligned memory, iova must be set for the ALIGN() in the
+ib_umem_num_dma_blocks() to take effect and return a correct value.
+
+mlx5_ib uses ib_umem_num_dma_blocks() to decide the mkey size to use for
+the MR. Without this fix, when registering unaligned ODP MR, a wrong
+size mkey might be chosen and this might cause the UMR to fail.
+
+UMR would fail over insufficient size to update the mkey translation:
+infiniband mlx5_0: dump_cqe:273:(pid 0): dump error cqe
+00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00000030: 00 00 00 00 0f 00 78 06 25 00 00 58 00 da ac d2
+infiniband mlx5_0: mlx5_ib_post_send_wait:806:(pid 20311): reg umr
+failed (6)
+infiniband mlx5_0: pagefault_real_mr:661:(pid 20311): Failed to update
+mkey page tables
+
+Fixes: f0093fb1a7cb ("RDMA/mlx5: Move mlx5_ib_cont_pages() to the creation of the mlx5_ib_mr")
+Fixes: a665aca89a41 ("RDMA/umem: Split ib_umem_num_pages() into ib_umem_num_dma_blocks()")
+Signed-off-by: Artemy Kovalyov <artemyko@nvidia.com>
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://lore.kernel.org/r/3d4be7ca2155bf239dd8c00a2d25974a92c26ab8.1689757344.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/cfg80211.h |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/umem.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -562,6 +562,9 @@ ieee80211_get_sband_iftype_data(const st
- 	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
- 		return NULL;
+--- a/drivers/infiniband/core/umem.c
++++ b/drivers/infiniband/core/umem.c
+@@ -85,6 +85,8 @@ unsigned long ib_umem_find_best_pgsz(str
+ 	dma_addr_t mask;
+ 	int i;
  
-+	if (iftype == NL80211_IFTYPE_AP_VLAN)
-+		iftype = NL80211_IFTYPE_AP;
++	umem->iova = va = virt;
 +
- 	for (i = 0; i < sband->n_iftype_data; i++)  {
- 		const struct ieee80211_sband_iftype_data *data =
- 			&sband->iftype_data[i];
+ 	if (umem->is_odp) {
+ 		unsigned int page_size = BIT(to_ib_umem_odp(umem)->page_shift);
+ 
+@@ -100,7 +102,6 @@ unsigned long ib_umem_find_best_pgsz(str
+ 	 */
+ 	pgsz_bitmap &= GENMASK(BITS_PER_LONG - 1, PAGE_SHIFT);
+ 
+-	umem->iova = va = virt;
+ 	/* The best result is the smallest page size that results in the minimum
+ 	 * number of required pages. Compute the largest page size that could
+ 	 * work based on VA address bits that don't change.
 
 
