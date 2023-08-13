@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26289446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D55FC433C8;
-	Sun, 13 Aug 2023 21:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97C49446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDB1C433C8;
+	Sun, 13 Aug 2023 21:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962640;
-	bh=KtcwlFMFaj+TPiyKEqABQ2x+QI0PA31MUkUfKp2shs0=;
+	s=korg; t=1691962643;
+	bh=gdXtDeJmPlC4guCEyiaQbDos5NN/iLLr/vN6YnbzFFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uXaPDifN8I4XWwySlj0Pw/3VqZA92KpAH7CwsI0CSmtkV4Ym2IIyZOn1xqafammYu
-	 o5CPz+YfgPH9Dfw55yMRKaCM5oWv3qFVDi13jUNURag5+Z+GACCCR3WceSyFnxxdeX
-	 CdDAyuSQR4z8GW6RgDh9kKNxocWCnYqsJBulzWYY=
+	b=X93ZdBIXd78hArNsmE52BJSPSqIYU6f1i9Bq28KWq2od3dpyy56nlfqsADWVus3DP
+	 yQe2+xuRdtTtIetAk76hvoWJNN5q4EnX5s3qG5xdszvwrRonl01y9eg9PgYld24lf5
+	 LWIG/i9MfI5aQadzOmLzjEeTW4fH7y52XCuqNY7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 103/149] net: tls: avoid discarding data on record close
-Date: Sun, 13 Aug 2023 23:19:08 +0200
-Message-ID: <20230813211721.858859233@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@bisdn.de>,
+	Elad Nachman <enachman@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 104/149] net: marvell: prestera: fix handling IPv4 routes with nhid
+Date: Sun, 13 Aug 2023 23:19:09 +0200
+Message-ID: <20230813211721.886241808@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,161 +35,160 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jonas Gorski <jonas.gorski@bisdn.de>
 
-commit 6b47808f223c70ff564f9b363446d2a5fa1e05b2 upstream.
+commit 2aa71b4b294ee2c3041d085404cea914be9b3225 upstream.
 
-TLS records end with a 16B tag. For TLS device offload we only
-need to make space for this tag in the stream, the device will
-generate and replace it with the actual calculated tag.
+Fix handling IPv4 routes referencing a nexthop via its id by replacing
+calls to fib_info_nh() with fib_info_nhc().
 
-Long time ago the code would just re-reference the head frag
-which mostly worked but was suboptimal because it prevented TCP
-from combining the record into a single skb frag. I'm not sure
-if it was correct as the first frag may be shorter than the tag.
+Trying to add an IPv4 route referencing a nextop via nhid:
 
-The commit under fixes tried to replace that with using the page
-frag and if the allocation failed rolling back the data, if record
-was long enough. It achieves better fragment coalescing but is
-also buggy.
+    $ ip link set up swp5
+    $ ip a a 10.0.0.1/24 dev swp5
+    $ ip nexthop add dev swp5 id 20 via 10.0.0.2
+    $ ip route add 10.0.1.0/24 nhid 20
 
-We don't roll back the iterator, so unless we're at the end of
-send we'll skip the data we designated as tag and start the
-next record as if the rollback never happened.
-There's also the possibility that the record was constructed
-with MSG_MORE and the data came from a different syscall and
-we already told the user space that we "got it".
+triggers warnings when trying to handle the route:
 
-Allocate a single dummy page and use it as fallback.
+[  528.805763] ------------[ cut here ]------------
+[  528.810437] WARNING: CPU: 3 PID: 53 at include/net/nexthop.h:468 __prestera_fi_is_direct+0x2c/0x68 [prestera]
+[  528.820434] Modules linked in: prestera_pci act_gact act_police sch_ingress cls_u32 cls_flower prestera arm64_delta_tn48m_dn_led(O) arm64_delta_tn48m_dn_cpld(O) [last unloaded: prestera_pci]
+[  528.837485] CPU: 3 PID: 53 Comm: kworker/u8:3 Tainted: G           O       6.4.5 #1
+[  528.845178] Hardware name: delta,tn48m-dn (DT)
+[  528.849641] Workqueue: prestera_ordered __prestera_router_fib_event_work [prestera]
+[  528.857352] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  528.864347] pc : __prestera_fi_is_direct+0x2c/0x68 [prestera]
+[  528.870135] lr : prestera_k_arb_fib_evt+0xb20/0xd50 [prestera]
+[  528.876007] sp : ffff80000b20bc90
+[  528.879336] x29: ffff80000b20bc90 x28: 0000000000000000 x27: ffff0001374d3a48
+[  528.886510] x26: ffff000105604000 x25: ffff000134af8a28 x24: ffff0001374d3800
+[  528.893683] x23: ffff000101c89148 x22: ffff000101c89000 x21: ffff000101c89200
+[  528.900855] x20: ffff00013641fda0 x19: ffff800009d01088 x18: 0000000000000059
+[  528.908027] x17: 0000000000000277 x16: 0000000000000000 x15: 0000000000000000
+[  528.915198] x14: 0000000000000003 x13: 00000000000fe400 x12: 0000000000000000
+[  528.922371] x11: 0000000000000002 x10: 0000000000000aa0 x9 : ffff8000013d2020
+[  528.929543] x8 : 0000000000000018 x7 : 000000007b1703f8 x6 : 000000001ca72f86
+[  528.936715] x5 : 0000000033399ea7 x4 : 0000000000000000 x3 : ffff0001374d3acc
+[  528.943886] x2 : 0000000000000000 x1 : ffff00010200de00 x0 : ffff000134ae3f80
+[  528.951058] Call trace:
+[  528.953516]  __prestera_fi_is_direct+0x2c/0x68 [prestera]
+[  528.958952]  __prestera_router_fib_event_work+0x100/0x158 [prestera]
+[  528.965348]  process_one_work+0x208/0x488
+[  528.969387]  worker_thread+0x4c/0x430
+[  528.973068]  kthread+0x120/0x138
+[  528.976313]  ret_from_fork+0x10/0x20
+[  528.979909] ---[ end trace 0000000000000000 ]---
+[  528.984998] ------------[ cut here ]------------
+[  528.989645] WARNING: CPU: 3 PID: 53 at include/net/nexthop.h:468 __prestera_fi_is_direct+0x2c/0x68 [prestera]
+[  528.999628] Modules linked in: prestera_pci act_gact act_police sch_ingress cls_u32 cls_flower prestera arm64_delta_tn48m_dn_led(O) arm64_delta_tn48m_dn_cpld(O) [last unloaded: prestera_pci]
+[  529.016676] CPU: 3 PID: 53 Comm: kworker/u8:3 Tainted: G        W  O       6.4.5 #1
+[  529.024368] Hardware name: delta,tn48m-dn (DT)
+[  529.028830] Workqueue: prestera_ordered __prestera_router_fib_event_work [prestera]
+[  529.036539] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  529.043533] pc : __prestera_fi_is_direct+0x2c/0x68 [prestera]
+[  529.049318] lr : __prestera_k_arb_fc_apply+0x280/0x2f8 [prestera]
+[  529.055452] sp : ffff80000b20bc60
+[  529.058781] x29: ffff80000b20bc60 x28: 0000000000000000 x27: ffff0001374d3a48
+[  529.065953] x26: ffff000105604000 x25: ffff000134af8a28 x24: ffff0001374d3800
+[  529.073126] x23: ffff000101c89148 x22: ffff000101c89148 x21: ffff00013641fda0
+[  529.080299] x20: ffff000101c89000 x19: ffff000101c89020 x18: 0000000000000059
+[  529.087471] x17: 0000000000000277 x16: 0000000000000000 x15: 0000000000000000
+[  529.094642] x14: 0000000000000003 x13: 00000000000fe400 x12: 0000000000000000
+[  529.101814] x11: 0000000000000002 x10: 0000000000000aa0 x9 : ffff8000013cee80
+[  529.108985] x8 : 0000000000000018 x7 : 000000007b1703f8 x6 : 0000000000000018
+[  529.116157] x5 : 00000000d3497eb6 x4 : ffff000105604081 x3 : 000000008e979557
+[  529.123329] x2 : 0000000000000000 x1 : ffff00010200de00 x0 : ffff000134ae3f80
+[  529.130501] Call trace:
+[  529.132958]  __prestera_fi_is_direct+0x2c/0x68 [prestera]
+[  529.138394]  prestera_k_arb_fib_evt+0x6b8/0xd50 [prestera]
+[  529.143918]  __prestera_router_fib_event_work+0x100/0x158 [prestera]
+[  529.150313]  process_one_work+0x208/0x488
+[  529.154348]  worker_thread+0x4c/0x430
+[  529.158030]  kthread+0x120/0x138
+[  529.161274]  ret_from_fork+0x10/0x20
+[  529.164867] ---[ end trace 0000000000000000 ]---
 
-Found by code inspection, and proven by forcing allocation
-failures.
+and results in a non offloaded route:
 
-Fixes: e7b159a48ba6 ("net/tls: remove the record tail optimization")
+    $ ip route
+    10.0.0.0/24 dev swp5 proto kernel scope link src 10.0.0.1 rt_trap
+    10.0.1.0/24 nhid 20 via 10.0.0.2 dev swp5 rt_trap
+
+When creating a route referencing a nexthop via its ID, the nexthop will
+be stored in a separate nh pointer instead of the array of nexthops in
+the fib_info struct. This causes issues since fib_info_nh() only handles
+the nexthops array, but not the separate nh pointer, and will loudly
+WARN about it.
+
+In contrast fib_info_nhc() handles both, but returns a fib_nh_common
+pointer instead of a fib_nh pointer. Luckily we only ever access fields
+from the fib_nh_common parts, so we can just replace all instances of
+fib_info_nh() with fib_info_nhc() and access the fields via their
+fib_nh_common names.
+
+This allows handling IPv4 routes with an external nexthop, and they now
+get offloaded as expected:
+
+    $ ip route
+    10.0.0.0/24 dev swp5 proto kernel scope link src 10.0.0.1 rt_trap
+    10.0.1.0/24 nhid 20 via 10.0.0.2 dev swp5 offload rt_offload
+
+Fixes: 396b80cb5cc8 ("net: marvell: prestera: Add neighbour cache accounting")
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+Acked-by: Elad Nachman <enachman@marvell.com>
+Link: https://lore.kernel.org/r/20230804101220.247515-1-jonas.gorski@bisdn.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_device.c |   64 ++++++++++++++++++++++++++-------------------------
- 1 file changed, 33 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/marvell/prestera/prestera_router.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -52,6 +52,8 @@ static LIST_HEAD(tls_device_list);
- static LIST_HEAD(tls_device_down_list);
- static DEFINE_SPINLOCK(tls_device_lock);
+--- a/drivers/net/ethernet/marvell/prestera/prestera_router.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_router.c
+@@ -166,11 +166,11 @@ prestera_util_neigh2nc_key(struct preste
  
-+static struct page *dummy_page;
-+
- static void tls_device_free_ctx(struct tls_context *ctx)
+ static bool __prestera_fi_is_direct(struct fib_info *fi)
  {
- 	if (ctx->tx_conf == TLS_HW) {
-@@ -313,36 +315,33 @@ static int tls_push_record(struct sock *
- 	return tls_push_sg(sk, ctx, offload_ctx->sg_tx_data, 0, flags);
- }
+-	struct fib_nh *fib_nh;
++	struct fib_nh_common *fib_nhc;
  
--static int tls_device_record_close(struct sock *sk,
--				   struct tls_context *ctx,
--				   struct tls_record_info *record,
--				   struct page_frag *pfrag,
--				   unsigned char record_type)
-+static void tls_device_record_close(struct sock *sk,
-+				    struct tls_context *ctx,
-+				    struct tls_record_info *record,
-+				    struct page_frag *pfrag,
-+				    unsigned char record_type)
- {
- 	struct tls_prot_info *prot = &ctx->prot_info;
--	int ret;
-+	struct page_frag dummy_tag_frag;
- 
- 	/* append tag
- 	 * device will fill in the tag, we just need to append a placeholder
- 	 * use socket memory to improve coalescing (re-using a single buffer
- 	 * increases frag count)
--	 * if we can't allocate memory now, steal some back from data
-+	 * if we can't allocate memory now use the dummy page
- 	 */
--	if (likely(skb_page_frag_refill(prot->tag_size, pfrag,
--					sk->sk_allocation))) {
--		ret = 0;
--		tls_append_frag(record, pfrag, prot->tag_size);
--	} else {
--		ret = prot->tag_size;
--		if (record->len <= prot->overhead_size)
--			return -ENOMEM;
-+	if (unlikely(pfrag->size - pfrag->offset < prot->tag_size) &&
-+	    !skb_page_frag_refill(prot->tag_size, pfrag, sk->sk_allocation)) {
-+		dummy_tag_frag.page = dummy_page;
-+		dummy_tag_frag.offset = 0;
-+		pfrag = &dummy_tag_frag;
+ 	if (fib_info_num_path(fi) == 1) {
+-		fib_nh = fib_info_nh(fi, 0);
+-		if (fib_nh->fib_nh_gw_family == AF_UNSPEC)
++		fib_nhc = fib_info_nhc(fi, 0);
++		if (fib_nhc->nhc_gw_family == AF_UNSPEC)
+ 			return true;
  	}
-+	tls_append_frag(record, pfrag, prot->tag_size);
  
- 	/* fill prepend */
- 	tls_fill_prepend(ctx, skb_frag_address(&record->frags[0]),
- 			 record->len - prot->overhead_size,
- 			 record_type);
--	return ret;
- }
- 
- static int tls_create_new_record(struct tls_offload_context_tx *offload_ctx,
-@@ -535,18 +534,8 @@ last_record:
- 
- 		if (done || record->len >= max_open_record_len ||
- 		    (record->num_frags >= MAX_SKB_FRAGS - 1)) {
--			rc = tls_device_record_close(sk, tls_ctx, record,
--						     pfrag, record_type);
--			if (rc) {
--				if (rc > 0) {
--					size += rc;
--				} else {
--					size = orig_size;
--					destroy_record(record);
--					ctx->open_record = NULL;
--					break;
--				}
--			}
-+			tls_device_record_close(sk, tls_ctx, record,
-+						pfrag, record_type);
- 
- 			rc = tls_push_record(sk,
- 					     tls_ctx,
-@@ -1466,14 +1455,26 @@ int __init tls_device_init(void)
+@@ -261,7 +261,7 @@ static bool
+ __prestera_util_kern_n_is_reachable_v4(u32 tb_id, __be32 *addr,
+ 				       struct net_device *dev)
  {
- 	int err;
+-	struct fib_nh *fib_nh;
++	struct fib_nh_common *fib_nhc;
+ 	struct fib_result res;
+ 	bool reachable;
  
--	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
--	if (!destruct_wq)
-+	dummy_page = alloc_page(GFP_KERNEL);
-+	if (!dummy_page)
- 		return -ENOMEM;
+@@ -269,8 +269,8 @@ __prestera_util_kern_n_is_reachable_v4(u
  
-+	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
-+	if (!destruct_wq) {
-+		err = -ENOMEM;
-+		goto err_free_dummy;
-+	}
-+
- 	err = register_netdevice_notifier(&tls_dev_notifier);
- 	if (err)
--		destroy_workqueue(destruct_wq);
-+		goto err_destroy_wq;
+ 	if (!prestera_util_kern_get_route(&res, tb_id, addr))
+ 		if (prestera_fi_is_direct(res.fi)) {
+-			fib_nh = fib_info_nh(res.fi, 0);
+-			if (dev == fib_nh->fib_nh_dev)
++			fib_nhc = fib_info_nhc(res.fi, 0);
++			if (dev == fib_nhc->nhc_dev)
+ 				reachable = true;
+ 		}
  
-+	return 0;
-+
-+err_destroy_wq:
-+	destroy_workqueue(destruct_wq);
-+err_free_dummy:
-+	put_page(dummy_page);
- 	return err;
- }
- 
-@@ -1482,4 +1483,5 @@ void __exit tls_device_cleanup(void)
- 	unregister_netdevice_notifier(&tls_dev_notifier);
- 	destroy_workqueue(destruct_wq);
- 	clean_acked_data_flush();
-+	put_page(dummy_page);
- }
+@@ -324,7 +324,7 @@ prestera_kern_fib_info_nhc(struct fib_no
+ 	if (info->family == AF_INET) {
+ 		fen4_info = container_of(info, struct fib_entry_notifier_info,
+ 					 info);
+-		return &fib_info_nh(fen4_info->fi, n)->nh_common;
++		return fib_info_nhc(fen4_info->fi, n);
+ 	} else if (info->family == AF_INET6) {
+ 		fen6_info = container_of(info, struct fib6_entry_notifier_info,
+ 					 info);
 
 
