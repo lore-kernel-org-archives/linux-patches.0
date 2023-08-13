@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C299446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F368C433C7;
-	Sun, 13 Aug 2023 21:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8859446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B6CC433C7;
+	Sun, 13 Aug 2023 21:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962653;
-	bh=K35XiHKbW6/O1VkZWxhykHHyBiXHC/XPoPf2n9/ucu4=;
+	s=korg; t=1691962656;
+	bh=qvMCbLCUhQzt2S/cLp+qQ19aeNjjUA+3La5Wft2PxnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkLaM0tWIXgJjQQR+SlaoHifBxc7Uk75/dCuus3LxT08nkcy2MQbbs23lC2hCrOfs
-	 WuRkACWs12S9J+deccXxj7p3txDzQO2S3rGG+2wvveZUIFqm4IgYGfCQb0ORJHmBw6
-	 QTv8SFB1O97QGtRBO17p4/hkfT6kkWzffjonCTm8=
+	b=FlDho9jt/5djryLHuka5guios/GWttyaMTVWaAmp5wjaMJpcQbnwYSFO5ESM5nT0m
+	 U9x8Jjp0qs8TwaFttGe/fODTE7MGutvC5jv0cbNClP/OBFZ+IOFTgoDgUtRFUvzau9
+	 PqvDr0GFn9AnpCWu0ABeoflvettVwNzq0/PrQJ4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 108/149] net: hns3: add wait until mac link down
-Date: Sun, 13 Aug 2023 23:19:13 +0200
-Message-ID: <20230813211721.995143713@linuxfoundation.org>
+Subject: [PATCH 6.1 109/149] net: hns3: fix deadlock issue when externel_lb and reset are executed together
+Date: Sun, 13 Aug 2023 23:19:14 +0200
+Message-ID: <20230813211722.023564637@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,54 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-commit 6265e242f7b95f2c1195b42ec912b84ad161470e upstream.
+commit ac6257a3ae5db5193b1f19c268e4f72d274ddb88 upstream.
 
-In some configure flow of hns3 driver, for example, change mtu, it will
-disable MAC through firmware before configuration. But firmware disables
-MAC asynchronously. The rx traffic may be not stopped in this case.
+When externel_lb and reset are executed together, a deadlock may
+occur:
+[ 3147.217009] INFO: task kworker/u321:0:7 blocked for more than 120 seconds.
+[ 3147.230483] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[ 3147.238999] task:kworker/u321:0  state:D stack:    0 pid:    7 ppid:     2 flags:0x00000008
+[ 3147.248045] Workqueue: hclge hclge_service_task [hclge]
+[ 3147.253957] Call trace:
+[ 3147.257093]  __switch_to+0x7c/0xbc
+[ 3147.261183]  __schedule+0x338/0x6f0
+[ 3147.265357]  schedule+0x50/0xe0
+[ 3147.269185]  schedule_preempt_disabled+0x18/0x24
+[ 3147.274488]  __mutex_lock.constprop.0+0x1d4/0x5dc
+[ 3147.279880]  __mutex_lock_slowpath+0x1c/0x30
+[ 3147.284839]  mutex_lock+0x50/0x60
+[ 3147.288841]  rtnl_lock+0x20/0x2c
+[ 3147.292759]  hclge_reset_prepare+0x68/0x90 [hclge]
+[ 3147.298239]  hclge_reset_subtask+0x88/0xe0 [hclge]
+[ 3147.303718]  hclge_reset_service_task+0x84/0x120 [hclge]
+[ 3147.309718]  hclge_service_task+0x2c/0x70 [hclge]
+[ 3147.315109]  process_one_work+0x1d0/0x490
+[ 3147.319805]  worker_thread+0x158/0x3d0
+[ 3147.324240]  kthread+0x108/0x13c
+[ 3147.328154]  ret_from_fork+0x10/0x18
 
-So fixes it by waiting until mac link is down.
+In externel_lb process, the hns3 driver call napi_disable()
+first, then the reset happen, then the restore process of the
+externel_lb will fail, and will not call napi_enable(). When
+doing externel_lb again, napi_disable() will be double call,
+cause a deadlock of rtnl_lock().
 
-Fixes: a9775bb64aa7 ("net: hns3: fix set and get link ksettings issue")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
+This patch use the HNS3_NIC_STATE_DOWN state to protect the
+calling of napi_disable() and napi_enable() in externel_lb
+process, just as the usage in ndo_stop() and ndo_start().
+
+Fixes: 04b6ba143521 ("net: hns3: add support for external loopback test")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230807113452.474224-4-shaojijie@huawei.com
+Link: https://lore.kernel.org/r/20230807113452.474224-5-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -7569,6 +7569,8 @@ static void hclge_enable_fd(struct hnae3
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 9f6890059666..b7b51e56b030 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -5854,6 +5854,9 @@ void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
+ 	if (!if_running)
+ 		return;
  
- static void hclge_cfg_mac_mode(struct hclge_dev *hdev, bool enable)
- {
-+#define HCLGE_LINK_STATUS_WAIT_CNT  3
-+
- 	struct hclge_desc desc;
- 	struct hclge_config_mac_mode_cmd *req =
- 		(struct hclge_config_mac_mode_cmd *)desc.data;
-@@ -7593,9 +7595,15 @@ static void hclge_cfg_mac_mode(struct hc
- 	req->txrx_pad_fcs_loop_en = cpu_to_le32(loop_en);
- 
- 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
--	if (ret)
-+	if (ret) {
- 		dev_err(&hdev->pdev->dev,
- 			"mac enable fail, ret =%d.\n", ret);
++	if (test_and_set_bit(HNS3_NIC_STATE_DOWN, &priv->state))
 +		return;
-+	}
 +
-+	if (!enable)
-+		hclge_mac_link_status_wait(hdev, HCLGE_LINK_STATUS_DOWN,
-+					   HCLGE_LINK_STATUS_WAIT_CNT);
- }
+ 	netif_carrier_off(ndev);
+ 	netif_tx_disable(ndev);
  
- static int hclge_config_switch_param(struct hclge_dev *hdev, int vfid,
+@@ -5882,7 +5885,16 @@ void hns3_external_lb_restore(struct net_device *ndev, bool if_running)
+ 	if (!if_running)
+ 		return;
+ 
+-	hns3_nic_reset_all_ring(priv->ae_handle);
++	if (hns3_nic_resetting(ndev))
++		return;
++
++	if (!test_bit(HNS3_NIC_STATE_DOWN, &priv->state))
++		return;
++
++	if (hns3_nic_reset_all_ring(priv->ae_handle))
++		return;
++
++	clear_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+ 
+ 	for (i = 0; i < priv->vector_num; i++)
+ 		hns3_vector_enable(&priv->tqp_vector[i]);
+-- 
+2.41.0
+
 
 
