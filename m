@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A609446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A30C433C7;
-	Sun, 13 Aug 2023 21:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26289446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D55FC433C8;
+	Sun, 13 Aug 2023 21:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962637;
-	bh=1c003UIrmwbmOnqJEoUdtA7kUjJf+M/OnAgg2A3N10A=;
+	s=korg; t=1691962640;
+	bh=KtcwlFMFaj+TPiyKEqABQ2x+QI0PA31MUkUfKp2shs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8jd4CXq6eq079jQIojJ4nWX2dIEhYkmzV9bVJmY+YtbBlS70S2cKhwJuFllX/OYJ
-	 AIAXn59+TmwqgRpcvrh60vjjIy5d1novTYlr9OgUBgNCSuXQvCtQGpPKHxNLM9PPA4
-	 P/xiY0ufYlngMTm3mpTxQC/FZTLPxdSpEvRiuByg=
+	b=uXaPDifN8I4XWwySlj0Pw/3VqZA92KpAH7CwsI0CSmtkV4Ym2IIyZOn1xqafammYu
+	 o5CPz+YfgPH9Dfw55yMRKaCM5oWv3qFVDi13jUNURag5+Z+GACCCR3WceSyFnxxdeX
+	 CdDAyuSQR4z8GW6RgDh9kKNxocWCnYqsJBulzWYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artemy Kovalyov <artemyko@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.1 102/149] RDMA/umem: Set iova in ODP flow
-Date: Sun, 13 Aug 2023 23:19:07 +0200
-Message-ID: <20230813211721.830930900@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 103/149] net: tls: avoid discarding data on record close
+Date: Sun, 13 Aug 2023 23:19:08 +0200
+Message-ID: <20230813211721.858859233@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,63 +34,161 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 186b169cf1e4be85aa212a893ea783a543400979 upstream.
+commit 6b47808f223c70ff564f9b363446d2a5fa1e05b2 upstream.
 
-Fixing the ODP registration flow to set the iova correctly.
-The calculation in ib_umem_num_dma_blocks() function assumes the iova of
-the umem is set correctly.
+TLS records end with a 16B tag. For TLS device offload we only
+need to make space for this tag in the stream, the device will
+generate and replace it with the actual calculated tag.
 
-When iova is not set, the calculation in ib_umem_num_dma_blocks() is
-equivalent to length/page_size, which is true only when memory is aligned.
-For unaligned memory, iova must be set for the ALIGN() in the
-ib_umem_num_dma_blocks() to take effect and return a correct value.
+Long time ago the code would just re-reference the head frag
+which mostly worked but was suboptimal because it prevented TCP
+from combining the record into a single skb frag. I'm not sure
+if it was correct as the first frag may be shorter than the tag.
 
-mlx5_ib uses ib_umem_num_dma_blocks() to decide the mkey size to use for
-the MR. Without this fix, when registering unaligned ODP MR, a wrong
-size mkey might be chosen and this might cause the UMR to fail.
+The commit under fixes tried to replace that with using the page
+frag and if the allocation failed rolling back the data, if record
+was long enough. It achieves better fragment coalescing but is
+also buggy.
 
-UMR would fail over insufficient size to update the mkey translation:
-infiniband mlx5_0: dump_cqe:273:(pid 0): dump error cqe
-00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000030: 00 00 00 00 0f 00 78 06 25 00 00 58 00 da ac d2
-infiniband mlx5_0: mlx5_ib_post_send_wait:806:(pid 20311): reg umr
-failed (6)
-infiniband mlx5_0: pagefault_real_mr:661:(pid 20311): Failed to update
-mkey page tables
+We don't roll back the iterator, so unless we're at the end of
+send we'll skip the data we designated as tag and start the
+next record as if the rollback never happened.
+There's also the possibility that the record was constructed
+with MSG_MORE and the data came from a different syscall and
+we already told the user space that we "got it".
 
-Fixes: f0093fb1a7cb ("RDMA/mlx5: Move mlx5_ib_cont_pages() to the creation of the mlx5_ib_mr")
-Fixes: a665aca89a41 ("RDMA/umem: Split ib_umem_num_pages() into ib_umem_num_dma_blocks()")
-Signed-off-by: Artemy Kovalyov <artemyko@nvidia.com>
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/3d4be7ca2155bf239dd8c00a2d25974a92c26ab8.1689757344.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Allocate a single dummy page and use it as fallback.
+
+Found by code inspection, and proven by forcing allocation
+failures.
+
+Fixes: e7b159a48ba6 ("net/tls: remove the record tail optimization")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/umem.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tls/tls_device.c |   64 ++++++++++++++++++++++++++-------------------------
+ 1 file changed, 33 insertions(+), 31 deletions(-)
 
---- a/drivers/infiniband/core/umem.c
-+++ b/drivers/infiniband/core/umem.c
-@@ -85,6 +85,8 @@ unsigned long ib_umem_find_best_pgsz(str
- 	dma_addr_t mask;
- 	int i;
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -52,6 +52,8 @@ static LIST_HEAD(tls_device_list);
+ static LIST_HEAD(tls_device_down_list);
+ static DEFINE_SPINLOCK(tls_device_lock);
  
-+	umem->iova = va = virt;
++static struct page *dummy_page;
 +
- 	if (umem->is_odp) {
- 		unsigned int page_size = BIT(to_ib_umem_odp(umem)->page_shift);
+ static void tls_device_free_ctx(struct tls_context *ctx)
+ {
+ 	if (ctx->tx_conf == TLS_HW) {
+@@ -313,36 +315,33 @@ static int tls_push_record(struct sock *
+ 	return tls_push_sg(sk, ctx, offload_ctx->sg_tx_data, 0, flags);
+ }
  
-@@ -100,7 +102,6 @@ unsigned long ib_umem_find_best_pgsz(str
+-static int tls_device_record_close(struct sock *sk,
+-				   struct tls_context *ctx,
+-				   struct tls_record_info *record,
+-				   struct page_frag *pfrag,
+-				   unsigned char record_type)
++static void tls_device_record_close(struct sock *sk,
++				    struct tls_context *ctx,
++				    struct tls_record_info *record,
++				    struct page_frag *pfrag,
++				    unsigned char record_type)
+ {
+ 	struct tls_prot_info *prot = &ctx->prot_info;
+-	int ret;
++	struct page_frag dummy_tag_frag;
+ 
+ 	/* append tag
+ 	 * device will fill in the tag, we just need to append a placeholder
+ 	 * use socket memory to improve coalescing (re-using a single buffer
+ 	 * increases frag count)
+-	 * if we can't allocate memory now, steal some back from data
++	 * if we can't allocate memory now use the dummy page
  	 */
- 	pgsz_bitmap &= GENMASK(BITS_PER_LONG - 1, PAGE_SHIFT);
+-	if (likely(skb_page_frag_refill(prot->tag_size, pfrag,
+-					sk->sk_allocation))) {
+-		ret = 0;
+-		tls_append_frag(record, pfrag, prot->tag_size);
+-	} else {
+-		ret = prot->tag_size;
+-		if (record->len <= prot->overhead_size)
+-			return -ENOMEM;
++	if (unlikely(pfrag->size - pfrag->offset < prot->tag_size) &&
++	    !skb_page_frag_refill(prot->tag_size, pfrag, sk->sk_allocation)) {
++		dummy_tag_frag.page = dummy_page;
++		dummy_tag_frag.offset = 0;
++		pfrag = &dummy_tag_frag;
+ 	}
++	tls_append_frag(record, pfrag, prot->tag_size);
  
--	umem->iova = va = virt;
- 	/* The best result is the smallest page size that results in the minimum
- 	 * number of required pages. Compute the largest page size that could
- 	 * work based on VA address bits that don't change.
+ 	/* fill prepend */
+ 	tls_fill_prepend(ctx, skb_frag_address(&record->frags[0]),
+ 			 record->len - prot->overhead_size,
+ 			 record_type);
+-	return ret;
+ }
+ 
+ static int tls_create_new_record(struct tls_offload_context_tx *offload_ctx,
+@@ -535,18 +534,8 @@ last_record:
+ 
+ 		if (done || record->len >= max_open_record_len ||
+ 		    (record->num_frags >= MAX_SKB_FRAGS - 1)) {
+-			rc = tls_device_record_close(sk, tls_ctx, record,
+-						     pfrag, record_type);
+-			if (rc) {
+-				if (rc > 0) {
+-					size += rc;
+-				} else {
+-					size = orig_size;
+-					destroy_record(record);
+-					ctx->open_record = NULL;
+-					break;
+-				}
+-			}
++			tls_device_record_close(sk, tls_ctx, record,
++						pfrag, record_type);
+ 
+ 			rc = tls_push_record(sk,
+ 					     tls_ctx,
+@@ -1466,14 +1455,26 @@ int __init tls_device_init(void)
+ {
+ 	int err;
+ 
+-	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
+-	if (!destruct_wq)
++	dummy_page = alloc_page(GFP_KERNEL);
++	if (!dummy_page)
+ 		return -ENOMEM;
+ 
++	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
++	if (!destruct_wq) {
++		err = -ENOMEM;
++		goto err_free_dummy;
++	}
++
+ 	err = register_netdevice_notifier(&tls_dev_notifier);
+ 	if (err)
+-		destroy_workqueue(destruct_wq);
++		goto err_destroy_wq;
+ 
++	return 0;
++
++err_destroy_wq:
++	destroy_workqueue(destruct_wq);
++err_free_dummy:
++	put_page(dummy_page);
+ 	return err;
+ }
+ 
+@@ -1482,4 +1483,5 @@ void __exit tls_device_cleanup(void)
+ 	unregister_netdevice_notifier(&tls_dev_notifier);
+ 	destroy_workqueue(destruct_wq);
+ 	clean_acked_data_flush();
++	put_page(dummy_page);
+ }
 
 
