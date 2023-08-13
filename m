@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82909446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF8DC433C7;
-	Sun, 13 Aug 2023 21:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8745B9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFA3C433C7;
+	Sun, 13 Aug 2023 21:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963030;
-	bh=hOabV+KorJK9yJKufh1IhqTLOa1UUsSKa8xLx0V0TvE=;
+	s=korg; t=1691963033;
+	bh=1cd9f9Nrl60F2vSrMupFiHB7YwJgpEozzReFfBxYsyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnoSqcCJd9xAfBLyrKnsobJfBr322FIo+bIqPf85dRkGxJizOBo0FRjs6dUTNEhNO
-	 LIkXRW3YnfoXHi7xWzCeL+6IFXZwBUxxOfRQYK7bbedpawbMPACrYobftnUKJWITAE
-	 t3Y8H1INTBm6oTVuU+tCEsTqpZPPrY6LQiPKevU4=
+	b=vOLp3ENEvtyAvENey2rvgyIiNhqK70nIEFJuqqqm7nH2b2RktlsyglIhYQDcTEfPT
+	 QLREW/ICLQaOW68RI5RGnvd5fE+VbjCu5OmWsXKwsV26S/bTaBpriN+SboxguyQFwX
+	 Bq8Sf1dFQ266tsjpQz+j+N6EZojD3aYUajFiFOq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@redhat.com>,
-	David Airlie <airlied@gmail.com>,
-	nouveau@lists.freedesktop.org,
-	Karol Herbst <kherbst@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 5.15 08/89] drm/nouveau/gr: enable memory loads on helper invocation on all channels
-Date: Sun, 13 Aug 2023 23:18:59 +0200
-Message-ID: <20230813211711.029282242@linuxfoundation.org>
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Roman Stratiienko <r.stratiienko@gmail.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 5.15 09/89] drm/shmem-helper: Reset vma->vm_ops before calling dma_buf_mmap()
+Date: Sun, 13 Aug 2023 23:19:00 +0200
+Message-ID: <20230813211711.058012414@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -37,112 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-commit 1cb9e2ef66d53b020842b18762e30d0eb4384de8 upstream.
+commit 07dd476f6116966cb2006e25fdcf48f0715115ff upstream.
 
-We have a lurking bug where Fragment Shader Helper Invocations can't load
-from memory. But this is actually required in OpenGL and is causing random
-hangs or failures in random shaders.
+The dma-buf backend is supposed to provide its own vm_ops, but some
+implementation just have nothing special to do and leave vm_ops
+untouched, probably expecting this field to be zero initialized (this
+is the case with the system_heap implementation for instance).
+Let's reset vma->vm_ops to NULL to keep things working with these
+implementations.
 
-It is unknown how widespread this issue is, but shaders hitting this can
-end up with infinite loops.
-
-We enable those only on all Kepler and newer GPUs where we use our own
-Firmware.
-
-Nvidia's firmware provides a way to set a kernelspace controlled list of
-mmio registers in the gr space from push buffers via MME macros.
-
-v2: drop code for gm200 and newer.
-
-Cc: Ben Skeggs <bskeggs@redhat.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: nouveau@lists.freedesktop.org
-Cc: stable@vger.kernel.org # 4.19+
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230622152017.2512101-1-kherbst@redhat.com
+Fixes: 26d3ac3cb04d ("drm/shmem-helpers: Redirect mmap for imported dma-buf")
+Cc: <stable@vger.kernel.org>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Reported-by: Roman Stratiienko <r.stratiienko@gmail.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Tested-by: Roman Stratiienko <r.stratiienko@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230724112610.60974-1-boris.brezillon@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h  |    1 +
- drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c  |    4 +++-
- drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c  |   10 ++++++++++
- drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c |    1 +
- drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c  |    1 +
- drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c  |    1 +
- 6 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h
-@@ -123,6 +123,7 @@ void gk104_grctx_generate_r418800(struct
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -591,7 +591,13 @@ int drm_gem_shmem_mmap(struct drm_gem_sh
+ 	int ret;
  
- extern const struct gf100_grctx_func gk110_grctx;
- void gk110_grctx_generate_r419eb0(struct gf100_gr *);
-+void gk110_grctx_generate_r419f78(struct gf100_gr *);
- 
- extern const struct gf100_grctx_func gk110b_grctx;
- extern const struct gf100_grctx_func gk208_grctx;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c
-@@ -916,7 +916,9 @@ static void
- gk104_grctx_generate_r419f78(struct gf100_gr *gr)
- {
- 	struct nvkm_device *device = gr->base.engine.subdev.device;
--	nvkm_mask(device, 0x419f78, 0x00000001, 0x00000000);
+ 	if (obj->import_attach) {
++		/* Reset both vm_ops and vm_private_data, so we don't end up with
++		 * vm_ops pointing to our implementation if the dma-buf backend
++		 * doesn't set those fields.
++		 */
+ 		vma->vm_private_data = NULL;
++		vma->vm_ops = NULL;
 +
-+	/* bit 3 set disables loads in fp helper invocations, we need it enabled */
-+	nvkm_mask(device, 0x419f78, 0x00000009, 0x00000000);
- }
+ 		ret = dma_buf_mmap(obj->dma_buf, vma, 0);
  
- void
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c
-@@ -820,6 +820,15 @@ gk110_grctx_generate_r419eb0(struct gf10
- 	nvkm_mask(device, 0x419eb0, 0x00001000, 0x00001000);
- }
- 
-+void
-+gk110_grctx_generate_r419f78(struct gf100_gr *gr)
-+{
-+	struct nvkm_device *device = gr->base.engine.subdev.device;
-+
-+	/* bit 3 set disables loads in fp helper invocations, we need it enabled */
-+	nvkm_mask(device, 0x419f78, 0x00000008, 0x00000000);
-+}
-+
- const struct gf100_grctx_func
- gk110_grctx = {
- 	.main  = gf100_grctx_generate_main,
-@@ -852,4 +861,5 @@ gk110_grctx = {
- 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
- 	.r418800 = gk104_grctx_generate_r418800,
- 	.r419eb0 = gk110_grctx_generate_r419eb0,
-+	.r419f78 = gk110_grctx_generate_r419f78,
- };
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c
-@@ -101,4 +101,5 @@ gk110b_grctx = {
- 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
- 	.r418800 = gk104_grctx_generate_r418800,
- 	.r419eb0 = gk110_grctx_generate_r419eb0,
-+	.r419f78 = gk110_grctx_generate_r419f78,
- };
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c
-@@ -566,4 +566,5 @@ gk208_grctx = {
- 	.dist_skip_table = gf117_grctx_generate_dist_skip_table,
- 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
- 	.r418800 = gk104_grctx_generate_r418800,
-+	.r419f78 = gk110_grctx_generate_r419f78,
- };
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c
-@@ -991,4 +991,5 @@ gm107_grctx = {
- 	.r406500 = gm107_grctx_generate_r406500,
- 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
- 	.r419e00 = gm107_grctx_generate_r419e00,
-+	.r419f78 = gk110_grctx_generate_r419f78,
- };
+ 		/* Drop the reference drm_gem_mmap_obj() acquired.*/
 
 
