@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD50C9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E362CC433C8;
-	Sun, 13 Aug 2023 21:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBC79446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20017C433C8;
+	Sun, 13 Aug 2023 21:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963300;
-	bh=lRKX90DWxNNAZFJi3WLWsHoCsZTsfVJ77NIp4QL0M5I=;
+	s=korg; t=1691963303;
+	bh=LTLTGtzwLFCfMwDPkwvOE59epzWiH/L6gcAyHUc0PlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PkpW3yurhgir+IC4XOKCgwXvbYcBsh79hF8iOA32UzFDlnGsGRMQc62UydIqJqgqr
-	 /f2K6Wufm95LCjUCsY3DzxGwrH8nU7Q2qkU6YukAdl6MrBo7DryO88fAKqY3ncqtgK
-	 5679Mb6KvP4huwYoVFjfL4HjhXeXjQyvL+exFaxE=
+	b=BoIhnK+11eJS84LmLCxnmV/cyGaT1ixBQ/Fd3BWA7Jd4ryEPLmFrHpV/NfQ4qGJTy
+	 cxEqDwwUwWyNNlwRIaYh9R+mIAA5VcLRq//JyAp4fdo0ypX2LRCFKQ0m/SmUvN+Et5
+	 89q7xkOF2iYKqYHOPfBj+JPcY/guI/fJqnr6oBnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 28/39] btrfs: dont stop integrity writeback too early
-Date: Sun, 13 Aug 2023 23:20:19 +0200
-Message-ID: <20230813211705.768830335@linuxfoundation.org>
+	Zhu Wang <wangzhu9@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 37/39] scsi: core: Fix possible memory leak if device_add() fails
+Date: Sun, 13 Aug 2023 23:20:28 +0200
+Message-ID: <20230813211706.068083941@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -35,50 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Zhu Wang <wangzhu9@huawei.com>
 
-commit effa24f689ce0948f68c754991a445a8d697d3a8 upstream.
+commit 04b5b5cb0136ce970333a9c6cec7e46adba1ea3a upstream.
 
-extent_write_cache_pages stops writing pages as soon as nr_to_write hits
-zero.  That is the right thing for opportunistic writeback, but incorrect
-for data integrity writeback, which needs to ensure that no dirty pages
-are left in the range.  Thus only stop the writeback for WB_SYNC_NONE
-if nr_to_write hits 0.
+If device_add() returns error, the name allocated by dev_set_name() needs
+be freed. As the comment of device_add() says, put_device() should be used
+to decrease the reference count in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanp().
 
-This is a port of write_cache_pages changes in commit 05fe478dd04e
-("mm: write_cache_pages integrity fix").
-
-Note that I've only trigger the problem with other changes to the btrfs
-writeback code, but this condition seems worthwhile fixing anyway.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ updated comment ]
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: ee959b00c335 ("SCSI: convert struct class_device to struct device")
+Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
+Link: https://lore.kernel.org/r/20230803020230.226903-1-wangzhu9@huawei.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/scsi/raid_class.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -4024,11 +4024,12 @@ retry:
- 			free_extent_buffer(eb);
+--- a/drivers/scsi/raid_class.c
++++ b/drivers/scsi/raid_class.c
+@@ -248,6 +248,7 @@ int raid_component_add(struct raid_templ
+ 	return 0;
  
- 			/*
--			 * the filesystem may choose to bump up nr_to_write.
-+			 * The filesystem may choose to bump up nr_to_write.
- 			 * We have to make sure to honor the new nr_to_write
--			 * at any time
-+			 * at any time.
- 			 */
--			nr_to_write_done = wbc->nr_to_write <= 0;
-+			nr_to_write_done = (wbc->sync_mode == WB_SYNC_NONE &&
-+					    wbc->nr_to_write <= 0);
- 		}
- 		pagevec_release(&pvec);
- 		cond_resched();
+ err_out:
++	put_device(&rc->dev);
+ 	list_del(&rc->node);
+ 	rd->component_count--;
+ 	put_device(component_dev);
 
 
