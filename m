@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D061E9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5849EC433C7;
-	Sun, 13 Aug 2023 21:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A7C9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D153C433C8;
+	Sun, 13 Aug 2023 21:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961671;
-	bh=zFFsrbhx1BJZq/FFlq1yZ9Aw/h9KAda7+x7fXBA50lg=;
+	s=korg; t=1691961675;
+	bh=Fd7KJUSLDtnBgYo5wsJHZ9VQ1IseQeJlbUvTyLRDZkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffB4XW6FjvEcFFzqyyqQlqKbjNTF02wxqqD9mUpmw3AT1dQOzWnfp/CEnxE0/ja2T
-	 sxMJGqa3I79igzvrt6OEv+hYkcZ4rHUvg6HRHbuW+0ql01TuLGWBGUnN49WxVQNev7
-	 e4sxbl5zx44VT6CHH4fUCSCUgGSEFu5AeR8cL8Oo=
+	b=PBUJ5QwzvwU++thXKK+ykhszmp5zTHerhexkvvmCiu+XjTenB+xcD6IJOXgoBrBbM
+	 VrTU6wpGtzQaM7VKmyuybW47YfAbaGbOuXp92rhLh7Ga1xmpbg9wtBMgc/kRQ4OnRa
+	 wK+I+88eG7OcGrq47LHzY3M+QNTz8AF5oj23P5m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Miller <doug.miller@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 4.14 18/26] IB/hfi1: Fix possible panic during hotplug remove
-Date: Sun, 13 Aug 2023 23:19:11 +0200
-Message-ID: <20230813211703.664570678@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.14 19/26] btrfs: dont stop integrity writeback too early
+Date: Sun, 13 Aug 2023 23:19:12 +0200
+Message-ID: <20230813211703.702861030@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
@@ -35,33 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Miller <doug.miller@cornelisnetworks.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 4fdfaef71fced490835145631a795497646f4555 upstream.
+commit effa24f689ce0948f68c754991a445a8d697d3a8 upstream.
 
-During hotplug remove it is possible that the update counters work
-might be pending, and may run after memory has been freed.
-Cancel the update counters work before freeing memory.
+extent_write_cache_pages stops writing pages as soon as nr_to_write hits
+zero.  That is the right thing for opportunistic writeback, but incorrect
+for data integrity writeback, which needs to ensure that no dirty pages
+are left in the range.  Thus only stop the writeback for WB_SYNC_NONE
+if nr_to_write hits 0.
 
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
-Signed-off-by: Douglas Miller <doug.miller@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/169099756100.3927190.15284930454106475280.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This is a port of write_cache_pages changes in commit 05fe478dd04e
+("mm: write_cache_pages integrity fix").
+
+Note that I've only trigger the problem with other changes to the btrfs
+writeback code, but this condition seems worthwhile fixing anyway.
+
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ updated comment ]
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/chip.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/extent_io.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/chip.c
-+++ b/drivers/infiniband/hw/hfi1/chip.c
-@@ -12141,6 +12141,7 @@ static void free_cntrs(struct hfi1_devda
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -3884,11 +3884,12 @@ retry:
+ 			free_extent_buffer(eb);
  
- 	if (dd->synth_stats_timer.data)
- 		del_timer_sync(&dd->synth_stats_timer);
-+	cancel_work_sync(&dd->update_cntr_work);
- 	dd->synth_stats_timer.data = 0;
- 	ppd = (struct hfi1_pportdata *)(dd + 1);
- 	for (i = 0; i < dd->num_pports; i++, ppd++) {
+ 			/*
+-			 * the filesystem may choose to bump up nr_to_write.
++			 * The filesystem may choose to bump up nr_to_write.
+ 			 * We have to make sure to honor the new nr_to_write
+-			 * at any time
++			 * at any time.
+ 			 */
+-			nr_to_write_done = wbc->nr_to_write <= 0;
++			nr_to_write_done = (wbc->sync_mode == WB_SYNC_NONE &&
++					    wbc->nr_to_write <= 0);
+ 		}
+ 		pagevec_release(&pvec);
+ 		cond_resched();
 
 
