@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8859446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B6CC433C7;
-	Sun, 13 Aug 2023 21:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4EC9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0113CC433C8;
+	Sun, 13 Aug 2023 21:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962656;
-	bh=qvMCbLCUhQzt2S/cLp+qQ19aeNjjUA+3La5Wft2PxnY=;
+	s=korg; t=1691962659;
+	bh=IoXWOz5dJk2xHTBfk8yU7zj59VKrYLXUzQsKw+nW4Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlDho9jt/5djryLHuka5guios/GWttyaMTVWaAmp5wjaMJpcQbnwYSFO5ESM5nT0m
-	 U9x8Jjp0qs8TwaFttGe/fODTE7MGutvC5jv0cbNClP/OBFZ+IOFTgoDgUtRFUvzau9
-	 PqvDr0GFn9AnpCWu0ABeoflvettVwNzq0/PrQJ4c=
+	b=vLQOOnnV09GxeFcO7E44CV0dTfmRxkVlaPAYZSA7bxwuy92RtwvPNSyRquqxEjDbN
+	 UEWUTyQykPj9K1O069oCnchFbPbMCodtdWugvnZ0Tbu+PJg9YX0EdnYlaXpXk9zoji
+	 imU9qbYQrPAi0byRFq39psGfMI+GJcw1jww2mAi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 109/149] net: hns3: fix deadlock issue when externel_lb and reset are executed together
-Date: Sun, 13 Aug 2023 23:19:14 +0200
-Message-ID: <20230813211722.023564637@linuxfoundation.org>
+Subject: [PATCH 6.1 110/149] nexthop: Fix infinite nexthop dump when using maximum nexthop ID
+Date: Sun, 13 Aug 2023 23:19:15 +0200
+Message-ID: <20230813211722.050554244@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,89 +36,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit ac6257a3ae5db5193b1f19c268e4f72d274ddb88 upstream.
+commit 913f60cacda73ccac8eead94983e5884c03e04cd upstream.
 
-When externel_lb and reset are executed together, a deadlock may
-occur:
-[ 3147.217009] INFO: task kworker/u321:0:7 blocked for more than 120 seconds.
-[ 3147.230483] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 3147.238999] task:kworker/u321:0  state:D stack:    0 pid:    7 ppid:     2 flags:0x00000008
-[ 3147.248045] Workqueue: hclge hclge_service_task [hclge]
-[ 3147.253957] Call trace:
-[ 3147.257093]  __switch_to+0x7c/0xbc
-[ 3147.261183]  __schedule+0x338/0x6f0
-[ 3147.265357]  schedule+0x50/0xe0
-[ 3147.269185]  schedule_preempt_disabled+0x18/0x24
-[ 3147.274488]  __mutex_lock.constprop.0+0x1d4/0x5dc
-[ 3147.279880]  __mutex_lock_slowpath+0x1c/0x30
-[ 3147.284839]  mutex_lock+0x50/0x60
-[ 3147.288841]  rtnl_lock+0x20/0x2c
-[ 3147.292759]  hclge_reset_prepare+0x68/0x90 [hclge]
-[ 3147.298239]  hclge_reset_subtask+0x88/0xe0 [hclge]
-[ 3147.303718]  hclge_reset_service_task+0x84/0x120 [hclge]
-[ 3147.309718]  hclge_service_task+0x2c/0x70 [hclge]
-[ 3147.315109]  process_one_work+0x1d0/0x490
-[ 3147.319805]  worker_thread+0x158/0x3d0
-[ 3147.324240]  kthread+0x108/0x13c
-[ 3147.328154]  ret_from_fork+0x10/0x18
+A netlink dump callback can return a positive number to signal that more
+information needs to be dumped or zero to signal that the dump is
+complete. In the second case, the core netlink code will append the
+NLMSG_DONE message to the skb in order to indicate to user space that
+the dump is complete.
 
-In externel_lb process, the hns3 driver call napi_disable()
-first, then the reset happen, then the restore process of the
-externel_lb will fail, and will not call napi_enable(). When
-doing externel_lb again, napi_disable() will be double call,
-cause a deadlock of rtnl_lock().
+The nexthop dump callback always returns a positive number if nexthops
+were filled in the provided skb, even if the dump is complete. This
+means that a dump will span at least two recvmsg() calls as long as
+nexthops are present. In the last recvmsg() call the dump callback will
+not fill in any nexthops because the previous call indicated that the
+dump should restart from the last dumped nexthop ID plus one.
 
-This patch use the HNS3_NIC_STATE_DOWN state to protect the
-calling of napi_disable() and napi_enable() in externel_lb
-process, just as the usage in ndo_stop() and ndo_start().
+ # ip nexthop add id 1 blackhole
+ # strace -e sendto,recvmsg -s 5 ip nexthop
+ sendto(3, [[{nlmsg_len=24, nlmsg_type=RTM_GETNEXTHOP, nlmsg_flags=NLM_F_REQUEST|NLM_F_DUMP, nlmsg_seq=1691394315, nlmsg_pid=0}, {nh_family=AF_UNSPEC, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}], {nlmsg_len=0, nlmsg_type=0 /* NLMSG_??? */, nlmsg_flags=0, nlmsg_seq=0, nlmsg_pid=0}], 152, 0, NULL, 0) = 152
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=NULL, iov_len=0}], msg_iovlen=1, msg_controllen=0, msg_flags=MSG_TRUNC}, MSG_PEEK|MSG_TRUNC) = 36
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[{nlmsg_len=36, nlmsg_type=RTM_NEWNEXTHOP, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394315, nlmsg_pid=343}, {nh_family=AF_INET, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}, [[{nla_len=8, nla_type=NHA_ID}, 1], {nla_len=4, nla_type=NHA_BLACKHOLE}]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 36
+ id 1 blackhole
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=NULL, iov_len=0}], msg_iovlen=1, msg_controllen=0, msg_flags=MSG_TRUNC}, MSG_PEEK|MSG_TRUNC) = 20
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[{nlmsg_len=20, nlmsg_type=NLMSG_DONE, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394315, nlmsg_pid=343}, 0], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 20
+ +++ exited with 0 +++
 
-Fixes: 04b6ba143521 ("net: hns3: add support for external loopback test")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230807113452.474224-5-shaojijie@huawei.com
+This behavior is both inefficient and buggy. If the last nexthop to be
+dumped had the maximum ID of 0xffffffff, then the dump will restart from
+0 (0xffffffff + 1) and never end:
+
+ # ip nexthop add id $((2**32-1)) blackhole
+ # ip nexthop
+ id 4294967295 blackhole
+ id 4294967295 blackhole
+ [...]
+
+Fix by adjusting the dump callback to return zero when the dump is
+complete. After the fix only one recvmsg() call is made and the
+NLMSG_DONE message is appended to the RTM_NEWNEXTHOP response:
+
+ # ip nexthop add id $((2**32-1)) blackhole
+ # strace -e sendto,recvmsg -s 5 ip nexthop
+ sendto(3, [[{nlmsg_len=24, nlmsg_type=RTM_GETNEXTHOP, nlmsg_flags=NLM_F_REQUEST|NLM_F_DUMP, nlmsg_seq=1691394080, nlmsg_pid=0}, {nh_family=AF_UNSPEC, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}], {nlmsg_len=0, nlmsg_type=0 /* NLMSG_??? */, nlmsg_flags=0, nlmsg_seq=0, nlmsg_pid=0}], 152, 0, NULL, 0) = 152
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=NULL, iov_len=0}], msg_iovlen=1, msg_controllen=0, msg_flags=MSG_TRUNC}, MSG_PEEK|MSG_TRUNC) = 56
+ recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[[{nlmsg_len=36, nlmsg_type=RTM_NEWNEXTHOP, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394080, nlmsg_pid=342}, {nh_family=AF_INET, nh_scope=RT_SCOPE_UNIVERSE, nh_protocol=RTPROT_UNSPEC, nh_flags=0}, [[{nla_len=8, nla_type=NHA_ID}, 4294967295], {nla_len=4, nla_type=NHA_BLACKHOLE}]], [{nlmsg_len=20, nlmsg_type=NLMSG_DONE, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1691394080, nlmsg_pid=342}, 0]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 56
+ id 4294967295 blackhole
+ +++ exited with 0 +++
+
+Note that if the NLMSG_DONE message cannot be appended because of size
+limitations, then another recvmsg() will be needed, but the core netlink
+code will not invoke the dump callback and simply reply with a
+NLMSG_DONE message since it knows that the callback previously returned
+zero.
+
+Add a test that fails before the fix:
+
+ # ./fib_nexthops.sh -t basic
+ [...]
+ TEST: Maximum nexthop ID dump                                       [FAIL]
+ [...]
+
+And passes after it:
+
+ # ./fib_nexthops.sh -t basic
+ [...]
+ TEST: Maximum nexthop ID dump                                       [ OK ]
+ [...]
+
+Fixes: ab84be7e54fc ("net: Initial nexthop code")
+Reported-by: Petr Machata <petrm@nvidia.com>
+Closes: https://lore.kernel.org/netdev/87sf91enuf.fsf@nvidia.com/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230808075233.3337922-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ net/ipv4/nexthop.c                          |    6 +-----
+ tools/testing/selftests/net/fib_nexthops.sh |    5 +++++
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 9f6890059666..b7b51e56b030 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -5854,6 +5854,9 @@ void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
- 	if (!if_running)
- 		return;
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -3221,13 +3221,9 @@ static int rtm_dump_nexthop(struct sk_bu
+ 				     &rtm_dump_nexthop_cb, &filter);
+ 	if (err < 0) {
+ 		if (likely(skb->len))
+-			goto out;
+-		goto out_err;
++			err = skb->len;
+ 	}
  
-+	if (test_and_set_bit(HNS3_NIC_STATE_DOWN, &priv->state))
-+		return;
-+
- 	netif_carrier_off(ndev);
- 	netif_tx_disable(ndev);
+-out:
+-	err = skb->len;
+-out_err:
+ 	cb->seq = net->nexthop.seq;
+ 	nl_dump_check_consistent(cb, nlmsg_hdr(skb));
+ 	return err;
+--- a/tools/testing/selftests/net/fib_nexthops.sh
++++ b/tools/testing/selftests/net/fib_nexthops.sh
+@@ -1981,6 +1981,11 @@ basic()
  
-@@ -5882,7 +5885,16 @@ void hns3_external_lb_restore(struct net_device *ndev, bool if_running)
- 	if (!if_running)
- 		return;
+ 	run_cmd "$IP link set dev lo up"
  
--	hns3_nic_reset_all_ring(priv->ae_handle);
-+	if (hns3_nic_resetting(ndev))
-+		return;
++	# Dump should not loop endlessly when maximum nexthop ID is configured.
++	run_cmd "$IP nexthop add id $((2**32-1)) blackhole"
++	run_cmd "timeout 5 $IP nexthop"
++	log_test $? 0 "Maximum nexthop ID dump"
 +
-+	if (!test_bit(HNS3_NIC_STATE_DOWN, &priv->state))
-+		return;
-+
-+	if (hns3_nic_reset_all_ring(priv->ae_handle))
-+		return;
-+
-+	clear_bit(HNS3_NIC_STATE_DOWN, &priv->state);
- 
- 	for (i = 0; i < priv->vector_num; i++)
- 		hns3_vector_enable(&priv->tqp_vector[i]);
--- 
-2.41.0
-
+ 	#
+ 	# groups
+ 	#
 
 
