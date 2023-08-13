@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F349443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:24:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC80C433C7;
-	Sun, 13 Aug 2023 21:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F3F9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:24:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC425C433C8;
+	Sun, 13 Aug 2023 21:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961845;
-	bh=WBhgL/98sI1Q+PMVwRtyWLFC6/NQXjMe0NjnBnC29Is=;
+	s=korg; t=1691961848;
+	bh=mCqvZt7xICFCSiofPWOuaRPTwXVLfS4/Q6cFloz4v4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNQFbg61RFTBiyP9B29UWs4jJzGAJuqKe0VOZRpgCDig5DYvqX2CiRXFSlFhFyhvi
-	 4sV4Pv0C05ercwwQO60jV3H2BiSrSRUCYy2AYlrqh4fQwEiwhkoBmQm7FAvxqkkwJa
-	 zK2+/xi95bmAbO6fFbYUdhlPO7XoK3sBOtgvBo7E=
+	b=DdgNkqoXh5aoh1tTmWmQOEVaSQW4zu8MbgNi978oMZw//ZyAjCcETJRoQQ+o8AstF
+	 gJszKwMcw32xBwMNGB222EE6Uj9tma7HSfLSvroETaeYcMlthPo6vUjBmhaCe9wlTu
+	 ntyRmI3P8VdjC8fGf66Xp3pof5y/SSFUHRNkzO1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	daniil.stas@posteo.net,
-	bitlord0xff@gmail.com,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.4 002/206] tpm: Disable RNG for all AMD fTPMs
-Date: Sun, 13 Aug 2023 23:16:12 +0200
-Message-ID: <20230813211725.045201856@linuxfoundation.org>
+	Richard Tresidder <rtresidd@electromag.com.au>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.4 020/206] dmaengine: pl330: Return DMA_PAUSED when transaction is paused
+Date: Sun, 13 Aug 2023 23:16:30 +0200
+Message-ID: <20230813211725.558234524@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,184 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 554b841d470338a3b1d6335b14ee1cd0c8f5d754 upstream.
+commit 8cda3ececf07d374774f6a13e5a94bc2dc04c26c upstream.
 
-The TPM RNG functionality is not necessary for entropy when the CPU
-already supports the RDRAND instruction. The TPM RNG functionality
-was previously disabled on a subset of AMD fTPM series, but reports
-continue to show problems on some systems causing stutter root caused
-to TPM RNG functionality.
+pl330_pause() does not set anything to indicate paused condition which
+causes pl330_tx_status() to return DMA_IN_PROGRESS. This breaks 8250
+DMA flush after the fix in commit 57e9af7831dc ("serial: 8250_dma: Fix
+DMA Rx rearm race"). The function comment for pl330_pause() claims
+pause is supported but resume is not which is enough for 8250 DMA flush
+to work as long as DMA status reports DMA_PAUSED when appropriate.
 
-Expand disabling TPM RNG use for all AMD fTPMs whether they have versions
-that claim to have fixed or not. To accomplish this, move the detection
-into part of the TPM CRB registration and add a flag indicating that
-the TPM should opt-out of registration to hwrng.
+Add PAUSED state for descriptor and mark BUSY descriptors with PAUSED
+in pl330_pause(). Return DMA_PAUSED from pl330_tx_status() when the
+descriptor is PAUSED.
 
-Cc: stable@vger.kernel.org # 6.1.y+
-Fixes: b006c439d58d ("hwrng: core - start hwrng kthread also for untrusted sources")
-Fixes: f1324bbc4011 ("tpm: disable hwrng for fTPM on some AMD designs")
-Reported-by: daniil.stas@posteo.net
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217719
-Reported-by: bitlord0xff@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217212
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reported-by: Richard Tresidder <rtresidd@electromag.com.au>
+Tested-by: Richard Tresidder <rtresidd@electromag.com.au>
+Fixes: 88987d2c7534 ("dmaengine: pl330: add DMA_PAUSE feature")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/linux-serial/f8a86ecd-64b1-573f-c2fa-59f541083f1a@electromag.com.au/
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230526105434.14959-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c |   68 +-------------------------------------------
- drivers/char/tpm/tpm_crb.c  |   30 +++++++++++++++++++
- include/linux/tpm.h         |    1 
- 3 files changed, 33 insertions(+), 66 deletions(-)
+ drivers/dma/pl330.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -510,70 +510,6 @@ static int tpm_add_legacy_sysfs(struct t
- 	return 0;
- }
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -404,6 +404,12 @@ enum desc_status {
+ 	 */
+ 	BUSY,
+ 	/*
++	 * Pause was called while descriptor was BUSY. Due to hardware
++	 * limitations, only termination is possible for descriptors
++	 * that have been paused.
++	 */
++	PAUSED,
++	/*
+ 	 * Sitting on the channel work_list but xfer done
+ 	 * by PL330 core
+ 	 */
+@@ -2041,7 +2047,7 @@ static inline void fill_queue(struct dma
+ 	list_for_each_entry(desc, &pch->work_list, node) {
  
--/*
-- * Some AMD fTPM versions may cause stutter
-- * https://www.amd.com/en/support/kb/faq/pa-410
-- *
-- * Fixes are available in two series of fTPM firmware:
-- * 6.x.y.z series: 6.0.18.6 +
-- * 3.x.y.z series: 3.57.y.5 +
-- */
--#ifdef CONFIG_X86
--static bool tpm_amd_is_rng_defective(struct tpm_chip *chip)
--{
--	u32 val1, val2;
--	u64 version;
--	int ret;
--
--	if (!(chip->flags & TPM_CHIP_FLAG_TPM2))
--		return false;
--
--	ret = tpm_request_locality(chip);
--	if (ret)
--		return false;
--
--	ret = tpm2_get_tpm_pt(chip, TPM2_PT_MANUFACTURER, &val1, NULL);
--	if (ret)
--		goto release;
--	if (val1 != 0x414D4400U /* AMD */) {
--		ret = -ENODEV;
--		goto release;
--	}
--	ret = tpm2_get_tpm_pt(chip, TPM2_PT_FIRMWARE_VERSION_1, &val1, NULL);
--	if (ret)
--		goto release;
--	ret = tpm2_get_tpm_pt(chip, TPM2_PT_FIRMWARE_VERSION_2, &val2, NULL);
--
--release:
--	tpm_relinquish_locality(chip);
--
--	if (ret)
--		return false;
--
--	version = ((u64)val1 << 32) | val2;
--	if ((version >> 48) == 6) {
--		if (version >= 0x0006000000180006ULL)
--			return false;
--	} else if ((version >> 48) == 3) {
--		if (version >= 0x0003005700000005ULL)
--			return false;
--	} else {
--		return false;
--	}
--
--	dev_warn(&chip->dev,
--		 "AMD fTPM version 0x%llx causes system stutter; hwrng disabled\n",
--		 version);
--
--	return true;
--}
--#else
--static inline bool tpm_amd_is_rng_defective(struct tpm_chip *chip)
--{
--	return false;
--}
--#endif /* CONFIG_X86 */
--
- static int tpm_hwrng_read(struct hwrng *rng, void *data, size_t max, bool wait)
+ 		/* If already submitted */
+-		if (desc->status == BUSY)
++		if (desc->status == BUSY || desc->status == PAUSED)
+ 			continue;
+ 
+ 		ret = pl330_submit_req(pch->thread, desc);
+@@ -2326,6 +2332,7 @@ static int pl330_pause(struct dma_chan *
  {
- 	struct tpm_chip *chip = container_of(rng, struct tpm_chip, hwrng);
-@@ -588,7 +524,7 @@ static int tpm_hwrng_read(struct hwrng *
- static int tpm_add_hwrng(struct tpm_chip *chip)
- {
- 	if (!IS_ENABLED(CONFIG_HW_RANDOM_TPM) || tpm_is_firmware_upgrade(chip) ||
--	    tpm_amd_is_rng_defective(chip))
-+	    chip->flags & TPM_CHIP_FLAG_HWRNG_DISABLED)
- 		return 0;
+ 	struct dma_pl330_chan *pch = to_pchan(chan);
+ 	struct pl330_dmac *pl330 = pch->dmac;
++	struct dma_pl330_desc *desc;
+ 	unsigned long flags;
  
- 	snprintf(chip->hwrng_name, sizeof(chip->hwrng_name),
-@@ -719,7 +655,7 @@ void tpm_chip_unregister(struct tpm_chip
- {
- 	tpm_del_legacy_sysfs(chip);
- 	if (IS_ENABLED(CONFIG_HW_RANDOM_TPM) && !tpm_is_firmware_upgrade(chip) &&
--	    !tpm_amd_is_rng_defective(chip))
-+	    !(chip->flags & TPM_CHIP_FLAG_HWRNG_DISABLED))
- 		hwrng_unregister(&chip->hwrng);
- 	tpm_bios_log_teardown(chip);
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2 && !tpm_is_firmware_upgrade(chip))
---- a/drivers/char/tpm/tpm_crb.c
-+++ b/drivers/char/tpm/tpm_crb.c
-@@ -463,6 +463,28 @@ static bool crb_req_canceled(struct tpm_
- 	return (cancel & CRB_CANCEL_INVOKE) == CRB_CANCEL_INVOKE;
- }
+ 	pm_runtime_get_sync(pl330->ddma.dev);
+@@ -2335,6 +2342,10 @@ static int pl330_pause(struct dma_chan *
+ 	_stop(pch->thread);
+ 	spin_unlock(&pl330->lock);
  
-+static int crb_check_flags(struct tpm_chip *chip)
-+{
-+	u32 val;
-+	int ret;
-+
-+	ret = crb_request_locality(chip, 0);
-+	if (ret)
-+		return ret;
-+
-+	ret = tpm2_get_tpm_pt(chip, TPM2_PT_MANUFACTURER, &val, NULL);
-+	if (ret)
-+		goto release;
-+
-+	if (val == 0x414D4400U /* AMD */)
-+		chip->flags |= TPM_CHIP_FLAG_HWRNG_DISABLED;
-+
-+release:
-+	crb_relinquish_locality(chip, 0);
-+
-+	return ret;
-+}
-+
- static const struct tpm_class_ops tpm_crb = {
- 	.flags = TPM_OPS_AUTO_STARTUP,
- 	.status = crb_status,
-@@ -800,6 +822,14 @@ static int crb_acpi_add(struct acpi_devi
- 	chip->acpi_dev_handle = device->handle;
- 	chip->flags = TPM_CHIP_FLAG_TPM2;
- 
-+	rc = tpm_chip_bootstrap(chip);
-+	if (rc)
-+		goto out;
-+
-+	rc = crb_check_flags(chip);
-+	if (rc)
-+		goto out;
-+
- 	rc = tpm_chip_register(chip);
- 
- out:
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -283,6 +283,7 @@ enum tpm_chip_flags {
- 	TPM_CHIP_FLAG_FIRMWARE_POWER_MANAGED	= BIT(6),
- 	TPM_CHIP_FLAG_FIRMWARE_UPGRADE		= BIT(7),
- 	TPM_CHIP_FLAG_SUSPENDED			= BIT(8),
-+	TPM_CHIP_FLAG_HWRNG_DISABLED		= BIT(9),
- };
- 
- #define to_tpm_chip(d) container_of(d, struct tpm_chip, dev)
++	list_for_each_entry(desc, &pch->work_list, node) {
++		if (desc->status == BUSY)
++			desc->status = PAUSED;
++	}
+ 	spin_unlock_irqrestore(&pch->lock, flags);
+ 	pm_runtime_mark_last_busy(pl330->ddma.dev);
+ 	pm_runtime_put_autosuspend(pl330->ddma.dev);
+@@ -2425,7 +2436,7 @@ pl330_tx_status(struct dma_chan *chan, d
+ 		else if (running && desc == running)
+ 			transferred =
+ 				pl330_get_current_xferred_count(pch, desc);
+-		else if (desc->status == BUSY)
++		else if (desc->status == BUSY || desc->status == PAUSED)
+ 			/*
+ 			 * Busy but not running means either just enqueued,
+ 			 * or finished and not yet marked done
+@@ -2442,6 +2453,9 @@ pl330_tx_status(struct dma_chan *chan, d
+ 			case DONE:
+ 				ret = DMA_COMPLETE;
+ 				break;
++			case PAUSED:
++				ret = DMA_PAUSED;
++				break;
+ 			case PREP:
+ 			case BUSY:
+ 				ret = DMA_IN_PROGRESS;
 
 
