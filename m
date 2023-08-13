@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95D49446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EC0C433C7;
-	Sun, 13 Aug 2023 21:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE9A9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C90C433C9;
+	Sun, 13 Aug 2023 21:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962713;
-	bh=sSTWRchjXAYWiknUjtPRtV8KpmFkWF6+TggGEWZ95hU=;
+	s=korg; t=1691962716;
+	bh=6zJ6Zzle7ZjsASV2cWQYABLXhNEGH5s7zQXMoKf/G6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf10Ge5ngqnobkuZMZccVnqqeRqIttu+iUekdv098Ngvf3Rrqq1b9JdBngEQ9yqEI
-	 kMMZ+47iLFjDgo9IOPoG6RSIQ88FSM6A5AfwlCWBDFNKXWhA/5Q/GxxedE/lxdYp+T
-	 Ccj+BUMFv742PjunouSM9XYnLI9eHY/nX8piVttM=
+	b=K9N1GhNY98ySyRqF0YU0UR9/IsVM9i9iJzKkshmxcksLN7dt2c3QevIVBbp7rI07w
+	 1gpDU3YOrPcouJd5NBItegLG++1T5xploNhMy5THrvKYqcd9c7d76//auoGfRXbM19
+	 y+AawDnLsrNIZVOKYxquEC/x9Dm4Zisvzf/b8HFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 128/149] btrfs: dont stop integrity writeback too early
-Date: Sun, 13 Aug 2023 23:19:33 +0200
-Message-ID: <20230813211722.549824528@linuxfoundation.org>
+	Andrew Kanner <andrew.kanner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 096/149] drivers: net: prevent tun_build_skb() to exceed the packet size limit
+Date: Sun, 13 Aug 2023 23:19:01 +0200
+Message-ID: <20230813211721.661432505@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,50 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Andrew Kanner <andrew.kanner@gmail.com>
 
-commit effa24f689ce0948f68c754991a445a8d697d3a8 upstream.
+commit 59eeb232940515590de513b997539ef495faca9a upstream.
 
-extent_write_cache_pages stops writing pages as soon as nr_to_write hits
-zero.  That is the right thing for opportunistic writeback, but incorrect
-for data integrity writeback, which needs to ensure that no dirty pages
-are left in the range.  Thus only stop the writeback for WB_SYNC_NONE
-if nr_to_write hits 0.
+Using the syzkaller repro with reduced packet size it was discovered
+that XDP_PACKET_HEADROOM is not checked in tun_can_build_skb(),
+although pad may be incremented in tun_build_skb(). This may end up
+with exceeding the PAGE_SIZE limit in tun_build_skb().
 
-This is a port of write_cache_pages changes in commit 05fe478dd04e
-("mm: write_cache_pages integrity fix").
+Jason Wang <jasowang@redhat.com> proposed to count XDP_PACKET_HEADROOM
+always (e.g. without rcu_access_pointer(tun->xdp_prog)) in
+tun_can_build_skb() since there's a window during which XDP program
+might be attached between tun_can_build_skb() and tun_build_skb().
 
-Note that I've only trigger the problem with other changes to the btrfs
-writeback code, but this condition seems worthwhile fixing anyway.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ updated comment ]
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 7df13219d757 ("tun: reserve extra headroom only when XDP is set")
+Link: https://syzkaller.appspot.com/bug?extid=f817490f5bd20541b90a
+Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
+Link: https://lore.kernel.org/r/20230803185947.2379988-1-andrew.kanner@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/tun.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -3015,11 +3015,12 @@ retry:
- 			}
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1588,7 +1588,7 @@ static bool tun_can_build_skb(struct tun
+ 	if (zerocopy)
+ 		return false;
  
- 			/*
--			 * the filesystem may choose to bump up nr_to_write.
-+			 * The filesystem may choose to bump up nr_to_write.
- 			 * We have to make sure to honor the new nr_to_write
--			 * at any time
-+			 * at any time.
- 			 */
--			nr_to_write_done = wbc->nr_to_write <= 0;
-+			nr_to_write_done = (wbc->sync_mode == WB_SYNC_NONE &&
-+					    wbc->nr_to_write <= 0);
- 		}
- 		pagevec_release(&pvec);
- 		cond_resched();
+-	if (SKB_DATA_ALIGN(len + TUN_RX_PAD) +
++	if (SKB_DATA_ALIGN(len + TUN_RX_PAD + XDP_PACKET_HEADROOM) +
+ 	    SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) > PAGE_SIZE)
+ 		return false;
+ 
 
 
