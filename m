@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F859443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEA7C433C7;
-	Sun, 13 Aug 2023 21:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304859443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBADC433CC;
+	Sun, 13 Aug 2023 21:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961937;
-	bh=XHFufILvnS2pkIk6rDSBWLu1ZV085aBG5lgvPFPLzzs=;
+	s=korg; t=1691961940;
+	bh=IaQdm7LkzryXjbAwr34+oFh68C878eWILHgPQlw6Jhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c+uYGrATMRdkNCiO7OS4/d2d6c7x2K0eKIt+OS6F67xv9njkd8iHEpMgFfDSm8g/c
-	 HqU6zEwhVtAWCiBss9Smvvw090fyK4j/ETYhQKeXwYqSPPz1pGFhh57yntCJ1c3z29
-	 zckHBBEpsI6SEu0I5bjKN/O/x+XCT7CmNTrtKjC0=
+	b=1GjZo0GVr7qXT8HO5LjjE7KWJ3FByNC6bji1r26jAJ0Zk9L7CKHZTu3lLYpFH4B08
+	 CNkBVTGuzD56fkUrtOjSorSmm9nGzkbfFdI+aq/VDLoste0Q+2zzUXS5YYIoKOtGgm
+	 OL6fFukWxRA7Q3UnCpM2yqquoY40qNuWsL8mW3aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Yang <andrew.yang@mediatek.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 052/206] zsmalloc: fix races between modifications of fullness and isolated
-Date: Sun, 13 Aug 2023 23:17:02 +0200
-Message-ID: <20230813211726.504101325@linuxfoundation.org>
+	Tao Ren <rentao.bupt@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.4 053/206] hwmon: (pmbus/bel-pfe) Enable PMBUS_SKIP_STATUS_CHECK for pfe1100
+Date: Sun, 13 Aug 2023 23:17:03 +0200
+Message-ID: <20230813211726.534282460@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -39,95 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Yang <andrew.yang@mediatek.com>
+From: Tao Ren <rentao.bupt@gmail.com>
 
-commit 4b5d1e47b69426c0f7491d97d73ad0152d02d437 upstream.
+commit f38963b9cd0645a336cf30c5da2e89e34e34fec3 upstream.
 
-We encountered many kernel exceptions of VM_BUG_ON(zspage->isolated ==
-0) in dec_zspage_isolation() and BUG_ON(!pages[1]) in zs_unmap_object()
-lately.  This issue only occurs when migration and reclamation occur at
-the same time.
+Skip status check for both pfe1100 and pfe3000 because the communication
+error is also observed on pfe1100 devices.
 
-With our memory stress test, we can reproduce this issue several times
-a day.  We have no idea why no one else encountered this issue.  BTW,
-we switched to the new kernel version with this defect a few months
-ago.
-
-Since fullness and isolated share the same unsigned int, modifications of
-them should be protected by the same lock.
-
-[andrew.yang@mediatek.com: move comment]
-  Link: https://lkml.kernel.org/r/20230727062910.6337-1-andrew.yang@mediatek.com
-Link: https://lkml.kernel.org/r/20230721063705.11455-1-andrew.yang@mediatek.com
-Fixes: c4549b871102 ("zsmalloc: remove zspage isolation for migration")
-Signed-off-by: Andrew Yang <andrew.yang@mediatek.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+Fixes: 626bb2f3fb3c hwmon: (pmbus) add driver for BEL PFE1100 and PFE3000
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230804221403.28931-1-rentao.bupt@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zsmalloc.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/hwmon/pmbus/bel-pfe.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -1977,6 +1977,7 @@ static void replace_sub_page(struct size
+--- a/drivers/hwmon/pmbus/bel-pfe.c
++++ b/drivers/hwmon/pmbus/bel-pfe.c
+@@ -17,12 +17,13 @@
+ enum chips {pfe1100, pfe3000};
  
- static bool zs_page_isolate(struct page *page, isolate_mode_t mode)
- {
-+	struct zs_pool *pool;
- 	struct zspage *zspage;
+ /*
+- * Disable status check for pfe3000 devices, because some devices report
+- * communication error (invalid command) for VOUT_MODE command (0x20)
+- * although correct VOUT_MODE (0x16) is returned: it leads to incorrect
+- * exponent in linear mode.
++ * Disable status check because some devices report communication error
++ * (invalid command) for VOUT_MODE command (0x20) although the correct
++ * VOUT_MODE (0x16) is returned: it leads to incorrect exponent in linear
++ * mode.
++ * This affects both pfe3000 and pfe1100.
+  */
+-static struct pmbus_platform_data pfe3000_plat_data = {
++static struct pmbus_platform_data pfe_plat_data = {
+ 	.flags = PMBUS_SKIP_STATUS_CHECK,
+ };
+ 
+@@ -94,16 +95,15 @@ static int pfe_pmbus_probe(struct i2c_cl
+ 	int model;
+ 
+ 	model = (int)i2c_match_id(pfe_device_id, client)->driver_data;
++	client->dev.platform_data = &pfe_plat_data;
  
  	/*
-@@ -1986,9 +1987,10 @@ static bool zs_page_isolate(struct page
- 	VM_BUG_ON_PAGE(PageIsolated(page), page);
- 
- 	zspage = get_zspage(page);
--	migrate_write_lock(zspage);
-+	pool = zspage->pool;
-+	spin_lock(&pool->lock);
- 	inc_zspage_isolation(zspage);
--	migrate_write_unlock(zspage);
-+	spin_unlock(&pool->lock);
- 
- 	return true;
- }
-@@ -2054,12 +2056,12 @@ static int zs_page_migrate(struct page *
- 	kunmap_atomic(s_addr);
- 
- 	replace_sub_page(class, zspage, newpage, page);
-+	dec_zspage_isolation(zspage);
- 	/*
- 	 * Since we complete the data copy and set up new zspage structure,
- 	 * it's okay to release the pool's lock.
+ 	 * PFE3000-12-069RA devices may not stay in page 0 during device
+ 	 * probe which leads to probe failure (read status word failed).
+ 	 * So let's set the device to page 0 at the beginning.
  	 */
- 	spin_unlock(&pool->lock);
--	dec_zspage_isolation(zspage);
- 	migrate_write_unlock(zspage);
+-	if (model == pfe3000) {
+-		client->dev.platform_data = &pfe3000_plat_data;
++	if (model == pfe3000)
+ 		i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
+-	}
  
- 	get_page(newpage);
-@@ -2076,14 +2078,16 @@ static int zs_page_migrate(struct page *
- 
- static void zs_page_putback(struct page *page)
- {
-+	struct zs_pool *pool;
- 	struct zspage *zspage;
- 
- 	VM_BUG_ON_PAGE(!PageIsolated(page), page);
- 
- 	zspage = get_zspage(page);
--	migrate_write_lock(zspage);
-+	pool = zspage->pool;
-+	spin_lock(&pool->lock);
- 	dec_zspage_isolation(zspage);
--	migrate_write_unlock(zspage);
-+	spin_unlock(&pool->lock);
+ 	return pmbus_do_probe(client, &pfe_driver_info[model]);
  }
- 
- static const struct movable_operations zsmalloc_mops = {
 
 
