@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11279443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F96C433C7;
-	Sun, 13 Aug 2023 21:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1DD9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC72C433C8;
+	Sun, 13 Aug 2023 21:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961998;
-	bh=RIqBAIEmXavQgo15/1d+p4OJhEPF+koZd9HCE0pZNfQ=;
+	s=korg; t=1691962001;
+	bh=UhcuMOvX1ZTV8TvojMBvOhYknOZLbX6WVCk1wN58+CY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNLrfqkixhYfjLvuJ08WdBwl+b9kvQED05k2pX1J22hGvzjxlFv+P6GSoF7Oy7UrJ
-	 GXwDJBNcfzQI6gnAliiHsOLbE0VsLktaO1lRNmQ7NINySO2DSeOY2jhq9FguWGWYcc
-	 XOVFNLCjUXKJ5QS7ExmoTOGZ6Rr7vVubXDbpZ1u4=
+	b=uBRbSyUSHQL+resvQxxSP9RWYc1HOqfDk8DnGbdkj78OHeYjjTwMDpGtVDxtl1gmO
+	 d/wSA5VqefN7NX7yVMJXb49qdf+MORnGyFPqT4STrf6tmlHNbiawxoGLoG25INFATo
+	 PyTf2bRRAYg/xVo3xG9PNazKffKEdZBSMhxRqxSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Avichal Rakesh <arakesh@google.com>
-Subject: [PATCH 6.4 076/206] USB: Gadget: core: Help prevent panic during UVC unconfigure
-Date: Sun, 13 Aug 2023 23:17:26 +0200
-Message-ID: <20230813211727.250367666@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	James Houghton <jthoughton@google.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 059/206] hugetlb: do not clear hugetlb dtor until allocating vmemmap
+Date: Sun, 13 Aug 2023 23:17:09 +0200
+Message-ID: <20230813211726.756510981@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,85 +41,203 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit 65dadb2beeb7360232b09ebc4585b54475dfee06 upstream.
+commit 32c877191e022b55fe3a374f3d7e9fb5741c514d upstream.
 
-Avichal Rakesh reported a kernel panic that occurred when the UVC
-gadget driver was removed from a gadget's configuration.  The panic
-involves a somewhat complicated interaction between the kernel driver
-and a userspace component (as described in the Link tag below), but
-the analysis did make one thing clear: The Gadget core should
-accomodate gadget drivers calling usb_gadget_deactivate() as part of
-their unbind procedure.
+Patch series "Fix hugetlb free path race with memory errors".
 
-Currently this doesn't work.  gadget_unbind_driver() calls
-driver->unbind() while holding the udc->connect_lock mutex, and
-usb_gadget_deactivate() attempts to acquire that mutex, which will
-result in a deadlock.
+In the discussion of Jiaqi Yan's series "Improve hugetlbfs read on
+HWPOISON hugepages" the race window was discovered.
+https://lore.kernel.org/linux-mm/20230616233447.GB7371@monkey/
 
-The simple fix is for gadget_unbind_driver() to release the mutex when
-invoking the ->unbind() callback.  There is no particular reason for
-it to be holding the mutex at that time, and the mutex isn't held
-while the ->bind() callback is invoked.  So we'll drop the mutex
-before performing the unbind callback and reacquire it afterward.
+Freeing a hugetlb page back to low level memory allocators is performed
+in two steps.
+1) Under hugetlb lock, remove page from hugetlb lists and clear destructor
+2) Outside lock, allocate vmemmap if necessary and call low level free
+Between these two steps, the hugetlb page will appear as a normal
+compound page.  However, vmemmap for tail pages could be missing.
+If a memory error occurs at this time, we could try to update page
+flags non-existant page structs.
 
-We'll also add a couple of comments to usb_gadget_activate() and
-usb_gadget_deactivate().  Because they run in process context they
-must not be called from a gadget driver's ->disconnect() callback,
-which (according to the kerneldoc for struct usb_gadget_driver in
-include/linux/usb/gadget.h) may run in interrupt context.  This may
-help prevent similar bugs from arising in the future.
+A much more detailed description is in the first patch.
 
-Reported-and-tested-by: Avichal Rakesh <arakesh@google.com>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 286d9975a838 ("usb: gadget: udc: core: Prevent soft_connect_store() race")
-Link: https://lore.kernel.org/linux-usb/4d7aa3f4-22d9-9f5a-3d70-1bd7148ff4ba@google.com/
-Cc: Badhri Jagan Sridharan <badhri@google.com>
+The first patch addresses the race window.  However, it adds a
+hugetlb_lock lock/unlock cycle to every vmemmap optimized hugetlb page
+free operation.  This could lead to slowdowns if one is freeing a large
+number of hugetlb pages.
+
+The second path optimizes the update_and_free_pages_bulk routine to only
+take the lock once in bulk operations.
+
+The second patch is technically not a bug fix, but includes a Fixes tag
+and Cc stable to avoid a performance regression.  It can be combined with
+the first, but was done separately make reviewing easier.
+
+
+This patch (of 2):
+
+Freeing a hugetlb page and releasing base pages back to the underlying
+allocator such as buddy or cma is performed in two steps:
+- remove_hugetlb_folio() is called to remove the folio from hugetlb
+  lists, get a ref on the page and remove hugetlb destructor.  This
+  all must be done under the hugetlb lock.  After this call, the page
+  can be treated as a normal compound page or a collection of base
+  size pages.
+- update_and_free_hugetlb_folio() is called to allocate vmemmap if
+  needed and the free routine of the underlying allocator is called
+  on the resulting page.  We can not hold the hugetlb lock here.
+
+One issue with this scheme is that a memory error could occur between
+these two steps.  In this case, the memory error handling code treats
+the old hugetlb page as a normal compound page or collection of base
+pages.  It will then try to SetPageHWPoison(page) on the page with an
+error.  If the page with error is a tail page without vmemmap, a write
+error will occur when trying to set the flag.
+
+Address this issue by modifying remove_hugetlb_folio() and
+update_and_free_hugetlb_folio() such that the hugetlb destructor is not
+cleared until after allocating vmemmap.  Since clearing the destructor
+requires holding the hugetlb lock, the clearing is done in
+remove_hugetlb_folio() if the vmemmap is present.  This saves a
+lock/unlock cycle.  Otherwise, destructor is cleared in
+update_and_free_hugetlb_folio() after allocating vmemmap.
+
+Note that this will leave hugetlb pages in a state where they are marked
+free (by hugetlb specific page flag) and have a ref count.  This is not
+a normal state.  The only code that would notice is the memory error
+code, and it is set up to retry in such a case.
+
+A subsequent patch will create a routine to do bulk processing of
+vmemmap allocation.  This will eliminate a lock/unlock cycle for each
+hugetlb page in the case where we are freeing a large number of pages.
+
+Link: https://lkml.kernel.org/r/20230711220942.43706-1-mike.kravetz@oracle.com
+Link: https://lkml.kernel.org/r/20230711220942.43706-2-mike.kravetz@oracle.com
+Fixes: ad2fa3717b74 ("mm: hugetlb: alloc the vmemmap pages associated with each HugeTLB page")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Tested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Jiaqi Yan <jiaqiyan@google.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/48b2f1f1-0639-46bf-bbfc-98cb05a24914@rowland.harvard.edu
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/hugetlb.c |   75 ++++++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 51 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index cd58f2a4e7f3..7d49d8a0b00c 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -822,6 +822,9 @@ EXPORT_SYMBOL_GPL(usb_gadget_disconnect);
-  * usb_gadget_activate() is called.  For example, user mode components may
-  * need to be activated before the system can talk to hosts.
-  *
-+ * This routine may sleep; it must not be called in interrupt context
-+ * (such as from within a gadget driver's disconnect() callback).
-+ *
-  * Returns zero on success, else negative errno.
-  */
- int usb_gadget_deactivate(struct usb_gadget *gadget)
-@@ -860,6 +863,8 @@ EXPORT_SYMBOL_GPL(usb_gadget_deactivate);
-  * This routine activates gadget which was previously deactivated with
-  * usb_gadget_deactivate() call. It calls usb_gadget_connect() if needed.
-  *
-+ * This routine may sleep; it must not be called in interrupt context.
-+ *
-  * Returns zero on success, else negative errno.
-  */
- int usb_gadget_activate(struct usb_gadget *gadget)
-@@ -1638,7 +1643,11 @@ static void gadget_unbind_driver(struct device *dev)
- 	usb_gadget_disable_async_callbacks(udc);
- 	if (gadget->irq)
- 		synchronize_irq(gadget->irq);
-+	mutex_unlock(&udc->connect_lock);
-+
- 	udc->driver->unbind(gadget);
-+
-+	mutex_lock(&udc->connect_lock);
- 	usb_gadget_udc_stop_locked(udc);
- 	mutex_unlock(&udc->connect_lock);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -1580,9 +1580,37 @@ static inline void destroy_compound_giga
+ 						unsigned int order) { }
+ #endif
  
--- 
-2.41.0
-
++static inline void __clear_hugetlb_destructor(struct hstate *h,
++						struct folio *folio)
++{
++	lockdep_assert_held(&hugetlb_lock);
++
++	/*
++	 * Very subtle
++	 *
++	 * For non-gigantic pages set the destructor to the normal compound
++	 * page dtor.  This is needed in case someone takes an additional
++	 * temporary ref to the page, and freeing is delayed until they drop
++	 * their reference.
++	 *
++	 * For gigantic pages set the destructor to the null dtor.  This
++	 * destructor will never be called.  Before freeing the gigantic
++	 * page destroy_compound_gigantic_folio will turn the folio into a
++	 * simple group of pages.  After this the destructor does not
++	 * apply.
++	 *
++	 */
++	if (hstate_is_gigantic(h))
++		folio_set_compound_dtor(folio, NULL_COMPOUND_DTOR);
++	else
++		folio_set_compound_dtor(folio, COMPOUND_PAGE_DTOR);
++}
++
+ /*
+- * Remove hugetlb folio from lists, and update dtor so that the folio appears
+- * as just a compound page.
++ * Remove hugetlb folio from lists.
++ * If vmemmap exists for the folio, update dtor so that the folio appears
++ * as just a compound page.  Otherwise, wait until after allocating vmemmap
++ * to update dtor.
+  *
+  * A reference is held on the folio, except in the case of demote.
+  *
+@@ -1613,31 +1641,19 @@ static void __remove_hugetlb_folio(struc
+ 	}
+ 
+ 	/*
+-	 * Very subtle
+-	 *
+-	 * For non-gigantic pages set the destructor to the normal compound
+-	 * page dtor.  This is needed in case someone takes an additional
+-	 * temporary ref to the page, and freeing is delayed until they drop
+-	 * their reference.
+-	 *
+-	 * For gigantic pages set the destructor to the null dtor.  This
+-	 * destructor will never be called.  Before freeing the gigantic
+-	 * page destroy_compound_gigantic_folio will turn the folio into a
+-	 * simple group of pages.  After this the destructor does not
+-	 * apply.
+-	 *
+-	 * This handles the case where more than one ref is held when and
+-	 * after update_and_free_hugetlb_folio is called.
+-	 *
+-	 * In the case of demote we do not ref count the page as it will soon
+-	 * be turned into a page of smaller size.
++	 * We can only clear the hugetlb destructor after allocating vmemmap
++	 * pages.  Otherwise, someone (memory error handling) may try to write
++	 * to tail struct pages.
++	 */
++	if (!folio_test_hugetlb_vmemmap_optimized(folio))
++		__clear_hugetlb_destructor(h, folio);
++
++	 /*
++	  * In the case of demote we do not ref count the page as it will soon
++	  * be turned into a page of smaller size.
+ 	 */
+ 	if (!demote)
+ 		folio_ref_unfreeze(folio, 1);
+-	if (hstate_is_gigantic(h))
+-		folio_set_compound_dtor(folio, NULL_COMPOUND_DTOR);
+-	else
+-		folio_set_compound_dtor(folio, COMPOUND_PAGE_DTOR);
+ 
+ 	h->nr_huge_pages--;
+ 	h->nr_huge_pages_node[nid]--;
+@@ -1706,6 +1722,7 @@ static void __update_and_free_hugetlb_fo
+ {
+ 	int i;
+ 	struct page *subpage;
++	bool clear_dtor = folio_test_hugetlb_vmemmap_optimized(folio);
+ 
+ 	if (hstate_is_gigantic(h) && !gigantic_page_runtime_supported())
+ 		return;
+@@ -1736,6 +1753,16 @@ static void __update_and_free_hugetlb_fo
+ 	if (unlikely(folio_test_hwpoison(folio)))
+ 		folio_clear_hugetlb_hwpoison(folio);
+ 
++	/*
++	 * If vmemmap pages were allocated above, then we need to clear the
++	 * hugetlb destructor under the hugetlb lock.
++	 */
++	if (clear_dtor) {
++		spin_lock_irq(&hugetlb_lock);
++		__clear_hugetlb_destructor(h, folio);
++		spin_unlock_irq(&hugetlb_lock);
++	}
++
+ 	for (i = 0; i < pages_per_huge_page(h); i++) {
+ 		subpage = folio_page(folio, i);
+ 		subpage->flags &= ~(1 << PG_locked | 1 << PG_error |
 
 
