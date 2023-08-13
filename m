@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CDB9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22616C433C8;
-	Sun, 13 Aug 2023 21:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4479443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E210EC433C8;
+	Sun, 13 Aug 2023 21:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962275;
-	bh=dbiv4JoIik8CIJOcYHRdECQk2GbRTz5ylBKVgFVpwAI=;
+	s=korg; t=1691962278;
+	bh=gn8sNZqcGgCcUzXkSMvEx2io4DuOGeXe/PQmg1PHtfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUX4UpAABYC7tNIzHa0eIe3EiJDis34mpvKpGDsyw4CA8daQ/q/COm8Y7Zm8U6oAI
-	 aywSQvhbE7S1YrGv9mxGCT8iIcZPhAdUR7XpGen1NoINDGnDLAlSS8HuHUEoa7xEwd
-	 rJt1GS+qGgqmUazlhPu8dsA1lbr0KFlsXBc5p8dQ=
+	b=E3sNECznxg5HrC+bFgVvilg1tGIr1FBeWy0qJH5lUhCzlOsqGjRWC8WAtfjsF87TX
+	 vSY4sh/hxWKyjS+4YKzXZVL/IEtZRe5PzNR4AEXpTXFYKmFwjS9M1sZFaD/lWOMrlj
+	 ZlV41U6OIQMEDECDrCmKTFQOIxYN6oYFoVaxinwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nick Child <nnac123@linux.ibm.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 176/206] ibmvnic: Unmap DMA login rsp buffer on send login fail
-Date: Sun, 13 Aug 2023 23:19:06 +0200
-Message-ID: <20230813211730.060994486@linuxfoundation.org>
+Subject: [PATCH 6.4 177/206] ibmvnic: Handle DMA unmapping of login buffs in release functions
+Date: Sun, 13 Aug 2023 23:19:07 +0200
+Message-ID: <20230813211730.090265216@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -37,39 +37,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Nick Child <nnac123@linux.ibm.com>
 
-commit 411c565b4bc63e9584a8493882bd566e35a90588 upstream.
+commit d78a671eb8996af19d6311ecdee9790d2fa479f0 upstream.
 
-If the LOGIN CRQ fails to send then we must DMA unmap the response
-buffer. Previously, if the CRQ failed then the memory was freed without
-DMA unmapping.
+Rather than leaving the DMA unmapping of the login buffers to the
+login response handler, move this work into the login release functions.
+Previously, these functions were only used for freeing the allocated
+buffers. This could lead to issues if there are more than one
+outstanding login buffer requests, which is possible if a login request
+times out.
 
-Fixes: c98d9cc4170d ("ibmvnic: send_login should check for crq errors")
+If a login request times out, then there is another call to send login.
+The send login function makes a call to the login buffer release
+function. In the past, this freed the buffers but did not DMA unmap.
+Therefore, the VIOS could still write to the old login (now freed)
+buffer. It is for this reason that it is a good idea to leave the DMA
+unmap call to the login buffers release function.
+
+Since the login buffer release functions now handle DMA unmapping,
+remove the duplicate DMA unmapping in handle_login_rsp().
+
+Fixes: dff515a3e71d ("ibmvnic: Harden device login requests")
 Signed-off-by: Nick Child <nnac123@linux.ibm.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230809221038.51296-2-nnac123@linux.ibm.com
+Link: https://lore.kernel.org/r/20230809221038.51296-3-nnac123@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ibm/ibmvnic.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 --- a/drivers/net/ethernet/ibm/ibmvnic.c
 +++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -4830,11 +4830,14 @@ static int send_login(struct ibmvnic_ada
- 	if (rc) {
- 		adapter->login_pending = false;
- 		netdev_err(adapter->netdev, "Failed to send login, rc=%d\n", rc);
--		goto buf_rsp_map_failed;
-+		goto buf_send_failed;
- 	}
+@@ -1588,12 +1588,22 @@ static int ibmvnic_login(struct net_devi
  
- 	return 0;
+ static void release_login_buffer(struct ibmvnic_adapter *adapter)
+ {
++	if (!adapter->login_buf)
++		return;
++
++	dma_unmap_single(&adapter->vdev->dev, adapter->login_buf_token,
++			 adapter->login_buf_sz, DMA_TO_DEVICE);
+ 	kfree(adapter->login_buf);
+ 	adapter->login_buf = NULL;
+ }
  
-+buf_send_failed:
-+	dma_unmap_single(dev, rsp_buffer_token, rsp_buffer_size,
-+			 DMA_FROM_DEVICE);
- buf_rsp_map_failed:
- 	kfree(login_rsp_buffer);
+ static void release_login_rsp_buffer(struct ibmvnic_adapter *adapter)
+ {
++	if (!adapter->login_rsp_buf)
++		return;
++
++	dma_unmap_single(&adapter->vdev->dev, adapter->login_rsp_buf_token,
++			 adapter->login_rsp_buf_sz, DMA_FROM_DEVICE);
+ 	kfree(adapter->login_rsp_buf);
  	adapter->login_rsp_buf = NULL;
+ }
+@@ -5411,11 +5421,6 @@ static int handle_login_rsp(union ibmvni
+ 	}
+ 	adapter->login_pending = false;
+ 
+-	dma_unmap_single(dev, adapter->login_buf_token, adapter->login_buf_sz,
+-			 DMA_TO_DEVICE);
+-	dma_unmap_single(dev, adapter->login_rsp_buf_token,
+-			 adapter->login_rsp_buf_sz, DMA_FROM_DEVICE);
+-
+ 	/* If the number of queues requested can't be allocated by the
+ 	 * server, the login response will return with code 1. We will need
+ 	 * to resend the login buffer with fewer queues requested.
 
 
