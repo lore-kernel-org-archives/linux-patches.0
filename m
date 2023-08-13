@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE95B9449
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD1DC433C9;
-	Sun, 13 Aug 2023 21:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1881F9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F20C433C7;
+	Sun, 13 Aug 2023 21:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962974;
-	bh=5FtQuB71NbM3ttVo78fjx9a/0JhwNv8fyRWaR0bmXBo=;
+	s=korg; t=1691962976;
+	bh=xsZQXSASeWOJycZBZIM83YWdCuNhim0xSWHvJRqhuLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlbvB090IoM3NFXbJtG0a6DIuiZ4KcrEWMJCUPiiJNjixgvzuSqHO9cUN8UGICXVY
-	 F8ELkEFW/K7F3KU0Xkt5qOLGk1pFRCEsD1jhaE2OmBOXwZct5fopkttodlVudCAA2H
-	 5/A/na3OZSWsixMnUkPAHZseEXZZGLj0nsf/EI8s=
+	b=buWEcANUKBdBYyMzPhWVx4qjtlVapFyH3nsOiv1As8Ibo7hGWWLWOEYu/fsIH3F6b
+	 +biusX7VLXAMLP6sXkdRIk5JUxB1wy3qUd5le1Zy9KurgopExTjxinAmi5ouKNp2a4
+	 MYp6saVGUd2oHWsewqD31lA6nsdkWpqoIgm6BtbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 61/68] scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
-Date: Sun, 13 Aug 2023 23:20:02 +0200
-Message-ID: <20230813211710.004779783@linuxfoundation.org>
+	Nick Child <nnac123@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 52/68] ibmvnic: Enforce stronger sanity checks on login response
+Date: Sun, 13 Aug 2023 23:19:53 +0200
+Message-ID: <20230813211709.729604214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -34,62 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-commit 175544ad48cbf56affeef2a679c6a4d4fb1e2881 upstream.
+commit db17ba719bceb52f0ae4ebca0e4c17d9a3bebf05 upstream.
 
-Hyper-V provides the ability to connect Fibre Channel LUNs to the host
-system and present them in a guest VM as a SCSI device. I/O to the vFC
-device is handled by the storvsc driver. The storvsc driver includes a
-partial integration with the FC transport implemented in the generic
-portion of the Linux SCSI subsystem so that FC attributes can be displayed
-in /sys.  However, the partial integration means that some aspects of vFC
-don't work properly. Unfortunately, a full and correct integration isn't
-practical because of limitations in what Hyper-V provides to the guest.
+Ensure that all offsets in a login response buffer are within the size
+of the allocated response buffer. Any offsets or lengths that surpass
+the allocation are likely the result of an incomplete response buffer.
+In these cases, a full reset is necessary.
 
-In particular, in the context of Hyper-V storvsc, the FC transport timeout
-function fc_eh_timed_out() causes a kernel panic because it can't find the
-rport and dereferences a NULL pointer. The original patch that added the
-call from storvsc_eh_timed_out() to fc_eh_timed_out() is faulty in this
-regard.
+When attempting to login, the ibmvnic device will allocate a response
+buffer and pass a reference to the VIOS. The VIOS will then send the
+ibmvnic device a LOGIN_RSP CRQ to signal that the buffer has been filled
+with data. If the ibmvnic device does not get a response in 20 seconds,
+the old buffer is freed and a new login request is sent. With 2
+outstanding requests, any LOGIN_RSP CRQ's could be for the older
+login request. If this is the case then the login response buffer (which
+is for the newer login request) could be incomplete and contain invalid
+data. Therefore, we must enforce strict sanity checks on the response
+buffer values.
 
-In many cases a timeout is due to a transient condition, so the situation
-can be improved by just continuing to wait like with other I/O requests
-issued by storvsc, and avoiding the guaranteed panic. For a permanent
-failure, continuing to wait may result in a hung thread instead of a panic,
-which again may be better.
+Testing has shown that the `off_rxadd_buff_size` value is filled in last
+by the VIOS and will be the smoking gun for these circumstances.
 
-So fix the panic by removing the storvsc call to fc_eh_timed_out().  This
-allows storvsc to keep waiting for a response.  The change has been tested
-by users who experienced a panic in fc_eh_timed_out() due to transient
-timeouts, and it solves their problem.
+Until VIOS can implement a mechanism for tracking outstanding response
+buffers and a method for mapping a LOGIN_RSP CRQ to a particular login
+response buffer, the best ibmvnic can do in this situation is perform a
+full reset.
 
-In the future we may want to deprecate the vFC functionality in storvsc
-since it can't be fully fixed. But it has current users for whom it is
-working well enough, so it should probably stay for a while longer.
-
-Fixes: 3930d7309807 ("scsi: storvsc: use default I/O timeout handler for FC devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1690606764-79669-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: dff515a3e71d ("ibmvnic: Harden device login requests")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809221038.51296-1-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1641,10 +1641,6 @@ static int storvsc_host_reset_handler(st
-  */
- static enum blk_eh_timer_return storvsc_eh_timed_out(struct scsi_cmnd *scmnd)
- {
--#if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
--	if (scmnd->device->host->transportt == fc_transport_template)
--		return fc_eh_timed_out(scmnd);
--#endif
- 	return BLK_EH_RESET_TIMER;
- }
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -4430,6 +4430,7 @@ static int handle_login_rsp(union ibmvni
+ 	int num_tx_pools;
+ 	int num_rx_pools;
+ 	u64 *size_array;
++	u32 rsp_len;
+ 	int i;
  
+ 	/* CHECK: Test/set of login_pending does not need to be atomic
+@@ -4481,6 +4482,23 @@ static int handle_login_rsp(union ibmvni
+ 		ibmvnic_reset(adapter, VNIC_RESET_FATAL);
+ 		return -EIO;
+ 	}
++
++	rsp_len = be32_to_cpu(login_rsp->len);
++	if (be32_to_cpu(login->login_rsp_len) < rsp_len ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_txsubm_subcrqs) ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_rxadd_subcrqs) ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_rxadd_buff_size) ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_supp_tx_desc)) {
++		/* This can happen if a login request times out and there are
++		 * 2 outstanding login requests sent, the LOGIN_RSP crq
++		 * could have been for the older login request. So we are
++		 * parsing the newer response buffer which may be incomplete
++		 */
++		dev_err(dev, "FATAL: Login rsp offsets/lengths invalid\n");
++		ibmvnic_reset(adapter, VNIC_RESET_FATAL);
++		return -EIO;
++	}
++
+ 	size_array = (u64 *)((u8 *)(adapter->login_rsp_buf) +
+ 		be32_to_cpu(adapter->login_rsp_buf->off_rxadd_buff_size));
+ 	/* variable buffer sizes are not supported, so just read the
 
 
