@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28269446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A792C433C7;
-	Sun, 13 Aug 2023 21:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11DA9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B6DC433C8;
+	Sun, 13 Aug 2023 21:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962612;
-	bh=3gHNiJlAYoBN1UEY/DhNVy1/4ubApVr7KOF6R/s7+9Q=;
+	s=korg; t=1691962615;
+	bh=5KgzM63Zrgw//2hLiYqcGjmF8S8om+CJgGSZ2PtFpSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocZNBKEf9AzappyRExTtDMWEMocmxrGX+J6YtbnGmupjqoaHMGfqzwt0xA9dM6Rwx
-	 xy9ENaVtSJDoCj/5qbqT1R5Lk8y1AD4WIlqRbahpkl8HrbL0kHpca0TEWtjBEw6gzW
-	 FVLnnNUFsXYTrV4DZjNd9gOaUYTmd2ZXJJs2pzf8=
+	b=Kq/3dN7TAydhwe8ukphReLpuCwXKvgWShLJtbhAivYFz1bp9P4h7PsCUTXds2rYZF
+	 TfhyJax2y3JSIE0j8DnllSH4+pIFYygkLCqEoHS09/f5N/l3dxXnprch2MPfQ/bwCU
+	 DZr2UgI7fmNTtqwjcHfZFY5nVi8zsuMkE/gDDh5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ping Gan <jacky_gam_2001@163.com>,
-	Manjusaka <me@manjusaka.me>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 091/149] tcp: add missing family to tcp_set_ca_state() tracepoint
-Date: Sun, 13 Aug 2023 23:18:56 +0200
-Message-ID: <20230813211721.513053125@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 058/149] usb-storage: alauda: Fix uninit-value in alauda_check_media()
+Date: Sun, 13 Aug 2023 23:18:23 +0200
+Message-ID: <20230813211720.549204042@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -37,52 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 8a70ed9520c5fafaac91053cacdd44625c39e188 upstream.
+commit a6ff6e7a9dd69364547751db0f626a10a6d628d2 upstream.
 
-Before this code is copied, add the missing family, as we did in
-commit 3dd344ea84e1 ("net: tracepoint: exposing sk_family in all tcp:tracepoints")
+Syzbot got KMSAN to complain about access to an uninitialized value in
+the alauda subdriver of usb-storage:
 
-Fixes: 15fcdf6ae116 ("tcp: Add tracepoint for tcp_set_ca_state")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Ping Gan <jacky_gam_2001@163.com>
-Cc: Manjusaka <me@manjusaka.me>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230808084923.2239142-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+BUG: KMSAN: uninit-value in alauda_transport+0x462/0x57f0
+drivers/usb/storage/alauda.c:1137
+CPU: 0 PID: 12279 Comm: usb-storage Not tainted 5.3.0-rc7+ #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x191/0x1f0 lib/dump_stack.c:113
+  kmsan_report+0x13a/0x2b0 mm/kmsan/kmsan_report.c:108
+  __msan_warning+0x73/0xe0 mm/kmsan/kmsan_instr.c:250
+  alauda_check_media+0x344/0x3310 drivers/usb/storage/alauda.c:460
+
+The problem is that alauda_check_media() doesn't verify that its USB
+transfer succeeded before trying to use the received data.  What
+should happen if the transfer fails isn't entirely clear, but a
+reasonably conservative approach is to pretend that no media is
+present.
+
+A similar problem exists in a usb_stor_dbg() call in
+alauda_get_media_status().  In this case, when an error occurs the
+call is redundant, because usb_stor_ctrl_transfer() already will print
+a debugging message.
+
+Finally, unrelated to the uninitialized memory access, is the fact
+that alauda_check_media() performs DMA to a buffer on the stack.
+Fortunately usb-storage provides a general purpose DMA-able buffer for
+uses like this.  We'll use it instead.
+
+Reported-and-tested-by: syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000007d25ff059457342d@google.com/T/
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/693d5d5e-f09b-42d0-8ed9-1f96cd30bcce@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/tcp.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/storage/alauda.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/include/trace/events/tcp.h
-+++ b/include/trace/events/tcp.h
-@@ -381,6 +381,7 @@ TRACE_EVENT(tcp_cong_state_set,
- 		__field(const void *, skaddr)
- 		__field(__u16, sport)
- 		__field(__u16, dport)
-+		__field(__u16, family)
- 		__array(__u8, saddr, 4)
- 		__array(__u8, daddr, 4)
- 		__array(__u8, saddr_v6, 16)
-@@ -396,6 +397,7 @@ TRACE_EVENT(tcp_cong_state_set,
+--- a/drivers/usb/storage/alauda.c
++++ b/drivers/usb/storage/alauda.c
+@@ -318,7 +318,8 @@ static int alauda_get_media_status(struc
+ 	rc = usb_stor_ctrl_transfer(us, us->recv_ctrl_pipe,
+ 		command, 0xc0, 0, 1, data, 2);
  
- 		__entry->sport = ntohs(inet->inet_sport);
- 		__entry->dport = ntohs(inet->inet_dport);
-+		__entry->family = sk->sk_family;
+-	usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
++	if (rc == USB_STOR_XFER_GOOD)
++		usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
  
- 		p32 = (__be32 *) __entry->saddr;
- 		*p32 = inet->inet_saddr;
-@@ -409,7 +411,8 @@ TRACE_EVENT(tcp_cong_state_set,
- 		__entry->cong_state = ca_state;
- 	),
+ 	return rc;
+ }
+@@ -454,9 +455,14 @@ static int alauda_init_media(struct us_d
+ static int alauda_check_media(struct us_data *us)
+ {
+ 	struct alauda_info *info = (struct alauda_info *) us->extra;
+-	unsigned char status[2];
++	unsigned char *status = us->iobuf;
++	int rc;
  
--	TP_printk("sport=%hu dport=%hu saddr=%pI4 daddr=%pI4 saddrv6=%pI6c daddrv6=%pI6c cong_state=%u",
-+	TP_printk("family=%s sport=%hu dport=%hu saddr=%pI4 daddr=%pI4 saddrv6=%pI6c daddrv6=%pI6c cong_state=%u",
-+		  show_family_name(__entry->family),
- 		  __entry->sport, __entry->dport,
- 		  __entry->saddr, __entry->daddr,
- 		  __entry->saddr_v6, __entry->daddr_v6,
+-	alauda_get_media_status(us, status);
++	rc = alauda_get_media_status(us, status);
++	if (rc != USB_STOR_XFER_GOOD) {
++		status[0] = 0xF0;	/* Pretend there's no media */
++		status[1] = 0;
++	}
+ 
+ 	/* Check for no media or door open */
+ 	if ((status[0] & 0x80) || ((status[0] & 0x1F) == 0x10)
 
 
