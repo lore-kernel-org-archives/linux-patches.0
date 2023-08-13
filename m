@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6F9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6C0C433C7;
-	Sun, 13 Aug 2023 21:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582FB9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34B8C433C8;
+	Sun, 13 Aug 2023 21:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962180;
-	bh=8TMxi96RIWjNIOiNhkjKHfj4IIP9kMJl8q2G3CFCKx0=;
+	s=korg; t=1691962183;
+	bh=1r+USbZpRoTQdVCPL6SBVDZviZdJRuvBfdZVNV48bPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc0SYzq0he1M9A1XdbmuuqXqtW+iCjHEDfhVjKlpRnAvW71rGSE7236c8kAorL9S4
-	 XPPx/0nXzcP17MbIQiNwmp+9/viLpYhrxrdmgViaYDt7+MArdaXMXeDxiKDae5kqKI
-	 b8ElD8BI0s1zQ3xGWM+yB9iyRMUIIk6177b8G8ME=
+	b=D50JM3OocpIhahtlq5jb/UAm1J28tRZnFmpEObfTDcZjMqB6UhU2CvUlifJJfsBkT
+	 DDYFNz4woRPM+M1YK8OHZC3jbkcnNDofJR4M6khNU/TCItoBF9Mlm/w8hDWGbPBU/z
+	 uZEUEB2R88xENNjsd/mgdgIvk2WDWePqAxuMoyyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Miller <doug.miller@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.4 142/206] IB/hfi1: Fix possible panic during hotplug remove
-Date: Sun, 13 Aug 2023 23:18:32 +0200
-Message-ID: <20230813211729.097956396@linuxfoundation.org>
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Mastan.Katragadda@amd.com,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 143/206] drm/amd/display: Dont show stack trace for missing eDP
+Date: Sun, 13 Aug 2023 23:18:33 +0200
+Message-ID: <20230813211729.127429766@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,33 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Miller <doug.miller@cornelisnetworks.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 4fdfaef71fced490835145631a795497646f4555 upstream.
+commit 7ad1dfc144cbf62702fd07838da8fd8a77921083 upstream.
 
-During hotplug remove it is possible that the update counters work
-might be pending, and may run after memory has been freed.
-Cancel the update counters work before freeing memory.
+Some systems are only connected by HDMI or DP, so warning related to
+missing eDP is unnecessary.  Downgrade to debug instead.
 
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
-Signed-off-by: Douglas Miller <doug.miller@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/169099756100.3927190.15284930454106475280.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Fixes: 6d9b6dceaa51 ("drm/amd/display: only warn once in dce110_edp_wait_for_hpd_ready()")
+Reported-by: Mastan.Katragadda@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/chip.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/hfi1/chip.c
-+++ b/drivers/infiniband/hw/hfi1/chip.c
-@@ -12307,6 +12307,7 @@ static void free_cntrs(struct hfi1_devda
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+@@ -780,7 +780,8 @@ void dce110_edp_wait_for_hpd_ready(
+ 	dal_gpio_destroy_irq(&hpd);
  
- 	if (dd->synth_stats_timer.function)
- 		del_timer_sync(&dd->synth_stats_timer);
-+	cancel_work_sync(&dd->update_cntr_work);
- 	ppd = (struct hfi1_pportdata *)(dd + 1);
- 	for (i = 0; i < dd->num_pports; i++, ppd++) {
- 		kfree(ppd->cntrs);
+ 	/* ensure that the panel is detected */
+-	ASSERT(edp_hpd_high);
++	if (!edp_hpd_high)
++		DC_LOG_DC("%s: wait timed out!\n", __func__);
+ }
+ 
+ void dce110_edp_power_control(
 
 
