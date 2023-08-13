@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9E59446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B735EC433C8;
-	Sun, 13 Aug 2023 21:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E709F9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDEFC433C7;
+	Sun, 13 Aug 2023 21:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963135;
-	bh=CoKHGRGzilooxH2zKSZSKs2c3F9n7IFcksP9FV/HbFg=;
+	s=korg; t=1691963137;
+	bh=TgbV6GkrhERFHAFmIXihiZSEqANQ+fDJlM3YYkNZomM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MCUxemLZczA+Z1Wq5HRomQVNfMQgLJwLV8aRdd906aSNM72CTQLgmcE/qu3ypbn0
-	 bwMDwvHXfOvL/YTMAVKgfp3KrvTGi+Iu44Q0XjBGUW5fOpSpTS11hHkNbFvEutYBpj
-	 /qhf9ZqIRD7jte0ymXhMVP17NyrxIlvGzBzZardE=
+	b=dLjoARxAXcolYMtmQcigpD/NS8DmYJmOrZkk34Dibbjc4uWP2ZjRmC7WC0MMoy48R
+	 YV5c1p05dnQiq6NwobXJ+EhAA8YYZxzKhRYXU0neIQSf0sbDwowgwdHlCISw+d0t97
+	 nCW0Ck3jKDjRcr3T+ak3ChV2FwK4trXFfsfWkunk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Ganesh G R <ganeshgr@linux.ibm.com>
-Subject: [PATCH 5.15 66/89] net/mlx5: Skip clock update work when device is in error state
-Date: Sun, 13 Aug 2023 23:19:57 +0200
-Message-ID: <20230813211712.761559739@linuxfoundation.org>
+	Nick Child <nnac123@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 67/89] ibmvnic: Enforce stronger sanity checks on login response
+Date: Sun, 13 Aug 2023 23:19:58 +0200
+Message-ID: <20230813211712.791795450@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -36,44 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-commit d006207625657322ba8251b6e7e829f9659755dc upstream.
+commit db17ba719bceb52f0ae4ebca0e4c17d9a3bebf05 upstream.
 
-When device is in error state, marked by the flag
-MLX5_DEVICE_STATE_INTERNAL_ERROR, the HW and PCI may not be accessible
-and so clock update work should be skipped. Furthermore, such access
-through PCI in error state, after calling mlx5_pci_disable_device() can
-result in failing to recover from pci errors.
+Ensure that all offsets in a login response buffer are within the size
+of the allocated response buffer. Any offsets or lengths that surpass
+the allocation are likely the result of an incomplete response buffer.
+In these cases, a full reset is necessary.
 
-Fixes: ef9814deafd0 ("net/mlx5e: Add HW timestamping (TS) support")
-Reported-and-tested-by: Ganesh G R <ganeshgr@linux.ibm.com>
-Closes: https://lore.kernel.org/netdev/9bdb9b9d-140a-7a28-f0de-2e64e873c068@nvidia.com
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+When attempting to login, the ibmvnic device will allocate a response
+buffer and pass a reference to the VIOS. The VIOS will then send the
+ibmvnic device a LOGIN_RSP CRQ to signal that the buffer has been filled
+with data. If the ibmvnic device does not get a response in 20 seconds,
+the old buffer is freed and a new login request is sent. With 2
+outstanding requests, any LOGIN_RSP CRQ's could be for the older
+login request. If this is the case then the login response buffer (which
+is for the newer login request) could be incomplete and contain invalid
+data. Therefore, we must enforce strict sanity checks on the response
+buffer values.
+
+Testing has shown that the `off_rxadd_buff_size` value is filled in last
+by the VIOS and will be the smoking gun for these circumstances.
+
+Until VIOS can implement a mechanism for tracking outstanding response
+buffers and a method for mapping a LOGIN_RSP CRQ to a particular login
+response buffer, the best ibmvnic can do in this situation is perform a
+full reset.
+
+Fixes: dff515a3e71d ("ibmvnic: Harden device login requests")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809221038.51296-1-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/ibm/ibmvnic.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-@@ -189,10 +189,15 @@ static void mlx5_timestamp_overflow(stru
- 	clock = container_of(timer, struct mlx5_clock, timer);
- 	mdev = container_of(clock, struct mlx5_core_dev, clock);
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -4788,6 +4788,7 @@ static int handle_login_rsp(union ibmvni
+ 	int num_tx_pools;
+ 	int num_rx_pools;
+ 	u64 *size_array;
++	u32 rsp_len;
+ 	int i;
  
-+	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR)
-+		goto out;
+ 	/* CHECK: Test/set of login_pending does not need to be atomic
+@@ -4839,6 +4840,23 @@ static int handle_login_rsp(union ibmvni
+ 		ibmvnic_reset(adapter, VNIC_RESET_FATAL);
+ 		return -EIO;
+ 	}
 +
- 	write_seqlock_irqsave(&clock->lock, flags);
- 	timecounter_read(&timer->tc);
- 	mlx5_update_clock_info_page(mdev);
- 	write_sequnlock_irqrestore(&clock->lock, flags);
++	rsp_len = be32_to_cpu(login_rsp->len);
++	if (be32_to_cpu(login->login_rsp_len) < rsp_len ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_txsubm_subcrqs) ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_rxadd_subcrqs) ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_rxadd_buff_size) ||
++	    rsp_len <= be32_to_cpu(login_rsp->off_supp_tx_desc)) {
++		/* This can happen if a login request times out and there are
++		 * 2 outstanding login requests sent, the LOGIN_RSP crq
++		 * could have been for the older login request. So we are
++		 * parsing the newer response buffer which may be incomplete
++		 */
++		dev_err(dev, "FATAL: Login rsp offsets/lengths invalid\n");
++		ibmvnic_reset(adapter, VNIC_RESET_FATAL);
++		return -EIO;
++	}
 +
-+out:
- 	schedule_delayed_work(&timer->overflow_work, timer->overflow_period);
- }
- 
+ 	size_array = (u64 *)((u8 *)(adapter->login_rsp_buf) +
+ 		be32_to_cpu(adapter->login_rsp_buf->off_rxadd_buff_size));
+ 	/* variable buffer sizes are not supported, so just read the
 
 
