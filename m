@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FB39446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6D8C433C7;
-	Sun, 13 Aug 2023 21:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57059446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4B6C433C8;
+	Sun, 13 Aug 2023 21:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963189;
-	bh=1c003UIrmwbmOnqJEoUdtA7kUjJf+M/OnAgg2A3N10A=;
+	s=korg; t=1691963192;
+	bh=rzNYM/QcUhQYG6AZr4bycAVj3ysLoM1vSnqvvNb1ykc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9/+GVTLmYyP5CJBmnMTNClnB6jaUHQaDjue4cBMOrWnLXUlmZLpP9UvK74toDUfL
-	 /O/CkvbHge8NOnOkfwVx9Kr0lwf/kapkbQZh4zIHSa0L9WVg4bmpdEDjXdb8qsBW/0
-	 7MaImG6LhvvMPOepjIHaq1AHc9m8jQ3UApuU/gcY=
+	b=RPT2ubAuPm6dc8z4xh/Sq5+VP/GNSaJ4IPj2JZH+DGW7BPQJevOqNK8qra0E0i5iQ
+	 0BvJ91pIqhzp1x4HwJWlnrmAUdOdHFnx8hRZctREpEGfn9h4a7D1EmfnjY9Np88koM
+	 e8EIUU2f3WaisWPo1dayclAJS4S21wcZyatvpCHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artemy Kovalyov <artemyko@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.15 57/89] RDMA/umem: Set iova in ODP flow
-Date: Sun, 13 Aug 2023 23:19:48 +0200
-Message-ID: <20230813211712.506490818@linuxfoundation.org>
+	Li Yang <leoyang.li@nxp.com>,
+	David Bauer <mail@david-bauer.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 58/89] net: phy: at803x: remove set/get wol callbacks for AR8032
+Date: Sun, 13 Aug 2023 23:19:49 +0200
+Message-ID: <20230813211712.534933779@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,63 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Li Yang <leoyang.li@nxp.com>
 
-commit 186b169cf1e4be85aa212a893ea783a543400979 upstream.
+commit d7791cec2304aea22eb2ada944e4d467302f5bfe upstream.
 
-Fixing the ODP registration flow to set the iova correctly.
-The calculation in ib_umem_num_dma_blocks() function assumes the iova of
-the umem is set correctly.
+Since the AR8032 part does not support wol, remove related callbacks
+from it.
 
-When iova is not set, the calculation in ib_umem_num_dma_blocks() is
-equivalent to length/page_size, which is true only when memory is aligned.
-For unaligned memory, iova must be set for the ALIGN() in the
-ib_umem_num_dma_blocks() to take effect and return a correct value.
-
-mlx5_ib uses ib_umem_num_dma_blocks() to decide the mkey size to use for
-the MR. Without this fix, when registering unaligned ODP MR, a wrong
-size mkey might be chosen and this might cause the UMR to fail.
-
-UMR would fail over insufficient size to update the mkey translation:
-infiniband mlx5_0: dump_cqe:273:(pid 0): dump error cqe
-00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000030: 00 00 00 00 0f 00 78 06 25 00 00 58 00 da ac d2
-infiniband mlx5_0: mlx5_ib_post_send_wait:806:(pid 20311): reg umr
-failed (6)
-infiniband mlx5_0: pagefault_real_mr:661:(pid 20311): Failed to update
-mkey page tables
-
-Fixes: f0093fb1a7cb ("RDMA/mlx5: Move mlx5_ib_cont_pages() to the creation of the mlx5_ib_mr")
-Fixes: a665aca89a41 ("RDMA/umem: Split ib_umem_num_pages() into ib_umem_num_dma_blocks()")
-Signed-off-by: Artemy Kovalyov <artemyko@nvidia.com>
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/3d4be7ca2155bf239dd8c00a2d25974a92c26ab8.1689757344.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 5800091a2061 ("net: phy: at803x: add support for AR8032 PHY")
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
+Cc: David Bauer <mail@david-bauer.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/umem.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/at803x.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/infiniband/core/umem.c
-+++ b/drivers/infiniband/core/umem.c
-@@ -85,6 +85,8 @@ unsigned long ib_umem_find_best_pgsz(str
- 	dma_addr_t mask;
- 	int i;
- 
-+	umem->iova = va = virt;
-+
- 	if (umem->is_odp) {
- 		unsigned int page_size = BIT(to_ib_umem_odp(umem)->page_shift);
- 
-@@ -100,7 +102,6 @@ unsigned long ib_umem_find_best_pgsz(str
- 	 */
- 	pgsz_bitmap &= GENMASK(BITS_PER_LONG - 1, PAGE_SHIFT);
- 
--	umem->iova = va = virt;
- 	/* The best result is the smallest page size that results in the minimum
- 	 * number of required pages. Compute the largest page size that could
- 	 * work based on VA address bits that don't change.
+--- a/drivers/net/phy/at803x.c
++++ b/drivers/net/phy/at803x.c
+@@ -1375,8 +1375,6 @@ static struct phy_driver at803x_driver[]
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	.config_init		= at803x_config_init,
+ 	.link_change_notify	= at803x_link_change_notify,
+-	.set_wol		= at803x_set_wol,
+-	.get_wol		= at803x_get_wol,
+ 	.suspend		= at803x_suspend,
+ 	.resume			= at803x_resume,
+ 	/* PHY_BASIC_FEATURES */
 
 
