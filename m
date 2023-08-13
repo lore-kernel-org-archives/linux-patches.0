@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122819443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B080C433C8;
-	Sun, 13 Aug 2023 21:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58559443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458B3C433C8;
+	Sun, 13 Aug 2023 21:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962241;
-	bh=OJg+T5Lg0O13AYYT+gVUpj2iBVGnVhWRj3qhBybT/bQ=;
+	s=korg; t=1691962244;
+	bh=TZqAcznvCqCvpUicTpX3fxdcny3QexH2xqVkMvJHJUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNDuHvw8h/cGDvqZD7a3FGrEPLeEIXw+5VxYdv0KhR6SnHkQ1jakkhSUMQRo4jZ/A
-	 NRr3FyYNW0KbQ3CnCwbj9UZBvMkl/ApYlZiuD2JJkClWfQ+jszrrkDfl20f8PljL/w
-	 BMto7ZoAPgecU6XslT9iFC5GPAfNbmsRSWBKJJH8=
+	b=Ex16rmMsV+TsYtwLXGR+ZZaeRJ+U42WKoTwGoNARK+7ytx307hihiLeITU8rM90On
+	 gyCKv4dfJi89+GWMSllExsSOwCq9PjsiBN3Pmh1q0HPC6Op6gEVK9/IGC/QefVpXIr
+	 gxod6EZTRulCIHb/pzfL0KZZeOerclTIkRkGqHf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Zhu <tony.zhu@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Zhang Jianhua <chris.zjh@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.4 165/206] dmaengine: idxd: Clear PRS disable flag when disabling IDXD device
-Date: Sun, 13 Aug 2023 23:18:55 +0200
-Message-ID: <20230813211729.748277072@linuxfoundation.org>
+Subject: [PATCH 6.4 166/206] dmaengine: owl-dma: Modify mismatched function name
+Date: Sun, 13 Aug 2023 23:18:56 +0200
+Message-ID: <20230813211729.777586316@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,50 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Zhang Jianhua <chris.zjh@huawei.com>
 
-commit 863676fe1ac1b82fc9eb56c242e80acfbfc18b76 upstream.
+commit 74d7221c1f9c9f3a8c316a3557ca7dca8b99d14c upstream.
 
-Disabling IDXD device doesn't reset Page Request Service (PRS)
-disable flag to its initial value 0. This may cause user confusion
-because once PRS is disabled user will see PRS still remains the
-previous setting (i.e. disabled) via sysfs interface even after the
-device is disabled.
+No functional modification involved.
 
-To eliminate user confusion, reset PRS disable flag to ensure that
-the PRS flag bit reflects correct state after the device is disabled.
+drivers/dma/owl-dma.c:208: warning: expecting prototype for struct owl_dma_pchan. Prototype was for struct owl_dma_vchan instead HDRTEST usr/include/sound/asequencer.h
 
-Additionally, simplify the code by setting wq->flags to 0, which clears
-all flag bits, including any future additions.
-
-Fixes: f2dc327131b5 ("dmaengine: idxd: add per wq PRS disable")
-Tested-by: Tony Zhu <tony.zhu@intel.com>
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230712193505.3440752-1-fenghua.yu@intel.com
+Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
+Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20230722153244.2086949-1-chris.zjh@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/device.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/dma/owl-dma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 5abbcc61c528..9a15f0d12c79 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -384,9 +384,7 @@ static void idxd_wq_disable_cleanup(struct idxd_wq *wq)
- 	wq->threshold = 0;
- 	wq->priority = 0;
- 	wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
--	clear_bit(WQ_FLAG_DEDICATED, &wq->flags);
--	clear_bit(WQ_FLAG_BLOCK_ON_FAULT, &wq->flags);
--	clear_bit(WQ_FLAG_ATS_DISABLE, &wq->flags);
-+	wq->flags = 0;
- 	memset(wq->name, 0, WQ_NAME_SIZE);
- 	wq->max_xfer_bytes = WQ_DEFAULT_MAX_XFER;
- 	idxd_wq_set_max_batch_size(idxd->data->type, wq, WQ_DEFAULT_MAX_BATCH);
--- 
-2.41.0
-
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -192,7 +192,7 @@ struct owl_dma_pchan {
+ };
+ 
+ /**
+- * struct owl_dma_pchan - Wrapper for DMA ENGINE channel
++ * struct owl_dma_vchan - Wrapper for DMA ENGINE channel
+  * @vc: wrapped virtual channel
+  * @pchan: the physical channel utilized by this channel
+  * @txd: active transaction on this channel
 
 
