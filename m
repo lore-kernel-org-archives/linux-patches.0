@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23109443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:31:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489DCC433C7;
-	Sun, 13 Aug 2023 21:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4FE9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084DCC433C8;
+	Sun, 13 Aug 2023 21:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962319;
-	bh=gdXtDeJmPlC4guCEyiaQbDos5NN/iLLr/vN6YnbzFFc=;
+	s=korg; t=1691962322;
+	bh=i/fbtv2MbgcrMOxqDF18c++Ov0hnabskZk5qKFLRyBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKaVd48MTE8yQN33gdv8Jp8E+LkSbOhAQYcvXBXvSZr8yeoC/js970eSOP+CoAEgB
-	 x2CIcDKX3rJReraeYuRFAPtMIcG6TdF8cVxSysELGtypyRNsXv2oa09sK3slsHeYNG
-	 eaYY5MfEerVKqXlUaEd1e+fvmvENQGH6ddDzTN7Y=
+	b=TwiWbn9UsMOlhDDh6/zTQcEXU2CqpelM+Rd4Ar3nLTZJ6mwhcp1dijQKvJr+21Cq9
+	 h4fNHs2U4thV0rQg2aPJXCDCkkJ3NiXRupB2VNHL2GkOD0lyQuuQ6h/gbfz8YZyng2
+	 BogcQUjEfNgHZ5TWPwmJ7muX5G+H/1+wXAuCS9FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Elad Nachman <enachman@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 153/206] net: marvell: prestera: fix handling IPv4 routes with nhid
-Date: Sun, 13 Aug 2023 23:18:43 +0200
-Message-ID: <20230813211729.407869243@linuxfoundation.org>
+	syzbot+ae97a827ae1c3336bbb4@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.4 186/206] btrfs: exit gracefully if reloc roots dont match
+Date: Sun, 13 Aug 2023 23:19:16 +0200
+Message-ID: <20230813211730.346855412@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,160 +36,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 2aa71b4b294ee2c3041d085404cea914be9b3225 upstream.
+commit 05d7ce504545f7874529701664c90814ca645c5d upstream.
 
-Fix handling IPv4 routes referencing a nexthop via its id by replacing
-calls to fib_info_nh() with fib_info_nhc().
+[BUG]
+Syzbot reported a crash that an ASSERT() got triggered inside
+prepare_to_merge().
 
-Trying to add an IPv4 route referencing a nextop via nhid:
+[CAUSE]
+The root cause of the triggered ASSERT() is we can have a race between
+quota tree creation and relocation.
 
-    $ ip link set up swp5
-    $ ip a a 10.0.0.1/24 dev swp5
-    $ ip nexthop add dev swp5 id 20 via 10.0.0.2
-    $ ip route add 10.0.1.0/24 nhid 20
+This leads us to create a duplicated quota tree in the
+btrfs_read_fs_root() path, and since it's treated as fs tree, it would
+have ROOT_SHAREABLE flag, causing us to create a reloc tree for it.
 
-triggers warnings when trying to handle the route:
+The bug itself is fixed by a dedicated patch for it, but this already
+taught us the ASSERT() is not something straightforward for
+developers.
 
-[  528.805763] ------------[ cut here ]------------
-[  528.810437] WARNING: CPU: 3 PID: 53 at include/net/nexthop.h:468 __prestera_fi_is_direct+0x2c/0x68 [prestera]
-[  528.820434] Modules linked in: prestera_pci act_gact act_police sch_ingress cls_u32 cls_flower prestera arm64_delta_tn48m_dn_led(O) arm64_delta_tn48m_dn_cpld(O) [last unloaded: prestera_pci]
-[  528.837485] CPU: 3 PID: 53 Comm: kworker/u8:3 Tainted: G           O       6.4.5 #1
-[  528.845178] Hardware name: delta,tn48m-dn (DT)
-[  528.849641] Workqueue: prestera_ordered __prestera_router_fib_event_work [prestera]
-[  528.857352] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  528.864347] pc : __prestera_fi_is_direct+0x2c/0x68 [prestera]
-[  528.870135] lr : prestera_k_arb_fib_evt+0xb20/0xd50 [prestera]
-[  528.876007] sp : ffff80000b20bc90
-[  528.879336] x29: ffff80000b20bc90 x28: 0000000000000000 x27: ffff0001374d3a48
-[  528.886510] x26: ffff000105604000 x25: ffff000134af8a28 x24: ffff0001374d3800
-[  528.893683] x23: ffff000101c89148 x22: ffff000101c89000 x21: ffff000101c89200
-[  528.900855] x20: ffff00013641fda0 x19: ffff800009d01088 x18: 0000000000000059
-[  528.908027] x17: 0000000000000277 x16: 0000000000000000 x15: 0000000000000000
-[  528.915198] x14: 0000000000000003 x13: 00000000000fe400 x12: 0000000000000000
-[  528.922371] x11: 0000000000000002 x10: 0000000000000aa0 x9 : ffff8000013d2020
-[  528.929543] x8 : 0000000000000018 x7 : 000000007b1703f8 x6 : 000000001ca72f86
-[  528.936715] x5 : 0000000033399ea7 x4 : 0000000000000000 x3 : ffff0001374d3acc
-[  528.943886] x2 : 0000000000000000 x1 : ffff00010200de00 x0 : ffff000134ae3f80
-[  528.951058] Call trace:
-[  528.953516]  __prestera_fi_is_direct+0x2c/0x68 [prestera]
-[  528.958952]  __prestera_router_fib_event_work+0x100/0x158 [prestera]
-[  528.965348]  process_one_work+0x208/0x488
-[  528.969387]  worker_thread+0x4c/0x430
-[  528.973068]  kthread+0x120/0x138
-[  528.976313]  ret_from_fork+0x10/0x20
-[  528.979909] ---[ end trace 0000000000000000 ]---
-[  528.984998] ------------[ cut here ]------------
-[  528.989645] WARNING: CPU: 3 PID: 53 at include/net/nexthop.h:468 __prestera_fi_is_direct+0x2c/0x68 [prestera]
-[  528.999628] Modules linked in: prestera_pci act_gact act_police sch_ingress cls_u32 cls_flower prestera arm64_delta_tn48m_dn_led(O) arm64_delta_tn48m_dn_cpld(O) [last unloaded: prestera_pci]
-[  529.016676] CPU: 3 PID: 53 Comm: kworker/u8:3 Tainted: G        W  O       6.4.5 #1
-[  529.024368] Hardware name: delta,tn48m-dn (DT)
-[  529.028830] Workqueue: prestera_ordered __prestera_router_fib_event_work [prestera]
-[  529.036539] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  529.043533] pc : __prestera_fi_is_direct+0x2c/0x68 [prestera]
-[  529.049318] lr : __prestera_k_arb_fc_apply+0x280/0x2f8 [prestera]
-[  529.055452] sp : ffff80000b20bc60
-[  529.058781] x29: ffff80000b20bc60 x28: 0000000000000000 x27: ffff0001374d3a48
-[  529.065953] x26: ffff000105604000 x25: ffff000134af8a28 x24: ffff0001374d3800
-[  529.073126] x23: ffff000101c89148 x22: ffff000101c89148 x21: ffff00013641fda0
-[  529.080299] x20: ffff000101c89000 x19: ffff000101c89020 x18: 0000000000000059
-[  529.087471] x17: 0000000000000277 x16: 0000000000000000 x15: 0000000000000000
-[  529.094642] x14: 0000000000000003 x13: 00000000000fe400 x12: 0000000000000000
-[  529.101814] x11: 0000000000000002 x10: 0000000000000aa0 x9 : ffff8000013cee80
-[  529.108985] x8 : 0000000000000018 x7 : 000000007b1703f8 x6 : 0000000000000018
-[  529.116157] x5 : 00000000d3497eb6 x4 : ffff000105604081 x3 : 000000008e979557
-[  529.123329] x2 : 0000000000000000 x1 : ffff00010200de00 x0 : ffff000134ae3f80
-[  529.130501] Call trace:
-[  529.132958]  __prestera_fi_is_direct+0x2c/0x68 [prestera]
-[  529.138394]  prestera_k_arb_fib_evt+0x6b8/0xd50 [prestera]
-[  529.143918]  __prestera_router_fib_event_work+0x100/0x158 [prestera]
-[  529.150313]  process_one_work+0x208/0x488
-[  529.154348]  worker_thread+0x4c/0x430
-[  529.158030]  kthread+0x120/0x138
-[  529.161274]  ret_from_fork+0x10/0x20
-[  529.164867] ---[ end trace 0000000000000000 ]---
+[ENHANCEMENT]
+Instead of using an ASSERT(), let's handle it gracefully and output
+extra info about the mismatch reloc roots to help debug.
 
-and results in a non offloaded route:
+Also with the above ASSERT() removed, we can trigger ASSERT(0)s inside
+merge_reloc_roots() later.
+Also replace those ASSERT(0)s with WARN_ON()s.
 
-    $ ip route
-    10.0.0.0/24 dev swp5 proto kernel scope link src 10.0.0.1 rt_trap
-    10.0.1.0/24 nhid 20 via 10.0.0.2 dev swp5 rt_trap
-
-When creating a route referencing a nexthop via its ID, the nexthop will
-be stored in a separate nh pointer instead of the array of nexthops in
-the fib_info struct. This causes issues since fib_info_nh() only handles
-the nexthops array, but not the separate nh pointer, and will loudly
-WARN about it.
-
-In contrast fib_info_nhc() handles both, but returns a fib_nh_common
-pointer instead of a fib_nh pointer. Luckily we only ever access fields
-from the fib_nh_common parts, so we can just replace all instances of
-fib_info_nh() with fib_info_nhc() and access the fields via their
-fib_nh_common names.
-
-This allows handling IPv4 routes with an external nexthop, and they now
-get offloaded as expected:
-
-    $ ip route
-    10.0.0.0/24 dev swp5 proto kernel scope link src 10.0.0.1 rt_trap
-    10.0.1.0/24 nhid 20 via 10.0.0.2 dev swp5 offload rt_offload
-
-Fixes: 396b80cb5cc8 ("net: marvell: prestera: Add neighbour cache accounting")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Link: https://lore.kernel.org/r/20230804101220.247515-1-jonas.gorski@bisdn.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CC: stable@vger.kernel.org # 5.15+
+Reported-by: syzbot+ae97a827ae1c3336bbb4@syzkaller.appspotmail.com
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_router.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/btrfs/relocation.c |   45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/marvell/prestera/prestera_router.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_router.c
-@@ -166,11 +166,11 @@ prestera_util_neigh2nc_key(struct preste
- 
- static bool __prestera_fi_is_direct(struct fib_info *fi)
- {
--	struct fib_nh *fib_nh;
-+	struct fib_nh_common *fib_nhc;
- 
- 	if (fib_info_num_path(fi) == 1) {
--		fib_nh = fib_info_nh(fi, 0);
--		if (fib_nh->fib_nh_gw_family == AF_UNSPEC)
-+		fib_nhc = fib_info_nhc(fi, 0);
-+		if (fib_nhc->nhc_gw_family == AF_UNSPEC)
- 			return true;
- 	}
- 
-@@ -261,7 +261,7 @@ static bool
- __prestera_util_kern_n_is_reachable_v4(u32 tb_id, __be32 *addr,
- 				       struct net_device *dev)
- {
--	struct fib_nh *fib_nh;
-+	struct fib_nh_common *fib_nhc;
- 	struct fib_result res;
- 	bool reachable;
- 
-@@ -269,8 +269,8 @@ __prestera_util_kern_n_is_reachable_v4(u
- 
- 	if (!prestera_util_kern_get_route(&res, tb_id, addr))
- 		if (prestera_fi_is_direct(res.fi)) {
--			fib_nh = fib_info_nh(res.fi, 0);
--			if (dev == fib_nh->fib_nh_dev)
-+			fib_nhc = fib_info_nhc(res.fi, 0);
-+			if (dev == fib_nhc->nhc_dev)
- 				reachable = true;
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -1916,7 +1916,39 @@ again:
+ 				err = PTR_ERR(root);
+ 			break;
  		}
+-		ASSERT(root->reloc_root == reloc_root);
++
++		if (unlikely(root->reloc_root != reloc_root)) {
++			if (root->reloc_root) {
++				btrfs_err(fs_info,
++"reloc tree mismatch, root %lld has reloc root key (%lld %u %llu) gen %llu, expect reloc root key (%lld %u %llu) gen %llu",
++					  root->root_key.objectid,
++					  root->reloc_root->root_key.objectid,
++					  root->reloc_root->root_key.type,
++					  root->reloc_root->root_key.offset,
++					  btrfs_root_generation(
++						  &root->reloc_root->root_item),
++					  reloc_root->root_key.objectid,
++					  reloc_root->root_key.type,
++					  reloc_root->root_key.offset,
++					  btrfs_root_generation(
++						  &reloc_root->root_item));
++			} else {
++				btrfs_err(fs_info,
++"reloc tree mismatch, root %lld has no reloc root, expect reloc root key (%lld %u %llu) gen %llu",
++					  root->root_key.objectid,
++					  reloc_root->root_key.objectid,
++					  reloc_root->root_key.type,
++					  reloc_root->root_key.offset,
++					  btrfs_root_generation(
++						  &reloc_root->root_item));
++			}
++			list_add(&reloc_root->root_list, &reloc_roots);
++			btrfs_put_root(root);
++			btrfs_abort_transaction(trans, -EUCLEAN);
++			if (!err)
++				err = -EUCLEAN;
++			break;
++		}
  
-@@ -324,7 +324,7 @@ prestera_kern_fib_info_nhc(struct fib_no
- 	if (info->family == AF_INET) {
- 		fen4_info = container_of(info, struct fib_entry_notifier_info,
- 					 info);
--		return &fib_info_nh(fen4_info->fi, n)->nh_common;
-+		return fib_info_nhc(fen4_info->fi, n);
- 	} else if (info->family == AF_INET6) {
- 		fen6_info = container_of(info, struct fib6_entry_notifier_info,
- 					 info);
+ 		/*
+ 		 * set reference count to 1, so btrfs_recover_relocation
+@@ -1989,7 +2021,7 @@ again:
+ 		root = btrfs_get_fs_root(fs_info, reloc_root->root_key.offset,
+ 					 false);
+ 		if (btrfs_root_refs(&reloc_root->root_item) > 0) {
+-			if (IS_ERR(root)) {
++			if (WARN_ON(IS_ERR(root))) {
+ 				/*
+ 				 * For recovery we read the fs roots on mount,
+ 				 * and if we didn't find the root then we marked
+@@ -1998,17 +2030,14 @@ again:
+ 				 * memory.  However there's no reason we can't
+ 				 * handle the error properly here just in case.
+ 				 */
+-				ASSERT(0);
+ 				ret = PTR_ERR(root);
+ 				goto out;
+ 			}
+-			if (root->reloc_root != reloc_root) {
++			if (WARN_ON(root->reloc_root != reloc_root)) {
+ 				/*
+-				 * This is actually impossible without something
+-				 * going really wrong (like weird race condition
+-				 * or cosmic rays).
++				 * This can happen if on-disk metadata has some
++				 * corruption, e.g. bad reloc tree key offset.
+ 				 */
+-				ASSERT(0);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
 
 
