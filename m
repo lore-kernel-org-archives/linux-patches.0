@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC2B9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4309C433C7;
-	Sun, 13 Aug 2023 21:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00869446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D90C433C7;
+	Sun, 13 Aug 2023 21:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962786;
-	bh=r6xxFqHXQKdczOMH3cyrcoDiHV/QrNJ/yfoHFoe8hCg=;
+	s=korg; t=1691962788;
+	bh=HykUHpbPs/2YVkHCI8x20/a9KSCSKMkB5Veryj+IJhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzGdrU19mzWdKWYTuchojSLvVultHEMUgjM4W87VDFTOh9dlV0Dwr3C7ktS+Vwf+2
-	 gi7cPbbedUHkKU7zwF6E3NGcycuzVp1ESDSU9JCa8gO50bXTeR+zeCALS74eZEz+8w
-	 DN88noeuY0fhd9V4KtQZI7AYdu5gD+CDmyoge8hs=
+	b=LIRzMqhzsbr86mimkT1V8McqH/rC1q4Z8F7ilyt3UFEFq3AM168JlaqAiZJmkS4Fu
+	 v4fTb94u7PciDMbnotD/OJKXyji/JMTa1a1Rutdpbg+WcFOFVcfary949LoKaRHp3Y
+	 +5DEONLRwe+ayRYpjrskT4Al0DPl62qzVbA1mhDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 138/149] scsi: ufs: renesas: Fix private allocation
-Date: Sun, 13 Aug 2023 23:19:43 +0200
-Message-ID: <20230813211722.840205824@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 129/149] btrfs: properly clear end of the unreserved range in cow_file_range
+Date: Sun, 13 Aug 2023 23:19:34 +0200
+Message-ID: <20230813211722.581708159@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,38 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit b6d128f89a85771433a004e8656090ccbe1fb969 upstream.
+commit 12b2d64e591652a2d97dd3afa2b062ca7a4ba352 upstream.
 
-Should use devm_kzalloc() for struct ufs_renesas_priv because the
-.initialized should be false as default.
+When the call to btrfs_reloc_clone_csums in cow_file_range returns an
+error, we jump to the out_unlock label with the extent_reserved variable
+set to false.   The cleanup at the label will then call
+extent_clear_unlock_delalloc on the range from start to end.  But we've
+already added cur_alloc_size to start before the jump, so there might no
+range be left from the newly incremented start to end.  Move the check for
+'start < end' so that it is reached by also for the !extent_reserved case.
 
-Fixes: d69520288efd ("scsi: ufs: ufs-renesas: Add support for Renesas R-Car UFS controller")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20230803081812.1446282-1-yoshihiro.shimoda.uh@renesas.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+CC: stable@vger.kernel.org # 6.1+
+Fixes: a315e68f6e8b ("Btrfs: fix invalid attempt to free reserved space on failure to cow range")
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-renesas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/inode.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-renesas.c b/drivers/ufs/host/ufs-renesas.c
-index f8a5e79ed3b4..ab0652d8705a 100644
---- a/drivers/ufs/host/ufs-renesas.c
-+++ b/drivers/ufs/host/ufs-renesas.c
-@@ -359,7 +359,7 @@ static int ufs_renesas_init(struct ufs_hba *hba)
- {
- 	struct ufs_renesas_priv *priv;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1429,8 +1429,6 @@ out_unlock:
+ 					     clear_bits,
+ 					     page_ops);
+ 		start += cur_alloc_size;
+-		if (start >= end)
+-			return ret;
+ 	}
  
--	priv = devm_kmalloc(hba->dev, sizeof(*priv), GFP_KERNEL);
-+	priv = devm_kzalloc(hba->dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
- 	ufshcd_set_variant(hba, priv);
--- 
-2.41.0
-
+ 	/*
+@@ -1439,9 +1437,11 @@ out_unlock:
+ 	 * space_info's bytes_may_use counter, reserved in
+ 	 * btrfs_check_data_free_space().
+ 	 */
+-	extent_clear_unlock_delalloc(inode, start, end, locked_page,
+-				     clear_bits | EXTENT_CLEAR_DATA_RESV,
+-				     page_ops);
++	if (start < end) {
++		clear_bits |= EXTENT_CLEAR_DATA_RESV;
++		extent_clear_unlock_delalloc(inode, start, end, locked_page,
++					     clear_bits, page_ops);
++	}
+ 	return ret;
+ }
+ 
 
 
