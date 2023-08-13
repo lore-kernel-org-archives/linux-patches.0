@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7432D9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1B7C433C7;
-	Sun, 13 Aug 2023 21:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEA29446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB52C433C8;
+	Sun, 13 Aug 2023 21:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962443;
-	bh=xAXx/zt6cnBCjCtuRM7IT7sXecnhScjP6kdh0cGl7Z0=;
+	s=korg; t=1691962445;
+	bh=91a//ZPt+Ufn40txO1MRK3Xk6hh7et4Z3OCnk954LOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyqHtd+G3bi0uIp6tJck7P1m6y09kG3plWO+YZZpLIhIzhBFiWlNIxdJhcElK5GTY
-	 FgmKTDqDlnqPptJNmMgt38qlQO4Xaic2GdBZ58ZluC7iIz83g3cBfyZP8icxs9Qvst
-	 azwxkPzmkka47wWVI6AlTRV3KlAlPCN+FEho7Kns=
+	b=q4Yd4imoUL2JX1ldE8dL0dOA4a5/WxrFPLUCorRRUefQeIJl1KcXXao9CoDXpF60i
+	 aYoZNHyeDCT2nnOTLt3Dmrbu0jKze5QnD+6G/2N4v+ODuKfP/VZbH/8TfUCnj8x1rB
+	 Nvyhuqjz7ua6l1k9w9DXPZf2eJnOGPeobTlUr7To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Torsten Duwe <duwe@suse.de>,
-	Petr Tesarik <petr.tesarik.ext@huawei.com>,
-	Li Zhengyu <lizhengyu3@huawei.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 023/149] riscv/kexec: handle R_RISCV_CALL_PLT relocation type
-Date: Sun, 13 Aug 2023 23:17:48 +0200
-Message-ID: <20230813211719.493069405@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Peichen Huang <peichen.huang@amd.com>,
+	Mustapha Ghaddar <Mustapha.Ghaddar@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 032/149] drm/amd/display: limit DPIA link rate to HBR3
+Date: Sun, 13 Aug 2023 23:17:57 +0200
+Message-ID: <20230813211719.767586367@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -37,55 +38,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Torsten Duwe <duwe@suse.de>
+From: Peichen Huang <peichen.huang@amd.com>
 
-commit d0b4f95a51038becce4bdab4789aa7ce59d4ea6e upstream.
+commit 0e69ef6ea82e8eece7d2b2b45a0da9670eaaefff upstream.
 
-R_RISCV_CALL has been deprecated and replaced by R_RISCV_CALL_PLT. See Enum
-18-19 in Table 3. Relocation types here:
+[Why]
+DPIA doesn't support UHBR, driver should not enable UHBR
+for dp tunneling
 
-https://github.com/riscv-non-isa/riscv-elf-psabi-doc/blob/master/riscv-elf.adoc
+[How]
+limit DPIA link rate to HBR3
 
-It was deprecated in ("Deprecated R_RISCV_CALL, prefer R_RISCV_CALL_PLT"):
-
-https://github.com/riscv-non-isa/riscv-elf-psabi-doc/commit/a0dced85018d7a0ec17023c9389cbd70b1dbc1b0
-
-Recent tools (at least GNU binutils-2.40) already use R_RISCV_CALL_PLT.
-Kernels built with such binutils fail kexec_load_file(2) with:
-
- kexec_image: Unknown rela relocation: 19
- kexec_image: Error loading purgatory ret=-8
-
-The binary code at the call site remains the same, so tell
-arch_kexec_apply_relocations_add() to handle _PLT alike.
-
-Fixes: 838b3e28488f ("RISC-V: Load purgatory in kexec_file")
-Signed-off-by: Torsten Duwe <duwe@suse.de>
-Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
-Cc: Li Zhengyu <lizhengyu3@huawei.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/all/b046b164af8efd33bbdb7d4003273bdf9196a5b0.1690365011.git.petr.tesarik.ext@huawei.com/
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: Peichen Huang <peichen.huang@amd.com>
+Reviewed-by: Mustapha Ghaddar <Mustapha.Ghaddar@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/elf_kexec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_link.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/riscv/kernel/elf_kexec.c b/arch/riscv/kernel/elf_kexec.c
-index 5372b708fae2..38390d3bdcac 100644
---- a/arch/riscv/kernel/elf_kexec.c
-+++ b/arch/riscv/kernel/elf_kexec.c
-@@ -425,6 +425,7 @@ int arch_kexec_apply_relocations_add(struct purgatory_info *pi,
- 		 * sym, instead of searching the whole relsec.
- 		 */
- 		case R_RISCV_PCREL_HI20:
-+		case R_RISCV_CALL_PLT:
- 		case R_RISCV_CALL:
- 			*(u64 *)loc = CLEAN_IMM(UITYPE, *(u64 *)loc) |
- 				 ENCODE_UJTYPE_IMM(val - addr);
--- 
-2.41.0
-
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
+@@ -1141,6 +1141,11 @@ static bool detect_link_and_local_sink(s
+ 					(link->dpcd_caps.dongle_type !=
+ 							DISPLAY_DONGLE_DP_HDMI_CONVERTER))
+ 				converter_disable_audio = true;
++
++			/* limited link rate to HBR3 for DPIA until we implement USB4 V2 */
++			if (link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA &&
++					link->reported_link_cap.link_rate > LINK_RATE_HIGH3)
++				link->reported_link_cap.link_rate = LINK_RATE_HIGH3;
+ 			break;
+ 		}
+ 
 
 
