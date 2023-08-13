@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6027B9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A37C433C9;
-	Sun, 13 Aug 2023 21:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CD59443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9DCC433C7;
+	Sun, 13 Aug 2023 21:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961788;
-	bh=e359yJop2fp5uwsKmsGRxJqrc8tJ3j6u1dUOUgmEzvM=;
+	s=korg; t=1691961790;
+	bh=ukzWOOMvVzXdGJnVI52DECWFzlmjRzOYGozlES3SsYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0k4ixmmmbNkdwR1IPqzDFV4DOE33II/vDTmKuvmXrl7McJgXZME3bp2ip9MpwnmEj
-	 Xjobki8Gs9jBORgXflq8O7hqBeqh12Tkjv3aqFwyrxYPTM5CoJ2NdRkaxAMkBlhw9c
-	 FavOCgW3uwLl/iWzhmIoPEiDDaJcxscidon1LroQ=
+	b=V7VgDR6WXjxWVCNYWRkfX+fTwlazTAlfeZ2qYOVJo/sSsa9N2mC+r0d1AoE91vrSf
+	 lplUgHsqZMvxwTQUITn/IimyHE8C+ZkB9WjF+BkErrUU2XXl0BV1XFQujafPKASD+h
+	 ziVKXCv6gNDHNroWvWZPbV1RVVeXTiHIHi0dbwXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 4.19 33/33] sch_netem: fix issues in netem_change() vs get_dist_table()
-Date: Sun, 13 Aug 2023 23:19:27 +0200
-Message-ID: <20230813211705.141126984@linuxfoundation.org>
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 18/33] bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Sun, 13 Aug 2023 23:19:12 +0200
+Message-ID: <20230813211704.588492853@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
@@ -39,148 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-commit 11b73313c12403f617b47752db0ab3deef201af7 upstream.
+commit 01f4fd27087078c90a0e22860d1dfa2cd0510791 upstream.
 
-In blamed commit, I missed that get_dist_table() was allocating
-memory using GFP_KERNEL, and acquiring qdisc lock to perform
-the swap of newly allocated table with current one.
+BUG_ON(!vlan_info) is triggered in unregister_vlan_dev() with
+following testcase:
 
-In this patch, get_dist_table() is allocating memory and
-copy user data before we acquire the qdisc lock.
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add bond0 type bond mode 0
+  # ip netns exec ns1 ip link add bond_slave_1 type veth peer veth2
+  # ip netns exec ns1 ip link set bond_slave_1 master bond0
+  # ip netns exec ns1 ip link add link bond_slave_1 name vlan10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link bond0 name bond0_vlan10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set bond_slave_1 nomaster
+  # ip netns del ns1
 
-Then we perform swap operations while being protected by the lock.
+The logical analysis of the problem is as follows:
 
-Note that after this patch netem_change() no longer can do partial changes.
-If an error is returned, qdisc conf is left unchanged.
+1. create ETH_P_8021AD protocol vlan10 for bond_slave_1:
+register_vlan_dev()
+  vlan_vid_add()
+    vlan_info_alloc()
+    __vlan_vid_add() // add [ETH_P_8021AD, 10] vid to bond_slave_1
 
-Fixes: 2174a08db80d ("sch_netem: acquire qdisc lock in netem_change()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230622181503.2327695-1-edumazet@google.com
+2. create ETH_P_8021AD protocol bond0_vlan10 for bond0:
+register_vlan_dev()
+  vlan_vid_add()
+    __vlan_vid_add()
+      vlan_add_rx_filter_info()
+          if (!vlan_hw_filter_capable(dev, proto)) // condition established because bond0 without NETIF_F_HW_VLAN_STAG_FILTER
+              return 0;
+
+          if (netif_device_present(dev))
+              return dev->netdev_ops->ndo_vlan_rx_add_vid(dev, proto, vid); // will be never called
+              // The slaves of bond0 will not refer to the [ETH_P_8021AD, 10] vid.
+
+3. detach bond_slave_1 from bond0:
+__bond_release_one()
+  vlan_vids_del_by_dev()
+    list_for_each_entry(vid_info, &vlan_info->vid_list, list)
+        vlan_vid_del(dev, vid_info->proto, vid_info->vid);
+        // bond_slave_1 [ETH_P_8021AD, 10] vid will be deleted.
+        // bond_slave_1->vlan_info will be assigned NULL.
+
+4. delete vlan10 during delete ns1:
+default_device_exit_batch()
+  dev->rtnl_link_ops->dellink() // unregister_vlan_dev() for vlan10
+    vlan_info = rtnl_dereference(real_dev->vlan_info); // real_dev of vlan10 is bond_slave_1
+	BUG_ON(!vlan_info); // bond_slave_1->vlan_info is NULL now, bug is triggered!!!
+
+Add S-VLAN tag related features support to bond driver. So the bond driver
+will always propagate the VLAN info to its slaves.
+
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230802114320.4156068-1-william.xuanziyang@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_netem.c |   59 +++++++++++++++++++++-----------------------------
- 1 file changed, 25 insertions(+), 34 deletions(-)
+ drivers/net/bonding/bond_main.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -748,12 +748,10 @@ static void dist_free(struct disttable *
-  * signed 16 bit values.
-  */
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4395,7 +4395,9 @@ void bond_setup(struct net_device *bond_
  
--static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
--			  const struct nlattr *attr)
-+static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
- {
- 	size_t n = nla_len(attr)/sizeof(__s16);
- 	const __s16 *data = nla_data(attr);
--	spinlock_t *root_lock;
- 	struct disttable *d;
- 	int i;
+ 	bond_dev->hw_features = BOND_VLAN_FEATURES |
+ 				NETIF_F_HW_VLAN_CTAG_RX |
+-				NETIF_F_HW_VLAN_CTAG_FILTER;
++				NETIF_F_HW_VLAN_CTAG_FILTER |
++				NETIF_F_HW_VLAN_STAG_RX |
++				NETIF_F_HW_VLAN_STAG_FILTER;
  
-@@ -768,13 +766,7 @@ static int get_dist_table(struct Qdisc *
- 	for (i = 0; i < n; i++)
- 		d->table[i] = data[i];
- 
--	root_lock = qdisc_root_sleeping_lock(sch);
--
--	spin_lock_bh(root_lock);
--	swap(*tbl, d);
--	spin_unlock_bh(root_lock);
--
--	dist_free(d);
-+	*tbl = d;
- 	return 0;
- }
- 
-@@ -930,6 +922,8 @@ static int netem_change(struct Qdisc *sc
- {
- 	struct netem_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_NETEM_MAX + 1];
-+	struct disttable *delay_dist = NULL;
-+	struct disttable *slot_dist = NULL;
- 	struct tc_netem_qopt *qopt;
- 	struct clgstate old_clg;
- 	int old_loss_model = CLG_RANDOM;
-@@ -943,6 +937,18 @@ static int netem_change(struct Qdisc *sc
- 	if (ret < 0)
- 		return ret;
- 
-+	if (tb[TCA_NETEM_DELAY_DIST]) {
-+		ret = get_dist_table(&delay_dist, tb[TCA_NETEM_DELAY_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
-+	if (tb[TCA_NETEM_SLOT_DIST]) {
-+		ret = get_dist_table(&slot_dist, tb[TCA_NETEM_SLOT_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
-@@ -952,26 +958,17 @@ static int netem_change(struct Qdisc *sc
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
-+			q->clg = old_clg;
- 			goto unlock;
- 		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
- 	}
- 
--	if (tb[TCA_NETEM_DELAY_DIST]) {
--		ret = get_dist_table(sch, &q->delay_dist,
--				     tb[TCA_NETEM_DELAY_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
--	if (tb[TCA_NETEM_SLOT_DIST]) {
--		ret = get_dist_table(sch, &q->slot_dist,
--				     tb[TCA_NETEM_SLOT_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
-+	if (delay_dist)
-+		swap(q->delay_dist, delay_dist);
-+	if (slot_dist)
-+		swap(q->slot_dist, slot_dist);
- 	sch->limit = qopt->limit;
- 
- 	q->latency = PSCHED_TICKS2NS(qopt->latency);
-@@ -1021,17 +1018,11 @@ static int netem_change(struct Qdisc *sc
- 
- unlock:
- 	sch_tree_unlock(sch);
--	return ret;
- 
--get_table_failure:
--	/* recover clg and loss_model, in case of
--	 * q->clg and q->loss_model were modified
--	 * in get_loss_clg()
--	 */
--	q->clg = old_clg;
--	q->loss_model = old_loss_model;
--
--	goto unlock;
-+table_free:
-+	dist_free(delay_dist);
-+	dist_free(slot_dist);
-+	return ret;
- }
- 
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+ 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
+ 	bond_dev->features |= bond_dev->hw_features;
 
 
