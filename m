@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45EE9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3BDC433C7;
-	Sun, 13 Aug 2023 21:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F89446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E523CC433C8;
+	Sun, 13 Aug 2023 21:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962844;
-	bh=hjGAXGdxgCqpelzW6v1gH7/+sX4uAgel7hNYy3DSLSQ=;
+	s=korg; t=1691962847;
+	bh=2KHo8ZDPZptaWdHEeaJAxd8pJNMcP/wkqvK1SWdiJqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2eSwitYBoyqZCv2wvhzuTHDUK1p7sMErdo8i55ZED7V21cI6B7zoFa/43YyALbTt
-	 7jlD4isN2VV52eWzN9E2W0PKBjEuZhzhV/xvArRJCZus6qX+JiTw/jOXHS6xnnvFSP
-	 dPx5xek7zm8PjruWAUrNIsiJ5s7m9X6WoxvhsVI0=
+	b=0+HWEd4K2EXe9lzuEaLiiFRLwS9JTeDjHz1AjmubsIQJTVC6bM5ZUwL/fOaWVhmyB
+	 yUyIiP7oHJT5GFioTmOU37wWQCk4xqda6J48woMtgxkgxhwkol9LBzpPUZAscazqWU
+	 eoPjIoRzjG6Cpe8vrE0anCFpiEGNLv55fyyVHdT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Pu Lehui <pulehui@huawei.com>,
 	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.10 08/68] selftests/bpf: Workaround verification failure for fexit_bpf2bpf/func_replace_return_code
-Date: Sun, 13 Aug 2023 23:19:09 +0200
-Message-ID: <20230813211708.410184002@linuxfoundation.org>
+Subject: [PATCH 5.10 09/68] selftests/bpf: Fix sk_assign on s390x
+Date: Sun, 13 Aug 2023 23:19:10 +0200
+Message-ID: <20230813211708.440547112@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -36,93 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit 63d78b7e8ca2d0eb8c687a355fa19d01b6fcc723 ]
+[ Upstream commit 7ce878ca81bca7811e669db4c394b86780e0dbe4 ]
 
-With latest llvm17, selftest fexit_bpf2bpf/func_replace_return_code
-has the following verification failure:
+sk_assign is failing on an s390x machine running Debian "bookworm" for
+2 reasons: legacy server_map definition and uninitialized addrlen in
+recvfrom() call.
 
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  ; int connect_v4_prog(struct bpf_sock_addr *ctx)
-  0: (bf) r7 = r1                       ; R1=ctx(off=0,imm=0) R7_w=ctx(off=0,imm=0)
-  1: (b4) w6 = 0                        ; R6_w=0
-  ; memset(&tuple.ipv4.saddr, 0, sizeof(tuple.ipv4.saddr));
-  ...
-  ; return do_bind(ctx) ? 1 : 0;
-  179: (bf) r1 = r7                     ; R1=ctx(off=0,imm=0) R7=ctx(off=0,imm=0)
-  180: (85) call pc+147
-  Func#3 is global and valid. Skipping.
-  181: R0_w=scalar()
-  181: (bc) w6 = w0                     ; R0_w=scalar() R6_w=scalar(umax=4294967295,var_off=(0x0; 0xffffffff))
-  182: (05) goto pc-129
-  ; }
-  54: (bc) w0 = w6                      ; R0_w=scalar(umax=4294967295,var_off=(0x0; 0xffffffff)) R6_w=scalar(umax=4294967295,var_off=(0x0; 0xffffffff))
-  55: (95) exit
-  At program exit the register R0 has value (0x0; 0xffffffff) should have been in (0x0; 0x1)
-  processed 281 insns (limit 1000000) max_states_per_insn 1 total_states 26 peak_states 26 mark_read 13
-  -- END PROG LOAD LOG --
-  libbpf: prog 'connect_v4_prog': failed to load: -22
+Fix by adding a new-style server_map definition and dropping addrlen
+(recvfrom() allows NULL values for src_addr and addrlen).
 
-The corresponding source code:
+Since the test should support tc built without libbpf, build the prog
+twice: with the old-style definition and with the new-style definition,
+then select the right one at runtime. This could be done at compile
+time too, but this would not be cross-compilation friendly.
 
-  __attribute__ ((noinline))
-  int do_bind(struct bpf_sock_addr *ctx)
-  {
-        struct sockaddr_in sa = {};
-
-        sa.sin_family = AF_INET;
-        sa.sin_port = bpf_htons(0);
-        sa.sin_addr.s_addr = bpf_htonl(SRC_REWRITE_IP4);
-
-        if (bpf_bind(ctx, (struct sockaddr *)&sa, sizeof(sa)) != 0)
-                return 0;
-
-        return 1;
-  }
-  ...
-  SEC("cgroup/connect4")
-  int connect_v4_prog(struct bpf_sock_addr *ctx)
-  {
-  ...
-        return do_bind(ctx) ? 1 : 0;
-  }
-
-Insn 180 is a call to 'do_bind'. The call's return value is also the return value
-for the program. Since do_bind() returns 0/1, so it is legitimate for compiler to
-optimize 'return do_bind(ctx) ? 1 : 0' to 'return do_bind(ctx)'. However, such
-optimization breaks verifier as the return value of 'do_bind()' is marked as any
-scalar which violates the requirement of prog return value 0/1.
-
-There are two ways to fix this problem, (1) changing 'return 1' in do_bind() to
-e.g. 'return 10' so the compiler has to do 'do_bind(ctx) ? 1 :0', or (2)
-suggested by Andrii, marking do_bind() with __weak attribute so the compiler
-cannot make any assumption on do_bind() return value.
-
-This patch adopted adding __weak approach which is simpler and more resistant
-to potential compiler optimizations.
-
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230310012410.2920570-1-yhs@fb.com
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230129190501.1624747-2-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Tested-by: Luiz Capitulino <luizcap@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/connect4_prog.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/sk_assign.c        |   25 ++++++++++----
+ tools/testing/selftests/bpf/progs/test_sk_assign.c        |   11 ++++++
+ tools/testing/selftests/bpf/progs/test_sk_assign_libbpf.c |    3 +
+ 3 files changed, 33 insertions(+), 6 deletions(-)
+ create mode 100644 tools/testing/selftests/bpf/progs/test_sk_assign_libbpf.c
 
---- a/tools/testing/selftests/bpf/progs/connect4_prog.c
-+++ b/tools/testing/selftests/bpf/progs/connect4_prog.c
-@@ -33,7 +33,7 @@
+--- a/tools/testing/selftests/bpf/prog_tests/sk_assign.c
++++ b/tools/testing/selftests/bpf/prog_tests/sk_assign.c
+@@ -29,7 +29,23 @@ static int stop, duration;
+ static bool
+ configure_stack(void)
+ {
++	char tc_version[128];
+ 	char tc_cmd[BUFSIZ];
++	char *prog;
++	FILE *tc;
++
++	/* Check whether tc is built with libbpf. */
++	tc = popen("tc -V", "r");
++	if (CHECK_FAIL(!tc))
++		return false;
++	if (CHECK_FAIL(!fgets(tc_version, sizeof(tc_version), tc)))
++		return false;
++	if (strstr(tc_version, ", libbpf "))
++		prog = "test_sk_assign_libbpf.o";
++	else
++		prog = "test_sk_assign.o";
++	if (CHECK_FAIL(pclose(tc)))
++		return false;
+ 
+ 	/* Move to a new networking namespace */
+ 	if (CHECK_FAIL(unshare(CLONE_NEWNET)))
+@@ -46,8 +62,8 @@ configure_stack(void)
+ 	/* Load qdisc, BPF program */
+ 	if (CHECK_FAIL(system("tc qdisc add dev lo clsact")))
+ 		return false;
+-	sprintf(tc_cmd, "%s %s %s %s", "tc filter add dev lo ingress bpf",
+-		       "direct-action object-file ./test_sk_assign.o",
++	sprintf(tc_cmd, "%s %s %s %s %s", "tc filter add dev lo ingress bpf",
++		       "direct-action object-file", prog,
+ 		       "section classifier/sk_assign_test",
+ 		       (env.verbosity < VERBOSE_VERY) ? " 2>/dev/null" : "verbose");
+ 	if (CHECK(system(tc_cmd), "BPF load failed;",
+@@ -129,15 +145,12 @@ get_port(int fd)
+ static ssize_t
+ rcv_msg(int srv_client, int type)
+ {
+-	struct sockaddr_storage ss;
+ 	char buf[BUFSIZ];
+-	socklen_t slen;
+ 
+ 	if (type == SOCK_STREAM)
+ 		return read(srv_client, &buf, sizeof(buf));
+ 	else
+-		return recvfrom(srv_client, &buf, sizeof(buf), 0,
+-				(struct sockaddr *)&ss, &slen);
++		return recvfrom(srv_client, &buf, sizeof(buf), 0, NULL, NULL);
+ }
+ 
+ static int
+--- a/tools/testing/selftests/bpf/progs/test_sk_assign.c
++++ b/tools/testing/selftests/bpf/progs/test_sk_assign.c
+@@ -16,6 +16,16 @@
+ #include <bpf/bpf_helpers.h>
+ #include <bpf/bpf_endian.h>
+ 
++#if defined(IPROUTE2_HAVE_LIBBPF)
++/* Use a new-style map definition. */
++struct {
++	__uint(type, BPF_MAP_TYPE_SOCKMAP);
++	__type(key, int);
++	__type(value, __u64);
++	__uint(pinning, LIBBPF_PIN_BY_NAME);
++	__uint(max_entries, 1);
++} server_map SEC(".maps");
++#else
+ /* Pin map under /sys/fs/bpf/tc/globals/<map name> */
+ #define PIN_GLOBAL_NS 2
+ 
+@@ -35,6 +45,7 @@ struct {
+ 	.max_elem = 1,
+ 	.pinning = PIN_GLOBAL_NS,
+ };
++#endif
  
  int _version SEC("version") = 1;
- 
--__attribute__ ((noinline))
-+__attribute__ ((noinline)) __weak
- int do_bind(struct bpf_sock_addr *ctx)
- {
- 	struct sockaddr_in sa = {};
+ char _license[] SEC("license") = "GPL";
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/test_sk_assign_libbpf.c
+@@ -0,0 +1,3 @@
++// SPDX-License-Identifier: GPL-2.0
++#define IPROUTE2_HAVE_LIBBPF
++#include "test_sk_assign.c"
 
 
