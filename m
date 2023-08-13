@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0749443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120FAC433C7;
-	Sun, 13 Aug 2023 21:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463BC9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD616C433C7;
+	Sun, 13 Aug 2023 21:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962224;
-	bh=ZIEubNXA9Nc6PvnKOyDsgSPV99TV7/hXp7Vt9fF1+iI=;
+	s=korg; t=1691962227;
+	bh=yS05owhavEkKqmOn3e6Yf/JzjSoo6EPebc5/jTditPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mvuo0PYus7AHHEwyG79Cle8RdH7b7C04dhI6Klfhyy55xa78/MDEypbDA2Vsd2TmZ
-	 D79UlE2gyPU+WcBFEpKPjrdVnZnjHg52/xDzOgIR+ZRO/TnLbxu+CghjpIXFHaBcz2
-	 TLI7+dzH5/K8pjWR9OC8XagtpnMe1kQLbu1nTI6s=
+	b=h/1lFV2yz5g/YeTgqBB9W4NoED7JifUEkF2R1K8uvdRrqy3DFTLshJu+MWs6+S7dq
+	 5fXOwu01uWb5Co62nYdxeoo6unNTOn9GiXpFTBFxo3+Xw1FHXlN2e6pQTzXjb5/lMt
+	 aZ5zDgnWIZPCSPMhCZcor0OEFEnZ/ToO4JOuOJMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 130/206] net/packet: annotate data-races around tp->status
-Date: Sun, 13 Aug 2023 23:18:20 +0200
-Message-ID: <20230813211728.746250223@linuxfoundation.org>
+	Jan Karcher <jaka@linux.ibm.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.4 131/206] net/smc: Fix setsockopt and sysctl to specify same buffer size again
+Date: Sun, 13 Aug 2023 23:18:21 +0200
+Message-ID: <20230813211728.773802523@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,125 +37,223 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-commit 8a9896177784063d01068293caea3f74f6830ff6 upstream.
+commit 833bac7ec392bf75053c8a4fa4c36d4148dac77d upstream.
 
-Another syzbot report [1] is about tp->status lockless reads
-from __packet_get_status()
+Commit 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock
+and make them tunable") introduced the net.smc.rmem and net.smc.wmem
+sysctls to specify the size of buffers to be used for SMC type
+connections. This created a regression for users that specified the
+buffer size via setsockopt() as the effective buffer size was now
+doubled.
 
-[1]
-BUG: KCSAN: data-race in __packet_rcv_has_room / __packet_set_status
+Re-introduce the division by 2 in the SMC buffer create code and level
+this out by duplicating the net.smc.[rw]mem values used for initializing
+sk_rcvbuf/sk_sndbuf at socket creation time. This gives users of both
+methods (setsockopt or sysctl) the effective buffer size that they
+expect.
 
-write to 0xffff888117d7c080 of 8 bytes by interrupt on cpu 0:
-__packet_set_status+0x78/0xa0 net/packet/af_packet.c:407
-tpacket_rcv+0x18bb/0x1a60 net/packet/af_packet.c:2483
-deliver_skb net/core/dev.c:2173 [inline]
-__netif_receive_skb_core+0x408/0x1e80 net/core/dev.c:5337
-__netif_receive_skb_one_core net/core/dev.c:5491 [inline]
-__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5607
-process_backlog+0x21f/0x380 net/core/dev.c:5935
-__napi_poll+0x60/0x3b0 net/core/dev.c:6498
-napi_poll net/core/dev.c:6565 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6698
-__do_softirq+0xc1/0x265 kernel/softirq.c:571
-invoke_softirq kernel/softirq.c:445 [inline]
-__irq_exit_rcu+0x57/0xa0 kernel/softirq.c:650
-sysvec_apic_timer_interrupt+0x6d/0x80 arch/x86/kernel/apic/apic.c:1106
-asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:645
-smpboot_thread_fn+0x33c/0x4a0 kernel/smpboot.c:112
-kthread+0x1d7/0x210 kernel/kthread.c:379
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+Initialize net.smc.[rw]mem from its own constant of 64kB, respectively.
+Internal performance tests show that this value is a good compromise
+between throughput/latency and memory consumption. Also, this decouples
+it from any tuning that was done to net.ipv4.tcp_[rw]mem[1] before the
+module for SMC protocol was loaded. Check that no more than INT_MAX / 2
+is assigned to net.smc.[rw]mem, in order to avoid any overflow condition
+when that is doubled for use in sk_sndbuf or sk_rcvbuf.
 
-read to 0xffff888117d7c080 of 8 bytes by interrupt on cpu 1:
-__packet_get_status net/packet/af_packet.c:436 [inline]
-packet_lookup_frame net/packet/af_packet.c:524 [inline]
-__tpacket_has_room net/packet/af_packet.c:1255 [inline]
-__packet_rcv_has_room+0x3f9/0x450 net/packet/af_packet.c:1298
-tpacket_rcv+0x275/0x1a60 net/packet/af_packet.c:2285
-deliver_skb net/core/dev.c:2173 [inline]
-dev_queue_xmit_nit+0x38a/0x5e0 net/core/dev.c:2243
-xmit_one net/core/dev.c:3574 [inline]
-dev_hard_start_xmit+0xcf/0x3f0 net/core/dev.c:3594
-__dev_queue_xmit+0xefb/0x1d10 net/core/dev.c:4244
-dev_queue_xmit include/linux/netdevice.h:3088 [inline]
-can_send+0x4eb/0x5d0 net/can/af_can.c:276
-bcm_can_tx+0x314/0x410 net/can/bcm.c:302
-bcm_tx_timeout_handler+0xdb/0x260
-__run_hrtimer kernel/time/hrtimer.c:1685 [inline]
-__hrtimer_run_queues+0x217/0x700 kernel/time/hrtimer.c:1749
-hrtimer_run_softirq+0xd6/0x120 kernel/time/hrtimer.c:1766
-__do_softirq+0xc1/0x265 kernel/softirq.c:571
-run_ksoftirqd+0x17/0x20 kernel/softirq.c:939
-smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
-kthread+0x1d7/0x210 kernel/kthread.c:379
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+While at it, drop the confusing sk_buf_size variable from
+__smc_buf_create and name "compressed" buffer size variables more
+consistently.
 
-value changed: 0x0000000000000000 -> 0x0000000020000081
+Background:
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 19 Comm: ksoftirqd/1 Not tainted 6.4.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+Before the commit mentioned above, SMC's buffer allocator in
+__smc_buf_create() always used half of the sockets' sk_rcvbuf/sk_sndbuf
+value as initial value to search for appropriate buffers. If the search
+resorted to using a bigger buffer when all buffers of the specified
+size were busy, the duplicate of the used effective buffer size is
+stored back to sk_rcvbuf/sk_sndbuf.
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230803145600.2937518-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When available, buffers of exactly the size that a user had specified as
+input to setsockopt() were used, despite setsockopt()'s documentation in
+"man 7 socket" talking of a mandatory duplication:
+
+[...]
+       SO_SNDBUF
+              Sets  or  gets the maximum socket send buffer in bytes.
+              The kernel doubles this value (to allow space for book‐
+              keeping  overhead)  when it is set using setsockopt(2),
+              and this doubled value is  returned  by  getsockopt(2).
+              The     default     value     is     set     by     the
+              /proc/sys/net/core/wmem_default file  and  the  maximum
+              allowed value is set by the /proc/sys/net/core/wmem_max
+              file.  The minimum (doubled) value for this  option  is
+              2048.
+[...]
+
+Fixes: 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock and make them tunable")
+Co-developed-by: Jan Karcher <jaka@linux.ibm.com>
+Signed-off-by: Jan Karcher <jaka@linux.ibm.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/smc/af_smc.c     |    4 ++--
+ net/smc/smc.h        |    2 +-
+ net/smc/smc_clc.c    |    4 ++--
+ net/smc/smc_core.c   |   25 ++++++++++++-------------
+ net/smc/smc_sysctl.c |   10 ++++++++--
+ 5 files changed, 25 insertions(+), 20 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -401,18 +401,20 @@ static void __packet_set_status(struct p
- {
- 	union tpacket_uhdr h;
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -378,8 +378,8 @@ static struct sock *smc_sock_alloc(struc
+ 	sk->sk_state = SMC_INIT;
+ 	sk->sk_destruct = smc_destruct;
+ 	sk->sk_protocol = protocol;
+-	WRITE_ONCE(sk->sk_sndbuf, READ_ONCE(net->smc.sysctl_wmem));
+-	WRITE_ONCE(sk->sk_rcvbuf, READ_ONCE(net->smc.sysctl_rmem));
++	WRITE_ONCE(sk->sk_sndbuf, 2 * READ_ONCE(net->smc.sysctl_wmem));
++	WRITE_ONCE(sk->sk_rcvbuf, 2 * READ_ONCE(net->smc.sysctl_rmem));
+ 	smc = smc_sk(sk);
+ 	INIT_WORK(&smc->tcp_listen_work, smc_tcp_listen_work);
+ 	INIT_WORK(&smc->connect_work, smc_connect_work);
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -161,7 +161,7 @@ struct smc_connection {
  
-+	/* WRITE_ONCE() are paired with READ_ONCE() in __packet_get_status */
-+
- 	h.raw = frame;
- 	switch (po->tp_version) {
- 	case TPACKET_V1:
--		h.h1->tp_status = status;
-+		WRITE_ONCE(h.h1->tp_status, status);
- 		flush_dcache_page(pgv_to_page(&h.h1->tp_status));
- 		break;
- 	case TPACKET_V2:
--		h.h2->tp_status = status;
-+		WRITE_ONCE(h.h2->tp_status, status);
- 		flush_dcache_page(pgv_to_page(&h.h2->tp_status));
- 		break;
- 	case TPACKET_V3:
--		h.h3->tp_status = status;
-+		WRITE_ONCE(h.h3->tp_status, status);
- 		flush_dcache_page(pgv_to_page(&h.h3->tp_status));
- 		break;
- 	default:
-@@ -429,17 +431,19 @@ static int __packet_get_status(const str
+ 	struct smc_buf_desc	*sndbuf_desc;	/* send buffer descriptor */
+ 	struct smc_buf_desc	*rmb_desc;	/* RMBE descriptor */
+-	int			rmbe_size_short;/* compressed notation */
++	int                     rmbe_size_comp; /* compressed notation */
+ 	int			rmbe_update_limit;
+ 						/* lower limit for consumer
+ 						 * cursor update
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -1007,7 +1007,7 @@ static int smc_clc_send_confirm_accept(s
+ 		clc->d0.gid =
+ 			conn->lgr->smcd->ops->get_local_gid(conn->lgr->smcd);
+ 		clc->d0.token = conn->rmb_desc->token;
+-		clc->d0.dmbe_size = conn->rmbe_size_short;
++		clc->d0.dmbe_size = conn->rmbe_size_comp;
+ 		clc->d0.dmbe_idx = 0;
+ 		memcpy(&clc->d0.linkid, conn->lgr->id, SMC_LGR_ID_SIZE);
+ 		if (version == SMC_V1) {
+@@ -1050,7 +1050,7 @@ static int smc_clc_send_confirm_accept(s
+ 			clc->r0.qp_mtu = min(link->path_mtu, link->peer_mtu);
+ 			break;
+ 		}
+-		clc->r0.rmbe_size = conn->rmbe_size_short;
++		clc->r0.rmbe_size = conn->rmbe_size_comp;
+ 		clc->r0.rmb_dma_addr = conn->rmb_desc->is_vm ?
+ 			cpu_to_be64((uintptr_t)conn->rmb_desc->cpu_addr) :
+ 			cpu_to_be64((u64)sg_dma_address
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -2309,31 +2309,30 @@ static int __smc_buf_create(struct smc_s
+ 	struct smc_connection *conn = &smc->conn;
+ 	struct smc_link_group *lgr = conn->lgr;
+ 	struct list_head *buf_list;
+-	int bufsize, bufsize_short;
++	int bufsize, bufsize_comp;
+ 	struct rw_semaphore *lock;	/* lock buffer list */
+ 	bool is_dgraded = false;
+-	int sk_buf_size;
  
- 	smp_rmb();
+ 	if (is_rmb)
+ 		/* use socket recv buffer size (w/o overhead) as start value */
+-		sk_buf_size = smc->sk.sk_rcvbuf;
++		bufsize = smc->sk.sk_rcvbuf / 2;
+ 	else
+ 		/* use socket send buffer size (w/o overhead) as start value */
+-		sk_buf_size = smc->sk.sk_sndbuf;
++		bufsize = smc->sk.sk_sndbuf / 2;
  
-+	/* READ_ONCE() are paired with WRITE_ONCE() in __packet_set_status */
-+
- 	h.raw = frame;
- 	switch (po->tp_version) {
- 	case TPACKET_V1:
- 		flush_dcache_page(pgv_to_page(&h.h1->tp_status));
--		return h.h1->tp_status;
-+		return READ_ONCE(h.h1->tp_status);
- 	case TPACKET_V2:
- 		flush_dcache_page(pgv_to_page(&h.h2->tp_status));
--		return h.h2->tp_status;
-+		return READ_ONCE(h.h2->tp_status);
- 	case TPACKET_V3:
- 		flush_dcache_page(pgv_to_page(&h.h3->tp_status));
--		return h.h3->tp_status;
-+		return READ_ONCE(h.h3->tp_status);
- 	default:
- 		WARN(1, "TPACKET version not supported.\n");
- 		BUG();
+-	for (bufsize_short = smc_compress_bufsize(sk_buf_size, is_smcd, is_rmb);
+-	     bufsize_short >= 0; bufsize_short--) {
++	for (bufsize_comp = smc_compress_bufsize(bufsize, is_smcd, is_rmb);
++	     bufsize_comp >= 0; bufsize_comp--) {
+ 		if (is_rmb) {
+ 			lock = &lgr->rmbs_lock;
+-			buf_list = &lgr->rmbs[bufsize_short];
++			buf_list = &lgr->rmbs[bufsize_comp];
+ 		} else {
+ 			lock = &lgr->sndbufs_lock;
+-			buf_list = &lgr->sndbufs[bufsize_short];
++			buf_list = &lgr->sndbufs[bufsize_comp];
+ 		}
+-		bufsize = smc_uncompress_bufsize(bufsize_short);
++		bufsize = smc_uncompress_bufsize(bufsize_comp);
+ 
+ 		/* check for reusable slot in the link group */
+-		buf_desc = smc_buf_get_slot(bufsize_short, lock, buf_list);
++		buf_desc = smc_buf_get_slot(bufsize_comp, lock, buf_list);
+ 		if (buf_desc) {
+ 			buf_desc->is_dma_need_sync = 0;
+ 			SMC_STAT_RMB_SIZE(smc, is_smcd, is_rmb, bufsize);
+@@ -2377,8 +2376,8 @@ static int __smc_buf_create(struct smc_s
+ 
+ 	if (is_rmb) {
+ 		conn->rmb_desc = buf_desc;
+-		conn->rmbe_size_short = bufsize_short;
+-		smc->sk.sk_rcvbuf = bufsize;
++		conn->rmbe_size_comp = bufsize_comp;
++		smc->sk.sk_rcvbuf = bufsize * 2;
+ 		atomic_set(&conn->bytes_to_rcv, 0);
+ 		conn->rmbe_update_limit =
+ 			smc_rmb_wnd_update_limit(buf_desc->len);
+@@ -2386,7 +2385,7 @@ static int __smc_buf_create(struct smc_s
+ 			smc_ism_set_conn(conn); /* map RMB/smcd_dev to conn */
+ 	} else {
+ 		conn->sndbuf_desc = buf_desc;
+-		smc->sk.sk_sndbuf = bufsize;
++		smc->sk.sk_sndbuf = bufsize * 2;
+ 		atomic_set(&conn->sndbuf_space, bufsize);
+ 	}
+ 	return 0;
+--- a/net/smc/smc_sysctl.c
++++ b/net/smc/smc_sysctl.c
+@@ -21,6 +21,10 @@
+ 
+ static int min_sndbuf = SMC_BUF_MIN_SIZE;
+ static int min_rcvbuf = SMC_BUF_MIN_SIZE;
++static int max_sndbuf = INT_MAX / 2;
++static int max_rcvbuf = INT_MAX / 2;
++static const int net_smc_wmem_init = (64 * 1024);
++static const int net_smc_rmem_init = (64 * 1024);
+ 
+ static struct ctl_table smc_table[] = {
+ 	{
+@@ -53,6 +57,7 @@ static struct ctl_table smc_table[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= &min_sndbuf,
++		.extra2		= &max_sndbuf,
+ 	},
+ 	{
+ 		.procname	= "rmem",
+@@ -61,6 +66,7 @@ static struct ctl_table smc_table[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= &min_rcvbuf,
++		.extra2		= &max_rcvbuf,
+ 	},
+ 	{  }
+ };
+@@ -88,8 +94,8 @@ int __net_init smc_sysctl_net_init(struc
+ 	net->smc.sysctl_autocorking_size = SMC_AUTOCORKING_DEFAULT_SIZE;
+ 	net->smc.sysctl_smcr_buf_type = SMCR_PHYS_CONT_BUFS;
+ 	net->smc.sysctl_smcr_testlink_time = SMC_LLC_TESTLINK_DEFAULT_TIME;
+-	WRITE_ONCE(net->smc.sysctl_wmem, READ_ONCE(net->ipv4.sysctl_tcp_wmem[1]));
+-	WRITE_ONCE(net->smc.sysctl_rmem, READ_ONCE(net->ipv4.sysctl_tcp_rmem[1]));
++	WRITE_ONCE(net->smc.sysctl_wmem, net_smc_wmem_init);
++	WRITE_ONCE(net->smc.sysctl_rmem, net_smc_rmem_init);
+ 
+ 	return 0;
+ 
 
 
