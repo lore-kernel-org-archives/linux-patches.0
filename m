@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63EB9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:33:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B93C433C8;
-	Sun, 13 Aug 2023 21:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFA49443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:33:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE6FC433C8;
+	Sun, 13 Aug 2023 21:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962382;
-	bh=MUmgrlAwWufSWeWUWj0Ex5Q6lW7QL6hPmoGGuN4BYak=;
+	s=korg; t=1691962385;
+	bh=rHSypBbSZT4Jam3GNg4+VqomMu6B+hadevaYTq4GXc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yttRTc28dCzWCfIst/FwGogEQUWwS3Tt/IT2BRalL+/rR0Tc/6BHfPECsyrp2lvZF
-	 h6isNJS3iMUqaQwAJaaFYbCFTg7Twt8ngEDZOjAwQNNFWYi4W0DSJ+gx8D40TN+DMs
-	 ycM0e19uKTv87etXEIvB0NtH1a3MTtGuuA/TgqqA=
+	b=i8ho9lEJixqkmO3cGY/stWqrGkIyiiMLaSwpKblX+UYq6dTOSdrGOlB1QmoCXbpK0
+	 v1uc0eJXfK2a0oXRbMX+MYqDIF68deruDulwhhcl6LlzkKhigXjZtMg77PSf5PTs5h
+	 EmAzWqPK7rQtsG7oAsfiwIvdKnRgC3TMcysJr/y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	linux-hardening@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>
-Subject: [PATCH 6.1 001/149] gcc-plugins: Reorganize gimple includes for GCC 13
-Date: Sun, 13 Aug 2023 23:17:26 +0200
-Message-ID: <20230813211718.802552390@linuxfoundation.org>
+	Damian B <bronecki.damian@gmail.com>,
+	Stable@vger.kernel.org,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 010/149] wifi: rtw89: fix 8852AE disconnection caused by RX full flags
+Date: Sun, 13 Aug 2023 23:17:35 +0200
+Message-ID: <20230813211719.107044372@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,47 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit e6a71160cc145e18ab45195abf89884112e02dfb upstream.
+commit b74bb07cdab6859e1a3fc9fe7351052176322ddf upstream.
 
-The gimple-iterator.h header must be included before gimple-fold.h
-starting with GCC 13. Reorganize gimple headers to work for all GCC
-versions.
+RX full flags are raised if certain types of RX FIFO are full, and then
+drop all following MPDU of AMPDU. In order to resume to receive MPDU
+when RX FIFO becomes available, we clear the register bits by the
+commit a0d99ebb3ecd ("wifi: rtw89: initialize DMA of CMAC"). But, 8852AE
+needs more settings to support this. To quickly fix disconnection problem,
+revert the behavior as before.
 
-Reported-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/all/20230113173033.4380-1-palmer@rivosinc.com/
-Cc: linux-hardening@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: a0d99ebb3ecd ("wifi: rtw89: initialize DMA of CMAC")
+Reported-by: Damian B <bronecki.damian@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217710
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Damian B <bronecki.damian@gmail.com>
+Link: https://lore.kernel.org/r/20230808005426.5327-1-pkshih@realtek.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gcc-plugins/gcc-common.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/gcc-plugins/gcc-common.h
-+++ b/scripts/gcc-plugins/gcc-common.h
-@@ -71,7 +71,9 @@
- #include "varasm.h"
- #include "stor-layout.h"
- #include "internal-fn.h"
-+#include "gimple.h"
- #include "gimple-expr.h"
-+#include "gimple-iterator.h"
- #include "gimple-fold.h"
- #include "context.h"
- #include "tree-ssa-alias.h"
-@@ -85,10 +87,8 @@
- #include "tree-eh.h"
- #include "stmt.h"
- #include "gimplify.h"
--#include "gimple.h"
- #include "tree-phinodes.h"
- #include "tree-cfg.h"
--#include "gimple-iterator.h"
- #include "gimple-ssa.h"
- #include "ssa-iterators.h"
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -2209,7 +2209,7 @@ static int cmac_dma_init(struct rtw89_de
+ 	u32 reg;
+ 	int ret;
  
+-	if (chip_id != RTL8852A && chip_id != RTL8852B)
++	if (chip_id != RTL8852B)
+ 		return 0;
+ 
+ 	ret = rtw89_mac_check_mac_en(rtwdev, mac_idx, RTW89_CMAC_SEL);
 
 
