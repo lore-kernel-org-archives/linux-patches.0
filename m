@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEADA9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DEE1C433C8;
-	Sun, 13 Aug 2023 21:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907849446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147F3C433C7;
+	Sun, 13 Aug 2023 21:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962852;
-	bh=MEZW6O7uEg9Ldg9R3lDawqHDsi3Psg26/ohCG6CX2fo=;
+	s=korg; t=1691962855;
+	bh=kXBFi4hfIk+Q14JW8uzgsf+WK2BtG/zSp8omQa2vUck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2f32TDzGny5Ey1qFJ5N/uPqVrv3zkYEQ+z2PATaFUfefl35R/Pay/yzIqbrm8Pjl/
-	 ofjOBzqZq6pjIk84pb3U/zvjcmgmPGff6IVaeQYXKtQNV4/yz+ms9wbaVFQhBF3vDC
-	 f5XQoreqOgKIDG6Dv+Lu5k5RGTyJapjg+/D7OjHk=
+	b=EtAg1R+kzMyZqZfk2AicWn1mYe8MCGYXZtkze13fj/TLoVrKlCf9G6pxinsvIrhl0
+	 05D3192ysDQVT2dz74Aua/acjAPJrGHck5ssKVtn27ozcx7R6hfvxJHi+T4XwOTB0S
+	 kPqfDfASKATjugB9By99DGYQhZJl1Wc6r7k7mlbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Roger Quadros <rogerq@kernel.org>
-Subject: [PATCH 5.10 23/68] usb: dwc3: Properly handle processing of pending events
-Date: Sun, 13 Aug 2023 23:19:24 +0200
-Message-ID: <20230813211708.860875271@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.10 32/68] selftests/rseq: Fix build with undefined __weak
+Date: Sun, 13 Aug 2023 23:19:33 +0200
+Message-ID: <20230813211709.133936691@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,56 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elson Roy Serrao <quic_eserrao@quicinc.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 3ddaa6a274578e23745b7466346fc2650df8f959 upstream.
+commit d5ad9aae13dcced333c1a7816ff0a4fbbb052466 upstream.
 
-If dwc3 is runtime suspended we defer processing the event buffer
-until resume, by setting the pending_events flag. Set this flag before
-triggering resume to avoid race with the runtime resume callback.
+Commit 3bcbc20942db ("selftests/rseq: Play nice with binaries statically
+linked against glibc 2.35+") which is now in Linus' tree introduced uses
+of __weak but did nothing to ensure that a definition is provided for it
+resulting in build failures for the rseq tests:
 
-While handling the pending events, in addition to checking the event
-buffer we also need to process it. Handle this by explicitly calling
-dwc3_thread_interrupt(). Also balance the runtime pm get() operation
-that triggered this processing.
+rseq.c:41:1: error: unknown type name '__weak'
+__weak ptrdiff_t __rseq_offset;
+^
+rseq.c:41:17: error: expected ';' after top level declarator
+__weak ptrdiff_t __rseq_offset;
+                ^
+                ;
+rseq.c:42:1: error: unknown type name '__weak'
+__weak unsigned int __rseq_size;
+^
+rseq.c:43:1: error: unknown type name '__weak'
+__weak unsigned int __rseq_flags;
 
-Cc: stable@vger.kernel.org
-Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230801192658.19275-1-quic_eserrao@quicinc.com
+Fix this by using the definition from tools/include compiler.h.
+
+Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Message-Id: <20230804-kselftest-rseq-build-v1-1-015830b66aa9@kernel.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/testing/selftests/rseq/Makefile |    4 +++-
+ tools/testing/selftests/rseq/rseq.c   |    2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3830,9 +3830,14 @@ static irqreturn_t dwc3_check_event_buf(
- 	u32 reg;
+--- a/tools/testing/selftests/rseq/Makefile
++++ b/tools/testing/selftests/rseq/Makefile
+@@ -4,8 +4,10 @@ ifneq ($(shell $(CC) --version 2>&1 | he
+ CLANG_FLAGS += -no-integrated-as
+ endif
  
- 	if (pm_runtime_suspended(dwc->dev)) {
-+		dwc->pending_events = true;
-+		/*
-+		 * Trigger runtime resume. The get() function will be balanced
-+		 * after processing the pending events in dwc3_process_pending
-+		 * events().
-+		 */
- 		pm_runtime_get(dwc->dev);
- 		disable_irq_nosync(dwc->irq_gadget);
--		dwc->pending_events = true;
- 		return IRQ_HANDLED;
- 	}
++top_srcdir = ../../../..
++
+ CFLAGS += -O2 -Wall -g -I./ -I../../../../usr/include/ -L$(OUTPUT) -Wl,-rpath=./ \
+-	  $(CLANG_FLAGS)
++	  $(CLANG_FLAGS) -I$(top_srcdir)/tools/include
+ LDLIBS += -lpthread -ldl
  
-@@ -4091,6 +4096,8 @@ void dwc3_gadget_process_pending_events(
- {
- 	if (dwc->pending_events) {
- 		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
-+		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
-+		pm_runtime_put(dwc->dev);
- 		dwc->pending_events = false;
- 		enable_irq(dwc->irq_gadget);
- 	}
+ # Own dependencies because we only want to build against 1st prerequisite, but
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -29,6 +29,8 @@
+ #include <dlfcn.h>
+ #include <stddef.h>
+ 
++#include <linux/compiler.h>
++
+ #include "../kselftest.h"
+ #include "rseq.h"
+ 
 
 
