@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B29443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCDBC433C7;
-	Sun, 13 Aug 2023 21:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A089446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EF4C433C9;
+	Sun, 13 Aug 2023 21:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962360;
-	bh=eQt7qd2P1Afc1nZDVmMp/yLSa/HpBufOBZvujW1dcOk=;
+	s=korg; t=1691962366;
+	bh=WaoRDZBPjt0jG1LYNUFc06mC2uf/uXVkQN47ZJyxiwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QjW9hKwZraOZjd3oYEss7ecXD5kspxbbG16vX+T5Ftz6pFeADAtR8IW/HEjq5kVET
-	 mbi+yLQic7jL8WdIMX04mH75b1UvsrWcsCH13xsDQy5nutH1rUsgfXX5GdB4La6hqr
-	 c9guB0kbiZjjNdKnqDCfSiHPgSdI+Ik8aHJP+c4M=
+	b=DZ52q1qkby7aaSiJh81FAta3oRVDFacj6wi4qRd+31sTcZYF7YqkFGTNw3uBPaj3P
+	 wlvplcPJNYH1CJCOQw624Gsa5pOE4SaRFKLExp7LaNavNx5yJPSLFAk4OjbYu55EF6
+	 kA5mvWaHZOnemDBDV9s1503Ci8mtxLATOyiejsVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 188/206] btrfs: set cache_block_group_error if we find an error
-Date: Sun, 13 Aug 2023 23:19:18 +0200
-Message-ID: <20230813211730.403252978@linuxfoundation.org>
+	Michael Kelley <mikelley@microsoft.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 190/206] scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
+Date: Sun, 13 Aug 2023 23:19:20 +0200
+Message-ID: <20230813211730.459184359@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,47 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Michael Kelley <mikelley@microsoft.com>
 
-commit 92fb94b69c6accf1e49fff699640fa0ce03dc910 upstream.
+commit 175544ad48cbf56affeef2a679c6a4d4fb1e2881 upstream.
 
-We set cache_block_group_error if btrfs_cache_block_group() returns an
-error, this is because we could end up not finding space to allocate and
-mistakenly return -ENOSPC, and which could then abort the transaction
-with the incorrect errno, and in the case of ENOSPC result in a
-WARN_ON() that will trip up tests like generic/475.
+Hyper-V provides the ability to connect Fibre Channel LUNs to the host
+system and present them in a guest VM as a SCSI device. I/O to the vFC
+device is handled by the storvsc driver. The storvsc driver includes a
+partial integration with the FC transport implemented in the generic
+portion of the Linux SCSI subsystem so that FC attributes can be displayed
+in /sys.  However, the partial integration means that some aspects of vFC
+don't work properly. Unfortunately, a full and correct integration isn't
+practical because of limitations in what Hyper-V provides to the guest.
 
-However there's the case where multiple threads can be racing, one
-thread gets the proper error, and the other thread doesn't actually call
-btrfs_cache_block_group(), it instead sees ->cached ==
-BTRFS_CACHE_ERROR.  Again the result is the same, we fail to allocate
-our space and return -ENOSPC.  Instead we need to set
-cache_block_group_error to -EIO in this case to make sure that if we do
-not make our allocation we get the appropriate error returned back to
-the caller.
+In particular, in the context of Hyper-V storvsc, the FC transport timeout
+function fc_eh_timed_out() causes a kernel panic because it can't find the
+rport and dereferences a NULL pointer. The original patch that added the
+call from storvsc_eh_timed_out() to fc_eh_timed_out() is faulty in this
+regard.
 
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+In many cases a timeout is due to a transient condition, so the situation
+can be improved by just continuing to wait like with other I/O requests
+issued by storvsc, and avoiding the guaranteed panic. For a permanent
+failure, continuing to wait may result in a hung thread instead of a panic,
+which again may be better.
+
+So fix the panic by removing the storvsc call to fc_eh_timed_out().  This
+allows storvsc to keep waiting for a response.  The change has been tested
+by users who experienced a panic in fc_eh_timed_out() due to transient
+timeouts, and it solves their problem.
+
+In the future we may want to deprecate the vFC functionality in storvsc
+since it can't be fully fixed. But it has current users for whom it is
+working well enough, so it should probably stay for a while longer.
+
+Fixes: 3930d7309807 ("scsi: storvsc: use default I/O timeout handler for FC devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1690606764-79669-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/storvsc_drv.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -4318,8 +4318,11 @@ have_block_group:
- 			ret = 0;
- 		}
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1672,10 +1672,6 @@ static int storvsc_host_reset_handler(st
+  */
+ static enum scsi_timeout_action storvsc_eh_timed_out(struct scsi_cmnd *scmnd)
+ {
+-#if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
+-	if (scmnd->device->host->transportt == fc_transport_template)
+-		return fc_eh_timed_out(scmnd);
+-#endif
+ 	return SCSI_EH_RESET_TIMER;
+ }
  
--		if (unlikely(block_group->cached == BTRFS_CACHE_ERROR))
-+		if (unlikely(block_group->cached == BTRFS_CACHE_ERROR)) {
-+			if (!cache_block_group_error)
-+				cache_block_group_error = -EIO;
- 			goto loop;
-+		}
- 
- 		if (!find_free_extent_check_size_class(ffe_ctl, block_group))
- 			goto loop;
 
 
