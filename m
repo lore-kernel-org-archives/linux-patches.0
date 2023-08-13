@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728C59443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC17BC433C7;
-	Sun, 13 Aug 2023 21:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4623C9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1862C433C8;
+	Sun, 13 Aug 2023 21:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961717;
-	bh=vFmKYYdT9dD/0yIP7GDSf/IPlBizywBUaEh2sD0SS/g=;
+	s=korg; t=1691961720;
+	bh=R15l1BKXod8hZEPiErcBzYQA82uGFFFFFen6jImXGo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lt5XkbLq1t2myaj8k9org/34L1qtRdPnnBbZtPPh7BNsfz2xgG0wNb8gLE9JDkWFb
-	 3yudxziMK7SKONXPqZDdyv5yJHkV5ZZWhTtJZr9+HsWoBsnJBPvPX8g4a9WZd0CnCr
-	 Up17IDN6M+ve0vwC5Cpi8JfPwoikYPCf/HdRI6pQ=
+	b=Hyt0I84SFM2vF4npw8fqx+K3zHDCShwKm5KXY1n2bzWleUrVTYMaZDh2SPl/dcJ1o
+	 oq3QOE+vOJa6WI7QTqS6JYGn4QIF37IU6fj9szfC+bFqFIjsU4/75/Q54R1fatuNHQ
+	 3zlRd5euZaV7+kU44l+u7UvRU/y79VYPIOBGgQjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 4.14 26/26] alpha: remove __init annotation from exported page_is_ram()
-Date: Sun, 13 Aug 2023 23:19:19 +0200
-Message-ID: <20230813211703.953628985@linuxfoundation.org>
+	Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.14 23/26] scsi: 53c700: Check that command slot is not NULL
+Date: Sun, 13 Aug 2023 23:19:16 +0200
+Message-ID: <20230813211703.848550401@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
@@ -34,40 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-commit 6ccbd7fd474674654019a20177c943359469103a upstream.
+commit 8366d1f1249a0d0bba41d0bd1298d63e5d34c7f7 upstream.
 
-EXPORT_SYMBOL and __init is a bad combination because the .init.text
-section is freed up after the initialization.
+Add a check for the command slot value to avoid dereferencing a NULL
+pointer.
 
-Commit c5a130325f13 ("ACPI/APEI: Add parameter check before error
-injection") exported page_is_ram(), hence the __init annotation should
-be removed.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This fixes the modpost warning in ARCH=alpha builds:
-
-  WARNING: modpost: vmlinux: page_is_ram: EXPORT_SYMBOL used for init symbol. Remove __init or EXPORT_SYMBOL.
-
-Fixes: c5a130325f13 ("ACPI/APEI: Add parameter check before error injection")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Link: https://lore.kernel.org/r/20230728123521.18293-1-adiupina@astralinux.ru
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/setup.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/scsi/53c700.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/alpha/kernel/setup.c
-+++ b/arch/alpha/kernel/setup.c
-@@ -469,8 +469,7 @@ setup_memory(void *kernel_end)
- extern void setup_memory(void *);
- #endif /* !CONFIG_DISCONTIGMEM */
- 
--int __init
--page_is_ram(unsigned long pfn)
-+int page_is_ram(unsigned long pfn)
- {
- 	struct memclust_struct * cluster;
- 	struct memdesc_struct * memdesc;
+--- a/drivers/scsi/53c700.c
++++ b/drivers/scsi/53c700.c
+@@ -1594,7 +1594,7 @@ NCR_700_intr(int irq, void *dev_id)
+ 				printk("scsi%d (%d:%d) PHASE MISMATCH IN SEND MESSAGE %d remain, return %p[%04x], phase %s\n", host->host_no, pun, lun, count, (void *)temp, temp - hostdata->pScript, sbcl_to_string(NCR_700_readb(host, SBCL_REG)));
+ #endif
+ 				resume_offset = hostdata->pScript + Ent_SendMessagePhaseMismatch;
+-			} else if(dsp >= to32bit(&slot->pSG[0].ins) &&
++			} else if (slot && dsp >= to32bit(&slot->pSG[0].ins) &&
+ 				  dsp <= to32bit(&slot->pSG[NCR_700_SG_SEGMENTS].ins)) {
+ 				int data_transfer = NCR_700_readl(host, DBC_REG) & 0xffffff;
+ 				int SGcount = (dsp - to32bit(&slot->pSG[0].ins))/sizeof(struct NCR_700_SG_List);
 
 
