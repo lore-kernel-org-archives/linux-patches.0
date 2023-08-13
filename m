@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57059446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4B6C433C8;
-	Sun, 13 Aug 2023 21:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7204D9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA3EC433C8;
+	Sun, 13 Aug 2023 21:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963192;
-	bh=rzNYM/QcUhQYG6AZr4bycAVj3ysLoM1vSnqvvNb1ykc=;
+	s=korg; t=1691963195;
+	bh=/h4CMtc3JNsgyY5AvvgztexyVpPj2LFcBYyxs/2wJa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPT2ubAuPm6dc8z4xh/Sq5+VP/GNSaJ4IPj2JZH+DGW7BPQJevOqNK8qra0E0i5iQ
-	 0BvJ91pIqhzp1x4HwJWlnrmAUdOdHFnx8hRZctREpEGfn9h4a7D1EmfnjY9Np88koM
-	 e8EIUU2f3WaisWPo1dayclAJS4S21wcZyatvpCHo=
+	b=kAfsQmbuOavncnI1x2Rded8Sb0OdPlwZwGyWVwaxNa2WimlS6KhdAyqXDdyZnUF7z
+	 zsMOcb5dZDcTxZlywOWRce6gW6puGFEgowCoRvVaAAdtyfDLcyQdQ3SNO5ZYnx7kB8
+	 Ft6jMR7uK5mvoYw0JLWDh6gb4Rd7vyXt9edk/mmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Yang <leoyang.li@nxp.com>,
-	David Bauer <mail@david-bauer.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 58/89] net: phy: at803x: remove set/get wol callbacks for AR8032
-Date: Sun, 13 Aug 2023 23:19:49 +0200
-Message-ID: <20230813211712.534933779@linuxfoundation.org>
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 59/89] net: hns3: refactor hclge_mac_link_status_wait for interface reuse
+Date: Sun, 13 Aug 2023 23:19:50 +0200
+Message-ID: <20230813211712.564200777@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,32 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Yang <leoyang.li@nxp.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-commit d7791cec2304aea22eb2ada944e4d467302f5bfe upstream.
+commit 08469dacfad25428b66549716811807203744f4f upstream.
 
-Since the AR8032 part does not support wol, remove related callbacks
-from it.
+Some nic configurations could only be performed after link is down. So this
+patch refactor this API for reuse.
 
-Fixes: 5800091a2061 ("net: phy: at803x: add support for AR8032 PHY")
-Signed-off-by: Li Yang <leoyang.li@nxp.com>
-Cc: David Bauer <mail@david-bauer.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230807113452.474224-3-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/at803x.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/net/phy/at803x.c
-+++ b/drivers/net/phy/at803x.c
-@@ -1375,8 +1375,6 @@ static struct phy_driver at803x_driver[]
- 	.flags			= PHY_POLL_CABLE_TEST,
- 	.config_init		= at803x_config_init,
- 	.link_change_notify	= at803x_link_change_notify,
--	.set_wol		= at803x_set_wol,
--	.get_wol		= at803x_get_wol,
- 	.suspend		= at803x_suspend,
- 	.resume			= at803x_resume,
- 	/* PHY_BASIC_FEATURES */
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -70,6 +70,8 @@ static void hclge_sync_mac_table(struct
+ static void hclge_restore_hw_table(struct hclge_dev *hdev);
+ static void hclge_sync_promisc_mode(struct hclge_dev *hdev);
+ static void hclge_sync_fd_table(struct hclge_dev *hdev);
++static int hclge_mac_link_status_wait(struct hclge_dev *hdev, int link_ret,
++				      int wait_cnt);
+ 
+ static struct hnae3_ae_algo ae_algo;
+ 
+@@ -7745,10 +7747,9 @@ static void hclge_phy_link_status_wait(s
+ 	} while (++i < HCLGE_PHY_LINK_STATUS_NUM);
+ }
+ 
+-static int hclge_mac_link_status_wait(struct hclge_dev *hdev, int link_ret)
++static int hclge_mac_link_status_wait(struct hclge_dev *hdev, int link_ret,
++				      int wait_cnt)
+ {
+-#define HCLGE_MAC_LINK_STATUS_NUM  100
+-
+ 	int link_status;
+ 	int i = 0;
+ 	int ret;
+@@ -7761,13 +7762,15 @@ static int hclge_mac_link_status_wait(st
+ 			return 0;
+ 
+ 		msleep(HCLGE_LINK_STATUS_MS);
+-	} while (++i < HCLGE_MAC_LINK_STATUS_NUM);
++	} while (++i < wait_cnt);
+ 	return -EBUSY;
+ }
+ 
+ static int hclge_mac_phy_link_status_wait(struct hclge_dev *hdev, bool en,
+ 					  bool is_phy)
+ {
++#define HCLGE_MAC_LINK_STATUS_NUM  100
++
+ 	int link_ret;
+ 
+ 	link_ret = en ? HCLGE_LINK_STATUS_UP : HCLGE_LINK_STATUS_DOWN;
+@@ -7775,7 +7778,8 @@ static int hclge_mac_phy_link_status_wai
+ 	if (is_phy)
+ 		hclge_phy_link_status_wait(hdev, link_ret);
+ 
+-	return hclge_mac_link_status_wait(hdev, link_ret);
++	return hclge_mac_link_status_wait(hdev, link_ret,
++					  HCLGE_MAC_LINK_STATUS_NUM);
+ }
+ 
+ static int hclge_set_app_loopback(struct hclge_dev *hdev, bool en)
 
 
