@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C789446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2B5C433C8;
-	Sun, 13 Aug 2023 21:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808309446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0387FC433C8;
+	Sun, 13 Aug 2023 21:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963257;
-	bh=IgRO3AVv1LzVnBQitVySX9JsP581lrTof0+biHCgK2w=;
+	s=korg; t=1691963260;
+	bh=FMei2CsV7GQhJ+i9pA7bSCfp/3BI5AitEfoTp59/bpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pU7bs+e6Ml+AyosOwWRU6NYw5TO1s/gcBfeUmCBtItbXOtijPDtU8FCyvUp+wD4gj
-	 zu8zeWQYVd1eJp4tcXEBqu4Gfr4vCwbB6c1uz6iDhY1/gYUXO4t++ervEbGP/YrWgW
-	 4KIsFr+lMR0QElFXgXzNTmzaSNZ/yijoV/FqMrIY=
+	b=CKc5ME0KUJiqLK3hd/GJg/hWpcyeGaFY1RxjdMdF1k2YCEjx9i0AHlIaMCoFcyoBc
+	 t1PfElWdtgsNNN+bj5jDCnm67/jrZok0Yn71TSLAif+FNUos6srkr4BzlXWEDeMi7o
+	 D00WDGHcX3niZ17cI6pfmNkP94eQKi/DClsQT6bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 20/39] bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Sun, 13 Aug 2023 23:20:11 +0200
-Message-ID: <20230813211705.522245328@linuxfoundation.org>
+Subject: [PATCH 5.4 21/39] dccp: fix data-race around dp->dccps_mss_cache
+Date: Sun, 13 Aug 2023 23:20:12 +0200
+Message-ID: <20230813211705.551589989@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -36,82 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 01f4fd27087078c90a0e22860d1dfa2cd0510791 upstream.
+commit a47e598fbd8617967e49d85c49c22f9fc642704c upstream.
 
-BUG_ON(!vlan_info) is triggered in unregister_vlan_dev() with
-following testcase:
+dccp_sendmsg() reads dp->dccps_mss_cache before locking the socket.
+Same thing in do_dccp_getsockopt().
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add bond0 type bond mode 0
-  # ip netns exec ns1 ip link add bond_slave_1 type veth peer veth2
-  # ip netns exec ns1 ip link set bond_slave_1 master bond0
-  # ip netns exec ns1 ip link add link bond_slave_1 name vlan10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link bond0 name bond0_vlan10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set bond_slave_1 nomaster
-  # ip netns del ns1
+Add READ_ONCE()/WRITE_ONCE() annotations,
+and change dccp_sendmsg() to check again dccps_mss_cache
+after socket is locked.
 
-The logical analysis of the problem is as follows:
-
-1. create ETH_P_8021AD protocol vlan10 for bond_slave_1:
-register_vlan_dev()
-  vlan_vid_add()
-    vlan_info_alloc()
-    __vlan_vid_add() // add [ETH_P_8021AD, 10] vid to bond_slave_1
-
-2. create ETH_P_8021AD protocol bond0_vlan10 for bond0:
-register_vlan_dev()
-  vlan_vid_add()
-    __vlan_vid_add()
-      vlan_add_rx_filter_info()
-          if (!vlan_hw_filter_capable(dev, proto)) // condition established because bond0 without NETIF_F_HW_VLAN_STAG_FILTER
-              return 0;
-
-          if (netif_device_present(dev))
-              return dev->netdev_ops->ndo_vlan_rx_add_vid(dev, proto, vid); // will be never called
-              // The slaves of bond0 will not refer to the [ETH_P_8021AD, 10] vid.
-
-3. detach bond_slave_1 from bond0:
-__bond_release_one()
-  vlan_vids_del_by_dev()
-    list_for_each_entry(vid_info, &vlan_info->vid_list, list)
-        vlan_vid_del(dev, vid_info->proto, vid_info->vid);
-        // bond_slave_1 [ETH_P_8021AD, 10] vid will be deleted.
-        // bond_slave_1->vlan_info will be assigned NULL.
-
-4. delete vlan10 during delete ns1:
-default_device_exit_batch()
-  dev->rtnl_link_ops->dellink() // unregister_vlan_dev() for vlan10
-    vlan_info = rtnl_dereference(real_dev->vlan_info); // real_dev of vlan10 is bond_slave_1
-	BUG_ON(!vlan_info); // bond_slave_1->vlan_info is NULL now, bug is triggered!!!
-
-Add S-VLAN tag related features support to bond driver. So the bond driver
-will always propagate the VLAN info to its slaves.
-
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230802114320.4156068-1-william.xuanziyang@huawei.com
+Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230803163021.2958262-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/dccp/output.c |    2 +-
+ net/dccp/proto.c  |   10 ++++++++--
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -4451,7 +4451,9 @@ void bond_setup(struct net_device *bond_
+--- a/net/dccp/output.c
++++ b/net/dccp/output.c
+@@ -185,7 +185,7 @@ unsigned int dccp_sync_mss(struct sock *
  
- 	bond_dev->hw_features = BOND_VLAN_FEATURES |
- 				NETIF_F_HW_VLAN_CTAG_RX |
--				NETIF_F_HW_VLAN_CTAG_FILTER;
-+				NETIF_F_HW_VLAN_CTAG_FILTER |
-+				NETIF_F_HW_VLAN_STAG_RX |
-+				NETIF_F_HW_VLAN_STAG_FILTER;
+ 	/* And store cached results */
+ 	icsk->icsk_pmtu_cookie = pmtu;
+-	dp->dccps_mss_cache = cur_mps;
++	WRITE_ONCE(dp->dccps_mss_cache, cur_mps);
  
- 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
- 	bond_dev->features |= bond_dev->hw_features;
+ 	return cur_mps;
+ }
+--- a/net/dccp/proto.c
++++ b/net/dccp/proto.c
+@@ -644,7 +644,7 @@ static int do_dccp_getsockopt(struct soc
+ 		return dccp_getsockopt_service(sk, len,
+ 					       (__be32 __user *)optval, optlen);
+ 	case DCCP_SOCKOPT_GET_CUR_MPS:
+-		val = dp->dccps_mss_cache;
++		val = READ_ONCE(dp->dccps_mss_cache);
+ 		break;
+ 	case DCCP_SOCKOPT_AVAILABLE_CCIDS:
+ 		return ccid_getsockopt_builtin_ccids(sk, len, optval, optlen);
+@@ -766,7 +766,7 @@ int dccp_sendmsg(struct sock *sk, struct
+ 
+ 	trace_dccp_probe(sk, len);
+ 
+-	if (len > dp->dccps_mss_cache)
++	if (len > READ_ONCE(dp->dccps_mss_cache))
+ 		return -EMSGSIZE;
+ 
+ 	lock_sock(sk);
+@@ -799,6 +799,12 @@ int dccp_sendmsg(struct sock *sk, struct
+ 		goto out_discard;
+ 	}
+ 
++	/* We need to check dccps_mss_cache after socket is locked. */
++	if (len > dp->dccps_mss_cache) {
++		rc = -EMSGSIZE;
++		goto out_discard;
++	}
++
+ 	skb_reserve(skb, sk->sk_prot->max_header);
+ 	rc = memcpy_from_msg(skb_put(skb, len), msg, len);
+ 	if (rc != 0)
 
 
