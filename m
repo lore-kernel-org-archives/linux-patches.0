@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEA89443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:24:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11115C433C9;
-	Sun, 13 Aug 2023 21:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331099443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:24:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE872C433C8;
+	Sun, 13 Aug 2023 21:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961884;
-	bh=b74PVG4SS8F2AaJ1+5HPkOwJMi+XXhoMwtfwCyHol/Y=;
+	s=korg; t=1691961887;
+	bh=SxsEya9kUcl2yirQXYpk4xrz84SrBFJe0cqmKjwZj6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TsuK8lwTIljz+kx3EEu9tJ4dMZdPZhiZtiMof3AeI8DGupk8PhRRPRHV/hYOlOl98
-	 t5FjCC1wry1oVsbQq3vRKsg68qVHN369OjN4ZbPeNtwbss3WI9DLmMOmQPyb5ke6lM
-	 SSKZO7lb5LndPiPb3HXmzVHwSGgrOb21/+xQiwew=
+	b=p4nMkSzjYp06k8GIdCCJnPx8o4EPS3n0RlICDloyz49wXdJ4guyrsFhrg2Ruwux7/
+	 5FRBWTTNTg5aetEwk2vwmlYNt6IoHNIBMzciESkFmLJAUYTexE23bABY4216YttHns
+	 rbGkWY6uX03N9oIu+liNOAwGB3rOTSWvFFU/xySY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.4 026/206] ACPI: resource: Add IRQ override quirk for PCSpecialist Elimina Pro 16 M
-Date: Sun, 13 Aug 2023 23:16:36 +0200
-Message-ID: <20230813211725.744793799@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chunguang Xu <brookxu.cn@gmail.com>,
+	Ming Lei <ming.lei@redhat.com>
+Subject: [PATCH 6.4 035/206] nvme: fix possible hang when removing a controller during error recovery
+Date: Sun, 13 Aug 2023 23:16:45 +0200
+Message-ID: <20230813211726.006453005@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,59 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 56fec0051a69ace182ca3fba47be9c13038b4e3f upstream.
+commit 1b95e817916069ec45a7f259d088fd1c091a8cc6 upstream.
 
-The PCSpecialist Elimina Pro 16 M laptop model is a Zen laptop which
-needs to use the MADT IRQ settings override and which does not have
-an INT_SRC_OVR entry for IRQ 1 in its MADT.
+Error recovery can be interrupted by controller removal, then the
+controller is left as quiesced, and IO hang can be caused.
 
-So this model needs a DMI quirk to enable the MADT IRQ settings override
-to fix its keyboard not working.
+Fix the issue by unquiescing controller unconditionally when removing
+namespaces.
 
-Fixes: a9c4a912b7dc ("ACPI: resource: Remove "Zen" specific match and quirks")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217394#c18
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This way is reasonable and safe given forward progress can be made
+when removing namespaces.
+
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reported-by: Chunguang Xu <brookxu.cn@gmail.com>
+Closes: https://lore.kernel.org/linux-nvme/cover.1685350577.git.chunguang.xu@shopee.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/nvme/host/core.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 8e32dd5776f5..a4d9f149b48d 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -498,6 +498,17 @@ static const struct dmi_system_id maingear_laptop[] = {
- 	{ }
- };
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4728,6 +4728,12 @@ void nvme_remove_namespaces(struct nvme_
+ 	 */
+ 	nvme_mpath_clear_ctrl_paths(ctrl);
  
-+static const struct dmi_system_id pcspecialist_laptop[] = {
-+	{
-+		.ident = "PCSpecialist Elimina Pro 16 M",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "PCSpecialist"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Elimina Pro 16 M"),
-+		},
-+	},
-+	{ }
-+};
++	/*
++	 * Unquiesce io queues so any pending IO won't hang, especially
++	 * those submitted from scan work
++	 */
++	nvme_unquiesce_io_queues(ctrl);
 +
- static const struct dmi_system_id lg_laptop[] = {
- 	{
- 		.ident = "LG Electronics 17U70P",
-@@ -523,6 +534,7 @@ static const struct irq_override_cmp override_table[] = {
- 	{ asus_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
- 	{ tongfang_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
- 	{ maingear_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
-+	{ pcspecialist_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
- 	{ lg_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
- };
+ 	/* prevent racing with ns scanning */
+ 	flush_work(&ctrl->scan_work);
  
--- 
-2.41.0
-
+@@ -4737,10 +4743,8 @@ void nvme_remove_namespaces(struct nvme_
+ 	 * removing the namespaces' disks; fail all the queues now to avoid
+ 	 * potentially having to clean up the failed sync later.
+ 	 */
+-	if (ctrl->state == NVME_CTRL_DEAD) {
++	if (ctrl->state == NVME_CTRL_DEAD)
+ 		nvme_mark_namespaces_dead(ctrl);
+-		nvme_unquiesce_io_queues(ctrl);
+-	}
+ 
+ 	/* this is a no-op when called from the controller reset handler */
+ 	nvme_change_ctrl_state(ctrl, NVME_CTRL_DELETING_NOIO);
 
 
