@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F339443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF74C433C8;
-	Sun, 13 Aug 2023 21:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3973D9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C44C433C8;
+	Sun, 13 Aug 2023 21:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961993;
-	bh=5KgzM63Zrgw//2hLiYqcGjmF8S8om+CJgGSZ2PtFpSo=;
+	s=korg; t=1691961996;
+	bh=tNEhuQ5LM8+VVIGTdRWB2Ibdx981rQni6o2lOUUSkAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAtARZ6eIPmkvp/zWiluD2Rk3Og11vsoZDvUXZq8/ltFdV2GjR3Mz4x1j13Sa9vzH
-	 yLX1fwNrvQwZ0fCjm8IjZiSoQnNR+dfrlm2XaDSush7+hKMXaDTqWadGUHEyxotWjM
-	 DTjjaam4y5KR8XbqhgB1douiMzogUyHLUSruwJr0=
+	b=DfZXCr5mbsWq2OXGIquxiP1m76XhwWF27w4CKGVINITvnN7qkqfxvXD9/785cPhVk
+	 l8jZ6PGlzLR70AnRl8ctETbVZLLVS6CbvJ58YQm5XMGSHh5DZn8OIDYPxVdAUGM9Vg
+	 140wvc5d34noRhxqzZqLiyntB6ZYcvRY3QQfEeH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
-Subject: [PATCH 6.4 074/206] usb-storage: alauda: Fix uninit-value in alauda_check_media()
-Date: Sun, 13 Aug 2023 23:17:24 +0200
-Message-ID: <20230813211727.191733083@linuxfoundation.org>
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Roger Quadros <rogerq@kernel.org>
+Subject: [PATCH 6.4 075/206] usb: dwc3: Properly handle processing of pending events
+Date: Sun, 13 Aug 2023 23:17:25 +0200
+Message-ID: <20230813211727.219851034@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,81 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Elson Roy Serrao <quic_eserrao@quicinc.com>
 
-commit a6ff6e7a9dd69364547751db0f626a10a6d628d2 upstream.
+commit 3ddaa6a274578e23745b7466346fc2650df8f959 upstream.
 
-Syzbot got KMSAN to complain about access to an uninitialized value in
-the alauda subdriver of usb-storage:
+If dwc3 is runtime suspended we defer processing the event buffer
+until resume, by setting the pending_events flag. Set this flag before
+triggering resume to avoid race with the runtime resume callback.
 
-BUG: KMSAN: uninit-value in alauda_transport+0x462/0x57f0
-drivers/usb/storage/alauda.c:1137
-CPU: 0 PID: 12279 Comm: usb-storage Not tainted 5.3.0-rc7+ #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
-Google 01/01/2011
-Call Trace:
-  __dump_stack lib/dump_stack.c:77 [inline]
-  dump_stack+0x191/0x1f0 lib/dump_stack.c:113
-  kmsan_report+0x13a/0x2b0 mm/kmsan/kmsan_report.c:108
-  __msan_warning+0x73/0xe0 mm/kmsan/kmsan_instr.c:250
-  alauda_check_media+0x344/0x3310 drivers/usb/storage/alauda.c:460
+While handling the pending events, in addition to checking the event
+buffer we also need to process it. Handle this by explicitly calling
+dwc3_thread_interrupt(). Also balance the runtime pm get() operation
+that triggered this processing.
 
-The problem is that alauda_check_media() doesn't verify that its USB
-transfer succeeded before trying to use the received data.  What
-should happen if the transfer fails isn't entirely clear, but a
-reasonably conservative approach is to pretend that no media is
-present.
-
-A similar problem exists in a usb_stor_dbg() call in
-alauda_get_media_status().  In this case, when an error occurs the
-call is redundant, because usb_stor_ctrl_transfer() already will print
-a debugging message.
-
-Finally, unrelated to the uninitialized memory access, is the fact
-that alauda_check_media() performs DMA to a buffer on the stack.
-Fortunately usb-storage provides a general purpose DMA-able buffer for
-uses like this.  We'll use it instead.
-
-Reported-and-tested-by: syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/0000000000007d25ff059457342d@google.com/T/
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/693d5d5e-f09b-42d0-8ed9-1f96cd30bcce@rowland.harvard.edu
+Cc: stable@vger.kernel.org
+Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20230801192658.19275-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/alauda.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/gadget.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -318,7 +318,8 @@ static int alauda_get_media_status(struc
- 	rc = usb_stor_ctrl_transfer(us, us->recv_ctrl_pipe,
- 		command, 0xc0, 0, 1, data, 2);
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4448,9 +4448,14 @@ static irqreturn_t dwc3_check_event_buf(
+ 	u32 count;
  
--	usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
-+	if (rc == USB_STOR_XFER_GOOD)
-+		usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
+ 	if (pm_runtime_suspended(dwc->dev)) {
++		dwc->pending_events = true;
++		/*
++		 * Trigger runtime resume. The get() function will be balanced
++		 * after processing the pending events in dwc3_process_pending
++		 * events().
++		 */
+ 		pm_runtime_get(dwc->dev);
+ 		disable_irq_nosync(dwc->irq_gadget);
+-		dwc->pending_events = true;
+ 		return IRQ_HANDLED;
+ 	}
  
- 	return rc;
- }
-@@ -454,9 +455,14 @@ static int alauda_init_media(struct us_d
- static int alauda_check_media(struct us_data *us)
+@@ -4711,6 +4716,8 @@ void dwc3_gadget_process_pending_events(
  {
- 	struct alauda_info *info = (struct alauda_info *) us->extra;
--	unsigned char status[2];
-+	unsigned char *status = us->iobuf;
-+	int rc;
- 
--	alauda_get_media_status(us, status);
-+	rc = alauda_get_media_status(us, status);
-+	if (rc != USB_STOR_XFER_GOOD) {
-+		status[0] = 0xF0;	/* Pretend there's no media */
-+		status[1] = 0;
-+	}
- 
- 	/* Check for no media or door open */
- 	if ((status[0] & 0x80) || ((status[0] & 0x1F) == 0x10)
+ 	if (dwc->pending_events) {
+ 		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
++		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
++		pm_runtime_put(dwc->dev);
+ 		dwc->pending_events = false;
+ 		enable_irq(dwc->irq_gadget);
+ 	}
 
 
