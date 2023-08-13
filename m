@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9B69446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6205AC433C8;
-	Sun, 13 Aug 2023 21:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCC99446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2378DC433C8;
+	Sun, 13 Aug 2023 21:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963148;
-	bh=MJyqatsGLPyZMEnU6ut9zXsnLwmfLJVmaJyEwamZpb8=;
+	s=korg; t=1691963151;
+	bh=TjDUOUnjDNyM7y1Mj9fP/mQvNjTx45ffVAsYa8F/XyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+2qdwWlVV0HZphMTDyFOlf18SnOmkoKioru8TAnyj6euj5y1VgaNzjbCkjHCBACP
-	 Wtm3QxJY0ezbNJPaYx6SxCyVQ21H5Zntcrl3fMU00ElOER90u6HY5WmyuhLEi37zPp
-	 m/Mart3vACQtgbybtNg2+c5eWFQP8b8B6OOhbVoY=
+	b=RwUxR83HTiKGYI05e4lkiwQpCHaO3ckZkMd5c3fkriKDeojq5kghmACCP/xdL764h
+	 Uo4Kxosj27mqqgj3rmuzANc83RFdcM4zgXsX/fnS/pdIaCXAsmHbH9nBal2iiHyR9v
+	 YjQqsYNEscMKICZYV/D4ZKa371fhaq3d8kq5kNGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Gardocki <piotrx.gardocki@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 53/89] iavf: fix potential races for FDIR filters
-Date: Sun, 13 Aug 2023 23:19:44 +0200
-Message-ID: <20230813211712.387170306@linuxfoundation.org>
+	syzbot+ae97a827ae1c3336bbb4@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 71/89] btrfs: exit gracefully if reloc roots dont match
+Date: Sun, 13 Aug 2023 23:20:02 +0200
+Message-ID: <20230813211712.905642804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -37,92 +36,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piotr Gardocki <piotrx.gardocki@intel.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 0fb1d8eb234b6979d4981d2d385780dd7d8d9771 upstream.
+commit 05d7ce504545f7874529701664c90814ca645c5d upstream.
 
-Add fdir_fltr_lock locking in unprotected places.
+[BUG]
+Syzbot reported a crash that an ASSERT() got triggered inside
+prepare_to_merge().
 
-The change in iavf_fdir_is_dup_fltr adds a spinlock around a loop which
-iterates over all filters and looks for a duplicate. The filter can be
-removed from list and freed from memory at the same time it's being
-compared. All other places where filters are deleted are already
-protected with spinlock.
+[CAUSE]
+The root cause of the triggered ASSERT() is we can have a race between
+quota tree creation and relocation.
 
-The remaining changes protect adapter->fdir_active_fltr variable so now
-all its uses are under a spinlock.
+This leads us to create a duplicated quota tree in the
+btrfs_read_fs_root() path, and since it's treated as fs tree, it would
+have ROOT_SHAREABLE flag, causing us to create a reloc tree for it.
 
-Fixes: 527691bf0682 ("iavf: Support IPv4 Flow Director filters")
-Signed-off-by: Piotr Gardocki <piotrx.gardocki@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230807205011.3129224-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The bug itself is fixed by a dedicated patch for it, but this already
+taught us the ASSERT() is not something straightforward for
+developers.
+
+[ENHANCEMENT]
+Instead of using an ASSERT(), let's handle it gracefully and output
+extra info about the mismatch reloc roots to help debug.
+
+Also with the above ASSERT() removed, we can trigger ASSERT(0)s inside
+merge_reloc_roots() later.
+Also replace those ASSERT(0)s with WARN_ON()s.
+
+CC: stable@vger.kernel.org # 5.15+
+Reported-by: syzbot+ae97a827ae1c3336bbb4@syzkaller.appspotmail.com
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_ethtool.c |    5 ++++-
- drivers/net/ethernet/intel/iavf/iavf_fdir.c    |   11 ++++++++---
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ fs/btrfs/relocation.c |   45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -1387,14 +1387,15 @@ static int iavf_add_fdir_ethtool(struct
- 	if (fsp->flow_type & FLOW_MAC_EXT)
- 		return -EINVAL;
- 
-+	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	if (adapter->fdir_active_fltr >= IAVF_MAX_FDIR_FILTERS) {
-+		spin_unlock_bh(&adapter->fdir_fltr_lock);
- 		dev_err(&adapter->pdev->dev,
- 			"Unable to add Flow Director filter because VF reached the limit of max allowed filters (%u)\n",
- 			IAVF_MAX_FDIR_FILTERS);
- 		return -ENOSPC;
- 	}
- 
--	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	if (iavf_find_fdir_fltr_by_loc(adapter, fsp->location)) {
- 		dev_err(&adapter->pdev->dev, "Failed to add Flow Director filter, it already exists\n");
- 		spin_unlock_bh(&adapter->fdir_fltr_lock);
-@@ -1767,7 +1768,9 @@ static int iavf_get_rxnfc(struct net_dev
- 	case ETHTOOL_GRXCLSRLCNT:
- 		if (!FDIR_FLTR_SUPPORT(adapter))
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -1905,7 +1905,39 @@ again:
+ 				err = PTR_ERR(root);
  			break;
-+		spin_lock_bh(&adapter->fdir_fltr_lock);
- 		cmd->rule_cnt = adapter->fdir_active_fltr;
-+		spin_unlock_bh(&adapter->fdir_fltr_lock);
- 		cmd->data = IAVF_MAX_FDIR_FILTERS;
- 		ret = 0;
- 		break;
---- a/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-@@ -722,7 +722,9 @@ void iavf_print_fdir_fltr(struct iavf_ad
- bool iavf_fdir_is_dup_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr)
- {
- 	struct iavf_fdir_fltr *tmp;
-+	bool ret = false;
- 
-+	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	list_for_each_entry(tmp, &adapter->fdir_list_head, list) {
- 		if (tmp->flow_type != fltr->flow_type)
- 			continue;
-@@ -732,11 +734,14 @@ bool iavf_fdir_is_dup_fltr(struct iavf_a
- 		    !memcmp(&tmp->ip_data, &fltr->ip_data,
- 			    sizeof(fltr->ip_data)) &&
- 		    !memcmp(&tmp->ext_data, &fltr->ext_data,
--			    sizeof(fltr->ext_data)))
--			return true;
-+			    sizeof(fltr->ext_data))) {
-+			ret = true;
+ 		}
+-		ASSERT(root->reloc_root == reloc_root);
++
++		if (unlikely(root->reloc_root != reloc_root)) {
++			if (root->reloc_root) {
++				btrfs_err(fs_info,
++"reloc tree mismatch, root %lld has reloc root key (%lld %u %llu) gen %llu, expect reloc root key (%lld %u %llu) gen %llu",
++					  root->root_key.objectid,
++					  root->reloc_root->root_key.objectid,
++					  root->reloc_root->root_key.type,
++					  root->reloc_root->root_key.offset,
++					  btrfs_root_generation(
++						  &root->reloc_root->root_item),
++					  reloc_root->root_key.objectid,
++					  reloc_root->root_key.type,
++					  reloc_root->root_key.offset,
++					  btrfs_root_generation(
++						  &reloc_root->root_item));
++			} else {
++				btrfs_err(fs_info,
++"reloc tree mismatch, root %lld has no reloc root, expect reloc root key (%lld %u %llu) gen %llu",
++					  root->root_key.objectid,
++					  reloc_root->root_key.objectid,
++					  reloc_root->root_key.type,
++					  reloc_root->root_key.offset,
++					  btrfs_root_generation(
++						  &reloc_root->root_item));
++			}
++			list_add(&reloc_root->root_list, &reloc_roots);
++			btrfs_put_root(root);
++			btrfs_abort_transaction(trans, -EUCLEAN);
++			if (!err)
++				err = -EUCLEAN;
 +			break;
 +		}
- 	}
-+	spin_unlock_bh(&adapter->fdir_fltr_lock);
  
--	return false;
-+	return ret;
- }
- 
- /**
+ 		/*
+ 		 * set reference count to 1, so btrfs_recover_relocation
+@@ -1978,7 +2010,7 @@ again:
+ 		root = btrfs_get_fs_root(fs_info, reloc_root->root_key.offset,
+ 					 false);
+ 		if (btrfs_root_refs(&reloc_root->root_item) > 0) {
+-			if (IS_ERR(root)) {
++			if (WARN_ON(IS_ERR(root))) {
+ 				/*
+ 				 * For recovery we read the fs roots on mount,
+ 				 * and if we didn't find the root then we marked
+@@ -1987,17 +2019,14 @@ again:
+ 				 * memory.  However there's no reason we can't
+ 				 * handle the error properly here just in case.
+ 				 */
+-				ASSERT(0);
+ 				ret = PTR_ERR(root);
+ 				goto out;
+ 			}
+-			if (root->reloc_root != reloc_root) {
++			if (WARN_ON(root->reloc_root != reloc_root)) {
+ 				/*
+-				 * This is actually impossible without something
+-				 * going really wrong (like weird race condition
+-				 * or cosmic rays).
++				 * This can happen if on-disk metadata has some
++				 * corruption, e.g. bad reloc tree key offset.
+ 				 */
+-				ASSERT(0);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
 
 
