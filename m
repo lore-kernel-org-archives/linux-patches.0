@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB10D9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCDDC433C7;
-	Sun, 13 Aug 2023 21:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112549446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA19C433C8;
+	Sun, 13 Aug 2023 21:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963230;
-	bh=kt+Fm+ruLUUnVPZ48q7braTLcg7MMb+sLzPvmzQ4t6A=;
+	s=korg; t=1691963232;
+	bh=nUMEiokJZiU6tqmO2VDBktmKlW/FpDm0C4mLBA3Q4qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yj88MKzgvplSD1C3fIUgkZiZQAC9zsp9vj0EcCgTnhIvAMKbZ/6pBbNK0XSq6Z9d9
-	 K0mn7T1gCpEHgb6EK5z/apGMAal2UV3t7M4hwJaO5WeM2Jp0z7FltA2TFLf1lUmsB+
-	 K+uUPgmDyGa9mLPLwFS0GvVkD9j8GI0rs1Oy2qkE=
+	b=yQ6VpUl3xS2aKMXwrNnnyJpAcowKuOtAkyPWkP06X3fg4QyHD5pvcL35cm7HIRw+k
+	 I/4YaWcuRAORXb06waMwThdN5WBKooG2FBZvkcgW1Y8bNQy6e6xCdqM+WbCJZglCdO
+	 5r4p0Amq0pQaFmAXeQf5+qQ3EGvUf4xeA6+2ZdQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Roger Quadros <rogerq@kernel.org>
-Subject: [PATCH 5.4 11/39] usb: dwc3: Properly handle processing of pending events
-Date: Sun, 13 Aug 2023 23:20:02 +0200
-Message-ID: <20230813211705.221926743@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.4 12/39] usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
+Date: Sun, 13 Aug 2023 23:20:03 +0200
+Message-ID: <20230813211705.255122360@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -35,56 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elson Roy Serrao <quic_eserrao@quicinc.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit 3ddaa6a274578e23745b7466346fc2650df8f959 upstream.
+commit 8e21a620c7e6e00347ade1a6ed4967b359eada5a upstream.
 
-If dwc3 is runtime suspended we defer processing the event buffer
-until resume, by setting the pending_events flag. Set this flag before
-triggering resume to avoid race with the runtime resume callback.
+Currently if we bootup a device without cable connected, then
+usb-conn-gpio won't call set_role() because last_role is same
+as current role. This happens since last_role gets initialised
+to zero during the probe.
 
-While handling the pending events, in addition to checking the event
-buffer we also need to process it. Handle this by explicitly calling
-dwc3_thread_interrupt(). Also balance the runtime pm get() operation
-that triggered this processing.
+To avoid this, add a new flag initial_detection into struct
+usb_conn_info, which prevents bailing out during initial
+detection.
 
-Cc: stable@vger.kernel.org
-Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230801192658.19275-1-quic_eserrao@quicinc.com
+Cc: <stable@vger.kernel.org> # 5.4
+Fixes: 4602f3bff266 ("usb: common: add USB GPIO based connection detection driver")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/1690880632-12588-1-git-send-email-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/common/usb-conn-gpio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3589,9 +3589,14 @@ static irqreturn_t dwc3_check_event_buf(
- 	u32 reg;
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -38,6 +38,7 @@ struct usb_conn_info {
+ 	struct gpio_desc *vbus_gpiod;
+ 	int id_irq;
+ 	int vbus_irq;
++	bool initial_detection;
+ };
  
- 	if (pm_runtime_suspended(dwc->dev)) {
-+		dwc->pending_events = true;
-+		/*
-+		 * Trigger runtime resume. The get() function will be balanced
-+		 * after processing the pending events in dwc3_process_pending
-+		 * events().
-+		 */
- 		pm_runtime_get(dwc->dev);
- 		disable_irq_nosync(dwc->irq_gadget);
--		dwc->pending_events = true;
- 		return IRQ_HANDLED;
+ /**
+@@ -82,11 +83,13 @@ static void usb_conn_detect_cable(struct
+ 	dev_dbg(info->dev, "role %d/%d, gpios: id %d, vbus %d\n",
+ 		info->last_role, role, id, vbus);
+ 
+-	if (info->last_role == role) {
++	if (!info->initial_detection && info->last_role == role) {
+ 		dev_warn(info->dev, "repeated role: %d\n", role);
+ 		return;
  	}
  
-@@ -3827,6 +3832,8 @@ void dwc3_gadget_process_pending_events(
- {
- 	if (dwc->pending_events) {
- 		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
-+		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
-+		pm_runtime_put(dwc->dev);
- 		dwc->pending_events = false;
- 		enable_irq(dwc->irq_gadget);
- 	}
++	info->initial_detection = false;
++
+ 	if (info->last_role == USB_ROLE_HOST)
+ 		regulator_disable(info->vbus);
+ 
+@@ -206,6 +209,7 @@ static int usb_conn_probe(struct platfor
+ 	platform_set_drvdata(pdev, info);
+ 
+ 	/* Perform initial detection */
++	info->initial_detection = true;
+ 	usb_conn_queue_dwork(info, 0);
+ 
+ 	return 0;
 
 
