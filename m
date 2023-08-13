@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EB39446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454ACC433C8;
-	Sun, 13 Aug 2023 21:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9810D9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18697C433C7;
+	Sun, 13 Aug 2023 21:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962866;
-	bh=iqwqPSbrOzLABMnbt/2aa7sFnp243oZZ+ilWCX40fuY=;
+	s=korg; t=1691962869;
+	bh=hwEnLo2tP0fO46fvhCBenOu25yC4/esmOUwiZ6XLvwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkSzUKymf6/zhFuVRAXvnKmarplah7btRGWDHKA0TjnQbc63PiJpm0+gBm8nKAaUF
-	 Oq6hSGCpEMNtXNqe0yp++oO/3wigiK6OxRsD7uOVB+HpdmJpXNNTLjo1G5WYQpc3o+
-	 Or71zF1mWn2u0QBA6WlNCQaqMuEAgmVGhkDUFJ0s=
+	b=rAiQdchXlqeUCJ3uoWXq1ihninaPnIrUVLKsADs8fvCWKBgQWo0Rev/IJzC03qKa6
+	 Ggj8wLz87ZrqX1JAQwhHOiYmmdVhvKDSiMu05FmEuG0R2fOqRUPi3QxCdpX5gVSpSW
+	 l31heBe93t0hKLgrY4Bt21zbqRCQnaPTkMQfxrCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hangbin Liu <liuhangbin@gmail.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 36/68] selftests: forwarding: Skip test when no interfaces are specified
-Date: Sun, 13 Aug 2023 23:19:37 +0200
-Message-ID: <20230813211709.256551181@linuxfoundation.org>
+Subject: [PATCH 5.10 37/68] selftests: forwarding: Switch off timeout
+Date: Sun, 13 Aug 2023 23:19:38 +0200
+Message-ID: <20230813211709.286509231@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -40,66 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-commit d72c83b1e4b4a36a38269c77a85ff52f95eb0d08 upstream.
+commit 0529883ad102f6c04e19fb7018f31e1bda575bbe upstream.
 
-As explained in [1], the forwarding selftests are meant to be run with
-either physical loopbacks or veth pairs. The interfaces are expected to
-be specified in a user-provided forwarding.config file or as command
-line arguments. By default, this file is not present and the tests fail:
+The default timeout for selftests is 45 seconds, but it is not enough
+for forwarding selftests which can takes minutes to finish depending on
+the number of tests cases:
 
  # make -C tools/testing/selftests TARGETS=net/forwarding run_tests
- [...]
  TAP version 13
  1..102
  # timeout set to 45
  # selftests: net/forwarding: bridge_igmp.sh
- # Command line is not complete. Try option "help"
- # Failed to create netif
- not ok 1 selftests: net/forwarding: bridge_igmp.sh # exit=1
- [...]
+ # TEST: IGMPv2 report 239.10.10.10                                    [ OK ]
+ # TEST: IGMPv2 leave 239.10.10.10                                     [ OK ]
+ # TEST: IGMPv3 report 239.10.10.10 is_include                         [ OK ]
+ # TEST: IGMPv3 report 239.10.10.10 include -> allow                   [ OK ]
+ #
+ not ok 1 selftests: net/forwarding: bridge_igmp.sh # TIMEOUT 45 seconds
 
-Fix by skipping a test if interfaces are not provided either via the
-configuration file or command line arguments.
-
- # make -C tools/testing/selftests TARGETS=net/forwarding run_tests
- [...]
- TAP version 13
- 1..102
- # timeout set to 45
- # selftests: net/forwarding: bridge_igmp.sh
- # SKIP: Cannot create interface. Name not specified
- ok 1 selftests: net/forwarding: bridge_igmp.sh # SKIP
-
-[1] tools/testing/selftests/net/forwarding/README
+Fix by switching off the timeout and setting it to 0. A similar change
+was done for BPF selftests in commit 6fc5916cc256 ("selftests: bpf:
+Switch off timeout").
 
 Fixes: 81573b18f26d ("selftests/net/forwarding: add Makefile to install tests")
 Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/856d454e-f83c-20cf-e166-6dc06cbc1543@alu.unizg.hr/
+Closes: https://lore.kernel.org/netdev/8d149f8c-818e-d141-a0ce-a6bae606bc22@alu.unizg.hr/
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
 Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
 Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-2-idosch@nvidia.com
+Link: https://lore.kernel.org/r/20230808141503.4060661-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/lib.sh |    5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/net/forwarding/settings |    1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tools/testing/selftests/net/forwarding/settings
 
---- a/tools/testing/selftests/net/forwarding/lib.sh
-+++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -132,6 +132,11 @@ create_netif_veth()
- 	for ((i = 1; i <= NUM_NETIFS; ++i)); do
- 		local j=$((i+1))
- 
-+		if [ -z ${NETIFS[p$i]} ]; then
-+			echo "SKIP: Cannot create interface. Name not specified"
-+			exit $ksft_skip
-+		fi
-+
- 		ip link show dev ${NETIFS[p$i]} &> /dev/null
- 		if [[ $? -ne 0 ]]; then
- 			ip link add ${NETIFS[p$i]} type veth \
+--- /dev/null
++++ b/tools/testing/selftests/net/forwarding/settings
+@@ -0,0 +1 @@
++timeout=0
 
 
