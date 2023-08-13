@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FBB9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:28:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43F5C433C9;
-	Sun, 13 Aug 2023 21:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281C49443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:28:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB97C433C8;
+	Sun, 13 Aug 2023 21:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962125;
-	bh=jSSFM6Ur8X+Thg2WccZzDbCDev7oioXCCyEujDJ0bho=;
+	s=korg; t=1691962128;
+	bh=kkJeiYHMZW6Tugf3zjNiLrMoS/tlMeAhg3bf+65P61g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEK7Kiz5TWu0wSVk78WrRSs+Twc5tgtoZQe13OC2ksYQ9SNWF/6TC4pmWDHgpTH7O
-	 0jWboU8nHLFthQA9pxKby542e1VQ+Ks5roqTdRSp7iagmplevmoFolOnLRhokZqiUu
-	 cLT3WiUI9NOoRaO9MkX/5+fnN+oofmg7GqeLliSs=
+	b=X9AwN5jqlpqUqkafeVN39WiuzdBYTIkckTxmJlt+tXQvdW4B3ctZs/TWXbVPg5gHm
+	 M3H8cmtWIt96/9ymsK0ElVi3m6tsB/RrCGorXOKKPFAMQTCGsjVS+XZKo2SiBKrd6y
+	 lrP2XTDlNUxt3GGpE7sV9xiUp2KfXCtn/jsYiU7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jason Wang <jasowang@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+f817490f5bd20541b90a@syzkaller.appspotmail.com
-Subject: [PATCH 6.4 121/206] net: core: remove unnecessary frame_sz check in bpf_xdp_adjust_tail()
-Date: Sun, 13 Aug 2023 23:18:11 +0200
-Message-ID: <20230813211728.504037985@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.4 093/206] netfilter: nft_set_hash: mark set element as dead when deleting from packet path
+Date: Sun, 13 Aug 2023 23:17:43 +0200
+Message-ID: <20230813211727.729864308@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -37,80 +33,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit d14eea09edf427fa36bd446f4a3271f99164202f upstream.
+commit c92db3030492b8ad1d0faace7a93bbcf53850d0c upstream.
 
-Syzkaller reported the following issue:
-=======================================
-Too BIG xdp->frame_sz = 131072
-WARNING: CPU: 0 PID: 5020 at net/core/filter.c:4121
-  ____bpf_xdp_adjust_tail net/core/filter.c:4121 [inline]
-WARNING: CPU: 0 PID: 5020 at net/core/filter.c:4121
-  bpf_xdp_adjust_tail+0x466/0xa10 net/core/filter.c:4103
-...
-Call Trace:
- <TASK>
- bpf_prog_4add87e5301a4105+0x1a/0x1c
- __bpf_prog_run include/linux/filter.h:600 [inline]
- bpf_prog_run_xdp include/linux/filter.h:775 [inline]
- bpf_prog_run_generic_xdp+0x57e/0x11e0 net/core/dev.c:4721
- netif_receive_generic_xdp net/core/dev.c:4807 [inline]
- do_xdp_generic+0x35c/0x770 net/core/dev.c:4866
- tun_get_user+0x2340/0x3ca0 drivers/net/tun.c:1919
- tun_chr_write_iter+0xe8/0x210 drivers/net/tun.c:2043
- call_write_iter include/linux/fs.h:1871 [inline]
- new_sync_write fs/read_write.c:491 [inline]
- vfs_write+0x650/0xe40 fs/read_write.c:584
- ksys_write+0x12f/0x250 fs/read_write.c:637
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Set on the NFT_SET_ELEM_DEAD_BIT flag on this element, instead of
+performing element removal which might race with an ongoing transaction.
+Enable gc when dynamic flag is set on since dynset deletion requires
+garbage collection after this patch.
 
-xdp->frame_sz > PAGE_SIZE check was introduced in commit c8741e2bfe87
-("xdp: Allow bpf_xdp_adjust_tail() to grow packet size"). But Jesper
-Dangaard Brouer <jbrouer@redhat.com> noted that after introducing the
-xdp_init_buff() which all XDP driver use - it's safe to remove this
-check. The original intend was to catch cases where XDP drivers have
-not been updated to use xdp.frame_sz, but that is not longer a concern
-(since xdp_init_buff).
-
-Running the initial syzkaller repro it was discovered that the
-contiguous physical memory allocation is used for both xdp paths in
-tun_get_user(), e.g. tun_build_skb() and tun_alloc_skb(). It was also
-stated by Jesper Dangaard Brouer <jbrouer@redhat.com> that XDP can
-work on higher order pages, as long as this is contiguous physical
-memory (e.g. a page).
-
-Reported-and-tested-by: syzbot+f817490f5bd20541b90a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000774b9205f1d8a80d@google.com/T/
-Link: https://syzkaller.appspot.com/bug?extid=f817490f5bd20541b90a
-Link: https://lore.kernel.org/all/20230725155403.796-1-andrew.kanner@gmail.com/T/
-Fixes: 43b5169d8355 ("net, xdp: Introduce xdp_init_buff utility routine")
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/r/20230803190316.2380231-1-andrew.kanner@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d0a8d877da97 ("netfilter: nft_dynset: support for element deletion")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c |    6 ------
- 1 file changed, 6 deletions(-)
+ net/netfilter/nft_set_hash.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4115,12 +4115,6 @@ BPF_CALL_2(bpf_xdp_adjust_tail, struct x
- 	if (unlikely(data_end > data_hard_end))
- 		return -EINVAL;
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -249,7 +249,9 @@ static bool nft_rhash_delete(const struc
+ 	if (he == NULL)
+ 		return false;
  
--	/* ALL drivers MUST init xdp->frame_sz, chicken check below */
--	if (unlikely(xdp->frame_sz > PAGE_SIZE)) {
--		WARN_ONCE(1, "Too BIG xdp->frame_sz = %d\n", xdp->frame_sz);
--		return -EINVAL;
--	}
--
- 	if (unlikely(data_end < xdp->data + ETH_HLEN))
- 		return -EINVAL;
+-	return rhashtable_remove_fast(&priv->ht, &he->node, nft_rhash_params) == 0;
++	nft_set_elem_dead(&he->ext);
++
++	return true;
+ }
  
+ static void nft_rhash_walk(const struct nft_ctx *ctx, struct nft_set *set,
+@@ -412,7 +414,7 @@ static int nft_rhash_init(const struct n
+ 		return err;
+ 
+ 	INIT_DEFERRABLE_WORK(&priv->gc_work, nft_rhash_gc);
+-	if (set->flags & NFT_SET_TIMEOUT)
++	if (set->flags & (NFT_SET_TIMEOUT | NFT_SET_EVAL))
+ 		nft_rhash_gc_init(set);
+ 
+ 	return 0;
 
 
