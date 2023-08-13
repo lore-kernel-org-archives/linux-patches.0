@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DF79446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C77C433C9;
-	Sun, 13 Aug 2023 21:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01D49446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EB0C433C7;
+	Sun, 13 Aug 2023 21:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962990;
-	bh=VkWxs0dVgAExpk9Vo8WMQB6BsThyzY1VLQ1Ep6bjmLM=;
+	s=korg; t=1691962992;
+	bh=546MNMIr+xnNdGKgD02vXjFPUs2k5SCVLyJKED+nLmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jG4nf8qViQ7P78qeHk7IXe9Mn+oU2Mo2I3zEgoOOtGlkDoaKC39P5BgcEhRZNmQcZ
-	 LTS1wnhVD1cBJ9fAsbp9Kwptm4Go4LyNXjm+HMGtLu7W2NojPPi5+p4glnXs2Xgf2t
-	 N3qI7JPs6KwBWsahBZj69ZAJ11/q8MgpzoB/3GZE=
+	b=c2b8oVMnkhFoLBw/rf3NVDFbfLR7AjG1cSRN+pe2ooyjfVyzeKav7uyaxrOWA8RXO
+	 JNdBAefPYV7ciXGDmZveFNKXJ7ebQMn2hwkiwO3F48CyLXKXXcKRaDZNNjaT6+qVJ9
+	 ePAMeloP0ZTwbJGy16BeaeRlDnDdn5QETwaepvNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 13/89] nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
-Date: Sun, 13 Aug 2023 23:19:04 +0200
-Message-ID: <20230813211711.169630145@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>
+Subject: [PATCH 5.15 14/89] bpf: allow precision tracking for programs with subprogs
+Date: Sun, 13 Aug 2023 23:19:05 +0200
+Message-ID: <20230813211711.197761174@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,120 +35,241 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit f8654743a0e6909dc634cbfad6db6816f10f3399 upstream.
+[ Upstream commit be2ef8161572ec1973124ebc50f56dafc2925e07 ]
 
-During unmount process of nilfs2, nothing holds nilfs_root structure after
-nilfs2 detaches its writer in nilfs_detach_log_writer().  Previously,
-nilfs_evict_inode() could cause use-after-free read for nilfs_root if
-inodes are left in "garbage_list" and released by nilfs_dispose_list at
-the end of nilfs_detach_log_writer(), and this bug was fixed by commit
-9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root in
-nilfs_evict_inode()").
+Stop forcing precise=true for SCALAR registers when BPF program has any
+subprograms. Current restriction means that any BPF program, as soon as
+it uses subprograms, will end up not getting any of the precision
+tracking benefits in reduction of number of verified states.
 
-However, it turned out that there is another possibility of UAF in the
-call path where mark_inode_dirty_sync() is called from iput():
+This patch keeps the fallback mark_all_scalars_precise() behavior if
+precise marking has to cross function frames. E.g., if subprogram
+requires R1 (first input arg) to be marked precise, ideally we'd need to
+backtrack to the parent function and keep marking R1 and its
+dependencies as precise. But right now we give up and force all the
+SCALARs in any of the current and parent states to be forced to
+precise=true. We can lift that restriction in the future.
 
-nilfs_detach_log_writer()
-  nilfs_dispose_list()
-    iput()
-      mark_inode_dirty_sync()
-        __mark_inode_dirty()
-          nilfs_dirty_inode()
-            __nilfs_mark_inode_dirty()
-              nilfs_load_inode_block() --> causes UAF of nilfs_root struct
+But this patch fixes two issues identified when trying to enable
+precision tracking for subprogs.
 
-This can happen after commit 0ae45f63d4ef ("vfs: add support for a
-lazytime mount option"), which changed iput() to call
-mark_inode_dirty_sync() on its final reference if i_state has I_DIRTY_TIME
-flag and i_nlink is non-zero.
+First, prevent "escaping" from top-most state in a global subprog. While
+with entry-level BPF program we never end up requesting precision for
+R1-R5 registers, because R2-R5 are not initialized (and so not readable
+in correct BPF program), and R1 is PTR_TO_CTX, not SCALAR, and so is
+implicitly precise. With global subprogs, though, it's different, as
+global subprog a) can have up to 5 SCALAR input arguments, which might
+get marked as precise=true and b) it is validated in isolation from its
+main entry BPF program. b) means that we can end up exhausting parent
+state chain and still not mark all registers in reg_mask as precise,
+which would lead to verifier bug warning.
 
-This issue appears after commit 28a65b49eb53 ("nilfs2: do not write dirty
-data after degenerating to read-only") when using the syzbot reproducer,
-but the issue has potentially existed before.
+To handle that, we need to consider two cases. First, if the very first
+state is not immediately "checkpointed" (i.e., stored in state lookup
+hashtable), it will get correct first_insn_idx and last_insn_idx
+instruction set during state checkpointing. As such, this case is
+already handled and __mark_chain_precision() already handles that by
+just doing nothing when we reach to the very first parent state.
+st->parent will be NULL and we'll just stop. Perhaps some extra check
+for reg_mask and stack_mask is due here, but this patch doesn't address
+that issue.
 
-Fix this issue by adding a "purging flag" to the nilfs structure, setting
-that flag while disposing the "garbage_list" and checking it in
-__nilfs_mark_inode_dirty().
+More problematic second case is when global function's initial state is
+immediately checkpointed before we manage to process the very first
+instruction. This is happening because when there is a call to global
+subprog from the main program the very first subprog's instruction is
+marked as pruning point, so before we manage to process first
+instruction we have to check and checkpoint state. This patch adds
+a special handling for such "empty" state, which is identified by having
+st->last_insn_idx set to -1. In such case, we check that we are indeed
+validating global subprog, and with some sanity checking we mark input
+args as precise if requested.
 
-Unlike commit 9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root
-in nilfs_evict_inode()"), this patch does not rely on ns_writer to
-determine whether to skip operations, so as not to break recovery on
-mount.  The nilfs_salvage_orphan_logs routine dirties the buffer of
-salvaged data before attaching the log writer, so changing
-__nilfs_mark_inode_dirty() to skip the operation when ns_writer is NULL
-will cause recovery write to fail.  The purpose of using the cleanup-only
-flag is to allow for narrowing of such conditions.
+Note that we also initialize state->first_insn_idx with correct start
+insn_idx offset. For main program zero is correct value, but for any
+subprog it's quite confusing to not have first_insn_idx set. This
+doesn't have any functional impact, but helps with debugging and state
+printing. We also explicitly initialize state->last_insns_idx instead of
+relying on is_state_visited() to do this with env->prev_insns_idx, which
+will be -1 on the very first instruction. This concludes necessary
+changes to handle specifically global subprog's precision tracking.
 
-Link: https://lkml.kernel.org/r/20230728191318.33047-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000b4e906060113fd63@google.com
-Fixes: 0ae45f63d4ef ("vfs: add support for a lazytime mount option")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org> # 4.0+
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Second identified problem was missed handling of BPF helper functions
+that call into subprogs (e.g., bpf_loop and few others). From precision
+tracking and backtracking logic's standpoint those are effectively calls
+into subprogs and should be called as BPF_PSEUDO_CALL calls.
+
+This patch takes the least intrusive way and just checks against a short
+list of current BPF helpers that do call subprogs, encapsulated in
+is_callback_calling_function() function. But to prevent accidentally
+forgetting to add new BPF helpers to this "list", we also do a sanity
+check in __check_func_call, which has to be called for each such special
+BPF helper, to validate that BPF helper is indeed recognized as
+callback-calling one. This should catch any missed checks in the future.
+Adding some special flags to be added in function proto definitions
+seemed like an overkill in this case.
+
+With the above changes, it's possible to remove forceful setting of
+reg->precise to true in __mark_reg_unknown, which turns on precision
+tracking both inside subprogs and entry progs that have subprogs. No
+warnings or errors were detected across all the selftests, but also when
+validating with veristat against internal Meta BPF objects and Cilium
+objects. Further, in some BPF programs there are noticeable reduction in
+number of states and instructions validated due to more effective
+precision tracking, especially benefiting syncookie test.
+
+$ ./veristat -C -e file,prog,insns,states ~/baseline-results.csv ~/subprog-precise-results.csv  | grep -v '+0'
+File                                      Program                     Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+----------------------------------------  --------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+pyperf600_bpf_loop.bpf.linked1.o          on_event                               3966             3678       -288 (-7.26%)               306               276         -30 (-9.80%)
+pyperf_global.bpf.linked1.o               on_event                               7563             7530        -33 (-0.44%)               520               517          -3 (-0.58%)
+pyperf_subprogs.bpf.linked1.o             on_event                              36358            36934       +576 (+1.58%)              2499              2531         +32 (+1.28%)
+setget_sockopt.bpf.linked1.o              skops_sockopt                          3965             4038        +73 (+1.84%)               343               347          +4 (+1.17%)
+test_cls_redirect_subprogs.bpf.linked1.o  cls_redirect                          64965            64901        -64 (-0.10%)              4619              4612          -7 (-0.15%)
+test_misc_tcp_hdr_options.bpf.linked1.o   misc_estab                             1491             1307      -184 (-12.34%)               110               100         -10 (-9.09%)
+test_pkt_access.bpf.linked1.o             test_pkt_access                         354              349         -5 (-1.41%)                25                24          -1 (-4.00%)
+test_sock_fields.bpf.linked1.o            egress_read_sock_fields                 435              375       -60 (-13.79%)                22                20          -2 (-9.09%)
+test_sysctl_loop2.bpf.linked1.o           sysctl_tcp_mem                         1508             1501         -7 (-0.46%)                29                28          -1 (-3.45%)
+test_tc_dtime.bpf.linked1.o               egress_fwdns_prio100                    468              435        -33 (-7.05%)                45                41          -4 (-8.89%)
+test_tc_dtime.bpf.linked1.o               ingress_fwdns_prio100                   398              408        +10 (+2.51%)                42                39          -3 (-7.14%)
+test_tc_dtime.bpf.linked1.o               ingress_fwdns_prio101                  1096              842      -254 (-23.18%)                97                73        -24 (-24.74%)
+test_tcp_hdr_options.bpf.linked1.o        estab                                  2758             2408      -350 (-12.69%)               208               181        -27 (-12.98%)
+test_urandom_usdt.bpf.linked1.o           urand_read_with_sema                    466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_urandom_usdt.bpf.linked1.o           urand_read_without_sema                 466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_urandom_usdt.bpf.linked1.o           urandlib_read_with_sema                 466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_urandom_usdt.bpf.linked1.o           urandlib_read_without_sema              466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_xdp_noinline.bpf.linked1.o           balancer_ingress_v6                    4302             4294         -8 (-0.19%)               257               256          -1 (-0.39%)
+xdp_synproxy_kern.bpf.linked1.o           syncookie_tc                         583722           405757   -177965 (-30.49%)             35846             25735     -10111 (-28.21%)
+xdp_synproxy_kern.bpf.linked1.o           syncookie_xdp                        609123           479055   -130068 (-21.35%)             35452             29145      -6307 (-17.79%)
+----------------------------------------  --------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: ecdf985d7615 ("bpf: track immediate values written to stack by BPF_ST instruction")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c     |    8 ++++++++
- fs/nilfs2/segment.c   |    2 ++
- fs/nilfs2/the_nilfs.h |    2 ++
- 3 files changed, 12 insertions(+)
+ kernel/bpf/verifier.c |   59 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -1105,9 +1105,17 @@ int nilfs_set_file_dirty(struct inode *i
- 
- int __nilfs_mark_inode_dirty(struct inode *inode, int flags)
- {
-+	struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
- 	struct buffer_head *ibh;
- 	int err;
- 
-+	/*
-+	 * Do not dirty inodes after the log writer has been detached
-+	 * and its nilfs_root struct has been freed.
-+	 */
-+	if (unlikely(nilfs_purging(nilfs)))
-+		return 0;
-+
- 	err = nilfs_load_inode_block(inode, &ibh);
- 	if (unlikely(err)) {
- 		nilfs_warn(inode->i_sb,
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2845,6 +2845,7 @@ void nilfs_detach_log_writer(struct supe
- 		nilfs_segctor_destroy(nilfs->ns_writer);
- 		nilfs->ns_writer = NULL;
- 	}
-+	set_nilfs_purging(nilfs);
- 
- 	/* Force to free the list of dirty files */
- 	spin_lock(&nilfs->ns_inode_lock);
-@@ -2857,4 +2858,5 @@ void nilfs_detach_log_writer(struct supe
- 	up_write(&nilfs->ns_segctor_sem);
- 
- 	nilfs_dispose_list(nilfs, &garbage_list, 1);
-+	clear_nilfs_purging(nilfs);
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -517,6 +517,12 @@ static bool is_ptr_cast_function(enum bp
+ 		func_id == BPF_FUNC_skc_to_tcp_request_sock;
  }
---- a/fs/nilfs2/the_nilfs.h
-+++ b/fs/nilfs2/the_nilfs.h
-@@ -29,6 +29,7 @@ enum {
- 	THE_NILFS_DISCONTINUED,	/* 'next' pointer chain has broken */
- 	THE_NILFS_GC_RUNNING,	/* gc process is running */
- 	THE_NILFS_SB_DIRTY,	/* super block is dirty */
-+	THE_NILFS_PURGING,	/* disposing dirty files for cleanup */
- };
  
- /**
-@@ -208,6 +209,7 @@ THE_NILFS_FNS(INIT, init)
- THE_NILFS_FNS(DISCONTINUED, discontinued)
- THE_NILFS_FNS(GC_RUNNING, gc_running)
- THE_NILFS_FNS(SB_DIRTY, sb_dirty)
-+THE_NILFS_FNS(PURGING, purging)
++static bool is_callback_calling_function(enum bpf_func_id func_id)
++{
++	return func_id == BPF_FUNC_for_each_map_elem ||
++	       func_id == BPF_FUNC_timer_set_callback;
++}
++
+ static bool is_cmpxchg_insn(const struct bpf_insn *insn)
+ {
+ 	return BPF_CLASS(insn->code) == BPF_STX &&
+@@ -1446,7 +1452,7 @@ static void __mark_reg_unknown(const str
+ 	reg->type = SCALAR_VALUE;
+ 	reg->var_off = tnum_unknown;
+ 	reg->frameno = 0;
+-	reg->precise = env->subprog_cnt > 1 || !env->bpf_capable;
++	reg->precise = !env->bpf_capable;
+ 	__mark_reg_unbounded(reg);
+ }
  
- /*
-  * Mount option operations
+@@ -2267,6 +2273,11 @@ static int backtrack_insn(struct bpf_ver
+ 			 */
+ 			if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL && insn->imm == 0)
+ 				return -ENOTSUPP;
++			/* BPF helpers that invoke callback subprogs are
++			 * equivalent to BPF_PSEUDO_CALL above
++			 */
++			if (insn->src_reg == 0 && is_callback_calling_function(insn->imm))
++				return -ENOTSUPP;
+ 			/* regular helper call sets R0 */
+ 			*reg_mask &= ~1;
+ 			if (*reg_mask & 0x3f) {
+@@ -2445,12 +2456,42 @@ static int __mark_chain_precision(struct
+ 		return 0;
+ 	if (!reg_mask && !stack_mask)
+ 		return 0;
++
+ 	for (;;) {
+ 		DECLARE_BITMAP(mask, 64);
+ 		u32 history = st->jmp_history_cnt;
+ 
+ 		if (env->log.level & BPF_LOG_LEVEL)
+ 			verbose(env, "last_idx %d first_idx %d\n", last_idx, first_idx);
++
++		if (last_idx < 0) {
++			/* we are at the entry into subprog, which
++			 * is expected for global funcs, but only if
++			 * requested precise registers are R1-R5
++			 * (which are global func's input arguments)
++			 */
++			if (st->curframe == 0 &&
++			    st->frame[0]->subprogno > 0 &&
++			    st->frame[0]->callsite == BPF_MAIN_FUNC &&
++			    stack_mask == 0 && (reg_mask & ~0x3e) == 0) {
++				bitmap_from_u64(mask, reg_mask);
++				for_each_set_bit(i, mask, 32) {
++					reg = &st->frame[0]->regs[i];
++					if (reg->type != SCALAR_VALUE) {
++						reg_mask &= ~(1u << i);
++						continue;
++					}
++					reg->precise = true;
++				}
++				return 0;
++			}
++
++			verbose(env, "BUG backtracing func entry subprog %d reg_mask %x stack_mask %llx\n",
++				st->frame[0]->subprogno, reg_mask, stack_mask);
++			WARN_ONCE(1, "verifier backtracking bug");
++			return -EFAULT;
++		}
++
+ 		for (i = last_idx;;) {
+ 			if (skip_first) {
+ 				err = 0;
+@@ -5806,6 +5847,10 @@ typedef int (*set_callee_state_fn)(struc
+ 				   struct bpf_func_state *callee,
+ 				   int insn_idx);
+ 
++static int set_callee_state(struct bpf_verifier_env *env,
++			    struct bpf_func_state *caller,
++			    struct bpf_func_state *callee, int insn_idx);
++
+ static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 			     int *insn_idx, int subprog,
+ 			     set_callee_state_fn set_callee_state_cb)
+@@ -5856,6 +5901,16 @@ static int __check_func_call(struct bpf_
+ 		}
+ 	}
+ 
++	/* set_callee_state is used for direct subprog calls, but we are
++	 * interested in validating only BPF helpers that can call subprogs as
++	 * callbacks
++	 */
++	if (set_callee_state_cb != set_callee_state && !is_callback_calling_function(insn->imm)) {
++		verbose(env, "verifier bug: helper %s#%d is not marked as callback-calling\n",
++			func_id_name(insn->imm), insn->imm);
++		return -EFAULT;
++	}
++
+ 	if (insn->code == (BPF_JMP | BPF_CALL) &&
+ 	    insn->src_reg == 0 &&
+ 	    insn->imm == BPF_FUNC_timer_set_callback) {
+@@ -13209,6 +13264,8 @@ static int do_check_common(struct bpf_ve
+ 			BPF_MAIN_FUNC /* callsite */,
+ 			0 /* frameno */,
+ 			subprog);
++	state->first_insn_idx = env->subprog_info[subprog].start;
++	state->last_insn_idx = -1;
+ 
+ 	regs = state->frame[state->curframe]->regs;
+ 	if (subprog || env->prog->type == BPF_PROG_TYPE_EXT) {
 
 
