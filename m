@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C9A9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E290EC433C8;
-	Sun, 13 Aug 2023 21:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5009446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC02C433C7;
+	Sun, 13 Aug 2023 21:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962947;
-	bh=CuKY4//Qrgx570pfF61icS748x0UBm7tj7LLPzJbPvU=;
+	s=korg; t=1691962950;
+	bh=EC2WCWgyoiDU5+tDDPPWxY2CHdsny6DE+73l8d4hfeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LQnf9XUTevshM0dMRJ1Szhs4fdZ8JSTpZ6qirXbidM1y7CSubeMR6HcXqP9BbiTx
-	 QlcnUBtFwigDRRaFu+gsZ22qa4AyLRSMUWTxGBOeMhwBGdxmlypeHKefkA3n8Cd04I
-	 D8lt2piBYC2tU3563bs/IuF3U5xO1ueNfrlQ88dQ=
+	b=neE2f5rWvcWGD77xQ3T58MujMaaqYeG1khOkLIDngswyGY3Q5hnCokYASW/FiHxXA
+	 y8uN6LQYULi1UtcCxvYX6KWs4M5RrByvdVZ7mdueyZ3A0Kufr48vtj3O/ZOUTtkPOB
+	 MplAwX/QhuOFaM5op72nsKi66gzIvZhgd0NdEr5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 66/68] scsi: qedf: Fix firmware halt over suspend and resume
-Date: Sun, 13 Aug 2023 23:20:07 +0200
-Message-ID: <20230813211710.150321873@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 5.10 67/68] alpha: remove __init annotation from exported page_is_ram()
+Date: Sun, 13 Aug 2023 23:20:08 +0200
+Message-ID: <20230813211710.181595640@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,71 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit ef222f551e7c4e2008fc442ffc9edcd1a7fd8f63 upstream.
+commit 6ccbd7fd474674654019a20177c943359469103a upstream.
 
-While performing certain power-off sequences, PCI drivers are called to
-suspend and resume their underlying devices through PCI PM (power
-management) interface. However the hardware does not support PCI PM
-suspend/resume operations so system wide suspend/resume leads to bad MFW
-(management firmware) state which causes various follow-up errors in driver
-when communicating with the device/firmware.
+EXPORT_SYMBOL and __init is a bad combination because the .init.text
+section is freed up after the initialization.
 
-To fix this driver implements PCI PM suspend handler to indicate
-unsupported operation to the PCI subsystem explicitly, thus avoiding system
-to go into suspended/standby mode.
+Commit c5a130325f13 ("ACPI/APEI: Add parameter check before error
+injection") exported page_is_ram(), hence the __init annotation should
+be removed.
 
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230807093725.46829-1-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This fixes the modpost warning in ARCH=alpha builds:
+
+  WARNING: modpost: vmlinux: page_is_ram: EXPORT_SYMBOL used for init symbol. Remove __init or EXPORT_SYMBOL.
+
+Fixes: c5a130325f13 ("ACPI/APEI: Add parameter check before error injection")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qedf/qedf_main.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ arch/alpha/kernel/setup.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -31,6 +31,7 @@ static void qedf_remove(struct pci_dev *
- static void qedf_shutdown(struct pci_dev *pdev);
- static void qedf_schedule_recovery_handler(void *dev);
- static void qedf_recovery_handler(struct work_struct *work);
-+static int qedf_suspend(struct pci_dev *pdev, pm_message_t state);
+--- a/arch/alpha/kernel/setup.c
++++ b/arch/alpha/kernel/setup.c
+@@ -394,8 +394,7 @@ setup_memory(void *kernel_end)
+ extern void setup_memory(void *);
+ #endif /* !CONFIG_DISCONTIGMEM */
  
- /*
-  * Driver module parameters.
-@@ -3272,6 +3273,7 @@ static struct pci_driver qedf_pci_driver
- 	.probe = qedf_probe,
- 	.remove = qedf_remove,
- 	.shutdown = qedf_shutdown,
-+	.suspend = qedf_suspend,
- };
- 
- static int __qedf_probe(struct pci_dev *pdev, int mode)
-@@ -3986,6 +3988,22 @@ static void qedf_shutdown(struct pci_dev
- 	__qedf_remove(pdev, QEDF_MODE_NORMAL);
- }
- 
-+static int qedf_suspend(struct pci_dev *pdev, pm_message_t state)
-+{
-+	struct qedf_ctx *qedf;
-+
-+	if (!pdev) {
-+		QEDF_ERR(NULL, "pdev is NULL.\n");
-+		return -ENODEV;
-+	}
-+
-+	qedf = pci_get_drvdata(pdev);
-+
-+	QEDF_ERR(&qedf->dbg_ctx, "%s: Device does not support suspend operation\n", __func__);
-+
-+	return -EPERM;
-+}
-+
- /*
-  * Recovery handler code
-  */
+-int __init
+-page_is_ram(unsigned long pfn)
++int page_is_ram(unsigned long pfn)
+ {
+ 	struct memclust_struct * cluster;
+ 	struct memdesc_struct * memdesc;
 
 
