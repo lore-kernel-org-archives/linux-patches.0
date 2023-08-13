@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3880C9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44BAC433C7;
-	Sun, 13 Aug 2023 21:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65EC9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDE7C433C8;
+	Sun, 13 Aug 2023 21:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961956;
-	bh=HhPc/qRnSiqXehVjmzVMurXNDk8bdWXue1yFrR4kqs8=;
+	s=korg; t=1691961958;
+	bh=oRCk/Hxr1zM1ulmwrTHTtRmAcAU350bPlP+CDrFzLC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NePE0XQ/7J1tWsxF667c/GZNRKfU7rMySGBTFRswv4W3UHgVSFxflFBoEJPO2/hLM
-	 vERqix1CP1Ke6uMOPpk47JGDbX5TaIJzDbqEbVO+bdiLrW6ZlE9jyEZyG98DtGjOZp
-	 IKmXiYgK60ZXUVgmz2E9Cb2l/uXFueoYZKJcdx+s=
+	b=mvRPznelv2O3rzWThbY7z16v/5YgYejQj0tiVnmYlypdhJ8Bu4prl9VMy2etD5u9t
+	 iR2vN+qw8JtxOgWNLIwxza+WstXQXN/vf7FElJ3bQI8bRIvvMZdRlKLYNBFQmnfvkp
+	 r6oEDcuxgPN6/jib3epuiIUp9YDtJD58VNe+aJeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Song Shuai <suagrfillet@gmail.com>,
+	Torsten Duwe <duwe@suse.de>,
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.4 030/206] riscv: Start of DRAM should at least be aligned on PMD size for the direct mapping
-Date: Sun, 13 Aug 2023 23:16:40 +0200
-Message-ID: <20230813211725.865896204@linuxfoundation.org>
+Subject: [PATCH 6.4 031/206] riscv/kexec: load initrd high in available memory
+Date: Sun, 13 Aug 2023 23:16:41 +0200
+Message-ID: <20230813211725.895070625@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,48 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Torsten Duwe <duwe@suse.de>
 
-commit c3bcc65d4d2e8292c435322cbc34c318d06b8b6c upstream.
+commit 49af7a2cd5f678217b8b4f86a29411aebebf3e78 upstream.
 
-So that we do not end up mapping the whole linear mapping using 4K
-pages, which is slow at boot time, and also very likely at runtime.
+When initrd is loaded low, the secondary kernel fails like this:
 
-So make sure we align the start of DRAM on a PMD boundary.
+ INITRD: 0xdc581000+0x00eef000 overlaps in-use memory region
 
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reported-by: Song Shuai <suagrfillet@gmail.com>
-Fixes: 3335068f8721 ("riscv: Use PUD/P4D/PGD pages for the linear mapping")
-Tested-by: Song Shuai <suagrfillet@gmail.com>
-Link: https://lore.kernel.org/r/20230704121837.248976-1-alexghiti@rivosinc.com
+This initrd load address corresponds to the _end symbol, but the
+reservation is aligned on PMD_SIZE, as explained by a comment in
+setup_bootmem().
+
+It is technically possible to align the initrd load address accordingly,
+leaving a hole between the end of kernel and the initrd, but it is much
+simpler to allocate the initrd top-down.
+
+Fixes: 838b3e28488f ("RISC-V: Load purgatory in kexec_file")
+Signed-off-by: Torsten Duwe <duwe@suse.de>
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/all/67c8eb9eea25717c2c8208d9bfbfaa39e6e2a1c6.1690365011.git.petr.tesarik.ext@huawei.com/
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/init.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/elf_kexec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 9ce504737d18..ad845c3aa9b2 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -214,8 +214,13 @@ static void __init setup_bootmem(void)
- 	memblock_reserve(vmlinux_start, vmlinux_end - vmlinux_start);
- 
- 	phys_ram_end = memblock_end_of_DRAM();
-+
-+	/*
-+	 * Make sure we align the start of the memory on a PMD boundary so that
-+	 * at worst, we map the linear mapping with PMD mappings.
-+	 */
- 	if (!IS_ENABLED(CONFIG_XIP_KERNEL))
--		phys_ram_base = memblock_start_of_DRAM();
-+		phys_ram_base = memblock_start_of_DRAM() & PMD_MASK;
- 
- 	/*
- 	 * In 64-bit, any use of __va/__pa before this point is wrong as we
--- 
-2.41.0
-
+--- a/arch/riscv/kernel/elf_kexec.c
++++ b/arch/riscv/kernel/elf_kexec.c
+@@ -281,7 +281,7 @@ static void *elf_kexec_load(struct kimag
+ 		kbuf.buffer = initrd;
+ 		kbuf.bufsz = kbuf.memsz = initrd_len;
+ 		kbuf.buf_align = PAGE_SIZE;
+-		kbuf.top_down = false;
++		kbuf.top_down = true;
+ 		kbuf.mem = KEXEC_BUF_MEM_UNKNOWN;
+ 		ret = kexec_add_buffer(&kbuf);
+ 		if (ret)
 
 
