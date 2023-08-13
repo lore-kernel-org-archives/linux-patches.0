@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEEA9454
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97988C433C7;
-	Sun, 13 Aug 2023 21:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82909446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF8DC433C7;
+	Sun, 13 Aug 2023 21:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963028;
-	bh=8SOFQyrS2XcR+/jgWBQbvc5B3VtrT921Tk6XIbDWWY8=;
+	s=korg; t=1691963030;
+	bh=hOabV+KorJK9yJKufh1IhqTLOa1UUsSKa8xLx0V0TvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXIv21NwdwfSELbHxFPVuuJfn0a8t8Io516YWItish490Se02EEiAc2ba9maOfZx0
-	 CKCeotIOof66pZbmoBdhISAjr3Sp5QTFtukU3pbZ9nHlWeZBrCg+ar3ejcpHmvr6mo
-	 OUu1uFtmzWTihf0k/8NJtqh4JoMDuGbPPdiEfauo=
+	b=vnoSqcCJd9xAfBLyrKnsobJfBr322FIo+bIqPf85dRkGxJizOBo0FRjs6dUTNEhNO
+	 LIkXRW3YnfoXHi7xWzCeL+6IFXZwBUxxOfRQYK7bbedpawbMPACrYobftnUKJWITAE
+	 t3Y8H1INTBm6oTVuU+tCEsTqpZPPrY6LQiPKevU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 07/89] riscv,mmio: Fix readX()-to-delay() ordering
-Date: Sun, 13 Aug 2023 23:18:58 +0200
-Message-ID: <20230813211711.000949585@linuxfoundation.org>
+	Ben Skeggs <bskeggs@redhat.com>,
+	David Airlie <airlied@gmail.com>,
+	nouveau@lists.freedesktop.org,
+	Karol Herbst <kherbst@redhat.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 5.15 08/89] drm/nouveau/gr: enable memory loads on helper invocation on all channels
+Date: Sun, 13 Aug 2023 23:18:59 +0200
+Message-ID: <20230813211711.029282242@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -34,68 +37,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Karol Herbst <kherbst@redhat.com>
 
-commit 4eb2eb1b4c0eb07793c240744843498564a67b83 upstream.
+commit 1cb9e2ef66d53b020842b18762e30d0eb4384de8 upstream.
 
-Section 2.1 of the Platform Specification [1] states:
+We have a lurking bug where Fragment Shader Helper Invocations can't load
+from memory. But this is actually required in OpenGL and is causing random
+hangs or failures in random shaders.
 
-  Unless otherwise specified by a given I/O device, I/O devices are on
-  ordering channel 0 (i.e., they are point-to-point strongly ordered).
+It is unknown how widespread this issue is, but shaders hitting this can
+end up with infinite loops.
 
-which is not sufficient to guarantee that a readX() by a hart completes
-before a subsequent delay() on the same hart (cf. memory-barriers.txt,
-"Kernel I/O barrier effects").
+We enable those only on all Kepler and newer GPUs where we use our own
+Firmware.
 
-Set the I(nput) bit in __io_ar() to restore the ordering, align inline
-comments.
+Nvidia's firmware provides a way to set a kernelspace controlled list of
+mmio registers in the gr space from push buffers via MME macros.
 
-[1] https://github.com/riscv/riscv-platform-specs
+v2: drop code for gm200 and newer.
 
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://lore.kernel.org/r/20230803042738.5937-1-parri.andrea@gmail.com
-Fixes: fab957c11efe ("RISC-V: Atomic and Locking Code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: nouveau@lists.freedesktop.org
+Cc: stable@vger.kernel.org # 4.19+
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230622152017.2512101-1-kherbst@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/mmio.h |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h  |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c  |    4 +++-
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c  |   10 ++++++++++
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c  |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c  |    1 +
+ 6 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/mmio.h
-+++ b/arch/riscv/include/asm/mmio.h
-@@ -101,9 +101,9 @@ static inline u64 __raw_readq(const vola
-  * Relaxed I/O memory access primitives. These follow the Device memory
-  * ordering rules but do not guarantee any ordering relative to Normal memory
-  * accesses.  These are defined to order the indicated access (either a read or
-- * write) with all other I/O memory accesses. Since the platform specification
-- * defines that all I/O regions are strongly ordered on channel 2, no explicit
-- * fences are required to enforce this ordering.
-+ * write) with all other I/O memory accesses to the same peripheral. Since the
-+ * platform specification defines that all I/O regions are strongly ordered on
-+ * channel 0, no explicit fences are required to enforce this ordering.
-  */
- /* FIXME: These are now the same as asm-generic */
- #define __io_rbr()		do {} while (0)
-@@ -125,14 +125,14 @@ static inline u64 __raw_readq(const vola
- #endif
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h
+@@ -123,6 +123,7 @@ void gk104_grctx_generate_r418800(struct
  
- /*
-- * I/O memory access primitives. Reads are ordered relative to any
-- * following Normal memory access. Writes are ordered relative to any prior
-- * Normal memory access.  The memory barriers here are necessary as RISC-V
-+ * I/O memory access primitives.  Reads are ordered relative to any following
-+ * Normal memory read and delay() loop.  Writes are ordered relative to any
-+ * prior Normal memory write.  The memory barriers here are necessary as RISC-V
-  * doesn't define any ordering between the memory space and the I/O space.
-  */
- #define __io_br()	do {} while (0)
--#define __io_ar(v)	__asm__ __volatile__ ("fence i,r" : : : "memory")
--#define __io_bw()	__asm__ __volatile__ ("fence w,o" : : : "memory")
-+#define __io_ar(v)	({ __asm__ __volatile__ ("fence i,ir" : : : "memory"); })
-+#define __io_bw()	({ __asm__ __volatile__ ("fence w,o" : : : "memory"); })
- #define __io_aw()	mmiowb_set_pending()
+ extern const struct gf100_grctx_func gk110_grctx;
+ void gk110_grctx_generate_r419eb0(struct gf100_gr *);
++void gk110_grctx_generate_r419f78(struct gf100_gr *);
  
- #define readb(c)	({ u8  __v; __io_br(); __v = readb_cpu(c); __io_ar(__v); __v; })
+ extern const struct gf100_grctx_func gk110b_grctx;
+ extern const struct gf100_grctx_func gk208_grctx;
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c
+@@ -916,7 +916,9 @@ static void
+ gk104_grctx_generate_r419f78(struct gf100_gr *gr)
+ {
+ 	struct nvkm_device *device = gr->base.engine.subdev.device;
+-	nvkm_mask(device, 0x419f78, 0x00000001, 0x00000000);
++
++	/* bit 3 set disables loads in fp helper invocations, we need it enabled */
++	nvkm_mask(device, 0x419f78, 0x00000009, 0x00000000);
+ }
+ 
+ void
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c
+@@ -820,6 +820,15 @@ gk110_grctx_generate_r419eb0(struct gf10
+ 	nvkm_mask(device, 0x419eb0, 0x00001000, 0x00001000);
+ }
+ 
++void
++gk110_grctx_generate_r419f78(struct gf100_gr *gr)
++{
++	struct nvkm_device *device = gr->base.engine.subdev.device;
++
++	/* bit 3 set disables loads in fp helper invocations, we need it enabled */
++	nvkm_mask(device, 0x419f78, 0x00000008, 0x00000000);
++}
++
+ const struct gf100_grctx_func
+ gk110_grctx = {
+ 	.main  = gf100_grctx_generate_main,
+@@ -852,4 +861,5 @@ gk110_grctx = {
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r418800 = gk104_grctx_generate_r418800,
+ 	.r419eb0 = gk110_grctx_generate_r419eb0,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c
+@@ -101,4 +101,5 @@ gk110b_grctx = {
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r418800 = gk104_grctx_generate_r418800,
+ 	.r419eb0 = gk110_grctx_generate_r419eb0,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c
+@@ -566,4 +566,5 @@ gk208_grctx = {
+ 	.dist_skip_table = gf117_grctx_generate_dist_skip_table,
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r418800 = gk104_grctx_generate_r418800,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c
+@@ -991,4 +991,5 @@ gm107_grctx = {
+ 	.r406500 = gm107_grctx_generate_r406500,
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r419e00 = gm107_grctx_generate_r419e00,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
 
 
