@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6430F9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB55DC433C7;
-	Sun, 13 Aug 2023 21:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BF29443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E620C433C9;
+	Sun, 13 Aug 2023 21:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961694;
-	bh=GWc1cu/amCp9CakShuTrrzwZPXKBwSs0rRxpgQItOYk=;
+	s=korg; t=1691961697;
+	bh=ZKG8s5xuZiblMO6eM1/BEJy75HQAz56zcA4G08jLXcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvcJ+GJ7XGFcGn3YwKN87OG5cJ5Jn0vm7DaAnD+osuOyPnC5E6R5EF0PNRvDw0ZS+
-	 RngF7jgz2jhNOpJuirz3f2/ffHe1N3isYefo1yTfYvkiwWl5uOK2NiuifFejfudN6A
-	 j8aTWK3uLqb0fsFBWzGb7XeDN0VVCfPIJTrycKGc=
+	b=cq2QgWWX7jz/G2wSRBCpMN1pPKN9wA/xyiNq0kK9GS+KzFxfBrzVJz0jykDoacuBy
+	 PI/+d7xfPAz4r7d0SAk/I3fvbpSg52X9n2az7w/kGgxdPw9ZSZroaQ5DG0MXut+E+1
+	 erbi/4+SAeQPS+A7fRYMwahjpBojktdJjPcq7pY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 06/26] nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
-Date: Sun, 13 Aug 2023 23:18:59 +0200
-Message-ID: <20230813211703.227229562@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kees Cook <keescook@chromium.org>,
+	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
+	Scott Branden <sbranden@broadcom.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 4.14 07/26] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
+Date: Sun, 13 Aug 2023 23:19:00 +0200
+Message-ID: <20230813211703.269420619@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
@@ -35,120 +41,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit f8654743a0e6909dc634cbfad6db6816f10f3399 upstream.
+commit 7dae593cd226a0bca61201cf85ceb9335cf63682 upstream.
 
-During unmount process of nilfs2, nothing holds nilfs_root structure after
-nilfs2 detaches its writer in nilfs_detach_log_writer().  Previously,
-nilfs_evict_inode() could cause use-after-free read for nilfs_root if
-inodes are left in "garbage_list" and released by nilfs_dispose_list at
-the end of nilfs_detach_log_writer(), and this bug was fixed by commit
-9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root in
-nilfs_evict_inode()").
+In a couple of situations like
 
-However, it turned out that there is another possibility of UAF in the
-call path where mark_inode_dirty_sync() is called from iput():
+	name = kstrndup(buf, count, GFP_KERNEL);
+	if (!name)
+		return -ENOSPC;
 
-nilfs_detach_log_writer()
-  nilfs_dispose_list()
-    iput()
-      mark_inode_dirty_sync()
-        __mark_inode_dirty()
-          nilfs_dirty_inode()
-            __nilfs_mark_inode_dirty()
-              nilfs_load_inode_block() --> causes UAF of nilfs_root struct
+the error is not actually "No space left on device", but "Out of memory".
 
-This can happen after commit 0ae45f63d4ef ("vfs: add support for a
-lazytime mount option"), which changed iput() to call
-mark_inode_dirty_sync() on its final reference if i_state has I_DIRTY_TIME
-flag and i_nlink is non-zero.
+It is semantically correct to return -ENOMEM in all failed kstrndup()
+and kzalloc() cases in this driver, as it is not a problem with disk
+space, but with kernel memory allocator failing allocation.
 
-This issue appears after commit 28a65b49eb53 ("nilfs2: do not write dirty
-data after degenerating to read-only") when using the syzbot reproducer,
-but the issue has potentially existed before.
+The semantically correct should be:
 
-Fix this issue by adding a "purging flag" to the nilfs structure, setting
-that flag while disposing the "garbage_list" and checking it in
-__nilfs_mark_inode_dirty().
+        name = kstrndup(buf, count, GFP_KERNEL);
+        if (!name)
+                return -ENOMEM;
 
-Unlike commit 9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root
-in nilfs_evict_inode()"), this patch does not rely on ns_writer to
-determine whether to skip operations, so as not to break recovery on
-mount.  The nilfs_salvage_orphan_logs routine dirties the buffer of
-salvaged data before attaching the log writer, so changing
-__nilfs_mark_inode_dirty() to skip the operation when ns_writer is NULL
-will cause recovery write to fail.  The purpose of using the cleanup-only
-flag is to allow for narrowing of such conditions.
-
-Link: https://lkml.kernel.org/r/20230728191318.33047-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000b4e906060113fd63@google.com
-Fixes: 0ae45f63d4ef ("vfs: add support for a lazytime mount option")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org> # 4.0+
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Brian Norris <briannorris@chromium.org>
+Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
+Fixes: 0a8adf584759c ("test: add firmware_class loader test")
+Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
+Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
+Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c     |    8 ++++++++
- fs/nilfs2/segment.c   |    2 ++
- fs/nilfs2/the_nilfs.h |    2 ++
- 3 files changed, 12 insertions(+)
+ lib/test_firmware.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -1121,9 +1121,17 @@ int nilfs_set_file_dirty(struct inode *i
- 
- int __nilfs_mark_inode_dirty(struct inode *inode, int flags)
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -159,7 +159,7 @@ static int __kstrncpy(char **dst, const
  {
-+	struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
- 	struct buffer_head *ibh;
- 	int err;
- 
-+	/*
-+	 * Do not dirty inodes after the log writer has been detached
-+	 * and its nilfs_root struct has been freed.
-+	 */
-+	if (unlikely(nilfs_purging(nilfs)))
-+		return 0;
-+
- 	err = nilfs_load_inode_block(inode, &ibh);
- 	if (unlikely(err)) {
- 		nilfs_msg(inode->i_sb, KERN_WARNING,
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2859,6 +2859,7 @@ void nilfs_detach_log_writer(struct supe
- 		nilfs_segctor_destroy(nilfs->ns_writer);
- 		nilfs->ns_writer = NULL;
- 	}
-+	set_nilfs_purging(nilfs);
- 
- 	/* Force to free the list of dirty files */
- 	spin_lock(&nilfs->ns_inode_lock);
-@@ -2871,4 +2872,5 @@ void nilfs_detach_log_writer(struct supe
- 	up_write(&nilfs->ns_segctor_sem);
- 
- 	nilfs_dispose_list(nilfs, &garbage_list, 1);
-+	clear_nilfs_purging(nilfs);
+ 	*dst = kstrndup(name, count, gfp);
+ 	if (!*dst)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 	return count;
  }
---- a/fs/nilfs2/the_nilfs.h
-+++ b/fs/nilfs2/the_nilfs.h
-@@ -37,6 +37,7 @@ enum {
- 	THE_NILFS_DISCONTINUED,	/* 'next' pointer chain has broken */
- 	THE_NILFS_GC_RUNNING,	/* gc process is running */
- 	THE_NILFS_SB_DIRTY,	/* super block is dirty */
-+	THE_NILFS_PURGING,	/* disposing dirty files for cleanup */
- };
  
- /**
-@@ -216,6 +217,7 @@ THE_NILFS_FNS(INIT, init)
- THE_NILFS_FNS(DISCONTINUED, discontinued)
- THE_NILFS_FNS(GC_RUNNING, gc_running)
- THE_NILFS_FNS(SB_DIRTY, sb_dirty)
-+THE_NILFS_FNS(PURGING, purging)
+@@ -459,7 +459,7 @@ static ssize_t trigger_request_store(str
  
- /*
-  * Mount option operations
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -500,7 +500,7 @@ static ssize_t trigger_async_request_sto
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -543,7 +543,7 @@ static ssize_t trigger_custom_fallback_s
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s' using custom fallback mechanism\n", name);
+ 
 
 
