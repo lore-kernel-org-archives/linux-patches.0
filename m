@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9866D9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37CBC433C9;
-	Sun, 13 Aug 2023 21:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8589443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB154C433C9;
+	Sun, 13 Aug 2023 21:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962336;
-	bh=sqTW8dK3H/9DaN2wTnRnd29na1gnUo6H+TTW5P1gbGQ=;
+	s=korg; t=1691962339;
+	bh=BW8zYnyIK6f1YjLz3AKGpHFzxJ/qs5zX7Js9MRK86Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kF4TwY5if33sK6X6OokdcWxkB+83IFzH6l9z4IeXYFK/pHNoKPe1B3tgkLif+sFUY
-	 boNqCg7fZYei9tcYQ4YFaVQovtl075cLsxaBAzwcAlcmFeW6yze6tmGoRJOzQMmTLs
-	 HmvM0NBa0eutwX8eGic7c3m0udavjXgen8O5/y3Y=
+	b=vudFhZbj89CnTmGyMlnKyUPRRrqt7GoZZaJ3yU1zkdVLjDbCDLdGg6JZIyqTJXqR1
+	 ZEfx24iSdXd1bZv/AkK8KBHJq3lb3BrGymicW8gSNNoYkUv5B5ZEcxS9smwkwSphcy
+	 UWEihr53veuS/VaiEE8VaBGBhyvOLEwaNzUXa3eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Andrew Kallmeyer <kallmeyeras@gmail.com>,
-	=?UTF-8?q?Gerg=C5=91=20K=C3=B6teles?= <soyer@irl.hu>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Michael Shych <michaelsh@nvidia.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.4 199/206] platform/x86: lenovo-ymc: Only bind on machines with a convertible DMI chassis-type
-Date: Sun, 13 Aug 2023 23:19:29 +0200
-Message-ID: <20230813211730.706570074@linuxfoundation.org>
+Subject: [PATCH 6.4 200/206] platform: mellanox: Change register offset addresses
+Date: Sun, 13 Aug 2023 23:19:30 +0200
+Message-ID: <20230813211730.733938316@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,94 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-commit 2b6aa6610dc9690f79d305ca938abfb799a4f766 upstream.
+commit d66a8aab7dc36c975bbaa6aa74cf7445878e7c69 upstream.
 
-The lenovo-ymc driver is causing the keyboard + touchpad to stop working
-on some regular laptop models such as the Lenovo ThinkBook 13s G2 ITL 20V9.
+Move debug register offsets to different location due to hardware changes.
 
-The problem is that there are YMC WMI GUID methods in the ACPI tables
-of these laptops, despite them not being Yogas and lenovo-ymc loading
-causes libinput to see a SW_TABLET_MODE switch with state 1.
-
-This in turn causes libinput to ignore events from the builtin keyboard
-and touchpad, since it filters those out for a Yoga in tablet mode.
-
-Similar issues with false-positive SW_TABLET_MODE=1 reporting have
-been seen with the intel-hid driver.
-
-Copy the intel-hid driver approach to fix this and only bind to the WMI
-device on machines where the DMI chassis-type indicates the machine
-is a convertible.
-
-Add a 'force' module parameter to allow overriding the chassis-type check
-so that users can easily test if the YMC interface works on models which
-report an unexpected chassis-type.
-
-Fixes: e82882cdd241 ("platform/x86: Add driver for Yoga Tablet Mode switch")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2229373
-Cc: André Apitzsch <git@apitzsch.eu>
-Cc: stable@vger.kernel.org
-Tested-by: Andrew Kallmeyer <kallmeyeras@gmail.com>
-Tested-by: Gergő Köteles <soyer@irl.hu>
+Fixes: dd635e33b5c9 ("platform: mellanox: Introduce support of new Nvidia L1 switch")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: Michael Shych <michaelsh@nvidia.com>
+Link: https://lore.kernel.org/r/20230813083735.39090-5-vadimp@nvidia.com
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230812144818.383230-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/lenovo-ymc.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/platform/x86/mlx-platform.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/lenovo-ymc.c b/drivers/platform/x86/lenovo-ymc.c
-index 41676188b373..f360370d5002 100644
---- a/drivers/platform/x86/lenovo-ymc.c
-+++ b/drivers/platform/x86/lenovo-ymc.c
-@@ -24,6 +24,10 @@ static bool ec_trigger __read_mostly;
- module_param(ec_trigger, bool, 0444);
- MODULE_PARM_DESC(ec_trigger, "Enable EC triggering work-around to force emitting tablet mode events");
- 
-+static bool force;
-+module_param(force, bool, 0444);
-+MODULE_PARM_DESC(force, "Force loading on boards without a convertible DMI chassis-type");
-+
- static const struct dmi_system_id ec_trigger_quirk_dmi_table[] = {
- 	{
- 		/* Lenovo Yoga 7 14ARB7 */
-@@ -35,6 +39,20 @@ static const struct dmi_system_id ec_trigger_quirk_dmi_table[] = {
- 	{ }
- };
- 
-+static const struct dmi_system_id allowed_chasis_types_dmi_table[] = {
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_CHASSIS_TYPE, "31" /* Convertible */),
-+		},
-+	},
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_CHASSIS_TYPE, "32" /* Detachable */),
-+		},
-+	},
-+	{ }
-+};
-+
- struct lenovo_ymc_private {
- 	struct input_dev *input_dev;
- 	struct acpi_device *ec_acpi_dev;
-@@ -111,6 +129,13 @@ static int lenovo_ymc_probe(struct wmi_device *wdev, const void *ctx)
- 	struct input_dev *input_dev;
- 	int err;
- 
-+	if (!dmi_check_system(allowed_chasis_types_dmi_table)) {
-+		if (force)
-+			dev_info(&wdev->dev, "Force loading Lenovo YMC support\n");
-+		else
-+			return -ENODEV;
-+	}
-+
- 	ec_trigger |= dmi_check_system(ec_trigger_quirk_dmi_table);
- 
- 	priv = devm_kzalloc(&wdev->dev, sizeof(*priv), GFP_KERNEL);
+diff --git a/drivers/platform/x86/mlx-platform.c b/drivers/platform/x86/mlx-platform.c
+index 240bc3174caf..7d33977d9c60 100644
+--- a/drivers/platform/x86/mlx-platform.c
++++ b/drivers/platform/x86/mlx-platform.c
+@@ -62,10 +62,6 @@
+ #define MLXPLAT_CPLD_LPC_REG_PWM_CONTROL_OFFSET	0x37
+ #define MLXPLAT_CPLD_LPC_REG_AGGR_OFFSET	0x3a
+ #define MLXPLAT_CPLD_LPC_REG_AGGR_MASK_OFFSET	0x3b
+-#define MLXPLAT_CPLD_LPC_REG_DBG1_OFFSET	0x3c
+-#define MLXPLAT_CPLD_LPC_REG_DBG2_OFFSET	0x3d
+-#define MLXPLAT_CPLD_LPC_REG_DBG3_OFFSET	0x3e
+-#define MLXPLAT_CPLD_LPC_REG_DBG4_OFFSET	0x3f
+ #define MLXPLAT_CPLD_LPC_REG_AGGRLO_OFFSET	0x40
+ #define MLXPLAT_CPLD_LPC_REG_AGGRLO_MASK_OFFSET	0x41
+ #define MLXPLAT_CPLD_LPC_REG_AGGRCO_OFFSET	0x42
+@@ -126,6 +122,10 @@
+ #define MLXPLAT_CPLD_LPC_REG_LC_SD_EVENT_OFFSET	0xaa
+ #define MLXPLAT_CPLD_LPC_REG_LC_SD_MASK_OFFSET	0xab
+ #define MLXPLAT_CPLD_LPC_REG_LC_PWR_ON		0xb2
++#define MLXPLAT_CPLD_LPC_REG_DBG1_OFFSET	0xb6
++#define MLXPLAT_CPLD_LPC_REG_DBG2_OFFSET	0xb7
++#define MLXPLAT_CPLD_LPC_REG_DBG3_OFFSET	0xb8
++#define MLXPLAT_CPLD_LPC_REG_DBG4_OFFSET	0xb9
+ #define MLXPLAT_CPLD_LPC_REG_GP4_RO_OFFSET	0xc2
+ #define MLXPLAT_CPLD_LPC_REG_SPI_CHNL_SELECT	0xc3
+ #define MLXPLAT_CPLD_LPC_REG_WD_CLEAR_OFFSET	0xc7
 -- 
 2.41.0
 
