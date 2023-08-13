@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E699443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784F4C433C7;
-	Sun, 13 Aug 2023 21:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F889443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:29:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B27C433C8;
+	Sun, 13 Aug 2023 21:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962171;
-	bh=ZDLjwiJlEnLYq1lcOf4AVnwMrnT0jR3Hno1KI8zbff8=;
+	s=korg; t=1691962174;
+	bh=PRcvwgMcXZzG1wyr1pZcJh57zqmpSsrMIGSgMl8KA2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xfM7xYdO+DSKUbg5wl+oyk4OAZ9oIX3AVQbmdGWY2mYcGesu49DQhaF/80Ds8G3iW
-	 jf/9Sn86WEUqecWJZjrkAmCoYT60hFXSLcmWrdNVeNGSNUUzxWwOXl+EWOxxeaRdK+
-	 C61SW1FjThhh1kefG0zNUWp7bYEnqQy1wm4BeYjE=
+	b=b0H9Q35XAq09roRMs+ym9lg/oPNUxCiqattFWYB/98YpMHX1mgsai0KyGwvcllfRX
+	 EG+EOPx++0ENqdOLHecUFyC6WFrXlk9ZtDTXY4o25cycvm/q/cGRMeXtLyBUSuEPZW
+	 Kg02IHbbV0BU04y4oGrDnrzA2ER14P87h9ENfpjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 140/206] drivers: vxlan: vnifilter: free percpu vni stats on error path
-Date: Sun, 13 Aug 2023 23:18:30 +0200
-Message-ID: <20230813211729.044200913@linuxfoundation.org>
+	Piotr Gardocki <piotrx.gardocki@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 141/206] iavf: fix potential races for FDIR filters
+Date: Sun, 13 Aug 2023 23:18:31 +0200
+Message-ID: <20230813211729.071075027@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,60 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Piotr Gardocki <piotrx.gardocki@intel.com>
 
-commit b1c936e9af5dd08636d568736fc6075ed9d1d529 upstream.
+commit 0fb1d8eb234b6979d4981d2d385780dd7d8d9771 upstream.
 
-In case rhashtable_lookup_insert_fast() fails inside vxlan_vni_add(), the
-allocated percpu vni stats are not freed on the error path.
+Add fdir_fltr_lock locking in unprotected places.
 
-Introduce vxlan_vni_free() which would work as a nice wrapper to free
-vxlan_vni_node resources properly.
+The change in iavf_fdir_is_dup_fltr adds a spinlock around a loop which
+iterates over all filters and looks for a duplicate. The filter can be
+removed from list and freed from memory at the same time it's being
+compared. All other places where filters are deleted are already
+protected with spinlock.
 
-Found by Linux Verification Center (linuxtesting.org).
+The remaining changes protect adapter->fdir_active_fltr variable so now
+all its uses are under a spinlock.
 
-Fixes: 4095e0e1328a ("drivers: vxlan: vnifilter: per vni stats")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 527691bf0682 ("iavf: Support IPv4 Flow Director filters")
+Signed-off-by: Piotr Gardocki <piotrx.gardocki@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230807205011.3129224-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_vnifilter.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_ethtool.c |    5 ++++-
+ drivers/net/ethernet/intel/iavf/iavf_fdir.c    |   11 ++++++++---
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_vnifilter.c
-+++ b/drivers/net/vxlan/vxlan_vnifilter.c
-@@ -713,6 +713,12 @@ static struct vxlan_vni_node *vxlan_vni_
- 	return vninode;
- }
+--- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+@@ -1401,14 +1401,15 @@ static int iavf_add_fdir_ethtool(struct
+ 	if (fsp->flow_type & FLOW_MAC_EXT)
+ 		return -EINVAL;
  
-+static void vxlan_vni_free(struct vxlan_vni_node *vninode)
-+{
-+	free_percpu(vninode->stats);
-+	kfree(vninode);
-+}
-+
- static int vxlan_vni_add(struct vxlan_dev *vxlan,
- 			 struct vxlan_vni_group *vg,
- 			 u32 vni, union vxlan_addr *group,
-@@ -740,7 +746,7 @@ static int vxlan_vni_add(struct vxlan_de
- 					    &vninode->vnode,
- 					    vxlan_vni_rht_params);
- 	if (err) {
--		kfree(vninode);
-+		vxlan_vni_free(vninode);
- 		return err;
++	spin_lock_bh(&adapter->fdir_fltr_lock);
+ 	if (adapter->fdir_active_fltr >= IAVF_MAX_FDIR_FILTERS) {
++		spin_unlock_bh(&adapter->fdir_fltr_lock);
+ 		dev_err(&adapter->pdev->dev,
+ 			"Unable to add Flow Director filter because VF reached the limit of max allowed filters (%u)\n",
+ 			IAVF_MAX_FDIR_FILTERS);
+ 		return -ENOSPC;
  	}
  
-@@ -763,8 +769,7 @@ static void vxlan_vni_node_rcu_free(stru
- 	struct vxlan_vni_node *v;
+-	spin_lock_bh(&adapter->fdir_fltr_lock);
+ 	if (iavf_find_fdir_fltr_by_loc(adapter, fsp->location)) {
+ 		dev_err(&adapter->pdev->dev, "Failed to add Flow Director filter, it already exists\n");
+ 		spin_unlock_bh(&adapter->fdir_fltr_lock);
+@@ -1781,7 +1782,9 @@ static int iavf_get_rxnfc(struct net_dev
+ 	case ETHTOOL_GRXCLSRLCNT:
+ 		if (!FDIR_FLTR_SUPPORT(adapter))
+ 			break;
++		spin_lock_bh(&adapter->fdir_fltr_lock);
+ 		cmd->rule_cnt = adapter->fdir_active_fltr;
++		spin_unlock_bh(&adapter->fdir_fltr_lock);
+ 		cmd->data = IAVF_MAX_FDIR_FILTERS;
+ 		ret = 0;
+ 		break;
+--- a/drivers/net/ethernet/intel/iavf/iavf_fdir.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
+@@ -722,7 +722,9 @@ void iavf_print_fdir_fltr(struct iavf_ad
+ bool iavf_fdir_is_dup_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr)
+ {
+ 	struct iavf_fdir_fltr *tmp;
++	bool ret = false;
  
- 	v = container_of(rcu, struct vxlan_vni_node, rcu);
--	free_percpu(v->stats);
--	kfree(v);
-+	vxlan_vni_free(v);
++	spin_lock_bh(&adapter->fdir_fltr_lock);
+ 	list_for_each_entry(tmp, &adapter->fdir_list_head, list) {
+ 		if (tmp->flow_type != fltr->flow_type)
+ 			continue;
+@@ -732,11 +734,14 @@ bool iavf_fdir_is_dup_fltr(struct iavf_a
+ 		    !memcmp(&tmp->ip_data, &fltr->ip_data,
+ 			    sizeof(fltr->ip_data)) &&
+ 		    !memcmp(&tmp->ext_data, &fltr->ext_data,
+-			    sizeof(fltr->ext_data)))
+-			return true;
++			    sizeof(fltr->ext_data))) {
++			ret = true;
++			break;
++		}
+ 	}
++	spin_unlock_bh(&adapter->fdir_fltr_lock);
+ 
+-	return false;
++	return ret;
  }
  
- static int vxlan_vni_del(struct vxlan_dev *vxlan,
+ /**
 
 
