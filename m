@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502C19446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA575C433C8;
-	Sun, 13 Aug 2023 21:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1585F9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93458C433C7;
+	Sun, 13 Aug 2023 21:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963006;
-	bh=QFDV2gQ2n1Pe8hS4T4nt/aZzlC++AjpDfPZYYhDN4rs=;
+	s=korg; t=1691963008;
+	bh=ZYN6cahuBPqKew9p1Yh0el1Wz+A8GFm7Ylbn5Ildkgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBel2pt9NwVZRw10PJFDVa+Z4uZfhxWWrFSSBx1GgY5KGx/HMCIV60YIDDBiUwI77
-	 wA+1i5R/kY9LJOOq3bc2aTtEZ/sRN5bP2bu3hQZdS40fWgSPOOOMAKAFNc6Vv5QFbt
-	 AXGjxxjXSMBEEU5mdEAuaR8lsDa2kkUEF72HjyCo=
+	b=VNdsLbA21fJoyOABQcfg5HXYxtGD74VYcstyVd78odKAoI30bfey5UAV7048fFHkT
+	 riT+Pj/qsjMAqY2Ysoe/cKU5esw/AEXx3NgudLrXP+oBKWU7T4ehei77OHZXYx7uHS
+	 0suz1eZ76jxXC6Q7IOG3SS/bBp826Eo+TOzslZSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.15 19/89] selftests/bpf: Fix sk_assign on s390x
-Date: Sun, 13 Aug 2023 23:19:10 +0200
-Message-ID: <20230813211711.339405466@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 02/89] ksmbd: fix wrong next length validation of ea buffer in smb2_set_ea()
+Date: Sun, 13 Aug 2023 23:18:53 +0200
+Message-ID: <20230813211710.859658800@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,120 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 7ce878ca81bca7811e669db4c394b86780e0dbe4 ]
+commit 79ed288cef201f1f212dfb934bcaac75572fb8f6 upstream.
 
-sk_assign is failing on an s390x machine running Debian "bookworm" for
-2 reasons: legacy server_map definition and uninitialized addrlen in
-recvfrom() call.
+There are multiple smb2_ea_info buffers in FILE_FULL_EA_INFORMATION request
+from client. ksmbd find next smb2_ea_info using ->NextEntryOffset of
+current smb2_ea_info. ksmbd need to validate buffer length Before
+accessing the next ea. ksmbd should check buffer length using buf_len,
+not next variable. next is the start offset of current ea that got from
+previous ea.
 
-Fix by adding a new-style server_map definition and dropping addrlen
-(recvfrom() allows NULL values for src_addr and addrlen).
-
-Since the test should support tc built without libbpf, build the prog
-twice: with the old-style definition and with the new-style definition,
-then select the right one at runtime. This could be done at compile
-time too, but this would not be cross-compilation friendly.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230129190501.1624747-2-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21598
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sk_assign.c        |   25 ++++++++++----
- tools/testing/selftests/bpf/progs/test_sk_assign.c        |   11 ++++++
- tools/testing/selftests/bpf/progs/test_sk_assign_libbpf.c |    3 +
- 3 files changed, 33 insertions(+), 6 deletions(-)
- create mode 100644 tools/testing/selftests/bpf/progs/test_sk_assign_libbpf.c
+ fs/ksmbd/smb2pdu.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/bpf/prog_tests/sk_assign.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sk_assign.c
-@@ -29,7 +29,23 @@ static int stop, duration;
- static bool
- configure_stack(void)
- {
-+	char tc_version[128];
- 	char tc_cmd[BUFSIZ];
-+	char *prog;
-+	FILE *tc;
-+
-+	/* Check whether tc is built with libbpf. */
-+	tc = popen("tc -V", "r");
-+	if (CHECK_FAIL(!tc))
-+		return false;
-+	if (CHECK_FAIL(!fgets(tc_version, sizeof(tc_version), tc)))
-+		return false;
-+	if (strstr(tc_version, ", libbpf "))
-+		prog = "test_sk_assign_libbpf.o";
-+	else
-+		prog = "test_sk_assign.o";
-+	if (CHECK_FAIL(pclose(tc)))
-+		return false;
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -2309,9 +2309,16 @@ next:
+ 			break;
+ 		buf_len -= next;
+ 		eabuf = (struct smb2_ea_info *)((char *)eabuf + next);
+-		if (next < (u32)eabuf->EaNameLength + le16_to_cpu(eabuf->EaValueLength))
++		if (buf_len < sizeof(struct smb2_ea_info)) {
++			rc = -EINVAL;
+ 			break;
++		}
  
- 	/* Move to a new networking namespace */
- 	if (CHECK_FAIL(unshare(CLONE_NEWNET)))
-@@ -46,8 +62,8 @@ configure_stack(void)
- 	/* Load qdisc, BPF program */
- 	if (CHECK_FAIL(system("tc qdisc add dev lo clsact")))
- 		return false;
--	sprintf(tc_cmd, "%s %s %s %s", "tc filter add dev lo ingress bpf",
--		       "direct-action object-file ./test_sk_assign.o",
-+	sprintf(tc_cmd, "%s %s %s %s %s", "tc filter add dev lo ingress bpf",
-+		       "direct-action object-file", prog,
- 		       "section classifier/sk_assign_test",
- 		       (env.verbosity < VERBOSE_VERY) ? " 2>/dev/null" : "verbose");
- 	if (CHECK(system(tc_cmd), "BPF load failed;",
-@@ -129,15 +145,12 @@ get_port(int fd)
- static ssize_t
- rcv_msg(int srv_client, int type)
- {
--	struct sockaddr_storage ss;
- 	char buf[BUFSIZ];
--	socklen_t slen;
++		if (buf_len < sizeof(struct smb2_ea_info) + eabuf->EaNameLength +
++				le16_to_cpu(eabuf->EaValueLength)) {
++			rc = -EINVAL;
++			break;
++		}
+ 	} while (next != 0);
  
- 	if (type == SOCK_STREAM)
- 		return read(srv_client, &buf, sizeof(buf));
- 	else
--		return recvfrom(srv_client, &buf, sizeof(buf), 0,
--				(struct sockaddr *)&ss, &slen);
-+		return recvfrom(srv_client, &buf, sizeof(buf), 0, NULL, NULL);
- }
- 
- static int
---- a/tools/testing/selftests/bpf/progs/test_sk_assign.c
-+++ b/tools/testing/selftests/bpf/progs/test_sk_assign.c
-@@ -16,6 +16,16 @@
- #include <bpf/bpf_helpers.h>
- #include <bpf/bpf_endian.h>
- 
-+#if defined(IPROUTE2_HAVE_LIBBPF)
-+/* Use a new-style map definition. */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_SOCKMAP);
-+	__type(key, int);
-+	__type(value, __u64);
-+	__uint(pinning, LIBBPF_PIN_BY_NAME);
-+	__uint(max_entries, 1);
-+} server_map SEC(".maps");
-+#else
- /* Pin map under /sys/fs/bpf/tc/globals/<map name> */
- #define PIN_GLOBAL_NS 2
- 
-@@ -35,6 +45,7 @@ struct {
- 	.max_elem = 1,
- 	.pinning = PIN_GLOBAL_NS,
- };
-+#endif
- 
- int _version SEC("version") = 1;
- char _license[] SEC("license") = "GPL";
---- /dev/null
-+++ b/tools/testing/selftests/bpf/progs/test_sk_assign_libbpf.c
-@@ -0,0 +1,3 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#define IPROUTE2_HAVE_LIBBPF
-+#include "test_sk_assign.c"
+ 	kfree(attr_name);
 
 
