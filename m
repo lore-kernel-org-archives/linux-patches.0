@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B835F9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E6DC433C8;
-	Sun, 13 Aug 2023 21:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8491D9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D4EC433C8;
+	Sun, 13 Aug 2023 21:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962456;
-	bh=15wlXXtqclz+Ns1jYZxbdLnWih14cMx6AIe2qjz4U/g=;
+	s=korg; t=1691962459;
+	bh=Olt41A8yjwAEtLveMGp9jIChwphHAUDSbDRn/vrLb1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMQbX9F84okZur3GoOBCVX3d1wGngrTqHWezIfXLV4JP8FIWY3XEvBAYDIOzOjrF0
-	 HWK/HxvqWX2gZ4+0m/rdsFW17CwYSKoUjqVy1OVEr+3BFPUGEmHxYj/AXWPjoD3SKO
-	 YXqRmdHunm962jyksw8Jd4sienm+sDxZAhqMj3sI=
+	b=jxcLqzoMuxP3we7MQmxAuL1wtdhYyUyPxPnxelvVmkGcPycktLI5RKUayYBSs/3DH
+	 MeOD6J9pAYT+ns4Ef9gbNC0tfkgJxnSyA4TN3jANv7GvAt7j6cNdQ4F3NP4iPsbrMZ
+	 Xbd8LuPMrpYHAvBauopRSnM+bvLleIl8KWM5NCIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 036/149] nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
-Date: Sun, 13 Aug 2023 23:18:01 +0200
-Message-ID: <20230813211719.888271996@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 037/149] drm/amd/pm: fulfill swsmu peak profiling mode shader/memory clock settings
+Date: Sun, 13 Aug 2023 23:18:02 +0200
+Message-ID: <20230813211719.918778033@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,120 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit f8654743a0e6909dc634cbfad6db6816f10f3399 upstream.
+commit 975b4b1d90ccf83da252907108f4090fb61b816e upstream
 
-During unmount process of nilfs2, nothing holds nilfs_root structure after
-nilfs2 detaches its writer in nilfs_detach_log_writer().  Previously,
-nilfs_evict_inode() could cause use-after-free read for nilfs_root if
-inodes are left in "garbage_list" and released by nilfs_dispose_list at
-the end of nilfs_detach_log_writer(), and this bug was fixed by commit
-9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root in
-nilfs_evict_inode()").
+Enable peak profiling mode shader/memory clocks reporting for swsmu
+framework.
 
-However, it turned out that there is another possibility of UAF in the
-call path where mark_inode_dirty_sync() is called from iput():
-
-nilfs_detach_log_writer()
-  nilfs_dispose_list()
-    iput()
-      mark_inode_dirty_sync()
-        __mark_inode_dirty()
-          nilfs_dirty_inode()
-            __nilfs_mark_inode_dirty()
-              nilfs_load_inode_block() --> causes UAF of nilfs_root struct
-
-This can happen after commit 0ae45f63d4ef ("vfs: add support for a
-lazytime mount option"), which changed iput() to call
-mark_inode_dirty_sync() on its final reference if i_state has I_DIRTY_TIME
-flag and i_nlink is non-zero.
-
-This issue appears after commit 28a65b49eb53 ("nilfs2: do not write dirty
-data after degenerating to read-only") when using the syzbot reproducer,
-but the issue has potentially existed before.
-
-Fix this issue by adding a "purging flag" to the nilfs structure, setting
-that flag while disposing the "garbage_list" and checking it in
-__nilfs_mark_inode_dirty().
-
-Unlike commit 9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root
-in nilfs_evict_inode()"), this patch does not rely on ns_writer to
-determine whether to skip operations, so as not to break recovery on
-mount.  The nilfs_salvage_orphan_logs routine dirties the buffer of
-salvaged data before attaching the log writer, so changing
-__nilfs_mark_inode_dirty() to skip the operation when ns_writer is NULL
-will cause recovery write to fail.  The purpose of using the cleanup-only
-flag is to allow for narrowing of such conditions.
-
-Link: https://lkml.kernel.org/r/20230728191318.33047-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000b4e906060113fd63@google.com
-Fixes: 0ae45f63d4ef ("vfs: add support for a lazytime mount option")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org> # 4.0+
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c     |    8 ++++++++
- fs/nilfs2/segment.c   |    2 ++
- fs/nilfs2/the_nilfs.h |    2 ++
- 3 files changed, 12 insertions(+)
+ drivers/gpu/drm/amd/include/kgd_pp_interface.h |    2 ++
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c      |    8 ++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -1101,9 +1101,17 @@ int nilfs_set_file_dirty(struct inode *i
- 
- int __nilfs_mark_inode_dirty(struct inode *inode, int flags)
- {
-+	struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
- 	struct buffer_head *ibh;
- 	int err;
- 
-+	/*
-+	 * Do not dirty inodes after the log writer has been detached
-+	 * and its nilfs_root struct has been freed.
-+	 */
-+	if (unlikely(nilfs_purging(nilfs)))
-+		return 0;
-+
- 	err = nilfs_load_inode_block(inode, &ibh);
- 	if (unlikely(err)) {
- 		nilfs_warn(inode->i_sb,
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2843,6 +2843,7 @@ void nilfs_detach_log_writer(struct supe
- 		nilfs_segctor_destroy(nilfs->ns_writer);
- 		nilfs->ns_writer = NULL;
- 	}
-+	set_nilfs_purging(nilfs);
- 
- 	/* Force to free the list of dirty files */
- 	spin_lock(&nilfs->ns_inode_lock);
-@@ -2855,4 +2856,5 @@ void nilfs_detach_log_writer(struct supe
- 	up_write(&nilfs->ns_segctor_sem);
- 
- 	nilfs_dispose_list(nilfs, &garbage_list, 1);
-+	clear_nilfs_purging(nilfs);
- }
---- a/fs/nilfs2/the_nilfs.h
-+++ b/fs/nilfs2/the_nilfs.h
-@@ -29,6 +29,7 @@ enum {
- 	THE_NILFS_DISCONTINUED,	/* 'next' pointer chain has broken */
- 	THE_NILFS_GC_RUNNING,	/* gc process is running */
- 	THE_NILFS_SB_DIRTY,	/* super block is dirty */
-+	THE_NILFS_PURGING,	/* disposing dirty files for cleanup */
+--- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+@@ -139,6 +139,8 @@ enum amd_pp_sensors {
+ 	AMDGPU_PP_SENSOR_MIN_FAN_RPM,
+ 	AMDGPU_PP_SENSOR_MAX_FAN_RPM,
+ 	AMDGPU_PP_SENSOR_VCN_POWER_STATE,
++	AMDGPU_PP_SENSOR_PEAK_PSTATE_SCLK,
++	AMDGPU_PP_SENSOR_PEAK_PSTATE_MCLK,
  };
  
- /**
-@@ -208,6 +209,7 @@ THE_NILFS_FNS(INIT, init)
- THE_NILFS_FNS(DISCONTINUED, discontinued)
- THE_NILFS_FNS(GC_RUNNING, gc_running)
- THE_NILFS_FNS(SB_DIRTY, sb_dirty)
-+THE_NILFS_FNS(PURGING, purging)
- 
- /*
-  * Mount option operations
+ enum amd_pp_task {
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -2520,6 +2520,14 @@ static int smu_read_sensor(void *handle,
+ 		*((uint32_t *)data) = pstate_table->uclk_pstate.standard * 100;
+ 		*size = 4;
+ 		break;
++	case AMDGPU_PP_SENSOR_PEAK_PSTATE_SCLK:
++		*((uint32_t *)data) = pstate_table->gfxclk_pstate.peak * 100;
++		*size = 4;
++		break;
++	case AMDGPU_PP_SENSOR_PEAK_PSTATE_MCLK:
++		*((uint32_t *)data) = pstate_table->uclk_pstate.peak * 100;
++		*size = 4;
++		break;
+ 	case AMDGPU_PP_SENSOR_ENABLED_SMC_FEATURES_MASK:
+ 		ret = smu_feature_get_enabled_mask(smu, (uint64_t *)data);
+ 		*size = 8;
 
 
