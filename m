@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AACB9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC1BC433C8;
-	Sun, 13 Aug 2023 21:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0468E9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC91C433C7;
+	Sun, 13 Aug 2023 21:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961823;
-	bh=amwjw9XamkyBWuFCZmLa0aWzXafwZbMjz29nSRQUV0Y=;
+	s=korg; t=1691961825;
+	bh=UOMJ9aiNM/0ygEbZWLmlE8LuD7LMYe7kDBdxmhLoaZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+8oCTuNWrveP5jz8G65zdIfnGMmG3ww3aoNvLneAuQ3SlREGGq32vRHLwFlbxICD
-	 FKd2XcVGFLTBjaI9GgoQ9G+Rcp3eSm/vVQPJFIWr1Lp6HspMk/2NlFc1GezD0yCDPI
-	 kecdbkGrRVeAhs51ZBxRhc2qYvTqu3eAwp7FqtZo=
+	b=IuAnLI+pPpmAN964OHmGSF1+RmXxoiOw0XyzAZUnvloS4T0Rtf+s4vubRPMEwraiY
+	 RQcSeC6URIQ73oQ6GvY4HnzT9hZlX7KlbZTrKUMylooO9l1PSOqdTmG1wqs3xW7hsl
+	 QfCML56HaK8KZ/9sxdNV3aXHfWRDYt7lFkRncaQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 012/206] wireguard: allowedips: expand maximum node depth
-Date: Sun, 13 Aug 2023 23:16:22 +0200
-Message-ID: <20230813211725.326482283@linuxfoundation.org>
+	Sergei Antonov <saproj@gmail.com>,
+	Jonas Jensen <jonas.jensen@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.4 013/206] mmc: moxart: read scr register without changing byte order
+Date: Sun, 13 Aug 2023 23:16:23 +0200
+Message-ID: <20230813211725.355315733@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,97 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Sergei Antonov <saproj@gmail.com>
 
-commit 46622219aae2b67813fe31a7b8cb7da5baff5c8a upstream.
+commit d44263222134b5635932974c6177a5cba65a07e8 upstream.
 
-In the allowedips self-test, nodes are inserted into the tree, but it
-generated an even amount of nodes, but for checking maximum node depth,
-there is of course the root node, which makes the total number
-necessarily odd. With two few nodes added, it never triggered the
-maximum depth check like it should have. So, add 129 nodes instead of
-128 nodes, and do so with a more straightforward scheme, starting with
-all the bits set, and shifting over one each time. Then increase the
-maximum depth to 129, and choose a better name for that variable to
-make it clear that it represents depth as opposed to bits.
+Conversion from big-endian to native is done in a common function
+mmc_app_send_scr(). Converting in moxart_transfer_pio() is extra.
+Double conversion on a LE system returns an incorrect SCR value,
+leads to errors:
 
+mmc0: unrecognised SCR structure version 8
+
+Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
+Signed-off-by: Sergei Antonov <saproj@gmail.com>
+Cc: Jonas Jensen <jonas.jensen@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://lore.kernel.org/r/20230807132146.2191597-2-Jason@zx2c4.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230627120549.2400325-1-saproj@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/allowedips.c          |    8 ++++----
- drivers/net/wireguard/selftest/allowedips.c |   16 ++++++++++------
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ drivers/mmc/host/moxart-mmc.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/net/wireguard/allowedips.c
-+++ b/drivers/net/wireguard/allowedips.c
-@@ -6,7 +6,7 @@
- #include "allowedips.h"
- #include "peer.h"
- 
--enum { MAX_ALLOWEDIPS_BITS = 128 };
-+enum { MAX_ALLOWEDIPS_DEPTH = 129 };
- 
- static struct kmem_cache *node_cache;
- 
-@@ -42,7 +42,7 @@ static void push_rcu(struct allowedips_n
- 		     struct allowedips_node __rcu *p, unsigned int *len)
- {
- 	if (rcu_access_pointer(p)) {
--		if (WARN_ON(IS_ENABLED(DEBUG) && *len >= MAX_ALLOWEDIPS_BITS))
-+		if (WARN_ON(IS_ENABLED(DEBUG) && *len >= MAX_ALLOWEDIPS_DEPTH))
- 			return;
- 		stack[(*len)++] = rcu_dereference_raw(p);
- 	}
-@@ -55,7 +55,7 @@ static void node_free_rcu(struct rcu_hea
- 
- static void root_free_rcu(struct rcu_head *rcu)
- {
--	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_BITS] = {
-+	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
- 		container_of(rcu, struct allowedips_node, rcu) };
- 	unsigned int len = 1;
- 
-@@ -68,7 +68,7 @@ static void root_free_rcu(struct rcu_hea
- 
- static void root_remove_peer_lists(struct allowedips_node *root)
- {
--	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_BITS] = { root };
-+	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = { root };
- 	unsigned int len = 1;
- 
- 	while (len > 0 && (node = stack[--len])) {
---- a/drivers/net/wireguard/selftest/allowedips.c
-+++ b/drivers/net/wireguard/selftest/allowedips.c
-@@ -593,16 +593,20 @@ bool __init wg_allowedips_selftest(void)
- 	wg_allowedips_remove_by_peer(&t, a, &mutex);
- 	test_negative(4, a, 192, 168, 0, 1);
- 
--	/* These will hit the WARN_ON(len >= MAX_ALLOWEDIPS_BITS) in free_node
-+	/* These will hit the WARN_ON(len >= MAX_ALLOWEDIPS_DEPTH) in free_node
- 	 * if something goes wrong.
- 	 */
--	for (i = 0; i < MAX_ALLOWEDIPS_BITS; ++i) {
--		part = cpu_to_be64(~(1LLU << (i % 64)));
--		memset(&ip, 0xff, 16);
--		memcpy((u8 *)&ip + (i < 64) * 8, &part, 8);
-+	for (i = 0; i < 64; ++i) {
-+		part = cpu_to_be64(~0LLU << i);
-+		memset(&ip, 0xff, 8);
-+		memcpy((u8 *)&ip + 8, &part, 8);
-+		wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
-+		memcpy(&ip, &part, 8);
-+		memset((u8 *)&ip + 8, 0, 8);
- 		wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
- 	}
--
-+	memset(&ip, 0, 16);
-+	wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
- 	wg_allowedips_free(&t, &mutex);
- 
- 	wg_allowedips_init(&t);
+--- a/drivers/mmc/host/moxart-mmc.c
++++ b/drivers/mmc/host/moxart-mmc.c
+@@ -338,13 +338,7 @@ static void moxart_transfer_pio(struct m
+ 				return;
+ 			}
+ 			for (len = 0; len < remain && len < host->fifo_width;) {
+-				/* SCR data must be read in big endian. */
+-				if (data->mrq->cmd->opcode == SD_APP_SEND_SCR)
+-					*sgp = ioread32be(host->base +
+-							  REG_DATA_WINDOW);
+-				else
+-					*sgp = ioread32(host->base +
+-							REG_DATA_WINDOW);
++				*sgp = ioread32(host->base + REG_DATA_WINDOW);
+ 				sgp++;
+ 				len += 4;
+ 			}
 
 
