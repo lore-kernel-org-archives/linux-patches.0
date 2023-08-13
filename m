@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861B99446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCB0C433C8;
-	Sun, 13 Aug 2023 21:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C491D9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51489C433C7;
+	Sun, 13 Aug 2023 21:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963093;
-	bh=8A6z34I6Q4MO59q1HPKPk4z7ZM6vPAPVtmQtJifYUpA=;
+	s=korg; t=1691963095;
+	bh=5KgzM63Zrgw//2hLiYqcGjmF8S8om+CJgGSZ2PtFpSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqLhSVeT3Faz2U7Tnb0wB5CvGKXW8sONgpHu2I+hnjlfMLROwEKFpVeoKfboKAgyg
-	 SK9vkrBD1sr4+NHozo/B50cgSEJC882pZ1EM/xoUQLSjiA//2wWb1wbE7+d3UEgCWl
-	 wvp9eR5AGdBq5WJr9vHlANyBbUdZD+ea3q3Nb5bA=
+	b=I4a8xSpxgtVy4MvCnJ337u99MYGd2GEE1WfBZSWAupWuCPD4I5ErMGzYRwkwgSSVB
+	 M1eUA+jTdXdf6cQjegcqo73oGIcBtHi0ErHGXrXwvoB4pyh/w7mppPwIZM5+YGvtr/
+	 ByyWMxV0IZf+U4WbtJDpi1Lx3S+GSRulbIvTuyg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 50/89] bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Sun, 13 Aug 2023 23:19:41 +0200
-Message-ID: <20230813211712.288248506@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 25/89] usb-storage: alauda: Fix uninit-value in alauda_check_media()
+Date: Sun, 13 Aug 2023 23:19:16 +0200
+Message-ID: <20230813211711.506624927@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -36,82 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 01f4fd27087078c90a0e22860d1dfa2cd0510791 upstream.
+commit a6ff6e7a9dd69364547751db0f626a10a6d628d2 upstream.
 
-BUG_ON(!vlan_info) is triggered in unregister_vlan_dev() with
-following testcase:
+Syzbot got KMSAN to complain about access to an uninitialized value in
+the alauda subdriver of usb-storage:
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add bond0 type bond mode 0
-  # ip netns exec ns1 ip link add bond_slave_1 type veth peer veth2
-  # ip netns exec ns1 ip link set bond_slave_1 master bond0
-  # ip netns exec ns1 ip link add link bond_slave_1 name vlan10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link bond0 name bond0_vlan10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set bond_slave_1 nomaster
-  # ip netns del ns1
+BUG: KMSAN: uninit-value in alauda_transport+0x462/0x57f0
+drivers/usb/storage/alauda.c:1137
+CPU: 0 PID: 12279 Comm: usb-storage Not tainted 5.3.0-rc7+ #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x191/0x1f0 lib/dump_stack.c:113
+  kmsan_report+0x13a/0x2b0 mm/kmsan/kmsan_report.c:108
+  __msan_warning+0x73/0xe0 mm/kmsan/kmsan_instr.c:250
+  alauda_check_media+0x344/0x3310 drivers/usb/storage/alauda.c:460
 
-The logical analysis of the problem is as follows:
+The problem is that alauda_check_media() doesn't verify that its USB
+transfer succeeded before trying to use the received data.  What
+should happen if the transfer fails isn't entirely clear, but a
+reasonably conservative approach is to pretend that no media is
+present.
 
-1. create ETH_P_8021AD protocol vlan10 for bond_slave_1:
-register_vlan_dev()
-  vlan_vid_add()
-    vlan_info_alloc()
-    __vlan_vid_add() // add [ETH_P_8021AD, 10] vid to bond_slave_1
+A similar problem exists in a usb_stor_dbg() call in
+alauda_get_media_status().  In this case, when an error occurs the
+call is redundant, because usb_stor_ctrl_transfer() already will print
+a debugging message.
 
-2. create ETH_P_8021AD protocol bond0_vlan10 for bond0:
-register_vlan_dev()
-  vlan_vid_add()
-    __vlan_vid_add()
-      vlan_add_rx_filter_info()
-          if (!vlan_hw_filter_capable(dev, proto)) // condition established because bond0 without NETIF_F_HW_VLAN_STAG_FILTER
-              return 0;
+Finally, unrelated to the uninitialized memory access, is the fact
+that alauda_check_media() performs DMA to a buffer on the stack.
+Fortunately usb-storage provides a general purpose DMA-able buffer for
+uses like this.  We'll use it instead.
 
-          if (netif_device_present(dev))
-              return dev->netdev_ops->ndo_vlan_rx_add_vid(dev, proto, vid); // will be never called
-              // The slaves of bond0 will not refer to the [ETH_P_8021AD, 10] vid.
-
-3. detach bond_slave_1 from bond0:
-__bond_release_one()
-  vlan_vids_del_by_dev()
-    list_for_each_entry(vid_info, &vlan_info->vid_list, list)
-        vlan_vid_del(dev, vid_info->proto, vid_info->vid);
-        // bond_slave_1 [ETH_P_8021AD, 10] vid will be deleted.
-        // bond_slave_1->vlan_info will be assigned NULL.
-
-4. delete vlan10 during delete ns1:
-default_device_exit_batch()
-  dev->rtnl_link_ops->dellink() // unregister_vlan_dev() for vlan10
-    vlan_info = rtnl_dereference(real_dev->vlan_info); // real_dev of vlan10 is bond_slave_1
-	BUG_ON(!vlan_info); // bond_slave_1->vlan_info is NULL now, bug is triggered!!!
-
-Add S-VLAN tag related features support to bond driver. So the bond driver
-will always propagate the VLAN info to its slaves.
-
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20230802114320.4156068-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-and-tested-by: syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000007d25ff059457342d@google.com/T/
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/693d5d5e-f09b-42d0-8ed9-1f96cd30bcce@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/storage/alauda.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -5491,7 +5491,9 @@ void bond_setup(struct net_device *bond_
+--- a/drivers/usb/storage/alauda.c
++++ b/drivers/usb/storage/alauda.c
+@@ -318,7 +318,8 @@ static int alauda_get_media_status(struc
+ 	rc = usb_stor_ctrl_transfer(us, us->recv_ctrl_pipe,
+ 		command, 0xc0, 0, 1, data, 2);
  
- 	bond_dev->hw_features = BOND_VLAN_FEATURES |
- 				NETIF_F_HW_VLAN_CTAG_RX |
--				NETIF_F_HW_VLAN_CTAG_FILTER;
-+				NETIF_F_HW_VLAN_CTAG_FILTER |
-+				NETIF_F_HW_VLAN_STAG_RX |
-+				NETIF_F_HW_VLAN_STAG_FILTER;
+-	usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
++	if (rc == USB_STOR_XFER_GOOD)
++		usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
  
- 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
- 	bond_dev->features |= bond_dev->hw_features;
+ 	return rc;
+ }
+@@ -454,9 +455,14 @@ static int alauda_init_media(struct us_d
+ static int alauda_check_media(struct us_data *us)
+ {
+ 	struct alauda_info *info = (struct alauda_info *) us->extra;
+-	unsigned char status[2];
++	unsigned char *status = us->iobuf;
++	int rc;
+ 
+-	alauda_get_media_status(us, status);
++	rc = alauda_get_media_status(us, status);
++	if (rc != USB_STOR_XFER_GOOD) {
++		status[0] = 0xF0;	/* Pretend there's no media */
++		status[1] = 0;
++	}
+ 
+ 	/* Check for no media or door open */
+ 	if ((status[0] & 0x80) || ((status[0] & 0x1F) == 0x10)
 
 
