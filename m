@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3999443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B0BC433CB;
-	Sun, 13 Aug 2023 21:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608359443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA15C433C8;
+	Sun, 13 Aug 2023 21:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962236;
-	bh=Q/9huDZQtCDnqCu3n8Lxkqn/nicz6guvEabofKVyExM=;
+	s=korg; t=1691962239;
+	bh=HQoPu4vPDZo5US+TpbT9lcOlZ+zKsoTKjnC/I46JQ+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+eJBcIJ+1Me1M8ISIn7iLsVE4bdF00MIGq74lZC7wEMAWe2BeJR2EbE8ytdJpjbo
-	 vjvumYI6GRnWMhroi4WrF0JzwFkVpZ5OZ6K8HvXaDRo5Pta+ekj+C404gQ/QXcAv7l
-	 u5df9PUz1Imfgq4iydtFzzeE2vgzDJP7GC8Kyjdo=
+	b=UwBp9oWCoqMDuYr40eMLouSadORYRsu7eXsMKQi4BI7pfMnOB1pmCIyto5qhJNAgf
+	 89y/biEPtqgTBCLDfww9qBKtjxtGfFpo5kXxDW/vAMlUTR8dd6OXxW3Kv+RVYFEmkG
+	 Dh3uvWQOJ8Bqid89kUat/199O5zfhECuWy6tHl30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Chen <chenhao418@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 163/206] net: hns3: fix strscpy causing content truncation issue
-Date: Sun, 13 Aug 2023 23:18:53 +0200
-Message-ID: <20230813211729.692342034@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.4 164/206] dmaengine: mcf-edma: Fix a potential un-allocated memory access
+Date: Sun, 13 Aug 2023 23:18:54 +0200
+Message-ID: <20230813211729.720654587@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,68 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Chen <chenhao418@huawei.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 5e3d20617b055e725e785e0058426368269949f3 upstream.
+commit 0a46781c89dece85386885a407244ca26e5c1c44 upstream.
 
-hns3_dbg_fill_content()/hclge_dbg_fill_content() is aim to integrate some
-items to a string for content, and we add '\n' and '\0' in the last
-two bytes of content.
+When 'mcf_edma' is allocated, some space is allocated for a
+flexible array at the end of the struct. 'chans' item are allocated, that is
+to say 'pdata->dma_channels'.
 
-strscpy() will add '\0' in the last byte of destination buffer(one of
-items), it result in finishing content print ahead of schedule and some
-dump content truncation.
+Then, this number of item is stored in 'mcf_edma->n_chans'.
 
-One Error log shows as below:
-cat mac_list/uc
-UC MAC_LIST:
+A few lines later, if 'mcf_edma->n_chans' is 0, then a default value of 64
+is set.
 
-Expected:
-UC MAC_LIST:
-FUNC_ID  MAC_ADDR            STATE
-pf       00:2b:19:05:03:00   ACTIVE
+This ends to no space allocated by devm_kzalloc() because chans was 0, but
+64 items are read and/or written in some not allocated memory.
 
-The destination buffer is length-bounded and not required to be
-NUL-terminated, so just change strscpy() to memcpy() to fix it.
+Change the logic to define a default value before allocating the memory.
 
-Fixes: 1cf3d5567f27 ("net: hns3: fix strncpy() not using dest-buf length as length issue")
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://lore.kernel.org/r/20230809020902.1941471-1-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e7a3ff92eaf1 ("dmaengine: fsl-edma: add ColdFire mcf5441x edma support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/f55d914407c900828f6fad3ea5fa791a5f17b9a4.1685172449.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c         |    4 ++--
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/mcf-edma.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-@@ -461,9 +461,9 @@ static void hns3_dbg_fill_content(char *
- 		if (result) {
- 			if (item_len < strlen(result[i]))
- 				break;
--			strscpy(pos, result[i], strlen(result[i]));
-+			memcpy(pos, result[i], strlen(result[i]));
- 		} else {
--			strscpy(pos, items[i].name, strlen(items[i].name));
-+			memcpy(pos, items[i].name, strlen(items[i].name));
- 		}
- 		pos += item_len;
- 		len -= item_len;
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-@@ -111,9 +111,9 @@ static void hclge_dbg_fill_content(char
- 		if (result) {
- 			if (item_len < strlen(result[i]))
- 				break;
--			strscpy(pos, result[i], strlen(result[i]));
-+			memcpy(pos, result[i], strlen(result[i]));
- 		} else {
--			strscpy(pos, items[i].name, strlen(items[i].name));
-+			memcpy(pos, items[i].name, strlen(items[i].name));
- 		}
- 		pos += item_len;
- 		len -= item_len;
+--- a/drivers/dma/mcf-edma.c
++++ b/drivers/dma/mcf-edma.c
+@@ -190,7 +190,13 @@ static int mcf_edma_probe(struct platfor
+ 		return -EINVAL;
+ 	}
+ 
+-	chans = pdata->dma_channels;
++	if (!pdata->dma_channels) {
++		dev_info(&pdev->dev, "setting default channel number to 64");
++		chans = 64;
++	} else {
++		chans = pdata->dma_channels;
++	}
++
+ 	len = sizeof(*mcf_edma) + sizeof(*mcf_chan) * chans;
+ 	mcf_edma = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
+ 	if (!mcf_edma)
+@@ -202,11 +208,6 @@ static int mcf_edma_probe(struct platfor
+ 	mcf_edma->drvdata = &mcf_data;
+ 	mcf_edma->big_endian = 1;
+ 
+-	if (!mcf_edma->n_chans) {
+-		dev_info(&pdev->dev, "setting default channel number to 64");
+-		mcf_edma->n_chans = 64;
+-	}
+-
+ 	mutex_init(&mcf_edma->fsl_edma_mutex);
+ 
+ 	mcf_edma->membase = devm_platform_ioremap_resource(pdev, 0);
 
 
