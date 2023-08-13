@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8B79446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA70C433C7;
-	Sun, 13 Aug 2023 21:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0D49446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BDFC433C8;
+	Sun, 13 Aug 2023 21:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962813;
-	bh=XonbXjtX4fr/jxXaqWPO3He07W4rCIOAc80OoMl3DLo=;
+	s=korg; t=1691962815;
+	bh=mehQCbLNCSNw65Igszu/fStmN9/LOpKgVuY8ux27FBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0iOw8LM3lvA4cXvq0ctHFsX/Kit4FddIYyXyP345UM/Hg622J+nd0Peyl1xvjjES
-	 /AG137cnCoUwszbDsR3jIjZwEBfC+dJu+QhTKec42mDvRkrGlz5bCfZSf6r08UOSwR
-	 tjylkCXstDLjdKL9xOnqQP9+SkgLd4uhGDeZjqwc=
+	b=vN0/rLn4dc0pzNfqzID/Fx91RoZx4mA/15WfKSrftcgdmc/CxPX1Y9ExwwuWbDfwa
+	 7cVAJz8ZJZGiM0sm2/9M1XAdhRmtUTwt1qAgvNxiVbJBPLqqPit8XkltwUU5QuhJJx
+	 3Vk7kIRu0EApSP6xBAAXy25eAd89StOH4fOezjXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Borislav Petkov <bp@suse.de>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Subject: [PATCH 5.10 17/68] x86/pkeys: Revert a5eff7259790 ("x86/pkeys: Add PKRU value to init_fpstate")
-Date: Sun, 13 Aug 2023 23:19:18 +0200
-Message-ID: <20230813211708.678961745@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 18/68] nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
+Date: Sun, 13 Aug 2023 23:19:19 +0200
+Message-ID: <20230813211708.706262569@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,76 +35,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit b3607269ff57fd3c9690cb25962c5e4b91a0fd3b upstream.
+commit f8654743a0e6909dc634cbfad6db6816f10f3399 upstream.
 
-This cannot work and it's unclear how that ever made a difference.
+During unmount process of nilfs2, nothing holds nilfs_root structure after
+nilfs2 detaches its writer in nilfs_detach_log_writer().  Previously,
+nilfs_evict_inode() could cause use-after-free read for nilfs_root if
+inodes are left in "garbage_list" and released by nilfs_dispose_list at
+the end of nilfs_detach_log_writer(), and this bug was fixed by commit
+9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root in
+nilfs_evict_inode()").
 
-init_fpstate.xsave.header.xfeatures is always 0 so get_xsave_addr() will
-always return a NULL pointer, which will prevent storing the default PKRU
-value in init_fpstate.
+However, it turned out that there is another possibility of UAF in the
+call path where mark_inode_dirty_sync() is called from iput():
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Borislav Petkov <bp@suse.de>
-Link: https://lkml.kernel.org/r/20210623121451.451391598@linutronix.de
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+nilfs_detach_log_writer()
+  nilfs_dispose_list()
+    iput()
+      mark_inode_dirty_sync()
+        __mark_inode_dirty()
+          nilfs_dirty_inode()
+            __nilfs_mark_inode_dirty()
+              nilfs_load_inode_block() --> causes UAF of nilfs_root struct
+
+This can happen after commit 0ae45f63d4ef ("vfs: add support for a
+lazytime mount option"), which changed iput() to call
+mark_inode_dirty_sync() on its final reference if i_state has I_DIRTY_TIME
+flag and i_nlink is non-zero.
+
+This issue appears after commit 28a65b49eb53 ("nilfs2: do not write dirty
+data after degenerating to read-only") when using the syzbot reproducer,
+but the issue has potentially existed before.
+
+Fix this issue by adding a "purging flag" to the nilfs structure, setting
+that flag while disposing the "garbage_list" and checking it in
+__nilfs_mark_inode_dirty().
+
+Unlike commit 9b5a04ac3ad9 ("nilfs2: fix use-after-free bug of nilfs_root
+in nilfs_evict_inode()"), this patch does not rely on ns_writer to
+determine whether to skip operations, so as not to break recovery on
+mount.  The nilfs_salvage_orphan_logs routine dirties the buffer of
+salvaged data before attaching the log writer, so changing
+__nilfs_mark_inode_dirty() to skip the operation when ns_writer is NULL
+will cause recovery write to fail.  The purpose of using the cleanup-only
+flag is to allow for narrowing of such conditions.
+
+Link: https://lkml.kernel.org/r/20230728191318.33047-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+74db8b3087f293d3a13a@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/000000000000b4e906060113fd63@google.com
+Fixes: 0ae45f63d4ef ("vfs: add support for a lazytime mount option")
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org> # 4.0+
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |    5 -----
- arch/x86/mm/pkeys.c          |    6 ------
- 2 files changed, 11 deletions(-)
+ fs/nilfs2/inode.c     |    8 ++++++++
+ fs/nilfs2/segment.c   |    2 ++
+ fs/nilfs2/the_nilfs.h |    2 ++
+ 3 files changed, 12 insertions(+)
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -472,8 +472,6 @@ static bool pku_disabled;
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -1103,9 +1103,17 @@ int nilfs_set_file_dirty(struct inode *i
  
- static __always_inline void setup_pku(struct cpuinfo_x86 *c)
+ int __nilfs_mark_inode_dirty(struct inode *inode, int flags)
  {
--	struct pkru_state *pk;
--
- 	/* check the boot processor, plus compile options for PKU: */
- 	if (!cpu_feature_enabled(X86_FEATURE_PKU))
- 		return;
-@@ -484,9 +482,6 @@ static __always_inline void setup_pku(st
- 		return;
++	struct the_nilfs *nilfs = inode->i_sb->s_fs_info;
+ 	struct buffer_head *ibh;
+ 	int err;
  
- 	cr4_set_bits(X86_CR4_PKE);
--	pk = get_xsave_addr(&init_fpstate.xsave, XFEATURE_PKRU);
--	if (pk)
--		pk->pkru = init_pkru_value;
- 	/*
- 	 * Seting X86_CR4_PKE will cause the X86_FEATURE_OSPKE
- 	 * cpuid bit to be set.  We need to ensure that we
---- a/arch/x86/mm/pkeys.c
-+++ b/arch/x86/mm/pkeys.c
-@@ -10,7 +10,6 @@
++	/*
++	 * Do not dirty inodes after the log writer has been detached
++	 * and its nilfs_root struct has been freed.
++	 */
++	if (unlikely(nilfs_purging(nilfs)))
++		return 0;
++
+ 	err = nilfs_load_inode_block(inode, &ibh);
+ 	if (unlikely(err)) {
+ 		nilfs_warn(inode->i_sb,
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2850,6 +2850,7 @@ void nilfs_detach_log_writer(struct supe
+ 		nilfs_segctor_destroy(nilfs->ns_writer);
+ 		nilfs->ns_writer = NULL;
+ 	}
++	set_nilfs_purging(nilfs);
  
- #include <asm/cpufeature.h>             /* boot_cpu_has, ...            */
- #include <asm/mmu_context.h>            /* vma_pkey()                   */
--#include <asm/fpu/internal.h>		/* init_fpstate			*/
+ 	/* Force to free the list of dirty files */
+ 	spin_lock(&nilfs->ns_inode_lock);
+@@ -2862,4 +2863,5 @@ void nilfs_detach_log_writer(struct supe
+ 	up_write(&nilfs->ns_segctor_sem);
  
- int __execute_only_pkey(struct mm_struct *mm)
- {
-@@ -154,7 +153,6 @@ static ssize_t init_pkru_read_file(struc
- static ssize_t init_pkru_write_file(struct file *file,
- 		 const char __user *user_buf, size_t count, loff_t *ppos)
- {
--	struct pkru_state *pk;
- 	char buf[32];
- 	ssize_t len;
- 	u32 new_init_pkru;
-@@ -177,10 +175,6 @@ static ssize_t init_pkru_write_file(stru
- 		return -EINVAL;
- 
- 	WRITE_ONCE(init_pkru_value, new_init_pkru);
--	pk = get_xsave_addr(&init_fpstate.xsave, XFEATURE_PKRU);
--	if (!pk)
--		return -EINVAL;
--	pk->pkru = new_init_pkru;
- 	return count;
+ 	nilfs_dispose_list(nilfs, &garbage_list, 1);
++	clear_nilfs_purging(nilfs);
  }
+--- a/fs/nilfs2/the_nilfs.h
++++ b/fs/nilfs2/the_nilfs.h
+@@ -29,6 +29,7 @@ enum {
+ 	THE_NILFS_DISCONTINUED,	/* 'next' pointer chain has broken */
+ 	THE_NILFS_GC_RUNNING,	/* gc process is running */
+ 	THE_NILFS_SB_DIRTY,	/* super block is dirty */
++	THE_NILFS_PURGING,	/* disposing dirty files for cleanup */
+ };
  
+ /**
+@@ -208,6 +209,7 @@ THE_NILFS_FNS(INIT, init)
+ THE_NILFS_FNS(DISCONTINUED, discontinued)
+ THE_NILFS_FNS(GC_RUNNING, gc_running)
+ THE_NILFS_FNS(SB_DIRTY, sb_dirty)
++THE_NILFS_FNS(PURGING, purging)
+ 
+ /*
+  * Mount option operations
 
 
