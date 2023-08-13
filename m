@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BD19443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09923C433C8;
-	Sun, 13 Aug 2023 21:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A199443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AB6C433C7;
+	Sun, 13 Aug 2023 21:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962363;
-	bh=hdtwnZqZbdSiRdVbN6xV4E6M7Ke+NsQRG3r4bczK5B4=;
+	s=korg; t=1691962368;
+	bh=xRYkjk2nqLzKMCzrDDwvi8PDqHF7BbEhR7r63ocb7mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdjFPqi5BwUs7X4vCTtM8PTaQwSY2J1zPpHHS0WHz90iq1ecu2H3W92xoIBLUENSU
-	 K+f9qMkGCyAXmt8o2WzO+4YO+BBk9fD9DEBBMXvKHm6syjQVYKnOE+6eNJvp9zF9l2
-	 /cGdylyNkh1TstcVXiW5Lj+XrIs2Ir5jQ9w2hDgc=
+	b=pV7LlIGwer8ms+9z6JY5FrzgDzJfu7iClwnY7wIF1hUbnpG+zRBTrfKrh/11r+gjK
+	 7HRvit0AUFRza7Tl0ZhB6AS4V+ZSg/MZu/35VzVVG2a+KM5pvWG4X40zpKAsTmYA1g
+	 pyqKtHbs0QFt+BiaSpw91x/azprSXosegLM9TDeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Martin K Petersen <martin.petersen@oracle.com>,
-	James Bottomley <jejb@linux.ibm.com>,
-	Willy Tarreau <w@1wt.eu>,
-	stable@kernel.org,
-	Tony Battersby <tonyb@cybernetics.com>
-Subject: [PATCH 6.4 189/206] scsi: core: Fix legacy /proc parsing buffer overflow
-Date: Sun, 13 Aug 2023 23:19:19 +0200
-Message-ID: <20230813211730.431439442@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 191/206] scsi: ufs: renesas: Fix private allocation
+Date: Sun, 13 Aug 2023 23:19:21 +0200
+Message-ID: <20230813211730.486736167@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -38,106 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-commit 9426d3cef5000824e5f24f80ed5f42fb935f2488 upstream.
+commit b6d128f89a85771433a004e8656090ccbe1fb969 upstream.
 
-(lightly modified commit message mostly by Linus Torvalds)
+Should use devm_kzalloc() for struct ufs_renesas_priv because the
+.initialized should be false as default.
 
-The parsing code for /proc/scsi/scsi is disgusting and broken.  We should
-have just used 'sscanf()' or something simple like that, but the logic may
-actually predate our kernel sscanf library routine for all I know.  It
-certainly predates both git and BK histories.
-
-And we can't change it to be something sane like that now, because the
-string matching at the start is done case-insensitively, and the separator
-parsing between numbers isn't done at all, so *any* separator will work,
-including a possible terminating NUL character.
-
-This interface is root-only, and entirely for legacy use, so there is
-absolutely no point in trying to tighten up the parsing.  Because any
-separator has traditionally worked, it's entirely possible that people have
-used random characters rather than the suggested space.
-
-So don't bother to try to pretty it up, and let's just make a minimal patch
-that can be back-ported and we can forget about this whole sorry thing for
-another two decades.
-
-Just make it at least not read past the end of the supplied data.
-
-Link: https://lore.kernel.org/linux-scsi/b570f5fe-cb7c-863a-6ed9-f6774c219b88@cybernetics.com/
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Martin K Petersen <martin.petersen@oracle.com>
-Cc: James Bottomley <jejb@linux.ibm.com>
-Cc: Willy Tarreau <w@1wt.eu>
-Cc: stable@kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Signed-off-by: Martin K Petersen <martin.petersen@oracle.com>
+Fixes: d69520288efd ("scsi: ufs: ufs-renesas: Add support for Renesas R-Car UFS controller")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20230803081812.1446282-1-yoshihiro.shimoda.uh@renesas.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_proc.c |   30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ drivers/ufs/host/ufs-renesas.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_proc.c
-+++ b/drivers/scsi/scsi_proc.c
-@@ -406,7 +406,7 @@ static ssize_t proc_scsi_write(struct fi
- 			       size_t length, loff_t *ppos)
+--- a/drivers/ufs/host/ufs-renesas.c
++++ b/drivers/ufs/host/ufs-renesas.c
+@@ -359,7 +359,7 @@ static int ufs_renesas_init(struct ufs_h
  {
- 	int host, channel, id, lun;
--	char *buffer, *p;
-+	char *buffer, *end, *p;
- 	int err;
+ 	struct ufs_renesas_priv *priv;
  
- 	if (!buf || length > PAGE_SIZE)
-@@ -421,10 +421,14 @@ static ssize_t proc_scsi_write(struct fi
- 		goto out;
- 
- 	err = -EINVAL;
--	if (length < PAGE_SIZE)
--		buffer[length] = '\0';
--	else if (buffer[PAGE_SIZE-1])
--		goto out;
-+	if (length < PAGE_SIZE) {
-+		end = buffer + length;
-+		*end = '\0';
-+	} else {
-+		end = buffer + PAGE_SIZE - 1;
-+		if (*end)
-+			goto out;
-+	}
- 
- 	/*
- 	 * Usage: echo "scsi add-single-device 0 1 2 3" >/proc/scsi/scsi
-@@ -433,10 +437,10 @@ static ssize_t proc_scsi_write(struct fi
- 	if (!strncmp("scsi add-single-device", buffer, 22)) {
- 		p = buffer + 23;
- 
--		host = simple_strtoul(p, &p, 0);
--		channel = simple_strtoul(p + 1, &p, 0);
--		id = simple_strtoul(p + 1, &p, 0);
--		lun = simple_strtoul(p + 1, &p, 0);
-+		host    = (p     < end) ? simple_strtoul(p, &p, 0) : 0;
-+		channel = (p + 1 < end) ? simple_strtoul(p + 1, &p, 0) : 0;
-+		id      = (p + 1 < end) ? simple_strtoul(p + 1, &p, 0) : 0;
-+		lun     = (p + 1 < end) ? simple_strtoul(p + 1, &p, 0) : 0;
- 
- 		err = scsi_add_single_device(host, channel, id, lun);
- 
-@@ -447,10 +451,10 @@ static ssize_t proc_scsi_write(struct fi
- 	} else if (!strncmp("scsi remove-single-device", buffer, 25)) {
- 		p = buffer + 26;
- 
--		host = simple_strtoul(p, &p, 0);
--		channel = simple_strtoul(p + 1, &p, 0);
--		id = simple_strtoul(p + 1, &p, 0);
--		lun = simple_strtoul(p + 1, &p, 0);
-+		host    = (p     < end) ? simple_strtoul(p, &p, 0) : 0;
-+		channel = (p + 1 < end) ? simple_strtoul(p + 1, &p, 0) : 0;
-+		id      = (p + 1 < end) ? simple_strtoul(p + 1, &p, 0) : 0;
-+		lun     = (p + 1 < end) ? simple_strtoul(p + 1, &p, 0) : 0;
- 
- 		err = scsi_remove_single_device(host, channel, id, lun);
- 	}
+-	priv = devm_kmalloc(hba->dev, sizeof(*priv), GFP_KERNEL);
++	priv = devm_kzalloc(hba->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+ 	ufshcd_set_variant(hba, priv);
 
 
