@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A199443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AB6C433C7;
-	Sun, 13 Aug 2023 21:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E829443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E041C433C8;
+	Sun, 13 Aug 2023 21:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962368;
-	bh=xRYkjk2nqLzKMCzrDDwvi8PDqHF7BbEhR7r63ocb7mQ=;
+	s=korg; t=1691962371;
+	bh=Ub6X6dlBZATCSM2/RUFOM5pJM3Y9N4IuTIa4sBcJSx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pV7LlIGwer8ms+9z6JY5FrzgDzJfu7iClwnY7wIF1hUbnpG+zRBTrfKrh/11r+gjK
-	 7HRvit0AUFRza7Tl0ZhB6AS4V+ZSg/MZu/35VzVVG2a+KM5pvWG4X40zpKAsTmYA1g
-	 pyqKtHbs0QFt+BiaSpw91x/azprSXosegLM9TDeI=
+	b=L6jj66GW2Z6PsdhHlZNkr4BGo8wSBNPn/+uNTwK+cc/MIJTF4M94e9h/T8yrbA2F4
+	 h9yjDPJbL7bVhRxR1SLK7sir6pgHFl4JHbnd4xgQ9JkPCxmTiwya99NHqNBHPOMWwE
+	 b9J+5VUVnDkA7lXC26Mt80z7mzZZ9PtOinBtGUkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 191/206] scsi: ufs: renesas: Fix private allocation
-Date: Sun, 13 Aug 2023 23:19:21 +0200
-Message-ID: <20230813211730.486736167@linuxfoundation.org>
+Subject: [PATCH 6.4 192/206] scsi: 53c700: Check that command slot is not NULL
+Date: Sun, 13 Aug 2023 23:19:22 +0200
+Message-ID: <20230813211730.514693622@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,33 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-commit b6d128f89a85771433a004e8656090ccbe1fb969 upstream.
+commit 8366d1f1249a0d0bba41d0bd1298d63e5d34c7f7 upstream.
 
-Should use devm_kzalloc() for struct ufs_renesas_priv because the
-.initialized should be false as default.
+Add a check for the command slot value to avoid dereferencing a NULL
+pointer.
 
-Fixes: d69520288efd ("scsi: ufs: ufs-renesas: Add support for Renesas R-Car UFS controller")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20230803081812.1446282-1-yoshihiro.shimoda.uh@renesas.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Link: https://lore.kernel.org/r/20230728123521.18293-1-adiupina@astralinux.ru
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-renesas.c |    2 +-
+ drivers/scsi/53c700.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ufs/host/ufs-renesas.c
-+++ b/drivers/ufs/host/ufs-renesas.c
-@@ -359,7 +359,7 @@ static int ufs_renesas_init(struct ufs_h
- {
- 	struct ufs_renesas_priv *priv;
- 
--	priv = devm_kmalloc(hba->dev, sizeof(*priv), GFP_KERNEL);
-+	priv = devm_kzalloc(hba->dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
- 	ufshcd_set_variant(hba, priv);
+--- a/drivers/scsi/53c700.c
++++ b/drivers/scsi/53c700.c
+@@ -1598,7 +1598,7 @@ NCR_700_intr(int irq, void *dev_id)
+ 				printk("scsi%d (%d:%d) PHASE MISMATCH IN SEND MESSAGE %d remain, return %p[%04x], phase %s\n", host->host_no, pun, lun, count, (void *)temp, temp - hostdata->pScript, sbcl_to_string(NCR_700_readb(host, SBCL_REG)));
+ #endif
+ 				resume_offset = hostdata->pScript + Ent_SendMessagePhaseMismatch;
+-			} else if(dsp >= to32bit(&slot->pSG[0].ins) &&
++			} else if (slot && dsp >= to32bit(&slot->pSG[0].ins) &&
+ 				  dsp <= to32bit(&slot->pSG[NCR_700_SG_SEGMENTS].ins)) {
+ 				int data_transfer = NCR_700_readl(host, DBC_REG) & 0xffffff;
+ 				int SGcount = (dsp - to32bit(&slot->pSG[0].ins))/sizeof(struct NCR_700_SG_List);
 
 
