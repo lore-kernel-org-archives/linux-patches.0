@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770659446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71F7C433C8;
-	Sun, 13 Aug 2023 21:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62839446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A47C433C7;
+	Sun, 13 Aug 2023 21:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962891;
-	bh=sWZ1OXHuB3XqLBP+ncP1JJpwvIMa3sLCs5/LOcx6BeQ=;
+	s=korg; t=1691962893;
+	bh=H8OsNGUikVtkbjDPMqqe4SQtUA0jbXNeF2Cl2cF2yL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ge6CKAeiV0zuQ1MwJtUVhcW9AIQ0NAUiHAQJ6Jncqj5idW2bGPYkj4i+qpmoWMfvp
-	 mDziywwiBEzE4zg/2XGNSYOZt/Jvp3BJrxDv/LXAfxyXW0CWEgQK6BBa9LvK4QVt+7
-	 gNu3L+Bshij7f8w+C+cKPZgbI09RC+6fZhxxaPFg=
+	b=MVmdjah5OGoxTCL+qugW915a2S6TBKqIpzL/hzJollgnd/qtwqDBuMGWKkkXOY/Xw
+	 mEB2LBw7qzLVj6Trc0DRQoYldpH2zXFYisV9f+go4D4homuuvLy4bZR+gMDZ1KoR4D
+	 lebRCX5//YIoQB6ZceP63qmumQKMFogrKRbN/uBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 44/68] drivers: net: prevent tun_build_skb() to exceed the packet size limit
-Date: Sun, 13 Aug 2023 23:19:45 +0200
-Message-ID: <20230813211709.499253742@linuxfoundation.org>
+	Douglas Miller <doug.miller@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 5.10 45/68] IB/hfi1: Fix possible panic during hotplug remove
+Date: Sun, 13 Aug 2023 23:19:46 +0200
+Message-ID: <20230813211709.527238537@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -34,40 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Douglas Miller <doug.miller@cornelisnetworks.com>
 
-commit 59eeb232940515590de513b997539ef495faca9a upstream.
+commit 4fdfaef71fced490835145631a795497646f4555 upstream.
 
-Using the syzkaller repro with reduced packet size it was discovered
-that XDP_PACKET_HEADROOM is not checked in tun_can_build_skb(),
-although pad may be incremented in tun_build_skb(). This may end up
-with exceeding the PAGE_SIZE limit in tun_build_skb().
+During hotplug remove it is possible that the update counters work
+might be pending, and may run after memory has been freed.
+Cancel the update counters work before freeing memory.
 
-Jason Wang <jasowang@redhat.com> proposed to count XDP_PACKET_HEADROOM
-always (e.g. without rcu_access_pointer(tun->xdp_prog)) in
-tun_can_build_skb() since there's a window during which XDP program
-might be attached between tun_can_build_skb() and tun_build_skb().
-
-Fixes: 7df13219d757 ("tun: reserve extra headroom only when XDP is set")
-Link: https://syzkaller.appspot.com/bug?extid=f817490f5bd20541b90a
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Link: https://lore.kernel.org/r/20230803185947.2379988-1-andrew.kanner@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Douglas Miller <doug.miller@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/169099756100.3927190.15284930454106475280.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/chip.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1604,7 +1604,7 @@ static bool tun_can_build_skb(struct tun
- 	if (zerocopy)
- 		return false;
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -12348,6 +12348,7 @@ static void free_cntrs(struct hfi1_devda
  
--	if (SKB_DATA_ALIGN(len + TUN_RX_PAD) +
-+	if (SKB_DATA_ALIGN(len + TUN_RX_PAD + XDP_PACKET_HEADROOM) +
- 	    SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) > PAGE_SIZE)
- 		return false;
- 
+ 	if (dd->synth_stats_timer.function)
+ 		del_timer_sync(&dd->synth_stats_timer);
++	cancel_work_sync(&dd->update_cntr_work);
+ 	ppd = (struct hfi1_pportdata *)(dd + 1);
+ 	for (i = 0; i < dd->num_pports; i++, ppd++) {
+ 		kfree(ppd->cntrs);
 
 
