@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200659446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910CAC433C7;
-	Sun, 13 Aug 2023 21:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6393F9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:46:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D3DC433C7;
+	Sun, 13 Aug 2023 21:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963175;
-	bh=4v+94prT9e4Zj/BHMucDr/oLfG8GPskabnTBqsh/0Dk=;
+	s=korg; t=1691963178;
+	bh=0A0gAzXwXNMOg3hGBc8XZMdar2aUZsUFEP1GVpAaOHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2WKQQ1G8hBwoAwHgXGoz+sFD5vBgb4XwA4KfaEfkhWUxWA2H6KLrKwKcjPRJVjl3
-	 twbksj1u0AlliETLFnAJOhlil9p0Q9GPOg71M3vJ1cvB8+ABvhsTal2mKBspFXflaG
-	 VvNpEefF5ORjfy1QpeLOR/pDvtDKzcCI20rPLh+0=
+	b=PgXjB8JVuLYyZZU5xM1EEzgQUG4a5IhkaN4ADctQUtNhAsJxgBJnoTH5LdrXQfEN0
+	 bsB2Bhu9IRZ5rBGcNY8MMrGnLd9rsxgRayG3pPsXNQ+xCcwO//t5kB9nvcgEmhmB7t
+	 qQCGBFotB/zf7add5Nzyc252nn2WKEpw+7StqH7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
-	Narsimhulu Musini <nmusini@cisco.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 80/89] scsi: snic: Fix possible memory leak if device_add() fails
-Date: Sun, 13 Aug 2023 23:20:11 +0200
-Message-ID: <20230813211713.169529669@linuxfoundation.org>
+	Douglas Miller <doug.miller@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 5.15 54/89] IB/hfi1: Fix possible panic during hotplug remove
+Date: Sun, 13 Aug 2023 23:19:45 +0200
+Message-ID: <20230813211712.416499728@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,34 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Douglas Miller <doug.miller@cornelisnetworks.com>
 
-commit 41320b18a0e0dfb236dba4edb9be12dba1878156 upstream.
+commit 4fdfaef71fced490835145631a795497646f4555 upstream.
 
-If device_add() returns error, the name allocated by dev_set_name() needs
-be freed. As the comment of device_add() says, put_device() should be used
-to give up the reference in the error path. So fix this by calling
-put_device(), then the name can be freed in kobject_cleanp().
+During hotplug remove it is possible that the update counters work
+might be pending, and may run after memory has been freed.
+Cancel the update counters work before freeing memory.
 
-Fixes: c8806b6c9e82 ("snic: driver for Cisco SCSI HBA")
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Acked-by: Narsimhulu Musini <nmusini@cisco.com>
-Link: https://lore.kernel.org/r/20230801111421.63651-1-wangzhu9@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Douglas Miller <doug.miller@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/169099756100.3927190.15284930454106475280.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/snic/snic_disc.c |    1 +
+ drivers/infiniband/hw/hfi1/chip.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/snic/snic_disc.c
-+++ b/drivers/scsi/snic/snic_disc.c
-@@ -317,6 +317,7 @@ snic_tgt_create(struct snic *snic, struc
- 			      "Snic Tgt: device_add, with err = %d\n",
- 			      ret);
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -12306,6 +12306,7 @@ static void free_cntrs(struct hfi1_devda
  
-+		put_device(&tgt->dev);
- 		put_device(&snic->shost->shost_gendev);
- 		spin_lock_irqsave(snic->shost->host_lock, flags);
- 		list_del(&tgt->list);
+ 	if (dd->synth_stats_timer.function)
+ 		del_timer_sync(&dd->synth_stats_timer);
++	cancel_work_sync(&dd->update_cntr_work);
+ 	ppd = (struct hfi1_pportdata *)(dd + 1);
+ 	for (i = 0; i < dd->num_pports; i++, ppd++) {
+ 		kfree(ppd->cntrs);
 
 
