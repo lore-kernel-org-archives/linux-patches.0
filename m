@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F909443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59780C433C7;
-	Sun, 13 Aug 2023 21:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9959E9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BFAC433C8;
+	Sun, 13 Aug 2023 21:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961699;
-	bh=0AMdvi2yKg9TaoT5QvER/EDpE0FTF7lzsOVJd4Y4lHc=;
+	s=korg; t=1691961702;
+	bh=duNH9GkYK8gUXZBV7vxnaM0btNAkMAzu2881LPHz2tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hj7sOY8irHDjF3o1+RyKzx9oJ01GUrl2BS2/pt2IJ78QeeCxhk3p11Bdmn3LbD2Sq
-	 sbDZ36MiMaKzcL90IpNx8iZ6eDEJ/Oh2D+T3JzZ5qmKV4+urq3xuAwixpbKXGnLxl0
-	 VRVpIcYOmTZBCg0olGU7IPj/ssQVcJDL3hGLWD+I=
+	b=jeRF1SZ/+4/Y7/T+CPSoIlLlR36kD5vD1P3FdKXlRwTBy2aSVsS/PSeilVNoGuFbV
+	 vLeL4pQBqSKB9NFwMCiH6qfJVW/Mqa5WlRNeev52l9B9ige4w4A9WxMSzooiGORCP/
+	 /vcqZ7USKR9aTpBGuqbsrsqaaVxUM2+ETBPoBDLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Yiyuan Guo <yguoaz@gmail.com>,
-	Stable@vger.kerenl.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.14 08/26] iio: cros_ec: Fix the allocation size for cros_ec_command
-Date: Sun, 13 Aug 2023 23:19:01 +0200
-Message-ID: <20230813211703.300724861@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Subject: [PATCH 4.14 09/26] usb-storage: alauda: Fix uninit-value in alauda_check_media()
+Date: Sun, 13 Aug 2023 23:19:02 +0200
+Message-ID: <20230813211703.340818636@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
@@ -36,35 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yiyuan Guo <yguoaz@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 8a4629055ef55177b5b63dab1ecce676bd8cccdd upstream.
+commit a6ff6e7a9dd69364547751db0f626a10a6d628d2 upstream.
 
-The struct cros_ec_command contains several integer fields and a
-trailing array. An allocation size neglecting the integer fields can
-lead to buffer overrun.
+Syzbot got KMSAN to complain about access to an uninitialized value in
+the alauda subdriver of usb-storage:
 
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Yiyuan Guo <yguoaz@gmail.com>
-Fixes: 974e6f02e27e ("iio: cros_ec_sensors_core: Add common functions for the ChromeOS EC Sensor Hub.")
-Link: https://lore.kernel.org/r/20230630143719.1513906-1-yguoaz@gmail.com
-Cc: <Stable@vger.kerenl.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+BUG: KMSAN: uninit-value in alauda_transport+0x462/0x57f0
+drivers/usb/storage/alauda.c:1137
+CPU: 0 PID: 12279 Comm: usb-storage Not tainted 5.3.0-rc7+ #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x191/0x1f0 lib/dump_stack.c:113
+  kmsan_report+0x13a/0x2b0 mm/kmsan/kmsan_report.c:108
+  __msan_warning+0x73/0xe0 mm/kmsan/kmsan_instr.c:250
+  alauda_check_media+0x344/0x3310 drivers/usb/storage/alauda.c:460
+
+The problem is that alauda_check_media() doesn't verify that its USB
+transfer succeeded before trying to use the received data.  What
+should happen if the transfer fails isn't entirely clear, but a
+reasonably conservative approach is to pretend that no media is
+present.
+
+A similar problem exists in a usb_stor_dbg() call in
+alauda_get_media_status().  In this case, when an error occurs the
+call is redundant, because usb_stor_ctrl_transfer() already will print
+a debugging message.
+
+Finally, unrelated to the uninitialized memory access, is the fact
+that alauda_check_media() performs DMA to a buffer on the stack.
+Fortunately usb-storage provides a general purpose DMA-able buffer for
+uses like this.  We'll use it instead.
+
+Reported-and-tested-by: syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000007d25ff059457342d@google.com/T/
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/693d5d5e-f09b-42d0-8ed9-1f96cd30bcce@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/alauda.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c
-+++ b/drivers/iio/common/cros_ec_sensors/cros_ec_sensors_core.c
-@@ -47,7 +47,7 @@ int cros_ec_sensors_core_init(struct pla
- 	platform_set_drvdata(pdev, indio_dev);
+--- a/drivers/usb/storage/alauda.c
++++ b/drivers/usb/storage/alauda.c
+@@ -330,7 +330,8 @@ static int alauda_get_media_status(struc
+ 	rc = usb_stor_ctrl_transfer(us, us->recv_ctrl_pipe,
+ 		command, 0xc0, 0, 1, data, 2);
  
- 	state->ec = ec->ec_dev;
--	state->msg = devm_kzalloc(&pdev->dev,
-+	state->msg = devm_kzalloc(&pdev->dev, sizeof(*state->msg) +
- 				max((u16)sizeof(struct ec_params_motion_sense),
- 				state->ec->max_response), GFP_KERNEL);
- 	if (!state->msg)
+-	usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
++	if (rc == USB_STOR_XFER_GOOD)
++		usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
+ 
+ 	return rc;
+ }
+@@ -466,10 +467,14 @@ static int alauda_init_media(struct us_d
+ static int alauda_check_media(struct us_data *us)
+ {
+ 	struct alauda_info *info = (struct alauda_info *) us->extra;
+-	unsigned char status[2];
++	unsigned char *status = us->iobuf;
+ 	int rc;
+ 
+ 	rc = alauda_get_media_status(us, status);
++	if (rc != USB_STOR_XFER_GOOD) {
++		status[0] = 0xF0;	/* Pretend there's no media */
++		status[1] = 0;
++	}
+ 
+ 	/* Check for no media or door open */
+ 	if ((status[0] & 0x80) || ((status[0] & 0x1F) == 0x10)
 
 
