@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D259446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E38C433C8;
-	Sun, 13 Aug 2023 21:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8739446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B39C433C8;
+	Sun, 13 Aug 2023 21:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962754;
-	bh=OJ8bT55eXcKf6TRMHS0UgRKiTPkMAAoq7xopAVbS/O4=;
+	s=korg; t=1691962756;
+	bh=wNRvscmA2Zxke4ubHVOHpXt0KjqJKn62DXB4yNNSvPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThPjZo38IPGxQh7coM6YLh+Efpt7CvePh9Gl7oS4YiMpJMma1k1KaKCn0QtiIikiw
-	 HAAq+KjoUVWFsgC23FlhOMNbtuDuftVJnNg5kmpd5um1hmLz8pqr2gKVuOn5LVYnov
-	 4gOiMmZ9IW2c/SwRdX/3zLIoi+ZI6dYfWzQ2FAGk=
+	b=VwMLGwJhD6zsZjF5x5XNmRe8PwGWRwHfYdCIuiZZQrAUh18eNt81ugawKF64xvxzD
+	 SzpFqIUKzf2YP8ElVDoGhndYr+coX0fTzQPVkBbePLU78ytJvRoyPmIEJRzo4VQCDj
+	 l2LTatD8/UYs7wX9smwMGzWiwSTf+X1RlJCph/LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Xu <xuwd1@hotmail.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 145/149] platform/x86: serial-multi-instantiate: Auto detect IRQ resource for CSC3551
-Date: Sun, 13 Aug 2023 23:19:50 +0200
-Message-ID: <20230813211723.032497807@linuxfoundation.org>
+Subject: [PATCH 6.1 146/149] ACPI: scan: Create platform device for CS35L56
+Date: Sun, 13 Aug 2023 23:19:51 +0200
+Message-ID: <20230813211723.060106273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,77 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Xu <xuwd1@hotmail.com>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-commit 676b7c5ecab36274442887ceadd6dee8248a244f upstream.
+commit 1cd0302be5645420f73090aee26fa787287e1096 upstream.
 
-The current code assumes that the CSC3551(multiple cs35l41) always have
-its interrupt pin connected to GPIO thus the IRQ can be acquired with
-acpi_dev_gpio_irq_get. However on some newer laptop models this is no
-longer the case as they have the CSC3551's interrupt pin connected to
-APIC. This causes smi_i2c_probe to fail on these machines.
+The ACPI device CSC3556 is a Cirrus Logic CS35L56 mono amplifier which
+is used in multiples, and can be connected either to I2C or SPI.
 
-To support these machines, a new macro IRQ_RESOURCE_AUTO was introduced
-for cs35l41 smi_node, and smi_get_irq function was modified so it tries
-to get GPIO irq resource first and if failed, tries to get
-APIC irq resource for cs35l41.
+There will be multiple instances under the same Device() node. Add it
+to ignore_serial_bus_ids and handle it in the serial-multi-instantiate
+driver.
 
-This patch affects only the cs35l41's probing and brings no negative
-influence on machines that indeed have the cs35l41's interrupt pin
-connected to GPIO.
+There can be a 5th I2cSerialBusV2, but this is an alias address and doesn't
+represent a real device. Ignore this by having a dummy 5th entry in the
+serial-multi-instantiate instance list with the name of a non-existent
+driver, on the same pattern as done for bsg2150.
 
-Signed-off-by: David Xu <xuwd1@hotmail.com>
-Link: https://lore.kernel.org/r/SY4P282MB18350CD8288687B87FFD2243E037A@SY4P282MB1835.AUSP282.PROD.OUTLOOK.COM
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20230728111345.7224-1-rf@opensource.cirrus.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/serial-multi-instantiate.c |   21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/acpi/scan.c                             |    1 +
+ drivers/platform/x86/serial-multi-instantiate.c |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+)
 
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -1712,6 +1712,7 @@ static bool acpi_device_enumeration_by_p
+ 		{"BSG1160", },
+ 		{"BSG2150", },
+ 		{"CSC3551", },
++		{"CSC3556", },
+ 		{"INT33FE", },
+ 		{"INT3515", },
+ 		/* Non-conforming _HID for Cirrus Logic already released */
 --- a/drivers/platform/x86/serial-multi-instantiate.c
 +++ b/drivers/platform/x86/serial-multi-instantiate.c
-@@ -21,6 +21,7 @@
- #define IRQ_RESOURCE_NONE	0
- #define IRQ_RESOURCE_GPIO	1
- #define IRQ_RESOURCE_APIC	2
-+#define IRQ_RESOURCE_AUTO   3
- 
- enum smi_bus_type {
- 	SMI_I2C,
-@@ -52,6 +53,18 @@ static int smi_get_irq(struct platform_d
- 	int ret;
- 
- 	switch (inst->flags & IRQ_RESOURCE_TYPE) {
-+	case IRQ_RESOURCE_AUTO:
-+		ret = acpi_dev_gpio_irq_get(adev, inst->irq_idx);
-+		if (ret > 0) {
-+			dev_dbg(&pdev->dev, "Using gpio irq\n");
-+			break;
-+		}
-+		ret = platform_get_irq(pdev, inst->irq_idx);
-+		if (ret > 0) {
-+			dev_dbg(&pdev->dev, "Using platform irq\n");
-+			break;
-+		}
-+		break;
- 	case IRQ_RESOURCE_GPIO:
- 		ret = acpi_dev_gpio_irq_get(adev, inst->irq_idx);
- 		break;
-@@ -308,10 +321,10 @@ static const struct smi_node int3515_dat
- 
- static const struct smi_node cs35l41_hda = {
- 	.instances = {
--		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
--		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
--		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
--		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
-+		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
-+		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
-+		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
-+		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
- 		{}
- 	},
+@@ -330,6 +330,19 @@ static const struct smi_node cs35l41_hda
  	.bus_type = SMI_AUTO_DETECT,
+ };
+ 
++static const struct smi_node cs35l56_hda = {
++	.instances = {
++		{ "cs35l56-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l56-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l56-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l56-hda", IRQ_RESOURCE_AUTO, 0 },
++		/* a 5th entry is an alias address, not a real device */
++		{ "cs35l56-hda_dummy_dev" },
++		{}
++	},
++	.bus_type = SMI_AUTO_DETECT,
++};
++
+ /*
+  * Note new device-ids must also be added to ignore_serial_bus_ids in
+  * drivers/acpi/scan.c: acpi_device_enumeration_by_parent().
+@@ -338,6 +351,7 @@ static const struct acpi_device_id smi_a
+ 	{ "BSG1160", (unsigned long)&bsg1160_data },
+ 	{ "BSG2150", (unsigned long)&bsg2150_data },
+ 	{ "CSC3551", (unsigned long)&cs35l41_hda },
++	{ "CSC3556", (unsigned long)&cs35l56_hda },
+ 	{ "INT3515", (unsigned long)&int3515_data },
+ 	/* Non-conforming _HID for Cirrus Logic already released */
+ 	{ "CLSA0100", (unsigned long)&cs35l41_hda },
 
 
