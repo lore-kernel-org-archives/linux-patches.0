@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1059446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8E9C433C7;
-	Sun, 13 Aug 2023 21:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BA89446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3F6C433C7;
+	Sun, 13 Aug 2023 21:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963103;
-	bh=wJesyX+wFJu46BpCLzMM89hYugzJCdDwtw/kkLCUNJ4=;
+	s=korg; t=1691963106;
+	bh=Kvr1ZChOe5DB+CDsii1GPug3kGdIbYAaBMt4Vk4irn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XH0TkYCP09/I2mro4BHf6Pe8jW6I/o5DmUa7TS0rbz7MxUhYm+bxzYIy0k6wX3/RK
-	 n5LzShj5Sx8uk9fcIqQFSIcRKHpJTknHQnwNWvG/yKAtx4Vz4oFC3yMKLt9VvVbxby
-	 noCWdvj3epQ6JPeCkaaR/b/RuPKioyU0EIz4YNRc=
+	b=MFgaw9Zur1nu/H2cweB9UO9R8ZOZCr8+3NMRwC62hsGh1qlXsH4ZBwWyaQX8dwmO/
+	 MvV0nGWF03MNtkJ3z9/TAYjWgMF/6HHarHH+T4Lnf/d13SpUGNSksPJPya1hPyTeUr
+	 xZauiSlxngRmhM1MWIWR80hAevo+cPn8xDmLHBAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 28/89] usb: typec: tcpm: Fix response to vsafe0V event
-Date: Sun, 13 Aug 2023 23:19:19 +0200
-Message-ID: <20230813211711.592138193@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Daniel Kolesa <daniel@octaforge.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Sven Volkinsfeld <thyrc@gmx.net>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 29/89] x86/srso: Fix build breakage with the LLVM linker
+Date: Sun, 13 Aug 2023 23:19:20 +0200
+Message-ID: <20230813211711.621048601@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -34,55 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit 4270d2b4845e820b274702bfc2a7140f69e4d19d upstream.
+commit cbe8ded48b939b9d55d2c5589ab56caa7b530709 upstream.
 
-Do not transition to SNK_UNATTACHED state when receiving vsafe0v event
-while in SNK_HARD_RESET_WAIT_VBUS. Ignore VBUS off events as well as
-in some platforms VBUS off can be signalled more than once.
+The assertion added to verify the difference in bits set of the
+addresses of srso_untrain_ret_alias() and srso_safe_ret_alias() would fail
+to link in LLVM's ld.lld linker with the following error:
 
-[143515.364753] Requesting mux state 1, usb-role 2, orientation 2
-[143515.365520] pending state change SNK_HARD_RESET_SINK_OFF -> SNK_HARD_RESET_SINK_ON @ 650 ms [rev3 HARD_RESET]
-[143515.632281] CC1: 0 -> 0, CC2: 3 -> 0 [state SNK_HARD_RESET_SINK_OFF, polarity 1, disconnected]
-[143515.637214] VBUS on
-[143515.664985] VBUS off
-[143515.664992] state change SNK_HARD_RESET_SINK_OFF -> SNK_HARD_RESET_WAIT_VBUS [rev3 HARD_RESET]
-[143515.665564] VBUS VSAFE0V
-[143515.665566] state change SNK_HARD_RESET_WAIT_VBUS -> SNK_UNATTACHED [rev3 HARD_RESET]
+  ld.lld: error: ./arch/x86/kernel/vmlinux.lds:210: at least one side of
+  the expression must be absolute
+  ld.lld: error: ./arch/x86/kernel/vmlinux.lds:211: at least one side of
+  the expression must be absolute
 
-Fixes: 28b43d3d746b ("usb: typec: tcpm: Introduce vsafe0v for vbus")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230712085722.1414743-1-badhri@google.com
+Use ABSOLUTE to evaluate the expression referring to at least one of the
+symbols so that LLD can evaluate the linker script.
+
+Also, add linker version info to the comment about XOR being unsupported
+in either ld.bfd or ld.lld until somewhat recently.
+
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Closes: https://lore.kernel.org/llvm/CA+G9fYsdUeNu-gwbs0+T6XHi4hYYk=Y9725-wFhZ7gJMspLDRA@mail.gmail.com/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Daniel Kolesa <daniel@octaforge.org>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Suggested-by: Sven Volkinsfeld <thyrc@gmx.net>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1907
+Link: https://lore.kernel.org/r/20230809-gds-v1-1-eaac90b0cbcc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kernel/vmlinux.lds.S |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5246,6 +5246,10 @@ static void _tcpm_pd_vbus_off(struct tcp
- 		/* Do nothing, vbus drop expected */
- 		break;
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -518,11 +518,17 @@ INIT_PER_CPU(irq_stack_backing_store);
  
-+	case SNK_HARD_RESET_WAIT_VBUS:
-+		/* Do nothing, its OK to receive vbus off events */
-+		break;
-+
- 	default:
- 		if (port->pwr_role == TYPEC_SINK && port->attached)
- 			tcpm_set_state(port, SNK_UNATTACHED, tcpm_wait_for_discharge(port));
-@@ -5292,6 +5296,9 @@ static void _tcpm_pd_vbus_vsafe0v(struct
- 	case SNK_DEBOUNCED:
- 		/*Do nothing, still waiting for VSAFE5V for connect */
- 		break;
-+	case SNK_HARD_RESET_WAIT_VBUS:
-+		/* Do nothing, its OK to receive vbus off events */
-+		break;
- 	default:
- 		if (port->pwr_role == TYPEC_SINK && port->auto_vbus_discharge_enabled)
- 			tcpm_set_state(port, SNK_UNATTACHED, 0);
+ #ifdef CONFIG_CPU_SRSO
+ /*
+- * GNU ld cannot do XOR so do: (A | B) - (A & B) in order to compute the XOR
++ * GNU ld cannot do XOR until 2.41.
++ * https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=f6f78318fca803c4907fb8d7f6ded8295f1947b1
++ *
++ * LLVM lld cannot do XOR until lld-17.
++ * https://github.com/llvm/llvm-project/commit/fae96104d4378166cbe5c875ef8ed808a356f3fb
++ *
++ * Instead do: (A | B) - (A & B) in order to compute the XOR
+  * of the two function addresses:
+  */
+-. = ASSERT(((srso_untrain_ret_alias | srso_safe_ret_alias) -
+-		(srso_untrain_ret_alias & srso_safe_ret_alias)) == ((1 << 2) | (1 << 8) | (1 << 14) | (1 << 20)),
++. = ASSERT(((ABSOLUTE(srso_untrain_ret_alias) | srso_safe_ret_alias) -
++		(ABSOLUTE(srso_untrain_ret_alias) & srso_safe_ret_alias)) == ((1 << 2) | (1 << 8) | (1 << 14) | (1 << 20)),
+ 		"SRSO function pair won't alias");
+ #endif
+ 
 
 
