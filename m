@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907849446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147F3C433C7;
-	Sun, 13 Aug 2023 21:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62C89446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCDEC433C8;
+	Sun, 13 Aug 2023 21:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962855;
-	bh=kXBFi4hfIk+Q14JW8uzgsf+WK2BtG/zSp8omQa2vUck=;
+	s=korg; t=1691962858;
+	bh=vyrbWkL+w5yCnSv55T8mPMqORP3G3ad88emGkNyMm4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EtAg1R+kzMyZqZfk2AicWn1mYe8MCGYXZtkze13fj/TLoVrKlCf9G6pxinsvIrhl0
-	 05D3192ysDQVT2dz74Aua/acjAPJrGHck5ssKVtn27ozcx7R6hfvxJHi+T4XwOTB0S
-	 kPqfDfASKATjugB9By99DGYQhZJl1Wc6r7k7mlbg=
+	b=DK90rvUvKR2KB0nj5hMesYA0ZOFXlygmalukTqUsf5lI9rQVwEhvvM2edpNomkfuh
+	 18yNvWHZKv/J733gnHbMUh9Nj2PPDPZQ9mRdQdyLtwxFQ28dBIl3tA4oMV9bAVm+K6
+	 aBxytHuoGo3iAfwRlskFp7IHL4oiZ6Db0KWy/orE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.10 32/68] selftests/rseq: Fix build with undefined __weak
-Date: Sun, 13 Aug 2023 23:19:33 +0200
-Message-ID: <20230813211709.133936691@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 33/68] selftests: forwarding: Add a helper to skip test when using veth pairs
+Date: Sun, 13 Aug 2023 23:19:34 +0200
+Message-ID: <20230813211709.162643828@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -34,64 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit d5ad9aae13dcced333c1a7816ff0a4fbbb052466 upstream.
+commit 66e131861ab7bf754b50813216f5c6885cd32d63 upstream.
 
-Commit 3bcbc20942db ("selftests/rseq: Play nice with binaries statically
-linked against glibc 2.35+") which is now in Linus' tree introduced uses
-of __weak but did nothing to ensure that a definition is provided for it
-resulting in build failures for the rseq tests:
+A handful of tests require physical loopbacks to be used instead of veth
+pairs. Add a helper that these tests will invoke in order to be skipped
+when executed with veth pairs.
 
-rseq.c:41:1: error: unknown type name '__weak'
-__weak ptrdiff_t __rseq_offset;
-^
-rseq.c:41:17: error: expected ';' after top level declarator
-__weak ptrdiff_t __rseq_offset;
-                ^
-                ;
-rseq.c:42:1: error: unknown type name '__weak'
-__weak unsigned int __rseq_size;
-^
-rseq.c:43:1: error: unknown type name '__weak'
-__weak unsigned int __rseq_flags;
-
-Fix this by using the definition from tools/include compiler.h.
-
-Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Message-Id: <20230804-kselftest-rseq-build-v1-1-015830b66aa9@kernel.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 64916b57c0b1 ("selftests: forwarding: Add speed and auto-negotiation test")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230808141503.4060661-7-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/Makefile |    4 +++-
- tools/testing/selftests/rseq/rseq.c   |    2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/lib.sh |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/tools/testing/selftests/rseq/Makefile
-+++ b/tools/testing/selftests/rseq/Makefile
-@@ -4,8 +4,10 @@ ifneq ($(shell $(CC) --version 2>&1 | he
- CLANG_FLAGS += -no-integrated-as
- endif
+--- a/tools/testing/selftests/net/forwarding/lib.sh
++++ b/tools/testing/selftests/net/forwarding/lib.sh
+@@ -69,6 +69,17 @@ check_tc_action_hw_stats_support()
+ 	fi
+ }
  
-+top_srcdir = ../../../..
++skip_on_veth()
++{
++	local kind=$(ip -j -d link show dev ${NETIFS[p1]} |
++		jq -r '.[].linkinfo.info_kind')
 +
- CFLAGS += -O2 -Wall -g -I./ -I../../../../usr/include/ -L$(OUTPUT) -Wl,-rpath=./ \
--	  $(CLANG_FLAGS)
-+	  $(CLANG_FLAGS) -I$(top_srcdir)/tools/include
- LDLIBS += -lpthread -ldl
- 
- # Own dependencies because we only want to build against 1st prerequisite, but
---- a/tools/testing/selftests/rseq/rseq.c
-+++ b/tools/testing/selftests/rseq/rseq.c
-@@ -29,6 +29,8 @@
- #include <dlfcn.h>
- #include <stddef.h>
- 
-+#include <linux/compiler.h>
++	if [[ $kind == veth ]]; then
++		echo "SKIP: Test cannot be run with veth pairs"
++		exit $ksft_skip
++	fi
++}
 +
- #include "../kselftest.h"
- #include "rseq.h"
- 
+ if [[ "$(id -u)" -ne 0 ]]; then
+ 	echo "SKIP: need root privileges"
+ 	exit 0
 
 
