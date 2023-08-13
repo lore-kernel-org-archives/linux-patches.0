@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1E49446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021DAC433C8;
-	Sun, 13 Aug 2023 21:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321CE9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:40:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD83BC433C7;
+	Sun, 13 Aug 2023 21:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962830;
-	bh=b5pj1ttmahcvFOhdvyKP86Jh+E/RHuW9h5oh+Z0X+AE=;
+	s=korg; t=1691962833;
+	bh=iCFrBTlo6yKmUgrW43uay1Zt0iGJycYcy0NiMTqNrIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FjX77BOY2F4neh9oZy2C6weYP9leD+0vwuC+DokbvxahpTatECati1xbI2lHbV+9
-	 C2+BM6ya3dCAiMCpReCZslKfBI8/tYRTG2cx/edrg+gIeVodc69va/Yk/24GUdqn11
-	 8ERPyNA61WlfPY+SH1EKWMk19jxgOL8SZ7iaSUuA=
+	b=MIJ6JU3cdRLTyAL7bZy4Lw2T0J0ElQE3r+JgOis/GAACJuZrFehrAoVPdoQ0Zxj8L
+	 BiDcrC6MsHn9CgPIwAWYdNgya1/ItNLTOlzvwpR3abUYpTEaZo+MLE9u6eslgH9lN0
+	 cnMUC5/Jp+HITrNrp6oluIq/aJFOBx+rvStHEHIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jen Linkova <furry@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	David Ahern <dsahern@gmail.com>,
-	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 03/68] ipv6: adjust ndisc_is_useropt() to also return true for PIO
-Date: Sun, 13 Aug 2023 23:19:04 +0200
-Message-ID: <20230813211708.254337151@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Luiz Capitulino <luizcap@amazon.com>
+Subject: [PATCH 5.10 04/68] bpf: allow precision tracking for programs with subprogs
+Date: Sun, 13 Aug 2023 23:19:05 +0200
+Message-ID: <20230813211708.288518641@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -38,54 +36,190 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 048c796beb6eb4fa3a5a647ee1c81f5c6f0f6a2a upstream.
+[ Upstream commit be2ef8161572ec1973124ebc50f56dafc2925e07 ]
 
-The upcoming (and nearly finalized):
-  https://datatracker.ietf.org/doc/draft-collink-6man-pio-pflag/
-will update the IPv6 RA to include a new flag in the PIO field,
-which will serve as a hint to perform DHCPv6-PD.
+Stop forcing precise=true for SCALAR registers when BPF program has any
+subprograms. Current restriction means that any BPF program, as soon as
+it uses subprograms, will end up not getting any of the precision
+tracking benefits in reduction of number of verified states.
 
-As we don't want DHCPv6 related logic inside the kernel, this piece of
-information needs to be exposed to userspace.  The simplest option is to
-simply expose the entire PIO through the already existing mechanism.
+This patch keeps the fallback mark_all_scalars_precise() behavior if
+precise marking has to cross function frames. E.g., if subprogram
+requires R1 (first input arg) to be marked precise, ideally we'd need to
+backtrack to the parent function and keep marking R1 and its
+dependencies as precise. But right now we give up and force all the
+SCALARs in any of the current and parent states to be forced to
+precise=true. We can lift that restriction in the future.
 
-Even without this new flag, the already existing PIO R (router address)
-flag (from RFC6275) cannot AFAICT be handled entirely in kernel,
-and provides useful information that should be exposed to userspace
-(the router's global address, for use by Mobile IPv6).
+But this patch fixes two issues identified when trying to enable
+precision tracking for subprogs.
 
-Also cc'ing stable@ for inclusion in LTS, as while technically this is
-not quite a bugfix, and instead more of a feature, it is absolutely
-trivial and the alternative is manually cherrypicking into all Android
-Common Kernel trees - and I know Greg will ask for it to be sent in via
-LTS instead...
+First, prevent "escaping" from top-most state in a global subprog. While
+with entry-level BPF program we never end up requesting precision for
+R1-R5 registers, because R2-R5 are not initialized (and so not readable
+in correct BPF program), and R1 is PTR_TO_CTX, not SCALAR, and so is
+implicitly precise. With global subprogs, though, it's different, as
+global subprog a) can have up to 5 SCALAR input arguments, which might
+get marked as precise=true and b) it is validated in isolation from its
+main entry BPF program. b) means that we can end up exhausting parent
+state chain and still not mark all registers in reg_mask as precise,
+which would lead to verifier bug warning.
 
-Cc: Jen Linkova <furry@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: David Ahern <dsahern@gmail.com>
-Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Link: https://lore.kernel.org/r/20230807102533.1147559-1-maze@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To handle that, we need to consider two cases. First, if the very first
+state is not immediately "checkpointed" (i.e., stored in state lookup
+hashtable), it will get correct first_insn_idx and last_insn_idx
+instruction set during state checkpointing. As such, this case is
+already handled and __mark_chain_precision() already handles that by
+just doing nothing when we reach to the very first parent state.
+st->parent will be NULL and we'll just stop. Perhaps some extra check
+for reg_mask and stack_mask is due here, but this patch doesn't address
+that issue.
+
+More problematic second case is when global function's initial state is
+immediately checkpointed before we manage to process the very first
+instruction. This is happening because when there is a call to global
+subprog from the main program the very first subprog's instruction is
+marked as pruning point, so before we manage to process first
+instruction we have to check and checkpoint state. This patch adds
+a special handling for such "empty" state, which is identified by having
+st->last_insn_idx set to -1. In such case, we check that we are indeed
+validating global subprog, and with some sanity checking we mark input
+args as precise if requested.
+
+Note that we also initialize state->first_insn_idx with correct start
+insn_idx offset. For main program zero is correct value, but for any
+subprog it's quite confusing to not have first_insn_idx set. This
+doesn't have any functional impact, but helps with debugging and state
+printing. We also explicitly initialize state->last_insns_idx instead of
+relying on is_state_visited() to do this with env->prev_insns_idx, which
+will be -1 on the very first instruction. This concludes necessary
+changes to handle specifically global subprog's precision tracking.
+
+Second identified problem was missed handling of BPF helper functions
+that call into subprogs (e.g., bpf_loop and few others). From precision
+tracking and backtracking logic's standpoint those are effectively calls
+into subprogs and should be called as BPF_PSEUDO_CALL calls.
+
+This patch takes the least intrusive way and just checks against a short
+list of current BPF helpers that do call subprogs, encapsulated in
+is_callback_calling_function() function. But to prevent accidentally
+forgetting to add new BPF helpers to this "list", we also do a sanity
+check in __check_func_call, which has to be called for each such special
+BPF helper, to validate that BPF helper is indeed recognized as
+callback-calling one. This should catch any missed checks in the future.
+Adding some special flags to be added in function proto definitions
+seemed like an overkill in this case.
+
+With the above changes, it's possible to remove forceful setting of
+reg->precise to true in __mark_reg_unknown, which turns on precision
+tracking both inside subprogs and entry progs that have subprogs. No
+warnings or errors were detected across all the selftests, but also when
+validating with veristat against internal Meta BPF objects and Cilium
+objects. Further, in some BPF programs there are noticeable reduction in
+number of states and instructions validated due to more effective
+precision tracking, especially benefiting syncookie test.
+
+$ ./veristat -C -e file,prog,insns,states ~/baseline-results.csv ~/subprog-precise-results.csv  | grep -v '+0'
+File                                      Program                     Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+----------------------------------------  --------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+pyperf600_bpf_loop.bpf.linked1.o          on_event                               3966             3678       -288 (-7.26%)               306               276         -30 (-9.80%)
+pyperf_global.bpf.linked1.o               on_event                               7563             7530        -33 (-0.44%)               520               517          -3 (-0.58%)
+pyperf_subprogs.bpf.linked1.o             on_event                              36358            36934       +576 (+1.58%)              2499              2531         +32 (+1.28%)
+setget_sockopt.bpf.linked1.o              skops_sockopt                          3965             4038        +73 (+1.84%)               343               347          +4 (+1.17%)
+test_cls_redirect_subprogs.bpf.linked1.o  cls_redirect                          64965            64901        -64 (-0.10%)              4619              4612          -7 (-0.15%)
+test_misc_tcp_hdr_options.bpf.linked1.o   misc_estab                             1491             1307      -184 (-12.34%)               110               100         -10 (-9.09%)
+test_pkt_access.bpf.linked1.o             test_pkt_access                         354              349         -5 (-1.41%)                25                24          -1 (-4.00%)
+test_sock_fields.bpf.linked1.o            egress_read_sock_fields                 435              375       -60 (-13.79%)                22                20          -2 (-9.09%)
+test_sysctl_loop2.bpf.linked1.o           sysctl_tcp_mem                         1508             1501         -7 (-0.46%)                29                28          -1 (-3.45%)
+test_tc_dtime.bpf.linked1.o               egress_fwdns_prio100                    468              435        -33 (-7.05%)                45                41          -4 (-8.89%)
+test_tc_dtime.bpf.linked1.o               ingress_fwdns_prio100                   398              408        +10 (+2.51%)                42                39          -3 (-7.14%)
+test_tc_dtime.bpf.linked1.o               ingress_fwdns_prio101                  1096              842      -254 (-23.18%)                97                73        -24 (-24.74%)
+test_tcp_hdr_options.bpf.linked1.o        estab                                  2758             2408      -350 (-12.69%)               208               181        -27 (-12.98%)
+test_urandom_usdt.bpf.linked1.o           urand_read_with_sema                    466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_urandom_usdt.bpf.linked1.o           urand_read_without_sema                 466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_urandom_usdt.bpf.linked1.o           urandlib_read_with_sema                 466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_urandom_usdt.bpf.linked1.o           urandlib_read_without_sema              466              448        -18 (-3.86%)                31                28          -3 (-9.68%)
+test_xdp_noinline.bpf.linked1.o           balancer_ingress_v6                    4302             4294         -8 (-0.19%)               257               256          -1 (-0.39%)
+xdp_synproxy_kern.bpf.linked1.o           syncookie_tc                         583722           405757   -177965 (-30.49%)             35846             25735     -10111 (-28.21%)
+xdp_synproxy_kern.bpf.linked1.o           syncookie_xdp                        609123           479055   -130068 (-21.35%)             35452             29145      -6307 (-17.79%)
+----------------------------------------  --------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: ecdf985d7615 ("bpf: track immediate values written to stack by BPF_ST instruction")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Tested-by: Luiz Capitulino <luizcap@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c |   35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -196,7 +196,8 @@ static struct nd_opt_hdr *ndisc_next_opt
- static inline int ndisc_is_useropt(const struct net_device *dev,
- 				   struct nd_opt_hdr *opt)
- {
--	return opt->nd_opt_type == ND_OPT_RDNSS ||
-+	return opt->nd_opt_type == ND_OPT_PREFIX_INFO ||
-+		opt->nd_opt_type == ND_OPT_RDNSS ||
- 		opt->nd_opt_type == ND_OPT_DNSSL ||
- 		opt->nd_opt_type == ND_OPT_CAPTIVE_PORTAL ||
- 		opt->nd_opt_type == ND_OPT_PREF64 ||
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -1359,7 +1359,7 @@ static void __mark_reg_unknown(const str
+ 	reg->type = SCALAR_VALUE;
+ 	reg->var_off = tnum_unknown;
+ 	reg->frameno = 0;
+-	reg->precise = env->subprog_cnt > 1 || !env->bpf_capable;
++	reg->precise = !env->bpf_capable;
+ 	__mark_reg_unbounded(reg);
+ }
+ 
+@@ -2097,12 +2097,42 @@ static int __mark_chain_precision(struct
+ 		return 0;
+ 	if (!reg_mask && !stack_mask)
+ 		return 0;
++
+ 	for (;;) {
+ 		DECLARE_BITMAP(mask, 64);
+ 		u32 history = st->jmp_history_cnt;
+ 
+ 		if (env->log.level & BPF_LOG_LEVEL)
+ 			verbose(env, "last_idx %d first_idx %d\n", last_idx, first_idx);
++
++		if (last_idx < 0) {
++			/* we are at the entry into subprog, which
++			 * is expected for global funcs, but only if
++			 * requested precise registers are R1-R5
++			 * (which are global func's input arguments)
++			 */
++			if (st->curframe == 0 &&
++			    st->frame[0]->subprogno > 0 &&
++			    st->frame[0]->callsite == BPF_MAIN_FUNC &&
++			    stack_mask == 0 && (reg_mask & ~0x3e) == 0) {
++				bitmap_from_u64(mask, reg_mask);
++				for_each_set_bit(i, mask, 32) {
++					reg = &st->frame[0]->regs[i];
++					if (reg->type != SCALAR_VALUE) {
++						reg_mask &= ~(1u << i);
++						continue;
++					}
++					reg->precise = true;
++				}
++				return 0;
++			}
++
++			verbose(env, "BUG backtracing func entry subprog %d reg_mask %x stack_mask %llx\n",
++				st->frame[0]->subprogno, reg_mask, stack_mask);
++			WARN_ONCE(1, "verifier backtracking bug");
++			return -EFAULT;
++		}
++
+ 		for (i = last_idx;;) {
+ 			if (skip_first) {
+ 				err = 0;
+@@ -11846,6 +11876,9 @@ static int do_check_common(struct bpf_ve
+ 			0 /* frameno */,
+ 			subprog);
+ 
++	state->first_insn_idx = env->subprog_info[subprog].start;
++	state->last_insn_idx = -1;
++
+ 	regs = state->frame[state->curframe]->regs;
+ 	if (subprog || env->prog->type == BPF_PROG_TYPE_EXT) {
+ 		ret = btf_prepare_func_args(env, subprog, regs);
 
 
