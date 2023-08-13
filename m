@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452249443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1670C433C7;
-	Sun, 13 Aug 2023 21:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D079443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63ACC433C8;
+	Sun, 13 Aug 2023 21:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961739;
-	bh=UrBH5tSEFB58qkmcw+mg9FcUjL3T0i0jwbLIHyUL2xk=;
+	s=korg; t=1691961742;
+	bh=EnlOqSZzYVL4gqDBVzyfLjHH9R2SKtoMEjbfxtC1vEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVwWabdFi8in1rg3zMjsvnSy0kQ6txlctc+TFO/ys4QRnDiCAjcy0ut30loJFN7Z7
-	 P/d37S+COvSAT53qLYtn6u8+cI6LKbxtoVnOXhNDTnBmEklp+Ki7YxMFStoPzbPr5Q
-	 hwmvUMUfbpHNmgUtn12HG61hrMoarNPi3x3xAt5c=
+	b=KtH94liXPtrG/pLkrvqAhbvoTFXYSZfbpF9VgoND6KSfHGphZevyUHr34lRnQ5ZMT
+	 W4JxGvQ6BiMpn6oDYAy36enSblRf7eAcbST0IthG29ivc0XnBrWXk4lM00KQSQdA1S
+	 80Ku/4UeQrVN+fbR1aJmgoUb+MDq8MEHeAS8Ilho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olaf Skibbe <news@kravcenko.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Karol Herbst <kherbst@redhat.com>
-Subject: [PATCH 4.19 15/33] drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
-Date: Sun, 13 Aug 2023 23:19:09 +0200
-Message-ID: <20230813211704.474062962@linuxfoundation.org>
+	Sergei Antonov <saproj@gmail.com>,
+	Jonas Jensen <jonas.jensen@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 02/33] mmc: moxart: read scr register without changing byte order
+Date: Sun, 13 Aug 2023 23:18:56 +0200
+Message-ID: <20230813211704.011158600@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
@@ -35,40 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Sergei Antonov <saproj@gmail.com>
 
-commit d5712cd22b9cf109fded1b7f178f4c1888c8b84b upstream.
+commit d44263222134b5635932974c6177a5cba65a07e8 upstream.
 
-The original commit adding that check tried to protect the kenrel against
-a potential invalid NULL pointer access.
+Conversion from big-endian to native is done in a common function
+mmc_app_send_scr(). Converting in moxart_transfer_pio() is extra.
+Double conversion on a LE system returns an incorrect SCR value,
+leads to errors:
 
-However we call nouveau_connector_detect_depth once without a native_mode
-set on purpose for non LVDS connectors and this broke DP support in a few
-cases.
+mmc0: unrecognised SCR structure version 8
 
-Cc: Olaf Skibbe <news@kravcenko.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/238
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/245
-Fixes: 20a2ce87fbaf8 ("drm/nouveau/dp: check for NULL nv_connector->native_mode")
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230805101813.2603989-1-kherbst@redhat.com
+Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
+Signed-off-by: Sergei Antonov <saproj@gmail.com>
+Cc: Jonas Jensen <jonas.jensen@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230627120549.2400325-1-saproj@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/moxart-mmc.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -921,7 +921,7 @@ nouveau_connector_get_modes(struct drm_c
- 	/* Determine display colour depth for everything except LVDS now,
- 	 * DP requires this before mode_valid() is called.
- 	 */
--	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
-+	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
- 		nouveau_connector_detect_depth(connector);
- 
- 	/* Find the native mode if this is a digital panel, if we didn't
+--- a/drivers/mmc/host/moxart-mmc.c
++++ b/drivers/mmc/host/moxart-mmc.c
+@@ -339,13 +339,7 @@ static void moxart_transfer_pio(struct m
+ 				return;
+ 			}
+ 			for (len = 0; len < remain && len < host->fifo_width;) {
+-				/* SCR data must be read in big endian. */
+-				if (data->mrq->cmd->opcode == SD_APP_SEND_SCR)
+-					*sgp = ioread32be(host->base +
+-							  REG_DATA_WINDOW);
+-				else
+-					*sgp = ioread32(host->base +
+-							REG_DATA_WINDOW);
++				*sgp = ioread32(host->base + REG_DATA_WINDOW);
+ 				sgp++;
+ 				len += 4;
+ 			}
 
 
