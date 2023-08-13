@@ -1,25 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4A69446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C11C433C9;
-	Sun, 13 Aug 2023 21:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D702C9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EE7C433C8;
+	Sun, 13 Aug 2023 21:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963068;
-	bh=zhGQR079K/MaYKvJ8I/fZVlaWoUsbW0YHrG0/GvdtlM=;
+	s=korg; t=1691963071;
+	bh=au87tlTGG3kVmUHDd/aOS7tzJPnWfRwjIyLp+gnphwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=psp/8bRgQeVWl/OvQzJGH+DfP/UKkQ2OUwFZ41D2mlop9K/r8Qc8Jk+8Zu3YQMWGP
-	 nl3XmPN1QU4EaDoB8AHBdFumlOMD6+bXfmtmKWk2u42dCvkU0W7mmGFy2it0+3TvrS
-	 gK5huBi2e+bg6FBJoO5m38RT/LxGrvhXGmKchCLc=
+	b=ByuPDeHjyLOYtv2PKE7L5BiR4mQG3HoEOYenhlitlZ8Nm63UFyKnWSSxWqZIYKerB
+	 Qj2lz261Kr8HSKVH9pAz7QSZC1SVeFZzVVhMniue22HrgaJF/XO7xpnKWNlL09Qcpb
+	 Uj1NOyCNyaa1ob/KRlZ8/dBbY47XbhOZo9wj6KUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricky Wu <ricky_wu@realtek.com>
-Subject: [PATCH 5.15 24/89] misc: rtsx: judge ASPM Mode to set PETXCFG Reg
-Date: Sun, 13 Aug 2023 23:19:15 +0200
-Message-ID: <20230813211711.479371422@linuxfoundation.org>
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 42/89] selftests: forwarding: tc_flower: Relax success criterion
+Date: Sun, 13 Aug 2023 23:19:33 +0200
+Message-ID: <20230813211712.051340656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -33,182 +38,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricky WU <ricky_wu@realtek.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 101bd907b4244a726980ee67f95ed9cafab6ff7a upstream.
+commit 9ee37e53e7687654b487fc94e82569377272a7a8 upstream.
 
-ASPM Mode is ASPM_MODE_CFG need to judge the value of clkreq_0
-to set HIGH or LOW, if the ASPM Mode is ASPM_MODE_REG
-always set to HIGH during the initialization.
+The test checks that filters that match on source or destination MAC
+were only hit once. A host can send more than one packet with a given
+source or destination MAC, resulting in failures.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
-Link: https://lore.kernel.org/r/52906c6836374c8cb068225954c5543a@realtek.com
+Fix by relaxing the success criterion and instead check that the filters
+were not hit zero times. Using tc_check_at_least_x_packets() is also an
+option, but it is not available in older kernels.
+
+Fixes: 07e5c75184a1 ("selftests: forwarding: Introduce tc flower matching tests")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230808141503.4060661-13-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/cardreader/rts5227.c  |    2 +-
- drivers/misc/cardreader/rts5228.c  |   18 ------------------
- drivers/misc/cardreader/rts5249.c  |    3 +--
- drivers/misc/cardreader/rts5260.c  |   18 ------------------
- drivers/misc/cardreader/rts5261.c  |   18 ------------------
- drivers/misc/cardreader/rtsx_pcr.c |    5 ++++-
- 6 files changed, 6 insertions(+), 58 deletions(-)
+ tools/testing/selftests/net/forwarding/tc_flower.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/cardreader/rts5227.c
-+++ b/drivers/misc/cardreader/rts5227.c
-@@ -171,7 +171,7 @@ static int rts5227_extra_init_hw(struct
- 	else
- 		rtsx_pci_add_cmd(pcr, WRITE_REG_CMD, PETXCFG, 0x30, 0x00);
+--- a/tools/testing/selftests/net/forwarding/tc_flower.sh
++++ b/tools/testing/selftests/net/forwarding/tc_flower.sh
+@@ -52,8 +52,8 @@ match_dst_mac_test()
+ 	tc_check_packets "dev $h2 ingress" 101 1
+ 	check_fail $? "Matched on a wrong filter"
  
--	if (option->force_clkreq_0)
-+	if (option->force_clkreq_0 && pcr->aspm_mode == ASPM_MODE_CFG)
- 		rtsx_pci_add_cmd(pcr, WRITE_REG_CMD, PETXCFG,
- 				FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
- 	else
---- a/drivers/misc/cardreader/rts5228.c
-+++ b/drivers/misc/cardreader/rts5228.c
-@@ -427,17 +427,10 @@ static void rts5228_init_from_cfg(struct
- 			option->ltr_enabled = false;
- 		}
- 	}
--
--	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
--				| PM_L1_1_EN | PM_L1_2_EN))
--		option->force_clkreq_0 = false;
--	else
--		option->force_clkreq_0 = true;
- }
+-	tc_check_packets "dev $h2 ingress" 102 1
+-	check_err $? "Did not match on correct filter"
++	tc_check_packets "dev $h2 ingress" 102 0
++	check_fail $? "Did not match on correct filter"
  
- static int rts5228_extra_init_hw(struct rtsx_pcr *pcr)
- {
--	struct rtsx_cr_option *option = &pcr->option;
+ 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
+ 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
+@@ -78,8 +78,8 @@ match_src_mac_test()
+ 	tc_check_packets "dev $h2 ingress" 101 1
+ 	check_fail $? "Matched on a wrong filter"
  
- 	rtsx_pci_write_register(pcr, RTS5228_AUTOLOAD_CFG1,
- 			CD_RESUME_EN_MASK, CD_RESUME_EN_MASK);
-@@ -468,17 +461,6 @@ static int rts5228_extra_init_hw(struct
- 	else
- 		rtsx_pci_write_register(pcr, PETXCFG, 0x30, 0x00);
+-	tc_check_packets "dev $h2 ingress" 102 1
+-	check_err $? "Did not match on correct filter"
++	tc_check_packets "dev $h2 ingress" 102 0
++	check_fail $? "Did not match on correct filter"
  
--	/*
--	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
--	 * to drive low, and we forcibly request clock.
--	 */
--	if (option->force_clkreq_0)
--		rtsx_pci_write_register(pcr, PETXCFG,
--				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
--	else
--		rtsx_pci_write_register(pcr, PETXCFG,
--				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
--
- 	rtsx_pci_write_register(pcr, PWD_SUSPEND_EN, 0xFF, 0xFB);
- 	rtsx_pci_write_register(pcr, pcr->reg_pm_ctrl3, 0x10, 0x00);
- 	rtsx_pci_write_register(pcr, RTS5228_REG_PME_FORCE_CTL,
---- a/drivers/misc/cardreader/rts5249.c
-+++ b/drivers/misc/cardreader/rts5249.c
-@@ -302,12 +302,11 @@ static int rts5249_extra_init_hw(struct
- 		}
- 	}
- 
--
- 	/*
- 	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
- 	 * to drive low, and we forcibly request clock.
- 	 */
--	if (option->force_clkreq_0)
-+	if (option->force_clkreq_0 && pcr->aspm_mode == ASPM_MODE_CFG)
- 		rtsx_pci_write_register(pcr, PETXCFG,
- 			FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
- 	else
---- a/drivers/misc/cardreader/rts5260.c
-+++ b/drivers/misc/cardreader/rts5260.c
-@@ -517,17 +517,10 @@ static void rts5260_init_from_cfg(struct
- 			option->ltr_enabled = false;
- 		}
- 	}
--
--	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
--				| PM_L1_1_EN | PM_L1_2_EN))
--		option->force_clkreq_0 = false;
--	else
--		option->force_clkreq_0 = true;
- }
- 
- static int rts5260_extra_init_hw(struct rtsx_pcr *pcr)
- {
--	struct rtsx_cr_option *option = &pcr->option;
- 
- 	/* Set mcu_cnt to 7 to ensure data can be sampled properly */
- 	rtsx_pci_write_register(pcr, 0xFC03, 0x7F, 0x07);
-@@ -546,17 +539,6 @@ static int rts5260_extra_init_hw(struct
- 
- 	rts5260_init_hw(pcr);
- 
--	/*
--	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
--	 * to drive low, and we forcibly request clock.
--	 */
--	if (option->force_clkreq_0)
--		rtsx_pci_write_register(pcr, PETXCFG,
--				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
--	else
--		rtsx_pci_write_register(pcr, PETXCFG,
--				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
--
- 	rtsx_pci_write_register(pcr, pcr->reg_pm_ctrl3, 0x10, 0x00);
- 
- 	return 0;
---- a/drivers/misc/cardreader/rts5261.c
-+++ b/drivers/misc/cardreader/rts5261.c
-@@ -468,17 +468,10 @@ static void rts5261_init_from_cfg(struct
- 			option->ltr_enabled = false;
- 		}
- 	}
--
--	if (rtsx_check_dev_flag(pcr, ASPM_L1_1_EN | ASPM_L1_2_EN
--				| PM_L1_1_EN | PM_L1_2_EN))
--		option->force_clkreq_0 = false;
--	else
--		option->force_clkreq_0 = true;
- }
- 
- static int rts5261_extra_init_hw(struct rtsx_pcr *pcr)
- {
--	struct rtsx_cr_option *option = &pcr->option;
- 	u32 val;
- 
- 	rtsx_pci_write_register(pcr, RTS5261_AUTOLOAD_CFG1,
-@@ -524,17 +517,6 @@ static int rts5261_extra_init_hw(struct
- 	else
- 		rtsx_pci_write_register(pcr, PETXCFG, 0x30, 0x00);
- 
--	/*
--	 * If u_force_clkreq_0 is enabled, CLKREQ# PIN will be forced
--	 * to drive low, and we forcibly request clock.
--	 */
--	if (option->force_clkreq_0)
--		rtsx_pci_write_register(pcr, PETXCFG,
--				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_LOW);
--	else
--		rtsx_pci_write_register(pcr, PETXCFG,
--				 FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
--
- 	rtsx_pci_write_register(pcr, PWD_SUSPEND_EN, 0xFF, 0xFB);
- 	rtsx_pci_write_register(pcr, pcr->reg_pm_ctrl3, 0x10, 0x00);
- 	rtsx_pci_write_register(pcr, RTS5261_REG_PME_FORCE_CTL,
---- a/drivers/misc/cardreader/rtsx_pcr.c
-+++ b/drivers/misc/cardreader/rtsx_pcr.c
-@@ -1400,8 +1400,11 @@ static int rtsx_pci_init_hw(struct rtsx_
- 			return err;
- 	}
- 
--	if (pcr->aspm_mode == ASPM_MODE_REG)
-+	if (pcr->aspm_mode == ASPM_MODE_REG) {
- 		rtsx_pci_write_register(pcr, ASPM_FORCE_CTL, 0x30, 0x30);
-+		rtsx_pci_write_register(pcr, PETXCFG,
-+				FORCE_CLKREQ_DELINK_MASK, FORCE_CLKREQ_HIGH);
-+	}
- 
- 	/* No CD interrupt if probing driver with card inserted.
- 	 * So we need to initialize pcr->card_exist here.
+ 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
+ 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
 
 
