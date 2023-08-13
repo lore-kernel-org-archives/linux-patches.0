@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E499A9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A53C433C7;
-	Sun, 13 Aug 2023 21:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DD69446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31356C433C7;
+	Sun, 13 Aug 2023 21:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962603;
-	bh=vLzRE8wPIkV0OHwXQjNwt6Lwb2s508y5j58PujaOhnk=;
+	s=korg; t=1691962606;
+	bh=65FajYFrnyYp50MI1Ud9RYl/c+DCILQfQDV80Qqb3DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Z+d0J9CkegXm5m+ImVuZL4vNu+A6c7+6rxtpWOMKk9HpWKLfi4j6SkVdCyrWjYf3
-	 z3XWW+p0OhEahumHaf1sMWqLpfzx3NCqasiTt7eM9tHa42c+RtpzLmcqO4xMXVqCCg
-	 /r/iINVmwGZX47e4NgdQheuGvBIa//K6zWHvmmXw=
+	b=15XHxrnYr6AAIEgMvAmPaH9EaBYc8XRVn4IscIP5KTUXw71+bT2+tq+DkuZ0Kqan9
+	 eV1D2R8BeZJq2kGGt+vb6N5cM9BJznEz4jRkbSsJmFMZ4lF0pXcXRh9DT/h8jVf6wZ
+	 LSkhggRjCUB40zhGBlvWKBCfJPl0u+F392IOzsgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Yang <xiangyang3@huawei.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 088/149] mptcp: fix the incorrect judgment for msk->cb_flags
-Date: Sun, 13 Aug 2023 23:18:53 +0200
-Message-ID: <20230813211721.420335825@linuxfoundation.org>
+Subject: [PATCH 6.1 089/149] net/packet: annotate data-races around tp->status
+Date: Sun, 13 Aug 2023 23:18:54 +0200
+Message-ID: <20230813211721.449924576@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,37 +36,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Yang <xiangyang3@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 17ebf8a4c38b5481c29623f5e003fdf7583947f9 upstream.
+commit 8a9896177784063d01068293caea3f74f6830ff6 upstream.
 
-Coccicheck reports the error below:
-net/mptcp/protocol.c:3330:15-28: ERROR: test of a variable/field address
+Another syzbot report [1] is about tp->status lockless reads
+from __packet_get_status()
 
-Since the address of msk->cb_flags is used in __test_and_clear_bit, the
-address should not be NULL. The judgment for if (unlikely(msk->cb_flags))
-will always be true, we should check the real value of msk->cb_flags here.
+[1]
+BUG: KCSAN: data-race in __packet_rcv_has_room / __packet_set_status
 
-Fixes: 65a569b03ca8 ("mptcp: optimize release_cb for the common case")
-Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Link: https://lore.kernel.org/r/20230803072438.1847500-1-xiangyang3@huawei.com
+write to 0xffff888117d7c080 of 8 bytes by interrupt on cpu 0:
+__packet_set_status+0x78/0xa0 net/packet/af_packet.c:407
+tpacket_rcv+0x18bb/0x1a60 net/packet/af_packet.c:2483
+deliver_skb net/core/dev.c:2173 [inline]
+__netif_receive_skb_core+0x408/0x1e80 net/core/dev.c:5337
+__netif_receive_skb_one_core net/core/dev.c:5491 [inline]
+__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5607
+process_backlog+0x21f/0x380 net/core/dev.c:5935
+__napi_poll+0x60/0x3b0 net/core/dev.c:6498
+napi_poll net/core/dev.c:6565 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6698
+__do_softirq+0xc1/0x265 kernel/softirq.c:571
+invoke_softirq kernel/softirq.c:445 [inline]
+__irq_exit_rcu+0x57/0xa0 kernel/softirq.c:650
+sysvec_apic_timer_interrupt+0x6d/0x80 arch/x86/kernel/apic/apic.c:1106
+asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:645
+smpboot_thread_fn+0x33c/0x4a0 kernel/smpboot.c:112
+kthread+0x1d7/0x210 kernel/kthread.c:379
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+
+read to 0xffff888117d7c080 of 8 bytes by interrupt on cpu 1:
+__packet_get_status net/packet/af_packet.c:436 [inline]
+packet_lookup_frame net/packet/af_packet.c:524 [inline]
+__tpacket_has_room net/packet/af_packet.c:1255 [inline]
+__packet_rcv_has_room+0x3f9/0x450 net/packet/af_packet.c:1298
+tpacket_rcv+0x275/0x1a60 net/packet/af_packet.c:2285
+deliver_skb net/core/dev.c:2173 [inline]
+dev_queue_xmit_nit+0x38a/0x5e0 net/core/dev.c:2243
+xmit_one net/core/dev.c:3574 [inline]
+dev_hard_start_xmit+0xcf/0x3f0 net/core/dev.c:3594
+__dev_queue_xmit+0xefb/0x1d10 net/core/dev.c:4244
+dev_queue_xmit include/linux/netdevice.h:3088 [inline]
+can_send+0x4eb/0x5d0 net/can/af_can.c:276
+bcm_can_tx+0x314/0x410 net/can/bcm.c:302
+bcm_tx_timeout_handler+0xdb/0x260
+__run_hrtimer kernel/time/hrtimer.c:1685 [inline]
+__hrtimer_run_queues+0x217/0x700 kernel/time/hrtimer.c:1749
+hrtimer_run_softirq+0xd6/0x120 kernel/time/hrtimer.c:1766
+__do_softirq+0xc1/0x265 kernel/softirq.c:571
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:939
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:379
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+
+value changed: 0x0000000000000000 -> 0x0000000020000081
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 19 Comm: ksoftirqd/1 Not tainted 6.4.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20230803145600.2937518-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3370,7 +3370,7 @@ static void mptcp_release_cb(struct sock
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -404,18 +404,20 @@ static void __packet_set_status(struct p
+ {
+ 	union tpacket_uhdr h;
  
- 	if (__test_and_clear_bit(MPTCP_CLEAN_UNA, &msk->cb_flags))
- 		__mptcp_clean_una_wakeup(sk);
--	if (unlikely(&msk->cb_flags)) {
-+	if (unlikely(msk->cb_flags)) {
- 		/* be sure to set the current sk state before tacking actions
- 		 * depending on sk_state, that is processing MPTCP_ERROR_REPORT
- 		 */
++	/* WRITE_ONCE() are paired with READ_ONCE() in __packet_get_status */
++
+ 	h.raw = frame;
+ 	switch (po->tp_version) {
+ 	case TPACKET_V1:
+-		h.h1->tp_status = status;
++		WRITE_ONCE(h.h1->tp_status, status);
+ 		flush_dcache_page(pgv_to_page(&h.h1->tp_status));
+ 		break;
+ 	case TPACKET_V2:
+-		h.h2->tp_status = status;
++		WRITE_ONCE(h.h2->tp_status, status);
+ 		flush_dcache_page(pgv_to_page(&h.h2->tp_status));
+ 		break;
+ 	case TPACKET_V3:
+-		h.h3->tp_status = status;
++		WRITE_ONCE(h.h3->tp_status, status);
+ 		flush_dcache_page(pgv_to_page(&h.h3->tp_status));
+ 		break;
+ 	default:
+@@ -432,17 +434,19 @@ static int __packet_get_status(const str
+ 
+ 	smp_rmb();
+ 
++	/* READ_ONCE() are paired with WRITE_ONCE() in __packet_set_status */
++
+ 	h.raw = frame;
+ 	switch (po->tp_version) {
+ 	case TPACKET_V1:
+ 		flush_dcache_page(pgv_to_page(&h.h1->tp_status));
+-		return h.h1->tp_status;
++		return READ_ONCE(h.h1->tp_status);
+ 	case TPACKET_V2:
+ 		flush_dcache_page(pgv_to_page(&h.h2->tp_status));
+-		return h.h2->tp_status;
++		return READ_ONCE(h.h2->tp_status);
+ 	case TPACKET_V3:
+ 		flush_dcache_page(pgv_to_page(&h.h3->tp_status));
+-		return h.h3->tp_status;
++		return READ_ONCE(h.h3->tp_status);
+ 	default:
+ 		WARN(1, "TPACKET version not supported.\n");
+ 		BUG();
 
 
