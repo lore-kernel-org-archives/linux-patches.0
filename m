@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAD49446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4E3C433C8;
-	Sun, 13 Aug 2023 21:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43189446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:37:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B165C433C8;
+	Sun, 13 Aug 2023 21:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962673;
-	bh=mwXPl1fmAk2/6qni2eX1lhVECipL2FkQkp6jb5pWnZQ=;
+	s=korg; t=1691962675;
+	bh=TZqAcznvCqCvpUicTpX3fxdcny3QexH2xqVkMvJHJUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuNk71EC3hXqI4ZiWJrXmrGOmbraJcHTJ8TRYQBQbp/u04xAsFh86pbLuDSB8zJIa
-	 bqov1zAU05BQcj9oKc/keistSv7bPVP7pfGchCd4zSyxWO2slRyonheOLoQ6wn4XkG
-	 QrmV+0h60DT6W99Z3VGzk3SDieII8bN7cD4rfw6w=
+	b=WLrjr2hjsnH+hEFPa5tXXhTrSmi+VR7d77GY4VHRlMHJDoPpbIfm2Bfuze+NduNjB
+	 evL3/mhMoqE2aum3d8rQMY8FWhz23CuvSsiBTZ2zY3StVaPCrWaBCH4c7qib7Ka+GQ
+	 bfFII5vJw9gF5Qr0cfmRiYEHVUhX+3JPqy8vzqpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Zhang Jianhua <chris.zjh@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 114/149] dmaengine: mcf-edma: Fix a potential un-allocated memory access
-Date: Sun, 13 Aug 2023 23:19:19 +0200
-Message-ID: <20230813211722.160736561@linuxfoundation.org>
+Subject: [PATCH 6.1 115/149] dmaengine: owl-dma: Modify mismatched function name
+Date: Sun, 13 Aug 2023 23:19:20 +0200
+Message-ID: <20230813211722.186736789@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,61 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Zhang Jianhua <chris.zjh@huawei.com>
 
-commit 0a46781c89dece85386885a407244ca26e5c1c44 upstream.
+commit 74d7221c1f9c9f3a8c316a3557ca7dca8b99d14c upstream.
 
-When 'mcf_edma' is allocated, some space is allocated for a
-flexible array at the end of the struct. 'chans' item are allocated, that is
-to say 'pdata->dma_channels'.
+No functional modification involved.
 
-Then, this number of item is stored in 'mcf_edma->n_chans'.
+drivers/dma/owl-dma.c:208: warning: expecting prototype for struct owl_dma_pchan. Prototype was for struct owl_dma_vchan instead HDRTEST usr/include/sound/asequencer.h
 
-A few lines later, if 'mcf_edma->n_chans' is 0, then a default value of 64
-is set.
-
-This ends to no space allocated by devm_kzalloc() because chans was 0, but
-64 items are read and/or written in some not allocated memory.
-
-Change the logic to define a default value before allocating the memory.
-
-Fixes: e7a3ff92eaf1 ("dmaengine: fsl-edma: add ColdFire mcf5441x edma support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/f55d914407c900828f6fad3ea5fa791a5f17b9a4.1685172449.git.christophe.jaillet@wanadoo.fr
+Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
+Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20230722153244.2086949-1-chris.zjh@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mcf-edma.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/dma/owl-dma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/dma/mcf-edma.c
-+++ b/drivers/dma/mcf-edma.c
-@@ -191,7 +191,13 @@ static int mcf_edma_probe(struct platfor
- 		return -EINVAL;
- 	}
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -192,7 +192,7 @@ struct owl_dma_pchan {
+ };
  
--	chans = pdata->dma_channels;
-+	if (!pdata->dma_channels) {
-+		dev_info(&pdev->dev, "setting default channel number to 64");
-+		chans = 64;
-+	} else {
-+		chans = pdata->dma_channels;
-+	}
-+
- 	len = sizeof(*mcf_edma) + sizeof(*mcf_chan) * chans;
- 	mcf_edma = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
- 	if (!mcf_edma)
-@@ -203,11 +209,6 @@ static int mcf_edma_probe(struct platfor
- 	mcf_edma->drvdata = &mcf_data;
- 	mcf_edma->big_endian = 1;
- 
--	if (!mcf_edma->n_chans) {
--		dev_info(&pdev->dev, "setting default channel number to 64");
--		mcf_edma->n_chans = 64;
--	}
--
- 	mutex_init(&mcf_edma->fsl_edma_mutex);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ /**
+- * struct owl_dma_pchan - Wrapper for DMA ENGINE channel
++ * struct owl_dma_vchan - Wrapper for DMA ENGINE channel
+  * @vc: wrapped virtual channel
+  * @pchan: the physical channel utilized by this channel
+  * @txd: active transaction on this channel
 
 
