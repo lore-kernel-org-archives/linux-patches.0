@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338E39446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E753C433C8;
-	Sun, 13 Aug 2023 21:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30B59446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7C6C433C7;
+	Sun, 13 Aug 2023 21:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962721;
-	bh=PRcvwgMcXZzG1wyr1pZcJh57zqmpSsrMIGSgMl8KA2M=;
+	s=korg; t=1691962724;
+	bh=8TMxi96RIWjNIOiNhkjKHfj4IIP9kMJl8q2G3CFCKx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDZlR6RhFupuCa52baU4DM9BF1FIQihCau9T5tQy6oiImGjufyedZhCHcLlT/p4yV
-	 T5FPo1bSYz+l1ZBbekp06AMzlkqzCRJDrnHa/NCCKs62j4+P0zRatlz5iePWv8mjfw
-	 qXZk+/8lEXDEYiyfvFhhvqEEJ4UzdzOwWvAFFSAs=
+	b=DYmdMbRvz+oB+EtSFux6rXeuLCL6ouZ2AnYkDBdBqeCZvEFGcNZMFJP9sKrj2OK0D
+	 RMipGTXV76GSjdNXGIESkV450l9w4B7vBUNblW6N/U71hKnoVjxPCtITsrokfY1nce
+	 a4HQiyLdgHXvsH/FCybFT5B+hoOEbEfUFTwnRxRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Gardocki <piotrx.gardocki@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 098/149] iavf: fix potential races for FDIR filters
-Date: Sun, 13 Aug 2023 23:19:03 +0200
-Message-ID: <20230813211721.718084012@linuxfoundation.org>
+	Douglas Miller <doug.miller@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 099/149] IB/hfi1: Fix possible panic during hotplug remove
+Date: Sun, 13 Aug 2023 23:19:04 +0200
+Message-ID: <20230813211721.747241757@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -37,92 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piotr Gardocki <piotrx.gardocki@intel.com>
+From: Douglas Miller <doug.miller@cornelisnetworks.com>
 
-commit 0fb1d8eb234b6979d4981d2d385780dd7d8d9771 upstream.
+commit 4fdfaef71fced490835145631a795497646f4555 upstream.
 
-Add fdir_fltr_lock locking in unprotected places.
+During hotplug remove it is possible that the update counters work
+might be pending, and may run after memory has been freed.
+Cancel the update counters work before freeing memory.
 
-The change in iavf_fdir_is_dup_fltr adds a spinlock around a loop which
-iterates over all filters and looks for a duplicate. The filter can be
-removed from list and freed from memory at the same time it's being
-compared. All other places where filters are deleted are already
-protected with spinlock.
-
-The remaining changes protect adapter->fdir_active_fltr variable so now
-all its uses are under a spinlock.
-
-Fixes: 527691bf0682 ("iavf: Support IPv4 Flow Director filters")
-Signed-off-by: Piotr Gardocki <piotrx.gardocki@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230807205011.3129224-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Douglas Miller <doug.miller@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/169099756100.3927190.15284930454106475280.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_ethtool.c |    5 ++++-
- drivers/net/ethernet/intel/iavf/iavf_fdir.c    |   11 ++++++++---
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hfi1/chip.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -1401,14 +1401,15 @@ static int iavf_add_fdir_ethtool(struct
- 	if (fsp->flow_type & FLOW_MAC_EXT)
- 		return -EINVAL;
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -12307,6 +12307,7 @@ static void free_cntrs(struct hfi1_devda
  
-+	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	if (adapter->fdir_active_fltr >= IAVF_MAX_FDIR_FILTERS) {
-+		spin_unlock_bh(&adapter->fdir_fltr_lock);
- 		dev_err(&adapter->pdev->dev,
- 			"Unable to add Flow Director filter because VF reached the limit of max allowed filters (%u)\n",
- 			IAVF_MAX_FDIR_FILTERS);
- 		return -ENOSPC;
- 	}
- 
--	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	if (iavf_find_fdir_fltr_by_loc(adapter, fsp->location)) {
- 		dev_err(&adapter->pdev->dev, "Failed to add Flow Director filter, it already exists\n");
- 		spin_unlock_bh(&adapter->fdir_fltr_lock);
-@@ -1781,7 +1782,9 @@ static int iavf_get_rxnfc(struct net_dev
- 	case ETHTOOL_GRXCLSRLCNT:
- 		if (!FDIR_FLTR_SUPPORT(adapter))
- 			break;
-+		spin_lock_bh(&adapter->fdir_fltr_lock);
- 		cmd->rule_cnt = adapter->fdir_active_fltr;
-+		spin_unlock_bh(&adapter->fdir_fltr_lock);
- 		cmd->data = IAVF_MAX_FDIR_FILTERS;
- 		ret = 0;
- 		break;
---- a/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-@@ -722,7 +722,9 @@ void iavf_print_fdir_fltr(struct iavf_ad
- bool iavf_fdir_is_dup_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr)
- {
- 	struct iavf_fdir_fltr *tmp;
-+	bool ret = false;
- 
-+	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	list_for_each_entry(tmp, &adapter->fdir_list_head, list) {
- 		if (tmp->flow_type != fltr->flow_type)
- 			continue;
-@@ -732,11 +734,14 @@ bool iavf_fdir_is_dup_fltr(struct iavf_a
- 		    !memcmp(&tmp->ip_data, &fltr->ip_data,
- 			    sizeof(fltr->ip_data)) &&
- 		    !memcmp(&tmp->ext_data, &fltr->ext_data,
--			    sizeof(fltr->ext_data)))
--			return true;
-+			    sizeof(fltr->ext_data))) {
-+			ret = true;
-+			break;
-+		}
- 	}
-+	spin_unlock_bh(&adapter->fdir_fltr_lock);
- 
--	return false;
-+	return ret;
- }
- 
- /**
+ 	if (dd->synth_stats_timer.function)
+ 		del_timer_sync(&dd->synth_stats_timer);
++	cancel_work_sync(&dd->update_cntr_work);
+ 	ppd = (struct hfi1_pportdata *)(dd + 1);
+ 	for (i = 0; i < dd->num_pports; i++, ppd++) {
+ 		kfree(ppd->cntrs);
 
 
