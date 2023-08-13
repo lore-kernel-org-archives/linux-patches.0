@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32619446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192A9C433C8;
-	Sun, 13 Aug 2023 21:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B269446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:47:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04310C433C7;
+	Sun, 13 Aug 2023 21:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963271;
-	bh=mwXPl1fmAk2/6qni2eX1lhVECipL2FkQkp6jb5pWnZQ=;
+	s=korg; t=1691963274;
+	bh=fgXNGAQTYlYSjdQdXDBa5ODIxnNhcUvDqKXl2asq4bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6oqGtpP0W7VEoyqWTMq12pBUDodT0Bh2bJk8uKdC8og8RNW0W2l6Hc+zuTVwA7zC
-	 772dH7Tb53n5MY063S5VMMc8cz5t7X5sHKRuC3ayL9FN8LbI+9o7bn0QH4/GlTOcep
-	 6/o2i9FX3LSBTxuPge3qDZv95jbLCEGSIMoGBXs4=
+	b=NHqOWrvI2QCaOEIso1JctbVJttAOaRh4jIaiqlgIvT9evr8RVrRMYvuVwsHUNFVFh
+	 JhVB0/3c/q6MbOBSClIEeS/KXWBw6FJCSRtL34+qHsscarP0jAzpFuVCSKo+awSD1G
+	 CsFBzbcQaWQ0VF3Ci4VcdWj/69sm3aXYQbLo50p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.4 25/39] dmaengine: mcf-edma: Fix a potential un-allocated memory access
-Date: Sun, 13 Aug 2023 23:20:16 +0200
-Message-ID: <20230813211705.677380403@linuxfoundation.org>
+	Daniel Jurgens <danielj@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>
+Subject: [PATCH 5.4 26/39] net/mlx5: Allow 0 for total host VFs
+Date: Sun, 13 Aug 2023 23:20:17 +0200
+Message-ID: <20230813211705.707135143@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -34,61 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniel Jurgens <danielj@nvidia.com>
 
-commit 0a46781c89dece85386885a407244ca26e5c1c44 upstream.
+commit 2dc2b3922d3c0f52d3a792d15dcacfbc4cc76b8f upstream.
 
-When 'mcf_edma' is allocated, some space is allocated for a
-flexible array at the end of the struct. 'chans' item are allocated, that is
-to say 'pdata->dma_channels'.
+When querying eswitch functions 0 is a valid number of host VFs. After
+introducing ARM SRIOV falling through to getting the max value from PCI
+results in using the total VFs allowed on the ARM for the host.
 
-Then, this number of item is stored in 'mcf_edma->n_chans'.
-
-A few lines later, if 'mcf_edma->n_chans' is 0, then a default value of 64
-is set.
-
-This ends to no space allocated by devm_kzalloc() because chans was 0, but
-64 items are read and/or written in some not allocated memory.
-
-Change the logic to define a default value before allocating the memory.
-
-Fixes: e7a3ff92eaf1 ("dmaengine: fsl-edma: add ColdFire mcf5441x edma support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/f55d914407c900828f6fad3ea5fa791a5f17b9a4.1685172449.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 86eec50beaf3 ("net/mlx5: Support querying max VFs from device");
+Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mcf-edma.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/sriov.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/dma/mcf-edma.c
-+++ b/drivers/dma/mcf-edma.c
-@@ -191,7 +191,13 @@ static int mcf_edma_probe(struct platfor
- 		return -EINVAL;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/sriov.c
+@@ -211,8 +211,7 @@ static u16 mlx5_get_max_vfs(struct mlx5_
+ 		host_total_vfs = MLX5_GET(query_esw_functions_out, out,
+ 					  host_params_context.host_total_vfs);
+ 		kvfree(out);
+-		if (host_total_vfs)
+-			return host_total_vfs;
++		return host_total_vfs;
  	}
  
--	chans = pdata->dma_channels;
-+	if (!pdata->dma_channels) {
-+		dev_info(&pdev->dev, "setting default channel number to 64");
-+		chans = 64;
-+	} else {
-+		chans = pdata->dma_channels;
-+	}
-+
- 	len = sizeof(*mcf_edma) + sizeof(*mcf_chan) * chans;
- 	mcf_edma = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
- 	if (!mcf_edma)
-@@ -203,11 +209,6 @@ static int mcf_edma_probe(struct platfor
- 	mcf_edma->drvdata = &mcf_data;
- 	mcf_edma->big_endian = 1;
- 
--	if (!mcf_edma->n_chans) {
--		dev_info(&pdev->dev, "setting default channel number to 64");
--		mcf_edma->n_chans = 64;
--	}
--
- 	mutex_init(&mcf_edma->fsl_edma_mutex);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ done:
 
 
