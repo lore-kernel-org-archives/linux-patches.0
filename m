@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F7C9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF39FC433C7;
-	Sun, 13 Aug 2023 21:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1580E9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91282C433C8;
+	Sun, 13 Aug 2023 21:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962557;
-	bh=dUbg9Vq72G66MzWm9kvn+MvOx9Lx3du4ObzVPShQ0Mg=;
+	s=korg; t=1691962559;
+	bh=mwL7FjSx5rULCfcNgMbIcnVduWdE9jZfwuOnaCWZfk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICsDpYTPW8yPflSHMoqhuAdBty1WKpTFJp05tfCdYolm5b5bXqV9s7pGW/mU7yJQo
-	 z66uRISiQ0dPDsDAo/Pz+R5z811Nddx31sqvftFiuWudqsAOOZTHNklnQKzhhMbZ/x
-	 cZgH/6TVs3HwVFk6LXlAXusWYTMNj1sfXMAmnhzY=
+	b=EM8pOmdo98JCihtOSUwaviy9B3pfFCqRopQri6dk7FXWIYUCtHgBVsIJ4pWINh7C8
+	 1LYu7z3r1jPBIzXPMRjqq5VYMreOfKNP5df/wpFMH4Q44wzk4xKt42peVLgkVrCCc2
+	 aXvRAQTW2hXP82pZzhl+7OQBj51c9xe+OXJ0IMhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <mdtipton@codeaurora.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 6.1 073/149] interconnect: qcom: Add support for mask-based BCMs
-Date: Sun, 13 Aug 2023 23:18:38 +0200
-Message-ID: <20230813211720.979703321@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 056/149] binder: fix memory leak in binder_init()
+Date: Sun, 13 Aug 2023 23:18:21 +0200
+Message-ID: <20230813211720.490501912@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,68 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Tipton <mdtipton@codeaurora.org>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit d8630f050d3fd2079f8617dd6c00c6509109c755 upstream.
+commit adb9743d6a08778b78d62d16b4230346d3508986 upstream.
 
-Some BCMs aren't directly associated with the data path (i.e. ACV) and
-therefore don't communicate using BW. Instead, they are simply
-enabled/disabled with a simple bit mask. Add support for these.
+In binder_init(), the destruction of binder_alloc_shrinker_init() is not
+performed in the wrong path, which will cause memory leaks. So this commit
+introduces binder_alloc_shrinker_exit() and calls it in the wrong path to
+fix that.
 
-Origin commit retrieved from:
-https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/2d1573e0206998151b342e6b52a4c0f7234d7e36
-
-Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-[narmstrong: removed copyright change from original commit]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230619-topic-sm8550-upstream-interconnect-mask-vote-v2-1-709474b151cc@linaro.org
-Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Fixes: f2517eb76f1f ("android: binder: Add global lru shrinker to binder")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230625154937.64316-1-qi.zheng@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/qcom/bcm-voter.c | 5 +++++
- drivers/interconnect/qcom/icc-rpmh.h  | 2 ++
- 2 files changed, 7 insertions(+)
+ drivers/android/binder.c       |    1 +
+ drivers/android/binder_alloc.c |    6 ++++++
+ drivers/android/binder_alloc.h |    1 +
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-index 8f385f9c2dd3..d5f2a6b5376b 100644
---- a/drivers/interconnect/qcom/bcm-voter.c
-+++ b/drivers/interconnect/qcom/bcm-voter.c
-@@ -83,6 +83,11 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -6602,6 +6602,7 @@ err_init_binder_device_failed:
  
- 		temp = agg_peak[bucket] * bcm->vote_scale;
- 		bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
+ err_alloc_device_names_failed:
+ 	debugfs_remove_recursive(binder_debugfs_dir_entry_root);
++	binder_alloc_shrinker_exit();
+ 
+ 	return ret;
+ }
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -1087,6 +1087,12 @@ int binder_alloc_shrinker_init(void)
+ 	return ret;
+ }
+ 
++void binder_alloc_shrinker_exit(void)
++{
++	unregister_shrinker(&binder_shrinker);
++	list_lru_destroy(&binder_alloc_lru);
++}
 +
-+		if (bcm->enable_mask && (bcm->vote_x[bucket] || bcm->vote_y[bucket])) {
-+			bcm->vote_x[bucket] = 0;
-+			bcm->vote_y[bucket] = bcm->enable_mask;
-+		}
- 	}
- 
- 	if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
-diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
-index 04391c1ba465..7843d8864d6b 100644
---- a/drivers/interconnect/qcom/icc-rpmh.h
-+++ b/drivers/interconnect/qcom/icc-rpmh.h
-@@ -81,6 +81,7 @@ struct qcom_icc_node {
-  * @vote_x: aggregated threshold values, represents sum_bw when @type is bw bcm
-  * @vote_y: aggregated threshold values, represents peak_bw when @type is bw bcm
-  * @vote_scale: scaling factor for vote_x and vote_y
-+ * @enable_mask: optional mask to send as vote instead of vote_x/vote_y
-  * @dirty: flag used to indicate whether the bcm needs to be committed
-  * @keepalive: flag used to indicate whether a keepalive is required
-  * @aux_data: auxiliary data used when calculating threshold values and
-@@ -97,6 +98,7 @@ struct qcom_icc_bcm {
- 	u64 vote_x[QCOM_ICC_NUM_BUCKETS];
- 	u64 vote_y[QCOM_ICC_NUM_BUCKETS];
- 	u64 vote_scale;
-+	u32 enable_mask;
- 	bool dirty;
- 	bool keepalive;
- 	struct bcm_db aux_data;
--- 
-2.41.0
-
+ /**
+  * check_buffer() - verify that buffer/offset is safe to access
+  * @alloc: binder_alloc for this proc
+--- a/drivers/android/binder_alloc.h
++++ b/drivers/android/binder_alloc.h
+@@ -129,6 +129,7 @@ extern struct binder_buffer *binder_allo
+ 						  int pid);
+ extern void binder_alloc_init(struct binder_alloc *alloc);
+ extern int binder_alloc_shrinker_init(void);
++extern void binder_alloc_shrinker_exit(void);
+ extern void binder_alloc_vma_close(struct binder_alloc *alloc);
+ extern struct binder_buffer *
+ binder_alloc_prepare_to_free(struct binder_alloc *alloc,
 
 
