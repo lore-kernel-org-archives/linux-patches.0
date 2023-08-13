@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD9B9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED21AC433C7;
-	Sun, 13 Aug 2023 21:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386739443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:21:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1008C433C8;
+	Sun, 13 Aug 2023 21:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961666;
-	bh=c+2LWefcHW//g9WMKgWlvMWqrW8stZ7s7bhip9HllYE=;
+	s=korg; t=1691961669;
+	bh=8IvPuOiceaZFMD8/pZoXlcfon2qftSs1zdjiPZGuSmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsPxoRRNmSJla8BWgzQWKhRXubauimuMy4nNloULXgSsb3knK96wc70WwkKm0EBeb
-	 14zYxtE8obIC3miMTF4SFwKFKakD73SohG7lKZaXa0XdDLftNtM3PYm94N4kv50/7s
-	 6ZjoB6cupbgFzbugqRjG1uAUDwFGK3mCyQlgjq88=
+	b=LXiCxMrmjSRwQc55U6g+WkIxla+oquX+snXekQGyxkQuXcdaIzRl0oIU8ktd4ku3j
+	 J6NNsdcjz7ukU9uN6rs8DVbZxRLWdfuUqLJs++qCK8tP620ve9NcFXWoT3xYC9cCr4
+	 eS+h5sq6VryR5FKZh/hcIB+X6H/a6nFLEQlUk/lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Andrew Kanner <andrew.kanner@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 16/26] dccp: fix data-race around dp->dccps_mss_cache
-Date: Sun, 13 Aug 2023 23:19:09 +0200
-Message-ID: <20230813211703.597664050@linuxfoundation.org>
+Subject: [PATCH 4.14 17/26] drivers: net: prevent tun_build_skb() to exceed the packet size limit
+Date: Sun, 13 Aug 2023 23:19:10 +0200
+Message-ID: <20230813211703.631274315@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211702.980427106@linuxfoundation.org>
 References: <20230813211702.980427106@linuxfoundation.org>
@@ -35,71 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Andrew Kanner <andrew.kanner@gmail.com>
 
-commit a47e598fbd8617967e49d85c49c22f9fc642704c upstream.
+commit 59eeb232940515590de513b997539ef495faca9a upstream.
 
-dccp_sendmsg() reads dp->dccps_mss_cache before locking the socket.
-Same thing in do_dccp_getsockopt().
+Using the syzkaller repro with reduced packet size it was discovered
+that XDP_PACKET_HEADROOM is not checked in tun_can_build_skb(),
+although pad may be incremented in tun_build_skb(). This may end up
+with exceeding the PAGE_SIZE limit in tun_build_skb().
 
-Add READ_ONCE()/WRITE_ONCE() annotations,
-and change dccp_sendmsg() to check again dccps_mss_cache
-after socket is locked.
+Jason Wang <jasowang@redhat.com> proposed to count XDP_PACKET_HEADROOM
+always (e.g. without rcu_access_pointer(tun->xdp_prog)) in
+tun_can_build_skb() since there's a window during which XDP program
+might be attached between tun_can_build_skb() and tun_build_skb().
 
-Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230803163021.2958262-1-edumazet@google.com
+Fixes: 7df13219d757 ("tun: reserve extra headroom only when XDP is set")
+Link: https://syzkaller.appspot.com/bug?extid=f817490f5bd20541b90a
+Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
+Link: https://lore.kernel.org/r/20230803185947.2379988-1-andrew.kanner@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/output.c |    2 +-
- net/dccp/proto.c  |   10 ++++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/tun.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/dccp/output.c
-+++ b/net/dccp/output.c
-@@ -189,7 +189,7 @@ unsigned int dccp_sync_mss(struct sock *
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1275,7 +1275,7 @@ static bool tun_can_build_skb(struct tun
+ 	if (zerocopy)
+ 		return false;
  
- 	/* And store cached results */
- 	icsk->icsk_pmtu_cookie = pmtu;
--	dp->dccps_mss_cache = cur_mps;
-+	WRITE_ONCE(dp->dccps_mss_cache, cur_mps);
+-	if (SKB_DATA_ALIGN(len + TUN_RX_PAD) +
++	if (SKB_DATA_ALIGN(len + TUN_RX_PAD + XDP_PACKET_HEADROOM) +
+ 	    SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) > PAGE_SIZE)
+ 		return false;
  
- 	return cur_mps;
- }
---- a/net/dccp/proto.c
-+++ b/net/dccp/proto.c
-@@ -645,7 +645,7 @@ static int do_dccp_getsockopt(struct soc
- 		return dccp_getsockopt_service(sk, len,
- 					       (__be32 __user *)optval, optlen);
- 	case DCCP_SOCKOPT_GET_CUR_MPS:
--		val = dp->dccps_mss_cache;
-+		val = READ_ONCE(dp->dccps_mss_cache);
- 		break;
- 	case DCCP_SOCKOPT_AVAILABLE_CCIDS:
- 		return ccid_getsockopt_builtin_ccids(sk, len, optval, optlen);
-@@ -765,7 +765,7 @@ int dccp_sendmsg(struct sock *sk, struct
- 	int rc, size;
- 	long timeo;
- 
--	if (len > dp->dccps_mss_cache)
-+	if (len > READ_ONCE(dp->dccps_mss_cache))
- 		return -EMSGSIZE;
- 
- 	lock_sock(sk);
-@@ -798,6 +798,12 @@ int dccp_sendmsg(struct sock *sk, struct
- 		goto out_discard;
- 	}
- 
-+	/* We need to check dccps_mss_cache after socket is locked. */
-+	if (len > dp->dccps_mss_cache) {
-+		rc = -EMSGSIZE;
-+		goto out_discard;
-+	}
-+
- 	skb_reserve(skb, sk->sk_prot->max_header);
- 	rc = memcpy_from_msg(skb_put(skb, len), msg, len);
- 	if (rc != 0)
 
 
