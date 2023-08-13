@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F63B9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E399C433C7;
-	Sun, 13 Aug 2023 21:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A189443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:30:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1F8C433C8;
+	Sun, 13 Aug 2023 21:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962210;
-	bh=KtcwlFMFaj+TPiyKEqABQ2x+QI0PA31MUkUfKp2shs0=;
+	s=korg; t=1691962213;
+	bh=c7okOy1ok9WKpHqGtLRqErVDuP7j/7b9TQDBML1gGHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=keWlaRZoyWPEQULj2mIpMyM6w1/fjfU5VIzWoTNCJkIbWGlFPDomoBYmKB1x3Gm53
-	 eIgKPCFzdyFiNB4Dgad+WHD2CQfsvm9RWbdsA9pZ0Qn/3prvKXbyk3EjNMIrSoIzdF
-	 nOb5t+7U3HaBCyZ0X2/OH+Y+WIIfIBxn9oGYvjlY=
+	b=Vmfm0Odni0FAFtwzCLBgMuTtuT8pz4VVJccNvWbKf0Xb8Ud1NgkRt3MWvi0u0U7hj
+	 7C2wOTtp8G2GwNeB7F5HjKxgRyry18pdTDbG26P/G32/Xv4NwIoei+L74E4GcEhY0i
+	 75+gy8uH5dGpc3DGeLkFZycy+LIudFmIwmz6gieA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 152/206] net: tls: avoid discarding data on record close
-Date: Sun, 13 Aug 2023 23:18:42 +0200
-Message-ID: <20230813211729.380365580@linuxfoundation.org>
+Subject: [PATCH 6.4 126/206] macsec: use DEV_STATS_INC()
+Date: Sun, 13 Aug 2023 23:18:16 +0200
+Message-ID: <20230813211728.636659163@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,161 +36,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6b47808f223c70ff564f9b363446d2a5fa1e05b2 upstream.
+commit 32d0a49d36a2a306c2e47fe5659361e424f0ed3f upstream.
 
-TLS records end with a 16B tag. For TLS device offload we only
-need to make space for this tag in the stream, the device will
-generate and replace it with the actual calculated tag.
+syzbot/KCSAN reported data-races in macsec whenever dev->stats fields
+are updated.
 
-Long time ago the code would just re-reference the head frag
-which mostly worked but was suboptimal because it prevented TCP
-from combining the record into a single skb frag. I'm not sure
-if it was correct as the first frag may be shorter than the tag.
+It appears all of these updates can happen from multiple cpus.
 
-The commit under fixes tried to replace that with using the page
-frag and if the allocation failed rolling back the data, if record
-was long enough. It achieves better fragment coalescing but is
-also buggy.
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-We don't roll back the iterator, so unless we're at the end of
-send we'll skip the data we designated as tag and start the
-next record as if the rollback never happened.
-There's also the possibility that the record was constructed
-with MSG_MORE and the data came from a different syscall and
-we already told the user space that we "got it".
-
-Allocate a single dummy page and use it as fallback.
-
-Found by code inspection, and proven by forcing allocation
-failures.
-
-Fixes: e7b159a48ba6 ("net/tls: remove the record tail optimization")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_device.c |   64 ++++++++++++++++++++++++++-------------------------
- 1 file changed, 33 insertions(+), 31 deletions(-)
+ drivers/net/macsec.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -52,6 +52,8 @@ static LIST_HEAD(tls_device_list);
- static LIST_HEAD(tls_device_down_list);
- static DEFINE_SPINLOCK(tls_device_lock);
- 
-+static struct page *dummy_page;
-+
- static void tls_device_free_ctx(struct tls_context *ctx)
- {
- 	if (ctx->tx_conf == TLS_HW) {
-@@ -313,36 +315,33 @@ static int tls_push_record(struct sock *
- 	return tls_push_sg(sk, ctx, offload_ctx->sg_tx_data, 0, flags);
- }
- 
--static int tls_device_record_close(struct sock *sk,
--				   struct tls_context *ctx,
--				   struct tls_record_info *record,
--				   struct page_frag *pfrag,
--				   unsigned char record_type)
-+static void tls_device_record_close(struct sock *sk,
-+				    struct tls_context *ctx,
-+				    struct tls_record_info *record,
-+				    struct page_frag *pfrag,
-+				    unsigned char record_type)
- {
- 	struct tls_prot_info *prot = &ctx->prot_info;
--	int ret;
-+	struct page_frag dummy_tag_frag;
- 
- 	/* append tag
- 	 * device will fill in the tag, we just need to append a placeholder
- 	 * use socket memory to improve coalescing (re-using a single buffer
- 	 * increases frag count)
--	 * if we can't allocate memory now, steal some back from data
-+	 * if we can't allocate memory now use the dummy page
- 	 */
--	if (likely(skb_page_frag_refill(prot->tag_size, pfrag,
--					sk->sk_allocation))) {
--		ret = 0;
--		tls_append_frag(record, pfrag, prot->tag_size);
--	} else {
--		ret = prot->tag_size;
--		if (record->len <= prot->overhead_size)
--			return -ENOMEM;
-+	if (unlikely(pfrag->size - pfrag->offset < prot->tag_size) &&
-+	    !skb_page_frag_refill(prot->tag_size, pfrag, sk->sk_allocation)) {
-+		dummy_tag_frag.page = dummy_page;
-+		dummy_tag_frag.offset = 0;
-+		pfrag = &dummy_tag_frag;
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -743,7 +743,7 @@ static bool macsec_post_decrypt(struct s
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsLate++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+-		secy->netdev->stats.rx_dropped++;
++		DEV_STATS_INC(secy->netdev, rx_dropped);
+ 		return false;
  	}
-+	tls_append_frag(record, pfrag, prot->tag_size);
  
- 	/* fill prepend */
- 	tls_fill_prepend(ctx, skb_frag_address(&record->frags[0]),
- 			 record->len - prot->overhead_size,
- 			 record_type);
--	return ret;
+@@ -767,7 +767,7 @@ static bool macsec_post_decrypt(struct s
+ 			rxsc_stats->stats.InPktsNotValid++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+ 			this_cpu_inc(rx_sa->stats->InPktsNotValid);
+-			secy->netdev->stats.rx_errors++;
++			DEV_STATS_INC(secy->netdev, rx_errors);
+ 			return false;
+ 		}
+ 
+@@ -1069,7 +1069,7 @@ static enum rx_handler_result handle_not
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoTag++;
+ 			u64_stats_update_end(&secy_stats->syncp);
+-			macsec->secy.netdev->stats.rx_dropped++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 			continue;
+ 		}
+ 
+@@ -1179,7 +1179,7 @@ static rx_handler_result_t macsec_handle
+ 		u64_stats_update_begin(&secy_stats->syncp);
+ 		secy_stats->stats.InPktsBadTag++;
+ 		u64_stats_update_end(&secy_stats->syncp);
+-		secy->netdev->stats.rx_errors++;
++		DEV_STATS_INC(secy->netdev, rx_errors);
+ 		goto drop_nosa;
+ 	}
+ 
+@@ -1196,7 +1196,7 @@ static rx_handler_result_t macsec_handle
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+-			secy->netdev->stats.rx_errors++;
++			DEV_STATS_INC(secy->netdev, rx_errors);
+ 			if (active_rx_sa)
+ 				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+@@ -1230,7 +1230,7 @@ static rx_handler_result_t macsec_handle
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsLate++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+-			macsec->secy.netdev->stats.rx_dropped++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 			goto drop;
+ 		}
+ 	}
+@@ -1271,7 +1271,7 @@ deliver:
+ 	if (ret == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+ 	else
+-		macsec->secy.netdev->stats.rx_dropped++;
++		DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 
+ 	rcu_read_unlock();
+ 
+@@ -1308,7 +1308,7 @@ nosci:
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
+-			macsec->secy.netdev->stats.rx_errors++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_errors);
+ 			continue;
+ 		}
+ 
+@@ -1327,7 +1327,7 @@ nosci:
+ 			secy_stats->stats.InPktsUnknownSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
+ 		} else {
+-			macsec->secy.netdev->stats.rx_dropped++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 		}
+ 	}
+ 
+@@ -3422,7 +3422,7 @@ static netdev_tx_t macsec_start_xmit(str
+ 
+ 	if (!secy->operational) {
+ 		kfree_skb(skb);
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
+@@ -3430,7 +3430,7 @@ static netdev_tx_t macsec_start_xmit(str
+ 	skb = macsec_encrypt(skb, dev);
+ 	if (IS_ERR(skb)) {
+ 		if (PTR_ERR(skb) != -EINPROGRESS)
+-			dev->stats.tx_dropped++;
++			DEV_STATS_INC(dev, tx_dropped);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
+@@ -3667,9 +3667,9 @@ static void macsec_get_stats64(struct ne
+ 
+ 	dev_fetch_sw_netstats(s, dev->tstats);
+ 
+-	s->rx_dropped = dev->stats.rx_dropped;
+-	s->tx_dropped = dev->stats.tx_dropped;
+-	s->rx_errors = dev->stats.rx_errors;
++	s->rx_dropped = atomic_long_read(&dev->stats.__rx_dropped);
++	s->tx_dropped = atomic_long_read(&dev->stats.__tx_dropped);
++	s->rx_errors = atomic_long_read(&dev->stats.__rx_errors);
  }
  
- static int tls_create_new_record(struct tls_offload_context_tx *offload_ctx,
-@@ -535,18 +534,8 @@ last_record:
- 
- 		if (done || record->len >= max_open_record_len ||
- 		    (record->num_frags >= MAX_SKB_FRAGS - 1)) {
--			rc = tls_device_record_close(sk, tls_ctx, record,
--						     pfrag, record_type);
--			if (rc) {
--				if (rc > 0) {
--					size += rc;
--				} else {
--					size = orig_size;
--					destroy_record(record);
--					ctx->open_record = NULL;
--					break;
--				}
--			}
-+			tls_device_record_close(sk, tls_ctx, record,
-+						pfrag, record_type);
- 
- 			rc = tls_push_record(sk,
- 					     tls_ctx,
-@@ -1466,14 +1455,26 @@ int __init tls_device_init(void)
- {
- 	int err;
- 
--	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
--	if (!destruct_wq)
-+	dummy_page = alloc_page(GFP_KERNEL);
-+	if (!dummy_page)
- 		return -ENOMEM;
- 
-+	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
-+	if (!destruct_wq) {
-+		err = -ENOMEM;
-+		goto err_free_dummy;
-+	}
-+
- 	err = register_netdevice_notifier(&tls_dev_notifier);
- 	if (err)
--		destroy_workqueue(destruct_wq);
-+		goto err_destroy_wq;
- 
-+	return 0;
-+
-+err_destroy_wq:
-+	destroy_workqueue(destruct_wq);
-+err_free_dummy:
-+	put_page(dummy_page);
- 	return err;
- }
- 
-@@ -1482,4 +1483,5 @@ void __exit tls_device_cleanup(void)
- 	unregister_netdevice_notifier(&tls_dev_notifier);
- 	destroy_workqueue(destruct_wq);
- 	clean_acked_data_flush();
-+	put_page(dummy_page);
- }
+ static int macsec_get_iflink(const struct net_device *dev)
 
 
