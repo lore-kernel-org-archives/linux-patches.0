@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F4C9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:43:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939C4C433C7;
-	Sun, 13 Aug 2023 21:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E369446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF85C433C7;
+	Sun, 13 Aug 2023 21:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963038;
-	bh=J3Ql6omGLv5otMMylyVQfBSPl0jzme1XllAxd+N5kfo=;
+	s=korg; t=1691963041;
+	bh=A87liQJZt1QETltZwySfFJ9Bx67cktbkLe9ZLwz4Ghs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJgEQ1uvcPdDwlq121ZmyioBNLseNBZH3HkLsex2dJKtEmSAPHVB43OE+z0QVYZPd
-	 3aixxePOlWxp1tPcHUI6ydvQ357sPh/JwBwuWcZd3/5FTV26FuMEhLq+X5jFk2e5/1
-	 N64McT8gVTJtP9NGkGyB837wtN57pOxgeXI3KX5c=
+	b=oQm5n8CIwdEWQOgJ5cVjWajEyny6iF2qNS1GuoY9MZ7GmFBKoy39eLXvzRU7T8xFp
+	 fCj7nbFq4hRSIYNcByVOyCoFUmamo6D4zTG/+HXCvahfiAq7kxYiPLcp/B9FFQ+kyh
+	 mGfOT4wCRKo55MrqgHGvW4rAUivoeyj+dqzpNzY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 23/89] binder: fix memory leak in binder_init()
-Date: Sun, 13 Aug 2023 23:19:14 +0200
-Message-ID: <20230813211711.451753713@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 32/89] x86/speculation: Add cpu_show_gds() prototype
+Date: Sun, 13 Aug 2023 23:19:23 +0200
+Message-ID: <20230813211711.716344408@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,61 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit adb9743d6a08778b78d62d16b4230346d3508986 upstream.
+commit a57c27c7ad85c420b7de44c6ee56692d51709dda upstream.
 
-In binder_init(), the destruction of binder_alloc_shrinker_init() is not
-performed in the wrong path, which will cause memory leaks. So this commit
-introduces binder_alloc_shrinker_exit() and calls it in the wrong path to
-fix that.
+The newly added function has two definitions but no prototypes:
 
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Fixes: f2517eb76f1f ("android: binder: Add global lru shrinker to binder")
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230625154937.64316-1-qi.zheng@linux.dev
+drivers/base/cpu.c:605:16: error: no previous prototype for 'cpu_show_gds' [-Werror=missing-prototypes]
+
+Add a declaration next to the other ones for this file to avoid the
+warning.
+
+Fixes: 8974eb588283b ("x86/speculation: Add Gather Data Sampling mitigation")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/all/20230809130530.1913368-1-arnd%40kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c       |    1 +
- drivers/android/binder_alloc.c |    6 ++++++
- drivers/android/binder_alloc.h |    1 +
- 3 files changed, 8 insertions(+)
+ include/linux/cpu.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -6412,6 +6412,7 @@ err_init_binder_device_failed:
+--- a/include/linux/cpu.h
++++ b/include/linux/cpu.h
+@@ -72,6 +72,8 @@ extern ssize_t cpu_show_retbleed(struct
+ 				 struct device_attribute *attr, char *buf);
+ extern ssize_t cpu_show_spec_rstack_overflow(struct device *dev,
+ 					     struct device_attribute *attr, char *buf);
++extern ssize_t cpu_show_gds(struct device *dev,
++			    struct device_attribute *attr, char *buf);
  
- err_alloc_device_names_failed:
- 	debugfs_remove_recursive(binder_debugfs_dir_entry_root);
-+	binder_alloc_shrinker_exit();
- 
- 	return ret;
- }
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -1091,6 +1091,12 @@ int binder_alloc_shrinker_init(void)
- 	return ret;
- }
- 
-+void binder_alloc_shrinker_exit(void)
-+{
-+	unregister_shrinker(&binder_shrinker);
-+	list_lru_destroy(&binder_alloc_lru);
-+}
-+
- /**
-  * check_buffer() - verify that buffer/offset is safe to access
-  * @alloc: binder_alloc for this proc
---- a/drivers/android/binder_alloc.h
-+++ b/drivers/android/binder_alloc.h
-@@ -131,6 +131,7 @@ extern struct binder_buffer *binder_allo
- 						  int pid);
- extern void binder_alloc_init(struct binder_alloc *alloc);
- extern int binder_alloc_shrinker_init(void);
-+extern void binder_alloc_shrinker_exit(void);
- extern void binder_alloc_vma_close(struct binder_alloc *alloc);
- extern struct binder_buffer *
- binder_alloc_prepare_to_free(struct binder_alloc *alloc,
+ extern __printf(4, 5)
+ struct device *cpu_device_create(struct device *parent, void *drvdata,
 
 
