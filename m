@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FF69446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054D2C433C8;
-	Sun, 13 Aug 2023 21:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529F19443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE4EC433C7;
+	Sun, 13 Aug 2023 21:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962044;
-	bh=4nxUTCpgAWUYROWKMjePS9LsqG9T7gBIbeVX6/1UuHY=;
+	s=korg; t=1691962047;
+	bh=7YC4QTgcXoie0embhnPa9OTF67dJCPBL8DCa1yndnZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbjx/Qxfit/4+x60Lr3MY7vzQVc4jnlZ2nrzMgrrHjGog3NLnWOfQBjo57VLIUK30
-	 vBpn6/xcMw7F4XqXp5JCtqUoTm9YI5u/r6aosXkPLw7/3PfRZw6iYHEX+ZRFBhC7+4
-	 UjR9B5mVRSk8oDMcDQ8nho3WD0OBpbjUHsQy2o3A=
+	b=YHATUvP2xhZc5oVkDCykDmvQLqvTNVtw5KDxqD+g8N8c+YQbT1oy7B+4sSiL4eahH
+	 Ku7qc+XDEhZ9RE9kc/aVkGb9DkUfgGja8I2/i4Nv/63n59A7fLAe0KZW3+0hc8Syoh
+	 CFhkQgFnn+4+XnqX8Qwi+my5SlwAevivl+InEvs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 063/206] mm: memory-failure: avoid false hwpoison page mapped error info
-Date: Sun, 13 Aug 2023 23:17:13 +0200
-Message-ID: <20230813211726.872246882@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.4 064/206] drm/amd/pm: expose swctf threshold setting for legacy powerplay
+Date: Sun, 13 Aug 2023 23:17:14 +0200
+Message-ID: <20230813211726.899062180@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -37,53 +36,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit faeb2ff2c1c5cb60ce0da193580b256c941f99ca upstream.
+commit 064329c595da56eff6d7a7e7760660c726433139 upstream.
 
-folio->_mapcount is overloaded in SLAB, so folio_mapped() has to be done
-after folio_test_slab() is checked. Otherwise slab folio might be treated
-as a mapped folio leading to false 'Someone maps the hwpoison page' error
-info.
+Preparation for coming optimization which eliminates the influence of
+GPU temperature momentary fluctuation.
 
-Link: https://lkml.kernel.org/r/20230727115643.639741-4-linmiaohe@huawei.com
-Fixes: 230ac719c500 ("mm/hwpoison: don't try to unpoison containment-failed pages")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h                  |    2 ++
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/hardwaremanager.c |    4 +++-
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c      |    2 ++
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c    |   10 ++++++++++
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c    |    4 ++++
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c    |    4 ++++
+ drivers/gpu/drm/amd/pm/powerplay/inc/power_state.h       |    1 +
+ 7 files changed, 26 insertions(+), 1 deletion(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -2502,6 +2502,13 @@ int unpoison_memory(unsigned long pfn)
- 		goto unlock_mutex;
- 	}
+--- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
++++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+@@ -89,6 +89,8 @@ struct amdgpu_dpm_thermal {
+ 	int                max_mem_crit_temp;
+ 	/* memory max emergency(shutdown) temp */
+ 	int                max_mem_emergency_temp;
++	/* SWCTF threshold */
++	int                sw_ctf_threshold;
+ 	/* was last interrupt low to high or high to low */
+ 	bool               high_to_low;
+ 	/* interrupt source */
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hardwaremanager.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hardwaremanager.c
+@@ -241,7 +241,8 @@ int phm_start_thermal_controller(struct
+ 		TEMP_RANGE_MAX,
+ 		TEMP_RANGE_MIN,
+ 		TEMP_RANGE_MAX,
+-		TEMP_RANGE_MAX};
++		TEMP_RANGE_MAX,
++		0};
+ 	struct amdgpu_device *adev = hwmgr->adev;
  
-+	if (folio_test_slab(folio) || PageTable(&folio->page) || folio_test_reserved(folio))
-+		goto unlock_mutex;
+ 	if (!hwmgr->not_vf)
+@@ -265,6 +266,7 @@ int phm_start_thermal_controller(struct
+ 	adev->pm.dpm.thermal.min_mem_temp = range.mem_min;
+ 	adev->pm.dpm.thermal.max_mem_crit_temp = range.mem_crit_max;
+ 	adev->pm.dpm.thermal.max_mem_emergency_temp = range.mem_emergency_max;
++	adev->pm.dpm.thermal.sw_ctf_threshold = range.sw_ctf_threshold;
+ 
+ 	return ret;
+ }
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -5432,6 +5432,8 @@ static int smu7_get_thermal_temperature_
+ 		thermal_data->max = data->thermal_temp_setting.temperature_shutdown *
+ 			PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 
++	thermal_data->sw_ctf_threshold = thermal_data->max;
 +
-+	/*
-+	 * Note that folio->_mapcount is overloaded in SLAB, so the simple test
-+	 * in folio_mapped() has to be done after folio_test_slab() is checked.
-+	 */
- 	if (folio_mapped(folio)) {
- 		unpoison_pr_info("Unpoison: Someone maps the hwpoison page %#lx\n",
- 				 pfn, &unpoison_rs);
-@@ -2514,9 +2521,6 @@ int unpoison_memory(unsigned long pfn)
- 		goto unlock_mutex;
- 	}
+ 	return 0;
+ }
  
--	if (folio_test_slab(folio) || PageTable(&folio->page) || folio_test_reserved(folio))
--		goto unlock_mutex;
--
- 	ghp = get_hwpoison_page(p, MF_UNPOISON);
- 	if (!ghp) {
- 		if (PageHuge(p)) {
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -5241,6 +5241,9 @@ static int vega10_get_thermal_temperatur
+ {
+ 	struct vega10_hwmgr *data = hwmgr->backend;
+ 	PPTable_t *pp_table = &(data->smc_state_table.pp_table);
++	struct phm_ppt_v2_information *pp_table_info =
++		(struct phm_ppt_v2_information *)(hwmgr->pptable);
++	struct phm_tdp_table *tdp_table = pp_table_info->tdp_table;
+ 
+ 	memcpy(thermal_data, &SMU7ThermalWithDelayPolicy[0], sizeof(struct PP_TemperatureRange));
+ 
+@@ -5257,6 +5260,13 @@ static int vega10_get_thermal_temperatur
+ 	thermal_data->mem_emergency_max = (pp_table->ThbmLimit + CTF_OFFSET_HBM)*
+ 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 
++	if (tdp_table->usSoftwareShutdownTemp > pp_table->ThotspotLimit &&
++	    tdp_table->usSoftwareShutdownTemp < VEGA10_THERMAL_MAXIMUM_ALERT_TEMP)
++		thermal_data->sw_ctf_threshold = tdp_table->usSoftwareShutdownTemp;
++	else
++		thermal_data->sw_ctf_threshold = VEGA10_THERMAL_MAXIMUM_ALERT_TEMP;
++	thermal_data->sw_ctf_threshold *= PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
++
+ 	return 0;
+ }
+ 
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c
+@@ -2763,6 +2763,8 @@ static int vega12_notify_cac_buffer_info
+ static int vega12_get_thermal_temperature_range(struct pp_hwmgr *hwmgr,
+ 		struct PP_TemperatureRange *thermal_data)
+ {
++	struct phm_ppt_v3_information *pptable_information =
++		(struct phm_ppt_v3_information *)hwmgr->pptable;
+ 	struct vega12_hwmgr *data =
+ 			(struct vega12_hwmgr *)(hwmgr->backend);
+ 	PPTable_t *pp_table = &(data->smc_state_table.pp_table);
+@@ -2781,6 +2783,8 @@ static int vega12_get_thermal_temperatur
+ 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 	thermal_data->mem_emergency_max = (pp_table->ThbmLimit + CTF_OFFSET_HBM)*
+ 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
++	thermal_data->sw_ctf_threshold = pptable_information->us_software_shutdown_temp *
++		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 
+ 	return 0;
+ }
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+@@ -4206,6 +4206,8 @@ static int vega20_notify_cac_buffer_info
+ static int vega20_get_thermal_temperature_range(struct pp_hwmgr *hwmgr,
+ 		struct PP_TemperatureRange *thermal_data)
+ {
++	struct phm_ppt_v3_information *pptable_information =
++		(struct phm_ppt_v3_information *)hwmgr->pptable;
+ 	struct vega20_hwmgr *data =
+ 			(struct vega20_hwmgr *)(hwmgr->backend);
+ 	PPTable_t *pp_table = &(data->smc_state_table.pp_table);
+@@ -4224,6 +4226,8 @@ static int vega20_get_thermal_temperatur
+ 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 	thermal_data->mem_emergency_max = (pp_table->ThbmLimit + CTF_OFFSET_HBM)*
+ 		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
++	thermal_data->sw_ctf_threshold = pptable_information->us_software_shutdown_temp *
++		PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 
+ 	return 0;
+ }
+--- a/drivers/gpu/drm/amd/pm/powerplay/inc/power_state.h
++++ b/drivers/gpu/drm/amd/pm/powerplay/inc/power_state.h
+@@ -131,6 +131,7 @@ struct PP_TemperatureRange {
+ 	int mem_min;
+ 	int mem_crit_max;
+ 	int mem_emergency_max;
++	int sw_ctf_threshold;
+ };
+ 
+ struct PP_StateValidationBlock {
 
 
