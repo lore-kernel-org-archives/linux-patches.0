@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A909443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AF4C433C8;
-	Sun, 13 Aug 2023 21:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322BC9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08EAC433C8;
+	Sun, 13 Aug 2023 21:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962028;
-	bh=A87liQJZt1QETltZwySfFJ9Bx67cktbkLe9ZLwz4Ghs=;
+	s=korg; t=1691962031;
+	bh=tr6jEyLlBDIdM8vx8Fa82jezzI4IohXavw1kuEqk9ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+PgFf/5w1eQE+Z9fiYQn3S5dYnij7XQpYNk3hocNrCNxLSP5eWvLxTlUmXwS4orT
-	 9xpZN/KqAoTZgqYQIms1FiU6Vp0OzqnvFRMcZyS0Mqo1b9yE83yxAcfT7xCTauHArP
-	 vXQ7EQAxqlk500oOBLDrD4DjSLDzHEQgeYVItzok=
+	b=X/XxSlY6CP20BI3E8uqnAqe2VEbRQ1l9nGjwcW1UFFDgP/PWFO+YtZk0ROQdRbMhp
+	 UkgQDUEOXhkyUYBevbXqGjbBLYvY/O8MnY9sP6XdrZ/mcg3MRhlEClyx2ky6OPZaIz
+	 zDdgHc/4mGdFntEESr5SSowqWHdOFvbbj3IzdBg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.4 086/206] x86/speculation: Add cpu_show_gds() prototype
-Date: Sun, 13 Aug 2023 23:17:36 +0200
-Message-ID: <20230813211727.539223147@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 060/206] mm/damon/core: initialize damo_filter->list from damos_new_filter()
+Date: Sun, 13 Aug 2023 23:17:10 +0200
+Message-ID: <20230813211726.789359655@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,38 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: SeongJae Park <sj@kernel.org>
 
-commit a57c27c7ad85c420b7de44c6ee56692d51709dda upstream.
+commit 5f1fc67f2cb8d3035d3acd273b48b97835af8afd upstream.
 
-The newly added function has two definitions but no prototypes:
+damos_new_filter() is not initializing the list field of newly allocated
+filter object.  However, DAMON sysfs interface and DAMON_RECLAIM are not
+initializing it after calling damos_new_filter().  As a result, accessing
+uninitialized memory is possible.  Actually, adding multiple DAMOS filters
+via DAMON sysfs interface caused NULL pointer dereferencing.  Initialize
+the field just after the allocation from damos_new_filter().
 
-drivers/base/cpu.c:605:16: error: no previous prototype for 'cpu_show_gds' [-Werror=missing-prototypes]
-
-Add a declaration next to the other ones for this file to avoid the
-warning.
-
-Fixes: 8974eb588283b ("x86/speculation: Add Gather Data Sampling mitigation")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/all/20230809130530.1913368-1-arnd%40kernel.org
+Link: https://lkml.kernel.org/r/20230729203733.38949-2-sj@kernel.org
+Fixes: 98def236f63c ("mm/damon/core: implement damos filter")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cpu.h |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/cpu.h
-+++ b/include/linux/cpu.h
-@@ -72,6 +72,8 @@ extern ssize_t cpu_show_retbleed(struct
- 				 struct device_attribute *attr, char *buf);
- extern ssize_t cpu_show_spec_rstack_overflow(struct device *dev,
- 					     struct device_attribute *attr, char *buf);
-+extern ssize_t cpu_show_gds(struct device *dev,
-+			    struct device_attribute *attr, char *buf);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 91cff7f2997e..eb9580942a5c 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -273,6 +273,7 @@ struct damos_filter *damos_new_filter(enum damos_filter_type type,
+ 		return NULL;
+ 	filter->type = type;
+ 	filter->matching = matching;
++	INIT_LIST_HEAD(&filter->list);
+ 	return filter;
+ }
  
- extern __printf(4, 5)
- struct device *cpu_device_create(struct device *parent, void *drvdata,
+-- 
+2.41.0
+
 
 
