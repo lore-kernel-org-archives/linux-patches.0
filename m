@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1881F9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F20C433C7;
-	Sun, 13 Aug 2023 21:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BC99446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDB5C433C8;
+	Sun, 13 Aug 2023 21:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962976;
-	bh=xsZQXSASeWOJycZBZIM83YWdCuNhim0xSWHvJRqhuLk=;
+	s=korg; t=1691962979;
+	bh=E73Ql3Cj/o78xMKMlW1rNExn1UcR+DhcTVFzSBYksP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=buWEcANUKBdBYyMzPhWVx4qjtlVapFyH3nsOiv1As8Ibo7hGWWLWOEYu/fsIH3F6b
-	 +biusX7VLXAMLP6sXkdRIk5JUxB1wy3qUd5le1Zy9KurgopExTjxinAmi5ouKNp2a4
-	 MYp6saVGUd2oHWsewqD31lA6nsdkWpqoIgm6BtbM=
+	b=DD2VyF7MBSIovg85rX0ihoaQ1HlCYwe+TLdqQKEWvK4Jm/iBKVwBpTKpXwiDo06B3
+	 3S088Txvk1iVgAoWNJCF3hSM/5pXTv3fLrQx1VmAXq4KrRNzVaM6QQM3Ly/7WOthKJ
+	 KCE0gGW5V78U2NeyzeY3qYkTXMVQRTmTtW8qc80g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 52/68] ibmvnic: Enforce stronger sanity checks on login response
-Date: Sun, 13 Aug 2023 23:19:53 +0200
-Message-ID: <20230813211709.729604214@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 01/89] ksmbd: validate command request size
+Date: Sun, 13 Aug 2023 23:18:52 +0200
+Message-ID: <20230813211710.832258864@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
-References: <20230813211708.149630011@linuxfoundation.org>
+In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
+References: <20230813211710.787645394@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,77 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Long Li <leo.lilong@huawei.com>
 
-commit db17ba719bceb52f0ae4ebca0e4c17d9a3bebf05 upstream.
+commit 5aa4fda5aa9c2a5a7bac67b4a12b089ab81fee3c upstream.
 
-Ensure that all offsets in a login response buffer are within the size
-of the allocated response buffer. Any offsets or lengths that surpass
-the allocation are likely the result of an incomplete response buffer.
-In these cases, a full reset is necessary.
+In commit 2b9b8f3b68ed ("ksmbd: validate command payload size"), except
+for SMB2_OPLOCK_BREAK_HE command, the request size of other commands
+is not checked, it's not expected. Fix it by add check for request
+size of other commands.
 
-When attempting to login, the ibmvnic device will allocate a response
-buffer and pass a reference to the VIOS. The VIOS will then send the
-ibmvnic device a LOGIN_RSP CRQ to signal that the buffer has been filled
-with data. If the ibmvnic device does not get a response in 20 seconds,
-the old buffer is freed and a new login request is sent. With 2
-outstanding requests, any LOGIN_RSP CRQ's could be for the older
-login request. If this is the case then the login response buffer (which
-is for the newer login request) could be incomplete and contain invalid
-data. Therefore, we must enforce strict sanity checks on the response
-buffer values.
-
-Testing has shown that the `off_rxadd_buff_size` value is filled in last
-by the VIOS and will be the smoking gun for these circumstances.
-
-Until VIOS can implement a mechanism for tracking outstanding response
-buffers and a method for mapping a LOGIN_RSP CRQ to a particular login
-response buffer, the best ibmvnic can do in this situation is perform a
-full reset.
-
-Fixes: dff515a3e71d ("ibmvnic: Harden device login requests")
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230809221038.51296-1-nnac123@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 2b9b8f3b68ed ("ksmbd: validate command payload size")
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ fs/ksmbd/smb2misc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/ibm/ibmvnic.c
-+++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -4430,6 +4430,7 @@ static int handle_login_rsp(union ibmvni
- 	int num_tx_pools;
- 	int num_rx_pools;
- 	u64 *size_array;
-+	u32 rsp_len;
- 	int i;
- 
- 	/* CHECK: Test/set of login_pending does not need to be atomic
-@@ -4481,6 +4482,23 @@ static int handle_login_rsp(union ibmvni
- 		ibmvnic_reset(adapter, VNIC_RESET_FATAL);
- 		return -EIO;
+--- a/fs/ksmbd/smb2misc.c
++++ b/fs/ksmbd/smb2misc.c
+@@ -381,13 +381,13 @@ int ksmbd_smb2_check_message(struct ksmb
  	}
-+
-+	rsp_len = be32_to_cpu(login_rsp->len);
-+	if (be32_to_cpu(login->login_rsp_len) < rsp_len ||
-+	    rsp_len <= be32_to_cpu(login_rsp->off_txsubm_subcrqs) ||
-+	    rsp_len <= be32_to_cpu(login_rsp->off_rxadd_subcrqs) ||
-+	    rsp_len <= be32_to_cpu(login_rsp->off_rxadd_buff_size) ||
-+	    rsp_len <= be32_to_cpu(login_rsp->off_supp_tx_desc)) {
-+		/* This can happen if a login request times out and there are
-+		 * 2 outstanding login requests sent, the LOGIN_RSP crq
-+		 * could have been for the older login request. So we are
-+		 * parsing the newer response buffer which may be incomplete
-+		 */
-+		dev_err(dev, "FATAL: Login rsp offsets/lengths invalid\n");
-+		ibmvnic_reset(adapter, VNIC_RESET_FATAL);
-+		return -EIO;
-+	}
-+
- 	size_array = (u64 *)((u8 *)(adapter->login_rsp_buf) +
- 		be32_to_cpu(adapter->login_rsp_buf->off_rxadd_buff_size));
- 	/* variable buffer sizes are not supported, so just read the
+ 
+ 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
+-		if (command == SMB2_OPLOCK_BREAK_HE &&
+-		    le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_20 &&
+-		    le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_21) {
++		if (!(command == SMB2_OPLOCK_BREAK_HE &&
++		    (le16_to_cpu(pdu->StructureSize2) == OP_BREAK_STRUCT_SIZE_20 ||
++		    le16_to_cpu(pdu->StructureSize2) == OP_BREAK_STRUCT_SIZE_21))) {
+ 			/* special case for SMB2.1 lease break message */
+ 			ksmbd_debug(SMB,
+-				    "Illegal request size %d for oplock break\n",
+-				    le16_to_cpu(pdu->StructureSize2));
++				"Illegal request size %u for command %d\n",
++				le16_to_cpu(pdu->StructureSize2), command);
+ 			return 1;
+ 		}
+ 	}
 
 
