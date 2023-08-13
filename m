@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F599443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E17CC433C8;
-	Sun, 13 Aug 2023 21:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F859443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:25:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEA7C433C7;
+	Sun, 13 Aug 2023 21:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961934;
-	bh=0+RZHS5a2ndIWK1TdSudHizWXOtlw48VKn/tL2U7yDs=;
+	s=korg; t=1691961937;
+	bh=XHFufILvnS2pkIk6rDSBWLu1ZV085aBG5lgvPFPLzzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBqHgaGGlqTIDs5KIHuZ541NANhEUinuiQEsnU4C/S9DJgMECpqx3vkUwnGJl4NVx
-	 uZcs6ebUC3gakzMJcMaDcbcwo3vSev141vED8ad31JKaK+0Y89Fh41B1ot2Iolwr2l
-	 /moiwbFGemU40uJKT63JX8M5RYI9jws3q83nJTjE=
+	b=c+uYGrATMRdkNCiO7OS4/d2d6c7x2K0eKIt+OS6F67xv9njkd8iHEpMgFfDSm8g/c
+	 HqU6zEwhVtAWCiBss9Smvvw090fyK4j/ETYhQKeXwYqSPPz1pGFhh57yntCJ1c3z29
+	 zckHBBEpsI6SEu0I5bjKN/O/x+XCT7CmNTrtKjC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 051/206] io_uring: correct check for O_TMPFILE
-Date: Sun, 13 Aug 2023 23:17:01 +0200
-Message-ID: <20230813211726.472448485@linuxfoundation.org>
+	Andrew Yang <andrew.yang@mediatek.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 052/206] zsmalloc: fix races between modifications of fullness and isolated
+Date: Sun, 13 Aug 2023 23:17:02 +0200
+Message-ID: <20230813211726.504101325@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -34,39 +39,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Andrew Yang <andrew.yang@mediatek.com>
 
-commit 72dbde0f2afbe4af8e8595a89c650ae6b9d9c36f upstream.
+commit 4b5d1e47b69426c0f7491d97d73ad0152d02d437 upstream.
 
-O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
-check for whether RESOLVE_CACHED can be used would incorrectly think
-that O_DIRECTORY could not be used with RESOLVE_CACHED.
+We encountered many kernel exceptions of VM_BUG_ON(zspage->isolated ==
+0) in dec_zspage_isolation() and BUG_ON(!pages[1]) in zs_unmap_object()
+lately.  This issue only occurs when migration and reclamation occur at
+the same time.
 
-Cc: stable@vger.kernel.org # v5.12+
-Fixes: 3a81fd02045c ("io_uring: enable LOOKUP_CACHED path resolution for filename lookups")
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/r/20230807-resolve_cached-o_tmpfile-v3-1-e49323e1ef6f@cyphar.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+With our memory stress test, we can reproduce this issue several times
+a day.  We have no idea why no one else encountered this issue.  BTW,
+we switched to the new kernel version with this defect a few months
+ago.
+
+Since fullness and isolated share the same unsigned int, modifications of
+them should be protected by the same lock.
+
+[andrew.yang@mediatek.com: move comment]
+  Link: https://lkml.kernel.org/r/20230727062910.6337-1-andrew.yang@mediatek.com
+Link: https://lkml.kernel.org/r/20230721063705.11455-1-andrew.yang@mediatek.com
+Fixes: c4549b871102 ("zsmalloc: remove zspage isolation for migration")
+Signed-off-by: Andrew Yang <andrew.yang@mediatek.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/openclose.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/zsmalloc.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/io_uring/openclose.c
-+++ b/io_uring/openclose.c
-@@ -35,9 +35,11 @@ static bool io_openat_force_async(struct
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1977,6 +1977,7 @@ static void replace_sub_page(struct size
+ 
+ static bool zs_page_isolate(struct page *page, isolate_mode_t mode)
  {
++	struct zs_pool *pool;
+ 	struct zspage *zspage;
+ 
  	/*
- 	 * Don't bother trying for O_TRUNC, O_CREAT, or O_TMPFILE open,
--	 * it'll always -EAGAIN
-+	 * it'll always -EAGAIN. Note that we test for __O_TMPFILE because
-+	 * O_TMPFILE includes O_DIRECTORY, which isn't a flag we need to force
-+	 * async for.
+@@ -1986,9 +1987,10 @@ static bool zs_page_isolate(struct page
+ 	VM_BUG_ON_PAGE(PageIsolated(page), page);
+ 
+ 	zspage = get_zspage(page);
+-	migrate_write_lock(zspage);
++	pool = zspage->pool;
++	spin_lock(&pool->lock);
+ 	inc_zspage_isolation(zspage);
+-	migrate_write_unlock(zspage);
++	spin_unlock(&pool->lock);
+ 
+ 	return true;
+ }
+@@ -2054,12 +2056,12 @@ static int zs_page_migrate(struct page *
+ 	kunmap_atomic(s_addr);
+ 
+ 	replace_sub_page(class, zspage, newpage, page);
++	dec_zspage_isolation(zspage);
+ 	/*
+ 	 * Since we complete the data copy and set up new zspage structure,
+ 	 * it's okay to release the pool's lock.
  	 */
--	return open->how.flags & (O_TRUNC | O_CREAT | O_TMPFILE);
-+	return open->how.flags & (O_TRUNC | O_CREAT | __O_TMPFILE);
+ 	spin_unlock(&pool->lock);
+-	dec_zspage_isolation(zspage);
+ 	migrate_write_unlock(zspage);
+ 
+ 	get_page(newpage);
+@@ -2076,14 +2078,16 @@ static int zs_page_migrate(struct page *
+ 
+ static void zs_page_putback(struct page *page)
+ {
++	struct zs_pool *pool;
+ 	struct zspage *zspage;
+ 
+ 	VM_BUG_ON_PAGE(!PageIsolated(page), page);
+ 
+ 	zspage = get_zspage(page);
+-	migrate_write_lock(zspage);
++	pool = zspage->pool;
++	spin_lock(&pool->lock);
+ 	dec_zspage_isolation(zspage);
+-	migrate_write_unlock(zspage);
++	spin_unlock(&pool->lock);
  }
  
- static int __io_openat_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ static const struct movable_operations zsmalloc_mops = {
 
 
