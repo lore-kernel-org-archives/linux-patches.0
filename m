@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBC19446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:34:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258EEC433C8;
-	Sun, 13 Aug 2023 21:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3961C9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:35:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F44C433C8;
+	Sun, 13 Aug 2023 21:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962499;
-	bh=Uo4hma2wBF/5S7o+ojQhxCzfga9i2wb+yUzSZRDuFeA=;
+	s=korg; t=1691962502;
+	bh=hOabV+KorJK9yJKufh1IhqTLOa1UUsSKa8xLx0V0TvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hF51f4B2vL7TzyicZHxQXfHiHZnu9xVIRzhw7rmIy4KwLGqeURyFhbu8mnxIBI8te
-	 U4Sjvg5H7/i2MdAfmTXnoH77xVJa7BBqwkF3Y7cnWgyGXUUYoxU339kEFhomvionX5
-	 mRFX3ESMssRJSWzWodLZWWzK288KWsMVQWV5rRf4=
+	b=jJ79xCRZ7CiUnhYxcctadfYveQgIrsnPcvl1Yi0GXV7sKtLvCV/UkGTx5Iqnuwkxy
+	 e/WDzcLwk77BN6j4mrqWluHP05F7fkL73VisF+7+6drVXd9V9+7lxoH/rrEgtG0FHC
+	 RkpbhmZXxZ9E9K4cIyT3B78z4e6b/Fp2EPGhbWS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 051/149] io_uring: correct check for O_TMPFILE
-Date: Sun, 13 Aug 2023 23:18:16 +0200
-Message-ID: <20230813211720.341879884@linuxfoundation.org>
+	Ben Skeggs <bskeggs@redhat.com>,
+	David Airlie <airlied@gmail.com>,
+	nouveau@lists.freedesktop.org,
+	Karol Herbst <kherbst@redhat.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 6.1 025/149] drm/nouveau/gr: enable memory loads on helper invocation on all channels
+Date: Sun, 13 Aug 2023 23:17:50 +0200
+Message-ID: <20230813211719.554323424@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -34,39 +37,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Karol Herbst <kherbst@redhat.com>
 
-Commit 72dbde0f2afbe4af8e8595a89c650ae6b9d9c36f upstream.
+commit 1cb9e2ef66d53b020842b18762e30d0eb4384de8 upstream.
 
-O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
-check for whether RESOLVE_CACHED can be used would incorrectly think
-that O_DIRECTORY could not be used with RESOLVE_CACHED.
+We have a lurking bug where Fragment Shader Helper Invocations can't load
+from memory. But this is actually required in OpenGL and is causing random
+hangs or failures in random shaders.
 
-Cc: stable@vger.kernel.org # v5.12+
-Fixes: 3a81fd02045c ("io_uring: enable LOOKUP_CACHED path resolution for filename lookups")
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/r/20230807-resolve_cached-o_tmpfile-v3-1-e49323e1ef6f@cyphar.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+It is unknown how widespread this issue is, but shaders hitting this can
+end up with infinite loops.
+
+We enable those only on all Kepler and newer GPUs where we use our own
+Firmware.
+
+Nvidia's firmware provides a way to set a kernelspace controlled list of
+mmio registers in the gr space from push buffers via MME macros.
+
+v2: drop code for gm200 and newer.
+
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: nouveau@lists.freedesktop.org
+Cc: stable@vger.kernel.org # 4.19+
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230622152017.2512101-1-kherbst@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/openclose.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h  |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c  |    4 +++-
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c  |   10 ++++++++++
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c  |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c  |    1 +
+ 6 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/io_uring/openclose.c
-+++ b/io_uring/openclose.c
-@@ -110,9 +110,11 @@ int io_openat2(struct io_kiocb *req, uns
- 	if (issue_flags & IO_URING_F_NONBLOCK) {
- 		/*
- 		 * Don't bother trying for O_TRUNC, O_CREAT, or O_TMPFILE open,
--		 * it'll always -EAGAIN
-+		 * it'll always -EAGAIN. Note that we test for __O_TMPFILE
-+		 * because O_TMPFILE includes O_DIRECTORY, which isn't a flag
-+		 * we need to force async for.
- 		 */
--		if (open->how.flags & (O_TRUNC | O_CREAT | O_TMPFILE))
-+		if (open->how.flags & (O_TRUNC | O_CREAT | __O_TMPFILE))
- 			return -EAGAIN;
- 		op.lookup_flags |= LOOKUP_CACHED;
- 		op.open_flag |= O_NONBLOCK;
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h
+@@ -123,6 +123,7 @@ void gk104_grctx_generate_r418800(struct
+ 
+ extern const struct gf100_grctx_func gk110_grctx;
+ void gk110_grctx_generate_r419eb0(struct gf100_gr *);
++void gk110_grctx_generate_r419f78(struct gf100_gr *);
+ 
+ extern const struct gf100_grctx_func gk110b_grctx;
+ extern const struct gf100_grctx_func gk208_grctx;
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c
+@@ -916,7 +916,9 @@ static void
+ gk104_grctx_generate_r419f78(struct gf100_gr *gr)
+ {
+ 	struct nvkm_device *device = gr->base.engine.subdev.device;
+-	nvkm_mask(device, 0x419f78, 0x00000001, 0x00000000);
++
++	/* bit 3 set disables loads in fp helper invocations, we need it enabled */
++	nvkm_mask(device, 0x419f78, 0x00000009, 0x00000000);
+ }
+ 
+ void
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c
+@@ -820,6 +820,15 @@ gk110_grctx_generate_r419eb0(struct gf10
+ 	nvkm_mask(device, 0x419eb0, 0x00001000, 0x00001000);
+ }
+ 
++void
++gk110_grctx_generate_r419f78(struct gf100_gr *gr)
++{
++	struct nvkm_device *device = gr->base.engine.subdev.device;
++
++	/* bit 3 set disables loads in fp helper invocations, we need it enabled */
++	nvkm_mask(device, 0x419f78, 0x00000008, 0x00000000);
++}
++
+ const struct gf100_grctx_func
+ gk110_grctx = {
+ 	.main  = gf100_grctx_generate_main,
+@@ -852,4 +861,5 @@ gk110_grctx = {
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r418800 = gk104_grctx_generate_r418800,
+ 	.r419eb0 = gk110_grctx_generate_r419eb0,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c
+@@ -101,4 +101,5 @@ gk110b_grctx = {
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r418800 = gk104_grctx_generate_r418800,
+ 	.r419eb0 = gk110_grctx_generate_r419eb0,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c
+@@ -566,4 +566,5 @@ gk208_grctx = {
+ 	.dist_skip_table = gf117_grctx_generate_dist_skip_table,
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r418800 = gk104_grctx_generate_r418800,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c
+@@ -991,4 +991,5 @@ gm107_grctx = {
+ 	.r406500 = gm107_grctx_generate_r406500,
+ 	.gpc_tpc_nr = gk104_grctx_generate_gpc_tpc_nr,
+ 	.r419e00 = gm107_grctx_generate_r419e00,
++	.r419f78 = gk110_grctx_generate_r419f78,
+ };
 
 
