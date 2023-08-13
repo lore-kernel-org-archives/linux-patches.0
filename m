@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DCC9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:22:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364F1C433C8;
-	Sun, 13 Aug 2023 21:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B9D9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58B1C433C8;
+	Sun, 13 Aug 2023 21:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961777;
-	bh=R15l1BKXod8hZEPiErcBzYQA82uGFFFFFen6jImXGo0=;
+	s=korg; t=1691961780;
+	bh=+of6qZ7pLslJgkRc1GRvLzUoOPcLqtrIfNyF0AoZg2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtpICajKxcySiknapsmKWwu4ppluUfLNvQY/5ps3iG+VDl35NcwydGEyhu8YK8BTg
-	 h7zUcwS07JO24vC/ebCS96k3B1G+3l+jmIXwwQQHdU0CMaEE856fEtYYtTKFz0c3DK
-	 XOFqayMTaFEb9jfza5WlQBtrENwqNzlBOLSq065E=
+	b=PSLK3OdfJ6B9qmpfJESawxL/ayQ4nBFV/urE4hPNdzwBKWKP/ukrOJwqqxzK9/XPE
+	 uuZIk5jw+4mlyKlayW1Ue4GNKh08kUSRqA6sdi6I18nRE/cRLY87kUu7JR3gtD5DDC
+	 etQyMK9ORl9nmPbQ45B9T/J3ShLW19dYaYY/SwT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>,
-	Alexandra Diupina <adiupina@astralinux.ru>,
+	Zhu Wang <wangzhu9@huawei.com>,
+	Narsimhulu Musini <nmusini@cisco.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.19 29/33] scsi: 53c700: Check that command slot is not NULL
-Date: Sun, 13 Aug 2023 23:19:23 +0200
-Message-ID: <20230813211704.993337754@linuxfoundation.org>
+Subject: [PATCH 4.19 30/33] scsi: snic: Fix possible memory leak if device_add() fails
+Date: Sun, 13 Aug 2023 23:19:24 +0200
+Message-ID: <20230813211705.029288575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
@@ -35,36 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Zhu Wang <wangzhu9@huawei.com>
 
-commit 8366d1f1249a0d0bba41d0bd1298d63e5d34c7f7 upstream.
+commit 41320b18a0e0dfb236dba4edb9be12dba1878156 upstream.
 
-Add a check for the command slot value to avoid dereferencing a NULL
-pointer.
+If device_add() returns error, the name allocated by dev_set_name() needs
+be freed. As the comment of device_add() says, put_device() should be used
+to give up the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanp().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
-Signed-off-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
-Link: https://lore.kernel.org/r/20230728123521.18293-1-adiupina@astralinux.ru
+Fixes: c8806b6c9e82 ("snic: driver for Cisco SCSI HBA")
+Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
+Acked-by: Narsimhulu Musini <nmusini@cisco.com>
+Link: https://lore.kernel.org/r/20230801111421.63651-1-wangzhu9@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/53c700.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/snic/snic_disc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/53c700.c
-+++ b/drivers/scsi/53c700.c
-@@ -1594,7 +1594,7 @@ NCR_700_intr(int irq, void *dev_id)
- 				printk("scsi%d (%d:%d) PHASE MISMATCH IN SEND MESSAGE %d remain, return %p[%04x], phase %s\n", host->host_no, pun, lun, count, (void *)temp, temp - hostdata->pScript, sbcl_to_string(NCR_700_readb(host, SBCL_REG)));
- #endif
- 				resume_offset = hostdata->pScript + Ent_SendMessagePhaseMismatch;
--			} else if(dsp >= to32bit(&slot->pSG[0].ins) &&
-+			} else if (slot && dsp >= to32bit(&slot->pSG[0].ins) &&
- 				  dsp <= to32bit(&slot->pSG[NCR_700_SG_SEGMENTS].ins)) {
- 				int data_transfer = NCR_700_readl(host, DBC_REG) & 0xffffff;
- 				int SGcount = (dsp - to32bit(&slot->pSG[0].ins))/sizeof(struct NCR_700_SG_List);
+--- a/drivers/scsi/snic/snic_disc.c
++++ b/drivers/scsi/snic/snic_disc.c
+@@ -316,6 +316,7 @@ snic_tgt_create(struct snic *snic, struc
+ 			      "Snic Tgt: device_add, with err = %d\n",
+ 			      ret);
+ 
++		put_device(&tgt->dev);
+ 		put_device(&snic->shost->shost_gendev);
+ 		spin_lock_irqsave(snic->shost->host_lock, flags);
+ 		list_del(&tgt->list);
 
 
