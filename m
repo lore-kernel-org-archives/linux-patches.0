@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6379446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0467FC433C8;
-	Sun, 13 Aug 2023 21:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFE19446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA56DC433C8;
+	Sun, 13 Aug 2023 21:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962928;
-	bh=kWd2UDvlp47925AesQ9yZZB/LslHx/esUxeX+rW1+M0=;
+	s=korg; t=1691962931;
+	bh=5KgzM63Zrgw//2hLiYqcGjmF8S8om+CJgGSZ2PtFpSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7L9GsQRJs4Mv0duwUvF8bVmWN3TgotPZ0L8NWo227XSnJzx8Ubv4ha0y1zslMw+n
-	 E4P4byWQ8qi/b1icAVdwWisVlIpa51WKpLnw0ng0D03fOAaytJAAHJDGewLez44JXe
-	 gEUXqL2JYUkOKn9PO3G87dnJ0ApYRx1oIuapen8s=
+	b=Pz8lR12JVj9GEuuVLzPehUmKkyui2CRLKIfpfeAWS/YZpUzpTaFja29QZSlJmsSHu
+	 EofiHsvM7qNzfadukMUbwegeCHCYqklGrke82MELci+eppAqqg5RfgnHa7yODZuoVS
+	 Z9DCW5cWoeIsXTHxn5JbxX6FOlEhuSfuDYS0mOgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 31/68] netfilter: nf_tables: dont skip expired elements during walk
-Date: Sun, 13 Aug 2023 23:19:32 +0200
-Message-ID: <20230813211709.102802314@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 22/68] usb-storage: alauda: Fix uninit-value in alauda_check_media()
+Date: Sun, 13 Aug 2023 23:19:23 +0200
+Message-ID: <20230813211708.828534758@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -34,129 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 24138933b97b055d486e8064b4a1721702442a9b upstream.
+commit a6ff6e7a9dd69364547751db0f626a10a6d628d2 upstream.
 
-There is an asymmetry between commit/abort and preparation phase if the
-following conditions are met:
+Syzbot got KMSAN to complain about access to an uninitialized value in
+the alauda subdriver of usb-storage:
 
-1. set is a verdict map ("1.2.3.4 : jump foo")
-2. timeouts are enabled
+BUG: KMSAN: uninit-value in alauda_transport+0x462/0x57f0
+drivers/usb/storage/alauda.c:1137
+CPU: 0 PID: 12279 Comm: usb-storage Not tainted 5.3.0-rc7+ #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+Google 01/01/2011
+Call Trace:
+  __dump_stack lib/dump_stack.c:77 [inline]
+  dump_stack+0x191/0x1f0 lib/dump_stack.c:113
+  kmsan_report+0x13a/0x2b0 mm/kmsan/kmsan_report.c:108
+  __msan_warning+0x73/0xe0 mm/kmsan/kmsan_instr.c:250
+  alauda_check_media+0x344/0x3310 drivers/usb/storage/alauda.c:460
 
-In this case, following sequence is problematic:
+The problem is that alauda_check_media() doesn't verify that its USB
+transfer succeeded before trying to use the received data.  What
+should happen if the transfer fails isn't entirely clear, but a
+reasonably conservative approach is to pretend that no media is
+present.
 
-1. element E in set S refers to chain C
-2. userspace requests removal of set S
-3. kernel does a set walk to decrement chain->use count for all elements
-   from preparation phase
-4. kernel does another set walk to remove elements from the commit phase
-   (or another walk to do a chain->use increment for all elements from
-    abort phase)
+A similar problem exists in a usb_stor_dbg() call in
+alauda_get_media_status().  In this case, when an error occurs the
+call is redundant, because usb_stor_ctrl_transfer() already will print
+a debugging message.
 
-If E has already expired in 1), it will be ignored during list walk, so its use count
-won't have been changed.
+Finally, unrelated to the uninitialized memory access, is the fact
+that alauda_check_media() performs DMA to a buffer on the stack.
+Fortunately usb-storage provides a general purpose DMA-able buffer for
+uses like this.  We'll use it instead.
 
-Then, when set is culled, ->destroy callback will zap the element via
-nf_tables_set_elem_destroy(), but this function is only safe for
-elements that have been deactivated earlier from the preparation phase:
-lack of earlier deactivate removes the element but leaks the chain use
-count, which results in a WARN splat when the chain gets removed later,
-plus a leak of the nft_chain structure.
-
-Update pipapo_get() not to skip expired elements, otherwise flush
-command reports bogus ENOENT errors.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Fixes: 9d0982927e79 ("netfilter: nft_hash: add support for timeouts")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-and-tested-by: syzbot+e7d46eb426883fb97efd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/0000000000007d25ff059457342d@google.com/T/
+Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/693d5d5e-f09b-42d0-8ed9-1f96cd30bcce@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c  |    4 ++++
- net/netfilter/nft_set_hash.c   |    2 --
- net/netfilter/nft_set_pipapo.c |   18 ++++++++++++------
- net/netfilter/nft_set_rbtree.c |    2 --
- 4 files changed, 16 insertions(+), 10 deletions(-)
+ drivers/usb/storage/alauda.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4911,8 +4911,12 @@ static int nf_tables_dump_setelem(const
- 				  const struct nft_set_iter *iter,
- 				  struct nft_set_elem *elem)
- {
-+	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
- 	struct nft_set_dump_args *args;
+--- a/drivers/usb/storage/alauda.c
++++ b/drivers/usb/storage/alauda.c
+@@ -318,7 +318,8 @@ static int alauda_get_media_status(struc
+ 	rc = usb_stor_ctrl_transfer(us, us->recv_ctrl_pipe,
+ 		command, 0xc0, 0, 1, data, 2);
  
-+	if (nft_set_elem_expired(ext))
-+		return 0;
-+
- 	args = container_of(iter, struct nft_set_dump_args, iter);
- 	return nf_tables_fill_setelem(args->skb, set, elem);
+-	usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
++	if (rc == USB_STOR_XFER_GOOD)
++		usb_stor_dbg(us, "Media status %02X %02X\n", data[0], data[1]);
+ 
+ 	return rc;
  }
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -277,8 +277,6 @@ static void nft_rhash_walk(const struct
- 
- 		if (iter->count < iter->skip)
- 			goto cont;
--		if (nft_set_elem_expired(&he->ext))
--			goto cont;
- 		if (!nft_set_elem_active(&he->ext, iter->genmask))
- 			goto cont;
- 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -566,8 +566,7 @@ next_match:
- 			goto out;
- 
- 		if (last) {
--			if (nft_set_elem_expired(&f->mt[b].e->ext) ||
--			    (genmask &&
-+			if ((genmask &&
- 			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
- 				goto next_match;
- 
-@@ -601,8 +600,17 @@ out:
- static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
- 			    const struct nft_set_elem *elem, unsigned int flags)
+@@ -454,9 +455,14 @@ static int alauda_init_media(struct us_d
+ static int alauda_check_media(struct us_data *us)
  {
--	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
--			  nft_genmask_cur(net));
-+	struct nft_pipapo_elem *ret;
-+
-+	ret = pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+			 nft_genmask_cur(net));
-+	if (IS_ERR(ret))
-+		return ret;
-+
-+	if (nft_set_elem_expired(&ret->ext))
-+		return ERR_PTR(-ENOENT);
-+
-+	return ret;
- }
+ 	struct alauda_info *info = (struct alauda_info *) us->extra;
+-	unsigned char status[2];
++	unsigned char *status = us->iobuf;
++	int rc;
  
- /**
-@@ -1981,8 +1989,6 @@ static void nft_pipapo_walk(const struct
- 			goto cont;
+-	alauda_get_media_status(us, status);
++	rc = alauda_get_media_status(us, status);
++	if (rc != USB_STOR_XFER_GOOD) {
++		status[0] = 0xF0;	/* Pretend there's no media */
++		status[1] = 0;
++	}
  
- 		e = f->mt[r].e;
--		if (nft_set_elem_expired(&e->ext))
--			goto cont;
- 
- 		elem.priv = e;
- 
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -551,8 +551,6 @@ static void nft_rbtree_walk(const struct
- 
- 		if (iter->count < iter->skip)
- 			goto cont;
--		if (nft_set_elem_expired(&rbe->ext))
--			goto cont;
- 		if (!nft_set_elem_active(&rbe->ext, iter->genmask))
- 			goto cont;
- 
+ 	/* Check for no media or door open */
+ 	if ((status[0] & 0x80) || ((status[0] & 0x1F) == 0x10)
 
 
