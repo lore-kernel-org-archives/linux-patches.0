@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80A39443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F73FC433C8;
-	Sun, 13 Aug 2023 21:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6027B9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A37C433C9;
+	Sun, 13 Aug 2023 21:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961785;
-	bh=vFmKYYdT9dD/0yIP7GDSf/IPlBizywBUaEh2sD0SS/g=;
+	s=korg; t=1691961788;
+	bh=e359yJop2fp5uwsKmsGRxJqrc8tJ3j6u1dUOUgmEzvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDcbvo80a2/w58cTWvEHjOSQ7ECpIJ8xAs1mtv0Au3hZohUHLZDpO4iR0NmOZbM3G
-	 hotvU2+zmvqXNPhxjgnAVhJvli9PRkGzeYV4Aj2xNtzGe74XKJNJvm9jZjxyaCgug7
-	 cAsLHkHgZT56aUhRiYeI0Ss77Ak7lBbeyy6bgs5Q=
+	b=0k4ixmmmbNkdwR1IPqzDFV4DOE33II/vDTmKuvmXrl7McJgXZME3bp2ip9MpwnmEj
+	 Xjobki8Gs9jBORgXflq8O7hqBeqh12Tkjv3aqFwyrxYPTM5CoJ2NdRkaxAMkBlhw9c
+	 FavOCgW3uwLl/iWzhmIoPEiDDaJcxscidon1LroQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 4.19 32/33] alpha: remove __init annotation from exported page_is_ram()
-Date: Sun, 13 Aug 2023 23:19:26 +0200
-Message-ID: <20230813211705.104711062@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 4.19 33/33] sch_netem: fix issues in netem_change() vs get_dist_table()
+Date: Sun, 13 Aug 2023 23:19:27 +0200
+Message-ID: <20230813211705.141126984@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
@@ -34,40 +39,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6ccbd7fd474674654019a20177c943359469103a upstream.
+commit 11b73313c12403f617b47752db0ab3deef201af7 upstream.
 
-EXPORT_SYMBOL and __init is a bad combination because the .init.text
-section is freed up after the initialization.
+In blamed commit, I missed that get_dist_table() was allocating
+memory using GFP_KERNEL, and acquiring qdisc lock to perform
+the swap of newly allocated table with current one.
 
-Commit c5a130325f13 ("ACPI/APEI: Add parameter check before error
-injection") exported page_is_ram(), hence the __init annotation should
-be removed.
+In this patch, get_dist_table() is allocating memory and
+copy user data before we acquire the qdisc lock.
 
-This fixes the modpost warning in ARCH=alpha builds:
+Then we perform swap operations while being protected by the lock.
 
-  WARNING: modpost: vmlinux: page_is_ram: EXPORT_SYMBOL used for init symbol. Remove __init or EXPORT_SYMBOL.
+Note that after this patch netem_change() no longer can do partial changes.
+If an error is returned, qdisc conf is left unchanged.
 
-Fixes: c5a130325f13 ("ACPI/APEI: Add parameter check before error injection")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 2174a08db80d ("sch_netem: acquire qdisc lock in netem_change()")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Hemminger <stephen@networkplumber.org>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230622181503.2327695-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/setup.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sched/sch_netem.c |   59 +++++++++++++++++++++-----------------------------
+ 1 file changed, 25 insertions(+), 34 deletions(-)
 
---- a/arch/alpha/kernel/setup.c
-+++ b/arch/alpha/kernel/setup.c
-@@ -469,8 +469,7 @@ setup_memory(void *kernel_end)
- extern void setup_memory(void *);
- #endif /* !CONFIG_DISCONTIGMEM */
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -748,12 +748,10 @@ static void dist_free(struct disttable *
+  * signed 16 bit values.
+  */
  
--int __init
--page_is_ram(unsigned long pfn)
-+int page_is_ram(unsigned long pfn)
+-static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
+-			  const struct nlattr *attr)
++static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
  {
- 	struct memclust_struct * cluster;
- 	struct memdesc_struct * memdesc;
+ 	size_t n = nla_len(attr)/sizeof(__s16);
+ 	const __s16 *data = nla_data(attr);
+-	spinlock_t *root_lock;
+ 	struct disttable *d;
+ 	int i;
+ 
+@@ -768,13 +766,7 @@ static int get_dist_table(struct Qdisc *
+ 	for (i = 0; i < n; i++)
+ 		d->table[i] = data[i];
+ 
+-	root_lock = qdisc_root_sleeping_lock(sch);
+-
+-	spin_lock_bh(root_lock);
+-	swap(*tbl, d);
+-	spin_unlock_bh(root_lock);
+-
+-	dist_free(d);
++	*tbl = d;
+ 	return 0;
+ }
+ 
+@@ -930,6 +922,8 @@ static int netem_change(struct Qdisc *sc
+ {
+ 	struct netem_sched_data *q = qdisc_priv(sch);
+ 	struct nlattr *tb[TCA_NETEM_MAX + 1];
++	struct disttable *delay_dist = NULL;
++	struct disttable *slot_dist = NULL;
+ 	struct tc_netem_qopt *qopt;
+ 	struct clgstate old_clg;
+ 	int old_loss_model = CLG_RANDOM;
+@@ -943,6 +937,18 @@ static int netem_change(struct Qdisc *sc
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (tb[TCA_NETEM_DELAY_DIST]) {
++		ret = get_dist_table(&delay_dist, tb[TCA_NETEM_DELAY_DIST]);
++		if (ret)
++			goto table_free;
++	}
++
++	if (tb[TCA_NETEM_SLOT_DIST]) {
++		ret = get_dist_table(&slot_dist, tb[TCA_NETEM_SLOT_DIST]);
++		if (ret)
++			goto table_free;
++	}
++
+ 	sch_tree_lock(sch);
+ 	/* backup q->clg and q->loss_model */
+ 	old_clg = q->clg;
+@@ -952,26 +958,17 @@ static int netem_change(struct Qdisc *sc
+ 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
+ 		if (ret) {
+ 			q->loss_model = old_loss_model;
++			q->clg = old_clg;
+ 			goto unlock;
+ 		}
+ 	} else {
+ 		q->loss_model = CLG_RANDOM;
+ 	}
+ 
+-	if (tb[TCA_NETEM_DELAY_DIST]) {
+-		ret = get_dist_table(sch, &q->delay_dist,
+-				     tb[TCA_NETEM_DELAY_DIST]);
+-		if (ret)
+-			goto get_table_failure;
+-	}
+-
+-	if (tb[TCA_NETEM_SLOT_DIST]) {
+-		ret = get_dist_table(sch, &q->slot_dist,
+-				     tb[TCA_NETEM_SLOT_DIST]);
+-		if (ret)
+-			goto get_table_failure;
+-	}
+-
++	if (delay_dist)
++		swap(q->delay_dist, delay_dist);
++	if (slot_dist)
++		swap(q->slot_dist, slot_dist);
+ 	sch->limit = qopt->limit;
+ 
+ 	q->latency = PSCHED_TICKS2NS(qopt->latency);
+@@ -1021,17 +1018,11 @@ static int netem_change(struct Qdisc *sc
+ 
+ unlock:
+ 	sch_tree_unlock(sch);
+-	return ret;
+ 
+-get_table_failure:
+-	/* recover clg and loss_model, in case of
+-	 * q->clg and q->loss_model were modified
+-	 * in get_loss_clg()
+-	 */
+-	q->clg = old_clg;
+-	q->loss_model = old_loss_model;
+-
+-	goto unlock;
++table_free:
++	dist_free(delay_dist);
++	dist_free(slot_dist);
++	return ret;
+ }
+ 
+ static int netem_init(struct Qdisc *sch, struct nlattr *opt,
 
 
