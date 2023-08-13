@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DD69446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31356C433C7;
-	Sun, 13 Aug 2023 21:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EF09446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28577C433C7;
+	Sun, 13 Aug 2023 21:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962606;
-	bh=65FajYFrnyYp50MI1Ud9RYl/c+DCILQfQDV80Qqb3DQ=;
+	s=korg; t=1691962609;
+	bh=QdlyopDjs1CN9CfUj0QnNaTh4A1rMMh2uch3Loy50As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15XHxrnYr6AAIEgMvAmPaH9EaBYc8XRVn4IscIP5KTUXw71+bT2+tq+DkuZ0Kqan9
-	 eV1D2R8BeZJq2kGGt+vb6N5cM9BJznEz4jRkbSsJmFMZ4lF0pXcXRh9DT/h8jVf6wZ
-	 LSkhggRjCUB40zhGBlvWKBCfJPl0u+F392IOzsgU=
+	b=de3QPdWyDh/3Ocl2k1PkUU2D0xmhqu9BSslvq+Ist3YWtEfncc4mR+vccprKdNH7+
+	 V7pdGQsQKp2zv71/v8C1lAKt/B4bU1q4SfrqRbRnoRbB5NxBCd33Gh+HJ8o32d98CR
+	 e2Z8vpvo8HtdamU5xupPv1K2kq+3sdy0aodvfxFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 089/149] net/packet: annotate data-races around tp->status
-Date: Sun, 13 Aug 2023 23:18:54 +0200
-Message-ID: <20230813211721.449924576@linuxfoundation.org>
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 090/149] net/smc: Use correct buffer sizes when switching between TCP and SMC
+Date: Sun, 13 Aug 2023 23:18:55 +0200
+Message-ID: <20230813211721.480103187@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -36,125 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-commit 8a9896177784063d01068293caea3f74f6830ff6 upstream.
+commit 30c3c4a4497c3765bf6b298f5072c8165aeaf7cc upstream.
 
-Another syzbot report [1] is about tp->status lockless reads
-from __packet_get_status()
+Tuning of the effective buffer size through setsockopts was working for
+SMC traffic only but not for TCP fall-back connections even before
+commit 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock and
+make them tunable"). That change made it apparent that TCP fall-back
+connections would use net.smc.[rw]mem as buffer size instead of
+net.ipv4_tcp_[rw]mem.
 
-[1]
-BUG: KCSAN: data-race in __packet_rcv_has_room / __packet_set_status
+Amend the code that copies attributes between the (TCP) clcsock and the
+SMC socket and adjust buffer sizes appropriately:
+- Copy over sk_userlocks so that both sockets agree on whether tuning
+  via setsockopt is active.
+- When falling back to TCP use sk_sndbuf or sk_rcvbuf as specified with
+  setsockopt. Otherwise, use the sysctl value for TCP/IPv4.
+- Likewise, use either values from setsockopt or from sysctl for SMC
+  (duplicated) on successful SMC connect.
 
-write to 0xffff888117d7c080 of 8 bytes by interrupt on cpu 0:
-__packet_set_status+0x78/0xa0 net/packet/af_packet.c:407
-tpacket_rcv+0x18bb/0x1a60 net/packet/af_packet.c:2483
-deliver_skb net/core/dev.c:2173 [inline]
-__netif_receive_skb_core+0x408/0x1e80 net/core/dev.c:5337
-__netif_receive_skb_one_core net/core/dev.c:5491 [inline]
-__netif_receive_skb+0x57/0x1b0 net/core/dev.c:5607
-process_backlog+0x21f/0x380 net/core/dev.c:5935
-__napi_poll+0x60/0x3b0 net/core/dev.c:6498
-napi_poll net/core/dev.c:6565 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6698
-__do_softirq+0xc1/0x265 kernel/softirq.c:571
-invoke_softirq kernel/softirq.c:445 [inline]
-__irq_exit_rcu+0x57/0xa0 kernel/softirq.c:650
-sysvec_apic_timer_interrupt+0x6d/0x80 arch/x86/kernel/apic/apic.c:1106
-asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:645
-smpboot_thread_fn+0x33c/0x4a0 kernel/smpboot.c:112
-kthread+0x1d7/0x210 kernel/kthread.c:379
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+In smc_tcp_listen_work() drop the explicit copy of buffer sizes as that
+is taken care of by the attribute copy.
 
-read to 0xffff888117d7c080 of 8 bytes by interrupt on cpu 1:
-__packet_get_status net/packet/af_packet.c:436 [inline]
-packet_lookup_frame net/packet/af_packet.c:524 [inline]
-__tpacket_has_room net/packet/af_packet.c:1255 [inline]
-__packet_rcv_has_room+0x3f9/0x450 net/packet/af_packet.c:1298
-tpacket_rcv+0x275/0x1a60 net/packet/af_packet.c:2285
-deliver_skb net/core/dev.c:2173 [inline]
-dev_queue_xmit_nit+0x38a/0x5e0 net/core/dev.c:2243
-xmit_one net/core/dev.c:3574 [inline]
-dev_hard_start_xmit+0xcf/0x3f0 net/core/dev.c:3594
-__dev_queue_xmit+0xefb/0x1d10 net/core/dev.c:4244
-dev_queue_xmit include/linux/netdevice.h:3088 [inline]
-can_send+0x4eb/0x5d0 net/can/af_can.c:276
-bcm_can_tx+0x314/0x410 net/can/bcm.c:302
-bcm_tx_timeout_handler+0xdb/0x260
-__run_hrtimer kernel/time/hrtimer.c:1685 [inline]
-__hrtimer_run_queues+0x217/0x700 kernel/time/hrtimer.c:1749
-hrtimer_run_softirq+0xd6/0x120 kernel/time/hrtimer.c:1766
-__do_softirq+0xc1/0x265 kernel/softirq.c:571
-run_ksoftirqd+0x17/0x20 kernel/softirq.c:939
-smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
-kthread+0x1d7/0x210 kernel/kthread.c:379
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-
-value changed: 0x0000000000000000 -> 0x0000000020000081
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 19 Comm: ksoftirqd/1 Not tainted 6.4.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230803145600.2937518-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock and make them tunable")
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/smc/af_smc.c |   73 ++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 51 insertions(+), 22 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -404,18 +404,20 @@ static void __packet_set_status(struct p
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -438,13 +438,60 @@ out:
+ 	return rc;
+ }
+ 
++/* copy only relevant settings and flags of SOL_SOCKET level from smc to
++ * clc socket (since smc is not called for these options from net/core)
++ */
++
++#define SK_FLAGS_SMC_TO_CLC ((1UL << SOCK_URGINLINE) | \
++			     (1UL << SOCK_KEEPOPEN) | \
++			     (1UL << SOCK_LINGER) | \
++			     (1UL << SOCK_BROADCAST) | \
++			     (1UL << SOCK_TIMESTAMP) | \
++			     (1UL << SOCK_DBG) | \
++			     (1UL << SOCK_RCVTSTAMP) | \
++			     (1UL << SOCK_RCVTSTAMPNS) | \
++			     (1UL << SOCK_LOCALROUTE) | \
++			     (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE) | \
++			     (1UL << SOCK_RXQ_OVFL) | \
++			     (1UL << SOCK_WIFI_STATUS) | \
++			     (1UL << SOCK_NOFCS) | \
++			     (1UL << SOCK_FILTER_LOCKED) | \
++			     (1UL << SOCK_TSTAMP_NEW))
++
++/* if set, use value set by setsockopt() - else use IPv4 or SMC sysctl value */
++static void smc_adjust_sock_bufsizes(struct sock *nsk, struct sock *osk,
++				     unsigned long mask)
++{
++	struct net *nnet = sock_net(nsk);
++
++	nsk->sk_userlocks = osk->sk_userlocks;
++	if (osk->sk_userlocks & SOCK_SNDBUF_LOCK) {
++		nsk->sk_sndbuf = osk->sk_sndbuf;
++	} else {
++		if (mask == SK_FLAGS_SMC_TO_CLC)
++			WRITE_ONCE(nsk->sk_sndbuf,
++				   READ_ONCE(nnet->ipv4.sysctl_tcp_wmem[1]));
++		else
++			WRITE_ONCE(nsk->sk_sndbuf,
++				   2 * READ_ONCE(nnet->smc.sysctl_wmem));
++	}
++	if (osk->sk_userlocks & SOCK_RCVBUF_LOCK) {
++		nsk->sk_rcvbuf = osk->sk_rcvbuf;
++	} else {
++		if (mask == SK_FLAGS_SMC_TO_CLC)
++			WRITE_ONCE(nsk->sk_rcvbuf,
++				   READ_ONCE(nnet->ipv4.sysctl_tcp_rmem[1]));
++		else
++			WRITE_ONCE(nsk->sk_rcvbuf,
++				   2 * READ_ONCE(nnet->smc.sysctl_rmem));
++	}
++}
++
+ static void smc_copy_sock_settings(struct sock *nsk, struct sock *osk,
+ 				   unsigned long mask)
  {
- 	union tpacket_uhdr h;
+ 	/* options we don't get control via setsockopt for */
+ 	nsk->sk_type = osk->sk_type;
+-	nsk->sk_sndbuf = osk->sk_sndbuf;
+-	nsk->sk_rcvbuf = osk->sk_rcvbuf;
+ 	nsk->sk_sndtimeo = osk->sk_sndtimeo;
+ 	nsk->sk_rcvtimeo = osk->sk_rcvtimeo;
+ 	nsk->sk_mark = READ_ONCE(osk->sk_mark);
+@@ -455,26 +502,10 @@ static void smc_copy_sock_settings(struc
  
-+	/* WRITE_ONCE() are paired with READ_ONCE() in __packet_get_status */
+ 	nsk->sk_flags &= ~mask;
+ 	nsk->sk_flags |= osk->sk_flags & mask;
 +
- 	h.raw = frame;
- 	switch (po->tp_version) {
- 	case TPACKET_V1:
--		h.h1->tp_status = status;
-+		WRITE_ONCE(h.h1->tp_status, status);
- 		flush_dcache_page(pgv_to_page(&h.h1->tp_status));
- 		break;
- 	case TPACKET_V2:
--		h.h2->tp_status = status;
-+		WRITE_ONCE(h.h2->tp_status, status);
- 		flush_dcache_page(pgv_to_page(&h.h2->tp_status));
- 		break;
- 	case TPACKET_V3:
--		h.h3->tp_status = status;
-+		WRITE_ONCE(h.h3->tp_status, status);
- 		flush_dcache_page(pgv_to_page(&h.h3->tp_status));
- 		break;
- 	default:
-@@ -432,17 +434,19 @@ static int __packet_get_status(const str
++	smc_adjust_sock_bufsizes(nsk, osk, mask);
+ }
  
- 	smp_rmb();
- 
-+	/* READ_ONCE() are paired with WRITE_ONCE() in __packet_set_status */
-+
- 	h.raw = frame;
- 	switch (po->tp_version) {
- 	case TPACKET_V1:
- 		flush_dcache_page(pgv_to_page(&h.h1->tp_status));
--		return h.h1->tp_status;
-+		return READ_ONCE(h.h1->tp_status);
- 	case TPACKET_V2:
- 		flush_dcache_page(pgv_to_page(&h.h2->tp_status));
--		return h.h2->tp_status;
-+		return READ_ONCE(h.h2->tp_status);
- 	case TPACKET_V3:
- 		flush_dcache_page(pgv_to_page(&h.h3->tp_status));
--		return h.h3->tp_status;
-+		return READ_ONCE(h.h3->tp_status);
- 	default:
- 		WARN(1, "TPACKET version not supported.\n");
- 		BUG();
+-#define SK_FLAGS_SMC_TO_CLC ((1UL << SOCK_URGINLINE) | \
+-			     (1UL << SOCK_KEEPOPEN) | \
+-			     (1UL << SOCK_LINGER) | \
+-			     (1UL << SOCK_BROADCAST) | \
+-			     (1UL << SOCK_TIMESTAMP) | \
+-			     (1UL << SOCK_DBG) | \
+-			     (1UL << SOCK_RCVTSTAMP) | \
+-			     (1UL << SOCK_RCVTSTAMPNS) | \
+-			     (1UL << SOCK_LOCALROUTE) | \
+-			     (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE) | \
+-			     (1UL << SOCK_RXQ_OVFL) | \
+-			     (1UL << SOCK_WIFI_STATUS) | \
+-			     (1UL << SOCK_NOFCS) | \
+-			     (1UL << SOCK_FILTER_LOCKED) | \
+-			     (1UL << SOCK_TSTAMP_NEW))
+-/* copy only relevant settings and flags of SOL_SOCKET level from smc to
+- * clc socket (since smc is not called for these options from net/core)
+- */
+ static void smc_copy_sock_settings_to_clc(struct smc_sock *smc)
+ {
+ 	smc_copy_sock_settings(smc->clcsock->sk, &smc->sk, SK_FLAGS_SMC_TO_CLC);
+@@ -2466,8 +2497,6 @@ static void smc_tcp_listen_work(struct w
+ 		sock_hold(lsk); /* sock_put in smc_listen_work */
+ 		INIT_WORK(&new_smc->smc_listen_work, smc_listen_work);
+ 		smc_copy_sock_settings_to_smc(new_smc);
+-		new_smc->sk.sk_sndbuf = lsmc->sk.sk_sndbuf;
+-		new_smc->sk.sk_rcvbuf = lsmc->sk.sk_rcvbuf;
+ 		sock_hold(&new_smc->sk); /* sock_put in passive closing */
+ 		if (!queue_work(smc_hs_wq, &new_smc->smc_listen_work))
+ 			sock_put(&new_smc->sk);
 
 
