@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CEF9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16263C433C8;
-	Sun, 13 Aug 2023 21:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5948B9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:45:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0147C433C7;
+	Sun, 13 Aug 2023 21:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963112;
-	bh=X9/ulL2ZAwhzNg6JtG4/vnZ5VuCVOrXyWCRYaVV4wz0=;
+	s=korg; t=1691963115;
+	bh=dN1ZRX4Ii9gxt+8Mw5PGBLZVgMHtWNYpF8xufNmBevM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeCOPBwawLN6kcYiKx7Jm6/80DB5K5PX//ARaZqRtepCU5pc8kmlp/K7lAYFeLyBI
-	 KGw49MGTZJX6F1S59scw6BTeRBjOxVBg2yERLRt7sp0wTo8Lb469zcs4/u2TLdInZf
-	 35+CDqwMayTPjIRmLbXCK10zbQpZaIabUKaIRo6E=
+	b=z00lIIhbRUoTMXF0EzNyY6bARTg6XJutd/ybr/ZirVCPUm/+7451BHNSjbHI6Kpiw
+	 xNzocpKumk7n19C6unBYClMlbjIvFG/VLvFfCvmaJdoWvaLeb7I5Ta6rqXqjO82vYW
+	 M1lUl9nvUA87xuuN4zLJMCzdVtzOUF3NbIz2Ik14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingcong Wu <yingcong.wu@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.15 31/89] x86/mm: Fix VDSO and VVAR placement on 5-level paging machines
-Date: Sun, 13 Aug 2023 23:19:22 +0200
-Message-ID: <20230813211711.685866167@linuxfoundation.org>
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 22/89] iio: adc: ina2xx: avoid NULL pointer dereference on OF device match
+Date: Sun, 13 Aug 2023 23:19:13 +0200
+Message-ID: <20230813211711.424238413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,52 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Alvin Šipraga <alsi@bang-olufsen.dk>
 
-commit 1b8b1aa90c9c0e825b181b98b8d9e249dc395470 upstream.
+commit a41e19cc0d6b6a445a4133170b90271e4a2553dc upstream.
 
-Yingcong has noticed that on the 5-level paging machine, VDSO and VVAR
-VMAs are placed above the 47-bit border:
+The affected lines were resulting in a NULL pointer dereference on our
+platform because the device tree contained the following list of
+compatible strings:
 
-8000001a9000-8000001ad000 r--p 00000000 00:00 0                          [vvar]
-8000001ad000-8000001af000 r-xp 00000000 00:00 0                          [vdso]
+    power-sensor@40 {
+        compatible = "ti,ina232", "ti,ina231";
+        ...
+    };
 
-This might confuse users who are not aware of 5-level paging and expect
-all userspace addresses to be under the 47-bit border.
+Since the driver doesn't declare a compatible string "ti,ina232", the OF
+matching succeeds on "ti,ina231". But the I2C device ID info is
+populated via the first compatible string, cf. modalias population in
+of_i2c_get_board_info(). Since there is no "ina232" entry in the legacy
+I2C device ID table either, the struct i2c_device_id *id pointer in the
+probe function is NULL.
 
-So far problem has only been triggered with ASLR disabled, although it
-may also occur with ASLR enabled if the layout is randomized in a just
-right way.
+Fix this by using the already populated type variable instead, which
+points to the proper driver data. Since the name is also wanted, add a
+generic one to the ina2xx_config table.
 
-The problem happens due to custom placement for the VMAs in the VDSO
-code: vdso_addr() tries to place them above the stack and checks the
-result against TASK_SIZE_MAX, which is wrong. TASK_SIZE_MAX is set to
-the 56-bit border on 5-level paging machines. Use DEFAULT_MAP_WINDOW
-instead.
-
-Fixes: b569bab78d8d ("x86/mm: Prepare to expose larger address space to userspace")
-Reported-by: Yingcong Wu <yingcong.wu@intel.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20230803151609.22141-1-kirill.shutemov%40linux.intel.com
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Fixes: c43a102e67db ("iio: ina2xx: add support for TI INA2xx Power Monitors")
+Link: https://lore.kernel.org/r/20230619141239.2257392-1-alvin@pqrs.dk
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/vdso/vma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ina2xx-adc.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/x86/entry/vdso/vma.c
-+++ b/arch/x86/entry/vdso/vma.c
-@@ -322,8 +322,8 @@ static unsigned long vdso_addr(unsigned
+--- a/drivers/iio/adc/ina2xx-adc.c
++++ b/drivers/iio/adc/ina2xx-adc.c
+@@ -124,6 +124,7 @@ static const struct regmap_config ina2xx
+ enum ina2xx_ids { ina219, ina226 };
  
- 	/* Round the lowest possible end address up to a PMD boundary. */
- 	end = (start + len + PMD_SIZE - 1) & PMD_MASK;
--	if (end >= TASK_SIZE_MAX)
--		end = TASK_SIZE_MAX;
-+	if (end >= DEFAULT_MAP_WINDOW)
-+		end = DEFAULT_MAP_WINDOW;
- 	end -= len;
+ struct ina2xx_config {
++	const char *name;
+ 	u16 config_default;
+ 	int calibration_value;
+ 	int shunt_voltage_lsb;	/* nV */
+@@ -155,6 +156,7 @@ struct ina2xx_chip_info {
  
- 	if (end > start) {
+ static const struct ina2xx_config ina2xx_config[] = {
+ 	[ina219] = {
++		.name = "ina219",
+ 		.config_default = INA219_CONFIG_DEFAULT,
+ 		.calibration_value = 4096,
+ 		.shunt_voltage_lsb = 10000,
+@@ -164,6 +166,7 @@ static const struct ina2xx_config ina2xx
+ 		.chip_id = ina219,
+ 	},
+ 	[ina226] = {
++		.name = "ina226",
+ 		.config_default = INA226_CONFIG_DEFAULT,
+ 		.calibration_value = 2048,
+ 		.shunt_voltage_lsb = 2500,
+@@ -999,7 +1002,7 @@ static int ina2xx_probe(struct i2c_clien
+ 	/* Patch the current config register with default. */
+ 	val = chip->config->config_default;
+ 
+-	if (id->driver_data == ina226) {
++	if (type == ina226) {
+ 		ina226_set_average(chip, INA226_DEFAULT_AVG, &val);
+ 		ina226_set_int_time_vbus(chip, INA226_DEFAULT_IT, &val);
+ 		ina226_set_int_time_vshunt(chip, INA226_DEFAULT_IT, &val);
+@@ -1018,7 +1021,7 @@ static int ina2xx_probe(struct i2c_clien
+ 	}
+ 
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+-	if (id->driver_data == ina226) {
++	if (type == ina226) {
+ 		indio_dev->channels = ina226_channels;
+ 		indio_dev->num_channels = ARRAY_SIZE(ina226_channels);
+ 		indio_dev->info = &ina226_info;
+@@ -1027,7 +1030,7 @@ static int ina2xx_probe(struct i2c_clien
+ 		indio_dev->num_channels = ARRAY_SIZE(ina219_channels);
+ 		indio_dev->info = &ina219_info;
+ 	}
+-	indio_dev->name = id->name;
++	indio_dev->name = id ? id->name : chip->config->name;
+ 
+ 	ret = devm_iio_kfifo_buffer_setup(&client->dev, indio_dev,
+ 					  INDIO_BUFFER_SOFTWARE,
 
 
