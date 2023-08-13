@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DBE9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A903BC433C8;
-	Sun, 13 Aug 2023 21:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E356A9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:32:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676C3C433C8;
+	Sun, 13 Aug 2023 21:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962347;
-	bh=fE48/0UsUrllRDfbt97Jx6zTEXya9sANIdyZCWDOEkg=;
+	s=korg; t=1691962349;
+	bh=TX6KPuOLXy5qbwZRUFoe526SomNTKtOAYQ965iHc2Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZc8KxrrSCnqWVTG0sQBK5xm0QXIvOGawSwNT0HAYzR59nqMDDR66JQUdjEaoosJ0
-	 pnwpSOYkyQA33GMtdF3Xevj0U08iSGWiyEv5ZRhKG7Y/OJBwfApRPKTSxsU26kL5CF
-	 G8AujkasnJtQN2rify6JMaobkm2IoXQr2BIuDL1w=
+	b=hPJj/kCZotGWOgJuxG4r0d2Q39vd7iTasi+N3y6TRBtnQ1Ifxuq0DrdokjJmlEXXg
+	 foeFDP7ewCgYH6PwZbb+MpbKXOFAM9LezV4hfIPiBgaLzBOxoRRRtG4BMn0ti0N9S2
+	 0kTnbR5aDmuDSBzUKJU8NSj+UjpZg/D7Q6JwOFmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Michael Shych <michaelsh@nvidia.com>,
+	David Xu <xuwd1@hotmail.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.4 203/206] platform: mellanox: Fix order in exit flow
-Date: Sun, 13 Aug 2023 23:19:33 +0200
-Message-ID: <20230813211730.813556600@linuxfoundation.org>
+Subject: [PATCH 6.4 204/206] platform/x86: serial-multi-instantiate: Auto detect IRQ resource for CSC3551
+Date: Sun, 13 Aug 2023 23:19:34 +0200
+Message-ID: <20230813211730.840252965@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,42 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: David Xu <xuwd1@hotmail.com>
 
-commit 8e3938cff0191c810b2abd827313c090fe09d166 upstream.
+commit 676b7c5ecab36274442887ceadd6dee8248a244f upstream.
 
-Fix exit flow order: call mlxplat_post_exit() after
-mlxplat_i2c_main_exit() in order to unregister main i2c driver before
-to "mlxplat" driver.
+The current code assumes that the CSC3551(multiple cs35l41) always have
+its interrupt pin connected to GPIO thus the IRQ can be acquired with
+acpi_dev_gpio_irq_get. However on some newer laptop models this is no
+longer the case as they have the CSC3551's interrupt pin connected to
+APIC. This causes smi_i2c_probe to fail on these machines.
 
-Fixes: 0170f616f496 ("platform: mellanox: Split initialization procedure")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Michael Shych <michaelsh@nvidia.com>
-Link: https://lore.kernel.org/r/20230813083735.39090-2-vadimp@nvidia.com
+To support these machines, a new macro IRQ_RESOURCE_AUTO was introduced
+for cs35l41 smi_node, and smi_get_irq function was modified so it tries
+to get GPIO irq resource first and if failed, tries to get
+APIC irq resource for cs35l41.
+
+This patch affects only the cs35l41's probing and brings no negative
+influence on machines that indeed have the cs35l41's interrupt pin
+connected to GPIO.
+
+Signed-off-by: David Xu <xuwd1@hotmail.com>
+Link: https://lore.kernel.org/r/SY4P282MB18350CD8288687B87FFD2243E037A@SY4P282MB1835.AUSP282.PROD.OUTLOOK.COM
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/mlx-platform.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/platform/x86/serial-multi-instantiate.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/mlx-platform.c
-+++ b/drivers/platform/x86/mlx-platform.c
-@@ -6238,8 +6238,6 @@ static void mlxplat_i2c_mux_topolgy_exit
- 		if (priv->pdev_mux[i])
- 			platform_device_unregister(priv->pdev_mux[i]);
- 	}
--
--	mlxplat_post_exit();
- }
+--- a/drivers/platform/x86/serial-multi-instantiate.c
++++ b/drivers/platform/x86/serial-multi-instantiate.c
+@@ -21,6 +21,7 @@
+ #define IRQ_RESOURCE_NONE	0
+ #define IRQ_RESOURCE_GPIO	1
+ #define IRQ_RESOURCE_APIC	2
++#define IRQ_RESOURCE_AUTO   3
  
- static int mlxplat_i2c_main_complition_notify(void *handle, int id)
-@@ -6369,6 +6367,7 @@ static void __exit mlxplat_exit(void)
- 		pm_power_off = NULL;
- 	mlxplat_pre_exit(priv);
- 	mlxplat_i2c_main_exit(priv);
-+	mlxplat_post_exit();
- }
- module_exit(mlxplat_exit);
+ enum smi_bus_type {
+ 	SMI_I2C,
+@@ -52,6 +53,18 @@ static int smi_get_irq(struct platform_d
+ 	int ret;
  
+ 	switch (inst->flags & IRQ_RESOURCE_TYPE) {
++	case IRQ_RESOURCE_AUTO:
++		ret = acpi_dev_gpio_irq_get(adev, inst->irq_idx);
++		if (ret > 0) {
++			dev_dbg(&pdev->dev, "Using gpio irq\n");
++			break;
++		}
++		ret = platform_get_irq(pdev, inst->irq_idx);
++		if (ret > 0) {
++			dev_dbg(&pdev->dev, "Using platform irq\n");
++			break;
++		}
++		break;
+ 	case IRQ_RESOURCE_GPIO:
+ 		ret = acpi_dev_gpio_irq_get(adev, inst->irq_idx);
+ 		break;
+@@ -307,10 +320,10 @@ static const struct smi_node int3515_dat
+ 
+ static const struct smi_node cs35l41_hda = {
+ 	.instances = {
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
+-		{ "cs35l41-hda", IRQ_RESOURCE_GPIO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
++		{ "cs35l41-hda", IRQ_RESOURCE_AUTO, 0 },
+ 		{}
+ 	},
+ 	.bus_type = SMI_AUTO_DETECT,
 
 
