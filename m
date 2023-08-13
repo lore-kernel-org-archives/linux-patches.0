@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F149443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E0C433C7;
-	Sun, 13 Aug 2023 21:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24E29443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBD8C433C8;
+	Sun, 13 Aug 2023 21:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962014;
-	bh=udbVLT8B/yzzrAkANMZrZxrApXHWjhDFtxJKzLt+Jsg=;
+	s=korg; t=1691962017;
+	bh=lAQ/l5TjbJHU8jSOymYws09tROvbAaEDGsg9hspSvSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncOlQRaq5lr2D0xjyORo86nUpVOHrrs16b2VJcOl0HbGUKUPtyJa2Aqh6z7MvRicf
-	 KBbFkF7j8PE4GvTOrOJTq6wwkB3G7e0qHQcWQuwR6Nx7r1wHCjGglE8t5cpjseld4G
-	 AOurUKxoCMgL6thQ3fkpKEK+i1Ex4uPojGQm4f5g=
+	b=VJ5Y83OrJ71gqWt/IxQIeV5maPuG2WRappc7n44Ne6y+kZNM9p32+aL9CuT+VTxyy
+	 dhJVaJsIWubpgjkAoWPEQUvMk2UzPPpTqlK5n84r6iiwSe9aW5ixl70PYZZQqiNYFA
+	 XVFBz3fjCYNhHbY17OEZa6+WOtJ70Y/sF+hgu8sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yujie.liu@intel.com>,
-	Shan Kang <shan.kang@intel.com>,
-	Xin Li <xin3.li@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.4 081/206] x86/vdso: Choose the right GDT_ENTRY_CPUNODE for 32-bit getcpu() on 64-bit kernel
-Date: Sun, 13 Aug 2023 23:17:31 +0200
-Message-ID: <20230813211727.398277094@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.4 082/206] x86/cpu/amd: Enable Zenbleed fix for AMD Custom APU 0405
+Date: Sun, 13 Aug 2023 23:17:32 +0200
+Message-ID: <20230813211727.425587415@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -36,46 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Li <xin3.li@intel.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit 39163d5479285a36522b6e8f9cc568cc4987db08 upstream.
+commit 6dbef74aeb090d6bee7d64ef3fa82ae6fa53f271 upstream.
 
-The vDSO getcpu() reads CPU ID from the GDT_ENTRY_CPUNODE entry when the RDPID
-instruction is not available. And GDT_ENTRY_CPUNODE is defined as 28 on 32-bit
-Linux kernel and 15 on 64-bit. But the 32-bit getcpu() on 64-bit Linux kernel
-is compiled with 32-bit Linux kernel GDT_ENTRY_CPUNODE, i.e., 28, beyond the
-64-bit Linux kernel GDT limit. Thus, it just fails _silently_.
+Commit
 
-When BUILD_VDSO32_64 is defined, choose the 64-bit Linux kernel GDT definitions
-to compile the 32-bit getcpu().
+  522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
 
-Fixes: 877cff5296faa6e ("x86/vdso: Fake 32bit VDSO build on 64bit compile for vgetcpu")
-Reported-by: kernel test robot <yujie.liu@intel.com>
-Reported-by: Shan Kang <shan.kang@intel.com>
-Signed-off-by: Xin Li <xin3.li@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20230322061758.10639-1-xin3.li@intel.com
-Link: https://lore.kernel.org/oe-lkp/202303020903.b01fd1de-yujie.liu@intel.com
+provided a fix for the Zen2 VZEROUPPER data corruption bug affecting
+a range of CPU models, but the AMD Custom APU 0405 found on SteamDeck
+was not listed, although it is clearly affected by the vulnerability.
+
+Add this CPU variant to the Zenbleed erratum list, in order to
+unconditionally enable the fallback fix until a proper microcode update
+is available.
+
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230811203705.1699914-1-cristian.ciocaltea@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/segment.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/amd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/include/asm/segment.h b/arch/x86/include/asm/segment.h
-index 794f69625780..9d6411c65920 100644
---- a/arch/x86/include/asm/segment.h
-+++ b/arch/x86/include/asm/segment.h
-@@ -56,7 +56,7 @@
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -73,6 +73,7 @@ static const int amd_erratum_1054[] =
+ static const int amd_zenbleed[] =
+ 	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x17, 0x30, 0x0, 0x4f, 0xf),
+ 			   AMD_MODEL_RANGE(0x17, 0x60, 0x0, 0x7f, 0xf),
++			   AMD_MODEL_RANGE(0x17, 0x90, 0x0, 0x91, 0xf),
+ 			   AMD_MODEL_RANGE(0x17, 0xa0, 0x0, 0xaf, 0xf));
  
- #define GDT_ENTRY_INVALID_SEG	0
- 
--#ifdef CONFIG_X86_32
-+#if defined(CONFIG_X86_32) && !defined(BUILD_VDSO32_64)
- /*
-  * The layout of the per-CPU GDT under Linux:
-  *
--- 
-2.41.0
-
+ static const int amd_div0[] =
 
 
