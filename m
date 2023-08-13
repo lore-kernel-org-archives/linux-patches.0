@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9309454
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616B2C433C8;
-	Sun, 13 Aug 2023 21:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C275A9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C48C433C8;
+	Sun, 13 Aug 2023 21:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963326;
-	bh=zbHdoh424WPGeM4MtZ02AfkQRrfdPPcoR/8IX7wuE5c=;
+	s=korg; t=1691963329;
+	bh=bq0AncfZhJruxItKeszUkrhtzeEdok/360VQdhTLdAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuCP248PiUpCKY+CncaiTlwmOucEOdK6ZI/Bi3rgbp3SHYcuDx6ww9OUDMl1K8Wj/
-	 abgQNeGyBQKf89X60HYOP61MJiYWKA2+y81cj7/RUbQBAA2HPSh952wAX9L8e/rS+w
-	 7FgM7KQU1h2TUDla8x2eyD1wr/SQxJjEtMBggFnk=
+	b=u1B2afuMLt75ktwvwvvjuFA0HuE1GFo0RzHkQ4ivjFOmNMOiuOO92vviGE+g4q6nX
+	 jDm1VP301hYBTEaOPUj4iZ8m7/Ns0h5ICUO15tx/zV31MOPNNVo3uS4Ahb6nMbDg48
+	 BXgUzsVhH9twaGrZkaPt/0oBMOad/YmDavgxXwzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
+	Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 34/39] scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
-Date: Sun, 13 Aug 2023 23:20:25 +0200
-Message-ID: <20230813211705.967182015@linuxfoundation.org>
+Subject: [PATCH 5.4 35/39] scsi: 53c700: Check that command slot is not NULL
+Date: Sun, 13 Aug 2023 23:20:26 +0200
+Message-ID: <20230813211705.998024928@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -34,62 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-commit 175544ad48cbf56affeef2a679c6a4d4fb1e2881 upstream.
+commit 8366d1f1249a0d0bba41d0bd1298d63e5d34c7f7 upstream.
 
-Hyper-V provides the ability to connect Fibre Channel LUNs to the host
-system and present them in a guest VM as a SCSI device. I/O to the vFC
-device is handled by the storvsc driver. The storvsc driver includes a
-partial integration with the FC transport implemented in the generic
-portion of the Linux SCSI subsystem so that FC attributes can be displayed
-in /sys.  However, the partial integration means that some aspects of vFC
-don't work properly. Unfortunately, a full and correct integration isn't
-practical because of limitations in what Hyper-V provides to the guest.
+Add a check for the command slot value to avoid dereferencing a NULL
+pointer.
 
-In particular, in the context of Hyper-V storvsc, the FC transport timeout
-function fc_eh_timed_out() causes a kernel panic because it can't find the
-rport and dereferences a NULL pointer. The original patch that added the
-call from storvsc_eh_timed_out() to fc_eh_timed_out() is faulty in this
-regard.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-In many cases a timeout is due to a transient condition, so the situation
-can be improved by just continuing to wait like with other I/O requests
-issued by storvsc, and avoiding the guaranteed panic. For a permanent
-failure, continuing to wait may result in a hung thread instead of a panic,
-which again may be better.
-
-So fix the panic by removing the storvsc call to fc_eh_timed_out().  This
-allows storvsc to keep waiting for a response.  The change has been tested
-by users who experienced a panic in fc_eh_timed_out() due to transient
-timeouts, and it solves their problem.
-
-In the future we may want to deprecate the vFC functionality in storvsc
-since it can't be fully fixed. But it has current users for whom it is
-working well enough, so it should probably stay for a while longer.
-
-Fixes: 3930d7309807 ("scsi: storvsc: use default I/O timeout handler for FC devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1690606764-79669-1-git-send-email-mikelley@microsoft.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Link: https://lore.kernel.org/r/20230728123521.18293-1-adiupina@astralinux.ru
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/scsi/53c700.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1526,10 +1526,6 @@ static int storvsc_host_reset_handler(st
-  */
- static enum blk_eh_timer_return storvsc_eh_timed_out(struct scsi_cmnd *scmnd)
- {
--#if IS_ENABLED(CONFIG_SCSI_FC_ATTRS)
--	if (scmnd->device->host->transportt == fc_transport_template)
--		return fc_eh_timed_out(scmnd);
--#endif
- 	return BLK_EH_RESET_TIMER;
- }
- 
+--- a/drivers/scsi/53c700.c
++++ b/drivers/scsi/53c700.c
+@@ -1581,7 +1581,7 @@ NCR_700_intr(int irq, void *dev_id)
+ 				printk("scsi%d (%d:%d) PHASE MISMATCH IN SEND MESSAGE %d remain, return %p[%04x], phase %s\n", host->host_no, pun, lun, count, (void *)temp, temp - hostdata->pScript, sbcl_to_string(NCR_700_readb(host, SBCL_REG)));
+ #endif
+ 				resume_offset = hostdata->pScript + Ent_SendMessagePhaseMismatch;
+-			} else if(dsp >= to32bit(&slot->pSG[0].ins) &&
++			} else if (slot && dsp >= to32bit(&slot->pSG[0].ins) &&
+ 				  dsp <= to32bit(&slot->pSG[NCR_700_SG_SEGMENTS].ins)) {
+ 				int data_transfer = NCR_700_readl(host, DBC_REG) & 0xffffff;
+ 				int SGcount = (dsp - to32bit(&slot->pSG[0].ins))/sizeof(struct NCR_700_SG_List);
 
 
