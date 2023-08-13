@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBAC9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89427C433C8;
-	Sun, 13 Aug 2023 21:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81BE9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD40C433C8;
+	Sun, 13 Aug 2023 21:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962694;
-	bh=YIim2C7tvSKuHNKNDL1vl/nusA/p/ze7IMNfV/U3HsM=;
+	s=korg; t=1691962697;
+	bh=vIVoZ7shh8NzRcqVSPcpv94DLIWyqQcMO1hF6QlqsH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkpn3pVJWR4J9T8YzqCdcOMB9ZnPtnbOfoJOcicjqPYicVUu68R1Je6fN0YYcKiaR
-	 PpjIAQgQ2BAqiGvCtHL4IkQTzymjRCqVM2n1l0ENRj+3eIf2Hl8hNAA/tlqaMENbd7
-	 0cKNv9NvJaMNP14jMbJI3e8HgymERDl0QNdYh/OQ=
+	b=P0MufsNVRgNPurX3X8fMSNF4nM+tCkp84IJDW6BRdXQofJ9GCwILN3DsdXGRYgzfF
+	 e+TUrHwd5Ac+7QmtiAF4O7nEVGfgvK6Iv47AvWaPZZWPDPuVQHBW9rAT/6m4hAIPZW
+	 ZhHHCUkzl0mcBJfrScMFeEYn7aVc5BxvuCZQ0VR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 095/149] dccp: fix data-race around dp->dccps_mss_cache
-Date: Sun, 13 Aug 2023 23:19:00 +0200
-Message-ID: <20230813211721.634147993@linuxfoundation.org>
+Subject: [PATCH 6.1 122/149] ibmvnic: Handle DMA unmapping of login buffs in release functions
+Date: Sun, 13 Aug 2023 23:19:27 +0200
+Message-ID: <20230813211722.385259531@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -35,71 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-commit a47e598fbd8617967e49d85c49c22f9fc642704c upstream.
+commit d78a671eb8996af19d6311ecdee9790d2fa479f0 upstream.
 
-dccp_sendmsg() reads dp->dccps_mss_cache before locking the socket.
-Same thing in do_dccp_getsockopt().
+Rather than leaving the DMA unmapping of the login buffers to the
+login response handler, move this work into the login release functions.
+Previously, these functions were only used for freeing the allocated
+buffers. This could lead to issues if there are more than one
+outstanding login buffer requests, which is possible if a login request
+times out.
 
-Add READ_ONCE()/WRITE_ONCE() annotations,
-and change dccp_sendmsg() to check again dccps_mss_cache
-after socket is locked.
+If a login request times out, then there is another call to send login.
+The send login function makes a call to the login buffer release
+function. In the past, this freed the buffers but did not DMA unmap.
+Therefore, the VIOS could still write to the old login (now freed)
+buffer. It is for this reason that it is a good idea to leave the DMA
+unmap call to the login buffers release function.
 
-Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230803163021.2958262-1-edumazet@google.com
+Since the login buffer release functions now handle DMA unmapping,
+remove the duplicate DMA unmapping in handle_login_rsp().
+
+Fixes: dff515a3e71d ("ibmvnic: Harden device login requests")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809221038.51296-3-nnac123@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/output.c |    2 +-
- net/dccp/proto.c  |   10 ++++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/net/dccp/output.c
-+++ b/net/dccp/output.c
-@@ -187,7 +187,7 @@ unsigned int dccp_sync_mss(struct sock *
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -1397,12 +1397,22 @@ static int ibmvnic_login(struct net_devi
  
- 	/* And store cached results */
- 	icsk->icsk_pmtu_cookie = pmtu;
--	dp->dccps_mss_cache = cur_mps;
-+	WRITE_ONCE(dp->dccps_mss_cache, cur_mps);
- 
- 	return cur_mps;
- }
---- a/net/dccp/proto.c
-+++ b/net/dccp/proto.c
-@@ -627,7 +627,7 @@ static int do_dccp_getsockopt(struct soc
- 		return dccp_getsockopt_service(sk, len,
- 					       (__be32 __user *)optval, optlen);
- 	case DCCP_SOCKOPT_GET_CUR_MPS:
--		val = dp->dccps_mss_cache;
-+		val = READ_ONCE(dp->dccps_mss_cache);
- 		break;
- 	case DCCP_SOCKOPT_AVAILABLE_CCIDS:
- 		return ccid_getsockopt_builtin_ccids(sk, len, optval, optlen);
-@@ -736,7 +736,7 @@ int dccp_sendmsg(struct sock *sk, struct
- 
- 	trace_dccp_probe(sk, len);
- 
--	if (len > dp->dccps_mss_cache)
-+	if (len > READ_ONCE(dp->dccps_mss_cache))
- 		return -EMSGSIZE;
- 
- 	lock_sock(sk);
-@@ -769,6 +769,12 @@ int dccp_sendmsg(struct sock *sk, struct
- 		goto out_discard;
- 	}
- 
-+	/* We need to check dccps_mss_cache after socket is locked. */
-+	if (len > dp->dccps_mss_cache) {
-+		rc = -EMSGSIZE;
-+		goto out_discard;
-+	}
+ static void release_login_buffer(struct ibmvnic_adapter *adapter)
+ {
++	if (!adapter->login_buf)
++		return;
 +
- 	skb_reserve(skb, sk->sk_prot->max_header);
- 	rc = memcpy_from_msg(skb_put(skb, len), msg, len);
- 	if (rc != 0)
++	dma_unmap_single(&adapter->vdev->dev, adapter->login_buf_token,
++			 adapter->login_buf_sz, DMA_TO_DEVICE);
+ 	kfree(adapter->login_buf);
+ 	adapter->login_buf = NULL;
+ }
+ 
+ static void release_login_rsp_buffer(struct ibmvnic_adapter *adapter)
+ {
++	if (!adapter->login_rsp_buf)
++		return;
++
++	dma_unmap_single(&adapter->vdev->dev, adapter->login_rsp_buf_token,
++			 adapter->login_rsp_buf_sz, DMA_FROM_DEVICE);
+ 	kfree(adapter->login_rsp_buf);
+ 	adapter->login_rsp_buf = NULL;
+ }
+@@ -5207,11 +5217,6 @@ static int handle_login_rsp(union ibmvni
+ 	}
+ 	adapter->login_pending = false;
+ 
+-	dma_unmap_single(dev, adapter->login_buf_token, adapter->login_buf_sz,
+-			 DMA_TO_DEVICE);
+-	dma_unmap_single(dev, adapter->login_rsp_buf_token,
+-			 adapter->login_rsp_buf_sz, DMA_FROM_DEVICE);
+-
+ 	/* If the number of queues requested can't be allocated by the
+ 	 * server, the login response will return with code 1. We will need
+ 	 * to resend the login buffer with fewer queues requested.
 
 
