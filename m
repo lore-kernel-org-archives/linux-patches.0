@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979CF9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF5AC433C8;
-	Sun, 13 Aug 2023 21:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED909446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:48:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF24DC433C7;
+	Sun, 13 Aug 2023 21:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963283;
-	bh=px2ikZgJt3p1w8e9TEPRcoe7l5DCFqn1YlrIsCewxYE=;
+	s=korg; t=1691963286;
+	bh=EuUxHQ4ItTH9Y/Q0y4+8xKhpOhn9EfOvPUemSxjG62M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgXV9kaI6VPoEKyquo1E3mmVe88GInl6qF8pwmZEsv08rrdODQji/0tMPveSLE+Fo
-	 Bd2FKZn4OtGfIx7AE14WTCe1URmM6lG0oW2ey2qGqJDomioUkJEKCZ3UNFmJGPmizc
-	 veOpWs9XAool3lLLMYaoNIDJylhIi/p3rxXGFUQg=
+	b=Z/fL0VI2ZyFw1c0PHmEpmEwOYeZZ1W8/FkkJzqM0OcKocnakw4FZuAX4F2pMqV6/d
+	 wbN2Hso3gGcIel7idCNsc8tBFefEKJqAACYZidOAONyA8Fd86nduuZJ9THvQtV6n4R
+	 CXLvEipSUqd2yF/GsrcAQCzv1BwYpd8UrT9pQXjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Konstantin Khlebnikov <koct9i@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 05/39] radix tree test suite: fix incorrect allocation size for pthreads
-Date: Sun, 13 Aug 2023 23:19:56 +0200
-Message-ID: <20230813211705.004475813@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@suse.de>,
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Subject: [PATCH 5.4 06/39] x86/pkeys: Revert a5eff7259790 ("x86/pkeys: Add PKRU value to init_fpstate")
+Date: Sun, 13 Aug 2023 23:19:57 +0200
+Message-ID: <20230813211705.041737617@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 References: <20230813211704.796906808@linuxfoundation.org>
@@ -36,41 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit cac7ea57a06016e4914848b707477fb07ee4ae1c upstream.
+commit b3607269ff57fd3c9690cb25962c5e4b91a0fd3b upstream.
 
-Currently the pthread allocation for each array item is based on the size
-of a pthread_t pointer and should be the size of the pthread_t structure,
-so the allocation is under-allocating the correct size.  Fix this by using
-the size of each element in the pthreads array.
+This cannot work and it's unclear how that ever made a difference.
 
-Static analysis cppcheck reported:
-tools/testing/radix-tree/regression1.c:180:2: warning: Size of pointer
-'threads' used instead of size of its data. [pointerSize]
+init_fpstate.xsave.header.xfeatures is always 0 so get_xsave_addr() will
+always return a NULL pointer, which will prevent storing the default PKRU
+value in init_fpstate.
 
-Link: https://lkml.kernel.org/r/20230727160930.632674-1-colin.i.king@gmail.com
-Fixes: 1366c37ed84b ("radix tree test harness")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Cc: Konstantin Khlebnikov <koct9i@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Borislav Petkov <bp@suse.de>
+Link: https://lkml.kernel.org/r/20210623121451.451391598@linutronix.de
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/radix-tree/regression1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/common.c |    5 -----
+ arch/x86/mm/pkeys.c          |    6 ------
+ 2 files changed, 11 deletions(-)
 
---- a/tools/testing/radix-tree/regression1.c
-+++ b/tools/testing/radix-tree/regression1.c
-@@ -177,7 +177,7 @@ void regression1_test(void)
- 	nr_threads = 2;
- 	pthread_barrier_init(&worker_barrier, NULL, nr_threads);
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -450,8 +450,6 @@ static bool pku_disabled;
  
--	threads = malloc(nr_threads * sizeof(pthread_t *));
-+	threads = malloc(nr_threads * sizeof(*threads));
+ static __always_inline void setup_pku(struct cpuinfo_x86 *c)
+ {
+-	struct pkru_state *pk;
+-
+ 	/* check the boot processor, plus compile options for PKU: */
+ 	if (!cpu_feature_enabled(X86_FEATURE_PKU))
+ 		return;
+@@ -462,9 +460,6 @@ static __always_inline void setup_pku(st
+ 		return;
  
- 	for (i = 0; i < nr_threads; i++) {
- 		arg = i;
+ 	cr4_set_bits(X86_CR4_PKE);
+-	pk = get_xsave_addr(&init_fpstate.xsave, XFEATURE_PKRU);
+-	if (pk)
+-		pk->pkru = init_pkru_value;
+ 	/*
+ 	 * Seting X86_CR4_PKE will cause the X86_FEATURE_OSPKE
+ 	 * cpuid bit to be set.  We need to ensure that we
+--- a/arch/x86/mm/pkeys.c
++++ b/arch/x86/mm/pkeys.c
+@@ -10,7 +10,6 @@
+ 
+ #include <asm/cpufeature.h>             /* boot_cpu_has, ...            */
+ #include <asm/mmu_context.h>            /* vma_pkey()                   */
+-#include <asm/fpu/internal.h>		/* init_fpstate			*/
+ 
+ int __execute_only_pkey(struct mm_struct *mm)
+ {
+@@ -154,7 +153,6 @@ static ssize_t init_pkru_read_file(struc
+ static ssize_t init_pkru_write_file(struct file *file,
+ 		 const char __user *user_buf, size_t count, loff_t *ppos)
+ {
+-	struct pkru_state *pk;
+ 	char buf[32];
+ 	ssize_t len;
+ 	u32 new_init_pkru;
+@@ -177,10 +175,6 @@ static ssize_t init_pkru_write_file(stru
+ 		return -EINVAL;
+ 
+ 	WRITE_ONCE(init_pkru_value, new_init_pkru);
+-	pk = get_xsave_addr(&init_fpstate.xsave, XFEATURE_PKRU);
+-	if (!pk)
+-		return -EINVAL;
+-	pk->pkru = new_init_pkru;
+ 	return count;
+ }
+ 
 
 
