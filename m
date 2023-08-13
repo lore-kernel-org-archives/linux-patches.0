@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090DD9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5DDC433C7;
-	Sun, 13 Aug 2023 21:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3869443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4B0C433C8;
+	Sun, 13 Aug 2023 21:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961809;
-	bh=BRLevBGrfVMwQ2osnvxXKlTN6p6K8Jye4hOJNUCFNmo=;
+	s=korg; t=1691961812;
+	bh=H7h0f5LeBrAhA+/f34J6/IQQM3D60YE+sXZjRPww420=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xy0OOQnoBKD9KsckP/DDmMM/JILDkl0aSukkCAn3LVspT3F3AH4nGYKE7OfPgRrCt
-	 tlGlWOldvZctBiG5FjlVKukVqSuTc5L+sKmo9LXM1Yb6hG9818im/RQb58Jmkarr6u
-	 jslLkSM8IgPwhMsiikJk7a9R+gN3Sf6K73RtdXqA=
+	b=Zyh3NrIDvxd6T1D9U4g3rrvi/1CaDEbxhwMgqRVo9K4IrDZpGlt92o3WuSjU55FLZ
+	 GRAr+Dt+uwXc9PWqY9TmmyX9fY1kkLAR5KIJ7iCWyCYJxx6cI98Dsb1gLXuo9nS3TX
+	 e8xMb+mJ8itpjB+SrGZTxC2tr/ux7RNwZ50aXsNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laura Garcia Liebana <nevola@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 25/33] netfilter: nf_tables: bogus EBUSY when deleting flowtable after flush
-Date: Sun, 13 Aug 2023 23:19:19 +0200
-Message-ID: <20230813211704.842776409@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 16/33] mISDN: Update parameter type of dsp_cmx_send()
+Date: Sun, 13 Aug 2023 23:19:10 +0200
+Message-ID: <20230813211704.514493817@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
 References: <20230813211703.915807095@linuxfoundation.org>
@@ -35,97 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-From: Laura Garcia Liebana <nevola@gmail.com>
+commit 1696ec8654016dad3b1baf6c024303e584400453 upstream.
 
-commit 9b05b6e11d5e93a3a517cadc12b9836e0470c255 upstream.
+When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
+there is a failure when dsp_cmx_send() is called indirectly from
+call_timer_fn():
 
-The deletion of a flowtable after a flush in the same transaction
-results in EBUSY. This patch adds an activation and deactivation of
-flowtables in order to update the _use_ counter.
+  [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
 
-Signed-off-by: Laura Garcia Liebana <nevola@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The function pointer prototype that call_timer_fn() expects is
+
+  void (*fn)(struct timer_list *)
+
+whereas dsp_cmx_send() has a parameter type of 'void *', which causes
+the control flow integrity checks to fail because the parameter types do
+not match.
+
+Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
+match the expected prototype. The argument is unused anyways, so this
+has no functional change, aside from avoiding the CFI failure.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Fixes: e313ac12eb13 ("mISDN: Convert timers to use timer_setup()")
+Link: https://lore.kernel.org/r/20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    4 ++++
- net/netfilter/nf_tables_api.c     |   16 ++++++++++++++++
- net/netfilter/nft_flow_offload.c  |   19 +++++++++++++++++++
- 3 files changed, 39 insertions(+)
+ drivers/isdn/mISDN/dsp.h      |    2 +-
+ drivers/isdn/mISDN/dsp_cmx.c  |    2 +-
+ drivers/isdn/mISDN/dsp_core.c |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1161,6 +1161,10 @@ struct nft_flowtable *nft_flowtable_look
- 					   const struct nlattr *nla,
- 					   u8 genmask);
+--- a/drivers/isdn/mISDN/dsp.h
++++ b/drivers/isdn/mISDN/dsp.h
+@@ -247,7 +247,7 @@ extern void dsp_cmx_hardware(struct dsp_
+ extern int dsp_cmx_conf(struct dsp *dsp, u32 conf_id);
+ extern void dsp_cmx_receive(struct dsp *dsp, struct sk_buff *skb);
+ extern void dsp_cmx_hdlc(struct dsp *dsp, struct sk_buff *skb);
+-extern void dsp_cmx_send(void *arg);
++extern void dsp_cmx_send(struct timer_list *arg);
+ extern void dsp_cmx_transmit(struct dsp *dsp, struct sk_buff *skb);
+ extern int dsp_cmx_del_conf_member(struct dsp *dsp);
+ extern int dsp_cmx_del_conf(struct dsp_conf *conf);
+--- a/drivers/isdn/mISDN/dsp_cmx.c
++++ b/drivers/isdn/mISDN/dsp_cmx.c
+@@ -1625,7 +1625,7 @@ static u16	dsp_count; /* last sample cou
+ static int	dsp_count_valid; /* if we have last sample count */
  
-+void nf_tables_deactivate_flowtable(const struct nft_ctx *ctx,
-+				    struct nft_flowtable *flowtable,
-+				    enum nft_trans_phase phase);
-+
- void nft_register_flowtable_type(struct nf_flowtable_type *type);
- void nft_unregister_flowtable_type(struct nf_flowtable_type *type);
- 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5519,6 +5519,22 @@ struct nft_flowtable *nft_flowtable_look
- }
- EXPORT_SYMBOL_GPL(nft_flowtable_lookup);
- 
-+void nf_tables_deactivate_flowtable(const struct nft_ctx *ctx,
-+				    struct nft_flowtable *flowtable,
-+				    enum nft_trans_phase phase)
-+{
-+	switch (phase) {
-+	case NFT_TRANS_PREPARE:
-+	case NFT_TRANS_ABORT:
-+	case NFT_TRANS_RELEASE:
-+		flowtable->use--;
-+		/* fall through */
-+	default:
-+		return;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nf_tables_deactivate_flowtable);
-+
- static struct nft_flowtable *
- nft_flowtable_lookup_byhandle(const struct nft_table *table,
- 			      const struct nlattr *nla, u8 genmask)
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -175,6 +175,23 @@ static int nft_flow_offload_init(const s
- 	return nf_ct_netns_get(ctx->net, ctx->family);
- }
- 
-+static void nft_flow_offload_deactivate(const struct nft_ctx *ctx,
-+					const struct nft_expr *expr,
-+					enum nft_trans_phase phase)
-+{
-+	struct nft_flow_offload *priv = nft_expr_priv(expr);
-+
-+	nf_tables_deactivate_flowtable(ctx, priv->flowtable, phase);
-+}
-+
-+static void nft_flow_offload_activate(const struct nft_ctx *ctx,
-+				      const struct nft_expr *expr)
-+{
-+	struct nft_flow_offload *priv = nft_expr_priv(expr);
-+
-+	priv->flowtable->use++;
-+}
-+
- static void nft_flow_offload_destroy(const struct nft_ctx *ctx,
- 				     const struct nft_expr *expr)
+ void
+-dsp_cmx_send(void *arg)
++dsp_cmx_send(struct timer_list *arg)
  {
-@@ -203,6 +220,8 @@ static const struct nft_expr_ops nft_flo
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_flow_offload)),
- 	.eval		= nft_flow_offload_eval,
- 	.init		= nft_flow_offload_init,
-+	.activate	= nft_flow_offload_activate,
-+	.deactivate	= nft_flow_offload_deactivate,
- 	.destroy	= nft_flow_offload_destroy,
- 	.validate	= nft_flow_offload_validate,
- 	.dump		= nft_flow_offload_dump,
+ 	struct dsp_conf *conf;
+ 	struct dsp_conf_member *member;
+--- a/drivers/isdn/mISDN/dsp_core.c
++++ b/drivers/isdn/mISDN/dsp_core.c
+@@ -1202,7 +1202,7 @@ static int __init dsp_init(void)
+ 	}
+ 
+ 	/* set sample timer */
+-	timer_setup(&dsp_spl_tl, (void *)dsp_cmx_send, 0);
++	timer_setup(&dsp_spl_tl, dsp_cmx_send, 0);
+ 	dsp_spl_tl.expires = jiffies + dsp_tics;
+ 	dsp_spl_jiffies = dsp_spl_tl.expires;
+ 	add_timer(&dsp_spl_tl);
 
 
