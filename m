@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A8F9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5001C433C7;
-	Sun, 13 Aug 2023 21:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861B99446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:44:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCB0C433C8;
+	Sun, 13 Aug 2023 21:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691963090;
-	bh=DJ99QsE4NiJUw90O8h8oIAkdEORPmMOM5bwIWT1ga9o=;
+	s=korg; t=1691963093;
+	bh=8A6z34I6Q4MO59q1HPKPk4z7ZM6vPAPVtmQtJifYUpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAnfLXR3u6FJQHlkdVUSAgazbeb3s7/CJqEUtvrdHib8QBzlnPGEtFyfB/x6889Zy
-	 dK28+mWJUjs8/ZMGlI2bpoczav8aGnWEDpB2DSP5+DKYs0o2pbIWIZiS1P8Lb5dnhw
-	 /mBRtYenb5brJCacWYYTonVSSMk1bAFSEe2wlhX8=
+	b=WqLhSVeT3Faz2U7Tnb0wB5CvGKXW8sONgpHu2I+hnjlfMLROwEKFpVeoKfboKAgyg
+	 SK9vkrBD1sr4+NHozo/B50cgSEJC882pZ1EM/xoUQLSjiA//2wWb1wbE7+d3UEgCWl
+	 wvp9eR5AGdBq5WJr9vHlANyBbUdZD+ea3q3Nb5bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8ada0057e69293a05fd4@syzkaller.appspotmail.com,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>
-Subject: [PATCH 5.15 49/89] xsk: fix refcount underflow in error path
-Date: Sun, 13 Aug 2023 23:19:40 +0200
-Message-ID: <20230813211712.260561254@linuxfoundation.org>
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 50/89] bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Sun, 13 Aug 2023 23:19:41 +0200
+Message-ID: <20230813211712.288248506@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
 References: <20230813211710.787645394@linuxfoundation.org>
@@ -35,46 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Magnus Karlsson <magnus.karlsson@intel.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-commit 85c2c79a07302fe68a1ad5cc449458cc559e314d upstream.
+commit 01f4fd27087078c90a0e22860d1dfa2cd0510791 upstream.
 
-Fix a refcount underflow problem reported by syzbot that can happen
-when a system is running out of memory. If xp_alloc_tx_descs() fails,
-and it can only fail due to not having enough memory, then the error
-path is triggered. In this error path, the refcount of the pool is
-decremented as it has incremented before. However, the reference to
-the pool in the socket was not nulled. This means that when the socket
-is closed later, the socket teardown logic will think that there is a
-pool attached to the socket and try to decrease the refcount again,
-leading to a refcount underflow.
+BUG_ON(!vlan_info) is triggered in unregister_vlan_dev() with
+following testcase:
 
-I chose this fix as it involved adding just a single line. Another
-option would have been to move xp_get_pool() and the assignment of
-xs->pool to after the if-statement and using xs_umem->pool instead of
-xs->pool in the whole if-statement resulting in somewhat simpler code,
-but this would have led to much more churn in the code base perhaps
-making it harder to backport.
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add bond0 type bond mode 0
+  # ip netns exec ns1 ip link add bond_slave_1 type veth peer veth2
+  # ip netns exec ns1 ip link set bond_slave_1 master bond0
+  # ip netns exec ns1 ip link add link bond_slave_1 name vlan10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link bond0 name bond0_vlan10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set bond_slave_1 nomaster
+  # ip netns del ns1
 
-Fixes: ba3beec2ec1d ("xsk: Fix possible crash when multiple sockets are created")
-Reported-by: syzbot+8ada0057e69293a05fd4@syzkaller.appspotmail.com
-Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/r/20230809142843.13944-1-magnus.karlsson@gmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+The logical analysis of the problem is as follows:
+
+1. create ETH_P_8021AD protocol vlan10 for bond_slave_1:
+register_vlan_dev()
+  vlan_vid_add()
+    vlan_info_alloc()
+    __vlan_vid_add() // add [ETH_P_8021AD, 10] vid to bond_slave_1
+
+2. create ETH_P_8021AD protocol bond0_vlan10 for bond0:
+register_vlan_dev()
+  vlan_vid_add()
+    __vlan_vid_add()
+      vlan_add_rx_filter_info()
+          if (!vlan_hw_filter_capable(dev, proto)) // condition established because bond0 without NETIF_F_HW_VLAN_STAG_FILTER
+              return 0;
+
+          if (netif_device_present(dev))
+              return dev->netdev_ops->ndo_vlan_rx_add_vid(dev, proto, vid); // will be never called
+              // The slaves of bond0 will not refer to the [ETH_P_8021AD, 10] vid.
+
+3. detach bond_slave_1 from bond0:
+__bond_release_one()
+  vlan_vids_del_by_dev()
+    list_for_each_entry(vid_info, &vlan_info->vid_list, list)
+        vlan_vid_del(dev, vid_info->proto, vid_info->vid);
+        // bond_slave_1 [ETH_P_8021AD, 10] vid will be deleted.
+        // bond_slave_1->vlan_info will be assigned NULL.
+
+4. delete vlan10 during delete ns1:
+default_device_exit_batch()
+  dev->rtnl_link_ops->dellink() // unregister_vlan_dev() for vlan10
+    vlan_info = rtnl_dereference(real_dev->vlan_info); // real_dev of vlan10 is bond_slave_1
+	BUG_ON(!vlan_info); // bond_slave_1->vlan_info is NULL now, bug is triggered!!!
+
+Add S-VLAN tag related features support to bond driver. So the bond driver
+will always propagate the VLAN info to its slaves.
+
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230802114320.4156068-1-william.xuanziyang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xdp/xsk.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/bonding/bond_main.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -1001,6 +1001,7 @@ static int xsk_bind(struct socket *sock,
- 				err = xp_alloc_tx_descs(xs->pool, xs);
- 				if (err) {
- 					xp_put_pool(xs->pool);
-+					xs->pool = NULL;
- 					sockfd_put(sock);
- 					goto out_unlock;
- 				}
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -5491,7 +5491,9 @@ void bond_setup(struct net_device *bond_
+ 
+ 	bond_dev->hw_features = BOND_VLAN_FEATURES |
+ 				NETIF_F_HW_VLAN_CTAG_RX |
+-				NETIF_F_HW_VLAN_CTAG_FILTER;
++				NETIF_F_HW_VLAN_CTAG_FILTER |
++				NETIF_F_HW_VLAN_STAG_RX |
++				NETIF_F_HW_VLAN_STAG_FILTER;
+ 
+ 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
+ 	bond_dev->features |= bond_dev->hw_features;
 
 
