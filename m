@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8CB9443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B5C433C7;
-	Sun, 13 Aug 2023 21:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710E9443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:23:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E1AC433C7;
+	Sun, 13 Aug 2023 21:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691961828;
-	bh=l+A7/fSknjB6lbbIKcvB0LBCrtFhjgyIsdIvt7V57cE=;
+	s=korg; t=1691961831;
+	bh=wSjiUeOe2C19RHL0a2hc/ug1bWUNPjaSEfNG3RAtNEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZVuT5XxPgSCIdVsJDoWqS6C5ntBqWy2GzhJbuljDU8lbqijpKmy+5t/YJYbeAGDO
-	 rX4QqUAS9/Va7Ooi9nBFqhyUXS8LW5H69x/VsY5nZqA3qEXFWULKSLbBWyJ2dCkp6+
-	 DVZz2pwQbn/4fHOJDs74cPdrLPau/uV9IsDXJQr8=
+	b=q+9EPctemBi2xP8rl3gcM92xU+u+dv2sAKT6lTR7e3PDsem05YgWYgQ2qlzVrs0fJ
+	 ZtvA2VdLsjfuiPhHQ2PLzK1Cexu0eiHzJYRVk4hQfE3Z2OxThGGuJgNaRt5wX4VNIV
+	 9TpFJbm4vteO9GydPVCSjKouG59P+rcA2Z+DeAmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.4 014/206] mmc: sdhci-f-sdh30: Replace with sdhci_pltfm
-Date: Sun, 13 Aug 2023 23:16:24 +0200
-Message-ID: <20230813211725.382730266@linuxfoundation.org>
+	Jen Linkova <furry@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	David Ahern <dsahern@gmail.com>,
+	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 015/206] ipv6: adjust ndisc_is_useropt() to also return true for PIO
+Date: Sun, 13 Aug 2023 23:16:25 +0200
+Message-ID: <20230813211725.410162417@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,151 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-commit 5def5c1c15bf22934ee227af85c1716762f3829f upstream.
+commit 048c796beb6eb4fa3a5a647ee1c81f5c6f0f6a2a upstream.
 
-Even if sdhci_pltfm_pmops is specified for PM, this driver doesn't apply
-sdhci_pltfm, so the structure is not correctly referenced in PM functions.
-This applies sdhci_pltfm to this driver to fix this issue.
+The upcoming (and nearly finalized):
+  https://datatracker.ietf.org/doc/draft-collink-6man-pio-pflag/
+will update the IPv6 RA to include a new flag in the PIO field,
+which will serve as a hint to perform DHCPv6-PD.
 
-- Call sdhci_pltfm_init() instead of sdhci_alloc_host() and
-  other functions that covered by sdhci_pltfm.
-- Move ops and quirks to sdhci_pltfm_data
-- Replace sdhci_priv() with own private function sdhci_f_sdh30_priv().
+As we don't want DHCPv6 related logic inside the kernel, this piece of
+information needs to be exposed to userspace.  The simplest option is to
+simply expose the entire PIO through the already existing mechanism.
 
-Fixes: 87a507459f49 ("mmc: sdhci: host: add new f_sdh30")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Even without this new flag, the already existing PIO R (router address)
+flag (from RFC6275) cannot AFAICT be handled entirely in kernel,
+and provides useful information that should be exposed to userspace
+(the router's global address, for use by Mobile IPv6).
+
+Also cc'ing stable@ for inclusion in LTS, as while technically this is
+not quite a bugfix, and instead more of a feature, it is absolutely
+trivial and the alternative is manually cherrypicking into all Android
+Common Kernel trees - and I know Greg will ask for it to be sent in via
+LTS instead...
+
+Cc: Jen Linkova <furry@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: David Ahern <dsahern@gmail.com>
+Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230630004533.26644-1-hayashi.kunihiko@socionext.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Link: https://lore.kernel.org/r/20230807102533.1147559-1-maze@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_f_sdh30.c |   60 +++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 33 deletions(-)
+ net/ipv6/ndisc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci_f_sdh30.c
-+++ b/drivers/mmc/host/sdhci_f_sdh30.c
-@@ -29,9 +29,16 @@ struct f_sdhost_priv {
- 	bool enable_cmd_dat_delay;
- };
- 
-+static void *sdhci_f_sdhost_priv(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+
-+	return sdhci_pltfm_priv(pltfm_host);
-+}
-+
- static void sdhci_f_sdh30_soft_voltage_switch(struct sdhci_host *host)
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -197,7 +197,8 @@ static struct nd_opt_hdr *ndisc_next_opt
+ static inline int ndisc_is_useropt(const struct net_device *dev,
+ 				   struct nd_opt_hdr *opt)
  {
--	struct f_sdhost_priv *priv = sdhci_priv(host);
-+	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
- 	u32 ctrl = 0;
- 
- 	usleep_range(2500, 3000);
-@@ -64,7 +71,7 @@ static unsigned int sdhci_f_sdh30_get_mi
- 
- static void sdhci_f_sdh30_reset(struct sdhci_host *host, u8 mask)
- {
--	struct f_sdhost_priv *priv = sdhci_priv(host);
-+	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
- 	u32 ctl;
- 
- 	if (sdhci_readw(host, SDHCI_CLOCK_CONTROL) == 0)
-@@ -95,30 +102,32 @@ static const struct sdhci_ops sdhci_f_sd
- 	.set_uhs_signaling = sdhci_set_uhs_signaling,
- };
- 
-+static const struct sdhci_pltfm_data sdhci_f_sdh30_pltfm_data = {
-+	.ops = &sdhci_f_sdh30_ops,
-+	.quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC
-+		| SDHCI_QUIRK_INVERTED_WRITE_PROTECT,
-+	.quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE
-+		|  SDHCI_QUIRK2_TUNING_WORK_AROUND,
-+};
-+
- static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- {
- 	struct sdhci_host *host;
- 	struct device *dev = &pdev->dev;
--	int irq, ctrl = 0, ret = 0;
-+	int ctrl = 0, ret = 0;
- 	struct f_sdhost_priv *priv;
-+	struct sdhci_pltfm_host *pltfm_host;
- 	u32 reg = 0;
- 
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
--
--	host = sdhci_alloc_host(dev, sizeof(struct f_sdhost_priv));
-+	host = sdhci_pltfm_init(pdev, &sdhci_f_sdh30_pltfm_data,
-+				sizeof(struct f_sdhost_priv));
- 	if (IS_ERR(host))
- 		return PTR_ERR(host);
- 
--	priv = sdhci_priv(host);
-+	pltfm_host = sdhci_priv(host);
-+	priv = sdhci_pltfm_priv(pltfm_host);
- 	priv->dev = dev;
- 
--	host->quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
--		       SDHCI_QUIRK_INVERTED_WRITE_PROTECT;
--	host->quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE |
--			SDHCI_QUIRK2_TUNING_WORK_AROUND;
--
- 	priv->enable_cmd_dat_delay = device_property_read_bool(dev,
- 						"fujitsu,cmd-dat-delay-select");
- 
-@@ -126,18 +135,6 @@ static int sdhci_f_sdh30_probe(struct pl
- 	if (ret)
- 		goto err;
- 
--	platform_set_drvdata(pdev, host);
--
--	host->hw_name = "f_sdh30";
--	host->ops = &sdhci_f_sdh30_ops;
--	host->irq = irq;
--
--	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(host->ioaddr)) {
--		ret = PTR_ERR(host->ioaddr);
--		goto err;
--	}
--
- 	if (dev_of_node(dev)) {
- 		sdhci_get_of_property(pdev);
- 
-@@ -204,24 +201,21 @@ err_rst:
- err_clk:
- 	clk_disable_unprepare(priv->clk_iface);
- err:
--	sdhci_free_host(host);
-+	sdhci_pltfm_free(pdev);
-+
- 	return ret;
- }
- 
- static int sdhci_f_sdh30_remove(struct platform_device *pdev)
- {
- 	struct sdhci_host *host = platform_get_drvdata(pdev);
--	struct f_sdhost_priv *priv = sdhci_priv(host);
--
--	sdhci_remove_host(host, readl(host->ioaddr + SDHCI_INT_STATUS) ==
--			  0xffffffff);
-+	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
- 
- 	reset_control_assert(priv->rst);
- 	clk_disable_unprepare(priv->clk);
- 	clk_disable_unprepare(priv->clk_iface);
- 
--	sdhci_free_host(host);
--	platform_set_drvdata(pdev, NULL);
-+	sdhci_pltfm_unregister(pdev);
- 
- 	return 0;
- }
+-	return opt->nd_opt_type == ND_OPT_RDNSS ||
++	return opt->nd_opt_type == ND_OPT_PREFIX_INFO ||
++		opt->nd_opt_type == ND_OPT_RDNSS ||
+ 		opt->nd_opt_type == ND_OPT_DNSSL ||
+ 		opt->nd_opt_type == ND_OPT_CAPTIVE_PORTAL ||
+ 		opt->nd_opt_type == ND_OPT_PREF64 ||
 
 
