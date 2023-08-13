@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6592C9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFF5C433C7;
-	Sun, 13 Aug 2023 21:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A219446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:36:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4C5C433C7;
+	Sun, 13 Aug 2023 21:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962598;
-	bh=z1bi7sjIe+HcyufpBLtsmTUYkE6/ZIFOj1d7unzD9iU=;
+	s=korg; t=1691962601;
+	bh=db3rPmon8gVmUXodyZj5rzdTR3LPjG9FuIJHR+2X23o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvwLzGFIq+Rw6/VVzbL7iSKjjBnU8V78Fm+a9tzgoYTAME4+qUque42gleOcH5JNX
-	 ghC/ULRUoKKytzzD9LzGjYLFn2QzDvh1Tf1kpN7/EwiomeQcydknw4Rg182ddO6lTx
-	 kIstMWida4IGdiUYYCBVZyji8iFHy5B59FeHZL5A=
+	b=OnrHVuwIlQhssWOsrg4Lx26Q1eq/tlfNcGUT/YeOEIdgSVPjKgWoZh0mtQH+Kf3tA
+	 THkghfiNdqXLQyUdEucieAdFwGudSWNJLxRXfjtW0mrB3M6xpSUaOopUebKpCnbbI3
+	 9+XLV0sCkCmF6gMGuxL7DvUHbJeK0eBV8C8uNU80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 086/149] mISDN: Update parameter type of dsp_cmx_send()
-Date: Sun, 13 Aug 2023 23:18:51 +0200
-Message-ID: <20230813211721.362988896@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 087/149] macsec: use DEV_STATS_INC()
+Date: Sun, 13 Aug 2023 23:18:52 +0200
+Message-ID: <20230813211721.391417435@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -37,75 +36,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1696ec8654016dad3b1baf6c024303e584400453 upstream.
+commit 32d0a49d36a2a306c2e47fe5659361e424f0ed3f upstream.
 
-When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
-there is a failure when dsp_cmx_send() is called indirectly from
-call_timer_fn():
+syzbot/KCSAN reported data-races in macsec whenever dev->stats fields
+are updated.
 
-  [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
+It appears all of these updates can happen from multiple cpus.
 
-The function pointer prototype that call_timer_fn() expects is
+Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
 
-  void (*fn)(struct timer_list *)
-
-whereas dsp_cmx_send() has a parameter type of 'void *', which causes
-the control flow integrity checks to fail because the parameter types do
-not match.
-
-Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
-match the expected prototype. The argument is unused anyways, so this
-has no functional change, aside from avoiding the CFI failure.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Fixes: e313ac12eb13 ("mISDN: Convert timers to use timer_setup()")
-Link: https://lore.kernel.org/r/20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/isdn/mISDN/dsp.h      |    2 +-
- drivers/isdn/mISDN/dsp_cmx.c  |    2 +-
- drivers/isdn/mISDN/dsp_core.c |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/macsec.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/drivers/isdn/mISDN/dsp.h
-+++ b/drivers/isdn/mISDN/dsp.h
-@@ -247,7 +247,7 @@ extern void dsp_cmx_hardware(struct dsp_
- extern int dsp_cmx_conf(struct dsp *dsp, u32 conf_id);
- extern void dsp_cmx_receive(struct dsp *dsp, struct sk_buff *skb);
- extern void dsp_cmx_hdlc(struct dsp *dsp, struct sk_buff *skb);
--extern void dsp_cmx_send(void *arg);
-+extern void dsp_cmx_send(struct timer_list *arg);
- extern void dsp_cmx_transmit(struct dsp *dsp, struct sk_buff *skb);
- extern int dsp_cmx_del_conf_member(struct dsp *dsp);
- extern int dsp_cmx_del_conf(struct dsp_conf *conf);
---- a/drivers/isdn/mISDN/dsp_cmx.c
-+++ b/drivers/isdn/mISDN/dsp_cmx.c
-@@ -1625,7 +1625,7 @@ static u16	dsp_count; /* last sample cou
- static int	dsp_count_valid; /* if we have last sample count */
- 
- void
--dsp_cmx_send(void *arg)
-+dsp_cmx_send(struct timer_list *arg)
- {
- 	struct dsp_conf *conf;
- 	struct dsp_conf_member *member;
---- a/drivers/isdn/mISDN/dsp_core.c
-+++ b/drivers/isdn/mISDN/dsp_core.c
-@@ -1195,7 +1195,7 @@ static int __init dsp_init(void)
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -743,7 +743,7 @@ static bool macsec_post_decrypt(struct s
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsLate++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+-		secy->netdev->stats.rx_dropped++;
++		DEV_STATS_INC(secy->netdev, rx_dropped);
+ 		return false;
  	}
  
- 	/* set sample timer */
--	timer_setup(&dsp_spl_tl, (void *)dsp_cmx_send, 0);
-+	timer_setup(&dsp_spl_tl, dsp_cmx_send, 0);
- 	dsp_spl_tl.expires = jiffies + dsp_tics;
- 	dsp_spl_jiffies = dsp_spl_tl.expires;
- 	add_timer(&dsp_spl_tl);
+@@ -767,7 +767,7 @@ static bool macsec_post_decrypt(struct s
+ 			rxsc_stats->stats.InPktsNotValid++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+ 			this_cpu_inc(rx_sa->stats->InPktsNotValid);
+-			secy->netdev->stats.rx_errors++;
++			DEV_STATS_INC(secy->netdev, rx_errors);
+ 			return false;
+ 		}
+ 
+@@ -1059,7 +1059,7 @@ static enum rx_handler_result handle_not
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoTag++;
+ 			u64_stats_update_end(&secy_stats->syncp);
+-			macsec->secy.netdev->stats.rx_dropped++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 			continue;
+ 		}
+ 
+@@ -1169,7 +1169,7 @@ static rx_handler_result_t macsec_handle
+ 		u64_stats_update_begin(&secy_stats->syncp);
+ 		secy_stats->stats.InPktsBadTag++;
+ 		u64_stats_update_end(&secy_stats->syncp);
+-		secy->netdev->stats.rx_errors++;
++		DEV_STATS_INC(secy->netdev, rx_errors);
+ 		goto drop_nosa;
+ 	}
+ 
+@@ -1186,7 +1186,7 @@ static rx_handler_result_t macsec_handle
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+-			secy->netdev->stats.rx_errors++;
++			DEV_STATS_INC(secy->netdev, rx_errors);
+ 			if (active_rx_sa)
+ 				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+@@ -1220,7 +1220,7 @@ static rx_handler_result_t macsec_handle
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsLate++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+-			macsec->secy.netdev->stats.rx_dropped++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 			goto drop;
+ 		}
+ 	}
+@@ -1261,7 +1261,7 @@ deliver:
+ 	if (ret == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+ 	else
+-		macsec->secy.netdev->stats.rx_dropped++;
++		DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 
+ 	rcu_read_unlock();
+ 
+@@ -1298,7 +1298,7 @@ nosci:
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
+-			macsec->secy.netdev->stats.rx_errors++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_errors);
+ 			continue;
+ 		}
+ 
+@@ -1317,7 +1317,7 @@ nosci:
+ 			secy_stats->stats.InPktsUnknownSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
+ 		} else {
+-			macsec->secy.netdev->stats.rx_dropped++;
++			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
+ 		}
+ 	}
+ 
+@@ -3418,7 +3418,7 @@ static netdev_tx_t macsec_start_xmit(str
+ 
+ 	if (!secy->operational) {
+ 		kfree_skb(skb);
+-		dev->stats.tx_dropped++;
++		DEV_STATS_INC(dev, tx_dropped);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
+@@ -3426,7 +3426,7 @@ static netdev_tx_t macsec_start_xmit(str
+ 	skb = macsec_encrypt(skb, dev);
+ 	if (IS_ERR(skb)) {
+ 		if (PTR_ERR(skb) != -EINPROGRESS)
+-			dev->stats.tx_dropped++;
++			DEV_STATS_INC(dev, tx_dropped);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
+@@ -3663,9 +3663,9 @@ static void macsec_get_stats64(struct ne
+ 
+ 	dev_fetch_sw_netstats(s, dev->tstats);
+ 
+-	s->rx_dropped = dev->stats.rx_dropped;
+-	s->tx_dropped = dev->stats.tx_dropped;
+-	s->rx_errors = dev->stats.rx_errors;
++	s->rx_dropped = atomic_long_read(&dev->stats.__rx_dropped);
++	s->tx_dropped = atomic_long_read(&dev->stats.__tx_dropped);
++	s->rx_errors = atomic_long_read(&dev->stats.__rx_errors);
+ }
+ 
+ static int macsec_get_iflink(const struct net_device *dev)
 
 
