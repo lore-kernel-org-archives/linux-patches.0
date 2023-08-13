@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9B39446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA719C433C7;
-	Sun, 13 Aug 2023 21:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBF59446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D32DC433C7;
+	Sun, 13 Aug 2023 21:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962904;
-	bh=Xn4wft8C5bKjuHLMzVzPBIvTfjdZS7z9V64uGcytKQs=;
+	s=korg; t=1691962907;
+	bh=mwXPl1fmAk2/6qni2eX1lhVECipL2FkQkp6jb5pWnZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGN7eTBljeuUiErpCL7yUxBsM/IV5sS0s4ArkKT908P3MSLgBhMlMQ7C2H9n6EOJt
-	 8fJy6cneZma9nuLsdhD/dMZknmMQvmmiSBemyxRPsRTWuQ4p/AHEwu65eLqyM7gpXT
-	 hICqMbk9jwozbhQUM2iZQ8g7PjvaECoKRymBuAdk=
+	b=f8HxacToY9cC55LwXeyK0/cmuC7XJtlij2BN8r6hlvNUrgS6R14usktqfV7XHAikG
+	 KAfuz8GxObUiqJ6owZgS5DfkZg1YRHl1A1ruoPM7pfYddTMcrlElmxp2u7olPTQTzt
+	 FKLATavsO0EnrU33J9bbLLN+rPLzswWMHjxIJ8jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 49/68] net: hns3: add wait until mac link down
-Date: Sun, 13 Aug 2023 23:19:50 +0200
-Message-ID: <20230813211709.641792836@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 50/68] dmaengine: mcf-edma: Fix a potential un-allocated memory access
+Date: Sun, 13 Aug 2023 23:19:51 +0200
+Message-ID: <20230813211709.670983687@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -36,54 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 6265e242f7b95f2c1195b42ec912b84ad161470e upstream.
+commit 0a46781c89dece85386885a407244ca26e5c1c44 upstream.
 
-In some configure flow of hns3 driver, for example, change mtu, it will
-disable MAC through firmware before configuration. But firmware disables
-MAC asynchronously. The rx traffic may be not stopped in this case.
+When 'mcf_edma' is allocated, some space is allocated for a
+flexible array at the end of the struct. 'chans' item are allocated, that is
+to say 'pdata->dma_channels'.
 
-So fixes it by waiting until mac link is down.
+Then, this number of item is stored in 'mcf_edma->n_chans'.
 
-Fixes: a9775bb64aa7 ("net: hns3: fix set and get link ksettings issue")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230807113452.474224-4-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+A few lines later, if 'mcf_edma->n_chans' is 0, then a default value of 64
+is set.
+
+This ends to no space allocated by devm_kzalloc() because chans was 0, but
+64 items are read and/or written in some not allocated memory.
+
+Change the logic to define a default value before allocating the memory.
+
+Fixes: e7a3ff92eaf1 ("dmaengine: fsl-edma: add ColdFire mcf5441x edma support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/f55d914407c900828f6fad3ea5fa791a5f17b9a4.1685172449.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/dma/mcf-edma.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -6560,6 +6560,8 @@ static void hclge_enable_fd(struct hnae3
+--- a/drivers/dma/mcf-edma.c
++++ b/drivers/dma/mcf-edma.c
+@@ -191,7 +191,13 @@ static int mcf_edma_probe(struct platfor
+ 		return -EINVAL;
+ 	}
  
- static void hclge_cfg_mac_mode(struct hclge_dev *hdev, bool enable)
- {
-+#define HCLGE_LINK_STATUS_WAIT_CNT  3
-+
- 	struct hclge_desc desc;
- 	struct hclge_config_mac_mode_cmd *req =
- 		(struct hclge_config_mac_mode_cmd *)desc.data;
-@@ -6584,9 +6586,15 @@ static void hclge_cfg_mac_mode(struct hc
- 	req->txrx_pad_fcs_loop_en = cpu_to_le32(loop_en);
- 
- 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
--	if (ret)
-+	if (ret) {
- 		dev_err(&hdev->pdev->dev,
- 			"mac enable fail, ret =%d.\n", ret);
-+		return;
+-	chans = pdata->dma_channels;
++	if (!pdata->dma_channels) {
++		dev_info(&pdev->dev, "setting default channel number to 64");
++		chans = 64;
++	} else {
++		chans = pdata->dma_channels;
 +	}
 +
-+	if (!enable)
-+		hclge_mac_link_status_wait(hdev, HCLGE_LINK_STATUS_DOWN,
-+					   HCLGE_LINK_STATUS_WAIT_CNT);
- }
+ 	len = sizeof(*mcf_edma) + sizeof(*mcf_chan) * chans;
+ 	mcf_edma = devm_kzalloc(&pdev->dev, len, GFP_KERNEL);
+ 	if (!mcf_edma)
+@@ -203,11 +209,6 @@ static int mcf_edma_probe(struct platfor
+ 	mcf_edma->drvdata = &mcf_data;
+ 	mcf_edma->big_endian = 1;
  
- static int hclge_config_switch_param(struct hclge_dev *hdev, int vfid,
+-	if (!mcf_edma->n_chans) {
+-		dev_info(&pdev->dev, "setting default channel number to 64");
+-		mcf_edma->n_chans = 64;
+-	}
+-
+ 	mutex_init(&mcf_edma->fsl_edma_mutex);
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 
 
