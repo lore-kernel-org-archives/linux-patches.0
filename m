@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3C59446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5475DC433C7;
-	Sun, 13 Aug 2023 21:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981AD9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:42:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194EBC433C7;
+	Sun, 13 Aug 2023 21:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962933;
-	bh=DMDY5byok+LnweDNn+7Bg/bl6dF0YkABVBmF1Pfj0Qk=;
+	s=korg; t=1691962936;
+	bh=UrCE919QDeTdJhujNC2yEFpmC+5sFxDp2UAz1ej6/EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gegh1RR7eqdRBmpwHconlUMV0mWH0UthtlvPO7P8Z7jJeBpjWaEn3qsiPcJ3HlEk1
-	 z3x1sJm/cdA7DOCdsHAWKtcIIXhCl0yxwB4BesBNywXuB19XyqfGVYtkSVu/pSozvq
-	 Zt2seYDTjKHhqrLZm3wRpN2GcDYswINMjDvIQS5c=
+	b=pOmdQv0NRZ/636a9UFIC1vns0Pr4mhSSr6JST/knIFRsmwePIguSAhjuOlhWrcGq0
+	 wwQ+OQXL01GZQZ992fCpCoxbtLLq9VXhhiuxvbukgaD689kPTXnszUc+F1hoOCxKun
+	 ge1eqbaeJdfIWS0qKxS0Mu8Bx1M4vso6aeTlLa6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 53/68] ibmvnic: Unmap DMA login rsp buffer on send login fail
-Date: Sun, 13 Aug 2023 23:19:54 +0200
-Message-ID: <20230813211709.757111058@linuxfoundation.org>
+	Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>,
+	Alexandra Diupina <adiupina@astralinux.ru>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 62/68] scsi: 53c700: Check that command slot is not NULL
+Date: Sun, 13 Aug 2023 23:20:03 +0200
+Message-ID: <20230813211710.032407855@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,41 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-commit 411c565b4bc63e9584a8493882bd566e35a90588 upstream.
+commit 8366d1f1249a0d0bba41d0bd1298d63e5d34c7f7 upstream.
 
-If the LOGIN CRQ fails to send then we must DMA unmap the response
-buffer. Previously, if the CRQ failed then the memory was freed without
-DMA unmapping.
+Add a check for the command slot value to avoid dereferencing a NULL
+pointer.
 
-Fixes: c98d9cc4170d ("ibmvnic: send_login should check for crq errors")
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230809221038.51296-2-nnac123@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Vladimir Telezhnikov <vtelezhnikov@astralinux.ru>
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Link: https://lore.kernel.org/r/20230728123521.18293-1-adiupina@astralinux.ru
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/53c700.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ibm/ibmvnic.c
-+++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -3861,11 +3861,14 @@ static int send_login(struct ibmvnic_ada
- 	if (rc) {
- 		adapter->login_pending = false;
- 		netdev_err(adapter->netdev, "Failed to send login, rc=%d\n", rc);
--		goto buf_rsp_map_failed;
-+		goto buf_send_failed;
- 	}
- 
- 	return 0;
- 
-+buf_send_failed:
-+	dma_unmap_single(dev, rsp_buffer_token, rsp_buffer_size,
-+			 DMA_FROM_DEVICE);
- buf_rsp_map_failed:
- 	kfree(login_rsp_buffer);
- 	adapter->login_rsp_buf = NULL;
+--- a/drivers/scsi/53c700.c
++++ b/drivers/scsi/53c700.c
+@@ -1600,7 +1600,7 @@ NCR_700_intr(int irq, void *dev_id)
+ 				printk("scsi%d (%d:%d) PHASE MISMATCH IN SEND MESSAGE %d remain, return %p[%04x], phase %s\n", host->host_no, pun, lun, count, (void *)temp, temp - hostdata->pScript, sbcl_to_string(NCR_700_readb(host, SBCL_REG)));
+ #endif
+ 				resume_offset = hostdata->pScript + Ent_SendMessagePhaseMismatch;
+-			} else if(dsp >= to32bit(&slot->pSG[0].ins) &&
++			} else if (slot && dsp >= to32bit(&slot->pSG[0].ins) &&
+ 				  dsp <= to32bit(&slot->pSG[NCR_700_SG_SEGMENTS].ins)) {
+ 				int data_transfer = NCR_700_readl(host, DBC_REG) & 0xffffff;
+ 				int SGcount = (dsp - to32bit(&slot->pSG[0].ins))/sizeof(struct NCR_700_SG_List);
 
 
