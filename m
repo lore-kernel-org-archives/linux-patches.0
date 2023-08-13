@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E291C9446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674F8C433C8;
-	Sun, 13 Aug 2023 21:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B769446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:41:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F918C433C8;
+	Sun, 13 Aug 2023 21:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962882;
-	bh=AO17ks+BVk7cg90ZOhuVWOIp63tLrMHqP5j2RQYvl7o=;
+	s=korg; t=1691962885;
+	bh=NZbtihaOi9sjdh61YVyB1eRFfwBPSdZRVYeswi3AIZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RznHMEW2UPgrGZVWymP1TX5Gs54+jXvTWUJJusMeOM8EgiRWGbnLUde+2zJu7fAqb
-	 gSr71PpnSMyfZ7bZLiz+6kiuphFtPV61D1RRvSOfPRKl51M6OelwkyPnWauIEAZcII
-	 4aXyRM91jIzKKMXbZBuHAzawRpnAFA8d9SyCCTQ4=
+	b=j4VK9IeCAF5VESm+zYO+fFgU8tLkECtEZgWhPZ7UrisNDD31f/umjXy7HaROkYSg3
+	 RzqmUWC83Qle+IyOqJ5ZoXysOgp7vmDisPUsNsgUGV7xcFdG1K9XLszzvGRQb6TmPi
+	 i3G9C/hcYCs/RpWyMRisop7/HCFrR152ok3uH5vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 24/68] usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
-Date: Sun, 13 Aug 2023 23:19:25 +0200
-Message-ID: <20230813211708.893665512@linuxfoundation.org>
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 42/68] bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Sun, 13 Aug 2023 23:19:43 +0200
+Message-ID: <20230813211709.436917292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 References: <20230813211708.149630011@linuxfoundation.org>
@@ -35,62 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-commit 8e21a620c7e6e00347ade1a6ed4967b359eada5a upstream.
+commit 01f4fd27087078c90a0e22860d1dfa2cd0510791 upstream.
 
-Currently if we bootup a device without cable connected, then
-usb-conn-gpio won't call set_role() because last_role is same
-as current role. This happens since last_role gets initialised
-to zero during the probe.
+BUG_ON(!vlan_info) is triggered in unregister_vlan_dev() with
+following testcase:
 
-To avoid this, add a new flag initial_detection into struct
-usb_conn_info, which prevents bailing out during initial
-detection.
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add bond0 type bond mode 0
+  # ip netns exec ns1 ip link add bond_slave_1 type veth peer veth2
+  # ip netns exec ns1 ip link set bond_slave_1 master bond0
+  # ip netns exec ns1 ip link add link bond_slave_1 name vlan10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link bond0 name bond0_vlan10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set bond_slave_1 nomaster
+  # ip netns del ns1
 
-Cc: <stable@vger.kernel.org> # 5.4
-Fixes: 4602f3bff266 ("usb: common: add USB GPIO based connection detection driver")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/1690880632-12588-1-git-send-email-quic_prashk@quicinc.com
+The logical analysis of the problem is as follows:
+
+1. create ETH_P_8021AD protocol vlan10 for bond_slave_1:
+register_vlan_dev()
+  vlan_vid_add()
+    vlan_info_alloc()
+    __vlan_vid_add() // add [ETH_P_8021AD, 10] vid to bond_slave_1
+
+2. create ETH_P_8021AD protocol bond0_vlan10 for bond0:
+register_vlan_dev()
+  vlan_vid_add()
+    __vlan_vid_add()
+      vlan_add_rx_filter_info()
+          if (!vlan_hw_filter_capable(dev, proto)) // condition established because bond0 without NETIF_F_HW_VLAN_STAG_FILTER
+              return 0;
+
+          if (netif_device_present(dev))
+              return dev->netdev_ops->ndo_vlan_rx_add_vid(dev, proto, vid); // will be never called
+              // The slaves of bond0 will not refer to the [ETH_P_8021AD, 10] vid.
+
+3. detach bond_slave_1 from bond0:
+__bond_release_one()
+  vlan_vids_del_by_dev()
+    list_for_each_entry(vid_info, &vlan_info->vid_list, list)
+        vlan_vid_del(dev, vid_info->proto, vid_info->vid);
+        // bond_slave_1 [ETH_P_8021AD, 10] vid will be deleted.
+        // bond_slave_1->vlan_info will be assigned NULL.
+
+4. delete vlan10 during delete ns1:
+default_device_exit_batch()
+  dev->rtnl_link_ops->dellink() // unregister_vlan_dev() for vlan10
+    vlan_info = rtnl_dereference(real_dev->vlan_info); // real_dev of vlan10 is bond_slave_1
+	BUG_ON(!vlan_info); // bond_slave_1->vlan_info is NULL now, bug is triggered!!!
+
+Add S-VLAN tag related features support to bond driver. So the bond driver
+will always propagate the VLAN info to its slaves.
+
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230802114320.4156068-1-william.xuanziyang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/usb-conn-gpio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/common/usb-conn-gpio.c
-+++ b/drivers/usb/common/usb-conn-gpio.c
-@@ -42,6 +42,7 @@ struct usb_conn_info {
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4920,7 +4920,9 @@ void bond_setup(struct net_device *bond_
  
- 	struct power_supply_desc desc;
- 	struct power_supply *charger;
-+	bool initial_detection;
- };
+ 	bond_dev->hw_features = BOND_VLAN_FEATURES |
+ 				NETIF_F_HW_VLAN_CTAG_RX |
+-				NETIF_F_HW_VLAN_CTAG_FILTER;
++				NETIF_F_HW_VLAN_CTAG_FILTER |
++				NETIF_F_HW_VLAN_STAG_RX |
++				NETIF_F_HW_VLAN_STAG_FILTER;
  
- /*
-@@ -86,11 +87,13 @@ static void usb_conn_detect_cable(struct
- 	dev_dbg(info->dev, "role %d/%d, gpios: id %d, vbus %d\n",
- 		info->last_role, role, id, vbus);
- 
--	if (info->last_role == role) {
-+	if (!info->initial_detection && info->last_role == role) {
- 		dev_warn(info->dev, "repeated role: %d\n", role);
- 		return;
- 	}
- 
-+	info->initial_detection = false;
-+
- 	if (info->last_role == USB_ROLE_HOST && info->vbus)
- 		regulator_disable(info->vbus);
- 
-@@ -277,6 +280,7 @@ static int usb_conn_probe(struct platfor
- 	platform_set_drvdata(pdev, info);
- 
- 	/* Perform initial detection */
-+	info->initial_detection = true;
- 	usb_conn_queue_dwork(info, 0);
- 
- 	return 0;
+ 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
+ #ifdef CONFIG_XFRM_OFFLOAD
 
 
