@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068269446
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AD3C433C7;
-	Sun, 13 Aug 2023 21:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BBC9446
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:39:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264CBC433C7;
+	Sun, 13 Aug 2023 21:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962772;
-	bh=YYpk5UZMJzfKeY0OXNFaMV4+zqmVAOe8Kp/+jib3eQA=;
+	s=korg; t=1691962775;
+	bh=P4vRP7IxQnMm4DNtO9GWyrdEfDinflvBfayp55P273o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUzZR15zamM4oIhB7J+bXW06EWp5b5wOvb3rW5L99FwDe4+LkpeQ4eJ3wlFTyTolw
-	 ZTVJcHfgih7TAJgaokDa5H17CdEV2eZ+Q9PJCRuwcwT68kXa4uDTZaka/3b7DmcJWm
-	 M42QFBNVM+A9cW3Ipda1QUBFUsgSv86RW0JMa9Oc=
+	b=aA27swOR2iSmELkTEirI07VbKMJC7OECCoYBzxGFSBKsa0gtf9izrv+FlFdWBjXbW
+	 gKtxOvQRJvHA20Im7ptpAg1EO+1/ZrUiVwyBJU3hHw7+o07tYXxKwR8MSeIjJaA4u7
+	 tfRMB7t+rDj16sf+NxYn32Y6c0xl+Y+Kqq1zmI2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yi Zhang <yi.zhang@redhat.com>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 133/149] nvme-tcp: fix potential unbalanced freeze & unfreeze
-Date: Sun, 13 Aug 2023 23:19:38 +0200
-Message-ID: <20230813211722.694200364@linuxfoundation.org>
+Subject: [PATCH 6.1 134/149] nvme-rdma: fix potential unbalanced freeze & unfreeze
+Date: Sun, 13 Aug 2023 23:19:39 +0200
+Message-ID: <20230813211722.721575220@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
 References: <20230813211718.757428827@linuxfoundation.org>
@@ -38,9 +38,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <ming.lei@redhat.com>
 
-commit 99dc264014d5aed66ee37ddf136a38b5a2b1b529 upstream.
+commit 29b434d1e49252b3ad56ad3197e47fafff5356a1 upstream.
 
-Move start_freeze into nvme_tcp_configure_io_queues(), and there is
+Move start_freeze into nvme_rdma_configure_io_queues(), and there is
 at least two benefits:
 
 1) fix unbalanced freeze and unfreeze, since re-connection work may
@@ -56,7 +56,7 @@ because of queue topo change, but that looks not one big deal:
 
 2) compared with !mpath, mpath use case is dominant
 
-Fixes: 2875b0aecabe ("nvme-tcp: fix controller reset hang during traffic")
+Fixes: 9f98772ba307 ("nvme-rdma: fix controller reset hang during traffic")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Tested-by: Yi Zhang <yi.zhang@redhat.com>
@@ -64,34 +64,34 @@ Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    3 ++-
+ drivers/nvme/host/rdma.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1890,6 +1890,7 @@ static int nvme_tcp_configure_io_queues(
- 		goto out_cleanup_connect_q;
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -923,6 +923,7 @@ static int nvme_rdma_configure_io_queues
+ 		goto out_cleanup_tagset;
  
  	if (!new) {
-+		nvme_start_freeze(ctrl);
- 		nvme_start_queues(ctrl);
- 		if (!nvme_wait_freeze_timeout(ctrl, NVME_IO_TIMEOUT)) {
++		nvme_start_freeze(&ctrl->ctrl);
+ 		nvme_start_queues(&ctrl->ctrl);
+ 		if (!nvme_wait_freeze_timeout(&ctrl->ctrl, NVME_IO_TIMEOUT)) {
  			/*
-@@ -1898,6 +1899,7 @@ static int nvme_tcp_configure_io_queues(
+@@ -931,6 +932,7 @@ static int nvme_rdma_configure_io_queues
  			 * to be safe.
  			 */
  			ret = -ENODEV;
-+			nvme_unfreeze(ctrl);
++			nvme_unfreeze(&ctrl->ctrl);
  			goto out_wait_freeze_timed_out;
  		}
- 		blk_mq_update_nr_hw_queues(ctrl->tagset,
-@@ -2002,7 +2004,6 @@ static void nvme_tcp_teardown_io_queues(
- 	if (ctrl->queue_count <= 1)
- 		return;
- 	nvme_stop_admin_queue(ctrl);
--	nvme_start_freeze(ctrl);
- 	nvme_stop_queues(ctrl);
- 	nvme_sync_io_queues(ctrl);
- 	nvme_tcp_stop_io_queues(ctrl);
+ 		blk_mq_update_nr_hw_queues(ctrl->ctrl.tagset,
+@@ -980,7 +982,6 @@ static void nvme_rdma_teardown_io_queues
+ 		bool remove)
+ {
+ 	if (ctrl->ctrl.queue_count > 1) {
+-		nvme_start_freeze(&ctrl->ctrl);
+ 		nvme_stop_queues(&ctrl->ctrl);
+ 		nvme_sync_io_queues(&ctrl->ctrl);
+ 		nvme_rdma_stop_io_queues(ctrl);
 
 
