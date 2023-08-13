@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E159443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B720C433C7;
-	Sun, 13 Aug 2023 21:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FA89443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:27:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4F9C433C8;
+	Sun, 13 Aug 2023 21:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962036;
-	bh=cnmWMrRr6lUCBR/pIbwAV2ET9T95iL1Fg41LRw2lKCs=;
+	s=korg; t=1691962039;
+	bh=sThYTK08FrQ5nNxppzIP45CgutzvRpbj55Ox3mvGBHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QYRKRwvt8cRvTXBkwYg9F7s/fsthuWLPw6+KhpMLH5D0onVbAS5lTrEiwzTPhT3zh
-	 uP36Rcz9PR2GYalxfHZTqvjfxsDuJyZcwuByjIwMYybeT791X4K9zrlAJoJ2YRs0wQ
-	 /cKwCobmsfO9qtrw8bSVysm3mYvXjQ76cbz2be2g=
+	b=bo2YpjuPWxosk5y7S4URrf97wHHKgPFZ0BYZW7GbGnBzOgae54A5mZhduvBKzVbUH
+	 mBg0xqYZC2p+ZsoH0iUS7//pW7rv1CQFSdUnQTLXiSsy8SiMsibMsSes2TH4rrbDne
+	 sNUbFN6z5/5lgEPnCgd/HaUMQmTvLTDc6aFRna4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.4 088/206] Revert "PCI: mvebu: Mark driver as BROKEN"
-Date: Sun, 13 Aug 2023 23:17:38 +0200
-Message-ID: <20230813211727.596879822@linuxfoundation.org>
+	Ayush Jain <ayush.jain3@amd.com>,
+	David Hildenbrand <david@redhat.com>,
+	Stefan Roesch <shr@devkernel.io>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 061/206] selftests: mm: ksm: fix incorrect evaluation of parameter
+Date: Sun, 13 Aug 2023 23:17:11 +0200
+Message-ID: <20230813211726.816613756@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -35,36 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Ayush Jain <ayush.jain3@amd.com>
 
-commit 3bfc37d92687b4b19056998cebc02f94fbc81427 upstream.
+commit 65294de30cb8bc7659e445f7be2846af9ed35499 upstream.
 
-b3574f579ece ("PCI: mvebu: Mark driver as BROKEN") made it impossible to
-enable the pci-mvebu driver.  The driver does have known problems, but as
-Russell and Uwe reported, it does work in some configurations, so removing
-it broke some working setups.
+A missing break in kms_tests leads to kselftest hang when the parameter -s
+is used.
 
-Revert b3574f579ece so pci-mvebu is available.
+In current code flow because of missing break in -s, -t parses args
+spilled from -s and as -t accepts only valid values as 0,1 so any arg in
+-s >1 or <0, gets in ksm_test failure
 
-Reported-by: Russell King (Oracle) <linux@armlinux.org.uk>
-Link: https://lore.kernel.org/r/ZMzicVQEyHyZzBOc@shell.armlinux.org.uk
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230804134622.pmbymxtzxj2yfhri@pengutronix.de
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+This went undetected since, before the addition of option -t, the next
+case -M would immediately break out of the switch statement but that is no
+longer the case
+
+Add the missing break statement.
+
+----Before----
+./ksm_tests -H -s 100
+Invalid merge type
+
+----After----
+./ksm_tests -H -s 100
+Number of normal pages:    0
+Number of huge pages:    50
+Total size:    100 MiB
+Total time:    0.401732682 s
+Average speed:  248.922 MiB/s
+
+Link: https://lkml.kernel.org/r/20230728163952.4634-1-ayush.jain3@amd.com
+Fixes: 07115fcc15b4 ("selftests/mm: add new selftests for KSM")
+Signed-off-by: Ayush Jain <ayush.jain3@amd.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Stefan Roesch <shr@devkernel.io>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/Kconfig |    1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/mm/ksm_tests.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/controller/Kconfig
-+++ b/drivers/pci/controller/Kconfig
-@@ -179,7 +179,6 @@ config PCI_MVEBU
- 	depends on MVEBU_MBUS
- 	depends on ARM
- 	depends on OF
--	depends on BROKEN
- 	select PCI_BRIDGE_EMUL
- 	help
- 	 Add support for Marvell EBU PCIe controller. This PCIe controller
+diff --git a/tools/testing/selftests/mm/ksm_tests.c b/tools/testing/selftests/mm/ksm_tests.c
+index 435acebdc325..380b691d3eb9 100644
+--- a/tools/testing/selftests/mm/ksm_tests.c
++++ b/tools/testing/selftests/mm/ksm_tests.c
+@@ -831,6 +831,7 @@ int main(int argc, char *argv[])
+ 				printf("Size must be greater than 0\n");
+ 				return KSFT_FAIL;
+ 			}
++			break;
+ 		case 't':
+ 			{
+ 				int tmp = atoi(optarg);
+-- 
+2.41.0
+
 
 
