@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F109443
-	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7998C433C8;
-	Sun, 13 Aug 2023 21:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F149443
+	for <patches@lists.linux.dev>; Sun, 13 Aug 2023 21:26:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E0C433C7;
+	Sun, 13 Aug 2023 21:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691962012;
-	bh=dfeez71j0EzL2q3JlGDBF6XUOHddfv3999U2zaZ4ds0=;
+	s=korg; t=1691962014;
+	bh=udbVLT8B/yzzrAkANMZrZxrApXHWjhDFtxJKzLt+Jsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ty3zZg20rXL5MjyJfvZpoa0JgJ+VuMyqIFTEs5SH5pg/onz0oMYMzg/gs3grELJTC
-	 nAFVW1Np4L/lfn5aSGbxNBSTR1S4QYo0fu/a6Ur5Yexh7CcVFzdWZnn0wIKegc+HMG
-	 wiSNiMtjp+t7H9ziZmhhrOGfX17LwAtbRIgcUEaM=
+	b=ncOlQRaq5lr2D0xjyORo86nUpVOHrrs16b2VJcOl0HbGUKUPtyJa2Aqh6z7MvRicf
+	 KBbFkF7j8PE4GvTOrOJTq6wwkB3G7e0qHQcWQuwR6Nx7r1wHCjGglE8t5cpjseld4G
+	 AOurUKxoCMgL6thQ3fkpKEK+i1Ex4uPojGQm4f5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Daniel Kolesa <daniel@octaforge.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Sven Volkinsfeld <thyrc@gmx.net>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.4 080/206] x86/srso: Fix build breakage with the LLVM linker
-Date: Sun, 13 Aug 2023 23:17:30 +0200
-Message-ID: <20230813211727.370097452@linuxfoundation.org>
+	kernel test robot <yujie.liu@intel.com>,
+	Shan Kang <shan.kang@intel.com>,
+	Xin Li <xin3.li@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.4 081/206] x86/vdso: Choose the right GDT_ENTRY_CPUNODE for 32-bit getcpu() on 64-bit kernel
+Date: Sun, 13 Aug 2023 23:17:31 +0200
+Message-ID: <20230813211727.398277094@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 References: <20230813211724.969019629@linuxfoundation.org>
@@ -38,62 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Xin Li <xin3.li@intel.com>
 
-commit cbe8ded48b939b9d55d2c5589ab56caa7b530709 upstream.
+commit 39163d5479285a36522b6e8f9cc568cc4987db08 upstream.
 
-The assertion added to verify the difference in bits set of the
-addresses of srso_untrain_ret_alias() and srso_safe_ret_alias() would fail
-to link in LLVM's ld.lld linker with the following error:
+The vDSO getcpu() reads CPU ID from the GDT_ENTRY_CPUNODE entry when the RDPID
+instruction is not available. And GDT_ENTRY_CPUNODE is defined as 28 on 32-bit
+Linux kernel and 15 on 64-bit. But the 32-bit getcpu() on 64-bit Linux kernel
+is compiled with 32-bit Linux kernel GDT_ENTRY_CPUNODE, i.e., 28, beyond the
+64-bit Linux kernel GDT limit. Thus, it just fails _silently_.
 
-  ld.lld: error: ./arch/x86/kernel/vmlinux.lds:210: at least one side of
-  the expression must be absolute
-  ld.lld: error: ./arch/x86/kernel/vmlinux.lds:211: at least one side of
-  the expression must be absolute
+When BUILD_VDSO32_64 is defined, choose the 64-bit Linux kernel GDT definitions
+to compile the 32-bit getcpu().
 
-Use ABSOLUTE to evaluate the expression referring to at least one of the
-symbols so that LLD can evaluate the linker script.
-
-Also, add linker version info to the comment about XOR being unsupported
-in either ld.bfd or ld.lld until somewhat recently.
-
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Closes: https://lore.kernel.org/llvm/CA+G9fYsdUeNu-gwbs0+T6XHi4hYYk=Y9725-wFhZ7gJMspLDRA@mail.gmail.com/
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Reported-by: Daniel Kolesa <daniel@octaforge.org>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Suggested-by: Sven Volkinsfeld <thyrc@gmx.net>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1907
-Link: https://lore.kernel.org/r/20230809-gds-v1-1-eaac90b0cbcc@google.com
+Fixes: 877cff5296faa6e ("x86/vdso: Fake 32bit VDSO build on 64bit compile for vgetcpu")
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Reported-by: Shan Kang <shan.kang@intel.com>
+Signed-off-by: Xin Li <xin3.li@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230322061758.10639-1-xin3.li@intel.com
+Link: https://lore.kernel.org/oe-lkp/202303020903.b01fd1de-yujie.liu@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/vmlinux.lds.S |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/segment.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -529,11 +529,17 @@ INIT_PER_CPU(irq_stack_backing_store);
+diff --git a/arch/x86/include/asm/segment.h b/arch/x86/include/asm/segment.h
+index 794f69625780..9d6411c65920 100644
+--- a/arch/x86/include/asm/segment.h
++++ b/arch/x86/include/asm/segment.h
+@@ -56,7 +56,7 @@
  
- #ifdef CONFIG_CPU_SRSO
+ #define GDT_ENTRY_INVALID_SEG	0
+ 
+-#ifdef CONFIG_X86_32
++#if defined(CONFIG_X86_32) && !defined(BUILD_VDSO32_64)
  /*
-- * GNU ld cannot do XOR so do: (A | B) - (A & B) in order to compute the XOR
-+ * GNU ld cannot do XOR until 2.41.
-+ * https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=f6f78318fca803c4907fb8d7f6ded8295f1947b1
-+ *
-+ * LLVM lld cannot do XOR until lld-17.
-+ * https://github.com/llvm/llvm-project/commit/fae96104d4378166cbe5c875ef8ed808a356f3fb
-+ *
-+ * Instead do: (A | B) - (A & B) in order to compute the XOR
-  * of the two function addresses:
-  */
--. = ASSERT(((srso_untrain_ret_alias | srso_safe_ret_alias) -
--		(srso_untrain_ret_alias & srso_safe_ret_alias)) == ((1 << 2) | (1 << 8) | (1 << 14) | (1 << 20)),
-+. = ASSERT(((ABSOLUTE(srso_untrain_ret_alias) | srso_safe_ret_alias) -
-+		(ABSOLUTE(srso_untrain_ret_alias) & srso_safe_ret_alias)) == ((1 << 2) | (1 << 8) | (1 << 14) | (1 << 20)),
- 		"SRSO function pair won't alias");
- #endif
- 
+  * The layout of the per-CPU GDT under Linux:
+  *
+-- 
+2.41.0
+
 
 
