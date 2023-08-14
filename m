@@ -1,98 +1,135 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2050.outbound.protection.outlook.com [40.107.243.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8569448
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 10:33:32 +0000 (UTC)
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5256d74dab9so368636a12.1
-        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 03:33:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1692009210; x=1692614010;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uleSPCEhWYps/G0+jIIwOEt4SNkxmTT9PADtVhClwek=;
-        b=rTS5GaH3NUE2HLbWYWh8BgcIglEgniZVG5sZ4i4ZlrWV4u3eTvI0cLZfvvVSfau1I+
-         lnTS6cNyW+ANkwA+Vnrckw7gLIhib+rVsuu5AbdpmbOP2sJj2S+/L6a3qM3i7gBHYDxA
-         9idSnN7Qg1YijsTeei97RINzROPvhctXrmZ0Zk4CtwjdjcS7NSFgOu5laR04tdV8L6px
-         dFyQiAKJ69KxzeMmG19NmwnBX7WfxP9ko3qpng96T8yEK+I5O22i2sV0TjwYhfifYZKz
-         Dsl5XgaPjf4UcmRdWpKcGWEDOv1VA5CHiMdY7xJJv4z9lVpe/Aoj6RTFI/X1WddREMst
-         NIxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692009210; x=1692614010;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uleSPCEhWYps/G0+jIIwOEt4SNkxmTT9PADtVhClwek=;
-        b=hGMeg0mGCTHeQSANmMAd90aZOWM0koMylFj8qEI1OiwdrCKWsdbXQJ94QSPMvMPWH5
-         ef9tNzRjyt0l3JbwV0Z1mpcgBBuqRdtKbeNqqKwM2L+ien9bVk3OwFPbpoLgJ2QZqf6c
-         T1uKxDY6k2xokJoaTHsCOz4hJnK/RfR2OdaxxYgs9p+lHGX8cGf5UKwEU9ii877KgS77
-         HOU6sR+5PXoDs4ltajKLAZoea4Hqj+vHmHphiOIZnGqR4VC0YCXWAXAiv8bRYGI4/X3h
-         Fp0iOa7HQDPRvpEh6/VRyHY8qJqLRTPH/gmCZm9TFUb02oxRL7qqlIX4FToZiV6K6y/n
-         w6QA==
-X-Gm-Message-State: AOJu0YxtvjJq2KHhukG56lmGKVeqRBa+/DO+xafKtzqqttbdAGrBtdjf
-	KwV39LV+SY9KyeJYb3mhrjr3cWsz/tgp5JQeDV5FLA==
-X-Google-Smtp-Source: AGHT+IErMvltuuNvb0Ql0I6gloiuj/IOh2manbi6gz3jz50UDeRT996wuxrHMof9qaZT/ImGdm9FiGAhgx3uc212J3w=
-X-Received: by 2002:a50:fa8f:0:b0:525:440a:616a with SMTP id
- w15-20020a50fa8f000000b00525440a616amr4644893edr.20.1692009210277; Mon, 14
- Aug 2023 03:33:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A706C8F77
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 11:18:18 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jpp561gFPZyvUthMpFOlQrHdL8SB//WvDTJxYp379kABV4S/AIBkUUb8BzTTxqPGYNKv7TNIMfaG7iNVD5l615yYTSClOrP2pEAJCqeYh3TChvnFpYcmWDo0xuPzUgvo+xKqMiV2GSvdZG/Np1wbc8ASzCCmT9T4DoF2POKOkHdKlhyCXlVHuBQoyJ691/JePShzHdAoxjuWbu6DDqr9Kna4i9Wgopw3JUYad183RJb6sv/nJUqFSKLSCRxENH+p96swZWvU64H2Il9t3CoLTZctNb4JvVrFl3kwOM6N/cr9xYgQmUo5XYZPN1iIuOLXW33qQTLm0dHFt7rxRVix1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FbqboGGOY1QtWx0LD6R0d/DPLPgO1M3b0D8fQqMj29E=;
+ b=CvhUH8PUt8j+j9TZEi3OmjhmWIKQA+m2dRD33HRTa0N+QQZR6QOYGVkH5OLqy9zeQpL3V0UGkvfaOHTmEHJMPqpEJYI+WlVJmBYzKz4j9C/kW1ODZ8N//5yK8OoZhauFJj1NmaqxKUzpMuwbunfXimr/UMOVlOjH0G6ldatSdCE7AQ+NLqiV8qqmZbOg72ctHTxDK4wObXFxiR/3kAh0dAA6xZPx+IDPPyvJcEBFjItzB9eXQwq7oT0qj/ZXSN+LPNre63+Ws7uc04mBTsQTcqOp+MBrzQ2TMWCiUB6tDJoZg67rR4s7vXZ/dYFuv2RO+JQEBe8U18tNqUn4BqyWWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FbqboGGOY1QtWx0LD6R0d/DPLPgO1M3b0D8fQqMj29E=;
+ b=UrazDNrkjdjI+dtmaOljHrl/q88f2tXAtEumS2e6liRiCf6qxOrWGEum2SMSHklssyKaQT6M0SXApDOUncGjdMJku14UWzrt0m89HpXIw56spfarfjfGGDOcxDNVxb+oBZyAkAz9SuJPbnR+Gx4zjyqX8TQNyaA/FtjFbKciWLnwciroyXb51iBVjDmND71seShfzOsqvyR3X8JaNeakGI3oSVCWoogY7KNtrJ16tbVDUogFSgKn6f0UOUmrZWDlJA+ceHhZGVujwIH1GYPKTxLehtvcQ/aMX4CG1iNLXCSKzsVwocYIiGM/ivRZSLSNG2M2+kT8Awi6FPyzYnSmyQ==
+Received: from PH7PR13CA0017.namprd13.prod.outlook.com (2603:10b6:510:174::13)
+ by DM8PR12MB5445.namprd12.prod.outlook.com (2603:10b6:8:24::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6678.26; Mon, 14 Aug 2023 11:18:16 +0000
+Received: from SN1PEPF0002529F.namprd05.prod.outlook.com
+ (2603:10b6:510:174:cafe::c4) by PH7PR13CA0017.outlook.office365.com
+ (2603:10b6:510:174::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.13 via Frontend
+ Transport; Mon, 14 Aug 2023 11:18:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ SN1PEPF0002529F.mail.protection.outlook.com (10.167.242.6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6699.12 via Frontend Transport; Mon, 14 Aug 2023 11:18:15 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Mon, 14 Aug 2023
+ 04:18:05 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Mon, 14 Aug
+ 2023 04:18:04 -0700
+Received: from orome.fritz.box (10.127.8.12) by mail.nvidia.com (10.129.68.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Mon, 14 Aug 2023 04:17:56 -0700
+From: Thierry Reding <treding@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
+In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+References: <20230809103636.615294317@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230813211718.757428827@linuxfoundation.org>
-In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Mon, 14 Aug 2023 19:33:19 +0900
-Message-ID: <CAKL4bV4cCVqYHyf01=ZBTgX3-dU5Gh8NZxAGnYD__xWmACR=Wg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/149] 6.1.46-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <c9ab182a-0dda-4e03-a55f-0b8b33388881@rnnvmail205.nvidia.com>
+Date: Mon, 14 Aug 2023 04:17:56 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002529F:EE_|DM8PR12MB5445:EE_
+X-MS-Office365-Filtering-Correlation-Id: b22bba77-6519-492c-d5b5-08db9cb827a4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	UHv1wP0syJdYDt5Oov3t6RE5XhmBCoLi1U+2MQH3J//owcAUNBGGBRISvkTAYfjHuIT2ZvTVdjhDG7J77E/mVIaPCBK317i52N5WxW6N1KohwFxBrqQq7c+B21b0Hm4upXOojWKfx2TxFPuk2gOaPBxjBm+GPp2/61evZ7fU/QYQXUyHdB14h39wXv53bbNYf4Zl8gj40tGn0mt6UL1jrWilanCpxdRgrftDKIVuCFXVUR4UXQ3p4Yg5JXbsS0mABBgNN22hZ+YvF+2oM2aLvv4/cq/zpL0ybkwyJXC/xOCFrDN9eZvlMx/BHpU4PszY88jaFByOs7bnMu0FK/URSKeFBxyQ4KtoHxqQqJcfT4zcBGc9FUHQDFHfAYH9ZO+8zL3ofCxk4Cd4JvRX8OJoWBl+wo5vJDRsWRMSaiLZn/2EWGuo5uO86UfbcaxEOpkzlPYiUFvMSsYrCUZIwe5BKA8nXu4Jzg1sKSJqAyhki2tcFiAPY4rnHFpBuYMNXZfBg51h7DIyuHIO93cLtBkvFlDoGnNW9Du7Z/o0dlifHqa01q6dleBPm6BMOBOn856kGZwe8h8rA/GricgR91M0Fh+6wDK7u6j5cQ9u0k8oqXdPixKw2v7D4/dQw6lfvVNcOuvq4HSjrS8H+KcWnl3Jesvy0UeUua06om9t6fKK8WXJop1bVKzA67LapT0V4OOiEDRmWdNJ+eQeDcYGJGWWyJDis6OT6BIkcc3hWE5I9zRIr9RLXuACbiQ7mT3yH2HLY2KmoRxPRJVfjaWZ4iHyv/k0SiSdqIwfEO1pkCf9Jxs=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(136003)(396003)(376002)(346002)(39860400002)(1800799006)(186006)(451199021)(82310400008)(36840700001)(40470700004)(46966006)(478600001)(966005)(110136005)(70586007)(70206006)(26005)(336012)(426003)(2906002)(40480700001)(7416002)(8936002)(8676002)(54906003)(316002)(4326008)(41300700001)(5660300002)(7636003)(356005)(82740400003)(86362001)(31696002)(36860700001)(47076005)(40460700003)(31686004);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2023 11:18:15.4524
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b22bba77-6519-492c-d5b5-08db9cb827a4
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF0002529F.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR12MB5445
 
-Hi Greg
-
-On Mon, Aug 14, 2023 at 6:34=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.46 release.
-> There are 149 patches in this series, all will be posted as a response
+On Wed, 09 Aug 2023 12:39:47 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.45 release.
+> There are 127 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+>=20
+> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
 > Anything received after that time might be too late.
->
+>=20
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.46-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.45-rc=
+1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git l=
+inux-6.1.y
 > and the diffstat can be found below.
->
+>=20
 > thanks,
->
+>=20
 > greg k-h
->
 
-6.1.46-rc1 tested.
+All tests passing for Tegra ...
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+Test results for stable-v6.1:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    130 tests:	130 pass, 0 fail
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Linux version:	6.1.45-rc1-g02a4c6c322d1
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Thanks
+Tested-by: Thierry Reding <treding@nvidia.com>
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
