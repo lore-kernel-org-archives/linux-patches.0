@@ -1,40 +1,54 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3901D528
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 21:07:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=mKonTCdLfpftC39X0RxcU5vrM/gZaTRV3WAv3PeJxKU=; b=r1zGp4cyztm3cyDrkZa6P4lbcz
-	J1A3caAUbRKvsDQD8zVQqAKyZxV/8CWackctoAFcEbLIcmQPAz9h6e/Ruy0Cb7JlYHZF9t7LR8nD7
-	JdUm2mJLR2OAku/qYV/6t06HvdJFrpsJo8jibZbCv2VIMLL7kXGQW7kwwKYt6UwSPWTk=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1qVe5t-0045SL-6U; Mon, 14 Aug 2023 22:23:17 +0200
-Date: Mon, 14 Aug 2023 22:23:17 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Michele Dalle Rive <dallerivemichele@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Davide Rovelli <davide.rovelli@usi.ch>,
-	rust-for-linux@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [RFC PATCH 0/7] Rust Socket abstractions
-Message-ID: <0e91e3be-abbb-4bf7-be05-ba75c7522736@lunn.ch>
-References: <20230814092302.1903203-1-dallerivemichele@gmail.com>
- <2023081411-apache-tubeless-7bb3@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320CACA46
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 21:27:57 +0000 (UTC)
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6bd3317144fso2659892a34.1
+        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 14:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1692048477; x=1692653277;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h2Gb6QdAQZGLkPrUcUrS4E1/hnWfvRNciGalZbqgQQ4=;
+        b=i11OJNbYHC5AYqDBR2eu2fGiK9DqeYAVHKwAtBqDqVczemPMwMq9yxj0tSz8BMAJy9
+         Td5JKgLF5NR7KOz2qv7DwuVONvciQESKh8dLyfB6SZTY8qDJFQP3y0mQ1NbREL5rTC4Z
+         F4fAQra83kQoWFJkYnHg+4p6ZlIDUtVKUTvZA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692048477; x=1692653277;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=h2Gb6QdAQZGLkPrUcUrS4E1/hnWfvRNciGalZbqgQQ4=;
+        b=LDzMEgfwtGBaoawmKamBitX1sB56PVJOqxeK1loGr+gWrI83cOahk0n/YERuRJrJy3
+         KplxUEe44bxcyhdwZ1UpDH79XuB/ctAIm1vUoOkVu6DFTCYz2lcxgAu8yIELMHBzsh15
+         dkxw7UAJVnDFtb3q8aACit27TtMJPAoySxD/XGHrh+XaAeE9CpwKTeWcyolstwNXjGlj
+         vYArgHvmIoTp44U+C6mSwXgLF9L7IdZe0eLdlCHfAuZxWk7Owy9qpa2PhF3AqJp9vBYl
+         R1r/6TMKBwHN3Z9gYQdhKXadvQ9wk6EzEne+az6h+cfFZyT8cZoLiCNX2Hc1hx+yWlAe
+         G9Zg==
+X-Gm-Message-State: AOJu0YyTn62Mt7sSGkfsKNrv/qR3phy2M8jwfwF14qRJey5rXpRcsju0
+	Jeq2tPxnb1ep1JuxNhn6mzd4ig==
+X-Google-Smtp-Source: AGHT+IF5Big4bba0sH4Y/J9B79lhl7z/AYAs28CvbkFA9qljvEtUNhSestPpkhMBziUHW7zBNaIktw==
+X-Received: by 2002:a9d:684a:0:b0:6b2:9bdb:a84a with SMTP id c10-20020a9d684a000000b006b29bdba84amr10662554oto.32.1692048477015;
+        Mon, 14 Aug 2023 14:27:57 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id d27-20020a0568301b7b00b006b1570a7674sm4708854ote.29.2023.08.14.14.27.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Aug 2023 14:27:56 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 14 Aug 2023 16:27:54 -0500
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 6.4 000/206] 6.4.11-rc1 review
+Message-ID: <ZNqcWhqouBYey/8g@fedora64.linuxtx.org>
+References: <20230813211724.969019629@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,48 +57,28 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2023081411-apache-tubeless-7bb3@gregkh>
+In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 
-On Mon, Aug 14, 2023 at 05:25:49PM +0200, Greg KH wrote:
-> On Mon, Aug 14, 2023 at 11:22:55AM +0200, Michele Dalle Rive wrote:
-> > This patch series is intended to create Rust abstractions for Sockets
-> > and other fundamental network entities. 
-> > 
-> > Specifically, it was added:
-> > - Ip address and Socket address wrappers (for `in_addr`, `in6_addr`,
-> >   `sockaddr_in`, `sockaddr_in6`, `sockaddr_storage`).
-> > - Socket wrapper.
-> > - Socket flags and options enums.
-> > - TCP and UDP specific abstractions over the Rust Socket structure.
-> > 
-> > This series is a RFC because I would appreciate some feedback about:
-> > - The structure of the module: is the division of the files and modules
-> >   appropriate or should it be more or less fine-grained?
-> >   Also, should the `net` module export all the structures of its
-> >   submodules? I noticed that it is done in the standard library.
-> > - Whether the documentation is comprehensive enough.
-> > - A few other specific questions, written in the individual patches.
-> > 
-> > I would greatly appreciate any kind of feedback or opinion. 
-> > I am pretty new to the patch/mailing list world, so please point out any
-> > mistake I might make.
+On Sun, Aug 13, 2023 at 11:16:10PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.11 release.
+> There are 206 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The best feedback is "who will use these new interfaces?"  Without that,
-> it's really hard to review a patchset as it's difficult to see how the
-> bindings will be used, right?
+> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.11-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-There is a long standing tradition in Linux, you don't get a new API
-merged without a user.
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-There is not too much use of in kernel sockets. Network file systems
-like NFS, and SMB are one. These need to be careful with memory usage,
-you could be busy writing blocks out because the system is low on
-memory and trying to free some up, and asking for more memory might
-not work.  Sending kernel log messages to a server. But that needs
-care because of the different contexts it can be used in. Without
-knowing what it will be used for, it is hard for us the point the
-special considerations which need to be made.
-
-So please also let us see the code using this API.
-
-	Andrew
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
