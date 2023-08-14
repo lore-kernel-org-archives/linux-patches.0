@@ -1,36 +1,36 @@
 Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CCABA36
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 13:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E4BAD29
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 13:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1692018012; x=1723554012;
+  t=1692018052; x=1723554052;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=DE9xX4dYWtBq0Su8RLmTH6uQZ23grIVCeSguhcWzu0U=;
-  b=X8E+dr7e74K3s1smJ0yZpDLqQi35oYs7Hjgcv3nf0DExg7JcdjKIpff8
-   Gt5Y2qq+5E2RfaRJsBaZCueqbjI9ZcEMcAfq+BcAcIWnEjL6m4+IUpKBT
-   gyMoa3RZpCnC+boJEBUlMwHbIfN9jahYrJoeDrkru63p7qL51c3rgFl8I
-   Wg/INcs4CznLMLvAFmXZGwQ3GHLs3k0ETXj1mT2fCCS6HJ7qR8uduqcb6
-   r5hHfxp3FeGUG3hlfXLVG/dqLWASympgtm0BAiKnKfBy0oARC0PZxdqVx
-   LdjgWeikrObxfrf3/tFCeSiBAm3u2H/ivLWbOgsiN6im6eqUG3ON8Frc+
-   Q==;
+  bh=x6U2lciyWZv16l3tw5CDh4m8yiw1CZFrKicNiibj/ZU=;
+  b=iz4Rh9+NKFMTXEapEiBEs9CbBKpBhy7cvH/kZl5eEnSTmdQxHhWV2H/h
+   sNk4M/GRfd5Qn7t23fuyrmPpp9PJ0YpbSHU7sqokcVd20dlB2+C/bikjL
+   jgvPlA7R3GTaE1kMiT3zTMS1mCCDQGjyjsD4jO1OBT8D7HBuhnu5tyANx
+   BQ1kV2ElOfCAqIYxPF2h7aRhJEcltMMCI82xz+Dxmkqs+1kodevl+M48U
+   S6z+4fqTza5GT0d4lV5wZHjtlbPADa53/hGzFGcyjd46UuG9xaImywdY9
+   UDISS8h7LYBSxgFoW+8bynnQrzbXcRg/M4xkmGVVUTDY4DfcrnTLLCPU0
+   w==;
 X-IronPort-AV: E=Sophos;i="6.01,172,1684825200"; 
-   d="asc'?scan'208";a="228827133"
+   d="asc'?scan'208";a="229705827"
 X-Amp-Result: UNKNOWN
 X-Amp-Original-Verdict: FILE UNKNOWN
 Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 14 Aug 2023 05:59:02 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
+  by esa5.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 14 Aug 2023 06:00:51 -0700
+Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
  chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Mon, 14 Aug 2023 05:59:02 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server (version=TLS1_2,
+ 15.1.2507.21; Mon, 14 Aug 2023 06:00:50 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex04.mchp-main.com
+ (10.10.85.152) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Mon, 14 Aug 2023 05:58:59 -0700
-Date: Mon, 14 Aug 2023 13:58:21 +0100
+ Transport; Mon, 14 Aug 2023 06:00:47 -0700
+Date: Mon, 14 Aug 2023 14:00:09 +0100
 From: Conor Dooley <conor.dooley@microchip.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
@@ -39,9 +39,9 @@ CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
 	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
 	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
 	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
-Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
-Message-ID: <20230814-tamale-persecute-6878e2892a57@wendy>
-References: <20230809103636.615294317@linuxfoundation.org>
+Subject: Re: [PATCH 6.4 000/206] 6.4.11-rc1 review
+Message-ID: <20230814-jimmy-march-7defc9fff112@wendy>
+References: <20230813211724.969019629@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,35 +49,34 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="T26R+JCjILvdL4AG"
+	protocol="application/pgp-signature"; boundary="9y0SwpsL8LCJz6Od"
 Content-Disposition: inline
-In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
 
---T26R+JCjILvdL4AG
+--9y0SwpsL8LCJz6Od
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Aug 09, 2023 at 12:39:47PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.45 release.
-> There are 127 patches in this series, all will be posted as a response
+On Sun, Aug 13, 2023 at 11:16:10PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.11 release.
+> There are 206 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Nothing looking amiss from here..
 Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
 Thanks,
 Conor.
 
---T26R+JCjILvdL4AG
+--9y0SwpsL8LCJz6Od
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZNok7QAKCRB4tDGHoIJi
-0pJtAP4iI7Upu2x9EmSOWEdkMF8xma+q4BC/Pgcob/zBUzNNmgEA3gjThIDvdrId
-3V+WLAx1GiySOqCFi2p1qNuh59FXmQ8=
-=nF15
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZNolWQAKCRB4tDGHoIJi
+0tdaAP4i3nafwH/sM8PrBKf8CRaa139GwZ01W000uBSNlQJK9gEAxIiLslXk7hig
+9fmzNbyg31OxBqnPG+99Y9OGMiP2QAI=
+=MsV5
 -----END PGP SIGNATURE-----
 
---T26R+JCjILvdL4AG--
+--9y0SwpsL8LCJz6Od--
