@@ -1,68 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ADDC137;
-	Mon, 14 Aug 2023 16:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E53C433C7;
-	Mon, 14 Aug 2023 16:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E583DC2FF;
+	Mon, 14 Aug 2023 17:33:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108C6C433C7;
+	Mon, 14 Aug 2023 17:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692031970;
-	bh=S8/38gOX8CEBqpB9alrToiwydnTBozTScdBE+KGfjnc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=txcWCsP8BvaHjh2RYmoe7+RTCg0O53+D1jmlGgIBOBq9VC2ckkSWUXdoUM/aLXN6J
-	 i2gV1zWw0rlBkNU0i43AzAopUr5Uw8voedWq/fF1K4giCWiNUtokKBUbRZNcqD6dTS
-	 TA1rejJzKREjB927mRsWauqHeM5oz+IXbPk9m4aUtoGsh8Lyl+/n2PkmLeB/zDZFI3
-	 TU+oLFWBOPZP2kpl12Byg5Hi5rv8zJAnmTpUObZNYlyWxtjGzNCaMMCpzRhOYRb6st
-	 3psq2Q4f43NQMM2v4nMPj3kanRCCUi/ywS/2oY1P3thPtfbizvDB/6xhnkApd1fSzC
-	 r1fZjGAVeUaFQ==
-Date: Mon, 14 Aug 2023 09:52:46 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	clang-built-linux <llvm@lists.linux.dev>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Sven Volkinsfeld <thyrc@gmx.net>,
-	Daniel Kolesa <daniel@octaforge.org>, x86@kernel.org
-Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
-Message-ID: <20230814165246.GA911700@dev-arch.thelio-3990X>
-References: <20230809103636.615294317@linuxfoundation.org>
- <CA+G9fYvQdQqTqCgbS4sit_Y2AtKtDiWMOkGZjoeSEFhc=M_jKw@mail.gmail.com>
- <078d6e3d-9572-a624-2c5a-e2d58473e6d0@roeck-us.net>
- <20230811041339.GA193223@dev-arch.thelio-3990X>
- <20230813110254.GDZNi4XhHjY4xlNdBJ@fat_crate.local>
+	s=k20201202; t=1692034425;
+	bh=yUg04tR1pN7v+DP0lF/LHfOCynWXpMf32x2afCs8lm8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tuwpLSay9CE/IcWDxy6SXqmal2K80if10co5deDTmGKEk+X0cNn0V7/E4mzAe1MeX
+	 YwCbyTyBZp6ShxhD0wN8656z2V40S/AdIyXcGa6orTlA7RNHei6fmnfe1mj1fnPh9s
+	 QY56Dn1BEPxv9jfIddp5jLd3lTHkzGLShrzVKl84Hp2pSpZ+w4bRCHrmtEoD+EhHM6
+	 vPj8qfLz1w1ZD59HTgjK4O9Y1MLX1O3ozIBEz0+8X1UAgEgpI4cy0sAZaH8vRaWc60
+	 4DD20HG1CcVIYxe+1Z0WmQju9jj1ZX3vSdzVwLR454+O7g0gEO3DqFNEsYhtnOeJQr
+	 Iekjf17yuFHwQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 00/89] 5.15.127-rc1 review
+Date: Mon, 14 Aug 2023 17:33:42 +0000
+Message-Id: <20230814173342.9798-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230813110254.GDZNi4XhHjY4xlNdBJ@fat_crate.local>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Aug 13, 2023 at 01:02:54PM +0200, Borislav Petkov wrote:
-> On Thu, Aug 10, 2023 at 09:13:39PM -0700, Nathan Chancellor wrote:
-> > 1911 is still being investigated (some additional eyes on it would not
-> > hurt).
-> 
-> I'm hoping that we can take this one:
-> 
-> https://lore.kernel.org/r/20230809072200.543939260@infradead.org
-> 
-> which should resolve this issue, right?
+Hello,
 
-Yes, it does, as least for mainline and 6.4. The backport to 6.1 seems
-hairy (due to a lack of call depth tracking me thinks). It may be worth
-taking Nick's change there for simplicity's sake but I'll let y'all make
-that decision.
 
-Cheers,
-Nathan
+On Sun, 13 Aug 2023 23:18:51 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 5.15.127 release.
+> There are 89 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.127-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] c79c1253de29 ("Linux 5.15.127-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+# selftests: damon-tests: build_i386_highpte.sh
+# .config:1341:warning: override: reassigning to symbol DAMON
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+# selftests: damon-tests: build_nomemcg.sh
+# .config:1342:warning: override: reassigning to symbol DAMON
+# .config:1352:warning: override: reassigning to symbol CGROUPS
+ok 15 selftests: damon-tests: build_nomemcg.sh
+# kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
+# the log is at '/home/sjpark/log'.
+ [32m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
+_remote_run_corr.sh SUCCESS
