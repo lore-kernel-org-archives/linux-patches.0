@@ -1,90 +1,131 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346F5C13D
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 18:33:45 +0000 (UTC)
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-77ac14ff51bso180862639f.3
-        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 11:33:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB71DDB7
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 21:06:47 +0000 (UTC)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-51d95aed33aso6437461a12.3
+        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 14:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692038024; x=1692642824;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hA1c32nPoqRtqKf1PeXAkYTakp7BkAfWNw6eIzfC7MU=;
-        b=SoApQCrCfC7Mt89LgZDoWi1W1VWVv/sBUPllr/NAiHmv7RJREjec9tUvnmqf2ONb8f
-         FTuhY+ZCQCL8UYzmbahUniwGqy9YqArSKiJl8bhPxu20rR5ny+2QKQ5SoRW3QM0ZWblX
-         Jgxkc7ANJnqnsJBhyhBZJxtdDsXjTKcAgST/bKI1YIV4/o5gwyC6qEL6Y5eTcVvr27ma
-         bgu1Yv2E8bVcwsGCvhWYVmx32odVL8jGMF+lYn0OyyJnr4K62jV4/JXnO+0AKuJFWmoQ
-         y4JPrFchLR/ie2g+dJKkBXb1lZBuQhW1Wb8oR4zBD9tIjVumkKegnj620ntCo7XeKWwN
-         rCaA==
+        d=gmail.com; s=20221208; t=1692047206; x=1692652006;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BGnQRNiyVwSNbQlh18XOyksehaxGg2fPJZTp5rmqjrc=;
+        b=hZy9jMAbJqx5t0whylgnWV3+kLvWLwn75nVX8i+sVfmXzgf2V+MQjfmsfVRUErdqD3
+         BWL3R4tCdvPiGfsaYcod5T+8zgNKZvxmXEvjA4DGaoFwVzOuk30VvS6LwDj0s3MqZDEz
+         6y3qQ37K65yj/lgncMXfmhgEPMTOqZBmWrJrPJ4ZrPG8GPFuXdmQ0myDE1e1QCqzt+DK
+         UI3S4T40JH2BADgpT+1iU13CsH7Gwy0efEqBaDhrE8DiCV9pEhyiSofKuwxklmNivMjS
+         x8eTubX0ZcN9+5xeSWyT7g5Cebv1wUmiyd1QUqaaEEMWHtzzN6gUb/LijcpU/G7Gm0c1
+         T2WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692038024; x=1692642824;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hA1c32nPoqRtqKf1PeXAkYTakp7BkAfWNw6eIzfC7MU=;
-        b=DuAoz5aBdJcy9S9hhrOheqalMFeq2u/Rf5WmwZNK/DI99S+CCenQdmOWtDa/k0VRVG
-         +fWXPhbgTyKld6H61RVxi5fp07Utt2AlWecJjehCR8x6AeuK148rX8zmYtqohw7VBcwK
-         z+WhLTSt5GivRhC/ekco5yjSWMRv6N2U1Kmk8K9VTlr22J2Y1gilnBX86MAjjZl22pqg
-         ksNz4/y4MD4e2lX7WFvFVkqwJGIofwErhl7aaL9vyvqqrAz+9wgSn9YS3ipgB2Wq132v
-         MD746NaHJ7x8a1iDx4XEArf/yE+kJK2pyoNZRC4RsuspvykAOajBadc9uRHsyel+QGQ9
-         mszw==
-X-Gm-Message-State: AOJu0Yyp3gHAuUaR7r+jVR87up7h/s5QGkZgl/5SV1qWmrR006qXEjnD
-	KUEaskYgthmBL8H9CNbFsIA=
-X-Google-Smtp-Source: AGHT+IGInvIBfbQ8LylVFc5S+ya7eq8omF2ey3IsarSvH5b8Avvbz5J1tuP4Xh+uIsPEnn4nNDa1mg==
-X-Received: by 2002:a6b:4a17:0:b0:790:aedd:3e81 with SMTP id w23-20020a6b4a17000000b00790aedd3e81mr12348202iob.8.1692038024176;
-        Mon, 14 Aug 2023 11:33:44 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id u2-20020a02c042000000b004310d570d6dsm3193100jam.94.2023.08.14.11.33.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Aug 2023 11:33:43 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 14 Aug 2023 11:33:42 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/149] 6.1.46-rc1 review
-Message-ID: <ba8db9d2-2bf3-4b23-97c1-1db07f93644c@roeck-us.net>
-References: <20230813211718.757428827@linuxfoundation.org>
+        d=1e100.net; s=20221208; t=1692047206; x=1692652006;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BGnQRNiyVwSNbQlh18XOyksehaxGg2fPJZTp5rmqjrc=;
+        b=JJDfyFA711TMOYZJ8oghtAWYJt7q/NKmGTe1cuGViMDRTtjc3+hY90m4CLSeRE4kwt
+         tQu7ODeasjoBFxb7wmD1NNsBBm5gi+byjN4liJynCYIOrprruGhf8++TwYecKLO3o8ho
+         BvflLSn0qINiR8NQGeuzz3eg2Ujy2NcYswrxT5DFLSF5oomzrr1WN3EaqLWIbV5iiHiF
+         vqvcBsExeQ6QYqySjdBJKpflYlvC6eC0Me4o9/CMUNiwGCEOOzTjOYmnQPY6Wia6q0gm
+         b9KFn8ExIDVB5yf8n89l1I21+o9ebxIcal1jPHJoqZHbhzg5b6V0fb+ni3wuVtu79ukE
+         kaWg==
+X-Gm-Message-State: AOJu0YyOqywj3e1HFJvsCtAo8JN3MClAa1pnN0XjunvoJbKee1VXy4S4
+	2vy/mdXdHXZKyGr0P4Fa+I3ycRewngbCkx+9w/0=
+X-Google-Smtp-Source: AGHT+IEgw1idU08AfDbthDkWP0ZE+35xEq4Rs685OP6MwdbFIqKicWP8OcHH9ADH2iu2pdS0K1x+C0mmzIyRFIyaFQs=
+X-Received: by 2002:a05:6402:141:b0:522:b112:6254 with SMTP id
+ s1-20020a056402014100b00522b1126254mr7482965edu.4.1692047205936; Mon, 14 Aug
+ 2023 14:06:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230813211718.757428827@linuxfoundation.org>
+References: <20230814092302.1903203-1-dallerivemichele@gmail.com>
+ <2023081411-apache-tubeless-7bb3@gregkh> <0e91e3be-abbb-4bf7-be05-ba75c7522736@lunn.ch>
+In-Reply-To: <0e91e3be-abbb-4bf7-be05-ba75c7522736@lunn.ch>
+From: Michele Dalle Rive <dallerivemichele@gmail.com>
+Date: Mon, 14 Aug 2023 23:06:34 +0200
+Message-ID: <CACETy0=V9B8UOCi+BKfyrX06ca=WvC0Gvo_ouR=DjX=_-jhAwg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/7] Rust Socket abstractions
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Greg KH <gregkh@linuxfoundation.org>, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Davide Rovelli <davide.rovelli@usi.ch>, rust-for-linux@vger.kernel.org, 
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Aug 13, 2023 at 11:17:25PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.46 release.
-> There are 149 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
-> Anything received after that time might be too late.
-> 
+On Mon, 14 Aug 2023 at 22:23, Andrew Lunn <andrew@lunn.ch> wrote:
+>
+> On Mon, Aug 14, 2023 at 05:25:49PM +0200, Greg KH wrote:
+> > On Mon, Aug 14, 2023 at 11:22:55AM +0200, Michele Dalle Rive wrote:
+> > > This patch series is intended to create Rust abstractions for Sockets
+> > > and other fundamental network entities.
+> > >
+> > > Specifically, it was added:
+> > > - Ip address and Socket address wrappers (for `in_addr`, `in6_addr`,
+> > >   `sockaddr_in`, `sockaddr_in6`, `sockaddr_storage`).
+> > > - Socket wrapper.
+> > > - Socket flags and options enums.
+> > > - TCP and UDP specific abstractions over the Rust Socket structure.
+> > >
+> > > This series is a RFC because I would appreciate some feedback about:
+> > > - The structure of the module: is the division of the files and modules
+> > >   appropriate or should it be more or less fine-grained?
+> > >   Also, should the `net` module export all the structures of its
+> > >   submodules? I noticed that it is done in the standard library.
+> > > - Whether the documentation is comprehensive enough.
+> > > - A few other specific questions, written in the individual patches.
+> > >
+> > > I would greatly appreciate any kind of feedback or opinion.
+> > > I am pretty new to the patch/mailing list world, so please point out any
+> > > mistake I might make.
+> >
+> > The best feedback is "who will use these new interfaces?"  Without that,
+> > it's really hard to review a patchset as it's difficult to see how the
+> > bindings will be used, right?
+>
+> There is a long standing tradition in Linux, you don't get a new API
+> merged without a user.
 
-Build results:
-	total: 157 pass: 157 fail: 0
-Qemu test results:
-	total: 521 pass: 519 fail: 2
-Failed tests:
-	arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:rootfs
-	arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:rootfs
+Sorry for not being clear on that.
 
-As already reported, the failing tests are crashing in f2fs code.
-This bears the questions 1) should I stop testing f2fs and 2),
-would it make sense to mark f2fs as broken in v6.1.y ?
+These abstractions are meant to be used by modules: having them, modules
+can start using the kernel network functionalities through a first, high level
+interface.
 
-It doesn't seem to make sense to keep testing code which is known
-to be broken.
+Since there is currently no network support in Rust, this patch series
+represents a first step to provide access to networking to modules.
+Sockets are just the highest layer of the network stack: the goal would be
+to port structures deeper in the network stack, to give modules more
+access to the network api. However, you need to start somewhere.
 
-Thanks,
-Guenter
+>
+> There is not too much use of in kernel sockets. Network file systems
+> like NFS, and SMB are one. These need to be careful with memory usage,
+> you could be busy writing blocks out because the system is low on
+> memory and trying to free some up, and asking for more memory might
+> not work.  Sending kernel log messages to a server. But that needs
+> care because of the different contexts it can be used in. Without
+> knowing what it will be used for, it is hard for us the point the
+> special considerations which need to be made.
+>
+> So please also let us see the code using this API.
+>
+>         Andrew
+
+The lack of these abstractions was noticed in the context of a research
+of the usability of Rust for the development of consensus algorithms using UDP.
+Any kind of kernel module requiring network support can take advantage
+of these socket abstractions, from a tcp echo server to any kind of complex
+networking kernel module.
+
+I could add an example kernel module in `samples/rust` showing an example
+of usage of these APIs.
+
+Thank you for your time,
+
+Michele
