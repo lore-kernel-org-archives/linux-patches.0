@@ -1,99 +1,128 @@
-Received: from mail-41104.protonmail.ch (mail-41104.protonmail.ch [185.70.41.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CB68F53
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 08:55:28 +0000 (UTC)
-Date: Mon, 14 Aug 2023 08:46:20 +0000
-Authentication-Results: mail-41104.protonmail.ch;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="k2qN/Jx4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1692002785; x=1692261985;
-	bh=NUvcaCDg0HGc9dhZ00uXG0esOB9jrNJkMRhz0/WtxiA=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=k2qN/Jx4xLT8u3/WhAEHUGylS53aNDn/BAIJT49zave/Xo1ylAlaE5tBfBoNKLQl+
-	 YH+buY4ZZlXuuDIhx0sALudnBY7gXbfUrmMY3lV2MHHgEe5VySOHUXxc43ypZ8xcmu
-	 ToyTu+U7yqADqq04WplwdcK4tOZgO0rWf8+9/PVT2bWYF61cDSvI9aWCQpYN8QZ6+q
-	 r+wO8ZEP/oSPJeCfDPBxhyFwGEOx3bAGXz0Jh4z+ZUv7v6U+8yEh89cogCqyiLJrnQ
-	 c5q1+/3377N+I8cOUG4PgUHnuapwHF7cb/+Tm7Wgkf0w7omIskyoRL88uEsVHT8uCa
-	 0AnqL3+AlCRyg==
-To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: [PATCH v4 00/13] Quality of life improvements for pin-init
-Message-ID: <20230814084602.25699-1-benno.lossin@proton.me>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1878F881F
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 09:24:25 +0000 (UTC)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-4fe389d6f19so6331175e87.3
+        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 02:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692005063; x=1692609863;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FEq4tMvABy02Aj9KhKkOBmN5DwD6++P6cc/KYaesST8=;
+        b=kwJW+qTe7U7dR7ZSg1LyK1C3o89JFyEyaFt1UAYxszT7fWnRwYnXIomXUCuxDp55XB
+         BU/B0DmyB3KlHrvIh5Yf3ltNlW5TUBqYFJhH6SYgRbIucYFZIbpGs7DL8U6NFrap05oI
+         knmO+wvsQKcPXvq1HaIZm6+xzAOD4lRy5tz4xRhHFgxKdZqPCHn62GNWjht/XE0f83oj
+         rElHr5iLIJdYTAoAVXWUhSt5h0Euwh6UOfSClUA2iCCnfYtFMYSM9Uxx1HUdq3dEIo9w
+         XewgyAcJXgCs2brD+cKd7HoIJomWNAn7K4b9pisaHWyy8u8Kp/CFyFNYkyjT8rUiijN5
+         EvjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692005063; x=1692609863;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FEq4tMvABy02Aj9KhKkOBmN5DwD6++P6cc/KYaesST8=;
+        b=TlJPDUoZtvLkAoJw4i6lUn0X4DW318teX+op1spGCacd0q16QxZcla2TzGCqln28Fr
+         FTxAu5H5gGAmQt3APnN/TboDbUeiwCQeLkPZtLdkoM8fVtyzU5FR4UrJ8i5e41UNgE+X
+         nWprtVs9jfmvXRIjtbOk19sGtKqt+k4oeIpx4cKnHVSWavmUrIIpS3uPie+ORBb2D10c
+         ANtuY8f90Ocrn3IydNHt8s3WwD8cKE2xRSojIl6MIk3nEZtG2jAfa8HoTHXWbHuKb+9A
+         cIDz2qZIAOon7q25B3QFwi8Bhh0L3oZm1FAb6bac7e1qjz3NMCzY1uxtqWZP2Cy5olXb
+         uARQ==
+X-Gm-Message-State: AOJu0YyzuroICpeRwSiZR9YBaHOI2VeFZFVVft8SDGb2+4f1tmCSb9EV
+	sMI1kYsF4SjCRnQeq/037L0=
+X-Google-Smtp-Source: AGHT+IGto0XKxg0a783A24zi+6GrrpKv8JVYmqks8BIDAX2izp8hCHaRxaHrtMeiurgnw2hG7qYyXg==
+X-Received: by 2002:ac2:5bc8:0:b0:4fb:9d61:db44 with SMTP id u8-20020ac25bc8000000b004fb9d61db44mr4791668lfn.12.1692005063397;
+        Mon, 14 Aug 2023 02:24:23 -0700 (PDT)
+Received: from micheledallerive.home ([2a02:1210:6051:ec00:61e9:3767:83a6:9bd9])
+        by smtp.gmail.com with ESMTPSA id b5-20020aa7c6c5000000b005224d960e66sm5314879eds.96.2023.08.14.02.24.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Aug 2023 02:24:23 -0700 (PDT)
+From: Michele Dalle Rive <dallerivemichele@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Davide Rovelli <davide.rovelli@usi.ch>,
+	rust-for-linux@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Michele Dalle Rive <dallerivemichele@gmail.com>
+Subject: [RFC PATCH 0/7] Rust Socket abstractions
+Date: Mon, 14 Aug 2023 11:22:55 +0200
+Message-ID: <20230814092302.1903203-1-dallerivemichele@gmail.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-This patch series adds several improvements to the pin-init api:
-- a derive macro for the `Zeroable` trait,
-- makes hygiene of fields in initializers behave like normal struct
-  initializers would behave,
-- prevent stackoverflow without optimizations
-- add `..Zeroable::zeroed()` syntax to zero missing fields,
-- support arbitrary paths in initializer macros.
+This patch series is intended to create Rust abstractions for Sockets
+and other fundamental network entities. 
 
-It is based on the `rust-dev` branch.
+Specifically, it was added:
+- Ip address and Socket address wrappers (for `in_addr`, `in6_addr`,
+  `sockaddr_in`, `sockaddr_in6`, `sockaddr_storage`).
+- Socket wrapper.
+- Socket flags and options enums.
+- TCP and UDP specific abstractions over the Rust Socket structure.
 
-This is the fourth version of this patch series.
-- v3: https://lore.kernel.org/rust-for-linux/20230729090838.225225-1-benno.=
-lossin@proton.me/
-- v2: https://lore.kernel.org/rust-for-linux/20230719141918.543938-1-benno.=
-lossin@proton.me/
-- v1: https://lore.kernel.org/rust-for-linux/20230624092330.157338-1-benno.=
-lossin@proton.me/
+This series is a RFC because I would appreciate some feedback about:
+- The structure of the module: is the division of the files and modules
+  appropriate or should it be more or less fine-grained?
+  Also, should the `net` module export all the structures of its
+  submodules? I noticed that it is done in the standard library.
+- Whether the documentation is comprehensive enough.
+- A few other specific questions, written in the individual patches.
 
-Changes not present on modified commits:
-v3 -> v4:
-No changes.
+I would greatly appreciate any kind of feedback or opinion. 
+I am pretty new to the patch/mailing list world, so please point out any
+mistake I might make.
 
-v2 -> v3:
-- make `#[pin_data]` work better with `#[cfg]` attributes on fields.
+The changes in this patch series are based on top of the latest commit
+of `rust-next` in the Rust git tree: 
+19cd7b5d229c ("btf, scripts: rust: drop is_rust_module.sh")
 
-v1 -> v2:
-- implement `Zeroable` for `Opaque`,
-- remove blanket impl of `PinInit` for `Init` and make it a supertrait
-  instead,
-- add `{pin_}chain` functions to execute code after initialization,
-- update the example macro expansion.
+Michele Dalle Rive (7):
+  rust: net: add net module files and shared enums.
+  rust: net: add ip and socket address bindings.
+  rust: net: add socket-related flags and flagset.
+  rust: net: add socket wrapper.
+  rust: net: implement socket options API.
+  rust: net: add socket TCP wrappers.
+  rust: net: add socket UDP wrappers.
 
-Benno Lossin (13):
-  rust: init: consolidate init macros
-  rust: init: make `#[pin_data]` compatible with conditional compilation
-    of fields
-  rust: add derive macro for `Zeroable`
-  rust: init: make guards in the init macros hygienic
-  rust: init: wrap type checking struct initializers in a closure
-  rust: init: make initializer values inaccessible after initializing
-  rust: init: add `..Zeroable::zeroed()` syntax for zeroing all missing
-    fields
-  rust: init: Add functions to create array initializers
-  rust: init: add support for arbitrary paths in init macros
-  rust: init: implement `Zeroable` for `UnsafeCell<T>` and `Opaque<T>`
-  rust: init: make `PinInit<T, E>` a supertrait of `Init<T, E>`
-  rust: init: add `{pin_}chain` functions to `{Pin}Init<T, E>`
-  rust: init: update expanded macro explanation
+ rust/bindings/bindings_helper.h |    3 +
+ rust/kernel/lib.rs              |    2 +
+ rust/kernel/net.rs              |  185 +++++
+ rust/kernel/net/addr.rs         | 1215 ++++++++++++++++++++++++++++++
+ rust/kernel/net/ip.rs           |   73 ++
+ rust/kernel/net/socket.rs       |  641 ++++++++++++++++
+ rust/kernel/net/socket/flags.rs |  467 ++++++++++++
+ rust/kernel/net/socket/opts.rs  | 1222 +++++++++++++++++++++++++++++++
+ rust/kernel/net/tcp.rs          |  252 +++++++
+ rust/kernel/net/udp.rs          |  182 +++++
+ 10 files changed, 4242 insertions(+)
+ create mode 100644 rust/kernel/net.rs
+ create mode 100644 rust/kernel/net/addr.rs
+ create mode 100644 rust/kernel/net/ip.rs
+ create mode 100644 rust/kernel/net/socket.rs
+ create mode 100644 rust/kernel/net/socket/flags.rs
+ create mode 100644 rust/kernel/net/socket/opts.rs
+ create mode 100644 rust/kernel/net/tcp.rs
+ create mode 100644 rust/kernel/net/udp.rs
 
- rust/kernel/init.rs            | 646 ++++++++++++++-------------------
- rust/kernel/init/__internal.rs |  39 +-
- rust/kernel/init/macros.rs     | 519 +++++++++++++++++++++++---
- rust/kernel/prelude.rs         |   2 +-
- rust/macros/lib.rs             |  20 +
- rust/macros/quote.rs           |  12 +
- rust/macros/zeroable.rs        |  72 ++++
- 7 files changed, 857 insertions(+), 453 deletions(-)
- create mode 100644 rust/macros/zeroable.rs
-
-
-base-commit: e73e793b32b7c440a53fd4da75a34c062841b66f
---=20
+-- 
 2.41.0
-
 
