@@ -1,43 +1,43 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C59CAD29
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 09:24:30 +0000 (UTC)
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5231410ab27so5266156a12.0
-        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 02:24:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74A6AD3B
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 09:24:32 +0000 (UTC)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-52164adea19so5259314a12.1
+        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 02:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692005068; x=1692609868;
+        d=gmail.com; s=20221208; t=1692005071; x=1692609871;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VJ7xEeTsfzsK2Sj+HhPXkqE70FTyJ3LgvM+nfAM6twU=;
-        b=hM0dyvSDLtX0Dq7BE6YJqSGHWh4y2nIGG/aI0ny+nsd6iBYOdcgVr7c5O0pR7knelK
-         TkCjkJr8pshvdPllcTofVguGpjqaqa9/iIomRhV8/sxPcv/BLGk6ePJvtO4nNIsxkB9P
-         WPbrdMFa+FOI1okQQ3kFdq1bZNgbVFmR1b75cwvUEgU0UqmgBAWFBWJeOBeheKAW3s7i
-         zT/eKBnbR02LHc51Pyyj9lT/Z8dRRaChetaXf9tTiD9pRbWPejY1B7l32UkptcdCHxzt
-         VkBp72e6l5dqfhCMkDEHkywdcdbN1EaHzKeabCuQ/35BgMr9EFA5ioIwZCfedLbTXhOq
-         ojyA==
+        bh=EGJFz/kZfK8TC+IMfmkiVkLeybb1P+BYtZwOfhN+JxY=;
+        b=MVHDfbVGNWloigTfg8DMCVjWLzA7g4y4G3Y2Ei5NcraB2Ay47TWfuuHHIlpOxg6ICd
+         yAlzaL2rfDPakLMQQqYEShsDdz8D5VpqVWvC7S0oL6jUGzJHrm7akKx17X1MrWgqI0lb
+         qzHPMQ02a1EWLcX5Rfa+Wqpa1z0KqRxHvdbgn+DxTJjVsxWW2YhsifzcNdJNZWDt5v7L
+         oHIj8vawXFODiETAUaaGAyEP3nB/Ow1DpSFSdE/EbU0lnsyogma/LvCYHJRV6ld27DrP
+         3AwoedgjC00XhWOMMNmHtxjO3BjGQjZFARhSrhHTwpi78c07D9/3sXfKBWBOht+mT/Qv
+         kiFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692005068; x=1692609868;
+        d=1e100.net; s=20221208; t=1692005071; x=1692609871;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VJ7xEeTsfzsK2Sj+HhPXkqE70FTyJ3LgvM+nfAM6twU=;
-        b=hFvt1pewzHob0nJ5/yM4g1UJlmxBDMnV7ZHlJgw3EY/oRmv9oY4JCX7Zo/7UsMJD0s
-         iZVxkDJnlDAChvgIAp/1RUeL36IyG433GQipWaD16+G1uv6hUAN8MfoKoU4jobfgkSBg
-         x4A8A61fS+/vPuiXBn292RcART9gZL8v03pqmdz3kp0Eyv2B81q5+KDxZKDbQzza7mfv
-         oA9OwVXiBQgqzeZ1icwhl/A6nvC2LYRUPK0A/Ehkx1DFK9G6+72XdbSffoCihAG27NL8
-         fFBwtBVYFQn//7KUyKAxzwm2XM0fMpSJi76war+X7GEEUjX6e8FoGDMP2y7W/2JIHe2O
-         oF7w==
-X-Gm-Message-State: AOJu0YzvdWT+1N1qy5npa87PNoLx2OA3SqVYMib4fQ95jsbm+0L6epN9
-	ApTu+Ey49JwlaC8S/JYoAkk=
-X-Google-Smtp-Source: AGHT+IG5yO5VujQspYhzAWD6vRpCJiumtT77HplkVprI5NxHY9kfOrjm6iRiKmkA34JHMvH3yL9a8A==
-X-Received: by 2002:aa7:c950:0:b0:523:ae0a:a447 with SMTP id h16-20020aa7c950000000b00523ae0aa447mr7016018edt.13.1692005068229;
-        Mon, 14 Aug 2023 02:24:28 -0700 (PDT)
+        bh=EGJFz/kZfK8TC+IMfmkiVkLeybb1P+BYtZwOfhN+JxY=;
+        b=gOw7nJPfN9NGq5RbIjyeCU7c7+JelpzKoryiLa7vsODGHiQfFqK6PkE8Slu4opZaN9
+         tsCtFd8Bkc6+zw5qDZhC7Qhh7NfQ/d2NoGgxYzSPoo8YKt0Vwqi1if4fzsFzbxyMyuEe
+         pZm4JMPyouPZuoEdSQmIQ2HCn8QYtXu1BcCBR9immioTe3sS3p8LjX6oVNcDzBFe+ZAH
+         mZljAK4flcR/XPVB4wIL2AN6ajwNzcz4/k2ZfW+DKFBDt1BN61m57TylUNFbb72M+t6G
+         M435mU1tU1Rk31uzSZXttQpgwmh8S1iUnDRI/mite3kCo9OSFp22itV9TGNWf3eqDqoL
+         k0NA==
+X-Gm-Message-State: AOJu0YxUm9iMXlBijas9icSQj1lEIjmJmYAqV4lguwECy+5MnpQNiDTB
+	kfxACqv74F94nPuM5PZ/HqQ=
+X-Google-Smtp-Source: AGHT+IHneK7ICFfdfFl4QH4pdwU2VHv7B3JQN2jRjmZ6z2yvspOSD6EL/lJD4e7TBQ7a39d2CUTfQg==
+X-Received: by 2002:aa7:dd55:0:b0:51e:309:2e12 with SMTP id o21-20020aa7dd55000000b0051e03092e12mr3134953edw.28.1692005070782;
+        Mon, 14 Aug 2023 02:24:30 -0700 (PDT)
 Received: from micheledallerive.home ([2a02:1210:6051:ec00:61e9:3767:83a6:9bd9])
-        by smtp.gmail.com with ESMTPSA id b5-20020aa7c6c5000000b005224d960e66sm5314879eds.96.2023.08.14.02.24.27
+        by smtp.gmail.com with ESMTPSA id b5-20020aa7c6c5000000b005224d960e66sm5314879eds.96.2023.08.14.02.24.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Aug 2023 02:24:28 -0700 (PDT)
+        Mon, 14 Aug 2023 02:24:30 -0700 (PDT)
 From: Michele Dalle Rive <dallerivemichele@gmail.com>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
@@ -57,9 +57,9 @@ Cc: Eric Dumazet <edumazet@google.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Michele Dalle Rive <dallerivemichele@gmail.com>
-Subject: [RFC PATCH 4/7] rust: net: add socket wrapper.
-Date: Mon, 14 Aug 2023 11:22:59 +0200
-Message-ID: <20230814092302.1903203-5-dallerivemichele@gmail.com>
+Subject: [RFC PATCH 6/7] rust: net: add socket TCP wrappers.
+Date: Mon, 14 Aug 2023 11:23:01 +0200
+Message-ID: <20230814092302.1903203-7-dallerivemichele@gmail.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230814092302.1903203-1-dallerivemichele@gmail.com>
 References: <20230814092302.1903203-1-dallerivemichele@gmail.com>
@@ -71,621 +71,286 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Create a `Socket` abstraction, which provides a Rust API to the kernel
-socket functionalities.
+Add `TcpListener` and `TcpStream` wrappers around the Rust Socket.
+They provide a convenient way to handle TCP sockets.
 
-The Socket structures tries to keep the same function signatures of the
-Rust standard library; at the same time, functions are added or modified
-in order to provide as much as possible of the C kernel functionalities.
-
-Most of the internals of the C socket is not accessible by Rust, because
-those structures are still to be wrapped. However, sockets are mainly
-managed through the functions provided by the kernel; thus, even if some
-fields are not accessible, since the functions are wrapped, most of the 
-kernel functionality should be available in Rust as well.
-
-Specifically, the usage of `msghdr` is mostly abstracted away in the
-Rust interface, because using it would mean having to deal, both in the
-kernel and in modules, with Pinned instances (msghdr is self-referencing),
-which would be a struggle that provides no particular advantage.
-A `MessageHeader` object is actually created and returned when a message
-is received, because at that point the structure is not really
-self-referencing, as long as the source address is copied. The wrapper
-is not used when a message is sent.
-Anyways, some useful functionalities of `msghdr`, like `cmsghdr`s, are 
-missing and should be implemented in the future to provide a complete API.
+This interface is intended to be as close as possible to the one in `std::net`.
 
 Signed-off-by: Michele Dalle Rive <dallerivemichele@gmail.com>
 ---
-Few questions here as well:
-- What about `MessageHeader`? Does it make sense to only have it on a
-  receive? My reasoning was that, AFAIK, when sending a message, the
-  `msghdr` structure is used for the flags and for eventually the
-  destination address. Does it make sense having to handle a pinned
-  object just to avoid having flags and destination address as arguments
-  of the send function? When a message is received, instead, there is no
-  pinning problem (as long as the address is saved), so the message
-  header can be freely returned and handled. As of now, the
-  `MessageHeader` only contains sender address and flags, but in the
-  future more `msghdr` fields could be wrapped.
-- In `has_flag` and `set_flag`, does it make sense to use the
-  bindgen-provided `__BindgenBitfieldUnit`? It is particularly
-  convenient, as it handles the big/little endianness. However, I
-  noticed that it changes between different bindgen version, and keeping
-  the code up to date could take more time than manually handle the
-  endianness.
-
- rust/kernel/net.rs        |   1 +
- rust/kernel/net/socket.rs | 550 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 551 insertions(+)
- create mode 100644 rust/kernel/net/socket.rs
+ rust/kernel/net.rs     |   1 +
+ rust/kernel/net/tcp.rs | 252 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 253 insertions(+)
+ create mode 100644 rust/kernel/net/tcp.rs
 
 diff --git a/rust/kernel/net.rs b/rust/kernel/net.rs
-index 346e7374e614..7d58ebb0324f 100644
+index 7d58ebb0324f..c7d9d4b0bcab 100644
 --- a/rust/kernel/net.rs
 +++ b/rust/kernel/net.rs
-@@ -12,6 +12,7 @@
- 
+@@ -13,6 +13,7 @@
  pub mod addr;
  pub mod ip;
-+pub mod socket;
+ pub mod socket;
++pub mod tcp;
  
  /// The address family.
  ///
-diff --git a/rust/kernel/net/socket.rs b/rust/kernel/net/socket.rs
+diff --git a/rust/kernel/net/tcp.rs b/rust/kernel/net/tcp.rs
 new file mode 100644
-index 000000000000..8396ce4b83a8
+index 000000000000..86a42ac3e367
 --- /dev/null
-+++ b/rust/kernel/net/socket.rs
-@@ -0,0 +1,550 @@
++++ b/rust/kernel/net/tcp.rs
+@@ -0,0 +1,252 @@
 +// SPDX-License-Identifier: GPL-2.0
 +
-+//! Socket API.
++//! TCP socket wrapper.
 +//!
-+//! This module contains the Socket layer kernel APIs that have been wrapped for usage by Rust code
-+//! in the kernel.
++//! This module contains wrappers for a TCP Socket ([`TcpListener`]) and an active
++//! TCP connection ([`TcpStream`]).
++//! The wrappers are just convenience structs around the generic [`Socket`] type.
 +//!
-+//! C header: [`include/linux/socket.h`](../../../../include/linux/socket.h)
-+//!
-+//! This API is inspired by the Rust std::net Socket API, but is not a direct port.
-+//! The main difference is that the Rust std::net API is designed for user-space, while this API
-+//! is designed for kernel-space.
-+//! Rust net API: <https://doc.rust-lang.org/std/net/index.html>
++//! The API is inspired by the Rust standard library's [`TcpListener`](https://doc.rust-lang.org/std/net/struct.TcpListener.html) and [`TcpStream`](https://doc.rust-lang.org/std/net/struct.TcpStream.html).
 +
-+use super::*;
-+use crate::error::{to_result, Result};
-+use crate::net::addr::*;
++use crate::error::Result;
++use crate::net::addr::SocketAddr;
 +use crate::net::ip::IpProtocol;
-+use flags::*;
++use crate::net::socket::flags::{FlagSet, ReceiveFlag, SendFlag};
++use crate::net::socket::opts::{SocketOption, WritableOption};
++use crate::net::socket::{ShutdownCmd, SockType, Socket};
++use crate::net::AddressFamily;
++use kernel::net::socket::MessageHeader;
 +
-+pub mod flags;
-+
-+/// The socket type.
-+pub enum SockType {
-+    /// Stream socket (e.g. TCP)
-+    Stream = bindings::sock_type_SOCK_STREAM as isize,
-+    /// Connectionless socket (e.g. UDP)
-+    Datagram = bindings::sock_type_SOCK_DGRAM as isize,
-+    /// Raw socket
-+    Raw = bindings::sock_type_SOCK_RAW as isize,
-+    /// Reliably-delivered message
-+    Rdm = bindings::sock_type_SOCK_RDM as isize,
-+    /// Sequenced packet stream
-+    Seqpacket = bindings::sock_type_SOCK_SEQPACKET as isize,
-+    /// Datagram Congestion Control Protocol socket
-+    Dccp = bindings::sock_type_SOCK_DCCP as isize,
-+    /// Packet socket
-+    Packet = bindings::sock_type_SOCK_PACKET as isize,
-+}
-+
-+/// The socket shutdown command.
-+pub enum ShutdownCmd {
-+    /// Disallow further receive operations.
-+    Read = bindings::sock_shutdown_cmd_SHUT_RD as isize,
-+    /// Disallow further send operations.
-+    Write = bindings::sock_shutdown_cmd_SHUT_WR as isize,
-+    /// Disallow further send and receive operations.
-+    Both = bindings::sock_shutdown_cmd_SHUT_RDWR as isize,
-+}
-+
-+/// A generic socket.
++/// A TCP listener.
 +///
-+/// Wraps a `struct socket` from the kernel.
-+/// See [include/linux/socket.h](../../../../include/linux/socket.h) for more information.
++/// Wraps the [`Socket`] type to create a TCP-specific interface.
 +///
-+/// The wrapper offers high-level methods for common operations on the socket.
-+/// More fine-grained control is possible by using the C bindings directly.
++/// The wrapper abstracts away the generic Socket methods that a connection-oriented
++/// protocol like TCP does not need.
 +///
-+/// # Example
-+/// A simple TCP echo server:
++/// # Examples
 +/// ```rust
-+/// use kernel::flag_set;
-+/// use kernel::net::addr::{Ipv4Addr, SocketAddr, SocketAddrV4};
-+/// use kernel::net::{AddressFamily, init_net};
-+/// use kernel::net::ip::IpProtocol;
-+/// use kernel::net::socket::{Socket, SockType};
++/// use kernel::net::tcp::TcpListener;
++/// use kernel::net::addr::*;
 +///
-+/// let socket = Socket::new_kern(
-+///     init_net(),
-+///     AddressFamily::Inet,
-+///     SockType::Stream,
-+///     IpProtocol::Tcp,
-+/// )?;
-+/// socket.bind(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000)))?;
-+/// socket.listen(10)?;
-+/// while let Ok(peer) = socket.accept(true) {
-+///     let mut buf = [0u8; 1024];
-+///     peer.receive(&mut buf, flag_set!())?;
-+///     peer.send(&buf, flag_set!())?;
++/// let listener = TcpListener::new(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000))).unwrap();
++/// while let Ok(stream) = listener.accept() {
++///   // ...
 +/// }
-+/// ```
-+/// A simple UDP echo server:
-+/// ```rust
-+/// use kernel::net::addr::{Ipv4Addr, SocketAddr, SocketAddrV4};
-+/// use kernel::net::{AddressFamily, init_net};
-+/// use kernel::net::ip::IpProtocol;
-+/// use kernel::net::socket::{Socket, SockType};
-+/// use kernel::flag_set;
-+///
-+/// let socket = Socket::new_kern(init_net(), AddressFamily::Inet, SockType::Datagram, IpProtocol::Udp)?;///
-+/// socket.bind(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000)))?;
-+/// let mut buf = [0u8; 1024];
-+/// while let Ok((len, sender_opt)) = socket.receive_from(&mut buf, flag_set!()) {
-+///     let sender: SocketAddr = sender_opt.expect("Sender address is always available for UDP");
-+///     socket.send_to(&buf[..len], &sender, flag_set!())?;
-+/// }
-+/// ```
-+///
-+/// # Invariants
-+///
-+/// The socket pointer is valid for the lifetime of the wrapper.
-+#[repr(transparent)]
-+pub struct Socket(*mut bindings::socket);
++pub struct TcpListener(pub(crate) Socket);
 +
-+/// Getters and setters of socket internal fields.
-+///
-+/// Not all fields are currently supported: hopefully, this will be improved in the future.
-+impl Socket {
-+    /// Retrieve the flags associated with the socket.
++impl TcpListener {
++    /// Create a new TCP listener bound to the given address.
 +    ///
-+    /// Unfortunately, these flags cannot be represented as a [`FlagSet`], since [`SocketFlag`]s
-+    /// are not represented as masks but as the index of the bit they represent.
-+    ///
-+    /// An enum could be created, containing masks instead of indexes, but this could create
-+    /// confusion with the C side.
-+    ///
-+    /// The methods [`Socket::has_flag`] and [`Socket::set_flags`] can be used to check and set individual flags.
-+    pub fn flags(&self) -> u64 {
-+        unsafe { (*self.0).flags }
++    /// The listener will be ready to accept connections.
++    pub fn new(address: SocketAddr) -> Result<Self> {
++        let socket = Socket::new(AddressFamily::Inet, SockType::Stream, IpProtocol::Tcp)?;
++        socket.bind(address)?;
++        socket.listen(128)?;
++        Ok(Self(socket))
 +    }
 +
-+    /// Set the flags associated with the socket.
-+    pub fn set_flags(&self, flags: u64) {
-+        unsafe {
-+            (*self.0).flags = flags;
-+        }
-+    }
-+
-+    /// Checks if the socket has a specific flag.
++    /// Returns the local address that this listener is bound to.
 +    ///
-+    /// # Example
-+    /// ```
-+    /// use kernel::net::socket::{Socket, flags::SocketFlag, SockType};
-+    /// use kernel::net::AddressFamily;
-+    /// use kernel::net::ip::IpProtocol;
-+    ///
-+    /// let socket = Socket::new(AddressFamily::Inet, SockType::Datagram, IpProtocol::Udp)?;
-+    /// assert_eq!(socket.has_flag(SocketFlag::CustomSockOpt), false);
-+    /// ```
-+    pub fn has_flag(&self, flag: SocketFlag) -> bool {
-+        bindings::__BindgenBitfieldUnit::<[u8; 8], u8>::new(self.flags().to_be_bytes())
-+            .get_bit(flag as _)
-+    }
-+
-+    /// Sets a flag on the socket.
-+    ///
-+    /// # Example
-+    /// ```
-+    /// use kernel::net::socket::{Socket, flags::SocketFlag, SockType};
-+    /// use kernel::net::AddressFamily;
-+    /// use kernel::net::ip::IpProtocol;
-+    ///
-+    /// let socket = Socket::new(AddressFamily::Inet, SockType::Datagram, IpProtocol::Udp)?;
-+    /// assert_eq!(socket.has_flag(SocketFlag::CustomSockOpt), false);
-+    /// socket.set_flag(SocketFlag::CustomSockOpt, true);
-+    /// assert_eq!(socket.has_flag(SocketFlag::CustomSockOpt), true);
-+    /// ```
-+    pub fn set_flag(&self, flag: SocketFlag, value: bool) {
-+        let flags_width = core::mem::size_of_val(&self.flags()) * 8;
-+        let mut flags =
-+            bindings::__BindgenBitfieldUnit::<[u8; 8], u8>::new(self.flags().to_be_bytes());
-+        flags.set_bit(flag as _, value);
-+        self.set_flags(flags.get(0, flags_width as _));
-+    }
-+
-+    /// Consumes the socket and returns the underlying pointer.
-+    ///
-+    /// The pointer is valid for the lifetime of the wrapper.
-+    ///
-+    /// # Safety
-+    /// The caller must ensure that the pointer is not used after the wrapper is dropped.
-+    pub unsafe fn into_inner(self) -> *mut bindings::socket {
-+        self.0
-+    }
-+
-+    /// Returns the underlying pointer.
-+    ///
-+    /// The pointer is valid for the lifetime of the wrapper.
-+    ///
-+    /// # Safety
-+    /// The caller must ensure that the pointer is not used after the wrapper is dropped.
-+    pub unsafe fn as_inner(&self) -> *mut bindings::socket {
-+        self.0
-+    }
-+}
-+
-+/// Socket API implementation
-+impl Socket {
-+    /// Private utility function to create a new socket by calling a function.
-+    /// The function is generic over the creation function.
-+    ///
-+    /// # Arguments
-+    /// * `create_fn`: A function that initiates the socket given as parameter.
-+    ///                The function must return 0 on success and a negative error code on failure.
-+    fn base_new<T>(create_fn: T) -> Result<Self>
-+    where
-+        T: (FnOnce(*mut *mut bindings::socket) -> core::ffi::c_int),
-+    {
-+        let mut socket_ptr: *mut bindings::socket = core::ptr::null_mut();
-+        to_result(create_fn(&mut socket_ptr))?;
-+        Ok(Self(socket_ptr))
-+    }
-+
-+    /// Create a new socket.
-+    ///
-+    /// Wraps the `sock_create` function.
-+    pub fn new(family: AddressFamily, type_: SockType, proto: IpProtocol) -> Result<Self> {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        Self::base_new(|socket_ptr| unsafe {
-+            bindings::sock_create(family as _, type_ as _, proto as _, socket_ptr)
-+        })
-+    }
-+
-+    /// Create a new socket in a specific namespace.
-+    ///
-+    /// Wraps the `sock_create_kern` function.
-+    pub fn new_kern(
-+        ns: &Namespace,
-+        family: AddressFamily,
-+        type_: SockType,
-+        proto: IpProtocol,
-+    ) -> Result<Self> {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        Self::base_new(|socket_ptr| unsafe {
-+            bindings::sock_create_kern(ns.0.get(), family as _, type_ as _, proto as _, socket_ptr)
-+        })
-+    }
-+
-+    /// Creates a new "lite" socket.
-+    ///
-+    /// Wraps the `sock_create_lite` function.
-+    ///
-+    /// This is a lighter version of `sock_create` that does not perform any sanity check.
-+    pub fn new_lite(family: AddressFamily, type_: SockType, proto: IpProtocol) -> Result<Self> {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        Self::base_new(|socket_ptr| unsafe {
-+            bindings::sock_create_lite(family as _, type_ as _, proto as _, socket_ptr)
-+        })
-+    }
-+
-+    /// Binds the socket to a specific address.
-+    ///
-+    /// Wraps the `kernel_bind` function.
-+    pub fn bind(&self, address: SocketAddr) -> Result {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        to_result(unsafe {
-+            bindings::kernel_bind(self.0, address.as_ptr() as _, address.size() as i32)
-+        })
-+    }
-+
-+    /// Connects the socket to a specific address.
-+    ///
-+    /// Wraps the `kernel_connect` function.
-+    ///
-+    /// The socket must be a connection-oriented socket.
-+    /// If the socket is not bound, it will be bound to a random local address.
-+    ///
-+    /// # Example
-+    /// ```rust
-+    /// use kernel::net::{AddressFamily, init_net};
-+    /// use kernel::net::addr::{Ipv4Addr, SocketAddr, SocketAddrV4};
-+    /// use kernel::net::ip::IpProtocol;
-+    /// use kernel::net::socket::{Socket, SockType};
-+    ///
-+    /// let socket = Socket::new_kern(init_net(), AddressFamily::Inet, SockType::Stream, IpProtocol::Tcp)?;
-+    /// socket.bind(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000)))?;
-+    /// socket.listen(10)?;
-+    pub fn listen(&self, backlog: i32) -> Result {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        to_result(unsafe { bindings::kernel_listen(self.0, backlog) })
-+    }
-+
-+    /// Accepts a connection on a socket.
-+    ///
-+    /// Wraps the `kernel_accept` function.
-+    pub fn accept(&self, block: bool) -> Result<Socket> {
-+        let mut new_sock = core::ptr::null_mut();
-+        let flags: i32 = if block { 0 } else { bindings::O_NONBLOCK as _ };
-+
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        to_result(unsafe { bindings::kernel_accept(self.0, &mut new_sock, flags as _) })?;
-+
-+        Ok(Self(new_sock))
-+    }
-+
-+    /// Returns the address the socket is bound to.
-+    ///
-+    /// Wraps the `kernel_getsockname` function.
++    /// See [`Socket::sockname()`] for more.
 +    pub fn sockname(&self) -> Result<SocketAddr> {
-+        let mut addr: SocketAddrStorage = SocketAddrStorage::default();
-+
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        unsafe {
-+            to_result(bindings::kernel_getsockname(
-+                self.0,
-+                &mut addr as *mut _ as _,
-+            ))
-+        }
-+        .and_then(|_| SocketAddr::try_from_raw(addr))
++        self.0.sockname()
 +    }
 +
-+    /// Returns the address the socket is connected to.
++    /// Returns an iterator over incoming connections.
 +    ///
-+    /// Wraps the `kernel_getpeername` function.
++    /// Each iteration will return a [`Result`] containing a [`TcpStream`] on success.
++    /// See [`TcpIncoming`] for more.
 +    ///
-+    /// The socket must be connected.
++    /// # Examples
++    /// ```rust
++    /// use kernel::net::tcp::TcpListener;
++    /// use kernel::net::addr::*;
++    ///
++    /// let listener = TcpListener::new(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000))).unwrap();
++    /// for stream in listener.incoming() {
++    ///    // ...
++    /// }
++    /// ```
++    pub fn incoming(&self) -> TcpIncoming<'_> {
++        TcpIncoming { listener: self }
++    }
++
++    /// Accepts an incoming connection.
++    ///
++    /// Returns a [`TcpStream`] on success.
++    pub fn accept(&self) -> Result<TcpStream> {
++        Ok(TcpStream(self.0.accept(true)?))
++    }
++
++    /// Sets the value of the given option.
++    ///
++    /// See [`Socket::set_option()`](Socket::set_option) for more.
++    pub fn set_option<O>(&self, value: impl Into<O::Type>) -> Result
++    where
++        O: SocketOption + WritableOption,
++    {
++        self.0.set_option::<O>(value)
++    }
++}
++
++/// An iterator over incoming connections from a [`TcpListener`].
++///
++/// Each iteration will return a [`Result`] containing a [`TcpStream`] on success.
++/// The iterator will never return [`None`].
++///
++/// This struct is created by the [`TcpListener::incoming()`] method.
++pub struct TcpIncoming<'a> {
++    listener: &'a TcpListener,
++}
++
++impl Iterator for TcpIncoming<'_> {
++    /// The item type of the iterator.
++    type Item = Result<TcpStream>;
++
++    /// Get the next connection from the listener.
++    fn next(&mut self) -> Option<Self::Item> {
++        Some(self.listener.accept())
++    }
++}
++
++/// A TCP stream.
++///
++/// Represents an active TCP connection between two sockets.
++/// The stream can be opened by the listener, with [`TcpListener::accept()`], or by
++/// connecting to a remote address with [`TcpStream::connect()`].
++/// The stream can be used to send and receive data.
++///
++/// See [`TcpListener`] for an example of how to create a [`TcpStream`].
++pub struct TcpStream(pub(crate) Socket);
++
++impl TcpStream {
++    /// Opens a TCP stream by connecting to the given address.
++    ///
++    /// Returns a [`TcpStream`] on success.
++    ///
++    /// # Examples
++    /// ```rust
++    /// use kernel::net::tcp::TcpStream;
++    /// use kernel::net::addr::*;
++    ///
++    /// let peer_addr = SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000));
++    /// let stream = TcpStream::connect(&peer_addr).unwrap();
++    /// ```
++    pub fn connect(address: &SocketAddr) -> Result<Self> {
++        let socket = Socket::new(AddressFamily::Inet, SockType::Stream, IpProtocol::Tcp)?;
++        socket.connect(address, 0)?;
++        Ok(Self(socket))
++    }
++
++    /// Returns the address of the remote peer of this connection.
++    ///
++    /// See [`Socket::peername()`] for more.
 +    pub fn peername(&self) -> Result<SocketAddr> {
-+        let mut addr: SocketAddrStorage = SocketAddrStorage::default();
-+
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        unsafe {
-+            to_result(bindings::kernel_getpeername(
-+                self.0,
-+                &mut addr as *mut _ as _,
-+            ))
-+        }
-+        .and_then(|_| SocketAddr::try_from_raw(addr))
++        self.0.peername()
 +    }
 +
-+    /// Connects the socket to a specific address.
++    /// Returns the address of the local socket of this connection.
 +    ///
-+    /// Wraps the `kernel_connect` function.
-+    pub fn connect(&self, address: &SocketAddr, flags: i32) -> Result {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        unsafe {
-+            to_result(bindings::kernel_connect(
-+                self.0,
-+                address.as_ptr() as _,
-+                address.size() as _,
-+                flags,
-+            ))
-+        }
++    /// See [`Socket::sockname()`] for more.
++    pub fn sockname(&self) -> Result<SocketAddr> {
++        self.0.sockname()
 +    }
 +
-+    /// Shuts down the socket.
++    /// Receive data from the stream.
++    /// The given flags are used to modify the behavior of the receive operation.
++    /// See [`ReceiveFlag`] for more.
 +    ///
-+    /// Wraps the `kernel_sock_shutdown` function.
-+    pub fn shutdown(&self, how: ShutdownCmd) -> Result {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        unsafe { to_result(bindings::kernel_sock_shutdown(self.0, how as _)) }
++    /// Returns the number of bytes received.
++    ///
++    /// # Examples
++    /// ```rust
++    /// use kernel::flag_set;
++    /// use kernel::net::tcp::TcpListener;
++    /// use kernel::net::addr::*;
++    ///
++    /// let listener = TcpListener::new(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000))).unwrap();
++    /// while let Ok(stream) = listener.accept() {
++    ///     let mut buf = [0u8; 1024];
++    ///     while let Ok(len) = stream.receive(&mut buf, flag_set!()) {
++    ///         // ...
++    ///     }
++    /// }
++    /// ```
++    pub fn receive(&self, buf: &mut [u8], flags: FlagSet<ReceiveFlag>) -> Result<usize> {
++        self.0.receive(buf, flags)
 +    }
 +
-+    /// Receive a message from the socket.
++    /// Receive data from the stream and return the message header.
 +    ///
-+    /// This function is the lowest-level receive function. It is used by the other receive functions.
++    /// The given flags are used to modify the behavior of the receive operation.
 +    ///
-+    /// The `flags` parameter is a set of flags that control the behavior of the function.
-+    /// The flags are described in the [`ReceiveFlag`] enum.
++    /// Returns the number of bytes received and the message header, which contains
++    /// information about the sender and the message.
 +    ///
-+    /// The returned Message is a wrapper for `msghdr` and it contains the header information about the message,
-+    /// including the sender address (if present) and the flags.
-+    ///
-+    /// The data message is written to the provided buffer and the number of bytes written is returned together with the header.
-+    ///
-+    /// Wraps the `kernel_recvmsg` function.
++    /// See [`Socket::receive_msg()`] for more.
 +    pub fn receive_msg(
 +        &self,
-+        bytes: &mut [u8],
++        buf: &mut [u8],
 +        flags: FlagSet<ReceiveFlag>,
 +    ) -> Result<(usize, MessageHeader)> {
-+        let addr = SocketAddrStorage::default();
-+
-+        let mut msg = bindings::msghdr {
-+            msg_name: &addr as *const _ as _,
-+            ..Default::default()
-+        };
-+
-+        let mut vec = bindings::kvec {
-+            iov_base: bytes.as_mut_ptr() as _,
-+            iov_len: bytes.len() as _,
-+        };
-+
-+        // SAFETY: FFI call; the socket address is valid for the lifetime of the wrapper.
-+        let size = unsafe {
-+            bindings::kernel_recvmsg(
-+                self.0,
-+                &mut msg as _,
-+                &mut vec,
-+                1,
-+                bytes.len() as _,
-+                flags.value() as _,
-+            )
-+        };
-+        to_result(size)?;
-+
-+        let addr: Option<SocketAddr> = SocketAddr::try_from_raw(addr).ok();
-+
-+        Ok((size as _, MessageHeader::new(msg, addr)))
++        self.0.receive_msg(buf, flags)
 +    }
 +
-+    /// Receives data from a remote socket and returns the bytes read and the sender address.
++    /// Send data to the stream.
 +    ///
-+    /// Used by connectionless sockets to retrieve the sender of the message.
-+    /// If the socket is connection-oriented, the sender address will be `None`.
++    /// The given flags are used to modify the behavior of the send operation.
++    /// See [`SendFlag`] for more.
 +    ///
-+    /// The function abstracts the usage of the `struct msghdr` type.
-+    /// See [Socket::receive_msg] for more information.
-+    pub fn receive_from(
-+        &self,
-+        bytes: &mut [u8],
-+        flags: FlagSet<ReceiveFlag>,
-+    ) -> Result<(usize, Option<SocketAddr>)> {
-+        self.receive_msg(bytes, flags)
-+            .map(|(size, hdr)| (size, hdr.into()))
++    /// Returns the number of bytes sent.
++    ///
++    /// # Examples
++    /// ```rust
++    /// use kernel::flag_set;
++    /// use kernel::net::tcp::TcpListener;
++    /// use kernel::net::addr::*;
++    ///
++    /// let listener = TcpListener::new(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000))).unwrap();
++    /// while let Ok(stream) = listener.accept() {
++    ///     let mut buf = [0u8; 1024];
++    ///     while let Ok(len) = stream.receive(&mut buf, flag_set!()) {
++    ///         stream.send(&buf[..len], flag_set!())?;
++    ///     }
++    /// }
++    /// ```
++    pub fn send(&self, buf: &[u8], flags: FlagSet<SendFlag>) -> Result<usize> {
++        self.0.send(buf, flags)
 +    }
 +
-+    /// Receives data from a remote socket and returns only the bytes read.
++    /// Manually shutdown some portion of the stream.
++    /// See [`ShutdownCmd`] for more.
 +    ///
-+    /// Used by connection-oriented sockets, where the sender address is the connected peer.
-+    pub fn receive(&self, bytes: &mut [u8], flags: FlagSet<ReceiveFlag>) -> Result<usize> {
-+        let (size, _) = self.receive_from(bytes, flags)?;
-+        Ok(size)
-+    }
-+
-+    /// Sends a message to a remote socket.
++    /// This method is not required to be called, as the stream will be shutdown
++    /// automatically when it is dropped.
 +    ///
-+    /// Wraps the `kernel_sendmsg` function.
++    /// # Examples
++    /// ```rust
++    /// use kernel::net::tcp::TcpListener;
++    /// use kernel::net::addr::*;
++    /// use kernel::net::socket::ShutdownCmd;
 +    ///
-+    /// Crate-public to allow its usage only in the kernel crate.
-+    /// In the future, this function could be made public, accepting a [`Message`] as input,
-+    /// but with the current API, it does not give any advantage.
-+    pub(crate) fn send_msg(
-+        &self,
-+        bytes: &[u8],
-+        mut message: bindings::msghdr,
-+        flags: FlagSet<SendFlag>,
-+    ) -> Result<usize> {
-+        let mut vec = bindings::kvec {
-+            iov_base: bytes.as_ptr() as _,
-+            iov_len: bytes.len() as _,
-+        };
-+        message.msg_flags = flags.value() as _;
-+
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        let size = unsafe {
-+            bindings::kernel_sendmsg(
-+                self.0,
-+                &message as *const _ as _,
-+                &mut vec,
-+                1,
-+                bytes.len() as _,
-+            )
-+        };
-+        to_result(size)?;
-+        Ok(size as _)
-+    }
-+
-+    /// Sends a message to a remote socket and returns the bytes sent.
-+    ///
-+    /// The `flags` parameter is a set of flags that control the behavior of the function.
-+    /// The flags are described in the [`SendFlag`] enum.
-+    pub fn send(&self, bytes: &[u8], flags: FlagSet<SendFlag>) -> Result<usize> {
-+        self.send_msg(bytes, bindings::msghdr::default(), flags)
-+    }
-+
-+    /// Sends a message to a specific remote socket address and returns the bytes sent.
-+    ///
-+    /// The `flags` parameter is a set of flags that control the behavior of the function.
-+    /// The flags are described in the [`SendFlag`] enum.
-+    pub fn send_to(
-+        &self,
-+        bytes: &[u8],
-+        address: &SocketAddr,
-+        flags: FlagSet<SendFlag>,
-+    ) -> Result<usize> {
-+        let message = bindings::msghdr {
-+            msg_name: address.as_ptr() as _,
-+            msg_namelen: address.size() as _,
-+            ..Default::default()
-+        };
-+        self.send_msg(bytes, message, flags)
++    /// let listener = TcpListener::new(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::LOOPBACK, 8000))).unwrap();
++    /// while let Ok(stream) = listener.accept() {
++    ///    // ...
++    ///    stream.shutdown(ShutdownCmd::Both)?;
++    /// }
++    /// ```
++    pub fn shutdown(&self, how: ShutdownCmd) -> Result {
++        self.0.shutdown(how)
 +    }
 +}
 +
-+impl Drop for Socket {
-+    /// Closes and releases the socket.
++impl Drop for TcpStream {
++    /// Shutdown the stream.
 +    ///
-+    /// Wraps the `sock_release` function.
++    /// This method ignores the outcome of the shutdown operation: whether the stream
++    /// is successfully shutdown or not, the stream will be dropped anyways.
 +    fn drop(&mut self) {
-+        // SAFETY: FFI call; the address is valid for the lifetime of the wrapper.
-+        unsafe {
-+            bindings::sock_release(self.0);
-+        }
-+    }
-+}
-+
-+// SAFETY: sockets are thread-safe; synchronization is handled by the kernel.
-+unsafe impl Send for Socket {}
-+unsafe impl Sync for Socket {}
-+
-+/// Socket header message.
-+///
-+/// Wraps the `msghdr` structure.
-+/// This struct provides a safe interface to the `msghdr` structure.
-+///
-+/// The instances of this struct are only created by the `receive` methods of the [`Socket`] struct.
-+///
-+/// # Invariants
-+/// The `msg_name` in the wrapped `msghdr` object is always null; the address is stored in the `MessageHeader` object
-+/// and can be retrieved with the [`MessageHeader::address`] method.
-+#[derive(Clone, Copy)]
-+pub struct MessageHeader(pub(crate) bindings::msghdr, pub(crate) Option<SocketAddr>);
-+
-+impl MessageHeader {
-+    /// Returns the address of the message.
-+    pub fn address(&self) -> Option<&SocketAddr> {
-+        self.1.as_ref()
-+    }
-+
-+    /// Returns the flags of the message.
-+    pub fn flags(&self) -> FlagSet<MessageFlag> {
-+        FlagSet::from(self.0.msg_flags as isize)
-+    }
-+
-+    /// Consumes the message header and returns the underlying `msghdr` structure.
-+    ///
-+    /// The returned msghdr will have a null pointer for the address.
-+    pub fn into_raw(self) -> bindings::msghdr {
-+        self.0
-+    }
-+
-+    /// Creates a new message header.
-+    ///
-+    /// The `msg_name` of the field gets replaced with a NULL pointer.
-+    pub(crate) fn new(mut hdr: bindings::msghdr, addr: Option<SocketAddr>) -> Self {
-+        hdr.msg_name = core::ptr::null_mut();
-+        Self(hdr, addr)
-+    }
-+}
-+
-+impl From<MessageHeader> for Option<SocketAddr> {
-+    /// Consumes the message header and returns the contained address.
-+    fn from(hdr: MessageHeader) -> Self {
-+        hdr.1
-+    }
-+}
-+
-+impl From<MessageHeader> for bindings::msghdr {
-+    /// Consumes the message header and returns the underlying `msghdr` structure.
-+    ///
-+    /// The returned msghdr will have a null pointer for the address.
-+    ///
-+    /// This function is actually supposed to be crate-public, since bindings are not supposed to be
-+    /// used outside the kernel library.
-+    /// However, until the support for `msghdr` is not complete, specific needs might be satisfied
-+    /// only by using directly the underlying `msghdr` structure.
-+    fn from(hdr: MessageHeader) -> Self {
-+        hdr.0
++        self.0.shutdown(ShutdownCmd::Both).ok();
 +    }
 +}
 -- 
