@@ -1,30 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9076C139
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 16:11:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFE8C433C8;
-	Mon, 14 Aug 2023 16:11:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692029476;
-	bh=lMjlapqeyDzouK7rBxj3XpLytHXl61DbEVPIrXEm/Cc=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ADDC137;
+	Mon, 14 Aug 2023 16:52:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E53C433C7;
+	Mon, 14 Aug 2023 16:52:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692031970;
+	bh=S8/38gOX8CEBqpB9alrToiwydnTBozTScdBE+KGfjnc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GRy/tMndOIDvb4+cNw875AafCPE/NdBqhjGP64kJGA93iLmZTGzACbbngw9yz98Ga
-	 jjTTvsE2XIjX+Wy2vfC7jFJ12H4Z9j9rVnrAgZBuKiUgFXd7Bpibk51AdPBF3zAie0
-	 epGnvlUonikjtRU2tgCUSJqi1wxrdiIAF5qyums4=
-Date: Mon, 14 Aug 2023 18:11:13 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pablo Neira Ayuso <pablo@netfilter.org>
-Cc: Florian Westphal <fw@strlen.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 6.4 090/206] netfilter: nf_tables: dont skip expired
- elements during walk
-Message-ID: <2023081404-quality-shindig-552b@gregkh>
-References: <20230813211724.969019629@linuxfoundation.org>
- <20230813211727.651202695@linuxfoundation.org>
- <20230813221730.GA22068@breakpoint.cc>
- <2023081418-goes-vitally-3c6f@gregkh>
- <ZNpLHwZ6VlaJjQD1@calendula>
+	b=txcWCsP8BvaHjh2RYmoe7+RTCg0O53+D1jmlGgIBOBq9VC2ckkSWUXdoUM/aLXN6J
+	 i2gV1zWw0rlBkNU0i43AzAopUr5Uw8voedWq/fF1K4giCWiNUtokKBUbRZNcqD6dTS
+	 TA1rejJzKREjB927mRsWauqHeM5oz+IXbPk9m4aUtoGsh8Lyl+/n2PkmLeB/zDZFI3
+	 TU+oLFWBOPZP2kpl12Byg5Hi5rv8zJAnmTpUObZNYlyWxtjGzNCaMMCpzRhOYRb6st
+	 3psq2Q4f43NQMM2v4nMPj3kanRCCUi/ywS/2oY1P3thPtfbizvDB/6xhnkApd1fSzC
+	 r1fZjGAVeUaFQ==
+Date: Mon, 14 Aug 2023 09:52:46 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	clang-built-linux <llvm@lists.linux.dev>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Sven Volkinsfeld <thyrc@gmx.net>,
+	Daniel Kolesa <daniel@octaforge.org>, x86@kernel.org
+Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
+Message-ID: <20230814165246.GA911700@dev-arch.thelio-3990X>
+References: <20230809103636.615294317@linuxfoundation.org>
+ <CA+G9fYvQdQqTqCgbS4sit_Y2AtKtDiWMOkGZjoeSEFhc=M_jKw@mail.gmail.com>
+ <078d6e3d-9572-a624-2c5a-e2d58473e6d0@roeck-us.net>
+ <20230811041339.GA193223@dev-arch.thelio-3990X>
+ <20230813110254.GDZNi4XhHjY4xlNdBJ@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,64 +46,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZNpLHwZ6VlaJjQD1@calendula>
+In-Reply-To: <20230813110254.GDZNi4XhHjY4xlNdBJ@fat_crate.local>
 
-On Mon, Aug 14, 2023 at 05:41:19PM +0200, Pablo Neira Ayuso wrote:
-> On Mon, Aug 14, 2023 at 05:14:48PM +0200, Greg Kroah-Hartman wrote:
-> > On Mon, Aug 14, 2023 at 12:17:30AM +0200, Florian Westphal wrote:
-> > > Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > > > From: Florian Westphal <fw@strlen.de>
-> > > > 
-> > > > commit 24138933b97b055d486e8064b4a1721702442a9b upstream.
-> > > 
-> > > Just FYI, this change is not correct.
-> > > 
-> > > > There is an asymmetry between commit/abort and preparation phase if the
-> > > > following conditions are met:
-> > > 
-> > > > 1. set is a verdict map ("1.2.3.4 : jump foo")
-> > > > 2. timeouts are enabled
-> > > 
-> > > [..]
-> > > 
-> > > > --- a/net/netfilter/nft_set_pipapo.c
-> > > > +++ b/net/netfilter/nft_set_pipapo.c
-> > > > @@ -566,8 +566,7 @@ next_match:
-> > > >  			goto out;
-> > > >  
-> > > >  		if (last) {
-> > > > -			if (nft_set_elem_expired(&f->mt[b].e->ext) ||
-> > > > -			    (genmask &&
-> > > > +			if ((genmask &&
-> > > >  			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
-> > > >  				goto next_match;
-> > > 
-> > > This part is bonkers, it papers over the real issue and introduces
-> > > another bug while at it (insertions for key K will fail if we have
-> > > a key K that is already expired).
-> > > 
-> > > A patch to resolve it is queued on the mailing list and I'll make sure
-> > > it gets passed to the net tree by this wednesday.
-> > > 
-> > > Sorry for the inconvenience, I hope this doesn't interefere with
-> > > -stable release plans and this is leaves enough time for
-> > > the fix to make it to -stable too.
-> > 
-> > Is there an upstream fix for this yet?  If so, I can pull it into the
-> > stable tree, or should I drop this one for now and wait for the real
-> > fix?  It's your call.
+On Sun, Aug 13, 2023 at 01:02:54PM +0200, Borislav Petkov wrote:
+> On Thu, Aug 10, 2023 at 09:13:39PM -0700, Nathan Chancellor wrote:
+> > 1911 is still being investigated (some additional eyes on it would not
+> > hurt).
 > 
-> I'd suggest: Drop it for 5.10, 5.15 and 6.1, because these versions
-> are still missing the full series.
+> I'm hoping that we can take this one:
 > 
-> Keep it for 6.4 (this already have the full series with fixed) the
-> incremental fix that is flying upstream will event amend this patch.
+> https://lore.kernel.org/r/20230809072200.543939260@infradead.org
 > 
-> In summary:
-> 
-> - drop it for 5.10, 5.15 and 6.1
-> - keep it for 6.4
+> which should resolve this issue, right?
 
-Ok, thanks, now dropped for those trees.
+Yes, it does, as least for mainline and 6.4. The backport to 6.1 seems
+hairy (due to a lack of call depth tracking me thinks). It may be worth
+taking Nick's change there for simplicity's sake but I'll let y'all make
+that decision.
 
-greg k-h
+Cheers,
+Nathan
