@@ -1,26 +1,26 @@
 Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06E7A92A
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 08:47:23 +0000 (UTC)
-Date: Mon, 14 Aug 2023 08:47:03 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C7FA929
+	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 08:47:26 +0000 (UTC)
+Date: Mon, 14 Aug 2023 08:47:15 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=pxdyxhsc5zgjrepj7b2v2ltcyq.protonmail; t=1692002841; x=1692262041;
-	bh=BM+ndpgoaIa28MW959xE4f6HCZcpfHae5spTLfBk2Ho=;
+	s=c3ehzphaojh3tmfhfoidalwfii.protonmail; t=1692002844; x=1692262044;
+	bh=FtpwglMZkGsk6Cq7uG4CBizP3n1NDqFHuFg1fsdOfrA=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=EZ4YpFZjH4dQ/P5XmIh0QjJWVL2O+OOOGrpHpVy1dZ7Tz4co9qn7Om0WECgCOcAzJ
-	 qRO9RgUIu1B+3VSgLzyCHaDSGputiYoY3zXVzTI1REi2yRnI0YbzTi2x7xp8oYq+9T
-	 d1Qi3RGgR2nhb0uEoRdrAhSN3FFiENW0UhYSeh9IBQcSXMR6fq+eTSmuP/XBg5U5dg
-	 mNKdGKovn5QZcSeEboo8SxC4peZLAdEX/jKOhhN6Rqfz0siuEYwciwGY/+wvnKPxbJ
-	 tuAsWeskPSu0sLjC1jYBptDReJAgYWrxOyz8FVhjGnmHGrI0+nA14JREu6HfkczFT3
-	 PtAsPqPX+w+PA==
+	b=Xa+gIRKh6q1Oa69K6I+pgABGtdkERf9oJ46KJRMnqaWH019BrDoZVQBvsJC1XsvlY
+	 cL/6BtfO3agfXPu+r9+v5wI+z6vETwK2ju/+PstvuGMGXpI/eiMdHIdSrOj/mFto+I
+	 sTzCCOyfyurQh3tniudsoZmGTyvpp32kHxZ7/Xf8ocuovOZw4cYkzkUoXP4PEs9sgd
+	 nq1uWTOjzcCxxLr4x5+LBDT7BwJfTVRwJfDFoXHHJ3jpof1FfWgQuk2j3Zw7Fis8Am
+	 qD1AYbBUR/QOJtqHCST/Qjydszw18rkHua7oYoKE7RM1tNaYTG/6qFV9v5eEo4RygI
+	 WtBV8gm9Ywzjw==
 To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
 From: Benno Lossin <benno.lossin@proton.me>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Subject: [PATCH v4 06/13] rust: init: make initializer values inaccessible after initializing
-Message-ID: <20230814084602.25699-7-benno.lossin@proton.me>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Subject: [PATCH v4 08/13] rust: init: Add functions to create array initializers
+Message-ID: <20230814084602.25699-9-benno.lossin@proton.me>
 In-Reply-To: <20230814084602.25699-1-benno.lossin@proton.me>
 References: <20230814084602.25699-1-benno.lossin@proton.me>
 Feedback-ID: 71780778:user:proton
@@ -33,107 +33,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Previously the init macros would create a local variable with the name
-and hygiene of the field that is being initialized to store the value of
-the field. This would override any user defined variables. For example:
-```
-struct Foo {
-    a: usize,
-    b: usize,
-}
-let a =3D 10;
-let foo =3D init!(Foo{
-    a: a + 1, // This creates a local variable named `a`.
-    b: a, // This refers to that variable!
-});
-let foo =3D Box::init!(foo)?;
-assert_eq!(foo.a, 11);
-assert_eq!(foo.b, 11);
-```
+Add two functions `pin_init_array_from_fn` and `init_array_from_fn` that
+take a function that generates initializers for `T` from usize, the added
+functions then return an initializer for `[T; N]` where every element is
+initialized by an element returned from the generator function.
 
-This patch changes this behavior, so the above code would panic at the
-last assertion, since `b` would have value 10.
-
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Suggested-by: Asahi Lina <lina@asahilina.net>
+Reviewed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 ---
 v3 -> v4:
-- added Reviewed-by from Gary.
+- changed example size from 1_000_000_000 to 1_000,
+- made functions unwind-safe by using a ScopeGuard,
+- added Reviewed-by from Martin.
 
 v2 -> v3:
-- added Reviewed-by's from Martin and Alice.
+- changed doctest: instead of printing the array, assert the length,
+- added Reviewed-by's from Alice.
 
- rust/kernel/init/macros.rs | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+v1 -> v2:
+- fix warnings and errors in doctests,
+- replace dropping loop with `drop_in_place` and `slice_from_raw_parts_mut`
+  inside of `{pin_}init_array_from_fn` functions.
 
-diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-index 2bad086cda0a..cfeacc4b3f7d 100644
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -1075,13 +1075,13 @@ macro_rules! __init_internal {
-         // In-place initialization syntax.
-         @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-     ) =3D> {
--        let $field =3D $val;
-+        let init =3D $val;
-         // Call the initializer.
-         //
-         // SAFETY: `slot` is valid, because we are inside of an initialize=
-r closure, we
-         // return when an error/panic occurs.
-         // We also use the `data` to require the correct trait (`Init` or =
-`PinInit`) for `$field`.
--        unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), =
-$field)? };
-+        unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), =
-init)? };
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to acc=
-ess this local variable.
-@@ -1107,12 +1107,12 @@ macro_rules! __init_internal {
-         // In-place initialization syntax.
-         @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-     ) =3D> {
--        let $field =3D $val;
-+        let init =3D $val;
-         // Call the initializer.
-         //
-         // SAFETY: `slot` is valid, because we are inside of an initialize=
-r closure, we
-         // return when an error/panic occurs.
--        unsafe { $crate::init::Init::__init($field, ::core::ptr::addr_of_m=
-ut!((*$slot).$field))? };
-+        unsafe { $crate::init::Init::__init(init, ::core::ptr::addr_of_mut=
-!((*$slot).$field))? };
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to acc=
-ess this local variable.
-@@ -1138,11 +1138,13 @@ macro_rules! __init_internal {
-         // Init by-value.
-         @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-     ) =3D> {
--        $(let $field =3D $val;)?
--        // Initialize the field.
--        //
--        // SAFETY: The memory at `slot` is uninitialized.
--        unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$fi=
-eld), $field) };
-+        {
-+            $(let $field =3D $val;)?
-+            // Initialize the field.
-+            //
-+            // SAFETY: The memory at `slot` is uninitialized.
-+            unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot)=
-.$field), $field) };
+ rust/kernel/init.rs | 88 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
+
+diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+index 460f808ebf84..b54f32017d00 100644
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -212,6 +212,7 @@
+ use crate::{
+     error::{self, Error},
+     sync::UniqueArc,
++    types::ScopeGuard,
+ };
+ use alloc::boxed::Box;
+ use core::{
+@@ -875,6 +876,93 @@ pub fn uninit<T, E>() -> impl Init<MaybeUninit<T>, E> =
+{
+     unsafe { init_from_closure(|_| Ok(())) }
+ }
+=20
++/// Initializes an array by initializing each element via the provided ini=
+tializer.
++///
++/// # Examples
++///
++/// ```rust
++/// use kernel::{error::Error, init::init_array_from_fn};
++/// let array: Box<[usize; 1_000]>=3D Box::init::<Error>(init_array_from_f=
+n(|i| i)).unwrap();
++/// assert_eq!(array.len(), 1_000);
++/// ```
++pub fn init_array_from_fn<I, const N: usize, T, E>(
++    mut make_init: impl FnMut(usize) -> I,
++) -> impl Init<[T; N], E>
++where
++    I: Init<T, E>,
++{
++    let init =3D move |slot: *mut [T; N]| {
++        let slot =3D slot.cast::<T>();
++        // Counts the number of initialized elements and when dropped drop=
+s that many elements from
++        // `slot`.
++        let mut init_count =3D ScopeGuard::new_with_data(0, |i| {
++            // We now free every element that has been initialized before:
++            // SAFETY: The loop initialized exactly the values from 0..i a=
+nd since we
++            // return `Err` below, the caller will consider the memory at =
+`slot` as
++            // uninitialized.
++            unsafe { ptr::drop_in_place(ptr::slice_from_raw_parts_mut(slot=
+, i)) };
++        });
++        for i in 0..N {
++            let init =3D make_init(i);
++            // SAFETY: since 0 <=3D `i` < N, it is still in bounds of `[T;=
+ N]`.
++            let ptr =3D unsafe { slot.add(i) };
++            // SAFETY: The pointer is derived from `slot` and thus satisfi=
+es the `__init`
++            // requirements.
++            unsafe { init.__init(ptr) }?;
++            *init_count +=3D 1;
 +        }
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to acc=
-ess this local variable.
++        init_count.dismiss();
++        Ok(())
++    };
++    // SAFETY: The initializer above initializes every element of the arra=
+y. On failure it drops
++    // any initialized elements and returns `Err`.
++    unsafe { init_from_closure(init) }
++}
++
++/// Initializes an array by initializing each element via the provided ini=
+tializer.
++///
++/// # Examples
++///
++/// ```rust
++/// use kernel::{sync::{Arc, Mutex}, init::pin_init_array_from_fn, new_mut=
+ex};
++/// let array: Arc<[Mutex<usize>; 1_000]>=3D
++///     Arc::pin_init(pin_init_array_from_fn(|i| new_mutex!(i))).unwrap();
++/// assert_eq!(array.len(), 1_000);
++/// ```
++pub fn pin_init_array_from_fn<I, const N: usize, T, E>(
++    mut make_init: impl FnMut(usize) -> I,
++) -> impl PinInit<[T; N], E>
++where
++    I: PinInit<T, E>,
++{
++    let init =3D move |slot: *mut [T; N]| {
++        let slot =3D slot.cast::<T>();
++        // Counts the number of initialized elements and when dropped drop=
+s that many elements from
++        // `slot`.
++        let mut init_count =3D ScopeGuard::new_with_data(0, |i| {
++            // We now free every element that has been initialized before:
++            // SAFETY: The loop initialized exactly the values from 0..i a=
+nd since we
++            // return `Err` below, the caller will consider the memory at =
+`slot` as
++            // uninitialized.
++            unsafe { ptr::drop_in_place(ptr::slice_from_raw_parts_mut(slot=
+, i)) };
++        });
++        for i in 0..N {
++            let init =3D make_init(i);
++            // SAFETY: since 0 <=3D `i` < N, it is still in bounds of `[T;=
+ N]`.
++            let ptr =3D unsafe { slot.add(i) };
++            // SAFETY: The pointer is derived from `slot` and thus satisfi=
+es the `__init`
++            // requirements.
++            unsafe { init.__pinned_init(ptr) }?;
++            *init_count +=3D 1;
++        }
++        init_count.dismiss();
++        Ok(())
++    };
++    // SAFETY: The initializer above initializes every element of the arra=
+y. On failure it drops
++    // any initialized elements and returns `Err`.
++    unsafe { pin_init_from_closure(init) }
++}
++
+ // SAFETY: Every type can be initialized by-value.
+ unsafe impl<T, E> Init<T, E> for T {
+     unsafe fn __init(self, slot: *mut T) -> Result<(), E> {
 --=20
 2.41.0
 
