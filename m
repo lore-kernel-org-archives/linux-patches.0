@@ -1,90 +1,96 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6326713AFD
-	for <patches@lists.linux.dev>; Tue, 15 Aug 2023 17:38:56 +0000 (UTC)
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-76731802203so387239585a.3
-        for <patches@lists.linux.dev>; Tue, 15 Aug 2023 10:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692121135; x=1692725935;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Hkd0vr8l+i8TA7+6Xkb7goHWw+Sxr4X5Pv6u5Fi2CNM=;
-        b=Rh1xTajwGEtdV7nPTnwcFs9RNIiHnwcZQlEOY5aJ1aCvx4dHBTLi1Y3KrkbRpPX1Gv
-         9CyAvtqipwTieYn2KeCenPR2oLECkljVA+m241v1Elb/wbZiKN21NSumhsljvsptsg/f
-         XQ4xIbu5lbJoHwgSI+8dtcZQtxpWcTmM0ODZuWtsK8711Ye0Jp2+7fvyr6hSR29LmpiF
-         tF75UufVfKcZgweVqeyldC6ZHnyjC1b0G7RmKb/8yT2D05GhmWVb9jBfaqJDm4KxQWTh
-         0kYnDeACGPAMT/BTXYJKeQGsI4CB0/NB/7Z6V4MnD2MkfD55z6fYfyyQrQGp+TSOfKMv
-         q6yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692121135; x=1692725935;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hkd0vr8l+i8TA7+6Xkb7goHWw+Sxr4X5Pv6u5Fi2CNM=;
-        b=KV6sbQz1PND8+62Bw3VzpPblsyzcPbUbT+hZ0/f8PlMnJFc5SPDxZf5ho7XU2shldq
-         ySQCUtnfL5kHJGJ13uSsS6DrCiP/zt/y8RVEvClKVl4IE2YAMvWZnRFtIL71WuI0AGA/
-         WL0FMDttp/+Vmfk/TPqbcagS+0ce5tGXAkCQU1BuY/AjXGz2dWP2PxmbXqfk1EZfn8ch
-         mj1MqqPrtYpRTKCvBw3NSvdoCyqDd5KRaU/1HFJBFe0NeIWFPsQwS+I4a7CvBMgMGcAa
-         Ny625SoDGEUw5J6BQ/vIH5pGOuiWHSLFVLh5xHEHrNiQM/XLuNvr3+eoSHuGaOkkR/u4
-         Us3Q==
-X-Gm-Message-State: AOJu0YzPEsTJQR0Gv7Gunts5sfj77ui1MkzoFX7nobOr/KPAdiFfL4z9
-	YBp14y/YQQSRjQyq9OPM3CQ=
-X-Google-Smtp-Source: AGHT+IFtBsk6TfpDYGZb7LDV77U4EmAigIkbu7pXVPS19QOpzgX+a65yqEiHbPpbyEVuObDdECQVHw==
-X-Received: by 2002:a05:620a:215b:b0:76c:ea6c:59a3 with SMTP id m27-20020a05620a215b00b0076cea6c59a3mr14366377qkm.46.1692121134963;
-        Tue, 15 Aug 2023 10:38:54 -0700 (PDT)
-Received: from [192.168.114.133] ([107.119.56.177])
-        by smtp.gmail.com with ESMTPSA id j7-20020a05620a000700b00767cfb1e859sm3899603qki.47.2023.08.15.10.38.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 10:38:54 -0700 (PDT)
-Message-ID: <9a4553c6-cd70-b99f-1186-7c3a0168165c@gmail.com>
-Date: Tue, 15 Aug 2023 10:38:50 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3FE156F7;
+	Tue, 15 Aug 2023 19:07:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F710C433C7;
+	Tue, 15 Aug 2023 19:07:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692126427;
+	bh=MJRTsKjJrCqgZBHh3ucJktBplP659QkvtPqpYoiAoQY=;
+	h=From:Date:Subject:To:Cc:From;
+	b=e5wIKX0EVRDwQ8ztXhcobA5K0H7FetEp9rCkWJCAkGOuVzNaswxxaDMkJDz/5BLUY
+	 p3U2fSmikJ/+yYR6zf1Q6hSqg9Na159AiTm9D8+F4NfGfrNd/fjsWuAfUamHcAgdtD
+	 040pJTC/tEnDHObPF0x37dC+WZgYZmbgstlFKPwIN/q7/aHumtMsf+/j8tSZ85dkCS
+	 +NDmXcKdcGPYoy51TznvaaItdBvpwDhBP8NWjDoRDZCugP3GKy1OUGc8dU4bGVv0DP
+	 gaI5fSECd5w3krOG+Uy6QDTpYLf8MbfR8f5RuopIr4q7asAcbHuBxAoViW2z1WJryr
+	 seDIlPdcvkBmg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Aug 2023 12:06:50 -0700
+Subject: [PATCH] watchdog: xilinx_wwdt: Use div_u64() in
+ xilinx_wwdt_start()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.4 000/206] 6.4.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230813211724.969019629@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20230815-watchdog-xilinx-div_u64-v1-1-20b0b5a65c2e@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAMnM22QC/x3MywqAIBBA0V+JWTdglr1+JSJCpxoIC+0hRP+et
+ DyLex/w5Jg8tMkDji72vNmILE1AL6OdCdlEgxQyF3Wm8B4PvZhtxsAr24CGr+EsC6yVlpUulSi
+ aHGK9O5o4/Oeuf98PnGt1FGkAAAA=
+To: srinivas.neeli@amd.com, wim@linux-watchdog.org
+Cc: shubhrajyoti.datta@amd.com, michal.simek@amd.com, linux@roeck-us.net, 
+ ndesaulniers@google.com, trix@redhat.com, linux-watchdog@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, patches@lists.linux.dev, 
+ llvm@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1840; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=MJRTsKjJrCqgZBHh3ucJktBplP659QkvtPqpYoiAoQY=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCm3z9za46s+3+aG7cQa/fs105dt+eAvter+059nAv7Xp
+ og5zpNt7ShlYRDjYJAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQAT2bmUkaHTbNGCHMVL139w
+ r5namNxs7dgxv8peou6PmCW32LuiSy0M/+uEYhQn/lDSj7JOLxBh8zn4u3xJ2Y5qx4bjS/lvGTh
+ PZQQA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 8/13/23 14:16, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.11 release.
-> There are 206 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+After commit f1a43aadb5a6 ("watchdog: Enable COMPILE_TEST for more
+drivers"), it is possible to enable this driver on 32-bit architectures.
+When building for those architectures with clang, there is an error due
+to a 64-bit division in xilinx_wwdt_start():
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels:
+  ERROR: modpost: "__aeabi_uldivmod" [drivers/watchdog/xilinx_wwdt.ko] undefined!
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Use div_u64() to fix this, which takes a 64-bit dividend and 32-bit
+divisor. GCC likely avoids the same error due to optimizations it
+employs to transform division by a constant into other equivalent
+operations, which may be different than what is implemented in clang.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1915
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/watchdog/xilinx_wwdt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/watchdog/xilinx_wwdt.c b/drivers/watchdog/xilinx_wwdt.c
+index 1d998db41533..d271e2e8d6e2 100644
+--- a/drivers/watchdog/xilinx_wwdt.c
++++ b/drivers/watchdog/xilinx_wwdt.c
+@@ -9,6 +9,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/ioport.h>
++#include <linux/math64.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -71,7 +72,7 @@ static int xilinx_wwdt_start(struct watchdog_device *wdd)
+ 
+ 	/* Calculate timeout count */
+ 	time_out = xdev->freq * wdd->timeout;
+-	closed_timeout = (time_out * xdev->close_percent) / 100;
++	closed_timeout = div_u64(time_out * xdev->close_percent, 100);
+ 	open_timeout = time_out - closed_timeout;
+ 	wdd->min_hw_heartbeat_ms = xdev->close_percent * 10 * wdd->timeout;
+ 
+
+---
+base-commit: 8a504bd61ec7b3ddd72680e15775f2c7c0f9e894
+change-id: 20230815-watchdog-xilinx-div_u64-85c27c650493
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
 
