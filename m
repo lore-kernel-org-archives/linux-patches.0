@@ -1,154 +1,102 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123757E
-	for <patches@lists.linux.dev>; Mon, 14 Aug 2023 22:40:52 +0000 (UTC)
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-d62b9bd5b03so4710566276.1
-        for <patches@lists.linux.dev>; Mon, 14 Aug 2023 15:40:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692052852; x=1692657652;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ST9EDbMOZFXnqi0vd0YF7UvQtOruYHigj9crRoWalvM=;
-        b=D7mNCMah/yau6g6kumYNQvMPHpBreLI/ewr1wb8zCKLZASymha+E57jdh0RvNUFNhn
-         jCVbDnpGmsO72u42u4H50tSbbuEprScRweO+JhyWz25t9l5lY2uVbj8vGjJCYS6fLClq
-         UdWT6ShQfn1DDmkbjfQCqE90OEczjdNvjufEk7KwoMOjqZGp055QnUQbgL3ofEqh3re+
-         a6IFwge0eZN3JM3wxKPh2M59Crnio9UM21RmQu85xegsj9wX6v5jdv9Ew8niPypYs0BN
-         MIA9a16gxYEBRM4RUTFbt52sj+jImGKpE33SM7zYWQwNhyTNVWoi8eKk72VQR/+At7ll
-         6lPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692052852; x=1692657652;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ST9EDbMOZFXnqi0vd0YF7UvQtOruYHigj9crRoWalvM=;
-        b=gkn4wxrYCTDkdjmIW77oLMYjogCUaVXAMXOyc+BRdcpGqIU85iOT6ABx7sfNdMnxgm
-         14hratqe8qOybWIZT+2cM9xNLzzao85Ft7X8XpD9smbfTqaVmM2CwId1WbCj92/b9CnQ
-         xBmsbtg3bYKhsyA/1W+7lA12Dr0h7ukgl7gyeEDf/Ckk5If7DJCbqJJ0UVH73jaZ8xUH
-         P0fAv04ozWp9HXp9jz21KoGuZ4a3+/XSALMD/Ca7flrdkrMGplNQdSRApvcPGFjiNE4j
-         W1Z36i60hYdHRYsnO9PGCJXxuuPfN80YS4eNXPTzHB8WGmOALaEbMQemKOS9p6+FPjJ6
-         /G3A==
-X-Gm-Message-State: AOJu0Yzw4jQKtqsh9Xq8R/WmrQSJE4R0wPO42g4qOK3LZxmgJS+IZYRA
-	RSPgxUmGah3FUoP8S/BVPbN/Hk/RQ9RXvvBJQuo=
-X-Google-Smtp-Source: AGHT+IFBu2vNjExAtBSX0HHSL9CHjFV7NRbjoamH5RTWuOApwfEkFSQnkFsv7Ky9xYSdSsFW0Da05PSwTr9sCVQugVs=
-X-Received: by 2002:a5b:24e:0:b0:d0a:353b:b939 with SMTP id
- g14-20020a5b024e000000b00d0a353bb939mr11876763ybp.52.1692052851891; Mon, 14
- Aug 2023 15:40:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158FB10E6
+	for <patches@lists.linux.dev>; Tue, 15 Aug 2023 00:28:28 +0000 (UTC)
+Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
+	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 04E4610047D7D
+	for <patches@lists.linux.dev>; Tue, 15 Aug 2023 00:28:17 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id VhuyqZCaoB2f0Vhuyqa0Ac; Tue, 15 Aug 2023 00:28:17 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=E+cIGYRl c=1 sm=1 tr=0 ts=64dac6a1
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10:nop_charset_1 a=UttIx32zK-AA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=NYoX+hSQAhC79najWNJzntbphiTtSKOpPwcuL63SwGg=; b=RoGlILo0ag5Dzje5eYZAFFvmFQ
+	dg/Sutjt1SIi4yJ5SXI31ekoJx8Gk/1SZRd4qA1U30Fe8m1gIjPQijqq5iEg/1cGA7kumcUx1pNFz
+	Wa396+J1bIE3RXaXhmB4DaVu7SzMGEKXlNFHF/9CGDnTU9NDeGYPnr5EbrPZ3wXfS4SHLa6lC1tEa
+	c899mf2dFaOGasSChxw1t9JTooa/Gtt1S5RKXoAEp9VzincWzZD9UWuTphSGSgXsQ5OGFNfqkFC86
+	IRahdqMeawxAQhxNA7kwwvXYTou26fPh2D73vsCBXLhH/Bt6FAw4mHcVsOL+z7i4wdxLCT6uNUd5/
+	hdRJoSsw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:51850 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qVhuy-003fq1-0X;
+	Mon, 14 Aug 2023 18:28:16 -0600
+Subject: Re: [PATCH 6.4 000/206] 6.4.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230813211724.969019629@linuxfoundation.org>
+In-Reply-To: <20230813211724.969019629@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <75a0aa6e-91d1-beff-809d-6600ed4f9622@w6rz.net>
+Date: Mon, 14 Aug 2023 17:28:14 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230729220317.416771-1-ojeda@kernel.org>
-In-Reply-To: <20230729220317.416771-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 15 Aug 2023 00:40:40 +0200
-Message-ID: <CANiq72mrzALO3J2VvDntscXwt7Z9KzT4+S8sc_HGc8u8izjyLw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] rust: upgrade to Rust 1.71.0
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qVhuy-003fq1-0X
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:51850
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Sun, Jul 30, 2023 at 12:04=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
+On 8/13/23 2:16 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.11 release.
+> There are 206 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> This is the second upgrade to the Rust toolchain, from 1.68.2 to 1.71.0
-> (i.e. the latest).
+> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+> Anything received after that time might be too late.
 >
-> See the upgrade policy [1] and the comments on the first upgrade in
-> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.11-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
 >
-> # Unstable features
+> thanks,
 >
-> No unstable features (that we use) were stabilized.
->
-> Therefore, the only unstable feature allowed to be used outside
-> the `kernel` crate is still `new_uninit`, though other code to be
-> upstreamed may increase the list.
->
-> Please see [2] for details.
->
-> # Required changes
->
-> For the upgrade, this patch requires the following changes:
->
->   - Removal of the `__rust_*` allocator functions, together with
->     the addition of the `__rust_no_alloc_shim_is_unstable` static.
->     See [3] for details.
->
->   - Some more compiler builtins added due to `<f{32,64}>::midpoint()`
->     that got added in Rust 1.71 [4].
->
-> # `alloc` upgrade and reviewing
->
-> The vast majority of changes are due to our `alloc` fork being upgraded
-> at once.
->
-> There are two kinds of changes to be aware of: the ones coming from
-> upstream, which we should follow as closely as possible, and the updates
-> needed in our added fallible APIs to keep them matching the newer
-> infallible APIs coming from upstream.
->
-> Instead of taking a look at the diff of this patch, an alternative
-> approach is reviewing a diff of the changes between upstream `alloc` and
-> the kernel's. This allows to easily inspect the kernel additions only,
-> especially to check if the fallible methods we already have still match
-> the infallible ones in the new version coming from upstream.
->
-> Another approach is reviewing the changes introduced in the additions in
-> the kernel fork between the two versions. This is useful to spot
-> potentially unintended changes to our additions.
->
-> To apply these approaches, one may follow steps similar to the following
-> to generate a pair of patches that show the differences between upstream
-> Rust and the kernel (for the subset of `alloc` we use) before and after
-> applying this patch:
->
->     # Get the difference with respect to the old version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > old.patch
->     git -C linux restore rust/alloc
->
->     # Apply this patch.
->     git -C linux am rust-upgrade.patch
->
->     # Get the difference with respect to the new version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > new.patch
->     git -C linux restore rust/alloc
->
-> Now one may check the `new.patch` to take a look at the additions (first
-> approach) or at the difference between those two patches (second
-> approach). For the latter, a side-by-side tool is recommended.
->
-> Link: https://rust-for-linux.com/rust-version-policy [1]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [2]
-> Link: https://github.com/rust-lang/rust/pull/86844 [3]
-> Link: https://github.com/rust-lang/rust/pull/92048 [4]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> greg k-h
 
-Applied to `rust-next` -- thanks everyone!
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-As mentioned earlier, I have moved to 1.71.1 instead that got released
-meanwhile, since it does not require any changes w.r.t. this one
-except the obvious ones and it is likely the one that people would
-like to use/have (so less warnings).
+Tested-by: Ron Economos <re@w6rz.net>
 
-Cheers,
-Miguel
