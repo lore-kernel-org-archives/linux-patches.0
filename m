@@ -1,116 +1,109 @@
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0FC1426C;
-	Tue, 15 Aug 2023 20:07:29 +0000 (UTC)
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-349783c5d43so24713705ab.3;
-        Tue, 15 Aug 2023 13:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692130048; x=1692734848;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nUCMTDCnmgGsHFEPB7fbXzNbYOHxgFVGtdGWinwxkH8=;
-        b=OoUNgnf/w6Vt3crMFnHUNDBtNczDdv1QRfkloganzykB1Jbb+p9FGCJoKArkeyOPEA
-         JmWudxeP7/+d4m28l38RpvRc3Dh8rWsg4H6PHlGnlgYbCini+rM0sh/uv/qU56MjXsMI
-         +lpuDZm9DIC4vWUo+BJ+WUURoycIaKnXr9XGt47sY8YDZ1CYWHVZGeZPT5PfZW8C/ffC
-         ptGLFdeRyij61Yrl9/z6sB+dCAShQ8Lt09HfMgH7u+EYE1XGNha/6fmWF8Jbdi3qggU1
-         mBnN6o/cIxc7xeIbc1zdxSgVGYmPGVyhsFHnEEHOwJ71G2GjHRC/hDIEOMmFLu7jAdWJ
-         sSRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692130048; x=1692734848;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nUCMTDCnmgGsHFEPB7fbXzNbYOHxgFVGtdGWinwxkH8=;
-        b=SF53avPsqUuciPGZEGzSMKg5bws9vZRCqbK0TV06PxsjYxfyUqRa6b1OPRvYmttLdp
-         YM3l0ERaoenjJIM1rOoFB2b1N4DRNnyCQHj4uPTswjolPmlGun9BPiU849TWpjm5tByZ
-         XMdQlaXiMB9XD6XhcKu0bY1zi5e7No+RTqvqA/yPAxvs+j24GPO6AbG2tJRJyyXf8QW3
-         8U8RjucUohFpnw9waLHsFJQyBa37NP6FUPf6MYElAvxRzldYNPpvR8nXKwzKGXf8H7PP
-         msS+9nqjrkp4zwf233xsjZuAUsX8T4s1mciVIhK3ul0jBGyT9a6DmSOWyLomari0SBKj
-         QK9Q==
-X-Gm-Message-State: AOJu0YxtGAdfD4KVCD7s3j0Qoc8ujHgUDZfz6mIe9NWm9OZmsi5a4+if
-	t3J52j3KtatnyWTfvOYZ6/E=
-X-Google-Smtp-Source: AGHT+IHdog8eeuIH4iCCRfH0UrplHufqLsUdqySFwCsdRxGz3H7GTGJAE/IFmnqMDd79BPqZFXN/fw==
-X-Received: by 2002:a05:6e02:1a0d:b0:345:f28f:cc26 with SMTP id s13-20020a056e021a0d00b00345f28fcc26mr20334172ild.24.1692130048048;
-        Tue, 15 Aug 2023 13:07:28 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id n10-20020a92d9ca000000b00349477a91dasm4115772ilq.79.2023.08.15.13.07.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Aug 2023 13:07:27 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Tue, 15 Aug 2023 13:07:26 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: srinivas.neeli@amd.com, wim@linux-watchdog.org,
-	shubhrajyoti.datta@amd.com, michal.simek@amd.com,
-	ndesaulniers@google.com, trix@redhat.com,
-	linux-watchdog@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, patches@lists.linux.dev,
-	llvm@lists.linux.dev
-Subject: Re: [PATCH] watchdog: xilinx_wwdt: Use div_u64() in
- xilinx_wwdt_start()
-Message-ID: <54b78b80-1d2b-43fe-845c-844a62b62773@roeck-us.net>
-References: <20230815-watchdog-xilinx-div_u64-v1-1-20b0b5a65c2e@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BDD15AD7
+	for <patches@lists.linux.dev>; Tue, 15 Aug 2023 22:16:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C56DC433C8;
+	Tue, 15 Aug 2023 22:16:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692137807;
+	bh=XwXvMZmSyw0Fultdv91spvUYs8G7JznbXwG0CGzyAxM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=KaH3eQclvi001FrOcutYbDGQo7hpeSF0k96n1brchRa+PiK6n2Ae+08jPrhGrUg8T
+	 eGCnjPwfFEWv+aMO+PZtOQKDFyPKAdFvH/OSA/jtdlDAW4KZqzIs2CCVlesgdEr8Hh
+	 MTwHqy+4AcvB3zN7Fto4z2hfELMIGWO6M4uO+lrwREwp/cETpubtrlMs5hock/a7hQ
+	 cW6lJXtRXM2fhmXtByLyZjKJcHtJjUQb0IaZuON8+tszOg3o2QwPmXObWcboYaF5ge
+	 TMS6t95ODItsb5blWCaSKTaqKU3ogPmd6ZEZayY/9p48hBjFqAEqfR1M14/gQ4k2Li
+	 geulV0KHc0eWw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Aug 2023 15:16:41 -0700
+Subject: [PATCH] rtc: stm32: Use NOIRQ_SYSTEM_SLEEP_PM_OPS()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230815-watchdog-xilinx-div_u64-v1-1-20b0b5a65c2e@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230815-rtc-stm32-unused-pm-funcs-v1-1-82eb8e02d903@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEj522QC/x3MMQ6DMAxA0asgz1hKAq1Cr4IYWscpHkhRTBAS4
+ u5EHd/w/wnKWVjh1ZyQeReVX6qwbQM0v9OXUUI1OOM64+0D80ao29I5LKkoB1wXjCWR4mCC7z/
+ kyNgn1H7NHOX4v8fpum502a94awAAAA==
+To: a.zummo@towertech.it, alexandre.belloni@bootlin.com
+Cc: mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com, arnd@arndb.de, 
+ linux-rtc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2767; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=XwXvMZmSyw0Fultdv91spvUYs8G7JznbXwG0CGzyAxM=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCm3f/rNPqfvaPfxjI/qv/SEwyGPJnwSUl0SduxYtgDPp
+ S69U5dPdJSyMIhxMMiKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJbCxm+B/Vfi3Ps2eVwv+z
+ d45+XBFroiSRWzq3mEllOSNb0qquM7wMv9kzPjClnctoZ5LVLOpb6rI3oe17fUy/WCuD88+wnYt
+ X8QMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Aug 15, 2023 at 12:06:50PM -0700, Nathan Chancellor wrote:
-> After commit f1a43aadb5a6 ("watchdog: Enable COMPILE_TEST for more
-> drivers"), it is possible to enable this driver on 32-bit architectures.
-> When building for those architectures with clang, there is an error due
-> to a 64-bit division in xilinx_wwdt_start():
-> 
->   ERROR: modpost: "__aeabi_uldivmod" [drivers/watchdog/xilinx_wwdt.ko] undefined!
-> 
-> Use div_u64() to fix this, which takes a 64-bit dividend and 32-bit
-> divisor. GCC likely avoids the same error due to optimizations it
-> employs to transform division by a constant into other equivalent
-> operations, which may be different than what is implemented in clang.
-> 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1915
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+After the switch to SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() and a subsequent
+fix, stm32_rtc_{suspend,resume}() are unused when CONFIG_PM_SLEEP is not
+set because SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is a no-op in that
+configuration:
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+  drivers/rtc/rtc-stm32.c:904:12: error: 'stm32_rtc_resume' defined but not used [-Werror=unused-function]
+    904 | static int stm32_rtc_resume(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~
+  drivers/rtc/rtc-stm32.c:894:12: error: 'stm32_rtc_suspend' defined but not used [-Werror=unused-function]
+    894 | static int stm32_rtc_suspend(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-> ---
->  drivers/watchdog/xilinx_wwdt.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/watchdog/xilinx_wwdt.c b/drivers/watchdog/xilinx_wwdt.c
-> index 1d998db41533..d271e2e8d6e2 100644
-> --- a/drivers/watchdog/xilinx_wwdt.c
-> +++ b/drivers/watchdog/xilinx_wwdt.c
-> @@ -9,6 +9,7 @@
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/ioport.h>
-> +#include <linux/math64.h>
->  #include <linux/mod_devicetable.h>
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> @@ -71,7 +72,7 @@ static int xilinx_wwdt_start(struct watchdog_device *wdd)
->  
->  	/* Calculate timeout count */
->  	time_out = xdev->freq * wdd->timeout;
-> -	closed_timeout = (time_out * xdev->close_percent) / 100;
-> +	closed_timeout = div_u64(time_out * xdev->close_percent, 100);
->  	open_timeout = time_out - closed_timeout;
->  	wdd->min_hw_heartbeat_ms = xdev->close_percent * 10 * wdd->timeout;
->  
-> 
-> ---
-> base-commit: 8a504bd61ec7b3ddd72680e15775f2c7c0f9e894
-> change-id: 20230815-watchdog-xilinx-div_u64-85c27c650493
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+The non-"SET_" version of this macro, NOIRQ_SYSTEM_SLEEP_PM_OPS(), is
+designed to handle this situation by only assigning the callbacks when
+CONFIG_PM_SLEEP is set while allowing the functions to appear used to
+the compiler. Switch to that macro to resolve the warnings. There is no
+functional change with this, as SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is
+defined using NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is set.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I am not sure what to do about a Fixes: tag for this change. I am not
+sure how Arnd triggered the error/warning in commit a69c610e13e2 ("rtc:
+stm32: remove incorrect #ifdef check"), since from what I can tell,
+SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is only defined in terms of
+NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is set, so I am not
+sure how those functions could be absent in the source file but used in
+NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is unset... I could be
+missing something though.
+
+However, I think this change should have been done as part of commit
+fb9a7e5360dc ("rtc: stm32: change PM callbacks to "_noirq()"") because
+the "SET_" macros are deprecated and that would have made Arnd's change
+necessary so... assign an appropriate Fixes: tag based on that
+information as you will :)
+---
+ drivers/rtc/rtc-stm32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/rtc/rtc-stm32.c b/drivers/rtc/rtc-stm32.c
+index 3ce4b3d08155..76753c71d92e 100644
+--- a/drivers/rtc/rtc-stm32.c
++++ b/drivers/rtc/rtc-stm32.c
+@@ -923,7 +923,7 @@ static int stm32_rtc_resume(struct device *dev)
+ }
+ 
+ static const struct dev_pm_ops stm32_rtc_pm_ops = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(stm32_rtc_suspend, stm32_rtc_resume)
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(stm32_rtc_suspend, stm32_rtc_resume)
+ };
+ 
+ static struct platform_driver stm32_rtc_driver = {
+
+---
+base-commit: 4f3688dca15053555ade31a785a9c75837a64fb8
+change-id: 20230815-rtc-stm32-unused-pm-funcs-90d84bc2c016
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
