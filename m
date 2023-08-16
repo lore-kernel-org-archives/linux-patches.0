@@ -1,16 +1,16 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B5981A
-	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 02:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724CE10F7
+	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 02:11:51 +0000 (UTC)
 Received: from dggpeml500006.china.huawei.com (unknown [172.30.72.53])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RQWc30TPVzFqYL;
-	Wed, 16 Aug 2023 10:02:27 +0800 (CST)
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4RQWkn2hYJzNml3;
+	Wed, 16 Aug 2023 10:08:17 +0800 (CST)
 Received: from [10.174.176.127] (10.174.176.127) by
  dggpeml500006.china.huawei.com (7.185.36.76) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Wed, 16 Aug 2023 10:05:22 +0800
-Subject: Re: [PATCH 4.19 00/33] 4.19.292-rc1 review
+ 15.1.2507.31; Wed, 16 Aug 2023 10:11:48 +0800
+Subject: Re: [PATCH 5.4 00/39] 5.4.254-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
 	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
@@ -18,10 +18,10 @@ CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
 	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
 	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
 	<rwarsow@gmx.de>, <conor@kernel.org>
-References: <20230813211703.915807095@linuxfoundation.org>
+References: <20230813211704.796906808@linuxfoundation.org>
 From: luomeng <luomeng12@huawei.com>
-Message-ID: <67f18995-78c6-d53c-1bc5-e30da7018bc6@huawei.com>
-Date: Wed, 16 Aug 2023 10:05:22 +0800
+Message-ID: <511a8f49-b521-3405-e9d3-607ccde656bf@huawei.com>
+Date: Wed, 16 Aug 2023 10:11:47 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.8.1
 Precedence: bulk
@@ -30,28 +30,28 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
+In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.174.176.127]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
  dggpeml500006.china.huawei.com (7.185.36.76)
 X-CFilter-Loop: Reflected
 
-Tested on arm64 and x86 for 4.19.292-rc1,
+Tested on arm64 and x86 for 5.4.254-rc1,
 
 Kernel 
 repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-4.19.y
-Version: 4.19.292-rc1
-Commit: 84b9d8b93009a14264e351f2ae6dd63d95dd6ceb
-Compiler: gcc version 7.3.0 (GCC))
+Branch: linux-5.4.y
+Version: 5.4.254-rc1
+Commit: 89e2e795021f6c31714341452eb5e5ef0e0f420f
+Compiler: gcc version 7.3.0 (GCC)
 
 arm64:
 --------------------------------------------------------------------
 Testcase Result Summary:
-total: 8901
-passed: 8901
+total: 8971
+passed: 8971
 failed: 0
 timeout: 0
 --------------------------------------------------------------------
@@ -59,16 +59,16 @@ timeout: 0
 x86:
 --------------------------------------------------------------------
 Testcase Result Summary:
-total: 8901
-passed: 8901
+total: 8971
+passed: 8971
 failed: 0
 timeout: 0
 --------------------------------------------------------------------
 Tested-by: Hulk Robot <hulkrobot@huawei.com>
 
-在 2023/8/14 5:18, Greg Kroah-Hartman 写道:
-> This is the start of the stable review cycle for the 4.19.292 release.
-> There are 33 patches in this series, all will be posted as a response
+在 2023/8/14 5:19, Greg Kroah-Hartman 写道:
+> This is the start of the stable review cycle for the 5.4.254 release.
+> There are 39 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -76,9 +76,9 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.292-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.254-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
 > 
 > thanks,
@@ -89,7 +89,7 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > Pseudo-Shortlog of commits:
 > 
 > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      Linux 4.19.292-rc1
+>      Linux 5.4.254-rc1
 > 
 > Eric Dumazet <edumazet@google.com>
 >      sch_netem: fix issues in netem_change() vs get_dist_table()
@@ -115,14 +115,26 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > Pablo Neira Ayuso <pablo@netfilter.org>
 >      netfilter: nf_tables: report use refcount overflow
 > 
-> Pablo Neira Ayuso <pablo@netfilter.org>
->      netfilter: nf_tables: bogus EBUSY when deleting flowtable after flush
+> Ming Lei <ming.lei@redhat.com>
+>      nvme-rdma: fix potential unbalanced freeze & unfreeze
+> 
+> Ming Lei <ming.lei@redhat.com>
+>      nvme-tcp: fix potential unbalanced freeze & unfreeze
+> 
+> Josef Bacik <josef@toxicpanda.com>
+>      btrfs: set cache_block_group_error if we find an error
 > 
 > Christoph Hellwig <hch@lst.de>
 >      btrfs: don't stop integrity writeback too early
 > 
 > Nick Child <nnac123@linux.ibm.com>
 >      ibmvnic: Handle DMA unmapping of login buffs in release functions
+> 
+> Daniel Jurgens <danielj@nvidia.com>
+>      net/mlx5: Allow 0 for total host VFs
+> 
+> Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+>      dmaengine: mcf-edma: Fix a potential un-allocated memory access
 > 
 > Felix Fietkau <nbd@nbd.name>
 >      wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
@@ -145,6 +157,9 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > Nathan Chancellor <nathan@kernel.org>
 >      mISDN: Update parameter type of dsp_cmx_send()
 > 
+> Mark Brown <broonie@kernel.org>
+>      selftests/rseq: Fix build with undefined __weak
+> 
 > Karol Herbst <kherbst@redhat.com>
 >      drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
 > 
@@ -156,6 +171,9 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > 
 > Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 >      x86/cpu/amd: Enable Zenbleed fix for AMD Custom APU 0405
+> 
+> Prashanth K <quic_prashk@quicinc.com>
+>      usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
 > 
 > Elson Roy Serrao <quic_eserrao@quicinc.com>
 >      usb: dwc3: Properly handle processing of pending events
@@ -172,6 +190,9 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > Ryusuke Konishi <konishi.ryusuke@gmail.com>
 >      nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
 > 
+> Thomas Gleixner <tglx@linutronix.de>
+>      x86/pkeys: Revert a5eff7259790 ("x86/pkeys: Add PKRU value to init_fpstate")
+> 
 > Colin Ian King <colin.i.king@gmail.com>
 >      radix tree test suite: fix incorrect allocation size for pthreads
 > 
@@ -187,9 +208,6 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > Sergei Antonov <saproj@gmail.com>
 >      mmc: moxart: read scr register without changing byte order
 > 
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      sparc: fix up arch_cpu_finalize_init() build breakage.
-> 
 > 
 > -------------
 > 
@@ -197,14 +215,16 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 > 
 >   Makefile                                           |   4 +-
 >   arch/alpha/kernel/setup.c                          |   3 +-
->   arch/sparc/Kconfig                                 |   2 +-
 >   arch/x86/entry/vdso/vma.c                          |   4 +-
 >   arch/x86/include/asm/processor.h                   |   2 +
 >   arch/x86/kernel/cpu/amd.c                          |   1 +
+>   arch/x86/kernel/cpu/common.c                       |   5 -
 >   arch/x86/kvm/x86.c                                 |   2 -
+>   arch/x86/mm/pkeys.c                                |   6 -
 >   drivers/android/binder.c                           |   1 +
 >   drivers/android/binder_alloc.c                     |   6 +
 >   drivers/android/binder_alloc.h                     |   1 +
+>   drivers/dma/mcf-edma.c                             |  13 +-
 >   drivers/dma/pl330.c                                |  18 ++-
 >   drivers/gpu/drm/nouveau/nouveau_connector.c        |   2 +-
 >   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h  |   1 +
@@ -221,30 +241,37 @@ Tested-by: Hulk Robot <hulkrobot@huawei.com>
 >   drivers/mmc/host/moxart-mmc.c                      |   8 +-
 >   drivers/net/bonding/bond_main.c                    |   4 +-
 >   drivers/net/ethernet/ibm/ibmvnic.c                 |  15 +-
+>   drivers/net/ethernet/mellanox/mlx5/core/sriov.c    |   3 +-
 >   drivers/net/tun.c                                  |   2 +-
+>   drivers/nvme/host/rdma.c                           |   3 +-
+>   drivers/nvme/host/tcp.c                            |   3 +-
 >   drivers/scsi/53c700.c                              |   2 +-
 >   drivers/scsi/raid_class.c                          |   1 +
 >   drivers/scsi/scsi_proc.c                           |  30 ++--
 >   drivers/scsi/snic/snic_disc.c                      |   1 +
 >   drivers/scsi/storvsc_drv.c                         |   4 -
+>   drivers/usb/common/usb-conn-gpio.c                 |   6 +-
 >   drivers/usb/dwc3/gadget.c                          |   9 +-
 >   drivers/usb/storage/alauda.c                       |   9 +-
+>   fs/btrfs/extent-tree.c                             |   5 +-
 >   fs/btrfs/extent_io.c                               |   7 +-
 >   fs/nilfs2/inode.c                                  |   8 +
 >   fs/nilfs2/segment.c                                |   2 +
 >   fs/nilfs2/the_nilfs.h                              |   2 +
 >   include/net/cfg80211.h                             |   3 +
->   include/net/netfilter/nf_tables.h                  |  35 +++-
+>   include/net/netfilter/nf_tables.h                  |  31 +++-
 >   net/dccp/output.c                                  |   2 +-
 >   net/dccp/proto.c                                   |  10 +-
 >   net/ipv6/ndisc.c                                   |   3 +-
->   net/netfilter/nf_tables_api.c                      | 180 ++++++++++++++-------
->   net/netfilter/nft_flow_offload.c                   |  23 ++-
+>   net/netfilter/nf_tables_api.c                      | 166 +++++++++++++--------
+>   net/netfilter/nft_flow_offload.c                   |   6 +-
 >   net/netfilter/nft_objref.c                         |   8 +-
 >   net/packet/af_packet.c                             |  16 +-
->   net/sched/sch_netem.c                              |  59 +++----
+>   net/sched/sch_netem.c                              |  59 ++++----
 >   tools/testing/radix-tree/regression1.c             |   2 +-
->   49 files changed, 349 insertions(+), 169 deletions(-)
+>   tools/testing/selftests/rseq/Makefile              |   4 +-
+>   tools/testing/selftests/rseq/rseq.c                |   2 +
+>   58 files changed, 337 insertions(+), 194 deletions(-)
 > 
 > 
 > .
