@@ -1,38 +1,30 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC070101DA;
-	Wed, 16 Aug 2023 15:07:30 +0000 (UTC)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-	by smtp-out1.suse.de (Postfix) with ESMTP id ED5F5218FC;
-	Wed, 16 Aug 2023 15:01:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-	t=1692198105; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cwYr/ImenycskpSCIbuvxpPgA8pKU0LOXJlUOQJJlZc=;
-	b=BAoXAjr4dRq9QYTkYjPQ3T3bey6O/p4hgNk6aSHnyCuZaN4++Hsb7G0+qFVygkvUE+zIgP
-	8Jp8g2/w4YONjyYfeGas0oTPBrHD0zfP5ikMwGNG1bj0klYLJFD+nsNenQGwWzIEHUz/Lk
-	ZSg1XKUJBkBw+gkrUhoXnUw4tSibH14=
-Received: from suse.cz (pmladek.tcp.ovpn2.prg.suse.de [10.100.208.146])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by relay2.suse.de (Postfix) with ESMTPS id 3CD052C146;
-	Wed, 16 Aug 2023 15:01:45 +0000 (UTC)
-Date: Wed, 16 Aug 2023 17:01:43 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: rostedt@goodmis.org, senozhatsky@chromium.org,
-	andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk,
-	ndesaulniers@google.com, trix@redhat.com,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH v2] lib: test_scanf: Add explicit type cast to result
- initialization in test_number_prefix()
-Message-ID: <ZNzk1yIvCy7EF_EF@alley>
-References: <20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org>
- <ZNysmicYHHQ3f1Ck@alley>
- <20230816140112.GA2109327@dev-arch.thelio-3990X>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C8D16434
+	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 16:26:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBA7C433C8;
+	Wed, 16 Aug 2023 16:26:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1692203209;
+	bh=XBmNXo56o9zWOdDYjFcNbBLRq5ZXa2vRzhhpN3dm3EQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YhdbozxPAhs2Yjhn4jGX9FtyIO1su/3cx8O7NteSl4+NQY/KxUj8plyvENUHsZixj
+	 8tMw05jXKvqkjpj6OQx3ydO1LxY8ogqNzyQ9QbUfwtF3xsr6OWzygcTEPswPS/+ys6
+	 fwathhk3ZlHbfsnzN7xEsMsBBu3TFvig8l9vJH9o=
+Date: Wed, 16 Aug 2023 18:26:47 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/149] 6.1.46-rc1 review
+Message-ID: <2023081631-uproar-tapered-2221@gregkh>
+References: <20230813211718.757428827@linuxfoundation.org>
+ <b392e1a8-b987-4993-bd45-035db9415a6e@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,67 +33,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230816140112.GA2109327@dev-arch.thelio-3990X>
+In-Reply-To: <b392e1a8-b987-4993-bd45-035db9415a6e@roeck-us.net>
 
-On Wed 2023-08-16 07:01:12, Nathan Chancellor wrote:
-> Hi Petr,
-> 
-> On Wed, Aug 16, 2023 at 01:01:46PM +0200, Petr Mladek wrote:
-> > On Mon 2023-08-07 08:36:28, Nathan Chancellor wrote:
-> > > A recent change in clang allows it to consider more expressions as
-> > > compile time constants, which causes it to point out an implicit
-> > > conversion in the scanf tests:
-> > > 
-> > >   lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
-> > >     661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
-> > >         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > >   lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
-> > >     609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
-> > >         |                       ~            ^~~~~~~~~~
-> > >   1 warning generated.
-> > > 
-> > > The result of the bitwise negation is the type of the operand after
-> > > going through the integer promotion rules, so this truncation is
-> > > expected but harmless, as the initial values in the result array get
-> > > overwritten by _test() anyways. Add an explicit cast to the expected
-> > > type in test_number_prefix() to silence the warning. There is no
-> > > functional change, as all the tests still pass with GCC 13.1.0 and clang
-> > > 18.0.0.
-> > > 
-> > > Cc: stable@vger.kernel.org
-> > > Closes: https://github.com/ClangBuiltLinux/linux/issues/1899
+On Mon, Aug 14, 2023 at 07:04:57AM -0700, Guenter Roeck wrote:
+> On Sun, Aug 13, 2023 at 11:17:25PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.46 release.
+> > There are 149 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > "Closes:" is not a valid tag. It was proposed and rejected in the end.
-> > I replaced it with "Link:" as suggested by ./scripts/checkpatch.pl/
+> > Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+> > Anything received after that time might be too late.
 > 
-> I don't really care about "Closes:" vs. "Link:", either is fine with me,
-> but checkpatch.pl did not warn me about it and I still see commit
-> 44c31888098a ("checkpatch: allow Closes tags with links") in mainline
-> and -next that explicitly allows this (and even requires Closes: instead
-> of Link: when following Reported-by:).
+> Booting with f2fs root file systems still crashes in this release
+> candidate. Would it make sense to mark f2fs as broken in v6.1.y ?
 
-Good to know. It is possible that I mixed this with another tag.
-I recall that people wanted to add some new tags recently and
-Linus was strongly against it. Unfortunately, I can't find
-the discussion now.
+Ick, yeah, let me dig into this next week and figure out what went
+wrong...
 
-It seems that the Closes: tag is acceptable. But Linus is still
-going to "put my foot down" when it gets misused, see
-https://lore.kernel.org/linux-doc/CAHk-=wh0v1EeDV3v8TzK81nDC40=XuTdY2MCr0xy3m3FiBV3+Q@mail.gmail.com/
-
-I called the checkpatch.pl from printk/linux.git in a branch based on 6.4.
-It did not have the commit 44c31888098a ("checkpatch: allow Closes
-tags with links").
-
-If you do not mind, I'll keep the "Link:" tag to avoid rebase in
-the for-6.6 branch in printk/linug.git.
-
-
-> > The patch has been pushed into printk/linux.git, branch for-6.6.
-> 
-> Thanks a lot for the review and acceptance!
-
-You are welcome.
-
-Best Regards,
-Petr
+greg k-h
