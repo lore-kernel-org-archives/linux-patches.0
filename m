@@ -1,41 +1,41 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B952215AE1
-	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 22:26:20 +0000 (UTC)
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6bd045336c6so6173405a34.2
-        for <patches@lists.linux.dev>; Wed, 16 Aug 2023 15:26:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26ADF15AE1
+	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 22:29:31 +0000 (UTC)
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-76d77cf9979so43036785a.3
+        for <patches@lists.linux.dev>; Wed, 16 Aug 2023 15:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google; t=1692224779; x=1692829579;
+        d=joelfernandes.org; s=google; t=1692224971; x=1692829771;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=mj8sP83fwQJwoEIWe+N0bDewpCENMlpgnFvs5MDXGYc=;
-        b=PrEWrARPly2E7lq6aw7kGSryWqF3Sxqfn03diJhqdaQLioRlND++z/rGnxi1u0MWaT
-         hOhbXGuW0Qp85tguIYTL+P5Lf+548YFyiXSyCnbBMVKOXCf3HaGbxp9Hl635BZlC9yu9
-         8HjOH9dEm0qWc0+KjpIfGYLlr3dK/W8qfoVfI=
+        bh=Bnw8GWbCg3crUhqUm6aNJ8qcR6RWaAljcB9fPeXaiCk=;
+        b=kw2QXMO6h7ym2gO3C2r/+y2XxsoBcL4Waeslybe8w3HSyjPDWq75hk0lk+lhFckhGg
+         c6O8f5MCrr9U8b9gJ4qaboGVqWZJLoX/vn9nDRuloYGozawzOp9JyaI9zKQVpsvYtCZj
+         OAocu+UWCSx38MVShPJb3WDi+bo6ZxOx3ZOc0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692224779; x=1692829579;
+        d=1e100.net; s=20221208; t=1692224971; x=1692829771;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mj8sP83fwQJwoEIWe+N0bDewpCENMlpgnFvs5MDXGYc=;
-        b=FQgiuxln7zDzj48ik9LqSkKzSgkLYAI25IzoXFr2X4G+EFdTMwbGbExoMlOze70k1X
-         xc7Rg5Xi2XErzTzCwfC81NbNMdE2ldfi61Qr+UiD1Di2L32fCAHgCnx+kk23bjz+AZOT
-         uIxD4SB6F6+h5W0Iuq/a54MGhbkD9RFomQ6P6TLAuwkXosxgpA5ohoTLqYO2Je//7V4M
-         xS3TngD+3UkrIeREVFvHwgrz13vTVu1NJRo2sj73t5GlOV8hGimjdyVEiujtFwULYig1
-         bDA+i1sWROl9EvySvS68jSOs3S3eAiT1Ae2AzoQfFtHZ4MaAPAWZoWPqohJo4bWGvmRy
-         TTbw==
-X-Gm-Message-State: AOJu0Yx/eWlXI3UN4hEdnPTn+sB77ZSbUVeP4qJ2fZOEqKsjPh41UvrY
-	jmX/uD+4v1Qn9mL/Y048W3SVWg==
-X-Google-Smtp-Source: AGHT+IHeRZXn4M/vsFcPK7DZe1Bixm4L6gO+i4z/bf3qoRZATD0pXNz/BR0LDNd/U0yjCv/gi/sShw==
-X-Received: by 2002:a05:6830:4c4:b0:6bc:f636:153a with SMTP id s4-20020a05683004c400b006bcf636153amr2986679otd.6.1692224779582;
-        Wed, 16 Aug 2023 15:26:19 -0700 (PDT)
+        bh=Bnw8GWbCg3crUhqUm6aNJ8qcR6RWaAljcB9fPeXaiCk=;
+        b=DQ+kBkNosywiSBDH+fTFS0zRS2V/tB3WObMr/ryDLmBM6zvDtVka/5vzeJbWv6N5y3
+         9t1tadG9xgplDp6sJDP3uAgK9VF6m1nL3bDPZqQ3grRFA/V+oBkBBhmqej9RKenSSZqb
+         V8g1fpw54xr8CnxOaxJACO1KTTviDlOl74zMoETwgelHR5z3qEEyJk8T6PHoe/bNQz/q
+         heNR+7RkzZTa6XxJonILAi1k4OAoKcRuPULdbkYHdhpu7L0RY6nBapRi/Aaq2FS3wBM0
+         d3qFVhQMg26XsMKED1yGyhX5Xgh9eafOrhWR8BoWu75qxq881pD4ixIIDK6d13R68UJo
+         1+mQ==
+X-Gm-Message-State: AOJu0YxgYGIb+Zrwz/ehMjNM+N0c12JFlo/owWyC72FXBpekmJbgj0K6
+	23ogITD9dwG6Q0rctzmhW4U2kw==
+X-Google-Smtp-Source: AGHT+IGNlj4ULxg5SjJ87GebvTE9fNDwtkuNFuQbP3LlsqQUhEIiMgjIitBNPkj7dX2HlulsHZ+RoA==
+X-Received: by 2002:a05:620a:3d15:b0:76d:75b2:968c with SMTP id tq21-20020a05620a3d1500b0076d75b2968cmr1562604qkn.75.1692224970670;
+        Wed, 16 Aug 2023 15:29:30 -0700 (PDT)
 Received: from localhost (c-98-249-43-138.hsd1.va.comcast.net. [98.249.43.138])
-        by smtp.gmail.com with ESMTPSA id o12-20020a05620a130c00b00767d2870e39sm4732290qkj.41.2023.08.16.15.26.18
+        by smtp.gmail.com with ESMTPSA id h19-20020a05620a10b300b007682af2c8aasm4736009qkk.126.2023.08.16.15.29.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Aug 2023 15:26:19 -0700 (PDT)
-Date: Wed, 16 Aug 2023 18:26:18 -0400
+        Wed, 16 Aug 2023 15:29:30 -0700 (PDT)
+Date: Wed, 16 Aug 2023 18:29:29 -0400
 From: Joel Fernandes <joel@joelfernandes.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -45,9 +45,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org
-Subject: Re: [PATCH 5.15 00/89] 5.15.127-rc1 review
-Message-ID: <20230816222618.GB1455425@joel-ThinkPad-X1-Carbon-4th>
-References: <20230813211710.787645394@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 00/68] 5.10.191-rc1 review
+Message-ID: <20230816222929.GC1455425@joel-ThinkPad-X1-Carbon-4th>
+References: <20230813211708.149630011@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,35 +57,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
+In-Reply-To: <20230813211708.149630011@linuxfoundation.org>
 
-On Sun, Aug 13, 2023 at 11:18:51PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.127 release.
-> There are 89 patches in this series, all will be posted as a response
+Hi Greg,
+
+On Sun, Aug 13, 2023 at 11:19:01PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.191 release.
+> There are 68 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
 > Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.191-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-Too late here.
+I had sent these with the SHA:
+https://lore.kernel.org/stable/20230814033934.1165010-1-joel@joelfernandes.org/#t
 
-Anyway for RCU it passed,
-
-Tested-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Can it be applied for next release or should I resend?
 
 thanks,
 
  - Joel
 
 
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.127-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
 > thanks,
 > 
 > greg k-h
@@ -94,16 +94,7 @@ thanks,
 > Pseudo-Shortlog of commits:
 > 
 > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 5.15.127-rc1
-> 
-> Frederic Weisbecker <frederic@kernel.org>
->     timers/nohz: Last resort update jiffies on nohz_full IRQ entry
-> 
-> Nicholas Piggin <npiggin@gmail.com>
->     timers/nohz: Switch to ONESHOT_STOPPED in the low-res handler when the tick is stopped
-> 
-> Frederic Weisbecker <frederic@kernel.org>
->     tick: Detect and fix jiffies update stall
+>     Linux 5.10.191-rc1
 > 
 > Eric Dumazet <edumazet@google.com>
 >     sch_netem: fix issues in netem_change() vs get_dist_table()
@@ -116,9 +107,6 @@ thanks,
 > 
 > Nilesh Javali <njavali@marvell.com>
 >     scsi: qedi: Fix firmware halt over suspend and resume
-> 
-> Karan Tilak Kumar <kartilak@cisco.com>
->     scsi: fnic: Replace return codes in fnic_clean_pending_aborts()
 > 
 > Zhu Wang <wangzhu9@huawei.com>
 >     scsi: core: Fix possible memory leak if device_add() fails
@@ -147,12 +135,6 @@ thanks,
 > Josef Bacik <josef@toxicpanda.com>
 >     btrfs: set cache_block_group_error if we find an error
 > 
-> Qu Wenruo <wqu@suse.com>
->     btrfs: reject invalid reloc tree root keys with stack dump
-> 
-> Qu Wenruo <wqu@suse.com>
->     btrfs: exit gracefully if reloc roots don't match
-> 
 > Christoph Hellwig <hch@lst.de>
 >     btrfs: don't stop integrity writeback too early
 > 
@@ -165,23 +147,11 @@ thanks,
 > Nick Child <nnac123@linux.ibm.com>
 >     ibmvnic: Enforce stronger sanity checks on login response
 > 
-> Moshe Shemesh <moshe@nvidia.com>
->     net/mlx5: Skip clock update work when device is in error state
-> 
 > Daniel Jurgens <danielj@nvidia.com>
 >     net/mlx5: Allow 0 for total host VFs
 > 
 > Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 >     dmaengine: mcf-edma: Fix a potential un-allocated memory access
-> 
-> Ido Schimmel <idosch@nvidia.com>
->     nexthop: Fix infinite nexthop bucket dump when using maximum nexthop ID
-> 
-> Ido Schimmel <idosch@nvidia.com>
->     nexthop: Make nexthop bucket dump more efficient
-> 
-> Ido Schimmel <idosch@nvidia.com>
->     nexthop: Fix infinite nexthop dump when using maximum nexthop ID
 > 
 > Jie Wang <wangjie125@huawei.com>
 >     net: hns3: add wait until mac link down
@@ -192,20 +162,11 @@ thanks,
 > Li Yang <leoyang.li@nxp.com>
 >     net: phy: at803x: remove set/get wol callbacks for AR8032
 > 
-> Michael Guralnik <michaelgur@nvidia.com>
->     RDMA/umem: Set iova in ODP flow
-> 
 > Felix Fietkau <nbd@nbd.name>
 >     wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
 > 
-> Daniel Stone <daniels@collabora.com>
->     drm/rockchip: Don't spam logs in atomic check
-> 
 > Douglas Miller <doug.miller@cornelisnetworks.com>
 >     IB/hfi1: Fix possible panic during hotplug remove
-> 
-> Piotr Gardocki <piotrx.gardocki@intel.com>
->     iavf: fix potential races for FDIR filters
 > 
 > Andrew Kanner <andrew.kanner@gmail.com>
 >     drivers: net: prevent tun_build_skb() to exceed the packet size limit
@@ -216,9 +177,6 @@ thanks,
 > Ziyang Xuan <william.xuanziyang@huawei.com>
 >     bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
 > 
-> Magnus Karlsson <magnus.karlsson@intel.com>
->     xsk: fix refcount underflow in error path
-> 
 > Florian Westphal <fw@strlen.de>
 >     tunnels: fix kasan splat when generating ipv4 pmtu error
 > 
@@ -227,15 +185,6 @@ thanks,
 > 
 > Nathan Chancellor <nathan@kernel.org>
 >     mISDN: Update parameter type of dsp_cmx_send()
-> 
-> Xu Kuohai <xukuohai@huawei.com>
->     bpf, sockmap: Fix bug that strp_done cannot be called
-> 
-> Xu Kuohai <xukuohai@huawei.com>
->     bpf, sockmap: Fix map type error in sock_map_del_link
-> 
-> Andrew Kanner <andrew.kanner@gmail.com>
->     net: core: remove unnecessary frame_sz check in bpf_xdp_adjust_tail()
 > 
 > Ido Schimmel <idosch@nvidia.com>
 >     selftests: forwarding: tc_flower: Relax success criterion
@@ -279,9 +228,6 @@ thanks,
 > Nick Desaulniers <ndesaulniers@google.com>
 >     x86/srso: Fix build breakage with the LLVM linker
 > 
-> Badhri Jagan Sridharan <badhri@google.com>
->     usb: typec: tcpm: Fix response to vsafe0V event
-> 
 > Prashanth K <quic_prashk@quicinc.com>
 >     usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
 > 
@@ -291,14 +237,8 @@ thanks,
 > Alan Stern <stern@rowland.harvard.edu>
 >     usb-storage: alauda: Fix uninit-value in alauda_check_media()
 > 
-> Ricky WU <ricky_wu@realtek.com>
->     misc: rtsx: judge ASPM Mode to set PETXCFG Reg
-> 
 > Qi Zheng <zhengqi.arch@bytedance.com>
 >     binder: fix memory leak in binder_init()
-> 
-> Alvin Šipraga <alsi@bang-olufsen.dk>
->     iio: adc: ina2xx: avoid NULL pointer dereference on OF device match
 > 
 > Yiyuan Guo <yguoaz@gmail.com>
 >     iio: cros_ec: Fix the allocation size for cros_ec_command
@@ -306,26 +246,11 @@ thanks,
 > Aleksa Sarai <cyphar@cyphar.com>
 >     io_uring: correct check for O_TMPFILE
 > 
-> Ilya Leoshkevich <iii@linux.ibm.com>
->     selftests/bpf: Fix sk_assign on s390x
-> 
-> Yonghong Song <yhs@fb.com>
->     selftests/bpf: Workaround verification failure for fexit_bpf2bpf/func_replace_return_code
-> 
-> Andrii Nakryiko <andrii@kernel.org>
->     selftests/bpf: make test_align selftest more robust
-> 
-> Andrii Nakryiko <andrii@kernel.org>
->     bpf: aggressively forget precise markings during state checkpointing
-> 
-> Andrii Nakryiko <andrii@kernel.org>
->     bpf: stop setting precise in current state
-> 
-> Andrii Nakryiko <andrii@kernel.org>
->     bpf: allow precision tracking for programs with subprogs
-> 
 > Ryusuke Konishi <konishi.ryusuke@gmail.com>
 >     nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
+> 
+> Thomas Gleixner <tglx@linutronix.de>
+>     x86/pkeys: Revert a5eff7259790 ("x86/pkeys: Add PKRU value to init_fpstate")
 > 
 > Colin Ian King <colin.i.king@gmail.com>
 >     radix tree test suite: fix incorrect allocation size for pthreads
@@ -348,6 +273,24 @@ thanks,
 > Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 >     dmaengine: pl330: Return DMA_PAUSED when transaction is paused
 > 
+> Ilya Leoshkevich <iii@linux.ibm.com>
+>     selftests/bpf: Fix sk_assign on s390x
+> 
+> Yonghong Song <yhs@fb.com>
+>     selftests/bpf: Workaround verification failure for fexit_bpf2bpf/func_replace_return_code
+> 
+> Andrii Nakryiko <andrii@kernel.org>
+>     selftests/bpf: make test_align selftest more robust
+> 
+> Andrii Nakryiko <andrii@kernel.org>
+>     bpf: aggressively forget precise markings during state checkpointing
+> 
+> Andrii Nakryiko <andrii@kernel.org>
+>     bpf: stop setting precise in current state
+> 
+> Andrii Nakryiko <andrii@kernel.org>
+>     bpf: allow precision tracking for programs with subprogs
+> 
 > Maciej Żenczykowski <maze@google.com>
 >     ipv6: adjust ndisc_is_useropt() to also return true for PIO
 > 
@@ -356,12 +299,6 @@ thanks,
 > 
 > Jason A. Donenfeld <Jason@zx2c4.com>
 >     wireguard: allowedips: expand maximum node depth
-> 
-> Namjae Jeon <linkinjeon@kernel.org>
->     ksmbd: fix wrong next length validation of ea buffer in smb2_set_ea()
-> 
-> Long Li <leo.lilong@huawei.com>
->     ksmbd: validate command request size
 > 
 > 
 > -------------
@@ -374,13 +311,15 @@ thanks,
 >  arch/x86/entry/vdso/vma.c                          |   4 +-
 >  arch/x86/include/asm/processor.h                   |   2 +
 >  arch/x86/kernel/cpu/amd.c                          |   1 +
+>  arch/x86/kernel/cpu/common.c                       |   5 -
 >  arch/x86/kernel/vmlinux.lds.S                      |  12 +-
 >  arch/x86/kvm/x86.c                                 |   2 -
+>  arch/x86/mm/pkeys.c                                |   6 -
 >  drivers/android/binder.c                           |   1 +
 >  drivers/android/binder_alloc.c                     |   6 +
 >  drivers/android/binder_alloc.h                     |   1 +
 >  drivers/dma/mcf-edma.c                             |  13 +-
->  drivers/dma/pl330.c                                |  18 +-
+>  drivers/dma/pl330.c                                |  18 ++-
 >  drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c   |   7 +-
 >  drivers/gpu/drm/drm_gem_shmem_helper.c             |   6 +
 >  drivers/gpu/drm/nouveau/nouveau_connector.c        |   2 +-
@@ -390,28 +329,16 @@ thanks,
 >  drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c |   1 +
 >  drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c  |   1 +
 >  drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c  |   1 +
->  drivers/gpu/drm/rockchip/rockchip_drm_vop.c        |  17 +-
 >  drivers/hwmon/pmbus/bel-pfe.c                      |  16 +-
->  drivers/iio/adc/ina2xx-adc.c                       |   9 +-
 >  .../common/cros_ec_sensors/cros_ec_sensors_core.c  |   2 +-
->  drivers/infiniband/core/umem.c                     |   3 +-
 >  drivers/infiniband/hw/hfi1/chip.c                  |   1 +
 >  drivers/isdn/mISDN/dsp.h                           |   2 +-
 >  drivers/isdn/mISDN/dsp_cmx.c                       |   2 +-
 >  drivers/isdn/mISDN/dsp_core.c                      |   2 +-
->  drivers/misc/cardreader/rts5227.c                  |   2 +-
->  drivers/misc/cardreader/rts5228.c                  |  18 --
->  drivers/misc/cardreader/rts5249.c                  |   3 +-
->  drivers/misc/cardreader/rts5260.c                  |  18 --
->  drivers/misc/cardreader/rts5261.c                  |  18 --
->  drivers/misc/cardreader/rtsx_pcr.c                 |   5 +-
 >  drivers/mmc/host/moxart-mmc.c                      |   8 +-
 >  drivers/net/bonding/bond_main.c                    |   4 +-
 >  .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c    |  24 ++-
->  drivers/net/ethernet/ibm/ibmvnic.c                 |  38 +++-
->  drivers/net/ethernet/intel/iavf/iavf_ethtool.c     |   5 +-
->  drivers/net/ethernet/intel/iavf/iavf_fdir.c        |  11 +-
->  .../net/ethernet/mellanox/mlx5/core/lib/clock.c    |   5 +
+>  drivers/net/ethernet/ibm/ibmvnic.c                 |  38 ++++-
 >  drivers/net/ethernet/mellanox/mlx5/core/sriov.c    |   3 +-
 >  drivers/net/phy/at803x.c                           |   2 -
 >  drivers/net/tun.c                                  |   2 +-
@@ -420,9 +347,8 @@ thanks,
 >  drivers/nvme/host/rdma.c                           |   3 +-
 >  drivers/nvme/host/tcp.c                            |   3 +-
 >  drivers/scsi/53c700.c                              |   2 +-
->  drivers/scsi/fnic/fnic_scsi.c                      |   6 +-
->  drivers/scsi/qedf/qedf_main.c                      |  18 ++
->  drivers/scsi/qedi/qedi_main.c                      |  18 ++
+>  drivers/scsi/qedf/qedf_main.c                      |  18 +++
+>  drivers/scsi/qedi/qedi_main.c                      |  18 +++
 >  drivers/scsi/raid_class.c                          |   1 +
 >  drivers/scsi/scsi_proc.c                           |  30 ++--
 >  drivers/scsi/snic/snic_disc.c                      |   1 +
@@ -430,51 +356,35 @@ thanks,
 >  drivers/usb/common/usb-conn-gpio.c                 |   6 +-
 >  drivers/usb/dwc3/gadget.c                          |   9 +-
 >  drivers/usb/storage/alauda.c                       |  12 +-
->  drivers/usb/typec/tcpm/tcpm.c                      |   7 +
->  fs/btrfs/disk-io.c                                 |   3 +-
 >  fs/btrfs/extent-tree.c                             |   5 +-
 >  fs/btrfs/extent_io.c                               |   7 +-
->  fs/btrfs/relocation.c                              |  45 ++++-
->  fs/btrfs/tree-checker.c                            |  14 ++
->  fs/ksmbd/smb2misc.c                                |  10 +-
->  fs/ksmbd/smb2pdu.c                                 |   9 +-
 >  fs/nilfs2/inode.c                                  |   8 +
 >  fs/nilfs2/segment.c                                |   2 +
 >  fs/nilfs2/the_nilfs.h                              |   2 +
 >  include/linux/cpu.h                                |   2 +
->  include/linux/skmsg.h                              |   1 +
 >  include/net/cfg80211.h                             |   3 +
 >  include/net/netfilter/nf_tables.h                  |  31 +++-
 >  io_uring/io_uring.c                                |   6 +-
->  kernel/bpf/verifier.c                              | 199 +++++++++++++++++++--
->  kernel/softirq.c                                   |   3 +-
->  kernel/time/tick-sched.c                           |  36 +++-
->  kernel/time/tick-sched.h                           |   4 +
->  net/core/filter.c                                  |   6 -
->  net/core/skmsg.c                                   |  10 +-
->  net/core/sock_map.c                                |  10 +-
+>  kernel/bpf/verifier.c                              | 175 +++++++++++++++++++--
 >  net/dccp/output.c                                  |   2 +-
 >  net/dccp/proto.c                                   |  10 +-
 >  net/ipv4/ip_tunnel_core.c                          |   2 +-
->  net/ipv4/nexthop.c                                 |  28 +--
 >  net/ipv6/ndisc.c                                   |   3 +-
->  net/netfilter/nf_tables_api.c                      | 168 ++++++++++-------
+>  net/netfilter/nf_tables_api.c                      | 175 +++++++++++++--------
 >  net/netfilter/nft_flow_offload.c                   |   6 +-
 >  net/netfilter/nft_immediate.c                      |   8 +-
 >  net/netfilter/nft_objref.c                         |   8 +-
 >  net/netfilter/nft_set_hash.c                       |   2 -
->  net/netfilter/nft_set_pipapo.c                     |  18 +-
+>  net/netfilter/nft_set_pipapo.c                     |  18 ++-
 >  net/netfilter/nft_set_rbtree.c                     |   2 -
 >  net/packet/af_packet.c                             |  16 +-
->  net/sched/sch_netem.c                              |  59 +++---
->  net/xdp/xsk.c                                      |   1 +
+>  net/sched/sch_netem.c                              |  59 +++----
 >  tools/testing/radix-tree/regression1.c             |   2 +-
->  tools/testing/selftests/bpf/prog_tests/align.c     |  36 ++--
+>  tools/testing/selftests/bpf/prog_tests/align.c     |  36 +++--
 >  tools/testing/selftests/bpf/prog_tests/sk_assign.c |  25 ++-
 >  tools/testing/selftests/bpf/progs/connect4_prog.c  |   2 +-
 >  tools/testing/selftests/bpf/progs/test_sk_assign.c |  11 ++
 >  .../selftests/bpf/progs/test_sk_assign_libbpf.c    |   3 +
->  tools/testing/selftests/net/fib_nexthops.sh        |  10 ++
 >  tools/testing/selftests/net/forwarding/ethtool.sh  |   2 +
 >  .../net/forwarding/ethtool_extended_state.sh       |   2 +
 >  tools/testing/selftests/net/forwarding/lib.sh      |  16 ++
@@ -482,6 +392,6 @@ thanks,
 >  .../testing/selftests/net/forwarding/tc_flower.sh  |   8 +-
 >  tools/testing/selftests/rseq/Makefile              |   4 +-
 >  tools/testing/selftests/rseq/rseq.c                |   2 +
->  114 files changed, 946 insertions(+), 407 deletions(-)
+>  87 files changed, 737 insertions(+), 293 deletions(-)
 > 
 > 
