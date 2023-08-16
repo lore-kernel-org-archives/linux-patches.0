@@ -1,109 +1,251 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BDD15AD7
-	for <patches@lists.linux.dev>; Tue, 15 Aug 2023 22:16:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C56DC433C8;
-	Tue, 15 Aug 2023 22:16:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692137807;
-	bh=XwXvMZmSyw0Fultdv91spvUYs8G7JznbXwG0CGzyAxM=;
-	h=From:Date:Subject:To:Cc:From;
-	b=KaH3eQclvi001FrOcutYbDGQo7hpeSF0k96n1brchRa+PiK6n2Ae+08jPrhGrUg8T
-	 eGCnjPwfFEWv+aMO+PZtOQKDFyPKAdFvH/OSA/jtdlDAW4KZqzIs2CCVlesgdEr8Hh
-	 MTwHqy+4AcvB3zN7Fto4z2hfELMIGWO6M4uO+lrwREwp/cETpubtrlMs5hock/a7hQ
-	 cW6lJXtRXM2fhmXtByLyZjKJcHtJjUQb0IaZuON8+tszOg3o2QwPmXObWcboYaF5ge
-	 TMS6t95ODItsb5blWCaSKTaqKU3ogPmd6ZEZayY/9p48hBjFqAEqfR1M14/gQ4k2Li
-	 geulV0KHc0eWw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 15 Aug 2023 15:16:41 -0700
-Subject: [PATCH] rtc: stm32: Use NOIRQ_SYSTEM_SLEEP_PM_OPS()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B5981A
+	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 02:05:33 +0000 (UTC)
+Received: from dggpeml500006.china.huawei.com (unknown [172.30.72.53])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4RQWc30TPVzFqYL;
+	Wed, 16 Aug 2023 10:02:27 +0800 (CST)
+Received: from [10.174.176.127] (10.174.176.127) by
+ dggpeml500006.china.huawei.com (7.185.36.76) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.31; Wed, 16 Aug 2023 10:05:22 +0800
+Subject: Re: [PATCH 4.19 00/33] 4.19.292-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>
+References: <20230813211703.915807095@linuxfoundation.org>
+From: luomeng <luomeng12@huawei.com>
+Message-ID: <67f18995-78c6-d53c-1bc5-e30da7018bc6@huawei.com>
+Date: Wed, 16 Aug 2023 10:05:22 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230815-rtc-stm32-unused-pm-funcs-v1-1-82eb8e02d903@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAEj522QC/x3MMQ6DMAxA0asgz1hKAq1Cr4IYWscpHkhRTBAS4
- u5EHd/w/wnKWVjh1ZyQeReVX6qwbQM0v9OXUUI1OOM64+0D80ao29I5LKkoB1wXjCWR4mCC7z/
- kyNgn1H7NHOX4v8fpum502a94awAAAA==
-To: a.zummo@towertech.it, alexandre.belloni@bootlin.com
-Cc: mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com, arnd@arndb.de, 
- linux-rtc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2767; i=nathan@kernel.org;
- h=from:subject:message-id; bh=XwXvMZmSyw0Fultdv91spvUYs8G7JznbXwG0CGzyAxM=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCm3f/rNPqfvaPfxjI/qv/SEwyGPJnwSUl0SduxYtgDPp
- S69U5dPdJSyMIhxMMiKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJbCxm+B/Vfi3Ps2eVwv+z
- d45+XBFroiSRWzq3mEllOSNb0qquM7wMv9kzPjClnctoZ5LVLOpb6rI3oe17fUy/WCuD88+wnYt
- X8QMA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+In-Reply-To: <20230813211703.915807095@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.174.176.127]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ dggpeml500006.china.huawei.com (7.185.36.76)
+X-CFilter-Loop: Reflected
 
-After the switch to SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() and a subsequent
-fix, stm32_rtc_{suspend,resume}() are unused when CONFIG_PM_SLEEP is not
-set because SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is a no-op in that
-configuration:
+Tested on arm64 and x86 for 4.19.292-rc1,
 
-  drivers/rtc/rtc-stm32.c:904:12: error: 'stm32_rtc_resume' defined but not used [-Werror=unused-function]
-    904 | static int stm32_rtc_resume(struct device *dev)
-        |            ^~~~~~~~~~~~~~~~
-  drivers/rtc/rtc-stm32.c:894:12: error: 'stm32_rtc_suspend' defined but not used [-Werror=unused-function]
-    894 | static int stm32_rtc_suspend(struct device *dev)
-        |            ^~~~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
+Kernel 
+repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+Branch: linux-4.19.y
+Version: 4.19.292-rc1
+Commit: 84b9d8b93009a14264e351f2ae6dd63d95dd6ceb
+Compiler: gcc version 7.3.0 (GCC))
 
-The non-"SET_" version of this macro, NOIRQ_SYSTEM_SLEEP_PM_OPS(), is
-designed to handle this situation by only assigning the callbacks when
-CONFIG_PM_SLEEP is set while allowing the functions to appear used to
-the compiler. Switch to that macro to resolve the warnings. There is no
-functional change with this, as SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is
-defined using NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is set.
+arm64:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 8901
+passed: 8901
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-I am not sure what to do about a Fixes: tag for this change. I am not
-sure how Arnd triggered the error/warning in commit a69c610e13e2 ("rtc:
-stm32: remove incorrect #ifdef check"), since from what I can tell,
-SET_NOIRQ_SYSTEM_SLEEP_PM_OPS() is only defined in terms of
-NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is set, so I am not
-sure how those functions could be absent in the source file but used in
-NOIRQ_SYSTEM_SLEEP_PM_OPS() when CONFIG_PM_SLEEP is unset... I could be
-missing something though.
+x86:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 8901
+passed: 8901
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
+Tested-by: Hulk Robot <hulkrobot@huawei.com>
 
-However, I think this change should have been done as part of commit
-fb9a7e5360dc ("rtc: stm32: change PM callbacks to "_noirq()"") because
-the "SET_" macros are deprecated and that would have made Arnd's change
-necessary so... assign an appropriate Fixes: tag based on that
-information as you will :)
----
- drivers/rtc/rtc-stm32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/rtc/rtc-stm32.c b/drivers/rtc/rtc-stm32.c
-index 3ce4b3d08155..76753c71d92e 100644
---- a/drivers/rtc/rtc-stm32.c
-+++ b/drivers/rtc/rtc-stm32.c
-@@ -923,7 +923,7 @@ static int stm32_rtc_resume(struct device *dev)
- }
- 
- static const struct dev_pm_ops stm32_rtc_pm_ops = {
--	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(stm32_rtc_suspend, stm32_rtc_resume)
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(stm32_rtc_suspend, stm32_rtc_resume)
- };
- 
- static struct platform_driver stm32_rtc_driver = {
-
----
-base-commit: 4f3688dca15053555ade31a785a9c75837a64fb8
-change-id: 20230815-rtc-stm32-unused-pm-funcs-90d84bc2c016
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+在 2023/8/14 5:18, Greg Kroah-Hartman 写道:
+> This is the start of the stable review cycle for the 4.19.292 release.
+> There are 33 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.292-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> -------------
+> Pseudo-Shortlog of commits:
+> 
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>      Linux 4.19.292-rc1
+> 
+> Eric Dumazet <edumazet@google.com>
+>      sch_netem: fix issues in netem_change() vs get_dist_table()
+> 
+> Masahiro Yamada <masahiroy@kernel.org>
+>      alpha: remove __init annotation from exported page_is_ram()
+> 
+> Zhu Wang <wangzhu9@huawei.com>
+>      scsi: core: Fix possible memory leak if device_add() fails
+> 
+> Zhu Wang <wangzhu9@huawei.com>
+>      scsi: snic: Fix possible memory leak if device_add() fails
+> 
+> Alexandra Diupina <adiupina@astralinux.ru>
+>      scsi: 53c700: Check that command slot is not NULL
+> 
+> Michael Kelley <mikelley@microsoft.com>
+>      scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
+> 
+> Tony Battersby <tonyb@cybernetics.com>
+>      scsi: core: Fix legacy /proc parsing buffer overflow
+> 
+> Pablo Neira Ayuso <pablo@netfilter.org>
+>      netfilter: nf_tables: report use refcount overflow
+> 
+> Pablo Neira Ayuso <pablo@netfilter.org>
+>      netfilter: nf_tables: bogus EBUSY when deleting flowtable after flush
+> 
+> Christoph Hellwig <hch@lst.de>
+>      btrfs: don't stop integrity writeback too early
+> 
+> Nick Child <nnac123@linux.ibm.com>
+>      ibmvnic: Handle DMA unmapping of login buffs in release functions
+> 
+> Felix Fietkau <nbd@nbd.name>
+>      wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
+> 
+> Douglas Miller <doug.miller@cornelisnetworks.com>
+>      IB/hfi1: Fix possible panic during hotplug remove
+> 
+> Andrew Kanner <andrew.kanner@gmail.com>
+>      drivers: net: prevent tun_build_skb() to exceed the packet size limit
+> 
+> Eric Dumazet <edumazet@google.com>
+>      dccp: fix data-race around dp->dccps_mss_cache
+> 
+> Ziyang Xuan <william.xuanziyang@huawei.com>
+>      bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+> 
+> Eric Dumazet <edumazet@google.com>
+>      net/packet: annotate data-races around tp->status
+> 
+> Nathan Chancellor <nathan@kernel.org>
+>      mISDN: Update parameter type of dsp_cmx_send()
+> 
+> Karol Herbst <kherbst@redhat.com>
+>      drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
+> 
+> Arnd Bergmann <arnd@arndb.de>
+>      x86: Move gds_ucode_mitigated() declaration to header
+> 
+> Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+>      x86/mm: Fix VDSO and VVAR placement on 5-level paging machines
+> 
+> Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+>      x86/cpu/amd: Enable Zenbleed fix for AMD Custom APU 0405
+> 
+> Elson Roy Serrao <quic_eserrao@quicinc.com>
+>      usb: dwc3: Properly handle processing of pending events
+> 
+> Alan Stern <stern@rowland.harvard.edu>
+>      usb-storage: alauda: Fix uninit-value in alauda_check_media()
+> 
+> Qi Zheng <zhengqi.arch@bytedance.com>
+>      binder: fix memory leak in binder_init()
+> 
+> Yiyuan Guo <yguoaz@gmail.com>
+>      iio: cros_ec: Fix the allocation size for cros_ec_command
+> 
+> Ryusuke Konishi <konishi.ryusuke@gmail.com>
+>      nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
+> 
+> Colin Ian King <colin.i.king@gmail.com>
+>      radix tree test suite: fix incorrect allocation size for pthreads
+> 
+> Karol Herbst <kherbst@redhat.com>
+>      drm/nouveau/gr: enable memory loads on helper invocation on all channels
+> 
+> Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+>      dmaengine: pl330: Return DMA_PAUSED when transaction is paused
+> 
+> Maciej Żenczykowski <maze@google.com>
+>      ipv6: adjust ndisc_is_useropt() to also return true for PIO
+> 
+> Sergei Antonov <saproj@gmail.com>
+>      mmc: moxart: read scr register without changing byte order
+> 
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>      sparc: fix up arch_cpu_finalize_init() build breakage.
+> 
+> 
+> -------------
+> 
+> Diffstat:
+> 
+>   Makefile                                           |   4 +-
+>   arch/alpha/kernel/setup.c                          |   3 +-
+>   arch/sparc/Kconfig                                 |   2 +-
+>   arch/x86/entry/vdso/vma.c                          |   4 +-
+>   arch/x86/include/asm/processor.h                   |   2 +
+>   arch/x86/kernel/cpu/amd.c                          |   1 +
+>   arch/x86/kvm/x86.c                                 |   2 -
+>   drivers/android/binder.c                           |   1 +
+>   drivers/android/binder_alloc.c                     |   6 +
+>   drivers/android/binder_alloc.h                     |   1 +
+>   drivers/dma/pl330.c                                |  18 ++-
+>   drivers/gpu/drm/nouveau/nouveau_connector.c        |   2 +-
+>   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h  |   1 +
+>   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c  |   4 +-
+>   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c  |  10 ++
+>   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c |   1 +
+>   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c  |   1 +
+>   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c  |   1 +
+>   .../common/cros_ec_sensors/cros_ec_sensors_core.c  |   2 +-
+>   drivers/infiniband/hw/hfi1/chip.c                  |   1 +
+>   drivers/isdn/mISDN/dsp.h                           |   2 +-
+>   drivers/isdn/mISDN/dsp_cmx.c                       |   2 +-
+>   drivers/isdn/mISDN/dsp_core.c                      |   2 +-
+>   drivers/mmc/host/moxart-mmc.c                      |   8 +-
+>   drivers/net/bonding/bond_main.c                    |   4 +-
+>   drivers/net/ethernet/ibm/ibmvnic.c                 |  15 +-
+>   drivers/net/tun.c                                  |   2 +-
+>   drivers/scsi/53c700.c                              |   2 +-
+>   drivers/scsi/raid_class.c                          |   1 +
+>   drivers/scsi/scsi_proc.c                           |  30 ++--
+>   drivers/scsi/snic/snic_disc.c                      |   1 +
+>   drivers/scsi/storvsc_drv.c                         |   4 -
+>   drivers/usb/dwc3/gadget.c                          |   9 +-
+>   drivers/usb/storage/alauda.c                       |   9 +-
+>   fs/btrfs/extent_io.c                               |   7 +-
+>   fs/nilfs2/inode.c                                  |   8 +
+>   fs/nilfs2/segment.c                                |   2 +
+>   fs/nilfs2/the_nilfs.h                              |   2 +
+>   include/net/cfg80211.h                             |   3 +
+>   include/net/netfilter/nf_tables.h                  |  35 +++-
+>   net/dccp/output.c                                  |   2 +-
+>   net/dccp/proto.c                                   |  10 +-
+>   net/ipv6/ndisc.c                                   |   3 +-
+>   net/netfilter/nf_tables_api.c                      | 180 ++++++++++++++-------
+>   net/netfilter/nft_flow_offload.c                   |  23 ++-
+>   net/netfilter/nft_objref.c                         |   8 +-
+>   net/packet/af_packet.c                             |  16 +-
+>   net/sched/sch_netem.c                              |  59 +++----
+>   tools/testing/radix-tree/regression1.c             |   2 +-
+>   49 files changed, 349 insertions(+), 169 deletions(-)
+> 
+> 
+> .
+> 
