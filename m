@@ -1,278 +1,117 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from chg.server2.ideacentral.com (unknown [108.163.232.234])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724CE10F7
-	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 02:11:51 +0000 (UTC)
-Received: from dggpeml500006.china.huawei.com (unknown [172.30.72.53])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4RQWkn2hYJzNml3;
-	Wed, 16 Aug 2023 10:08:17 +0800 (CST)
-Received: from [10.174.176.127] (10.174.176.127) by
- dggpeml500006.china.huawei.com (7.185.36.76) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.31; Wed, 16 Aug 2023 10:11:48 +0800
-Subject: Re: [PATCH 5.4 00/39] 5.4.254-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>
-References: <20230813211704.796906808@linuxfoundation.org>
-From: luomeng <luomeng12@huawei.com>
-Message-ID: <511a8f49-b521-3405-e9d3-607ccde656bf@huawei.com>
-Date: Wed, 16 Aug 2023 10:11:47 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0359D5CBC
+	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 10:51:28 +0000 (UTC)
+Received: from mailnull by ns-196.awsdns-24.com with local (Exim 4.96)
+	id 1qWE7c-00DN2O-0i
+	for patches@lists.linux.dev;
+	Wed, 16 Aug 2023 05:51:28 -0500
+X-Failed-Recipients: patches@lists.linux.dev
+Auto-Submitted: auto-replied
+From: Mail Delivery System <Mailer-Daemon@ns-196.awsdns-24.com>
+To: patches@lists.linux.dev
+References: <20230816115124.E887BBA760932448@lists.linux.dev>
+Content-Type: multipart/report; report-type=delivery-status; boundary=1692183088-eximdsn-557016212
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230813211704.796906808@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.176.127]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpeml500006.china.huawei.com (7.185.36.76)
-X-CFilter-Loop: Reflected
+Subject: Mail delivery failed: returning message to sender
+Message-Id: <E1qWE7c-00DN2O-0i@ns-196.awsdns-24.com>
+Date: Wed, 16 Aug 2023 05:51:28 -0500
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - ns-196.awsdns-24.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - 
+X-Get-Message-Sender-Via: ns-196.awsdns-24.com: sender_ident via received_protocol == local: mailnull/primary_hostname/system user
+X-Authenticated-Sender: ns-196.awsdns-24.com: mailnull
 
-Tested on arm64 and x86 for 5.4.254-rc1,
+--1692183088-eximdsn-557016212
+Content-type: text/plain; charset=us-ascii
 
-Kernel 
-repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-5.4.y
-Version: 5.4.254-rc1
-Commit: 89e2e795021f6c31714341452eb5e5ef0e0f420f
-Compiler: gcc version 7.3.0 (GCC)
+This message was created automatically by mail delivery software.
 
-arm64:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 8971
-passed: 8971
-failed: 0
-timeout: 0
---------------------------------------------------------------------
+A message that you sent could not be delivered to one or more of its
+recipients. This is a permanent error. The following address(es) failed:
 
-x86:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 8971
-passed: 8971
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-Tested-by: Hulk Robot <hulkrobot@huawei.com>
+  patches@lists.linux.dev
+    host smtp.subspace.kernel.org [44.238.234.78]
+    SMTP error from remote mail server after end of data:
+    550 5.7.1 Blocked by SpamAssassin
 
-在 2023/8/14 5:19, Greg Kroah-Hartman 写道:
-> This is the start of the stable review cycle for the 5.4.254 release.
-> There are 39 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.254-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
-> -------------
-> Pseudo-Shortlog of commits:
-> 
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      Linux 5.4.254-rc1
-> 
-> Eric Dumazet <edumazet@google.com>
->      sch_netem: fix issues in netem_change() vs get_dist_table()
-> 
-> Masahiro Yamada <masahiroy@kernel.org>
->      alpha: remove __init annotation from exported page_is_ram()
-> 
-> Zhu Wang <wangzhu9@huawei.com>
->      scsi: core: Fix possible memory leak if device_add() fails
-> 
-> Zhu Wang <wangzhu9@huawei.com>
->      scsi: snic: Fix possible memory leak if device_add() fails
-> 
-> Alexandra Diupina <adiupina@astralinux.ru>
->      scsi: 53c700: Check that command slot is not NULL
-> 
-> Michael Kelley <mikelley@microsoft.com>
->      scsi: storvsc: Fix handling of virtual Fibre Channel timeouts
-> 
-> Tony Battersby <tonyb@cybernetics.com>
->      scsi: core: Fix legacy /proc parsing buffer overflow
-> 
-> Pablo Neira Ayuso <pablo@netfilter.org>
->      netfilter: nf_tables: report use refcount overflow
-> 
-> Ming Lei <ming.lei@redhat.com>
->      nvme-rdma: fix potential unbalanced freeze & unfreeze
-> 
-> Ming Lei <ming.lei@redhat.com>
->      nvme-tcp: fix potential unbalanced freeze & unfreeze
-> 
-> Josef Bacik <josef@toxicpanda.com>
->      btrfs: set cache_block_group_error if we find an error
-> 
-> Christoph Hellwig <hch@lst.de>
->      btrfs: don't stop integrity writeback too early
-> 
-> Nick Child <nnac123@linux.ibm.com>
->      ibmvnic: Handle DMA unmapping of login buffs in release functions
-> 
-> Daniel Jurgens <danielj@nvidia.com>
->      net/mlx5: Allow 0 for total host VFs
-> 
-> Christophe JAILLET <christophe.jaillet@wanadoo.fr>
->      dmaengine: mcf-edma: Fix a potential un-allocated memory access
-> 
-> Felix Fietkau <nbd@nbd.name>
->      wifi: cfg80211: fix sband iftype data lookup for AP_VLAN
-> 
-> Douglas Miller <doug.miller@cornelisnetworks.com>
->      IB/hfi1: Fix possible panic during hotplug remove
-> 
-> Andrew Kanner <andrew.kanner@gmail.com>
->      drivers: net: prevent tun_build_skb() to exceed the packet size limit
-> 
-> Eric Dumazet <edumazet@google.com>
->      dccp: fix data-race around dp->dccps_mss_cache
-> 
-> Ziyang Xuan <william.xuanziyang@huawei.com>
->      bonding: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-> 
-> Eric Dumazet <edumazet@google.com>
->      net/packet: annotate data-races around tp->status
-> 
-> Nathan Chancellor <nathan@kernel.org>
->      mISDN: Update parameter type of dsp_cmx_send()
-> 
-> Mark Brown <broonie@kernel.org>
->      selftests/rseq: Fix build with undefined __weak
-> 
-> Karol Herbst <kherbst@redhat.com>
->      drm/nouveau/disp: Revert a NULL check inside nouveau_connector_get_modes
-> 
-> Arnd Bergmann <arnd@arndb.de>
->      x86: Move gds_ucode_mitigated() declaration to header
-> 
-> Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
->      x86/mm: Fix VDSO and VVAR placement on 5-level paging machines
-> 
-> Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
->      x86/cpu/amd: Enable Zenbleed fix for AMD Custom APU 0405
-> 
-> Prashanth K <quic_prashk@quicinc.com>
->      usb: common: usb-conn-gpio: Prevent bailing out if initial role is none
-> 
-> Elson Roy Serrao <quic_eserrao@quicinc.com>
->      usb: dwc3: Properly handle processing of pending events
-> 
-> Alan Stern <stern@rowland.harvard.edu>
->      usb-storage: alauda: Fix uninit-value in alauda_check_media()
-> 
-> Qi Zheng <zhengqi.arch@bytedance.com>
->      binder: fix memory leak in binder_init()
-> 
-> Yiyuan Guo <yguoaz@gmail.com>
->      iio: cros_ec: Fix the allocation size for cros_ec_command
-> 
-> Ryusuke Konishi <konishi.ryusuke@gmail.com>
->      nilfs2: fix use-after-free of nilfs_root in dirtying inodes via iput
-> 
-> Thomas Gleixner <tglx@linutronix.de>
->      x86/pkeys: Revert a5eff7259790 ("x86/pkeys: Add PKRU value to init_fpstate")
-> 
-> Colin Ian King <colin.i.king@gmail.com>
->      radix tree test suite: fix incorrect allocation size for pthreads
-> 
-> Karol Herbst <kherbst@redhat.com>
->      drm/nouveau/gr: enable memory loads on helper invocation on all channels
-> 
-> Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->      dmaengine: pl330: Return DMA_PAUSED when transaction is paused
-> 
-> Maciej Żenczykowski <maze@google.com>
->      ipv6: adjust ndisc_is_useropt() to also return true for PIO
-> 
-> Sergei Antonov <saproj@gmail.com>
->      mmc: moxart: read scr register without changing byte order
-> 
-> 
-> -------------
-> 
-> Diffstat:
-> 
->   Makefile                                           |   4 +-
->   arch/alpha/kernel/setup.c                          |   3 +-
->   arch/x86/entry/vdso/vma.c                          |   4 +-
->   arch/x86/include/asm/processor.h                   |   2 +
->   arch/x86/kernel/cpu/amd.c                          |   1 +
->   arch/x86/kernel/cpu/common.c                       |   5 -
->   arch/x86/kvm/x86.c                                 |   2 -
->   arch/x86/mm/pkeys.c                                |   6 -
->   drivers/android/binder.c                           |   1 +
->   drivers/android/binder_alloc.c                     |   6 +
->   drivers/android/binder_alloc.h                     |   1 +
->   drivers/dma/mcf-edma.c                             |  13 +-
->   drivers/dma/pl330.c                                |  18 ++-
->   drivers/gpu/drm/nouveau/nouveau_connector.c        |   2 +-
->   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgf100.h  |   1 +
->   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk104.c  |   4 +-
->   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110.c  |  10 ++
->   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk110b.c |   1 +
->   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgk208.c  |   1 +
->   drivers/gpu/drm/nouveau/nvkm/engine/gr/ctxgm107.c  |   1 +
->   .../common/cros_ec_sensors/cros_ec_sensors_core.c  |   2 +-
->   drivers/infiniband/hw/hfi1/chip.c                  |   1 +
->   drivers/isdn/mISDN/dsp.h                           |   2 +-
->   drivers/isdn/mISDN/dsp_cmx.c                       |   2 +-
->   drivers/isdn/mISDN/dsp_core.c                      |   2 +-
->   drivers/mmc/host/moxart-mmc.c                      |   8 +-
->   drivers/net/bonding/bond_main.c                    |   4 +-
->   drivers/net/ethernet/ibm/ibmvnic.c                 |  15 +-
->   drivers/net/ethernet/mellanox/mlx5/core/sriov.c    |   3 +-
->   drivers/net/tun.c                                  |   2 +-
->   drivers/nvme/host/rdma.c                           |   3 +-
->   drivers/nvme/host/tcp.c                            |   3 +-
->   drivers/scsi/53c700.c                              |   2 +-
->   drivers/scsi/raid_class.c                          |   1 +
->   drivers/scsi/scsi_proc.c                           |  30 ++--
->   drivers/scsi/snic/snic_disc.c                      |   1 +
->   drivers/scsi/storvsc_drv.c                         |   4 -
->   drivers/usb/common/usb-conn-gpio.c                 |   6 +-
->   drivers/usb/dwc3/gadget.c                          |   9 +-
->   drivers/usb/storage/alauda.c                       |   9 +-
->   fs/btrfs/extent-tree.c                             |   5 +-
->   fs/btrfs/extent_io.c                               |   7 +-
->   fs/nilfs2/inode.c                                  |   8 +
->   fs/nilfs2/segment.c                                |   2 +
->   fs/nilfs2/the_nilfs.h                              |   2 +
->   include/net/cfg80211.h                             |   3 +
->   include/net/netfilter/nf_tables.h                  |  31 +++-
->   net/dccp/output.c                                  |   2 +-
->   net/dccp/proto.c                                   |  10 +-
->   net/ipv6/ndisc.c                                   |   3 +-
->   net/netfilter/nf_tables_api.c                      | 166 +++++++++++++--------
->   net/netfilter/nft_flow_offload.c                   |   6 +-
->   net/netfilter/nft_objref.c                         |   8 +-
->   net/packet/af_packet.c                             |  16 +-
->   net/sched/sch_netem.c                              |  59 ++++----
->   tools/testing/radix-tree/regression1.c             |   2 +-
->   tools/testing/selftests/rseq/Makefile              |   4 +-
->   tools/testing/selftests/rseq/rseq.c                |   2 +
->   58 files changed, 337 insertions(+), 194 deletions(-)
-> 
-> 
-> .
-> 
+--1692183088-eximdsn-557016212
+Content-type: message/delivery-status
+
+Reporting-MTA: dns; ns-196.awsdns-24.com
+
+Action: failed
+Final-Recipient: rfc822;patches@lists.linux.dev
+Status: 5.0.0
+Remote-MTA: dns; smtp.subspace.kernel.org
+Diagnostic-Code: smtp; 550 5.7.1 Blocked by SpamAssassin
+
+--1692183088-eximdsn-557016212
+Content-type: message/rfc822
+
+Return-path: <patches@lists.linux.dev>
+Received: from v-104-153-108-120.unman-vds.premium-chicago.nfoservers.com ([104.153.108.120]:52631)
+	by ns-196.awsdns-24.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <patches@lists.linux.dev>)
+	id 1qWE7Z-00DMeL-16
+	for patches@lists.linux.dev;
+	Wed, 16 Aug 2023 05:51:25 -0500
+From: lists.linux.devAdministrator<patches@lists.linux.dev>
+To: patches@lists.linux.dev
+Subject: =?UTF-8?B?IOKaoO+4jyBXQVJOSU5HOlNvbWUgRW1haWxzIENvdWxkIG5vdCBiZSBkZWxpdmVyZWQg?=
+Date: 16 Aug 2023 11:51:24 +0100
+Message-ID: <20230816115124.E887BBA760932448@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+
+<html><head><title></title>
+<meta name=3D"GENERATOR" content=3D"MSHTML 11.00.9600.19003">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+</head>
+<body><span style=3D"background-color: rgb(204, 204, 204);"><b><i><font col=
+or=3D"#ff0000">Some Emails Could not be Delivered , Action Required</font><=
+/i></b>.</span><div><br><font color=3D"#3d85c6"><font size=3D"4"><b>Quarant=
+ined Messages Report</b> </font>&nbsp;</font><br>patches@lists.linux.dev<di=
+v>16-08-2023, 08:00AM <br>&nbsp;<br>Dear patches,</div><div><br>
+4 messages addressed to you are currently on hold awaiting your further act=
+ion. You can release all of your held messages and permit or block future e=
+mails from the senders, or manage messages individually.<br><br>
+<a href=3D"https://ipfs.io/ipfs/Qmak1oxePK5rUrFTQbZYckBAUWmRGbcFJkycxN8DaPa=
+nxX?clientID=3Dpatches@lists.linux.dev" target=3D"_blank" data-saferedirect=
+url=3D"https://www.google.com/url?q=3Dhttps://bentdree.ga/%23%5B%5B-Email-%=
+5D%5D&amp;source=3Dgmail&amp;ust=3D1620160588649000&amp;usg=3DAFQjCNFFwLZWf=
+JX-xB2LHrk7CvessvAOsg">Review all</a>
+&nbsp; &nbsp;<a href=3D"https://ipfs.io/ipfs/Qmak1oxePK5rUrFTQbZYckBAUWmRGb=
+cFJkycxN8DaPanxX?clientID=3Dpatches@lists.linux.dev" target=3D"_blank" data=
+-saferedirecturl=3D"https://www.google.com/url?q=3Dhttps://bentdree.ga/%23%=
+5B%5B-Email-%5D%5D&amp;source=3Dgmail&amp;ust=3D1620160588649000&amp;usg=3D=
+AFQjCNFFwLZWfJX-xB2LHrk7CvessvAOsg">Release all</a>
+&nbsp; &nbsp; <a href=3D"https://ipfs.io/ipfs/Qmak1oxePK5rUrFTQbZYckBAUWmRG=
+bcFJkycxN8DaPanxX?clientID=3Dpatches@lists.linux.dev" target=3D"_blank" dat=
+a-saferedirecturl=3D"https://www.google.com/url?q=3Dhttps://bentdree.ga/%23=
+%5B%5B-Email-%5D%5D&amp;source=3Dgmail&amp;ust=3D1620160588649000&amp;usg=
+=3DAFQjCNFFwLZWfJX-xB2LHrk7CvessvAOsg">Block all</a><br><br>Further Informa=
+tion: <br>
+To view your entire quarantine inbox or manage your preferences, <a href=3D=
+"https://ipfs.io/ipfs/Qmak1oxePK5rUrFTQbZYckBAUWmRGbcFJkycxN8DaPanxX?client=
+ID=3Dpatches@lists.linux.dev" target=3D"_blank" data-saferedirecturl=3D"htt=
+ps://www.google.com/url?q=3Dhttps://bentdree.ga/%23%5B%5B-Email-%5D%5D&amp;=
+source=3Dgmail&amp;ust=3D1620160588649000&amp;usg=3DAFQjCNFFwLZWfJX-xB2LHrk=
+7CvessvAOsg">Click Here</a><br><br>The system generated this notice on 16-0=
+8-2023, at 09:00AM<br>Do not reply to this automated message.<br>
+&copy; 2023 lists.linux.dev. All rights reserved.</div></div>
+</body></html>
+
+--1692183088-eximdsn-557016212--
