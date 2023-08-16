@@ -1,136 +1,101 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2086.outbound.protection.outlook.com [40.107.220.86])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA7C20E7
-	for <patches@lists.linux.dev>; Wed, 16 Aug 2023 16:36:52 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MShFF08GYapZ0FnS+DXCG0bKC3VdamsCZvIJEonAKLraiAp+dVPxi04Slh/dnzMyEiSCxTtcmwmpzmp6pEtcjRxUQ1TZZwTQtABpAhjWAndETfMWcLgUX16z3rgodv/V6iM+WdOTYsaa5SWFGSmi+1PClYYnYhB7mhDTYnXUMZF/hqO7JXqL9KisGIG1Vkxz7/t1D1mNwZQVikj+wF9NEPoHwz/BToJXDY7VDUwOuk0o5OO8d+xqCMdrqlywAUPY2q2BSaceAMc+RoUYK+2xmjMJBw/EzPJjrZB8MW9ihteTJpArJHAsLXi4EX6ceOLcOoRf8sUSmFBa0JI3S3KYPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YkR74BTEcSe6D8aFH4bv7M0SkZPl+ZuHgvW+U/LM4ac=;
- b=b5w6Ab709+Us7sPf3HK6t1xSB2gAD0KqRPZpAlHkevmp3X3viWRj90H9/EwfDlThrW5EscrpYkAfVcD1vWGkXCKiTw+tLEcrnQ+lZ10NUsTesr+mKGTWM2ZZzsnJNEpF9nOII06Af9x+b+6myJGeP8sCsCx56enWBHmsv4WV+EdgxFYxbfWj4orOYs7v5UHFigP3zcGxBKu0nIAe3mC23AaSH6o1cuUE97PwTX7FY0dl+PItZ1ufLAPmr8wGIR16iZg0S0oWUhUTPC58rElYeDtLq7bvL6wlNKgEVA1zPRbm54VckWp+oh4X06PLRdiPvE7K0TJRBuKk1+l0wOl4XA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YkR74BTEcSe6D8aFH4bv7M0SkZPl+ZuHgvW+U/LM4ac=;
- b=Nl17idLRd4cXzdiR+zPhYgiOdHpwkNXSJoHYM4L+5bTWVh/HSqow8JOUQpa3cZdGgX3oCxlzqybMmEYFcZN/ZcXpJAQim2WweXUL6GaiGR1PFJuaVtjGnqQRFEqE2Nu6CQIDuu/Ry08r9H0u88MrCqtZ7lttGZG4j2tXL24EM7zWUZm75Vxk25O+EGEnCZzOuzVCZTrSOpa1ZPLXpNng5MYdgesd1b1APRmIba48rHAciemlQ5O0+T4rAFkL5HtqwIsxaH8yR4AIBawcbHEP74MLvKjYpzPlHkOwqpMBHAlzIcdNOKUYX0rZMtvpfgK9Cw+klbcs1b6pEmma+w5Jhw==
-Received: from CY5PR13CA0055.namprd13.prod.outlook.com (2603:10b6:930:11::7)
- by IA1PR12MB8079.namprd12.prod.outlook.com (2603:10b6:208:3fb::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.26; Wed, 16 Aug
- 2023 16:36:49 +0000
-Received: from CY4PEPF0000EE37.namprd05.prod.outlook.com
- (2603:10b6:930:11:cafe::db) by CY5PR13CA0055.outlook.office365.com
- (2603:10b6:930:11::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.14 via Frontend
- Transport; Wed, 16 Aug 2023 16:36:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CY4PEPF0000EE37.mail.protection.outlook.com (10.167.242.43) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6699.14 via Frontend Transport; Wed, 16 Aug 2023 16:36:48 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Wed, 16 Aug 2023
- 09:36:34 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Wed, 16 Aug
- 2023 09:36:34 -0700
-Received: from orome.fritz.box (10.127.8.12) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Wed, 16 Aug 2023 09:36:30 -0700
-From: Thierry Reding <treding@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 5.15 00/89] 5.15.127-rc1 review
-In-Reply-To: <20230813211710.787645394@linuxfoundation.org>
-References: <20230813211710.787645394@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6EF10949;
+	Wed, 16 Aug 2023 17:36:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C38C433CA;
+	Wed, 16 Aug 2023 17:36:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692207375;
+	bh=m679p/qT6+EyvubNhxEO5K2mUWdE4N+P6efMLjeRxGw=;
+	h=From:Date:Subject:To:Cc:From;
+	b=HfNrC/VNXLU2zN7yz9ioqbbYI6MatQwhSss0CKArWGV0bLb53MhC2Kn+h63zcgnnQ
+	 OaZ/LCaai2p+1nZtfOuojFokIT6y8ofycIxMPhbzOl8sm8tV/996S8V/UexSqerVZY
+	 RGTXxgMANVI8jjVn0Ijlyp6FyHQ/8LzT9BBhiNvfc6byvFwkqVEBwV0Z6rwr5JMc7N
+	 nqR4vYi4RIePFPxkmOjmK2e/LOvNyhKLhIfC3pKTNV7hvnKT5mxotP2LY7LAEVZT1m
+	 si9DTo4nMo8DNkn3gv+8SBh2IFyyd72Z1c8ujqmVMVVIoBXgz79/oKZF7vDb75ciKF
+	 xhOCoVH+zNJfA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 16 Aug 2023 10:35:43 -0700
+Subject: [PATCH] lib/Kconfig.debug: Restrict DEBUG_INFO_SPLIT for RISC-V
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <474472ed-c85f-4d93-b6e3-10fb8ecfe203@rnnvmail203.nvidia.com>
-Date: Wed, 16 Aug 2023 09:36:30 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE37:EE_|IA1PR12MB8079:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4d63ab2d-6ba2-407b-6c8a-08db9e76fcee
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	jL5fnQftx3UNlk4p6KYR2AuJHzwicRcBSPY0j9fGIviYnZjw+0mgwHMI36me5QHebfr+fVzYt+ISJLY/QGhtnlwsI2h5i1Lx9/uOaKWCdDqP748XUu8dCh0aVib76PiedEtJ5W1L2ElsYy0DRvJrFyNvCaVy6+fFoFAqxfuMrWwxPstX+R/hToV6EmHDFE9HfF3HzTCG/Uhr+2kjw2o2feHbNRFwH2q+u8CFsKlbJe28P1mHBwHk/cPsfJJmYzZ64Pze5jKuKgugNZmZrVSgFhsPGFi2CoPDaqnDeA6qUqdIujph2uqKc4+UdluZl3t6WBUjWB83pAQMcwta3liFRbrgZnMrrZpEwR1UhibL5FOUcYXdCh4vOe9ickUR5UQvsRqJUJCJnA0nyCKbO39kEWUqnKoB+aSMKG89QIJW1hUiXJpRfKZCxLK54JK139MVKdq9Vk+zhrlUcBpX/edSBuZLvl5hX8zmT9tRNnb957qGUrNB6nmfW5qcQbcG74wok9QjqFQ+IzfF8ZFhPz1dAiI1sAybPdlGTEXGeoYx5cIYpU+TPCos42Gy1HrhGMR6/4pB2fNiEtq7bgSGtSYyIknPN0AeyaF15MGa2Owlxp7FioSXNW+qauZKSkTwqMxrwXqTeg0O9mq8JO0ikZj/RIQwasbXtYuAR7H3LnIUMnhXfHlT5/pjju6zuQGzqvzbgNt7UILJfurOmUaINF+857KYJ4a9KJy/xfQYdJm9MBIXDdHkIVVgEdVS658itZ9OKEkfotoYZds27c+udDJDCdRFJthqe0B1FySW4btFRYs=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(396003)(39860400002)(346002)(376002)(136003)(1800799009)(451199024)(186009)(82310400011)(46966006)(36840700001)(40470700004)(7636003)(316002)(54906003)(356005)(82740400003)(110136005)(70586007)(70206006)(966005)(36860700001)(41300700001)(5660300002)(47076005)(31686004)(8676002)(4326008)(8936002)(2906002)(40460700003)(26005)(40480700001)(478600001)(426003)(336012)(7416002)(86362001)(31696002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2023 16:36:48.8464
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d63ab2d-6ba2-407b-6c8a-08db9e76fcee
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000EE37.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8079
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230816-riscv-debug_info_split-v1-1-d1019d6ccc11@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAO4I3WQC/x3MSwqAMAwA0atI1haaih+8ikipNWpAqjQqgnh3i
+ 8u3mHlAKDIJtNkDkS4W3kIC5hn4xYWZFI/JYLQpdIOViiz+UiMN52w5TJuVfeVD6RqLskaHzht
+ I8R5p4vsfd/37fgujfGNoAAAA
+To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+ akpm@linux-foundation.org
+Cc: conor@kernel.org, ndesaulniers@google.com, trix@redhat.com, 
+ linux-riscv@lists.infradead.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, kernel test robot <lkp@intel.com>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2086; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=m679p/qT6+EyvubNhxEO5K2mUWdE4N+P6efMLjeRxGw=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCl3OfkExD9F7fHcujvxoHro5+nPGv/lFzIzHs08Et660
+ qvfptW3o5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzkDR/DH472fWeuhOS5cjye
+ aX1hB2fRRe31btynWoT6ZoXvc+1t4GP4Z6P2VmhKnsbGngTdXzUGjAphT66kWt9Ma/Sefn3X04d
+ XmAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Sun, 13 Aug 2023 23:18:51 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.127 release.
-> There are 89 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.127-=
-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git l=
-inux-5.15.y
-> and the diffstat can be found below.
->=20
-> thanks,
->=20
-> greg k-h
+When building for ARCH=riscv using LLVM < 14, there is an error with
+CONFIG_DEBUG_INFO_SPLIT=y:
 
-All tests passing for Tegra ...
+  error: A dwo section may not contain relocations
 
-Test results for stable-v5.15:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    102 tests:	102 pass, 0 fail
+This was worked around in LLVM 15 by disallowing '-gsplit-dwarf' with
+'-mrelax' (the default), so CONFIG_DEBUG_INFO_SPLIT is not selectable
+with newer versions of LLVM:
 
-Linux version:	5.15.127-rc1-g952b0de2b49f
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+  $ clang --target=riscv64-linux-gnu -gsplit-dwarf -c -o /dev/null -x c /dev/null
+  clang: error: -gsplit-dwarf is unsupported with RISC-V linker relaxation (-mrelax)
 
-Tested-by: Thierry Reding <treding@nvidia.com>
+GCC silently had a similar issue that was resolved with GCC 12.x.
+Restrict CONFIG_DEBUG_INFO_SPLIT for RISC-V when using LLVM or GCC <
+12.x to avoid these known issues.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1914
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99090
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202308090204.9yZffBWo-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Since this only impacts RISC-V, it seems reasonable that this would go
+in via their tree but I have added Andrew in case he wants to take it.
+---
+ lib/Kconfig.debug | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index d6798513a8c2..bd51274f4771 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -355,6 +355,11 @@ endchoice # "Compressed Debug information"
+ config DEBUG_INFO_SPLIT
+ 	bool "Produce split debuginfo in .dwo files"
+ 	depends on $(cc-option,-gsplit-dwarf)
++	# RISC-V linker relaxation + -gsplit-dwarf has issues with LLVM and GCC
++	# prior to 12.x:
++	# https://github.com/llvm/llvm-project/issues/56642
++	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99090
++	depends on !RISCV || GCC_VERSION >= 120000
+ 	help
+ 	  Generate debug info into separate .dwo files. This significantly
+ 	  reduces the build directory size for builds with DEBUG_INFO,
+
+---
+base-commit: 2ccdd1b13c591d306f0401d98dedc4bdcd02b421
+change-id: 20230816-riscv-debug_info_split-0713571a1ac2
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
