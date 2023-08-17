@@ -1,82 +1,221 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E326317ACA
-	for <patches@lists.linux.dev>; Thu, 17 Aug 2023 19:15:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=wjawszGYwlc1+n1slj6SEY36aeLR7+yb2wb5c2CH3WE=; b=KCs8+hRICKYDwiHAC565/y4OkK
-	dGV9Ny7cicErgMbHuw1wHhFdV1s87Y5wcXmNhk8lqH+EiI/0t2QOMv4RkL81uMKrqcD52jeyx9m0G
-	LYSKpfn6PjNg5hL/1JjfpLgbvq20s/IIfQb78wKoUU15LMKDcluj3fQkHxg/8gyt4pmQ=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1qWiS4-004Q97-Np; Thu, 17 Aug 2023 21:14:36 +0200
-Date: Thu, 17 Aug 2023 21:14:36 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Michele Dalle Rive <dallerivemichele@gmail.com>,
-	Greg KH <gregkh@linuxfoundation.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Davide Rovelli <davide.rovelli@usi.ch>,
-	rust-for-linux@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [RFC PATCH 0/7] Rust Socket abstractions
-Message-ID: <02d0771b-ba9b-4bed-afe5-9ece5100dadf@lunn.ch>
-References: <20230814092302.1903203-1-dallerivemichele@gmail.com>
- <2023081411-apache-tubeless-7bb3@gregkh>
- <0e91e3be-abbb-4bf7-be05-ba75c7522736@lunn.ch>
- <CACETy0=V9B8UOCi+BKfyrX06ca=WvC0Gvo_ouR=DjX=_-jhAwg@mail.gmail.com>
- <e3b4164a-5392-4209-99e5-560bf96df1df@lunn.ch>
- <CACETy0n0217=JOnHUWvxM_npDrdg4U=nzGYKqYbGFsvspjP6gg@mail.gmail.com>
- <CANiq72=3z+FcyYGV0upsezGAkh2J4EmzbJ=5s374gf=10AYnUQ@mail.gmail.com>
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 710381BB57
+	for <patches@lists.linux.dev>; Thu, 17 Aug 2023 22:02:05 +0000 (UTC)
+Received: from linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net (linux.microsoft.com [13.77.154.182])
+	by linux.microsoft.com (Postfix) with ESMTPSA id E9E4C211F7C6;
+	Thu, 17 Aug 2023 15:01:58 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E9E4C211F7C6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1692309719;
+	bh=U6l3ItEpAWNpGMd+I6ahTnQzkcVWmX2leWbmhYkCCk8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=OdAVpZsfODeKczpiZ55Jw9qDXSz6GdE7fKWj8SyfLu8peybtAO/HsOx1KUTS9B7uP
+	 n7thN31aTD6i+d8QEeH8qc9YRgkcX0cGuzhcqkHrRDsfhafG7ZXXQTkbpF7kUEIgJS
+	 fCN4au2j2FE2mzxdgctvbbY995tEk12h1WWONWHQ=
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+To: linux-hyperv@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	x86@kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arch@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	mikelley@microsoft.com,
+	kys@microsoft.com,
+	wei.liu@kernel.org,
+	haiyangz@microsoft.com,
+	decui@microsoft.com,
+	apais@linux.microsoft.com,
+	Tianyu.Lan@microsoft.com,
+	ssengar@linux.microsoft.com,
+	mukeshrathor@microsoft.com,
+	stanislav.kinsburskiy@gmail.com,
+	jinankjain@linux.microsoft.com,
+	vkuznets@redhat.com,
+	tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	hpa@zytor.com,
+	will@kernel.org,
+	catalin.marinas@arm.com
+Subject: [PATCH v2 02/15] mshyperv: Introduce hv_get_hypervisor_version function
+Date: Thu, 17 Aug 2023 15:01:38 -0700
+Message-Id: <1692309711-5573-3-git-send-email-nunodasneves@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com>
+References: <1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANiq72=3z+FcyYGV0upsezGAkh2J4EmzbJ=5s374gf=10AYnUQ@mail.gmail.com>
 
-> If I understood correctly from Zulip, you cannot (right now) show your
-> use case because it is confidential and therefore you cannot upstream
-> it
+x86_64 and arm64 implementations to get the hypervisor version
+information. Store these in hv_hypervisor_version_info structure to
+simplify parsing the fields.
 
-Is there a clear path for it to become public and mergable?
+Replace the existing parsing when printing the version numbers at boot.
 
-There is also a general trend that code developed behind closed doors
-needs a complete re-write when made public and reviewed by mainline
-developers. And that rewrite could involve the APIs to other
-subsystems, like sockets. So any API you define now with a 'toy' in
-kernel user, could in fact be totally useless by the time your real
-target gets merged.
+Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+---
+ arch/arm64/hyperv/mshyperv.c      | 23 +++++++++++-------
+ arch/x86/kernel/cpu/mshyperv.c    | 40 ++++++++++++++++++++-----------
+ include/asm-generic/hyperv-tlfs.h | 23 ++++++++++++++++++
+ include/asm-generic/mshyperv.h    |  2 ++
+ 4 files changed, 66 insertions(+), 22 deletions(-)
 
-As Jon pointed out, we kernel maintainers need to help people coming
-from a different background. Within the community it is well known
-that internal APIs are unstable. Any developer can change any API, and
-all its in kernel users if there is a need to do so. This makes
-maintaining out of tree modules hard. There are a number of 'vendor
-crap' drivers which do do this, with lots of ugly code to work around
-differences between kernel versions. To some extent, that works
-because the C APIs are not that volatile. My guess is, the Rust APIs
-are going to be a lot more volatile for a number of years while
-developers figure out what good APIs look like, and rework them again
-and again, and again. Anybody trying to maintain an out of tree rust
-module is going to be in a world of pain. In tree however, benefits
-from the fast that any developer who wants to change an API needs to
-also change all users...
+diff --git a/arch/arm64/hyperv/mshyperv.c b/arch/arm64/hyperv/mshyperv.c
+index f1b8a04ee9f2..53bdd3bc81ac 100644
+--- a/arch/arm64/hyperv/mshyperv.c
++++ b/arch/arm64/hyperv/mshyperv.c
+@@ -19,10 +19,19 @@
+ 
+ static bool hyperv_initialized;
+ 
++int hv_get_hypervisor_version(union hv_hypervisor_version_info *info)
++{
++	hv_get_vpreg_128(HV_REGISTER_HYPERVISOR_VERSION,
++			 (struct hv_get_vp_registers_output *)info);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(hv_get_hypervisor_version);
++
+ static int __init hyperv_init(void)
+ {
+-	struct hv_get_vp_registers_output	result;
+-	u32	a, b, c, d;
++	struct hv_get_vp_registers_output result;
++	union hv_hypervisor_version_info version;
+ 	u64	guest_id;
+ 	int	ret;
+ 
+@@ -55,13 +64,11 @@ static int __init hyperv_init(void)
+ 		ms_hyperv.misc_features);
+ 
+ 	/* Get information about the Hyper-V host version */
+-	hv_get_vpreg_128(HV_REGISTER_HYPERVISOR_VERSION, &result);
+-	a = result.as32.a;
+-	b = result.as32.b;
+-	c = result.as32.c;
+-	d = result.as32.d;
++	hv_get_hypervisor_version(&version);
+ 	pr_info("Hyper-V: Host Build %d.%d.%d.%d-%d-%d\n",
+-		b >> 16, b & 0xFFFF, a,	d & 0xFFFFFF, c, d >> 24);
++		version.major_version, version.minor_version,
++		version.build_number, version.service_number,
++		version.service_pack, version.service_branch);
+ 
+ 	ret = hv_common_init();
+ 	if (ret)
+diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
+index 4d38cafe6f2c..e80e503c8cf5 100644
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -313,13 +313,30 @@ static void __init hv_smp_prepare_cpus(unsigned int max_cpus)
+ }
+ #endif
+ 
++int hv_get_hypervisor_version(union hv_hypervisor_version_info *info)
++{
++	unsigned int hv_max_functions;
++
++	hv_max_functions = cpuid_eax(HYPERV_CPUID_VENDOR_AND_MAX_FUNCTIONS);
++	if (hv_max_functions < HYPERV_CPUID_VERSION) {
++		pr_err("%s: Could not detect Hyper-V version\n",
++			__func__);
++		return -ENODEV;
++	}
++
++	info->eax = cpuid_eax(HYPERV_CPUID_VERSION);
++	info->ebx = cpuid_ebx(HYPERV_CPUID_VERSION);
++	info->ecx = cpuid_ecx(HYPERV_CPUID_VERSION);
++	info->edx = cpuid_edx(HYPERV_CPUID_VERSION);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(hv_get_hypervisor_version);
++
+ static void __init ms_hyperv_init_platform(void)
+ {
+ 	int hv_max_functions_eax;
+-	int hv_host_info_eax;
+-	int hv_host_info_ebx;
+-	int hv_host_info_ecx;
+-	int hv_host_info_edx;
++	union hv_hypervisor_version_info version;
+ 
+ #ifdef CONFIG_PARAVIRT
+ 	pv_info.name = "Hyper-V";
+@@ -373,16 +390,11 @@ static void __init ms_hyperv_init_platform(void)
+ 	/*
+ 	 * Extract host information.
+ 	 */
+-	if (hv_max_functions_eax >= HYPERV_CPUID_VERSION) {
+-		hv_host_info_eax = cpuid_eax(HYPERV_CPUID_VERSION);
+-		hv_host_info_ebx = cpuid_ebx(HYPERV_CPUID_VERSION);
+-		hv_host_info_ecx = cpuid_ecx(HYPERV_CPUID_VERSION);
+-		hv_host_info_edx = cpuid_edx(HYPERV_CPUID_VERSION);
+-
+-		pr_info("Hyper-V: Host Build %d.%d.%d.%d-%d-%d\n",
+-			hv_host_info_ebx >> 16, hv_host_info_ebx & 0xFFFF,
+-			hv_host_info_eax, hv_host_info_edx & 0xFFFFFF,
+-			hv_host_info_ecx, hv_host_info_edx >> 24);
++	if (hv_get_hypervisor_version(&version) == 0) {
++		pr_info("Hyper-V Host Build:%d-%d.%d-%d-%d.%d\n",
++			version.build_number, version.major_version,
++			version.minor_version, version.service_pack,
++			version.service_branch, version.service_number);
+ 	}
+ 
+ 	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
+diff --git a/include/asm-generic/hyperv-tlfs.h b/include/asm-generic/hyperv-tlfs.h
+index f4e4cc4f965f..373f26efa18a 100644
+--- a/include/asm-generic/hyperv-tlfs.h
++++ b/include/asm-generic/hyperv-tlfs.h
+@@ -786,6 +786,29 @@ struct hv_input_unmap_device_interrupt {
+ #define HV_SOURCE_SHADOW_NONE               0x0
+ #define HV_SOURCE_SHADOW_BRIDGE_BUS_RANGE   0x1
+ 
++/*
++ * Version info reported by hypervisor
++ */
++union hv_hypervisor_version_info {
++	struct {
++		u32 build_number;
++
++		u32 minor_version : 16;
++		u32 major_version : 16;
++
++		u32 service_pack;
++
++		u32 service_number : 24;
++		u32 service_branch : 8;
++	};
++	struct {
++		u32 eax;
++		u32 ebx;
++		u32 ecx;
++		u32 edx;
++	};
++};
++
+ /*
+  * The whole argument should fit in a page to be able to pass to the hypervisor
+  * in one hypercall.
+diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
+index 094c57320ed1..233c976344e5 100644
+--- a/include/asm-generic/mshyperv.h
++++ b/include/asm-generic/mshyperv.h
+@@ -153,6 +153,8 @@ static inline void vmbus_signal_eom(struct hv_message *msg, u32 old_msg_type)
+ 	}
+ }
+ 
++int hv_get_hypervisor_version(union hv_hypervisor_version_info *info);
++
+ void hv_setup_vmbus_handler(void (*handler)(void));
+ void hv_remove_vmbus_handler(void);
+ void hv_setup_stimer0_handler(void (*handler)(void));
+-- 
+2.25.1
 
-       Andrew
