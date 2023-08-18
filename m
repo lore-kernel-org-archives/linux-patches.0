@@ -1,120 +1,115 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89F018031
-	for <patches@lists.linux.dev>; Fri, 18 Aug 2023 11:47:50 +0000 (UTC)
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-79ae250266cso278565241.2
-        for <patches@lists.linux.dev>; Fri, 18 Aug 2023 04:47:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692359269; x=1692964069;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bAfIM5gpLJTpuPiiqsDtzWBiv40WoFry3jyTY/pzGKQ=;
-        b=WgFyAtGBMxvr226dkfTHl5GKxVdN0h0kzbcnKkrDeKL5Ytm3ODeLGpBw3r8/9neIvl
-         4PgYqJcR3HIXVKyz/eDspWnSbTYXggMWmwAyYUxyZCLSrlcvE5jarpyyPh5an6FfsVbE
-         rq2cpMAUGAhSXnFr1YtBtfa/uPtC+qYHNbhNnh3XH6JzDjDcBq9lltcDR16c/+8FjZKW
-         kPkCPN4+2CWSUj4cBzqCw+OXpU1lqkDs+7yP0qnOEeprus4uBBXMrMPhRrAj+VK8IMAg
-         47KKkowdN1QOLpwwVHJ0UuDM+5S5//PjWoBGGfWbP2D3U0gqE4PVNJGU3qiSzzLsx0BG
-         o7pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692359269; x=1692964069;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bAfIM5gpLJTpuPiiqsDtzWBiv40WoFry3jyTY/pzGKQ=;
-        b=YpNKnEyLgyy6hOmAvwTvr2UWQ431pKGoqKHHnhOIQG69d/AbaS3QTGGaRyk7Drnqy6
-         tKFO6e46dyFq7HzybzD4brb3u6u5JmYhW62EQg90/rhP8+R4+cQn6Voh4yTvpc+X7cy2
-         IAcLssPUvKtWZ3q79ClEWsJTCC9RziieFpv6pCSkMqiW8hcV+oqC20xJ5Qggovu+TL/3
-         IrJGZt+IXvsN8nJqTjpdhkmasVEFrRDXk+v1c8MAHBvsawKJEJuEvLu6u+n8ssw8LuuI
-         TAcLmnlmksEDvvNKZKVyUxVGNS4CHbYfNmi/33jqTiE834A5iI0V52rQYXHUr34o3jcr
-         JtjQ==
-X-Gm-Message-State: AOJu0YzFBbA2OsP11IsuEIb4U2VaQMgIGBAf8hWx+wU6fiRmlnqDBpqQ
-	9j56oB0gx8aMCa95Ikw8S4SDb+GdhjKl743hg70=
-X-Google-Smtp-Source: AGHT+IGJrBuWc0TgeyRTJnSrv8cqlREWyOoz6U6qJj7S3f7Ew1q7aRXhto3Nmue2STFJvfLAkqstSuKdh0XXv93p+lc=
-X-Received: by 2002:a67:f5d6:0:b0:447:6965:7285 with SMTP id
- t22-20020a67f5d6000000b0044769657285mr3080841vso.9.1692359269361; Fri, 18 Aug
- 2023 04:47:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E14018AF7
+	for <patches@lists.linux.dev>; Fri, 18 Aug 2023 12:42:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=0jubvQH8s1Fv3I0hA9yIVmKUUm71HOUT3IKIhSEZ3X4=; b=FkjGN3Mt84nVTJEssTzZgpuMqS
+	IONqYjZCL0Tb9PIidAXYLXAavuj7MYtwicOS31Cfq3fTRVebeWUPIwJ1lVzgwWgfsJTPMtnoyeDBx
+	RSqcSEOSaFOEcaw+r9r50ptK/vj3zUzHZGXmdreXyb7HUgmOgXZCJxL0pJCqzaIi+ffw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1qWyo6-004UYT-Rv; Fri, 18 Aug 2023 14:42:26 +0200
+Date: Fri, 18 Aug 2023 14:42:26 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Davide Rovelli <roveld@usi.ch>
+Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Michele Dalle Rive <dallerivemichele@gmail.com>,
+	Greg KH <gregkh@linuxfoundation.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Davide Rovelli <davide.rovelli@usi.ch>,
+	rust-for-linux@vger.kernel.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [RFC PATCH 0/7] Rust Socket abstractions
+Message-ID: <c61a60ef-fa9d-44ea-9852-ae7b18bc1ab1@lunn.ch>
+References: <20230814092302.1903203-1-dallerivemichele@gmail.com>
+ <2023081411-apache-tubeless-7bb3@gregkh>
+ <0e91e3be-abbb-4bf7-be05-ba75c7522736@lunn.ch>
+ <CACETy0=V9B8UOCi+BKfyrX06ca=WvC0Gvo_ouR=DjX=_-jhAwg@mail.gmail.com>
+ <e3b4164a-5392-4209-99e5-560bf96df1df@lunn.ch>
+ <CACETy0n0217=JOnHUWvxM_npDrdg4U=nzGYKqYbGFsvspjP6gg@mail.gmail.com>
+ <CANiq72=3z+FcyYGV0upsezGAkh2J4EmzbJ=5s374gf=10AYnUQ@mail.gmail.com>
+ <bddea099-4468-4f96-2e06-2b207b608485@usi.ch>
+ <0ba551eb-480e-4327-b62f-fc105d280821@lunn.ch>
+ <c9c63da7-bc8a-7307-63f1-1f393b017da2@usi.ch>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230808095342.12637-7-vbabka@suse.cz> <20230808095342.12637-8-vbabka@suse.cz>
-In-Reply-To: <20230808095342.12637-8-vbabka@suse.cz>
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Date: Fri, 18 Aug 2023 20:47:37 +0900
-Message-ID: <CAB=+i9QaA+ewMeGM9ngkn06ag2HFoJqCRhmfG4qP-_G3Gv5DTQ@mail.gmail.com>
-Subject: Re: [RFC v1 1/5] mm, slub: fix bulk alloc and free stats
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>, Matthew Wilcox <willy@infradead.org>, 
-	Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>, Pekka Enberg <penberg@kernel.org>, 
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c9c63da7-bc8a-7307-63f1-1f393b017da2@usi.ch>
 
-On Tue, Aug 8, 2023 at 6:53=E2=80=AFPM Vlastimil Babka <vbabka@suse.cz> wro=
-te:
->
-> The SLUB sysfs stats enabled CONFIG_SLUB_STATS have two deficiencies
-> identified wrt bulk alloc/free operations:
->
-> - Bulk allocations from cpu freelist are not counted. Add the
->   ALLOC_FASTPATH counter there.
->
-> - Bulk fastpath freeing will count a list of multiple objects with a
->   single FREE_FASTPATH inc. Add a stat_add() variant to count them all.
->
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/slub.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/mm/slub.c b/mm/slub.c
-> index e3b5d5c0eb3a..a9437d48840c 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -341,6 +341,14 @@ static inline void stat(const struct kmem_cache *s, =
-enum stat_item si)
->  #endif
->  }
->
-> +static inline void stat_add(const struct kmem_cache *s, enum stat_item s=
-i, int v)
-> +{
-> +#ifdef CONFIG_SLUB_STATS
-> +       raw_cpu_add(s->cpu_slab->stat[si], v);
-> +#endif
-> +}
-> +
-> +
->  /*
->   * Tracks for which NUMA nodes we have kmem_cache_nodes allocated.
->   * Corresponds to node_state[N_NORMAL_MEMORY], but can temporarily
-> @@ -3776,7 +3784,7 @@ static __always_inline void do_slab_free(struct kme=
-m_cache *s,
->
->                 local_unlock(&s->cpu_slab->lock);
->         }
-> -       stat(s, FREE_FASTPATH);
-> +       stat_add(s, FREE_FASTPATH, cnt);
+On Fri, Aug 18, 2023 at 09:50:45AM +0200, Davide Rovelli wrote:
+> 
+> 
+> On 8/18/23 03:30, Andrew Lunn wrote:
+> 
+> > So you have an application in user space wanting to use this
+> > protocol. I assume it is using BSD sockets to communicate with the
+> > kernel and the protocol.
+> 
+> No, at the moment it uses procfs or a shared mmap'd chardev buffer.
 
-Should bulk free slowpath also be counted in the same way?
+O.K, so that will never be accepted. There is support for zero copy in
+sockets. Look at the work Eric did. And you should look at netlink,
+which might be needed for the control plane.
+ 
+> > So you need an API below sockets to get this
+> > traffic, i assume a whole new protocol family? But you have an API on
+> > top of sockets for TCP/UDP. So i guess your protocol somehow
+> > encapsulate the traffic and then uses the API your are proposing to
+> > send over TCP or UDP?
+> 
+> Yes, we take a message/value from a user space app and send it to
+> other nodes via UDP according to the chosen protocol. Mind that
+> the term "protocol" might be misleading here as it can be confused
+> with classic network protocols. Our API offers distributed services
+> such as failure detectors, consensus etc.
+> 
+> > Which makes me think:
+> > 
+> > Why go through sockets twice for a low jitter networking protocol?
+> 
+> The idea behind the system is to be split: user space apps are
+> normal apps that can present arbitrary jitter, kernel space services
+> are isolated to provide low jitter. The same applies in the network
+> via a SDN based protocol which prioritises our traffic. By having
+> end-to-end timely communication and processing, we can achieve
+> new efficient distributed services.
 
->  }
->  #else /* CONFIG_SLUB_TINY */
->  static void do_slab_free(struct kmem_cache *s,
-> @@ -3978,6 +3986,7 @@ static inline int __kmem_cache_alloc_bulk(struct km=
-em_cache *s, gfp_t flags,
->                 c->freelist =3D get_freepointer(s, object);
->                 p[i] =3D object;
->                 maybe_wipe_obj_freeptr(s, p[i]);
-> +               stat(s, ALLOC_FASTPATH);
->         }
->         c->tid =3D next_tid(c->tid);
->         local_unlock_irqrestore(&s->cpu_slab->lock, irqflags);
-> --
-> 2.41.0
->
+Having the services running in kernel space is going to limit what
+services you can actually offer, if you need to go through getting
+them merged every time. If you only have one or two, yes it can be
+done. But anything general purpose is not going to be practical.  The
+answer might be to write your services using eBPF. They can then be
+loaded from user space and do pretty much anything which eBPF can do.
+
+There is often a huge step from academic code to production
+code. Academic code just needs to implement enough to prove the
+concept. It can take all sort of short cuts. Production code to be
+merged into the kernel needs to follow the usual development
+processes, code quality guidelines, and most importantly,
+architecture.
+
+If you want to make that step to production code, we can help you, but
+i don't think it makes any sense to merge API code until you have the
+correct basic architecture. That architecture will define what APIs
+you need, and sitting on top of sockets might not be correct.
+
+	Andrew
