@@ -1,301 +1,99 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1E606106
-	for <patches@lists.linux.dev>; Fri, 18 Aug 2023 18:59:34 +0000 (UTC)
-Received: from [192.168.0.5] (71-212-112-68.tukw.qwest.net [71.212.112.68])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 953D6211F7DD;
-	Fri, 18 Aug 2023 11:59:33 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 953D6211F7DD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1692385174;
-	bh=d135KGrz2cWsfEoV6BOJWYUpTSu6tAXXjBPCbPKLBJA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=aZLRFk89WqilThXbog1OAMH5ppE8UiJskTwacYRU+T5fSznZv25tozwgXb54wsvZX
-	 qH5kzl227zdj2JAvPND2lFizLRXc3+pQ/scXbhSpfkFmxhuTmqoTeTQ5DktR3jCsG7
-	 X9HoHytr/hCasHZrRVC0Z5zwsGS3UX1tA5UX6IPs=
-Message-ID: <664aec4c-7ea9-447f-afab-9e31e9e106c1@linux.microsoft.com>
-Date: Fri, 18 Aug 2023 11:59:34 -0700
+Received: from baloo.adam-barratt.org.uk (baloo.adam-barratt.org.uk [185.177.148.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1327E468C
+	for <patches@lists.linux.dev>; Fri, 18 Aug 2023 20:45:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=adam-barratt.org.uk; s=ab20190809; h=Content-Transfer-Encoding:MIME-Version
+	:Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:
+	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=wWtIIwgNyBU83Jq6GJVjZAMsWUM7aJS5t0b8GPBX1uQ=; b=wwlkMpw3pdl91IMBQTEu695kc5
+	tNV9jgsuveHylq8fMEvigrFjgS+UmiJ9oTTKIL1B3fJIVfM0ZrQkxo0lPcmV/0J2QImvJ9pTfZf71
+	NH3QdrRJzdS0qIGht1m2Dhi7tJEhjrWx4NLcDRi5uAwIHabBDtt5tIzgaWvA62TktVti7MuOLx0+H
+	h7JnlWzf0qn++f5NMvQRAS0HGL+qOzuiP4YDdmO9AjwZXxGrPoXxcn6bfBJa4xZReK/uo3rEn9pGe
+	5YJb2vbTFU+yy3KbBfhH6+vZNhwxpAUuHLlWr3DkDgAS6GP1fVYDLdaoBvXA0O9zExOsStySuA60J
+	I2lD58IQ==;
+Received: from kotick.adam-barratt.org.uk ([2a02:8010:66ea:1:240::2]:38036 helo=kotick)
+	by baloo.adam-barratt.org.uk with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92 #3 (Debian))
+	(envelope-from <adam@adam-barratt.org.uk>)
+	id 1qX64L-00010i-U4; Fri, 18 Aug 2023 21:27:41 +0100
+Received: from localhost ([127.0.0.1])
+	by kotick with esmtp (Exim 4.92)
+	(envelope-from <adam@adam-barratt.org.uk>)
+	id 1qX64K-0003HZ-1I; Fri, 18 Aug 2023 21:27:40 +0100
+Message-ID: <413120de0cd467cc5dfe87045d8750e3223a368b.camel@adam-barratt.org.uk>
+Subject: Re: [PATCH 5.10 076/529] crypto: ccp: Use the stack for small SEV
+ command buffers
+From: "Adam D. Barratt" <adam@adam-barratt.org.uk>
+To: Ben Hutchings <ben@decadent.org.uk>, Greg Kroah-Hartman
+	 <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Sean Christopherson
+ <seanjc@google.com>, Brijesh Singh <brijesh.singh@amd.com>, Tom Lendacky
+ <thomas.lendacky@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Sasha Levin
+ <sashal@kernel.org>, Julien Cristau <jcristau@debian.org>, 
+ 1036543@bugs.debian.org
+Date: Fri, 18 Aug 2023 21:26:09 +0100
+In-Reply-To: <c83138f6c2b65d0b51868af537ba03533f724cf8.camel@decadent.org.uk>
+References: <20230310133804.978589368@linuxfoundation.org>
+	 <20230310133808.495306749@linuxfoundation.org>
+	 <80d3ba7a1b8b7d65713f66ca3562a5ec4971c5ee.camel@decadent.org.uk>
+	 <2023051720-studied-plutonium-7fa8@gregkh>
+	 <2023051729-jumbo-uncolored-05c1@gregkh>
+	 <c83138f6c2b65d0b51868af537ba03533f724cf8.camel@decadent.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Content-Language: en-US
-To: Saurabh Singh Sengar <ssengar@microsoft.com>,
- "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "x86@kernel.org" <x86@kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>
-Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Michael Kelley (LINUX)" <mikelley@microsoft.com>,
- KY Srinivasan <kys@microsoft.com>, "wei.liu@kernel.org"
- <wei.liu@kernel.org>, Haiyang Zhang <haiyangz@microsoft.com>,
- Dexuan Cui <decui@microsoft.com>,
- "apais@linux.microsoft.com" <apais@linux.microsoft.com>,
- Tianyu Lan <Tianyu.Lan@microsoft.com>,
- "ssengar@linux.microsoft.com" <ssengar@linux.microsoft.com>,
- MUKESH RATHOR <mukeshrathor@microsoft.com>,
- "stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
- "jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>,
- vkuznets <vkuznets@redhat.com>, "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "hpa@zytor.com" <hpa@zytor.com>, "will@kernel.org" <will@kernel.org>,
- "catalin.marinas@arm.com" <catalin.marinas@arm.com>
-References: <1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1692309711-5573-16-git-send-email-nunodasneves@linux.microsoft.com>
- <PUZP153MB063545036E6B547C009F6AECBE1BA@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <PUZP153MB063545036E6B547C009F6AECBE1BA@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-ADSB-Scan-Signature: d6dde418675bc1ec94e740e4db21c226
 
-On 8/18/2023 6:08 AM, Saurabh Singh Sengar wrote:
->> +
->> +config MSHV_VTL
->> +	tristate "Microsoft Hyper-V VTL driver"
->> +	depends on MSHV
->> +	select HYPERV_VTL_MODE
->> +	select TRANSPARENT_HUGEPAGE
-> 
-> TRANSPARENT_HUGEPAGE can be avoided for now.
-> 
+Control: close -1 5.10.191-1
 
-I will remove it in the next version. Thanks.
->> +
->> +#define HV_GET_REGISTER_BATCH_SIZE	\
->> +	(HV_HYP_PAGE_SIZE / sizeof(union hv_register_value))
->> +#define HV_SET_REGISTER_BATCH_SIZE	\
->> +	((HV_HYP_PAGE_SIZE - sizeof(struct hv_input_set_vp_registers)) \
->> +		/ sizeof(struct hv_register_assoc))
->> +
->> +int hv_call_get_vp_registers(
->> +		u32 vp_index,
->> +		u64 partition_id,
->> +		u16 count,
->> +		union hv_input_vtl input_vtl,
->> +		struct hv_register_assoc *registers)
->> +{
->> +	struct hv_input_get_vp_registers *input_page;
->> +	union hv_register_value *output_page;
->> +	u16 completed = 0;
->> +	unsigned long remaining = count;
->> +	int rep_count, i;
->> +	u64 status;
->> +	unsigned long flags;
->> +
->> +	local_irq_save(flags);
->> +
->> +	input_page = *this_cpu_ptr(hyperv_pcpu_input_arg);
->> +	output_page = *this_cpu_ptr(hyperv_pcpu_output_arg);
->> +
->> +	input_page->partition_id = partition_id;
->> +	input_page->vp_index = vp_index;
->> +	input_page->input_vtl.as_uint8 = input_vtl.as_uint8;
->> +	input_page->rsvd_z8 = 0;
->> +	input_page->rsvd_z16 = 0;
->> +
->> +	while (remaining) {
->> +		rep_count = min(remaining, HV_GET_REGISTER_BATCH_SIZE);
->> +		for (i = 0; i < rep_count; ++i)
->> +			input_page->names[i] = registers[i].name;
->> +
->> +		status = hv_do_rep_hypercall(HVCALL_GET_VP_REGISTERS,
->> rep_count,
->> +					     0, input_page, output_page);
+On Fri, 2023-05-26 at 17:36 +0200, Ben Hutchings wrote:
+> On Wed, 2023-05-17 at 16:06 +0200, Greg Kroah-Hartman wrote:
+> > On Wed, May 17, 2023 at 04:02:35PM +0200, Greg Kroah-Hartman wrote:
+> > > On Wed, May 17, 2023 at 02:56:21PM +0200, Ben Hutchings wrote:
+[..]
+> > > Julien Cristau reported a regression in ccp - the
+> > > > WARN_ON_ONCE(!virt_addr_valid(data)) is now being triggered.  I
+> > > > believe
+> > > > this was introduced by the above commit, which depends on:
+> > > > 
+> > > > commit 8347b99473a313be6549a5b940bc3c56a71be81c
+> > > > Author: Sean Christopherson <seanjc@google.com>
+> > > > Date:   Tue Apr 6 15:49:48 2021 -0700
+> > > >  
+> > > >     crypto: ccp: Play nice with vmalloc'd memory for SEV
+> > > > command structs
+> > > > 
+> > > > Ben.
+> > > > 
+> > > 
+> > > Thanks for letting me know, now queued up.
+> > 
+> > Nope, now dropped, it breaks the build :(
 > 
-> Is there any possibility that count value is passed 0 by mistake ? In that case
-> status will remain uninitialized. 
+> I've now looked further and found that we need both:
+> 
+> d5760dee127b crypto: ccp: Reject SEV commands with mismatching
+> command buffer
+> 8347b99473a3 crypto: ccp: Play nice with vmalloc'd memory for SEV
+> command structs
+> 
+> (Not yet tested; I'll ask Julien if he can do that.)
 > 
 
-These lines ensure rep_count is never 0 here:
+Having just upgraded several affected debian.org nodes, I'm happy to
+confirm that the 5.10.191-1 kernel resolves the issue for us.
 
-	while (remaining) {
-		rep_count = min(remaining, HV_GET_REGISTER_BATCH_SIZE);
+Regards,
 
-Remaining can't be 0 or the loop would exit, and HV_GET_REGISTER_BATCH_SIZE
-is not 0, or we would never get any registers.
-
->> diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
->> index 13f972e72375..ccd76f30a638 100644
->> --- a/drivers/hv/hv_common.c
->> +++ b/drivers/hv/hv_common.c
->> @@ -62,7 +62,11 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
->>   */
->>  static inline bool hv_output_arg_exists(void)
->>  {
->> +#ifdef CONFIG_MSHV_VTL
-> 
-> Although today both the option works together. But thinking
-> which is more accurate CONFIG_HYPERV_VTL_MODE or
-> CONFIG_MSHV_VTL here for scalability of VTL modules.
-> 
-
-Good point. Though I'm not sure it matters too much right now,
-since as you mention they will always be enabled together.
-
-Does CONFIG_HYPERV_VTL_MODE use the output arg?
-
->> diff --git a/drivers/hv/mshv.h b/drivers/hv/mshv.h
->> new file mode 100644
->> index 000000000000..166480a73f3f
->> --- /dev/null
->> +++ b/drivers/hv/mshv.h
->> @@ -0,0 +1,156 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2023, Microsoft Corporation.
->> + */
->> +
->> +#ifndef _MSHV_H_
->> +#define _MSHV_H_
->> +
->> +#include <linux/spinlock.h>
->> +#include <linux/mutex.h>
->> +#include <linux/semaphore.h>
->> +#include <linux/sched.h>
->> +#include <linux/srcu.h>
->> +#include <linux/wait.h>
->> +#include <uapi/linux/mshv.h>
->> +
->> +/*
->> + * Hyper-V hypercalls
->> + */
->> +
->> +int hv_call_withdraw_memory(u64 count, int node, u64 partition_id);
->> +int hv_call_create_partition(
->> +		u64 flags,
->> +		struct hv_partition_creation_properties creation_properties,
->> +		union hv_partition_isolation_properties isolation_properties,
->> +		u64 *partition_id);
->> +int hv_call_initialize_partition(u64 partition_id);
->> +int hv_call_finalize_partition(u64 partition_id);
->> +int hv_call_delete_partition(u64 partition_id);
->> +int hv_call_map_gpa_pages(
->> +		u64 partition_id,
->> +		u64 gpa_target,
->> +		u64 page_count, u32 flags,
->> +		struct page **pages);
->> +int hv_call_unmap_gpa_pages(
->> +		u64 partition_id,
->> +		u64 gpa_target,
->> +		u64 page_count, u32 flags);
->> +int hv_call_get_vp_registers(
->> +		u32 vp_index,
->> +		u64 partition_id,
->> +		u16 count,
->> +		union hv_input_vtl input_vtl,
->> +		struct hv_register_assoc *registers);
->> +int hv_call_get_gpa_access_states(
->> +		u64 partition_id,
->> +		u32 count,
->> +		u64 gpa_base_pfn,
->> +		u64 state_flags,
->> +		int *written_total,
->> +		union hv_gpa_page_access_state *states);
->> +
->> +int hv_call_set_vp_registers(
->> +		u32 vp_index,
->> +		u64 partition_id,
->> +		u16 count,
->> +		union hv_input_vtl input_vtl,
->> +		struct hv_register_assoc *registers);
-> 
-> Nit: Opportunity to fix many of the checkpatch.pl related to line break here
-> and many other places.
-> 
-
-checkpatch.pl doesn't complain about anything in this file.
-
->> +static int
->> +mshv_assign_ioeventfd(struct mshv_partition *partition,
->> +		      struct mshv_ioeventfd *args)
->> +	__must_hold(&partition->mutex)
->> +{
->> +	struct kernel_mshv_ioeventfd *p;
->> +	struct eventfd_ctx *eventfd;
->> +	u64 doorbell_flags = 0;
->> +	int ret;
->> +
->> +	/* This mutex is currently protecting ioeventfd.items list */
->> +	WARN_ON_ONCE(!mutex_is_locked(&partition->mutex));
->> +
->> +	if (args->flags & MSHV_IOEVENTFD_FLAG_PIO)
->> +		return -EOPNOTSUPP;
->> +
->> +	/* must be natural-word sized */
->> +	switch (args->len) {
->> +	case 0:
->> +		doorbell_flags = HV_DOORBELL_FLAG_TRIGGER_SIZE_ANY;
->> +		break;
->> +	case 1:
->> +		doorbell_flags = HV_DOORBELL_FLAG_TRIGGER_SIZE_BYTE;
->> +		break;
->> +	case 2:
->> +		doorbell_flags = HV_DOORBELL_FLAG_TRIGGER_SIZE_WORD;
->> +		break;
->> +	case 4:
->> +		doorbell_flags =
->> HV_DOORBELL_FLAG_TRIGGER_SIZE_DWORD;
->> +		break;
->> +	case 8:
->> +		doorbell_flags =
->> HV_DOORBELL_FLAG_TRIGGER_SIZE_QWORD;
->> +		break;
->> +	default:
->> +		pr_warn("ioeventfd: invalid length specified\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	/* check for range overflow */
->> +	if (args->addr + args->len < args->addr)
->> +		return -EINVAL;
->> +
->> +	/* check for extra flags that we don't understand */
->> +	if (args->flags & ~MSHV_IOEVENTFD_VALID_FLAG_MASK)
->> +		return -EINVAL;
->> +
->> +	eventfd = eventfd_ctx_fdget(args->fd);
->> +	if (IS_ERR(eventfd))
->> +		return PTR_ERR(eventfd);
->> +
->> +	p = kzalloc(sizeof(*p), GFP_KERNEL);
->> +	if (!p) {
->> +		ret = -ENOMEM;
->> +		goto fail;
->> +	}
->> +
->> +	p->addr    = args->addr;
->> +	p->length  = args->len;
->> +	p->eventfd = eventfd;
->> +
->> +	/* The datamatch feature is optional, otherwise this is a wildcard */
->> +	if (args->flags & MSHV_IOEVENTFD_FLAG_DATAMATCH)
->> +		p->datamatch = args->datamatch;
->> +	else {
->> +		p->wildcard = true;
->> +		doorbell_flags |=
->> HV_DOORBELL_FLAG_TRIGGER_ANY_VALUE;
->> +	}
->> +
->> +	if (ioeventfd_check_collision(partition, p)) {
->> +		ret = -EEXIST;
->> +		goto unlock_fail;
->> +	}
->> +
->> +	ret = mshv_register_doorbell(partition->id, ioeventfd_mmio_write,
->> +				     (void *)partition, p->addr,
->> +				     p->datamatch, doorbell_flags);
->> +	if (ret < 0) {
->> +		pr_err("Failed to register ioeventfd doorbell!\n");
-> 
-> Nit: Do we like to print function name at the start of pr_err. 
-> 
-
-Yes, we should. I will fix it. Thanks!
+Adam
 
