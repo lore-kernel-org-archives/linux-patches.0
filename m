@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C731171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53157C433C7;
-	Mon, 21 Aug 2023 20:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB6D1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1134BC433C7;
+	Mon, 21 Aug 2023 20:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648326;
-	bh=gy2fFrkQKDYAJjnxxL0FNZUFwCO9wPlsjDzYcGvNJHc=;
+	s=korg; t=1692648329;
+	bh=wLVD/HOSWQgw3q2YFCLXbHQNj7pUc9Wn0reyOXHLfqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWmSlRZue3GHMggNYkyVXBMQY2+S7rIEJh9D7tvkrM5jMIpMfQbi88VyeEw6Dupfq
-	 a9TdpEyi5wxfeiwp8+WvRJ+VNYxjE47w2mDEvXgl/J1Ycy81vbbf2W3zzmVYWfID6k
-	 cNOGTHf5KJXC6cqlXIiVOhCLwmMmomOm3mNdHwgg=
+	b=fbIiF6mzM5OMMP5Qzf9mDcbIAEHwlpG7sPgpbo8M0s6kIQNP0hjlU13hOGg9zXvjl
+	 ggknNwALNJ2atiXp992F6O9EohFEmPEkJ44L1w7Sm0N8daKDUhR6DamoNve7mvtqpL
+	 7mTb1MuEgChS/aCM6bLXGbPnzzpI8hT7KJGk/HXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 136/234] xfrm: fix slab-use-after-free in decode_session6
-Date: Mon, 21 Aug 2023 21:41:39 +0200
-Message-ID: <20230821194134.848128154@linuxfoundation.org>
+Subject: [PATCH 6.4 137/234] ip6_vti: fix slab-use-after-free in decode_session6
+Date: Mon, 21 Aug 2023 21:41:40 +0200
+Message-ID: <20230821194134.888738439@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -37,16 +37,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 53223f2ed1ef5c90dad814daaaefea4e68a933c8 ]
+[ Upstream commit 9fd41f1ba638938c9a1195d09bc6fa3be2712f25 ]
 
-When the xfrm device is set to the qdisc of the sfb type, the cb field
+When ipv6_vti device is set to the qdisc of the sfb type, the cb field
 of the sent skb may be modified during enqueuing. Then,
-slab-use-after-free may occur when the xfrm device sends IPv6 packets.
+slab-use-after-free may occur when ipv6_vti device sends IPv6 packets.
 
 The stack information is as follows:
 BUG: KASAN: slab-use-after-free in decode_session6+0x103f/0x1890
-Read of size 1 at addr ffff8881111458ef by task swapper/3/0
-CPU: 3 PID: 0 Comm: swapper/3 Not tainted 6.4.0-next-20230707 #409
+Read of size 1 at addr ffff88802e08edc2 by task swapper/0/0
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-next-20230707-00001-g84e2cad7f979 #410
 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
 Call Trace:
 <IRQ>
@@ -55,7 +55,7 @@ print_address_description.constprop.0+0x2c/0x3c0
 kasan_report+0x11d/0x130
 decode_session6+0x103f/0x1890
 __xfrm_decode_session+0x54/0xb0
-xfrmi_xmit+0x173/0x1ca0
+vti6_tnl_xmit+0x3e6/0x1ee0
 dev_hard_start_xmit+0x187/0x700
 sch_direct_xmit+0x1a3/0xc30
 __qdisc_run+0x510/0x17a0
@@ -74,42 +74,42 @@ __do_softirq+0x1d4/0x905
 irq_exit_rcu+0xb7/0x120
 sysvec_apic_timer_interrupt+0x97/0xc0
 </IRQ>
-<TASK>
-asm_sysvec_apic_timer_interrupt+0x1a/0x20
-RIP: 0010:intel_idle_hlt+0x23/0x30
-Code: 1f 84 00 00 00 00 00 f3 0f 1e fa 41 54 41 89 d4 0f 1f 44 00 00 66 90 0f 1f 44 00 00 0f 00 2d c4 9f ab 00 0f 1f 44 00 00 fb f4 <fa> 44 89 e0 41 5c c3 66 0f 1f 44 00 00 f3 0f 1e fa 41 54 41 89 d4
-RSP: 0018:ffffc90000197d78 EFLAGS: 00000246
-RAX: 00000000000a83c3 RBX: ffffe8ffffd09c50 RCX: ffffffff8a22d8e5
-RDX: 0000000000000001 RSI: ffffffff8d3f8080 RDI: ffffe8ffffd09c50
-RBP: ffffffff8d3f8080 R08: 0000000000000001 R09: ffffed1026ba6d9d
-R10: ffff888135d36ceb R11: 0000000000000001 R12: 0000000000000001
-R13: ffffffff8d3f8100 R14: 0000000000000001 R15: 0000000000000000
-cpuidle_enter_state+0xd3/0x6f0
-cpuidle_enter+0x4e/0xa0
-do_idle+0x2fe/0x3c0
-cpu_startup_entry+0x18/0x20
-start_secondary+0x200/0x290
-secondary_startup_64_no_verify+0x167/0x16b
-</TASK>
-Allocated by task 939:
+Allocated by task 9176:
 kasan_save_stack+0x22/0x40
 kasan_set_track+0x25/0x30
 __kasan_slab_alloc+0x7f/0x90
 kmem_cache_alloc_node+0x1cd/0x410
 kmalloc_reserve+0x165/0x270
 __alloc_skb+0x129/0x330
-inet6_ifa_notify+0x118/0x230
-__ipv6_ifa_notify+0x177/0xbe0
-addrconf_dad_completed+0x133/0xe00
-addrconf_dad_work+0x764/0x1390
-process_one_work+0xa32/0x16f0
-worker_thread+0x67d/0x10c0
-kthread+0x344/0x440
-ret_from_fork+0x1f/0x30
-The buggy address belongs to the object at ffff888111145800
+netlink_sendmsg+0x9b1/0xe30
+sock_sendmsg+0xde/0x190
+____sys_sendmsg+0x739/0x920
+___sys_sendmsg+0x110/0x1b0
+__sys_sendmsg+0xf7/0x1c0
+do_syscall_64+0x39/0xb0
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Freed by task 9176:
+kasan_save_stack+0x22/0x40
+kasan_set_track+0x25/0x30
+kasan_save_free_info+0x2b/0x40
+____kasan_slab_free+0x160/0x1c0
+slab_free_freelist_hook+0x11b/0x220
+kmem_cache_free+0xf0/0x490
+skb_free_head+0x17f/0x1b0
+skb_release_data+0x59c/0x850
+consume_skb+0xd2/0x170
+netlink_unicast+0x54f/0x7f0
+netlink_sendmsg+0x926/0xe30
+sock_sendmsg+0xde/0x190
+____sys_sendmsg+0x739/0x920
+___sys_sendmsg+0x110/0x1b0
+__sys_sendmsg+0xf7/0x1c0
+do_syscall_64+0x39/0xb0
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+The buggy address belongs to the object at ffff88802e08ed00
 which belongs to the cache skbuff_small_head of size 640
-The buggy address is located 239 bytes inside of
-freed 640-byte region [ffff888111145800, ffff888111145a80)
+The buggy address is located 194 bytes inside of
+freed 640-byte region [ffff88802e08ed00, ffff88802e08ef80)
 
 As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
 _decode_session6.") showed, xfrm_decode_session was originally intended
@@ -122,33 +122,28 @@ Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_interface_core.c | 4 ++--
+ net/ipv6/ip6_vti.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
-index a3319965470a7..b864740846902 100644
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -537,8 +537,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 10b222865d46a..73c85d4e0e9cd 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -568,12 +568,12 @@ vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		    vti6_addr_conflict(t, ipv6_hdr(skb)))
+ 			goto tx_err;
  
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IPV6):
 -		xfrm_decode_session(skb, &fl, AF_INET6);
  		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
 +		xfrm_decode_session(skb, &fl, AF_INET6);
- 		if (!dst) {
- 			fl.u.ip6.flowi6_oif = dev->ifindex;
- 			fl.u.ip6.flowi6_flags |= FLOWI_FLAG_ANYSRC;
-@@ -552,8 +552,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
- 		}
  		break;
  	case htons(ETH_P_IP):
 -		xfrm_decode_session(skb, &fl, AF_INET);
  		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
 +		xfrm_decode_session(skb, &fl, AF_INET);
- 		if (!dst) {
- 			struct rtable *rt;
- 
+ 		break;
+ 	default:
+ 		goto tx_err;
 -- 
 2.40.1
 
