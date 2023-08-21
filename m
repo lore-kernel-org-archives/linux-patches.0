@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B851171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D80C433C7;
-	Mon, 21 Aug 2023 20:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E74D1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1749C433C7;
+	Mon, 21 Aug 2023 20:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648514;
-	bh=ZnKMC5MA3sHAFGoGNIOugIvGhd6Ei9kuQwossqRfee4=;
+	s=korg; t=1692648517;
+	bh=o8Jo3omLh/CkLxUbW2wCdHc/iRwSWpnzUT2ilnBop3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fibcfppEw1elFAAbO2MpckM+EyM4MmTqJFF3sHGcYn4LItVuPrZvsfyFfIE6ohl05
-	 I1M2V1vDzUGb36ii94WdT9HkyLwR3DXq4UnVuJ2tepr48HxLTl9SUmSon86T6OyAAh
-	 /RzDgMnzyy2d6CLG+4yWF7SAhevnsfEdKOkkUMoo=
+	b=zhEMpLk9DmtWyIr8waDlsfpsio+tgT1IqJkH8Iywwp9MPi7tVdX1KjjoNER+PeV+S
+	 kCFXcKuq1rUosVOpBwDR7uLI3DljFP/ZqLS2jrV7AoO9nkOj9yAJiq/sI/CshaimmC
+	 o9lRxWqoe8vvTsXNBrDGNurUFvXbJ+vb6it+jt1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Harmon <russ@har.mn>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.4 203/234] cifs: Release folio lock on fscache read hit.
-Date: Mon, 21 Aug 2023 21:42:46 +0200
-Message-ID: <20230821194137.833000408@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 186/234] ARM: dts: imx: Set default tuning step for imx7d usdhc
+Date: Mon, 21 Aug 2023 21:42:29 +0200
+Message-ID: <20230821194137.066770593@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,65 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell Harmon via samba-technical <samba-technical@lists.samba.org>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 69513dd669e243928f7450893190915a88f84a2b upstream.
+[ Upstream commit be18293e47cbca7c6acee9231fc851601d69563a ]
 
-Under the current code, when cifs_readpage_worker is called, the call
-contract is that the callee should unlock the page. This is documented
-in the read_folio section of Documentation/filesystems/vfs.rst as:
+If the tuning step is not set, the tuning step is set to 1.
+For some sd cards, the following Tuning timeout will occur.
 
-> The filesystem should unlock the folio once the read has completed,
-> whether it was successful or not.
+Tuning failed, falling back to fixed sampling clock
+mmc0: Tuning failed, falling back to fixed sampling clock
 
-Without this change, when fscache is in use and cache hit occurs during
-a read, the page lock is leaked, producing the following stack on
-subsequent reads (via mmap) to the page:
+So set the default tuning step. This refers to the NXP vendor's
+commit below:
 
-$ cat /proc/3890/task/12864/stack
-[<0>] folio_wait_bit_common+0x124/0x350
-[<0>] filemap_read_folio+0xad/0xf0
-[<0>] filemap_fault+0x8b1/0xab0
-[<0>] __do_fault+0x39/0x150
-[<0>] do_fault+0x25c/0x3e0
-[<0>] __handle_mm_fault+0x6ca/0xc70
-[<0>] handle_mm_fault+0xe9/0x350
-[<0>] do_user_addr_fault+0x225/0x6c0
-[<0>] exc_page_fault+0x84/0x1b0
-[<0>] asm_exc_page_fault+0x27/0x30
+https://github.com/nxp-imx/linux-imx/blob/lf-6.1.y/
+arch/arm/boot/dts/imx7s.dtsi#L1216-L1217
 
-This requires a reboot to resolve; it is a deadlock.
-
-Note however that the call to cifs_readpage_from_fscache does mark the
-page clean, but does not free the folio lock. This happens in
-__cifs_readpage_from_fscache on success. Releasing the lock at that
-point however is not appropriate as cifs_readahead also calls
-cifs_readpage_from_fscache and *does* unconditionally release the lock
-after its return. This change therefore effectively makes
-cifs_readpage_worker work like cifs_readahead.
-
-Signed-off-by: Russell Harmon <russ@har.mn>
-Acked-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/file.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/imx7s.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -4681,9 +4681,9 @@ static int cifs_readpage_worker(struct f
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index 54026c2c93fac..6ffb428dc939c 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -1184,6 +1184,8 @@
+ 					<&clks IMX7D_USDHC1_ROOT_CLK>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-step = <2>;
++				fsl,tuning-start-tap = <20>;
+ 				status = "disabled";
+ 			};
  
- io_error:
- 	kunmap(page);
--	unlock_page(page);
+@@ -1196,6 +1198,8 @@
+ 					<&clks IMX7D_USDHC2_ROOT_CLK>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-step = <2>;
++				fsl,tuning-start-tap = <20>;
+ 				status = "disabled";
+ 			};
  
- read_complete:
-+	unlock_page(page);
- 	return rc;
- }
+@@ -1208,6 +1212,8 @@
+ 					<&clks IMX7D_USDHC3_ROOT_CLK>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-step = <2>;
++				fsl,tuning-start-tap = <20>;
+ 				status = "disabled";
+ 			};
  
+-- 
+2.40.1
+
 
 
