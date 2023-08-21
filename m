@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A0D1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0A5C433C7;
-	Mon, 21 Aug 2023 20:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689701171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF47EC433C7;
+	Mon, 21 Aug 2023 20:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648385;
-	bh=6th6LfthIn3IlT5iCdpNktpEtzyPbwTmBGzjyMyhn18=;
+	s=korg; t=1692648388;
+	bh=/cqN16+Qs2mGXLtrbvjwXl76Z3tXO2E6uKjJ2kxVBXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkvDwEbdUytxtZdNOCI0KP4XnOuXK0KBoEnLn43+OaETov6Uew1kfir5ok6zhwsw1
-	 i0SIK3Q4fZU83VE+36W4h3ddzas2p6y1H4RZc2C1aSpFVov4fsScZNtDBYQpUIZjNS
-	 S8sFQ7AqOzK3ifTEcLIwLtSpFeAoBc1qmzubpb2E=
+	b=dvx+LGwKRjIZbP9AfLxLntupM2LfbwBy5g8Co7BbGJvdbKCOB77v8/8OxEYG48erU
+	 FiMiRDFnz7CHNPEwRjDV+S1W3Cfd4zBRH40ylqppyqVu0hMeI3HnPplAnquYPIpupq
+	 Is6F1OEivktNQI817TvqMMtqLKolj/V2lM8SBXA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.4 127/234] x86/CPU/AMD: Fix the DIV(0) initial fix attempt
-Date: Mon, 21 Aug 2023 21:41:30 +0200
-Message-ID: <20230821194134.453983732@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.4 128/234] x86/srso: Disable the mitigation on unaffected configurations
+Date: Mon, 21 Aug 2023 21:41:31 +0200
+Message-ID: <20230821194134.498077383@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,71 +35,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit f58d6fbcb7c848b7f2469be339bc571f2e9d245b upstream.
+commit e9fbc47b818b964ddff5df5b2d5c0f5f32f4a147 upstream.
 
-Initially, it was thought that doing an innocuous division in the #DE
-handler would take care to prevent any leaking of old data from the
-divider but by the time the fault is raised, the speculation has already
-advanced too far and such data could already have been used by younger
-operations.
+Skip the srso cmd line parsing which is not needed on Zen1/2 with SMT
+disabled and with the proper microcode applied (latter should be the
+case anyway) as those are not affected.
 
-Therefore, do the innocuous division on every exit to userspace so that
-userspace doesn't see any potentially old data from integer divisions in
-kernel space.
-
-Do the same before VMRUN too, to protect host data from leaking into the
-guest too.
-
-Fixes: 77245f1c3c64 ("x86/CPU/AMD: Do not leak quotient data after a division by 0")
+Fixes: 5a15d8348881 ("x86/srso: Tie SBPB bit setting to microcode patch detection")
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230811213824.10025-1-bp@alien8.de
+Link: https://lore.kernel.org/r/20230813104517.3346-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/entry-common.h |    1 +
- arch/x86/kernel/cpu/amd.c           |    1 +
- arch/x86/kernel/traps.c             |    2 --
- arch/x86/kvm/svm/svm.c              |    2 ++
- 4 files changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/entry-common.h
-+++ b/arch/x86/include/asm/entry-common.h
-@@ -92,6 +92,7 @@ static inline void arch_exit_to_user_mod
- static __always_inline void arch_exit_to_user_mode(void)
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2429,8 +2429,10 @@ static void __init srso_select_mitigatio
+ 		 * IBPB microcode has been applied.
+ 		 */
+ 		if ((boot_cpu_data.x86 < 0x19) &&
+-		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED)))
++		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED))) {
+ 			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
++			return;
++		}
+ 	}
+ 
+ 	if (retbleed_mitigation == RETBLEED_MITIGATION_IBPB) {
+@@ -2716,6 +2718,9 @@ static ssize_t gds_show_state(char *buf)
+ 
+ static ssize_t srso_show_state(char *buf)
  {
- 	mds_user_clear_cpu_buffers();
-+	amd_clear_divider();
- }
- #define arch_exit_to_user_mode arch_exit_to_user_mode
- 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1329,3 +1329,4 @@ void noinstr amd_clear_divider(void)
- 	asm volatile(ALTERNATIVE("", "div %2\n\t", X86_BUG_DIV0)
- 		     :: "a" (0), "d" (0), "r" (1));
- }
-+EXPORT_SYMBOL_GPL(amd_clear_divider);
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -206,8 +206,6 @@ DEFINE_IDTENTRY(exc_divide_error)
- {
- 	do_error_trap(regs, 0, "divide error", X86_TRAP_DE, SIGFPE,
- 		      FPE_INTDIV, error_get_trap_addr(regs));
--
--	amd_clear_divider();
- }
- 
- DEFINE_IDTENTRY(exc_overflow)
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4034,6 +4034,8 @@ static noinstr void svm_vcpu_enter_exit(
- 
- 	guest_state_enter_irqoff();
- 
-+	amd_clear_divider();
++	if (boot_cpu_has(X86_FEATURE_SRSO_NO))
++		return sysfs_emit(buf, "Not affected\n");
 +
- 	if (sev_es_guest(vcpu->kvm))
- 		__svm_sev_es_vcpu_run(svm, spec_ctrl_intercepted);
- 	else
+ 	return sysfs_emit(buf, "%s%s\n",
+ 			  srso_strings[srso_mitigation],
+ 			  (cpu_has_ibpb_brtype_microcode() ? "" : ", no microcode"));
 
 
