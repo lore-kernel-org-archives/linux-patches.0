@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBC21170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFFAC433C9;
-	Mon, 21 Aug 2023 19:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793641170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4FFC433C9;
+	Mon, 21 Aug 2023 19:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647658;
-	bh=cRTc8eRyLHrtCb90g9KlXfs0GJ+1q7rJi62JBEFsFQA=;
+	s=korg; t=1692647661;
+	bh=BnfRMvWGj+yOLG3+t50I5FPVEgAalNskJrrEnB1BRGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E5CgGYs5IDJtaTcPCjYGkF72ID/0Ew/XMrmEb2v2C9tuoJyuYPloMqEKF5gpEbfz9
-	 KDR0//VwOlQF0NbQT/1Sj1THujenBOJSK2eyZleE6BHbMCHNq00BdDttjJsWj/XBJ8
-	 XWoB03gVjnvo4wXjcuntGI9QMCNLDY6ExD5aQgdY=
+	b=RrQNWHbIm65G8JPDSksWiwHl0r6G+rMjqCoQWAlNFqHqUMvZR/jFPxfYM5W6tJiRO
+	 n48R8hmuyzIfGKWNOULwupb29YpEB5dmwAOlS++xB3DwGBUgd03nRoQtd6qqrc4iFW
+	 4aFdvnDId2PDKqaAuvuWn6cFoo0PFaBj+lRyVZaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BassCheck <bass@buaa.edu.cn>,
-	Tuo Li <islituo@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/194] ALSA: hda: fix a possible null-pointer dereference due to data race in snd_hdac_regmap_sync()
-Date: Mon, 21 Aug 2023 21:40:44 +0200
-Message-ID: <20230821194125.627003512@linuxfoundation.org>
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 092/194] fbdev: mmp: fix value check in mmphw_probe()
+Date: Mon, 21 Aug 2023 21:41:11 +0200
+Message-ID: <20230821194126.766924209@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,61 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tuo Li <islituo@gmail.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit 1f4a08fed450db87fbb5ff5105354158bdbe1a22 ]
+commit 0872b2c0abc0e84ac82472959c8e14e35277549c upstream.
 
-The variable codec->regmap is often protected by the lock
-codec->regmap_lock when is accessed. However, it is accessed without
-holding the lock when is accessed in snd_hdac_regmap_sync():
+in mmphw_probe(), check the return value of clk_prepare_enable()
+and return the error code if clk_prepare_enable() returns an
+unexpected value.
 
-  if (codec->regmap)
-
-In my opinion, this may be a harmful race, because if codec->regmap is
-set to NULL right after the condition is checked, a null-pointer
-dereference can occur in the called function regcache_sync():
-
-  map->lock(map->lock_arg); --> Line 360 in drivers/base/regmap/regcache.c
-
-To fix this possible null-pointer dereference caused by data race, the
-mutex_lock coverage is extended to protect the if statement as well as the
-function call to regcache_sync().
-
-[ Note: the lack of the regmap_lock itself is harmless for the current
-  codec driver implementations, as snd_hdac_regmap_sync() is only for
-  PM runtime resume that is prohibited during the codec probe.
-  But the change makes the whole code more consistent, so it's merged
-  as is -- tiwai ]
-
-Reported-by: BassCheck <bass@buaa.edu.cn>
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Link: https://lore.kernel.org/r/20230703031016.1184711-1-islituo@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d63028c38905 ("video: mmp display controller support")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/hdac_regmap.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/mmp/hw/mmp_ctrl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/hdac_regmap.c b/sound/hda/hdac_regmap.c
-index fe3587547cfec..39610a15bcc98 100644
---- a/sound/hda/hdac_regmap.c
-+++ b/sound/hda/hdac_regmap.c
-@@ -597,10 +597,9 @@ EXPORT_SYMBOL_GPL(snd_hdac_regmap_update_raw_once);
-  */
- void snd_hdac_regmap_sync(struct hdac_device *codec)
- {
--	if (codec->regmap) {
--		mutex_lock(&codec->regmap_lock);
-+	mutex_lock(&codec->regmap_lock);
-+	if (codec->regmap)
- 		regcache_sync(codec->regmap);
--		mutex_unlock(&codec->regmap_lock);
--	}
-+	mutex_unlock(&codec->regmap_lock);
- }
- EXPORT_SYMBOL_GPL(snd_hdac_regmap_sync);
--- 
-2.40.1
-
+--- a/drivers/video/fbdev/mmp/hw/mmp_ctrl.c
++++ b/drivers/video/fbdev/mmp/hw/mmp_ctrl.c
+@@ -519,7 +519,9 @@ static int mmphw_probe(struct platform_d
+ 			      "unable to get clk %s\n", mi->clk_name);
+ 		goto failed;
+ 	}
+-	clk_prepare_enable(ctrl->clk);
++	ret = clk_prepare_enable(ctrl->clk);
++	if (ret)
++		goto failed;
+ 
+ 	/* init global regs */
+ 	ctrl_set_default(ctrl);
 
 
