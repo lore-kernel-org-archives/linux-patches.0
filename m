@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B315E11703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353C4C433C8;
-	Mon, 21 Aug 2023 19:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4C311703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFBBC433C8;
+	Mon, 21 Aug 2023 19:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647714;
-	bh=QoUHOy1hMl35+v/+/K6UM3YcObeNLkRM5pnSKCc2ztw=;
+	s=korg; t=1692647717;
+	bh=7hwvDBACKTflcEs4feTvTnJvGuY6kcnlAwwUj9pVOpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pml7klS09zJAuolvhTX+k/QzvRS9VIJrfplr3MwcPgVlK2CvdtxF+0TZEMiKi1fPs
-	 Ngdb7141UnSNsdkXioEoWbKwjkaxkAFqcdPHIKwxTvc5smlcng4j0QUZJPiVwCV4v6
-	 ByQm+YvJppAk/Xdj0vyjcoi/lZDKyC8OVzd0b2cg=
+	b=Ngj3ZQLX1vKpt6YaK+Y9CKhIs/KajW9tQwTcNTBvIYYPLNZ9wBXNO5OOTytOv/UGy
+	 oxU1vZvYip/vXerp061Iya2BzHV58nCk+soMwC3XdBOwoZGCELQ6qN7W+CJq3XYvmj
+	 OBneJ2qOFFC7AYXAgfyYWRbNwldm1Rv4fAvTDazc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	stable@vger.kernelorg,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.1 095/194] vdpa: Add queue index attr to vdpa_nl_policy for nlattr length check
-Date: Mon, 21 Aug 2023 21:41:14 +0200
-Message-ID: <20230821194126.885919775@linuxfoundation.org>
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 113/194] virtio-net: set queues after driver_ok
+Date: Mon, 21 Aug 2023 21:41:32 +0200
+Message-ID: <20230821194127.662940648@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,40 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Jason Wang <jasowang@redhat.com>
 
-commit b3003e1b54e057f5f3124e437b80c3bef26ed3fe upstream.
+[ Upstream commit 51b813176f098ff61bd2833f627f5319ead098a5 ]
 
-The vdpa_nl_policy structure is used to validate the nlattr when parsing
-the incoming nlmsg. It will ensure the attribute being described produces
-a valid nlattr pointer in info->attrs before entering into each handler
-in vdpa_nl_ops.
+Commit 25266128fe16 ("virtio-net: fix race between set queues and
+probe") tries to fix the race between set queues and probe by calling
+_virtnet_set_queues() before DRIVER_OK is set. This violates virtio
+spec. Fixing this by setting queues after virtio_device_ready().
 
-That is to say, the missing part in vdpa_nl_policy may lead to illegal
-nlattr after parsing, which could lead to OOB read just like CVE-2023-3773.
+Note that rtnl needs to be held for userspace requests to change the
+number of queues. So we are serialized in this way.
 
-This patch adds the missing nla_policy for vdpa queue index attr to avoid
-such bugs.
-
-Fixes: 13b00b135665 ("vdpa: Add support for querying vendor statistics")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Cc: stable@vger.kernelorg
-Message-Id: <20230727175757.73988-5-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 25266128fe16 ("virtio-net: fix race between set queues and probe")
+Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/virtio_net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/vdpa/vdpa.c
-+++ b/drivers/vdpa/vdpa.c
-@@ -1174,6 +1174,7 @@ static const struct nla_policy vdpa_nl_p
- 	[VDPA_ATTR_DEV_NET_CFG_MACADDR] = NLA_POLICY_ETH_ADDR,
- 	/* virtio spec 1.1 section 5.1.4.1 for valid MTU range */
- 	[VDPA_ATTR_DEV_NET_CFG_MTU] = NLA_POLICY_MIN(NLA_U16, 68),
-+	[VDPA_ATTR_DEV_QUEUE_INDEX] = { .type = NLA_U32 },
- 	[VDPA_ATTR_DEV_FEATURES] = { .type = NLA_U64 },
- };
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index b7a4df4bab817..55c20ccb791ea 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3942,8 +3942,6 @@ static int virtnet_probe(struct virtio_device *vdev)
+ 	if (vi->has_rss || vi->has_rss_hash_report)
+ 		virtnet_init_default_rss(vi);
  
+-	_virtnet_set_queues(vi, vi->curr_queue_pairs);
+-
+ 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
+ 	rtnl_lock();
+ 
+@@ -3956,6 +3954,8 @@ static int virtnet_probe(struct virtio_device *vdev)
+ 
+ 	virtio_device_ready(vdev);
+ 
++	_virtnet_set_queues(vi, vi->curr_queue_pairs);
++
+ 	/* a random MAC address has been assigned, notify the device.
+ 	 * We don't fail probe if VIRTIO_NET_F_CTRL_MAC_ADDR is not there
+ 	 * because many devices work fine without getting MAC explicitly
+-- 
+2.40.1
+
 
 
