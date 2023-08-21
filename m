@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1499A11707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8860CC433C8;
-	Mon, 21 Aug 2023 19:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED85611707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A838C433C8;
+	Mon, 21 Aug 2023 19:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647638;
-	bh=dSaRez5M8vk01g6Q5wIkMeyrpF/zL5mIDqFYlx/DBqw=;
+	s=korg; t=1692647641;
+	bh=e3rYZd+4wzYBIlhgNFT/+/Wf9tZq1DaXhREG3wtJ9cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bONK+1PggmH94J0z9hXFEh5uQfnoFiMGSUUxcfMfckoG7KXySQmRjYUtaLBFYgtLU
-	 IEqWwkzyURwGVld2OZ3two+7F/UTeCCVVWcUSEvSRyQpJMWAmHPcvcd5FIpgCb8Gkc
-	 sescsUknfDq5+cIxls9FhZaxkAniAHQc86HEY8EU=
+	b=1vYXSBp1/56ouZ03dqnF0nJtNunkMnR/D8qLzJIr3nIpo4JYSMPIdkFbzWFLP0HQQ
+	 zVZ94RAMJfkkxr2D4OQYAHmJv1rfYWSo5Z58r6Mzc/Nv0hFuIfNm7wR8LrLOOfIak7
+	 JPcNIpsAWDP+VY0a3Srxc7wIzikSxxvHleSnM7Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xieyongji@bytedance.com,
-	Jason Wang <jasowang@redhat.com>,
-	Maxime Coquelin <maxime.coquelin@redhat.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Gal Pressman <gal@nvidia.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/194] vduse: Use proper spinlock for IRQ injection
-Date: Mon, 21 Aug 2023 21:41:04 +0200
-Message-ID: <20230821194126.494846320@linuxfoundation.org>
+Subject: [PATCH 6.1 086/194] vdpa/mlx5: Fix mr->initialized semantics
+Date: Mon, 21 Aug 2023 21:41:05 +0200
+Message-ID: <20230821194126.531155454@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,62 +38,183 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Coquelin <maxime.coquelin@redhat.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 7ca26efb09a1543fddb29308ea3b63b66cb5d3ee ]
+[ Upstream commit 9ee811009ad8f87982b69e61d07447d12233ad01 ]
 
-The IRQ injection work used spin_lock_irq() to protect the
-scheduling of the softirq, but spin_lock_bh() should be
-used.
+The mr->initialized flag is shared between the control vq and data vq
+part of the mr init/uninit. But if the control vq and data vq get placed
+in different ASIDs, it can happen that initializing the control vq will
+prevent the data vq mr from being initialized.
 
-With spin_lock_irq(), we noticed delay of more than 6
-seconds between the time a NAPI polling work is scheduled
-and the time it is executed.
+This patch consolidates the control and data vq init parts into their
+own init functions. The mr->initialized will now be used for the data vq
+only. The control vq currently doesn't need a flag.
 
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Cc: xieyongji@bytedance.com
+The uninitializing part is also taken care of: mlx5_vdpa_destroy_mr got
+split into data and control vq functions which are now also ASID aware.
 
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
-Message-Id: <20230705114505.63274-1-maxime.coquelin@redhat.com>
+Fixes: 8fcd20c30704 ("vdpa/mlx5: Support different address spaces for control and data")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Message-Id: <20230802171231.11001-3-dtatulea@nvidia.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/vdpa/mlx5/core/mlx5_vdpa.h |  1 +
+ drivers/vdpa/mlx5/core/mr.c        | 97 +++++++++++++++++++++---------
+ 2 files changed, 71 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 72f924ec4658d..edcd74cc4c0f7 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -899,10 +899,10 @@ static void vduse_dev_irq_inject(struct work_struct *work)
+diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+index 25fc4120b618d..a0420be5059f4 100644
+--- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
++++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+@@ -31,6 +31,7 @@ struct mlx5_vdpa_mr {
+ 	struct list_head head;
+ 	unsigned long num_directs;
+ 	unsigned long num_klms;
++	/* state of dvq mr */
+ 	bool initialized;
+ 
+ 	/* serialize mkey creation and destruction */
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index a4d7ee2339fa5..b3609867d5676 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -491,15 +491,24 @@ static void destroy_user_mr(struct mlx5_vdpa_dev *mvdev, struct mlx5_vdpa_mr *mr
+ 	}
+ }
+ 
+-void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev)
++static void _mlx5_vdpa_destroy_cvq_mr(struct mlx5_vdpa_dev *mvdev, unsigned int asid)
++{
++	if (mvdev->group2asid[MLX5_VDPA_CVQ_GROUP] != asid)
++		return;
++
++	prune_iotlb(mvdev);
++}
++
++static void _mlx5_vdpa_destroy_dvq_mr(struct mlx5_vdpa_dev *mvdev, unsigned int asid)
  {
- 	struct vduse_dev *dev = container_of(work, struct vduse_dev, inject);
+ 	struct mlx5_vdpa_mr *mr = &mvdev->mr;
  
--	spin_lock_irq(&dev->irq_lock);
-+	spin_lock_bh(&dev->irq_lock);
- 	if (dev->config_cb.callback)
- 		dev->config_cb.callback(dev->config_cb.private);
--	spin_unlock_irq(&dev->irq_lock);
-+	spin_unlock_bh(&dev->irq_lock);
+-	mutex_lock(&mr->mkey_mtx);
++	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] != asid)
++		return;
++
+ 	if (!mr->initialized)
+-		goto out;
++		return;
+ 
+-	prune_iotlb(mvdev);
+ 	if (mr->user_mr)
+ 		destroy_user_mr(mvdev, mr);
+ 	else
+@@ -507,45 +516,79 @@ void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev)
+ 
+ 	memset(mr, 0, sizeof(*mr));
+ 	mr->initialized = false;
+-out:
++}
++
++static void mlx5_vdpa_destroy_mr_asid(struct mlx5_vdpa_dev *mvdev, unsigned int asid)
++{
++	struct mlx5_vdpa_mr *mr = &mvdev->mr;
++
++	mutex_lock(&mr->mkey_mtx);
++
++	_mlx5_vdpa_destroy_dvq_mr(mvdev, asid);
++	_mlx5_vdpa_destroy_cvq_mr(mvdev, asid);
++
+ 	mutex_unlock(&mr->mkey_mtx);
  }
  
- static void vduse_vq_irq_inject(struct work_struct *work)
-@@ -910,10 +910,10 @@ static void vduse_vq_irq_inject(struct work_struct *work)
- 	struct vduse_virtqueue *vq = container_of(work,
- 					struct vduse_virtqueue, inject);
+-static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
+-				struct vhost_iotlb *iotlb, unsigned int asid)
++void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev)
++{
++	mlx5_vdpa_destroy_mr_asid(mvdev, mvdev->group2asid[MLX5_VDPA_CVQ_GROUP]);
++	mlx5_vdpa_destroy_mr_asid(mvdev, mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP]);
++}
++
++static int _mlx5_vdpa_create_cvq_mr(struct mlx5_vdpa_dev *mvdev,
++				    struct vhost_iotlb *iotlb,
++				    unsigned int asid)
++{
++	if (mvdev->group2asid[MLX5_VDPA_CVQ_GROUP] != asid)
++		return 0;
++
++	return dup_iotlb(mvdev, iotlb);
++}
++
++static int _mlx5_vdpa_create_dvq_mr(struct mlx5_vdpa_dev *mvdev,
++				    struct vhost_iotlb *iotlb,
++				    unsigned int asid)
+ {
+ 	struct mlx5_vdpa_mr *mr = &mvdev->mr;
+ 	int err;
  
--	spin_lock_irq(&vq->irq_lock);
-+	spin_lock_bh(&vq->irq_lock);
- 	if (vq->ready && vq->cb.callback)
- 		vq->cb.callback(vq->cb.private);
--	spin_unlock_irq(&vq->irq_lock);
-+	spin_unlock_bh(&vq->irq_lock);
+-	if (mr->initialized)
++	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] != asid)
+ 		return 0;
+ 
+-	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] == asid) {
+-		if (iotlb)
+-			err = create_user_mr(mvdev, iotlb);
+-		else
+-			err = create_dma_mr(mvdev, mr);
++	if (mr->initialized)
++		return 0;
+ 
+-		if (err)
+-			return err;
+-	}
++	if (iotlb)
++		err = create_user_mr(mvdev, iotlb);
++	else
++		err = create_dma_mr(mvdev, mr);
+ 
+-	if (mvdev->group2asid[MLX5_VDPA_CVQ_GROUP] == asid) {
+-		err = dup_iotlb(mvdev, iotlb);
+-		if (err)
+-			goto out_err;
+-	}
++	if (err)
++		return err;
+ 
+ 	mr->initialized = true;
++
++	return 0;
++}
++
++static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
++				struct vhost_iotlb *iotlb, unsigned int asid)
++{
++	int err;
++
++	err = _mlx5_vdpa_create_dvq_mr(mvdev, iotlb, asid);
++	if (err)
++		return err;
++
++	err = _mlx5_vdpa_create_cvq_mr(mvdev, iotlb, asid);
++	if (err)
++		goto out_err;
++
+ 	return 0;
+ 
+ out_err:
+-	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] == asid) {
+-		if (iotlb)
+-			destroy_user_mr(mvdev, mr);
+-		else
+-			destroy_dma_mr(mvdev, mr);
+-	}
++	_mlx5_vdpa_destroy_dvq_mr(mvdev, asid);
+ 
+ 	return err;
  }
- 
- static int vduse_dev_queue_irq_work(struct vduse_dev *dev,
 -- 
 2.40.1
 
