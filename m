@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E437911703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68910C433C8;
-	Mon, 21 Aug 2023 19:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB24311703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C45BC433C7;
+	Mon, 21 Aug 2023 19:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647841;
-	bh=7+WTvDMP3OayobXOcibiXEZpzllZvhQnqYomzB9IhkU=;
+	s=korg; t=1692647844;
+	bh=rh09D86xD7Ddke+7V2Fls3/0QZ6DaspZN9EIg7Ph8ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULUNTZY+x3sSvPsBqAQ6JBbamQTztgGJa7as0brsRHhjlbjesvoU8UZSGyaIop0AK
-	 hkJpFuy+VjTHNiMEm1qsCXairKc5trgiSwJe7RanZHQqRIi5+iaDcCLSkLOm44IKYJ
-	 RDgzQ1QLmw88bNHXpY0+Hcff9Z8PiuJZSb2c5EOc=
+	b=ppXt/uSL1NQGoN3M0cQ59fDmHVgVWoA6TUOHpTaqn3Pu2OH3iw/pUlulXgeJ21aBN
+	 AWh0tuYrLgUDQC2on8QZVaMqd07ocaUFXRvdKq9A6FsBBv/yDu7/sjOmhy/DBiR3Hn
+	 eAMN8k8SuUL2AVVCSG2e9mb4GvwwekY1a59B706g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Hegde <yogi.kernel@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.1 156/194] arm64: dts: rockchip: Fix Wifi/Bluetooth on ROCK Pi 4 boards
-Date: Mon, 21 Aug 2023 21:42:15 +0200
-Message-ID: <20230821194129.555507253@linuxfoundation.org>
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Eric Biggers <ebiggers@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 157/194] blk-crypto: dynamically allocate fallback profile
+Date: Mon, 21 Aug 2023 21:42:16 +0200
+Message-ID: <20230821194129.608176928@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,43 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yogesh Hegde <yogi.kernel@gmail.com>
+From: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
 
-commit ebceec271e552a2b05e47d8ef0597052b1a39449 upstream.
+commit c984ff1423ae9f70b1f28ce811856db0d9c99021 upstream.
 
-This patch fixes an issue affecting the Wifi/Bluetooth connectivity on
-ROCK Pi 4 boards. Commit f471b1b2db08 ("arm64: dts: rockchip: Fix Bluetooth
-on ROCK Pi 4 boards") introduced a problem with the clock configuration.
-Specifically, the clock-names property of the sdio-pwrseq node was not
-updated to 'lpo', causing the driver to wait indefinitely for the wrong clock
-signal 'ext_clock' instead of the expected one 'lpo'. This prevented the proper
-initialization of Wifi/Bluetooth chip on ROCK Pi 4 boards.
+blk_crypto_profile_init() calls lockdep_register_key(), which warns and
+does not register if the provided memory is a static object.
+blk-crypto-fallback currently has a static blk_crypto_profile and calls
+blk_crypto_profile_init() thereupon, resulting in the warning and
+failure to register.
 
-To address this, this patch updates the clock-names property of the
-sdio-pwrseq node to "lpo" to align with the changes made to the bluetooth node.
+Fortunately it is simple enough to use a dynamically allocated profile
+and make lockdep function correctly.
 
-This patch has been tested on ROCK Pi 4B.
-
-Fixes: f471b1b2db08 ("arm64: dts: rockchip: Fix Bluetooth on ROCK Pi 4 boards")
+Fixes: 2fb48d88e77f ("blk-crypto: use dynamic lock class for blk_crypto_profile::lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yogesh Hegde <yogi.kernel@gmail.com>
-Link: https://lore.kernel.org/r/ZLbATQRjOl09aLAp@zephyrusG14
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230817141615.15387-1-sweettea-kernel@dorminy.me
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-crypto-fallback.c | 36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -45,7 +45,7 @@
- 	sdio_pwrseq: sdio-pwrseq {
- 		compatible = "mmc-pwrseq-simple";
- 		clocks = <&rk808 1>;
--		clock-names = "ext_clock";
-+		clock-names = "lpo";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wifi_enable_h>;
- 		reset-gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW>;
+diff --git a/block/blk-crypto-fallback.c b/block/blk-crypto-fallback.c
+index ad9844c5b40c..e6468eab2681 100644
+--- a/block/blk-crypto-fallback.c
++++ b/block/blk-crypto-fallback.c
+@@ -78,7 +78,7 @@ static struct blk_crypto_fallback_keyslot {
+ 	struct crypto_skcipher *tfms[BLK_ENCRYPTION_MODE_MAX];
+ } *blk_crypto_keyslots;
+ 
+-static struct blk_crypto_profile blk_crypto_fallback_profile;
++static struct blk_crypto_profile *blk_crypto_fallback_profile;
+ static struct workqueue_struct *blk_crypto_wq;
+ static mempool_t *blk_crypto_bounce_page_pool;
+ static struct bio_set crypto_bio_split;
+@@ -292,7 +292,7 @@ static bool blk_crypto_fallback_encrypt_bio(struct bio **bio_ptr)
+ 	 * Get a blk-crypto-fallback keyslot that contains a crypto_skcipher for
+ 	 * this bio's algorithm and key.
+ 	 */
+-	blk_st = blk_crypto_get_keyslot(&blk_crypto_fallback_profile,
++	blk_st = blk_crypto_get_keyslot(blk_crypto_fallback_profile,
+ 					bc->bc_key, &slot);
+ 	if (blk_st != BLK_STS_OK) {
+ 		src_bio->bi_status = blk_st;
+@@ -395,7 +395,7 @@ static void blk_crypto_fallback_decrypt_bio(struct work_struct *work)
+ 	 * Get a blk-crypto-fallback keyslot that contains a crypto_skcipher for
+ 	 * this bio's algorithm and key.
+ 	 */
+-	blk_st = blk_crypto_get_keyslot(&blk_crypto_fallback_profile,
++	blk_st = blk_crypto_get_keyslot(blk_crypto_fallback_profile,
+ 					bc->bc_key, &slot);
+ 	if (blk_st != BLK_STS_OK) {
+ 		bio->bi_status = blk_st;
+@@ -499,7 +499,7 @@ bool blk_crypto_fallback_bio_prep(struct bio **bio_ptr)
+ 		return false;
+ 	}
+ 
+-	if (!__blk_crypto_cfg_supported(&blk_crypto_fallback_profile,
++	if (!__blk_crypto_cfg_supported(blk_crypto_fallback_profile,
+ 					&bc->bc_key->crypto_cfg)) {
+ 		bio->bi_status = BLK_STS_NOTSUPP;
+ 		return false;
+@@ -526,7 +526,7 @@ bool blk_crypto_fallback_bio_prep(struct bio **bio_ptr)
+ 
+ int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
+ {
+-	return __blk_crypto_evict_key(&blk_crypto_fallback_profile, key);
++	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
+ }
+ 
+ static bool blk_crypto_fallback_inited;
+@@ -534,7 +534,6 @@ static int blk_crypto_fallback_init(void)
+ {
+ 	int i;
+ 	int err;
+-	struct blk_crypto_profile *profile = &blk_crypto_fallback_profile;
+ 
+ 	if (blk_crypto_fallback_inited)
+ 		return 0;
+@@ -545,18 +544,27 @@ static int blk_crypto_fallback_init(void)
+ 	if (err)
+ 		goto out;
+ 
+-	err = blk_crypto_profile_init(profile, blk_crypto_num_keyslots);
+-	if (err)
++	/* Dynamic allocation is needed because of lockdep_register_key(). */
++	blk_crypto_fallback_profile =
++		kzalloc(sizeof(*blk_crypto_fallback_profile), GFP_KERNEL);
++	if (!blk_crypto_fallback_profile) {
++		err = -ENOMEM;
+ 		goto fail_free_bioset;
++	}
++
++	err = blk_crypto_profile_init(blk_crypto_fallback_profile,
++				      blk_crypto_num_keyslots);
++	if (err)
++		goto fail_free_profile;
+ 	err = -ENOMEM;
+ 
+-	profile->ll_ops = blk_crypto_fallback_ll_ops;
+-	profile->max_dun_bytes_supported = BLK_CRYPTO_MAX_IV_SIZE;
++	blk_crypto_fallback_profile->ll_ops = blk_crypto_fallback_ll_ops;
++	blk_crypto_fallback_profile->max_dun_bytes_supported = BLK_CRYPTO_MAX_IV_SIZE;
+ 
+ 	/* All blk-crypto modes have a crypto API fallback. */
+ 	for (i = 0; i < BLK_ENCRYPTION_MODE_MAX; i++)
+-		profile->modes_supported[i] = 0xFFFFFFFF;
+-	profile->modes_supported[BLK_ENCRYPTION_MODE_INVALID] = 0;
++		blk_crypto_fallback_profile->modes_supported[i] = 0xFFFFFFFF;
++	blk_crypto_fallback_profile->modes_supported[BLK_ENCRYPTION_MODE_INVALID] = 0;
+ 
+ 	blk_crypto_wq = alloc_workqueue("blk_crypto_wq",
+ 					WQ_UNBOUND | WQ_HIGHPRI |
+@@ -597,7 +605,9 @@ static int blk_crypto_fallback_init(void)
+ fail_free_wq:
+ 	destroy_workqueue(blk_crypto_wq);
+ fail_destroy_profile:
+-	blk_crypto_profile_destroy(profile);
++	blk_crypto_profile_destroy(blk_crypto_fallback_profile);
++fail_free_profile:
++	kfree(blk_crypto_fallback_profile);
+ fail_free_bioset:
+ 	bioset_exit(&crypto_bio_split);
+ out:
+-- 
+2.41.0
+
 
 
