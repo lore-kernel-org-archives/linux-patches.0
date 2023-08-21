@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A66A11703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B701C433C8;
-	Mon, 21 Aug 2023 19:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E9711703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF467C433C7;
+	Mon, 21 Aug 2023 19:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647864;
-	bh=kuluGRixW5xL/vpUOIqbJ1gB2pr77hjSFVN9GZYTvEk=;
+	s=korg; t=1692647867;
+	bh=zeK/ysJgb6ZniSTJBeu7TX3T/ZMG36DFOfxcEtkvRtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZ8kE4EgAmO5BVmnne6+Kkx/aYUfSSwTL/etXH9Uux84zkomYEemNpLo496UjIbEy
-	 FgV6Ni8oyeSoG/c6YtNFy2aZRYSNCH58csuuhxaxYeDIKfQXLJTpt5HlXj5CXfLMSi
-	 l1gIQjYVYn078APWiU4jpunlCLSpnJKb8FfSfUI0=
+	b=Erl/8ZiiJpmuXZMJJdn3rqsZH5KhgsnLN4qb4lg5vR0KRzr9zKRj5xdeAFwJpKNvp
+	 /AvwUSsy3h7gqe/GwKQhZ85ckxltCZg2XKlL+9jNUSPwaCV0R5JiOW/5r9pOibT11J
+	 A7DjqK0AkhsqZAroNHbt0AibMNlvgXKw8qlhHe8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/194] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Mon, 21 Aug 2023 21:41:44 +0200
-Message-ID: <20230821194128.208910644@linuxfoundation.org>
+	Yibin Ding <yibin.ding@unisoc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 159/194] mmc: block: Fix in_flight[issue_type] value error
+Date: Mon, 21 Aug 2023 21:42:18 +0200
+Message-ID: <20230821194129.694433724@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,54 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Yibin Ding <yibin.ding@unisoc.com>
 
-[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
+commit 4b430d4ac99750ee2ae2f893f1055c7af1ec3dc5 upstream.
 
-Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
-ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
-in unregister_vlan_dev() with the following testcase:
+For a completed request, after the mmc_blk_mq_complete_rq(mq, req)
+function is executed, the bitmap_tags corresponding to the
+request will be cleared, that is, the request will be regarded as
+idle. If the request is acquired by a different type of process at
+this time, the issue_type of the request may change. It further
+caused the value of mq->in_flight[issue_type] to be abnormal,
+and a large number of requests could not be sent.
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add team1 type team
-  # ip netns exec ns1 ip link add team_slave type veth peer veth2
-  # ip netns exec ns1 ip link set team_slave master team1
-  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set team_slave nomaster
-  # ip netns del ns1
+p1:					      p2:
+mmc_blk_mq_complete_rq
+  blk_mq_free_request
+					      blk_mq_get_request
+					        blk_mq_rq_ctx_init
+mmc_blk_mq_dec_in_flight
+  mmc_issue_type(mq, req)
 
-Add S-VLAN tag related features support to team driver. So the team driver
-will always propagate the VLAN info to its slaves.
+This strategy can ensure the consistency of issue_type
+before and after executing mmc_blk_mq_complete_rq.
 
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 81196976ed94 ("mmc: block: Add blk-mq support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yibin Ding <yibin.ding@unisoc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230802023023.1318134-1-yunlong.xing@unisoc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/team/team.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/core/block.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 509ba706781ed..921ca59822b0f 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2200,7 +2200,9 @@ static void team_setup(struct net_device *dev)
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -2097,14 +2097,14 @@ static void mmc_blk_mq_poll_completion(s
+ 	mmc_blk_urgent_bkops(mq, mqrq);
+ }
  
- 	dev->hw_features = TEAM_VLAN_FEATURES |
- 			   NETIF_F_HW_VLAN_CTAG_RX |
--			   NETIF_F_HW_VLAN_CTAG_FILTER;
-+			   NETIF_F_HW_VLAN_CTAG_FILTER |
-+			   NETIF_F_HW_VLAN_STAG_RX |
-+			   NETIF_F_HW_VLAN_STAG_FILTER;
+-static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, struct request *req)
++static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, enum mmc_issue_type issue_type)
+ {
+ 	unsigned long flags;
+ 	bool put_card;
  
- 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
- 	dev->features |= dev->hw_features;
--- 
-2.40.1
-
+ 	spin_lock_irqsave(&mq->lock, flags);
+ 
+-	mq->in_flight[mmc_issue_type(mq, req)] -= 1;
++	mq->in_flight[issue_type] -= 1;
+ 
+ 	put_card = (mmc_tot_in_flight(mq) == 0);
+ 
+@@ -2117,6 +2117,7 @@ static void mmc_blk_mq_dec_in_flight(str
+ static void mmc_blk_mq_post_req(struct mmc_queue *mq, struct request *req,
+ 				bool can_sleep)
+ {
++	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
+ 	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
+ 	struct mmc_request *mrq = &mqrq->brq.mrq;
+ 	struct mmc_host *host = mq->card->host;
+@@ -2136,7 +2137,7 @@ static void mmc_blk_mq_post_req(struct m
+ 			blk_mq_complete_request(req);
+ 	}
+ 
+-	mmc_blk_mq_dec_in_flight(mq, req);
++	mmc_blk_mq_dec_in_flight(mq, issue_type);
+ }
+ 
+ void mmc_blk_mq_recovery(struct mmc_queue *mq)
 
 
