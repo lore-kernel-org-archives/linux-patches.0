@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394C51170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AD1C433C9;
-	Mon, 21 Aug 2023 19:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001B31170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7545DC433C7;
+	Mon, 21 Aug 2023 19:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647681;
-	bh=hxLfyn0pQUNRfI3j8a/PWMJVgOTjKQvg6wZeNvfzlTI=;
+	s=korg; t=1692647683;
+	bh=FczYBzczb6PQCSzO5uywPJwqlkJX5PTn+4lftX16+6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yd7WsCuVR5jejgCpDbslD7GLbOJTaZCIWb73vLWhXSNq6y7WXE2fBaVEVLaD0DHsa
-	 kpR0lfJ0ygPtJZEcIo/vXJbJ5tkGHfu+EgHPCLYOPh0bd9G1wTxXkmp18g+x8AZNmB
-	 86JdDq/Y+3d0l0i3ZGRajSmR22xjt5cfCcRTkJ0E=
+	b=pkSShjSiQ2B2kZXWhltITQDFD96U3//3Pzfv0oEz6f0od4k6sUQMUqss+YY1dhAsl
+	 prEVaM04RThbJEABiSFkD+XZ7gF+u2mPPlhZXFZSfhYpzehZ/2fdi78yf5zCtFQzBO
+	 xgclRFWOKTKMa/bOFMaVvtXXUHoS93TXTFeXY7BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/194] fs: ntfs3: Fix possible null-pointer dereferences in mi_read()
-Date: Mon, 21 Aug 2023 21:40:41 +0200
-Message-ID: <20230821194125.495349092@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.1 094/194] vdpa: Add features attr to vdpa_nl_policy for nlattr length check
+Date: Mon, 21 Aug 2023 21:41:13 +0200
+Message-ID: <20230821194126.845944056@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,62 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 97498cd610c0d030a7bd49a7efad974790661162 ]
+commit 79c8651587504ba263d2fd67fd4406240fb21f69 upstream.
 
-In a previous commit 2681631c2973 ("fs/ntfs3: Add null pointer check to
-attr_load_runs_vcn"), ni can be NULL in attr_load_runs_vcn(), and thus it
-should be checked before being used.
+The vdpa_nl_policy structure is used to validate the nlattr when parsing
+the incoming nlmsg. It will ensure the attribute being described produces
+a valid nlattr pointer in info->attrs before entering into each handler
+in vdpa_nl_ops.
 
-However, in the call stack of this commit, mft_ni in mi_read() is
-aliased with ni in attr_load_runs_vcn(), and it is also used in
-mi_read() at two places:
+That is to say, the missing part in vdpa_nl_policy may lead to illegal
+nlattr after parsing, which could lead to OOB read just like CVE-2023-3773.
 
-mi_read()
-  rw_lock = &mft_ni->file.run_lock -> No check
-  attr_load_runs_vcn(mft_ni, ...)
-    ni (namely mft_ni) is checked in the previous commit
-  attr_load_runs_vcn(..., &mft_ni->file.run) -> No check
+This patch adds the missing nla_policy for vdpa features attr to avoid
+such bugs.
 
-Thus, to avoid possible null-pointer dereferences, the related checks
-should be added.
-
-These bugs are reported by a static analysis tool implemented by myself,
-and they are found by extending a known bug fixed in the previous commit.
-Thus, they could be theoretical bugs.
-
-Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 90fea5a800c3 ("vdpa: device feature provisioning")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Cc: stable@vger.kernel.org
+Message-Id: <20230727175757.73988-3-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/record.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vdpa/vdpa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index af1e4b364ea8e..07037ec773ac8 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -124,7 +124,7 @@ int mi_read(struct mft_inode *mi, bool is_mft)
- 	struct rw_semaphore *rw_lock = NULL;
+--- a/drivers/vdpa/vdpa.c
++++ b/drivers/vdpa/vdpa.c
+@@ -1174,6 +1174,7 @@ static const struct nla_policy vdpa_nl_p
+ 	[VDPA_ATTR_DEV_NET_CFG_MACADDR] = NLA_POLICY_ETH_ADDR,
+ 	/* virtio spec 1.1 section 5.1.4.1 for valid MTU range */
+ 	[VDPA_ATTR_DEV_NET_CFG_MTU] = NLA_POLICY_MIN(NLA_U16, 68),
++	[VDPA_ATTR_DEV_FEATURES] = { .type = NLA_U64 },
+ };
  
- 	if (is_mounted(sbi)) {
--		if (!is_mft) {
-+		if (!is_mft && mft_ni) {
- 			rw_lock = &mft_ni->file.run_lock;
- 			down_read(rw_lock);
- 		}
-@@ -148,7 +148,7 @@ int mi_read(struct mft_inode *mi, bool is_mft)
- 		ni_lock(mft_ni);
- 		down_write(rw_lock);
- 	}
--	err = attr_load_runs_vcn(mft_ni, ATTR_DATA, NULL, 0, &mft_ni->file.run,
-+	err = attr_load_runs_vcn(mft_ni, ATTR_DATA, NULL, 0, run,
- 				 vbo >> sbi->cluster_bits);
- 	if (rw_lock) {
- 		up_write(rw_lock);
--- 
-2.40.1
-
+ static const struct genl_ops vdpa_nl_ops[] = {
 
 
