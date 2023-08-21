@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6DB11707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E525C433C7;
-	Mon, 21 Aug 2023 19:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895BE11707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5EDC433CC;
+	Mon, 21 Aug 2023 19:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647563;
-	bh=vKyQ+AZoQ+qSywjdfSuB90jJrIlZ5oWkJvriPVoQBXQ=;
+	s=korg; t=1692647566;
+	bh=p63cm29ENoU+yexhRwWthqhwyxK8ETrffRUcyHXpps8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVIdBvNBkjYPDsM844tnL8Y51SsKdPiPIs6nFZfrh1SFSD5ClB0yatw8PhwW+4my6
-	 xQliw3BLVFc83h2KTFM8YisGKzTisUcz4/3tpIsW8k0ozbPc8/d7Yq5pqotOwmJahH
-	 NrUINtOzeChbl+V8dA12UIkiiOdVjAfNRIBOt9gA=
+	b=L12M2Rr5o4giuPphNgHG+N6zPjGZvFTNMmsBEo8jIDOEQ13YkVvVWvRxDJ2VU54KF
+	 bZwsiuAXRsac92KFf7TYqxFYNGQS4zeapzSRLTa/YVziN83UB/LIvFEBjmBPSNtiz+
+	 WfT+kpLJ++piLygCKfiK7hkxL1Fyra2PuJ6Z9nEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Anderson <ruinairas1992@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/194] Bluetooth: btusb: Add MT7922 bluetooth ID for the Asus Ally
-Date: Mon, 21 Aug 2023 21:40:37 +0200
-Message-ID: <20230821194125.320695793@linuxfoundation.org>
+Subject: [PATCH 6.1 059/194] ceph: try to dump the msgs when decoding fails
+Date: Mon, 21 Aug 2023 21:40:38 +0200
+Message-ID: <20230821194125.372275925@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,35 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Anderson <ruinairas1992@gmail.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit fa01eba11f0e57c767a5eab5291c7a01407a00be ]
+[ Upstream commit 8b0da5c549ae63ba1debd92a350f90773cb4bfe7 ]
 
-Adding the device ID from the Asus Ally gets the bluetooth working
-on the device.
+When the msgs are corrupted we need to dump them and then it will
+be easier to dig what has happened and where the issue is.
 
-Signed-off-by: Matthew Anderson <ruinairas1992@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ceph/mds_client.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index faad19b396d50..d6f405763c56f 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -600,6 +600,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe0d9), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0f5), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
- 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index dcabe2783edfe..5399a9ea5b4f1 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -645,6 +645,7 @@ static int parse_reply_info(struct ceph_mds_session *s, struct ceph_msg *msg,
+ 	err = -EIO;
+ out_bad:
+ 	pr_err("mds parse_reply err %d\n", err);
++	ceph_msg_dump(msg);
+ 	return err;
+ }
+ 
+@@ -3534,6 +3535,7 @@ static void handle_forward(struct ceph_mds_client *mdsc,
+ 
+ bad:
+ 	pr_err("mdsc_handle_forward decode error err=%d\n", err);
++	ceph_msg_dump(msg);
+ }
+ 
+ static int __decode_session_metadata(void **p, void *end,
+@@ -5254,6 +5256,7 @@ void ceph_mdsc_handle_fsmap(struct ceph_mds_client *mdsc, struct ceph_msg *msg)
+ bad:
+ 	pr_err("error decoding fsmap %d. Shutting down mount.\n", err);
+ 	ceph_umount_begin(mdsc->fsc->sb);
++	ceph_msg_dump(msg);
+ err_out:
+ 	mutex_lock(&mdsc->mutex);
+ 	mdsc->mdsmap_err = err;
+@@ -5322,6 +5325,7 @@ void ceph_mdsc_handle_mdsmap(struct ceph_mds_client *mdsc, struct ceph_msg *msg)
+ bad:
+ 	pr_err("error decoding mdsmap %d. Shutting down mount.\n", err);
+ 	ceph_umount_begin(mdsc->fsc->sb);
++	ceph_msg_dump(msg);
+ 	return;
+ }
+ 
 -- 
 2.40.1
 
