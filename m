@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408E51170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B481EC433C7;
-	Mon, 21 Aug 2023 19:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10A81170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A05C433C7;
+	Mon, 21 Aug 2023 19:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647499;
-	bh=J36NlGXUopwVycdST2nC0uYi5Gjb1g39h5dQ6u7Xf+Y=;
+	s=korg; t=1692647501;
+	bh=Xjpf5DvFv4dZ/Pw7d2+9vRkwgkTeqWtjqsNkwDMhOP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHLaOh0aG9GK59DG799sAKO54upsEfyIVLHFVLaPoeMsAMLfNV64opLGD/rn23jIE
-	 WvLNEnnABJ7JOXYBgQNGDaWDHjrVkrh4278IGRCc0OIAFxzJYtJIsY3jUUWs+17reX
-	 4O88ovh3U3HYKI7L9PzKSkotpIj54u6sQt8LgcVQ=
+	b=Hlzuyp8r5HK6bfzuIpA9/KqbdBrV3zhfBVeKe2GZjBCP6r2mnor2kfXuF12uFaiTG
+	 vA+xkLf7NuSMO1P8ZUov7fNyGsnzZivJc7DWfWlABEDO3voK3QZVXU3H3idyOgZE/U
+	 SFeTolR562I1DLLE/WhaShMA7Abiiq9862Gpu1Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/194] net/smc: replace mutex rmbs_lock and sndbufs_lock with rw_semaphore
-Date: Mon, 21 Aug 2023 21:39:47 +0200
-Message-ID: <20230821194123.083249090@linuxfoundation.org>
+Subject: [PATCH 6.1 009/194] net/smc: Fix setsockopt and sysctl to specify same buffer size again
+Date: Mon, 21 Aug 2023 21:39:48 +0200
+Message-ID: <20230821194123.133785398@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,306 +38,233 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit aff7bfed9097435ea38de919befbe2d7771a3e87 ]
+[ Upstream commit 833bac7ec392bf75053c8a4fa4c36d4148dac77d ]
 
-It's clear that rmbs_lock and sndbufs_lock are aims to protect the
-rmbs list or the sndbufs list.
+Commit 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock
+and make them tunable") introduced the net.smc.rmem and net.smc.wmem
+sysctls to specify the size of buffers to be used for SMC type
+connections. This created a regression for users that specified the
+buffer size via setsockopt() as the effective buffer size was now
+doubled.
 
-During connection establieshment, smc_buf_get_slot() will always
-be invoked, and it only performs read semantics in rmbs list and
-sndbufs list.
+Re-introduce the division by 2 in the SMC buffer create code and level
+this out by duplicating the net.smc.[rw]mem values used for initializing
+sk_rcvbuf/sk_sndbuf at socket creation time. This gives users of both
+methods (setsockopt or sysctl) the effective buffer size that they
+expect.
 
-Based on the above considerations, we replace mutex with rw_semaphore.
-Only smc_buf_get_slot() use down_read() to allow smc_buf_get_slot()
-run concurrently, other part use down_write() to keep exclusive
-semantics.
+Initialize net.smc.[rw]mem from its own constant of 64kB, respectively.
+Internal performance tests show that this value is a good compromise
+between throughput/latency and memory consumption. Also, this decouples
+it from any tuning that was done to net.ipv4.tcp_[rw]mem[1] before the
+module for SMC protocol was loaded. Check that no more than INT_MAX / 2
+is assigned to net.smc.[rw]mem, in order to avoid any overflow condition
+when that is doubled for use in sk_sndbuf or sk_rcvbuf.
 
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+While at it, drop the confusing sk_buf_size variable from
+__smc_buf_create and name "compressed" buffer size variables more
+consistently.
+
+Background:
+
+Before the commit mentioned above, SMC's buffer allocator in
+__smc_buf_create() always used half of the sockets' sk_rcvbuf/sk_sndbuf
+value as initial value to search for appropriate buffers. If the search
+resorted to using a bigger buffer when all buffers of the specified
+size were busy, the duplicate of the used effective buffer size is
+stored back to sk_rcvbuf/sk_sndbuf.
+
+When available, buffers of exactly the size that a user had specified as
+input to setsockopt() were used, despite setsockopt()'s documentation in
+"man 7 socket" talking of a mandatory duplication:
+
+[...]
+       SO_SNDBUF
+              Sets  or  gets the maximum socket send buffer in bytes.
+              The kernel doubles this value (to allow space for book‐
+              keeping  overhead)  when it is set using setsockopt(2),
+              and this doubled value is  returned  by  getsockopt(2).
+              The     default     value     is     set     by     the
+              /proc/sys/net/core/wmem_default file  and  the  maximum
+              allowed value is set by the /proc/sys/net/core/wmem_max
+              file.  The minimum (doubled) value for this  option  is
+              2048.
+[...]
+
+Fixes: 0227f058aa29 ("net/smc: Unbind r/w buffer size from clcsock and make them tunable")
+Co-developed-by: Jan Karcher <jaka@linux.ibm.com>
+Signed-off-by: Jan Karcher <jaka@linux.ibm.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 833bac7ec392 ("net/smc: Fix setsockopt and sysctl to specify same buffer size again")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 55 +++++++++++++++++++++++-----------------------
- net/smc/smc_core.h |  4 ++--
- net/smc/smc_llc.c  | 16 +++++++-------
- 3 files changed, 38 insertions(+), 37 deletions(-)
+ net/smc/af_smc.c     |  4 ++--
+ net/smc/smc.h        |  2 +-
+ net/smc/smc_clc.c    |  4 ++--
+ net/smc/smc_core.c   | 25 ++++++++++++-------------
+ net/smc/smc_sysctl.c | 10 ++++++++--
+ 5 files changed, 25 insertions(+), 20 deletions(-)
 
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 5712a5297bd01..84219c5121bc2 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -379,8 +379,8 @@ static struct sock *smc_sock_alloc(struct net *net, struct socket *sock,
+ 	sk->sk_state = SMC_INIT;
+ 	sk->sk_destruct = smc_destruct;
+ 	sk->sk_protocol = protocol;
+-	WRITE_ONCE(sk->sk_sndbuf, READ_ONCE(net->smc.sysctl_wmem));
+-	WRITE_ONCE(sk->sk_rcvbuf, READ_ONCE(net->smc.sysctl_rmem));
++	WRITE_ONCE(sk->sk_sndbuf, 2 * READ_ONCE(net->smc.sysctl_wmem));
++	WRITE_ONCE(sk->sk_rcvbuf, 2 * READ_ONCE(net->smc.sysctl_rmem));
+ 	smc = smc_sk(sk);
+ 	INIT_WORK(&smc->tcp_listen_work, smc_tcp_listen_work);
+ 	INIT_WORK(&smc->connect_work, smc_connect_work);
+diff --git a/net/smc/smc.h b/net/smc/smc.h
+index 5ed765ea0c731..1d36720fc019c 100644
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -161,7 +161,7 @@ struct smc_connection {
+ 
+ 	struct smc_buf_desc	*sndbuf_desc;	/* send buffer descriptor */
+ 	struct smc_buf_desc	*rmb_desc;	/* RMBE descriptor */
+-	int			rmbe_size_short;/* compressed notation */
++	int                     rmbe_size_comp; /* compressed notation */
+ 	int			rmbe_update_limit;
+ 						/* lower limit for consumer
+ 						 * cursor update
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index dfb9797f7bc63..9b8999e2afca5 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -1002,7 +1002,7 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 		clc->hdr.typev1 = SMC_TYPE_D;
+ 		clc->d0.gid = conn->lgr->smcd->local_gid;
+ 		clc->d0.token = conn->rmb_desc->token;
+-		clc->d0.dmbe_size = conn->rmbe_size_short;
++		clc->d0.dmbe_size = conn->rmbe_size_comp;
+ 		clc->d0.dmbe_idx = 0;
+ 		memcpy(&clc->d0.linkid, conn->lgr->id, SMC_LGR_ID_SIZE);
+ 		if (version == SMC_V1) {
+@@ -1045,7 +1045,7 @@ static int smc_clc_send_confirm_accept(struct smc_sock *smc,
+ 			clc->r0.qp_mtu = min(link->path_mtu, link->peer_mtu);
+ 			break;
+ 		}
+-		clc->r0.rmbe_size = conn->rmbe_size_short;
++		clc->r0.rmbe_size = conn->rmbe_size_comp;
+ 		clc->r0.rmb_dma_addr = conn->rmb_desc->is_vm ?
+ 			cpu_to_be64((uintptr_t)conn->rmb_desc->cpu_addr) :
+ 			cpu_to_be64((u64)sg_dma_address
 diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index f82f43573a159..f793101e0ecc3 100644
+index f793101e0ecc3..c676d92af7b7d 100644
 --- a/net/smc/smc_core.c
 +++ b/net/smc/smc_core.c
-@@ -852,8 +852,8 @@ static int smc_lgr_create(struct smc_sock *smc, struct smc_init_info *ini)
- 	lgr->freeing = 0;
- 	lgr->vlan_id = ini->vlan_id;
- 	refcount_set(&lgr->refcnt, 1); /* set lgr refcnt to 1 */
--	mutex_init(&lgr->sndbufs_lock);
--	mutex_init(&lgr->rmbs_lock);
-+	init_rwsem(&lgr->sndbufs_lock);
-+	init_rwsem(&lgr->rmbs_lock);
- 	rwlock_init(&lgr->conns_lock);
- 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
- 		INIT_LIST_HEAD(&lgr->sndbufs[i]);
-@@ -1095,7 +1095,7 @@ struct smc_link *smc_switch_conns(struct smc_link_group *lgr,
- static void smcr_buf_unuse(struct smc_buf_desc *buf_desc, bool is_rmb,
- 			   struct smc_link_group *lgr)
- {
--	struct mutex *lock;	/* lock buffer list */
-+	struct rw_semaphore *lock;	/* lock buffer list */
- 	int rc;
- 
- 	if (is_rmb && buf_desc->is_conf_rkey && !list_empty(&lgr->list)) {
-@@ -1115,9 +1115,9 @@ static void smcr_buf_unuse(struct smc_buf_desc *buf_desc, bool is_rmb,
- 		/* buf registration failed, reuse not possible */
- 		lock = is_rmb ? &lgr->rmbs_lock :
- 				&lgr->sndbufs_lock;
--		mutex_lock(lock);
-+		down_write(lock);
- 		list_del(&buf_desc->list);
--		mutex_unlock(lock);
-+		up_write(lock);
- 
- 		smc_buf_free(lgr, is_rmb, buf_desc);
- 	} else {
-@@ -1220,15 +1220,16 @@ static void smcr_buf_unmap_lgr(struct smc_link *lnk)
- 	int i;
- 
- 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
--		mutex_lock(&lgr->rmbs_lock);
-+		down_write(&lgr->rmbs_lock);
- 		list_for_each_entry_safe(buf_desc, bf, &lgr->rmbs[i], list)
- 			smcr_buf_unmap_link(buf_desc, true, lnk);
--		mutex_unlock(&lgr->rmbs_lock);
--		mutex_lock(&lgr->sndbufs_lock);
-+		up_write(&lgr->rmbs_lock);
-+
-+		down_write(&lgr->sndbufs_lock);
- 		list_for_each_entry_safe(buf_desc, bf, &lgr->sndbufs[i],
- 					 list)
- 			smcr_buf_unmap_link(buf_desc, false, lnk);
--		mutex_unlock(&lgr->sndbufs_lock);
-+		up_write(&lgr->sndbufs_lock);
- 	}
- }
- 
-@@ -1986,19 +1987,19 @@ int smc_uncompress_bufsize(u8 compressed)
-  * buffer size; if not available, return NULL
-  */
- static struct smc_buf_desc *smc_buf_get_slot(int compressed_bufsize,
--					     struct mutex *lock,
-+					     struct rw_semaphore *lock,
- 					     struct list_head *buf_list)
- {
- 	struct smc_buf_desc *buf_slot;
- 
--	mutex_lock(lock);
-+	down_read(lock);
- 	list_for_each_entry(buf_slot, buf_list, list) {
- 		if (cmpxchg(&buf_slot->used, 0, 1) == 0) {
--			mutex_unlock(lock);
-+			up_read(lock);
- 			return buf_slot;
- 		}
- 	}
--	mutex_unlock(lock);
-+	up_read(lock);
- 	return NULL;
- }
- 
-@@ -2107,13 +2108,13 @@ int smcr_link_reg_buf(struct smc_link *link, struct smc_buf_desc *buf_desc)
- 	return 0;
- }
- 
--static int _smcr_buf_map_lgr(struct smc_link *lnk, struct mutex *lock,
-+static int _smcr_buf_map_lgr(struct smc_link *lnk, struct rw_semaphore *lock,
- 			     struct list_head *lst, bool is_rmb)
- {
- 	struct smc_buf_desc *buf_desc, *bf;
- 	int rc = 0;
- 
--	mutex_lock(lock);
-+	down_write(lock);
- 	list_for_each_entry_safe(buf_desc, bf, lst, list) {
- 		if (!buf_desc->used)
- 			continue;
-@@ -2122,7 +2123,7 @@ static int _smcr_buf_map_lgr(struct smc_link *lnk, struct mutex *lock,
- 			goto out;
- 	}
- out:
--	mutex_unlock(lock);
-+	up_write(lock);
- 	return rc;
- }
- 
-@@ -2155,37 +2156,37 @@ int smcr_buf_reg_lgr(struct smc_link *lnk)
- 	int i, rc = 0;
- 
- 	/* reg all RMBs for a new link */
--	mutex_lock(&lgr->rmbs_lock);
-+	down_write(&lgr->rmbs_lock);
- 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
- 		list_for_each_entry_safe(buf_desc, bf, &lgr->rmbs[i], list) {
- 			if (!buf_desc->used)
- 				continue;
- 			rc = smcr_link_reg_buf(lnk, buf_desc);
- 			if (rc) {
--				mutex_unlock(&lgr->rmbs_lock);
-+				up_write(&lgr->rmbs_lock);
- 				return rc;
- 			}
- 		}
- 	}
--	mutex_unlock(&lgr->rmbs_lock);
-+	up_write(&lgr->rmbs_lock);
- 
- 	if (lgr->buf_type == SMCR_PHYS_CONT_BUFS)
- 		return rc;
- 
- 	/* reg all vzalloced sndbufs for a new link */
--	mutex_lock(&lgr->sndbufs_lock);
-+	down_write(&lgr->sndbufs_lock);
- 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
- 		list_for_each_entry_safe(buf_desc, bf, &lgr->sndbufs[i], list) {
- 			if (!buf_desc->used || !buf_desc->is_vm)
- 				continue;
- 			rc = smcr_link_reg_buf(lnk, buf_desc);
- 			if (rc) {
--				mutex_unlock(&lgr->sndbufs_lock);
-+				up_write(&lgr->sndbufs_lock);
- 				return rc;
- 			}
- 		}
- 	}
--	mutex_unlock(&lgr->sndbufs_lock);
-+	up_write(&lgr->sndbufs_lock);
- 	return rc;
- }
- 
-@@ -2305,8 +2306,8 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+@@ -2305,31 +2305,30 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 	struct smc_connection *conn = &smc->conn;
  	struct smc_link_group *lgr = conn->lgr;
  	struct list_head *buf_list;
- 	int bufsize, bufsize_short;
-+	struct rw_semaphore *lock;	/* lock buffer list */
+-	int bufsize, bufsize_short;
++	int bufsize, bufsize_comp;
+ 	struct rw_semaphore *lock;	/* lock buffer list */
  	bool is_dgraded = false;
--	struct mutex *lock;	/* lock buffer list */
- 	int sk_buf_size;
+-	int sk_buf_size;
  
  	if (is_rmb)
-@@ -2354,9 +2355,9 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
- 		SMC_STAT_RMB_ALLOC(smc, is_smcd, is_rmb);
- 		SMC_STAT_RMB_SIZE(smc, is_smcd, is_rmb, bufsize);
- 		buf_desc->used = 1;
--		mutex_lock(lock);
-+		down_write(lock);
- 		list_add(&buf_desc->list, buf_list);
--		mutex_unlock(lock);
-+		up_write(lock);
- 		break; /* found */
+ 		/* use socket recv buffer size (w/o overhead) as start value */
+-		sk_buf_size = smc->sk.sk_rcvbuf;
++		bufsize = smc->sk.sk_rcvbuf / 2;
+ 	else
+ 		/* use socket send buffer size (w/o overhead) as start value */
+-		sk_buf_size = smc->sk.sk_sndbuf;
++		bufsize = smc->sk.sk_sndbuf / 2;
+ 
+-	for (bufsize_short = smc_compress_bufsize(sk_buf_size, is_smcd, is_rmb);
+-	     bufsize_short >= 0; bufsize_short--) {
++	for (bufsize_comp = smc_compress_bufsize(bufsize, is_smcd, is_rmb);
++	     bufsize_comp >= 0; bufsize_comp--) {
+ 		if (is_rmb) {
+ 			lock = &lgr->rmbs_lock;
+-			buf_list = &lgr->rmbs[bufsize_short];
++			buf_list = &lgr->rmbs[bufsize_comp];
+ 		} else {
+ 			lock = &lgr->sndbufs_lock;
+-			buf_list = &lgr->sndbufs[bufsize_short];
++			buf_list = &lgr->sndbufs[bufsize_comp];
+ 		}
+-		bufsize = smc_uncompress_bufsize(bufsize_short);
++		bufsize = smc_uncompress_bufsize(bufsize_comp);
+ 
+ 		/* check for reusable slot in the link group */
+-		buf_desc = smc_buf_get_slot(bufsize_short, lock, buf_list);
++		buf_desc = smc_buf_get_slot(bufsize_comp, lock, buf_list);
+ 		if (buf_desc) {
+ 			buf_desc->is_dma_need_sync = 0;
+ 			SMC_STAT_RMB_SIZE(smc, is_smcd, is_rmb, bufsize);
+@@ -2373,8 +2372,8 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 
+ 	if (is_rmb) {
+ 		conn->rmb_desc = buf_desc;
+-		conn->rmbe_size_short = bufsize_short;
+-		smc->sk.sk_rcvbuf = bufsize;
++		conn->rmbe_size_comp = bufsize_comp;
++		smc->sk.sk_rcvbuf = bufsize * 2;
+ 		atomic_set(&conn->bytes_to_rcv, 0);
+ 		conn->rmbe_update_limit =
+ 			smc_rmb_wnd_update_limit(buf_desc->len);
+@@ -2382,7 +2381,7 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 			smc_ism_set_conn(conn); /* map RMB/smcd_dev to conn */
+ 	} else {
+ 		conn->sndbuf_desc = buf_desc;
+-		smc->sk.sk_sndbuf = bufsize;
++		smc->sk.sk_sndbuf = bufsize * 2;
+ 		atomic_set(&conn->sndbuf_space, bufsize);
  	}
+ 	return 0;
+diff --git a/net/smc/smc_sysctl.c b/net/smc/smc_sysctl.c
+index b6f79fabb9d3f..0b2a957ca5f5f 100644
+--- a/net/smc/smc_sysctl.c
++++ b/net/smc/smc_sysctl.c
+@@ -21,6 +21,10 @@
  
-@@ -2430,9 +2431,9 @@ int smc_buf_create(struct smc_sock *smc, bool is_smcd)
- 	/* create rmb */
- 	rc = __smc_buf_create(smc, is_smcd, true);
- 	if (rc) {
--		mutex_lock(&smc->conn.lgr->sndbufs_lock);
-+		down_write(&smc->conn.lgr->sndbufs_lock);
- 		list_del(&smc->conn.sndbuf_desc->list);
--		mutex_unlock(&smc->conn.lgr->sndbufs_lock);
-+		up_write(&smc->conn.lgr->sndbufs_lock);
- 		smc_buf_free(smc->conn.lgr, false, smc->conn.sndbuf_desc);
- 		smc->conn.sndbuf_desc = NULL;
- 	}
-diff --git a/net/smc/smc_core.h b/net/smc/smc_core.h
-index 285f9bd8e232e..6051d92270130 100644
---- a/net/smc/smc_core.h
-+++ b/net/smc/smc_core.h
-@@ -252,9 +252,9 @@ struct smc_link_group {
- 	unsigned short		vlan_id;	/* vlan id of link group */
+ static int min_sndbuf = SMC_BUF_MIN_SIZE;
+ static int min_rcvbuf = SMC_BUF_MIN_SIZE;
++static int max_sndbuf = INT_MAX / 2;
++static int max_rcvbuf = INT_MAX / 2;
++static const int net_smc_wmem_init = (64 * 1024);
++static const int net_smc_rmem_init = (64 * 1024);
  
- 	struct list_head	sndbufs[SMC_RMBE_SIZES];/* tx buffers */
--	struct mutex		sndbufs_lock;	/* protects tx buffers */
-+	struct rw_semaphore	sndbufs_lock;	/* protects tx buffers */
- 	struct list_head	rmbs[SMC_RMBE_SIZES];	/* rx buffers */
--	struct mutex		rmbs_lock;	/* protects rx buffers */
-+	struct rw_semaphore	rmbs_lock;	/* protects rx buffers */
+ static struct ctl_table smc_table[] = {
+ 	{
+@@ -53,6 +57,7 @@ static struct ctl_table smc_table[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= &min_sndbuf,
++		.extra2		= &max_sndbuf,
+ 	},
+ 	{
+ 		.procname	= "rmem",
+@@ -61,6 +66,7 @@ static struct ctl_table smc_table[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= &min_rcvbuf,
++		.extra2		= &max_rcvbuf,
+ 	},
+ 	{  }
+ };
+@@ -88,8 +94,8 @@ int __net_init smc_sysctl_net_init(struct net *net)
+ 	net->smc.sysctl_autocorking_size = SMC_AUTOCORKING_DEFAULT_SIZE;
+ 	net->smc.sysctl_smcr_buf_type = SMCR_PHYS_CONT_BUFS;
+ 	net->smc.sysctl_smcr_testlink_time = SMC_LLC_TESTLINK_DEFAULT_TIME;
+-	WRITE_ONCE(net->smc.sysctl_wmem, READ_ONCE(net->ipv4.sysctl_tcp_wmem[1]));
+-	WRITE_ONCE(net->smc.sysctl_rmem, READ_ONCE(net->ipv4.sysctl_tcp_rmem[1]));
++	WRITE_ONCE(net->smc.sysctl_wmem, net_smc_wmem_init);
++	WRITE_ONCE(net->smc.sysctl_rmem, net_smc_rmem_init);
  
- 	u8			id[SMC_LGR_ID_SIZE];	/* unique lgr id */
- 	struct delayed_work	free_work;	/* delayed freeing of an lgr */
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 760f8bbff822e..fcb24a0ccf761 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -611,7 +611,7 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
- 
- 	prim_lnk_idx = link->link_idx;
- 	lnk_idx = link_new->link_idx;
--	mutex_lock(&lgr->rmbs_lock);
-+	down_write(&lgr->rmbs_lock);
- 	ext->num_rkeys = lgr->conns_num;
- 	if (!ext->num_rkeys)
- 		goto out;
-@@ -631,7 +631,7 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
- 	}
- 	len += i * sizeof(ext->rt[0]);
- out:
--	mutex_unlock(&lgr->rmbs_lock);
-+	up_write(&lgr->rmbs_lock);
- 	return len;
- }
- 
-@@ -892,7 +892,7 @@ static int smc_llc_cli_rkey_exchange(struct smc_link *link,
- 	int rc = 0;
- 	int i;
- 
--	mutex_lock(&lgr->rmbs_lock);
-+	down_write(&lgr->rmbs_lock);
- 	num_rkeys_send = lgr->conns_num;
- 	buf_pos = smc_llc_get_first_rmb(lgr, &buf_lst);
- 	do {
-@@ -919,7 +919,7 @@ static int smc_llc_cli_rkey_exchange(struct smc_link *link,
- 			break;
- 	} while (num_rkeys_send || num_rkeys_recv);
- 
--	mutex_unlock(&lgr->rmbs_lock);
-+	up_write(&lgr->rmbs_lock);
- 	return rc;
- }
- 
-@@ -1002,14 +1002,14 @@ static void smc_llc_save_add_link_rkeys(struct smc_link *link,
- 	ext = (struct smc_llc_msg_add_link_v2_ext *)((u8 *)lgr->wr_rx_buf_v2 +
- 						     SMC_WR_TX_SIZE);
- 	max = min_t(u8, ext->num_rkeys, SMC_LLC_RKEYS_PER_MSG_V2);
--	mutex_lock(&lgr->rmbs_lock);
-+	down_write(&lgr->rmbs_lock);
- 	for (i = 0; i < max; i++) {
- 		smc_rtoken_set(lgr, link->link_idx, link_new->link_idx,
- 			       ext->rt[i].rmb_key,
- 			       ext->rt[i].rmb_vaddr_new,
- 			       ext->rt[i].rmb_key_new);
- 	}
--	mutex_unlock(&lgr->rmbs_lock);
-+	up_write(&lgr->rmbs_lock);
- }
- 
- static void smc_llc_save_add_link_info(struct smc_link *link,
-@@ -1316,7 +1316,7 @@ static int smc_llc_srv_rkey_exchange(struct smc_link *link,
- 	int rc = 0;
- 	int i;
- 
--	mutex_lock(&lgr->rmbs_lock);
-+	down_write(&lgr->rmbs_lock);
- 	num_rkeys_send = lgr->conns_num;
- 	buf_pos = smc_llc_get_first_rmb(lgr, &buf_lst);
- 	do {
-@@ -1341,7 +1341,7 @@ static int smc_llc_srv_rkey_exchange(struct smc_link *link,
- 		smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
- 	} while (num_rkeys_send || num_rkeys_recv);
- out:
--	mutex_unlock(&lgr->rmbs_lock);
-+	up_write(&lgr->rmbs_lock);
- 	return rc;
- }
+ 	return 0;
  
 -- 
 2.40.1
