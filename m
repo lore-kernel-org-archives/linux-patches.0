@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B301171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B46C433C8;
-	Mon, 21 Aug 2023 20:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B828D1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3778EC433C8;
+	Mon, 21 Aug 2023 20:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648533;
-	bh=7+WTvDMP3OayobXOcibiXEZpzllZvhQnqYomzB9IhkU=;
+	s=korg; t=1692648536;
+	bh=M+g/UnpP6LNzYTgLF7CLv3PQtgaxXMZ4/DkAxgZcfOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2Z1npp4CHYtbdD7mibyx7H+dQfzmg71e3JFPIsvvCwkH4nZnUFeRwZI2uoDwR1PC
-	 l0JR0/AbrYVnmRCmFNdaNQPs3EQso+OlkhmEEU7GmqPciePCcIYcaha+F9t7vHcxk4
-	 05aeJAHHkSd4Yw9veYA8HPepI3yMB2Gfeoj/OhE0=
+	b=WqZmT9lw2+vkbawcFXe/xGIAbpqUqti42dvpEdLQz4vxP/jtQFt/kyD99WeolQMBG
+	 w7tS7N4JQR2TYiL5xl8lZ7XCfBXXyaBrweGAgoWlM2SQop8dgmeeXiJtGiW6bhijWu
+	 7T7hZarW1CGioleQUYA42VYwoLsdQTAxhtjeWtnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Hegde <yogi.kernel@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.4 209/234] arm64: dts: rockchip: Fix Wifi/Bluetooth on ROCK Pi 4 boards
-Date: Mon, 21 Aug 2023 21:42:52 +0200
-Message-ID: <20230821194138.095360563@linuxfoundation.org>
+	David Spickett <David.Spickett@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.4 210/234] arm64/ptrace: Ensure that SME is set up for target when writing SSVE state
+Date: Mon, 21 Aug 2023 21:42:53 +0200
+Message-ID: <20230821194138.145326925@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,43 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yogesh Hegde <yogi.kernel@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit ebceec271e552a2b05e47d8ef0597052b1a39449 upstream.
+commit 5d0a8d2fba50e9c07cde4aad7fba28c008b07a5b upstream.
 
-This patch fixes an issue affecting the Wifi/Bluetooth connectivity on
-ROCK Pi 4 boards. Commit f471b1b2db08 ("arm64: dts: rockchip: Fix Bluetooth
-on ROCK Pi 4 boards") introduced a problem with the clock configuration.
-Specifically, the clock-names property of the sdio-pwrseq node was not
-updated to 'lpo', causing the driver to wait indefinitely for the wrong clock
-signal 'ext_clock' instead of the expected one 'lpo'. This prevented the proper
-initialization of Wifi/Bluetooth chip on ROCK Pi 4 boards.
+When we use NT_ARM_SSVE to either enable streaming mode or change the
+vector length for a process we do not currently do anything to ensure that
+there is storage allocated for the SME specific register state.  If the
+task had not previously used SME or we changed the vector length then
+the task will not have had TIF_SME set or backing storage for ZA/ZT
+allocated, resulting in inconsistent register sizes when saving state
+and spurious traps which flush the newly set register state.
 
-To address this, this patch updates the clock-names property of the
-sdio-pwrseq node to "lpo" to align with the changes made to the bluetooth node.
+We should set TIF_SME to disable traps and ensure that storage is
+allocated for ZA and ZT if it is not already allocated.  This requires
+modifying sme_alloc() to make the flush of any existing register state
+optional so we don't disturb existing state for ZA and ZT.
 
-This patch has been tested on ROCK Pi 4B.
-
-Fixes: f471b1b2db08 ("arm64: dts: rockchip: Fix Bluetooth on ROCK Pi 4 boards")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yogesh Hegde <yogi.kernel@gmail.com>
-Link: https://lore.kernel.org/r/ZLbATQRjOl09aLAp@zephyrusG14
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
+Reported-by: David Spickett <David.Spickett@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.19.x
+Link: https://lore.kernel.org/r/20230810-arm64-fix-ptrace-race-v1-1-a5361fad2bd6@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/fpsimd.h |    4 ++--
+ arch/arm64/kernel/fpsimd.c      |    6 +++---
+ arch/arm64/kernel/ptrace.c      |   11 +++++++++--
+ arch/arm64/kernel/signal.c      |    2 +-
+ 4 files changed, 15 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -45,7 +45,7 @@
- 	sdio_pwrseq: sdio-pwrseq {
- 		compatible = "mmc-pwrseq-simple";
- 		clocks = <&rk808 1>;
--		clock-names = "ext_clock";
-+		clock-names = "lpo";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wifi_enable_h>;
- 		reset-gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW>;
+--- a/arch/arm64/include/asm/fpsimd.h
++++ b/arch/arm64/include/asm/fpsimd.h
+@@ -356,7 +356,7 @@ static inline int sme_max_virtualisable_
+ 	return vec_max_virtualisable_vl(ARM64_VEC_SME);
+ }
+ 
+-extern void sme_alloc(struct task_struct *task);
++extern void sme_alloc(struct task_struct *task, bool flush);
+ extern unsigned int sme_get_vl(void);
+ extern int sme_set_current_vl(unsigned long arg);
+ extern int sme_get_current_vl(void);
+@@ -388,7 +388,7 @@ static inline void sme_smstart_sm(void)
+ static inline void sme_smstop_sm(void) { }
+ static inline void sme_smstop(void) { }
+ 
+-static inline void sme_alloc(struct task_struct *task) { }
++static inline void sme_alloc(struct task_struct *task, bool flush) { }
+ static inline void sme_setup(void) { }
+ static inline unsigned int sme_get_vl(void) { return 0; }
+ static inline int sme_max_vl(void) { return 0; }
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1285,9 +1285,9 @@ void fpsimd_release_task(struct task_str
+  * the interest of testability and predictability, the architecture
+  * guarantees that when ZA is enabled it will be zeroed.
+  */
+-void sme_alloc(struct task_struct *task)
++void sme_alloc(struct task_struct *task, bool flush)
+ {
+-	if (task->thread.sme_state) {
++	if (task->thread.sme_state && flush) {
+ 		memset(task->thread.sme_state, 0, sme_state_size(task));
+ 		return;
+ 	}
+@@ -1515,7 +1515,7 @@ void do_sme_acc(unsigned long esr, struc
+ 	}
+ 
+ 	sve_alloc(current, false);
+-	sme_alloc(current);
++	sme_alloc(current, true);
+ 	if (!current->thread.sve_state || !current->thread.sme_state) {
+ 		force_sig(SIGKILL);
+ 		return;
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -881,6 +881,13 @@ static int sve_set_common(struct task_st
+ 			break;
+ 		case ARM64_VEC_SME:
+ 			target->thread.svcr |= SVCR_SM_MASK;
++
++			/*
++			 * Disable traps and ensure there is SME storage but
++			 * preserve any currently set values in ZA/ZT.
++			 */
++			sme_alloc(target, false);
++			set_tsk_thread_flag(target, TIF_SME);
+ 			break;
+ 		default:
+ 			WARN_ON_ONCE(1);
+@@ -1100,7 +1107,7 @@ static int za_set(struct task_struct *ta
+ 	}
+ 
+ 	/* Allocate/reinit ZA storage */
+-	sme_alloc(target);
++	sme_alloc(target, true);
+ 	if (!target->thread.sme_state) {
+ 		ret = -ENOMEM;
+ 		goto out;
+@@ -1171,7 +1178,7 @@ static int zt_set(struct task_struct *ta
+ 		return -EINVAL;
+ 
+ 	if (!thread_za_enabled(&target->thread)) {
+-		sme_alloc(target);
++		sme_alloc(target, true);
+ 		if (!target->thread.sme_state)
+ 			return -ENOMEM;
+ 	}
+--- a/arch/arm64/kernel/signal.c
++++ b/arch/arm64/kernel/signal.c
+@@ -474,7 +474,7 @@ static int restore_za_context(struct use
+ 	fpsimd_flush_task_state(current);
+ 	/* From now, fpsimd_thread_switch() won't touch thread.sve_state */
+ 
+-	sme_alloc(current);
++	sme_alloc(current, true);
+ 	if (!current->thread.sme_state) {
+ 		current->thread.svcr &= ~SVCR_ZA_MASK;
+ 		clear_thread_flag(TIF_SME);
 
 
