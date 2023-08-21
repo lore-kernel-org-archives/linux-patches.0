@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89CF1170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:50:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3049CC433C8;
-	Mon, 21 Aug 2023 19:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716B51170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:50:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F78C433C7;
+	Mon, 21 Aug 2023 19:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647437;
-	bh=eYwNrDYQnkl2Ex8mL5fDXEkPQbrkYdeSzbVx/RL6+7A=;
+	s=korg; t=1692647440;
+	bh=YjeUbFMqDQEiNcqSjtnue2Iunq7FXVgtGTik+1y1s4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEjUXqFnp3LB5jFHnZ1sFjngeZAz/VmkZoR1l0Un5fA3h0UxBRysJWMCV45RhIsu4
-	 Y5/xxGRWnKAHwsevrZhS/uHx5/pWQbiRBX1MyCtKheqJORc+fVku0r0qW8YHKdprnh
-	 OKcnpwG8li0cN8dNt7Dj5kjkHFYsmdIaTrTUif6Q=
+	b=0Uh9khGwCppztYxENRGkRH3ViO9hOx7FEXlLgTv70U8Pyo7bgC6c9/kqBJFnhXZvg
+	 2NjvzLRkM6PknQAPzLsmvakogfNcSVfoUBAl06YhfOgkJFP9nUulyaxS0eIm/JEMOf
+	 KIOcYzuYzsA6FDWDt6g00SdLnWYgpqwkPdavCTdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/194] drm/amdgpu: fix memory leak in mes self test
-Date: Mon, 21 Aug 2023 21:39:53 +0200
-Message-ID: <20230821194123.372913760@linuxfoundation.org>
+Subject: [PATCH 6.1 015/194] ASoC: Intel: sof_sdw: add quirk for MTL RVP
+Date: Mon, 21 Aug 2023 21:39:54 +0200
+Message-ID: <20230821194123.425512634@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,34 +33,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jack Xiao <Jack.Xiao@amd.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 31d7c3a4fc3d312a0646990767647925d5bde540 ]
+[ Upstream commit 289e1df00e49a229a1c924c059242e759a552f01 ]
 
-The fences associated with mes queue have to be freed
-up during amdgpu_ring_fini.
+We should use RT711_JD2_100K for on board rt711.
 
-Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
+Link: https://lore.kernel.org/r/20230512173305.65399-4-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-index d3558c34d406c..296b2d5976af7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -361,6 +361,8 @@ void amdgpu_ring_fini(struct amdgpu_ring *ring)
- 		amdgpu_bo_free_kernel(&ring->ring_obj,
- 				      &ring->gpu_addr,
- 				      (void **)&ring->ring);
-+	} else {
-+		kfree(ring->fence_drv.fences);
- 	}
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index a37c85d301471..7f9940c722a3c 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -374,6 +374,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(RT711_JD1),
+ 	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Meteor Lake Client Platform"),
++		},
++		.driver_data = (void *)(RT711_JD2_100K),
++	},
+ 	{}
+ };
  
- 	dma_fence_put(ring->vmid_wait);
 -- 
 2.40.1
 
