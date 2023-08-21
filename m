@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62EA1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EADC433C7;
-	Mon, 21 Aug 2023 20:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7351B1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DEAC433C7;
+	Mon, 21 Aug 2023 20:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648233;
-	bh=jkr/wUpIvTQHTNBKEQsJs7rUlBo0FZ4S6ODwvDjTiN4=;
+	s=korg; t=1692648236;
+	bh=RrXHtGy317FVEhZMESI/Ncw9A1/YQro2RoPblKc8aUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKTsJ8+AVz6K1Ikf4K+nE+KPziVYeVoMr9ZgO1Pc/2j0eL+4C+gVET4wkBYTqrSsx
-	 lUizpOfxrMvnxsuVivL6X2G7NQaXRwrlGVS4yg5oa81Ib2DcxdtVONm6GOj528sQeP
-	 FDLQeUkZpoxuNHI8E+ILycGcxEfEcWvt31H6vAio=
+	b=CQK0GotNXT6oG6j0FECfzYFDbnyPe5DO3K3VXsSnLQxaCgdsbQchCt92MRMCE2lfm
+	 ZNGlLqPqqv5lLoK1ZBxd+AfopgPQS2Y0TnnDURW6yR7shObukYXYN6uSnTFYeHsPHP
+	 5elEbrVCgTmggN8VZ+TQZw4xZi651xyzY6wnFZFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.4 103/234] vdpa: Enable strict validation for netlinks ops
-Date: Mon, 21 Aug 2023 21:41:06 +0200
-Message-ID: <20230821194133.376089674@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.4 104/234] smb3: display network namespace in debug information
+Date: Mon, 21 Aug 2023 21:41:07 +0200
+Message-ID: <20230821194133.416635430@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,63 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit f46c1e1620c6bbc9aad5693082efd1b80822e97c upstream.
+commit 7b38f6ddc97bf572c3422d3175e8678dd95502fa upstream.
 
-The previous patches added the missing nla policies that were required for
-validation to work.
+We recently had problems where a network namespace was deleted
+causing hard to debug reconnect problems.  To help deal with
+configuration issues like this it is useful to dump the network
+namespace to better debug what happened.
 
-Now strict validation on netlink ops can be enabled. This patch does it.
+So add this to information displayed in /proc/fs/cifs/DebugData for
+the server (and channels if mounted with multichannel). For example:
 
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+   Local Users To Server: 1 SecMode: 0x1 Req On Wire: 0 Net namespace: 4026531840
+
+This can be easily compared with what is displayed for the
+processes on the system. For example /proc/1/ns/net in this case
+showed the same thing (see below), and we can see that the namespace
+is still valid in this example.
+
+   'net:[4026531840]'
+
 Cc: stable@vger.kernel.org
-Message-Id: <20230727175757.73988-9-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/vdpa.c |    6 ------
- 1 file changed, 6 deletions(-)
+ fs/smb/client/cifs_debug.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/vdpa/vdpa.c
-+++ b/drivers/vdpa/vdpa.c
-@@ -1257,37 +1257,31 @@ static const struct nla_policy vdpa_nl_p
- static const struct genl_ops vdpa_nl_ops[] = {
- 	{
- 		.cmd = VDPA_CMD_MGMTDEV_GET,
--		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = vdpa_nl_cmd_mgmtdev_get_doit,
- 		.dumpit = vdpa_nl_cmd_mgmtdev_get_dumpit,
- 	},
- 	{
- 		.cmd = VDPA_CMD_DEV_NEW,
--		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = vdpa_nl_cmd_dev_add_set_doit,
- 		.flags = GENL_ADMIN_PERM,
- 	},
- 	{
- 		.cmd = VDPA_CMD_DEV_DEL,
--		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = vdpa_nl_cmd_dev_del_set_doit,
- 		.flags = GENL_ADMIN_PERM,
- 	},
- 	{
- 		.cmd = VDPA_CMD_DEV_GET,
--		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = vdpa_nl_cmd_dev_get_doit,
- 		.dumpit = vdpa_nl_cmd_dev_get_dumpit,
- 	},
- 	{
- 		.cmd = VDPA_CMD_DEV_CONFIG_GET,
--		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = vdpa_nl_cmd_dev_config_get_doit,
- 		.dumpit = vdpa_nl_cmd_dev_config_get_dumpit,
- 	},
- 	{
- 		.cmd = VDPA_CMD_DEV_VSTATS_GET,
--		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = vdpa_nl_cmd_dev_stats_get_doit,
- 		.flags = GENL_ADMIN_PERM,
- 	},
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -153,6 +153,11 @@ cifs_dump_channel(struct seq_file *m, in
+ 		   in_flight(server),
+ 		   atomic_read(&server->in_send),
+ 		   atomic_read(&server->num_waiters));
++#ifdef CONFIG_NET_NS
++	if (server->net)
++		seq_printf(m, " Net namespace: %u ", server->net->ns.inum);
++#endif /* NET_NS */
++
+ }
+ 
+ static inline const char *smb_speed_to_str(size_t bps)
+@@ -429,10 +434,15 @@ skip_rdma:
+ 				server->reconnect_instance,
+ 				server->srv_count,
+ 				server->sec_mode, in_flight(server));
++#ifdef CONFIG_NET_NS
++		if (server->net)
++			seq_printf(m, " Net namespace: %u ", server->net->ns.inum);
++#endif /* NET_NS */
+ 
+ 		seq_printf(m, "\nIn Send: %d In MaxReq Wait: %d",
+ 				atomic_read(&server->in_send),
+ 				atomic_read(&server->num_waiters));
++
+ 		if (server->leaf_fullpath) {
+ 			seq_printf(m, "\nDFS leaf full path: %s",
+ 				   server->leaf_fullpath);
 
 
