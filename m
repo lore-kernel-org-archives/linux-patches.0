@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08CD11703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310F3C433C8;
-	Mon, 21 Aug 2023 19:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A92F11703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0795C433C7;
+	Mon, 21 Aug 2023 19:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647833;
-	bh=Ts7MD2nmsTmRTuy6bd/7b+rO+iYOveb0OO+NMHAJPSg=;
+	s=korg; t=1692647836;
+	bh=8ACl1lHMyL3rapMORDfQZPMDRVSe91sevhX4VVHhs0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hI8KB6AmKFOXodV4F/fg2y22wPSYjMfbXKkiei+OjK3yGrNR90BYV1IOX3cbiVGo
-	 5IJTznUVjxROwaqPaW4BkjgWkTdR69x9TPdHbpRzSgMKNHqSwULMm5lyoVsHCXmhMq
-	 Bo8bNV3FlJk2Fai8iWGTYLd4rhG45Jp1hblMEEe0=
+	b=uLAEOnj3vHAOPJLJ9UIR0mSCh9Znj8l7WbazI/aqMlx3gZvgMKrKHLUnTSlaKbrUP
+	 a0nIMWzTqGcH3t3HIZROu3vLxlsq0xl5f4wpt9aIIhqHj+Zv833cfwR/s4fSuU2qia
+	 i+4rEwzjRzaqb3XQu/Op2xggpqAoUEIvRlVwDYCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Guo Ren <guoren@kernel.org>,
-	Mingzheng Xing <xingmingzheng@iscas.ac.cn>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 154/194] riscv: Handle zicsr/zifencei issue between gcc and binutils
-Date: Mon, 21 Aug 2023 21:42:13 +0200
-Message-ID: <20230821194129.481225086@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Andrii Staikov <andrii.staikov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 128/194] i40e: fix misleading debug logs
+Date: Mon, 21 Aug 2023 21:41:47 +0200
+Message-ID: <20230821194128.325252788@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,111 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mingzheng Xing <xingmingzheng@iscas.ac.cn>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-commit ca09f772cccaeec4cd05a21528c37a260aa2dd2c upstream.
+[ Upstream commit 2f2beb8874cb0844e84ad26e990f05f4f13ff63f ]
 
-Binutils-2.38 and GCC-12.1.0 bumped[0][1] the default ISA spec to the newer
-20191213 version which moves some instructions from the I extension to the
-Zicsr and Zifencei extensions. So if one of the binutils and GCC exceeds
-that version, we should explicitly specifying Zicsr and Zifencei via -march
-to cope with the new changes. but this only occurs when binutils >= 2.36
-and GCC >= 11.1.0. It's a different story when binutils < 2.36.
+Change "write" into the actual "read" word.
+Change parameters description.
 
-binutils-2.36 supports the Zifencei extension[2] and splits Zifencei and
-Zicsr from I[3]. GCC-11.1.0 is particular[4] because it add support Zicsr
-and Zifencei extension for -march. binutils-2.35 does not support the
-Zifencei extension, and does not need to specify Zicsr and Zifencei when
-working with GCC >= 12.1.0.
-
-To make our lives easier, let's relax the check to binutils >= 2.36 in
-CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI. For the other two cases,
-where clang < 17 or GCC < 11.1.0, we will deal with them in
-CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC.
-
-For more information, please refer to:
-commit 6df2a016c0c8 ("riscv: fix build with binutils 2.38")
-commit e89c2e815e76 ("riscv: Handle zicsr/zifencei issues between clang and binutils")
-
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=aed44286efa8ae8717a77d94b51ac3614e2ca6dc [0]
-Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=98416dbb0a62579d4a7a4a76bab51b5b52fec2cd [1]
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=5a1b31e1e1cee6e9f1c92abff59cdcfff0dddf30 [2]
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=729a53530e86972d1143553a415db34e6e01d5d2 [3]
-Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=b03be74bad08c382da47e048007a78fa3fb4ef49 [4]
-Link: https://lore.kernel.org/all/20230308220842.1231003-1-conor@kernel.org
-Link: https://lore.kernel.org/all/20230223220546.52879-1-conor@kernel.org
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Mingzheng Xing <xingmingzheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230809165648.21071-1-xingmingzheng@iscas.ac.cn
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7073f46e443e ("i40e: Add AQ commands for NVM Update for X722")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig                     |   28 +++++++++++++++++-----------
- arch/riscv/kernel/compat_vdso/Makefile |    8 +++++++-
- 2 files changed, 24 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_nvm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -447,24 +447,30 @@ config TOOLCHAIN_HAS_ZIHINTPAUSE
- config TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
- 	def_bool y
- 	# https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=aed44286efa8ae8717a77d94b51ac3614e2ca6dc
--	depends on AS_IS_GNU && AS_VERSION >= 23800
-+	# https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=98416dbb0a62579d4a7a4a76bab51b5b52fec2cd
-+	depends on AS_IS_GNU && AS_VERSION >= 23600
- 	help
--	  Newer binutils versions default to ISA spec version 20191213 which
--	  moves some instructions from the I extension to the Zicsr and Zifencei
--	  extensions.
-+	  Binutils-2.38 and GCC-12.1.0 bumped the default ISA spec to the newer
-+	  20191213 version, which moves some instructions from the I extension to
-+	  the Zicsr and Zifencei extensions. This requires explicitly specifying
-+	  Zicsr and Zifencei when binutils >= 2.38 or GCC >= 12.1.0. Zicsr
-+	  and Zifencei are supported in binutils from version 2.36 onwards.
-+	  To make life easier, and avoid forcing toolchains that default to a
-+	  newer ISA spec to version 2.2, relax the check to binutils >= 2.36.
-+	  For clang < 17 or GCC < 11.1.0, for which this is not possible, this is
-+	  dealt with in CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC.
- 
- config TOOLCHAIN_NEEDS_OLD_ISA_SPEC
- 	def_bool y
- 	depends on TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
- 	# https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
--	depends on CC_IS_CLANG && CLANG_VERSION < 170000
-+	# https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=b03be74bad08c382da47e048007a78fa3fb4ef49
-+	depends on (CC_IS_CLANG && CLANG_VERSION < 170000) || (CC_IS_GCC && GCC_VERSION < 110100)
- 	help
--	  Certain versions of clang do not support zicsr and zifencei via -march
--	  but newer versions of binutils require it for the reasons noted in the
--	  help text of CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI. This
--	  option causes an older ISA spec compatible with these older versions
--	  of clang to be passed to GAS, which has the same result as passing zicsr
--	  and zifencei to -march.
-+	  Certain versions of clang and GCC do not support zicsr and zifencei via
-+	  -march. This option causes an older ISA spec compatible with these older
-+	  versions of clang and GCC to be passed to GAS, which has the same result
-+	  as passing zicsr and zifencei to -march.
- 
- config FPU
- 	bool "FPU support"
---- a/arch/riscv/kernel/compat_vdso/Makefile
-+++ b/arch/riscv/kernel/compat_vdso/Makefile
-@@ -11,7 +11,13 @@ compat_vdso-syms += flush_icache
- COMPAT_CC := $(CC)
- COMPAT_LD := $(LD)
- 
--COMPAT_CC_FLAGS := -march=rv32g -mabi=ilp32
-+# binutils 2.35 does not support the zifencei extension, but in the ISA
-+# spec 20191213, G stands for IMAFD_ZICSR_ZIFENCEI.
-+ifdef CONFIG_TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
-+	COMPAT_CC_FLAGS := -march=rv32g -mabi=ilp32
-+else
-+	COMPAT_CC_FLAGS := -march=rv32imafd -mabi=ilp32
-+endif
- COMPAT_LD_FLAGS := -melf32lriscv
- 
- # Disable attributes, as they're useless and break the build.
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+index 17e3f26eee4a4..779ba907009a5 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+@@ -210,11 +210,11 @@ static int i40e_read_nvm_word_srctl(struct i40e_hw *hw, u16 offset,
+  * @hw: pointer to the HW structure.
+  * @module_pointer: module pointer location in words from the NVM beginning
+  * @offset: offset in words from module start
+- * @words: number of words to write
+- * @data: buffer with words to write to the Shadow RAM
++ * @words: number of words to read
++ * @data: buffer with words to read to the Shadow RAM
+  * @last_command: tells the AdminQ that this is the last command
+  *
+- * Writes a 16 bit words buffer to the Shadow RAM using the admin command.
++ * Reads a 16 bit words buffer to the Shadow RAM using the admin command.
+  **/
+ static int i40e_read_nvm_aq(struct i40e_hw *hw,
+ 			    u8 module_pointer, u32 offset,
+@@ -234,18 +234,18 @@ static int i40e_read_nvm_aq(struct i40e_hw *hw,
+ 	 */
+ 	if ((offset + words) > hw->nvm.sr_size)
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: offset %d beyond Shadow RAM limit %d\n",
++			   "NVM read error: offset %d beyond Shadow RAM limit %d\n",
+ 			   (offset + words), hw->nvm.sr_size);
+ 	else if (words > I40E_SR_SECTOR_SIZE_IN_WORDS)
+-		/* We can write only up to 4KB (one sector), in one AQ write */
++		/* We can read only up to 4KB (one sector), in one AQ write */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write fail error: tried to write %d words, limit is %d.\n",
++			   "NVM read fail error: tried to read %d words, limit is %d.\n",
+ 			   words, I40E_SR_SECTOR_SIZE_IN_WORDS);
+ 	else if (((offset + (words - 1)) / I40E_SR_SECTOR_SIZE_IN_WORDS)
+ 		 != (offset / I40E_SR_SECTOR_SIZE_IN_WORDS))
+-		/* A single write cannot spread over two sectors */
++		/* A single read cannot spread over two sectors */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: cannot spread over two sectors in a single write offset=%d words=%d\n",
++			   "NVM read error: cannot spread over two sectors in a single read offset=%d words=%d\n",
+ 			   offset, words);
+ 	else
+ 		ret_code = i40e_aq_read_nvm(hw, module_pointer,
+-- 
+2.40.1
+
 
 
