@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE04411707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41402C433C7;
-	Mon, 21 Aug 2023 19:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3E011707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1135CC433C8;
+	Mon, 21 Aug 2023 19:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647546;
-	bh=oMWZPEONArk7VvM5WnO/SxhH+xt8Ku0GeNuXlBzUP+8=;
+	s=korg; t=1692647549;
+	bh=8Huq6hrapfJvhxHBk24jlzK8ivNqdYeHtSQ/dIAxR38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZDD4iZDHS5hG+ifGnSPwx/J+fweBl6J0+ivrPEQasLyaoyS8SV+m7Zot3GgdoJMn
-	 282zFL6CvU25jqdCpZ1BfoSyT5r53KdBo9A1AS6Ms4nxDW4OR7vITvJbnkjj6qcbBy
-	 wnOtqG1evOaMYjCPWvY7AIROzDZ4aG0CFJ5y94xg=
+	b=fry/42rXoXRVN174UdHFax0t+bKYdf3hHOLpmBejAQ8nDSYKKjDVnCD/+5vWbaryF
+	 CovbHHyxMU2xHpaGQgXp3eAeLJlNkAeOHkuWO7o6IVR7q8Dkem280/8m7x4xoPCoCJ
+	 Q2iBp698dYJdyafLh+454r0PfWz3xbnVoR3NvDB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
+	Pengfei Xu <pengfei.xu@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/194] pcmcia: rsrc_nonstatic: Fix memory leak in nonstatic_release_resource_db()
-Date: Mon, 21 Aug 2023 21:40:31 +0200
-Message-ID: <20230821194125.096001773@linuxfoundation.org>
+Subject: [PATCH 6.1 053/194] thunderbolt: Add Intel Barlow Ridge PCI ID
+Date: Mon, 21 Aug 2023 21:40:32 +0200
+Message-ID: <20230821194125.132238149@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,63 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit c85fd9422fe0f5d667305efb27f56d09eab120b0 ]
+[ Upstream commit 6f14a210661ce03988ef4ed3c8402037c8e06539 ]
 
-When nonstatic_release_resource_db() frees all resources associated
-with an PCMCIA socket, it forgets to free socket_data too, causing
-a memory leak observable with kmemleak:
+Intel Barlow Ridge is the first USB4 v2 controller from Intel. The
+controller exposes standard USB4 PCI class ID in typical configurations,
+however there is a way to configure it so that it uses a special class
+ID to allow using s different driver than the Windows inbox one. For
+this reason add the Barlow Ridge PCI ID to the Linux driver too so that
+the driver can attach regardless of the class ID.
 
-unreferenced object 0xc28d1000 (size 64):
-  comm "systemd-udevd", pid 297, jiffies 4294898478 (age 194.484s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 f0 85 0e c3 00 00 00 00  ................
-    00 00 00 00 0c 10 8d c2 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffda4245>] __kmem_cache_alloc_node+0x2d7/0x4a0
-    [<7e51f0c8>] kmalloc_trace+0x31/0xa4
-    [<d52b4ca0>] nonstatic_init+0x24/0x1a4 [pcmcia_rsrc]
-    [<a2f13e08>] pcmcia_register_socket+0x200/0x35c [pcmcia_core]
-    [<a728be1b>] yenta_probe+0x4d8/0xa70 [yenta_socket]
-    [<c48fac39>] pci_device_probe+0x99/0x194
-    [<84b7c690>] really_probe+0x181/0x45c
-    [<8060fe6e>] __driver_probe_device+0x75/0x1f4
-    [<b9b76f43>] driver_probe_device+0x28/0xac
-    [<648b766f>] __driver_attach+0xeb/0x1e4
-    [<6e9659eb>] bus_for_each_dev+0x61/0xb4
-    [<25a669f3>] driver_attach+0x1e/0x28
-    [<d8671d6b>] bus_add_driver+0x102/0x20c
-    [<df0d323c>] driver_register+0x5b/0x120
-    [<942cd8a4>] __pci_register_driver+0x44/0x4c
-    [<e536027e>] __UNIQUE_ID___addressable_cleanup_module188+0x1c/0xfffff000 [iTCO_vendor_support]
-
-Fix this by freeing socket_data too.
-
-Tested on a Acer Travelmate 4002WLMi by manually binding/unbinding
-the yenta_cardbus driver (yenta_socket).
-
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Message-ID: <20230512184529.5094-1-W_Armin@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thunderbolt/nhi.c | 2 ++
+ drivers/thunderbolt/nhi.h | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index ad1141fddb4cc..8bda75990bce5 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -1053,6 +1053,8 @@ static void nonstatic_release_resource_db(struct pcmcia_socket *s)
- 		q = p->next;
- 		kfree(p);
- 	}
-+
-+	kfree(data);
- }
+diff --git a/drivers/thunderbolt/nhi.c b/drivers/thunderbolt/nhi.c
+index 4a6a3802d7e51..288aaa05d0071 100644
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1479,6 +1479,8 @@ static struct pci_device_id nhi_ids[] = {
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTL_P_NHI1),
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
  
- 
+ 	/* Any USB4 compliant host */
+ 	{ PCI_DEVICE_CLASS(PCI_CLASS_SERIAL_USB_USB4, ~0) },
+diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
+index b0718020c6f59..c15a0c46c9cff 100644
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -75,6 +75,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE	0x15ef
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI0			0x463e
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
++#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
++#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
+ #define PCI_DEVICE_ID_INTEL_MTL_M_NHI0			0x7eb2
+ #define PCI_DEVICE_ID_INTEL_MTL_P_NHI0			0x7ec2
+ #define PCI_DEVICE_ID_INTEL_MTL_P_NHI1			0x7ec3
 -- 
 2.40.1
 
