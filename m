@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BCD1170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23FAC433C7;
-	Mon, 21 Aug 2023 19:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D411707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C2CC433C7;
+	Mon, 21 Aug 2023 19:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647516;
-	bh=huYK2x+mdV8q2J0fadHGlP+yUjHICg0wCyYUCLB4Qqw=;
+	s=korg; t=1692647518;
+	bh=Rvs2mjOYAEfDzSaqSIsmi03ON1mCHXsW3Qvbb3uC4CY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pw7owFMTO916THtwKG/YUKOO0JbyFaNdvXNtMbbNyJTke1p+vwzX1CjF8UqFkzXBZ
-	 gwlupvzqhcMRxwGimvdOOgDSgvrgBuIKHYLCnJTUF8L4taFG3DXmtu25PdYMxVjDIE
-	 EZfdKOKx9iEkozkQy0SRFUbmX+vw93u3ymhIFeQM=
+	b=MvilroHpVIpW2e+7M+0rn2M/N4ULTCPIFArFq3kjtaaVG4pjCcXrkx3/dUXQoxjHe
+	 Qnsy35c7vuMfk+6S1QNj4dSMqRJkapNNoidLciMe7exyZkGSYcMU733ln2KMNNmQCX
+	 Tg8ZtqAYKfgtUHHdHdFSJ/zGJVep32Gj+1IjNa30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Hongfei <luhongfei@vivo.com>,
-	Lee Jones <lee@kernel.org>,
+	Pina Chen <pina.chen@mediatek.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/194] led: qcom-lpg: Fix resource leaks in for_each_available_child_of_node() loops
-Date: Mon, 21 Aug 2023 21:40:21 +0200
-Message-ID: <20230821194124.656927724@linuxfoundation.org>
+Subject: [PATCH 6.1 043/194] media: v4l2-mem2mem: add lock to protect parameter num_rdy
+Date: Mon, 21 Aug 2023 21:40:22 +0200
+Message-ID: <20230821194124.697868657@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,48 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lu Hongfei <luhongfei@vivo.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 8f38f8fa7261819eb7d4fb369dc3bfab72259033 ]
+[ Upstream commit 56b5c3e67b0f9af3f45cf393be048ee8d8a92694 ]
 
-Ensure child node references are decremented properly in the error path.
+Getting below error when using KCSAN to check the driver. Adding lock to
+protect parameter num_rdy when getting the value with function:
+v4l2_m2m_num_src_bufs_ready/v4l2_m2m_num_dst_bufs_ready.
 
-Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
-Link: https://lore.kernel.org/r/20230525111705.3055-1-luhongfei@vivo.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+kworker/u16:3: [name:report&]BUG: KCSAN: data-race in v4l2_m2m_buf_queue
+kworker/u16:3: [name:report&]
+
+kworker/u16:3: [name:report&]read-write to 0xffffff8105f35b94 of 1 bytes by task 20865 on cpu 7:
+kworker/u16:3:  v4l2_m2m_buf_queue+0xd8/0x10c
+
+Signed-off-by: Pina Chen <pina.chen@mediatek.com>
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/media/v4l2-mem2mem.h | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index f1c2419334e6f..f85a5d65d1314 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -1112,8 +1112,10 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 		i = 0;
- 		for_each_available_child_of_node(np, child) {
- 			ret = lpg_parse_channel(lpg, child, &led->channels[i]);
--			if (ret < 0)
-+			if (ret < 0) {
-+				of_node_put(child);
- 				return ret;
-+			}
+diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
+index bb9de6a899e07..d6c8eb2b52019 100644
+--- a/include/media/v4l2-mem2mem.h
++++ b/include/media/v4l2-mem2mem.h
+@@ -593,7 +593,14 @@ void v4l2_m2m_buf_queue(struct v4l2_m2m_ctx *m2m_ctx,
+ static inline
+ unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
+ {
+-	return m2m_ctx->out_q_ctx.num_rdy;
++	unsigned int num_buf_rdy;
++	unsigned long flags;
++
++	spin_lock_irqsave(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
++	num_buf_rdy = m2m_ctx->out_q_ctx.num_rdy;
++	spin_unlock_irqrestore(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
++
++	return num_buf_rdy;
+ }
  
- 			info[i].color_index = led->channels[i]->color;
- 			info[i].intensity = 0;
-@@ -1291,8 +1293,10 @@ static int lpg_probe(struct platform_device *pdev)
+ /**
+@@ -605,7 +612,14 @@ unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
+ static inline
+ unsigned int v4l2_m2m_num_dst_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
+ {
+-	return m2m_ctx->cap_q_ctx.num_rdy;
++	unsigned int num_buf_rdy;
++	unsigned long flags;
++
++	spin_lock_irqsave(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
++	num_buf_rdy = m2m_ctx->cap_q_ctx.num_rdy;
++	spin_unlock_irqrestore(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
++
++	return num_buf_rdy;
+ }
  
- 	for_each_available_child_of_node(pdev->dev.of_node, np) {
- 		ret = lpg_add_led(lpg, np);
--		if (ret)
-+		if (ret) {
-+			of_node_put(np);
- 			return ret;
-+		}
- 	}
- 
- 	for (i = 0; i < lpg->num_channels; i++)
+ /**
 -- 
 2.40.1
 
