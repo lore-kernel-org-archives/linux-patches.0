@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B1F1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BD3C43395;
-	Mon, 21 Aug 2023 20:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613DF1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA27EC433C7;
+	Mon, 21 Aug 2023 20:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648500;
-	bh=beFuRUs66v2wXy+j9FqyEF57gIoFuQr1pWKalieRImY=;
+	s=korg; t=1692648503;
+	bh=2lLFFkfrqM9pw7aUtXbAiwjFZEeNaczATqvOIfLswy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwO18vUxl2Ba3j6xlUIFaT5g8xC9ilmbaod7KL7xcSo1cG8Rydlhmuiw/cXT04JNL
-	 2m0qeR+0tQ2hCp2EEnUVtAnYHcGCOrCa3y8ejjN1Y0+i5HaGB48PM2Jhd6e8C2n/W6
-	 OCZb1kaxJKichNarbzsKx16LTtF7MF2XrtmXz2Dk=
+	b=AzlXrBKiO9DslqTVOrQx3n5W+SSyPfwwJj09C2E1mZmj2P7fxFDNnxp2IcpFT16Ad
+	 QcMZde9QLTB1Qg5RKxnUQx+WF2lR+KGRy2OwEeEmbXpWSQIMwevh5bEvxLWnqXxq7m
+	 52QSGA2r6VImmPj1aTRc21eMFDl1oGak6KCOlEs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Yan <felixonmars@archlinux.org>,
-	Ruizhe Pan <c141028@gmail.com>,
-	Shiqi Zhang <shiqi@isrc.iscas.ac.cn>,
-	Celeste Liu <CoelacanthusHex@gmail.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Guo Ren <guoren@kernel.org>,
+	Nam Cao <namcaov@gmail.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 198/234] riscv: entry: set a0 = -ENOSYS only when syscall != -1
-Date: Mon, 21 Aug 2023 21:42:41 +0200
-Message-ID: <20230821194137.578534960@linuxfoundation.org>
+Subject: [PATCH 6.4 199/234] riscv: correct riscv_insn_is_c_jr() and riscv_insn_is_c_jalr()
+Date: Mon, 21 Aug 2023 21:42:42 +0200
+Message-ID: <20230821194137.632749363@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -41,67 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Celeste Liu <coelacanthushex@gmail.com>
+From: Nam Cao <namcaov@gmail.com>
 
-[ Upstream commit 52449c17bdd1540940e21511612b58acebc49c06 ]
+[ Upstream commit 79bc3f85c51fc352f8e684ba6b626f677a3aa230 ]
 
-When we test seccomp with 6.4 kernel, we found errno has wrong value.
-If we deny NETLINK_AUDIT with EAFNOSUPPORT, after f0bddf50586d, we will
-get ENOSYS instead. We got same result with commit 9c2598d43510 ("riscv:
-entry: Save a0 prior syscall_enter_from_user_mode()").
+The instructions c.jr and c.jalr must have rs1 != 0, but
+riscv_insn_is_c_jr() and riscv_insn_is_c_jalr() do not check for this. So,
+riscv_insn_is_c_jr() can match a reserved encoding, while
+riscv_insn_is_c_jalr() can match the c.ebreak instruction.
 
-After analysing code, we think that regs->a0 = -ENOSYS should only be
-executed when syscall != -1. In __seccomp_filter, when seccomp rejected
-this syscall with specified errno, they will set a0 to return number as
-syscall ABI, and then return -1. This return number is finally pass as
-return number of syscall_enter_from_user_mode, and then is compared with
-NR_syscalls after converted to ulong (so it will be ULONG_MAX). The
-condition syscall < NR_syscalls will always be false, so regs->a0 = -ENOSYS
-is always executed. It covered a0 set by seccomp, so we always get
-ENOSYS when match seccomp RET_ERRNO rule.
+Rewrite them with check for rs1 != 0.
 
-Fixes: f0bddf50586d ("riscv: entry: Convert to generic entry")
-Reported-by: Felix Yan <felixonmars@archlinux.org>
-Co-developed-by: Ruizhe Pan <c141028@gmail.com>
-Signed-off-by: Ruizhe Pan <c141028@gmail.com>
-Co-developed-by: Shiqi Zhang <shiqi@isrc.iscas.ac.cn>
-Signed-off-by: Shiqi Zhang <shiqi@isrc.iscas.ac.cn>
-Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
-Tested-by: Felix Yan <felixonmars@archlinux.org>
-Tested-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230801141607.435192-1-CoelacanthusHex@gmail.com
+Signed-off-by: Nam Cao <namcaov@gmail.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Fixes: ec5f90877516 ("RISC-V: Move riscv_insn_is_* macros into a common header")
+Link: https://lore.kernel.org/r/20230731183925.152145-1-namcaov@gmail.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/insn.h | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 8c258b78c925c..bd19e885dcec1 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -268,16 +268,16 @@ asmlinkage __visible __trap_section void do_trap_break(struct pt_regs *regs)
- asmlinkage __visible __trap_section void do_trap_ecall_u(struct pt_regs *regs)
- {
- 	if (user_mode(regs)) {
--		ulong syscall = regs->a7;
-+		long syscall = regs->a7;
+diff --git a/arch/riscv/include/asm/insn.h b/arch/riscv/include/asm/insn.h
+index 8d5c84f2d5ef7..603095c913e37 100644
+--- a/arch/riscv/include/asm/insn.h
++++ b/arch/riscv/include/asm/insn.h
+@@ -110,6 +110,7 @@
+ #define RVC_INSN_FUNCT4_OPOFF	12
+ #define RVC_INSN_FUNCT3_MASK	GENMASK(15, 13)
+ #define RVC_INSN_FUNCT3_OPOFF	13
++#define RVC_INSN_J_RS1_MASK	GENMASK(11, 7)
+ #define RVC_INSN_J_RS2_MASK	GENMASK(6, 2)
+ #define RVC_INSN_OPCODE_MASK	GENMASK(1, 0)
+ #define RVC_ENCODE_FUNCT3(f_)	(RVC_FUNCT3_##f_ << RVC_INSN_FUNCT3_OPOFF)
+@@ -225,8 +226,6 @@ __RISCV_INSN_FUNCS(c_jal, RVC_MASK_C_JAL, RVC_MATCH_C_JAL)
+ __RISCV_INSN_FUNCS(auipc, RVG_MASK_AUIPC, RVG_MATCH_AUIPC)
+ __RISCV_INSN_FUNCS(jalr, RVG_MASK_JALR, RVG_MATCH_JALR)
+ __RISCV_INSN_FUNCS(jal, RVG_MASK_JAL, RVG_MATCH_JAL)
+-__RISCV_INSN_FUNCS(c_jr, RVC_MASK_C_JR, RVC_MATCH_C_JR)
+-__RISCV_INSN_FUNCS(c_jalr, RVC_MASK_C_JALR, RVC_MATCH_C_JALR)
+ __RISCV_INSN_FUNCS(c_j, RVC_MASK_C_J, RVC_MATCH_C_J)
+ __RISCV_INSN_FUNCS(beq, RVG_MASK_BEQ, RVG_MATCH_BEQ)
+ __RISCV_INSN_FUNCS(bne, RVG_MASK_BNE, RVG_MATCH_BNE)
+@@ -253,6 +252,18 @@ static __always_inline bool riscv_insn_is_branch(u32 code)
+ 	return (code & RV_INSN_OPCODE_MASK) == RVG_OPCODE_BRANCH;
+ }
  
- 		regs->epc += 4;
- 		regs->orig_a0 = regs->a0;
- 
- 		syscall = syscall_enter_from_user_mode(regs, syscall);
- 
--		if (syscall < NR_syscalls)
-+		if (syscall >= 0 && syscall < NR_syscalls)
- 			syscall_handler(regs, syscall);
--		else
-+		else if (syscall != -1)
- 			regs->a0 = -ENOSYS;
- 
- 		syscall_exit_to_user_mode(regs);
++static __always_inline bool riscv_insn_is_c_jr(u32 code)
++{
++	return (code & RVC_MASK_C_JR) == RVC_MATCH_C_JR &&
++	       (code & RVC_INSN_J_RS1_MASK) != 0;
++}
++
++static __always_inline bool riscv_insn_is_c_jalr(u32 code)
++{
++	return (code & RVC_MASK_C_JALR) == RVC_MATCH_C_JALR &&
++	       (code & RVC_INSN_J_RS1_MASK) != 0;
++}
++
+ #define RV_IMM_SIGN(x) (-(((x) >> 31) & 1))
+ #define RVC_IMM_SIGN(x) (-(((x) >> 12) & 1))
+ #define RV_X(X, s, mask)  (((X) >> (s)) & (mask))
 -- 
 2.40.1
 
