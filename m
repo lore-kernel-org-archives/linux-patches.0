@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073011703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78040C433C7;
-	Mon, 21 Aug 2023 19:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFEF11703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA7BC433C7;
+	Mon, 21 Aug 2023 19:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647794;
-	bh=962olrkhxR8zvRZyjaLYihQ5Me6g+cM6ToYxfuij8hE=;
+	s=korg; t=1692647796;
+	bh=9GFseNURY6Jlq6FDHxAejCEZE1twpkrLSlYzNVziqv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uw094H7KjTgJrVVF1YzO+vqxsDBL/MCNbZQiIB4T8TjKyZnKWUhIbPMWWTI6PBqVF
-	 wJCkKfDAqyz1BGHg/P+yobRoarsVpQJ6adPCAGuwUiurtPmfVrSWUzp+H6/sFXDRq4
-	 ZLPpXnp6xyXJG6M4esBJu//f6Yg2ui45XDzyNu+s=
+	b=QAEqxKOKkOYv0Joytyo5Hf0/gPdaqtmgMRWtfOFsHbkFGhdhfK/ZFjRIyIs/PPxPY
+	 8mP1wOiHc0vtjK6CPaY3ZLrwzg6dXGGt74/noI7WWaEZqdGZwikxaQz4E9k0O88gY+
+	 WElvj8H1s0vMegpY2xdvT0kXCi9Yl7UGwOxU/T9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Marek Vasut <marex@denx.de>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Adam Ford <aford173@gmail.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/194] arm64: dts: imx8mm: Drop CSI1 PHY reference clock configuration
-Date: Mon, 21 Aug 2023 21:42:00 +0200
-Message-ID: <20230821194128.897335637@linuxfoundation.org>
+Subject: [PATCH 6.1 142/194] ARM: dts: imx: Set default tuning step for imx6sx usdhc
+Date: Mon, 21 Aug 2023 21:42:01 +0200
+Message-ID: <20230821194128.937308566@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -38,51 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit f02b53375e8f14b4c27a14f6e4fb6e89914fdc29 ]
+[ Upstream commit 0a2b96e42a0284c4fc03022236f656a085ca714a ]
 
-The CSI1 PHY reference clock is limited to 125 MHz according to:
-i.MX 8M Mini Applications Processor Reference Manual, Rev. 3, 11/2020
-Table 5-1. Clock Root Table (continued) / page 307
-Slice Index n = 123 .
+If the tuning step is not set, the tuning step is set to 1.
+For some sd cards, the following Tuning timeout will occur.
 
-Currently the IMX8MM_CLK_CSI1_PHY_REF clock is configured to be
-fed directly from 1 GHz PLL2 , which overclocks them. Instead, drop
-the configuration altogether, which defaults the clock to 24 MHz REF
-clock input, which for the PHY reference clock is just fine.
+Tuning failed, falling back to fixed sampling clock
 
-Based on a patch from Marek Vasut for the imx8mn.
+So set the default tuning step. This refers to the NXP vendor's
+commit below:
 
-Fixes: e523b7c54c05 ("arm64: dts: imx8mm: Add CSI nodes")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Adam Ford <aford173@gmail.com>
+https://github.com/nxp-imx/linux-imx/blob/lf-6.1.y/
+arch/arm/boot/dts/imx6sx.dtsi#L1108-L1109
+
+Fixes: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm.dtsi | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/imx6sx.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
-index 420ba0d6f1343..12c82bb1bb7aa 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
-@@ -1145,10 +1145,9 @@
- 				compatible = "fsl,imx8mm-mipi-csi2";
- 				reg = <0x32e30000 0x1000>;
- 				interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
--				assigned-clocks = <&clk IMX8MM_CLK_CSI1_CORE>,
--						  <&clk IMX8MM_CLK_CSI1_PHY_REF>;
--				assigned-clock-parents = <&clk IMX8MM_SYS_PLL2_1000M>,
--							  <&clk IMX8MM_SYS_PLL2_1000M>;
-+				assigned-clocks = <&clk IMX8MM_CLK_CSI1_CORE>;
-+				assigned-clock-parents = <&clk IMX8MM_SYS_PLL2_1000M>;
-+
- 				clock-frequency = <333000000>;
- 				clocks = <&clk IMX8MM_CLK_DISP_APB_ROOT>,
- 					 <&clk IMX8MM_CLK_CSI1_ROOT>,
+diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
+index abc3572d699e6..1f1053a898fbf 100644
+--- a/arch/arm/boot/dts/imx6sx.dtsi
++++ b/arch/arm/boot/dts/imx6sx.dtsi
+@@ -981,6 +981,8 @@
+ 					 <&clks IMX6SX_CLK_USDHC1>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-start-tap = <20>;
++				fsl,tuning-step= <2>;
+ 				status = "disabled";
+ 			};
+ 
+@@ -993,6 +995,8 @@
+ 					 <&clks IMX6SX_CLK_USDHC2>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-start-tap = <20>;
++				fsl,tuning-step= <2>;
+ 				status = "disabled";
+ 			};
+ 
+@@ -1005,6 +1009,8 @@
+ 					 <&clks IMX6SX_CLK_USDHC3>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-start-tap = <20>;
++				fsl,tuning-step= <2>;
+ 				status = "disabled";
+ 			};
+ 
 -- 
 2.40.1
 
