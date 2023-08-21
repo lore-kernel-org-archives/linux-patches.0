@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2FC11703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:58:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5143C433C7;
-	Mon, 21 Aug 2023 19:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4786C11703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:58:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB009C433C7;
+	Mon, 21 Aug 2023 19:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647906;
-	bh=JONYzCju5HF1dHnhi/xWb3GxlTVU8+izOlGDbgqplXc=;
+	s=korg; t=1692647909;
+	bh=HQ8bPOu5wruvzUErKDn/m+eSOSUgyJex25sIu/IVKak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1/2c4px2t1MNOsm5WvEjpOI+0bDjTb0iUFltLPXKAXBZoHEcJUTGUXYAJovnOYAj
-	 D2mvTb9XvruFl3Z/marI7tloitotALuXTsnmdXezMa3DF1hxT1EvfSoVI2XDNcS+NU
-	 TfFpYhfTO6ZhB8Qs8xoOjzPGUAET7zI+ZwMPnUn4=
+	b=br0CeCbA/Y81L0JiQ1J+5MlxrEcQCsnRnSjzFpLlciMzRwwz9vInjpJir9inZeVhD
+	 OExnvtMW6t3JQqpovbLuWxPdb7JafiFHVvANV/z0NgshUyRkV6qhS7phJcIdA0/+r4
+	 q3Zq5G3u+4nlAf8gt5w9clD0GTNCxU/UDUyV/8EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 180/194] x86/srso: Explain the untraining sequences a bit more
-Date: Mon, 21 Aug 2023 21:42:39 +0200
-Message-ID: <20230821194130.637136055@linuxfoundation.org>
+	Christian Bricart <christian@bricart.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 6.1 181/194] x86/static_call: Fix __static_call_fixup()
+Date: Mon, 21 Aug 2023 21:42:40 +0200
+Message-ID: <20230821194130.681442797@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -33,46 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 9dbd23e42ff0b10c9b02c9e649c76e5228241a8e upstream.
+commit 54097309620ef0dc2d7083783dc521c6a5fef957 upstream.
 
-The goal is to eventually have a proper documentation about all this.
+Christian reported spurious module load crashes after some of Song's
+module memory layout patches.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814164447.GFZNpZ/64H4lENIe94@fat_crate.local
+Turns out that if the very last instruction on the very last page of the
+module is a 'JMP __x86_return_thunk' then __static_call_fixup() will
+trip a fault and die.
+
+And while the module rework made this slightly more likely to happen,
+it's always been possible.
+
+Fixes: ee88d363d156 ("x86,static_call: Use alternative RET encoding")
+Reported-by: Christian Bricart <christian@bricart.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lkml.kernel.org/r/20230816104419.GA982867@hirez.programming.kicks-ass.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/lib/retpoline.S |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/x86/kernel/static_call.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -130,6 +130,25 @@ SYM_CODE_START(srso_alias_return_thunk)
- SYM_CODE_END(srso_alias_return_thunk)
- 
- /*
-+ * Some generic notes on the untraining sequences:
-+ *
-+ * They are interchangeable when it comes to flushing potentially wrong
-+ * RET predictions from the BTB.
-+ *
-+ * The SRSO Zen1/2 (MOVABS) untraining sequence is longer than the
-+ * Retbleed sequence because the return sequence done there
-+ * (srso_safe_ret()) is longer and the return sequence must fully nest
-+ * (end before) the untraining sequence. Therefore, the untraining
-+ * sequence must fully overlap the return sequence.
-+ *
-+ * Regarding alignment - the instructions which need to be untrained,
-+ * must all start at a cacheline boundary for Zen1/2 generations. That
-+ * is, instruction sequences starting at srso_safe_ret() and
-+ * the respective instruction sequences at retbleed_return_thunk()
-+ * must start at a cacheline boundary.
-+ */
+--- a/arch/x86/kernel/static_call.c
++++ b/arch/x86/kernel/static_call.c
+@@ -184,6 +184,19 @@ EXPORT_SYMBOL_GPL(arch_static_call_trans
+  */
+ bool __static_call_fixup(void *tramp, u8 op, void *dest)
+ {
++	unsigned long addr = (unsigned long)tramp;
++	/*
++	 * Not all .return_sites are a static_call trampoline (most are not).
++	 * Check if the 3 bytes after the return are still kernel text, if not,
++	 * then this definitely is not a trampoline and we need not worry
++	 * further.
++	 *
++	 * This avoids the memcmp() below tripping over pagefaults etc..
++	 */
++	if (((addr >> PAGE_SHIFT) != ((addr + 7) >> PAGE_SHIFT)) &&
++	    !kernel_text_address(addr + 7))
++		return false;
 +
-+/*
-  * Safety details here pertain to the AMD Zen{1,2} microarchitecture:
-  * 1) The RET at retbleed_return_thunk must be on a 64 byte boundary, for
-  *    alignment within the BTB.
+ 	if (memcmp(tramp+5, tramp_ud, 3)) {
+ 		/* Not a trampoline site, not our problem. */
+ 		return false;
 
 
