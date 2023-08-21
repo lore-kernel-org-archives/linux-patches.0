@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D601171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF30C433C8;
-	Mon, 21 Aug 2023 20:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C731171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53157C433C7;
+	Mon, 21 Aug 2023 20:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648323;
-	bh=UoIPqozLxwklBSS3rgN2pzmq8qRddHYrb7TTDl3zKwQ=;
+	s=korg; t=1692648326;
+	bh=gy2fFrkQKDYAJjnxxL0FNZUFwCO9wPlsjDzYcGvNJHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pxE15+Kc9N+xgYqe1wNnES7v8L9/4ihnRryaTsM8WbgcTGQAuVc+sejaeEPGwy8AM
-	 PbysujzJB+FOrQbp7RcZ/A7f8V62wwcurKA/i8/HlDf4abjLKdiGRzcoZ5brOfp4UA
-	 Tfsbcm68DQJRtzhzm0410B8P4Qm/GNCFaFLrNQ/4=
+	b=rWmSlRZue3GHMggNYkyVXBMQY2+S7rIEJh9D7tvkrM5jMIpMfQbi88VyeEw6Dupfq
+	 a9TdpEyi5wxfeiwp8+WvRJ+VNYxjE47w2mDEvXgl/J1Ycy81vbbf2W3zzmVYWfID6k
+	 cNOGTHf5KJXC6cqlXIiVOhCLwmMmomOm3mNdHwgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 135/234] xfrm: Silence warnings triggerable by bad packets
-Date: Mon, 21 Aug 2023 21:41:38 +0200
-Message-ID: <20230821194134.798873838@linuxfoundation.org>
+Subject: [PATCH 6.4 136/234] xfrm: fix slab-use-after-free in decode_session6
+Date: Mon, 21 Aug 2023 21:41:39 +0200
+Message-ID: <20230821194134.848128154@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,96 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 57010b8ece2821a1fdfdba2197d14a022f3769db ]
+[ Upstream commit 53223f2ed1ef5c90dad814daaaefea4e68a933c8 ]
 
-After the elimination of inner modes, a couple of warnings that
-were previously unreachable can now be triggered by malformed
-inbound packets.
+When the xfrm device is set to the qdisc of the sfb type, the cb field
+of the sent skb may be modified during enqueuing. Then,
+slab-use-after-free may occur when the xfrm device sends IPv6 packets.
 
-Fix this by:
+The stack information is as follows:
+BUG: KASAN: slab-use-after-free in decode_session6+0x103f/0x1890
+Read of size 1 at addr ffff8881111458ef by task swapper/3/0
+CPU: 3 PID: 0 Comm: swapper/3 Not tainted 6.4.0-next-20230707 #409
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+Call Trace:
+<IRQ>
+dump_stack_lvl+0xd9/0x150
+print_address_description.constprop.0+0x2c/0x3c0
+kasan_report+0x11d/0x130
+decode_session6+0x103f/0x1890
+__xfrm_decode_session+0x54/0xb0
+xfrmi_xmit+0x173/0x1ca0
+dev_hard_start_xmit+0x187/0x700
+sch_direct_xmit+0x1a3/0xc30
+__qdisc_run+0x510/0x17a0
+__dev_queue_xmit+0x2215/0x3b10
+neigh_connected_output+0x3c2/0x550
+ip6_finish_output2+0x55a/0x1550
+ip6_finish_output+0x6b9/0x1270
+ip6_output+0x1f1/0x540
+ndisc_send_skb+0xa63/0x1890
+ndisc_send_rs+0x132/0x6f0
+addrconf_rs_timer+0x3f1/0x870
+call_timer_fn+0x1a0/0x580
+expire_timers+0x29b/0x4b0
+run_timer_softirq+0x326/0x910
+__do_softirq+0x1d4/0x905
+irq_exit_rcu+0xb7/0x120
+sysvec_apic_timer_interrupt+0x97/0xc0
+</IRQ>
+<TASK>
+asm_sysvec_apic_timer_interrupt+0x1a/0x20
+RIP: 0010:intel_idle_hlt+0x23/0x30
+Code: 1f 84 00 00 00 00 00 f3 0f 1e fa 41 54 41 89 d4 0f 1f 44 00 00 66 90 0f 1f 44 00 00 0f 00 2d c4 9f ab 00 0f 1f 44 00 00 fb f4 <fa> 44 89 e0 41 5c c3 66 0f 1f 44 00 00 f3 0f 1e fa 41 54 41 89 d4
+RSP: 0018:ffffc90000197d78 EFLAGS: 00000246
+RAX: 00000000000a83c3 RBX: ffffe8ffffd09c50 RCX: ffffffff8a22d8e5
+RDX: 0000000000000001 RSI: ffffffff8d3f8080 RDI: ffffe8ffffd09c50
+RBP: ffffffff8d3f8080 R08: 0000000000000001 R09: ffffed1026ba6d9d
+R10: ffff888135d36ceb R11: 0000000000000001 R12: 0000000000000001
+R13: ffffffff8d3f8100 R14: 0000000000000001 R15: 0000000000000000
+cpuidle_enter_state+0xd3/0x6f0
+cpuidle_enter+0x4e/0xa0
+do_idle+0x2fe/0x3c0
+cpu_startup_entry+0x18/0x20
+start_secondary+0x200/0x290
+secondary_startup_64_no_verify+0x167/0x16b
+</TASK>
+Allocated by task 939:
+kasan_save_stack+0x22/0x40
+kasan_set_track+0x25/0x30
+__kasan_slab_alloc+0x7f/0x90
+kmem_cache_alloc_node+0x1cd/0x410
+kmalloc_reserve+0x165/0x270
+__alloc_skb+0x129/0x330
+inet6_ifa_notify+0x118/0x230
+__ipv6_ifa_notify+0x177/0xbe0
+addrconf_dad_completed+0x133/0xe00
+addrconf_dad_work+0x764/0x1390
+process_one_work+0xa32/0x16f0
+worker_thread+0x67d/0x10c0
+kthread+0x344/0x440
+ret_from_fork+0x1f/0x30
+The buggy address belongs to the object at ffff888111145800
+which belongs to the cache skbuff_small_head of size 640
+The buggy address is located 239 bytes inside of
+freed 640-byte region [ffff888111145800, ffff888111145a80)
 
-1. Moving the setting of skb->protocol into the decap functions.
-2. Returning -EINVAL when unexpected protocol is seen.
+As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
+_decode_session6.") showed, xfrm_decode_session was originally intended
+only for the receive path. IP6CB(skb)->nhoff is not set during
+transmission. Therefore, set the cb field in the skb to 0 before
+sending packets.
 
-Reported-by: Maciej Żenczykowski<maze@google.com>
-Fixes: 5f24f41e8ea6 ("xfrm: Remove inner/outer modes from input path")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Fixes: f855691975bb ("xfrm6: Fix the nexthdr offset in _decode_session6.")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ net/xfrm/xfrm_interface_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index 815b380804011..d5ee96789d4bf 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -180,6 +180,8 @@ static int xfrm4_remove_beet_encap(struct xfrm_state *x, struct sk_buff *skb)
- 	int optlen = 0;
- 	int err = -EINVAL;
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index a3319965470a7..b864740846902 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -537,8 +537,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
  
-+	skb->protocol = htons(ETH_P_IP);
-+
- 	if (unlikely(XFRM_MODE_SKB_CB(skb)->protocol == IPPROTO_BEETPH)) {
- 		struct ip_beet_phdr *ph;
- 		int phlen;
-@@ -232,6 +234,8 @@ static int xfrm4_remove_tunnel_encap(struct xfrm_state *x, struct sk_buff *skb)
- {
- 	int err = -EINVAL;
- 
-+	skb->protocol = htons(ETH_P_IP);
-+
- 	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
- 		goto out;
- 
-@@ -267,6 +271,8 @@ static int xfrm6_remove_tunnel_encap(struct xfrm_state *x, struct sk_buff *skb)
- {
- 	int err = -EINVAL;
- 
-+	skb->protocol = htons(ETH_P_IPV6);
-+
- 	if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
- 		goto out;
- 
-@@ -296,6 +302,8 @@ static int xfrm6_remove_beet_encap(struct xfrm_state *x, struct sk_buff *skb)
- 	int size = sizeof(struct ipv6hdr);
- 	int err;
- 
-+	skb->protocol = htons(ETH_P_IPV6);
-+
- 	err = skb_cow_head(skb, size + skb->mac_len);
- 	if (err)
- 		goto out;
-@@ -346,6 +354,7 @@ xfrm_inner_mode_encap_remove(struct xfrm_state *x,
- 			return xfrm6_remove_tunnel_encap(x, skb);
- 		break;
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IPV6):
+-		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		if (!dst) {
+ 			fl.u.ip6.flowi6_oif = dev->ifindex;
+ 			fl.u.ip6.flowi6_flags |= FLOWI_FLAG_ANYSRC;
+@@ -552,8 +552,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
  		}
-+		return -EINVAL;
- 	}
- 
- 	WARN_ON_ONCE(1);
-@@ -366,19 +375,6 @@ static int xfrm_prepare_input(struct xfrm_state *x, struct sk_buff *skb)
- 		return -EAFNOSUPPORT;
- 	}
- 
--	switch (XFRM_MODE_SKB_CB(skb)->protocol) {
--	case IPPROTO_IPIP:
--	case IPPROTO_BEETPH:
--		skb->protocol = htons(ETH_P_IP);
--		break;
--	case IPPROTO_IPV6:
--		skb->protocol = htons(ETH_P_IPV6);
--		break;
--	default:
--		WARN_ON_ONCE(1);
--		break;
--	}
--
- 	return xfrm_inner_mode_encap_remove(x, skb);
- }
+ 		break;
+ 	case htons(ETH_P_IP):
+-		xfrm_decode_session(skb, &fl, AF_INET);
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET);
+ 		if (!dst) {
+ 			struct rtable *rt;
  
 -- 
 2.40.1
