@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC4611703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE15C433C7;
-	Mon, 21 Aug 2023 19:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E437911703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68910C433C8;
+	Mon, 21 Aug 2023 19:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647839;
-	bh=QZHtQzG5N9ZAWZJO9WZWG6oYF4ylwsYrCsCkGHCpSQM=;
+	s=korg; t=1692647841;
+	bh=7+WTvDMP3OayobXOcibiXEZpzllZvhQnqYomzB9IhkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDTN1voo4I07jQUy0phRLbX29f+mqKHtzQEhoe728fXIE4nEKKO5IEpddO75O8Obn
-	 oebDbn7qsyk47L4u+o3DVo//KQGCoyVwpwXavLrtK5F9548CUzrSMYQGkYrHWUbreD
-	 573OvUPY5E1p+i2GaDaA7JMiSfW8k1oAvHniYhgM=
+	b=ULUNTZY+x3sSvPsBqAQ6JBbamQTztgGJa7as0brsRHhjlbjesvoU8UZSGyaIop0AK
+	 hkJpFuy+VjTHNiMEm1qsCXairKc5trgiSwJe7RanZHQqRIi5+iaDcCLSkLOm44IKYJ
+	 RDgzQ1QLmw88bNHXpY0+Hcff9Z8PiuJZSb2c5EOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Melnychenko <andrew@daynix.com>,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Jason Wang <jasowang@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Subject: [PATCH 6.1 155/194] virtio-net: Zero max_tx_vq field for VIRTIO_NET_CTRL_MQ_HASH_CONFIG case
-Date: Mon, 21 Aug 2023 21:42:14 +0200
-Message-ID: <20230821194129.513901395@linuxfoundation.org>
+	Yogesh Hegde <yogi.kernel@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.1 156/194] arm64: dts: rockchip: Fix Wifi/Bluetooth on ROCK Pi 4 boards
+Date: Mon, 21 Aug 2023 21:42:15 +0200
+Message-ID: <20230821194129.555507253@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -38,52 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Yogesh Hegde <yogi.kernel@gmail.com>
 
-commit 2c507ce90e02cd78d00fd4b0fe26c8641873c13f upstream.
+commit ebceec271e552a2b05e47d8ef0597052b1a39449 upstream.
 
-Kernel uses `struct virtio_net_ctrl_rss` to save command-specific-data
-for both the VIRTIO_NET_CTRL_MQ_HASH_CONFIG and
-VIRTIO_NET_CTRL_MQ_RSS_CONFIG commands.
+This patch fixes an issue affecting the Wifi/Bluetooth connectivity on
+ROCK Pi 4 boards. Commit f471b1b2db08 ("arm64: dts: rockchip: Fix Bluetooth
+on ROCK Pi 4 boards") introduced a problem with the clock configuration.
+Specifically, the clock-names property of the sdio-pwrseq node was not
+updated to 'lpo', causing the driver to wait indefinitely for the wrong clock
+signal 'ext_clock' instead of the expected one 'lpo'. This prevented the proper
+initialization of Wifi/Bluetooth chip on ROCK Pi 4 boards.
 
-According to the VirtIO standard, "Field reserved MUST contain zeroes.
-It is defined to make the structure to match the layout of
-virtio_net_rss_config structure, defined in 5.1.6.5.7.".
+To address this, this patch updates the clock-names property of the
+sdio-pwrseq node to "lpo" to align with the changes made to the bluetooth node.
 
-Yet for the VIRTIO_NET_CTRL_MQ_HASH_CONFIG command case, the `max_tx_vq`
-field in struct virtio_net_ctrl_rss, which corresponds to the
-`reserved` field in struct virtio_net_hash_config, is not zeroed,
-thereby violating the VirtIO standard.
+This patch has been tested on ROCK Pi 4B.
 
-This patch solves this problem by zeroing this field in
-virtnet_init_default_rss().
-
-Cc: Andrew Melnychenko <andrew@daynix.com>
+Fixes: f471b1b2db08 ("arm64: dts: rockchip: Fix Bluetooth on ROCK Pi 4 boards")
 Cc: stable@vger.kernel.org
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20230810110405.25558-1-yin31149@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Yogesh Hegde <yogi.kernel@gmail.com>
+Link: https://lore.kernel.org/r/ZLbATQRjOl09aLAp@zephyrusG14
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2504,7 +2504,7 @@ static void virtnet_init_default_rss(str
- 		vi->ctrl->rss.indirection_table[i] = indir_val;
- 	}
- 
--	vi->ctrl->rss.max_tx_vq = vi->curr_queue_pairs;
-+	vi->ctrl->rss.max_tx_vq = vi->has_rss ? vi->curr_queue_pairs : 0;
- 	vi->ctrl->rss.hash_key_length = vi->rss_key_size;
- 
- 	netdev_rss_key_fill(vi->ctrl->rss.key, vi->rss_key_size);
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+@@ -45,7 +45,7 @@
+ 	sdio_pwrseq: sdio-pwrseq {
+ 		compatible = "mmc-pwrseq-simple";
+ 		clocks = <&rk808 1>;
+-		clock-names = "ext_clock";
++		clock-names = "lpo";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&wifi_enable_h>;
+ 		reset-gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW>;
 
 
