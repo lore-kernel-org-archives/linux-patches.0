@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DF71170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32655C433C8;
-	Mon, 21 Aug 2023 19:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EE41170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59E9C433C8;
+	Mon, 21 Aug 2023 19:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647493;
-	bh=zubj/pj0f85ja9rx1D07j6wzLnheolhlWy20rrcFpjs=;
+	s=korg; t=1692647496;
+	bh=0twrrRWoRtZYbvOHAoojKjJ328ClxSfEiY/zKCgy4Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhsmbBrN27m+PfGhn/erWPVTvxsfSR6uGmzlLWgRQw0Jo8DUNatjSmoKu4j0+Gc/s
-	 /2DNQlEnDdL/oMsW6RDPoua8zphCiBUG/7n6eRBKvD0Sw4FH8q9nuYDskoX8naqq99
-	 cPvxPAQw7wdrFWyj7zzc9aj85YLks5xytuqwO+Ew=
+	b=jUEPaeAKi8LrfsV48/BH1GcMyAPj4E5FL2XFmM1oY9BNhVSAMC4715iJMyREWnVNW
+	 o9dHX+HyBDka+GFbpCcT7XlTqaB7rLjVcaeoVUIFK74Uu+C54c+GkNS4LB08Cn1imU
+	 +qfqOYU2GaJCks9MnmTLST4mO4oi3VCRRGhH2NdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Davide Caratti <dcaratti@redhat.com>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/194] selftests: forwarding: tc_actions: cleanup temporary files when test is aborted
-Date: Mon, 21 Aug 2023 21:39:45 +0200
-Message-ID: <20230821194122.995099455@linuxfoundation.org>
+Subject: [PATCH 6.1 007/194] selftests: forwarding: tc_actions: Use ncat instead of nc
+Date: Mon, 21 Aug 2023 21:39:46 +0200
+Message-ID: <20230821194123.039286037@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,83 +39,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit f58531716ced8975a4ade108ef4af35f98722af7 ]
+[ Upstream commit 5e8670610b93158ffacc3241f835454ff26a3469 ]
 
-remove temporary files created by 'mirred_egress_to_ingress_tcp' test
-in the cleanup() handler. Also, change variable names to avoid clashing
-with globals from lib.sh.
+The test relies on 'nc' being the netcat version from the nmap project.
+While this seems to be the case on Fedora, it is not the case on Ubuntu,
+resulting in failures such as [1].
 
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://lore.kernel.org/r/091649045a017fc00095ecbb75884e5681f7025f.1676368027.git.dcaratti@redhat.com
+Fix by explicitly using the 'ncat' utility from the nmap project and the
+skip the test in case it is not installed.
+
+[1]
+ # timeout set to 0
+ # selftests: net/forwarding: tc_actions.sh
+ # TEST: gact drop and ok (skip_hw)                                    [ OK ]
+ # TEST: mirred egress flower redirect (skip_hw)                       [ OK ]
+ # TEST: mirred egress flower mirror (skip_hw)                         [ OK ]
+ # TEST: mirred egress matchall mirror (skip_hw)                       [ OK ]
+ # TEST: mirred_egress_to_ingress (skip_hw)                            [ OK ]
+ # nc: invalid option -- '-'
+ # usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
+ #         [-m minttl] [-O length] [-P proxy_username] [-p source_port]
+ #         [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
+ #         [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
+ #         [destination] [port]
+ # nc: invalid option -- '-'
+ # usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
+ #         [-m minttl] [-O length] [-P proxy_username] [-p source_port]
+ #         [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
+ #         [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
+ #         [destination] [port]
+ # TEST: mirred_egress_to_ingress_tcp (skip_hw)                        [FAIL]
+ #       server output check failed
+ # INFO: Could not test offloaded functionality
+ not ok 80 selftests: net/forwarding: tc_actions.sh # exit=1
+
+Fixes: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230808141503.4060661-12-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5e8670610b93 ("selftests: forwarding: tc_actions: Use ncat instead of nc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/forwarding/tc_actions.sh       | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/forwarding/tc_actions.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
-index 919c0dd9fe4bc..a96cff8e72197 100755
+index a96cff8e72197..b0f5e55d2d0b2 100755
 --- a/tools/testing/selftests/net/forwarding/tc_actions.sh
 +++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -201,10 +201,10 @@ mirred_egress_to_ingress_test()
+@@ -9,6 +9,8 @@ NUM_NETIFS=4
+ source tc_common.sh
+ source lib.sh
  
- mirred_egress_to_ingress_tcp_test()
- {
--	local tmpfile=$(mktemp) tmpfile1=$(mktemp)
-+	mirred_e2i_tf1=$(mktemp) mirred_e2i_tf2=$(mktemp)
++require_command ncat
++
+ tcflags="skip_hw"
  
- 	RET=0
--	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$tmpfile
-+	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$mirred_e2i_tf1
- 	tc filter add dev $h1 protocol ip pref 100 handle 100 egress flower \
- 		$tcflags ip_proto tcp src_ip 192.0.2.1 dst_ip 192.0.2.2 \
- 			action ct commit nat src addr 192.0.2.2 pipe \
-@@ -220,11 +220,11 @@ mirred_egress_to_ingress_tcp_test()
+ h1_create()
+@@ -220,9 +222,9 @@ mirred_egress_to_ingress_tcp_test()
  		ip_proto icmp \
  			action drop
  
--	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $tmpfile1  &
-+	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2  &
+-	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2  &
++	ip vrf exec v$h1 ncat --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2 &
  	local rpid=$!
--	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$tmpfile
-+	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
+-	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
++	ip vrf exec v$h1 ncat -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
  	wait -n $rpid
--	cmp -s $tmpfile $tmpfile1
-+	cmp -s $mirred_e2i_tf1 $mirred_e2i_tf2
+ 	cmp -s $mirred_e2i_tf1 $mirred_e2i_tf2
  	check_err $? "server output check failed"
- 
- 	$MZ $h1 -c 10 -p 64 -a $h1mac -b $h1mac -A 192.0.2.1 -B 192.0.2.1 \
-@@ -241,7 +241,7 @@ mirred_egress_to_ingress_tcp_test()
- 	tc filter del dev $h1 egress protocol ip pref 101 handle 101 flower
- 	tc filter del dev $h1 ingress protocol ip pref 102 handle 102 flower
- 
--	rm -f $tmpfile $tmpfile1
-+	rm -f $mirred_e2i_tf1 $mirred_e2i_tf2
- 	log_test "mirred_egress_to_ingress_tcp ($tcflags)"
- }
- 
-@@ -270,6 +270,8 @@ setup_prepare()
- 
- cleanup()
- {
-+	local tf
-+
- 	pre_cleanup
- 
- 	switch_destroy
-@@ -280,6 +282,8 @@ cleanup()
- 
- 	ip link set $swp2 address $swp2origmac
- 	ip link set $swp1 address $swp1origmac
-+
-+	for tf in $mirred_e2i_tf1 $mirred_e2i_tf2; do rm -f $tf; done
- }
- 
- mirred_egress_redirect_test()
 -- 
 2.40.1
 
