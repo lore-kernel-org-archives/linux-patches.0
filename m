@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6170D1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9813C433C7;
-	Mon, 21 Aug 2023 20:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FBB1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C630C433C8;
+	Mon, 21 Aug 2023 20:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648360;
-	bh=1aafCBCVIQzJTgrJVwPKt2RbKEpmbZ3lIG3vDxXTuNQ=;
+	s=korg; t=1692648362;
+	bh=8xTRZ5XLuhoRZTyQDjyxibXpnGim9XrJBV6S11QU528=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dY9VYcv6DP8ErpABokEr24wukSb6EJHGFH0eRW8SAp/lZ8Ji2zm9Qgwmu651v9r4O
-	 aogycsOlvvkdmzb2uF2i6+RxPCxutlF7AxtzV806Hj0OEEe73fGzWbq31C91cDeVms
-	 eKJXEWc8w+SiXdV1sT55bpUrTEaNqmDU0UaYOzIk=
+	b=pVzPUB+MzYMxlBiOBMjfplHPMbYHevtn9FN+3UlTBElCYbhmEYrd1gl2W1jQQUmj4
+	 nYWUX03HEOdBliuZD5oBItec2RwZBTGfO577UH4xF0vMRkAqbbZLbuhX4zEw2Y6MFE
+	 lgo2V/D9V7dfIgg+UEfp+CWZnjmblKnvvDnE0jOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 147/234] drm/panel: simple: Fix AUO G121EAN01 panel timings according to the docs
-Date: Mon, 21 Aug 2023 21:41:50 +0200
-Message-ID: <20230821194135.342373641@linuxfoundation.org>
+Subject: [PATCH 6.4 148/234] drm/i915/guc/slpc: Restore efficient freq earlier
+Date: Mon, 21 Aug 2023 21:41:51 +0200
+Message-ID: <20230821194135.392732920@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,75 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit e8470c0a7bcaa82f78ad34282d662dd7bd9630c2 ]
+[ Upstream commit 5598c9bfdb81f40f2f5d769b342d25bff74b07a6 ]
 
-Commit 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4
-panel") added support for this panel model, but the timings it implements
-are very different from what the datasheet describes. I checked both the
-G121EAN01.0 datasheet from [0] and the G121EAN01.4 one from [1] and they
-all have the same timings: for example the LVDS clock typical value is 74.4
-MHz, not 66.7 MHz as implemented.
+This should be done before the soft min/max frequencies are restored.
+When we disable the "Ignore efficient frequency" flag, GuC does not
+actually bring the requested freq down to RPn.
 
-Replace the timings with the ones from the documentation. These timings
-have been tested and the clock frequencies verified with an oscilloscope to
-ensure they are correct.
+Specifically, this scenario-
 
-Also use struct display_timing instead of struct drm_display_mode in order
-to also specify the minimum and maximum values.
+- ignore efficient freq set to true
+- reduce min to RPn (from efficient)
+- suspend
+- resume (includes GuC load, restore soft min/max, restore efficient freq)
+- validate min freq has been resored to RPn
 
-[0] https://embedded.avnet.com/product/g121ean01-0/
-[1] https://embedded.avnet.com/product/g121ean01-4/
+This will fail if we didn't first restore(disable, in this case) efficient
+freq flag before setting the soft min frequency.
 
-Fixes: 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4 panel")
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804151239.835216-1-luca.ceresoli@bootlin.com
+v2: Bring the min freq down to RPn when we disable efficient freq (Rodrigo)
+Also made the change to set the min softlimit to RPn at init. Otherwise, we
+were storing RPe there.
+
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/8736
+Fixes: 55f9720dbf23 ("drm/i915/guc/slpc: Provide sysfs for efficient freq")
+Fixes: 95ccf312a1e4 ("drm/i915/guc/slpc: Allow SLPC to use efficient frequency")
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230726010044.3280402-1-vinay.belgaumkar@intel.com
+(cherry picked from commit 28e671114fb0f28f334fac8d0a6b9c395c7b0498)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c | 22 +++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index e02249b212c2a..cf6b146acc323 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -969,21 +969,21 @@ static const struct panel_desc auo_g104sn02 = {
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
+index cc18e8f664864..78822331f1b7f 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
+@@ -470,12 +470,19 @@ int intel_guc_slpc_set_ignore_eff_freq(struct intel_guc_slpc *slpc, bool val)
+ 	ret = slpc_set_param(slpc,
+ 			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
+ 			     val);
+-	if (ret)
++	if (ret) {
+ 		guc_probe_error(slpc_to_guc(slpc), "Failed to set efficient freq(%d): %pe\n",
+ 				val, ERR_PTR(ret));
+-	else
++	} else {
+ 		slpc->ignore_eff_freq = val;
  
--static const struct drm_display_mode auo_g121ean01_mode = {
--	.clock = 66700,
--	.hdisplay = 1280,
--	.hsync_start = 1280 + 58,
--	.hsync_end = 1280 + 58 + 8,
--	.htotal = 1280 + 58 + 8 + 70,
--	.vdisplay = 800,
--	.vsync_start = 800 + 6,
--	.vsync_end = 800 + 6 + 4,
--	.vtotal = 800 + 6 + 4 + 10,
-+static const struct display_timing auo_g121ean01_timing = {
-+	.pixelclock = { 60000000, 74400000, 90000000 },
-+	.hactive = { 1280, 1280, 1280 },
-+	.hfront_porch = { 20, 50, 100 },
-+	.hback_porch = { 20, 50, 100 },
-+	.hsync_len = { 30, 100, 200 },
-+	.vactive = { 800, 800, 800 },
-+	.vfront_porch = { 2, 10, 25 },
-+	.vback_porch = { 2, 10, 25 },
-+	.vsync_len = { 4, 18, 50 },
- };
++		/* Set min to RPn when we disable efficient freq */
++		if (val)
++			ret = slpc_set_param(slpc,
++					     SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
++					     slpc->min_freq);
++	}
++
+ 	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
+ 	mutex_unlock(&slpc->lock);
+ 	return ret;
+@@ -602,9 +609,8 @@ static int slpc_set_softlimits(struct intel_guc_slpc *slpc)
+ 		return ret;
  
- static const struct panel_desc auo_g121ean01 = {
--	.modes = &auo_g121ean01_mode,
--	.num_modes = 1,
-+	.timings = &auo_g121ean01_timing,
-+	.num_timings = 1,
- 	.bpc = 8,
- 	.size = {
- 		.width = 261,
+ 	if (!slpc->min_freq_softlimit) {
+-		ret = intel_guc_slpc_get_min_freq(slpc, &slpc->min_freq_softlimit);
+-		if (unlikely(ret))
+-			return ret;
++		/* Min softlimit is initialized to RPn */
++		slpc->min_freq_softlimit = slpc->min_freq;
+ 		slpc_to_gt(slpc)->defaults.min_freq = slpc->min_freq_softlimit;
+ 	} else {
+ 		return intel_guc_slpc_set_min_freq(slpc,
+@@ -755,6 +761,9 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ 		return ret;
+ 	}
+ 
++	/* Set cached value of ignore efficient freq */
++	intel_guc_slpc_set_ignore_eff_freq(slpc, slpc->ignore_eff_freq);
++
+ 	/* Revert SLPC min/max to softlimits if necessary */
+ 	ret = slpc_set_softlimits(slpc);
+ 	if (unlikely(ret)) {
+@@ -765,9 +774,6 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ 	/* Set cached media freq ratio mode */
+ 	intel_guc_slpc_set_media_ratio_mode(slpc, slpc->media_ratio_mode);
+ 
+-	/* Set cached value of ignore efficient freq */
+-	intel_guc_slpc_set_ignore_eff_freq(slpc, slpc->ignore_eff_freq);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.40.1
 
