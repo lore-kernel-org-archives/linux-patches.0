@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB60E1170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C11C433C8;
-	Mon, 21 Aug 2023 19:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290181170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E901C433C8;
+	Mon, 21 Aug 2023 19:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647460;
-	bh=MKqgisjxGHNLTOWD5WRTTpyoXsI2cg8WwtGfsQvazVI=;
+	s=korg; t=1692647463;
+	bh=WOXxEcVIQSNHMTI057wELF3FuRIP59K/RZVdNZJLuyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enPdRYBypGhFgw22t0AAZDa92cmGkZNUICu8qPjiO/Z57GhUScI389C0Ftpwn/QpF
-	 GKpijaEd7PlceI41V3icM66w4/zDMvDjZctMwkZxvEhJop7L2esAD7oIwyFQEXD3Ug
-	 O+EsSLKl2IdUK8tPUt5XByEqS3H/6A1ylVebfs6Q=
+	b=El/isUMiKOJo0VLdWf4abGtgCFPRVQVw4fpe8OooshauknaZ1ynns7KdDOJwGjbeE
+	 2oGFz0it3nOKOBUxNGDepBdwQJjwzgcNwI9anwuZx3oFuK9HoQS7G0ME2O1tPmplRr
+	 H4cV1HWhnCdmUtUUd+vnuEdTRwYHMiohNp/dX2ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/194] ASoC: amd: vangogh: Add check for acp config flags in vangogh platform
-Date: Mon, 21 Aug 2023 21:40:00 +0200
-Message-ID: <20230821194123.712203964@linuxfoundation.org>
+Subject: [PATCH 6.1 022/194] ARM: dts: imx6dl: prtrvt, prtvt7, prti6q, prtwd2: fix USB related warnings
+Date: Mon, 21 Aug 2023 21:40:01 +0200
+Message-ID: <20230821194123.761440492@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,60 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit e89f45edb747ed88e97a5771dd6d3dd1eb517873 ]
+[ Upstream commit 1d14bd943fa2bbdfda1efbcc080b298fed5f1803 ]
 
-We have SOF and generic ACP support enabled for Vangogh platform
-on some machines. Since we have same PCI id used for probing,
-add check for machine configuration flag to avoid conflict with
-newer pci drivers. Such machine flag has been initialized via
-dmi match on few Vangogh based machines. If no flag is
-specified probe and register older platform device.
+Fix USB-related warnings in prtrvt, prtvt7, prti6q and prtwd2 device trees
+by disabling unused usbphynop1 and usbphynop2 USB PHYs and providing proper
+configuration for the over-current detection. This fixes the following
+warnings with the current kernel:
+ usb_phy_generic usbphynop1: dummy supplies not allowed for exclusive requests
+ usb_phy_generic usbphynop2: dummy supplies not allowed for exclusive requests
+ imx_usb 2184200.usb: No over current polarity defined
 
-Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
-Link: https://lore.kernel.org/r/20230530110802.674939-1-venkataprasad.potturu@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+By the way, fix over-current detection on usbotg port for prtvt7, prti6q
+and prtwd2 boards. Only prtrvt do not have OC on USB OTG port.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/vangogh/acp5x.h     | 2 ++
- sound/soc/amd/vangogh/pci-acp5x.c | 7 ++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/imx6dl-prtrvt.dts   |  4 ++++
+ arch/arm/boot/dts/imx6qdl-prti6q.dtsi | 11 ++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/vangogh/acp5x.h b/sound/soc/amd/vangogh/acp5x.h
-index bd9f1c5684d17..ac1936a8c43ff 100644
---- a/sound/soc/amd/vangogh/acp5x.h
-+++ b/sound/soc/amd/vangogh/acp5x.h
-@@ -147,6 +147,8 @@ static inline void acp_writel(u32 val, void __iomem *base_addr)
- 	writel(val, base_addr - ACP5x_PHY_BASE_ADDRESS);
- }
+diff --git a/arch/arm/boot/dts/imx6dl-prtrvt.dts b/arch/arm/boot/dts/imx6dl-prtrvt.dts
+index 56bb1ca56a2df..36b031236e475 100644
+--- a/arch/arm/boot/dts/imx6dl-prtrvt.dts
++++ b/arch/arm/boot/dts/imx6dl-prtrvt.dts
+@@ -124,6 +124,10 @@ &usbh1 {
+ 	status = "disabled";
+ };
  
-+int snd_amd_acp_find_config(struct pci_dev *pci);
++&usbotg {
++	disable-over-current;
++};
 +
- static inline u64 acp_get_byte_count(struct i2s_stream_instance *rtd,
- 				     int direction)
- {
-diff --git a/sound/soc/amd/vangogh/pci-acp5x.c b/sound/soc/amd/vangogh/pci-acp5x.c
-index e0df17c88e8e0..c4634a8a17cdc 100644
---- a/sound/soc/amd/vangogh/pci-acp5x.c
-+++ b/sound/soc/amd/vangogh/pci-acp5x.c
-@@ -125,10 +125,15 @@ static int snd_acp5x_probe(struct pci_dev *pci,
- {
- 	struct acp5x_dev_data *adata;
- 	struct platform_device_info pdevinfo[ACP5x_DEVS];
--	unsigned int irqflags;
-+	unsigned int irqflags, flag;
- 	int ret, i;
- 	u32 addr, val;
+ &vpu {
+ 	status = "disabled";
+ };
+diff --git a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
+index f0db0d4471f40..36f84f4da6b0d 100644
+--- a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
+@@ -69,6 +69,7 @@ &usbh1 {
+ 	vbus-supply = <&reg_usb_h1_vbus>;
+ 	phy_type = "utmi";
+ 	dr_mode = "host";
++	disable-over-current;
+ 	status = "okay";
+ };
  
-+	/* Return if acp config flag is defined */
-+	flag = snd_amd_acp_find_config(pci);
-+	if (flag)
-+		return -ENODEV;
+@@ -78,10 +79,18 @@ &usbotg {
+ 	pinctrl-0 = <&pinctrl_usbotg>;
+ 	phy_type = "utmi";
+ 	dr_mode = "host";
+-	disable-over-current;
++	over-current-active-low;
+ 	status = "okay";
+ };
+ 
++&usbphynop1 {
++	status = "disabled";
++};
 +
- 	irqflags = IRQF_SHARED;
- 	if (pci->revision != 0x50)
- 		return -ENODEV;
++&usbphynop2 {
++	status = "disabled";
++};
++
+ &usdhc1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_usdhc1>;
 -- 
 2.40.1
 
