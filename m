@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7351B1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DEAC433C7;
-	Mon, 21 Aug 2023 20:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE341171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFCDC433C7;
+	Mon, 21 Aug 2023 20:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648236;
-	bh=RrXHtGy317FVEhZMESI/Ncw9A1/YQro2RoPblKc8aUc=;
+	s=korg; t=1692648239;
+	bh=fIxge3vpvc3fJVMQ/Z76NluC+pQh8uo6+X9V9h9k4G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQK0GotNXT6oG6j0FECfzYFDbnyPe5DO3K3VXsSnLQxaCgdsbQchCt92MRMCE2lfm
-	 ZNGlLqPqqv5lLoK1ZBxd+AfopgPQS2Y0TnnDURW6yR7shObukYXYN6uSnTFYeHsPHP
-	 5elEbrVCgTmggN8VZ+TQZw4xZi651xyzY6wnFZFg=
+	b=DYchMp5p7rsgmHVXmDHIs3W0QKzwdrs6H+ur40oh8Pm3Rsqz5mgLz9uczCr7tbqka
+	 0/sCxigjqPPl64dIBslVdg4IlJvxHtx6QYEpKlDSfVv5bQprmhBc1JIdZsT6SxHUGL
+	 LVKOGeeThhE/DTXpgHY9tntHD3ti+f3+C7ZzheAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.4 104/234] smb3: display network namespace in debug information
-Date: Mon, 21 Aug 2023 21:41:07 +0200
-Message-ID: <20230821194133.416635430@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yi Yang <yiyang13@huawei.com>,
+	Qiumiao Zhang <zhangqiumiao1@huawei.com>
+Subject: [PATCH 6.4 105/234] tty: n_gsm: fix the UAF caused by race condition in gsm_cleanup_mux
+Date: Mon, 21 Aug 2023 21:41:08 +0200
+Message-ID: <20230821194133.461921785@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,64 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-commit 7b38f6ddc97bf572c3422d3175e8678dd95502fa upstream.
+commit 3c4f8333b582487a2d1e02171f1465531cde53e3 upstream.
 
-We recently had problems where a network namespace was deleted
-causing hard to debug reconnect problems.  To help deal with
-configuration issues like this it is useful to dump the network
-namespace to better debug what happened.
+In commit 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux"), the UAF
+problem is not completely fixed. There is a race condition in
+gsm_cleanup_mux(), which caused this UAF.
 
-So add this to information displayed in /proc/fs/cifs/DebugData for
-the server (and channels if mounted with multichannel). For example:
+The UAF problem is triggered by the following race:
+task[5046]                     task[5054]
+-----------------------        -----------------------
+gsm_cleanup_mux();
+dlci = gsm->dlci[0];
+mutex_lock(&gsm->mutex);
+                               gsm_cleanup_mux();
+			       dlci = gsm->dlci[0]; //Didn't take the lock
+gsm_dlci_release(gsm->dlci[i]);
+gsm->dlci[i] = NULL;
+mutex_unlock(&gsm->mutex);
+                               mutex_lock(&gsm->mutex);
+			       dlci->dead = true; //UAF
 
-   Local Users To Server: 1 SecMode: 0x1 Req On Wire: 0 Net namespace: 4026531840
+Fix it by assigning values after mutex_lock().
 
-This can be easily compared with what is displayed for the
-processes on the system. For example /proc/1/ns/net in this case
-showed the same thing (see below), and we can see that the namespace
-is still valid in this example.
-
-   'net:[4026531840]'
-
-Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://syzkaller.appspot.com/text?tag=CrashReport&x=176188b5a80000
+Cc: stable <stable@kernel.org>
+Fixes: 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux")
+Fixes: aa371e96f05d ("tty: n_gsm: fix restart handling via CLD command")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Co-developed-by: Qiumiao Zhang <zhangqiumiao1@huawei.com>
+Signed-off-by: Qiumiao Zhang <zhangqiumiao1@huawei.com>
+Link: https://lore.kernel.org/r/20230811031121.153237-1-yiyang13@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_debug.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/tty/n_gsm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cifs_debug.c
-+++ b/fs/smb/client/cifs_debug.c
-@@ -153,6 +153,11 @@ cifs_dump_channel(struct seq_file *m, in
- 		   in_flight(server),
- 		   atomic_read(&server->in_send),
- 		   atomic_read(&server->num_waiters));
-+#ifdef CONFIG_NET_NS
-+	if (server->net)
-+		seq_printf(m, " Net namespace: %u ", server->net->ns.inum);
-+#endif /* NET_NS */
-+
- }
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -3042,12 +3042,13 @@ static void gsm_error(struct gsm_mux *gs
+ static void gsm_cleanup_mux(struct gsm_mux *gsm, bool disc)
+ {
+ 	int i;
+-	struct gsm_dlci *dlci = gsm->dlci[0];
++	struct gsm_dlci *dlci;
+ 	struct gsm_msg *txq, *ntxq;
  
- static inline const char *smb_speed_to_str(size_t bps)
-@@ -429,10 +434,15 @@ skip_rdma:
- 				server->reconnect_instance,
- 				server->srv_count,
- 				server->sec_mode, in_flight(server));
-+#ifdef CONFIG_NET_NS
-+		if (server->net)
-+			seq_printf(m, " Net namespace: %u ", server->net->ns.inum);
-+#endif /* NET_NS */
+ 	gsm->dead = true;
+ 	mutex_lock(&gsm->mutex);
  
- 		seq_printf(m, "\nIn Send: %d In MaxReq Wait: %d",
- 				atomic_read(&server->in_send),
- 				atomic_read(&server->num_waiters));
-+
- 		if (server->leaf_fullpath) {
- 			seq_printf(m, "\nDFS leaf full path: %s",
- 				   server->leaf_fullpath);
++	dlci = gsm->dlci[0];
+ 	if (dlci) {
+ 		if (disc && dlci->state != DLCI_CLOSED) {
+ 			gsm_dlci_begin_close(dlci);
 
 
