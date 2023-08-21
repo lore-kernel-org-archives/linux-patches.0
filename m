@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CB01171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA540C433C7;
-	Mon, 21 Aug 2023 20:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9237D1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CB4C433CA;
+	Mon, 21 Aug 2023 20:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648374;
-	bh=zApVTFQFRsLKPHHOMTpJVVlRGCvPHOzViZsR6SGu5pI=;
+	s=korg; t=1692648377;
+	bh=ssKlJnTABAjpqIuwDCywPavouhxTUo+/w8ya1mq2tLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZSfl+XFGTOZUrx1O4UbYPwRacUa9cNxSijj/n57MsR7TX31zW8QDvywc/frfRt4k
-	 8hd9iGzdJZEO3zRiZAB4iO00a7xmwdxYXS4lvgzOEL8YgF7c3SZaepm6T8u+FfJkWB
-	 Xfz2Qqvbqe7twChFHR2a67H+N44vrTou5uUAGGiU=
+	b=sYAlpFX8N4j+lbH8Un7DE+D8dHLU/rxg7bG7kvQof1mJHXbEmlFDKOvsHSzhAXQbu
+	 KShNIxoEM3/CvpOxrTGhqm+0pJe1Wp1keuuxzqSY1gdGm0xqPSJvl2fvIBENi2Bj6n
+	 w8jJZJCYSfJNH/CfrxZsqkWMCJ0MSOMjH4XXqyW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Bricart <christian@bricart.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 6.4 125/234] x86/static_call: Fix __static_call_fixup()
-Date: Mon, 21 Aug 2023 21:41:28 +0200
-Message-ID: <20230821194134.350318374@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 152/234] octeon_ep: cancel ctrl_mbox_task after intr_poll_task
+Date: Mon, 21 Aug 2023 21:41:55 +0200
+Message-ID: <20230821194135.548090239@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,51 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-commit 54097309620ef0dc2d7083783dc521c6a5fef957 upstream.
+[ Upstream commit 607a7a45cdf38c1901e0d81e4e00a2a88786330a ]
 
-Christian reported spurious module load crashes after some of Song's
-module memory layout patches.
+intr_poll_task may queue ctrl_mbox_task. The function
+octep_poll_non_ioq_interrupts_cn93_pf does this.
 
-Turns out that if the very last instruction on the very last page of the
-module is a 'JMP __x86_return_thunk' then __static_call_fixup() will
-trip a fault and die.
+When removing the driver and canceling these two works, cancel
+ctrl_mbox_task last to guarantee it does not run anymore.
 
-And while the module rework made this slightly more likely to happen,
-it's always been possible.
-
-Fixes: ee88d363d156 ("x86,static_call: Use alternative RET encoding")
-Reported-by: Christian Bricart <christian@bricart.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lkml.kernel.org/r/20230816104419.GA982867@hirez.programming.kicks-ass.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 24d4333233b3 ("octeon_ep: poll for control messages")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Link: https://lore.kernel.org/r/20230810150114.107765-4-mschmidt@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/static_call.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -186,6 +186,19 @@ EXPORT_SYMBOL_GPL(arch_static_call_trans
-  */
- bool __static_call_fixup(void *tramp, u8 op, void *dest)
- {
-+	unsigned long addr = (unsigned long)tramp;
-+	/*
-+	 * Not all .return_sites are a static_call trampoline (most are not).
-+	 * Check if the 3 bytes after the return are still kernel text, if not,
-+	 * then this definitely is not a trampoline and we need not worry
-+	 * further.
-+	 *
-+	 * This avoids the memcmp() below tripping over pagefaults etc..
-+	 */
-+	if (((addr >> PAGE_SHIFT) != ((addr + 7) >> PAGE_SHIFT)) &&
-+	    !kernel_text_address(addr + 7))
-+		return false;
-+
- 	if (memcmp(tramp+5, tramp_ud, 3)) {
- 		/* Not a trampoline site, not our problem. */
- 		return false;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index d8066bff5f7b1..ab69b6d625094 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -1200,7 +1200,6 @@ static void octep_remove(struct pci_dev *pdev)
+ 	if (!oct)
+ 		return;
+ 
+-	cancel_work_sync(&oct->ctrl_mbox_task);
+ 	netdev = oct->netdev;
+ 	if (netdev->reg_state == NETREG_REGISTERED)
+ 		unregister_netdev(netdev);
+@@ -1208,6 +1207,7 @@ static void octep_remove(struct pci_dev *pdev)
+ 	cancel_work_sync(&oct->tx_timeout_task);
+ 	oct->poll_non_ioq_intr = false;
+ 	cancel_delayed_work_sync(&oct->intr_poll_task);
++	cancel_work_sync(&oct->ctrl_mbox_task);
+ 	octep_device_cleanup(oct);
+ 	pci_release_mem_regions(pdev);
+ 	free_netdev(netdev);
+-- 
+2.40.1
+
 
 
