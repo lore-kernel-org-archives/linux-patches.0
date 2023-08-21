@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52C211703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:04:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58030C433C8;
-	Mon, 21 Aug 2023 20:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3093B11703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:04:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2418BC433C7;
+	Mon, 21 Aug 2023 20:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648289;
-	bh=aB3kEMDtCkTkPvotAwUWNN5+fRZCXq3IuE5i7s+0OTo=;
+	s=korg; t=1692648292;
+	bh=ZG6CXfQVPEcgKf8Q6ZsnrJBeMAokzq6ZEH4Kn6F8oOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKUSsIIuUtJiSnkvU8F0E+cll0khF0N1ov8G67+8lpypiT1ig6v4SAhUMAqNhDWeu
-	 l4biaBTFlohebD96w6gM0fOr16ekzhxKyO/OImQk6ABmclxX6YvmnW4kHCAz5LZZ1+
-	 zFuTDy5yYCxaCKvZk6pZQ1UUgmijCYjr2hL7e14Q=
+	b=sq7ZoD1Zvwh4auczSfhGmpDSx0uljDFOSiSbSNuN/Ht1kCwk6aiU2gz8NiN/aouCG
+	 dQu9MORkYboYbb9qhBKtw4BHClXsMwVUUqAu9X5lGP1DCtFmpchg6xRHcvZKDKvotJ
+	 DUzzSlsmfsMvbb+s3ruuNGoENEW36tG0vOh3ZKD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.4 121/234] x86/cpu: Cleanup the untrain mess
-Date: Mon, 21 Aug 2023 21:41:24 +0200
-Message-ID: <20230821194134.172641025@linuxfoundation.org>
+	Parker Newman <pnewman@connecttech.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.4 095/234] i2c: tegra: Fix i2c-tegra DMA config option processing
+Date: Mon, 21 Aug 2023 21:40:58 +0200
+Message-ID: <20230821194133.013057171@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,109 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Parker Newman <pnewman@connecttech.com>
 
-commit e7c25c441e9e0fa75b4c83e0b26306b702cfe90d upstream.
+commit 27ec43c77b5db780a56fc3a6d6de6bf2f74614f7 upstream.
 
-Since there can only be one active return_thunk, there only needs be
-one (matching) untrain_ret. It fundamentally doesn't make sense to
-allow multiple untrain_ret at the same time.
+Tegra processors prior to Tegra186 used APB DMA for I2C requiring
+CONFIG_TEGRA20_APB_DMA=y while Tegra186 and later use GPC DMA requiring
+CONFIG_TEGRA186_GPC_DMA=y.
 
-Fold all the 3 different untrain methods into a single (temporary)
-helper stub.
+The check for if the processor uses APB DMA is inverted and so the wrong
+DMA config options are checked.
 
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121149.042774962@infradead.org
+This means if CONFIG_TEGRA20_APB_DMA=y but CONFIG_TEGRA186_GPC_DMA=n
+with a Tegra186 or later processor the driver will incorrectly think DMA is
+enabled and attempt to request DMA channels that will never be availible,
+leaving the driver in a perpetual EPROBE_DEFER state.
+
+Fixes: 48cb6356fae1 ("i2c: tegra: Add GPCDMA support")
+Signed-off-by: Parker Newman <pnewman@connecttech.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Acked-by: Akhil R <akhilrajeev@nvidia.com>
+Link: https://lore.kernel.org/r/fcfcf9b3-c8c4-9b34-2ff8-cd60a3d490bd@connecttech.com
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |   19 +++++--------------
- arch/x86/kernel/cpu/bugs.c           |    1 +
- arch/x86/lib/retpoline.S             |    7 +++++++
- 3 files changed, 13 insertions(+), 14 deletions(-)
+ drivers/i2c/busses/i2c-tegra.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -268,9 +268,9 @@
- .endm
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -449,7 +449,7 @@ static int tegra_i2c_init_dma(struct teg
+ 	if (i2c_dev->is_vi)
+ 		return 0;
  
- #ifdef CONFIG_CPU_UNRET_ENTRY
--#define CALL_ZEN_UNTRAIN_RET	"call retbleed_untrain_ret"
-+#define CALL_UNTRAIN_RET	"call entry_untrain_ret"
- #else
--#define CALL_ZEN_UNTRAIN_RET	""
-+#define CALL_UNTRAIN_RET	""
- #endif
- 
- /*
-@@ -289,15 +289,10 @@
- 	defined(CONFIG_CALL_DEPTH_TRACKING) || defined(CONFIG_CPU_SRSO)
- 	VALIDATE_UNRET_END
- 	ALTERNATIVE_3 "",						\
--		      CALL_ZEN_UNTRAIN_RET, X86_FEATURE_UNRET,		\
-+		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
- 		      "call entry_ibpb", X86_FEATURE_ENTRY_IBPB,	\
- 		      __stringify(RESET_CALL_DEPTH), X86_FEATURE_CALL_DEPTH
- #endif
--
--#ifdef CONFIG_CPU_SRSO
--	ALTERNATIVE_2 "", "call srso_untrain_ret", X86_FEATURE_SRSO, \
--			  "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
--#endif
- .endm
- 
- .macro UNTRAIN_RET_FROM_CALL
-@@ -305,15 +300,10 @@
- 	defined(CONFIG_CALL_DEPTH_TRACKING)
- 	VALIDATE_UNRET_END
- 	ALTERNATIVE_3 "",						\
--		      CALL_ZEN_UNTRAIN_RET, X86_FEATURE_UNRET,		\
-+		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
- 		      "call entry_ibpb", X86_FEATURE_ENTRY_IBPB,	\
- 		      __stringify(RESET_CALL_DEPTH_FROM_CALL), X86_FEATURE_CALL_DEPTH
- #endif
--
--#ifdef CONFIG_CPU_SRSO
--	ALTERNATIVE_2 "", "call srso_untrain_ret", X86_FEATURE_SRSO, \
--			  "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
--#endif
- .endm
- 
- 
-@@ -351,6 +341,7 @@ extern void retbleed_untrain_ret(void);
- extern void srso_untrain_ret(void);
- extern void srso_alias_untrain_ret(void);
- 
-+extern void entry_untrain_ret(void);
- extern void entry_ibpb(void);
- 
- extern void (*x86_return_thunk)(void);
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2458,6 +2458,7 @@ static void __init srso_select_mitigatio
- 			 * like ftrace, static_call, etc.
- 			 */
- 			setup_force_cpu_cap(X86_FEATURE_RETHUNK);
-+			setup_force_cpu_cap(X86_FEATURE_UNRET);
- 
- 			if (boot_cpu_data.x86 == 0x19) {
- 				setup_force_cpu_cap(X86_FEATURE_SRSO_ALIAS);
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -290,6 +290,13 @@ SYM_CODE_START(srso_return_thunk)
- 	ud2
- SYM_CODE_END(srso_return_thunk)
- 
-+SYM_FUNC_START(entry_untrain_ret)
-+	ALTERNATIVE_2 "jmp retbleed_untrain_ret", \
-+		      "jmp srso_untrain_ret", X86_FEATURE_SRSO, \
-+		      "jmp srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
-+SYM_FUNC_END(entry_untrain_ret)
-+__EXPORT_THUNK(entry_untrain_ret)
-+
- SYM_CODE_START(__x86_return_thunk)
- 	UNWIND_HINT_FUNC
- 	ANNOTATE_NOENDBR
+-	if (!i2c_dev->hw->has_apb_dma) {
++	if (i2c_dev->hw->has_apb_dma) {
+ 		if (!IS_ENABLED(CONFIG_TEGRA20_APB_DMA)) {
+ 			dev_dbg(i2c_dev->dev, "APB DMA support not enabled\n");
+ 			return 0;
 
 
