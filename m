@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B54711707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C087BC433C8;
-	Mon, 21 Aug 2023 19:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A52C11707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0EAC433C8;
+	Mon, 21 Aug 2023 19:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647538;
-	bh=WrsdKtYVWp/fEUU5mLYh+O9aT/t0cfGxX6i+gKnAVjs=;
+	s=korg; t=1692647541;
+	bh=5612J5t2h9QIHiXc1izaY/Cq5xWKezMWcpkqLJ38ixU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXoEzlHhjWpd4ubP2GP1z4IZ4OJKyIh8gP3SLtXRcOgOslgu1lG7ez00ZoGKe8wYX
-	 SGreFlGhbCulHUg1s27VANCaBOndM02zmVPr0DCDmUPDGhXqJjVtrDZW4F0gzr2FjJ
-	 Rz2ThOlFxG3cXPDNDySsMbdKHtOBlFcxQ3VESRWk=
+	b=W87xt9F1QDRn98AHtL/ld+kl+Av3J2Tt7RvZ2lFnmsvoK24o2Jhc0nnV3SZ7CCwg/
+	 AZZQMSglUu4wiD2YDIwW4JTJ9rB/MYQduCCbf91H2TwXYhA+Fxj8YaahqwBex0AOwk
+	 VqyGCMnSaiIxXRqlL3a325bASF3ByX/P0yVu7n3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <nevenko.stupar@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Li Jun <jun.li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/194] drm/amd/display: Apply 60us prefetch for DCFCLK <= 300Mhz
-Date: Mon, 21 Aug 2023 21:40:11 +0200
-Message-ID: <20230821194124.200768520@linuxfoundation.org>
+Subject: [PATCH 6.1 050/194] usb: chipidea: imx: add missing USB PHY DPDM wakeup setting
+Date: Mon, 21 Aug 2023 21:40:29 +0200
+Message-ID: <20230821194125.002629395@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -39,64 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Lee <alvin.lee2@amd.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 7e60ab4eb3e4ba2adac46d737fdbbc5732bebd58 ]
+[ Upstream commit 53d061c19dc4cb68409df6dc11c40389c8c42a75 ]
 
-[Description]
-- Previously we wanted to apply extra 60us of prefetch for min DCFCLK
-  (200Mhz), but DCFCLK can be calculated to be 201Mhz which underflows
-  also without the extra prefetch
-- Instead, apply the the extra 60us prefetch for any DCFCLK freq <=
-  300Mhz
+USB PHY DPDM wakeup bit is enabled by default, when USB wakeup
+is not required(/sys/.../wakeup is disabled), this bit should be
+disabled, otherwise we will have unexpected wakeup if do USB device
+connect/disconnect while system sleep.
+This bit can be enabled for both host and device mode.
 
-Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Message-ID: <20230517081907.3410465-3-xu.yang_2@nxp.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c    | 4 ++--
- .../gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h    | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/chipidea/usbmisc_imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-index 2bb768413c92a..19f55657272e4 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-@@ -808,7 +808,7 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
- 					v->SwathHeightC[k],
- 					TWait,
- 					(v->DRAMSpeedPerState[mode_lib->vba.VoltageLevel] <= MEM_STROBE_FREQ_MHZ ||
--						v->DCFCLKPerState[mode_lib->vba.VoltageLevel] <= MIN_DCFCLK_FREQ_MHZ) ?
-+						v->DCFCLKPerState[mode_lib->vba.VoltageLevel] <= DCFCLK_FREQ_EXTRA_PREFETCH_REQ_MHZ) ?
- 							mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
- 					/* Output */
- 					&v->DSTXAfterScaler[k],
-@@ -3289,7 +3289,7 @@ void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
- 							v->swath_width_chroma_ub_this_state[k],
- 							v->SwathHeightYThisState[k],
- 							v->SwathHeightCThisState[k], v->TWait,
--							(v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ || v->DCFCLKState[i][j] <= MIN_DCFCLK_FREQ_MHZ) ?
-+							(v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ || v->DCFCLKState[i][j] <= DCFCLK_FREQ_EXTRA_PREFETCH_REQ_MHZ) ?
- 									mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
+diff --git a/drivers/usb/chipidea/usbmisc_imx.c b/drivers/usb/chipidea/usbmisc_imx.c
+index bac0f5458cab9..2318c7906acdb 100644
+--- a/drivers/usb/chipidea/usbmisc_imx.c
++++ b/drivers/usb/chipidea/usbmisc_imx.c
+@@ -135,7 +135,7 @@
+ #define TXVREFTUNE0_MASK		(0xf << 20)
  
- 							/* Output */
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-index e92eee2c664d0..a475775bc3894 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-@@ -52,7 +52,7 @@
- #define BPP_BLENDED_PIPE 0xffffffff
+ #define MX6_USB_OTG_WAKEUP_BITS (MX6_BM_WAKEUP_ENABLE | MX6_BM_VBUS_WAKEUP | \
+-				 MX6_BM_ID_WAKEUP)
++				 MX6_BM_ID_WAKEUP | MX6SX_BM_DPDM_WAKEUP_EN)
  
- #define MEM_STROBE_FREQ_MHZ 1600
--#define MIN_DCFCLK_FREQ_MHZ 200
-+#define DCFCLK_FREQ_EXTRA_PREFETCH_REQ_MHZ 300
- #define MEM_STROBE_MAX_DELIVERY_TIME_US 60.0
- 
- struct display_mode_lib;
+ struct usbmisc_ops {
+ 	/* It's called once when probe a usb device */
 -- 
 2.40.1
 
