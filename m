@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF181171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:00:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E11C433C8;
-	Mon, 21 Aug 2023 20:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8E31171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:00:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869EAC433AD;
+	Mon, 21 Aug 2023 20:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648052;
-	bh=omgmah/6V8IykbrHp1i8bRAcr4/6bLO2qoNIvbmh8HI=;
+	s=korg; t=1692648054;
+	bh=hW5diEkEytNcR/8Ui4cVc8vwgamNsa3DvTByOMXbXwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzALY+wdQq92xUTu7gX6E3zt1TK0+k6RYmA465cZKr7djf8Bjf3QuOmXIiEs2Vu/E
-	 Y20OyQdP+Muk88lgy+5jYFTz1ppCYN7kxH6wHy1iR2qJTfIyCYoxGPSuwoVFMCaGb0
-	 V7Qz5EVNp+GCg2ZDFc1hJHsdZckP64QhCw75TkBw=
+	b=cqoZdbDrX2qBDOhbvuRudnC7N8VZXepmvRnBOv7SZzzGDg9kWtMQr71skd/RaO9vg
+	 /BderDaZOW1x4CvnRpf0bFQP7+H+JbIrNVHsRdp+S59nLCxRqLs/hhLLZnlQOQZoyx
+	 Yi89y/Nyxa6vM6AQ6H8cW+vDLg+s/vKmp+zAE7cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Jun Lei <jun.lei@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 038/234] RDMA/bnxt_re: consider timeout of destroy ah as success.
-Date: Mon, 21 Aug 2023 21:40:01 +0200
-Message-ID: <20230821194130.401560350@linuxfoundation.org>
+Subject: [PATCH 6.4 039/234] drm/amd/display: Skip DPP DTO update if root clock is gated
+Date: Mon, 21 Aug 2023 21:40:02 +0200
+Message-ID: <20230821194130.445711282@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,118 +38,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit bb8c93618fb0b8567d309f1aebc6df0cd31da1a2 ]
+[ Upstream commit 30f90f3c1c2c63c2fa44f61233737d27b72637c2 ]
 
-If destroy_ah is timed out, it is likely to be destroyed by firmware
-but it is taking longer time due to temporary slowness
-in processing the rcfw command. In worst case, there might be
-AH resource leak in firmware.
+[Why]
+Hardware implements root clock gating by utilizing the DPP DTO registers
+with a special case of DTO enabled, phase = 0, modulo = 1. This
+conflicts with our policy to always update the DPPDTO for cases where
+it's expected to be disabled.
 
-Sending timeout return value can dump warning message from ib_core
-which can be avoided if we map timeout of destroy_ah as success.
+The pipes unexpectedly enter a higher power state than expected because
+of this programming flow.
 
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1686308514-11996-14-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[How]
+Guard the upper layers of HWSS against this hardware quirk with
+programming the register with an internal state flag in DCCG.
+
+While technically acting as global state for the DCCG, HWSS shouldn't be
+expected to understand the hardware quirk for having DTO disabled
+causing more power than DTO enabled with this specific setting.
+
+This also prevents sequencing errors from occuring in the future if
+we have to program DPP DTO in multiple locations.
+
+Acked-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/bnxt_re.h  |  2 ++
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 16 ++++++++++++----
- drivers/infiniband/hw/bnxt_re/qplib_sp.c |  8 +++++---
- drivers/infiniband/hw/bnxt_re/qplib_sp.h |  4 ++--
- 4 files changed, 21 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn31/dcn31_dccg.c   | 8 ++++++++
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c | 5 +++++
+ drivers/gpu/drm/amd/display/dc/inc/hw/dccg.h        | 1 +
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/bnxt_re.h b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
-index 2c95e6f3d47ac..eef3ef3fabb42 100644
---- a/drivers/infiniband/hw/bnxt_re/bnxt_re.h
-+++ b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
-@@ -179,6 +179,8 @@ struct bnxt_re_dev {
- #define BNXT_RE_ROCEV2_IPV4_PACKET	2
- #define BNXT_RE_ROCEV2_IPV6_PACKET	3
- 
-+#define BNXT_RE_CHECK_RC(x) ((x) && ((x) != -ETIMEDOUT))
-+
- static inline struct device *rdev_to_dev(struct bnxt_re_dev *rdev)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_dccg.c
+index 4c2fdfea162f5..65c1d754e2d6b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_dccg.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_dccg.c
+@@ -47,6 +47,14 @@ void dccg31_update_dpp_dto(struct dccg *dccg, int dpp_inst, int req_dppclk)
  {
- 	if (rdev)
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index ebe6852c40e8c..e7f153ee27541 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -614,12 +614,20 @@ int bnxt_re_destroy_ah(struct ib_ah *ib_ah, u32 flags)
- {
- 	struct bnxt_re_ah *ah = container_of(ib_ah, struct bnxt_re_ah, ib_ah);
- 	struct bnxt_re_dev *rdev = ah->rdev;
-+	bool block = true;
-+	int rc = 0;
+ 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
  
--	bnxt_qplib_destroy_ah(&rdev->qplib_res, &ah->qplib_ah,
--			      !(flags & RDMA_DESTROY_AH_SLEEPABLE));
-+	block = !(flags & RDMA_DESTROY_AH_SLEEPABLE);
-+	rc = bnxt_qplib_destroy_ah(&rdev->qplib_res, &ah->qplib_ah, block);
-+	if (BNXT_RE_CHECK_RC(rc)) {
-+		if (rc == -ETIMEDOUT)
-+			rc = 0;
-+		else
-+			goto fail;
++	if (dccg->dpp_clock_gated[dpp_inst]) {
++		/*
++		 * Do not update the DPPCLK DTO if the clock is stopped.
++		 * It is treated the same as if the pipe itself were in PG.
++		 */
++		return;
 +	}
- 	atomic_dec(&rdev->ah_count);
--
--	return 0;
-+fail:
-+	return rc;
- }
- 
- static u8 bnxt_re_stack_to_dev_nw_type(enum rdma_network_type ntype)
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index b967a17a44beb..10919532bca29 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -468,13 +468,14 @@ int bnxt_qplib_create_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
- 	return 0;
- }
- 
--void bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
--			   bool block)
-+int bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
-+			  bool block)
++
+ 	if (dccg->ref_dppclk && req_dppclk) {
+ 		int ref_dppclk = dccg->ref_dppclk;
+ 		int modulo, phase;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
+index de7bfba2c1798..6ba24d5848b20 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
+@@ -322,6 +322,9 @@ static void dccg314_dpp_root_clock_control(
  {
- 	struct bnxt_qplib_rcfw *rcfw = res->rcfw;
- 	struct creq_destroy_ah_resp resp = {};
- 	struct bnxt_qplib_cmdqmsg msg = {};
- 	struct cmdq_destroy_ah req = {};
-+	int rc;
+ 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
  
- 	/* Clean up the AH table in the device */
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
-@@ -485,7 +486,8 @@ void bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
- 
- 	bnxt_qplib_fill_cmdqmsg(&msg, &req, &resp, NULL, sizeof(req),
- 				sizeof(resp), block);
--	bnxt_qplib_rcfw_send_message(rcfw, &msg);
-+	rc = bnxt_qplib_rcfw_send_message(rcfw, &msg);
-+	return rc;
++	if (dccg->dpp_clock_gated[dpp_inst] == clock_on)
++		return;
++
+ 	if (clock_on) {
+ 		/* turn off the DTO and leave phase/modulo at max */
+ 		REG_UPDATE(DPPCLK_DTO_CTRL, DPPCLK_DTO_ENABLE[dpp_inst], 0);
+@@ -335,6 +338,8 @@ static void dccg314_dpp_root_clock_control(
+ 			  DPPCLK0_DTO_PHASE, 0,
+ 			  DPPCLK0_DTO_MODULO, 1);
+ 	}
++
++	dccg->dpp_clock_gated[dpp_inst] = !clock_on;
  }
  
- /* MRW */
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-index 5de874659cdfa..4061616048e85 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-@@ -327,8 +327,8 @@ int bnxt_qplib_set_func_resources(struct bnxt_qplib_res *res,
- 				  struct bnxt_qplib_ctx *ctx);
- int bnxt_qplib_create_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
- 			 bool block);
--void bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
--			   bool block);
-+int bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
-+			  bool block);
- int bnxt_qplib_alloc_mrw(struct bnxt_qplib_res *res,
- 			 struct bnxt_qplib_mrw *mrw);
- int bnxt_qplib_dereg_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mrw,
+ static const struct dccg_funcs dccg314_funcs = {
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/dccg.h b/drivers/gpu/drm/amd/display/dc/inc/hw/dccg.h
+index ad6acd1b34e1d..9651cccb084a3 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw/dccg.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw/dccg.h
+@@ -68,6 +68,7 @@ struct dccg {
+ 	const struct dccg_funcs *funcs;
+ 	int pipe_dppclk_khz[MAX_PIPES];
+ 	int ref_dppclk;
++	bool dpp_clock_gated[MAX_PIPES];
+ 	//int dtbclk_khz[MAX_PIPES];/* TODO needs to be removed */
+ 	//int audio_dtbclk_khz;/* TODO needs to be removed */
+ 	//int ref_dtbclk_khz;/* TODO needs to be removed */
 -- 
 2.40.1
 
