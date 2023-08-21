@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3FD1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B37C433C9;
-	Mon, 21 Aug 2023 20:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47281171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CF6C433C8;
+	Mon, 21 Aug 2023 20:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648063;
-	bh=svC5EW/wWcYF6hFHxGFiGd80cnVgqTU0VKWeb2IcgpA=;
+	s=korg; t=1692648066;
+	bh=dbRHxPMkQ9nrNWUKoWZNWzUzsxBX/FS2dqF9mwM0wSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/YPGZ7Q3PGwWvxnd9oto9l5iOr7dvgNahskEKYVJqTOIqMUhGA8lbq1v+TgFJe8n
-	 G/vHabWKSBa41Y8+/BPwR8q28gueGhyvOGuJ/MKggPjMOQqPaRzUedeJYa3ajuPn2S
-	 7IlnIwLHh5ufZcRyljT8dauNaqeFiyOlsiX0YiLc=
+	b=Zgo36UyQP8jc/RRIV6GOYcjk0vpIRt6HKZwFPFZ+6gDHCoY3qOu9Tvu2Hr7YXCX9E
+	 Bu1qF6yPhcuv502vwvkWp2dfTdkxpJ8KfZaD3Pi13VAUv/riHw2xTg/bzLUoHvZe3n
+	 4HWdMgDOWiVWcL0wYUzm1qAdbbCFKF+cF3fD4ZlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Even Xu <even.xu@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 042/234] HID: intel-ish-hid: ipc: Add Arrow Lake PCI device ID
-Date: Mon, 21 Aug 2023 21:40:05 +0200
-Message-ID: <20230821194130.597203646@linuxfoundation.org>
+Subject: [PATCH 6.4 043/234] Revert "[PATCH] uml: export symbols added by GCC hardened"
+Date: Mon, 21 Aug 2023 21:40:06 +0200
+Message-ID: <20230821194130.636870207@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,45 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Even Xu <even.xu@intel.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 4982126e3029cd59fbd1da0d9cc0365a0585fe64 ]
+[ Upstream commit 8635e8df477bc77837886da206f4915576f88fec ]
 
-Add device ID of Arrow Lake-H into ishtp support list.
+This reverts commit cead61a6717a9873426b08d73a34a325e3546f5d.
 
-Signed-off-by: Even Xu <even.xu@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+It exported __stack_smash_handler and __guard, while they may not be
+defined by anyone.
+
+The code *declares* __stack_smash_handler and __guard. It does not
+create weak symbols. If no external library is linked, they are left
+undefined, but yet exported.
+
+If a loadable module tries to access non-existing symbols, bad things
+(a page fault, NULL pointer dereference, etc.) will happen. So, the
+current code is wrong and dangerous.
+
+If the code were written as follows, it would *define* them as weak
+symbols so modules would be able to get access to them.
+
+  void (*__stack_smash_handler)(void *) __attribute__((weak));
+  EXPORT_SYMBOL(__stack_smash_handler);
+
+  long __guard __attribute__((weak));
+  EXPORT_SYMBOL(__guard);
+
+In fact, modpost forbids exporting undefined symbols. It shows an error
+message if it detects such a mistake.
+
+  ERROR: modpost: "..." [...] was exported without definition
+
+Unfortunately, it is checked only when the code is built as modular.
+The problem described above has been unnoticed for a long time because
+arch/um/os-Linux/user_syms.c is always built-in.
+
+With a planned change in Kbuild, exporting undefined symbols will always
+result in a build error instead of a run-time error. It is a good thing,
+but we need to fix the breakage in advance.
+
+One fix is to define weak symbols as shown above. An alternative is to
+export them conditionally as follows:
+
+  #ifdef CONFIG_STACKPROTECTOR
+  extern void __stack_smash_handler(void *);
+  EXPORT_SYMBOL(__stack_smash_handler);
+
+  external long __guard;
+  EXPORT_SYMBOL(__guard);
+  #endif
+
+This is what other architectures do; EXPORT_SYMBOL(__stack_chk_guard)
+is guarded by #ifdef CONFIG_STACKPROTECTOR.
+
+However, adding the #ifdef guard is not sensible because UML cannot
+enable the stack-protector in the first place! (Please note UML does
+not select HAVE_STACKPROTECTOR in Kconfig.)
+
+So, the code is already broken (and unused) in multiple ways.
+
+Just remove.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/hw-ish.h  | 1 +
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 1 +
- 2 files changed, 2 insertions(+)
+ arch/um/os-Linux/user_syms.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/hw-ish.h b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-index fc108f19a64c3..e99f3a3c65e15 100644
---- a/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-+++ b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-@@ -33,6 +33,7 @@
- #define ADL_N_DEVICE_ID		0x54FC
- #define RPL_S_DEVICE_ID		0x7A78
- #define MTL_P_DEVICE_ID		0x7E45
-+#define ARL_H_DEVICE_ID		0x7745
+diff --git a/arch/um/os-Linux/user_syms.c b/arch/um/os-Linux/user_syms.c
+index 9b62a9d352b3a..a310ae27b479a 100644
+--- a/arch/um/os-Linux/user_syms.c
++++ b/arch/um/os-Linux/user_syms.c
+@@ -37,13 +37,6 @@ EXPORT_SYMBOL(vsyscall_ehdr);
+ EXPORT_SYMBOL(vsyscall_end);
+ #endif
  
- #define	REVISION_ID_CHT_A0	0x6
- #define	REVISION_ID_CHT_Ax_SI	0x0
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index 7120b30ac51d0..55cb25038e632 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -44,6 +44,7 @@ static const struct pci_device_id ish_pci_tbl[] = {
- 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, ADL_N_DEVICE_ID)},
- 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, RPL_S_DEVICE_ID)},
- 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MTL_P_DEVICE_ID)},
-+	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, ARL_H_DEVICE_ID)},
- 	{0, }
- };
- MODULE_DEVICE_TABLE(pci, ish_pci_tbl);
+-/* Export symbols used by GCC for the stack protector. */
+-extern void __stack_smash_handler(void *) __attribute__((weak));
+-EXPORT_SYMBOL(__stack_smash_handler);
+-
+-extern long __guard __attribute__((weak));
+-EXPORT_SYMBOL(__guard);
+-
+ #ifdef _FORTIFY_SOURCE
+ extern int __sprintf_chk(char *str, int flag, size_t len, const char *format);
+ EXPORT_SYMBOL(__sprintf_chk);
 -- 
 2.40.1
 
