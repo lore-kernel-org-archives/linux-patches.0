@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D83211703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D03C433C7;
-	Mon, 21 Aug 2023 19:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E331311703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C3FC433C7;
+	Mon, 21 Aug 2023 19:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647951;
-	bh=iWDUk4P8sKQkD6Cjm9oKNbn77WdQ3tBoUc1YZyoI8eE=;
+	s=korg; t=1692647953;
+	bh=7a8AK98anMFfua3NLL8RUEamcE2sPD8UDE4T5o3pr8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHdEt55ca4r0pdeUVX7clmNe4XoMKCJetQMkrA9h3W7Q46C8dpPH/OP3FFIY455dA
-	 HrpHLu1YHr131kx0M+wi6IVNeBeeKKS1U5mzP+jfKtRdw2QaI3QEey+cVDZDIaf6w/
-	 JLFpQZG8GuDYmKM3rywh2u4UzLUBXGOso8q1vhEA=
+	b=o1SkIJXyfaPzh5hx/c1zQDVIWfGlv53+CHZR3gHDe38Ma/T62Iz0QYNRkoHSgfh4L
+	 o75lNEKArVbi/345N9tru7CLuF7UOo78CpqTPpWWvcAEKMA8sNMbIoWGRUaSYGqeey
+	 uCl6HLSuj002EA5iwET+z9eah+5xvLwtrFJ31Lyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 167/194] zsmalloc: allow only one active pool compaction context
-Date: Mon, 21 Aug 2023 21:42:26 +0200
-Message-ID: <20230821194130.043557852@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 158/194] mmc: wbsd: fix double mmc_free_host() in wbsd_init()
+Date: Mon, 21 Aug 2023 21:42:17 +0200
+Message-ID: <20230821194129.655817446@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,87 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit d2658f2052c7db6ec0a79977205f8cf1cb9effc2 upstream.
+commit d83035433701919ac6db15f7737cbf554c36c1a6 upstream.
 
-zsmalloc pool can be compacted concurrently by many contexts,
-e.g.
+mmc_free_host() has already be called in wbsd_free_mmc(),
+remove the mmc_free_host() in error path in wbsd_init().
 
- cc1 handle_mm_fault()
-      do_anonymous_page()
-       __alloc_pages_slowpath()
-        try_to_free_pages()
-         do_try_to_free_pages(
-          lru_gen_shrink_node()
-           shrink_slab()
-            do_shrink_slab()
-             zs_shrinker_scan()
-              zs_compact()
-
-Pool compaction is currently (basically) single-threaded as
-it is performed under pool->lock. Having multiple compaction
-threads results in unnecessary contention, as each thread
-competes for pool->lock. This, in turn, affects all zsmalloc
-operations such as zs_malloc(), zs_map_object(), zs_free(), etc.
-
-Introduce the pool->compaction_in_progress atomic variable,
-which ensures that only one compaction context can run at a
-time. This reduces overall pool->lock contention in (corner)
-cases when many contexts attempt to shrink zspool simultaneously.
-
-Link: https://lkml.kernel.org/r/20230418074639.1903197-1-senozhatsky@chromium.org
-Fixes: c0547d0b6a4b ("zsmalloc: consolidate zs_pool's migrate_lock and size_class's locks")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: dc5b9b50fc9d ("mmc: wbsd: fix return value check of mmc_add_host()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230807124443.3431366-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zsmalloc.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/mmc/host/wbsd.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -246,6 +246,7 @@ struct zs_pool {
- 	struct work_struct free_work;
- #endif
- 	spinlock_t lock;
-+	atomic_t compaction_in_progress;
- };
+--- a/drivers/mmc/host/wbsd.c
++++ b/drivers/mmc/host/wbsd.c
+@@ -1705,8 +1705,6 @@ static int wbsd_init(struct device *dev,
  
- struct zspage {
-@@ -2100,6 +2101,15 @@ unsigned long zs_compact(struct zs_pool
- 	struct size_class *class;
- 	unsigned long pages_freed = 0;
- 
-+	/*
-+	 * Pool compaction is performed under pool->lock so it is basically
-+	 * single-threaded. Having more than one thread in __zs_compact()
-+	 * will increase pool->lock contention, which will impact other
-+	 * zsmalloc operations that need pool->lock.
-+	 */
-+	if (atomic_xchg(&pool->compaction_in_progress, 1))
-+		return 0;
-+
- 	for (i = ZS_SIZE_CLASSES - 1; i >= 0; i--) {
- 		class = pool->size_class[i];
- 		if (class->index != i)
-@@ -2107,6 +2117,7 @@ unsigned long zs_compact(struct zs_pool
- 		pages_freed += __zs_compact(pool, class);
+ 		wbsd_release_resources(host);
+ 		wbsd_free_mmc(dev);
+-
+-		mmc_free_host(mmc);
+ 		return ret;
  	}
- 	atomic_long_add(pages_freed, &pool->stats.pages_compacted);
-+	atomic_set(&pool->compaction_in_progress, 0);
  
- 	return pages_freed;
- }
-@@ -2193,6 +2204,7 @@ struct zs_pool *zs_create_pool(const cha
- 
- 	init_deferred_free(pool);
- 	spin_lock_init(&pool->lock);
-+	atomic_set(&pool->compaction_in_progress, 0);
- 
- 	pool->name = kstrdup(name, GFP_KERNEL);
- 	if (!pool->name)
 
 
