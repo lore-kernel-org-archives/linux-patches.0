@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508C81171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DC2C433C7;
-	Mon, 21 Aug 2023 20:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41CB1171B
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58715C433C8;
+	Mon, 21 Aug 2023 20:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648542;
-	bh=O32kj4yH/B2k7Rwj56EJ6QAMxyK5Qa8KPE147Fj8FEw=;
+	s=korg; t=1692648547;
+	bh=qeudcGN8HNgBz5SgkXygnoDhjvgcagvT5TCfF54u/7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUUDmVLc8j6uxXuRHBSEseq6Km11SzZlTFZkUSCz2NGnnDhR0MXA50QGniQLv+0On
-	 g6zEw8+kQuMbTrevzcgB5fWogMaRjsvn3kCO8tCjyHdyblhjb0p72RI5dhIQgOZe3Z
-	 lbpgPKREZgKhpKPV1W8CzOEqkmlygT/tDetR9qdM=
+	b=sv4QdEu5y2EPPK7chkclov67qLjiP+yBNR+LTW5uUiYlkU8tncnXtMWgOM8mrwuE7
+	 O8TA8sMV3lRqm62h5Knkfiar1JBZb3L7ZYVCL2/9JLKvlOv1y49wPr5lbbZYQ0/ccx
+	 JvcC8PzHyiRsjxDcW+n1qJJZ1oRB+Qnbq26RImlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Eric Biggers <ebiggers@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 212/234] blk-crypto: dynamically allocate fallback profile
-Date: Mon, 21 Aug 2023 21:42:55 +0200
-Message-ID: <20230821194138.244732182@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Marek Vasut <marex@denx.de>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Adam Ford <aford173@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 187/234] arm64: dts: imx8mm: Drop CSI1 PHY reference clock configuration
+Date: Mon, 21 Aug 2023 21:42:30 +0200
+Message-ID: <20230821194137.105468441@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,129 +38,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+From: Fabio Estevam <festevam@denx.de>
 
-commit c984ff1423ae9f70b1f28ce811856db0d9c99021 upstream.
+[ Upstream commit f02b53375e8f14b4c27a14f6e4fb6e89914fdc29 ]
 
-blk_crypto_profile_init() calls lockdep_register_key(), which warns and
-does not register if the provided memory is a static object.
-blk-crypto-fallback currently has a static blk_crypto_profile and calls
-blk_crypto_profile_init() thereupon, resulting in the warning and
-failure to register.
+The CSI1 PHY reference clock is limited to 125 MHz according to:
+i.MX 8M Mini Applications Processor Reference Manual, Rev. 3, 11/2020
+Table 5-1. Clock Root Table (continued) / page 307
+Slice Index n = 123 .
 
-Fortunately it is simple enough to use a dynamically allocated profile
-and make lockdep function correctly.
+Currently the IMX8MM_CLK_CSI1_PHY_REF clock is configured to be
+fed directly from 1 GHz PLL2 , which overclocks them. Instead, drop
+the configuration altogether, which defaults the clock to 24 MHz REF
+clock input, which for the PHY reference clock is just fine.
 
-Fixes: 2fb48d88e77f ("blk-crypto: use dynamic lock class for blk_crypto_profile::lock")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20230817141615.15387-1-sweettea-kernel@dorminy.me
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Based on a patch from Marek Vasut for the imx8mn.
+
+Fixes: e523b7c54c05 ("arm64: dts: imx8mm: Add CSI nodes")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-crypto-fallback.c |   36 +++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/block/blk-crypto-fallback.c
-+++ b/block/blk-crypto-fallback.c
-@@ -78,7 +78,7 @@ static struct blk_crypto_fallback_keyslo
- 	struct crypto_skcipher *tfms[BLK_ENCRYPTION_MODE_MAX];
- } *blk_crypto_keyslots;
- 
--static struct blk_crypto_profile blk_crypto_fallback_profile;
-+static struct blk_crypto_profile *blk_crypto_fallback_profile;
- static struct workqueue_struct *blk_crypto_wq;
- static mempool_t *blk_crypto_bounce_page_pool;
- static struct bio_set crypto_bio_split;
-@@ -292,7 +292,7 @@ static bool blk_crypto_fallback_encrypt_
- 	 * Get a blk-crypto-fallback keyslot that contains a crypto_skcipher for
- 	 * this bio's algorithm and key.
- 	 */
--	blk_st = blk_crypto_get_keyslot(&blk_crypto_fallback_profile,
-+	blk_st = blk_crypto_get_keyslot(blk_crypto_fallback_profile,
- 					bc->bc_key, &slot);
- 	if (blk_st != BLK_STS_OK) {
- 		src_bio->bi_status = blk_st;
-@@ -395,7 +395,7 @@ static void blk_crypto_fallback_decrypt_
- 	 * Get a blk-crypto-fallback keyslot that contains a crypto_skcipher for
- 	 * this bio's algorithm and key.
- 	 */
--	blk_st = blk_crypto_get_keyslot(&blk_crypto_fallback_profile,
-+	blk_st = blk_crypto_get_keyslot(blk_crypto_fallback_profile,
- 					bc->bc_key, &slot);
- 	if (blk_st != BLK_STS_OK) {
- 		bio->bi_status = blk_st;
-@@ -499,7 +499,7 @@ bool blk_crypto_fallback_bio_prep(struct
- 		return false;
- 	}
- 
--	if (!__blk_crypto_cfg_supported(&blk_crypto_fallback_profile,
-+	if (!__blk_crypto_cfg_supported(blk_crypto_fallback_profile,
- 					&bc->bc_key->crypto_cfg)) {
- 		bio->bi_status = BLK_STS_NOTSUPP;
- 		return false;
-@@ -526,7 +526,7 @@ bool blk_crypto_fallback_bio_prep(struct
- 
- int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
- {
--	return __blk_crypto_evict_key(&blk_crypto_fallback_profile, key);
-+	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
- }
- 
- static bool blk_crypto_fallback_inited;
-@@ -534,7 +534,6 @@ static int blk_crypto_fallback_init(void
- {
- 	int i;
- 	int err;
--	struct blk_crypto_profile *profile = &blk_crypto_fallback_profile;
- 
- 	if (blk_crypto_fallback_inited)
- 		return 0;
-@@ -545,18 +544,27 @@ static int blk_crypto_fallback_init(void
- 	if (err)
- 		goto out;
- 
--	err = blk_crypto_profile_init(profile, blk_crypto_num_keyslots);
--	if (err)
-+	/* Dynamic allocation is needed because of lockdep_register_key(). */
-+	blk_crypto_fallback_profile =
-+		kzalloc(sizeof(*blk_crypto_fallback_profile), GFP_KERNEL);
-+	if (!blk_crypto_fallback_profile) {
-+		err = -ENOMEM;
- 		goto fail_free_bioset;
-+	}
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+index d6b36f04f3dc1..1a647d4072ba0 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+@@ -1221,10 +1221,9 @@
+ 				compatible = "fsl,imx8mm-mipi-csi2";
+ 				reg = <0x32e30000 0x1000>;
+ 				interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+-				assigned-clocks = <&clk IMX8MM_CLK_CSI1_CORE>,
+-						  <&clk IMX8MM_CLK_CSI1_PHY_REF>;
+-				assigned-clock-parents = <&clk IMX8MM_SYS_PLL2_1000M>,
+-							  <&clk IMX8MM_SYS_PLL2_1000M>;
++				assigned-clocks = <&clk IMX8MM_CLK_CSI1_CORE>;
++				assigned-clock-parents = <&clk IMX8MM_SYS_PLL2_1000M>;
 +
-+	err = blk_crypto_profile_init(blk_crypto_fallback_profile,
-+				      blk_crypto_num_keyslots);
-+	if (err)
-+		goto fail_free_profile;
- 	err = -ENOMEM;
- 
--	profile->ll_ops = blk_crypto_fallback_ll_ops;
--	profile->max_dun_bytes_supported = BLK_CRYPTO_MAX_IV_SIZE;
-+	blk_crypto_fallback_profile->ll_ops = blk_crypto_fallback_ll_ops;
-+	blk_crypto_fallback_profile->max_dun_bytes_supported = BLK_CRYPTO_MAX_IV_SIZE;
- 
- 	/* All blk-crypto modes have a crypto API fallback. */
- 	for (i = 0; i < BLK_ENCRYPTION_MODE_MAX; i++)
--		profile->modes_supported[i] = 0xFFFFFFFF;
--	profile->modes_supported[BLK_ENCRYPTION_MODE_INVALID] = 0;
-+		blk_crypto_fallback_profile->modes_supported[i] = 0xFFFFFFFF;
-+	blk_crypto_fallback_profile->modes_supported[BLK_ENCRYPTION_MODE_INVALID] = 0;
- 
- 	blk_crypto_wq = alloc_workqueue("blk_crypto_wq",
- 					WQ_UNBOUND | WQ_HIGHPRI |
-@@ -597,7 +605,9 @@ fail_free_keyslots:
- fail_free_wq:
- 	destroy_workqueue(blk_crypto_wq);
- fail_destroy_profile:
--	blk_crypto_profile_destroy(profile);
-+	blk_crypto_profile_destroy(blk_crypto_fallback_profile);
-+fail_free_profile:
-+	kfree(blk_crypto_fallback_profile);
- fail_free_bioset:
- 	bioset_exit(&crypto_bio_split);
- out:
+ 				clock-frequency = <333000000>;
+ 				clocks = <&clk IMX8MM_CLK_DISP_APB_ROOT>,
+ 					 <&clk IMX8MM_CLK_CSI1_ROOT>,
+-- 
+2.40.1
+
 
 
