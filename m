@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F96D11703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF6CC433C8;
-	Mon, 21 Aug 2023 19:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8F011703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF54C433C7;
+	Mon, 21 Aug 2023 19:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647743;
-	bh=/n9RbwhLuk1NdjMKMZDc+nv73wejL7euPUd27sv06iU=;
+	s=korg; t=1692647745;
+	bh=M4DTS+drw2p5W2ABw0ZRSB4V7H4iuWimUeaOxzVSFII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OleqEoFPlzX71RdMdd2JrMVATzXdCbfzlMV9euJNmKNdEUD4fHIO2cQY6uodBNBJF
-	 r7q3uxUKz456eXMTs2wUCC/+euGDP8H+WoWvmsRAiwX+1gt9eWX0XFXtiXjw6l/uFD
-	 B6bGyWbjjhQgWr4oio3xTNe8cJo0HiLb7uComLy8=
+	b=EinHY8Y8oXJsE2+Mboi/6Go0DHF2N72eBCsdsmsOSQ0ApsBPRLjll1x1ZOyuvZbEk
+	 33BCOKkpP/PIH4gEpFUPD7Jh5xJOt8UxiO9R2Pi7/IilFIEy116CeeVE5tgMCVREkh
+	 7kvvTsOvNSYMl+jsS2aPaItmBn5eHaJqRNrxjO7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sishuai Gong <sishuai.system@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/194] ipvs: fix racy memcpy in proc_do_sync_threshold
-Date: Mon, 21 Aug 2023 21:41:41 +0200
-Message-ID: <20230821194128.077291235@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.1 096/194] vdpa: Add max vqp attr to vdpa_nl_policy for nlattr length check
+Date: Mon, 21 Aug 2023 21:41:15 +0200
+Message-ID: <20230821194126.926030783@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,69 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sishuai Gong <sishuai.system@gmail.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
+commit 5d6ba607d6cb5c58a4ddf33381e18c83dbb4098f upstream.
 
-When two threads run proc_do_sync_threshold() in parallel,
-data races could happen between the two memcpy():
+The vdpa_nl_policy structure is used to validate the nlattr when parsing
+the incoming nlmsg. It will ensure the attribute being described produces
+a valid nlattr pointer in info->attrs before entering into each handler
+in vdpa_nl_ops.
 
-Thread-1			Thread-2
-memcpy(val, valp, sizeof(val));
-				memcpy(valp, val, sizeof(val));
+That is to say, the missing part in vdpa_nl_policy may lead to illegal
+nlattr after parsing, which could lead to OOB read just like CVE-2023-3773.
 
-This race might mess up the (struct ctl_table *) table->data,
-so we add a mutex lock to serialize them.
+This patch adds the missing nla_policy for vdpa max vqp attr to avoid
+such bugs.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
-Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
-Acked-by: Simon Horman <horms@kernel.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ad69dd0bf26b ("vdpa: Introduce query of device config layout")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Cc: stable@vger.kernel.org
+Message-Id: <20230727175757.73988-7-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/vdpa/vdpa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 03af6a2ffd567..17a1b731a76b1 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1798,6 +1798,7 @@ static int
- proc_do_sync_threshold(struct ctl_table *table, int write,
- 		       void *buffer, size_t *lenp, loff_t *ppos)
- {
-+	struct netns_ipvs *ipvs = table->extra2;
- 	int *valp = table->data;
- 	int val[2];
- 	int rc;
-@@ -1807,6 +1808,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		.mode = table->mode,
- 	};
- 
-+	mutex_lock(&ipvs->sync_mutex);
- 	memcpy(val, valp, sizeof(val));
- 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
- 	if (write) {
-@@ -1816,6 +1818,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		else
- 			memcpy(valp, val, sizeof(val));
- 	}
-+	mutex_unlock(&ipvs->sync_mutex);
- 	return rc;
- }
- 
-@@ -4080,6 +4083,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
- 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
- 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
- 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
-+	tbl[idx].extra2 = ipvs;
- 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
- 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
- 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
--- 
-2.40.1
-
+--- a/drivers/vdpa/vdpa.c
++++ b/drivers/vdpa/vdpa.c
+@@ -1172,6 +1172,7 @@ static const struct nla_policy vdpa_nl_p
+ 	[VDPA_ATTR_MGMTDEV_DEV_NAME] = { .type = NLA_STRING },
+ 	[VDPA_ATTR_DEV_NAME] = { .type = NLA_STRING },
+ 	[VDPA_ATTR_DEV_NET_CFG_MACADDR] = NLA_POLICY_ETH_ADDR,
++	[VDPA_ATTR_DEV_NET_CFG_MAX_VQP] = { .type = NLA_U16 },
+ 	/* virtio spec 1.1 section 5.1.4.1 for valid MTU range */
+ 	[VDPA_ATTR_DEV_NET_CFG_MTU] = NLA_POLICY_MIN(NLA_U16, 68),
+ 	[VDPA_ATTR_DEV_QUEUE_INDEX] = { .type = NLA_U32 },
 
 
