@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053C111707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB21FC433C8;
-	Mon, 21 Aug 2023 19:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BEC11707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:52:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80C7C433C7;
+	Mon, 21 Aug 2023 19:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647552;
-	bh=32BLOo+jraNMI1GTEVf8OEWKY+bMqyqyuOX2YRfJnw8=;
+	s=korg; t=1692647555;
+	bh=kOV8X/1pUNLPG6/JsJglTS8HZWoVyfmvhamuRIRx/ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfSuNcWYyyTfqpcWEI0ciBsvI76O1z22C0eeiPTFkAj04VtMYoqkdkEqo8YXY8oey
-	 pboy/TduoJM+7Jouk5BW1mM2cmt0e76/47YVvdWt9lslGXw1AgP+87a1yQOcLQhA3c
-	 QT3PG9ZrcWjxfNNlY7hmMou984ny0xO2ezsRhcyA=
+	b=OIVPc8j/62xCeCIq7wGzUZn2ulncU8of0j1zk22/HGVye/NjRSg8/T4ZB6gfVRdKa
+	 2iTny9fZfsv9azJJfGdVBQVwQ6gpSrGeUVUbc8lD7hqZ86Ixs9CwAVW/ixmALE0rlU
+	 CW6NMzqKPHHBCuZGaZ6u1VWuxvG8oQI4iL4bBJ3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/194] thunderbolt: Limit Intel Barlow Ridge USB3 bandwidth
-Date: Mon, 21 Aug 2023 21:40:33 +0200
-Message-ID: <20230821194125.162949531@linuxfoundation.org>
+Subject: [PATCH 6.1 055/194] firewire: net: fix use after free in fwnet_finish_incoming_packet()
+Date: Mon, 21 Aug 2023 21:40:34 +0200
+Message-ID: <20230821194125.197999854@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,54 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit f2bfa944080dcbb8eb56259dfd2c07204cbee17e ]
+[ Upstream commit 3ff256751a2853e1ffaa36958ff933ccc98c6cb5 ]
 
-Intel Barlow Ridge discrete USB4 host router has the same limitation as
-the previous generations so make sure the USB3 bandwidth limitation
-quirk is applied to Barlow Ridge too.
+The netif_rx() function frees the skb so we can't dereference it to
+save the skb->len.
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_3B3D24B66ED66A6BB73CC0E63C6A14E45109@qq.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.h    | 2 ++
- drivers/thunderbolt/quirks.c | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ drivers/firewire/net.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
-index c15a0c46c9cff..0f029ce758825 100644
---- a/drivers/thunderbolt/nhi.h
-+++ b/drivers/thunderbolt/nhi.h
-@@ -77,6 +77,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
- #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
-+#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE 0x5786
-+#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE 0x57a4
- #define PCI_DEVICE_ID_INTEL_MTL_M_NHI0			0x7eb2
- #define PCI_DEVICE_ID_INTEL_MTL_P_NHI0			0x7ec2
- #define PCI_DEVICE_ID_INTEL_MTL_P_NHI1			0x7ec3
-diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
-index 1157b8869bcca..8c2ee431fcde8 100644
---- a/drivers/thunderbolt/quirks.c
-+++ b/drivers/thunderbolt/quirks.c
-@@ -74,6 +74,14 @@ static const struct tb_quirk tb_quirks[] = {
- 		  quirk_usb3_maximum_bandwidth },
- 	{ 0x8087, PCI_DEVICE_ID_INTEL_MTL_P_NHI1, 0x0000, 0x0000,
- 		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
- 	/*
- 	 * CLx is not supported on AMD USB4 Yellow Carp and Pink Sardine platforms.
- 	 */
+diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
+index af22be84034bb..a53eacebca339 100644
+--- a/drivers/firewire/net.c
++++ b/drivers/firewire/net.c
+@@ -479,7 +479,7 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
+ 					struct sk_buff *skb, u16 source_node_id,
+ 					bool is_broadcast, u16 ether_type)
+ {
+-	int status;
++	int status, len;
+ 
+ 	switch (ether_type) {
+ 	case ETH_P_ARP:
+@@ -533,13 +533,15 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
+ 		}
+ 		skb->protocol = protocol;
+ 	}
++
++	len = skb->len;
+ 	status = netif_rx(skb);
+ 	if (status == NET_RX_DROP) {
+ 		net->stats.rx_errors++;
+ 		net->stats.rx_dropped++;
+ 	} else {
+ 		net->stats.rx_packets++;
+-		net->stats.rx_bytes += skb->len;
++		net->stats.rx_bytes += len;
+ 	}
+ 
+ 	return 0;
 -- 
 2.40.1
 
