@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F40811707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C9CC433C9;
-	Mon, 21 Aug 2023 19:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4624411707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E87C433C7;
+	Mon, 21 Aug 2023 19:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647586;
-	bh=svC5EW/wWcYF6hFHxGFiGd80cnVgqTU0VKWeb2IcgpA=;
+	s=korg; t=1692647589;
+	bh=WeRSSW8Fsi3VIhhTro4QLdAxCtWch2Rm8sw4UtWinEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMLqkdsP+tZiI+va2H9+yFCw+Inxm21CWpCr1ns1hPvQKjitPzr/wAmzmHOU2lZ9D
-	 YC5vmKXV0rqrHzXG9M62NRoSesyKFPx0GXqt3syL3Jom+5DuyC5wKdU7AL6cRg7wXn
-	 aSYi71xJveeEJzhtCkebU0aFneIgS12wRaKvNb0k=
+	b=oLR4xSNsDbM51/3pYIRDtotT69VfQwitmjsBap47bhBiYY8jRjP+5XSMptTv8h77t
+	 EgDAzqSpQYyzkhpmrQgHYiRtuD/aCSnpVOB4lR0WfXIK66GlAjDIUvzOWph1lB3BOJ
+	 Xy+BnsemGEJTQd66aUhHy5KNOQgbN1PtlMQ3Rvts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Even Xu <even.xu@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Matthew Anderson <ruinairas1992@gmail.com>,
+	Philip Mueller <philm@manjaro.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/194] HID: intel-ish-hid: ipc: Add Arrow Lake PCI device ID
-Date: Mon, 21 Aug 2023 21:40:16 +0200
-Message-ID: <20230821194124.435333993@linuxfoundation.org>
+Subject: [PATCH 6.1 038/194] ALSA: hda/realtek: Add quirks for ROG ALLY CS35l41 audio
+Date: Mon, 21 Aug 2023 21:40:17 +0200
+Message-ID: <20230821194124.485028797@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,45 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Even Xu <even.xu@intel.com>
+From: Matthew Anderson <ruinairas1992@gmail.com>
 
-[ Upstream commit 4982126e3029cd59fbd1da0d9cc0365a0585fe64 ]
+[ Upstream commit 724418b84e6248cd27599607b7e5fac365b8e3f5 ]
 
-Add device ID of Arrow Lake-H into ishtp support list.
+This requires a patched ACPI table or a firmware from ASUS to work because
+the system does not come with the _DSD field for the CSC3551.
 
-Signed-off-by: Even Xu <even.xu@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217550
+Signed-off-by: Matthew Anderson <ruinairas1992@gmail.com>
+Tested-by: Philip Mueller <philm@manjaro.org>
+Link: https://lore.kernel.org/r/20230621161714.9442-1-ruinairas1992@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/hw-ish.h  | 1 +
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 1 +
- 2 files changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c | 46 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/hw-ish.h b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-index fc108f19a64c3..e99f3a3c65e15 100644
---- a/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-+++ b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-@@ -33,6 +33,7 @@
- #define ADL_N_DEVICE_ID		0x54FC
- #define RPL_S_DEVICE_ID		0x7A78
- #define MTL_P_DEVICE_ID		0x7E45
-+#define ARL_H_DEVICE_ID		0x7745
- 
- #define	REVISION_ID_CHT_A0	0x6
- #define	REVISION_ID_CHT_Ax_SI	0x0
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index 7120b30ac51d0..55cb25038e632 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -44,6 +44,7 @@ static const struct pci_device_id ish_pci_tbl[] = {
- 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, ADL_N_DEVICE_ID)},
- 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, RPL_S_DEVICE_ID)},
- 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MTL_P_DEVICE_ID)},
-+	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, ARL_H_DEVICE_ID)},
- 	{0, }
- };
- MODULE_DEVICE_TABLE(pci, ish_pci_tbl);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index f93b68a2a8393..f3c5940b032ff 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7136,6 +7136,10 @@ enum {
+ 	ALC294_FIXUP_ASUS_DUAL_SPK,
+ 	ALC285_FIXUP_THINKPAD_X1_GEN7,
+ 	ALC285_FIXUP_THINKPAD_HEADSET_JACK,
++	ALC294_FIXUP_ASUS_ALLY,
++	ALC294_FIXUP_ASUS_ALLY_PINS,
++	ALC294_FIXUP_ASUS_ALLY_VERBS,
++	ALC294_FIXUP_ASUS_ALLY_SPEAKER,
+ 	ALC294_FIXUP_ASUS_HPE,
+ 	ALC294_FIXUP_ASUS_COEF_1B,
+ 	ALC294_FIXUP_ASUS_GX502_HP,
+@@ -8450,6 +8454,47 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC294_FIXUP_SPK2_TO_DAC1
+ 	},
++	[ALC294_FIXUP_ASUS_ALLY] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cs35l41_fixup_i2c_two,
++		.chained = true,
++		.chain_id = ALC294_FIXUP_ASUS_ALLY_PINS
++	},
++	[ALC294_FIXUP_ASUS_ALLY_PINS] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x19, 0x03a11050 },
++			{ 0x1a, 0x03a11c30 },
++			{ 0x21, 0x03211420 },
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC294_FIXUP_ASUS_ALLY_VERBS
++	},
++	[ALC294_FIXUP_ASUS_ALLY_VERBS] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x45 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x5089 },
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x46 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x0004 },
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x47 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0xa47a },
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x49 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x0049},
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x4a },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x201b },
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x6b },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4278},
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC294_FIXUP_ASUS_ALLY_SPEAKER
++	},
++	[ALC294_FIXUP_ASUS_ALLY_SPEAKER] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc285_fixup_speaker2_to_dac1,
++	},
+ 	[ALC285_FIXUP_THINKPAD_X1_GEN7] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_thinkpad_x1_gen7,
+@@ -9562,6 +9607,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x16e3, "ASUS UX50", ALC269_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1740, "ASUS UX430UA", ALC295_FIXUP_ASUS_DACS),
+ 	SND_PCI_QUIRK(0x1043, 0x17d1, "ASUS UX431FL", ALC294_FIXUP_ASUS_DUAL_SPK),
++	SND_PCI_QUIRK(0x1043, 0x17f3, "ROG Ally RC71L_RC71L", ALC294_FIXUP_ASUS_ALLY),
+ 	SND_PCI_QUIRK(0x1043, 0x1881, "ASUS Zephyrus S/M", ALC294_FIXUP_ASUS_GX502_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x18b1, "Asus MJ401TA", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x18f1, "Asus FX505DT", ALC256_FIXUP_ASUS_HEADSET_MIC),
 -- 
 2.40.1
 
