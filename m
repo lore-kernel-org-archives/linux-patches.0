@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B71171B
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:00:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2175C433C9;
-	Mon, 21 Aug 2023 20:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF181171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:00:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E11C433C8;
+	Mon, 21 Aug 2023 20:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648049;
-	bh=I+raB3N1ZOvtlX2HGUjEngj12muty9u18VOFwAZxVR4=;
+	s=korg; t=1692648052;
+	bh=omgmah/6V8IykbrHp1i8bRAcr4/6bLO2qoNIvbmh8HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EH8KHf+g8bVeHY3sq6c/EQOBLetDUTVvSMXjhfBt1NDFSeMVjguLXTgFkz6j2fJnf
-	 f7kFa0JBrSmXC4pGM7hqCj2ihO9PrjbI+bLdR6p4soHeHCKeEJsw0M8ifrhZKJ5YmU
-	 vr9lNqrT+YTjub5mhuca56bXv8NI8gufNagVyKDE=
+	b=SzALY+wdQq92xUTu7gX6E3zt1TK0+k6RYmA465cZKr7djf8Bjf3QuOmXIiEs2Vu/E
+	 Y20OyQdP+Muk88lgy+5jYFTz1ppCYN7kxH6wHy1iR2qJTfIyCYoxGPSuwoVFMCaGb0
+	 V7Qz5EVNp+GCg2ZDFc1hJHsdZckP64QhCw75TkBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	Jeff LaBundy <jeff@labundy.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 029/234] dt-bindings: input: goodix: Add "goodix,no-reset-during-suspend" property
-Date: Mon, 21 Aug 2023 21:39:52 +0200
-Message-ID: <20230821194130.029134869@linuxfoundation.org>
+Subject: [PATCH 6.4 038/234] RDMA/bnxt_re: consider timeout of destroy ah as success.
+Date: Mon, 21 Aug 2023 21:40:01 +0200
+Message-ID: <20230821194130.401560350@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -39,51 +36,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fei Shao <fshao@chromium.org>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 359ed24a0dd3802e703ec8071dc3b6ed446de5f0 ]
+[ Upstream commit bb8c93618fb0b8567d309f1aebc6df0cd31da1a2 ]
 
-We observed that on Chromebook device Steelix, if Goodix GT7375P
-touchscreen is powered in suspend (because, for example, it connects to
-an always-on regulator) and with the reset GPIO asserted, it will
-introduce about 14mW power leakage.
+If destroy_ah is timed out, it is likely to be destroyed by firmware
+but it is taking longer time due to temporary slowness
+in processing the rcfw command. In worst case, there might be
+AH resource leak in firmware.
 
-To address that, we add this property to skip reset during suspend.
-If it's set, the driver will stop asserting the reset GPIO during
-power-down. Refer to the comments in the driver for details.
+Sending timeout return value can dump warning message from ib_core
+which can be avoided if we map timeout of destroy_ah as success.
 
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Suggested-by: Jeff LaBundy <jeff@labundy.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Reviewed-by: Jeff LaBundy <jeff@labundy.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1686308514-11996-14-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/input/goodix,gt7375p.yaml        | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/infiniband/hw/bnxt_re/bnxt_re.h  |  2 ++
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 16 ++++++++++++----
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c |  8 +++++---
+ drivers/infiniband/hw/bnxt_re/qplib_sp.h |  4 ++--
+ 4 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/input/goodix,gt7375p.yaml b/Documentation/devicetree/bindings/input/goodix,gt7375p.yaml
-index ce18d7dadae23..1edad1da1196d 100644
---- a/Documentation/devicetree/bindings/input/goodix,gt7375p.yaml
-+++ b/Documentation/devicetree/bindings/input/goodix,gt7375p.yaml
-@@ -43,6 +43,15 @@ properties:
-       itself as long as it allows the main board to make signals compatible
-       with what the touchscreen is expecting for its IO rails.
+diff --git a/drivers/infiniband/hw/bnxt_re/bnxt_re.h b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
+index 2c95e6f3d47ac..eef3ef3fabb42 100644
+--- a/drivers/infiniband/hw/bnxt_re/bnxt_re.h
++++ b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
+@@ -179,6 +179,8 @@ struct bnxt_re_dev {
+ #define BNXT_RE_ROCEV2_IPV4_PACKET	2
+ #define BNXT_RE_ROCEV2_IPV6_PACKET	3
  
-+  goodix,no-reset-during-suspend:
-+    description:
-+      Set this to true to enforce the driver to not assert the reset GPIO
-+      during suspend.
-+      Due to potential touchscreen hardware flaw, back-powering could happen in
-+      suspend if the power supply is on and with active-low reset GPIO asserted.
-+      This property is used to avoid the back-powering issue.
-+    type: boolean
++#define BNXT_RE_CHECK_RC(x) ((x) && ((x) != -ETIMEDOUT))
 +
- required:
-   - compatible
-   - reg
+ static inline struct device *rdev_to_dev(struct bnxt_re_dev *rdev)
+ {
+ 	if (rdev)
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index ebe6852c40e8c..e7f153ee27541 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -614,12 +614,20 @@ int bnxt_re_destroy_ah(struct ib_ah *ib_ah, u32 flags)
+ {
+ 	struct bnxt_re_ah *ah = container_of(ib_ah, struct bnxt_re_ah, ib_ah);
+ 	struct bnxt_re_dev *rdev = ah->rdev;
++	bool block = true;
++	int rc = 0;
+ 
+-	bnxt_qplib_destroy_ah(&rdev->qplib_res, &ah->qplib_ah,
+-			      !(flags & RDMA_DESTROY_AH_SLEEPABLE));
++	block = !(flags & RDMA_DESTROY_AH_SLEEPABLE);
++	rc = bnxt_qplib_destroy_ah(&rdev->qplib_res, &ah->qplib_ah, block);
++	if (BNXT_RE_CHECK_RC(rc)) {
++		if (rc == -ETIMEDOUT)
++			rc = 0;
++		else
++			goto fail;
++	}
+ 	atomic_dec(&rdev->ah_count);
+-
+-	return 0;
++fail:
++	return rc;
+ }
+ 
+ static u8 bnxt_re_stack_to_dev_nw_type(enum rdma_network_type ntype)
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index b967a17a44beb..10919532bca29 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -468,13 +468,14 @@ int bnxt_qplib_create_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
+ 	return 0;
+ }
+ 
+-void bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
+-			   bool block)
++int bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
++			  bool block)
+ {
+ 	struct bnxt_qplib_rcfw *rcfw = res->rcfw;
+ 	struct creq_destroy_ah_resp resp = {};
+ 	struct bnxt_qplib_cmdqmsg msg = {};
+ 	struct cmdq_destroy_ah req = {};
++	int rc;
+ 
+ 	/* Clean up the AH table in the device */
+ 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
+@@ -485,7 +486,8 @@ void bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
+ 
+ 	bnxt_qplib_fill_cmdqmsg(&msg, &req, &resp, NULL, sizeof(req),
+ 				sizeof(resp), block);
+-	bnxt_qplib_rcfw_send_message(rcfw, &msg);
++	rc = bnxt_qplib_rcfw_send_message(rcfw, &msg);
++	return rc;
+ }
+ 
+ /* MRW */
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+index 5de874659cdfa..4061616048e85 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+@@ -327,8 +327,8 @@ int bnxt_qplib_set_func_resources(struct bnxt_qplib_res *res,
+ 				  struct bnxt_qplib_ctx *ctx);
+ int bnxt_qplib_create_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
+ 			 bool block);
+-void bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
+-			   bool block);
++int bnxt_qplib_destroy_ah(struct bnxt_qplib_res *res, struct bnxt_qplib_ah *ah,
++			  bool block);
+ int bnxt_qplib_alloc_mrw(struct bnxt_qplib_res *res,
+ 			 struct bnxt_qplib_mrw *mrw);
+ int bnxt_qplib_dereg_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mrw,
 -- 
 2.40.1
 
