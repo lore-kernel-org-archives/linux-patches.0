@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7363611703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1C4C433C7;
-	Mon, 21 Aug 2023 19:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0F511703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29E7C433C8;
+	Mon, 21 Aug 2023 19:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647945;
-	bh=Ys87YkibDy+FcXVl/iCEpFRzhmMOMcBvNv6IT2QmaZo=;
+	s=korg; t=1692647948;
+	bh=NFioXjB4EkUAqf/svMdM9kNpGGfusDOLZ972obtPanI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdRY2wAnOQq1McyKRNlJlj6K5seNNkFsU5kOl3CZFmT1AOCk8zgp2jBkCsf2QCOCW
-	 rF/6C8/XY7SYKHn8xtesfFQjbpLqCnN1iByUu0d49uyYPsofwK/cQ/xsOCmDXvH8eU
-	 ef1Y6ZJy88Mu9iEuCTJ/m6gwpY6S6mzP5XPzhS8g=
+	b=GyB48dIowsoJnpjP5g90kDQRZuTqej9mTtiKwCAyqe0+9eSUAbgyKpibIbUBCbUSo
+	 YC0z/U32a6hwyPD7/GfbZZvPdNjO9J9aE3M57m2Cxbsjo4qdfMe40OSmW+uCszGhXb
+	 pQRz75eXialLp+IxZvOI5UfP1ErSjfi6oBtJpvLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 165/194] ASoC: amd: vangogh: select CONFIG_SND_AMD_ACP_CONFIG
-Date: Mon, 21 Aug 2023 21:42:24 +0200
-Message-ID: <20230821194129.949966895@linuxfoundation.org>
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Daniel Miess <daniel.miess@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 166/194] drm/amd/display: disable RCO for DCN314
+Date: Mon, 21 Aug 2023 21:42:25 +0200
+Message-ID: <20230821194130.000941520@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,34 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Daniel Miess <daniel.miess@amd.com>
 
-commit 812a05256d673b2b9c5db906775d1e6625ba4787 upstream.
+commit 85e41f1ed5d94a26fe4e57003c399936d291ed70 upstream.
 
-The vangogh driver just gained a link time dependency that now causes
-randconfig builds to fail:
+[Why]
+RCO is causing error messages on some DCN314 systems
 
-x86_64-linux-ld: sound/soc/amd/vangogh/pci-acp5x.o: in function `snd_acp5x_probe':
-pci-acp5x.c:(.text+0xbb): undefined reference to `snd_amd_acp_find_config'
+[How]
+Force disable RCO for DCN314
 
-Fixes: e89f45edb747e ("ASoC: amd: vangogh: Add check for acp config flags in vangogh platform")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230602124447.863476-1-arnd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 17fbdbda9cc8 ("drm/amd/display: Enable dcn314 DPP RCO")
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Daniel Miess <daniel.miess@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c     |    2 +-
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c |    4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/soc/amd/Kconfig
-+++ b/sound/soc/amd/Kconfig
-@@ -81,6 +81,7 @@ config SND_SOC_AMD_VANGOGH_MACH
- 	tristate "AMD Vangogh support for NAU8821 CS35L41"
- 	select SND_SOC_NAU8821
- 	select SND_SOC_CS35L41_SPI
-+	select SND_AMD_ACP_CONFIG
- 	depends on SND_SOC_AMD_ACP5x && I2C && SPI_MASTER
- 	help
- 	  This option enables machine driver for Vangogh platform
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
+@@ -296,7 +296,7 @@ static void dccg314_dpp_root_clock_contr
+ {
+ 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
+ 
+-	if (dccg->dpp_clock_gated[dpp_inst] == clock_on)
++	if (dccg->dpp_clock_gated[dpp_inst] != clock_on)
+ 		return;
+ 
+ 	if (clock_on) {
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
+@@ -1933,6 +1933,10 @@ static bool dcn314_resource_construct(
+ 		dc->debug = debug_defaults_drv;
+ 	else
+ 		dc->debug = debug_defaults_diags;
++
++	/* Disable root clock optimization */
++	dc->debug.root_clock_optimization.u32All = 0;
++
+ 	// Init the vm_helper
+ 	if (dc->vm_helper)
+ 		vm_helper_init(dc->vm_helper, 16);
 
 
