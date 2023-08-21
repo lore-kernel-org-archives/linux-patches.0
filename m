@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716B51170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:50:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F78C433C7;
-	Mon, 21 Aug 2023 19:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E6D1170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39A4C433C7;
+	Mon, 21 Aug 2023 19:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647440;
-	bh=YjeUbFMqDQEiNcqSjtnue2Iunq7FXVgtGTik+1y1s4o=;
+	s=korg; t=1692647443;
+	bh=kbzL1Z7pfyyKL0MhVDjpcOVpy1WlPFtmfYJ0FqgC1yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Uh9khGwCppztYxENRGkRH3ViO9hOx7FEXlLgTv70U8Pyo7bgC6c9/kqBJFnhXZvg
-	 2NjvzLRkM6PknQAPzLsmvakogfNcSVfoUBAl06YhfOgkJFP9nUulyaxS0eIm/JEMOf
-	 KIOcYzuYzsA6FDWDt6g00SdLnWYgpqwkPdavCTdU=
+	b=WN4e+D0EAR1Mi7YLCtMPGpaa7kNn28jfL8V4OlvDwLgE4ZXbCcRSywvaIp664A3yf
+	 wXeZFwKHHDvh7ODY8hxpsr1vwS68B8OB+1fxXpDLH9Sl9DfidTKGI3yf8KkpTKqeuB
+	 TWlNrFdr1/ZINJU0W8Sup2R+VeFRr3vLS84xXKys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/194] ASoC: Intel: sof_sdw: add quirk for MTL RVP
-Date: Mon, 21 Aug 2023 21:39:54 +0200
-Message-ID: <20230821194123.425512634@linuxfoundation.org>
+Subject: [PATCH 6.1 016/194] ASoC: Intel: sof_sdw: add quirk for LNL RVP
+Date: Mon, 21 Aug 2023 21:39:55 +0200
+Message-ID: <20230821194123.478433415@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -33,35 +33,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 289e1df00e49a229a1c924c059242e759a552f01 ]
+[ Upstream commit dfe25fea968dc4884e12d471c8263f0f611b380a ]
 
-We should use RT711_JD2_100K for on board rt711.
+We should use RT711_JD2_100K for on board rt711
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com
 Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
-Link: https://lore.kernel.org/r/20230512173305.65399-4-pierre-louis.bossart@linux.intel.com
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com
+Link: https://lore.kernel.org/r/20230512173305.65399-9-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/intel/boards/sof_sdw.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index a37c85d301471..7f9940c722a3c 100644
+index 7f9940c722a3c..0cf9efec46ce2 100644
 --- a/sound/soc/intel/boards/sof_sdw.c
 +++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -374,6 +374,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+@@ -382,6 +382,15 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
  		},
- 		.driver_data = (void *)(RT711_JD1),
+ 		.driver_data = (void *)(RT711_JD2_100K),
  	},
++	/* LunarLake devices */
 +	{
 +		.callback = sof_sdw_quirk_cb,
 +		.matches = {
 +			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Meteor Lake Client Platform"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Lunar Lake Client Platform"),
 +		},
 +		.driver_data = (void *)(RT711_JD2_100K),
 +	},
