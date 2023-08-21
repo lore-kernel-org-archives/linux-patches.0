@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C1C11707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7D2C433C7;
-	Mon, 21 Aug 2023 19:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654C111707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823FEC433C8;
+	Mon, 21 Aug 2023 19:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647600;
-	bh=QwBZ85ljfxPq7idyry/2ENnScIM4SN7gLfSORZ8iXRk=;
+	s=korg; t=1692647602;
+	bh=xb15YU+UnxaFmzkueO6wJMxzwIyHV668S+6DjS6ZQzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8OUvPILAarWXGbAegTgNoZM6g3UJ9iCxxWAM36GOC4uiRnNpr80ODNbCVRA2aKKy
-	 LZ2aDfIfu9ZYl+/D1JsdM6LUnagCtrMF63N5Nfm7ZWKPYkhxsho3EFlAtfkkW2N0SE
-	 Bcjo9JLfF3zDul8ShjjU0uBhVUjOACvP4IGjhBIc=
+	b=RFZdPkOe4kWVwu+XigLthdUB1ynJHPeCiy5zt9mZa74CKPsm9ztjAoiVVx+qRIxhQ
+	 ICjkUeK7Deig+hUwZtDGKvzN5P3U97N/Z7JTSKGcM9uaLtUhHqur0oIizVmpauSAx7
+	 bMq3jjhgEqT9B1l3AgPdsemY3ZdREuk6FsXN2pWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jesper Dangaard Brouer <brouer@redhat.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	hersen wu <hersenxs.wu@amd.com>,
+	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/194] igc: read before write to SRRCTL register
-Date: Mon, 21 Aug 2023 21:40:51 +0200
-Message-ID: <20230821194125.953378093@linuxfoundation.org>
+Subject: [PATCH 6.1 073/194] drm/amd/display: save restore hdcp state when display is unplugged from mst hub
+Date: Mon, 21 Aug 2023 21:40:52 +0200
+Message-ID: <20230821194125.993370513@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -40,94 +38,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Yoong Siang <yoong.siang.song@intel.com>
+From: hersen wu <hersenxs.wu@amd.com>
 
-[ Upstream commit 3ce29c17dc847bf4245e16aad78a7617afa96297 ]
+[ Upstream commit 82986fd631fa04bcedaefe11a6b3767601cbe84f ]
 
-igc_configure_rx_ring() function will be called as part of XDP program
-setup. If Rx hardware timestamp is enabled prio to XDP program setup,
-this timestamp enablement will be overwritten when buffer size is
-written into SRRCTL register.
+[Why]
+connector hdcp properties are lost after display is
+unplgged from mst hub. connector is destroyed with
+dm_dp_mst_connector_destroy. when display is plugged
+back, hdcp is not desired and it wouldnt be enabled.
 
-Thus, this commit read the register value before write to SRRCTL
-register. This commit is tested by using xdp_hw_metadata bpf selftest
-tool. The tool enables Rx hardware timestamp and then attach XDP program
-to igc driver. It will display hardware timestamp of UDP packet with
-port number 9092. Below are detail of test steps and results.
+[How]
+save hdcp properties into hdcp_work within
+amdgpu_dm_atomic_commit_tail. If the same display is
+plugged back with same display index, its hdcp
+properties will be retrieved from hdcp_work within
+dm_dp_mst_get_modes.
 
-Command on DUT:
-  sudo ./xdp_hw_metadata <interface name>
-
-Command on Link Partner:
-  echo -n skb | nc -u -q1 <destination IPv4 addr> 9092
-
-Result before this patch:
-  skb hwtstamp is not found!
-
-Result after this patch:
-  found skb hwtstamp = 1677800973.642836757
-
-Optionally, read PHC to confirm the values obtained are almost the same:
-Command:
-  sudo ./testptp -d /dev/ptp0 -g
-Result:
-  clock time: 1677800973.913598978 or Fri Mar  3 07:49:33 2023
-
-Fixes: fc9df2a0b520 ("igc: Enable RX via AF_XDP zero-copy")
-Cc: <stable@vger.kernel.org> # 5.14+
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Tested-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: hersen wu <hersenxs.wu@amd.com>
+Reviewed-by: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: cdff36a0217a ("drm/amd/display: fix access hdcp_workqueue assert")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_base.h | 11 ++++++++---
- drivers/net/ethernet/intel/igc/igc_main.c |  7 +++++--
- 2 files changed, 13 insertions(+), 5 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 24 ++++++++++++++++-
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.h    | 14 ++++++++++
+ .../display/amdgpu_dm/amdgpu_dm_mst_types.c   | 26 +++++++++++++++++++
+ 3 files changed, 63 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_base.h b/drivers/net/ethernet/intel/igc/igc_base.h
-index ce530f5fd7bda..52849f5e8048d 100644
---- a/drivers/net/ethernet/intel/igc/igc_base.h
-+++ b/drivers/net/ethernet/intel/igc/igc_base.h
-@@ -85,8 +85,13 @@ union igc_adv_rx_desc {
- #define IGC_RXDCTL_SWFLUSH		0x04000000 /* Receive Software Flush */
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 9f718b98da1f7..bdc6f90b3adb5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8350,11 +8350,33 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ 			continue;
+ 		}
  
- /* SRRCTL bit definitions */
--#define IGC_SRRCTL_BSIZEPKT_SHIFT		10 /* Shift _right_ */
--#define IGC_SRRCTL_BSIZEHDRSIZE_SHIFT		2  /* Shift _left_ */
--#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	0x02000000
-+#define IGC_SRRCTL_BSIZEPKT_MASK	GENMASK(6, 0)
-+#define IGC_SRRCTL_BSIZEPKT(x)		FIELD_PREP(IGC_SRRCTL_BSIZEPKT_MASK, \
-+					(x) / 1024) /* in 1 KB resolution */
-+#define IGC_SRRCTL_BSIZEHDR_MASK	GENMASK(13, 8)
-+#define IGC_SRRCTL_BSIZEHDR(x)		FIELD_PREP(IGC_SRRCTL_BSIZEHDR_MASK, \
-+					(x) / 64) /* in 64 bytes resolution */
-+#define IGC_SRRCTL_DESCTYPE_MASK	GENMASK(27, 25)
-+#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	FIELD_PREP(IGC_SRRCTL_DESCTYPE_MASK, 1)
+-		if (is_content_protection_different(new_con_state, old_con_state, connector, adev->dm.hdcp_workqueue))
++		if (is_content_protection_different(new_con_state, old_con_state, connector, adev->dm.hdcp_workqueue)) {
++			/* when display is unplugged from mst hub, connctor will
++			 * be destroyed within dm_dp_mst_connector_destroy. connector
++			 * hdcp perperties, like type, undesired, desired, enabled,
++			 * will be lost. So, save hdcp properties into hdcp_work within
++			 * amdgpu_dm_atomic_commit_tail. if the same display is
++			 * plugged back with same display index, its hdcp properties
++			 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++			 */
++
++			if (aconnector->dc_link && aconnector->dc_sink &&
++				aconnector->dc_link->type == dc_connection_mst_branch) {
++				struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
++				struct hdcp_workqueue *hdcp_w =
++					&hdcp_work[aconnector->dc_link->link_index];
++
++				hdcp_w->hdcp_content_type[connector->index] =
++					new_con_state->hdcp_content_type;
++				hdcp_w->content_protection[connector->index] =
++					new_con_state->content_protection;
++			}
++
+ 			hdcp_update_display(
+ 				adev->dm.hdcp_workqueue, aconnector->dc_link->link_index, aconnector,
+ 				new_con_state->hdcp_content_type,
+ 				new_con_state->content_protection == DRM_MODE_CONTENT_PROTECTION_DESIRED);
++    }
+ 	}
+ #endif
  
- #endif /* _IGC_BASE_H */
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index d877dc0f87f71..2f3947cf513bd 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -675,8 +675,11 @@ static void igc_configure_rx_ring(struct igc_adapter *adapter,
- 	else
- 		buf_size = IGC_RXBUFFER_2048;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+index 09294ff122fea..bbbf7d0eff82f 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+@@ -52,6 +52,20 @@ struct hdcp_workqueue {
+ 	struct mod_hdcp_link link;
  
--	srrctl = IGC_RX_HDR_LEN << IGC_SRRCTL_BSIZEHDRSIZE_SHIFT;
--	srrctl |= buf_size >> IGC_SRRCTL_BSIZEPKT_SHIFT;
-+	srrctl = rd32(IGC_SRRCTL(reg_idx));
-+	srrctl &= ~(IGC_SRRCTL_BSIZEPKT_MASK | IGC_SRRCTL_BSIZEHDR_MASK |
-+		    IGC_SRRCTL_DESCTYPE_MASK);
-+	srrctl |= IGC_SRRCTL_BSIZEHDR(IGC_RX_HDR_LEN);
-+	srrctl |= IGC_SRRCTL_BSIZEPKT(buf_size);
- 	srrctl |= IGC_SRRCTL_DESCTYPE_ADV_ONEBUF;
+ 	enum mod_hdcp_encryption_status encryption_status;
++
++	/* when display is unplugged from mst hub, connctor will be
++	 * destroyed within dm_dp_mst_connector_destroy. connector
++	 * hdcp perperties, like type, undesired, desired, enabled,
++	 * will be lost. So, save hdcp properties into hdcp_work within
++	 * amdgpu_dm_atomic_commit_tail. if the same display is
++	 * plugged back with same display index, its hdcp properties
++	 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++	 */
++	/* un-desired, desired, enabled */
++	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	/* hdcp1.x, hdcp2.x */
++	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_INDEX];
++
+ 	uint8_t max_link;
  
- 	wr32(IGC_SRRCTL(reg_idx), srrctl);
+ 	uint8_t *srm;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index d07e1053b36b3..9884dd78c652c 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -32,6 +32,10 @@
+ #include "amdgpu_dm.h"
+ #include "amdgpu_dm_mst_types.h"
+ 
++#ifdef CONFIG_DRM_AMD_DC_HDCP
++#include "amdgpu_dm_hdcp.h"
++#endif
++
+ #include "dc.h"
+ #include "dm_helpers.h"
+ 
+@@ -363,6 +367,28 @@ static int dm_dp_mst_get_modes(struct drm_connector *connector)
+ 		/* dc_link_add_remote_sink returns a new reference */
+ 		aconnector->dc_sink = dc_sink;
+ 
++		/* when display is unplugged from mst hub, connctor will be
++		 * destroyed within dm_dp_mst_connector_destroy. connector
++		 * hdcp perperties, like type, undesired, desired, enabled,
++		 * will be lost. So, save hdcp properties into hdcp_work within
++		 * amdgpu_dm_atomic_commit_tail. if the same display is
++		 * plugged back with same display index, its hdcp properties
++		 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++		 */
++#ifdef CONFIG_DRM_AMD_DC_HDCP
++		if (aconnector->dc_sink && connector->state) {
++			struct drm_device *dev = connector->dev;
++			struct amdgpu_device *adev = drm_to_adev(dev);
++			struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
++			struct hdcp_workqueue *hdcp_w = &hdcp_work[aconnector->dc_link->link_index];
++
++			connector->state->hdcp_content_type =
++			hdcp_w->hdcp_content_type[connector->index];
++			connector->state->content_protection =
++			hdcp_w->content_protection[connector->index];
++		}
++#endif
++
+ 		if (aconnector->dc_sink) {
+ 			amdgpu_dm_update_freesync_caps(
+ 					connector, aconnector->edid);
 -- 
 2.40.1
 
