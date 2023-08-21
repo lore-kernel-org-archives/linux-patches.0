@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE8C1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708FCC433C7;
-	Mon, 21 Aug 2023 20:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38151171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EF5C433C7;
+	Mon, 21 Aug 2023 20:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648135;
-	bh=8wIZgmQ7cNiLTKgKaCmxKSyYTpIWjAijkUt80ywWrk0=;
+	s=korg; t=1692648138;
+	bh=32BLOo+jraNMI1GTEVf8OEWKY+bMqyqyuOX2YRfJnw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjTYZtCpDepvesvPjBt4X042y3rGUfBKtGwej0Jdz6fi/KGlY/6VOQS5a0bGhJymD
-	 sUHncumrvDQcHvFWmNJ7Zn7T+T2G0UGOGkmXw4wVZUErBIHoB/hEmpLVuCxW+RY3MV
-	 905pfLO5/CM/xJcor5+1lmmZgL1IzkNMJx4NiFug=
+	b=ZNNDaPfc3QLGwldLXf6dIxjOk4VbV1WYvdkaGovcTbmEUV2y7pIKFM+GIuiuPKk/d
+	 7SmLdSQPKnfIZ3dXvDJUJ1+CaIqYPj/JT17N4CDRTmM10Px1JeyMu7BcugaxHjMKiN
+	 0JtqJHZVXE9DP483g1sjrdBKr4nPwfIG7l3X9XoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moti Haimovski <mhaimovski@habana.ai>,
-	Dani Liberman <dliberman@habana.ai>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 028/234] accel/habanalabs: fix mem leak in capture user mappings
-Date: Mon, 21 Aug 2023 21:39:51 +0200
-Message-ID: <20230821194129.994374865@linuxfoundation.org>
+Subject: [PATCH 6.4 061/234] thunderbolt: Limit Intel Barlow Ridge USB3 bandwidth
+Date: Mon, 21 Aug 2023 21:40:24 +0200
+Message-ID: <20230821194131.461881095@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,43 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moti Haimovski <mhaimovski@habana.ai>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 314a7ffd7c196b27eedd50cb7553029e17789b55 ]
+[ Upstream commit f2bfa944080dcbb8eb56259dfd2c07204cbee17e ]
 
-This commit fixes a memory leak caused when clearing the user_mappings
-info when a new context is opened immediately after user_mapping is
-captured and a hard reset is performed.
+Intel Barlow Ridge discrete USB4 host router has the same limitation as
+the previous generations so make sure the USB3 bandwidth limitation
+quirk is applied to Barlow Ridge too.
 
-Signed-off-by: Moti Haimovski <mhaimovski@habana.ai>
-Reviewed-by: Dani Liberman <dliberman@habana.ai>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/common/habanalabs_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thunderbolt/nhi.h    | 2 ++
+ drivers/thunderbolt/quirks.c | 8 ++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/accel/habanalabs/common/habanalabs_drv.c b/drivers/accel/habanalabs/common/habanalabs_drv.c
-index 1ec97da3dddb8..70fb2df9a93b8 100644
---- a/drivers/accel/habanalabs/common/habanalabs_drv.c
-+++ b/drivers/accel/habanalabs/common/habanalabs_drv.c
-@@ -13,6 +13,7 @@
- 
- #include <linux/pci.h>
- #include <linux/module.h>
-+#include <linux/vmalloc.h>
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/habanalabs.h>
-@@ -218,6 +219,7 @@ int hl_device_open(struct inode *inode, struct file *filp)
- 
- 	hl_debugfs_add_file(hpriv);
- 
-+	vfree(hdev->captured_err_info.page_fault_info.user_mappings);
- 	memset(&hdev->captured_err_info, 0, sizeof(hdev->captured_err_info));
- 	atomic_set(&hdev->captured_err_info.cs_timeout.write_enable, 1);
- 	hdev->captured_err_info.undef_opcode.write_enable = true;
+diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
+index c15a0c46c9cff..0f029ce758825 100644
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -77,6 +77,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
++#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE 0x5786
++#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE 0x57a4
+ #define PCI_DEVICE_ID_INTEL_MTL_M_NHI0			0x7eb2
+ #define PCI_DEVICE_ID_INTEL_MTL_P_NHI0			0x7ec2
+ #define PCI_DEVICE_ID_INTEL_MTL_P_NHI1			0x7ec3
+diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
+index 1157b8869bcca..8c2ee431fcde8 100644
+--- a/drivers/thunderbolt/quirks.c
++++ b/drivers/thunderbolt/quirks.c
+@@ -74,6 +74,14 @@ static const struct tb_quirk tb_quirks[] = {
+ 		  quirk_usb3_maximum_bandwidth },
+ 	{ 0x8087, PCI_DEVICE_ID_INTEL_MTL_P_NHI1, 0x0000, 0x0000,
+ 		  quirk_usb3_maximum_bandwidth },
++	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI, 0x0000, 0x0000,
++		  quirk_usb3_maximum_bandwidth },
++	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI, 0x0000, 0x0000,
++		  quirk_usb3_maximum_bandwidth },
++	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE, 0x0000, 0x0000,
++		  quirk_usb3_maximum_bandwidth },
++	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE, 0x0000, 0x0000,
++		  quirk_usb3_maximum_bandwidth },
+ 	/*
+ 	 * CLx is not supported on AMD USB4 Yellow Carp and Pink Sardine platforms.
+ 	 */
 -- 
 2.40.1
 
