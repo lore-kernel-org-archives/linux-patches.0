@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CB111703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC65FC433C7;
-	Mon, 21 Aug 2023 19:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCD311703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4264C433C8;
+	Mon, 21 Aug 2023 19:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647850;
-	bh=63DoUM+Q+NylRYkPzqYnb/TaawSHcakRxY876FWY4AI=;
+	s=korg; t=1692647853;
+	bh=btyUeFK5LHYaF5p/IA1NQ+4oYyZmPdTGmKfeS18aVm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxv6oB00QRxs7xVPfGT3yz6Exa/fGYr6zPnLyGIpZOY+WXd2mWzQgO+cXKLg30xMi
-	 qWZS3NUKL9Mfeq81iUoF7AqO5WmfeN0+4SRs8aBna0M7/OZf9ffM3c+kEHvPNdyJQB
-	 B7TziKvwvpUOHb9LqQvOa87/ZIjtJEdyCpnIlvoY=
+	b=YK41pVNv4+vSLjc4yjWPUidGxJVUOM/ejb6H1BNmWH+izYYnNZbBl46Db6IIYIZhL
+	 ng+4HM3IyKjLCvdiB5z5HvZilcLyzBnuJLfGY2LdOnPK9RLrzoJAFBrfT/tkvcsz0C
+	 5qdMq+e5VYQXCdMPlRqxUlf2RbYPYL8E5V2KzNPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/194] sfc: dont unregister flow_indr if it was never registered
-Date: Mon, 21 Aug 2023 21:41:49 +0200
-Message-ID: <20230821194128.411508114@linuxfoundation.org>
+Subject: [PATCH 6.1 131/194] sock: Fix misuse of sk_under_memory_pressure()
+Date: Mon, 21 Aug 2023 21:41:50 +0200
+Message-ID: <20230821194128.453599729@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,41 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Cree <ecree.xilinx@gmail.com>
+From: Abel Wu <wuyun.abel@bytedance.com>
 
-[ Upstream commit fa165e1949976704500a442faeef8d9596faee76 ]
+[ Upstream commit 2d0c88e84e483982067a82073f6125490ddf3614 ]
 
-In efx_init_tc(), move the setting of efx->tc->up after the
- flow_indr_dev_register() call, so that if it fails, efx_fini_tc()
- won't call flow_indr_dev_unregister().
+The status of global socket memory pressure is updated when:
 
-Fixes: 5b2e12d51bd8 ("sfc: bind indirect blocks for TC offload on EF100")
-Suggested-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Reviewed-by: Martin Habets <habetsm.xilinx@gmail.com>
-Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://lore.kernel.org/r/a81284d7013aba74005277bd81104e4cfbea3f6f.1692114888.git.ecree.xilinx@gmail.com
+  a) __sk_mem_raise_allocated():
+
+	enter: sk_memory_allocated(sk) >  sysctl_mem[1]
+	leave: sk_memory_allocated(sk) <= sysctl_mem[0]
+
+  b) __sk_mem_reduce_allocated():
+
+	leave: sk_under_memory_pressure(sk) &&
+		sk_memory_allocated(sk) < sysctl_mem[0]
+
+So the conditions of leaving global pressure are inconstant, which
+may lead to the situation that one pressured net-memcg prevents the
+global pressure from being cleared when there is indeed no global
+pressure, thus the global constrains are still in effect unexpectedly
+on the other sockets.
+
+This patch fixes this by ignoring the net-memcg's pressure when
+deciding whether should leave global memory pressure.
+
+Fixes: e1aab161e013 ("socket: initial cgroup code.")
+Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Link: https://lore.kernel.org/r/20230816091226.1542-1-wuyun.abel@bytedance.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/tc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sock.h | 6 ++++++
+ net/core/sock.c    | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/tc.c b/drivers/net/ethernet/sfc/tc.c
-index 3478860d40232..d312147cd2dd7 100644
---- a/drivers/net/ethernet/sfc/tc.c
-+++ b/drivers/net/ethernet/sfc/tc.c
-@@ -603,10 +603,10 @@ int efx_init_tc(struct efx_nic *efx)
- 	rc = efx_tc_configure_rep_mport(efx);
- 	if (rc)
- 		return rc;
--	efx->tc->up = true;
- 	rc = flow_indr_dev_register(efx_tc_indr_setup_cb, efx);
- 	if (rc)
- 		return rc;
-+	efx->tc->up = true;
- 	return 0;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 1bbdddcf61542..699408944952c 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1445,6 +1445,12 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
+ 	return sk->sk_prot->memory_pressure != NULL;
  }
  
++static inline bool sk_under_global_memory_pressure(const struct sock *sk)
++{
++	return sk->sk_prot->memory_pressure &&
++		!!*sk->sk_prot->memory_pressure;
++}
++
+ static inline bool sk_under_memory_pressure(const struct sock *sk)
+ {
+ 	if (!sk->sk_prot->memory_pressure)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 3b5304f084ef3..509773919d302 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3099,7 +3099,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
+ 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
+ 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
+ 
+-	if (sk_under_memory_pressure(sk) &&
++	if (sk_under_global_memory_pressure(sk) &&
+ 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
+ 		sk_leave_memory_pressure(sk);
+ }
 -- 
 2.40.1
 
