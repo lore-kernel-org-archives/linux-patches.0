@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1553211707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860EFC433C7;
-	Mon, 21 Aug 2023 19:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20AB11707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536C7C433C8;
+	Mon, 21 Aug 2023 19:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647624;
-	bh=Iu3viuHrJiD6osOJsvUHCqDPOmFtWzz0wIksALaInew=;
+	s=korg; t=1692647627;
+	bh=Nhkh6vO8ZYOxNYpWSX5O8kScDS9iDBTQ/7LSBxD6yPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ST+y7kKWkMpfNL2tkN69KaTM3v85nlrPgyKtWae2VSxYaAxki2kW3mrAuu8B4I3kX
-	 f6Y/ikDFmK/16HSCM2hTgk4qq6jEPlSkbPeXuGTcRiYlCnXtonFA7ueNSKXMXZ5d+K
-	 ZIlLCIHfxn+cLYLXHxSWHUjeyOWKVHIOjIjhVosA=
+	b=qZSGnj3nZP6dZcoUtaX9094es4nbpV+Bi5eo6Or48UNTw4NUnlT8oGsGYwMI76Iwh
+	 RUFSUoxnvy74URFPF201XSalGREngbyuDV6ja18w9rwf6DyjV0/cHuxVhrJ/SY/yke
+	 6mOaW4HiIdgoMjmv96cxp/DPhuFP5i2vojqwEBVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	dengxiang <dengxiang@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/194] btrfs: convert btrfs_block_group::needs_free_space to runtime flag
-Date: Mon, 21 Aug 2023 21:41:00 +0200
-Message-ID: <20230821194126.335620968@linuxfoundation.org>
+Subject: [PATCH 6.1 064/194] ALSA: hda/realtek: Add quirks for Unis H3C Desktop B760 & Q760
+Date: Mon, 21 Aug 2023 21:40:43 +0200
+Message-ID: <20230821194125.586071477@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,125 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: dengxiang <dengxiang@nfschina.com>
 
-[ Upstream commit 0d7764ff58b4b45c39eb03f2c74a819c1a88fa7b ]
+[ Upstream commit 73f1c75d5e6bd8ce2a887ef493a66ad1b16ed704 ]
 
-We already have flags in block group to track various status bits,
-convert needs_free_space as well and reduce size of btrfs_block_group.
+These models use NSIWAY amplifiers for internal speaker, but cannot put
+sound outside from these amplifiers. So eapd verbs are needed to initialize
+the amplifiers. They can be added during boot to get working sound out
+of internal speaker.
 
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 0657b20c5a76 ("btrfs: fix use-after-free of new block group that became unused")
+Signed-off-by: dengxiang <dengxiang@nfschina.com>
+Link: https://lore.kernel.org/r/20230703021751.2945750-1-dengxiang@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c                 |  2 +-
- fs/btrfs/block-group.h                 |  8 ++------
- fs/btrfs/free-space-tree.c             | 10 +++++-----
- fs/btrfs/tests/free-space-tree-tests.c |  2 +-
- 4 files changed, 9 insertions(+), 13 deletions(-)
+ sound/pci/hda/patch_realtek.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 9f5a971bfed42..a726b532b5277 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2543,7 +2543,7 @@ struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *tran
- 	cache->global_root_id = calculate_global_root_id(fs_info, cache->start);
- 
- 	if (btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE))
--		cache->needs_free_space = 1;
-+		set_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &cache->runtime_flags);
- 
- 	ret = btrfs_load_block_group_zone_info(cache, true);
- 	if (ret) {
-diff --git a/fs/btrfs/block-group.h b/fs/btrfs/block-group.h
-index debd42aeae0f1..dcad5e959b920 100644
---- a/fs/btrfs/block-group.h
-+++ b/fs/btrfs/block-group.h
-@@ -55,6 +55,8 @@ enum btrfs_block_group_flags {
- 	BLOCK_GROUP_FLAG_CHUNK_ITEM_INSERTED,
- 	BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE,
- 	BLOCK_GROUP_FLAG_ZONED_DATA_RELOC,
-+	/* Does the block group need to be added to the free space tree? */
-+	BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index f3c5940b032ff..923b8e0c9efe3 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11314,6 +11314,7 @@ enum {
+ 	ALC897_FIXUP_HP_HSMIC_VERB,
+ 	ALC897_FIXUP_LENOVO_HEADSET_MODE,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN2,
++	ALC897_FIXUP_UNIS_H3C_X500S,
  };
  
- enum btrfs_caching_type {
-@@ -204,12 +206,6 @@ struct btrfs_block_group {
- 	/* Lock for free space tree operations. */
- 	struct mutex free_space_lock;
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -11753,6 +11754,13 @@ static const struct hda_fixup alc662_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
+ 	},
++	[ALC897_FIXUP_UNIS_H3C_X500S] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			{ 0x14, AC_VERB_SET_EAPD_BTLENABLE, 0 },
++			{}
++		},
++	},
+ };
  
--	/*
--	 * Does the block group need to be added to the free space tree?
--	 * Protected by free_space_lock.
--	 */
--	int needs_free_space;
--
- 	/* Flag indicating this block group is placed on a sequential zone */
- 	bool seq_zone;
+ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+@@ -11914,6 +11922,7 @@ static const struct hda_model_fixup alc662_fixup_models[] = {
+ 	{.id = ALC662_FIXUP_USI_HEADSET_MODE, .name = "usi-headset"},
+ 	{.id = ALC662_FIXUP_LENOVO_MULTI_CODECS, .name = "dual-codecs"},
+ 	{.id = ALC669_FIXUP_ACER_ASPIRE_ETHOS, .name = "aspire-ethos"},
++	{.id = ALC897_FIXUP_UNIS_H3C_X500S, .name = "unis-h3c-x500s"},
+ 	{}
+ };
  
-diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
-index a207db9322264..6a44733a95e1c 100644
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -803,7 +803,7 @@ int __remove_from_free_space_tree(struct btrfs_trans_handle *trans,
- 	u32 flags;
- 	int ret;
- 
--	if (block_group->needs_free_space) {
-+	if (test_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &block_group->runtime_flags)) {
- 		ret = __add_block_group_free_space(trans, block_group, path);
- 		if (ret)
- 			return ret;
-@@ -996,7 +996,7 @@ int __add_to_free_space_tree(struct btrfs_trans_handle *trans,
- 	u32 flags;
- 	int ret;
- 
--	if (block_group->needs_free_space) {
-+	if (test_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &block_group->runtime_flags)) {
- 		ret = __add_block_group_free_space(trans, block_group, path);
- 		if (ret)
- 			return ret;
-@@ -1350,7 +1350,7 @@ static int __add_block_group_free_space(struct btrfs_trans_handle *trans,
- {
- 	int ret;
- 
--	block_group->needs_free_space = 0;
-+	clear_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &block_group->runtime_flags);
- 
- 	ret = add_new_free_space_info(trans, block_group, path);
- 	if (ret)
-@@ -1372,7 +1372,7 @@ int add_block_group_free_space(struct btrfs_trans_handle *trans,
- 		return 0;
- 
- 	mutex_lock(&block_group->free_space_lock);
--	if (!block_group->needs_free_space)
-+	if (!test_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &block_group->runtime_flags))
- 		goto out;
- 
- 	path = btrfs_alloc_path();
-@@ -1405,7 +1405,7 @@ int remove_block_group_free_space(struct btrfs_trans_handle *trans,
- 	if (!btrfs_fs_compat_ro(trans->fs_info, FREE_SPACE_TREE))
- 		return 0;
- 
--	if (block_group->needs_free_space) {
-+	if (test_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &block_group->runtime_flags)) {
- 		/* We never added this block group to the free space tree. */
- 		return 0;
- 	}
-diff --git a/fs/btrfs/tests/free-space-tree-tests.c b/fs/btrfs/tests/free-space-tree-tests.c
-index 13734ed43bfcb..766117a76d742 100644
---- a/fs/btrfs/tests/free-space-tree-tests.c
-+++ b/fs/btrfs/tests/free-space-tree-tests.c
-@@ -470,7 +470,7 @@ static int run_test(test_func_t test_func, int bitmaps, u32 sectorsize,
- 	}
- 	cache->bitmap_low_thresh = 0;
- 	cache->bitmap_high_thresh = (u32)-1;
--	cache->needs_free_space = 1;
-+	set_bit(BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE, &cache->runtime_flags);
- 	cache->fs_info = root->fs_info;
- 
- 	btrfs_init_dummy_trans(&trans, root->fs_info);
 -- 
 2.40.1
 
