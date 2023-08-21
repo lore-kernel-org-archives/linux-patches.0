@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A3D1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612BAC433C8;
-	Mon, 21 Aug 2023 20:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3651171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A7AC433C7;
+	Mon, 21 Aug 2023 20:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648407;
-	bh=zZ7jmvzev7xcy2nK4sMOt06wQTIC/fyfJZL8EeESf2Y=;
+	s=korg; t=1692648410;
+	bh=ylcf7xCOFcZ9a79OP+JpHb/JkeS/qnUtEm0dMjTehuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQxaJ/8l2S82cmrKtsY1BUEHFQYbGaSPWtFgYwJjqPpQSUhs2xu0XVjpnt80UXxZ7
-	 ndfY4YIASOwDC1I7HvS9bgy304W/hZ8UcF3xbACUm9yRJV1XQnunm0sjXhunfs9Y9P
-	 cenhWCCVFVCnCHTcUtgdsNfDWpxueAsFH/0zYJ8Q=
+	b=lEen3J6K8Yih4+MQPSm98oq8e+Oo0FJtuu+x2OYL0YIiy7Ir7F7kORgcjn4wmY409
+	 nbnKMKid23TKnnI68JbtWoHEivuCEyXDHwXnw//Yv1WrMa5PXOcM0mFy1GPFLo9r4N
+	 zK+U3huhdockDJphpUqD/W0bCNX03SOIY9cu3JfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 165/234] net: phy: broadcom: stub c45 read/write for 54810
-Date: Mon, 21 Aug 2023 21:42:08 +0200
-Message-ID: <20230821194136.123156258@linuxfoundation.org>
+Subject: [PATCH 6.4 166/234] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Mon, 21 Aug 2023 21:42:09 +0200
+Message-ID: <20230821194136.173502257@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,56 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 096516d092d54604d590827d05b1022c8f326639 ]
+[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
 
-The 54810 does not support c45. The mmd_phy_indirect accesses return
-arbirtary values leading to odd behavior like saying it supports EEE
-when it doesn't. We also see that reading/writing these non-existent
-MMD registers leads to phy instability in some cases.
+Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
+ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
+in unregister_vlan_dev() with the following testcase:
 
-Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add team1 type team
+  # ip netns exec ns1 ip link add team_slave type veth peer veth2
+  # ip netns exec ns1 ip link set team_slave master team1
+  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set team_slave nomaster
+  # ip netns del ns1
+
+Add S-VLAN tag related features support to team driver. So the team driver
+will always propagate the VLAN info to its slaves.
+
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/broadcom.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/team/team.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
-index ad71c88c87e78..f9ad8902100f3 100644
---- a/drivers/net/phy/broadcom.c
-+++ b/drivers/net/phy/broadcom.c
-@@ -486,6 +486,17 @@ static int bcm54xx_resume(struct phy_device *phydev)
- 	return bcm54xx_config_init(phydev);
- }
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index d3dc22509ea58..382756c3fb837 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -2200,7 +2200,9 @@ static void team_setup(struct net_device *dev)
  
-+static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
-+			      u16 val)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int bcm54811_config_init(struct phy_device *phydev)
- {
- 	int err, reg;
-@@ -981,6 +992,8 @@ static struct phy_driver broadcom_drivers[] = {
- 	.get_strings	= bcm_phy_get_strings,
- 	.get_stats	= bcm54xx_get_stats,
- 	.probe		= bcm54xx_phy_probe,
-+	.read_mmd	= bcm54810_read_mmd,
-+	.write_mmd	= bcm54810_write_mmd,
- 	.config_init    = bcm54xx_config_init,
- 	.config_aneg    = bcm5481_config_aneg,
- 	.config_intr    = bcm_phy_config_intr,
+ 	dev->hw_features = TEAM_VLAN_FEATURES |
+ 			   NETIF_F_HW_VLAN_CTAG_RX |
+-			   NETIF_F_HW_VLAN_CTAG_FILTER;
++			   NETIF_F_HW_VLAN_CTAG_FILTER |
++			   NETIF_F_HW_VLAN_STAG_RX |
++			   NETIF_F_HW_VLAN_STAG_FILTER;
+ 
+ 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
+ 	dev->features |= dev->hw_features;
 -- 
 2.40.1
 
