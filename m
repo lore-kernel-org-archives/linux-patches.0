@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228601170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9928DC433C8;
-	Mon, 21 Aug 2023 19:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0819F1170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7801BC433CC;
+	Mon, 21 Aug 2023 19:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647485;
-	bh=k37WndKbNUeOeDSGMkshATlh3pPCBoy9xSJEupg7dTE=;
+	s=korg; t=1692647487;
+	bh=oMPlmp3UHT64eKMPWX6Q7+2VLToajGb4sCD3qIE+Ca8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABLtaX+NqwD0vqBomJE3pW1G4aZq3WCAaqgZIExpNLkYGhXMFtuRYDV/XekTSZK2j
-	 Bb+rddq3N/TfJP/KUpxvyJzWlijwwjxBqgK+Vy9qaR1FX57iUczxVmWvyME2VXMRqv
-	 mI7ke4NqKi8WSx9wu7b9y8RkQUPRHyOrvCQa1pkY=
+	b=IyHg5vETzNW0G+Mjh7jlAQfwVRW+rwlVbPfT3K2af0i8q8OpU/jBVnWjTFvJaHX+z
+	 eXbM/dEaOAZuonUc96hEh5+eRR4peSXkLhi4DqqMw1dsFWKXCeKxDJn2m1K9lyzMWz
+	 x8G/UNICs9al58XDWy07/4TQWA58yLIL+jzXsD/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maulik Shah <quic_mkshah@quicinc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Dan Streetman <ddstreet@ieee.org>,
+	Nitin Gupta <ngupta@vflare.org>,
+	Seth Jennings <sjenning@redhat.com>,
+	Vitaly Wool <vitaly.wool@konsulko.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/194] cpuidle: psci: Move enabling OSI mode after power domains creation
-Date: Mon, 21 Aug 2023 21:39:42 +0200
-Message-ID: <20230821194122.843293083@linuxfoundation.org>
+Subject: [PATCH 6.1 004/194] zsmalloc: consolidate zs_pools migrate_lock and size_classs locks
+Date: Mon, 21 Aug 2023 21:39:43 +0200
+Message-ID: <20230821194122.893349354@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,121 +42,400 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maulik Shah <quic_mkshah@quicinc.com>
+From: Nhat Pham <nphamcs@gmail.com>
 
-[ Upstream commit 12acb348fa4528a4203edf1cce7a3be2c9af2279 ]
+[ Upstream commit c0547d0b6a4b637db05406b90ba82e1b2e71de56 ]
 
-A switch from OSI to PC mode is only possible if all CPUs other than the
-calling one are OFF, either through a call to CPU_OFF or not yet booted.
+Currently, zsmalloc has a hierarchy of locks, which includes a pool-level
+migrate_lock, and a lock for each size class.  We have to obtain both
+locks in the hotpath in most cases anyway, except for zs_malloc.  This
+exception will no longer exist when we introduce a LRU into the zs_pool
+for the new writeback functionality - we will need to obtain a pool-level
+lock to synchronize LRU handling even in zs_malloc.
 
-Currently OSI mode is enabled before power domains are created. In cases
-where CPUidle states are not using hierarchical CPU topology the bail out
-path tries to switch back to PC mode which gets denied by firmware since
-other CPUs are online at this point and creates inconsistent state as
-firmware is in OSI mode and Linux in PC mode.
+In preparation for zsmalloc writeback, consolidate these locks into a
+single pool-level lock, which drastically reduces the complexity of
+synchronization in zsmalloc.
 
-This change moves enabling OSI mode after power domains are created,
-this would makes sure that hierarchical CPU topology is used before
-switching firmware to OSI mode.
+We have also benchmarked the lock consolidation to see the performance
+effect of this change on zram.
 
-Cc: stable@vger.kernel.org
-Fixes: 70c179b49870 ("cpuidle: psci: Allow PM domain to be initialized even if no OSI mode")
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+First, we ran a synthetic FS workload on a server machine with 36 cores
+(same machine for all runs), using
+
+fs_mark  -d  ../zram1mnt  -s  100000  -n  2500  -t  32  -k
+
+before and after for btrfs and ext4 on zram (FS usage is 80%).
+
+Here is the result (unit is file/second):
+
+With lock consolidation (btrfs):
+Average: 13520.2, Median: 13531.0, Stddev: 137.5961482019028
+
+Without lock consolidation (btrfs):
+Average: 13487.2, Median: 13575.0, Stddev: 309.08283679298665
+
+With lock consolidation (ext4):
+Average: 16824.4, Median: 16839.0, Stddev: 89.97388510006668
+
+Without lock consolidation (ext4)
+Average: 16958.0, Median: 16986.0, Stddev: 194.7370021336469
+
+As you can see, we observe a 0.3% regression for btrfs, and a 0.9%
+regression for ext4. This is a small, barely measurable difference in my
+opinion.
+
+For a more realistic scenario, we also tries building the kernel on zram.
+Here is the time it takes (in seconds):
+
+With lock consolidation (btrfs):
+real
+Average: 319.6, Median: 320.0, Stddev: 0.8944271909999159
+user
+Average: 6894.2, Median: 6895.0, Stddev: 25.528415540334656
+sys
+Average: 521.4, Median: 522.0, Stddev: 1.51657508881031
+
+Without lock consolidation (btrfs):
+real
+Average: 319.8, Median: 320.0, Stddev: 0.8366600265340756
+user
+Average: 6896.6, Median: 6899.0, Stddev: 16.04057355583023
+sys
+Average: 520.6, Median: 521.0, Stddev: 1.140175425099138
+
+With lock consolidation (ext4):
+real
+Average: 320.0, Median: 319.0, Stddev: 1.4142135623730951
+user
+Average: 6896.8, Median: 6878.0, Stddev: 28.621670111997307
+sys
+Average: 521.2, Median: 521.0, Stddev: 1.7888543819998317
+
+Without lock consolidation (ext4)
+real
+Average: 319.6, Median: 319.0, Stddev: 0.8944271909999159
+user
+Average: 6886.2, Median: 6887.0, Stddev: 16.93221781102523
+sys
+Average: 520.4, Median: 520.0, Stddev: 1.140175425099138
+
+The difference is entirely within the noise of a typical run on zram.
+This hardly justifies the complexity of maintaining both the pool lock and
+the class lock.  In fact, for writeback, we would need to introduce yet
+another lock to prevent data races on the pool's LRU, further complicating
+the lock handling logic.  IMHO, it is just better to collapse all of these
+into a single pool-level lock.
+
+Link: https://lkml.kernel.org/r/20221128191616.1261026-4-nphamcs@gmail.com
+Signed-off-by: Nhat Pham <nphamcs@gmail.com>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Minchan Kim <minchan@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Dan Streetman <ddstreet@ieee.org>
+Cc: Nitin Gupta <ngupta@vflare.org>
+Cc: Seth Jennings <sjenning@redhat.com>
+Cc: Vitaly Wool <vitaly.wool@konsulko.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 4b5d1e47b694 ("zsmalloc: fix races between modifications of fullness and isolated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle-psci-domain.c | 39 +++++++++------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ mm/zsmalloc.c | 87 ++++++++++++++++++++++-----------------------------
+ 1 file changed, 37 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
-index 1fca250d5dece..f5d4359555d77 100644
---- a/drivers/cpuidle/cpuidle-psci-domain.c
-+++ b/drivers/cpuidle/cpuidle-psci-domain.c
-@@ -117,20 +117,6 @@ static void psci_pd_remove(void)
- 	}
+diff --git a/mm/zsmalloc.c b/mm/zsmalloc.c
+index d03941cace2c4..326faa751f0a4 100644
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -33,8 +33,7 @@
+ /*
+  * lock ordering:
+  *	page_lock
+- *	pool->migrate_lock
+- *	class->lock
++ *	pool->lock
+  *	zspage->lock
+  */
+ 
+@@ -192,7 +191,6 @@ static const int fullness_threshold_frac = 4;
+ static size_t huge_class_size;
+ 
+ struct size_class {
+-	spinlock_t lock;
+ 	struct list_head fullness_list[NR_ZS_FULLNESS];
+ 	/*
+ 	 * Size of objects stored in this class. Must be multiple
+@@ -247,8 +245,7 @@ struct zs_pool {
+ #ifdef CONFIG_COMPACTION
+ 	struct work_struct free_work;
+ #endif
+-	/* protect page/zspage migration */
+-	rwlock_t migrate_lock;
++	spinlock_t lock;
+ };
+ 
+ struct zspage {
+@@ -355,7 +352,7 @@ static void cache_free_zspage(struct zs_pool *pool, struct zspage *zspage)
+ 	kmem_cache_free(pool->zspage_cachep, zspage);
  }
  
--static bool psci_pd_try_set_osi_mode(void)
--{
--	int ret;
--
--	if (!psci_has_osi_support())
--		return false;
--
--	ret = psci_set_osi_mode(true);
--	if (ret)
--		return false;
--
--	return true;
--}
--
- static void psci_cpuidle_domain_sync_state(struct device *dev)
+-/* class->lock(which owns the handle) synchronizes races */
++/* pool->lock(which owns the handle) synchronizes races */
+ static void record_obj(unsigned long handle, unsigned long obj)
  {
- 	/*
-@@ -149,15 +135,12 @@ static int psci_cpuidle_domain_probe(struct platform_device *pdev)
+ 	*(unsigned long *)handle = obj;
+@@ -452,7 +449,7 @@ static __maybe_unused int is_first_page(struct page *page)
+ 	return PagePrivate(page);
+ }
+ 
+-/* Protected by class->lock */
++/* Protected by pool->lock */
+ static inline int get_zspage_inuse(struct zspage *zspage)
  {
- 	struct device_node *np = pdev->dev.of_node;
- 	struct device_node *node;
--	bool use_osi;
-+	bool use_osi = psci_has_osi_support();
- 	int ret = 0, pd_count = 0;
- 
- 	if (!np)
- 		return -ENODEV;
- 
--	/* If OSI mode is supported, let's try to enable it. */
--	use_osi = psci_pd_try_set_osi_mode();
--
- 	/*
- 	 * Parse child nodes for the "#power-domain-cells" property and
- 	 * initialize a genpd/genpd-of-provider pair when it's found.
-@@ -167,33 +150,37 @@ static int psci_cpuidle_domain_probe(struct platform_device *pdev)
+ 	return zspage->inuse;
+@@ -597,13 +594,13 @@ static int zs_stats_size_show(struct seq_file *s, void *v)
+ 		if (class->index != i)
  			continue;
  
- 		ret = psci_pd_init(node, use_osi);
--		if (ret)
--			goto put_node;
-+		if (ret) {
-+			of_node_put(node);
-+			goto exit;
-+		}
+-		spin_lock(&class->lock);
++		spin_lock(&pool->lock);
+ 		class_almost_full = zs_stat_get(class, CLASS_ALMOST_FULL);
+ 		class_almost_empty = zs_stat_get(class, CLASS_ALMOST_EMPTY);
+ 		obj_allocated = zs_stat_get(class, OBJ_ALLOCATED);
+ 		obj_used = zs_stat_get(class, OBJ_USED);
+ 		freeable = zs_can_compact(class);
+-		spin_unlock(&class->lock);
++		spin_unlock(&pool->lock);
  
- 		pd_count++;
+ 		objs_per_zspage = class->objs_per_zspage;
+ 		pages_used = obj_allocated / objs_per_zspage *
+@@ -916,7 +913,7 @@ static void __free_zspage(struct zs_pool *pool, struct size_class *class,
+ 
+ 	get_zspage_mapping(zspage, &class_idx, &fg);
+ 
+-	assert_spin_locked(&class->lock);
++	assert_spin_locked(&pool->lock);
+ 
+ 	VM_BUG_ON(get_zspage_inuse(zspage));
+ 	VM_BUG_ON(fg != ZS_EMPTY);
+@@ -1247,19 +1244,19 @@ void *zs_map_object(struct zs_pool *pool, unsigned long handle,
+ 	BUG_ON(in_interrupt());
+ 
+ 	/* It guarantees it can get zspage from handle safely */
+-	read_lock(&pool->migrate_lock);
++	spin_lock(&pool->lock);
+ 	obj = handle_to_obj(handle);
+ 	obj_to_location(obj, &page, &obj_idx);
+ 	zspage = get_zspage(page);
+ 
+ 	/*
+-	 * migration cannot move any zpages in this zspage. Here, class->lock
++	 * migration cannot move any zpages in this zspage. Here, pool->lock
+ 	 * is too heavy since callers would take some time until they calls
+ 	 * zs_unmap_object API so delegate the locking from class to zspage
+ 	 * which is smaller granularity.
+ 	 */
+ 	migrate_read_lock(zspage);
+-	read_unlock(&pool->migrate_lock);
++	spin_unlock(&pool->lock);
+ 
+ 	class = zspage_class(pool, zspage);
+ 	off = (class->size * obj_idx) & ~PAGE_MASK;
+@@ -1412,8 +1409,8 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
+ 	size += ZS_HANDLE_SIZE;
+ 	class = pool->size_class[get_size_class_index(size)];
+ 
+-	/* class->lock effectively protects the zpage migration */
+-	spin_lock(&class->lock);
++	/* pool->lock effectively protects the zpage migration */
++	spin_lock(&pool->lock);
+ 	zspage = find_get_zspage(class);
+ 	if (likely(zspage)) {
+ 		obj = obj_malloc(pool, zspage, handle);
+@@ -1421,12 +1418,12 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
+ 		fix_fullness_group(class, zspage);
+ 		record_obj(handle, obj);
+ 		class_stat_inc(class, OBJ_USED, 1);
+-		spin_unlock(&class->lock);
++		spin_unlock(&pool->lock);
+ 
+ 		return handle;
  	}
  
- 	/* Bail out if not using the hierarchical CPU topology. */
- 	if (!pd_count)
--		goto no_pd;
-+		return 0;
+-	spin_unlock(&class->lock);
++	spin_unlock(&pool->lock);
  
- 	/* Link genpd masters/subdomains to model the CPU topology. */
- 	ret = dt_idle_pd_init_topology(np);
- 	if (ret)
- 		goto remove_pd;
+ 	zspage = alloc_zspage(pool, class, gfp);
+ 	if (!zspage) {
+@@ -1434,7 +1431,7 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
+ 		return (unsigned long)ERR_PTR(-ENOMEM);
+ 	}
  
-+	/* let's try to enable OSI. */
-+	ret = psci_set_osi_mode(use_osi);
-+	if (ret)
-+		goto remove_pd;
-+
- 	pr_info("Initialized CPU PM domain topology using %s mode\n",
- 		use_osi ? "OSI" : "PC");
- 	return 0;
+-	spin_lock(&class->lock);
++	spin_lock(&pool->lock);
+ 	obj = obj_malloc(pool, zspage, handle);
+ 	newfg = get_fullness_group(class, zspage);
+ 	insert_zspage(class, zspage, newfg);
+@@ -1447,7 +1444,7 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
  
--put_node:
--	of_node_put(node);
- remove_pd:
-+	dt_idle_pd_remove_topology(np);
- 	psci_pd_remove();
-+exit:
- 	pr_err("failed to create CPU PM domains ret=%d\n", ret);
--no_pd:
--	if (use_osi)
--		psci_set_osi_mode(false);
- 	return ret;
+ 	/* We completely set up zspage so mark them as movable */
+ 	SetZsPageMovable(pool, zspage);
+-	spin_unlock(&class->lock);
++	spin_unlock(&pool->lock);
+ 
+ 	return handle;
  }
+@@ -1491,16 +1488,14 @@ void zs_free(struct zs_pool *pool, unsigned long handle)
+ 		return;
  
+ 	/*
+-	 * The pool->migrate_lock protects the race with zpage's migration
++	 * The pool->lock protects the race with zpage's migration
+ 	 * so it's safe to get the page from handle.
+ 	 */
+-	read_lock(&pool->migrate_lock);
++	spin_lock(&pool->lock);
+ 	obj = handle_to_obj(handle);
+ 	obj_to_page(obj, &f_page);
+ 	zspage = get_zspage(f_page);
+ 	class = zspage_class(pool, zspage);
+-	spin_lock(&class->lock);
+-	read_unlock(&pool->migrate_lock);
+ 
+ 	obj_free(class->size, obj);
+ 	class_stat_dec(class, OBJ_USED, 1);
+@@ -1510,7 +1505,7 @@ void zs_free(struct zs_pool *pool, unsigned long handle)
+ 
+ 	free_zspage(pool, class, zspage);
+ out:
+-	spin_unlock(&class->lock);
++	spin_unlock(&pool->lock);
+ 	cache_free_handle(pool, handle);
+ }
+ EXPORT_SYMBOL_GPL(zs_free);
+@@ -1867,16 +1862,12 @@ static int zs_page_migrate(struct page *newpage, struct page *page,
+ 	pool = zspage->pool;
+ 
+ 	/*
+-	 * The pool migrate_lock protects the race between zpage migration
++	 * The pool's lock protects the race between zpage migration
+ 	 * and zs_free.
+ 	 */
+-	write_lock(&pool->migrate_lock);
++	spin_lock(&pool->lock);
+ 	class = zspage_class(pool, zspage);
+ 
+-	/*
+-	 * the class lock protects zpage alloc/free in the zspage.
+-	 */
+-	spin_lock(&class->lock);
+ 	/* the migrate_write_lock protects zpage access via zs_map_object */
+ 	migrate_write_lock(zspage);
+ 
+@@ -1906,10 +1897,9 @@ static int zs_page_migrate(struct page *newpage, struct page *page,
+ 	replace_sub_page(class, zspage, newpage, page);
+ 	/*
+ 	 * Since we complete the data copy and set up new zspage structure,
+-	 * it's okay to release migration_lock.
++	 * it's okay to release the pool's lock.
+ 	 */
+-	write_unlock(&pool->migrate_lock);
+-	spin_unlock(&class->lock);
++	spin_unlock(&pool->lock);
+ 	dec_zspage_isolation(zspage);
+ 	migrate_write_unlock(zspage);
+ 
+@@ -1964,9 +1954,9 @@ static void async_free_zspage(struct work_struct *work)
+ 		if (class->index != i)
+ 			continue;
+ 
+-		spin_lock(&class->lock);
++		spin_lock(&pool->lock);
+ 		list_splice_init(&class->fullness_list[ZS_EMPTY], &free_pages);
+-		spin_unlock(&class->lock);
++		spin_unlock(&pool->lock);
+ 	}
+ 
+ 	list_for_each_entry_safe(zspage, tmp, &free_pages, list) {
+@@ -1976,9 +1966,9 @@ static void async_free_zspage(struct work_struct *work)
+ 		get_zspage_mapping(zspage, &class_idx, &fullness);
+ 		VM_BUG_ON(fullness != ZS_EMPTY);
+ 		class = pool->size_class[class_idx];
+-		spin_lock(&class->lock);
++		spin_lock(&pool->lock);
+ 		__free_zspage(pool, class, zspage);
+-		spin_unlock(&class->lock);
++		spin_unlock(&pool->lock);
+ 	}
+ };
+ 
+@@ -2039,10 +2029,11 @@ static unsigned long __zs_compact(struct zs_pool *pool,
+ 	struct zspage *dst_zspage = NULL;
+ 	unsigned long pages_freed = 0;
+ 
+-	/* protect the race between zpage migration and zs_free */
+-	write_lock(&pool->migrate_lock);
+-	/* protect zpage allocation/free */
+-	spin_lock(&class->lock);
++	/*
++	 * protect the race between zpage migration and zs_free
++	 * as well as zpage allocation/free
++	 */
++	spin_lock(&pool->lock);
+ 	while ((src_zspage = isolate_zspage(class, true))) {
+ 		/* protect someone accessing the zspage(i.e., zs_map_object) */
+ 		migrate_write_lock(src_zspage);
+@@ -2067,7 +2058,7 @@ static unsigned long __zs_compact(struct zs_pool *pool,
+ 			putback_zspage(class, dst_zspage);
+ 			migrate_write_unlock(dst_zspage);
+ 			dst_zspage = NULL;
+-			if (rwlock_is_contended(&pool->migrate_lock))
++			if (spin_is_contended(&pool->lock))
+ 				break;
+ 		}
+ 
+@@ -2084,11 +2075,9 @@ static unsigned long __zs_compact(struct zs_pool *pool,
+ 			pages_freed += class->pages_per_zspage;
+ 		} else
+ 			migrate_write_unlock(src_zspage);
+-		spin_unlock(&class->lock);
+-		write_unlock(&pool->migrate_lock);
++		spin_unlock(&pool->lock);
+ 		cond_resched();
+-		write_lock(&pool->migrate_lock);
+-		spin_lock(&class->lock);
++		spin_lock(&pool->lock);
+ 	}
+ 
+ 	if (src_zspage) {
+@@ -2096,8 +2085,7 @@ static unsigned long __zs_compact(struct zs_pool *pool,
+ 		migrate_write_unlock(src_zspage);
+ 	}
+ 
+-	spin_unlock(&class->lock);
+-	write_unlock(&pool->migrate_lock);
++	spin_unlock(&pool->lock);
+ 
+ 	return pages_freed;
+ }
+@@ -2200,7 +2188,7 @@ struct zs_pool *zs_create_pool(const char *name)
+ 		return NULL;
+ 
+ 	init_deferred_free(pool);
+-	rwlock_init(&pool->migrate_lock);
++	spin_lock_init(&pool->lock);
+ 
+ 	pool->name = kstrdup(name, GFP_KERNEL);
+ 	if (!pool->name)
+@@ -2271,7 +2259,6 @@ struct zs_pool *zs_create_pool(const char *name)
+ 		class->index = i;
+ 		class->pages_per_zspage = pages_per_zspage;
+ 		class->objs_per_zspage = objs_per_zspage;
+-		spin_lock_init(&class->lock);
+ 		pool->size_class[i] = class;
+ 		for (fullness = ZS_EMPTY; fullness < NR_ZS_FULLNESS;
+ 							fullness++)
 -- 
 2.40.1
 
