@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388451170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EDCC433C8;
-	Mon, 21 Aug 2023 19:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FCD1170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7578BC433C8;
+	Mon, 21 Aug 2023 19:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647650;
-	bh=Wx1QkOMr5T8daH/THw1esdjbU8/kbEJnuCp8xPc5bwI=;
+	s=korg; t=1692647653;
+	bh=XxEp7jAuiCfYzzgVGvN9php2593EJmAcvg8pChy4cMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovVtN0s8Onq5qh5LTgCaAunE+2+1QN2SwJi35zHRTijO1cBQlBycIRjecFxb/WpAw
-	 22CmTYs6YDvPk5eStgl57/IzRb+uYfOAiRzTDxHin49z7E9CxGaF0liYWSkhrHnENw
-	 8LKdeu8sLu0Vk0YSVwNI5unxKJvxHXZzRfxK7OY0=
+	b=yJfIyy1uogMbj/GoUFcjehLTSZyTaGZPNFas8p7t7JJjdtMRVVGitGDGcxCOVfQSP
+	 Dyjn5Wj6k4lGfzdm4r0J0WA4yQNlm2kbesxAcIlaB1kvZ9IrZA9av61ohZlhPbX8kI
+	 bquBVd6AxP4L2g158OBAg1ueNUL8Br/BzsYzNtuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Ray Jui <ray.jui@broadcom.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 089/194] i2c: bcm-iproc: Fix bcm_iproc_i2c_isr deadlock issue
-Date: Mon, 21 Aug 2023 21:41:08 +0200
-Message-ID: <20230821194126.636786790@linuxfoundation.org>
+Subject: [PATCH 6.1 090/194] i2c: hisi: Only handle the interrupt of the drivers transfer
+Date: Mon, 21 Aug 2023 21:41:09 +0200
+Message-ID: <20230821194126.688607959@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,61 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-commit 4caf4cb1eaed469742ef719f2cc024b1ec3fa9e6 upstream.
+commit fff67c1b17ee093947bdcbac6f64d072e644159a upstream.
 
-iproc_i2c_rd_reg() and iproc_i2c_wr_reg() are called from both
-interrupt context (e.g. bcm_iproc_i2c_isr) and process context
-(e.g. bcm_iproc_i2c_suspend). Therefore, interrupts should be
-disabled to avoid potential deadlock. To prevent this scenario,
-use spin_lock_irqsave().
+The controller may be shared with other port, for example the firmware.
+Handle the interrupt from other sources will cause crash since some
+data are not initialized. So only handle the interrupt of the driver's
+transfer and discard others.
 
-Fixes: 9a1038728037 ("i2c: iproc: add NIC I2C support")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Acked-by: Ray Jui <ray.jui@broadcom.com>
+Fixes: d62fbdb99a85 ("i2c: add support for HiSilicon I2C controller")
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
 Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20230801124625.63587-1-yangyicong@huawei.com
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-bcm-iproc.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-hisi.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/i2c/busses/i2c-bcm-iproc.c
-+++ b/drivers/i2c/busses/i2c-bcm-iproc.c
-@@ -233,13 +233,14 @@ static inline u32 iproc_i2c_rd_reg(struc
- 				   u32 offset)
- {
- 	u32 val;
-+	unsigned long flags;
+--- a/drivers/i2c/busses/i2c-hisi.c
++++ b/drivers/i2c/busses/i2c-hisi.c
+@@ -328,6 +328,14 @@ static irqreturn_t hisi_i2c_irq(int irq,
+ 	struct hisi_i2c_controller *ctlr = context;
+ 	u32 int_stat;
  
- 	if (iproc_i2c->idm_base) {
--		spin_lock(&iproc_i2c->idm_lock);
-+		spin_lock_irqsave(&iproc_i2c->idm_lock, flags);
- 		writel(iproc_i2c->ape_addr_mask,
- 		       iproc_i2c->idm_base + IDM_CTRL_DIRECT_OFFSET);
- 		val = readl(iproc_i2c->base + offset);
--		spin_unlock(&iproc_i2c->idm_lock);
-+		spin_unlock_irqrestore(&iproc_i2c->idm_lock, flags);
- 	} else {
- 		val = readl(iproc_i2c->base + offset);
- 	}
-@@ -250,12 +251,14 @@ static inline u32 iproc_i2c_rd_reg(struc
- static inline void iproc_i2c_wr_reg(struct bcm_iproc_i2c_dev *iproc_i2c,
- 				    u32 offset, u32 val)
- {
-+	unsigned long flags;
++	/*
++	 * Don't handle the interrupt if cltr->completion is NULL. We may
++	 * reach here because the interrupt is spurious or the transfer is
++	 * started by another port (e.g. firmware) rather than us.
++	 */
++	if (!ctlr->completion)
++		return IRQ_NONE;
 +
- 	if (iproc_i2c->idm_base) {
--		spin_lock(&iproc_i2c->idm_lock);
-+		spin_lock_irqsave(&iproc_i2c->idm_lock, flags);
- 		writel(iproc_i2c->ape_addr_mask,
- 		       iproc_i2c->idm_base + IDM_CTRL_DIRECT_OFFSET);
- 		writel(val, iproc_i2c->base + offset);
--		spin_unlock(&iproc_i2c->idm_lock);
-+		spin_unlock_irqrestore(&iproc_i2c->idm_lock, flags);
- 	} else {
- 		writel(val, iproc_i2c->base + offset);
- 	}
+ 	int_stat = readl(ctlr->iobase + HISI_I2C_INT_MSTAT);
+ 	hisi_i2c_clear_int(ctlr, int_stat);
+ 	if (!(int_stat & HISI_I2C_INT_ALL))
 
 
