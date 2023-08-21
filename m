@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786E111703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08D9C433C7;
-	Mon, 21 Aug 2023 19:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409D211703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5ADAC433C8;
+	Mon, 21 Aug 2023 19:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647959;
-	bh=9uXSArX/wMQHY5M39yUQ5eNMegUNNCd5y+IJ0LCWyV4=;
+	s=korg; t=1692647962;
+	bh=jkyfypRiDzJyk1RjDal3jKbyNclTlmBoJgSXq8CvOZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ru+4aMtF26tY3H+wGqH5prW5ae6l2RdE9jTtPxZPoq9bDXt44HzRBuybuzL+RyTMq
-	 VcXFglucI0hLXnZUW8mjKm2Q7vstjF2sQR1L0azK03sUVMQj0EMSbTLZ6Ou9AkZZGA
-	 yDoozjo5NWEiSyNL+6Uv+AWeGNrkIrJg4IcNLKbk=
+	b=CH0vUvZxFTB9nggjrX4qaJOzXnwFFf2TgmYs578Skp8EQf8bBJLs7Ap6Fd8aUzBi+
+	 7Vy3idOlJzJkfrBqopt9faiyYh4B75sYnnAN2kbgliP/dMTkFd6CQJcIwQQ/KeloGS
+	 aFJ+jpdOzJ9Q+ZmsyT+fWzuyk/73UdlOzc8ED5ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.1 192/194] drm/nouveau/disp: fix use-after-free in error handling of nouveau_connector_create
-Date: Mon, 21 Aug 2023 21:42:51 +0200
-Message-ID: <20230821194131.144428893@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 193/194] net: fix the RTO timer retransmitting skb every 1ms if linear option is enabled
+Date: Mon, 21 Aug 2023 21:42:52 +0200
+Message-ID: <20230821194131.188612894@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,50 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-commit 1b254b791d7b7dea6e8adc887fbbd51746d8bb27 upstream.
+commit e4dd0d3a2f64b8bd8029ec70f52bdbebd0644408 upstream.
 
-We can't simply free the connector after calling drm_connector_init on it.
-We need to clean up the drm side first.
+In the real workload, I encountered an issue which could cause the RTO
+timer to retransmit the skb per 1ms with linear option enabled. The amount
+of lost-retransmitted skbs can go up to 1000+ instantly.
 
-It might not fix all regressions from commit 2b5d1c29f6c4
-("drm/nouveau/disp: PIOR DP uses GPIO for HPD, not PMGR AUX interrupts"),
-but at least it fixes a memory corruption in error handling related to
-that commit.
+The root cause is that if the icsk_rto happens to be zero in the 6th round
+(which is the TCP_THIN_LINEAR_RETRIES value), then it will always be zero
+due to the changed calculation method in tcp_retransmit_timer() as follows:
 
-Link: https://lore.kernel.org/lkml/20230806213107.GFZNARG6moWpFuSJ9W@fat_crate.local/
-Fixes: 95983aea8003 ("drm/nouveau/disp: add connector class")
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230814144933.3956959-1-kherbst@redhat.com
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
+icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX);
+
+Above line could be converted to
+icsk->icsk_rto = min(0 << 1, TCP_RTO_MAX) = 0
+
+Therefore, the timer expires so quickly without any doubt.
+
+I read through the RFC 6298 and found that the RTO value can be rounded
+up to a certain value, in Linux, say TCP_RTO_MIN as default, which is
+regarded as the lower bound in this patch as suggested by Eric.
+
+Fixes: 36e31b0af587 ("net: TCP thin linear timeouts")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_timer.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -1407,8 +1407,7 @@ nouveau_connector_create(struct drm_devi
- 		ret = nvif_conn_ctor(&disp->disp, nv_connector->base.name, nv_connector->index,
- 				     &nv_connector->conn);
- 		if (ret) {
--			kfree(nv_connector);
--			return ERR_PTR(ret);
-+			goto drm_conn_err;
- 		}
- 	}
- 
-@@ -1470,4 +1469,9 @@ nouveau_connector_create(struct drm_devi
- 
- 	drm_connector_register(connector);
- 	return connector;
-+
-+drm_conn_err:
-+	drm_connector_cleanup(connector);
-+	kfree(nv_connector);
-+	return ERR_PTR(ret);
- }
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -586,7 +586,9 @@ out_reset_timer:
+ 	    tcp_stream_is_thin(tp) &&
+ 	    icsk->icsk_retransmits <= TCP_THIN_LINEAR_RETRIES) {
+ 		icsk->icsk_backoff = 0;
+-		icsk->icsk_rto = min(__tcp_set_rto(tp), TCP_RTO_MAX);
++		icsk->icsk_rto = clamp(__tcp_set_rto(tp),
++				       tcp_rto_min(sk),
++				       TCP_RTO_MAX);
+ 	} else {
+ 		/* Use normal (exponential) backoff */
+ 		icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX);
 
 
