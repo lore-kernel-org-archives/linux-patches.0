@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8354A11707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A8CC433C8;
-	Mon, 21 Aug 2023 19:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDC111707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73CBC433C8;
+	Mon, 21 Aug 2023 19:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647608;
-	bh=B77pQH4kCd+5X3F9uUrfzJJLzLSM30YZslTRqE1feFk=;
+	s=korg; t=1692647611;
+	bh=H6oo2xXiUVKrOPpu1pqiSLgl0ycsKxf3//S+0nV4Q9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vt8/Y1uhlDCkysO0TEjhISHnfMOjrc8lsfy68GmdfM76OoEGFCCM2+VuZ1f9GP54C
-	 HMKeTucMDjhJi+M19NUgB15bfT/f2/WrTcx7GBHx7t/YVnVwnH6MHMKaEFk1UUsbwE
-	 sd1lfBguF3ZpDlO2W7cQPmU1fA0vBNgJQTtBfHV4=
+	b=hURf1mbT7rgyK7eOr4Vkniq4whfSBr1QYafoWhmPVlaIQOBXL+bcex+xl+Ep2k6i1
+	 bP4KzSMnX67BTXK6Jb6sYpNqsxsg33xGEP1LAafNuNaAJGPhJ9Z95LIcIqBHTEZ2tA
+	 zv0H5l12g4bpwk57PZFjqukD2pGIuxFYtVl48beE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/194] drm/amd/display: fix access hdcp_workqueue assert
-Date: Mon, 21 Aug 2023 21:40:54 +0200
-Message-ID: <20230821194126.064176183@linuxfoundation.org>
+Subject: [PATCH 6.1 076/194] KVM: arm64: vgic-v4: Make the doorbell request robust w.r.t preemption
+Date: Mon, 21 Aug 2023 21:40:55 +0200
+Message-ID: <20230821194126.108512504@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -38,79 +37,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit cdff36a0217aadf5cbc167893ad1c0da869619cb ]
+[ Upstream commit b321c31c9b7b309dcde5e8854b741c8e6a9a05f0 ]
 
-[Why] hdcp are enabled for asics from raven. for old asics
-which hdcp are not enabled, hdcp_workqueue are null. some
-access to hdcp work queue are not guarded with pointer check.
+Xiang reports that VMs occasionally fail to boot on GICv4.1 systems when
+running a preemptible kernel, as it is possible that a vCPU is blocked
+without requesting a doorbell interrupt.
 
-[How] add hdcp_workqueue pointer check before access workqueue.
+The issue is that any preemption that occurs between vgic_v4_put() and
+schedule() on the block path will mark the vPE as nonresident and *not*
+request a doorbell irq. This occurs because when the vcpu thread is
+resumed on its way to block, vcpu_load() will make the vPE resident
+again. Once the vcpu actually blocks, we don't request a doorbell
+anymore, and the vcpu won't be woken up on interrupt delivery.
 
-Reviewed-by: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix it by tracking that we're entering WFI, and key the doorbell
+request on that flag. This allows us not to make the vPE resident
+when going through a preempt/schedule cycle, meaning we don't lose
+any state.
+
+Cc: stable@vger.kernel.org
+Fixes: 8e01d9a396e6 ("KVM: arm64: vgic-v4: Move the GICv4 residency flow to be driven by vcpu_load/put")
+Reported-by: Xiang Chen <chenxiang66@hisilicon.com>
+Suggested-by: Zenghui Yu <yuzenghui@huawei.com>
+Tested-by: Xiang Chen <chenxiang66@hisilicon.com>
+Co-developed-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Zenghui Yu <yuzenghui@huawei.com>
+Link: https://lore.kernel.org/r/20230713070657.3873244-1-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c    |  6 ++++++
- .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c  | 16 ++++++++++------
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ arch/arm64/include/asm/kvm_host.h | 2 ++
+ arch/arm64/kvm/arm.c              | 6 ++++--
+ arch/arm64/kvm/vgic/vgic-v3.c     | 2 +-
+ arch/arm64/kvm/vgic/vgic-v4.c     | 7 +++++--
+ include/kvm/arm_vgic.h            | 2 +-
+ 5 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index aa0ea28a86f02..249b269e2cc53 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8372,6 +8372,9 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- 		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);
- 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index b5a8e8b3c691c..577cf444c1135 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -559,6 +559,8 @@ struct kvm_vcpu_arch {
+ #define SYSREGS_ON_CPU		__vcpu_single_flag(sflags, BIT(4))
+ /* Software step state is Active-pending */
+ #define DBG_SS_ACTIVE_PENDING	__vcpu_single_flag(sflags, BIT(5))
++/* WFI instruction trapped */
++#define IN_WFI			__vcpu_single_flag(sflags, BIT(7))
  
-+		if (!adev->dm.hdcp_workqueue)
-+			continue;
-+
- 		pr_debug("[HDCP_DM] -------------- i : %x ----------\n", i);
  
- 		if (!connector)
-@@ -8420,6 +8423,9 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- 		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);
- 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
+ /* Pointer to the vcpu's SVE FFR for sve_{save,load}_state() */
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 35481d51aada8..6cc380a15eb76 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -692,13 +692,15 @@ void kvm_vcpu_wfi(struct kvm_vcpu *vcpu)
+ 	 */
+ 	preempt_disable();
+ 	kvm_vgic_vmcr_sync(vcpu);
+-	vgic_v4_put(vcpu, true);
++	vcpu_set_flag(vcpu, IN_WFI);
++	vgic_v4_put(vcpu);
+ 	preempt_enable();
  
-+		if (!adev->dm.hdcp_workqueue)
-+			continue;
-+
- 		new_crtc_state = NULL;
- 		old_crtc_state = NULL;
+ 	kvm_vcpu_halt(vcpu);
+ 	vcpu_clear_flag(vcpu, IN_WFIT);
  
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 9884dd78c652c..a9ddff774a978 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -379,13 +379,17 @@ static int dm_dp_mst_get_modes(struct drm_connector *connector)
- 		if (aconnector->dc_sink && connector->state) {
- 			struct drm_device *dev = connector->dev;
- 			struct amdgpu_device *adev = drm_to_adev(dev);
--			struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
--			struct hdcp_workqueue *hdcp_w = &hdcp_work[aconnector->dc_link->link_index];
- 
--			connector->state->hdcp_content_type =
--			hdcp_w->hdcp_content_type[connector->index];
--			connector->state->content_protection =
--			hdcp_w->content_protection[connector->index];
-+			if (adev->dm.hdcp_workqueue) {
-+				struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
-+				struct hdcp_workqueue *hdcp_w =
-+					&hdcp_work[aconnector->dc_link->link_index];
-+
-+				connector->state->hdcp_content_type =
-+				hdcp_w->hdcp_content_type[connector->index];
-+				connector->state->content_protection =
-+				hdcp_w->content_protection[connector->index];
-+			}
+ 	preempt_disable();
++	vcpu_clear_flag(vcpu, IN_WFI);
+ 	vgic_v4_load(vcpu);
+ 	preempt_enable();
+ }
+@@ -766,7 +768,7 @@ static int check_vcpu_requests(struct kvm_vcpu *vcpu)
+ 		if (kvm_check_request(KVM_REQ_RELOAD_GICv4, vcpu)) {
+ 			/* The distributor enable bits were changed */
+ 			preempt_disable();
+-			vgic_v4_put(vcpu, false);
++			vgic_v4_put(vcpu);
+ 			vgic_v4_load(vcpu);
+ 			preempt_enable();
  		}
- #endif
+diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
+index f86c3007a319c..1f8eea53e982f 100644
+--- a/arch/arm64/kvm/vgic/vgic-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-v3.c
+@@ -742,7 +742,7 @@ void vgic_v3_put(struct kvm_vcpu *vcpu)
+ {
+ 	struct vgic_v3_cpu_if *cpu_if = &vcpu->arch.vgic_cpu.vgic_v3;
  
+-	WARN_ON(vgic_v4_put(vcpu, false));
++	WARN_ON(vgic_v4_put(vcpu));
+ 
+ 	vgic_v3_vmcr_sync(vcpu);
+ 
+diff --git a/arch/arm64/kvm/vgic/vgic-v4.c b/arch/arm64/kvm/vgic/vgic-v4.c
+index c1c28fe680ba3..339a55194b2c6 100644
+--- a/arch/arm64/kvm/vgic/vgic-v4.c
++++ b/arch/arm64/kvm/vgic/vgic-v4.c
+@@ -336,14 +336,14 @@ void vgic_v4_teardown(struct kvm *kvm)
+ 	its_vm->vpes = NULL;
+ }
+ 
+-int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db)
++int vgic_v4_put(struct kvm_vcpu *vcpu)
+ {
+ 	struct its_vpe *vpe = &vcpu->arch.vgic_cpu.vgic_v3.its_vpe;
+ 
+ 	if (!vgic_supports_direct_msis(vcpu->kvm) || !vpe->resident)
+ 		return 0;
+ 
+-	return its_make_vpe_non_resident(vpe, need_db);
++	return its_make_vpe_non_resident(vpe, !!vcpu_get_flag(vcpu, IN_WFI));
+ }
+ 
+ int vgic_v4_load(struct kvm_vcpu *vcpu)
+@@ -354,6 +354,9 @@ int vgic_v4_load(struct kvm_vcpu *vcpu)
+ 	if (!vgic_supports_direct_msis(vcpu->kvm) || vpe->resident)
+ 		return 0;
+ 
++	if (vcpu_get_flag(vcpu, IN_WFI))
++		return 0;
++
+ 	/*
+ 	 * Before making the VPE resident, make sure the redistributor
+ 	 * corresponding to our current CPU expects us here. See the
+diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+index 4df9e73a8bb5f..1d7d4cffaefc6 100644
+--- a/include/kvm/arm_vgic.h
++++ b/include/kvm/arm_vgic.h
+@@ -429,6 +429,6 @@ int kvm_vgic_v4_unset_forwarding(struct kvm *kvm, int irq,
+ 
+ int vgic_v4_load(struct kvm_vcpu *vcpu);
+ void vgic_v4_commit(struct kvm_vcpu *vcpu);
+-int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db);
++int vgic_v4_put(struct kvm_vcpu *vcpu);
+ 
+ #endif /* __KVM_ARM_VGIC_H */
 -- 
 2.40.1
 
