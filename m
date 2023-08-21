@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3098F11711
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2015C433CA;
-	Mon, 21 Aug 2023 19:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F085011703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720BAC433C8;
+	Mon, 21 Aug 2023 19:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647774;
-	bh=cBn8qZ58K0qAmPClpol/5nY3DLSsoHGIdnRXhPPvlZg=;
+	s=korg; t=1692647776;
+	bh=U9mFyu5XHRGA3Wok2dRZIV719QkZ9TcR8KXPX2uSn2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K80t+w3MKWLDT4ud9DYvlcgABK63Yi9CUOB1GmpM0Vi1i7QGo8azs9OY3mWqiK2/a
-	 vpfUfXRK47DBwn3NX3YQaozel/uU+UqABnJur1lHSKDRRAmREEd9d1e4FGFipK9o4D
-	 u5ijkKjtlBiCxV0CkqJxvmrt3nhKe8FPOeZvN/Ds=
+	b=rjo7Fu5MmRMPmr14FR03UfBPY6I/xGvhNaZObXrn4q3qoSLUEt5nK0yBRluyLscom
+	 kYH2VSWdGFsNnw608pMHCHCKdsns7uUuQ215U0lJ5Fo8PfYQzcQm96rl+KHN51Qhgj
+	 e+KGI5d2VjGbE269QeE50ejz5xiLEd532j71RceE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7456b5dcf65111553320@syzkaller.appspotmail.com,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"kernelci.org bot" <bot@kernelci.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/194] net: openvswitch: reject negative ifindex
-Date: Mon, 21 Aug 2023 21:41:45 +0200
-Message-ID: <20230821194128.250045046@linuxfoundation.org>
+Subject: [PATCH 6.1 135/194] bus: ti-sysc: Flush posted write on enable before reset
+Date: Mon, 21 Aug 2023 21:41:54 +0200
+Message-ID: <20230821194128.620095903@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,91 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit a552bfa16bab4ce901ee721346a28c4e483f4066 ]
+[ Upstream commit 34539b442b3bc7d5bf10164750302b60b91f18a7 ]
 
-Recent changes in net-next (commit 759ab1edb56c ("net: store netdevs
-in an xarray")) refactored the handling of pre-assigned ifindexes
-and let syzbot surface a latent problem in ovs. ovs does not validate
-ifindex, making it possible to create netdev ports with negative
-ifindex values. It's easy to repro with YNL:
+The am335x devices started producing boot errors for resetting musb module
+in because of subtle timing changes:
 
-$ ./cli.py --spec netlink/specs/ovs_datapath.yaml \
-         --do new \
-	 --json '{"upcall-pid": 1, "name":"my-dp"}'
-$ ./cli.py --spec netlink/specs/ovs_vport.yaml \
-	 --do new \
-	 --json '{"upcall-pid": "00000001", "name": "some-port0", "dp-ifindex":3,"ifindex":4294901760,"type":2}'
-
-$ ip link show
--65536: some-port0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 7a:48:21:ad:0b:fb brd ff:ff:ff:ff:ff:ff
+Unhandled fault: external abort on non-linefetch (0x1008)
+...
+sysc_poll_reset_sysconfig from sysc_reset+0x109/0x12
+sysc_reset from sysc_probe+0xa99/0xeb0
 ...
 
-Validate the inputs. Now the second command correctly returns:
+The fix is to flush posted write after enable before reset during
+probe. Note that some devices also need to specify the delay after enable
+with ti,sysc-delay-us, but this is not needed for musb on am335x based on
+my tests.
 
-$ ./cli.py --spec netlink/specs/ovs_vport.yaml \
-	 --do new \
-	 --json '{"upcall-pid": "00000001", "name": "some-port0", "dp-ifindex":3,"ifindex":4294901760,"type":2}'
-
-lib.ynl.NlError: Netlink error: Numerical result out of range
-nl_len = 108 (92) nl_flags = 0x300 nl_type = 2
-	error: -34	extack: {'msg': 'integer out of range', 'unknown': [[type:4 len:36] b'\x0c\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0c\x00\x03\x00\xff\xff\xff\x7f\x00\x00\x00\x00\x08\x00\x01\x00\x08\x00\x00\x00'], 'bad-attr': '.ifindex'}
-
-Accept 0 since it used to be silently ignored.
-
-Fixes: 54c4ef34c4b6 ("openvswitch: allow specifying ifindex of new interfaces")
-Reported-by: syzbot+7456b5dcf65111553320@syzkaller.appspotmail.com
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://lore.kernel.org/r/20230814203840.2908710-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Closes: https://storage.kernelci.org/next/master/next-20230614/arm/multi_v7_defconfig+CONFIG_THUMB2_KERNEL=y/gcc-10/lab-cip/baseline-beaglebone-black.html
+Fixes: 596e7955692b ("bus: ti-sysc: Add support for software reset")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/bus/ti-sysc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 5920fdca12875..3c7b245354096 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1806,7 +1806,7 @@ static int ovs_dp_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	parms.port_no = OVSP_LOCAL;
- 	parms.upcall_portids = a[OVS_DP_ATTR_UPCALL_PID];
- 	parms.desired_ifindex = a[OVS_DP_ATTR_IFINDEX]
--		? nla_get_u32(a[OVS_DP_ATTR_IFINDEX]) : 0;
-+		? nla_get_s32(a[OVS_DP_ATTR_IFINDEX]) : 0;
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index cae078bffc715..9b7268bae66ab 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -2159,6 +2159,8 @@ static int sysc_reset(struct sysc *ddata)
+ 		sysc_val = sysc_read_sysconfig(ddata);
+ 		sysc_val |= sysc_mask;
+ 		sysc_write(ddata, sysc_offset, sysc_val);
++		/* Flush posted write */
++		sysc_val = sysc_read_sysconfig(ddata);
+ 	}
  
- 	/* So far only local changes have been made, now need the lock. */
- 	ovs_lock();
-@@ -2026,7 +2026,7 @@ static const struct nla_policy datapath_policy[OVS_DP_ATTR_MAX + 1] = {
- 	[OVS_DP_ATTR_USER_FEATURES] = { .type = NLA_U32 },
- 	[OVS_DP_ATTR_MASKS_CACHE_SIZE] =  NLA_POLICY_RANGE(NLA_U32, 0,
- 		PCPU_MIN_UNIT_SIZE / sizeof(struct mask_cache_entry)),
--	[OVS_DP_ATTR_IFINDEX] = {.type = NLA_U32 },
-+	[OVS_DP_ATTR_IFINDEX] = NLA_POLICY_MIN(NLA_S32, 0),
- };
- 
- static const struct genl_small_ops dp_datapath_genl_ops[] = {
-@@ -2276,7 +2276,7 @@ static int ovs_vport_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	parms.port_no = port_no;
- 	parms.upcall_portids = a[OVS_VPORT_ATTR_UPCALL_PID];
- 	parms.desired_ifindex = a[OVS_VPORT_ATTR_IFINDEX]
--		? nla_get_u32(a[OVS_VPORT_ATTR_IFINDEX]) : 0;
-+		? nla_get_s32(a[OVS_VPORT_ATTR_IFINDEX]) : 0;
- 
- 	vport = new_vport(&parms);
- 	err = PTR_ERR(vport);
-@@ -2513,7 +2513,7 @@ static const struct nla_policy vport_policy[OVS_VPORT_ATTR_MAX + 1] = {
- 	[OVS_VPORT_ATTR_TYPE] = { .type = NLA_U32 },
- 	[OVS_VPORT_ATTR_UPCALL_PID] = { .type = NLA_UNSPEC },
- 	[OVS_VPORT_ATTR_OPTIONS] = { .type = NLA_NESTED },
--	[OVS_VPORT_ATTR_IFINDEX] = { .type = NLA_U32 },
-+	[OVS_VPORT_ATTR_IFINDEX] = NLA_POLICY_MIN(NLA_S32, 0),
- 	[OVS_VPORT_ATTR_NETNSID] = { .type = NLA_S32 },
- };
- 
+ 	if (ddata->cfg.srst_udelay)
 -- 
 2.40.1
 
