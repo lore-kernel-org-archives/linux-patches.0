@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BE81171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AFDC433C7;
-	Mon, 21 Aug 2023 20:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B321171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF38C433C7;
+	Mon, 21 Aug 2023 20:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648185;
-	bh=S9o/KXMNiW1iIqR0DTAEIt/HRYw7XDHhJh/MVsWpTHg=;
+	s=korg; t=1692648188;
+	bh=/zhDAk95nE3tQYSpQs71BMmCfmR8QFKViPDzcvFvLhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3oTizcCij9zoN8qphUt3ng7Lrsq+2RehUVhcCG4yCr4lWlrkpS/srFk5mw5OFb/6
-	 ZJCi3oWvBzk3em+rW/msnELdafyjrLV99NO2VyCq3feTbWmUpgEJPrBPuC2dacXnW8
-	 iVPc0H14PbNAoT44MMM/ifhLB+rSbnMy7/oTH4ZM=
+	b=rpKRq/dmDBOX+FFLwVUyU/6ePJU+a8L6d/Pxmo0m2n2nke/RpbwHWzKPmXBUHDc6L
+	 RzwgjjmmRffr0KlNr6wIrJ51oZ2TEfOWEnlDyrh6ndbGhyOqh/VEU+uV7Pahc54Yx8
+	 43lqS1dFzfIZ62ZsN+E3ntMt4y6/VotbqCjiSKiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 085/234] regulator: qcom-rpmh: Fix LDO 12 regulator for PM8550
-Date: Mon, 21 Aug 2023 21:40:48 +0200
-Message-ID: <20230821194132.527917323@linuxfoundation.org>
+Subject: [PATCH 6.4 086/234] virtio-mmio: dont break lifecycle of vm_dev
+Date: Mon, 21 Aug 2023 21:40:49 +0200
+Message-ID: <20230821194132.578499041@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,35 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 7cdf55462c5533a1c78ae13ab8563558e30e4130 ]
+[ Upstream commit 55c91fedd03d7b9cf0c5199b2eb12b9b8e95281a ]
 
-The LDO 12 is NLDO 515 low voltage type, so fix accordingly.
+vm_dev has a separate lifecycle because it has a 'struct device'
+embedded. Thus, having a release callback for it is correct.
 
-Fixes: e6e3776d682d ("regulator: qcom-rpmh: Add support for PM8550 regulators")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230801095702.2891127-1-abel.vesa@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Allocating the vm_dev struct with devres totally breaks this protection,
+though. Instead of waiting for the vm_dev release callback, the memory
+is freed when the platform_device is removed. Resulting in a
+use-after-free when finally the callback is to be called.
+
+To easily see the problem, compile the kernel with
+CONFIG_DEBUG_KOBJECT_RELEASE and unbind with sysfs.
+
+The fix is easy, don't use devres in this case.
+
+Found during my research about object lifetime problems.
+
+Fixes: 7eb781b1bbb7 ("virtio_mmio: add cleanup for virtio_mmio_probe")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Message-Id: <20230629120526.7184-1-wsa+renesas@sang-engineering.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/virtio/virtio_mmio.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index f3b280af07737..cd077b7c4aff3 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1068,7 +1068,7 @@ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
- 	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
- 	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo515,    "vdd-l1-l4-l10"),
- 	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo515,    "vdd-l11"),
--	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
-+	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_nldo515,    "vdd-l12"),
- 	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
- 	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
- 	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_nldo515,    "vdd-l15"),
+diff --git a/drivers/virtio/virtio_mmio.c b/drivers/virtio/virtio_mmio.c
+index a46a4a29e9295..97760f6112959 100644
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -607,9 +607,8 @@ static void virtio_mmio_release_dev(struct device *_d)
+ 	struct virtio_device *vdev =
+ 			container_of(_d, struct virtio_device, dev);
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
+-	struct platform_device *pdev = vm_dev->pdev;
+ 
+-	devm_kfree(&pdev->dev, vm_dev);
++	kfree(vm_dev);
+ }
+ 
+ /* Platform device */
+@@ -620,7 +619,7 @@ static int virtio_mmio_probe(struct platform_device *pdev)
+ 	unsigned long magic;
+ 	int rc;
+ 
+-	vm_dev = devm_kzalloc(&pdev->dev, sizeof(*vm_dev), GFP_KERNEL);
++	vm_dev = kzalloc(sizeof(*vm_dev), GFP_KERNEL);
+ 	if (!vm_dev)
+ 		return -ENOMEM;
+ 
 -- 
 2.40.1
 
