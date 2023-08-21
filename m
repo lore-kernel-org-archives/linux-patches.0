@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B828D1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3778EC433C8;
-	Mon, 21 Aug 2023 20:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D2F1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF98BC433C8;
+	Mon, 21 Aug 2023 20:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648536;
-	bh=M+g/UnpP6LNzYTgLF7CLv3PQtgaxXMZ4/DkAxgZcfOo=;
+	s=korg; t=1692648539;
+	bh=+1HAN5myfBu/T1grATkD4KwhI3E6gBZVNKZdlFTtLv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqZmT9lw2+vkbawcFXe/xGIAbpqUqti42dvpEdLQz4vxP/jtQFt/kyD99WeolQMBG
-	 w7tS7N4JQR2TYiL5xl8lZ7XCfBXXyaBrweGAgoWlM2SQop8dgmeeXiJtGiW6bhijWu
-	 7T7hZarW1CGioleQUYA42VYwoLsdQTAxhtjeWtnY=
+	b=odCRWvv8bTKOTNELtnw5qDcdCNLc2lA0OnkDkKzdxM4mjUS2DgdS0L7v16jzVmVyA
+	 Lywzen2wNum96fj628NQoW6axleJkAfhDbfa93RQJuyDg0+yyaQDx7xr78/IBG90iE
+	 7Lquh8evOK+5ibmtLOsU19XnK+eCFEnLgjTRsEhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Spickett <David.Spickett@arm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.4 210/234] arm64/ptrace: Ensure that SME is set up for target when writing SSVE state
-Date: Mon, 21 Aug 2023 21:42:53 +0200
-Message-ID: <20230821194138.145326925@linuxfoundation.org>
+Subject: [PATCH 6.4 211/234] arm64/ptrace: Ensure that the task sees ZT writes on first use
+Date: Mon, 21 Aug 2023 21:42:54 +0200
+Message-ID: <20230821194138.191055135@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -37,122 +36,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Brown <broonie@kernel.org>
 
-commit 5d0a8d2fba50e9c07cde4aad7fba28c008b07a5b upstream.
+commit 2f43f549cd0b3164ea0345e59aa3958c0d243383 upstream.
 
-When we use NT_ARM_SSVE to either enable streaming mode or change the
-vector length for a process we do not currently do anything to ensure that
-there is storage allocated for the SME specific register state.  If the
-task had not previously used SME or we changed the vector length then
-the task will not have had TIF_SME set or backing storage for ZA/ZT
-allocated, resulting in inconsistent register sizes when saving state
-and spurious traps which flush the newly set register state.
+When the value of ZT is set via ptrace we don't disable traps for SME.
+This means that when a the task has never used SME before then the value
+set via ptrace will never be seen by the target task since it will
+trigger a SME access trap which will flush the register state.
 
-We should set TIF_SME to disable traps and ensure that storage is
-allocated for ZA and ZT if it is not already allocated.  This requires
-modifying sme_alloc() to make the flush of any existing register state
-optional so we don't disturb existing state for ZA and ZT.
+Disable SME traps when setting ZT, this means we also need to allocate
+storage for SVE if it is not already allocated, for the benefit of
+streaming SVE.
 
-Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
-Reported-by: David Spickett <David.Spickett@arm.com>
+Fixes: f90b529bcbe5 ("arm64/sme: Implement ZT0 ptrace support")
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Link: https://lore.kernel.org/r/20230810-arm64-fix-ptrace-race-v1-1-a5361fad2bd6@kernel.org
+Cc: <stable@vger.kernel.org> # 6.3.x
+Link: https://lore.kernel.org/r/20230816-arm64-zt-ptrace-first-use-v2-1-00aa82847e28@kernel.org
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/fpsimd.h |    4 ++--
- arch/arm64/kernel/fpsimd.c      |    6 +++---
- arch/arm64/kernel/ptrace.c      |   11 +++++++++--
- arch/arm64/kernel/signal.c      |    2 +-
- 4 files changed, 15 insertions(+), 8 deletions(-)
+ arch/arm64/kernel/ptrace.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/fpsimd.h
-+++ b/arch/arm64/include/asm/fpsimd.h
-@@ -356,7 +356,7 @@ static inline int sme_max_virtualisable_
- 	return vec_max_virtualisable_vl(ARM64_VEC_SME);
- }
- 
--extern void sme_alloc(struct task_struct *task);
-+extern void sme_alloc(struct task_struct *task, bool flush);
- extern unsigned int sme_get_vl(void);
- extern int sme_set_current_vl(unsigned long arg);
- extern int sme_get_current_vl(void);
-@@ -388,7 +388,7 @@ static inline void sme_smstart_sm(void)
- static inline void sme_smstop_sm(void) { }
- static inline void sme_smstop(void) { }
- 
--static inline void sme_alloc(struct task_struct *task) { }
-+static inline void sme_alloc(struct task_struct *task, bool flush) { }
- static inline void sme_setup(void) { }
- static inline unsigned int sme_get_vl(void) { return 0; }
- static inline int sme_max_vl(void) { return 0; }
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1285,9 +1285,9 @@ void fpsimd_release_task(struct task_str
-  * the interest of testability and predictability, the architecture
-  * guarantees that when ZA is enabled it will be zeroed.
-  */
--void sme_alloc(struct task_struct *task)
-+void sme_alloc(struct task_struct *task, bool flush)
- {
--	if (task->thread.sme_state) {
-+	if (task->thread.sme_state && flush) {
- 		memset(task->thread.sme_state, 0, sme_state_size(task));
- 		return;
- 	}
-@@ -1515,7 +1515,7 @@ void do_sme_acc(unsigned long esr, struc
- 	}
- 
- 	sve_alloc(current, false);
--	sme_alloc(current);
-+	sme_alloc(current, true);
- 	if (!current->thread.sve_state || !current->thread.sme_state) {
- 		force_sig(SIGKILL);
- 		return;
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index a31af7a1abe3..187aa2b175b4 100644
 --- a/arch/arm64/kernel/ptrace.c
 +++ b/arch/arm64/kernel/ptrace.c
-@@ -881,6 +881,13 @@ static int sve_set_common(struct task_st
- 			break;
- 		case ARM64_VEC_SME:
- 			target->thread.svcr |= SVCR_SM_MASK;
-+
-+			/*
-+			 * Disable traps and ensure there is SME storage but
-+			 * preserve any currently set values in ZA/ZT.
-+			 */
-+			sme_alloc(target, false);
-+			set_tsk_thread_flag(target, TIF_SME);
- 			break;
- 		default:
- 			WARN_ON_ONCE(1);
-@@ -1100,7 +1107,7 @@ static int za_set(struct task_struct *ta
- 	}
- 
- 	/* Allocate/reinit ZA storage */
--	sme_alloc(target);
-+	sme_alloc(target, true);
- 	if (!target->thread.sme_state) {
- 		ret = -ENOMEM;
- 		goto out;
-@@ -1171,7 +1178,7 @@ static int zt_set(struct task_struct *ta
+@@ -1177,6 +1177,11 @@ static int zt_set(struct task_struct *target,
+ 	if (!system_supports_sme2())
  		return -EINVAL;
  
++	/* Ensure SVE storage in case this is first use of SME */
++	sve_alloc(target, false);
++	if (!target->thread.sve_state)
++		return -ENOMEM;
++
  	if (!thread_za_enabled(&target->thread)) {
--		sme_alloc(target);
-+		sme_alloc(target, true);
+ 		sme_alloc(target, true);
  		if (!target->thread.sme_state)
- 			return -ENOMEM;
- 	}
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -474,7 +474,7 @@ static int restore_za_context(struct use
- 	fpsimd_flush_task_state(current);
- 	/* From now, fpsimd_thread_switch() won't touch thread.sve_state */
+@@ -1186,8 +1191,10 @@ static int zt_set(struct task_struct *target,
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf,
+ 				 thread_zt_state(&target->thread),
+ 				 0, ZT_SIG_REG_BYTES);
+-	if (ret == 0)
++	if (ret == 0) {
+ 		target->thread.svcr |= SVCR_ZA_MASK;
++		set_tsk_thread_flag(target, TIF_SME);
++	}
  
--	sme_alloc(current);
-+	sme_alloc(current, true);
- 	if (!current->thread.sme_state) {
- 		current->thread.svcr &= ~SVCR_ZA_MASK;
- 		clear_thread_flag(TIF_SME);
+ 	fpsimd_flush_task_state(target);
+ 
+-- 
+2.41.0
+
 
 
