@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2E51171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BCEC433C8;
-	Mon, 21 Aug 2023 20:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E9F1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCA4C433C8;
+	Mon, 21 Aug 2023 20:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648576;
-	bh=zeK/ysJgb6ZniSTJBeu7TX3T/ZMG36DFOfxcEtkvRtI=;
+	s=korg; t=1692648579;
+	bh=CE46UrjLI89jK7OPIFEf+aCDPgDqvk+a44r8r6zt2hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gNBW0SQFMAQJXC9ya0CEDhCMhkKd4w3+Wwx1anlgGcryUoC0v4xQR7h8RWcQopzG
-	 TLDeA79M6ErJImTWBMoOAr0WRrtzeVzpc5zEDiyMO+sWeM/n3kVpXa8WY/8Gy2aUYL
-	 wkEciaXF9hQ/X5kUNoX+F7h62M7Jzmde8reUMUxI=
+	b=rjWmEPCgx/uV4BP2AMX4Jak7N8RMe1Nwe2dUnbiGde/ISI2NQWF5pt5VznmqEVy9/
+	 hQEZz/NsYTrlqfx9N43EObqa/jvlDKF81Nv/MgNiyMMLFYfXA1AcRks5SiQ0FXKOYT
+	 yPbW1DZhnAeWxJb/Ms9bYyI7Wj829jm5ZSEJGHls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibin Ding <yibin.ding@unisoc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.4 217/234] mmc: block: Fix in_flight[issue_type] value error
-Date: Mon, 21 Aug 2023 21:43:00 +0200
-Message-ID: <20230821194138.464555585@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Umio Yasuno <coelacanth_dream@protonmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 226/234] drm/amdgpu/pm: fix throttle_status for other than MP1 11.0.7
+Date: Mon, 21 Aug 2023 21:43:09 +0200
+Message-ID: <20230821194138.903792602@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,75 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yibin Ding <yibin.ding@unisoc.com>
+From: Umio Yasuno <coelacanth_dream@protonmail.com>
 
-commit 4b430d4ac99750ee2ae2f893f1055c7af1ec3dc5 upstream.
+commit 6a92761a86817ad15c9a562e2a809386237fae3e upstream.
 
-For a completed request, after the mmc_blk_mq_complete_rq(mq, req)
-function is executed, the bitmap_tags corresponding to the
-request will be cleared, that is, the request will be regarded as
-idle. If the request is acquired by a different type of process at
-this time, the issue_type of the request may change. It further
-caused the value of mq->in_flight[issue_type] to be abnormal,
-and a large number of requests could not be sent.
+Use the right metrics table version based on the firmware.
 
-p1:					      p2:
-mmc_blk_mq_complete_rq
-  blk_mq_free_request
-					      blk_mq_get_request
-					        blk_mq_rq_ctx_init
-mmc_blk_mq_dec_in_flight
-  mmc_issue_type(mq, req)
-
-This strategy can ensure the consistency of issue_type
-before and after executing mmc_blk_mq_complete_rq.
-
-Fixes: 81196976ed94 ("mmc: block: Add blk-mq support")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2720
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Umio Yasuno <coelacanth_dream@protonmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yibin Ding <yibin.ding@unisoc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230802023023.1318134-1-yunlong.xing@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -2097,14 +2097,14 @@ static void mmc_blk_mq_poll_completion(s
- 	mmc_blk_urgent_bkops(mq, mqrq);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -588,7 +588,9 @@ err0_out:
+ 	return -ENOMEM;
  }
  
--static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, struct request *req)
-+static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, enum mmc_issue_type issue_type)
+-static uint32_t sienna_cichlid_get_throttler_status_locked(struct smu_context *smu)
++static uint32_t sienna_cichlid_get_throttler_status_locked(struct smu_context *smu,
++							   bool use_metrics_v3,
++							   bool use_metrics_v2)
  {
- 	unsigned long flags;
- 	bool put_card;
+ 	struct smu_table_context *smu_table= &smu->smu_table;
+ 	SmuMetricsExternal_t *metrics_ext =
+@@ -596,13 +598,11 @@ static uint32_t sienna_cichlid_get_throt
+ 	uint32_t throttler_status = 0;
+ 	int i;
  
- 	spin_lock_irqsave(&mq->lock, flags);
+-	if ((smu->adev->ip_versions[MP1_HWIP][0] == IP_VERSION(11, 0, 7)) &&
+-	     (smu->smc_fw_version >= 0x3A4900)) {
++	if (use_metrics_v3) {
+ 		for (i = 0; i < THROTTLER_COUNT; i++)
+ 			throttler_status |=
+ 				(metrics_ext->SmuMetrics_V3.ThrottlingPercentage[i] ? 1U << i : 0);
+-	} else if ((smu->adev->ip_versions[MP1_HWIP][0] == IP_VERSION(11, 0, 7)) &&
+-	     (smu->smc_fw_version >= 0x3A4300)) {
++	} else if (use_metrics_v2) {
+ 		for (i = 0; i < THROTTLER_COUNT; i++)
+ 			throttler_status |=
+ 				(metrics_ext->SmuMetrics_V2.ThrottlingPercentage[i] ? 1U << i : 0);
+@@ -864,7 +864,7 @@ static int sienna_cichlid_get_smu_metric
+ 			metrics->TemperatureVrSoc) * SMU_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 		break;
+ 	case METRICS_THROTTLER_STATUS:
+-		*value = sienna_cichlid_get_throttler_status_locked(smu);
++		*value = sienna_cichlid_get_throttler_status_locked(smu, use_metrics_v3, use_metrics_v2);
+ 		break;
+ 	case METRICS_CURR_FANSPEED:
+ 		*value = use_metrics_v3 ? metrics_v3->CurrFanSpeed :
+@@ -4017,7 +4017,7 @@ static ssize_t sienna_cichlid_get_gpu_me
+ 	gpu_metrics->current_dclk1 = use_metrics_v3 ? metrics_v3->CurrClock[PPCLK_DCLK_1] :
+ 		use_metrics_v2 ? metrics_v2->CurrClock[PPCLK_DCLK_1] : metrics->CurrClock[PPCLK_DCLK_1];
  
--	mq->in_flight[mmc_issue_type(mq, req)] -= 1;
-+	mq->in_flight[issue_type] -= 1;
- 
- 	put_card = (mmc_tot_in_flight(mq) == 0);
- 
-@@ -2117,6 +2117,7 @@ static void mmc_blk_mq_dec_in_flight(str
- static void mmc_blk_mq_post_req(struct mmc_queue *mq, struct request *req,
- 				bool can_sleep)
- {
-+	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
- 	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
- 	struct mmc_request *mrq = &mqrq->brq.mrq;
- 	struct mmc_host *host = mq->card->host;
-@@ -2136,7 +2137,7 @@ static void mmc_blk_mq_post_req(struct m
- 			blk_mq_complete_request(req);
- 	}
- 
--	mmc_blk_mq_dec_in_flight(mq, req);
-+	mmc_blk_mq_dec_in_flight(mq, issue_type);
- }
- 
- void mmc_blk_mq_recovery(struct mmc_queue *mq)
+-	gpu_metrics->throttle_status = sienna_cichlid_get_throttler_status_locked(smu);
++	gpu_metrics->throttle_status = sienna_cichlid_get_throttler_status_locked(smu, use_metrics_v3, use_metrics_v2);
+ 	gpu_metrics->indep_throttle_status =
+ 			smu_cmn_get_indep_throttler_status(gpu_metrics->throttle_status,
+ 							   sienna_cichlid_throttler_map);
 
 
