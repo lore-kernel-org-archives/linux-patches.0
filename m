@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B751171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2227C433C8;
-	Mon, 21 Aug 2023 20:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBA11171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77463C433C8;
+	Mon, 21 Aug 2023 20:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648458;
-	bh=QOdbOjd77tRHJKaZCLvCnjEN3yCD1g2vrPvzsmLnEco=;
+	s=korg; t=1692648460;
+	bh=L59e5lGacmybGIgAO4HOyR1l4rEgUoUyyFbZWTRi8I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uUm5YFGXOwJbZSbRSRd4q1+veq2nBhBozWTeW4wmnlJd2MNSQKynnknQRKqXbu5QO
-	 QX6CcF5aAtLBK4N8rDyvYjqegv1GjT8ceq8aSkZuSw2IXEkhZl7K6neniGOks/+wpv
-	 2UctCXq/XrEC4Fw1C3IAyKrDjAA8dtkU06cHH5qg=
+	b=ZHRqgS7cl0S5mdos5tfKkqpalDFlHa+OG+QHEcnssUSu7Cz0hOpPDu3qDkTCjVnSO
+	 nm8//FgBo25qK3MjyTNCdNoZTv2XOckYePkBvsvaqosCR/NWi0FKKLHI++JA9SS5fz
+	 v1JxQXEaLBi1E9heZVj4BjvwOGdlqbamX4syKJuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christopher Obbard <chris.obbard@collabora.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 182/234] arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4
-Date: Mon, 21 Aug 2023 21:42:25 +0200
-Message-ID: <20230821194136.892565851@linuxfoundation.org>
+Subject: [PATCH 6.4 183/234] arm64: dts: rockchip: Disable HS400 for eMMC on ROCK 4C+
+Date: Mon, 21 Aug 2023 21:42:26 +0200
+Message-ID: <20230821194136.926676520@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -38,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Christopher Obbard <chris.obbard@collabora.com>
 
-[ Upstream commit cee572756aa2cb46e959e9797ad4b730b78a050b ]
+[ Upstream commit 2bd1d2dd808c60532283e9cf05110bf1bf2f9079 ]
 
 There is some instablity with some eMMC modules on ROCK Pi 4 SBCs running
 in HS400 mode. This ends up resulting in some block errors after a while
@@ -67,35 +66,30 @@ but doesn't seem to improve the I/O errors. Until this can be investigated
 further, disable HS400 mode on the ROCK Pi 4 SBCs to at least stop I/O
 errors from occurring.
 
-While we are here, set the eMMC maximum clock frequency to 1.5MHz to
-follow the ROCK 4C+.
-
-Fixes: 1b5715c602fd ("arm64: dts: rockchip: add ROCK Pi 4 DTS support")
+Fixes: 246450344dad ("arm64: dts: rockchip: rk3399: Radxa ROCK 4C+")
 Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
-Tested-By: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20230705144255.115299-2-chris.obbard@collabora.com
+Link: https://lore.kernel.org/r/20230705144255.115299-3-chris.obbard@collabora.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-rock-4c-plus.dts | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index 907071d4fe804..95efee311ece9 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -645,9 +645,9 @@
- };
- 
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-4c-plus.dts b/arch/arm64/boot/dts/rockchip/rk3399-rock-4c-plus.dts
+index 028eb508ae302..8bfd5f88d1ef6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock-4c-plus.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-4c-plus.dts
+@@ -548,9 +548,8 @@
  &sdhci {
-+	max-frequency = <150000000>;
+ 	max-frequency = <150000000>;
  	bus-width = <8>;
 -	mmc-hs400-1_8v;
--	mmc-hs400-enhanced-strobe;
 +	mmc-hs200-1_8v;
  	non-removable;
+-	mmc-hs400-enhanced-strobe;
  	status = "okay";
  };
+ 
 -- 
 2.40.1
 
