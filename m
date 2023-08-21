@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C9011707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AB1C433C8;
-	Mon, 21 Aug 2023 19:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F40811707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C9CC433C9;
+	Mon, 21 Aug 2023 19:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647583;
-	bh=6LyPm8E7dfriTWP1h1Ebk90izTj3y652bKadQGrgXao=;
+	s=korg; t=1692647586;
+	bh=svC5EW/wWcYF6hFHxGFiGd80cnVgqTU0VKWeb2IcgpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sb8J15zb2hO/ZpA5rGVIZaPxwW8osn47FRVU20gXJ3dwSdl8Qa5qmk+0f3LgEgRj2
-	 8SrYM1Pbx8hZYgJMpxND7xt42Ju3YQWid+mOBBO/90uKZzWSuL1SA6MPIuardYg5b7
-	 QNlXmDbeFwazKBcFwx93s9OdnxijaV9bdoMwnpd4=
+	b=MMLqkdsP+tZiI+va2H9+yFCw+Inxm21CWpCr1ns1hPvQKjitPzr/wAmzmHOU2lZ9D
+	 YC5vmKXV0rqrHzXG9M62NRoSesyKFPx0GXqt3syL3Jom+5DuyC5wKdU7AL6cRg7wXn
+	 aSYi71xJveeEJzhtCkebU0aFneIgS12wRaKvNb0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Even Xu <even.xu@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/194] ASoC: SOF: core: Free the firmware trace before calling snd_sof_shutdown()
-Date: Mon, 21 Aug 2023 21:40:15 +0200
-Message-ID: <20230821194124.382950607@linuxfoundation.org>
+Subject: [PATCH 6.1 037/194] HID: intel-ish-hid: ipc: Add Arrow Lake PCI device ID
+Date: Mon, 21 Aug 2023 21:40:16 +0200
+Message-ID: <20230821194124.435333993@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -41,52 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit d389dcb3a48cec4f03c16434c0bf98a4c635372a ]
+[ Upstream commit 4982126e3029cd59fbd1da0d9cc0365a0585fe64 ]
 
-The shutdown is called on reboot/shutdown of the machine.
-At this point the firmware tracing cannot be used anymore but in case of
-IPC3 it is using and keeping a DMA channel active (dtrace).
+Add device ID of Arrow Lake-H into ishtp support list.
 
-For Tiger Lake platforms we have a quirk in place to fix rare reboot issues
-when a DMA was active before rebooting the system.
-If the tracing is enabled this quirk will be always used and a print
-appears on the kernel log which might be misleading or not even correct.
-
-Release the fw tracing before executing the shutdown to make sure that this
-known DMA user is cleared away.
-
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230616100039.378150-4-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Even Xu <even.xu@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/intel-ish-hid/ipc/hw-ish.h  | 1 +
+ drivers/hid/intel-ish-hid/ipc/pci-ish.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/sound/soc/sof/core.c b/sound/soc/sof/core.c
-index 625977a29d8a8..75a1e2c6539f2 100644
---- a/sound/soc/sof/core.c
-+++ b/sound/soc/sof/core.c
-@@ -479,8 +479,10 @@ int snd_sof_device_shutdown(struct device *dev)
- 	if (IS_ENABLED(CONFIG_SND_SOC_SOF_PROBE_WORK_QUEUE))
- 		cancel_work_sync(&sdev->probe_work);
+diff --git a/drivers/hid/intel-ish-hid/ipc/hw-ish.h b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
+index fc108f19a64c3..e99f3a3c65e15 100644
+--- a/drivers/hid/intel-ish-hid/ipc/hw-ish.h
++++ b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
+@@ -33,6 +33,7 @@
+ #define ADL_N_DEVICE_ID		0x54FC
+ #define RPL_S_DEVICE_ID		0x7A78
+ #define MTL_P_DEVICE_ID		0x7E45
++#define ARL_H_DEVICE_ID		0x7745
  
--	if (sdev->fw_state == SOF_FW_BOOT_COMPLETE)
-+	if (sdev->fw_state == SOF_FW_BOOT_COMPLETE) {
-+		sof_fw_trace_free(sdev);
- 		return snd_sof_shutdown(sdev);
-+	}
- 
- 	return 0;
- }
+ #define	REVISION_ID_CHT_A0	0x6
+ #define	REVISION_ID_CHT_Ax_SI	0x0
+diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
+index 7120b30ac51d0..55cb25038e632 100644
+--- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
++++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
+@@ -44,6 +44,7 @@ static const struct pci_device_id ish_pci_tbl[] = {
+ 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, ADL_N_DEVICE_ID)},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, RPL_S_DEVICE_ID)},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MTL_P_DEVICE_ID)},
++	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, ARL_H_DEVICE_ID)},
+ 	{0, }
+ };
+ MODULE_DEVICE_TABLE(pci, ish_pci_tbl);
 -- 
 2.40.1
 
