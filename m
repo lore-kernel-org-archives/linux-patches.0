@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5663111703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86E0C433C7;
-	Mon, 21 Aug 2023 19:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3098F11711
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2015C433CA;
+	Mon, 21 Aug 2023 19:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647771;
-	bh=IT8kB5BnyrDfvarCDq+u4PXJSeWtUWSd8zd3heqFeuY=;
+	s=korg; t=1692647774;
+	bh=cBn8qZ58K0qAmPClpol/5nY3DLSsoHGIdnRXhPPvlZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6DiWXtyPTDQzbnFmNO+s2kzddkMmNsjgMwIe15p+yTlfNqIjzmNFeobWOtldoi54
-	 NuGhxX8OfMu8J136dKdEmhZG+b06uYM9dLOHf8whV4NQvnOzqq8/1Mok0EL5ej60q6
-	 5VNgPgsMHh1HWtFMILXTkZhfOid16tTPYuT+mJC0=
+	b=K80t+w3MKWLDT4ud9DYvlcgABK63Yi9CUOB1GmpM0Vi1i7QGo8azs9OY3mWqiK2/a
+	 vpfUfXRK47DBwn3NX3YQaozel/uU+UqABnJur1lHSKDRRAmREEd9d1e4FGFipK9o4D
+	 u5ijkKjtlBiCxV0CkqJxvmrt3nhKe8FPOeZvN/Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 093/194] powerpc/rtas_flash: allow user copy to flash block cache objects
-Date: Mon, 21 Aug 2023 21:41:12 +0200
-Message-ID: <20230821194126.806254683@linuxfoundation.org>
+	syzbot+7456b5dcf65111553320@syzkaller.appspotmail.com,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 126/194] net: openvswitch: reject negative ifindex
+Date: Mon, 21 Aug 2023 21:41:45 +0200
+Message-ID: <20230821194128.250045046@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,68 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 4f3175979e62de3b929bfa54a0db4b87d36257a7 upstream.
+[ Upstream commit a552bfa16bab4ce901ee721346a28c4e483f4066 ]
 
-With hardened usercopy enabled (CONFIG_HARDENED_USERCOPY=y), using the
-/proc/powerpc/rtas/firmware_update interface to prepare a system
-firmware update yields a BUG():
+Recent changes in net-next (commit 759ab1edb56c ("net: store netdevs
+in an xarray")) refactored the handling of pre-assigned ifindexes
+and let syzbot surface a latent problem in ovs. ovs does not validate
+ifindex, making it possible to create netdev ports with negative
+ifindex values. It's easy to repro with YNL:
 
-  kernel BUG at mm/usercopy.c:102!
-  Oops: Exception in kernel mode, sig: 5 [#1]
-  LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  CPU: 0 PID: 2232 Comm: dd Not tainted 6.5.0-rc3+ #2
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
-  NIP:  c0000000005991d0 LR: c0000000005991cc CTR: 0000000000000000
-  REGS: c0000000148c76a0 TRAP: 0700   Not tainted  (6.5.0-rc3+)
-  MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002242  XER: 0000000c
-  CFAR: c0000000001fbd34 IRQMASK: 0
-  [ ... GPRs omitted ... ]
-  NIP usercopy_abort+0xa0/0xb0
-  LR  usercopy_abort+0x9c/0xb0
-  Call Trace:
-    usercopy_abort+0x9c/0xb0 (unreliable)
-    __check_heap_object+0x1b4/0x1d0
-    __check_object_size+0x2d0/0x380
-    rtas_flash_write+0xe4/0x250
-    proc_reg_write+0xfc/0x160
-    vfs_write+0xfc/0x4e0
-    ksys_write+0x90/0x160
-    system_call_exception+0x178/0x320
-    system_call_common+0x160/0x2c4
+$ ./cli.py --spec netlink/specs/ovs_datapath.yaml \
+         --do new \
+	 --json '{"upcall-pid": 1, "name":"my-dp"}'
+$ ./cli.py --spec netlink/specs/ovs_vport.yaml \
+	 --do new \
+	 --json '{"upcall-pid": "00000001", "name": "some-port0", "dp-ifindex":3,"ifindex":4294901760,"type":2}'
 
-The blocks of the firmware image are copied directly from user memory
-to objects allocated from flash_block_cache, so flash_block_cache must
-be created using kmem_cache_create_usercopy() to mark it safe for user
-access.
+$ ip link show
+-65536: some-port0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 7a:48:21:ad:0b:fb brd ff:ff:ff:ff:ff:ff
+...
 
-Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-[mpe: Trim and indent oops]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230810-rtas-flash-vs-hardened-usercopy-v2-1-dcf63793a938@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Validate the inputs. Now the second command correctly returns:
+
+$ ./cli.py --spec netlink/specs/ovs_vport.yaml \
+	 --do new \
+	 --json '{"upcall-pid": "00000001", "name": "some-port0", "dp-ifindex":3,"ifindex":4294901760,"type":2}'
+
+lib.ynl.NlError: Netlink error: Numerical result out of range
+nl_len = 108 (92) nl_flags = 0x300 nl_type = 2
+	error: -34	extack: {'msg': 'integer out of range', 'unknown': [[type:4 len:36] b'\x0c\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0c\x00\x03\x00\xff\xff\xff\x7f\x00\x00\x00\x00\x08\x00\x01\x00\x08\x00\x00\x00'], 'bad-attr': '.ifindex'}
+
+Accept 0 since it used to be silently ignored.
+
+Fixes: 54c4ef34c4b6 ("openvswitch: allow specifying ifindex of new interfaces")
+Reported-by: syzbot+7456b5dcf65111553320@syzkaller.appspotmail.com
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://lore.kernel.org/r/20230814203840.2908710-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas_flash.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/openvswitch/datapath.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/kernel/rtas_flash.c
-+++ b/arch/powerpc/kernel/rtas_flash.c
-@@ -710,9 +710,9 @@ static int __init rtas_flash_init(void)
- 	if (!rtas_validate_flash_data.buf)
- 		return -ENOMEM;
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 5920fdca12875..3c7b245354096 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1806,7 +1806,7 @@ static int ovs_dp_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	parms.port_no = OVSP_LOCAL;
+ 	parms.upcall_portids = a[OVS_DP_ATTR_UPCALL_PID];
+ 	parms.desired_ifindex = a[OVS_DP_ATTR_IFINDEX]
+-		? nla_get_u32(a[OVS_DP_ATTR_IFINDEX]) : 0;
++		? nla_get_s32(a[OVS_DP_ATTR_IFINDEX]) : 0;
  
--	flash_block_cache = kmem_cache_create("rtas_flash_cache",
--					      RTAS_BLK_SIZE, RTAS_BLK_SIZE, 0,
--					      NULL);
-+	flash_block_cache = kmem_cache_create_usercopy("rtas_flash_cache",
-+						       RTAS_BLK_SIZE, RTAS_BLK_SIZE,
-+						       0, 0, RTAS_BLK_SIZE, NULL);
- 	if (!flash_block_cache) {
- 		printk(KERN_ERR "%s: failed to create block cache\n",
- 				__func__);
+ 	/* So far only local changes have been made, now need the lock. */
+ 	ovs_lock();
+@@ -2026,7 +2026,7 @@ static const struct nla_policy datapath_policy[OVS_DP_ATTR_MAX + 1] = {
+ 	[OVS_DP_ATTR_USER_FEATURES] = { .type = NLA_U32 },
+ 	[OVS_DP_ATTR_MASKS_CACHE_SIZE] =  NLA_POLICY_RANGE(NLA_U32, 0,
+ 		PCPU_MIN_UNIT_SIZE / sizeof(struct mask_cache_entry)),
+-	[OVS_DP_ATTR_IFINDEX] = {.type = NLA_U32 },
++	[OVS_DP_ATTR_IFINDEX] = NLA_POLICY_MIN(NLA_S32, 0),
+ };
+ 
+ static const struct genl_small_ops dp_datapath_genl_ops[] = {
+@@ -2276,7 +2276,7 @@ static int ovs_vport_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	parms.port_no = port_no;
+ 	parms.upcall_portids = a[OVS_VPORT_ATTR_UPCALL_PID];
+ 	parms.desired_ifindex = a[OVS_VPORT_ATTR_IFINDEX]
+-		? nla_get_u32(a[OVS_VPORT_ATTR_IFINDEX]) : 0;
++		? nla_get_s32(a[OVS_VPORT_ATTR_IFINDEX]) : 0;
+ 
+ 	vport = new_vport(&parms);
+ 	err = PTR_ERR(vport);
+@@ -2513,7 +2513,7 @@ static const struct nla_policy vport_policy[OVS_VPORT_ATTR_MAX + 1] = {
+ 	[OVS_VPORT_ATTR_TYPE] = { .type = NLA_U32 },
+ 	[OVS_VPORT_ATTR_UPCALL_PID] = { .type = NLA_UNSPEC },
+ 	[OVS_VPORT_ATTR_OPTIONS] = { .type = NLA_NESTED },
+-	[OVS_VPORT_ATTR_IFINDEX] = { .type = NLA_U32 },
++	[OVS_VPORT_ATTR_IFINDEX] = NLA_POLICY_MIN(NLA_S32, 0),
+ 	[OVS_VPORT_ATTR_NETNSID] = { .type = NLA_S32 },
+ };
+ 
+-- 
+2.40.1
+
 
 
