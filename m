@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47281171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CF6C433C8;
-	Mon, 21 Aug 2023 20:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3EA1171B
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3ECC433C7;
+	Mon, 21 Aug 2023 20:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648066;
-	bh=dbRHxPMkQ9nrNWUKoWZNWzUzsxBX/FS2dqF9mwM0wSM=;
+	s=korg; t=1692648069;
+	bh=z2IRWWYs/DyVYsjKdWnLHgCyC/jhbsowJiurYHgULuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zgo36UyQP8jc/RRIV6GOYcjk0vpIRt6HKZwFPFZ+6gDHCoY3qOu9Tvu2Hr7YXCX9E
-	 Bu1qF6yPhcuv502vwvkWp2dfTdkxpJ8KfZaD3Pi13VAUv/riHw2xTg/bzLUoHvZe3n
-	 4HWdMgDOWiVWcL0wYUzm1qAdbbCFKF+cF3fD4ZlQ=
+	b=k/PuwH9UZQQt++Vl2OqmSpZNM1C2nQnvEzoukcMFRkx56HWsolRw8d+e9btFG8Em3
+	 4T71VGghdPBMZ0GpOu1Eg8/a4civVxGQc5rB7kvnLqMLTKlSecxEfu6pUum8Na9P/x
+	 1OTNswZkROuCC2tBXEPQ9Li4S5NBuM69SgXZmHow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 043/234] Revert "[PATCH] uml: export symbols added by GCC hardened"
-Date: Mon, 21 Aug 2023 21:40:06 +0200
-Message-ID: <20230821194130.636870207@linuxfoundation.org>
+Subject: [PATCH 6.4 044/234] smb: client: fix warning in cifs_smb3_do_mount()
+Date: Mon, 21 Aug 2023 21:40:07 +0200
+Message-ID: <20230821194130.678862214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,92 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 8635e8df477bc77837886da206f4915576f88fec ]
+[ Upstream commit 12c30f33cc6769bf411088a2872843c4f9ea32f9 ]
 
-This reverts commit cead61a6717a9873426b08d73a34a325e3546f5d.
+This fixes the following warning reported by kernel test robot
 
-It exported __stack_smash_handler and __guard, while they may not be
-defined by anyone.
+  fs/smb/client/cifsfs.c:982 cifs_smb3_do_mount() warn: possible
+  memory leak of 'cifs_sb'
 
-The code *declares* __stack_smash_handler and __guard. It does not
-create weak symbols. If no external library is linked, they are left
-undefined, but yet exported.
-
-If a loadable module tries to access non-existing symbols, bad things
-(a page fault, NULL pointer dereference, etc.) will happen. So, the
-current code is wrong and dangerous.
-
-If the code were written as follows, it would *define* them as weak
-symbols so modules would be able to get access to them.
-
-  void (*__stack_smash_handler)(void *) __attribute__((weak));
-  EXPORT_SYMBOL(__stack_smash_handler);
-
-  long __guard __attribute__((weak));
-  EXPORT_SYMBOL(__guard);
-
-In fact, modpost forbids exporting undefined symbols. It shows an error
-message if it detects such a mistake.
-
-  ERROR: modpost: "..." [...] was exported without definition
-
-Unfortunately, it is checked only when the code is built as modular.
-The problem described above has been unnoticed for a long time because
-arch/um/os-Linux/user_syms.c is always built-in.
-
-With a planned change in Kbuild, exporting undefined symbols will always
-result in a build error instead of a run-time error. It is a good thing,
-but we need to fix the breakage in advance.
-
-One fix is to define weak symbols as shown above. An alternative is to
-export them conditionally as follows:
-
-  #ifdef CONFIG_STACKPROTECTOR
-  extern void __stack_smash_handler(void *);
-  EXPORT_SYMBOL(__stack_smash_handler);
-
-  external long __guard;
-  EXPORT_SYMBOL(__guard);
-  #endif
-
-This is what other architectures do; EXPORT_SYMBOL(__stack_chk_guard)
-is guarded by #ifdef CONFIG_STACKPROTECTOR.
-
-However, adding the #ifdef guard is not sensible because UML cannot
-enable the stack-protector in the first place! (Please note UML does
-not select HAVE_STACKPROTECTOR in Kconfig.)
-
-So, the code is already broken (and unused) in multiple ways.
-
-Just remove.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/all/202306170124.CtQqzf0I-lkp@intel.com/
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/os-Linux/user_syms.c | 7 -------
- 1 file changed, 7 deletions(-)
+ fs/smb/client/cifsfs.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/arch/um/os-Linux/user_syms.c b/arch/um/os-Linux/user_syms.c
-index 9b62a9d352b3a..a310ae27b479a 100644
---- a/arch/um/os-Linux/user_syms.c
-+++ b/arch/um/os-Linux/user_syms.c
-@@ -37,13 +37,6 @@ EXPORT_SYMBOL(vsyscall_ehdr);
- EXPORT_SYMBOL(vsyscall_end);
- #endif
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index 43a4d8603db34..30b03938f6d1d 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -884,11 +884,11 @@ struct dentry *
+ cifs_smb3_do_mount(struct file_system_type *fs_type,
+ 	      int flags, struct smb3_fs_context *old_ctx)
+ {
+-	int rc;
+-	struct super_block *sb = NULL;
+-	struct cifs_sb_info *cifs_sb = NULL;
+ 	struct cifs_mnt_data mnt_data;
++	struct cifs_sb_info *cifs_sb;
++	struct super_block *sb;
+ 	struct dentry *root;
++	int rc;
  
--/* Export symbols used by GCC for the stack protector. */
--extern void __stack_smash_handler(void *) __attribute__((weak));
--EXPORT_SYMBOL(__stack_smash_handler);
--
--extern long __guard __attribute__((weak));
--EXPORT_SYMBOL(__guard);
--
- #ifdef _FORTIFY_SOURCE
- extern int __sprintf_chk(char *str, int flag, size_t len, const char *format);
- EXPORT_SYMBOL(__sprintf_chk);
+ 	if (cifsFYI) {
+ 		cifs_dbg(FYI, "%s: devname=%s flags=0x%x\n", __func__,
+@@ -897,11 +897,9 @@ cifs_smb3_do_mount(struct file_system_type *fs_type,
+ 		cifs_info("Attempting to mount %s\n", old_ctx->source);
+ 	}
+ 
+-	cifs_sb = kzalloc(sizeof(struct cifs_sb_info), GFP_KERNEL);
+-	if (cifs_sb == NULL) {
+-		root = ERR_PTR(-ENOMEM);
+-		goto out;
+-	}
++	cifs_sb = kzalloc(sizeof(*cifs_sb), GFP_KERNEL);
++	if (!cifs_sb)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	cifs_sb->ctx = kzalloc(sizeof(struct smb3_fs_context), GFP_KERNEL);
+ 	if (!cifs_sb->ctx) {
+@@ -938,10 +936,8 @@ cifs_smb3_do_mount(struct file_system_type *fs_type,
+ 
+ 	sb = sget(fs_type, cifs_match_super, cifs_set_super, flags, &mnt_data);
+ 	if (IS_ERR(sb)) {
+-		root = ERR_CAST(sb);
+ 		cifs_umount(cifs_sb);
+-		cifs_sb = NULL;
+-		goto out;
++		return ERR_CAST(sb);
+ 	}
+ 
+ 	if (sb->s_root) {
+@@ -972,13 +968,9 @@ cifs_smb3_do_mount(struct file_system_type *fs_type,
+ 	deactivate_locked_super(sb);
+ 	return root;
+ out:
+-	if (cifs_sb) {
+-		if (!sb || IS_ERR(sb)) {  /* otherwise kill_sb will handle */
+-			kfree(cifs_sb->prepath);
+-			smb3_cleanup_fs_context(cifs_sb->ctx);
+-			kfree(cifs_sb);
+-		}
+-	}
++	kfree(cifs_sb->prepath);
++	smb3_cleanup_fs_context(cifs_sb->ctx);
++	kfree(cifs_sb);
+ 	return root;
+ }
+ 
 -- 
 2.40.1
 
