@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F8911703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645A6C433C9;
-	Mon, 21 Aug 2023 19:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B105011703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E58C433C7;
+	Mon, 21 Aug 2023 19:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647728;
-	bh=I0H5T/uzRtpGVd6pfft/OCqyjXzU7rIyj5KdwwbLv7A=;
+	s=korg; t=1692647731;
+	bh=qvpxPsOOK8qVZzDrtwNQpKSzDQXV/y+mOwGgwJEFYKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Om/NwOXRau0VTGoQvtnrj2ZwWjM0oJ5qeylMelqWPefBZDzyvWfFhxHRP+1tD7pdy
-	 DEYP19qP9XboXeTTOIJYy4LFOLYdUDIZhD/MzIIS8pm1YyILecfITfkkfXGkNGujw5
-	 OQg2kzml5/DdM5Nqgfz9q5pOTrvuESs+Cp5bp6f4=
+	b=cRudAFYP/1imGFwtDW14Ci6R6OxclINFTTO+IUDyEj+Vq3WScsgZdhXapGUCuJVY9
+	 kIBAto5rmc9v01HLfIhhdds/eSwGTVinBVPeOw0BhymbrWe1fX1Iu29t5b3YfTXpZW
+	 5Bfw1n7/b/RSMB1IGjEaIFtNy7h6oiCdgUgXsoqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/194] drm/panel: simple: Fix AUO G121EAN01 panel timings according to the docs
-Date: Mon, 21 Aug 2023 21:41:36 +0200
-Message-ID: <20230821194127.842291565@linuxfoundation.org>
+Subject: [PATCH 6.1 118/194] net: macb: In ZynqMP resume always configure PS GTR for non-wakeup source
+Date: Mon, 21 Aug 2023 21:41:37 +0200
+Message-ID: <20230821194127.892746233@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,75 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit e8470c0a7bcaa82f78ad34282d662dd7bd9630c2 ]
+[ Upstream commit 6c461e394d11a981c662cc16cebfb05b602e23ba ]
 
-Commit 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4
-panel") added support for this panel model, but the timings it implements
-are very different from what the datasheet describes. I checked both the
-G121EAN01.0 datasheet from [0] and the G121EAN01.4 one from [1] and they
-all have the same timings: for example the LVDS clock typical value is 74.4
-MHz, not 66.7 MHz as implemented.
+On Zynq UltraScale+ MPSoC ubuntu platform when systemctl issues suspend,
+network manager bring down the interface and goes into suspend. When it
+wakes up it again enables the interface.
 
-Replace the timings with the ones from the documentation. These timings
-have been tested and the clock frequencies verified with an oscilloscope to
-ensure they are correct.
+This leads to xilinx-psgtr "PLL lock timeout" on interface bringup, as
+the power management controller power down the entire FPD (including
+SERDES) if none of the FPD devices are in use and serdes is not
+initialized on resume.
 
-Also use struct display_timing instead of struct drm_display_mode in order
-to also specify the minimum and maximum values.
+$ sudo rtcwake -m no -s 120 -v
+$ sudo systemctl suspend  <this does ifconfig eth1 down>
+$ ifconfig eth1 up
+xilinx-psgtr fd400000.phy: lane 0 (type 10, protocol 5): PLL lock timeout
+phy phy-fd400000.phy.0: phy poweron failed --> -110
 
-[0] https://embedded.avnet.com/product/g121ean01-0/
-[1] https://embedded.avnet.com/product/g121ean01-4/
+macb driver is called in this way:
+1. macb_close: Stop network interface. In this function, it
+   reset MACB IP and disables PHY and network interface.
 
-Fixes: 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4 panel")
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804151239.835216-1-luca.ceresoli@bootlin.com
+2. macb_suspend: It is called in kernel suspend flow. But because
+   network interface has been disabled(netif_running(ndev) is
+   false), it does nothing and returns directly;
+
+3. System goes into suspend state. Some time later, system is
+   waken up by RTC wakeup device;
+
+4. macb_resume: It does nothing because network interface has
+   been disabled;
+
+5. macb_open: It is called to enable network interface again. ethernet
+   interface is initialized in this API but serdes which is power-off
+   by PMUFW during FPD-off suspend is not initialized again and so
+   we hit GT PLL lock issue on open.
+
+To resolve this PLL timeout issue always do PS GTR initialization
+when ethernet device is configured as non-wakeup source.
+
+Fixes: f22bd29ba19a ("net: macb: Fix ZynqMP SGMII non-wakeup source resume failure")
+Fixes: 8b73fa3ae02b ("net: macb: Added ZynqMP-specific initialization")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1691414091-2260697-1-git-send-email-radhey.shyam.pandey@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index f851aaf2c5917..5e067ba7e5fba 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -969,21 +969,21 @@ static const struct panel_desc auo_g104sn02 = {
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index abd6cc0cd641f..5fb991835078a 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5070,6 +5070,9 @@ static int __maybe_unused macb_suspend(struct device *dev)
+ 	unsigned int q;
+ 	int err;
  
--static const struct drm_display_mode auo_g121ean01_mode = {
--	.clock = 66700,
--	.hdisplay = 1280,
--	.hsync_start = 1280 + 58,
--	.hsync_end = 1280 + 58 + 8,
--	.htotal = 1280 + 58 + 8 + 70,
--	.vdisplay = 800,
--	.vsync_start = 800 + 6,
--	.vsync_end = 800 + 6 + 4,
--	.vtotal = 800 + 6 + 4 + 10,
-+static const struct display_timing auo_g121ean01_timing = {
-+	.pixelclock = { 60000000, 74400000, 90000000 },
-+	.hactive = { 1280, 1280, 1280 },
-+	.hfront_porch = { 20, 50, 100 },
-+	.hback_porch = { 20, 50, 100 },
-+	.hsync_len = { 30, 100, 200 },
-+	.vactive = { 800, 800, 800 },
-+	.vfront_porch = { 2, 10, 25 },
-+	.vback_porch = { 2, 10, 25 },
-+	.vsync_len = { 4, 18, 50 },
- };
++	if (!device_may_wakeup(&bp->dev->dev))
++		phy_exit(bp->sgmii_phy);
++
+ 	if (!netif_running(netdev))
+ 		return 0;
  
- static const struct panel_desc auo_g121ean01 = {
--	.modes = &auo_g121ean01_mode,
--	.num_modes = 1,
-+	.timings = &auo_g121ean01_timing,
-+	.num_timings = 1,
- 	.bpc = 8,
- 	.size = {
- 		.width = 261,
+@@ -5130,7 +5133,6 @@ static int __maybe_unused macb_suspend(struct device *dev)
+ 	if (!(bp->wol & MACB_WOL_ENABLED)) {
+ 		rtnl_lock();
+ 		phylink_stop(bp->phylink);
+-		phy_exit(bp->sgmii_phy);
+ 		rtnl_unlock();
+ 		spin_lock_irqsave(&bp->lock, flags);
+ 		macb_reset_hw(bp);
+@@ -5160,6 +5162,9 @@ static int __maybe_unused macb_resume(struct device *dev)
+ 	unsigned int q;
+ 	int err;
+ 
++	if (!device_may_wakeup(&bp->dev->dev))
++		phy_init(bp->sgmii_phy);
++
+ 	if (!netif_running(netdev))
+ 		return 0;
+ 
+@@ -5220,8 +5225,6 @@ static int __maybe_unused macb_resume(struct device *dev)
+ 	macb_set_rx_mode(netdev);
+ 	macb_restore_features(bp);
+ 	rtnl_lock();
+-	if (!device_may_wakeup(&bp->dev->dev))
+-		phy_init(bp->sgmii_phy);
+ 
+ 	phylink_start(bp->phylink);
+ 	rtnl_unlock();
 -- 
 2.40.1
 
