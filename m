@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A2F11707
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0F8C433C8;
-	Mon, 21 Aug 2023 19:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C1C11707
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:53:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7D2C433C7;
+	Mon, 21 Aug 2023 19:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647597;
-	bh=vsevAjzeEs68uQgUS842kKKvazz2Dxege4TpMoOL+TM=;
+	s=korg; t=1692647600;
+	bh=QwBZ85ljfxPq7idyry/2ENnScIM4SN7gLfSORZ8iXRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjXQnok0FAjfmSpMg2rD1ji3otaHKa7IavlIUEmJRhKr4MbNaI1wCIbohprQr7IGN
-	 8SFLGACUxsQrgm9UR5XAvfgtK6ETLAE5gKSokudnU4AgPshdtWffTJnGoDc50U8QIU
-	 jlfMPlEF0rrqFMDstqorT5s/sZefxfET8u5sGNRI=
+	b=k8OUvPILAarWXGbAegTgNoZM6g3UJ9iCxxWAM36GOC4uiRnNpr80ODNbCVRA2aKKy
+	 LZ2aDfIfu9ZYl+/D1JsdM6LUnagCtrMF63N5Nfm7ZWKPYkhxsho3EFlAtfkkW2N0SE
+	 Bcjo9JLfF3zDul8ShjjU0uBhVUjOACvP4IGjhBIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/194] fs/ntfs3: Mark ntfs dirty when on-disk struct is corrupted
-Date: Mon, 21 Aug 2023 21:40:42 +0200
-Message-ID: <20230821194125.541308461@linuxfoundation.org>
+Subject: [PATCH 6.1 072/194] igc: read before write to SRRCTL register
+Date: Mon, 21 Aug 2023 21:40:51 +0200
+Message-ID: <20230821194125.953378093@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,79 +40,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Song Yoong Siang <yoong.siang.song@intel.com>
 
-[ Upstream commit e0f363a98830e8d7d70fbaf91c07ae0b7c57aafe ]
+[ Upstream commit 3ce29c17dc847bf4245e16aad78a7617afa96297 ]
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+igc_configure_rx_ring() function will be called as part of XDP program
+setup. If Rx hardware timestamp is enabled prio to XDP program setup,
+this timestamp enablement will be overwritten when buffer size is
+written into SRRCTL register.
+
+Thus, this commit read the register value before write to SRRCTL
+register. This commit is tested by using xdp_hw_metadata bpf selftest
+tool. The tool enables Rx hardware timestamp and then attach XDP program
+to igc driver. It will display hardware timestamp of UDP packet with
+port number 9092. Below are detail of test steps and results.
+
+Command on DUT:
+  sudo ./xdp_hw_metadata <interface name>
+
+Command on Link Partner:
+  echo -n skb | nc -u -q1 <destination IPv4 addr> 9092
+
+Result before this patch:
+  skb hwtstamp is not found!
+
+Result after this patch:
+  found skb hwtstamp = 1677800973.642836757
+
+Optionally, read PHC to confirm the values obtained are almost the same:
+Command:
+  sudo ./testptp -d /dev/ptp0 -g
+Result:
+  clock time: 1677800973.913598978 or Fri Mar  3 07:49:33 2023
+
+Fixes: fc9df2a0b520 ("igc: Enable RX via AF_XDP zero-copy")
+Cc: <stable@vger.kernel.org> # 5.14+
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Tested-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c  | 2 +-
- fs/ntfs3/index.c   | 6 ++++++
- fs/ntfs3/ntfs_fs.h | 2 ++
- fs/ntfs3/record.c  | 6 ++++++
- 4 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_base.h | 11 ++++++++---
+ drivers/net/ethernet/intel/igc/igc_main.c |  7 +++++--
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index b6e22bcb929ba..829b62d3bb889 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -154,7 +154,7 @@ int ntfs_fix_post_read(struct NTFS_RECORD_HEADER *rhdr, size_t bytes,
- 	/* Check errors. */
- 	if ((fo & 1) || fo + fn * sizeof(short) > SECTOR_SIZE || !fn-- ||
- 	    fn * SECTOR_SIZE > bytes) {
--		return -EINVAL; /* Native chkntfs returns ok! */
-+		return -E_NTFS_CORRUPT;
- 	}
+diff --git a/drivers/net/ethernet/intel/igc/igc_base.h b/drivers/net/ethernet/intel/igc/igc_base.h
+index ce530f5fd7bda..52849f5e8048d 100644
+--- a/drivers/net/ethernet/intel/igc/igc_base.h
++++ b/drivers/net/ethernet/intel/igc/igc_base.h
+@@ -85,8 +85,13 @@ union igc_adv_rx_desc {
+ #define IGC_RXDCTL_SWFLUSH		0x04000000 /* Receive Software Flush */
  
- 	/* Get fixup pointer. */
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 9e9a9ffd92958..495cfb37962fa 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1103,6 +1103,12 @@ int indx_read(struct ntfs_index *indx, struct ntfs_inode *ni, CLST vbn,
- 	*node = in;
+ /* SRRCTL bit definitions */
+-#define IGC_SRRCTL_BSIZEPKT_SHIFT		10 /* Shift _right_ */
+-#define IGC_SRRCTL_BSIZEHDRSIZE_SHIFT		2  /* Shift _left_ */
+-#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	0x02000000
++#define IGC_SRRCTL_BSIZEPKT_MASK	GENMASK(6, 0)
++#define IGC_SRRCTL_BSIZEPKT(x)		FIELD_PREP(IGC_SRRCTL_BSIZEPKT_MASK, \
++					(x) / 1024) /* in 1 KB resolution */
++#define IGC_SRRCTL_BSIZEHDR_MASK	GENMASK(13, 8)
++#define IGC_SRRCTL_BSIZEHDR(x)		FIELD_PREP(IGC_SRRCTL_BSIZEHDR_MASK, \
++					(x) / 64) /* in 64 bytes resolution */
++#define IGC_SRRCTL_DESCTYPE_MASK	GENMASK(27, 25)
++#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	FIELD_PREP(IGC_SRRCTL_DESCTYPE_MASK, 1)
  
- out:
-+	if (err == -E_NTFS_CORRUPT) {
-+		ntfs_inode_err(&ni->vfs_inode, "directory corrupted");
-+		ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
-+		err = -EINVAL;
-+	}
-+
- 	if (ib != in->index)
- 		kfree(ib);
+ #endif /* _IGC_BASE_H */
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index d877dc0f87f71..2f3947cf513bd 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -675,8 +675,11 @@ static void igc_configure_rx_ring(struct igc_adapter *adapter,
+ 	else
+ 		buf_size = IGC_RXBUFFER_2048;
  
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 24227b2e1b2b0..8c9abaf139e67 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -53,6 +53,8 @@ enum utf16_endian;
- #define E_NTFS_NONRESIDENT		556
- /* NTFS specific error code about punch hole. */
- #define E_NTFS_NOTALIGNED		557
-+/* NTFS specific error code when on-disk struct is corrupted. */
-+#define E_NTFS_CORRUPT			558
+-	srrctl = IGC_RX_HDR_LEN << IGC_SRRCTL_BSIZEHDRSIZE_SHIFT;
+-	srrctl |= buf_size >> IGC_SRRCTL_BSIZEPKT_SHIFT;
++	srrctl = rd32(IGC_SRRCTL(reg_idx));
++	srrctl &= ~(IGC_SRRCTL_BSIZEPKT_MASK | IGC_SRRCTL_BSIZEHDR_MASK |
++		    IGC_SRRCTL_DESCTYPE_MASK);
++	srrctl |= IGC_SRRCTL_BSIZEHDR(IGC_RX_HDR_LEN);
++	srrctl |= IGC_SRRCTL_BSIZEPKT(buf_size);
+ 	srrctl |= IGC_SRRCTL_DESCTYPE_ADV_ONEBUF;
  
- 
- /* sbi->flags */
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index 07037ec773ac8..ba336c7280b85 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -180,6 +180,12 @@ int mi_read(struct mft_inode *mi, bool is_mft)
- 	return 0;
- 
- out:
-+	if (err == -E_NTFS_CORRUPT) {
-+		ntfs_err(sbi->sb, "mft corrupted");
-+		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
-+		err = -EINVAL;
-+	}
-+
- 	return err;
- }
- 
+ 	wr32(IGC_SRRCTL(reg_idx), srrctl);
 -- 
 2.40.1
 
