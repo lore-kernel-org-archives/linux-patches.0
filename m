@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBC21171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC1BC433C8;
-	Mon, 21 Aug 2023 20:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B751171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2227C433C8;
+	Mon, 21 Aug 2023 20:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648455;
-	bh=Xj2LFqGal3CVB+Fi+X3l56oIIs6Oh3kbe/m3IWF1ytk=;
+	s=korg; t=1692648458;
+	bh=QOdbOjd77tRHJKaZCLvCnjEN3yCD1g2vrPvzsmLnEco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTVDBZz+4wb/Uh6Hz1zRGjEXp1xYlGqxp/J097QZ81v6PWM3Vf8sncKKmPvVUurCG
-	 Hw9bJYunnUdLSUDL5fDkxZVd2otvdWF/vHycawacpD2bLfH74bFMgQO5UCZUqkyRQo
-	 0zq2pWgmRKwGtIt9NWQheMGEhAh7wJwT7hon/MLM=
+	b=uUm5YFGXOwJbZSbRSRd4q1+veq2nBhBozWTeW4wmnlJd2MNSQKynnknQRKqXbu5QO
+	 QX6CcF5aAtLBK4N8rDyvYjqegv1GjT8ceq8aSkZuSw2IXEkhZl7K6neniGOks/+wpv
+	 2UctCXq/XrEC4Fw1C3IAyKrDjAA8dtkU06cHH5qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Folker Schwesinger <dev@folker-schwesinger.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 181/234] arm64: dts: qcom: qrb5165-rb5: fix thermal zone conflict
-Date: Mon, 21 Aug 2023 21:42:24 +0200
-Message-ID: <20230821194136.851812457@linuxfoundation.org>
+Subject: [PATCH 6.4 182/234] arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4
+Date: Mon, 21 Aug 2023 21:42:25 +0200
+Message-ID: <20230821194136.892565851@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,43 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Christopher Obbard <chris.obbard@collabora.com>
 
-[ Upstream commit 798f1df86e5709b7b6aedf493cc04c7fedbf544a ]
+[ Upstream commit cee572756aa2cb46e959e9797ad4b730b78a050b ]
 
-The commit 3a786086c6f8 ("arm64: dts: qcom: Add missing "-thermal"
-suffix for thermal zones") renamed the thermal zone in the pm8150l.dtsi
-file to comply with the schema. However this resulted in a clash with
-the RB5 board file, which already contained the pm8150l-thermal zone for
-the on-board sensor. This resulted in the board file definition
-overriding the thermal zone defined in the PMIC include file (and thus
-the on-die PMIC temp alarm was not probing at all).
+There is some instablity with some eMMC modules on ROCK Pi 4 SBCs running
+in HS400 mode. This ends up resulting in some block errors after a while
+or after a "heavy" operation utilising the eMMC (e.g. resizing a
+filesystem). An example of these errors is as follows:
 
-Rename the thermal zone in qcom/qrb5165-rb5.dts to remove this override.
+    [  289.171014] mmc1: running CQE recovery
+    [  290.048972] mmc1: running CQE recovery
+    [  290.054834] mmc1: running CQE recovery
+    [  290.060817] mmc1: running CQE recovery
+    [  290.061337] blk_update_request: I/O error, dev mmcblk1, sector 1411072 op 0x1:(WRITE) flags 0x800 phys_seg 36 prio class 0
+    [  290.061370] EXT4-fs warning (device mmcblk1p1): ext4_end_bio:348: I/O error 10 writing to inode 29547 starting block 176466)
+    [  290.061484] Buffer I/O error on device mmcblk1p1, logical block 172288
+    [  290.061531] Buffer I/O error on device mmcblk1p1, logical block 172289
+    [  290.061551] Buffer I/O error on device mmcblk1p1, logical block 172290
+    [  290.061574] Buffer I/O error on device mmcblk1p1, logical block 172291
+    [  290.061592] Buffer I/O error on device mmcblk1p1, logical block 172292
+    [  290.061615] Buffer I/O error on device mmcblk1p1, logical block 172293
+    [  290.061632] Buffer I/O error on device mmcblk1p1, logical block 172294
+    [  290.061654] Buffer I/O error on device mmcblk1p1, logical block 172295
+    [  290.061673] Buffer I/O error on device mmcblk1p1, logical block 172296
+    [  290.061695] Buffer I/O error on device mmcblk1p1, logical block 172297
 
-Fixes: 3a786086c6f8 ("arm64: dts: qcom: Add missing "-thermal" suffix for thermal zones")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230613131224.666668-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Disabling the Command Queue seems to stop the CQE recovery from running,
+but doesn't seem to improve the I/O errors. Until this can be investigated
+further, disable HS400 mode on the ROCK Pi 4 SBCs to at least stop I/O
+errors from occurring.
+
+While we are here, set the eMMC maximum clock frequency to 1.5MHz to
+follow the ROCK 4C+.
+
+Fixes: 1b5715c602fd ("arm64: dts: rockchip: add ROCK Pi 4 DTS support")
+Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
+Tested-By: Folker Schwesinger <dev@folker-schwesinger.de>
+Link: https://lore.kernel.org/r/20230705144255.115299-2-chris.obbard@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index dd924331b0eea..ec066a89436a8 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -121,7 +121,7 @@
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+index 907071d4fe804..95efee311ece9 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+@@ -645,9 +645,9 @@
+ };
  
--		pm8150l-thermal {
-+		pm8150l-pcb-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&pm8150l_adc_tm 1>;
+ &sdhci {
++	max-frequency = <150000000>;
+ 	bus-width = <8>;
+-	mmc-hs400-1_8v;
+-	mmc-hs400-enhanced-strobe;
++	mmc-hs200-1_8v;
+ 	non-removable;
+ 	status = "okay";
+ };
 -- 
 2.40.1
 
