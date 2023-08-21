@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F7511703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23145C433C9;
-	Mon, 21 Aug 2023 19:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F78311703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F46C433C8;
+	Mon, 21 Aug 2023 19:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647765;
-	bh=BHSASM0blRGdb3tTZYOTtZ4tD/7Y9ftY6dZTxgSwyk8=;
+	s=korg; t=1692647768;
+	bh=ZqXMqSGFTK4y2HZnHJYay9/4BD3AFpaWThPFUV+6aUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9qhCp4mmge7rbbTlgID8EC+a0BnkMPtFxEi0fCYU8uOfocsCaGPUB3+PatFKJvn0
-	 9UK3er9SnzIma8+gy0wEzAQgD20OJPu1T/+SPQEJAqbd0OeZTyEzbL7sAfKgV1zqe5
-	 W/UmSjJuLo4PEJuWMIjDgQXdhPRut+sKv4IUEVBw=
+	b=zHdmJv1fTWNRpGSxTeWgrn3lwY6n6Wduj3jCYqy1OzaJxOCO7HAma75ITF2mVU7fE
+	 aYogstSfkydGNGUFRSAd3MtcKBCVSp6pNJuJ+tuxnYXimiMMDa8a38N4PItAwHNBnR
+	 bwdm16B73pcGLFsLMrbfYoaCBstWkiiskbJiqR2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiaoshoukui <xiaoshoukui@ruijie.com.cn>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 101/194] btrfs: fix BUG_ON condition in btrfs_cancel_balance
-Date: Mon, 21 Aug 2023 21:41:20 +0200
-Message-ID: <20230821194127.128022037@linuxfoundation.org>
+	Tam Nguyen <tamnguyenchi@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.1 102/194] i2c: designware: Correct length byte validation logic
+Date: Mon, 21 Aug 2023 21:41:21 +0200
+Message-ID: <20230821194127.175853783@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,64 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiaoshoukui <xiaoshoukui@gmail.com>
+From: Quan Nguyen <quan@os.amperecomputing.com>
 
-commit 29eefa6d0d07e185f7bfe9576f91e6dba98189c2 upstream.
+commit 49d4db3953cb9004ff94efc0c176e026c820af5a upstream.
 
-Pausing and canceling balance can race to interrupt balance lead to BUG_ON
-panic in btrfs_cancel_balance. The BUG_ON condition in btrfs_cancel_balance
-does not take this race scenario into account.
+Commit 0daede80f870 ("i2c: designware: Convert driver to using regmap API")
+changes the logic to validate the whole 32-bit return value of
+DW_IC_DATA_CMD register instead of 8-bit LSB without reason.
 
-However, the race condition has no other side effects. We can fix that.
+Later, commit f53f15ba5a85 ("i2c: designware: Get right data length"),
+introduced partial fix but not enough because the "tmp > 0" still test
+tmp as 32-bit value and is wrong in case the IC_DATA_CMD[11] is set.
 
-Reproducing it with panic trace like this:
+Revert the logic to just before commit 0daede80f870
+("i2c: designware: Convert driver to using regmap API").
 
-  kernel BUG at fs/btrfs/volumes.c:4618!
-  RIP: 0010:btrfs_cancel_balance+0x5cf/0x6a0
-  Call Trace:
-   <TASK>
-   ? do_nanosleep+0x60/0x120
-   ? hrtimer_nanosleep+0xb7/0x1a0
-   ? sched_core_clone_cookie+0x70/0x70
-   btrfs_ioctl_balance_ctl+0x55/0x70
-   btrfs_ioctl+0xa46/0xd20
-   __x64_sys_ioctl+0x7d/0xa0
-   do_syscall_64+0x38/0x80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-  Race scenario as follows:
-  > mutex_unlock(&fs_info->balance_mutex);
-  > --------------------
-  > .......issue pause and cancel req in another thread
-  > --------------------
-  > ret = __btrfs_balance(fs_info);
-  >
-  > mutex_lock(&fs_info->balance_mutex);
-  > if (ret == -ECANCELED && atomic_read(&fs_info->balance_pause_req)) {
-  >         btrfs_info(fs_info, "balance: paused");
-  >         btrfs_exclop_balance(fs_info, BTRFS_EXCLOP_BALANCE_PAUSED);
-  > }
-
-CC: stable@vger.kernel.org # 4.19+
-Signed-off-by: xiaoshoukui <xiaoshoukui@ruijie.com.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f53f15ba5a85 ("i2c: designware: Get right data length")
+Fixes: 0daede80f870 ("i2c: designware: Convert driver to using regmap API")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
+Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20230726080001.337353-2-tamnguyenchi@os.amperecomputing.com
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-designware-master.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -4652,8 +4652,7 @@ int btrfs_cancel_balance(struct btrfs_fs
- 		}
- 	}
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -525,9 +525,10 @@ i2c_dw_read(struct dw_i2c_dev *dev)
+ 			u32 flags = msgs[dev->msg_read_idx].flags;
  
--	BUG_ON(fs_info->balance_ctl ||
--		test_bit(BTRFS_FS_BALANCE_RUNNING, &fs_info->flags));
-+	ASSERT(!test_bit(BTRFS_FS_BALANCE_RUNNING, &fs_info->flags));
- 	atomic_dec(&fs_info->balance_cancel_req);
- 	mutex_unlock(&fs_info->balance_mutex);
- 	return 0;
+ 			regmap_read(dev->map, DW_IC_DATA_CMD, &tmp);
++			tmp &= DW_IC_DATA_CMD_DAT;
+ 			/* Ensure length byte is a valid value */
+ 			if (flags & I2C_M_RECV_LEN &&
+-			    (tmp & DW_IC_DATA_CMD_DAT) <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
++			    tmp <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
+ 				len = i2c_dw_recv_len(dev, tmp);
+ 			}
+ 			*buf++ = tmp;
 
 
