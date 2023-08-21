@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F5B1170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87CAFC433C7;
-	Mon, 21 Aug 2023 19:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA07D1170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CFDAC433C8;
+	Mon, 21 Aug 2023 19:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647666;
-	bh=mDqe71lKpDXYyHzIsJBpbgHwYJe8TwsTC1hRdGqMJZI=;
+	s=korg; t=1692647669;
+	bh=JVeZ3shbsFCgAKtEpvT0OoBXu4cw1OaG4miPlIiW6KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAy15sGu9llDHjmBMre0Ey85BO43BKSlG6kdLgu+rS82f06k2Lnl786Bqg2rsx5to
-	 tdq2FVBIOR1ItK0HoxBvcPbgYogdYgRsu7m+xAYIY08yavq6lT/FU/DGsSitxqZbmI
-	 BSLYHHX9FLe0NW4Jc2Ech3LS+wJtS+S0IhDFy6YY=
+	b=syl2q+GTbtx50RfOEnTvtT5BPxHgzCZ4SkdbPL5nBRbDU1oqqh48gx0cCbE25dlJ8
+	 VdvqqFWlPmTRLQMfAxp1k0kz4UPKsGHzYwXFrHd2gHaQ7XwyXaZNyJFCos+bacXltB
+	 nxBpqHZqWyIT1blkxuXo8sPeOSFh9YeLURJ5pcZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Luke D. Jones" <luke@ljones.dev>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/194] ALSA: hda/realtek: Add quirk for ASUS ROG GA402X
-Date: Mon, 21 Aug 2023 21:40:46 +0200
-Message-ID: <20230821194125.731691383@linuxfoundation.org>
+Subject: [PATCH 6.1 068/194] ALSA: hda/realtek: Add quirk for ASUS ROG GZ301V
+Date: Mon, 21 Aug 2023 21:40:47 +0200
+Message-ID: <20230821194125.772935774@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,16 +37,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit 9abc77fb144fe916fd2f592dc4b8c7bade02e58a ]
+[ Upstream commit 5251605f4d297a0eb5d3b7f39f9dcee9e4d0115a ]
 
 Adds the required quirk to enable the Cirrus amp and correct pins
-on the ASUS ROG GA402X series which uses an I2C connected Cirrus amp.
+on the ASUS ROG GZ301V series which uses an SPI connected Cirrus amp.
 
 While this works if the related _DSD properties are made available, these
 aren't included in the ACPI of these laptops (yet).
 
 Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Link: https://lore.kernel.org/r/20230704044619.19343-3-luke@ljones.dev
+Link: https://lore.kernel.org/r/20230706223323.30871-2-luke@ljones.dev
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -54,17 +54,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index b290391314873..b0cee0a361bfb 100644
+index b0cee0a361bfb..526ec8cae9437 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9617,6 +9617,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650P", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1463, "Asus GA402X", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
+@@ -9621,6 +9621,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
  	SND_PCI_QUIRK(0x1043, 0x1473, "ASUS GU604V", ALC285_FIXUP_ASUS_HEADSET_MIC),
  	SND_PCI_QUIRK(0x1043, 0x1483, "ASUS GU603V", ALC285_FIXUP_ASUS_HEADSET_MIC),
  	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
++	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301V", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
 -- 
 2.40.1
 
