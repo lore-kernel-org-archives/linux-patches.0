@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3651171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A7AC433C7;
-	Mon, 21 Aug 2023 20:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902EB1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1B4C433C7;
+	Mon, 21 Aug 2023 20:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648410;
-	bh=ylcf7xCOFcZ9a79OP+JpHb/JkeS/qnUtEm0dMjTehuk=;
+	s=korg; t=1692648413;
+	bh=PriA6zDK3soTxJ2EJUzuv+TuUa22NkLq0iVM4/w07bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEen3J6K8Yih4+MQPSm98oq8e+Oo0FJtuu+x2OYL0YIiy7Ir7F7kORgcjn4wmY409
-	 nbnKMKid23TKnnI68JbtWoHEivuCEyXDHwXnw//Yv1WrMa5PXOcM0mFy1GPFLo9r4N
-	 zK+U3huhdockDJphpUqD/W0bCNX03SOIY9cu3JfA=
+	b=iDvMAeRJQaoQtufkBtnBQ6TmbWsW3Mx3T67X9TO+ynxk36qAtDMD3tDRT8AL6s+dd
+	 dG6RpQ6LXb3uKaHKwvZTd+unqM2JvWbsJA686ZYwx7acFPKbO1CphHgwdyh+SHanP+
+	 d73Qk+J0LdoLcCC1051jGNr87hbcqcg8TtJQb1tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+7456b5dcf65111553320@syzkaller.appspotmail.com,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 166/234] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Mon, 21 Aug 2023 21:42:09 +0200
-Message-ID: <20230821194136.173502257@linuxfoundation.org>
+Subject: [PATCH 6.4 167/234] net: openvswitch: reject negative ifindex
+Date: Mon, 21 Aug 2023 21:42:10 +0200
+Message-ID: <20230821194136.213325738@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -37,52 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
+[ Upstream commit a552bfa16bab4ce901ee721346a28c4e483f4066 ]
 
-Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
-ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
-in unregister_vlan_dev() with the following testcase:
+Recent changes in net-next (commit 759ab1edb56c ("net: store netdevs
+in an xarray")) refactored the handling of pre-assigned ifindexes
+and let syzbot surface a latent problem in ovs. ovs does not validate
+ifindex, making it possible to create netdev ports with negative
+ifindex values. It's easy to repro with YNL:
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add team1 type team
-  # ip netns exec ns1 ip link add team_slave type veth peer veth2
-  # ip netns exec ns1 ip link set team_slave master team1
-  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set team_slave nomaster
-  # ip netns del ns1
+$ ./cli.py --spec netlink/specs/ovs_datapath.yaml \
+         --do new \
+	 --json '{"upcall-pid": 1, "name":"my-dp"}'
+$ ./cli.py --spec netlink/specs/ovs_vport.yaml \
+	 --do new \
+	 --json '{"upcall-pid": "00000001", "name": "some-port0", "dp-ifindex":3,"ifindex":4294901760,"type":2}'
 
-Add S-VLAN tag related features support to team driver. So the team driver
-will always propagate the VLAN info to its slaves.
+$ ip link show
+-65536: some-port0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 7a:48:21:ad:0b:fb brd ff:ff:ff:ff:ff:ff
+...
 
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
+Validate the inputs. Now the second command correctly returns:
+
+$ ./cli.py --spec netlink/specs/ovs_vport.yaml \
+	 --do new \
+	 --json '{"upcall-pid": "00000001", "name": "some-port0", "dp-ifindex":3,"ifindex":4294901760,"type":2}'
+
+lib.ynl.NlError: Netlink error: Numerical result out of range
+nl_len = 108 (92) nl_flags = 0x300 nl_type = 2
+	error: -34	extack: {'msg': 'integer out of range', 'unknown': [[type:4 len:36] b'\x0c\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0c\x00\x03\x00\xff\xff\xff\x7f\x00\x00\x00\x00\x08\x00\x01\x00\x08\x00\x00\x00'], 'bad-attr': '.ifindex'}
+
+Accept 0 since it used to be silently ignored.
+
+Fixes: 54c4ef34c4b6 ("openvswitch: allow specifying ifindex of new interfaces")
+Reported-by: syzbot+7456b5dcf65111553320@syzkaller.appspotmail.com
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://lore.kernel.org/r/20230814203840.2908710-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/openvswitch/datapath.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index d3dc22509ea58..382756c3fb837 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2200,7 +2200,9 @@ static void team_setup(struct net_device *dev)
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index a6d2a0b1aa21e..3d7a91e64c88f 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1829,7 +1829,7 @@ static int ovs_dp_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	parms.port_no = OVSP_LOCAL;
+ 	parms.upcall_portids = a[OVS_DP_ATTR_UPCALL_PID];
+ 	parms.desired_ifindex = a[OVS_DP_ATTR_IFINDEX]
+-		? nla_get_u32(a[OVS_DP_ATTR_IFINDEX]) : 0;
++		? nla_get_s32(a[OVS_DP_ATTR_IFINDEX]) : 0;
  
- 	dev->hw_features = TEAM_VLAN_FEATURES |
- 			   NETIF_F_HW_VLAN_CTAG_RX |
--			   NETIF_F_HW_VLAN_CTAG_FILTER;
-+			   NETIF_F_HW_VLAN_CTAG_FILTER |
-+			   NETIF_F_HW_VLAN_STAG_RX |
-+			   NETIF_F_HW_VLAN_STAG_FILTER;
+ 	/* So far only local changes have been made, now need the lock. */
+ 	ovs_lock();
+@@ -2049,7 +2049,7 @@ static const struct nla_policy datapath_policy[OVS_DP_ATTR_MAX + 1] = {
+ 	[OVS_DP_ATTR_USER_FEATURES] = { .type = NLA_U32 },
+ 	[OVS_DP_ATTR_MASKS_CACHE_SIZE] =  NLA_POLICY_RANGE(NLA_U32, 0,
+ 		PCPU_MIN_UNIT_SIZE / sizeof(struct mask_cache_entry)),
+-	[OVS_DP_ATTR_IFINDEX] = {.type = NLA_U32 },
++	[OVS_DP_ATTR_IFINDEX] = NLA_POLICY_MIN(NLA_S32, 0),
+ };
  
- 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
- 	dev->features |= dev->hw_features;
+ static const struct genl_small_ops dp_datapath_genl_ops[] = {
+@@ -2302,7 +2302,7 @@ static int ovs_vport_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	parms.port_no = port_no;
+ 	parms.upcall_portids = a[OVS_VPORT_ATTR_UPCALL_PID];
+ 	parms.desired_ifindex = a[OVS_VPORT_ATTR_IFINDEX]
+-		? nla_get_u32(a[OVS_VPORT_ATTR_IFINDEX]) : 0;
++		? nla_get_s32(a[OVS_VPORT_ATTR_IFINDEX]) : 0;
+ 
+ 	vport = new_vport(&parms);
+ 	err = PTR_ERR(vport);
+@@ -2539,7 +2539,7 @@ static const struct nla_policy vport_policy[OVS_VPORT_ATTR_MAX + 1] = {
+ 	[OVS_VPORT_ATTR_TYPE] = { .type = NLA_U32 },
+ 	[OVS_VPORT_ATTR_UPCALL_PID] = { .type = NLA_UNSPEC },
+ 	[OVS_VPORT_ATTR_OPTIONS] = { .type = NLA_NESTED },
+-	[OVS_VPORT_ATTR_IFINDEX] = { .type = NLA_U32 },
++	[OVS_VPORT_ATTR_IFINDEX] = NLA_POLICY_MIN(NLA_S32, 0),
+ 	[OVS_VPORT_ATTR_NETNSID] = { .type = NLA_S32 },
+ 	[OVS_VPORT_ATTR_UPCALL_STATS] = { .type = NLA_NESTED },
+ };
 -- 
 2.40.1
 
