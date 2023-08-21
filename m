@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3846711703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5098C433C8;
-	Mon, 21 Aug 2023 19:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073011703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78040C433C7;
+	Mon, 21 Aug 2023 19:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647791;
-	bh=TIFmacErtkdGo8Q6ZjqysLcFmM67zi5bmtSzjFEbY4M=;
+	s=korg; t=1692647794;
+	bh=962olrkhxR8zvRZyjaLYihQ5Me6g+cM6ToYxfuij8hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faKwDxbd6VYoG2IiJzof1e3W9bXm65L+TE2LeDqapfXnGuBY0Ay36uEjB2G7l/cee
-	 m0TYzSVu7qJYNqljFutFe4R8KdfwUyiY2F2ve+xfze3eswTWxeCpT2448wLvG8zM72
-	 7NGbV6GUajBBMcXbUVPx35vL8DKhkFHI2TeqhE7U=
+	b=uw094H7KjTgJrVVF1YzO+vqxsDBL/MCNbZQiIB4T8TjKyZnKWUhIbPMWWTI6PBqVF
+	 wJCkKfDAqyz1BGHg/P+yobRoarsVpQJ6adPCAGuwUiurtPmfVrSWUzp+H6/sFXDRq4
+	 ZLPpXnp6xyXJG6M4esBJu//f6Yg2ui45XDzyNu+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Picej <andrej.picej@norik.com>,
-	=?UTF-8?q?Stefan=20Riedm=C3=BCller?= <s.riedmueller@phytec.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Marek Vasut <marex@denx.de>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Adam Ford <aford173@gmail.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/194] ARM: dts: imx6: phytec: fix RTC interrupt level
-Date: Mon, 21 Aug 2023 21:41:59 +0200
-Message-ID: <20230821194128.845707097@linuxfoundation.org>
+Subject: [PATCH 6.1 141/194] arm64: dts: imx8mm: Drop CSI1 PHY reference clock configuration
+Date: Mon, 21 Aug 2023 21:42:00 +0200
+Message-ID: <20230821194128.897335637@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,39 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrej Picej <andrej.picej@norik.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 762b700982a1e0f562184363f19860c3b9bdd0bf ]
+[ Upstream commit f02b53375e8f14b4c27a14f6e4fb6e89914fdc29 ]
 
-RTC interrupt level should be set to "LOW". This was revealed by the
-introduction of commit:
+The CSI1 PHY reference clock is limited to 125 MHz according to:
+i.MX 8M Mini Applications Processor Reference Manual, Rev. 3, 11/2020
+Table 5-1. Clock Root Table (continued) / page 307
+Slice Index n = 123 .
 
-  f181987ef477 ("rtc: m41t80: use IRQ flags obtained from fwnode")
+Currently the IMX8MM_CLK_CSI1_PHY_REF clock is configured to be
+fed directly from 1 GHz PLL2 , which overclocks them. Instead, drop
+the configuration altogether, which defaults the clock to 24 MHz REF
+clock input, which for the PHY reference clock is just fine.
 
-which changed the way IRQ type is obtained.
+Based on a patch from Marek Vasut for the imx8mn.
 
-Signed-off-by: Andrej Picej <andrej.picej@norik.com>
-Reviewed-by: Stefan Riedmüller <s.riedmueller@phytec.de>
-Fixes: 800d595151bb ("ARM: dts: imx6: Add initial support for phyBOARD-Mira")
+Fixes: e523b7c54c05 ("arm64: dts: imx8mm: Add CSI nodes")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Adam Ford <aford173@gmail.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi b/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi
-index 1a599c294ab86..1ca4d219609f6 100644
---- a/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi
-@@ -182,7 +182,7 @@
- 		pinctrl-0 = <&pinctrl_rtc_int>;
- 		reg = <0x68>;
- 		interrupt-parent = <&gpio7>;
--		interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
- 		status = "disabled";
- 	};
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+index 420ba0d6f1343..12c82bb1bb7aa 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+@@ -1145,10 +1145,9 @@
+ 				compatible = "fsl,imx8mm-mipi-csi2";
+ 				reg = <0x32e30000 0x1000>;
+ 				interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+-				assigned-clocks = <&clk IMX8MM_CLK_CSI1_CORE>,
+-						  <&clk IMX8MM_CLK_CSI1_PHY_REF>;
+-				assigned-clock-parents = <&clk IMX8MM_SYS_PLL2_1000M>,
+-							  <&clk IMX8MM_SYS_PLL2_1000M>;
++				assigned-clocks = <&clk IMX8MM_CLK_CSI1_CORE>;
++				assigned-clock-parents = <&clk IMX8MM_SYS_PLL2_1000M>;
++
+ 				clock-frequency = <333000000>;
+ 				clocks = <&clk IMX8MM_CLK_DISP_APB_ROOT>,
+ 					 <&clk IMX8MM_CLK_CSI1_ROOT>,
 -- 
 2.40.1
 
