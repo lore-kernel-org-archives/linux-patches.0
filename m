@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0F511703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29E7C433C8;
-	Mon, 21 Aug 2023 19:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D83211703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D03C433C7;
+	Mon, 21 Aug 2023 19:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647948;
-	bh=NFioXjB4EkUAqf/svMdM9kNpGGfusDOLZ972obtPanI=;
+	s=korg; t=1692647951;
+	bh=iWDUk4P8sKQkD6Cjm9oKNbn77WdQ3tBoUc1YZyoI8eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GyB48dIowsoJnpjP5g90kDQRZuTqej9mTtiKwCAyqe0+9eSUAbgyKpibIbUBCbUSo
-	 YC0z/U32a6hwyPD7/GfbZZvPdNjO9J9aE3M57m2Cxbsjo4qdfMe40OSmW+uCszGhXb
-	 pQRz75eXialLp+IxZvOI5UfP1ErSjfi6oBtJpvLw=
+	b=VHdEt55ca4r0pdeUVX7clmNe4XoMKCJetQMkrA9h3W7Q46C8dpPH/OP3FFIY455dA
+	 HrpHLu1YHr131kx0M+wi6IVNeBeeKKS1U5mzP+jfKtRdw2QaI3QEey+cVDZDIaf6w/
+	 JLFpQZG8GuDYmKM3rywh2u4UzLUBXGOso8q1vhEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Daniel Miess <daniel.miess@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 166/194] drm/amd/display: disable RCO for DCN314
-Date: Mon, 21 Aug 2023 21:42:25 +0200
-Message-ID: <20230821194130.000941520@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 167/194] zsmalloc: allow only one active pool compaction context
+Date: Mon, 21 Aug 2023 21:42:26 +0200
+Message-ID: <20230821194130.043557852@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,50 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Miess <daniel.miess@amd.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-commit 85e41f1ed5d94a26fe4e57003c399936d291ed70 upstream.
+commit d2658f2052c7db6ec0a79977205f8cf1cb9effc2 upstream.
 
-[Why]
-RCO is causing error messages on some DCN314 systems
+zsmalloc pool can be compacted concurrently by many contexts,
+e.g.
 
-[How]
-Force disable RCO for DCN314
+ cc1 handle_mm_fault()
+      do_anonymous_page()
+       __alloc_pages_slowpath()
+        try_to_free_pages()
+         do_try_to_free_pages(
+          lru_gen_shrink_node()
+           shrink_slab()
+            do_shrink_slab()
+             zs_shrinker_scan()
+              zs_compact()
 
-Fixes: 17fbdbda9cc8 ("drm/amd/display: Enable dcn314 DPP RCO")
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Daniel Miess <daniel.miess@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Pool compaction is currently (basically) single-threaded as
+it is performed under pool->lock. Having multiple compaction
+threads results in unnecessary contention, as each thread
+competes for pool->lock. This, in turn, affects all zsmalloc
+operations such as zs_malloc(), zs_map_object(), zs_free(), etc.
+
+Introduce the pool->compaction_in_progress atomic variable,
+which ensures that only one compaction context can run at a
+time. This reduces overall pool->lock contention in (corner)
+cases when many contexts attempt to shrink zspool simultaneously.
+
+Link: https://lkml.kernel.org/r/20230418074639.1903197-1-senozhatsky@chromium.org
+Fixes: c0547d0b6a4b ("zsmalloc: consolidate zs_pool's migrate_lock and size_class's locks")
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c     |    2 +-
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c |    4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ mm/zsmalloc.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
-@@ -296,7 +296,7 @@ static void dccg314_dpp_root_clock_contr
- {
- 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -246,6 +246,7 @@ struct zs_pool {
+ 	struct work_struct free_work;
+ #endif
+ 	spinlock_t lock;
++	atomic_t compaction_in_progress;
+ };
  
--	if (dccg->dpp_clock_gated[dpp_inst] == clock_on)
-+	if (dccg->dpp_clock_gated[dpp_inst] != clock_on)
- 		return;
+ struct zspage {
+@@ -2100,6 +2101,15 @@ unsigned long zs_compact(struct zs_pool
+ 	struct size_class *class;
+ 	unsigned long pages_freed = 0;
  
- 	if (clock_on) {
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-@@ -1933,6 +1933,10 @@ static bool dcn314_resource_construct(
- 		dc->debug = debug_defaults_drv;
- 	else
- 		dc->debug = debug_defaults_diags;
++	/*
++	 * Pool compaction is performed under pool->lock so it is basically
++	 * single-threaded. Having more than one thread in __zs_compact()
++	 * will increase pool->lock contention, which will impact other
++	 * zsmalloc operations that need pool->lock.
++	 */
++	if (atomic_xchg(&pool->compaction_in_progress, 1))
++		return 0;
 +
-+	/* Disable root clock optimization */
-+	dc->debug.root_clock_optimization.u32All = 0;
-+
- 	// Init the vm_helper
- 	if (dc->vm_helper)
- 		vm_helper_init(dc->vm_helper, 16);
+ 	for (i = ZS_SIZE_CLASSES - 1; i >= 0; i--) {
+ 		class = pool->size_class[i];
+ 		if (class->index != i)
+@@ -2107,6 +2117,7 @@ unsigned long zs_compact(struct zs_pool
+ 		pages_freed += __zs_compact(pool, class);
+ 	}
+ 	atomic_long_add(pages_freed, &pool->stats.pages_compacted);
++	atomic_set(&pool->compaction_in_progress, 0);
+ 
+ 	return pages_freed;
+ }
+@@ -2193,6 +2204,7 @@ struct zs_pool *zs_create_pool(const cha
+ 
+ 	init_deferred_free(pool);
+ 	spin_lock_init(&pool->lock);
++	atomic_set(&pool->compaction_in_progress, 0);
+ 
+ 	pool->name = kstrdup(name, GFP_KERNEL);
+ 	if (!pool->name)
 
 
