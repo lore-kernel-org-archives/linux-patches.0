@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78C11171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68506C433C7;
-	Mon, 21 Aug 2023 20:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CBF1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF70C433C9;
+	Mon, 21 Aug 2023 20:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648449;
-	bh=+cfpVhpX5L9oCL1RLl3mlW4YDEj/HL/Ey12892ENCpE=;
+	s=korg; t=1692648452;
+	bh=hp73kmSVLXc9H1W2nqXbvVF35riPw7CH2ANVj0/YE+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rULv6V058FPCI3T3ODGIclo88lmeQ0YcGDyFzDUHwyvmhh9gnay3lLrhDLJU2FkCY
-	 pyXfUX1DMAW2MYsE8ihn20wQBSwXfvNDNk9xBOcIMRlYxfjQtD3OqnJGzJ49nvZ5jo
-	 XkMAtDB6cHKpsQfq5Tbf0Adr8Zz6NraUyte57WKc=
+	b=HXdvOTWHGCEgf3257L5qlmQJ5cghZffvNJR+GRZvDpsY1oc+3ziqKxBS9Lvv3QAZw
+	 DqHn+816AGy4PWWqGtmjoRpebf5AcEQAXEKDvDwSjoACfdjr0+Qcvoe2DPyXPEowzO
+	 rWQQcx6WrJvkMmtflOqHCflCdrF3R/K/YD8GxiKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"kernelci.org bot" <bot@kernelci.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 179/234] ice: Block switchdev mode when ADQ is active and vice versa
-Date: Mon, 21 Aug 2023 21:42:22 +0200
-Message-ID: <20230821194136.755957846@linuxfoundation.org>
+Subject: [PATCH 6.4 180/234] bus: ti-sysc: Flush posted write on enable before reset
+Date: Mon, 21 Aug 2023 21:42:23 +0200
+Message-ID: <20230821194136.801684857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -39,63 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 43d00e102d9ecbe2635d7e3f2e14d2e90183d6af ]
+[ Upstream commit 34539b442b3bc7d5bf10164750302b60b91f18a7 ]
 
-ADQ and switchdev are not supported simultaneously. Enabling both at the
-same time can result in nullptr dereference.
+The am335x devices started producing boot errors for resetting musb module
+in because of subtle timing changes:
 
-To prevent this, check if ADQ is active when changing devlink mode to
-switchdev mode, and check if switchdev is active when enabling ADQ.
+Unhandled fault: external abort on non-linefetch (0x1008)
+...
+sysc_poll_reset_sysconfig from sysc_reset+0x109/0x12
+sysc_reset from sysc_probe+0xa99/0xeb0
+...
 
-Fixes: fbc7b27af0f9 ("ice: enable ndo_setup_tc support for mqprio_qdisc")
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230816193405.1307580-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The fix is to flush posted write after enable before reset during
+probe. Note that some devices also need to specify the delay after enable
+with ti,sysc-delay-us, but this is not needed for musb on am335x based on
+my tests.
+
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Closes: https://storage.kernelci.org/next/master/next-20230614/arm/multi_v7_defconfig+CONFIG_THUMB2_KERNEL=y/gcc-10/lab-cip/baseline-beaglebone-black.html
+Fixes: 596e7955692b ("bus: ti-sysc: Add support for software reset")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_eswitch.c | 6 ++++++
- drivers/net/ethernet/intel/ice/ice_main.c    | 5 +++++
- 2 files changed, 11 insertions(+)
+ drivers/bus/ti-sysc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-index f6dd3f8fd936e..03e5139849462 100644
---- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-@@ -568,6 +568,12 @@ ice_eswitch_mode_set(struct devlink *devlink, u16 mode,
- 		break;
- 	case DEVLINK_ESWITCH_MODE_SWITCHDEV:
- 	{
-+		if (ice_is_adq_active(pf)) {
-+			dev_err(ice_pf_to_dev(pf), "Couldn't change eswitch mode to switchdev - ADQ is active. Delete ADQ configs and try again, e.g. tc qdisc del dev $PF root");
-+			NL_SET_ERR_MSG_MOD(extack, "Couldn't change eswitch mode to switchdev - ADQ is active. Delete ADQ configs and try again, e.g. tc qdisc del dev $PF root");
-+			return -EOPNOTSUPP;
-+		}
-+
- 		dev_info(ice_pf_to_dev(pf), "PF %d changed eswitch mode to switchdev",
- 			 pf->hw.pf_id);
- 		NL_SET_ERR_MSG_MOD(extack, "Changed eswitch mode to switchdev");
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 34e8e7cb1bc54..cfb76612bd2f9 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -9065,6 +9065,11 @@ ice_setup_tc(struct net_device *netdev, enum tc_setup_type type,
- 						  ice_setup_tc_block_cb,
- 						  np, np, true);
- 	case TC_SETUP_QDISC_MQPRIO:
-+		if (ice_is_eswitch_mode_switchdev(pf)) {
-+			netdev_err(netdev, "TC MQPRIO offload not supported, switchdev is enabled\n");
-+			return -EOPNOTSUPP;
-+		}
-+
- 		if (pf->adev) {
- 			mutex_lock(&pf->adev_mutex);
- 			device_lock(&pf->adev->dev);
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 21fe9854703f9..4cb23b9e06ea4 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -2142,6 +2142,8 @@ static int sysc_reset(struct sysc *ddata)
+ 		sysc_val = sysc_read_sysconfig(ddata);
+ 		sysc_val |= sysc_mask;
+ 		sysc_write(ddata, sysc_offset, sysc_val);
++		/* Flush posted write */
++		sysc_val = sysc_read_sysconfig(ddata);
+ 	}
+ 
+ 	if (ddata->cfg.srst_udelay)
 -- 
 2.40.1
 
