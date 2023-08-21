@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3371171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEDEC433C8;
-	Mon, 21 Aug 2023 20:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC3A1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E922C433C7;
+	Mon, 21 Aug 2023 20:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648528;
-	bh=U+X3YHCDMSfutFfxTGuVSrLKdrjus8sxmRLfeDDWRo0=;
+	s=korg; t=1692648531;
+	bh=p7MNHl+6ZNFj+Yi07wmhbn7bihov60Aj0FXa/pLjxvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snB/ekYsgFtGmRsP6/Wh0uUgmdkq27I22zLuSZ8iQFi7HcXQzYJBx3GGCloTT6Nwz
-	 GZheeSfoyTzUAS2Vsyn/0XeZssOvZRCi8A+cEZo1C8xgBCl4df8tLDzgy0A/78kOnC
-	 8d+RstGbHEWEeMY8FVpDPqdjeU1DEWYYeIgoPxVA=
+	b=kAyt8hIpVKwniVv+zHdpNPyynJOXWxIxjl6Kk4JWVpxFrKLFiqa4YxeGWGWLcvntm
+	 7WX8/ZNicp50KQFpZBY8F5uNZd9PEafrtMd1jWjfa+XU1v5EI8530L6msjrDvw4583
+	 90kp4aXbivhKJXIxTHR0JA1iwRhF+ictERIZ81wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Fuzzey <martin.fuzzey@flowbird.group>,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 207/234] regulator: da9063: better fix null deref with partial DT
-Date: Mon, 21 Aug 2023 21:42:50 +0200
-Message-ID: <20230821194138.014575590@linuxfoundation.org>
+	Andrew Melnychenko <andrew@daynix.com>,
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Jason Wang <jasowang@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Subject: [PATCH 6.4 208/234] virtio-net: Zero max_tx_vq field for VIRTIO_NET_CTRL_MQ_HASH_CONFIG case
+Date: Mon, 21 Aug 2023 21:42:51 +0200
+Message-ID: <20230821194138.056010169@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,62 +38,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Fuzzey <martin.fuzzey@flowbird.group>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-commit 30c694fd4a99fbbc4115d180156ca01b60953371 upstream.
+commit 2c507ce90e02cd78d00fd4b0fe26c8641873c13f upstream.
 
-Two versions of the original patch were sent but V1 was merged instead
-of V2 due to a mistake.
+Kernel uses `struct virtio_net_ctrl_rss` to save command-specific-data
+for both the VIRTIO_NET_CTRL_MQ_HASH_CONFIG and
+VIRTIO_NET_CTRL_MQ_RSS_CONFIG commands.
 
-So update to V2.
+According to the VirtIO standard, "Field reserved MUST contain zeroes.
+It is defined to make the structure to match the layout of
+virtio_net_rss_config structure, defined in 5.1.6.5.7.".
 
-The advantage of V2 is that it completely avoids dereferencing the pointer,
-even just to take the address, which may fix problems with some compilers.
-Both versions work on my gcc 9.4 but use the safer one.
+Yet for the VIRTIO_NET_CTRL_MQ_HASH_CONFIG command case, the `max_tx_vq`
+field in struct virtio_net_ctrl_rss, which corresponds to the
+`reserved` field in struct virtio_net_hash_config, is not zeroed,
+thereby violating the VirtIO standard.
 
-Fixes: 98e2dd5f7a8b ("regulator: da9063: fix null pointer deref with partial DT config")
-Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
-Tested-by: Benjamin Bara <benjamin.bara@skidata.com>
+This patch solves this problem by zeroing this field in
+virtnet_init_default_rss().
+
+Cc: Andrew Melnychenko <andrew@daynix.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230804083514.1887124-1-martin.fuzzey@flowbird.group
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20230810110405.25558-1-yin31149@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/da9063-regulator.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/virtio_net.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/da9063-regulator.c b/drivers/regulator/da9063-regulator.c
-index dfd5ec9f75c9..a0621665a6d2 100644
---- a/drivers/regulator/da9063-regulator.c
-+++ b/drivers/regulator/da9063-regulator.c
-@@ -778,9 +778,6 @@ static int da9063_check_xvp_constraints(struct regulator_config *config)
- 	const struct notification_limit *uv_l = &constr->under_voltage_limits;
- 	const struct notification_limit *ov_l = &constr->over_voltage_limits;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2652,7 +2652,7 @@ static void virtnet_init_default_rss(str
+ 		vi->ctrl->rss.indirection_table[i] = indir_val;
+ 	}
  
--	if (!config->init_data) /* No config in DT, pointers will be invalid */
--		return 0;
--
- 	/* make sure that only one severity is used to clarify if unchanged, enabled or disabled */
- 	if ((!!uv_l->prot + !!uv_l->err + !!uv_l->warn) > 1) {
- 		dev_err(config->dev, "%s: at most one voltage monitoring severity allowed!\n",
-@@ -1031,9 +1028,12 @@ static int da9063_regulator_probe(struct platform_device *pdev)
- 			config.of_node = da9063_reg_matches[id].of_node;
- 		config.regmap = da9063->regmap;
+-	vi->ctrl->rss.max_tx_vq = vi->curr_queue_pairs;
++	vi->ctrl->rss.max_tx_vq = vi->has_rss ? vi->curr_queue_pairs : 0;
+ 	vi->ctrl->rss.hash_key_length = vi->rss_key_size;
  
--		ret = da9063_check_xvp_constraints(&config);
--		if (ret)
--			return ret;
-+		/* Checking constraints requires init_data from DT. */
-+		if (config.init_data) {
-+			ret = da9063_check_xvp_constraints(&config);
-+			if (ret)
-+				return ret;
-+		}
- 
- 		regl->rdev = devm_regulator_register(&pdev->dev, &regl->desc,
- 						     &config);
--- 
-2.41.0
-
+ 	netdev_rss_key_fill(vi->ctrl->rss.key, vi->rss_key_size);
 
 
