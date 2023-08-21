@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290181170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E901C433C8;
-	Mon, 21 Aug 2023 19:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D921170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C027C433C7;
+	Mon, 21 Aug 2023 19:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647463;
-	bh=WOXxEcVIQSNHMTI057wELF3FuRIP59K/RZVdNZJLuyY=;
+	s=korg; t=1692647465;
+	bh=SZOaBTshAzDMMqkNpjaEFRw0hAd/HYZknxjpo8xs0p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=El/isUMiKOJo0VLdWf4abGtgCFPRVQVw4fpe8OooshauknaZ1ynns7KdDOJwGjbeE
-	 2oGFz0it3nOKOBUxNGDepBdwQJjwzgcNwI9anwuZx3oFuK9HoQS7G0ME2O1tPmplRr
-	 H4cV1HWhnCdmUtUUd+vnuEdTRwYHMiohNp/dX2ec=
+	b=n7vtx2DqxTtzDDN9Oh6CMXdI9zYPvoVLZ/DtW6TejxUwmmWtNKOKOc2NL56SEg0OB
+	 YBn3jJDSQOtD6mC/slPjA0txx/mCkJQp/dgB8XeGOiUJb72TPg9ea35UUREbxfINko
+	 AFDyLeTAgmajlPQhpLDS8a2OvnxG7uU7w2rOWZOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/194] ARM: dts: imx6dl: prtrvt, prtvt7, prti6q, prtwd2: fix USB related warnings
-Date: Mon, 21 Aug 2023 21:40:01 +0200
-Message-ID: <20230821194123.761440492@linuxfoundation.org>
+Subject: [PATCH 6.1 023/194] ASoC: Intel: sof_sdw_rt_sdca_jack_common: test SOF_JACK_JDSRC in _exit
+Date: Mon, 21 Aug 2023 21:40:02 +0200
+Message-ID: <20230821194123.811881240@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,76 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 1d14bd943fa2bbdfda1efbcc080b298fed5f1803 ]
+[ Upstream commit 526a1876fc48e2d0c0ea8ad63b58bdb2cc13047f ]
 
-Fix USB-related warnings in prtrvt, prtvt7, prti6q and prtwd2 device trees
-by disabling unused usbphynop1 and usbphynop2 USB PHYs and providing proper
-configuration for the over-current detection. This fixes the following
-warnings with the current kernel:
- usb_phy_generic usbphynop1: dummy supplies not allowed for exclusive requests
- usb_phy_generic usbphynop2: dummy supplies not allowed for exclusive requests
- imx_usb 2184200.usb: No over current polarity defined
+if (!SOF_RT711_JDSRC(sof_sdw_quirk)) is tested in rt711_sdca_add_codec_
+device_props(), and we don't add software node to the device if jack
+source is not set. We need to do the same test in
+sof_sdw_rt711_sdca_exit(), and avoid removing software node if jack
+source is not set.
 
-By the way, fix over-current detection on usbotg port for prtvt7, prti6q
-and prtwd2 boards. Only prtrvt do not have OC on USB OTG port.
-
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230602202225.249209-8-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6dl-prtrvt.dts   |  4 ++++
- arch/arm/boot/dts/imx6qdl-prti6q.dtsi | 11 ++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_sdw_rt711_sdca.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/imx6dl-prtrvt.dts b/arch/arm/boot/dts/imx6dl-prtrvt.dts
-index 56bb1ca56a2df..36b031236e475 100644
---- a/arch/arm/boot/dts/imx6dl-prtrvt.dts
-+++ b/arch/arm/boot/dts/imx6dl-prtrvt.dts
-@@ -124,6 +124,10 @@ &usbh1 {
- 	status = "disabled";
- };
+diff --git a/sound/soc/intel/boards/sof_sdw_rt711_sdca.c b/sound/soc/intel/boards/sof_sdw_rt711_sdca.c
+index 7f16304d025be..cf8b9793fe0e5 100644
+--- a/sound/soc/intel/boards/sof_sdw_rt711_sdca.c
++++ b/sound/soc/intel/boards/sof_sdw_rt711_sdca.c
+@@ -143,6 +143,9 @@ int sof_sdw_rt711_sdca_exit(struct snd_soc_card *card, struct snd_soc_dai_link *
+ 	if (!ctx->headset_codec_dev)
+ 		return 0;
  
-+&usbotg {
-+	disable-over-current;
-+};
++	if (!SOF_RT711_JDSRC(sof_sdw_quirk))
++		return 0;
 +
- &vpu {
- 	status = "disabled";
- };
-diff --git a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
-index f0db0d4471f40..36f84f4da6b0d 100644
---- a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
-@@ -69,6 +69,7 @@ &usbh1 {
- 	vbus-supply = <&reg_usb_h1_vbus>;
- 	phy_type = "utmi";
- 	dr_mode = "host";
-+	disable-over-current;
- 	status = "okay";
- };
+ 	device_remove_software_node(ctx->headset_codec_dev);
+ 	put_device(ctx->headset_codec_dev);
  
-@@ -78,10 +79,18 @@ &usbotg {
- 	pinctrl-0 = <&pinctrl_usbotg>;
- 	phy_type = "utmi";
- 	dr_mode = "host";
--	disable-over-current;
-+	over-current-active-low;
- 	status = "okay";
- };
- 
-+&usbphynop1 {
-+	status = "disabled";
-+};
-+
-+&usbphynop2 {
-+	status = "disabled";
-+};
-+
- &usdhc1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_usdhc1>;
 -- 
 2.40.1
 
