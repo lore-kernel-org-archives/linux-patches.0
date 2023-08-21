@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EE41170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59E9C433C8;
-	Mon, 21 Aug 2023 19:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408E51170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B481EC433C7;
+	Mon, 21 Aug 2023 19:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647496;
-	bh=0twrrRWoRtZYbvOHAoojKjJ328ClxSfEiY/zKCgy4Eo=;
+	s=korg; t=1692647499;
+	bh=J36NlGXUopwVycdST2nC0uYi5Gjb1g39h5dQ6u7Xf+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUEPaeAKi8LrfsV48/BH1GcMyAPj4E5FL2XFmM1oY9BNhVSAMC4715iJMyREWnVNW
-	 o9dHX+HyBDka+GFbpCcT7XlTqaB7rLjVcaeoVUIFK74Uu+C54c+GkNS4LB08Cn1imU
-	 +qfqOYU2GaJCks9MnmTLST4mO4oi3VCRRGhH2NdM=
+	b=tHLaOh0aG9GK59DG799sAKO54upsEfyIVLHFVLaPoeMsAMLfNV64opLGD/rn23jIE
+	 WvLNEnnABJ7JOXYBgQNGDaWDHjrVkrh4278IGRCc0OIAFxzJYtJIsY3jUUWs+17reX
+	 4O88ovh3U3HYKI7L9PzKSkotpIj54u6sQt8LgcVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/194] selftests: forwarding: tc_actions: Use ncat instead of nc
-Date: Mon, 21 Aug 2023 21:39:46 +0200
-Message-ID: <20230821194123.039286037@linuxfoundation.org>
+Subject: [PATCH 6.1 008/194] net/smc: replace mutex rmbs_lock and sndbufs_lock with rw_semaphore
+Date: Mon, 21 Aug 2023 21:39:47 +0200
+Message-ID: <20230821194123.083249090@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -39,82 +35,307 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 5e8670610b93158ffacc3241f835454ff26a3469 ]
+[ Upstream commit aff7bfed9097435ea38de919befbe2d7771a3e87 ]
 
-The test relies on 'nc' being the netcat version from the nmap project.
-While this seems to be the case on Fedora, it is not the case on Ubuntu,
-resulting in failures such as [1].
+It's clear that rmbs_lock and sndbufs_lock are aims to protect the
+rmbs list or the sndbufs list.
 
-Fix by explicitly using the 'ncat' utility from the nmap project and the
-skip the test in case it is not installed.
+During connection establieshment, smc_buf_get_slot() will always
+be invoked, and it only performs read semantics in rmbs list and
+sndbufs list.
 
-[1]
- # timeout set to 0
- # selftests: net/forwarding: tc_actions.sh
- # TEST: gact drop and ok (skip_hw)                                    [ OK ]
- # TEST: mirred egress flower redirect (skip_hw)                       [ OK ]
- # TEST: mirred egress flower mirror (skip_hw)                         [ OK ]
- # TEST: mirred egress matchall mirror (skip_hw)                       [ OK ]
- # TEST: mirred_egress_to_ingress (skip_hw)                            [ OK ]
- # nc: invalid option -- '-'
- # usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
- #         [-m minttl] [-O length] [-P proxy_username] [-p source_port]
- #         [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
- #         [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
- #         [destination] [port]
- # nc: invalid option -- '-'
- # usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
- #         [-m minttl] [-O length] [-P proxy_username] [-p source_port]
- #         [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
- #         [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
- #         [destination] [port]
- # TEST: mirred_egress_to_ingress_tcp (skip_hw)                        [FAIL]
- #       server output check failed
- # INFO: Could not test offloaded functionality
- not ok 80 selftests: net/forwarding: tc_actions.sh # exit=1
+Based on the above considerations, we replace mutex with rw_semaphore.
+Only smc_buf_get_slot() use down_read() to allow smc_buf_get_slot()
+run concurrently, other part use down_write() to keep exclusive
+semantics.
 
-Fixes: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-12-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 833bac7ec392 ("net/smc: Fix setsockopt and sysctl to specify same buffer size again")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/tc_actions.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/smc/smc_core.c | 55 +++++++++++++++++++++++-----------------------
+ net/smc/smc_core.h |  4 ++--
+ net/smc/smc_llc.c  | 16 +++++++-------
+ 3 files changed, 38 insertions(+), 37 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
-index a96cff8e72197..b0f5e55d2d0b2 100755
---- a/tools/testing/selftests/net/forwarding/tc_actions.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -9,6 +9,8 @@ NUM_NETIFS=4
- source tc_common.sh
- source lib.sh
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index f82f43573a159..f793101e0ecc3 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -852,8 +852,8 @@ static int smc_lgr_create(struct smc_sock *smc, struct smc_init_info *ini)
+ 	lgr->freeing = 0;
+ 	lgr->vlan_id = ini->vlan_id;
+ 	refcount_set(&lgr->refcnt, 1); /* set lgr refcnt to 1 */
+-	mutex_init(&lgr->sndbufs_lock);
+-	mutex_init(&lgr->rmbs_lock);
++	init_rwsem(&lgr->sndbufs_lock);
++	init_rwsem(&lgr->rmbs_lock);
+ 	rwlock_init(&lgr->conns_lock);
+ 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
+ 		INIT_LIST_HEAD(&lgr->sndbufs[i]);
+@@ -1095,7 +1095,7 @@ struct smc_link *smc_switch_conns(struct smc_link_group *lgr,
+ static void smcr_buf_unuse(struct smc_buf_desc *buf_desc, bool is_rmb,
+ 			   struct smc_link_group *lgr)
+ {
+-	struct mutex *lock;	/* lock buffer list */
++	struct rw_semaphore *lock;	/* lock buffer list */
+ 	int rc;
  
-+require_command ncat
+ 	if (is_rmb && buf_desc->is_conf_rkey && !list_empty(&lgr->list)) {
+@@ -1115,9 +1115,9 @@ static void smcr_buf_unuse(struct smc_buf_desc *buf_desc, bool is_rmb,
+ 		/* buf registration failed, reuse not possible */
+ 		lock = is_rmb ? &lgr->rmbs_lock :
+ 				&lgr->sndbufs_lock;
+-		mutex_lock(lock);
++		down_write(lock);
+ 		list_del(&buf_desc->list);
+-		mutex_unlock(lock);
++		up_write(lock);
+ 
+ 		smc_buf_free(lgr, is_rmb, buf_desc);
+ 	} else {
+@@ -1220,15 +1220,16 @@ static void smcr_buf_unmap_lgr(struct smc_link *lnk)
+ 	int i;
+ 
+ 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
+-		mutex_lock(&lgr->rmbs_lock);
++		down_write(&lgr->rmbs_lock);
+ 		list_for_each_entry_safe(buf_desc, bf, &lgr->rmbs[i], list)
+ 			smcr_buf_unmap_link(buf_desc, true, lnk);
+-		mutex_unlock(&lgr->rmbs_lock);
+-		mutex_lock(&lgr->sndbufs_lock);
++		up_write(&lgr->rmbs_lock);
 +
- tcflags="skip_hw"
++		down_write(&lgr->sndbufs_lock);
+ 		list_for_each_entry_safe(buf_desc, bf, &lgr->sndbufs[i],
+ 					 list)
+ 			smcr_buf_unmap_link(buf_desc, false, lnk);
+-		mutex_unlock(&lgr->sndbufs_lock);
++		up_write(&lgr->sndbufs_lock);
+ 	}
+ }
  
- h1_create()
-@@ -220,9 +222,9 @@ mirred_egress_to_ingress_tcp_test()
- 		ip_proto icmp \
- 			action drop
+@@ -1986,19 +1987,19 @@ int smc_uncompress_bufsize(u8 compressed)
+  * buffer size; if not available, return NULL
+  */
+ static struct smc_buf_desc *smc_buf_get_slot(int compressed_bufsize,
+-					     struct mutex *lock,
++					     struct rw_semaphore *lock,
+ 					     struct list_head *buf_list)
+ {
+ 	struct smc_buf_desc *buf_slot;
  
--	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2  &
-+	ip vrf exec v$h1 ncat --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2 &
- 	local rpid=$!
--	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
-+	ip vrf exec v$h1 ncat -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
- 	wait -n $rpid
- 	cmp -s $mirred_e2i_tf1 $mirred_e2i_tf2
- 	check_err $? "server output check failed"
+-	mutex_lock(lock);
++	down_read(lock);
+ 	list_for_each_entry(buf_slot, buf_list, list) {
+ 		if (cmpxchg(&buf_slot->used, 0, 1) == 0) {
+-			mutex_unlock(lock);
++			up_read(lock);
+ 			return buf_slot;
+ 		}
+ 	}
+-	mutex_unlock(lock);
++	up_read(lock);
+ 	return NULL;
+ }
+ 
+@@ -2107,13 +2108,13 @@ int smcr_link_reg_buf(struct smc_link *link, struct smc_buf_desc *buf_desc)
+ 	return 0;
+ }
+ 
+-static int _smcr_buf_map_lgr(struct smc_link *lnk, struct mutex *lock,
++static int _smcr_buf_map_lgr(struct smc_link *lnk, struct rw_semaphore *lock,
+ 			     struct list_head *lst, bool is_rmb)
+ {
+ 	struct smc_buf_desc *buf_desc, *bf;
+ 	int rc = 0;
+ 
+-	mutex_lock(lock);
++	down_write(lock);
+ 	list_for_each_entry_safe(buf_desc, bf, lst, list) {
+ 		if (!buf_desc->used)
+ 			continue;
+@@ -2122,7 +2123,7 @@ static int _smcr_buf_map_lgr(struct smc_link *lnk, struct mutex *lock,
+ 			goto out;
+ 	}
+ out:
+-	mutex_unlock(lock);
++	up_write(lock);
+ 	return rc;
+ }
+ 
+@@ -2155,37 +2156,37 @@ int smcr_buf_reg_lgr(struct smc_link *lnk)
+ 	int i, rc = 0;
+ 
+ 	/* reg all RMBs for a new link */
+-	mutex_lock(&lgr->rmbs_lock);
++	down_write(&lgr->rmbs_lock);
+ 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
+ 		list_for_each_entry_safe(buf_desc, bf, &lgr->rmbs[i], list) {
+ 			if (!buf_desc->used)
+ 				continue;
+ 			rc = smcr_link_reg_buf(lnk, buf_desc);
+ 			if (rc) {
+-				mutex_unlock(&lgr->rmbs_lock);
++				up_write(&lgr->rmbs_lock);
+ 				return rc;
+ 			}
+ 		}
+ 	}
+-	mutex_unlock(&lgr->rmbs_lock);
++	up_write(&lgr->rmbs_lock);
+ 
+ 	if (lgr->buf_type == SMCR_PHYS_CONT_BUFS)
+ 		return rc;
+ 
+ 	/* reg all vzalloced sndbufs for a new link */
+-	mutex_lock(&lgr->sndbufs_lock);
++	down_write(&lgr->sndbufs_lock);
+ 	for (i = 0; i < SMC_RMBE_SIZES; i++) {
+ 		list_for_each_entry_safe(buf_desc, bf, &lgr->sndbufs[i], list) {
+ 			if (!buf_desc->used || !buf_desc->is_vm)
+ 				continue;
+ 			rc = smcr_link_reg_buf(lnk, buf_desc);
+ 			if (rc) {
+-				mutex_unlock(&lgr->sndbufs_lock);
++				up_write(&lgr->sndbufs_lock);
+ 				return rc;
+ 			}
+ 		}
+ 	}
+-	mutex_unlock(&lgr->sndbufs_lock);
++	up_write(&lgr->sndbufs_lock);
+ 	return rc;
+ }
+ 
+@@ -2305,8 +2306,8 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 	struct smc_link_group *lgr = conn->lgr;
+ 	struct list_head *buf_list;
+ 	int bufsize, bufsize_short;
++	struct rw_semaphore *lock;	/* lock buffer list */
+ 	bool is_dgraded = false;
+-	struct mutex *lock;	/* lock buffer list */
+ 	int sk_buf_size;
+ 
+ 	if (is_rmb)
+@@ -2354,9 +2355,9 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 		SMC_STAT_RMB_ALLOC(smc, is_smcd, is_rmb);
+ 		SMC_STAT_RMB_SIZE(smc, is_smcd, is_rmb, bufsize);
+ 		buf_desc->used = 1;
+-		mutex_lock(lock);
++		down_write(lock);
+ 		list_add(&buf_desc->list, buf_list);
+-		mutex_unlock(lock);
++		up_write(lock);
+ 		break; /* found */
+ 	}
+ 
+@@ -2430,9 +2431,9 @@ int smc_buf_create(struct smc_sock *smc, bool is_smcd)
+ 	/* create rmb */
+ 	rc = __smc_buf_create(smc, is_smcd, true);
+ 	if (rc) {
+-		mutex_lock(&smc->conn.lgr->sndbufs_lock);
++		down_write(&smc->conn.lgr->sndbufs_lock);
+ 		list_del(&smc->conn.sndbuf_desc->list);
+-		mutex_unlock(&smc->conn.lgr->sndbufs_lock);
++		up_write(&smc->conn.lgr->sndbufs_lock);
+ 		smc_buf_free(smc->conn.lgr, false, smc->conn.sndbuf_desc);
+ 		smc->conn.sndbuf_desc = NULL;
+ 	}
+diff --git a/net/smc/smc_core.h b/net/smc/smc_core.h
+index 285f9bd8e232e..6051d92270130 100644
+--- a/net/smc/smc_core.h
++++ b/net/smc/smc_core.h
+@@ -252,9 +252,9 @@ struct smc_link_group {
+ 	unsigned short		vlan_id;	/* vlan id of link group */
+ 
+ 	struct list_head	sndbufs[SMC_RMBE_SIZES];/* tx buffers */
+-	struct mutex		sndbufs_lock;	/* protects tx buffers */
++	struct rw_semaphore	sndbufs_lock;	/* protects tx buffers */
+ 	struct list_head	rmbs[SMC_RMBE_SIZES];	/* rx buffers */
+-	struct mutex		rmbs_lock;	/* protects rx buffers */
++	struct rw_semaphore	rmbs_lock;	/* protects rx buffers */
+ 
+ 	u8			id[SMC_LGR_ID_SIZE];	/* unique lgr id */
+ 	struct delayed_work	free_work;	/* delayed freeing of an lgr */
+diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
+index 760f8bbff822e..fcb24a0ccf761 100644
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -611,7 +611,7 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
+ 
+ 	prim_lnk_idx = link->link_idx;
+ 	lnk_idx = link_new->link_idx;
+-	mutex_lock(&lgr->rmbs_lock);
++	down_write(&lgr->rmbs_lock);
+ 	ext->num_rkeys = lgr->conns_num;
+ 	if (!ext->num_rkeys)
+ 		goto out;
+@@ -631,7 +631,7 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
+ 	}
+ 	len += i * sizeof(ext->rt[0]);
+ out:
+-	mutex_unlock(&lgr->rmbs_lock);
++	up_write(&lgr->rmbs_lock);
+ 	return len;
+ }
+ 
+@@ -892,7 +892,7 @@ static int smc_llc_cli_rkey_exchange(struct smc_link *link,
+ 	int rc = 0;
+ 	int i;
+ 
+-	mutex_lock(&lgr->rmbs_lock);
++	down_write(&lgr->rmbs_lock);
+ 	num_rkeys_send = lgr->conns_num;
+ 	buf_pos = smc_llc_get_first_rmb(lgr, &buf_lst);
+ 	do {
+@@ -919,7 +919,7 @@ static int smc_llc_cli_rkey_exchange(struct smc_link *link,
+ 			break;
+ 	} while (num_rkeys_send || num_rkeys_recv);
+ 
+-	mutex_unlock(&lgr->rmbs_lock);
++	up_write(&lgr->rmbs_lock);
+ 	return rc;
+ }
+ 
+@@ -1002,14 +1002,14 @@ static void smc_llc_save_add_link_rkeys(struct smc_link *link,
+ 	ext = (struct smc_llc_msg_add_link_v2_ext *)((u8 *)lgr->wr_rx_buf_v2 +
+ 						     SMC_WR_TX_SIZE);
+ 	max = min_t(u8, ext->num_rkeys, SMC_LLC_RKEYS_PER_MSG_V2);
+-	mutex_lock(&lgr->rmbs_lock);
++	down_write(&lgr->rmbs_lock);
+ 	for (i = 0; i < max; i++) {
+ 		smc_rtoken_set(lgr, link->link_idx, link_new->link_idx,
+ 			       ext->rt[i].rmb_key,
+ 			       ext->rt[i].rmb_vaddr_new,
+ 			       ext->rt[i].rmb_key_new);
+ 	}
+-	mutex_unlock(&lgr->rmbs_lock);
++	up_write(&lgr->rmbs_lock);
+ }
+ 
+ static void smc_llc_save_add_link_info(struct smc_link *link,
+@@ -1316,7 +1316,7 @@ static int smc_llc_srv_rkey_exchange(struct smc_link *link,
+ 	int rc = 0;
+ 	int i;
+ 
+-	mutex_lock(&lgr->rmbs_lock);
++	down_write(&lgr->rmbs_lock);
+ 	num_rkeys_send = lgr->conns_num;
+ 	buf_pos = smc_llc_get_first_rmb(lgr, &buf_lst);
+ 	do {
+@@ -1341,7 +1341,7 @@ static int smc_llc_srv_rkey_exchange(struct smc_link *link,
+ 		smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
+ 	} while (num_rkeys_send || num_rkeys_recv);
+ out:
+-	mutex_unlock(&lgr->rmbs_lock);
++	up_write(&lgr->rmbs_lock);
+ 	return rc;
+ }
+ 
 -- 
 2.40.1
 
