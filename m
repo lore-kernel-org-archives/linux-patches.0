@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651FD1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC056C433C8;
-	Mon, 21 Aug 2023 20:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB9E1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE3BC433C8;
+	Mon, 21 Aug 2023 20:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648130;
-	bh=SXB83HQhxpf7telpAlLDH6P/xAHGUXhEla0Od3Ibjwg=;
+	s=korg; t=1692648133;
+	bh=OWctS8xcVwvjIC5sBhMy79Yifw7EEWEh3ICMcbxf8Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaZg4mAj4MMigKzj2/VuoUydEab9mxmw9YmOTlcieeWTuXE3d0fORSAinCAhupVle
-	 tLDmN4y/8ufvdNaIwYjmQtj5IlZFuMjQ4ZDYiDtLRsHoRJHkZ9Mvzet4FwxNrVr852
-	 Pgjcp2l9y/kS/krk35JbGHYh6HtS41WyuH6C3RJs=
+	b=hjY2dfoEGABR3pYc6nHBMU9i+bnUkXwoFQ3ssUcnoXoLL+65vHILuy3TgzN8DDINJ
+	 BG4pOwKkhCsEPiA/PZ0ZuPupf3NqmFELUQPyk3tQ4p8wfkqQnVFWnnaUrbEE/JkVq5
+	 0O+jKTT0K1TAznbmPKZtg1VTMzD44UTheZPSzqII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lang Yu <Lang.Yu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 036/234] drm/amdgpu: unmap and remove csa_va properly
-Date: Mon, 21 Aug 2023 21:39:59 +0200
-Message-ID: <20230821194130.317772396@linuxfoundation.org>
+Subject: [PATCH 6.4 037/234] RDMA/mlx5: Return the firmware result upon destroying QP/RQ
+Date: Mon, 21 Aug 2023 21:40:00 +0200
+Message-ID: <20230821194130.365758242@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,122 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lang Yu <Lang.Yu@amd.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 5daff15cd013422bc6d1efcfe82b586800025384 ]
+[ Upstream commit 22664c06e997087fe37f9ba208008c948571214a ]
 
-Root PD BO should be reserved before unmap and remove
-a bo_va from VM otherwise lockdep will complain.
+Previously when destroying a QP/RQ, the result of the firmware
+destruction function was ignored and upper layers weren't informed
+about the failure.
+Which in turn could lead to various problems since when upper layer
+isn't aware of the failure it continues its operation thinking that the
+related QP/RQ was successfully destroyed while it actually wasn't,
+which could lead to the below kernel WARN.
 
-v2: check fpriv->csa_va is not NULL instead of amdgpu_mcbp (christian)
+Currently, we return the correct firmware destruction status to upper
+layers which in case of the RQ would be mlx5_ib_destroy_wq() which
+was already capable of handling RQ destruction failure or in case of
+a QP to destroy_qp_common(), which now would actually warn upon qp
+destruction failure.
 
-[14616.936827] WARNING: CPU: 6 PID: 1711 at drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c:1762 amdgpu_vm_bo_del+0x399/0x3f0 [amdgpu]
-[14616.937096] Call Trace:
-[14616.937097]  <TASK>
-[14616.937102]  amdgpu_driver_postclose_kms+0x249/0x2f0 [amdgpu]
-[14616.937187]  drm_file_free+0x1d6/0x300 [drm]
-[14616.937207]  drm_close_helper.isra.0+0x62/0x70 [drm]
-[14616.937220]  drm_release+0x5e/0x100 [drm]
-[14616.937234]  __fput+0x9f/0x280
-[14616.937239]  ____fput+0xe/0x20
-[14616.937241]  task_work_run+0x61/0x90
-[14616.937246]  exit_to_user_mode_prepare+0x215/0x220
-[14616.937251]  syscall_exit_to_user_mode+0x2a/0x60
-[14616.937254]  do_syscall_64+0x48/0x90
-[14616.937257]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+WARNING: CPU: 3 PID: 995 at drivers/infiniband/core/rdma_core.c:940 uverbs_destroy_ufile_hw+0xcb/0xe0 [ib_uverbs]
+Modules linked in: xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi rdma_cm ib_umad ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core overlay mlx5_core fuse
+CPU: 3 PID: 995 Comm: python3 Not tainted 5.16.0-rc5+ #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:uverbs_destroy_ufile_hw+0xcb/0xe0 [ib_uverbs]
+Code: 41 5c 41 5d 41 5e e9 44 34 f0 e0 48 89 df e8 4c 77 ff ff 49 8b 86 10 01 00 00 48 85 c0 74 a1 4c 89 e7 ff d0 eb 9a 0f 0b eb c1 <0f> 0b be 04 00 00 00 48 89 df e8 b6 f6 ff ff e9 75 ff ff ff 90 0f
+RSP: 0018:ffff8881533e3e78 EFLAGS: 00010287
+RAX: ffff88811b2cf3e0 RBX: ffff888106209700 RCX: 0000000000000000
+RDX: ffff888106209780 RSI: ffff8881533e3d30 RDI: ffff888109b101a0
+RBP: 0000000000000001 R08: ffff888127cb381c R09: 0de9890000000009
+R10: ffff888127cb3800 R11: 0000000000000000 R12: ffff888106209780
+R13: ffff888106209750 R14: ffff888100f20660 R15: 0000000000000000
+FS:  00007f8be353b740(0000) GS:ffff88852c980000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8bd5b117c0 CR3: 000000012cd8a004 CR4: 0000000000370ea0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ib_uverbs_close+0x1a/0x90 [ib_uverbs]
+ __fput+0x82/0x230
+ task_work_run+0x59/0x90
+ exit_to_user_mode_prepare+0x138/0x140
+ syscall_exit_to_user_mode+0x1d/0x50
+ ? __x64_sys_close+0xe/0x40
+ do_syscall_64+0x4a/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7f8be3ae0abb
+Code: 03 00 00 00 0f 05 48 3d 00 f0 ff ff 77 41 c3 48 83 ec 18 89 7c 24 0c e8 83 43 f9 ff 8b 7c 24 0c 41 89 c0 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 35 44 89 c7 89 44 24 0c e8 c1 43 f9 ff 8b 44
+RSP: 002b:00007ffdb51909c0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000557bb7f7c020 RCX: 00007f8be3ae0abb
+RDX: 0000557bb7c74010 RSI: 0000557bb7f14ca0 RDI: 0000000000000005
+RBP: 0000557bb7fbd598 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000293 R12: 0000557bb7fbd5b8
+R13: 0000557bb7fbd5a8 R14: 0000000000001000 R15: 0000557bb7f7c020
+ </TASK>
 
-Signed-off-by: Lang Yu <Lang.Yu@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://lore.kernel.org/r/c6df677f931d18090bafbe7f7dbb9524047b7d9b.1685953497.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c | 38 +++++++++++++++++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.h |  3 ++
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 10 +++----
- 3 files changed, 46 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/mlx5/qpc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-index c6d4d41c4393e..23d054526e7c7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -106,3 +106,41 @@ int amdgpu_map_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 	ttm_eu_backoff_reservation(&ticket, &list);
- 	return 0;
+diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
+index bae0334d6e7f1..aec011557b4a7 100644
+--- a/drivers/infiniband/hw/mlx5/qpc.c
++++ b/drivers/infiniband/hw/mlx5/qpc.c
+@@ -298,8 +298,7 @@ int mlx5_core_destroy_qp(struct mlx5_ib_dev *dev, struct mlx5_core_qp *qp)
+ 	MLX5_SET(destroy_qp_in, in, opcode, MLX5_CMD_OP_DESTROY_QP);
+ 	MLX5_SET(destroy_qp_in, in, qpn, qp->qpn);
+ 	MLX5_SET(destroy_qp_in, in, uid, qp->uid);
+-	mlx5_cmd_exec_in(dev->mdev, destroy_qp, in);
+-	return 0;
++	return mlx5_cmd_exec_in(dev->mdev, destroy_qp, in);
  }
-+
-+int amdgpu_unmap_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
-+			    struct amdgpu_bo *bo, struct amdgpu_bo_va *bo_va,
-+			    uint64_t csa_addr)
-+{
-+	struct ww_acquire_ctx ticket;
-+	struct list_head list;
-+	struct amdgpu_bo_list_entry pd;
-+	struct ttm_validate_buffer csa_tv;
-+	int r;
-+
-+	INIT_LIST_HEAD(&list);
-+	INIT_LIST_HEAD(&csa_tv.head);
-+	csa_tv.bo = &bo->tbo;
-+	csa_tv.num_shared = 1;
-+
-+	list_add(&csa_tv.head, &list);
-+	amdgpu_vm_get_pd_bo(vm, &list, &pd);
-+
-+	r = ttm_eu_reserve_buffers(&ticket, &list, true, NULL);
-+	if (r) {
-+		DRM_ERROR("failed to reserve CSA,PD BOs: err=%d\n", r);
-+		return r;
-+	}
-+
-+	r = amdgpu_vm_bo_unmap(adev, bo_va, csa_addr);
-+	if (r) {
-+		DRM_ERROR("failed to do bo_unmap on static CSA, err=%d\n", r);
-+		ttm_eu_backoff_reservation(&ticket, &list);
-+		return r;
-+	}
-+
-+	amdgpu_vm_bo_del(adev, bo_va);
-+
-+	ttm_eu_backoff_reservation(&ticket, &list);
-+
-+	return 0;
-+}
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.h
-index 524b4437a0217..7dfc1f2012ebf 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.h
-@@ -34,6 +34,9 @@ int amdgpu_allocate_static_csa(struct amdgpu_device *adev, struct amdgpu_bo **bo
- int amdgpu_map_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 			  struct amdgpu_bo *bo, struct amdgpu_bo_va **bo_va,
- 			  uint64_t csa_addr, uint32_t size);
-+int amdgpu_unmap_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
-+			    struct amdgpu_bo *bo, struct amdgpu_bo_va *bo_va,
-+			    uint64_t csa_addr);
- void amdgpu_free_static_csa(struct amdgpu_bo **bo);
  
- #endif
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 0efb38539d70c..724e80c192973 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -1284,12 +1284,12 @@ void amdgpu_driver_postclose_kms(struct drm_device *dev,
- 	if (amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_VCE) != NULL)
- 		amdgpu_vce_free_handles(adev, file_priv);
+ int mlx5_core_set_delay_drop(struct mlx5_ib_dev *dev,
+@@ -551,14 +550,14 @@ int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn)
+ 	return mlx5_cmd_exec_in(dev->mdev, dealloc_xrcd, in);
+ }
  
--	if (amdgpu_mcbp) {
--		/* TODO: how to handle reserve failure */
--		BUG_ON(amdgpu_bo_reserve(adev->virt.csa_obj, true));
--		amdgpu_vm_bo_del(adev, fpriv->csa_va);
-+	if (fpriv->csa_va) {
-+		uint64_t csa_addr = amdgpu_csa_vaddr(adev) & AMDGPU_GMC_HOLE_MASK;
-+
-+		WARN_ON(amdgpu_unmap_static_csa(adev, &fpriv->vm, adev->virt.csa_obj,
-+						fpriv->csa_va, csa_addr));
- 		fpriv->csa_va = NULL;
--		amdgpu_bo_unreserve(adev->virt.csa_obj);
- 	}
+-static void destroy_rq_tracked(struct mlx5_ib_dev *dev, u32 rqn, u16 uid)
++static int destroy_rq_tracked(struct mlx5_ib_dev *dev, u32 rqn, u16 uid)
+ {
+ 	u32 in[MLX5_ST_SZ_DW(destroy_rq_in)] = {};
  
- 	pasid = fpriv->vm.pasid;
+ 	MLX5_SET(destroy_rq_in, in, opcode, MLX5_CMD_OP_DESTROY_RQ);
+ 	MLX5_SET(destroy_rq_in, in, rqn, rqn);
+ 	MLX5_SET(destroy_rq_in, in, uid, uid);
+-	mlx5_cmd_exec_in(dev->mdev, destroy_rq, in);
++	return mlx5_cmd_exec_in(dev->mdev, destroy_rq, in);
+ }
+ 
+ int mlx5_core_create_rq_tracked(struct mlx5_ib_dev *dev, u32 *in, int inlen,
+@@ -589,8 +588,7 @@ int mlx5_core_destroy_rq_tracked(struct mlx5_ib_dev *dev,
+ 				 struct mlx5_core_qp *rq)
+ {
+ 	destroy_resource_common(dev, rq);
+-	destroy_rq_tracked(dev, rq->qpn, rq->uid);
+-	return 0;
++	return destroy_rq_tracked(dev, rq->qpn, rq->uid);
+ }
+ 
+ static void destroy_sq_tracked(struct mlx5_ib_dev *dev, u32 sqn, u16 uid)
 -- 
 2.40.1
 
