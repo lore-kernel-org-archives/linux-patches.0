@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C84B1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1900C433CA;
-	Mon, 21 Aug 2023 20:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5CC1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B163AC433C9;
+	Mon, 21 Aug 2023 20:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648486;
-	bh=b7P2Dh/6FBa+I9pt3tckwToxnbbiYeXDocwr+u9Et1c=;
+	s=korg; t=1692648489;
+	bh=KDDmVz8V3t9SBYvQP5pPq3AnF5wkAvMsIB2MpFgFYHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvkqGfnTdnJdBKgy+saflQiLNlbtLmNj1ouctLmgFchSpVNnMeMVaNLDUWwPX6zwt
-	 npCO6e/O8Vf459xXjMA6IKZIYI9lf+8nt6jQ4RTiRpd0JrZNiOwRfM+d2z5OULoiI0
-	 evQKfnrlANDQAZx6FBnWRbBjttB//LIIneD5hMe4=
+	b=0U9151ltKrYuNmLsqzmMpKzt5jgb6/Zo+jj2H8u0Hu9fCN0mSEX6Arrq6CLe9D5yS
+	 wlRX+aoXAFLG/6VECWAPXkqpx9hl1GRdSec43q9GjbiFN1pEwJjzNCdR0sI87jDFRk
+	 kvd5WvE7ldFZCyxA+0Cfzx3ovUN43PPoMwES0mPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 185/234] ARM: dts: imx: Adjust dma-apbh node name
-Date: Mon, 21 Aug 2023 21:42:28 +0200
-Message-ID: <20230821194137.020727434@linuxfoundation.org>
+	Ninad Naik <quic_ninanaik@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 6.4 194/234] pinctrl: qcom: Add intr_target_width field to support increased number of interrupt targets
+Date: Mon, 21 Aug 2023 21:42:37 +0200
+Message-ID: <20230821194137.405481551@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,107 +38,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Wahren <stefan.wahren@i2se.com>
+From: Ninad Naik <quic_ninanaik@quicinc.com>
 
-[ Upstream commit e9f5cd85f1f931bb7b64031492f7051187ccaac7 ]
+[ Upstream commit 9757300d2750ef76f139aa6f5f7eadd61a0de0d3 ]
 
-Currently the dtbs_check generates warnings like this:
+SA8775 and newer target have added support for an increased number of
+interrupt targets. To implement this change, the intr_target field, which
+is used to configure the interrupt target in the interrupt configuration
+register is increased from 3 bits to 4 bits.
 
-$nodename:0: 'dma-apbh@110000' does not match '^dma-controller(@.*)?$'
+In accordance to these updates, a new intr_target_width member is
+introduced in msm_pingroup structure. This member stores the value of
+width of intr_target field in the interrupt configuration register. This
+value is used to dynamically calculate and generate mask for setting the
+intr_target field. By default, this mask is set to 3 bit wide, to ensure
+backward compatibility with the older targets.
 
-So fix all affected dma-apbh node names.
-
-Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: be18293e47cb ("ARM: dts: imx: Set default tuning step for imx7d usdhc")
+Fixes: 4b6b18559927 ("pinctrl: qcom: add the tlmm driver sa8775p platforms")
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Link: https://lore.kernel.org/r/20230809100634.3961-1-quic_ninanaik@quicinc.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx23.dtsi   | 2 +-
- arch/arm/boot/dts/imx28.dtsi   | 2 +-
- arch/arm/boot/dts/imx6qdl.dtsi | 2 +-
- arch/arm/boot/dts/imx6sx.dtsi  | 2 +-
- arch/arm/boot/dts/imx6ul.dtsi  | 2 +-
- arch/arm/boot/dts/imx7s.dtsi   | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c     | 9 ++++++---
+ drivers/pinctrl/qcom/pinctrl-msm.h     | 2 ++
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c | 1 +
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx23.dtsi b/arch/arm/boot/dts/imx23.dtsi
-index d19508c8f9ed6..a3668a0827fc8 100644
---- a/arch/arm/boot/dts/imx23.dtsi
-+++ b/arch/arm/boot/dts/imx23.dtsi
-@@ -59,7 +59,7 @@
- 				reg = <0x80000000 0x2000>;
- 			};
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index c5f52d4f7781b..1fb0a24356bf5 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1039,6 +1039,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+ 	const struct msm_pingroup *g;
++	u32 intr_target_mask = GENMASK(2, 0);
+ 	unsigned long flags;
+ 	bool was_enabled;
+ 	u32 val;
+@@ -1075,13 +1076,15 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	 * With intr_target_use_scm interrupts are routed to
+ 	 * application cpu using scm calls.
+ 	 */
++	if (g->intr_target_width)
++		intr_target_mask = GENMASK(g->intr_target_width - 1, 0);
++
+ 	if (pctrl->intr_target_use_scm) {
+ 		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
+ 		int ret;
  
--			dma_apbh: dma-apbh@80004000 {
-+			dma_apbh: dma-controller@80004000 {
- 				compatible = "fsl,imx23-dma-apbh";
- 				reg = <0x80004000 0x2000>;
- 				interrupts = <0 14 20 0
-diff --git a/arch/arm/boot/dts/imx28.dtsi b/arch/arm/boot/dts/imx28.dtsi
-index a8d3c3113e0f6..29e37b1fae66f 100644
---- a/arch/arm/boot/dts/imx28.dtsi
-+++ b/arch/arm/boot/dts/imx28.dtsi
-@@ -78,7 +78,7 @@
- 				status = "disabled";
- 			};
+ 		qcom_scm_io_readl(addr, &val);
+-
+-		val &= ~(7 << g->intr_target_bit);
++		val &= ~(intr_target_mask << g->intr_target_bit);
+ 		val |= g->intr_target_kpss_val << g->intr_target_bit;
  
--			dma_apbh: dma-apbh@80004000 {
-+			dma_apbh: dma-controller@80004000 {
- 				compatible = "fsl,imx28-dma-apbh";
- 				reg = <0x80004000 0x2000>;
- 				interrupts = <82 83 84 85
-diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
-index b72ec745f6d12..bda182edc5891 100644
---- a/arch/arm/boot/dts/imx6qdl.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl.dtsi
-@@ -150,7 +150,7 @@
- 		interrupt-parent = <&gpc>;
- 		ranges;
+ 		ret = qcom_scm_io_writel(addr, val);
+@@ -1091,7 +1094,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 				d->hwirq);
+ 	} else {
+ 		val = msm_readl_intr_target(pctrl, g);
+-		val &= ~(7 << g->intr_target_bit);
++		val &= ~(intr_target_mask << g->intr_target_bit);
+ 		val |= g->intr_target_kpss_val << g->intr_target_bit;
+ 		msm_writel_intr_target(val, pctrl, g);
+ 	}
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index 985eceda25173..7f30416be127b 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -51,6 +51,7 @@ struct msm_function {
+  * @intr_status_bit:      Offset in @intr_status_reg for reading and acking the interrupt
+  *                        status.
+  * @intr_target_bit:      Offset in @intr_target_reg for configuring the interrupt routing.
++ * @intr_target_width:    Number of bits used for specifying interrupt routing target.
+  * @intr_target_kpss_val: Value in @intr_target_bit for specifying that the interrupt from
+  *                        this gpio should get routed to the KPSS processor.
+  * @intr_raw_status_bit:  Offset in @intr_cfg_reg for the raw status bit.
+@@ -94,6 +95,7 @@ struct msm_pingroup {
+ 	unsigned intr_ack_high:1;
  
--		dma_apbh: dma-apbh@110000 {
-+		dma_apbh: dma-controller@110000 {
- 			compatible = "fsl,imx6q-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x00110000 0x2000>;
- 			interrupts = <0 13 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
-index 93ac2380ca1ec..4233943a1cca8 100644
---- a/arch/arm/boot/dts/imx6sx.dtsi
-+++ b/arch/arm/boot/dts/imx6sx.dtsi
-@@ -209,7 +209,7 @@
- 			power-domains = <&pd_pu>;
- 		};
- 
--		dma_apbh: dma-apbh@1804000 {
-+		dma_apbh: dma-controller@1804000 {
- 			compatible = "fsl,imx6sx-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x01804000 0x2000>;
- 			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
-index 3d9d0f8235685..118764c50d921 100644
---- a/arch/arm/boot/dts/imx6ul.dtsi
-+++ b/arch/arm/boot/dts/imx6ul.dtsi
-@@ -164,7 +164,7 @@
- 			      <0x00a06000 0x2000>;
- 		};
- 
--		dma_apbh: dma-apbh@1804000 {
-+		dma_apbh: dma-controller@1804000 {
- 			compatible = "fsl,imx6q-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x01804000 0x2000>;
- 			interrupts = <0 13 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index efe2525b62fa1..54026c2c93fac 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -1257,7 +1257,7 @@
- 			};
- 		};
- 
--		dma_apbh: dma-apbh@33000000 {
-+		dma_apbh: dma-controller@33000000 {
- 			compatible = "fsl,imx7d-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x33000000 0x2000>;
- 			interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>,
+ 	unsigned intr_target_bit:5;
++	unsigned intr_target_width:5;
+ 	unsigned intr_target_kpss_val:5;
+ 	unsigned intr_raw_status_bit:5;
+ 	unsigned intr_polarity_bit:5;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+index 2ae7cdca65d3e..62f7a36d290cb 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
++++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+@@ -54,6 +54,7 @@
+ 		.intr_enable_bit = 0,		\
+ 		.intr_status_bit = 0,		\
+ 		.intr_target_bit = 5,		\
++		.intr_target_width = 4,		\
+ 		.intr_target_kpss_val = 3,	\
+ 		.intr_raw_status_bit = 4,	\
+ 		.intr_polarity_bit = 1,		\
 -- 
 2.40.1
 
