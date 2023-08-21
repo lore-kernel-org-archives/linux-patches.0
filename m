@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60A71171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:04:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4503CC433C7;
-	Mon, 21 Aug 2023 20:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12FD1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:04:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD5BC433CD;
+	Mon, 21 Aug 2023 20:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648244;
-	bh=SCYwbt4veiTOzYc9EpcMiu+jnqhV65nFWDA1vBR30XM=;
+	s=korg; t=1692648247;
+	bh=tbCZWwafjFvySFG3syUOe9ZIWKW3errZdyJkfXQxQ3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6ChSAgSOsaak/te6xX1k+ifV+qkXHZzAcWWXXzFjZSFrdHWk946CGKy+W4U1Pa7H
-	 Cl8wvCV5J5pkjQ38YxSE23cIRcYAVb2zHI/eqm1ptukjYcPN4xelLzZTw7WHEhUHHL
-	 Vwxv88X+varHqNIdwEdBg0TtY9AH2iXl3kM0z0jo=
+	b=F/6ZKCdgMOIxk9hohlQfoiCZbrIIhsa/2kzV6a5xCE07IbAEydt+uRqCRlFJOHBpY
+	 x7Lrzy805mCrhy12v7yMB1xAN2Z9MvzUgDIYRhelBKBJ0OLUFK4f7DTm4Xup7psML+
+	 J1HptqIqbgtepbArA4ZkV36R0v0Pg6slM77je3Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Landley <rob@landley.net>,
 	Filipe Manana <fdmanana@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 107/234] btrfs: fix infinite directory reads
-Date: Mon, 21 Aug 2023 21:41:10 +0200
-Message-ID: <20230821194133.552391662@linuxfoundation.org>
+Subject: [PATCH 6.4 108/234] btrfs: fix incorrect splitting in btrfs_drop_extent_map_range
+Date: Mon, 21 Aug 2023 21:41:11 +0200
+Message-ID: <20230821194133.592626340@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,307 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 9b378f6ad48cfa195ed868db9123c09ee7ec5ea2 upstream.
+commit c962098ca4af146f2625ed64399926a098752c9c upstream.
 
-The readdir implementation currently processes always up to the last index
-it finds. This however can result in an infinite loop if the directory has
-a large number of entries such that they won't all fit in the given buffer
-passed to the readdir callback, that is, dir_emit() returns a non-zero
-value. Because in that case readdir() will be called again and if in the
-meanwhile new directory entries were added and we still can't put all the
-remaining entries in the buffer, we keep repeating this over and over.
+In production we were seeing a variety of WARN_ON()'s in the extent_map
+code, specifically in btrfs_drop_extent_map_range() when we have to call
+add_extent_mapping() for our second split.
 
-The following C program and test script reproduce the problem:
+Consider the following extent map layout
 
-  $ cat /mnt/readdir_prog.c
-  #include <sys/types.h>
-  #include <dirent.h>
-  #include <stdio.h>
+	PINNED
+	[0 16K)  [32K, 48K)
 
-  int main(int argc, char *argv[])
-  {
-    DIR *dir = opendir(".");
-    struct dirent *dd;
+and then we call btrfs_drop_extent_map_range for [0, 36K), with
+skip_pinned == true.  The initial loop will have
 
-    while ((dd = readdir(dir))) {
-      printf("%s\n", dd->d_name);
-      rename(dd->d_name, "TEMPFILE");
-      rename("TEMPFILE", dd->d_name);
-    }
-    closedir(dir);
-  }
+	start = 0
+	end = 36K
+	len = 36K
 
-  $ gcc -o /mnt/readdir_prog /mnt/readdir_prog.c
+we will find the [0, 16k) extent, but since we are pinned we will skip
+it, which has this code
 
-  $ cat test.sh
-  #!/bin/bash
+	start = em_end;
+	if (end != (u64)-1)
+		len = start + len - em_end;
 
-  DEV=/dev/sdi
-  MNT=/mnt/sdi
+em_end here is 16K, so now the values are
 
-  mkfs.btrfs -f $DEV &> /dev/null
-  #mkfs.xfs -f $DEV &> /dev/null
-  #mkfs.ext4 -F $DEV &> /dev/null
+	start = 16K
+	len = 16K + 36K - 16K = 36K
 
-  mount $DEV $MNT
+len should instead be 20K.  This is a problem when we find the next
+extent at [32K, 48K), we need to split this extent to leave [36K, 48k),
+however the code for the split looks like this
 
-  mkdir $MNT/testdir
-  for ((i = 1; i <= 2000; i++)); do
-      echo -n > $MNT/testdir/file_$i
-  done
+	split->start = start + len;
+	split->len = em_end - (start + len);
 
-  cd $MNT/testdir
-  /mnt/readdir_prog
+In this case we have
 
-  cd /mnt
+	em_end = 48K
+	split->start = 16K + 36K       // this should be 16K + 20K
+	split->len = 48K - (16K + 36K) // this overflows as 16K + 36K is 52K
 
-  umount $MNT
+and now we have an invalid extent_map in the tree that potentially
+overlaps other entries in the extent map.  Even in the non-overlapping
+case we will have split->start set improperly, which will cause problems
+with any block related calculations.
 
-This behaviour is surprising to applications and it's unlike ext4, xfs,
-tmpfs, vfat and other filesystems, which always finish. In this case where
-new entries were added due to renames, some file names may be reported
-more than once, but this varies according to each filesystem - for example
-ext4 never reported the same file more than once while xfs reports the
-first 13 file names twice.
+We don't actually need len in this loop, we can simply use end as our
+end point, and only adjust start up when we find a pinned extent we need
+to skip.
 
-So change our readdir implementation to track the last index number when
-opendir() is called and then make readdir() never process beyond that
-index number. This gives the same behaviour as ext4.
+Adjust the logic to do this, which keeps us from inserting an invalid
+extent map.
 
-Reported-by: Rob Landley <rob@landley.net>
-Link: https://lore.kernel.org/linux-btrfs/2c8c55ec-04c6-e0dc-9c5c-8c7924778c35@landley.net/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217681
-CC: stable@vger.kernel.org # 6.4+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+We only skip_pinned in the relocation case, so this is relatively rare,
+except in the case where you are running relocation a lot, which can
+happen with auto relocation on.
+
+Fixes: 55ef68990029 ("Btrfs: Fix btrfs_drop_extent_cache for skip pinned case")
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h         |    1 
- fs/btrfs/delayed-inode.c |    5 +
- fs/btrfs/delayed-inode.h |    1 
- fs/btrfs/inode.c         |  131 ++++++++++++++++++++++++++++-------------------
- 4 files changed, 84 insertions(+), 54 deletions(-)
+ fs/btrfs/extent_map.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -443,6 +443,7 @@ struct btrfs_drop_extents_args {
+--- a/fs/btrfs/extent_map.c
++++ b/fs/btrfs/extent_map.c
+@@ -758,8 +758,6 @@ void btrfs_drop_extent_map_range(struct
  
- struct btrfs_file_private {
- 	void *filldir_buf;
-+	u64 last_index;
- 	struct extent_state *llseek_cached_state;
- };
+ 		if (skip_pinned && test_bit(EXTENT_FLAG_PINNED, &em->flags)) {
+ 			start = em_end;
+-			if (end != (u64)-1)
+-				len = start + len - em_end;
+ 			goto next;
+ 		}
  
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -1632,6 +1632,7 @@ int btrfs_inode_delayed_dir_index_count(
- }
- 
- bool btrfs_readdir_get_delayed_items(struct inode *inode,
-+				     u64 last_index,
- 				     struct list_head *ins_list,
- 				     struct list_head *del_list)
- {
-@@ -1651,14 +1652,14 @@ bool btrfs_readdir_get_delayed_items(str
- 
- 	mutex_lock(&delayed_node->mutex);
- 	item = __btrfs_first_delayed_insertion_item(delayed_node);
--	while (item) {
-+	while (item && item->index <= last_index) {
- 		refcount_inc(&item->refs);
- 		list_add_tail(&item->readdir_list, ins_list);
- 		item = __btrfs_next_delayed_item(item);
- 	}
- 
- 	item = __btrfs_first_delayed_deletion_item(delayed_node);
--	while (item) {
-+	while (item && item->index <= last_index) {
- 		refcount_inc(&item->refs);
- 		list_add_tail(&item->readdir_list, del_list);
- 		item = __btrfs_next_delayed_item(item);
---- a/fs/btrfs/delayed-inode.h
-+++ b/fs/btrfs/delayed-inode.h
-@@ -148,6 +148,7 @@ void btrfs_destroy_delayed_inodes(struct
- 
- /* Used for readdir() */
- bool btrfs_readdir_get_delayed_items(struct inode *inode,
-+				     u64 last_index,
- 				     struct list_head *ins_list,
- 				     struct list_head *del_list);
- void btrfs_readdir_put_delayed_items(struct inode *inode,
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -5745,6 +5745,74 @@ static struct dentry *btrfs_lookup(struc
- }
- 
- /*
-+ * Find the highest existing sequence number in a directory and then set the
-+ * in-memory index_cnt variable to the first free sequence number.
-+ */
-+static int btrfs_set_inode_index_count(struct btrfs_inode *inode)
-+{
-+	struct btrfs_root *root = inode->root;
-+	struct btrfs_key key, found_key;
-+	struct btrfs_path *path;
-+	struct extent_buffer *leaf;
-+	int ret;
-+
-+	key.objectid = btrfs_ino(inode);
-+	key.type = BTRFS_DIR_INDEX_KEY;
-+	key.offset = (u64)-1;
-+
-+	path = btrfs_alloc_path();
-+	if (!path)
-+		return -ENOMEM;
-+
-+	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
-+	if (ret < 0)
-+		goto out;
-+	/* FIXME: we should be able to handle this */
-+	if (ret == 0)
-+		goto out;
-+	ret = 0;
-+
-+	if (path->slots[0] == 0) {
-+		inode->index_cnt = BTRFS_DIR_START_INDEX;
-+		goto out;
-+	}
-+
-+	path->slots[0]--;
-+
-+	leaf = path->nodes[0];
-+	btrfs_item_key_to_cpu(leaf, &found_key, path->slots[0]);
-+
-+	if (found_key.objectid != btrfs_ino(inode) ||
-+	    found_key.type != BTRFS_DIR_INDEX_KEY) {
-+		inode->index_cnt = BTRFS_DIR_START_INDEX;
-+		goto out;
-+	}
-+
-+	inode->index_cnt = found_key.offset + 1;
-+out:
-+	btrfs_free_path(path);
-+	return ret;
-+}
-+
-+static int btrfs_get_dir_last_index(struct btrfs_inode *dir, u64 *index)
-+{
-+	if (dir->index_cnt == (u64)-1) {
-+		int ret;
-+
-+		ret = btrfs_inode_delayed_dir_index_count(dir);
-+		if (ret) {
-+			ret = btrfs_set_inode_index_count(dir);
-+			if (ret)
-+				return ret;
-+		}
-+	}
-+
-+	*index = dir->index_cnt;
-+
-+	return 0;
-+}
-+
-+/*
-  * All this infrastructure exists because dir_emit can fault, and we are holding
-  * the tree lock when doing readdir.  For now just allocate a buffer and copy
-  * our information into that, and then dir_emit from the buffer.  This is
-@@ -5756,10 +5824,17 @@ static struct dentry *btrfs_lookup(struc
- static int btrfs_opendir(struct inode *inode, struct file *file)
- {
- 	struct btrfs_file_private *private;
-+	u64 last_index;
-+	int ret;
-+
-+	ret = btrfs_get_dir_last_index(BTRFS_I(inode), &last_index);
-+	if (ret)
-+		return ret;
- 
- 	private = kzalloc(sizeof(struct btrfs_file_private), GFP_KERNEL);
- 	if (!private)
- 		return -ENOMEM;
-+	private->last_index = last_index;
- 	private->filldir_buf = kzalloc(PAGE_SIZE, GFP_KERNEL);
- 	if (!private->filldir_buf) {
- 		kfree(private);
-@@ -5826,7 +5901,8 @@ static int btrfs_real_readdir(struct fil
- 
- 	INIT_LIST_HEAD(&ins_list);
- 	INIT_LIST_HEAD(&del_list);
--	put = btrfs_readdir_get_delayed_items(inode, &ins_list, &del_list);
-+	put = btrfs_readdir_get_delayed_items(inode, private->last_index,
-+					      &ins_list, &del_list);
- 
- again:
- 	key.type = BTRFS_DIR_INDEX_KEY;
-@@ -5844,6 +5920,8 @@ again:
- 			break;
- 		if (found_key.offset < ctx->pos)
- 			continue;
-+		if (found_key.offset > private->last_index)
-+			break;
- 		if (btrfs_should_delete_dir_index(&del_list, found_key.offset))
- 			continue;
- 		di = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_dir_item);
-@@ -5980,57 +6058,6 @@ static int btrfs_update_time(struct inod
- }
- 
- /*
-- * find the highest existing sequence number in a directory
-- * and then set the in-memory index_cnt variable to reflect
-- * free sequence numbers
-- */
--static int btrfs_set_inode_index_count(struct btrfs_inode *inode)
--{
--	struct btrfs_root *root = inode->root;
--	struct btrfs_key key, found_key;
--	struct btrfs_path *path;
--	struct extent_buffer *leaf;
--	int ret;
--
--	key.objectid = btrfs_ino(inode);
--	key.type = BTRFS_DIR_INDEX_KEY;
--	key.offset = (u64)-1;
--
--	path = btrfs_alloc_path();
--	if (!path)
--		return -ENOMEM;
--
--	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
--	if (ret < 0)
--		goto out;
--	/* FIXME: we should be able to handle this */
--	if (ret == 0)
--		goto out;
--	ret = 0;
--
--	if (path->slots[0] == 0) {
--		inode->index_cnt = BTRFS_DIR_START_INDEX;
--		goto out;
--	}
--
--	path->slots[0]--;
--
--	leaf = path->nodes[0];
--	btrfs_item_key_to_cpu(leaf, &found_key, path->slots[0]);
--
--	if (found_key.objectid != btrfs_ino(inode) ||
--	    found_key.type != BTRFS_DIR_INDEX_KEY) {
--		inode->index_cnt = BTRFS_DIR_START_INDEX;
--		goto out;
--	}
--
--	inode->index_cnt = found_key.offset + 1;
--out:
--	btrfs_free_path(path);
--	return ret;
--}
--
--/*
-  * helper to find a free sequence number in a given directory.  This current
-  * code is very simple, later versions will do smarter things in the btree
-  */
+@@ -827,8 +825,8 @@ void btrfs_drop_extent_map_range(struct
+ 				if (!split)
+ 					goto remove_em;
+ 			}
+-			split->start = start + len;
+-			split->len = em_end - (start + len);
++			split->start = end;
++			split->len = em_end - end;
+ 			split->block_start = em->block_start;
+ 			split->flags = flags;
+ 			split->compress_type = em->compress_type;
 
 
