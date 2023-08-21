@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A611D1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25295C433C9;
-	Mon, 21 Aug 2023 20:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2E51171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BCEC433C8;
+	Mon, 21 Aug 2023 20:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648573;
-	bh=TIFmacErtkdGo8Q6ZjqysLcFmM67zi5bmtSzjFEbY4M=;
+	s=korg; t=1692648576;
+	bh=zeK/ysJgb6ZniSTJBeu7TX3T/ZMG36DFOfxcEtkvRtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z48PNKLE9T0yM9hExfhdVMiRYlunrRqYciiUfriwzhbPi//hOVWWVisBkcEcA8LEN
-	 aJmNmNxTsmIgEGZNBB0Bl6qj/kBvICwQ5lVAcVBlIPZWNxgYfYyz0GmWnGkQcY0g2k
-	 oep6+RjyVKI2I2/40Y4TAH8aFKDZ+DDxfiIAVTS0=
+	b=0gNBW0SQFMAQJXC9ya0CEDhCMhkKd4w3+Wwx1anlgGcryUoC0v4xQR7h8RWcQopzG
+	 TLDeA79M6ErJImTWBMoOAr0WRrtzeVzpc5zEDiyMO+sWeM/n3kVpXa8WY/8Gy2aUYL
+	 wkEciaXF9hQ/X5kUNoX+F7h62M7Jzmde8reUMUxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Picej <andrej.picej@norik.com>,
-	=?UTF-8?q?Stefan=20Riedm=C3=BCller?= <s.riedmueller@phytec.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 184/234] ARM: dts: imx6: phytec: fix RTC interrupt level
-Date: Mon, 21 Aug 2023 21:42:27 +0200
-Message-ID: <20230821194136.979902200@linuxfoundation.org>
+	Yibin Ding <yibin.ding@unisoc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.4 217/234] mmc: block: Fix in_flight[issue_type] value error
+Date: Mon, 21 Aug 2023 21:43:00 +0200
+Message-ID: <20230821194138.464555585@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,41 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrej Picej <andrej.picej@norik.com>
+From: Yibin Ding <yibin.ding@unisoc.com>
 
-[ Upstream commit 762b700982a1e0f562184363f19860c3b9bdd0bf ]
+commit 4b430d4ac99750ee2ae2f893f1055c7af1ec3dc5 upstream.
 
-RTC interrupt level should be set to "LOW". This was revealed by the
-introduction of commit:
+For a completed request, after the mmc_blk_mq_complete_rq(mq, req)
+function is executed, the bitmap_tags corresponding to the
+request will be cleared, that is, the request will be regarded as
+idle. If the request is acquired by a different type of process at
+this time, the issue_type of the request may change. It further
+caused the value of mq->in_flight[issue_type] to be abnormal,
+and a large number of requests could not be sent.
 
-  f181987ef477 ("rtc: m41t80: use IRQ flags obtained from fwnode")
+p1:					      p2:
+mmc_blk_mq_complete_rq
+  blk_mq_free_request
+					      blk_mq_get_request
+					        blk_mq_rq_ctx_init
+mmc_blk_mq_dec_in_flight
+  mmc_issue_type(mq, req)
 
-which changed the way IRQ type is obtained.
+This strategy can ensure the consistency of issue_type
+before and after executing mmc_blk_mq_complete_rq.
 
-Signed-off-by: Andrej Picej <andrej.picej@norik.com>
-Reviewed-by: Stefan Riedmüller <s.riedmueller@phytec.de>
-Fixes: 800d595151bb ("ARM: dts: imx6: Add initial support for phyBOARD-Mira")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 81196976ed94 ("mmc: block: Add blk-mq support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yibin Ding <yibin.ding@unisoc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230802023023.1318134-1-yunlong.xing@unisoc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/core/block.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi b/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi
-index 1a599c294ab86..1ca4d219609f6 100644
---- a/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-phytec-mira.dtsi
-@@ -182,7 +182,7 @@
- 		pinctrl-0 = <&pinctrl_rtc_int>;
- 		reg = <0x68>;
- 		interrupt-parent = <&gpio7>;
--		interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
- 		status = "disabled";
- 	};
- };
--- 
-2.40.1
-
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -2097,14 +2097,14 @@ static void mmc_blk_mq_poll_completion(s
+ 	mmc_blk_urgent_bkops(mq, mqrq);
+ }
+ 
+-static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, struct request *req)
++static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, enum mmc_issue_type issue_type)
+ {
+ 	unsigned long flags;
+ 	bool put_card;
+ 
+ 	spin_lock_irqsave(&mq->lock, flags);
+ 
+-	mq->in_flight[mmc_issue_type(mq, req)] -= 1;
++	mq->in_flight[issue_type] -= 1;
+ 
+ 	put_card = (mmc_tot_in_flight(mq) == 0);
+ 
+@@ -2117,6 +2117,7 @@ static void mmc_blk_mq_dec_in_flight(str
+ static void mmc_blk_mq_post_req(struct mmc_queue *mq, struct request *req,
+ 				bool can_sleep)
+ {
++	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
+ 	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
+ 	struct mmc_request *mrq = &mqrq->brq.mrq;
+ 	struct mmc_host *host = mq->card->host;
+@@ -2136,7 +2137,7 @@ static void mmc_blk_mq_post_req(struct m
+ 			blk_mq_complete_request(req);
+ 	}
+ 
+-	mmc_blk_mq_dec_in_flight(mq, req);
++	mmc_blk_mq_dec_in_flight(mq, issue_type);
+ }
+ 
+ void mmc_blk_mq_recovery(struct mmc_queue *mq)
 
 
