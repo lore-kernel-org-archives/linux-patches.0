@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE28D11703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603CBC433C8;
-	Mon, 21 Aug 2023 19:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9599711703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0AAC433C7;
+	Mon, 21 Aug 2023 19:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647700;
-	bh=5dr9/qXG4BZ6zE/aI2jfPNOkG2+cOe5jo4kA2cXCToo=;
+	s=korg; t=1692647703;
+	bh=tymMAYCdrUOvS0urqm/B7oRH7Mn874o7MJ/Ls+gqqIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBA8VrLTwroEfPJXXSM9LI5fq8Q4OW/NAAHmULFBTqA/fbp4toG0nTGEnxbbQslOq
-	 wh+rT7SY1bsi96h5C7TalgBAy9Pa88pq9r/CI6ZvMg95HICDGb+l42uyqRd4/NcuYG
-	 O1HTl7AfAjRHUVGu8CGmRozQXXL5y0IUgm6SLYK0=
+	b=JD1PHFHJxWCa45SBGVyVn+8M+hHiVwfzxsXWdB1BR8GmOoU7vtF6ri/JnflEqYpt+
+	 /CR7M68nE27W/oiQRApMZWaG5CzJoxomvvi8/AQjVnAj2kEspPcEZSsWSGMa7y8DYp
+	 m+kwnlgXCsx5FYInOVBe6avsJ+clnYbJQnQuMP8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/194] ip6_vti: fix slab-use-after-free in decode_session6
-Date: Mon, 21 Aug 2023 21:41:27 +0200
-Message-ID: <20230821194127.435670245@linuxfoundation.org>
+Subject: [PATCH 6.1 109/194] ip_vti: fix potential slab-use-after-free in decode_session6
+Date: Mon, 21 Aug 2023 21:41:28 +0200
+Message-ID: <20230821194127.482797626@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,80 +37,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 9fd41f1ba638938c9a1195d09bc6fa3be2712f25 ]
+[ Upstream commit 6018a266279b1a75143c7c0804dd08a5fc4c3e0b ]
 
-When ipv6_vti device is set to the qdisc of the sfb type, the cb field
+When ip_vti device is set to the qdisc of the sfb type, the cb field
 of the sent skb may be modified during enqueuing. Then,
-slab-use-after-free may occur when ipv6_vti device sends IPv6 packets.
-
-The stack information is as follows:
-BUG: KASAN: slab-use-after-free in decode_session6+0x103f/0x1890
-Read of size 1 at addr ffff88802e08edc2 by task swapper/0/0
-CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-next-20230707-00001-g84e2cad7f979 #410
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-Call Trace:
-<IRQ>
-dump_stack_lvl+0xd9/0x150
-print_address_description.constprop.0+0x2c/0x3c0
-kasan_report+0x11d/0x130
-decode_session6+0x103f/0x1890
-__xfrm_decode_session+0x54/0xb0
-vti6_tnl_xmit+0x3e6/0x1ee0
-dev_hard_start_xmit+0x187/0x700
-sch_direct_xmit+0x1a3/0xc30
-__qdisc_run+0x510/0x17a0
-__dev_queue_xmit+0x2215/0x3b10
-neigh_connected_output+0x3c2/0x550
-ip6_finish_output2+0x55a/0x1550
-ip6_finish_output+0x6b9/0x1270
-ip6_output+0x1f1/0x540
-ndisc_send_skb+0xa63/0x1890
-ndisc_send_rs+0x132/0x6f0
-addrconf_rs_timer+0x3f1/0x870
-call_timer_fn+0x1a0/0x580
-expire_timers+0x29b/0x4b0
-run_timer_softirq+0x326/0x910
-__do_softirq+0x1d4/0x905
-irq_exit_rcu+0xb7/0x120
-sysvec_apic_timer_interrupt+0x97/0xc0
-</IRQ>
-Allocated by task 9176:
-kasan_save_stack+0x22/0x40
-kasan_set_track+0x25/0x30
-__kasan_slab_alloc+0x7f/0x90
-kmem_cache_alloc_node+0x1cd/0x410
-kmalloc_reserve+0x165/0x270
-__alloc_skb+0x129/0x330
-netlink_sendmsg+0x9b1/0xe30
-sock_sendmsg+0xde/0x190
-____sys_sendmsg+0x739/0x920
-___sys_sendmsg+0x110/0x1b0
-__sys_sendmsg+0xf7/0x1c0
-do_syscall_64+0x39/0xb0
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-Freed by task 9176:
-kasan_save_stack+0x22/0x40
-kasan_set_track+0x25/0x30
-kasan_save_free_info+0x2b/0x40
-____kasan_slab_free+0x160/0x1c0
-slab_free_freelist_hook+0x11b/0x220
-kmem_cache_free+0xf0/0x490
-skb_free_head+0x17f/0x1b0
-skb_release_data+0x59c/0x850
-consume_skb+0xd2/0x170
-netlink_unicast+0x54f/0x7f0
-netlink_sendmsg+0x926/0xe30
-sock_sendmsg+0xde/0x190
-____sys_sendmsg+0x739/0x920
-___sys_sendmsg+0x110/0x1b0
-__sys_sendmsg+0xf7/0x1c0
-do_syscall_64+0x39/0xb0
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-The buggy address belongs to the object at ffff88802e08ed00
-which belongs to the cache skbuff_small_head of size 640
-The buggy address is located 194 bytes inside of
-freed 640-byte region [ffff88802e08ed00, ffff88802e08ef80)
-
+slab-use-after-free may occur when ip_vti device sends IPv6 packets.
 As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
 _decode_session6.") showed, xfrm_decode_session was originally intended
 only for the receive path. IP6CB(skb)->nhoff is not set during
@@ -122,25 +53,25 @@ Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_vti.c | 4 ++--
+ net/ipv4/ip_vti.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 151337d7f67b4..cb71463bbbabd 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -570,12 +570,12 @@ vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
- 		    vti6_addr_conflict(t, ipv6_hdr(skb)))
- 			goto tx_err;
+diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
+index 8c2bd1d9ddce3..615c1dcf3a28e 100644
+--- a/net/ipv4/ip_vti.c
++++ b/net/ipv4/ip_vti.c
+@@ -287,12 +287,12 @@ static netdev_tx_t vti_tunnel_xmit(struct sk_buff *skb, struct net_device *dev)
  
--		xfrm_decode_session(skb, &fl, AF_INET6);
- 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
-+		xfrm_decode_session(skb, &fl, AF_INET6);
- 		break;
+ 	switch (skb->protocol) {
  	case htons(ETH_P_IP):
 -		xfrm_decode_session(skb, &fl, AF_INET);
  		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
 +		xfrm_decode_session(skb, &fl, AF_INET);
+ 		break;
+ 	case htons(ETH_P_IPV6):
+-		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET6);
  		break;
  	default:
  		goto tx_err;
