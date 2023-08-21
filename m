@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AC91171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:04:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0467CC433C8;
-	Mon, 21 Aug 2023 20:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A421171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:04:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5ECC433C8;
+	Mon, 21 Aug 2023 20:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648250;
-	bh=nclExWFw676E372srVWbZDntFQeSIr4NcdixgvUy2WE=;
+	s=korg; t=1692648253;
+	bh=S5WcrngwKR/88kGSzBqyf7XxVbNuMO7K6YDhiPKl1eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aednq+6E7Lx9D9TJk6fLuT4xSuJOpKMAVQXYoGJ5QlWWZRtxWiesa9qtnLSPyaYNr
-	 27ZOQxKsVHdYBy0NhVSHoLblM0rNmGkY6vqqZQD9hysUcfm01y9Dz9Y/CA4T1TEeNl
-	 F3geljQvJt1SBMRcSkcb0r0XeygzNFVoh7bSq4JY=
+	b=0wtuCSxsH4llDmXoAvhOrY0r3cAEWMyyfZ8VbhDPAfDasz1PTDyy4gW5QomjUKn4M
+	 MmO2fvRaQX0TNegGNKoYJrc0O1OnPZHpBtAT8CSTo9cJYicW7OVt1CYcs/nyNJaxpT
+	 6LsXKzYwIQzbyDSiH98r0sCMRsUC0xwYaKVz4wHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiaoshoukui <xiaoshoukui@ruijie.com.cn>,
+	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 109/234] btrfs: fix BUG_ON condition in btrfs_cancel_balance
-Date: Mon, 21 Aug 2023 21:41:12 +0200
-Message-ID: <20230821194133.632548069@linuxfoundation.org>
+Subject: [PATCH 6.4 110/234] btrfs: fix replace/scrub failure with metadata_uuid
+Date: Mon, 21 Aug 2023 21:41:13 +0200
+Message-ID: <20230821194133.674138608@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,64 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiaoshoukui <xiaoshoukui@gmail.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-commit 29eefa6d0d07e185f7bfe9576f91e6dba98189c2 upstream.
+commit b471965fdb2daa225850e5972d86600992fa398e upstream.
 
-Pausing and canceling balance can race to interrupt balance lead to BUG_ON
-panic in btrfs_cancel_balance. The BUG_ON condition in btrfs_cancel_balance
-does not take this race scenario into account.
+Fstests with POST_MKFS_CMD="btrfstune -m" (as in the mailing list)
+reported a few of the test cases failing.
 
-However, the race condition has no other side effects. We can fix that.
+The failure scenario can be summarized and simplified as follows:
 
-Reproducing it with panic trace like this:
+  $ mkfs.btrfs -fq -draid1 -mraid1 /dev/sdb1 /dev/sdb2 :0
+  $ btrfstune -m /dev/sdb1 :0
+  $ wipefs -a /dev/sdb1 :0
+  $ mount -o degraded /dev/sdb2 /btrfs :0
+  $ btrfs replace start -B -f -r 1 /dev/sdb1 /btrfs :1
+    STDERR:
+    ERROR: ioctl(DEV_REPLACE_START) failed on "/btrfs": Input/output error
 
-  kernel BUG at fs/btrfs/volumes.c:4618!
-  RIP: 0010:btrfs_cancel_balance+0x5cf/0x6a0
-  Call Trace:
-   <TASK>
-   ? do_nanosleep+0x60/0x120
-   ? hrtimer_nanosleep+0xb7/0x1a0
-   ? sched_core_clone_cookie+0x70/0x70
-   btrfs_ioctl_balance_ctl+0x55/0x70
-   btrfs_ioctl+0xa46/0xd20
-   __x64_sys_ioctl+0x7d/0xa0
-   do_syscall_64+0x38/0x80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  [11290.583502] BTRFS warning (device sdb2): tree block 22036480 mirror 2 has bad fsid, has 99835c32-49f0-4668-9e66-dc277a96b4a6 want da40350c-33ac-4872-92a8-4948ed8c04d0
+  [11290.586580] BTRFS error (device sdb2): unable to fix up (regular) error at logical 22020096 on dev /dev/sdb8 physical 1048576
 
-  Race scenario as follows:
-  > mutex_unlock(&fs_info->balance_mutex);
-  > --------------------
-  > .......issue pause and cancel req in another thread
-  > --------------------
-  > ret = __btrfs_balance(fs_info);
-  >
-  > mutex_lock(&fs_info->balance_mutex);
-  > if (ret == -ECANCELED && atomic_read(&fs_info->balance_pause_req)) {
-  >         btrfs_info(fs_info, "balance: paused");
-  >         btrfs_exclop_balance(fs_info, BTRFS_EXCLOP_BALANCE_PAUSED);
-  > }
+As above, the replace is failing because we are verifying the header with
+fs_devices::fsid instead of fs_devices::metadata_uuid, despite the
+metadata_uuid actually being present.
 
-CC: stable@vger.kernel.org # 4.19+
-Signed-off-by: xiaoshoukui <xiaoshoukui@ruijie.com.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
+To fix this, use fs_devices::metadata_uuid. We copy fsid into
+fs_devices::metadata_uuid if there is no metadata_uuid, so its fine.
+
+Fixes: a3ddbaebc7c9 ("btrfs: scrub: introduce a helper to verify one metadata block")
+CC: stable@vger.kernel.org # 6.4+
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/scrub.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -4631,8 +4631,7 @@ int btrfs_cancel_balance(struct btrfs_fs
- 		}
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -655,7 +655,8 @@ static void scrub_verify_one_metadata(st
+ 			      btrfs_stack_header_bytenr(header), logical);
+ 		return;
  	}
- 
--	BUG_ON(fs_info->balance_ctl ||
--		test_bit(BTRFS_FS_BALANCE_RUNNING, &fs_info->flags));
-+	ASSERT(!test_bit(BTRFS_FS_BALANCE_RUNNING, &fs_info->flags));
- 	atomic_dec(&fs_info->balance_cancel_req);
- 	mutex_unlock(&fs_info->balance_mutex);
- 	return 0;
+-	if (memcmp(header->fsid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE) != 0) {
++	if (memcmp(header->fsid, fs_info->fs_devices->metadata_uuid,
++		   BTRFS_FSID_SIZE) != 0) {
+ 		bitmap_set(&stripe->meta_error_bitmap, sector_nr, sectors_per_tree);
+ 		bitmap_set(&stripe->error_bitmap, sector_nr, sectors_per_tree);
+ 		btrfs_warn_rl(fs_info,
 
 
