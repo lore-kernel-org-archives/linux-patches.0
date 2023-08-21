@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FBB1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C630C433C8;
-	Mon, 21 Aug 2023 20:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBB91171C
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:06:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6549AC433C7;
+	Mon, 21 Aug 2023 20:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648362;
-	bh=8xTRZ5XLuhoRZTyQDjyxibXpnGim9XrJBV6S11QU528=;
+	s=korg; t=1692648365;
+	bh=L3orHMSze/2KMZ7XZXgQ/fHae78bN7YFxfdscclpYK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVzPUB+MzYMxlBiOBMjfplHPMbYHevtn9FN+3UlTBElCYbhmEYrd1gl2W1jQQUmj4
-	 nYWUX03HEOdBliuZD5oBItec2RwZBTGfO577UH4xF0vMRkAqbbZLbuhX4zEw2Y6MFE
-	 lgo2V/D9V7dfIgg+UEfp+CWZnjmblKnvvDnE0jOI=
+	b=EUOjfzI6a8pqe6iFM+9a8mauusS9SNzifmd9Oc3w2ZGNU7RHVnFEcaMg8EDsiz1wq
+	 AVnlPQKc359lZyXAx+z36wM0Y9R/Kd7XjOcCD8IDr6YdY3r46PurPRGQ9X+ynXZ7ai
+	 EJxQMy0rhGrjrbqsRbkCRMRmZ3bheJRQ9vz7AOx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 148/234] drm/i915/guc/slpc: Restore efficient freq earlier
-Date: Mon, 21 Aug 2023 21:41:51 +0200
-Message-ID: <20230821194135.392732920@linuxfoundation.org>
+Subject: [PATCH 6.4 149/234] net: macb: In ZynqMP resume always configure PS GTR for non-wakeup source
+Date: Mon, 21 Aug 2023 21:41:52 +0200
+Message-ID: <20230821194135.430621803@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,101 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 5598c9bfdb81f40f2f5d769b342d25bff74b07a6 ]
+[ Upstream commit 6c461e394d11a981c662cc16cebfb05b602e23ba ]
 
-This should be done before the soft min/max frequencies are restored.
-When we disable the "Ignore efficient frequency" flag, GuC does not
-actually bring the requested freq down to RPn.
+On Zynq UltraScale+ MPSoC ubuntu platform when systemctl issues suspend,
+network manager bring down the interface and goes into suspend. When it
+wakes up it again enables the interface.
 
-Specifically, this scenario-
+This leads to xilinx-psgtr "PLL lock timeout" on interface bringup, as
+the power management controller power down the entire FPD (including
+SERDES) if none of the FPD devices are in use and serdes is not
+initialized on resume.
 
-- ignore efficient freq set to true
-- reduce min to RPn (from efficient)
-- suspend
-- resume (includes GuC load, restore soft min/max, restore efficient freq)
-- validate min freq has been resored to RPn
+$ sudo rtcwake -m no -s 120 -v
+$ sudo systemctl suspend  <this does ifconfig eth1 down>
+$ ifconfig eth1 up
+xilinx-psgtr fd400000.phy: lane 0 (type 10, protocol 5): PLL lock timeout
+phy phy-fd400000.phy.0: phy poweron failed --> -110
 
-This will fail if we didn't first restore(disable, in this case) efficient
-freq flag before setting the soft min frequency.
+macb driver is called in this way:
+1. macb_close: Stop network interface. In this function, it
+   reset MACB IP and disables PHY and network interface.
 
-v2: Bring the min freq down to RPn when we disable efficient freq (Rodrigo)
-Also made the change to set the min softlimit to RPn at init. Otherwise, we
-were storing RPe there.
+2. macb_suspend: It is called in kernel suspend flow. But because
+   network interface has been disabled(netif_running(ndev) is
+   false), it does nothing and returns directly;
 
-Link: https://gitlab.freedesktop.org/drm/intel/-/issues/8736
-Fixes: 55f9720dbf23 ("drm/i915/guc/slpc: Provide sysfs for efficient freq")
-Fixes: 95ccf312a1e4 ("drm/i915/guc/slpc: Allow SLPC to use efficient frequency")
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230726010044.3280402-1-vinay.belgaumkar@intel.com
-(cherry picked from commit 28e671114fb0f28f334fac8d0a6b9c395c7b0498)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+3. System goes into suspend state. Some time later, system is
+   waken up by RTC wakeup device;
+
+4. macb_resume: It does nothing because network interface has
+   been disabled;
+
+5. macb_open: It is called to enable network interface again. ethernet
+   interface is initialized in this API but serdes which is power-off
+   by PMUFW during FPD-off suspend is not initialized again and so
+   we hit GT PLL lock issue on open.
+
+To resolve this PLL timeout issue always do PS GTR initialization
+when ethernet device is configured as non-wakeup source.
+
+Fixes: f22bd29ba19a ("net: macb: Fix ZynqMP SGMII non-wakeup source resume failure")
+Fixes: 8b73fa3ae02b ("net: macb: Added ZynqMP-specific initialization")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1691414091-2260697-1-git-send-email-radhey.shyam.pandey@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c | 22 +++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-index cc18e8f664864..78822331f1b7f 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-@@ -470,12 +470,19 @@ int intel_guc_slpc_set_ignore_eff_freq(struct intel_guc_slpc *slpc, bool val)
- 	ret = slpc_set_param(slpc,
- 			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
- 			     val);
--	if (ret)
-+	if (ret) {
- 		guc_probe_error(slpc_to_guc(slpc), "Failed to set efficient freq(%d): %pe\n",
- 				val, ERR_PTR(ret));
--	else
-+	} else {
- 		slpc->ignore_eff_freq = val;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 29a1199dad146..3fbe15b3ac627 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5159,6 +5159,9 @@ static int __maybe_unused macb_suspend(struct device *dev)
+ 	unsigned int q;
+ 	int err;
  
-+		/* Set min to RPn when we disable efficient freq */
-+		if (val)
-+			ret = slpc_set_param(slpc,
-+					     SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
-+					     slpc->min_freq);
-+	}
++	if (!device_may_wakeup(&bp->dev->dev))
++		phy_exit(bp->sgmii_phy);
 +
- 	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
- 	mutex_unlock(&slpc->lock);
- 	return ret;
-@@ -602,9 +609,8 @@ static int slpc_set_softlimits(struct intel_guc_slpc *slpc)
- 		return ret;
+ 	if (!netif_running(netdev))
+ 		return 0;
  
- 	if (!slpc->min_freq_softlimit) {
--		ret = intel_guc_slpc_get_min_freq(slpc, &slpc->min_freq_softlimit);
--		if (unlikely(ret))
--			return ret;
-+		/* Min softlimit is initialized to RPn */
-+		slpc->min_freq_softlimit = slpc->min_freq;
- 		slpc_to_gt(slpc)->defaults.min_freq = slpc->min_freq_softlimit;
- 	} else {
- 		return intel_guc_slpc_set_min_freq(slpc,
-@@ -755,6 +761,9 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- 		return ret;
- 	}
+@@ -5219,7 +5222,6 @@ static int __maybe_unused macb_suspend(struct device *dev)
+ 	if (!(bp->wol & MACB_WOL_ENABLED)) {
+ 		rtnl_lock();
+ 		phylink_stop(bp->phylink);
+-		phy_exit(bp->sgmii_phy);
+ 		rtnl_unlock();
+ 		spin_lock_irqsave(&bp->lock, flags);
+ 		macb_reset_hw(bp);
+@@ -5249,6 +5251,9 @@ static int __maybe_unused macb_resume(struct device *dev)
+ 	unsigned int q;
+ 	int err;
  
-+	/* Set cached value of ignore efficient freq */
-+	intel_guc_slpc_set_ignore_eff_freq(slpc, slpc->ignore_eff_freq);
++	if (!device_may_wakeup(&bp->dev->dev))
++		phy_init(bp->sgmii_phy);
 +
- 	/* Revert SLPC min/max to softlimits if necessary */
- 	ret = slpc_set_softlimits(slpc);
- 	if (unlikely(ret)) {
-@@ -765,9 +774,6 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- 	/* Set cached media freq ratio mode */
- 	intel_guc_slpc_set_media_ratio_mode(slpc, slpc->media_ratio_mode);
+ 	if (!netif_running(netdev))
+ 		return 0;
  
--	/* Set cached value of ignore efficient freq */
--	intel_guc_slpc_set_ignore_eff_freq(slpc, slpc->ignore_eff_freq);
--
- 	return 0;
- }
+@@ -5309,8 +5314,6 @@ static int __maybe_unused macb_resume(struct device *dev)
+ 	macb_set_rx_mode(netdev);
+ 	macb_restore_features(bp);
+ 	rtnl_lock();
+-	if (!device_may_wakeup(&bp->dev->dev))
+-		phy_init(bp->sgmii_phy);
  
+ 	phylink_start(bp->phylink);
+ 	rtnl_unlock();
 -- 
 2.40.1
 
