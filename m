@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357001171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:10:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD02EC433C8;
-	Mon, 21 Aug 2023 20:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199371171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B811C433C7;
+	Mon, 21 Aug 2023 20:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648618;
-	bh=GZqoPox0uf6tI6043WBCAEHPFXmftqEaGenKl5i8slM=;
+	s=korg; t=1692648620;
+	bh=JUsIp3tjmrC8w4p9PBJQCiedXA75mmFwKKnvXVyCFQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkKqRsumFssFud2VhLBfZCD1wiW1g6En3hlSQnmbR6cD+egI7oybHyvx3LD41G1lP
-	 wYWYy1pfY7TClyKYU+r/Kc4XECRRoiQLO7uehLoARZYe4G4PK90BXF/Emt9wdkX8oj
-	 ug0l9xpX+uuGvpc9KzCHGigePNtNKjt/MURJMhfI=
+	b=ivj2qFBx8jSD8b7kT1WyDomrsmwJ+UQW6GNswCl/ovRV3RQGhUSRvr61fTqag5bH/
+	 m6kU5vkBcMgTPJqWvC8sNOqqg5i5MhC7b4YvjrdkFS/K54JoGzL0QIwdOrPjl8LH+F
+	 FEM+O5LMUOZGh/Bjoeo9N/GnXe4/HixUgyUhzoFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomi=20Lepp=C3=A4nen?= <tomi@tomin.site>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.4 223/234] drm/i915/sdvo: fix panel_type initialization
-Date: Mon, 21 Aug 2023 21:43:06 +0200
-Message-ID: <20230821194138.763756410@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tim Huang <tim.huang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 224/234] drm/amd: flush any delayed gfxoff on suspend entry
+Date: Mon, 21 Aug 2023 21:43:07 +0200
+Message-ID: <20230821194138.815640589@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -37,44 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 2002eb6d3ea954dde9f8a223018d5335779937d0 upstream.
+commit a7b7d9e8aee4f71b4c7151702fd74237b8cef989 upstream.
 
-Commit 3f9ffce5765d ("drm/i915: Do panel VBT init early if the VBT
-declares an explicit panel type") started using -1 as the value for
-unset panel_type. It gets initialized in intel_panel_init_alloc(), but
-the SDVO code never calls it.
+DCN 3.1.4 is reported to hang on s2idle entry if graphics activity
+is happening during entry.  This is because GFXOFF was scheduled as
+delayed but RLC gets disabled in s2idle entry sequence which will
+hang GFX IP if not already in GFXOFF.
 
-Call intel_panel_init_alloc() to initialize the panel, including the
-panel_type.
+To help this problem, flush any delayed work for GFXOFF early in
+s2idle entry sequence to ensure that it's off when RLC is changed.
 
-Reported-by: Tomi Leppänen <tomi@tomin.site>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8896
-Fixes: 3f9ffce5765d ("drm/i915: Do panel VBT init early if the VBT declares an explicit panel type")
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.1+
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Tested-by: Tomi Leppänen <tomi@tomin.site>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230803122706.838721-1-jani.nikula@intel.com
-(cherry picked from commit 26e60294e8eacedc8ebb33405b2c375fd80e0900)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+commit 4b31b92b143f ("drm/amdgpu: complete gfxoff allow signal during
+suspend without delay") modified power gating flow so that if called
+in s0ix that it ensured that GFXOFF wasn't put in work queue but
+instead processed immediately.
+
+This is dead code due to commit 10cb67eb8a1b ("drm/amdgpu: skip
+CG/PG for gfx during S0ix") because GFXOFF will now not be explicitly
+called as part of the suspend entry code.  Remove that dead code.
+
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_sdvo.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c    |    9 +--------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -2752,7 +2752,7 @@ static struct intel_sdvo_connector *inte
- 	__drm_atomic_helper_connector_reset(&sdvo_connector->base.base,
- 					    &conn_state->base.base);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4250,6 +4250,7 @@ int amdgpu_device_suspend(struct drm_dev
+ 		drm_fb_helper_set_suspend_unlocked(adev_to_drm(adev)->fb_helper, true);
  
--	INIT_LIST_HEAD(&sdvo_connector->base.panel.fixed_modes);
-+	intel_panel_init_alloc(&sdvo_connector->base);
+ 	cancel_delayed_work_sync(&adev->delayed_init_work);
++	flush_delayed_work(&adev->gfx.gfx_off_delay_work);
  
- 	return sdvo_connector;
- }
+ 	amdgpu_ras_suspend(adev);
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -589,15 +589,8 @@ void amdgpu_gfx_off_ctrl(struct amdgpu_d
+ 
+ 		if (adev->gfx.gfx_off_req_count == 0 &&
+ 		    !adev->gfx.gfx_off_state) {
+-			/* If going to s2idle, no need to wait */
+-			if (adev->in_s0ix) {
+-				if (!amdgpu_dpm_set_powergating_by_smu(adev,
+-						AMD_IP_BLOCK_TYPE_GFX, true))
+-					adev->gfx.gfx_off_state = true;
+-			} else {
+-				schedule_delayed_work(&adev->gfx.gfx_off_delay_work,
++			schedule_delayed_work(&adev->gfx.gfx_off_delay_work,
+ 					      delay);
+-			}
+ 		}
+ 	} else {
+ 		if (adev->gfx.gfx_off_req_count == 0) {
 
 
