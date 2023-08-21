@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B55911703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC94C433C7;
-	Mon, 21 Aug 2023 19:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB6911703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:59:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A31C433C7;
+	Mon, 21 Aug 2023 19:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647964;
-	bh=ayBJRZCvt2084hc1IRrtsSpfdEvtOtwkL+oa3E/MWV0=;
+	s=korg; t=1692647967;
+	bh=CqNuPus9+gVCCk0O+FoUgPGdf/AyYELMA7YysG9k8io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDPVguhFxW2k/OGCjVSKcDSp8ftQjxXJUmC+1YPhHPkaxGFpLNlQVswXcZ9L1O2U0
-	 rXdwd13yBHfVO2Aqmfni+twOPo/6E6rHZk/nbby4TEsVn9uPny+SO30tOxiJCcRT97
-	 IHD23GB+Zjm9I+WgiJINbm/ss16YeAO8eC9UnWZk=
+	b=tQX5isYeqsleT02+UP6BV3vvsdMIeYk3KnLk0ibOnT214C8UkfJSgAgEItCSRpf1Y
+	 fUHHeO1gH+gMabk2EoldnfW/AwkeysD/3B/3F5NUhmUpdEGqIsHRDdQDOC6I8t1UT0
+	 UJUko7rcBqmD+l2r8aDitaTGINeN8fPVpOSM+108=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 194/194] mmc: f-sdh30: fix order of function calls in sdhci_f_sdh30_remove
-Date: Mon, 21 Aug 2023 21:42:53 +0200
-Message-ID: <20230821194131.233840269@linuxfoundation.org>
+	Guchun Chen <guchun.chen@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 190/194] drm/amdgpu: keep irq count in amdgpu_irq_disable_all
+Date: Mon, 21 Aug 2023 21:42:49 +0200
+Message-ID: <20230821194131.058955552@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,46 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-commit 58abdd80b93b09023ca03007b608685c41e3a289 upstream.
+commit 8ffd6f0442674f32c048ec8dffdbc5ec67829beb upstream.
 
-The order of function calls in sdhci_f_sdh30_remove is wrong,
-let's call sdhci_pltfm_unregister first.
+This can clean up all irq warnings because of unbalanced
+amdgpu_irq_get/put when unplugging/unbinding device, and leave
+irq count decrease in each ip fini function.
 
-Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 5def5c1c15bf ("mmc: sdhci-f-sdh30: Replace with sdhci_pltfm")
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230727070051.17778-62-frank.li@vivo.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_f_sdh30.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci_f_sdh30.c
-+++ b/drivers/mmc/host/sdhci_f_sdh30.c
-@@ -188,12 +188,14 @@ static int sdhci_f_sdh30_remove(struct p
- {
- 	struct sdhci_host *host = platform_get_drvdata(pdev);
- 	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
--
--	clk_disable_unprepare(priv->clk_iface);
--	clk_disable_unprepare(priv->clk);
-+	struct clk *clk_iface = priv->clk_iface;
-+	struct clk *clk = priv->clk;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+@@ -160,7 +160,6 @@ void amdgpu_irq_disable_all(struct amdgp
+ 				continue;
  
- 	sdhci_pltfm_unregister(pdev);
- 
-+	clk_disable_unprepare(clk_iface);
-+	clk_disable_unprepare(clk);
-+
- 	return 0;
- }
- 
+ 			for (k = 0; k < src->num_types; ++k) {
+-				atomic_set(&src->enabled_types[k], 0);
+ 				r = src->funcs->set(adev, src, k,
+ 						    AMDGPU_IRQ_STATE_DISABLE);
+ 				if (r)
 
 
