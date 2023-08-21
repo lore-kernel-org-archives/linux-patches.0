@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186401170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333D8C433C9;
-	Mon, 21 Aug 2023 19:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93781170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291A7C433C7;
+	Mon, 21 Aug 2023 19:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647507;
-	bh=7Y6FDpY8gQLgdiDvCN78bdM8WkP7uqFVFzSt6B0mJmA=;
+	s=korg; t=1692647510;
+	bh=g0G3QE/venAKgn7airmwYdbVu5an341Yj8q+jdZU8sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8yKB4E9Z1cZYmXAQH3fdMlwZwApFVmflc5TncCRfiY9XR059yn2zaCqJEyDrR4DG
-	 OuXeA163o7EmwTmozTjR0OIhvLQ2OGlfotc9rV1Zro/6fW3FGzfKLpz9ZptHt22ukx
-	 +8+doADFUqsdg/IXXtPWEbF28nAAJtNPwIubxUeA=
+	b=gYjtX+9rrHzXbK5MFowi6euEV8N/+fzxKwF8dkf/CewlMlo/lQncVRPAHphhJfjY5
+	 Ht2dO9H+0vOlY0gP05oVmrcdk//38gc7jmoAt9uC9/BmXggxvj24qPMTnC5uQrY5K9
+	 EfJo6QFLQZFATKGs3E41Kdrkck3jiNIB+TFhVq6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lang Yu <Lang.Yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Winston Wen <wentao@uniontech.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/194] drm/amdgpu: install stub fence into potential unused fence pointers
-Date: Mon, 21 Aug 2023 21:40:10 +0200
-Message-ID: <20230821194124.159289650@linuxfoundation.org>
+Subject: [PATCH 6.1 040/194] cifs: fix session state check in reconnect to avoid use-after-free issue
+Date: Mon, 21 Aug 2023 21:40:19 +0200
+Message-ID: <20230821194124.561438040@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -36,54 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lang Yu <Lang.Yu@amd.com>
+From: Winston Wen <wentao@uniontech.com>
 
-[ Upstream commit 187916e6ed9d0c3b3abc27429f7a5f8c936bd1f0 ]
+[ Upstream commit 99f280700b4cc02d5f141b8d15f8e9fad0418f65 ]
 
-When using cpu to update page tables, vm update fences are unused.
-Install stub fence into these fence pointers instead of NULL
-to avoid NULL dereference when calling dma_fence_wait() on them.
+Don't collect exiting session in smb2_reconnect_server(), because it
+will be released soon.
 
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Lang Yu <Lang.Yu@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Note that the exiting session will stay in server->smb_ses_list until
+it complete the cifs_free_ipc() and logoff() and then delete itself
+from the list.
+
+Signed-off-by: Winston Wen <wentao@uniontech.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2pdu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index ec938a1a50621..4c661e024e13d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1352,6 +1352,7 @@ struct amdgpu_bo_va *amdgpu_vm_bo_add(struct amdgpu_device *adev,
- 	amdgpu_vm_bo_base_init(&bo_va->base, vm, bo);
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 3ca593cdda76e..ba46156e32680 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -3841,6 +3841,12 @@ void smb2_reconnect_server(struct work_struct *work)
  
- 	bo_va->ref_count = 1;
-+	bo_va->last_pt_update = dma_fence_get_stub();
- 	INIT_LIST_HEAD(&bo_va->valids);
- 	INIT_LIST_HEAD(&bo_va->invalids);
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
++		spin_lock(&ses->ses_lock);
++		if (ses->ses_status == SES_EXITING) {
++			spin_unlock(&ses->ses_lock);
++			continue;
++		}
++		spin_unlock(&ses->ses_lock);
  
-@@ -2073,7 +2074,8 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm)
- 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
- 	else
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
--	vm->last_update = NULL;
-+
-+	vm->last_update = dma_fence_get_stub();
- 	vm->last_unlocked = dma_fence_get_stub();
- 	vm->last_tlb_flush = dma_fence_get_stub();
+ 		tcon_selected = false;
  
-@@ -2198,7 +2200,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
- 		goto unreserve_bo;
- 
- 	dma_fence_put(vm->last_update);
--	vm->last_update = NULL;
-+	vm->last_update = dma_fence_get_stub();
- 	vm->is_compute_context = true;
- 
- 	/* Free the shadow bo for compute VM */
 -- 
 2.40.1
 
