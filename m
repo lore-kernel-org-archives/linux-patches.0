@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111281171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8710CC433C8;
-	Mon, 21 Aug 2023 20:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69941171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540E9C433C9;
+	Mon, 21 Aug 2023 20:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648085;
-	bh=/XVswPKIq5ZACMzR36SY539qXiooozv0CKygIgVf4To=;
+	s=korg; t=1692648088;
+	bh=YcWtSfAlmzSUuqlQ5euyjXrdo1zZJcp09m8Y3kCMIYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7P1ainhgRk6N5kQFsD//GSSe9WOM5sbhgpdrBFVu1Dmadd2xOdZx38E5v/zACB5W
-	 3c5HMZcxR4609U4bOwEVy6H33VcdP0JRCJj9GEbqD0/zI3KzinWNSyOQHW4TZdylCF
-	 MU0RZ7HaBP4jPl1m1zr36XS0e2rZEnL7svLl+XVs=
+	b=OmFG7Iw0O96HHmGQ8MRL226/ZBAFxY726+WFc6MZonG6CZrdhDd+VXZad+uEZtRCx
+	 60LtxLFWv4oY+ALu9bXIiuQPjhM++mLYPtjKKAmw694q1UFS0dwxRsnH9A5Kc1FxLz
+	 4bNhWe4YsnGD+RIXZ8wVdtMf45NUgIPMZCFk3cVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andrey.konovalov@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Prashanth K <quic_prashk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 049/234] media: camss: set VFE bpl_alignment to 16 for sdm845 and sm8250
-Date: Mon, 21 Aug 2023 21:40:12 +0200
-Message-ID: <20230821194130.902812728@linuxfoundation.org>
+Subject: [PATCH 6.4 050/234] usb: gadget: u_serial: Avoid spinlock recursion in __gs_console_push
+Date: Mon, 21 Aug 2023 21:40:13 +0200
+Message-ID: <20230821194130.942369562@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,46 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Konovalov <andrey.konovalov@linaro.org>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit d5b7eb477c286f6ceccbb38704136eea0e6b09ca ]
+[ Upstream commit e5990469943c711cb00bfde6338d2add6c6d0bfe ]
 
->From the experiments with camera sensors using SGRBG10_1X10/3280x2464 and
-SRGGB10_1X10/3280x2464 formats, it becomes clear that on sdm845 and sm8250
-VFE outputs the lines padded to a length multiple of 16 bytes. As in the
-current driver the value of the bpl_alignment is set to 8 bytes, the frames
-captured in formats with the bytes-per-line value being not a multiple of
-16 get corrupted.
+When serial console over USB is enabled, gs_console_connect
+queues gs_console_work, where it acquires the spinlock and
+queues the usb request, and this request goes to gadget layer.
+Now consider a situation where gadget layer prints something
+to dmesg, this will eventually call gs_console_write() which
+requires cons->lock. And this causes spinlock recursion. Avoid
+this by excluding usb_ep_queue from the spinlock.
 
-Set the bpl_alignment of the camss video output device to 16 for sdm845 and
-sm8250 to fix that.
+ spin_lock_irqsave //needs cons->lock
+ gs_console_write
+	.
+	.
+ _printk
+ __warn_printk
+ dev_warn/pr_err
+	.
+	.
+ [USB Gadget Layer]
+	.
+	.
+ usb_ep_queue
+ gs_console_work
+ __gs_console_push // acquires cons->lock
+ process_one_work
 
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Link: https://lore.kernel.org/r/1683638872-6885-1-git-send-email-quic_prashk@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_serial.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index e0832f3f4f25c..06c95568e5af4 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1541,7 +1541,11 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
- 		}
+diff --git a/drivers/usb/gadget/function/u_serial.c b/drivers/usb/gadget/function/u_serial.c
+index e5d522d54f6a3..97f07757d19e3 100644
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -916,8 +916,11 @@ static void __gs_console_push(struct gs_console *cons)
+ 	}
  
- 		video_out->ops = &vfe->video_ops;
--		video_out->bpl_alignment = 8;
-+		if (vfe->camss->version == CAMSS_845 ||
-+		    vfe->camss->version == CAMSS_8250)
-+			video_out->bpl_alignment = 16;
-+		else
-+			video_out->bpl_alignment = 8;
- 		video_out->line_based = 0;
- 		if (i == VFE_LINE_PIX) {
- 			video_out->bpl_alignment = 16;
+ 	req->length = size;
++
++	spin_unlock_irq(&cons->lock);
+ 	if (usb_ep_queue(ep, req, GFP_ATOMIC))
+ 		req->length = 0;
++	spin_lock_irq(&cons->lock);
+ }
+ 
+ static void gs_console_work(struct work_struct *work)
 -- 
 2.40.1
 
