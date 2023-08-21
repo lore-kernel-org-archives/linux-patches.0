@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DCE1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579ACC433C8;
-	Mon, 21 Aug 2023 20:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D1F1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A489C433C8;
+	Mon, 21 Aug 2023 20:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648337;
-	bh=e3KG4TBMjco6opXK3qBIKD+o4+Js0YV5uUVwSAM4BBQ=;
+	s=korg; t=1692648340;
+	bh=2rnd9LZVN/utajeYp6BjMU60ll1wyBl8NIF2ApHuu80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygV9KQzOkZ7U9f+2D6VLAiOI8JZ9LOJ/h3XigxRbIry4dAjA8JmfGIFntWLB1Y3hk
-	 elUfOkfloTBnZWh1CYTUV3yhg09EZkX0qrRtTT0mDQtr10rvQqJcgECrDvjVRdHMnB
-	 XbZzqGzPAPzLVHGYeRCRKYL8KYgyiE2uoEyKCprQ=
+	b=S0wpiYhx5L7m8ioBRQWcpXmI1e9VLD37wVsgv82TyoWfl5Me/f4gQM+pqbTxZEPJG
+	 Utkh22v5TUTpFJ9I0vd5mCWOwFGr/vbwc/5zZM7pONJJYlQ8g2aRKcp9P8Dyuwi/Do
+	 RZWlPDm78I+0/mYLkvbHv6M/PaxWU3tqrizZAd9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Simon Horman <simon.horman@corigine.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 140/234] xfrm: add forgotten nla_policy for XFRMA_MTIMER_THRESH
-Date: Mon, 21 Aug 2023 21:41:43 +0200
-Message-ID: <20230821194135.020939656@linuxfoundation.org>
+Subject: [PATCH 6.4 141/234] xfrm: delete offloaded policy
+Date: Mon, 21 Aug 2023 21:41:44 +0200
+Message-ID: <20230821194135.062308096@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -37,34 +35,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 5e2424708da7207087934c5c75211e8584d553a0 ]
+[ Upstream commit 982c3aca8bac8ae38acdc940e4f1ecec3bffc623 ]
 
-The previous commit 4e484b3e969b ("xfrm: rate limit SA mapping change
-message to user space") added one additional attribute named
-XFRMA_MTIMER_THRESH and described its type at compat_policy
-(net/xfrm/xfrm_compat.c).
+The policy memory was released but not HW driver data. Add
+call to xfrm_dev_policy_delete(), so drivers will have a chance
+to release their resources.
 
-However, the author forgot to also describe the nla_policy at
-xfrma_policy (net/xfrm/xfrm_user.c). Hence, this suppose NLA_U32 (4
-bytes) value can be faked as empty (0 bytes) by a malicious user, which
-leads to 4 bytes overflow read and heap information leak when parsing
-nlattrs.
-
-To exploit this, one malicious user can spray the SLUB objects and then
-leverage this 4 bytes OOB read to leak the heap data into
-x->mapping_maxage (see xfrm_update_ae_params(...)), and leak it to
-userspace via copy_to_user_state_extra(...).
-
-The above bug is assigned CVE-2023-3773. To fix it, this commit just
-completes the nla_policy description for XFRMA_MTIMER_THRESH, which
-enforces the length check and avoids such OOB read.
-
-Fixes: 4e484b3e969b ("xfrm: rate limit SA mapping change message to user space")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 919e43fad516 ("xfrm: add an interface to offload policy")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -72,17 +52,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 8f74dde4a55f6..f06d6deb58dd4 100644
+index f06d6deb58dd4..ad01997c3aa9d 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -3044,6 +3044,7 @@ const struct nla_policy xfrma_policy[XFRMA_MAX+1] = {
- 	[XFRMA_SET_MARK]	= { .type = NLA_U32 },
- 	[XFRMA_SET_MARK_MASK]	= { .type = NLA_U32 },
- 	[XFRMA_IF_ID]		= { .type = NLA_U32 },
-+	[XFRMA_MTIMER_THRESH]   = { .type = NLA_U32 },
- };
- EXPORT_SYMBOL_GPL(xfrma_policy);
+@@ -2345,6 +2345,7 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 					    NETLINK_CB(skb).portid);
+ 		}
+ 	} else {
++		xfrm_dev_policy_delete(xp);
+ 		xfrm_audit_policy_delete(xp, err ? 0 : 1, true);
  
+ 		if (err != 0)
 -- 
 2.40.1
 
