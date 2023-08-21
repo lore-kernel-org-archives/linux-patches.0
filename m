@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA111171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A38C433C8;
-	Mon, 21 Aug 2023 20:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CD41171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDD9C433C8;
+	Mon, 21 Aug 2023 20:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648480;
-	bh=cuco2N02EsBYwTikwDz7fT3Y1pKcP3ilbDOHV0Sxcao=;
+	s=korg; t=1692648483;
+	bh=gdMlTlce/QpDXlz4WrUfLf/KiAVwMwkr10LkZ/NTYH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxBaCE+YgLsgPMtICVetMhqsxW67m09NcQXN7g2aV/YrQ/69A619K+kYPMdao13y/
-	 NSDYsWhtIDFcRjVR+Y4cPXNGQOqxz/GCutiJUmzfi9hOhj+QiMKXCcphGerkZlNHQJ
-	 CoQgQ8a4jMLdPJPTl+YVbV8OxZ6hs23izHO9YyiU=
+	b=dAk3OyUdLaro1b0AoTj0NdNaujrf0irrNzyxlptX4+F6Dqr28lXHw+ialPISu05DB
+	 nMofojyfj5eON9XVPiNU8ObxQxEY7CYxZNXKq6ehX27eYpM0XKS9JlYQx6he48yV/l
+	 uQa4XRon615EuOq5PWKBYxq2rdxFHdpfkXBQajlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Liang Chen <liangchen.linux@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 163/234] netfilter: nf_tables: GC transaction race with netns dismantle
-Date: Mon, 21 Aug 2023 21:42:06 +0200
-Message-ID: <20230821194136.031787985@linuxfoundation.org>
+Subject: [PATCH 6.4 154/234] net: veth: Page pool creation error handling for existing pools only
+Date: Mon, 21 Aug 2023 21:41:57 +0200
+Message-ID: <20230821194135.622503945@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,40 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Liang Chen <liangchen.linux@gmail.com>
 
-[ Upstream commit 02c6c24402bf1c1e986899c14ba22a10b510916b ]
+[ Upstream commit 8a519a572598b7c0c07b02f69bf5b4e8dd4b2d7d ]
 
-Use maybe_get_net() since GC workqueue might race with netns exit path.
+The failure handling procedure destroys page pools for all queues,
+including those that haven't had their page pool created yet. this patch
+introduces necessary adjustments to prevent potential risks and
+inconsistency with the error handling behavior.
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 0ebab78cbcbf ("net: veth: add page_pool for page recycling")
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Signed-off-by: Liang Chen <liangchen.linux@gmail.com>
+Link: https://lore.kernel.org/r/20230812023016.10553-1-liangchen.linux@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/veth.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index dcf3ed3d5af9d..b280b151a9e98 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9495,9 +9495,14 @@ struct nft_trans_gc *nft_trans_gc_alloc(struct nft_set *set,
- 	if (!trans)
- 		return NULL;
- 
-+	trans->net = maybe_get_net(net);
-+	if (!trans->net) {
-+		kfree(trans);
-+		return NULL;
-+	}
-+
- 	refcount_inc(&set->refs);
- 	trans->set = set;
--	trans->net = get_net(net);
- 	trans->seq = gc_seq;
- 
- 	return trans;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index dce9f9d63e04e..76019949e3fe9 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1071,8 +1071,9 @@ static int __veth_napi_enable_range(struct net_device *dev, int start, int end)
+ err_xdp_ring:
+ 	for (i--; i >= start; i--)
+ 		ptr_ring_cleanup(&priv->rq[i].xdp_ring, veth_ptr_free);
++	i = end;
+ err_page_pool:
+-	for (i = start; i < end; i++) {
++	for (i--; i >= start; i--) {
+ 		page_pool_destroy(priv->rq[i].page_pool);
+ 		priv->rq[i].page_pool = NULL;
+ 	}
 -- 
 2.40.1
 
