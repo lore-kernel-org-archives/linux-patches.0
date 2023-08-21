@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7B111703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:56:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED44C433C7;
-	Mon, 21 Aug 2023 19:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B3F11703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:57:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E4CC433C7;
+	Mon, 21 Aug 2023 19:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647819;
-	bh=YkXt/uxdhqGudtrZQ6zKD6rcsUbTMgKt7hIp3CYYKJg=;
+	s=korg; t=1692647822;
+	bh=7GGK7IRq82SBo4ZQw2yxJoW78BVywWtAdDasAcc2YFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHWg7kn9UraZNYXNtirjNVAk2PDN3nLJ+A7SRgM8RBzHo2HSo2mRPeQVBLyIJFKct
-	 sfVC9gESOJq+qSzJXaPILEnLYRyp/9Sl0iJSXrGKqMASleg+9WaQJa+Hqk8T3w1fnE
-	 c62JIeVYrdzekfkQBBKl+ipJ5Qr8Dxok4q4/5bsY=
+	b=ljTVq00XTku25T6V7KUv3vlqMSWMEMBttaUz/9nT6ppxAF54CWiZqsSIJSDNcSjVD
+	 /x0VeLNZQQTRj8/n8/2vhXl4Rry9bgZ0+npzHCsjh5Qr+9s7FyjslnRU56Hj2rMkre
+	 K9eWE1m2hxz9eD5xMHJFH9u3ruvyl0oIaVT104Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bo YU <tsu.yubo@gmail.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/194] ALSA: hda/realtek - Remodified 3k pull low procedure
-Date: Mon, 21 Aug 2023 21:42:08 +0200
-Message-ID: <20230821194129.273424732@linuxfoundation.org>
+Subject: [PATCH 6.1 150/194] riscv: uaccess: Return the number of bytes effectively not copied
+Date: Mon, 21 Aug 2023 21:42:09 +0200
+Message-ID: <20230821194129.325291681@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,61 +38,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kailang Yang <kailang@realtek.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 46cdff2369cbdf8d78081a22526e77bd1323f563 ]
+[ Upstream commit 4b05b993900dd3eba0fc83ef5c5ddc7d65d786c6 ]
 
-Set spec->en_3kpull_low default to true.
-Then fillback ALC236 and ALC257 to false.
+It was reported that the riscv kernel hangs while executing the test
+in [1].
 
-Additional note: this addresses a regression caused by the previous
-fix 69ea4c9d02b7 ("ALSA: hda/realtek - remove 3k pull low procedure").
-The previous workaround was applied too widely without necessity,
-which resulted in the pop noise at PM again.  This patch corrects the
-condition and restores the old behavior for the devices that don't
-suffer from the original problem.
+Indeed, the test hangs when trying to write a buffer to a file. The
+problem is that the riscv implementation of raw_copy_from_user() does not
+return the correct number of bytes not written when an exception happens
+and is fixed up, instead it always returns the initial size to copy,
+even if some bytes were actually copied.
 
-Fixes: 69ea4c9d02b7 ("ALSA: hda/realtek - remove 3k pull low procedure")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217732
-Link: https://lore.kernel.org/r/01e212a538fc407ca6edd10b81ff7b05@realtek.com
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+generic_perform_write() pre-faults the user pages and bails out if nothing
+can be written, otherwise it will access the userspace buffer: here the
+riscv implementation keeps returning it was not able to copy any byte
+though the pre-faulting indicates otherwise. So generic_perform_write()
+keeps retrying to access the user memory and ends up in an infinite
+loop.
+
+Note that before the commit mentioned in [1] that introduced this
+regression, it worked because generic_perform_write() would bail out if
+only one byte could not be written.
+
+So fix this by returning the number of bytes effectively not written in
+__asm_copy_[to|from]_user() and __clear_user(), as it is expected.
+
+Link: https://lore.kernel.org/linux-riscv/20230309151841.bomov6hq3ybyp42a@debian/ [1]
+Fixes: ebcbd75e3962 ("riscv: Fix the bug in memory access fixup code")
+Reported-by: Bo YU <tsu.yubo@gmail.com>
+Closes: https://lore.kernel.org/linux-riscv/20230309151841.bomov6hq3ybyp42a@debian/#t
+Reported-by: Aurelien Jarno <aurelien@aurel32.net>
+Closes: https://lore.kernel.org/linux-riscv/ZNOnCakhwIeue3yr@aurel32.net/
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+Link: https://lore.kernel.org/r/20230811150604.1621784-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/lib/uaccess.S | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index de6bd8a9871cf..aa475154c582f 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10620,6 +10620,7 @@ static int patch_alc269(struct hda_codec *codec)
- 	spec = codec->spec;
- 	spec->gen.shared_mic_vref_pin = 0x18;
- 	codec->power_save_node = 0;
-+	spec->en_3kpull_low = true;
+diff --git a/arch/riscv/lib/uaccess.S b/arch/riscv/lib/uaccess.S
+index ec486e5369d9b..09b47ebacf2e8 100644
+--- a/arch/riscv/lib/uaccess.S
++++ b/arch/riscv/lib/uaccess.S
+@@ -17,8 +17,11 @@ ENTRY(__asm_copy_from_user)
+ 	li t6, SR_SUM
+ 	csrs CSR_STATUS, t6
  
- #ifdef CONFIG_PM
- 	codec->patch_ops.suspend = alc269_suspend;
-@@ -10702,14 +10703,16 @@ static int patch_alc269(struct hda_codec *codec)
- 		spec->shutup = alc256_shutup;
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
--		if (codec->bus->pci->vendor == PCI_VENDOR_ID_AMD)
--			spec->en_3kpull_low = true;
-+		if (codec->core.vendor_id == 0x10ec0236 &&
-+		    codec->bus->pci->vendor != PCI_VENDOR_ID_AMD)
-+			spec->en_3kpull_low = false;
- 		break;
- 	case 0x10ec0257:
- 		spec->codec_variant = ALC269_TYPE_ALC257;
- 		spec->shutup = alc256_shutup;
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0;
-+		spec->en_3kpull_low = false;
- 		break;
- 	case 0x10ec0215:
- 	case 0x10ec0245:
+-	/* Save for return value */
+-	mv	t5, a2
++	/*
++	 * Save the terminal address which will be used to compute the number
++	 * of bytes copied in case of a fixup exception.
++	 */
++	add	t5, a0, a2
+ 
+ 	/*
+ 	 * Register allocation for code below:
+@@ -176,7 +179,7 @@ ENTRY(__asm_copy_from_user)
+ 10:
+ 	/* Disable access to user memory */
+ 	csrc CSR_STATUS, t6
+-	mv a0, t5
++	sub a0, t5, a0
+ 	ret
+ ENDPROC(__asm_copy_to_user)
+ ENDPROC(__asm_copy_from_user)
+@@ -228,7 +231,7 @@ ENTRY(__clear_user)
+ 11:
+ 	/* Disable access to user memory */
+ 	csrc CSR_STATUS, t6
+-	mv a0, a1
++	sub a0, a3, a0
+ 	ret
+ ENDPROC(__clear_user)
+ EXPORT_SYMBOL(__clear_user)
 -- 
 2.40.1
 
