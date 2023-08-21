@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FEC1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAB3C433C7;
-	Mon, 21 Aug 2023 20:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5894F1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:03:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF228C433C8;
+	Mon, 21 Aug 2023 20:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648180;
-	bh=EoRLN+7/dRwOsKtZOWbFB0x6iooNrxY0Tw8t/b/Qs20=;
+	s=korg; t=1692648183;
+	bh=8W4g0dxsKrQ+4u4lNj5bJs/cVCB9s+uga3zfYCz65uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfSCilN6ujMuTFPcmCP1yYqFjZooGKldEYiyJ01IlHRkhJ2sAfzCqToE3HJs45icc
-	 DgLFnM4lvtYq9rTFdE3ga2Q2AoUh766aFpVenK0GvDVj3yZciCP7e36EizqylGx6qw
-	 2jv/SeVaLRvv/mRVdZ9DC4LWuS69DGpf92OwvfWA=
+	b=zRUdnUSbMyg/OHZneut0tZueT5X379fvmmtu5TO3Ft+W4tSp6WEorwJ93I28K+6DN
+	 Ri8rSoleFOs8WMFStnMchdIT1h0Fs6uvhLK/gKq13Lr/hMPR7rgC8CIYJOtYmMmi4t
+	 Fn+a8wouvifUgZriI3tYDbngNTiGdkNWc3mTtPLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 083/234] btrfs: move out now unused BG from the reclaim list
-Date: Mon, 21 Aug 2023 21:40:46 +0200
-Message-ID: <20230821194132.428198398@linuxfoundation.org>
+Subject: [PATCH 6.4 084/234] btrfs: fix use-after-free of new block group that became unused
+Date: Mon, 21 Aug 2023 21:40:47 +0200
+Message-ID: <20230821194132.478299929@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -37,50 +35,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naota@elisp.net>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a9f189716cf15913c453299d72f69c51a9b0f86b ]
+[ Upstream commit 0657b20c5a76c938612f8409735a8830d257866e ]
 
-An unused block group is easy to remove to free up space and should be
-reclaimed fast. Such block group can often already be a target of the
-reclaim process. As we check list_empty(&bg->bg_list), we keep it in the
-reclaim list. That block group is never reclaimed until the file system
-is filled e.g. up to 75%.
+If a task creates a new block group and that block group becomes unused
+before we finish its creation, at btrfs_create_pending_block_groups(),
+then when btrfs_mark_bg_unused() is called against the block group, we
+assume that the block group is currently in the list of block groups to
+reclaim, and we move it out of the list of new block groups and into the
+list of unused block groups. This has two consequences:
 
-Instead, we can move unused block group to the unused list and delete it
-fast.
+1) We move it out of the list of new block groups associated to the
+   current transaction. So the block group creation is not finished and
+   if we attempt to delete the bg because it's unused, we will not find
+   the block group item in the extent tree (or the new block group tree),
+   its device extent items in the device tree etc, resulting in the
+   deletion to fail due to the missing items;
 
-Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
+2) We don't increment the reference count on the block group when we
+   move it to the list of unused block groups, because we assumed the
+   block group was on the list of block groups to reclaim, and in that
+   case it already has the correct reference count. However the block
+   group was on the list of new block groups, in which case no extra
+   reference was taken because it's local to the current task. This
+   later results in doing an extra reference count decrement when
+   removing the block group from the unused list, eventually leading the
+   reference count to 0.
+
+This second case was caught when running generic/297 from fstests, which
+produced the following assertion failure and stack trace:
+
+  [589.559] assertion failed: refcount_read(&block_group->refs) == 1, in fs/btrfs/block-group.c:4299
+  [589.559] ------------[ cut here ]------------
+  [589.559] kernel BUG at fs/btrfs/block-group.c:4299!
+  [589.560] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  [589.560] CPU: 8 PID: 2819134 Comm: umount Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
+  [589.560] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [589.560] RIP: 0010:btrfs_free_block_groups+0x449/0x4a0 [btrfs]
+  [589.561] Code: 68 62 da c0 (...)
+  [589.561] RSP: 0018:ffffa55a8c3b3d98 EFLAGS: 00010246
+  [589.561] RAX: 0000000000000058 RBX: ffff8f030d7f2000 RCX: 0000000000000000
+  [589.562] RDX: 0000000000000000 RSI: ffffffff953f0878 RDI: 00000000ffffffff
+  [589.562] RBP: ffff8f030d7f2088 R08: 0000000000000000 R09: ffffa55a8c3b3c50
+  [589.562] R10: 0000000000000001 R11: 0000000000000001 R12: ffff8f05850b4c00
+  [589.562] R13: ffff8f030d7f2090 R14: ffff8f05850b4cd8 R15: dead000000000100
+  [589.563] FS:  00007f497fd2e840(0000) GS:ffff8f09dfc00000(0000) knlGS:0000000000000000
+  [589.563] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [589.563] CR2: 00007f497ff8ec10 CR3: 0000000271472006 CR4: 0000000000370ee0
+  [589.563] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [589.564] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [589.564] Call Trace:
+  [589.564]  <TASK>
+  [589.565]  ? __die_body+0x1b/0x60
+  [589.565]  ? die+0x39/0x60
+  [589.565]  ? do_trap+0xeb/0x110
+  [589.565]  ? btrfs_free_block_groups+0x449/0x4a0 [btrfs]
+  [589.566]  ? do_error_trap+0x6a/0x90
+  [589.566]  ? btrfs_free_block_groups+0x449/0x4a0 [btrfs]
+  [589.566]  ? exc_invalid_op+0x4e/0x70
+  [589.566]  ? btrfs_free_block_groups+0x449/0x4a0 [btrfs]
+  [589.567]  ? asm_exc_invalid_op+0x16/0x20
+  [589.567]  ? btrfs_free_block_groups+0x449/0x4a0 [btrfs]
+  [589.567]  ? btrfs_free_block_groups+0x449/0x4a0 [btrfs]
+  [589.567]  close_ctree+0x35d/0x560 [btrfs]
+  [589.568]  ? fsnotify_sb_delete+0x13e/0x1d0
+  [589.568]  ? dispose_list+0x3a/0x50
+  [589.568]  ? evict_inodes+0x151/0x1a0
+  [589.568]  generic_shutdown_super+0x73/0x1a0
+  [589.569]  kill_anon_super+0x14/0x30
+  [589.569]  btrfs_kill_super+0x12/0x20 [btrfs]
+  [589.569]  deactivate_locked_super+0x2e/0x70
+  [589.569]  cleanup_mnt+0x104/0x160
+  [589.570]  task_work_run+0x56/0x90
+  [589.570]  exit_to_user_mode_prepare+0x160/0x170
+  [589.570]  syscall_exit_to_user_mode+0x22/0x50
+  [589.570]  ? __x64_sys_umount+0x12/0x20
+  [589.571]  do_syscall_64+0x48/0x90
+  [589.571]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+  [589.571] RIP: 0033:0x7f497ff0a567
+  [589.571] Code: af 98 0e (...)
+  [589.572] RSP: 002b:00007ffc98347358 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
+  [589.572] RAX: 0000000000000000 RBX: 00007f49800b8264 RCX: 00007f497ff0a567
+  [589.572] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000557f558abfa0
+  [589.573] RBP: 0000557f558a6ba0 R08: 0000000000000000 R09: 00007ffc98346100
+  [589.573] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  [589.573] R13: 0000557f558abfa0 R14: 0000557f558a6cb0 R15: 0000557f558a6dd0
+  [589.573]  </TASK>
+  [589.574] Modules linked in: dm_snapshot dm_thin_pool (...)
+  [589.576] ---[ end trace 0000000000000000 ]---
+
+Fix this by adding a runtime flag to the block group to tell that the
+block group is still in the list of new block groups, and therefore it
+should not be moved to the list of unused block groups, at
+btrfs_mark_bg_unused(), until the flag is cleared, when we finish the
+creation of the block group at btrfs_create_pending_block_groups().
+
+Fixes: a9f189716cf1 ("btrfs: move out now unused BG from the reclaim list")
 CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/btrfs/block-group.c | 13 +++++++++++--
+ fs/btrfs/block-group.h |  5 +++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 2a60033d907bf..78d57f1efe1d0 100644
+index 78d57f1efe1d0..a250afa655d5c 100644
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -1665,11 +1665,14 @@ void btrfs_mark_bg_unused(struct btrfs_block_group *bg)
+@@ -1665,13 +1665,14 @@ void btrfs_mark_bg_unused(struct btrfs_block_group *bg)
  {
  	struct btrfs_fs_info *fs_info = bg->fs_info;
  
-+	trace_btrfs_add_unused_block_group(bg);
+-	trace_btrfs_add_unused_block_group(bg);
  	spin_lock(&fs_info->unused_bgs_lock);
  	if (list_empty(&bg->bg_list)) {
  		btrfs_get_block_group(bg);
--		trace_btrfs_add_unused_block_group(bg);
++		trace_btrfs_add_unused_block_group(bg);
  		list_add_tail(&bg->bg_list, &fs_info->unused_bgs);
-+	} else {
-+		/* Pull out the block group from the reclaim_bgs list. */
-+		list_move_tail(&bg->bg_list, &fs_info->unused_bgs);
+-	} else {
++	} else if (!test_bit(BLOCK_GROUP_FLAG_NEW, &bg->runtime_flags)) {
+ 		/* Pull out the block group from the reclaim_bgs list. */
++		trace_btrfs_add_unused_block_group(bg);
+ 		list_move_tail(&bg->bg_list, &fs_info->unused_bgs);
  	}
  	spin_unlock(&fs_info->unused_bgs_lock);
+@@ -2696,6 +2697,7 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
+ next:
+ 		btrfs_delayed_refs_rsv_release(fs_info, 1);
+ 		list_del_init(&block_group->bg_list);
++		clear_bit(BLOCK_GROUP_FLAG_NEW, &block_group->runtime_flags);
+ 	}
+ 	btrfs_trans_release_chunk_metadata(trans);
  }
+@@ -2735,6 +2737,13 @@ struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *tran
+ 	if (!cache)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	/*
++	 * Mark it as new before adding it to the rbtree of block groups or any
++	 * list, so that no other task finds it and calls btrfs_mark_bg_unused()
++	 * before the new flag is set.
++	 */
++	set_bit(BLOCK_GROUP_FLAG_NEW, &cache->runtime_flags);
++
+ 	cache->length = size;
+ 	set_free_space_tree_thresholds(cache);
+ 	cache->flags = type;
+diff --git a/fs/btrfs/block-group.h b/fs/btrfs/block-group.h
+index 471f591db7c0c..0852f6c101f82 100644
+--- a/fs/btrfs/block-group.h
++++ b/fs/btrfs/block-group.h
+@@ -70,6 +70,11 @@ enum btrfs_block_group_flags {
+ 	BLOCK_GROUP_FLAG_NEEDS_FREE_SPACE,
+ 	/* Indicate that the block group is placed on a sequential zone */
+ 	BLOCK_GROUP_FLAG_SEQUENTIAL_ZONE,
++	/*
++	 * Indicate that block group is in the list of new block groups of a
++	 * transaction.
++	 */
++	BLOCK_GROUP_FLAG_NEW,
+ };
+ 
+ enum btrfs_caching_type {
 -- 
 2.40.1
 
