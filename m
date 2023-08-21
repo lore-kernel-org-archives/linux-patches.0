@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D1F1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A489C433C8;
-	Mon, 21 Aug 2023 20:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCB11171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:05:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FBBC433C9;
+	Mon, 21 Aug 2023 20:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648340;
-	bh=2rnd9LZVN/utajeYp6BjMU60ll1wyBl8NIF2ApHuu80=;
+	s=korg; t=1692648343;
+	bh=4nD8u9nNpJpZ5wAZW7xX1mvhw11J97gYxsm1YDatnJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0wpiYhx5L7m8ioBRQWcpXmI1e9VLD37wVsgv82TyoWfl5Me/f4gQM+pqbTxZEPJG
-	 Utkh22v5TUTpFJ9I0vd5mCWOwFGr/vbwc/5zZM7pONJJYlQ8g2aRKcp9P8Dyuwi/Do
-	 RZWlPDm78I+0/mYLkvbHv6M/PaxWU3tqrizZAd9U=
+	b=Kv8hf0UY/1JCC3px44iOapS7MgNKEchdK4a9zyEIXvA90+hxcNSoBD8WiCif1Owcg
+	 3As2aKvK2LALVJoqYWfKuG0liIsEwYDKynwMjxtOOcwdC7ZupqTP/mNCgB4F1fmb3V
+	 179wAk/ap3HwvKHLHCumUk7QhSRBF8zpVZ/s++74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 141/234] xfrm: delete offloaded policy
-Date: Mon, 21 Aug 2023 21:41:44 +0200
-Message-ID: <20230821194135.062308096@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 6.4 124/234] objtool/x86: Fixup frame-pointer vs rethunk
+Date: Mon, 21 Aug 2023 21:41:27 +0200
+Message-ID: <20230821194134.308191977@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,36 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 982c3aca8bac8ae38acdc940e4f1ecec3bffc623 ]
+commit dbf46008775516f7f25c95b7760041c286299783 upstream.
 
-The policy memory was released but not HW driver data. Add
-call to xfrm_dev_policy_delete(), so drivers will have a chance
-to release their resources.
+For stack-validation of a frame-pointer build, objtool validates that
+every CALL instruction is preceded by a frame-setup. The new SRSO
+return thunks violate this with their RSB stuffing trickery.
 
-Fixes: 919e43fad516 ("xfrm: add an interface to offload policy")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Extend the __fentry__ exception to also cover the embedded_insn case
+used for this. This cures:
+
+  vmlinux.o: warning: objtool: srso_untrain_ret+0xd: call without frame pointer save/setup
+
+Fixes: 4ae68b26c3ab ("objtool/x86: Fix SRSO mess")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/20230816115921.GH980931@hirez.programming.kicks-ass.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/objtool/check.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index f06d6deb58dd4..ad01997c3aa9d 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2345,6 +2345,7 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
- 					    NETLINK_CB(skb).portid);
- 		}
- 	} else {
-+		xfrm_dev_policy_delete(xp);
- 		xfrm_audit_policy_delete(xp, err ? 0 : 1, true);
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2698,12 +2698,17 @@ static int decode_sections(struct objtoo
+ 	return 0;
+ }
  
- 		if (err != 0)
--- 
-2.40.1
-
+-static bool is_fentry_call(struct instruction *insn)
++static bool is_special_call(struct instruction *insn)
+ {
+-	if (insn->type == INSN_CALL &&
+-	    insn_call_dest(insn) &&
+-	    insn_call_dest(insn)->fentry)
+-		return true;
++	if (insn->type == INSN_CALL) {
++		struct symbol *dest = insn_call_dest(insn);
++
++		if (!dest)
++			return false;
++
++		if (dest->fentry || dest->embedded_insn)
++			return true;
++	}
+ 
+ 	return false;
+ }
+@@ -3701,7 +3706,7 @@ static int validate_branch(struct objtoo
+ 			if (ret)
+ 				return ret;
+ 
+-			if (opts.stackval && func && !is_fentry_call(insn) &&
++			if (opts.stackval && func && !is_special_call(insn) &&
+ 			    !has_valid_stack_frame(&state)) {
+ 				WARN_INSN(insn, "call without frame pointer save/setup");
+ 				return 1;
 
 
