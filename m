@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001B31170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7545DC433C7;
-	Mon, 21 Aug 2023 19:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66E011703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:54:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C6FC433BA;
+	Mon, 21 Aug 2023 19:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647683;
-	bh=FczYBzczb6PQCSzO5uywPJwqlkJX5PTn+4lftX16+6A=;
+	s=korg; t=1692647686;
+	bh=TXfax9c4mV4lIN7hMVIyhN9JXMIX7u2mtnHlXlZUQxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkSShjSiQ2B2kZXWhltITQDFD96U3//3Pzfv0oEz6f0od4k6sUQMUqss+YY1dhAsl
-	 prEVaM04RThbJEABiSFkD+XZ7gF+u2mPPlhZXFZSfhYpzehZ/2fdi78yf5zCtFQzBO
-	 xgclRFWOKTKMa/bOFMaVvtXXUHoS93TXTFeXY7BQ=
+	b=kGSErHeRBiS56UujRSFJzes3x/TCmmbamEproBNUx3rmZ2JPWVf4OywzWMpQ0vJju
+	 0sb4PQF3+l2GxI+LEwwu1geNkncyYGDWpy8B/zUmM5kelIZpOHImC+j5QuypLVuvoL
+	 W+fUDp2kQVoY/dpopPhy0NH6i+W6RDMeqHMO7nu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.1 094/194] vdpa: Add features attr to vdpa_nl_policy for nlattr length check
-Date: Mon, 21 Aug 2023 21:41:13 +0200
-Message-ID: <20230821194126.845944056@linuxfoundation.org>
+	Tam Nguyen <tamnguyenchi@os.amperecomputing.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.1 103/194] i2c: designware: Handle invalid SMBus block data response length value
+Date: Mon, 21 Aug 2023 21:41:22 +0200
+Message-ID: <20230821194127.220885098@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -34,40 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
 
-commit 79c8651587504ba263d2fd67fd4406240fb21f69 upstream.
+commit 69f035c480d76f12bf061148ccfd578e1099e5fc upstream.
 
-The vdpa_nl_policy structure is used to validate the nlattr when parsing
-the incoming nlmsg. It will ensure the attribute being described produces
-a valid nlattr pointer in info->attrs before entering into each handler
-in vdpa_nl_ops.
+In the I2C_FUNC_SMBUS_BLOCK_DATA case, the invalid length byte value
+(outside of 1-32) of the SMBus block data response from the Slave device
+is not correctly handled by the I2C Designware driver.
 
-That is to say, the missing part in vdpa_nl_policy may lead to illegal
-nlattr after parsing, which could lead to OOB read just like CVE-2023-3773.
+In case IC_EMPTYFIFO_HOLD_MASTER_EN==1, which cannot be detected
+from the registers, the Master can be disabled only if the STOP bit
+is set. Without STOP bit set, the Master remains active, holding the bus
+until receiving a block data response length. This hangs the bus and
+is unrecoverable.
 
-This patch adds the missing nla_policy for vdpa features attr to avoid
-such bugs.
+Avoid this by issuing another dump read to reach the stop condition when
+an invalid length byte is received.
 
-Fixes: 90fea5a800c3 ("vdpa: device feature provisioning")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
 Cc: stable@vger.kernel.org
-Message-Id: <20230727175757.73988-3-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20230726080001.337353-3-tamnguyenchi@os.amperecomputing.com
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/vdpa.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-designware-master.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/vdpa/vdpa.c
-+++ b/drivers/vdpa/vdpa.c
-@@ -1174,6 +1174,7 @@ static const struct nla_policy vdpa_nl_p
- 	[VDPA_ATTR_DEV_NET_CFG_MACADDR] = NLA_POLICY_ETH_ADDR,
- 	/* virtio spec 1.1 section 5.1.4.1 for valid MTU range */
- 	[VDPA_ATTR_DEV_NET_CFG_MTU] = NLA_POLICY_MIN(NLA_U16, 68),
-+	[VDPA_ATTR_DEV_FEATURES] = { .type = NLA_U64 },
- };
- 
- static const struct genl_ops vdpa_nl_ops[] = {
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -527,8 +527,19 @@ i2c_dw_read(struct dw_i2c_dev *dev)
+ 			regmap_read(dev->map, DW_IC_DATA_CMD, &tmp);
+ 			tmp &= DW_IC_DATA_CMD_DAT;
+ 			/* Ensure length byte is a valid value */
+-			if (flags & I2C_M_RECV_LEN &&
+-			    tmp <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
++			if (flags & I2C_M_RECV_LEN) {
++				/*
++				 * if IC_EMPTYFIFO_HOLD_MASTER_EN is set, which cannot be
++				 * detected from the registers, the controller can be
++				 * disabled if the STOP bit is set. But it is only set
++				 * after receiving block data response length in
++				 * I2C_FUNC_SMBUS_BLOCK_DATA case. That needs to read
++				 * another byte with STOP bit set when the block data
++				 * response length is invalid to complete the transaction.
++				 */
++				if (!tmp || tmp > I2C_SMBUS_BLOCK_MAX)
++					tmp = 1;
++
+ 				len = i2c_dw_recv_len(dev, tmp);
+ 			}
+ 			*buf++ = tmp;
 
 
