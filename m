@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468C81171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE74C433C8;
-	Mon, 21 Aug 2023 20:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0482A1171B
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:07:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB52C433C7;
+	Mon, 21 Aug 2023 20:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648469;
-	bh=1Y3djnkq4GcPRyptUoXXY6BGPdqFi+uZWkc2soq5ePw=;
+	s=korg; t=1692648471;
+	bh=h4dRJAUKg5uSFC+zJMn38XmJwhjG604jPjr5sSg1QHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JtlyDyjKLnMqp7+yp5wqp2Iz9hu4jJz+ilDs5zYQhvm5VLqX/HI/zLrC2SOTF+XV
-	 6rLm+vVVayyD7sh4s3R++PWH49RL8/a79VsVVX5QsqHtMKpN2Dbd1V8giTFOgEBm5v
-	 azOAXw2Jko1cGUBaWhXebDpRDeOLITovzWcmKqqk=
+	b=uXoRSvf4RS+tI/9rr1qGYjpxDqE8Nt4uqeYJcgP/J0QFEk76qWJ7ju0eaja3ifd2m
+	 oJAQ/vdHuKWwWMBbijtMsvFfDQolnwTbacM6KiQrt78JKb42jwhhbqTXQKyOmzOrE8
+	 vFp4tK1CL/+67dDiFxEm/lUN9nTc0hHQNiHNX3Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paolo Valerio <pvalerio@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 159/234] netfilter: nf_tables: dont fail inserts if duplicate has expired
-Date: Mon, 21 Aug 2023 21:42:02 +0200
-Message-ID: <20230821194135.843121383@linuxfoundation.org>
+Subject: [PATCH 6.4 160/234] netfilter: set default timeout to 3 secs for sctp shutdown send and recv state
+Date: Mon, 21 Aug 2023 21:42:03 +0200
+Message-ID: <20230821194135.891062488@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -34,100 +37,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 7845914f45f066497ac75b30c50dbc735e84e884 ]
+[ Upstream commit 9bfab6d23a2865966a4f89a96536fbf23f83bc8c ]
 
-nftables selftests fail:
-run-tests.sh testcases/sets/0044interval_overlap_0
-Expected: 0-2 . 0-3, got:
-W: [FAILED]     ./testcases/sets/0044interval_overlap_0: got 1
+In SCTP protocol, it is using the same timer (T2 timer) for SHUTDOWN and
+SHUTDOWN_ACK retransmission. However in sctp conntrack the default timeout
+value for SCTP_CONNTRACK_SHUTDOWN_ACK_SENT state is 3 secs while it's 300
+msecs for SCTP_CONNTRACK_SHUTDOWN_SEND/RECV state.
 
-Insertion must ignore duplicate but expired entries.
+As Paolo Valerio noticed, this might cause unwanted expiration of the ct
+entry. In my test, with 1s tc netem delay set on the NAT path, after the
+SHUTDOWN is sent, the sctp ct entry enters SCTP_CONNTRACK_SHUTDOWN_SEND
+state. However, due to 300ms (too short) delay, when the SHUTDOWN_ACK is
+sent back from the peer, the sctp ct entry has expired and been deleted,
+and then the SHUTDOWN_ACK has to be dropped.
 
-Moreover, there is a strange asymmetry in nft_pipapo_activate:
+Also, it is confusing these two sysctl options always show 0 due to all
+timeout values using sec as unit:
 
-It refetches the current element, whereas the other ->activate callbacks
-(bitmap, hash, rhash, rbtree) use elem->priv.
-Same for .remove: other set implementations take elem->priv,
-nft_pipapo_remove fetches elem->priv, then does a relookup,
-remove this.
+  net.netfilter.nf_conntrack_sctp_timeout_shutdown_recd = 0
+  net.netfilter.nf_conntrack_sctp_timeout_shutdown_sent = 0
 
-I suspect this was the reason for the change that prompted the
-removal of the expired check in pipapo_get() in the first place,
-but skipping exired elements there makes no sense to me, this helper
-is used for normal get requests, insertions (duplicate check)
-and deactivate callback.
+This patch fixes it by also using 3 secs for sctp shutdown send and recv
+state in sctp conntrack, which is also RTO.initial value in SCTP protocol.
 
-In first two cases expired elements must be skipped.
+Note that the very short time value for SCTP_CONNTRACK_SHUTDOWN_SEND/RECV
+was probably used for a rare scenario where SHUTDOWN is sent on 1st path
+but SHUTDOWN_ACK is replied on 2nd path, then a new connection started
+immediately on 1st path. So this patch also moves from SHUTDOWN_SEND/RECV
+to CLOSE when receiving INIT in the ORIGINAL direction.
 
-For ->deactivate(), this gets called for DELSETELEM, so it
-seems to me that expired elements should be skipped as well, i.e.
-delete request should fail with -ENOENT error.
-
-Fixes: 24138933b97b ("netfilter: nf_tables: don't skip expired elements during walk")
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Reported-by: Paolo Valerio <pvalerio@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 23 ++++-------------------
- 1 file changed, 4 insertions(+), 19 deletions(-)
+ Documentation/networking/nf_conntrack-sysctl.rst | 4 ++--
+ net/netfilter/nf_conntrack_proto_sctp.c          | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 3b5c3919fff9c..352180b123fc7 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -566,6 +566,8 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
- 			goto out;
+diff --git a/Documentation/networking/nf_conntrack-sysctl.rst b/Documentation/networking/nf_conntrack-sysctl.rst
+index 8b1045c3b59e0..c383a394c6656 100644
+--- a/Documentation/networking/nf_conntrack-sysctl.rst
++++ b/Documentation/networking/nf_conntrack-sysctl.rst
+@@ -178,10 +178,10 @@ nf_conntrack_sctp_timeout_established - INTEGER (seconds)
+ 	Default is set to (hb_interval * path_max_retrans + rto_max)
  
- 		if (last) {
-+			if (nft_set_elem_expired(&f->mt[b].e->ext))
-+				goto next_match;
- 			if ((genmask &&
- 			     !nft_set_elem_active(&f->mt[b].e->ext, genmask)))
- 				goto next_match;
-@@ -600,17 +602,8 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
- static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
- 			    const struct nft_set_elem *elem, unsigned int flags)
- {
--	struct nft_pipapo_elem *ret;
--
--	ret = pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
- 			 nft_genmask_cur(net));
--	if (IS_ERR(ret))
--		return ret;
--
--	if (nft_set_elem_expired(&ret->ext))
--		return ERR_PTR(-ENOENT);
--
--	return ret;
- }
+ nf_conntrack_sctp_timeout_shutdown_sent - INTEGER (seconds)
+-	default 0.3
++	default 3
  
- /**
-@@ -1744,11 +1737,7 @@ static void nft_pipapo_activate(const struct net *net,
- 				const struct nft_set *set,
- 				const struct nft_set_elem *elem)
- {
--	struct nft_pipapo_elem *e;
--
--	e = pipapo_get(net, set, (const u8 *)elem->key.val.data, 0);
--	if (IS_ERR(e))
--		return;
-+	struct nft_pipapo_elem *e = elem->priv;
+ nf_conntrack_sctp_timeout_shutdown_recd - INTEGER (seconds)
+-	default 0.3
++	default 3
  
- 	nft_set_elem_change_active(net, set, &e->ext);
- }
-@@ -1962,10 +1951,6 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
- 
- 	data = (const u8 *)nft_set_ext_key(&e->ext);
- 
--	e = pipapo_get(net, set, data, 0);
--	if (IS_ERR(e))
--		return;
--
- 	while ((rules_f0 = pipapo_rules_same_key(m->f, first_rule))) {
- 		union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
- 		const u8 *match_start, *match_end;
+ nf_conntrack_sctp_timeout_shutdown_ack_sent - INTEGER (seconds)
+ 	default 3
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index 91eacc9b0b987..b6bcc8f2f46b7 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -49,8 +49,8 @@ static const unsigned int sctp_timeouts[SCTP_CONNTRACK_MAX] = {
+ 	[SCTP_CONNTRACK_COOKIE_WAIT]		= 3 SECS,
+ 	[SCTP_CONNTRACK_COOKIE_ECHOED]		= 3 SECS,
+ 	[SCTP_CONNTRACK_ESTABLISHED]		= 210 SECS,
+-	[SCTP_CONNTRACK_SHUTDOWN_SENT]		= 300 SECS / 1000,
+-	[SCTP_CONNTRACK_SHUTDOWN_RECD]		= 300 SECS / 1000,
++	[SCTP_CONNTRACK_SHUTDOWN_SENT]		= 3 SECS,
++	[SCTP_CONNTRACK_SHUTDOWN_RECD]		= 3 SECS,
+ 	[SCTP_CONNTRACK_SHUTDOWN_ACK_SENT]	= 3 SECS,
+ 	[SCTP_CONNTRACK_HEARTBEAT_SENT]		= 30 SECS,
+ };
+@@ -105,7 +105,7 @@ static const u8 sctp_conntracks[2][11][SCTP_CONNTRACK_MAX] = {
+ 	{
+ /*	ORIGINAL	*/
+ /*                  sNO, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS */
+-/* init         */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCW},
++/* init         */ {sCL, sCL, sCW, sCE, sES, sCL, sCL, sSA, sCW},
+ /* init_ack     */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},
+ /* abort        */ {sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL},
+ /* shutdown     */ {sCL, sCL, sCW, sCE, sSS, sSS, sSR, sSA, sCL},
 -- 
 2.40.1
 
