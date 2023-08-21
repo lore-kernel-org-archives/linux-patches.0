@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38151171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EF5C433C7;
-	Mon, 21 Aug 2023 20:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CEB1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2CBC433C7;
+	Mon, 21 Aug 2023 20:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648138;
-	bh=32BLOo+jraNMI1GTEVf8OEWKY+bMqyqyuOX2YRfJnw8=;
+	s=korg; t=1692648141;
+	bh=Um7W+5SmD1TJXucZNnoSICvBOWPkGurB8aG04NjCGGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZNNDaPfc3QLGwldLXf6dIxjOk4VbV1WYvdkaGovcTbmEUV2y7pIKFM+GIuiuPKk/d
-	 7SmLdSQPKnfIZ3dXvDJUJ1+CaIqYPj/JT17N4CDRTmM10Px1JeyMu7BcugaxHjMKiN
-	 0JtqJHZVXE9DP483g1sjrdBKr4nPwfIG7l3X9XoE=
+	b=UWUrhAlDfFQGlpEqbYtXJunJJARTZqP0EHuj1urUgjhjSh6eyfszUpo+SpivIgPzE
+	 S55ud/eFIhXR3DOeubb05t1dv3a6heK2/toNl34FD//zokbkguAMYGXyRLcW/js50M
+	 cpzAO9OSE8DP3jjTGuDYUzNxI20Z7uqnX7WBcatM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jia-Ju Bai <baijiaju@buaa.edu.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 061/234] thunderbolt: Limit Intel Barlow Ridge USB3 bandwidth
-Date: Mon, 21 Aug 2023 21:40:24 +0200
-Message-ID: <20230821194131.461881095@linuxfoundation.org>
+Subject: [PATCH 6.4 070/234] fs: ntfs3: Fix possible null-pointer dereferences in mi_read()
+Date: Mon, 21 Aug 2023 21:40:33 +0200
+Message-ID: <20230821194131.855984480@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,54 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Jia-Ju Bai <baijiaju@buaa.edu.cn>
 
-[ Upstream commit f2bfa944080dcbb8eb56259dfd2c07204cbee17e ]
+[ Upstream commit 97498cd610c0d030a7bd49a7efad974790661162 ]
 
-Intel Barlow Ridge discrete USB4 host router has the same limitation as
-the previous generations so make sure the USB3 bandwidth limitation
-quirk is applied to Barlow Ridge too.
+In a previous commit 2681631c2973 ("fs/ntfs3: Add null pointer check to
+attr_load_runs_vcn"), ni can be NULL in attr_load_runs_vcn(), and thus it
+should be checked before being used.
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+However, in the call stack of this commit, mft_ni in mi_read() is
+aliased with ni in attr_load_runs_vcn(), and it is also used in
+mi_read() at two places:
+
+mi_read()
+  rw_lock = &mft_ni->file.run_lock -> No check
+  attr_load_runs_vcn(mft_ni, ...)
+    ni (namely mft_ni) is checked in the previous commit
+  attr_load_runs_vcn(..., &mft_ni->file.run) -> No check
+
+Thus, to avoid possible null-pointer dereferences, the related checks
+should be added.
+
+These bugs are reported by a static analysis tool implemented by myself,
+and they are found by extending a known bug fixed in the previous commit.
+Thus, they could be theoretical bugs.
+
+Signed-off-by: Jia-Ju Bai <baijiaju@buaa.edu.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.h    | 2 ++
- drivers/thunderbolt/quirks.c | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ fs/ntfs3/record.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
-index c15a0c46c9cff..0f029ce758825 100644
---- a/drivers/thunderbolt/nhi.h
-+++ b/drivers/thunderbolt/nhi.h
-@@ -77,6 +77,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
- #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
-+#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE 0x5786
-+#define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE 0x57a4
- #define PCI_DEVICE_ID_INTEL_MTL_M_NHI0			0x7eb2
- #define PCI_DEVICE_ID_INTEL_MTL_P_NHI0			0x7ec2
- #define PCI_DEVICE_ID_INTEL_MTL_P_NHI1			0x7ec3
-diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
-index 1157b8869bcca..8c2ee431fcde8 100644
---- a/drivers/thunderbolt/quirks.c
-+++ b/drivers/thunderbolt/quirks.c
-@@ -74,6 +74,14 @@ static const struct tb_quirk tb_quirks[] = {
- 		  quirk_usb3_maximum_bandwidth },
- 	{ 0x8087, PCI_DEVICE_ID_INTEL_MTL_P_NHI1, 0x0000, 0x0000,
- 		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
-+	{ 0x8087, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_40G_BRIDGE, 0x0000, 0x0000,
-+		  quirk_usb3_maximum_bandwidth },
- 	/*
- 	 * CLx is not supported on AMD USB4 Yellow Carp and Pink Sardine platforms.
- 	 */
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 2a281cead2bcc..7060f784c2d72 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -124,7 +124,7 @@ int mi_read(struct mft_inode *mi, bool is_mft)
+ 	struct rw_semaphore *rw_lock = NULL;
+ 
+ 	if (is_mounted(sbi)) {
+-		if (!is_mft) {
++		if (!is_mft && mft_ni) {
+ 			rw_lock = &mft_ni->file.run_lock;
+ 			down_read(rw_lock);
+ 		}
+@@ -148,7 +148,7 @@ int mi_read(struct mft_inode *mi, bool is_mft)
+ 		ni_lock(mft_ni);
+ 		down_write(rw_lock);
+ 	}
+-	err = attr_load_runs_vcn(mft_ni, ATTR_DATA, NULL, 0, &mft_ni->file.run,
++	err = attr_load_runs_vcn(mft_ni, ATTR_DATA, NULL, 0, run,
+ 				 vbo >> sbi->cluster_bits);
+ 	if (rw_lock) {
+ 		up_write(rw_lock);
 -- 
 2.40.1
 
