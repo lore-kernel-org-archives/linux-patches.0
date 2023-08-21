@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8388211703
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EFBC433C9;
-	Mon, 21 Aug 2023 19:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FC311703
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECA4C433C8;
+	Mon, 21 Aug 2023 19:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647734;
-	bh=bEXIITThi8D8NdwdR9mUvs/pfPrs71ERLHsPzE2esRM=;
+	s=korg; t=1692647737;
+	bh=rQgHTJSY07SYNiK/m8K6gwE8ld+M0KAuDYu8h4Yd2D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvif631kPpS4c436rKEsjCKcW6li3+wj+DkzClXyBOWIfv/dn7kD/Cu/wFpFI1QqT
-	 LHh5vgUKvO848G/t+QnoVcXr5ioAv40fd6PLT3t+uZkf0pKjdgDXcRQe22+FNjDuLG
-	 lyTHYGLaCayqQR0Dj/Kt/g7D5zkmkEGtEeaGa2Eo=
+	b=zLEKZp2cL/ikre5GgHiS9sUIYaIUN24tsSaaOQ5Up+/HnQQ3bsSYstBLY9gGYwUgY
+	 ryKLHA7L4pMbBXkJWgG9Y67HlCF5jxwFvbjMIkGsmRJaMWMKxxgf06f3e1hwp6vJiX
+	 0GEWFMeT+C7mECfeTLbAznxR/k1Jr9O+EurJYHDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/194] octeon_ep: cancel tx_timeout_task later in remove sequence
-Date: Mon, 21 Aug 2023 21:41:38 +0200
-Message-ID: <20230821194127.934063814@linuxfoundation.org>
+Subject: [PATCH 6.1 120/194] netfilter: nf_tables: fix false-positive lockdep splat
+Date: Mon, 21 Aug 2023 21:41:39 +0200
+Message-ID: <20230821194127.980951276@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -35,44 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 28458c80006bb4e993a09fc094094a8578cad292 ]
+[ Upstream commit b9f052dc68f69dac89fe1e24693354c033daa091 ]
 
-tx_timeout_task is canceled too early when removing the driver. Nothing
-prevents .ndo_tx_timeout from triggering and queuing the work again.
+->abort invocation may cause splat on debug kernels:
 
-Better cancel it after the netdev is unregistered.
-It's harmless for octep_tx_timeout_task to run in the window between the
-unregistration and cancelation, because it checks netif_running.
+WARNING: suspicious RCU usage
+net/netfilter/nft_set_pipapo.c:1697 suspicious rcu_dereference_check() usage!
+[..]
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by nft/133554: [..] (nft_net->commit_mutex){+.+.}-{3:3}, at: nf_tables_valid_genid
+[..]
+ lockdep_rcu_suspicious+0x1ad/0x260
+ nft_pipapo_abort+0x145/0x180
+ __nf_tables_abort+0x5359/0x63d0
+ nf_tables_abort+0x24/0x40
+ nfnetlink_rcv+0x1a0a/0x22c0
+ netlink_unicast+0x73c/0x900
+ netlink_sendmsg+0x7f0/0xc20
+ ____sys_sendmsg+0x48d/0x760
 
-Fixes: 862cd659a6fb ("octeon_ep: Add driver framework and device initialization")
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Link: https://lore.kernel.org/r/20230810150114.107765-3-mschmidt@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Transaction mutex is held, so parallel updates are not possible.
+Switch to _protected and check mutex is held for lockdep enabled builds.
+
+Fixes: 212ed75dc5fb ("netfilter: nf_tables: integrate pipapo into commit protocol")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_set_pipapo.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index 8979dd05e873f..d4ec46d1c8cfb 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -1121,12 +1121,12 @@ static void octep_remove(struct pci_dev *pdev)
- 	if (!oct)
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index a81829c10feab..32cfd0a84b0e2 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1665,6 +1665,17 @@ static void nft_pipapo_commit(const struct nft_set *set)
+ 	priv->clone = new_clone;
+ }
+ 
++static bool nft_pipapo_transaction_mutex_held(const struct nft_set *set)
++{
++#ifdef CONFIG_PROVE_LOCKING
++	const struct net *net = read_pnet(&set->net);
++
++	return lockdep_is_held(&nft_pernet(net)->commit_mutex);
++#else
++	return true;
++#endif
++}
++
+ static void nft_pipapo_abort(const struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+@@ -1673,7 +1684,7 @@ static void nft_pipapo_abort(const struct nft_set *set)
+ 	if (!priv->dirty)
  		return;
  
--	cancel_work_sync(&oct->tx_timeout_task);
- 	cancel_work_sync(&oct->ctrl_mbox_task);
- 	netdev = oct->netdev;
- 	if (netdev->reg_state == NETREG_REGISTERED)
- 		unregister_netdev(netdev);
+-	m = rcu_dereference(priv->match);
++	m = rcu_dereference_protected(priv->match, nft_pipapo_transaction_mutex_held(set));
  
-+	cancel_work_sync(&oct->tx_timeout_task);
- 	octep_device_cleanup(oct);
- 	pci_release_mem_regions(pdev);
- 	free_netdev(netdev);
+ 	new_clone = pipapo_clone(m);
+ 	if (IS_ERR(new_clone))
 -- 
 2.40.1
 
