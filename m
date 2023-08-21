@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FFE5684
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:50:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C50C433C8;
-	Mon, 21 Aug 2023 19:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602781170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:50:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C84AC433C9;
+	Mon, 21 Aug 2023 19:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647431;
-	bh=G1bO7GVyLp8uBw1MoN0Pwd2Fhr6LZC6c7jbxFNl/ku4=;
+	s=korg; t=1692647434;
+	bh=5YwqM484xbVfflbVO7WGXO5b54wXwEkIDazFCVNBtLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rH26wEl2nkiBoBrEVY9oE4oPcey96/eotDb82CeYHX0x4wXXg90YM7ZrrD2LQt2iL
-	 WjLZH2v+QYywl7lI5Hc20ZvpSSMimbQu5Bi0bi6gLlBxbiGahyJFwjfvKx2U9lB6wu
-	 tclXgW2vrKjvKhPjJFv2VmK/Zzrz9szLthUUtSng=
+	b=SC+3C6lxUEJFyz5jPEXUtjf52KKeq4Li7riiBnaQUIqE86oTotUNvUSC/GGfvDKfV
+	 GgRHKeMBKqKUkzbz3xz6E4UOfSCML1noUbTJcWUEQ+8+CNdu9MxCn+4Fpr7doY52sc
+	 rWx20oBoSCrDJifceT42NhXsdmKCQXgw9w3/KlJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guchun Chen <guchun.chen@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Longlong Yao <Longlong.Yao@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	hackyzh002 <hackyzh002@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/194] drm/amdgpu: fix calltrace warning in amddrm_buddy_fini
-Date: Mon, 21 Aug 2023 21:39:51 +0200
-Message-ID: <20230821194123.270256345@linuxfoundation.org>
+Subject: [PATCH 6.1 013/194] drm/amdgpu: Fix integer overflow in amdgpu_cs_pass1
+Date: Mon, 21 Aug 2023 21:39:52 +0200
+Message-ID: <20230821194123.319782320@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -37,75 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Longlong Yao <Longlong.Yao@amd.com>
+From: hackyzh002 <hackyzh002@gmail.com>
 
-[ Upstream commit 01382501509871d0799bab6bd412c228486af5bf ]
+[ Upstream commit 87c2213e85bd81e4a9a4d0880c256568794ae388 ]
 
-The following call trace is observed when removing the amdgpu driver, which
-is caused by that BOs allocated for psp are not freed until removing.
+The type of size is unsigned int, if size is 0x40000000, there will
+be an integer overflow, size will be zero after size *= sizeof(uint32_t),
+will cause uninitialized memory to be referenced later.
 
-[61811.450562] RIP: 0010:amddrm_buddy_fini.cold+0x29/0x47 [amddrm_buddy]
-[61811.450577] Call Trace:
-[61811.450577]  <TASK>
-[61811.450579]  amdgpu_vram_mgr_fini+0x135/0x1c0 [amdgpu]
-[61811.450728]  amdgpu_ttm_fini+0x207/0x290 [amdgpu]
-[61811.450870]  amdgpu_bo_fini+0x27/0xa0 [amdgpu]
-[61811.451012]  gmc_v9_0_sw_fini+0x4a/0x60 [amdgpu]
-[61811.451166]  amdgpu_device_fini_sw+0x117/0x520 [amdgpu]
-[61811.451306]  amdgpu_driver_release_kms+0x16/0x30 [amdgpu]
-[61811.451447]  devm_drm_dev_init_release+0x4d/0x80 [drm]
-[61811.451466]  devm_action_release+0x15/0x20
-[61811.451469]  release_nodes+0x40/0xb0
-[61811.451471]  devres_release_all+0x9b/0xd0
-[61811.451473]  __device_release_driver+0x1bb/0x2a0
-[61811.451476]  driver_detach+0xf3/0x140
-[61811.451479]  bus_remove_driver+0x6c/0xf0
-[61811.451481]  driver_unregister+0x31/0x60
-[61811.451483]  pci_unregister_driver+0x40/0x90
-[61811.451486]  amdgpu_exit+0x15/0x447 [amdgpu]
-
-For smu v13_0_2, if the GPU supports xgmi, refer to
-
-commit f5c7e7797060 ("drm/amdgpu: Adjust removal control flow for smu v13_0_2"),
-
-it will run gpu recover in AMDGPU_RESET_FOR_DEVICE_REMOVE mode when removing,
-which makes all devices in hive list have hw reset but no resume except the
-basic ip blocks, then other ip blocks will not call .hw_fini according to
-ip_block.status.hw.
-
-Since psp_free_shared_bufs just includes some software operations, so move
-it to psp_sw_fini.
-
-Reviewed-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Signed-off-by: Longlong Yao <Longlong.Yao@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: hackyzh002 <hackyzh002@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index eecbd8eeb1f5a..8764ff7ed97e0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -514,6 +514,8 @@ static int psp_sw_fini(void *handle)
- 	kfree(cmd);
- 	cmd = NULL;
- 
-+	psp_free_shared_bufs(psp);
-+
- 	if (psp->km_ring.ring_mem)
- 		amdgpu_bo_free_kernel(&adev->firmware.rbuf,
- 				      &psp->km_ring.ring_mem_mc_addr,
-@@ -2673,8 +2675,6 @@ static int psp_hw_fini(void *handle)
- 
- 	psp_ring_destroy(psp, PSP_RING_TYPE__KM);
- 
--	psp_free_shared_bufs(psp);
--
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index fdb53d4394f30..6d3d01c5f0a28 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -185,7 +185,7 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
+ 	uint64_t *chunk_array_user;
+ 	uint64_t *chunk_array;
+ 	uint32_t uf_offset = 0;
+-	unsigned int size;
++	size_t size;
+ 	int ret;
+ 	int i;
  
 -- 
 2.40.1
