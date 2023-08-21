@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FF31171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D26C433C8;
-	Mon, 21 Aug 2023 20:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0609211729
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:01:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8D5C433C9;
+	Mon, 21 Aug 2023 20:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648108;
-	bh=lXG7bg5jonVFfHb3OqZk0up6B5hzTooDG0KaaXq0d/I=;
+	s=korg; t=1692648110;
+	bh=j2/SJBiFhWFnYATV/tALmd+Ax6GAELMae4O70ON35mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIFUKyKkJyqcuRBABJF6iMwEGNDso9Kp/UEcIpe+ztJK0DGIisIEALqpuDr68y56P
-	 a6MdmioX+IE8ZMd6owTXs7gSAgsv/OXaZTd6fCREVbkVTlPQ0e3xKkC+3IuWJlLdN0
-	 9QnO1syhIv2f28oYKZY8GyZAQ5eZmOyjzcDIXVwM=
+	b=SNKDE80BwubfOnUbt69F9pQlrC2DvIQwRRoNaP9TEaNylsMClNDEVG+8LkXDF4COT
+	 sLbCutsD1i+D+0atZtHmd5iYuHgdkI+QEwriowvOA4eOg06sc78p0DUdM5z3tNec1o
+	 MdugDRpCDc+8cwgN4rJiF6fiamFdnlPcm0LUX6I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Bastien Nocera <hadess@hadess.net>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 057/234] usb: chipidea: imx: add missing USB PHY DPDM wakeup setting
-Date: Mon, 21 Aug 2023 21:40:20 +0200
-Message-ID: <20230821194131.278041700@linuxfoundation.org>
+Subject: [PATCH 6.4 031/234] HID: logitech-hidpp: Add USB and Bluetooth IDs for the Logitech G915 TKL Keyboard
+Date: Mon, 21 Aug 2023 21:39:54 +0200
+Message-ID: <20230821194130.112167727@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,39 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: stuarthayhurst <stuart.a.hayhurst@gmail.com>
 
-[ Upstream commit 53d061c19dc4cb68409df6dc11c40389c8c42a75 ]
+[ Upstream commit 48aea8b445c422a372cf15915101035a47105421 ]
 
-USB PHY DPDM wakeup bit is enabled by default, when USB wakeup
-is not required(/sys/.../wakeup is disabled), this bit should be
-disabled, otherwise we will have unexpected wakeup if do USB device
-connect/disconnect while system sleep.
-This bit can be enabled for both host and device mode.
+Adds the USB and Bluetooth IDs for the Logitech G915 TKL keyboard, for device detection
+For this device, this provides battery reporting on top of hid-generic
 
-Signed-off-by: Li Jun <jun.li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Message-ID: <20230517081907.3410465-3-xu.yang_2@nxp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/usbmisc_imx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/chipidea/usbmisc_imx.c b/drivers/usb/chipidea/usbmisc_imx.c
-index 0938e274ba3a8..681c2ddc83fa5 100644
---- a/drivers/usb/chipidea/usbmisc_imx.c
-+++ b/drivers/usb/chipidea/usbmisc_imx.c
-@@ -135,7 +135,7 @@
- #define TXVREFTUNE0_MASK		(0xf << 20)
- 
- #define MX6_USB_OTG_WAKEUP_BITS (MX6_BM_WAKEUP_ENABLE | MX6_BM_VBUS_WAKEUP | \
--				 MX6_BM_ID_WAKEUP)
-+				 MX6_BM_ID_WAKEUP | MX6SX_BM_DPDM_WAKEUP_EN)
- 
- struct usbmisc_ops {
- 	/* It's called once when probe a usb device */
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index f7e06d433a915..dfe8e09a18de0 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4608,6 +4608,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC086) },
+ 	{ /* Logitech G903 Hero Gaming Mouse over USB */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC091) },
++	{ /* Logitech G915 TKL Keyboard over USB */
++	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC343) },
+ 	{ /* Logitech G920 Wheel over USB */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_G920_WHEEL),
+ 		.driver_data = HIDPP_QUIRK_CLASS_G920 | HIDPP_QUIRK_FORCE_OUTPUT_REPORTS},
+@@ -4630,6 +4632,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	{ /* MX5500 keyboard over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb30b),
+ 	  .driver_data = HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS },
++	{ /* Logitech G915 TKL keyboard over Bluetooth */
++	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb35f) },
+ 	{ /* M-RCQ142 V470 Cordless Laser Mouse over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb008) },
+ 	{ /* MX Master mouse over Bluetooth */
 -- 
 2.40.1
 
