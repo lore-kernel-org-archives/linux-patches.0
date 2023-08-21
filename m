@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F911171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37B8C433C8;
-	Mon, 21 Aug 2023 20:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AEC1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:09:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6858C433C7;
+	Mon, 21 Aug 2023 20:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648553;
-	bh=6n6e7bSu8bR/tatQoDyYKjuJ2RtADOEIdcdDo0j0BhU=;
+	s=korg; t=1692648556;
+	bh=PxOmZgFCP6jaFO+5I2DqmFSAuf6rJnBqvX+pl1pG1Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mf85pcvWtj+p62MQFZLvPhyjLkqPJ3z5rCqsoRuEhFc7cyuNHfFaGDYUK7aJGfvps
-	 Y14FaCCbYaYpMnlAyFJSq32/IcyQGlbhi8PTfbq4BWJq8VsW3MDhUgGh43hQYn/VWv
-	 oHzlupBsMbOHxf+1oLVaFp2Z7aMl3OINr00x7fD4=
+	b=UqLiGXetluFhWD+oGByJFsGSL0vQA4Nnyf7C6PAVeqsS6BNzVLAcUTiLILShgFwwS
+	 w+ax1WZPJ0SzbebRttHdsQnKNWvHPl+XRjaM3GWXgQd6pDxhIaUREnGOExvlFJZOwN
+	 HbMZqaRgMkILvfnJhRcnp1c6ujLttUtcG5ucy7cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.4 215/234] mmc: f-sdh30: fix order of function calls in sdhci_f_sdh30_remove
-Date: Mon, 21 Aug 2023 21:42:58 +0200
-Message-ID: <20230821194138.375133000@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 188/234] ARM: dts: imx: Set default tuning step for imx6sx usdhc
+Date: Mon, 21 Aug 2023 21:42:31 +0200
+Message-ID: <20230821194137.145197022@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -36,49 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 58abdd80b93b09023ca03007b608685c41e3a289 upstream.
+[ Upstream commit 0a2b96e42a0284c4fc03022236f656a085ca714a ]
 
-The order of function calls in sdhci_f_sdh30_remove is wrong,
-let's call sdhci_pltfm_unregister first.
+If the tuning step is not set, the tuning step is set to 1.
+For some sd cards, the following Tuning timeout will occur.
 
-Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 5def5c1c15bf ("mmc: sdhci-f-sdh30: Replace with sdhci_pltfm")
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230727070051.17778-62-frank.li@vivo.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tuning failed, falling back to fixed sampling clock
+
+So set the default tuning step. This refers to the NXP vendor's
+commit below:
+
+https://github.com/nxp-imx/linux-imx/blob/lf-6.1.y/
+arch/arm/boot/dts/imx6sx.dtsi#L1108-L1109
+
+Fixes: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_f_sdh30.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/imx6sx.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/mmc/host/sdhci_f_sdh30.c
-+++ b/drivers/mmc/host/sdhci_f_sdh30.c
-@@ -210,13 +210,16 @@ static int sdhci_f_sdh30_remove(struct p
- {
- 	struct sdhci_host *host = platform_get_drvdata(pdev);
- 	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
--
--	reset_control_assert(priv->rst);
--	clk_disable_unprepare(priv->clk);
--	clk_disable_unprepare(priv->clk_iface);
-+	struct clk *clk_iface = priv->clk_iface;
-+	struct reset_control *rst = priv->rst;
-+	struct clk *clk = priv->clk;
+diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
+index 4233943a1cca8..fc0654e3fe950 100644
+--- a/arch/arm/boot/dts/imx6sx.dtsi
++++ b/arch/arm/boot/dts/imx6sx.dtsi
+@@ -980,6 +980,8 @@
+ 					 <&clks IMX6SX_CLK_USDHC1>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-start-tap = <20>;
++				fsl,tuning-step= <2>;
+ 				status = "disabled";
+ 			};
  
- 	sdhci_pltfm_unregister(pdev);
+@@ -992,6 +994,8 @@
+ 					 <&clks IMX6SX_CLK_USDHC2>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-start-tap = <20>;
++				fsl,tuning-step= <2>;
+ 				status = "disabled";
+ 			};
  
-+	reset_control_assert(rst);
-+	clk_disable_unprepare(clk);
-+	clk_disable_unprepare(clk_iface);
-+
- 	return 0;
- }
+@@ -1004,6 +1008,8 @@
+ 					 <&clks IMX6SX_CLK_USDHC3>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-start-tap = <20>;
++				fsl,tuning-step= <2>;
+ 				status = "disabled";
+ 			};
  
+-- 
+2.40.1
+
 
 
