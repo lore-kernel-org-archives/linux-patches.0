@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE45C1171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:00:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF09C433C8;
-	Mon, 21 Aug 2023 20:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807AC1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:00:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01977C433C8;
+	Mon, 21 Aug 2023 20:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648015;
-	bh=l9TXvh63oZNnvBOy59ADhd5nUHUpAaJRUqFTbwqzZBQ=;
+	s=korg; t=1692648018;
+	bh=Df5Cd+qXoza4tr5db3N30kUzoYiOuz3+DyXiqM42MlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbtamtvwHlqBqRAIGalsVnLPbPav8w9hn87AgH7dfayQ9NFQfj6Goj9W4V4aUaliT
-	 EpE1fpRtLqsceHXxW/C98xX93DzcFaZLeMJweP1MFfpTtjduaSGlhzQHU7Hzd8cSHL
-	 hgJmrA/7cokWqfaHSLz+HztFA6eXcef9zX15ZWlI=
+	b=015eFnEn/fp8054IK2XW3esyHRXH+JZQ+4aHilxvNDbxd7Pg90fFPA1RGDPiWWve/
+	 Pl+ZLcSLp7gUj+xBlElRqKLah2z6arrCcTMZ3hGImC6GqifcFj+uORXw2PeXSTm/ey
+	 XI8kmbB4Tq4h63bukGNmiPkLro7ih5oisVJ9yQMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tony Lindgren <tony@atomide.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 024/234] iopoll: Call cpu_relax() in busy loops
-Date: Mon, 21 Aug 2023 21:39:47 +0200
-Message-ID: <20230821194129.823318112@linuxfoundation.org>
+Subject: [PATCH 6.4 025/234] ASoC: SOF: Intel: fix SoundWire/HDaudio mutual exclusion
+Date: Mon, 21 Aug 2023 21:39:48 +0200
+Message-ID: <20230821194129.874670305@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -38,75 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit b407460ee99033503993ac7437d593451fcdfe44 ]
+[ Upstream commit f751b99255cacd9ffe8c4bbf99767ad670cee1f7 ]
 
-It is considered good practice to call cpu_relax() in busy loops, see
-Documentation/process/volatile-considered-harmful.rst.  This can not
-only lower CPU power consumption or yield to a hyperthreaded twin
-processor, but also allows an architecture to mitigate hardware issues
-(e.g. ARM Erratum 754327 for Cortex-A9 prior to r2p0) in the
-architecture-specific cpu_relax() implementation.
+The functionality described in Commit 61bef9e68dca ("ASoC: SOF: Intel: hda: enforce exclusion between HDaudio and SoundWire")
+does not seem to be properly implemented with two issues that need to
+be corrected.
 
-In addition, cpu_relax() is also a compiler barrier.  It is not
-immediately obvious that the @op argument "function" will result in an
-actual function call (e.g. in case of inlining).
+a) The test used is incorrect when DisplayAudio codecs are not supported.
 
-Where a function call is a C sequence point, this is lost on inlining.
-Therefore, with agressive enough optimization it might be possible for
-the compiler to hoist the:
+b) Conversely when only Display Audio codecs can be found, we do want
+to start the SoundWire links, if any. That will help add the relevant
+topologies and machine descriptors, and identify cases where the
+SoundWire information in ACPI needs to be modified with a quirk.
 
-        (val) = op(args);
-
-"load" out of the loop because it doesn't see the value changing. The
-addition of cpu_relax() would inhibit this.
-
-As the iopoll helpers lack calls to cpu_relax(), people are sometimes
-reluctant to use them, and may fall back to open-coded polling loops
-(including cpu_relax() calls) instead.
-
-Fix this by adding calls to cpu_relax() to the iopoll helpers:
-  - For the non-atomic case, it is sufficient to call cpu_relax() in
-    case of a zero sleep-between-reads value, as a call to
-    usleep_range() is a safe barrier otherwise.  However, it doesn't
-    hurt to add the call regardless, for simplicity, and for similarity
-    with the atomic case below.
-  - For the atomic case, cpu_relax() must be called regardless of the
-    sleep-between-reads value, as there is no guarantee all
-    architecture-specific implementations of udelay() handle this.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://lore.kernel.org/r/45c87bec3397fdd704376807f0eec5cc71be440f.1685692810.git.geert+renesas@glider.be
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20230606222529.57156-2-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iopoll.h | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/intel/hda.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/iopoll.h b/include/linux/iopoll.h
-index 2c8860e406bd8..0417360a6db9b 100644
---- a/include/linux/iopoll.h
-+++ b/include/linux/iopoll.h
-@@ -53,6 +53,7 @@
- 		} \
- 		if (__sleep_us) \
- 			usleep_range((__sleep_us >> 2) + 1, __sleep_us); \
-+		cpu_relax(); \
- 	} \
- 	(cond) ? 0 : -ETIMEDOUT; \
- })
-@@ -95,6 +96,7 @@
- 		} \
- 		if (__delay_us) \
- 			udelay(__delay_us); \
-+		cpu_relax(); \
- 	} \
- 	(cond) ? 0 : -ETIMEDOUT; \
- })
+diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
+index 3153e21f100ab..3853582e32e12 100644
+--- a/sound/soc/sof/intel/hda.c
++++ b/sound/soc/sof/intel/hda.c
+@@ -1343,12 +1343,22 @@ static void hda_generic_machine_select(struct snd_sof_dev *sdev,
+ 			hda_mach->mach_params.dmic_num = dmic_num;
+ 			pdata->tplg_filename = tplg_filename;
+ 
+-			if (codec_num == 2) {
++			if (codec_num == 2 ||
++			    (codec_num == 1 && !HDA_IDISP_CODEC(bus->codec_mask))) {
+ 				/*
+ 				 * Prevent SoundWire links from starting when an external
+ 				 * HDaudio codec is used
+ 				 */
+ 				hda_mach->mach_params.link_mask = 0;
++			} else {
++				/*
++				 * Allow SoundWire links to start when no external HDaudio codec
++				 * was detected. This will not create a SoundWire card but
++				 * will help detect if any SoundWire codec reports as ATTACHED.
++				 */
++				struct sof_intel_hda_dev *hdev = sdev->pdata->hw_pdata;
++
++				hda_mach->mach_params.link_mask = hdev->info.link_mask;
+ 			}
+ 
+ 			*mach = hda_mach;
 -- 
 2.40.1
 
