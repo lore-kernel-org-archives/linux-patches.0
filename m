@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84321171A
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC03C433C7;
-	Mon, 21 Aug 2023 20:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D92C1171A
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 20:02:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E406AC433C7;
+	Mon, 21 Aug 2023 20:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692648166;
-	bh=iPPDiYbSYEZQyfavUSLC/90we8XMumNTMzO7yTL+BkE=;
+	s=korg; t=1692648169;
+	bh=dEuxq1ERzATKTbv3N4kuA6T8WYtzyJRaAtcsjEbj8Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i41IPGQyJv8cDchBIzkwzCkekQdQKGctIyui02J3dHsA2Jp1YSTS+yLvhoxs1GjFE
-	 gdIY1X1nDqfbHY7tVDLws59gGA5OIO8TlldrwEc0k1OzFTVpbp+gsL3NSFBJ7bpN3E
-	 /8YEVraMMJDfKfzqm+dr6FhbIJrlENouNkYv29nw=
+	b=lzEV/vmcvDeGdcPuz1SPDMPH3lfXw/ZMVGV5G0iNz9ZEU4c4rfDdnz3qC/4TvartJ
+	 YPrufBIsFXQoC8XdP84Dy4QcU+/qku+uBKI777NeRa8ovSPBB4e80xDTAjjULUbpMb
+	 9oPGje4u6d9NfwP5WwQ/XsyLQiCQdQgTv5ecAouw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 079/234] ALSA: hda/realtek: Add quirk for ASUS ROG GZ301V
-Date: Mon, 21 Aug 2023 21:40:42 +0200
-Message-ID: <20230821194132.260162225@linuxfoundation.org>
+Subject: [PATCH 6.4 062/234] firewire: net: fix use after free in fwnet_finish_incoming_packet()
+Date: Mon, 21 Aug 2023 21:40:25 +0200
+Message-ID: <20230821194131.508073304@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 References: <20230821194128.754601642@linuxfoundation.org>
@@ -35,36 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 5251605f4d297a0eb5d3b7f39f9dcee9e4d0115a ]
+[ Upstream commit 3ff256751a2853e1ffaa36958ff933ccc98c6cb5 ]
 
-Adds the required quirk to enable the Cirrus amp and correct pins
-on the ASUS ROG GZ301V series which uses an SPI connected Cirrus amp.
+The netif_rx() function frees the skb so we can't dereference it to
+save the skb->len.
 
-While this works if the related _DSD properties are made available, these
-aren't included in the ACPI of these laptops (yet).
-
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Link: https://lore.kernel.org/r/20230706223323.30871-2-luke@ljones.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_3B3D24B66ED66A6BB73CC0E63C6A14E45109@qq.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firewire/net.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 9278362e4edb2..853d1ed21facd 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9632,6 +9632,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1483, "ASUS GU603V", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1493, "ASUS GV601V", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
-+	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301V", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
+diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
+index 538bd677c254a..7a4d1a478e33e 100644
+--- a/drivers/firewire/net.c
++++ b/drivers/firewire/net.c
+@@ -479,7 +479,7 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
+ 					struct sk_buff *skb, u16 source_node_id,
+ 					bool is_broadcast, u16 ether_type)
+ {
+-	int status;
++	int status, len;
+ 
+ 	switch (ether_type) {
+ 	case ETH_P_ARP:
+@@ -533,13 +533,15 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
+ 		}
+ 		skb->protocol = protocol;
+ 	}
++
++	len = skb->len;
+ 	status = netif_rx(skb);
+ 	if (status == NET_RX_DROP) {
+ 		net->stats.rx_errors++;
+ 		net->stats.rx_dropped++;
+ 	} else {
+ 		net->stats.rx_packets++;
+-		net->stats.rx_bytes += skb->len;
++		net->stats.rx_bytes += len;
+ 	}
+ 
+ 	return 0;
 -- 
 2.40.1
 
