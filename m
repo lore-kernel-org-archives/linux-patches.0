@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFAC1170E
-	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA31C433C7;
-	Mon, 21 Aug 2023 19:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1421170E
+	for <patches@lists.linux.dev>; Mon, 21 Aug 2023 19:51:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF1AC433C7;
+	Mon, 21 Aug 2023 19:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692647468;
-	bh=D0H7n3QbEDyFampISASt+MeFuSXfgoZJJZ7aQ36M9Yk=;
+	s=korg; t=1692647471;
+	bh=l9TXvh63oZNnvBOy59ADhd5nUHUpAaJRUqFTbwqzZBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6xm3cuxaNYsvkGsoEKm8YMU7gbzo7PRhK7bAwOc5BIhtMOnT7QzpYBpXZ2+uk2hJ
-	 tzkcs9DeONGEq5H4sbH0hgKC2zNaSiPA6cFc780RMXFBZyfa9yoh1EnAx+U3gEidHJ
-	 6OpNw9LtuKfyOXd8+pFp7zZ+JU1CThHrtdrbaz+k=
+	b=pWVimMVbAucWc1QnL+8Laz5uBND4mm9wGum1JFliX2bKLHH0/z1HqrjTyrkzHhWBN
+	 RYG8a8V2/lKvmvNkbtKtrP1ga7RPJnkXlHahFHSBIf5Ndg4hR0ZbCxjKTIWMy3670+
+	 QV2OE5V/ad4ejbtfPRT7Pp/HiiEHclnNt8ZxpadM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Yong Zhi <yong.zhi@intel.com>,
-	Uday M Bhat <uday.m.bhat@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/194] ASoC: Intel: sof_sdw: Add support for Rex soundwire
-Date: Mon, 21 Aug 2023 21:40:03 +0200
-Message-ID: <20230821194123.854674711@linuxfoundation.org>
+Subject: [PATCH 6.1 025/194] iopoll: Call cpu_relax() in busy loops
+Date: Mon, 21 Aug 2023 21:40:04 +0200
+Message-ID: <20230821194123.897412681@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 References: <20230821194122.695845670@linuxfoundation.org>
@@ -39,43 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uday M Bhat <uday.m.bhat@intel.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 164e5dc17525181c05563f0a06796f1a363801d5 ]
+[ Upstream commit b407460ee99033503993ac7437d593451fcdfe44 ]
 
-Add rex entry in the soundwire quirk table
+It is considered good practice to call cpu_relax() in busy loops, see
+Documentation/process/volatile-considered-harmful.rst.  This can not
+only lower CPU power consumption or yield to a hyperthreaded twin
+processor, but also allows an architecture to mitigate hardware issues
+(e.g. ARM Erratum 754327 for Cortex-A9 prior to r2p0) in the
+architecture-specific cpu_relax() implementation.
 
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Yong Zhi <yong.zhi@intel.com>
-Signed-off-by: Uday M Bhat <uday.m.bhat@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230602202225.249209-28-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+In addition, cpu_relax() is also a compiler barrier.  It is not
+immediately obvious that the @op argument "function" will result in an
+actual function call (e.g. in case of inlining).
+
+Where a function call is a C sequence point, this is lost on inlining.
+Therefore, with agressive enough optimization it might be possible for
+the compiler to hoist the:
+
+        (val) = op(args);
+
+"load" out of the loop because it doesn't see the value changing. The
+addition of cpu_relax() would inhibit this.
+
+As the iopoll helpers lack calls to cpu_relax(), people are sometimes
+reluctant to use them, and may fall back to open-coded polling loops
+(including cpu_relax() calls) instead.
+
+Fix this by adding calls to cpu_relax() to the iopoll helpers:
+  - For the non-atomic case, it is sufficient to call cpu_relax() in
+    case of a zero sleep-between-reads value, as a call to
+    usleep_range() is a safe barrier otherwise.  However, it doesn't
+    hurt to add the call regardless, for simplicity, and for similarity
+    with the atomic case below.
+  - For the atomic case, cpu_relax() must be called regardless of the
+    sleep-between-reads value, as there is no guarantee all
+    architecture-specific implementations of udelay() handle this.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/45c87bec3397fdd704376807f0eec5cc71be440f.1685692810.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/iopoll.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 0cf9efec46ce2..064b6feb76167 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -382,6 +382,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(RT711_JD2_100K),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Google"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Rex"),
-+		},
-+		.driver_data = (void *)(SOF_SDW_PCH_DMIC),
-+	},
- 	/* LunarLake devices */
- 	{
- 		.callback = sof_sdw_quirk_cb,
+diff --git a/include/linux/iopoll.h b/include/linux/iopoll.h
+index 2c8860e406bd8..0417360a6db9b 100644
+--- a/include/linux/iopoll.h
++++ b/include/linux/iopoll.h
+@@ -53,6 +53,7 @@
+ 		} \
+ 		if (__sleep_us) \
+ 			usleep_range((__sleep_us >> 2) + 1, __sleep_us); \
++		cpu_relax(); \
+ 	} \
+ 	(cond) ? 0 : -ETIMEDOUT; \
+ })
+@@ -95,6 +96,7 @@
+ 		} \
+ 		if (__delay_us) \
+ 			udelay(__delay_us); \
++		cpu_relax(); \
+ 	} \
+ 	(cond) ? 0 : -ETIMEDOUT; \
+ })
 -- 
 2.40.1
 
