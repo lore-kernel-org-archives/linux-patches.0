@@ -1,253 +1,91 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACBD820180
-	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 20:18:49 +0000 (UTC)
-Received: from [192.168.0.5] (71-212-112-68.tukw.qwest.net [71.212.112.68])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 9692B2126CD4;
-	Tue, 22 Aug 2023 13:18:42 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9692B2126CD4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1692735523;
-	bh=btU0rYW/bx7YGoKcH73ygw8rCrE2wH1cwH/SWBjhpw4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DFC55oaMZJjU5gyX4Fty/5hcpe8EZiLuuMET7BoKHLcBAxiEFJXna19hq74swcGlC
-	 HTBv8OZaA5fbgfgXzMlSIqmKIqtQxAIih87JuxnQWsZCkg4XQAwNVfozq/7qHFGGB8
-	 G7mAw8OA+d5/OAuXF2bxPILeSUJ7bneXfKAmIDb4=
-Message-ID: <8978223c-c5e8-4235-a0ed-2031583c2751@linux.microsoft.com>
-Date: Tue, 22 Aug 2023 13:18:51 -0700
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA420180
+	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 20:23:36 +0000 (UTC)
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6bc9811558cso3530856a34.0
+        for <patches@lists.linux.dev>; Tue, 22 Aug 2023 13:23:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692735815; x=1693340615;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jqi3CURD1i8JRUxuB5MEXSey4Yu1NRacqMjmHXpb1qA=;
+        b=aSXkQr2s1RA5cBAyhs8eZgXQWhEROgEBM1yN6Ve2691jUCUqbRIqt24CHWtZdWN9nv
+         oEP/l6SIlZLzCy6JFtBKllAi0H8u5IZEDwdfyasmUeldWda3Y7cIGn2ldfoRck39fcZj
+         AgUxglBO88vB7pFCug3egYT7c2FKX3eCM9sENBv/VjiKm8hyr7kLRuVWHTY6+81uuJAn
+         J5r2kJ+7Jygi2TPWMSajEl9XHe/31i3lggdvO37mLhWbfKX42yU8k+xC4OQxQgO/Q+ha
+         Vd0ULCrP7ophvNZw4jeJvKsJcA24uVw4jtYtlPy5ENJENGu8It1W4f98spTTCTQRdv+S
+         W4kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692735815; x=1693340615;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jqi3CURD1i8JRUxuB5MEXSey4Yu1NRacqMjmHXpb1qA=;
+        b=NEgGwmtnjD89cqh1eIpCa6k08fmJ2l61kQZegOqe4xl0mSUCS4z12K4iNrBiCeeMqv
+         ydTx0AVzjZc+jLq9b2ZcZmYjvAkEYBz4Aoo5SBOAYABI0nmQyDlltdp5x+uU1cN8cjPv
+         Ucsi2/T08/TjiXYs39or6uIcVv+tlyWzlhYLL/Jp3dEaIR7xXOf5/yBuFQPBFX5Is7JZ
+         QpnZy10uKSp5iUQOm8/OeRJbXWYcdetx5c6APkWFLhJTdhMDCs4ebAlouTJflOXUr6Jr
+         CoHUppWLhFlxlumVqmYdbpqy40KvYXcQD+q4WoXNGOfce3tjOVl7BopJQfJvEQgD4JtH
+         JjqQ==
+X-Gm-Message-State: AOJu0Yx4J9+zzNs4IWo91r15gCUkMcy22a0FZn/8BRNAA6thqQ7B94A7
+	mL0X0duYoHDDofmLoGT0Tvw=
+X-Google-Smtp-Source: AGHT+IG/FGtyCP48fro2CrnwocGv7TDALAy+pryH74Z/aT+ZSu5UWrreZjVZYosdOw/Z/3FYMNZ/pw==
+X-Received: by 2002:a05:6870:2188:b0:19f:6711:8e0a with SMTP id l8-20020a056870218800b0019f67118e0amr13111471oae.32.1692735815183;
+        Tue, 22 Aug 2023 13:23:35 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id b5-20020a0cf045000000b0063cfe9adb2csm3293671qvl.108.2023.08.22.13.23.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Aug 2023 13:23:34 -0700 (PDT)
+Message-ID: <2333b38a-fe55-7972-0418-c5946dcda672@gmail.com>
+Date: Tue, 22 Aug 2023 13:23:13 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
 Content-Language: en-US
-To: Saurabh Singh Sengar <ssengar@microsoft.com>,
- "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "x86@kernel.org" <x86@kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>
-Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Michael Kelley (LINUX)" <mikelley@microsoft.com>,
- KY Srinivasan <kys@microsoft.com>, "wei.liu@kernel.org"
- <wei.liu@kernel.org>, Haiyang Zhang <haiyangz@microsoft.com>,
- Dexuan Cui <decui@microsoft.com>,
- "apais@linux.microsoft.com" <apais@linux.microsoft.com>,
- Tianyu Lan <Tianyu.Lan@microsoft.com>,
- "ssengar@linux.microsoft.com" <ssengar@linux.microsoft.com>,
- MUKESH RATHOR <mukeshrathor@microsoft.com>,
- "stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
- "jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>,
- vkuznets <vkuznets@redhat.com>, "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "hpa@zytor.com" <hpa@zytor.com>, "will@kernel.org" <will@kernel.org>,
- "catalin.marinas@arm.com" <catalin.marinas@arm.com>
-References: <1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1692309711-5573-16-git-send-email-nunodasneves@linux.microsoft.com>
- <PUZP153MB063545036E6B547C009F6AECBE1BA@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
- <664aec4c-7ea9-447f-afab-9e31e9e106c1@linux.microsoft.com>
- <PUZP153MB0635A9EBE87C3589612B628CBE19A@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <PUZP153MB0635A9EBE87C3589612B628CBE19A@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230821194122.695845670@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/19/2023 10:19 PM, Saurabh Singh Sengar wrote:
+On 8/21/23 12:39, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.47 release.
+> There are 194 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> Anything received after that time might be too late.
 > 
->> -----Original Message-----
->> From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
->> Sent: Saturday, August 19, 2023 12:30 AM
->> To: Saurabh Singh Sengar <ssengar@microsoft.com>; linux-
->> hyperv@vger.kernel.org; linux-kernel@vger.kernel.org; x86@kernel.org; linux-
->> arm-kernel@lists.infradead.org; linux-arch@vger.kernel.org
->> Cc: patches@lists.linux.dev; Michael Kelley (LINUX)
->> <mikelley@microsoft.com>; KY Srinivasan <kys@microsoft.com>;
->> wei.liu@kernel.org; Haiyang Zhang <haiyangz@microsoft.com>; Dexuan Cui
->> <decui@microsoft.com>; apais@linux.microsoft.com; Tianyu Lan
->> <Tianyu.Lan@microsoft.com>; ssengar@linux.microsoft.com; MUKESH
->> RATHOR <mukeshrathor@microsoft.com>; stanislav.kinsburskiy@gmail.com;
->> jinankjain@linux.microsoft.com; vkuznets <vkuznets@redhat.com>;
->> tglx@linutronix.de; mingo@redhat.com; bp@alien8.de;
->> dave.hansen@linux.intel.com; hpa@zytor.com; will@kernel.org;
->> catalin.marinas@arm.com
->> Subject: Re: [PATCH v2 15/15] Drivers: hv: Add modules to expose /dev/mshv
->> to VMMs running on Hyper-V
->>
->> On 8/18/2023 6:08 AM, Saurabh Singh Sengar wrote:
->>>> +
->>>> +config MSHV_VTL
->>>> +	tristate "Microsoft Hyper-V VTL driver"
->>>> +	depends on MSHV
->>>> +	select HYPERV_VTL_MODE
->>>> +	select TRANSPARENT_HUGEPAGE
->>>
->>> TRANSPARENT_HUGEPAGE can be avoided for now.
->>>
->>
->> I will remove it in the next version. Thanks.
->>>> +
->>>> +#define HV_GET_REGISTER_BATCH_SIZE	\
->>>> +	(HV_HYP_PAGE_SIZE / sizeof(union hv_register_value))
->>>> +#define HV_SET_REGISTER_BATCH_SIZE	\
->>>> +	((HV_HYP_PAGE_SIZE - sizeof(struct hv_input_set_vp_registers)) \
->>>> +		/ sizeof(struct hv_register_assoc))
->>>> +
->>>> +int hv_call_get_vp_registers(
->>>> +		u32 vp_index,
->>>> +		u64 partition_id,
->>>> +		u16 count,
->>>> +		union hv_input_vtl input_vtl,
->>>> +		struct hv_register_assoc *registers) {
->>>> +	struct hv_input_get_vp_registers *input_page;
->>>> +	union hv_register_value *output_page;
->>>> +	u16 completed = 0;
->>>> +	unsigned long remaining = count;
->>>> +	int rep_count, i;
->>>> +	u64 status;
->>>> +	unsigned long flags;
->>>> +
->>>> +	local_irq_save(flags);
->>>> +
->>>> +	input_page = *this_cpu_ptr(hyperv_pcpu_input_arg);
->>>> +	output_page = *this_cpu_ptr(hyperv_pcpu_output_arg);
->>>> +
->>>> +	input_page->partition_id = partition_id;
->>>> +	input_page->vp_index = vp_index;
->>>> +	input_page->input_vtl.as_uint8 = input_vtl.as_uint8;
->>>> +	input_page->rsvd_z8 = 0;
->>>> +	input_page->rsvd_z16 = 0;
->>>> +
->>>> +	while (remaining) {
->>>> +		rep_count = min(remaining, HV_GET_REGISTER_BATCH_SIZE);
->>>> +		for (i = 0; i < rep_count; ++i)
->>>> +			input_page->names[i] = registers[i].name;
->>>> +
->>>> +		status = hv_do_rep_hypercall(HVCALL_GET_VP_REGISTERS,
->>>> rep_count,
->>>> +					     0, input_page, output_page);
->>>
->>> Is there any possibility that count value is passed 0 by mistake ? In
->>> that case status will remain uninitialized.
->>>
->>
->> These lines ensure rep_count is never 0 here:
->>
->> 	while (remaining) {
->> 		rep_count = min(remaining, HV_GET_REGISTER_BATCH_SIZE);
->>
->> Remaining can't be 0 or the loop would exit, and
->> HV_GET_REGISTER_BATCH_SIZE is not 0, or we would never get any registers.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.47-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> There is a parameter in this function "count". I was checking if there is any possibility
-> that is passed as 0 by mistake ? this will lead to "remaining" value as 0 and loop will never
-> execute. Which results using "status" uninitialized later in the function.
+> thanks,
 > 
-> 
+> greg k-h
 
-Ah ok, thanks! I will change it to return immediately in case count is 0.
->>>> diff --git a/drivers/hv/mshv.h b/drivers/hv/mshv.h
->>>> new file mode 100644
->>>> index 000000000000..166480a73f3f
->>>> --- /dev/null
->>>> +++ b/drivers/hv/mshv.h
->>>> @@ -0,0 +1,156 @@
->>>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>>> +/*
->>>> + * Copyright (c) 2023, Microsoft Corporation.
->>>> + */
->>>> +
->>>> +#ifndef _MSHV_H_
->>>> +#define _MSHV_H_
->>>> +
->>>> +#include <linux/spinlock.h>
->>>> +#include <linux/mutex.h>
->>>> +#include <linux/semaphore.h>
->>>> +#include <linux/sched.h>
->>>> +#include <linux/srcu.h>
->>>> +#include <linux/wait.h>
->>>> +#include <uapi/linux/mshv.h>
->>>> +
->>>> +/*
->>>> + * Hyper-V hypercalls
->>>> + */
->>>> +
->>>> +int hv_call_withdraw_memory(u64 count, int node, u64 partition_id);
->>>> +int hv_call_create_partition(
->>>> +		u64 flags,
->>>> +		struct hv_partition_creation_properties creation_properties,
->>>> +		union hv_partition_isolation_properties isolation_properties,
->>>> +		u64 *partition_id);
->>>> +int hv_call_initialize_partition(u64 partition_id);
->>>> +int hv_call_finalize_partition(u64 partition_id);
->>>> +int hv_call_delete_partition(u64 partition_id);
->>>> +int hv_call_map_gpa_pages(
->>>> +		u64 partition_id,
->>>> +		u64 gpa_target,
->>>> +		u64 page_count, u32 flags,
->>>> +		struct page **pages);
->>>> +int hv_call_unmap_gpa_pages(
->>>> +		u64 partition_id,
->>>> +		u64 gpa_target,
->>>> +		u64 page_count, u32 flags);
->>>> +int hv_call_get_vp_registers(
->>>> +		u32 vp_index,
->>>> +		u64 partition_id,
->>>> +		u16 count,
->>>> +		union hv_input_vtl input_vtl,
->>>> +		struct hv_register_assoc *registers);
->>>> +int hv_call_get_gpa_access_states(
->>>> +		u64 partition_id,
->>>> +		u32 count,
->>>> +		u64 gpa_base_pfn,
->>>> +		u64 state_flags,
->>>> +		int *written_total,
->>>> +		union hv_gpa_page_access_state *states);
->>>> +
->>>> +int hv_call_set_vp_registers(
->>>> +		u32 vp_index,
->>>> +		u64 partition_id,
->>>> +		u16 count,
->>>> +		union hv_input_vtl input_vtl,
->>>> +		struct hv_register_assoc *registers);
->>>
->>> Nit: Opportunity to fix many of the checkpatch.pl related to line break here
->>> and many other places.
->>>
->>
->> checkpatch.pl doesn't complain about anything in this file.
-> 
-> If we use --strict switch with checkpatch.pl we observe additional CHECK(s).
-> I observe 159 CHECK(s) with this patch overall.
-> (total: 1 errors, 7 warnings, 159 checks, 7460 lines checked)
-> Few examples:
-> 
-> CHECK: Lines should not end with a '('
-> #240: FILE: drivers/hv/hv_call.c:73:
-> +int hv_call_set_vp_registers(
-> 
-> CHECK: Alignment should match open parenthesis
-> #266: FILE: drivers/hv/hv_call.c:99:
-> +               memcpy(input_page->elements, registers,
-> +                       sizeof(struct hv_register_assoc) * rep_count);
-> 
-> 
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-I didn't try --strict before. Thanks, I'll fix up the formatting.
-
-> I also see an error with flexible array, possibly we can fix that as well.
-> 
-> ERROR: Use C99 flexible arrays - see https://docs.kernel.org/process/deprecated.html#zero-length-and-one-element-arrays
-> #7468: FILE: include/uapi/linux/mshv.h:134:
-> +       struct mshv_msi_routing_entry entries[0];
-> +};
-> 
-
-Indeed, I'll fix it too.
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
