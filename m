@@ -1,121 +1,93 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AF718AE5
-	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 15:27:06 +0000 (UTC)
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-31adc5c899fso4282166f8f.2
-        for <patches@lists.linux.dev>; Tue, 22 Aug 2023 08:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692718024; x=1693322824;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P8Gu3e55JmS9M6j7VGf0BGDN5maX8MZT1jBCyJ1KpJs=;
-        b=pTS5glFP09xWkddToRrsvw+rzji+JZnjxa/vXdk6ubi1lRuxH7pU3SAek6mu4kfyX7
-         NoBwTFX9hkU3AtN7X+p887Z3xoDwu/Hns1wxrS08Ixhox9mA1BOpU23XxAU3tzNV7lHO
-         52xd6+JParNxxT1zFLgBVu+NmOs6N9DtaUTmil7UBpWknQbM4ZqciGLo4UElvurwhG+a
-         fc49p18gEc2PwyIcojYpmaiLFJjf+YhtPrIL49CIa8y4RnFiXU+EyFPauNKow4NNjX1l
-         Xx46IUt49eqEh/NusZQn934tksJlhqkgZMoDSWvwitGxCvYINv+vnS17WkLeN4uyZx4W
-         rpOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692718024; x=1693322824;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P8Gu3e55JmS9M6j7VGf0BGDN5maX8MZT1jBCyJ1KpJs=;
-        b=dH/ThVOJno3ibe9p7p8tkbh2N5tU9YpjTMqKZTHGgHiXeNZ2BC12RhnlWry1qREzcw
-         3AJuYCwWZSGf48W+QwsDl+FkfgW9i9VIgx9OFugoQ1s27rF1bcMjZBY/t/uJ3oXk24+o
-         dVYdzpUAIX0U+aVxwNZnPdgqMbX5hV6JG9yUTjNcTHXZuIpaigYReUoQOox4j97lk93V
-         vGPO8KxkjELmKb9/153YbK+EWOXlq9BuNcatl95c4Lrtu/xjvuEppnxUoSfNRKJ3Xo5n
-         B3EY3iCoCFwBX9RDHeWmRYaIrUrWGxuIkg7x/5dK1+fO/6aOmqiW1/jSrc1rb6Xqf2Xv
-         cF/g==
-X-Gm-Message-State: AOJu0Yyndi4ULoDyLIXE0x/dbopbgigIy0OPA2ZH7RJGiUwBN4UUJtND
-	DK5ZNKUysdGvJ2qBeQw4OVk=
-X-Google-Smtp-Source: AGHT+IGyrQGqEFG9EGxeiNZupgIw8uPE0bXsgKS9m9DzgYCB57XrzUgOv60079WGh4qOE2pgnuBMYg==
-X-Received: by 2002:adf:fed1:0:b0:319:7421:fde with SMTP id q17-20020adffed1000000b0031974210fdemr7888446wrs.32.1692718024302;
-        Tue, 22 Aug 2023 08:27:04 -0700 (PDT)
-Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
-        by smtp.gmail.com with ESMTPSA id c10-20020adffb4a000000b00317a29af4b2sm16022296wrs.68.2023.08.22.08.27.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Aug 2023 08:27:03 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id A90CABE2DE0; Tue, 22 Aug 2023 17:27:02 +0200 (CEST)
-Date: Tue, 22 Aug 2023 17:27:02 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Borislav Petkov <bp@alien8.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <ZOTTxsW5IGhOO8IW@eldamar.lan>
-References: <20230821194122.695845670@linuxfoundation.org>
- <CA+G9fYvkBSb-i_6unB3bRLwRibVtZ3snYDe_gG+bsZehu3Hv3w@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD0918AE5;
+	Tue, 22 Aug 2023 15:27:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB80C433C8;
+	Tue, 22 Aug 2023 15:27:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692718045;
+	bh=aJtctRw2XMMUw+/KdyBDVt6YooHDM28RFX47L7McclU=;
+	h=From:Date:Subject:To:Cc:From;
+	b=YSgE2n9JFbYBSxzDaZa1ZfTFOxaO+JBXAiFvHPeb8cnKV0TIk9we2qfaK/df19yUX
+	 2N20diQdiP7RvYVT1/6wnQTTgxeCTm2sZKRQNSv2Nz3or67095ATWPCoOQY6R+WuEc
+	 U+Kexefe65eMzxZsOJKfjmpd9mIt5pu4DnmnzOKMPbUmB0hECx3Z/fGVhq0SMV/7+v
+	 HPsW7GWS+PWdCGjqbzoEgQsDlcFHdwb3D6BV78VOOjXg2JLuliK4k3SF6gDAYh4SdV
+	 HgrDai2M6lZ0ixQOprynFY1CXsN4xL1mII/EzHYibGvM5EDC1Io3V3aDkNYnuKSBiS
+	 y9J2z6cGQXbsQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 22 Aug 2023 08:27:16 -0700
+Subject: [PATCH] wifi: rtw89: Fix clang -Wimplicit-fallthrough in
+ rtw89_query_sar()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYvkBSb-i_6unB3bRLwRibVtZ3snYDe_gG+bsZehu3Hv3w@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230822-rtw89-tas-clang-implicit-fallthrough-v1-1-5cb73f0fa976@kernel.org>
+X-B4-Tracking: v=1; b=H4sIANPT5GQC/x2NQQqDMBAAvyJ7diFNKUS/Ij0scWMWUpVN1ELw7
+ w09DgMzFTKrcIaxq6B8SpZtbfDoO/CR1oVR5sZgjX0aZy1qudyAhTL61DzKZ0/ipWCglErU7Vg
+ iEgWeHQ8vEzy01K4c5PvfTO/7/gFtbPeUdgAAAA==
+To: pkshih@realtek.com, kvalo@kernel.org
+Cc: ndesaulniers@google.com, trix@redhat.com, damon.chen@realtek.com, 
+ linux-wireless@vger.kernel.org, patches@lists.linux.dev, 
+ llvm@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1846; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=aJtctRw2XMMUw+/KdyBDVt6YooHDM28RFX47L7McclU=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDClPLt9tsFnXJTY7N6JDVGy66NHy/O1ydZaX33+anD5J8
+ 7jC7ZYHHaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAin4sYGY6m8fyYvOdUVqJV
+ OMefmla1p/4m4jb9QoyTRAIe2t84Ec3wT+HrlzPcB5lWzOLzlJniKtyhE1fVWZDoXcyRcZifJy2
+ MCQA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi,
+clang warns (or errors with CONFIG_WERROR=y):
 
-[Adding Peter Zijlstra to CC]
+  drivers/net/wireless/realtek/rtw89/sar.c:216:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+    216 |                 case RTW89_TAS_STATE_DPR_FORBID:
+        |                 ^
+  drivers/net/wireless/realtek/rtw89/sar.c:216:3: note: insert 'break;' to avoid fall-through
+    216 |                 case RTW89_TAS_STATE_DPR_FORBID:
+        |                 ^
+        |                 break;
+  1 error generated.
 
-On Tue, Aug 22, 2023 at 04:25:22PM +0530, Naresh Kamboju wrote:
-> On Tue, 22 Aug 2023 at 01:21, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.1.47 release.
-> > There are 194 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.47-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> Results from Linaro’s test farm.
-> No regressions on arm64, arm, x86_64, and i386.
-> 
-> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> 
-> NOTE:
-> Kernel warnings noticed on x86_64 while booting the kernel.
-> Paul E. McKenney reported this last week [1] and discussions email
-> thread provided here.
-> 
->  [1] https://lore.kernel.org/lkml/4dc3d0ec-b827-4bce-8927-cfa5d837fd03@paulmck-laptop/T/
+Clang is a little more pedantic than GCC, which does not warn when
+falling through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing break to silence
+the warning.
 
-Seeing the same warning for the 6.1.47-rc1, which is missing
-4ae68b26c3ab ("objtool/x86: Fix SRSO mess"). Unfortunately the commit
-will not apply cleanly to 6.1.y. 
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1921
+Fixes: eb2624f55ad1 ("wifi: rtw89: Introduce Time Averaged SAR (TAS) feature")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/wireless/realtek/rtw89/sar.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I guess we need at least as well dbcdbdfdf137 ("objtool: Rework
-instruction -> symbol mapping"), but not sure this is enough.
+diff --git a/drivers/net/wireless/realtek/rtw89/sar.c b/drivers/net/wireless/realtek/rtw89/sar.c
+index fafc7a0cfe97..715bf5c2f56a 100644
+--- a/drivers/net/wireless/realtek/rtw89/sar.c
++++ b/drivers/net/wireless/realtek/rtw89/sar.c
+@@ -213,6 +213,7 @@ s8 rtw89_query_sar(struct rtw89_dev *rtwdev)
+ 		case RTW89_TAS_STATE_DPR_ON:
+ 			delta = rtw89_txpwr_tas_to_sar(sar_hdl, tas->delta);
+ 			cfg -= delta;
++			break;
+ 		case RTW89_TAS_STATE_DPR_FORBID:
+ 		default:
+ 			break;
 
-Peter, is this correct?
+---
+base-commit: f585f4ab0b998578b4ef3610ccfc08e207fc3499
+change-id: 20230822-rtw89-tas-clang-implicit-fallthrough-aafed8e950fc
 
-Regards,
-Salvatore
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
