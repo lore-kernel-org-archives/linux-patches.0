@@ -1,87 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D321DA43
-	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 18:25:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2200BC433C8;
-	Tue, 22 Aug 2023 18:25:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692728758;
-	bh=D1aKSF/2SZQ7zmJpVY9L5WKJ+QUpGfpqfVmFQt4hxaU=;
-	h=From:Date:Subject:To:Cc:From;
-	b=ReGXukQAfep2M5ZEaoIQDvQC+uruYENF8XEJAohJsYNOfvukrhdlaz4SMtvuToWLy
-	 Uoj+DeoPbav/ZR9E7oHBhuQybxWicKx1PsuNofiPGs+pQb74cjh83ekBfr5dxHo+7N
-	 TGd3nsrAuzAQsMkVnX1Knxy2XaSSqiGGVlQFWRHTu4IQ4lpKiK9r1oDFtS8MAckIs/
-	 rLk35h9VgzvBN4NK7CqpUJcdBF+SNOR+GtW3mRa9rv56S0xBlAAdeu4iBAykHzyXUU
-	 dpwqMXvaXbpNjfrG0I/kpd9Mu1zwi5Yy6YrKmXU0bm/qg++ipU24IMaOVGVCtkR9Xb
-	 rddiQgnDy/pUg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 22 Aug 2023 11:25:49 -0700
-Subject: [PATCH] x86/hyperv: Add missing 'inline' to hv_snp_boot_ap() stub
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCC020180
+	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 19:52:10 +0000 (UTC)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-523d2ef19e4so6227688a12.2
+        for <patches@lists.linux.dev>; Tue, 22 Aug 2023 12:52:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1692733929; x=1693338729;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=8rgEdoTOAdm60cwf4SttnTE5XQ2a7mDmyn58eCgJqMM=;
+        b=AL2vd6ZYVb+rHSzEIpdrY9JUYph0K6Y9attv4GTebIus4ywA1Azleve9/Pnw3KK1sy
+         zT5z6NtZbKwMa0g0cazMAvsDvkbNq11pn7rTYj+RrzyhgUamA0pS8sbZzw5Sde6rBUZb
+         gUc9cMUqSOcSKEveiYiM2GNIlxIAGDTyJ79VlfAjsg3hZuO02kStGu4D5SWI7r9Q3u7B
+         /8vRBxHwY8Ubo4RilruQUtIzWq+KtoiuFjfMqVAAnVFn2C5Bw0DGB66knnVeuqv3sR9J
+         pjJBpC1h0Yw8lqP1V/wgtc08pImAbASzZ8+UWACc24oK0GYRva2/Wr+TSi34ouaHtAfa
+         Zi6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692733929; x=1693338729;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8rgEdoTOAdm60cwf4SttnTE5XQ2a7mDmyn58eCgJqMM=;
+        b=EKCbDbDvAbxmhGrj3NfZjuUI143nRAwFGYCNzxpsV4sD1eCsq+sCd9wDg3nzBlfv6A
+         doo+utFn3L7H69+1P3xK04exdILGXLwd36/IgDmiEH8ieunE+aj0W2mWycFoHTY8c4tN
+         KTQrH2titrRIx11D9vBQPm8P2J+gYiAeBBmsJS8wuYC5vQW4B14smQyuknTkKT7iZx1L
+         IbKQKYe/Fwl1OCDa1vMNm25EPSqvhr41dY2rAiC1+kN2eHHlgsuxZyMVBKnc/aiB8jCF
+         5nWxMz5WeumoBattPf2wGiEyUUxbYzJNL2qrfa6V3i9+cOuqy4EfA3bU2cBCvvttXUVp
+         wTgA==
+X-Gm-Message-State: AOJu0YzeuJJVjoCQI03bj45KZQuiiE9+Ufkm7j9sTtWmckimdtKDC7rQ
+	S2xTtnxdp1EULyVruJ2HQSS09w==
+X-Google-Smtp-Source: AGHT+IE4wVIW18x3q1rp0TBbYP4cS1KkB0SFLU6Vc/NWR4Tkowt2qZGoQovU3XtLmgcLq2hSbP3e2w==
+X-Received: by 2002:a17:907:2c59:b0:993:d7fe:7f1d with SMTP id hf25-20020a1709072c5900b00993d7fe7f1dmr8355338ejc.28.1692733928951;
+        Tue, 22 Aug 2023 12:52:08 -0700 (PDT)
+Received: from localhost ([79.142.230.34])
+        by smtp.gmail.com with ESMTPSA id k12-20020a1709061c0c00b009a1a653770bsm2699886ejg.87.2023.08.22.12.52.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Aug 2023 12:52:08 -0700 (PDT)
+References: <20230711093303.1433770-1-aliceryhl@google.com>
+ <20230711093303.1433770-7-aliceryhl@google.com>
+ <vyrVN334oIXneb9VWievGpPTOCy0irxvoG-mDR0sQX5-xN-TL2Hngl0cl_XrVUwjDB3rXkXfR9Mdjy_no6fzhe4yIf_c7xpKa5OURt43k9c=@proton.me>
+User-agent: mu4e 1.10.5; emacs 28.2.50
+From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
+To: Benno Lossin <benno.lossin@proton.me>
+Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, Tejun
+ Heo <tj@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, Lai Jiangshan
+ <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex
+ Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary
+ Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
+ <bjorn3_gh@protonmail.com>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v3 6/9] rust: workqueue: add helper for defining
+ work_struct fields
+Date: Tue, 22 Aug 2023 20:24:04 +0200
+In-reply-to: <vyrVN334oIXneb9VWievGpPTOCy0irxvoG-mDR0sQX5-xN-TL2Hngl0cl_XrVUwjDB3rXkXfR9Mdjy_no6fzhe4yIf_c7xpKa5OURt43k9c=@proton.me>
+Message-ID: <87msyisvmi.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230822-hv_snp_boot_ap-missing-inline-v1-1-e712dcb2da0f@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAK395GQC/x3M0QqCQBAF0F+ReW5gnVKiX4lYzEa9ULPLTkgg/
- rtLj+flbORaoE63ZqOiKxzJKtpTQ+My2KyMVzVJkHO4ivCyRrccnyl945D5A3fYzLA3TFlCp33
- b6WXSnuqRi074/f/7Y98P6hFpT28AAAA=
-To: kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org, 
- decui@microsoft.com
-Cc: x86@kernel.org, mikelley@microsoft.com, tiala@microsoft.com, 
- linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1635; i=nathan@kernel.org;
- h=from:subject:message-id; bh=D1aKSF/2SZQ7zmJpVY9L5WKJ+QUpGfpqfVmFQt4hxaU=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDClP/m5NndNxqzP63vZnD0w6S+JX9SeuPLaxNnE5n5S0X
- sTZIu6VHaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiLUmMDK9MZx2YNcl9jmA/
- c67srzcsmbzK6160Kj9iOZTKKb1K5xwjw++ifRdmiJ/7tFFz2cuOI7aC0zqnt3682al8Pf9V08e
- L9QwA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain
 
-When building without CONFIG_AMD_MEM_ENCRYPT, there are several
-repeated instances of -Wunused-function due to missing 'inline' on
-the stub of hy_snp_boot_ap():
 
-  In file included from drivers/hv/hv_common.c:29:
-  ./arch/x86/include/asm/mshyperv.h:272:12: error: 'hv_snp_boot_ap' defined but not used [-Werror=unused-function]
-    272 | static int hv_snp_boot_ap(int cpu, unsigned long start_ip) { return 0; }
-        |            ^~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
+Hi Benno,
 
-Add 'inline' to fix the warnings.
+Benno Lossin <benno.lossin@proton.me> writes:
 
-Fixes: 44676bb9d566 ("x86/hyperv: Add smp support for SEV-SNP guest")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/x86/include/asm/mshyperv.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+...
 
-diff --git a/arch/x86/include/asm/mshyperv.h b/arch/x86/include/asm/mshyperv.h
-index 6bd9ae04d9c3..b6be267ff3d0 100644
---- a/arch/x86/include/asm/mshyperv.h
-+++ b/arch/x86/include/asm/mshyperv.h
-@@ -269,7 +269,7 @@ static inline void hv_ghcb_msr_read(u64 msr, u64 *value) {}
- static inline bool hv_ghcb_negotiate_protocol(void) { return false; }
- static inline void hv_ghcb_terminate(unsigned int set, unsigned int reason) {}
- static inline void hv_vtom_init(void) {}
--static int hv_snp_boot_ap(int cpu, unsigned long start_ip) { return 0; }
-+static inline int hv_snp_boot_ap(int cpu, unsigned long start_ip) { return 0; }
- #endif
- 
- extern bool hv_isolation_type_snp(void);
+>> +/// Links for a work item.
+>> +///
+>> +/// This struct contains a function pointer to the `run` function from the [`WorkItemPointer`]
+>> +/// trait, and defines the linked list pointers necessary to enqueue a work item in a workqueue.
+>> +///
+>> +/// Wraps the kernel's C `struct work_struct`.
+>> +///
+>> +/// This is a helper type used to associate a `work_struct` with the [`WorkItem`] that uses it.
+>> +#[repr(transparent)]
+>> +pub struct Work<T: ?Sized, const ID: u64 = 0> {
+>> +    work: Opaque<bindings::work_struct>,
+>> +    _inner: PhantomData<T>,
+>
+> Should this really be `PhantomData<T>`? Are you dropping `T`s in the 
+> destructor of `Work<T>`? I do not think so `PhantomData<fn() -> Box<T>>`
+> should do the trick.
+>
 
----
-base-commit: bb9b0e46b84c19d3dd7d453a2da71a0fdc172b31
-change-id: 20230822-hv_snp_boot_ap-missing-inline-205e615e4fe6
+Could you elaborate what is the issue in having `PhantomData<T>`?
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+BR Andreas
 
