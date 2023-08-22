@@ -1,87 +1,104 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from postout2.mail.lrz.de (postout2.mail.lrz.de [129.187.255.138])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5637D1BEF9
-	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 11:47:30 +0000 (UTC)
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2bccda76fb1so12921941fa.2
-        for <patches@lists.linux.dev>; Tue, 22 Aug 2023 04:47:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1692704849; x=1693309649;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=uhIrFon087E3iYfZNnOqwEsuA1QGwXh+7swXilo4wNE=;
-        b=MYo+yKWLa81z+XWwwjzVYCoI07QUk84F37CFOstTIT0Olw3mmnSPMI2BwhGVAuQeib
-         IqXlcYHpUDLDUko026HKd4AcSIeqtPooSaGhK2A88c0S2uw3UTdvlTIB+kO13CRZtB5P
-         Mt1g72j1MQ5ircxEomxpjmSKXlbFRrvKTnEipwqfc4LN+oCJNQqGD0Dp6COdIJYhWna8
-         xMHA7oSXMJco9TrwMuOlyqiAN76cwHuRfol0uGnMVUI5OhpaWc6H901blMfKJtbMMK76
-         8uCmpeBYJBZdWhDEFgtuYEyG7LaGxEVK1rLNh6lduuwPisotDTc8aga/MzfxGGG3EWO2
-         uzlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692704849; x=1693309649;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uhIrFon087E3iYfZNnOqwEsuA1QGwXh+7swXilo4wNE=;
-        b=gzlcw/D2gXq74BAw07WgsM6xuReCyL45ShFZzl4KD5uBjsLY/BFeEBw3mjkUShuiSw
-         AIBANvUG33rNA2FLI3LdVSpaH8xPSNE+b0Zjue6KvjZmk1jDxGngoaEIIsVz0qnuzQUC
-         4xipTCIXYPQij5gTvuhBZwxawvH7xePE9sPTiFxm3+0nKpJKeubME9cLk/O1slwywWQW
-         YdvVBKjnzhZookclxvhS2UGrVh8jOoNWWHiI7N1KsMAeHX6OozkidizlmxehevrvQ3Sk
-         lFurP/Y9jnKQFwTFjevEVvqXwQbNHLOwdG+S9DBde1XkEtP64wKQozYmYOodqTfxQZjT
-         X10w==
-X-Gm-Message-State: AOJu0YwY7TDEKna+NuYQzjWCklDkRBBpxQVZhPQoa5mGX+qcaJZfUSp8
-	LLjzZCb+E7iDIEae6KpZj4igDw==
-X-Google-Smtp-Source: AGHT+IHuAzW/pPPxCGL04jOEgbZm7KqKnU9xn7BXSLzQzVo0ZR2moNYaGphImjz9x3L1vE52LMDqRw==
-X-Received: by 2002:a05:6512:3b2b:b0:4fe:1bca:d921 with SMTP id f43-20020a0565123b2b00b004fe1bcad921mr8573241lfv.21.1692704848653;
-        Tue, 22 Aug 2023 04:47:28 -0700 (PDT)
-Received: from localhost ([79.142.230.34])
-        by smtp.gmail.com with ESMTPSA id o4-20020aa7d3c4000000b005255991c576sm7424753edr.66.2023.08.22.04.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Aug 2023 04:47:28 -0700 (PDT)
-References: <20230711093303.1433770-1-aliceryhl@google.com>
- <20230711093303.1433770-3-aliceryhl@google.com>
-User-agent: mu4e 1.10.5; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>, Miguel Ojeda
- <ojeda@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, Wedson Almeida
- Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun
- Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj?=
- =?utf-8?Q?=C3=B6rn?= Roy Baron
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev, Wedson Almeida
- Filho <walmeida@microsoft.com>
-Subject: Re: [PATCH v3 2/9] rust: sync: add `Arc::{from_raw, into_raw}`
-Date: Tue, 22 Aug 2023 13:46:56 +0200
-In-reply-to: <20230711093303.1433770-3-aliceryhl@google.com>
-Message-ID: <87r0nvs3hu.fsf@metaspace.dk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E4D1C9E0
+	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 13:17:41 +0000 (UTC)
+Received: from lxmhs52.srv.lrz.de (localhost [127.0.0.1])
+	by postout2.mail.lrz.de (Postfix) with ESMTP id 4RVV952pW7zyX2;
+	Tue, 22 Aug 2023 15:11:21 +0200 (CEST)
+Authentication-Results: postout.lrz.de (amavisd-new); dkim=pass (2048-bit key)
+	reason="pass (just generated, assumed good)" header.d=tum.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tum.de; h=
+	in-reply-to:content-disposition:content-type:content-type
+	:mime-version:references:message-id:subject:subject:from:from
+	:date:date:received:received; s=tu-postout21; t=1692709880; bh=7
+	MXBSA2oPcu+//EHHLMQozjXroTKi4+sBWXdNVXS71k=; b=LuuD/tm2rdPtMca1x
+	wTO32C1Z3C9GMBu1lGwVBUmIO23Q5WaEQsQCY3fHPGbyxh6XF33OvTiYUDoahGvc
+	5FXeYL4z9IhePrSHrqiO6cnFGAVLTSTxwcKydMKeCPzAtko1pGvNWJZu51O7PWYp
+	94aT9sIgkGIaTtUzt/ylqmSBS3ZMBaD+s5R2voTxyhyWnk3dcSIh0zHnth01z+ei
+	3nOsADb9eR4FHgh82BjOPxrsbiK4XORiDH3v4Gpj0QMUWzQUz4p5W5eY7JCCC7Jv
+	vkC/b2ukIDnqzo+9d4gYP2edHff3PfGYCTbsYGCQ0px1NHUftLyQFaNY+l4FxYKi
+	zVn+w==
+X-Virus-Scanned: by amavisd-new at lrz.de in lxmhs52.srv.lrz.de
+X-Spam-Flag: NO
+X-Spam-Score: -2.871
+X-Spam-Level:
+X-Spam-Status: No, score=-2.871 tagged_above=-999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, DMARC_ADKIM_RELAXED=0.001,
+	DMARC_ASPF_RELAXED=0.001, DMARC_POLICY_NONE=0.001,
+	LRZ_DMARC_FAIL=0.001, LRZ_DMARC_FAIL_NONE=0.001,
+	LRZ_DMARC_POLICY=0.001, LRZ_DMARC_TUM_FAIL=0.001,
+	LRZ_DMARC_TUM_REJECT=3.5, LRZ_DMARC_TUM_REJECT_PO=-3.5,
+	LRZ_ENVFROM_FROM_MATCH=0.001, LRZ_ENVFROM_TUM_S=0.001,
+	LRZ_FROM_ENVFROM_ALIGNED_STRICT=0.001, LRZ_FROM_HAS_A=0.001,
+	LRZ_FROM_HAS_AAAA=0.001, LRZ_FROM_HAS_MDOM=0.001,
+	LRZ_FROM_HAS_MX=0.001, LRZ_FROM_HOSTED_DOMAIN=0.001,
+	LRZ_FROM_NAME_IN_ADDR=0.001, LRZ_FROM_PHRASE=0.001,
+	LRZ_FROM_PRE_SUR_PHRASE=0.001, LRZ_FROM_TUM_S=0.001, LRZ_HAS_CT=0.001,
+	LRZ_HAS_IN_REPLY_TO=0.001, LRZ_HAS_MIME_VERSION=0.001,
+	LRZ_HAS_SPF=0.001, LRZ_HAS_URL_HTTP=0.001, LRZ_MSGID_AN_AN=0.001,
+	LRZ_NO_UA_HEADER=0.001, LRZ_SUBJ_FW_RE=0.001,
+	LRZ_URL_HTTP_SINGLE=0.001, LRZ_URL_PLAIN_SINGLE=0.001]
+	autolearn=no autolearn_force=no
+Received: from postout2.mail.lrz.de ([127.0.0.1])
+	by lxmhs52.srv.lrz.de (lxmhs52.srv.lrz.de [127.0.0.1]) (amavisd-new, port 20024)
+	with LMTP id DfRD1ZXrXZAS; Tue, 22 Aug 2023 15:11:20 +0200 (CEST)
+Received: from r2-d2.localdomain (unknown [IPv6:2001:4ca0:0:f293:2e93:503c:b2ad:193b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by postout2.mail.lrz.de (Postfix) with ESMTPSA id 4RVV933VvKzyV6;
+	Tue, 22 Aug 2023 15:11:19 +0200 (CEST)
+Date: Tue, 22 Aug 2023 15:11:18 +0200
+From: Andrei Rabusov <a.rabusov@tum.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 6.4 000/234] 6.4.12-rc1 review
+Message-ID: <ZOSz9vvKd9FNHr_u@r2-d2.localdomain>
+References: <20230821194128.754601642@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
 
+On Mon, Aug 21, 2023 at 09:39:23PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.12 release.
+> There are 234 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.12-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Alice Ryhl <aliceryhl@google.com> writes:
+6.4.12-rc1 configures, compiles, runs, and passes most of the tests with
+my custom config for Lenovo Thinkpad X220 (x86_64). Here is a short log:
 
-> From: Wedson Almeida Filho <walmeida@microsoft.com>
->
-> These methods can be used to turn an `Arc` into a raw pointer and back,
-> in a way that preserves the metadata for fat pointers.
->
-> This is done using the unstable ptr_metadata feature [1]. However, it
-> could also be done using the unstable pointer_byte_offsets feature [2],
-> which is likely to have a shorter path to stabilization than
-> ptr_metadata.
->
-> Link: https://github.com/rust-lang/rust/issues/81513 [1]
-> Link: https://github.com/rust-lang/rust/issues/96283 [2]
-> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-> Co-developed-by: Alice Ryhl <aliceryhl@google.com>
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> Reviewed-by: Gary Guo <gary@garyguo.net>
-> ---
+system-manufacturer               LENOVO
+system-product-name              4291EM4
+bios-release-date             06/21/2018
+bios-version            8DET76WW (1.46 )
+kernel                        6.4.12-rc1
+selftest result                  570/652
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
-
+Tested-by: Andrei Rabusov <andrei@rabusov.de>
