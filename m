@@ -1,157 +1,87 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49CDC2018C
-	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 21:00:02 +0000 (UTC)
-Received: from [192.168.0.5] (71-212-112-68.tukw.qwest.net [71.212.112.68])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 6E15F2126CD1;
-	Tue, 22 Aug 2023 14:00:01 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6E15F2126CD1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1692738001;
-	bh=Wik2nYlgFy2h1vwJvpE3BbkkhoxbzmyA5NHLHlPVd2g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Z/J45Xowxo29xY/xCJi1OztlNqr4L62uk0uJjhJWK4PJzqvW/0uXbhZf+d5fywsGH
-	 nOWnLmddSQJ3gTJiBRWuTuimYwrk/fjCu9d3kFnz1ucTJUSNR0ztdQW7W6I6mAUb3R
-	 4TRYyaYL/egYfQNi9SS8ROI9g6UVFOxwWsObhWFA=
-Message-ID: <c53fa288-a16d-4f23-83de-84d6ff20823c@linux.microsoft.com>
-Date: Tue, 22 Aug 2023 14:00:10 -0700
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28E52019C
+	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 22:52:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D004CC433C7;
+	Tue, 22 Aug 2023 22:52:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692744767;
+	bh=yWNdNH98z11k2f6XrB1ayhOgAMMe6RDCicH8KsnHT7g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Hiu4BvHGryw/cf0SMNOnRqWCAk6pjbHNi/br7X+APUbz5YDCOHKRIeqsHDXaduB2O
+	 k2EEdPgeoQAC0c4Sh2+/uGG32klYGK+SMSyfuEt7Vqlhy035HC68FgYlqED2SzFiNZ
+	 ExvAvTZyAR3RsifUyNdSGZIxCh5/EIiMZewXp2glvf+m/bPvqDhmdI4ee2hAE8YR+z
+	 uStNVtIgQzmlUrbMr+El1Fc2x1u+ZLxlts0MkOtDwN7Il0YHoB/KGa/sKfIHPfUvuV
+	 hD4Dg2zGUAMmQWQnI7O8pQ1e17noooK3jqLhQS4OQJluHLIskNpCfic2E+zgOBjH6K
+	 mZWKGQnHp6Vaw==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] clk: Cleanup devm_clk_match() wreckage
+Date: Tue, 22 Aug 2023 15:52:42 -0700
+Message-ID: <20230822225245.3624370-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.42.0.rc1.204.g551eb34607-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/15] Drivers: hv: Add modules to expose /dev/mshv to
- VMMs running on Hyper-V
-Content-Language: en-US
-To: Saurabh Singh Sengar <ssengar@microsoft.com>,
- "linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "x86@kernel.org" <x86@kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>
-Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Michael Kelley (LINUX)" <mikelley@microsoft.com>,
- KY Srinivasan <kys@microsoft.com>, "wei.liu@kernel.org"
- <wei.liu@kernel.org>, Haiyang Zhang <haiyangz@microsoft.com>,
- Dexuan Cui <decui@microsoft.com>,
- "apais@linux.microsoft.com" <apais@linux.microsoft.com>,
- Tianyu Lan <Tianyu.Lan@microsoft.com>,
- "ssengar@linux.microsoft.com" <ssengar@linux.microsoft.com>,
- MUKESH RATHOR <mukeshrathor@microsoft.com>,
- "stanislav.kinsburskiy@gmail.com" <stanislav.kinsburskiy@gmail.com>,
- "jinankjain@linux.microsoft.com" <jinankjain@linux.microsoft.com>,
- vkuznets <vkuznets@redhat.com>, "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "hpa@zytor.com" <hpa@zytor.com>, "will@kernel.org" <will@kernel.org>,
- "catalin.marinas@arm.com" <catalin.marinas@arm.com>
-References: <1692309711-5573-1-git-send-email-nunodasneves@linux.microsoft.com>
- <1692309711-5573-16-git-send-email-nunodasneves@linux.microsoft.com>
- <PUZP153MB063571CB1D30770996948726BE1EA@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-In-Reply-To: <PUZP153MB063571CB1D30770996948726BE1EA@PUZP153MB0635.APCP153.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/21/2023 11:18 AM, Saurabh Singh Sengar wrote:
-> 
-> 
->> -----Original Message-----
->> From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
->> Sent: Friday, August 18, 2023 3:32 AM
->> To: linux-hyperv@vger.kernel.org; linux-kernel@vger.kernel.org;
->> x86@kernel.org; linux-arm-kernel@lists.infradead.org; linux-
->> arch@vger.kernel.org
->> Cc: patches@lists.linux.dev; Michael Kelley (LINUX)
->> <mikelley@microsoft.com>; KY Srinivasan <kys@microsoft.com>;
->> wei.liu@kernel.org; Haiyang Zhang <haiyangz@microsoft.com>; Dexuan Cui
->> <decui@microsoft.com>; apais@linux.microsoft.com; Tianyu Lan
->> <Tianyu.Lan@microsoft.com>; ssengar@linux.microsoft.com; MUKESH
->> RATHOR <mukeshrathor@microsoft.com>; stanislav.kinsburskiy@gmail.com;
->> jinankjain@linux.microsoft.com; vkuznets <vkuznets@redhat.com>;
->> tglx@linutronix.de; mingo@redhat.com; bp@alien8.de;
->> dave.hansen@linux.intel.com; hpa@zytor.com; will@kernel.org;
->> catalin.marinas@arm.com
->> Subject: [PATCH v2 15/15] Drivers: hv: Add modules to expose /dev/mshv to
->> VMMs running on Hyper-V
->>
->> Add mshv, mshv_root, and mshv_vtl modules:
->>
-> 
-> <snip>
-> 
->> +	ret = mshv_set_vp_registers(vp->index, vp->partition->id,
->> +				    1, &dispatch_suspend);
->> +	if (ret)
->> +		pr_err("%s: failed to suspend partition %llu vp %u\n",
->> +			__func__, vp->partition->id, vp->index);
->> +
->> +	return ret;
->> +}
->> +
->> +static int
->> +get_vp_signaled_count(struct mshv_vp *vp, u64 *count)
->> +{
->> +	int ret;
->> +	struct hv_register_assoc root_signal_count = {
->> +		.name = HV_REGISTER_VP_ROOT_SIGNAL_COUNT,
->> +	};
->> +
->> +	ret = mshv_get_vp_registers(vp->index, vp->partition->id,
->> +				    1, &root_signal_count);
->> +
->> +	if (ret) {
->> +		pr_err("%s: failed to get root signal count for partition %llu vp
->> %u",
->> +			__func__, vp->partition->id, vp->index);
->> +		*count = 0;
-> 
-> Have we missed a return here ?
-> Moreover, the return type of this function is never checked consider
-> checking it or change it to void.
-> 
+The 'res' pointer passed to devm_clk_match() is a pointer to struct
+devm_clk_state after commit abae8e57e49a ("clk: generalize
+devm_clk_get() a bit"). Update the logic here to convert the void
+pointer to the right type so that this is cleaner. Note that this
+doesn't actually change anything due to how struct devm_clk_state is
+defined to have a struct clk pointer as the first member.
 
-Thanks, we do need to return here.
+Given we're cleaning things up, split the WARN_ON() into two different
+conditions to provide clarity about which condition is false. Also move
+the WARN_ON to the conditional so that the compiler is hinted that all
+this code is unlikely().
 
-This function is called on a cleanup path (deleting the guest VM), so if it fails
-something is wrong. Instead of returning void, I think we should check the return
-value with WARN_ON(), and abort the cleanup if it failed.
+Cc: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/clk-devres.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
->> +
->> +/* Retrieve and stash the supported scheduler type */
->> +static int __init mshv_retrieve_scheduler_type(void)
->> +{
->> +	struct hv_input_get_system_property *input;
->> +	struct hv_output_get_system_property *output;
->> +	unsigned long flags;
->> +	u64 status;
->> +
->> +	local_irq_save(flags);
->> +	input = *this_cpu_ptr(hyperv_pcpu_input_arg);
->> +	output = *this_cpu_ptr(hyperv_pcpu_output_arg);
->> +
->> +	memset(input, 0, sizeof(*input));
->> +	memset(output, 0, sizeof(*output));
->> +	input->property_id = HV_SYSTEM_PROPERTY_SCHEDULER_TYPE;
->> +
->> +	status = hv_do_hypercall(HVCALL_GET_SYSTEM_PROPERTY, input,
->> output);
->> +	if (!hv_result_success(status)) {
->> +		local_irq_restore(flags);
->> +		pr_err("%s: %s\n", __func__, hv_status_to_string(status));
->> +		return hv_status_to_errno(status);
->> +	}
->> +
->> +	hv_scheduler_type = output->scheduler_type;
->> +	local_irq_restore(flags);
->> +
->> +	pr_info("mshv: hypervisor using %s\n",
->> scheduler_type_to_string(hv_scheduler_type));
-> 
-> Nit: In this file we are using two styles of prints, few are appended with
-> "mshv:" and few with "__func__".  It's better to have a single style
-> for one module.
+diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
+index 737aa70e2cb3..979562ee79ba 100644
+--- a/drivers/clk/clk-devres.c
++++ b/drivers/clk/clk-devres.c
+@@ -184,12 +184,14 @@ EXPORT_SYMBOL_GPL(devm_clk_bulk_get_all);
+ 
+ static int devm_clk_match(struct device *dev, void *res, void *data)
+ {
+-	struct clk **c = res;
+-	if (!c || !*c) {
+-		WARN_ON(!c || !*c);
++	struct devm_clk_state *state = res;
++
++	if (WARN_ON(!state))
+ 		return 0;
+-	}
+-	return *c == data;
++	if (WARN_ON(!state->clk))
++		return 0;
++
++	return state->clk == data;
+ }
+ 
+ void devm_clk_put(struct device *dev, struct clk *clk)
 
-Thanks, I'll switch them all to __func__
+base-commit: 66fbfb35da47f391bdadf9fa7ceb88af4faa9022
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
