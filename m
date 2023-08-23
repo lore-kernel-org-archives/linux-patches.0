@@ -1,140 +1,99 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3128487
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 08:45:00 +0000 (UTC)
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-3ff1c397405so3324755e9.3
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 01:45:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF849883A
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 08:54:49 +0000 (UTC)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-3ff1c397405so3393775e9.3
+        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 01:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1692780299; x=1693385099;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=q2cgmL0Oxi/Ka+T0qRkNIQGy3DlLEIQoGhbZx1wxXXg=;
-        b=LonQ0vsOr7GJ73NzxO39Rbo6xOcF//DSk5ReABLOrEGbN2SFKmP7QBQ3Ds70B7+HH2
-         vitmIRgQeu+cIR3Orv/AtwdGik94Po1BMx7mkzP7N/Dv2Rjpeo/Qp6+l/ABU0oO1WARc
-         pxTAYpdnShdK8D803xL7MlB75J2uVsQdUeIT2tdR8lTgRk1VZ1GfPlmQJjs29YXm/1L1
-         05VQ9rzA5MBCGPXA7ZYPQRunb8JkSD/STinlo/0a19Pvv8bvPzHHutMnEOZVomTEQS5a
-         EVJpfwqiixoiRJ33Q0t5h39VHlf3gdSVMPiNpb2sKsWhfv43cXU5c3zEK5ePMtiRHjzy
-         Fr5Q==
+        d=gmail.com; s=20221208; t=1692780888; x=1693385688;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BswGZjQLEAdts40JO7B/IE0p4jIiLic8b6XiJmbSSU8=;
+        b=fSDE82jP59sJAPSRXKdVYg+WN0BbOPfp5i6NmlFjJHRaIR2z8gNl1IglMyTOPoxE27
+         Vt+0l+NBoMOv86vUwP/7EoYCQms98lAL1tRcuBiQ4QTYcnx9dVMaZjCaWj+14ZshJNbH
+         uucTDRizEa5zYS8htbqqor/8rJZwTyGU32tZ9NPQtgdODGCfleKYL2HtVC9fzFYtgnl0
+         9iqGKmAmP6/tqCb9O/E+Y11GziSbDd2FraZgxDYPlXsyWgGj2CSX1mcWZy5HYOvfLDPH
+         +vVrkcLFEKn8Wx9HDs8jJKVZ3pHarNx1ufz6NqtIzsltmt4m4wZTXEAtwvx43opoHh6e
+         wY2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692780299; x=1693385099;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20221208; t=1692780888; x=1693385688;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q2cgmL0Oxi/Ka+T0qRkNIQGy3DlLEIQoGhbZx1wxXXg=;
-        b=Dr4caY8QZQXUd5XZrcTDDUFavhs2/xSIyrl2N2jDbmvZPryNMfJsCTifCMquHyo320
-         slsjoSKJscBKgtcYRPBwOL5rNIzMKMQHJMRkhE03hawJ7YfvZDRteDo8Cgx4SOaS/1Z4
-         q3R+m+g1puyidTYNWIi1bCV5Me4d0tLll2VEG/xy/qcgu/hCODIPeYiTRCL+Dk/7n/LK
-         g7Vj4gvgEYMt5j1WLbrfCpvfknLy/llpexCS2GRxF7HFNL80xg8Ey/xUK8Mlw9rjBWP/
-         PYDuN86CihClWZrJNgdOR2ZJToxF3nYNw/zXIqZDVggBJrN8L8YpBalq3+IKF1xKZmWf
-         Cofg==
-X-Gm-Message-State: AOJu0YwgxFKAF24QLNM7Zsm5wwZhP+3IrYZkZBt49AFQ0xeoo1Ot9+/z
-	+ktuXkAWZ8U7ggCZZBT7jeIfAw==
-X-Google-Smtp-Source: AGHT+IHK4M5cW+ii2QsY9thF0YAboNVSBb0QymA/D8MSrbEEeJganwycbU58f5qGLuLuVPD1BN12nw==
-X-Received: by 2002:a7b:c3d0:0:b0:3f9:c0f2:e1a4 with SMTP id t16-20020a7bc3d0000000b003f9c0f2e1a4mr8835302wmj.34.1692780298570;
-        Wed, 23 Aug 2023 01:44:58 -0700 (PDT)
-Received: from localhost ([165.225.194.193])
-        by smtp.gmail.com with ESMTPSA id l11-20020a1c790b000000b003fbca942499sm21185071wme.14.2023.08.23.01.44.58
+        bh=BswGZjQLEAdts40JO7B/IE0p4jIiLic8b6XiJmbSSU8=;
+        b=dcU8eiX+/88kBzMALkr+3mSLrSZR6YynQd/8aTl5VbNmukcEvsQdaTEBBz/zb/lqi4
+         a/3SXXjldNvefvqyzt/VFFgARJiZ0o++d1TkzH+lk/YQfxTTWv+eE3PI2ipxDRR4aJI2
+         /UifeB8DYuKiFf05KDZOQZV1B1Xsv4IXRlzTzto1PwAtvKT+UDPPYAR8sCC3MfN2vfSy
+         QFztys3GuMYtiPfAQgMeayCuXtLoVwMQujDrSkbOkoHoPURF0gzEpIJHoREUZhNgfdnj
+         S1gD4PRMiYyarVq+aSGZkdkagx7Cqa5zK0m1y+ehFGlR1Q03XcQafxqRvjIdzodNGCiu
+         w64g==
+X-Gm-Message-State: AOJu0YyAwdCVlBTuPEWuJvu1ttd6sczBR88DTQE9XO2O1jJO6AkcNIBE
+	CPbt1fSRnUur6DMQxwITP9E=
+X-Google-Smtp-Source: AGHT+IHQjqP4ss6RAjHKdp48XvlaiwLE59zsm0ttZMacwSKYnoz7zPhcE40z1lNftwIMZWc/LGZyUg==
+X-Received: by 2002:adf:facd:0:b0:314:3ad6:2327 with SMTP id a13-20020adffacd000000b003143ad62327mr8096342wrs.12.1692780887797;
+        Wed, 23 Aug 2023 01:54:47 -0700 (PDT)
+Received: from debian ([167.98.27.226])
+        by smtp.gmail.com with ESMTPSA id t10-20020a5d49ca000000b0031ad2f9269dsm18179338wrs.40.2023.08.23.01.54.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 01:44:58 -0700 (PDT)
-References: <87r0octho8.fsf@metaspace.dk>
- <20230822093154.3478754-1-aliceryhl@google.com>
-User-agent: mu4e 1.10.5; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
- boqun.feng@gmail.com, gary@garyguo.net, linux-kernel@vger.kernel.org,
- ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org,
- wedsonaf@gmail.com
-Subject: Re: [PATCH v1] rust: add improved version of
- `ForeignOwnable::borrow_mut`
-Date: Wed, 23 Aug 2023 10:43:18 +0200
-In-reply-to: <20230822093154.3478754-1-aliceryhl@google.com>
-Message-ID: <87msyi406u.fsf@metaspace.dk>
+        Wed, 23 Aug 2023 01:54:47 -0700 (PDT)
+Date: Wed, 23 Aug 2023 09:54:45 +0100
+From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
+Message-ID: <ZOXJVamgYV1Mb+7S@debian>
+References: <20230821194122.695845670@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 
+Hi Greg,
 
-Alice Ryhl <aliceryhl@google.com> writes:
+On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.47 release.
+> There are 194 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> Anything received after that time might be too late.
 
-> Andreas Hindborg <nmi@metaspace.dk> writes:
->>> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
->>> index 172f563976a9..f152a562c9c3 100644
->>> --- a/rust/kernel/sync/arc.rs
->>> +++ b/rust/kernel/sync/arc.rs
->>> @@ -232,26 +232,35 @@ pub fn ptr_eq(this: &Self, other: &Self) -> bool {
->>>  
->>>  impl<T: 'static> ForeignOwnable for Arc<T> {
->>>      type Borrowed<'a> = ArcBorrow<'a, T>;
->>> +    // Mutable access to the `Arc` does not give any extra abilities over
->>> +    // immutable access.
->>> +    type BorrowedMut<'a> = ArcBorrow<'a, T>;
->>>  
->>>      fn into_foreign(self) -> *const core::ffi::c_void {
->>>          ManuallyDrop::new(self).ptr.as_ptr() as _
->>>      }
->>>  
->>> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
->>> -        // SAFETY: By the safety requirement of this function, we know that `ptr` came from
->>> -        // a previous call to `Arc::into_foreign`.
->>> -        let inner = NonNull::new(ptr as *mut ArcInner<T>).unwrap();
->>> -
->>> -        // SAFETY: The safety requirements of `from_foreign` ensure that the object remains alive
->>> -        // for the lifetime of the returned value.
->>> -        unsafe { ArcBorrow::new(inner) }
->>> -    }
->>> -
->>>      unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
->>>          // SAFETY: By the safety requirement of this function, we know that `ptr` came from
->>>          // a previous call to `Arc::into_foreign`, which guarantees that `ptr` is valid and
->>>          // holds a reference count increment that is transferrable to us.
->>> -        unsafe { Self::from_inner(NonNull::new(ptr as _).unwrap()) }
->>> +        unsafe { Self::from_inner(NonNull::new_unchecked(ptr as _)) }
->>>      }
->>> +
->>> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
->>> +        // SAFETY: By the safety requirement of this function, we know that `ptr` came from
->>> +        // a previous call to `Arc::into_foreign`.
->>> +        let inner = unsafe { NonNull::new_unchecked(ptr as *mut ArcInner<T>) };
->>> +
->>> +        // SAFETY: The safety requirements ensure that we will not give up our
->>> +        // foreign-owned refcount while the `ArcBorrow` is still live.
->>> +        unsafe { ArcBorrow::new(inner) }
->>> +    }
->>> +
->>> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
->>> +        // SAFETY: The safety requirements for `borrow_mut` are a superset of the safety
->>> +        // requirements for `borrow`.
->>> +        unsafe { Self::borrow(ptr) }
->>> +    }
->>
->> I am not sure this makes sense. How about splitting the trait in two,
->> immutable and mutable and only implementing the immutable one or Arc?
->
-> I used this design based on what would make sense for a linked list. The
-> idea is that we can have two different types of cursors for a linked
-> list: immutable and mutable. The immutable cursor lets you:
->
->  * move around the linked list
->  * access the values using `borrow`
->
-> The mutable cursor lets you:
->
->  * move around the linked list
->  * delete or add items to the list
->  * access the values using `borrow_mut`
->
-> The mutable cursor gives you extra abilities beyond the `borrow` vs
-> `borrow_mut` distinction, so we want to provide both types of cursors
-> even if the pointer type is Arc. To do that, we need a trait that
-> defines what it means to have mutable access to an Arc.
+Build test (gcc version 12.3.1 20230625):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-I don't see how that prevents this trait from being split in two?
+Boot test:
+x86_64: Booted on my test laptop. Warning on boot, already reported by others.
+x86_64: Booted on qemu. Warning on boot, already reported by others. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
-BR Andreas
+[1]. https://openqa.qa.codethink.co.uk/tests/4765
+[2]. https://openqa.qa.codethink.co.uk/tests/4773
+[3]. https://openqa.qa.codethink.co.uk/tests/4772
 
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
