@@ -1,116 +1,103 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-41103.protonmail.ch (mail-41103.protonmail.ch [185.70.41.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508BCC8EC
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 16:13:39 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 5D73520931;
-	Wed, 23 Aug 2023 16:13:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1692807217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jwNPIlXO1cZROk1bqLcvHXeSLn6/7q5ucl311GCvZ9s=;
-	b=ML/JHayOof9oF9g58EMq30h5KwiW4v8QN4lIlrE6HUzqEJBEtJSwkrtBdHVWLFoRe4RdAl
-	VKeuVFmWffNyQaBI2dHs3RsAx8Qa46zaqKyzq7F3pLTcr6+4fQbQjC/7RHpIIib5RMcLJf
-	Hn3GXhvapfz119lcFfO7bufDJZ9wIRo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1692807217;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jwNPIlXO1cZROk1bqLcvHXeSLn6/7q5ucl311GCvZ9s=;
-	b=hs6icawUeUaqdnSo4AuosAVSPbx3Jr66UxFUBgP2sm7Q4cUy0uj2C1QYJPxV8H2GkR1swt
-	Os+fCO9yhxyrT+CQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 24FFE13458;
-	Wed, 23 Aug 2023 16:13:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id g/cQCDEw5mSOPgAAMHmgww
-	(envelope-from <tiwai@suse.de>); Wed, 23 Aug 2023 16:13:37 +0000
-Date: Wed, 23 Aug 2023 18:13:36 +0200
-Message-ID: <87fs49d9e7.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Takashi Yano <takashi.yano@nifty.ne.jp>
-Cc: Takashi Iwai <tiwai@suse.de>,
-	gregkh@linuxfoundation.org,
-	patches@lists.linux.dev,
-	sashal@kernel.org,
-	stable@vger.kernel.org,
-	tasos@tasossah.com
-Subject: Re: [PATCH 6.1 110/181] ALSA: ymfpci: Create card with device-managed snd_devm_card_new()
-In-Reply-To: <20230824004533.eef5bfded08b8af05f71bee9@nifty.ne.jp>
-References: <20230403140418.679274299@linuxfoundation.org>
-	<20230823135846.1812-1-takashi.yano@nifty.ne.jp>
-	<87h6ophml0.wl-tiwai@suse.de>
-	<20230824004533.eef5bfded08b8af05f71bee9@nifty.ne.jp>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF2FC8FD
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 16:27:28 +0000 (UTC)
+Date: Wed, 23 Aug 2023 16:18:39 +0000
+Authentication-Results: mail-41103.protonmail.ch;
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="jg6sJdO+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1692807540; x=1693066740;
+	bh=x+ih6c7WHhuGLWj+NKR9PNQotRoT6LuY26VzJlqilQI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=jg6sJdO+wYfiN0CZyNbSGsqjc0kJkj+61U/RuzVBMg2AxPn32enN0K6C+YdWLxyU3
+	 GuTu6akhfV+GFprFWj/p15cJ1EVVWqdCY67mme62pA7MXtip9ZYHpIUPmWZo+OixiE
+	 eA5/AzIntIRie646SvMAHroA3ozy7SKjsXF+N5l1eF63gv9Z5LogDPdihwFZNAnsxN
+	 VFd5jRyqkoT8K02tGax+efa8Z0EzU5VGGUdGpLiWCru5tJLfzGJlYTC2kabgGpXA0Y
+	 T2r4p5uEBNOJNYVEPXC6KaUnJnv1t7tRB7YSAOuW8gyCDPd1o0xKUBx3drtKKAM19x
+	 0CFNA7ElsgUdw==
+To: Miguel Ojeda <ojeda@kernel.org>
+From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 1/2] rust: arc: add explicit `drop()` around `Box::from_raw()`
+Message-ID: <pNr7-0EyO6weJkSEeU770VmDkk25LV2u1CAbyHuS2XwPdFpYPmgBxqWLjLZLjOCW9p1At09QxciCyE_e9QdfnXO0SikhaJVZAU6GPAjA8aU=@protonmail.com>
+In-Reply-To: <20230823160244.188033-2-ojeda@kernel.org>
+References: <20230823160244.188033-1-ojeda@kernel.org> <20230823160244.188033-2-ojeda@kernel.org>
+Feedback-ID: 27884398:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 23 Aug 2023 17:45:33 +0200,
-Takashi Yano wrote:
-> 
-> On Wed, 23 Aug 2023 16:15:07 +0200
-> Takashi Iwai wrote:
-> > On Wed, 23 Aug 2023 15:58:46 +0200,
-> > Takashi Yano wrote:
-> > > 
-> > > Dear Linux Kernel Team,
-> > > 
-> > > I had encountered the problem that I reported to debian kernel team:
-> > > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1050117
-> > > , where I was suggested to report this to upstream.
-> > > 
-> > > After a lot of struggle, I found that this issue occurs after the following
-> > > commit. The problem happens if a YAMAHA YMF7x4 sound card is present AND the
-> > > firmware is missing. Not only the shutdown/reboot problem, but the page fault,
-> > > whose error log is being cited following the commit, also occurs in the boot
-> > > process.
-> > (snip)
-> > > I looked into this problem and found the mechanism of the page fault.
-> > > 
-> > > 1) chip->reg_area_virt is mapped in sound/pci/ymfpci/ymfpci_main.c:
-> > >    snd_ymfpci_create() in the initialize process of snd_ymfpci.
-> > > 2) The initializing fails due to a lack of the firmware.
-> > > 3) The allocated resources are released in drivers/base/devres.c:
-> > >    release_nodes().
-> > > 4) In the release process 3), reg_area_virt is unmapped before calling
-> > >    sound/pci/ymfpci/ymfpci_main.c: snd_ymfpci_free().
-> > > 5) The first register access in sound/pci/ymfpci/ymfpci_main.c:
-> > >    snd_ymfpci_free() causes page fault because the reg_area_virt is
-> > >    already unmapped.
-> > > 
-> > > Unfortunately, I am not familiar with the linux kernel code, so I am not
-> > > sure of the appropriate way how the problem should be fixed.
-> > 
-> > Thanks for the report and the analysis.  Yes, it's the problem of the
-> > device release, and this driver was overlooked while it's been fixed in
-> > a few others.
-> > 
-> > Below is the fix patch.  Let me know if it works for you, then I'll
-> > submit to the upstream and let stable branch backporting it later.
-> 
-> Thank you for your amazingly quick reply. :)
-> I have confirmed that the following patch solves the problem.
-> With this patch, snd_ymfpci_free() no longer seems to be called in
-> the release process on error.
-> 
-> Thank you so much for your help.
+On Wednesday, August 23rd, 2023 at 18:02, Miguel Ojeda <ojeda@kernel.org> w=
+rote:
 
-Thanks for quick testing.  I'll submit and merge for the upstream.
+> `Box::from_raw()` is `#[must_use]`, which means the result cannot
+> go unused.
+>=20
+> In Rust 1.71.0, this was not detected because the block expression
+> swallows the diagnostic [1]:
+>=20
+>     unsafe { Box::from_raw(self.ptr.as_ptr()) };
+>=20
+> It would have been detected, however, if the line had been instead:
+>=20
+>     unsafe { Box::from_raw(self.ptr.as_ptr()); }
+>=20
+> i.e. the semicolon being inside the `unsafe` block, rather than
+> outside.
+>=20
+> In Rust 1.72.0, the compiler started warning about this [2], so
+> without this patch we will get:
+>=20
+>         error: unused return value of `alloc::boxed::Box::<T>::from_raw` =
+that must be used
+>         --> rust/kernel/sync/arc.rs:302:22
+>         |
+>     302 |             unsafe { Box::from_raw(self.ptr.as_ptr()) };
+>         |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>         |
+>         =3D note: call `drop(Box::from_raw(ptr))` if you intend to drop t=
+he `Box`
+>         =3D note: `-D unused-must-use` implied by `-D warnings`
+>     help: use `let _ =3D ...` to ignore the resulting value
+>         |
+>     302 |             unsafe { let _ =3D Box::from_raw(self.ptr.as_ptr())=
+; };
+>         |                      +++++++                                 +
+>=20
+> Thus add an add an explicit `drop()` as the `#[must_use]`'s
+> annotation suggests (instead of the more general help line).
+>=20
+> Link: https://github.com/rust-lang/rust/issues/104253 [1]
+> Link: https://github.com/rust-lang/rust/pull/112529 [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
+Reviewed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
 
-Takashi
+> ---
+>  rust/kernel/sync/arc.rs | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index 172f563976a9..4c14d540a581 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -299,7 +299,7 @@ fn drop(&mut self) {
+>              // The count reached zero, we must free the memory.
+>              //
+>              // SAFETY: The pointer was initialised from the result of `B=
+ox::leak`.
+> -            unsafe { Box::from_raw(self.ptr.as_ptr()) };
+> +            unsafe { drop(Box::from_raw(self.ptr.as_ptr())) };
+>          }
+>      }
+>  }
+> --
+> 2.42.0
