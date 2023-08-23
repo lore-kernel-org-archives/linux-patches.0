@@ -1,141 +1,83 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B03A934
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 09:14:55 +0000 (UTC)
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-3fed963273cso27255615e9.1
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 02:14:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1692782094; x=1693386894;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=qiZlM8QEOpDTpRFMe/2/zEZ6wsyKpsV1KUA2VGwkVqc=;
-        b=TZmuqPNeD3vmbShzj7gSb9+WRe+VS3qWdT9gRNdlIP9KZZgdfonNFTcwLwx5mRJt4q
-         ZN6MwyNgTnqxerFqVS838PDSa9SZahDI+0GrYqHbmOOI0lS1z9cmYY8xV/NJtu+8RZJo
-         6tQuut33WKBdRXsVpKVyM69X8LCHU2KjK3uJqfZjXbMlenzYj+FYyfvMDqZA33cydqgy
-         XTmSgGZeHwVcHBM5nX+9NbJetLEwqVrJOHnKcl3ZIwQavAH4RDuNakYzvfwbxEhH8/ET
-         ebPNY+1w72xFkKQFbxQILYIPWjBdxqGfbMHKXsQ+VYtIjpovbaEVa3H62hZEtJ8g71KQ
-         g0PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692782094; x=1693386894;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qiZlM8QEOpDTpRFMe/2/zEZ6wsyKpsV1KUA2VGwkVqc=;
-        b=R8VNKuq/QVVs7ZQCIrPvYWfAKraRRer0LMqcTlU2f5ZJPnRBeJ/cfLMDRRV6sLODuU
-         iJkmT+SIyC7BW0dErh8cTAbr6xKW8E3bnKVYenaX5jtRl6VTOWXmDZ5Oo0Jy91ECT6MP
-         s5WIrAPA9+suTtzPEvvlFqg0jTlOC2tQUBxWOuhcYda6GSJM+xC41AbpSn4PUN/qqrWx
-         T9JV4V7w0sWBxJqdaWyetSVduuWi9qJlD0oxs4W9OHJhnkXlwiO+zzJEjJKNg02hr1tO
-         zRCH22okJYOGm6MQOgzorLaZn7uoSj5ycEHoxddxRBSMfEDO0m5H2IkykdEHwpwb94dV
-         plnw==
-X-Gm-Message-State: AOJu0Yydw5VObwARKyx16URNTGk0vNPNR008JKhBCMgizxekJAAypLqe
-	Pu/K3PsT6W+xRWo7H70jck4dEg==
-X-Google-Smtp-Source: AGHT+IGmx49TcZyNIesZ0Y8hEQR3pLmQeKegxY8NL7lzkFIt1BTGvLiiowVfWMRULj4No2sYruY+WA==
-X-Received: by 2002:a05:600c:3007:b0:3fa:91d0:8ddb with SMTP id j7-20020a05600c300700b003fa91d08ddbmr9556489wmh.14.1692782093753;
-        Wed, 23 Aug 2023 02:14:53 -0700 (PDT)
-Received: from localhost ([165.225.194.205])
-        by smtp.gmail.com with ESMTPSA id n22-20020a1c7216000000b003fefe70ec9csm2536983wmc.10.2023.08.23.02.14.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 02:14:53 -0700 (PDT)
-References: <20230711093303.1433770-1-aliceryhl@google.com>
- <20230711093303.1433770-7-aliceryhl@google.com>
- <vyrVN334oIXneb9VWievGpPTOCy0irxvoG-mDR0sQX5-xN-TL2Hngl0cl_XrVUwjDB3rXkXfR9Mdjy_no6fzhe4yIf_c7xpKa5OURt43k9c=@proton.me>
- <87msyisvmi.fsf@metaspace.dk>
-User-agent: mu4e 1.10.5; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Benno Lossin <benno.lossin@proton.me>
-Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, Tejun
-  Heo <tj@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, Lai Jiangshan
- <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex
-  Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary
-  Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
- <bjorn3_gh@protonmail.com>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v3 6/9] rust: workqueue: add helper for defining
- work_struct fields
-Date: Wed, 23 Aug 2023 11:06:37 +0200
-In-reply-to: <87msyisvmi.fsf@metaspace.dk>
-Message-ID: <87il963ysz.fsf@metaspace.dk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4106947B
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 09:26:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABE1C433C7;
+	Wed, 23 Aug 2023 09:26:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1692782786;
+	bh=ITHYbCSa8xC05AhgVVAUPq+ran6o4m6ijJRCtqyDnaw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=19arubAMz5JMa7tD64e+VmEucN4mlbKn4q1cPGDyJhN/7esJfQK1t6Ke8snvHrPfO
+	 RWssWDdFjrz8xrCedGg3agVoWv6o0vCV7P8gBSwZuTWJCu+h5dRj18lAwTPdwiR0tt
+	 O9kYIF86By6hESVzoIC8dtSJNhqe7ShOhGoOhlOA=
+Date: Wed, 23 Aug 2023 11:26:23 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
+Message-ID: <2023082303-musky-plastic-335f@gregkh>
+References: <20230821194122.695845670@linuxfoundation.org>
+ <ZOXJVamgYV1Mb+7S@debian>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZOXJVamgYV1Mb+7S@debian>
 
+On Wed, Aug 23, 2023 at 09:54:45AM +0100, Sudip Mukherjee (Codethink) wrote:
+> Hi Greg,
+> 
+> On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.47 release.
+> > There are 194 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> > Anything received after that time might be too late.
+> 
+> Build test (gcc version 12.3.1 20230625):
+> mips: 52 configs -> no failure
+> arm: 100 configs -> no failure
+> arm64: 3 configs -> no failure
+> x86_64: 4 configs -> no failure
+> alpha allmodconfig -> no failure
+> csky allmodconfig -> no failure
+> powerpc allmodconfig -> no failure
+> riscv allmodconfig -> no failure
+> s390 allmodconfig -> no failure
+> xtensa allmodconfig -> no failure
+> 
+> Boot test:
+> x86_64: Booted on my test laptop. Warning on boot, already reported by others.
+> x86_64: Booted on qemu. Warning on boot, already reported by others. [1]
+> arm64: Booted on rpi4b (4GB model). No regression. [2]
+> mips: Booted on ci20 board. No regression. [3]
+> 
+> [1]. https://openqa.qa.codethink.co.uk/tests/4765
+> [2]. https://openqa.qa.codethink.co.uk/tests/4773
+> [3]. https://openqa.qa.codethink.co.uk/tests/4772
+> 
+> Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+> 
+> -- 
+> Regards
+> Sudip
 
-"Andreas Hindborg (Samsung)" <nmi@metaspace.dk> writes:
+One question about the warning on boot, all still works afterward,
+right?  Or does the system not work?
 
-> Hi Benno,
->
-> Benno Lossin <benno.lossin@proton.me> writes:
->
-> ...
->
->>> +/// Links for a work item.
->>> +///
->>> +/// This struct contains a function pointer to the `run` function from the [`WorkItemPointer`]
->>> +/// trait, and defines the linked list pointers necessary to enqueue a work item in a workqueue.
->>> +///
->>> +/// Wraps the kernel's C `struct work_struct`.
->>> +///
->>> +/// This is a helper type used to associate a `work_struct` with the [`WorkItem`] that uses it.
->>> +#[repr(transparent)]
->>> +pub struct Work<T: ?Sized, const ID: u64 = 0> {
->>> +    work: Opaque<bindings::work_struct>,
->>> +    _inner: PhantomData<T>,
->>
->> Should this really be `PhantomData<T>`? Are you dropping `T`s in the 
->> destructor of `Work<T>`? I do not think so `PhantomData<fn() -> Box<T>>`
->> should do the trick.
->>
->
-> Could you elaborate what is the issue in having `PhantomData<T>`?
+thanks,
 
-I played around with this and as far as I can tell, using
-`PhantomData<fn() -> Box<T>>` does not disable dropck for T. Thus,
-`PhantomData<T>` has the same effect as `PhantomData<fn() -> Box<T>`,
-which is covariance over T and dropck:
-
-```rust
-use std::marker::PhantomData;
-
-struct A<T> {
-    _marker: PhantomData<fn() -> Box<T>>,
-}
-
-//#[cfg(disable)]
-impl<T> Drop for A<T> {
-    fn drop(&mut self) {
-        todo!()
-    }
-}
-
-struct B {}
-
-fn main() {
-    let (_a, b);
-    b = B {};
-    _a = foo(&b);
-}
-
-fn foo<'a>(_b: &'a B) -> A<&'a B> {
-    let a: A<&'a B> = A {
-        _marker: PhantomData,
-    };
-    a
-}
-```
-
-This is a little surprising to me since nomicon [1] explicitly marks
-`PhantomData<T>` as "covariant (with drop check)" but only "covariant"
-for `PhantomData<fn() -> T>`.
-
-Not sure why you wanted the box?
-
-Best regards,
-Andreas
-
-
-[1] https://doc.rust-lang.org/nomicon/phantom-data.html#table-of-phantomdata-patterns
+greg k-h
