@@ -1,110 +1,65 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FA3BA27
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 14:38:12 +0000 (UTC)
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so89350591fa.3
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 07:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692801490; x=1693406290;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f1+ZllnE3NbofBa3yUXNVhhtAoB7pOoNIr9xPlAL2nQ=;
-        b=F9Zz1Q+FMq1u5azSJ78JrOh/du6sYU23KN/am58NG3uX8jVDJvqJjviC+cKhkemZCO
-         1M83BojLnh/YGm/VTde+j+ZwzKgYbthMKufFSf8gbcMCYplecIOyKrII4aYMDwPMoY+4
-         r2SAukydHxtAnGhBSDAreBzt6odrH9XKeWLqna4we1ja3ij1+aoOtnQoEKiKopD5JOn+
-         ZIsU9kQgL7OaOfb2VEOWOonR+5BQvKnQYmjTQK8hUQnYJm6j4FoithtSzTOxrkgUrhP6
-         fEH+ZAWjTzXZgu9VANl5mE8Tg7i1AotWQvfCh0oD8QHTh3AJOdRU/bBifC3W7wvgAyVG
-         rDVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692801490; x=1693406290;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f1+ZllnE3NbofBa3yUXNVhhtAoB7pOoNIr9xPlAL2nQ=;
-        b=LLxRfEHvjR5VyY4FIryGAjtLYOvurEo4H/D4X0ub0Hol33AGK2SEa7vM3Y+U+vDtqt
-         VSIC4nFi/yTiHoMQWa3UTnxNsszFzO6tf8rfSAf0JgRxZkSpCZVjy2gvvEJ5xtu1EBsy
-         yPwLwGQIQ9rD4rfCWoRAESuwmgOaxNAid4gbihIAZ/uFT5PczwVNB+3ZwYzEztMzh6+q
-         cPhzmNs7w6eMdqYGmpqvW4ddc89ecfnV/SrrYyDdc6xo+GxKhCeZ/P3smdj1rc5CtsKt
-         l1fo0JB5LwhsLFokPeGYAkfIIR54OK4BMFPpYLBkYfUZB8ef/6PMJKmBEiv+I+YSeZa6
-         wMMw==
-X-Gm-Message-State: AOJu0Yzec2ysYwEC8FYsV8DsiFToGPbQBmyTjL95mpOobtZjugI2iRkc
-	QB7ycc2oYZW2iDPNZun2SUbh8ygOMcrL4HGBwC0=
-X-Google-Smtp-Source: AGHT+IHpt8TANhM2/9N/N8ppybLLJeWThUz4SEZ2Rh9Ro03P5XDBnf0PiL904TERN7Cywz4PqqO/arp4oPjTXdlgXGc=
-X-Received: by 2002:a2e:9649:0:b0:2bc:c28c:a2b8 with SMTP id
- z9-20020a2e9649000000b002bcc28ca2b8mr5711315ljh.27.1692801489970; Wed, 23 Aug
- 2023 07:38:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E039DAD42;
+	Wed, 23 Aug 2023 15:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA3CC433C8;
+	Wed, 23 Aug 2023 15:18:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692803934;
+	bh=1HhWgxgZ/OdvFcrLfSrPMjddPyrrJ+HBdSpwrFuf2NE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LytZAiuAivXLxyA3Cn6Qnvsp8H5wfxUNXLzsaGnvi2zRKoLLu2foo0Ho/J4NHvdnP
+	 N+hzTaLQEV8Llp2d4P8BRzgnfBErBQyVDszFmtQdgZOk9w0zPHKpQ4FS2HxqeSh60B
+	 MYi8jv8SgRo82IDiWw69ZmbCH0wzTp0kGsco/XPb164OcLzmnO5XxPoB+BdC/5/NHw
+	 nIoWO+Oz70rBgy9vDQh4byb5HhaLsume7UD3l29r+plpyxzW8PDxkzeKNk5RoJKGM+
+	 1jso12T48XMhH4dI3CUibNkX+Z5Y4s7zoEW7qryWaaAH2FxAxcUWj1v6zHG18D2VFG
+	 QzRQ3xyGQRaSg==
+Received: (nullmailer pid 2364874 invoked by uid 1000);
+	Wed, 23 Aug 2023 15:18:51 -0000
+Date: Wed, 23 Aug 2023 10:18:51 -0500
+From: Rob Herring <robh@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: srinivas.neeli@amd.com, wim@linux-watchdog.org, shubhrajyoti.datta@amd.com, michal.simek@amd.com, linux@roeck-us.net, ndesaulniers@google.com, trix@redhat.com, linux-watchdog@vger.kernel.org, linux-arm-kernel@lists.infradead.org, patches@lists.linux.dev, llvm@lists.linux.dev
+Subject: Re: [PATCH] watchdog: xilinx_wwdt: Use div_u64() in
+ xilinx_wwdt_start()
+Message-ID: <20230823151851.GA2359738-robh@kernel.org>
+References: <20230815-watchdog-xilinx-div_u64-v1-1-20b0b5a65c2e@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230821194122.695845670@linuxfoundation.org> <ZOXJVamgYV1Mb+7S@debian>
- <2023082303-musky-plastic-335f@gregkh>
-In-Reply-To: <2023082303-musky-plastic-335f@gregkh>
-From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Date: Wed, 23 Aug 2023 15:37:33 +0100
-Message-ID: <CADVatmMDcbkeo3DLog8TRQ2BNbgN=DzK6=OgfB-eL-Ruchu_jQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net, 
-	rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230815-watchdog-xilinx-div_u64-v1-1-20b0b5a65c2e@kernel.org>
 
-On Wed, 23 Aug 2023 at 10:26, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Wed, Aug 23, 2023 at 09:54:45AM +0100, Sudip Mukherjee (Codethink) wrote:
-> > Hi Greg,
-> >
-> > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.1.47 release.
-> > > There are 194 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
-> > > Anything received after that time might be too late.
-> >
-> > Build test (gcc version 12.3.1 20230625):
-> > mips: 52 configs -> no failure
-> > arm: 100 configs -> no failure
-> > arm64: 3 configs -> no failure
-> > x86_64: 4 configs -> no failure
-> > alpha allmodconfig -> no failure
-> > csky allmodconfig -> no failure
-> > powerpc allmodconfig -> no failure
-> > riscv allmodconfig -> no failure
-> > s390 allmodconfig -> no failure
-> > xtensa allmodconfig -> no failure
-> >
-> > Boot test:
-> > x86_64: Booted on my test laptop. Warning on boot, already reported by others.
-> > x86_64: Booted on qemu. Warning on boot, already reported by others. [1]
-> > arm64: Booted on rpi4b (4GB model). No regression. [2]
-> > mips: Booted on ci20 board. No regression. [3]
-> >
-> > [1]. https://openqa.qa.codethink.co.uk/tests/4765
-> > [2]. https://openqa.qa.codethink.co.uk/tests/4773
-> > [3]. https://openqa.qa.codethink.co.uk/tests/4772
-> >
-> > Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
-> >
-> > --
-> > Regards
-> > Sudip
->
-> One question about the warning on boot, all still works afterward,
-> right?  Or does the system not work?
+On Tue, Aug 15, 2023 at 12:06:50PM -0700, Nathan Chancellor wrote:
+> After commit f1a43aadb5a6 ("watchdog: Enable COMPILE_TEST for more
+> drivers"), it is possible to enable this driver on 32-bit architectures.
+> When building for those architectures with clang, there is an error due
+> to a 64-bit division in xilinx_wwdt_start():
+> 
+>   ERROR: modpost: "__aeabi_uldivmod" [drivers/watchdog/xilinx_wwdt.ko] undefined!
+> 
+> Use div_u64() to fix this, which takes a 64-bit dividend and 32-bit
+> divisor. GCC likely avoids the same error due to optimizations it
+> employs to transform division by a constant into other equivalent
+> operations, which may be different than what is implemented in clang.
+> 
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1915
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/watchdog/xilinx_wwdt.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-I did not notice any problem in testing after boot. Only the warning.
+Thanks for the fix. Also reported by 0-day with a similar failure:
+
+All errors (new ones prefixed by >>):
+
+   microblaze-linux-ld: drivers/watchdog/xilinx_wwdt.o: in function `xilinx_wwdt_start':
+>> drivers/watchdog/xilinx_wwdt.c:74: undefined reference to `__udivdi3'
 
 
--- 
-Regards
-Sudip
+Acked-by: Rob Herring <robh@kernel.org>
