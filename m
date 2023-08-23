@@ -1,91 +1,85 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816DEC2E6
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 20:14:42 +0000 (UTC)
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-68a41031768so2626374b3a.3
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 13:14:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692821682; x=1693426482;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ENARu/aPypvUKijJ61BaG061fO+rJyQYL9bbexKiSJQ=;
-        b=DOwyH1+0wwzV7UVglk3+hbfFVcvdl7t/vbjnXO6S7kGoAuA7C7QfSFHqWWaJtI9fcQ
-         8Npa8la2Wc5nooTvzLzSrM2Gt2s6wivswGWt5O0bi/XRrkSjN+KwmVBUynvEqp33eish
-         UKi3abUGp+7Oiu6lZ1j4P8QWF2EncAoB/HM9sWncYCkB/YzW/VWU38ksd9OlxQqqaFQ3
-         /JDenatfe2z1NCGJrmeiybri2Fb3Xgqx/FsYfOWnO/uLjFf2On8vhwg2jjstEuSbWzGX
-         mGBvNYCvmGSthkkwb4EO2xYjrU+A0H9ziMi6vjf/HY2Qd8fYWPliOjJV2WjZHug8WiJY
-         da3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692821682; x=1693426482;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ENARu/aPypvUKijJ61BaG061fO+rJyQYL9bbexKiSJQ=;
-        b=UHOlDD9FI+0us4ELiu5pMM9Pv8XGlZz8XJDUrcFF9z75UpLQ2GIy/ZeXLRRTYtZ+FM
-         kZeONEPVTE21EikzFKiDeU6zqcNfoHw26gmY7lMt421L7yT54WxOjPP3Zk2PCQlaYF7e
-         itfetlYbd/uaC2kiyhV8pM3RqdPO+x3vq1fOpgMiO0c1qXtqB+tgOorUqcqHij+Ey812
-         9hDZBKkGfvDlOJTRRdQkRxTLMX/wkrHw6SjqCek28qh95QJQEBltx9396C2bNit5RPgB
-         m0TQtOOumk+NR9fuTz3wnYXPF1cQnzT2daqTmcdUheANVhckNfUjVQcFbNSqedsH0laP
-         hh9Q==
-X-Gm-Message-State: AOJu0Yy36b559OVXzf9GZZqA0HY/JFKKultS3ZV8QBT7icgZI1F9rSCo
-	5Uk3/u3Jory9wX8xY50XmKg=
-X-Google-Smtp-Source: AGHT+IHuoCBRBpvaTtL0zg2ATZOSsX9vVOCtLY8ej1KK9HqDGq1zRIVqpbNPesPonujmRCazLjSryA==
-X-Received: by 2002:a05:6a20:4310:b0:149:2149:9491 with SMTP id h16-20020a056a20431000b0014921499491mr10020989pzk.43.1692821681631;
-        Wed, 23 Aug 2023 13:14:41 -0700 (PDT)
-Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id j24-20020aa79298000000b0068a077847c7sm8219980pfa.135.2023.08.23.13.14.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Aug 2023 13:14:40 -0700 (PDT)
-Message-ID: <5a4fedbd-ee1e-9413-2022-a155a098fe4d@gmail.com>
-Date: Wed, 23 Aug 2023 13:14:38 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EEB1C3F;
+	Wed, 23 Aug 2023 21:09:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B352C433C7;
+	Wed, 23 Aug 2023 21:09:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1692824944;
+	bh=OF5HJLG5FzsNNhmPY/VyYpOOUEVm3L9+q1JsGFn1ulc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=OlF1Si3rIqIafTdto8/wWcEkfcJW3vMy6f1dXKj8rC8vDSkwCRZARXc8pFOpHcGAX
+	 J5EUQvKgGyA2fRcpDucTMc4/V3k604hVLHApj3UeaI/eGyIU00RlhyaJBSz6TT4MLt
+	 EvY2XwnGU/GoLcbz5Iy/VrJPyWH17b2TZGWyV1FMaKg8SywCUy2HlB2oIt0t5QcEnb
+	 txsYqO9AJad/5by7hrKs0sFTxNqg5giCqJK1hUx5mrpzBoCKpwsXCyCDCvIhPlLp78
+	 Wovg8OZsbvZ1lR8Fy8fopf8zMJtuQtgIHgybFhnGJHyUpE8zmWX3oZ+89/D38Kj8wW
+	 ylsxKr7FnWYVQ==
+From: Mark Brown <broonie@kernel.org>
+To: james.schulman@cirrus.com, david.rhodes@cirrus.com, 
+ rf@opensource.cirrus.com, ckeepax@opensource.cirrus.com, 
+ Nathan Chancellor <nathan@kernel.org>
+Cc: lgirdwood@gmail.com, ndesaulniers@google.com, trix@redhat.com, 
+ alsa-devel@alsa-project.org, patches@opensource.cirrus.com, 
+ patches@lists.linux.dev, llvm@lists.linux.dev
+In-Reply-To: <20230823-cs42l43_pll_ev-init-ret-v1-1-5836f1ad5dad@kernel.org>
+References: <20230823-cs42l43_pll_ev-init-ret-v1-1-5836f1ad5dad@kernel.org>
+Subject: Re: [PATCH] ASoC: cs42l43: Initialize ret in default case in
+ cs42l43_pll_ev()
+Message-Id: <169282494202.183189.5510150432042109830.b4-ty@kernel.org>
+Date: Wed, 23 Aug 2023 22:09:02 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.4 000/234] 6.4.12-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230821194128.754601642@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20230821194128.754601642@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-034f2
 
-On 8/21/23 12:39, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.12 release.
-> There are 234 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, 23 Aug 2023 09:32:50 -0700, Nathan Chancellor wrote:
+> clang warns (or errors with CONFIG_WERROR=y):
 > 
-> Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
-> Anything received after that time might be too late.
+>   sound/soc/codecs/cs42l43.c:1371:2: error: variable 'ret' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+>    1371 |         default:
+>         |         ^~~~~~~
+>   sound/soc/codecs/cs42l43.c:1377:9: note: uninitialized use occurs here
+>    1377 |         return ret;
+>         |                ^~~
+>   sound/soc/codecs/cs42l43.c:1349:9: note: initialize the variable 'ret' to silence this warning
+>    1349 |         int ret;
+>         |                ^
+>         |                 = 0
+>   1 error generated.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.12-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> [...]
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Applied to
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: cs42l43: Initialize ret in default case in cs42l43_pll_ev()
+      commit: a74048432fbb30e7a574747f6e1f47aef17010b0
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
