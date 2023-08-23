@@ -1,60 +1,61 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932D1BE7B
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 13:30:15 +0000 (UTC)
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-56b0c5a140dso2527661a12.0
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 06:30:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF5ABE4D
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 13:31:01 +0000 (UTC)
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-68a3de5f231so2490162b3a.0
+        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 06:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692797415; x=1693402215;
+        d=gmail.com; s=20221208; t=1692797461; x=1693402261;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=67eR0XKV1cIlXfm6z6Fca6SQKuHaMk/U6YOTAoJA9D0=;
-        b=Uj6qKyLqzuSjkS1Xf+lekrhwQCQ2L93SaNeAIohnQxhrfrfaN+J27XPkY8Lf4vgyoo
-         On9XdPcJmWNsKqRGLyaPfzXM/yMESEkbw4svnBiLdfrz3Tre/FnnXhTd/SnGWYeDnMdI
-         SAOg6ep2+q1CVGZt7xPHl3qbobUC91lrc4zI3MPHnOQpYKn16oOxRAx9KcmB5T0i6lNm
-         ZXmGUFgssLSp7W4H/BSzVedPHV1My0RDlzIq+6QEtgRDP8vHOefR3OUjwWTE0RKt5fL0
-         LxVr+32EaHYl58+zedBXv6CwRloBejIKs47YvDDySmTWlHuuDtV632lrY5BTYvrK7H63
-         qGAA==
+        bh=+D0W/16BoY62R/hiThUj2ugSOF40Kj3HdGJGIhUmYhc=;
+        b=nvZeCsp///OZbBne2fiRgEgHTTWKM7LWvd09xMTBGY4NmiQFPK7KqdDLsYyOQGh9LG
+         2xhQk6Ie/vraLN43k8FOk9aO7/0oD/xAwPcF4ORDKK0schgRNzcS50N7sM7juwzpeNR1
+         9lxR18ZrKDNj1L0iLpso6gIbJat5XDVV4wScTKN5fJpshRHzx+nb04rryFIofO5Lhq0+
+         M8QOBi8MdXRn8TDDOlTPXVHh19WDoxANN7IQdYjA3oX1LmdE1CEKXUn2rzVxMSDV2I2i
+         GNVc/IxEEhQyFIfZYWEQgeBHXPQi8iLEIez5Z+OgfnIQnqnmRF7ybRva0/e2o5DOnxsU
+         nEQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692797415; x=1693402215;
+        d=1e100.net; s=20221208; t=1692797461; x=1693402261;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=67eR0XKV1cIlXfm6z6Fca6SQKuHaMk/U6YOTAoJA9D0=;
-        b=kxniEagu44mNfCkaWJBAIIpZjnNkLo4iP1IVpBUiWf6+PYaOxiwUQ8gxNrJ9X1tSFm
-         ElFS4ITsnfBxKxLrwlU1bIlNLcQ/Eubk5/sDN8nT6axJVRxuCAfP5A30KK1P52OA9CcQ
-         d5KZDXnPDISPutkjwM2ZNWg9ljh53ZZHFa4Mff8XmUdB1vjmjO4Pk5DuXITyqaLCnLBR
-         kEST2qcYkgMllUiQAyiHtRdHxuf3s4ZQSLgVBtxayMU2R5MvMAnMZzzTRXyqoKizfpa9
-         tgnqYEzbyuT1ZR1mPW7Xv6tp9d2UWf9J+K+zmeoi4C5xZiI6L19lHdubJ5vHN0C5dget
-         81hQ==
-X-Gm-Message-State: AOJu0Yyk2O3QIU2EUvndeNSGYLGd4+x1G/ERoXt4cCaADedOgYz0ylxb
-	3s/XzsSgunuanilLHia9soU=
-X-Google-Smtp-Source: AGHT+IFP5oobQMnDXiUdLaaatQk3CCNsv+09Y4/zjUDdAC34eBKJ9inGiI2iDr8BzaWRDeZMOtTRsw==
-X-Received: by 2002:a17:90a:fa01:b0:262:e84f:ad80 with SMTP id cm1-20020a17090afa0100b00262e84fad80mr11253168pjb.9.1692797414821;
-        Wed, 23 Aug 2023 06:30:14 -0700 (PDT)
+        bh=+D0W/16BoY62R/hiThUj2ugSOF40Kj3HdGJGIhUmYhc=;
+        b=MQi1qc1RtiPKLKaqyaRly0X6N8keZIf2BTHeonA+8+VFw5/TwozXuUDRwQ8D2CcmAB
+         wUGSmJ7eWRgTHnUNB8EGzQiIaoGVW+NS3lJs1gv71Eyj0qDPnJr49m43+F+n60tZmyjo
+         EmRm/NACmBoTYn8c8vQhjqQTR/u28RBCMr6j0746CKVtg7ou61LWivBBjkIHuxcbS27T
+         dQm2RxZgIZAwV/8T2F798NYebiqN8s7OyJT0sHmWrCe9gS0BORGYp7DisxxBq9evR8lI
+         RvP64O8UgQNpyrGOko5Z5QFmJP8ZG2bozY/xPxhYrqbbmW7+6LFZ9cKT0tUq9TDXteAN
+         vnXA==
+X-Gm-Message-State: AOJu0YyXfpVAMGSz3WhAfZ2CeFmPz6+PWgLMXNX/mPlljLtwURsMHPKW
+	cXQUFRG3eVqSlA51TToFLpk=
+X-Google-Smtp-Source: AGHT+IHxqIWYvGpO5p0maI7SBmqebnAHzyXG74P2UQdnr44NQ7qsDllqd4gy2UgfiycK38B8l5N+0w==
+X-Received: by 2002:a05:6a20:748b:b0:136:42c8:693c with SMTP id p11-20020a056a20748b00b0013642c8693cmr11821998pzd.6.1692797460787;
+        Wed, 23 Aug 2023 06:31:00 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id gx3-20020a17090b124300b0026b45fb4443sm11519465pjb.4.2023.08.23.06.30.14
+        by smtp.gmail.com with ESMTPSA id a2-20020aa780c2000000b00688214cff65sm9477564pfn.44.2023.08.23.06.31.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 06:30:14 -0700 (PDT)
+        Wed, 23 Aug 2023 06:31:00 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 23 Aug 2023 06:30:13 -0700
+Date: Wed, 23 Aug 2023 06:30:59 -0700
 From: Guenter Roeck <linux@roeck-us.net>
 To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+	f.fainelli@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
 Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <2d8a5f48-6c50-4c12-8a3d-23e621c6b722@roeck-us.net>
+Message-ID: <8ecc1785-2e12-4a66-b567-b4d50b4d2892@roeck-us.net>
 References: <20230821194122.695845670@linuxfoundation.org>
- <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
- <2023082309-veggie-unwoven-a7df@gregkh>
- <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
+ <ZOXJVamgYV1Mb+7S@debian>
+ <2023082303-musky-plastic-335f@gregkh>
+ <CA+G9fYvm-7DPuA9kAF3784DpW4BmAXa_+_NW3AP_919_UND5-Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,13 +64,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
+In-Reply-To: <CA+G9fYvm-7DPuA9kAF3784DpW4BmAXa_+_NW3AP_919_UND5-Q@mail.gmail.com>
 
-On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
-> On Wed, 23 Aug 2023 at 12:33, Greg Kroah-Hartman
+On Wed, Aug 23, 2023 at 04:02:14PM +0530, Naresh Kamboju wrote:
+> On Wed, 23 Aug 2023 at 14:56, Greg Kroah-Hartman
 > <gregkh@linuxfoundation.org> wrote:
 > >
-> > On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
+> > On Wed, Aug 23, 2023 at 09:54:45AM +0100, Sudip Mukherjee (Codethink) wrote:
+> > > Hi Greg,
+> > >
 > > > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
 > > > > This is the start of the stable review cycle for the 6.1.47 release.
 > > > > There are 194 patches in this series, all will be posted as a response
@@ -78,45 +81,42 @@ On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
 > > > >
 > > > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
 > > > > Anything received after that time might be too late.
-> > > >
 > > >
-> > > Build results:
-> > >       total: 157 pass: 156 fail: 1
-> > > Failed builds:
-> > >       m68k:sun3_defconfig
-> > > Qemu test results:
-> > >       total: 521 pass: 519 fail: 2
-> > > Failed tests:
-> > >       arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
-> > >       arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
+> > > Build test (gcc version 12.3.1 20230625):
+> > > mips: 52 configs -> no failure
+> > > arm: 100 configs -> no failure
+> > > arm64: 3 configs -> no failure
+> > > x86_64: 4 configs -> no failure
+> > > alpha allmodconfig -> no failure
+> > > csky allmodconfig -> no failure
+> > > powerpc allmodconfig -> no failure
+> > > riscv allmodconfig -> no failure
+> > > s390 allmodconfig -> no failure
+> > > xtensa allmodconfig -> no failure
 > > >
-> > > The m68k build failure is
+> > > Boot test:
+> > > x86_64: Booted on my test laptop. Warning on boot, already reported by others.
+> > > x86_64: Booted on qemu. Warning on boot, already reported by others. [1]
+> > > arm64: Booted on rpi4b (4GB model). No regression. [2]
+> > > mips: Booted on ci20 board. No regression. [3]
 > > >
-> > > Inconsistent kallsyms data
-> > > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
+> > > [1]. https://openqa.qa.codethink.co.uk/tests/4765
+> > > [2]. https://openqa.qa.codethink.co.uk/tests/4773
+> > > [3]. https://openqa.qa.codethink.co.uk/tests/4772
 > > >
-> > > I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
-> > > Nothing to worry about. The f2fs crashes are still seen. They
-> > > also happen for other architectures, so it is not just an arm problem.
-> > > I'll probably just disable all f2fs testing going forward. If so I'll
-> > > send a note clarifying that the lack of reported test failures doesn't
-> > > mean that it works.
+> > > Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+> > >
+> > > --
+> > > Regards
+> > > Sudip
 > >
-> > I'll look into this later this week, next week to resolve the f2fs
-> > stuff.  I wanted to get to the other known bug fixes first.
-> >
-> > > For x86 I get the same runtime warning as everyone else.
-> >
-> > Yeah, this is troubling...
-> >
-> > Is it clang only?  I'll dig into this today...
+> > One question about the warning on boot, all still works afterward,
+> > right?  Or does the system not work?
 > 
-> It is seen with gcc-13 and clang-17 with few extra configs.
-> We are not booting defconfig.
+> The warning while booting and root login successful and
+> LTP and other test runs are successful.
 > 
-> The Kconfigs are enabled with KFENCE.
-> 
-I have KFENCE enabled as well, so it may well be that this triggers
-the warning. I don't see it in 6.4.y or upstream, though.
+
+Same here.
 
 Guenter
