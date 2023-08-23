@@ -1,99 +1,116 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37454C8EC
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 16:10:05 +0000 (UTC)
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso770147066b.1
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 09:10:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1692807004; x=1693411804;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=AvCyDnox4fbKDW7rNSjZG6/gL/syisPTe8ALd97uo+Q=;
-        b=AMRCA5jQetEgbNYV7zkyPQEYLYr+i8pUdYZUEF4QON89eMWTb4UdIdYtj3uoFKba67
-         LZXYSU0+KedMQZ5+JpEvVjTZsFdPlHKtnDeg26ENh2AvkV9sfqbuU+BPxfFxmx/kUdSH
-         naknCJY4MAYa0aqSG74R4dvx6iHvj7VSUVgUpO2t/kuCwmxhLdcVLLL6k7xWHIDiI8im
-         aqWBaOrsQ1k0QsvOYK7DjYvrkr7j3FS4zjb7rhXjJpVIbxKA+ahm9kgFjUbe8l1etZn4
-         DaYsdfX/zC2jJLvApnGKQCAdgIqJ67AbybH9iIdjl8kC0gXT+ZCDJIhHKS8KDlH7uoPL
-         mHZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692807004; x=1693411804;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AvCyDnox4fbKDW7rNSjZG6/gL/syisPTe8ALd97uo+Q=;
-        b=KVmGMitQeH0q6ZqDaJ08CGqWVmqZup/6kGdpB1QXtrt1PMq/i4msYR2Rg1PWegx8sq
-         QBzGIELFO7SydYL9lePXTbGnCwXKeBtH1f+87lcsmjTaF51ITfMzZqItExpOw2uYs2VM
-         59OrBgWfsNFYep9lSILyK7TrRje1cfBuiF3+yEmYzHPoYi8kRC9A8zQQAqgr4TBPucFA
-         7IiO0O844+EiBoW+DsDbfwpwuiZKszUbaNhkJC8b4Dz+UQIRE7XMlc3KKmewEt1Vz4GQ
-         gFBzyoVM1oJW0fa2Yp5rJVt+FDUTHfgDLedWqwhNek51sn7vowsH9jXw5zjOMp/uajmh
-         f4tA==
-X-Gm-Message-State: AOJu0YyqKyZDKEfHh0UBeDGxV+rlrs/AZgFUnozQKBIpJs37Q8n/MhZf
-	sxEo5duuKmbnzMtotLM9WMxjlg==
-X-Google-Smtp-Source: AGHT+IHqKjdbXppHqxgenNeZYES7RnrdB3Ff8k7iiNuK7kgXftXUykFdhh/FJBhTWdlI5gR+XbKyNA==
-X-Received: by 2002:a17:906:2d1:b0:991:d5ad:f1b1 with SMTP id 17-20020a17090602d100b00991d5adf1b1mr11989340ejk.47.1692807003799;
-        Wed, 23 Aug 2023 09:10:03 -0700 (PDT)
-Received: from localhost ([79.142.230.34])
-        by smtp.gmail.com with ESMTPSA id o5-20020a1709064f8500b0099d45ed589csm9938111eju.125.2023.08.23.09.10.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 09:10:03 -0700 (PDT)
-References: <87msyi406u.fsf@metaspace.dk>
- <20230823103458.243871-1-aliceryhl@google.com>
-User-agent: mu4e 1.10.5; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
- boqun.feng@gmail.com, gary@garyguo.net, linux-kernel@vger.kernel.org,
- ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org,
- wedsonaf@gmail.com
-Subject: Re: [PATCH v1] rust: add improved version of
- `ForeignOwnable::borrow_mut`
-Date: Wed, 23 Aug 2023 18:09:15 +0200
-In-reply-to: <20230823103458.243871-1-aliceryhl@google.com>
-Message-ID: <87a5uh4u5h.fsf@metaspace.dk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508BCC8EC
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 16:13:39 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 5D73520931;
+	Wed, 23 Aug 2023 16:13:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1692807217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jwNPIlXO1cZROk1bqLcvHXeSLn6/7q5ucl311GCvZ9s=;
+	b=ML/JHayOof9oF9g58EMq30h5KwiW4v8QN4lIlrE6HUzqEJBEtJSwkrtBdHVWLFoRe4RdAl
+	VKeuVFmWffNyQaBI2dHs3RsAx8Qa46zaqKyzq7F3pLTcr6+4fQbQjC/7RHpIIib5RMcLJf
+	Hn3GXhvapfz119lcFfO7bufDJZ9wIRo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1692807217;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jwNPIlXO1cZROk1bqLcvHXeSLn6/7q5ucl311GCvZ9s=;
+	b=hs6icawUeUaqdnSo4AuosAVSPbx3Jr66UxFUBgP2sm7Q4cUy0uj2C1QYJPxV8H2GkR1swt
+	Os+fCO9yhxyrT+CQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 24FFE13458;
+	Wed, 23 Aug 2023 16:13:37 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id g/cQCDEw5mSOPgAAMHmgww
+	(envelope-from <tiwai@suse.de>); Wed, 23 Aug 2023 16:13:37 +0000
+Date: Wed, 23 Aug 2023 18:13:36 +0200
+Message-ID: <87fs49d9e7.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Takashi Yano <takashi.yano@nifty.ne.jp>
+Cc: Takashi Iwai <tiwai@suse.de>,
+	gregkh@linuxfoundation.org,
+	patches@lists.linux.dev,
+	sashal@kernel.org,
+	stable@vger.kernel.org,
+	tasos@tasossah.com
+Subject: Re: [PATCH 6.1 110/181] ALSA: ymfpci: Create card with device-managed snd_devm_card_new()
+In-Reply-To: <20230824004533.eef5bfded08b8af05f71bee9@nifty.ne.jp>
+References: <20230403140418.679274299@linuxfoundation.org>
+	<20230823135846.1812-1-takashi.yano@nifty.ne.jp>
+	<87h6ophml0.wl-tiwai@suse.de>
+	<20230824004533.eef5bfded08b8af05f71bee9@nifty.ne.jp>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+
+On Wed, 23 Aug 2023 17:45:33 +0200,
+Takashi Yano wrote:
+> 
+> On Wed, 23 Aug 2023 16:15:07 +0200
+> Takashi Iwai wrote:
+> > On Wed, 23 Aug 2023 15:58:46 +0200,
+> > Takashi Yano wrote:
+> > > 
+> > > Dear Linux Kernel Team,
+> > > 
+> > > I had encountered the problem that I reported to debian kernel team:
+> > > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1050117
+> > > , where I was suggested to report this to upstream.
+> > > 
+> > > After a lot of struggle, I found that this issue occurs after the following
+> > > commit. The problem happens if a YAMAHA YMF7x4 sound card is present AND the
+> > > firmware is missing. Not only the shutdown/reboot problem, but the page fault,
+> > > whose error log is being cited following the commit, also occurs in the boot
+> > > process.
+> > (snip)
+> > > I looked into this problem and found the mechanism of the page fault.
+> > > 
+> > > 1) chip->reg_area_virt is mapped in sound/pci/ymfpci/ymfpci_main.c:
+> > >    snd_ymfpci_create() in the initialize process of snd_ymfpci.
+> > > 2) The initializing fails due to a lack of the firmware.
+> > > 3) The allocated resources are released in drivers/base/devres.c:
+> > >    release_nodes().
+> > > 4) In the release process 3), reg_area_virt is unmapped before calling
+> > >    sound/pci/ymfpci/ymfpci_main.c: snd_ymfpci_free().
+> > > 5) The first register access in sound/pci/ymfpci/ymfpci_main.c:
+> > >    snd_ymfpci_free() causes page fault because the reg_area_virt is
+> > >    already unmapped.
+> > > 
+> > > Unfortunately, I am not familiar with the linux kernel code, so I am not
+> > > sure of the appropriate way how the problem should be fixed.
+> > 
+> > Thanks for the report and the analysis.  Yes, it's the problem of the
+> > device release, and this driver was overlooked while it's been fixed in
+> > a few others.
+> > 
+> > Below is the fix patch.  Let me know if it works for you, then I'll
+> > submit to the upstream and let stable branch backporting it later.
+> 
+> Thank you for your amazingly quick reply. :)
+> I have confirmed that the following patch solves the problem.
+> With this patch, snd_ymfpci_free() no longer seems to be called in
+> the release process on error.
+> 
+> Thank you so much for your help.
+
+Thanks for quick testing.  I'll submit and merge for the upstream.
 
 
-Alice Ryhl <aliceryhl@google.com> writes:
-
-> Andreas Hindborg <nmi@metaspace.dk> writes:
->>>> I am not sure this makes sense. How about splitting the trait in two,
->>>> immutable and mutable and only implementing the immutable one or Arc?
->>>
->>> I used this design based on what would make sense for a linked list. The
->>> idea is that we can have two different types of cursors for a linked
->>> list: immutable and mutable. The immutable cursor lets you:
->>>
->>>  * move around the linked list
->>>  * access the values using `borrow`
->>>
->>> The mutable cursor lets you:
->>>
->>>  * move around the linked list
->>>  * delete or add items to the list
->>>  * access the values using `borrow_mut`
->>>
->>> The mutable cursor gives you extra abilities beyond the `borrow` vs
->>> `borrow_mut` distinction, so we want to provide both types of cursors
->>> even if the pointer type is Arc. To do that, we need a trait that
->>> defines what it means to have mutable access to an Arc.
->> 
->> I don't see how that prevents this trait from being split in two?
->
-> Well, you could split the trait, but if you make the mutable iterator
-> require the `borrow_mut` trait, then you have to implement the mutable
-> trait for `Arc` too if you want the mutable iterator to work with `Arc`.
->
-> And if you're always going to implement both traits, then maybe it
-> makes more sense to not split the traits?
-
-Maybe. Do you have a prototype for the list cursor available?
-
-BR Andreas
-
+Takashi
