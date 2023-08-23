@@ -1,153 +1,110 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F766BE7C
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 14:15:15 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E9B112088B;
-	Wed, 23 Aug 2023 14:15:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1692800107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=rAF64jP1YQvc0jbwt9ErHkFT28tgKrurCuDmG2KWNAI=;
-	b=MVjhib8g//APwSzyIdy5RcNNrDLDm50Y8puR44G5siGDob/Ak55Z+9vGXZLd3YzEC25di9
-	+xTJtZMyZAr+JovgqssyGGu6MKvOGtwszVLmKO2QGiWRXifE8Gfznted7lMU6zjaggkkm1
-	uIzdXc/Hqc1xZpumApPsDxdnilMwKfg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1692800107;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=rAF64jP1YQvc0jbwt9ErHkFT28tgKrurCuDmG2KWNAI=;
-	b=0q8oym04FmGME2+TVX8iHwONAM+FrDWhpyCHlffpiZQF4AIuO0SNYHA+rv31R7RqOboaBC
-	OFiMGodoBmf/zGDg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D7AE51351F;
-	Wed, 23 Aug 2023 14:15:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id wpRXNGsU5mQDCAAAMHmgww
-	(envelope-from <tiwai@suse.de>); Wed, 23 Aug 2023 14:15:07 +0000
-Date: Wed, 23 Aug 2023 16:15:07 +0200
-Message-ID: <87h6ophml0.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Takashi Yano <takashi.yano@nifty.ne.jp>
-Cc: gregkh@linuxfoundation.org,
-	patches@lists.linux.dev,
-	sashal@kernel.org,
-	stable@vger.kernel.org,
-	tasos@tasossah.com,
-	tiwai@suse.de
-Subject: Re: [PATCH 6.1 110/181] ALSA: ymfpci: Create card with device-managed snd_devm_card_new()
-In-Reply-To: <20230823135846.1812-1-takashi.yano@nifty.ne.jp>
-References: <20230403140418.679274299@linuxfoundation.org>
-	<20230823135846.1812-1-takashi.yano@nifty.ne.jp>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FA3BA27
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 14:38:12 +0000 (UTC)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so89350591fa.3
+        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 07:38:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692801490; x=1693406290;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=f1+ZllnE3NbofBa3yUXNVhhtAoB7pOoNIr9xPlAL2nQ=;
+        b=F9Zz1Q+FMq1u5azSJ78JrOh/du6sYU23KN/am58NG3uX8jVDJvqJjviC+cKhkemZCO
+         1M83BojLnh/YGm/VTde+j+ZwzKgYbthMKufFSf8gbcMCYplecIOyKrII4aYMDwPMoY+4
+         r2SAukydHxtAnGhBSDAreBzt6odrH9XKeWLqna4we1ja3ij1+aoOtnQoEKiKopD5JOn+
+         ZIsU9kQgL7OaOfb2VEOWOonR+5BQvKnQYmjTQK8hUQnYJm6j4FoithtSzTOxrkgUrhP6
+         fEH+ZAWjTzXZgu9VANl5mE8Tg7i1AotWQvfCh0oD8QHTh3AJOdRU/bBifC3W7wvgAyVG
+         rDVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692801490; x=1693406290;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f1+ZllnE3NbofBa3yUXNVhhtAoB7pOoNIr9xPlAL2nQ=;
+        b=LLxRfEHvjR5VyY4FIryGAjtLYOvurEo4H/D4X0ub0Hol33AGK2SEa7vM3Y+U+vDtqt
+         VSIC4nFi/yTiHoMQWa3UTnxNsszFzO6tf8rfSAf0JgRxZkSpCZVjy2gvvEJ5xtu1EBsy
+         yPwLwGQIQ9rD4rfCWoRAESuwmgOaxNAid4gbihIAZ/uFT5PczwVNB+3ZwYzEztMzh6+q
+         cPhzmNs7w6eMdqYGmpqvW4ddc89ecfnV/SrrYyDdc6xo+GxKhCeZ/P3smdj1rc5CtsKt
+         l1fo0JB5LwhsLFokPeGYAkfIIR54OK4BMFPpYLBkYfUZB8ef/6PMJKmBEiv+I+YSeZa6
+         wMMw==
+X-Gm-Message-State: AOJu0Yzec2ysYwEC8FYsV8DsiFToGPbQBmyTjL95mpOobtZjugI2iRkc
+	QB7ycc2oYZW2iDPNZun2SUbh8ygOMcrL4HGBwC0=
+X-Google-Smtp-Source: AGHT+IHpt8TANhM2/9N/N8ppybLLJeWThUz4SEZ2Rh9Ro03P5XDBnf0PiL904TERN7Cywz4PqqO/arp4oPjTXdlgXGc=
+X-Received: by 2002:a2e:9649:0:b0:2bc:c28c:a2b8 with SMTP id
+ z9-20020a2e9649000000b002bcc28ca2b8mr5711315ljh.27.1692801489970; Wed, 23 Aug
+ 2023 07:38:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
+MIME-Version: 1.0
+References: <20230821194122.695845670@linuxfoundation.org> <ZOXJVamgYV1Mb+7S@debian>
+ <2023082303-musky-plastic-335f@gregkh>
+In-Reply-To: <2023082303-musky-plastic-335f@gregkh>
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date: Wed, 23 Aug 2023 15:37:33 +0100
+Message-ID: <CADVatmMDcbkeo3DLog8TRQ2BNbgN=DzK6=OgfB-eL-Ruchu_jQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net, 
+	rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 23 Aug 2023 15:58:46 +0200,
-Takashi Yano wrote:
-> 
-> Dear Linux Kernel Team,
-> 
-> I had encountered the problem that I reported to debian kernel team:
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1050117
-> , where I was suggested to report this to upstream.
-> 
-> After a lot of struggle, I found that this issue occurs after the following
-> commit. The problem happens if a YAMAHA YMF7x4 sound card is present AND the
-> firmware is missing. Not only the shutdown/reboot problem, but the page fault,
-> whose error log is being cited following the commit, also occurs in the boot
-> process.
-(snip)
-> I looked into this problem and found the mechanism of the page fault.
-> 
-> 1) chip->reg_area_virt is mapped in sound/pci/ymfpci/ymfpci_main.c:
->    snd_ymfpci_create() in the initialize process of snd_ymfpci.
-> 2) The initializing fails due to a lack of the firmware.
-> 3) The allocated resources are released in drivers/base/devres.c:
->    release_nodes().
-> 4) In the release process 3), reg_area_virt is unmapped before calling
->    sound/pci/ymfpci/ymfpci_main.c: snd_ymfpci_free().
-> 5) The first register access in sound/pci/ymfpci/ymfpci_main.c:
->    snd_ymfpci_free() causes page fault because the reg_area_virt is
->    already unmapped.
-> 
-> Unfortunately, I am not familiar with the linux kernel code, so I am not
-> sure of the appropriate way how the problem should be fixed.
+On Wed, 23 Aug 2023 at 10:26, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Wed, Aug 23, 2023 at 09:54:45AM +0100, Sudip Mukherjee (Codethink) wrote:
+> > Hi Greg,
+> >
+> > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.1.47 release.
+> > > There are 194 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> > > Anything received after that time might be too late.
+> >
+> > Build test (gcc version 12.3.1 20230625):
+> > mips: 52 configs -> no failure
+> > arm: 100 configs -> no failure
+> > arm64: 3 configs -> no failure
+> > x86_64: 4 configs -> no failure
+> > alpha allmodconfig -> no failure
+> > csky allmodconfig -> no failure
+> > powerpc allmodconfig -> no failure
+> > riscv allmodconfig -> no failure
+> > s390 allmodconfig -> no failure
+> > xtensa allmodconfig -> no failure
+> >
+> > Boot test:
+> > x86_64: Booted on my test laptop. Warning on boot, already reported by others.
+> > x86_64: Booted on qemu. Warning on boot, already reported by others. [1]
+> > arm64: Booted on rpi4b (4GB model). No regression. [2]
+> > mips: Booted on ci20 board. No regression. [3]
+> >
+> > [1]. https://openqa.qa.codethink.co.uk/tests/4765
+> > [2]. https://openqa.qa.codethink.co.uk/tests/4773
+> > [3]. https://openqa.qa.codethink.co.uk/tests/4772
+> >
+> > Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+> >
+> > --
+> > Regards
+> > Sudip
+>
+> One question about the warning on boot, all still works afterward,
+> right?  Or does the system not work?
 
-Thanks for the report and the analysis.  Yes, it's the problem of the
-device release, and this driver was overlooked while it's been fixed in
-a few others.
-
-Below is the fix patch.  Let me know if it works for you, then I'll
-submit to the upstream and let stable branch backporting it later.
+I did not notice any problem in testing after boot. Only the warning.
 
 
-Takashi
-
--- 8< --
-From: Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH] ALSA: ymfpci: Fix the missing snd_card_free() call at probe
- error
-
-Like a few other drivers, YMFPCI driver needs to clean up with
-snd_card_free() call at an error path of the probe; otherwise the
-other devres resources are released before the card and it results in
-the UAF.
-
-This patch uses the helper for handling the probe error gracefully.
-
-Fixes: f33fc1576757 ("ALSA: ymfpci: Create card with device-managed snd_devm_card_new()")
-Cc: <stable@vger.kernel.org>
-Reported-by: Takashi Yano <takashi.yano@nifty.ne.jp>
-Closes: https://lore.kernel.org/r/20230823135846.1812-1-takashi.yano@nifty.ne.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
----
- sound/pci/ymfpci/ymfpci.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/sound/pci/ymfpci/ymfpci.c b/sound/pci/ymfpci/ymfpci.c
-index b033bd290940..48444dda44de 100644
---- a/sound/pci/ymfpci/ymfpci.c
-+++ b/sound/pci/ymfpci/ymfpci.c
-@@ -152,8 +152,8 @@ static inline int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev, i
- void snd_ymfpci_free_gameport(struct snd_ymfpci *chip) { }
- #endif /* SUPPORT_JOYSTICK */
- 
--static int snd_card_ymfpci_probe(struct pci_dev *pci,
--				 const struct pci_device_id *pci_id)
-+static int __snd_card_ymfpci_probe(struct pci_dev *pci,
-+				   const struct pci_device_id *pci_id)
- {
- 	static int dev;
- 	struct snd_card *card;
-@@ -348,6 +348,12 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
- 	return 0;
- }
- 
-+static int snd_card_ymfpci_probe(struct pci_dev *pci,
-+				 const struct pci_device_id *pci_id)
-+{
-+	return snd_card_free_on_error(&pci->dev, __snd_card_ymfpci_probe(pci, pci_id));
-+}
-+
- static struct pci_driver ymfpci_driver = {
- 	.name = KBUILD_MODNAME,
- 	.id_table = snd_ymfpci_ids,
 -- 
-2.35.3
-
+Regards
+Sudip
