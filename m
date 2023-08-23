@@ -1,48 +1,30 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F13117F5
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 05:42:08 +0000 (UTC)
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1bf7423ef3eso21283485ad.3
-        for <patches@lists.linux.dev>; Tue, 22 Aug 2023 22:42:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692769328; x=1693374128;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZXFrwzCPZpjmPe0jGsBW0zhL8FGGi+rHIxlG2RCSp3M=;
-        b=bJKxut98Ui2Y1Bx/fpRIH+PT+xE1csGkWBraZJROmoRxrHZMdN/0jrs1zVxB3ltcJC
-         TCk9naGgcQacCJvQhzNEMM083hxxk8v0Ebp85ME1acG2JOw3wtabyZMKgCqYhMn3Bk3w
-         161ToNQM4B2/mnJ6WFY/RiW6QIZ89NB+GMuvsQbdoi3CAM0D4tS1xtn4PK46B8DVDZMU
-         KPm3nJgdPpgTZ7mLMGAqvB8TDzqujlsFe+cL/AoESyBWu2B56hmePHEnNVGIE399rdkQ
-         a5/G6IMABrH5yQIOPDp1lFwd5pDIAGwTPehqgPF0NzmCgGkVpXKHasc9A1gh0hqP61lI
-         f32Q==
-X-Gm-Message-State: AOJu0YzIqRy1vnqq3KM3up7pNI5Av5FVs99nDeP1ahNttAizK9jIWVPI
-	ZqGfWfd1d7FTDX+aQo0uLEo=
-X-Google-Smtp-Source: AGHT+IHwWwyNqcwGFCJcai2/Zp8Qf19N7YHZ3EX/92MJSUq1BAhBTsJMXS48VcMQTbv2Y9ewFWaqQg==
-X-Received: by 2002:a17:902:6b47:b0:1b8:b3f0:3d57 with SMTP id g7-20020a1709026b4700b001b8b3f03d57mr8432370plt.31.1692769327722;
-        Tue, 22 Aug 2023 22:42:07 -0700 (PDT)
-Received: from liuwe-devbox-debian-v2 ([20.69.120.36])
-        by smtp.gmail.com with ESMTPSA id jw15-20020a170903278f00b001b9d7c8f44dsm9962498plb.182.2023.08.22.22.42.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Aug 2023 22:42:07 -0700 (PDT)
-Date: Wed, 23 Aug 2023 05:41:46 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Dexuan Cui <decui@microsoft.com>
-Cc: Nathan Chancellor <nathan@kernel.org>,
-	KY Srinivasan <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"wei.liu@kernel.org" <wei.liu@kernel.org>,
-	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"Michael Kelley (LINUX)" <mikelley@microsoft.com>,
-	Tianyu Lan <Tianyu.Lan@microsoft.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH] x86/hyperv: Add missing 'inline' to hv_snp_boot_ap() stub
-Message-ID: <ZOWcGnu7pqA4m2Ar@liuwe-devbox-debian-v2>
-References: <20230822-hv_snp_boot_ap-missing-inline-v1-1-e712dcb2da0f@kernel.org>
- <SA1PR21MB1335C1D74D05A582D90EA1A9BF1CA@SA1PR21MB1335.namprd21.prod.outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C5420EE3
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 07:03:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDF0C433C7;
+	Wed, 23 Aug 2023 07:03:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1692774232;
+	bh=CREXmtSVm3ElNVCBgi60/kP4BfR2bXJzoUJvCekaTJE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VGbhFAKGEzEoNxcW4EtllY/OrEfRIxobd2x5V0x80KncOeqwWe4hbtwrj07BQvtMJ
+	 tVhaOqLyIo63cKtluc/YZW4nYqVAOaN2bF9zeotw9BrKXIy1SWdflrx34jVLW4mmlT
+	 ejXL8m4yqtOBfvfTTgoW/Oh1c8DyswxkwVs+ZZgw=
+Date: Wed, 23 Aug 2023 09:03:49 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
+Message-ID: <2023082309-veggie-unwoven-a7df@gregkh>
+References: <20230821194122.695845670@linuxfoundation.org>
+ <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,29 +33,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SA1PR21MB1335C1D74D05A582D90EA1A9BF1CA@SA1PR21MB1335.namprd21.prod.outlook.com>
+In-Reply-To: <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
 
-On Wed, Aug 23, 2023 at 01:00:55AM +0000, Dexuan Cui wrote:
-> > From: Nathan Chancellor <nathan@kernel.org>
-> > Sent: Tuesday, August 22, 2023 11:26 AM
-> > [...]
-> > When building without CONFIG_AMD_MEM_ENCRYPT, there are several
-> > repeated instances of -Wunused-function due to missing 'inline' on
-> > the stub of hy_snp_boot_ap():
+On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
+> On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.47 release.
+> > There are 194 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> >   In file included from drivers/hv/hv_common.c:29:
-> >   ./arch/x86/include/asm/mshyperv.h:272:12: error: 'hv_snp_boot_ap'
-> > defined but not used [-Werror=unused-function]
-> >     272 | static int hv_snp_boot_ap(int cpu, unsigned long start_ip) { return
-> > 0; }
-> >         |            ^~~~~~~~~~~~~~
-> >   cc1: all warnings being treated as errors
+> > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > Add 'inline' to fix the warnings.
-> > 
-> > Fixes: 44676bb9d566 ("x86/hyperv: Add smp support for SEV-SNP guest")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > 
-> Reviewed-by: Dexuan Cui <decui@microsoft.com>
+> Build results:
+> 	total: 157 pass: 156 fail: 1
+> Failed builds:
+> 	m68k:sun3_defconfig
+> Qemu test results:
+> 	total: 521 pass: 519 fail: 2
+> Failed tests:
+> 	arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
+> 	arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
+> 
+> The m68k build failure is
+> 
+> Inconsistent kallsyms data
+> Try make KALLSYMS_EXTRA_PASS=1 as a workaround
+> 
+> I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
+> Nothing to worry about. The f2fs crashes are still seen. They
+> also happen for other architectures, so it is not just an arm problem.
+> I'll probably just disable all f2fs testing going forward. If so I'll
+> send a note clarifying that the lack of reported test failures doesn't
+> mean that it works.
 
-Applied. Thanks.
+I'll look into this later this week, next week to resolve the f2fs
+stuff.  I wanted to get to the other known bug fixes first.
+
+> For x86 I get the same runtime warning as everyone else.
+
+Yeah, this is troubling...
+
+Is it clang only?  I'll dig into this today...
+
+thanks,
+
+greg k-h
