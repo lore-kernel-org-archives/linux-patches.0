@@ -1,124 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137038834
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 08:27:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E052DC433C8;
-	Wed, 23 Aug 2023 08:27:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692779268;
-	bh=69PE5gQJiEYod7ui+fX3bPowl/3d8H9a0vbiN23RpbU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F6B+Q51Ark3YyhyQYI+f5ShRZBV6Eb14sfSF9c4jRk1K4blvwvkKmjlavHJ7ZZ5lk
-	 otCmJqhcRJuWT0woMWMAbfXanaF2N99Oi6BxHG3PfimciuxANrvk39zlShnpPIM6O5
-	 9qAGW+cXpHzX9KpJOUHnHvaS/P7i3Dd3eV5GpBi0=
-Date: Wed, 23 Aug 2023 10:27:45 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <2023082357-doing-throwback-c9f0@gregkh>
-References: <20230821194122.695845670@linuxfoundation.org>
- <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
- <2023082309-veggie-unwoven-a7df@gregkh>
- <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674EC20F00
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 08:41:26 +0000 (UTC)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2bb8a12e819so83123051fa.1
+        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 01:41:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1692780085; x=1693384885;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ADGGDbtG9VdwETdTI9uegT/TDj/LK9Ermf0BY1pyan4=;
+        b=VERXx5a/FY1g4cz7TNxBlxrADguo1odfx5FgYGuY006LuXOwj/qZPXH1nawUFDan2y
+         hK9e8O9WyBzghs23+Sef0NmsuolkfM9L2pZXsMWAmJvKqsxx2lG6FKFDLEWj9iv7GDqk
+         a0dpWxwl8z0dLaTnZMMo+jpKzpp1dc1++Cj/fPs1Gv62juEgGIW6Nf0ezcydOHNhx0yf
+         bPgSRpoXWJMyXGPkYsf351zm1pBzkzFbdPD8gBaluL/fmRI/KQ8PcW2S4Xn7KFCCpuH7
+         2/VbVnLoCaT6eZI/AuuMy0FlPcjgnRybOQKDDk7IxWYbzJqtAS9OvhtpmczK14OOpHIg
+         3X+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692780085; x=1693384885;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ADGGDbtG9VdwETdTI9uegT/TDj/LK9Ermf0BY1pyan4=;
+        b=GZ8F4Tb2rxqKZzE94HuAfa82ioIrYNGfVrpiK5BEl7Xh66jpSC9UKZYoaxViiQ4Wcm
+         oCIo8iGWTDhOQ7zLFazlILP0lUfcoJCpgt1AG9oD1bB9k3U/SA5mzG+xzIDhQDqpeajY
+         3U54AXABAUcs2mj8AfgcEfLBALkh8vCA+x+q9vCPRc/xWJp0U/zpbC0iBBqBWnKFYFB2
+         EbMgHIIx416rVsOJVP89F+UhU3brGFEk6lh/7CcnypeWhc7BOB5zACdFOUMFVOEowbSX
+         bJ2lko8ODcmE81Ve7NtqLX5M3lSDVR5QrUzE3mH2mUBRGEw1vsJ2G75Cz4q1LFTidJnX
+         pZTA==
+X-Gm-Message-State: AOJu0YwI6XtUjh80S1FLkCxyHQqHEn4LzF94+5NgYwAMEef0mly/Ngwt
+	83PF5jqorVlvbNCwdyLTtFX1Yg==
+X-Google-Smtp-Source: AGHT+IGVBY8vfYuHN9oZfC4KA6gsilfYQ6t93muUcdurvOZg0uLZ9V3ryMaF2bhwTVHGjV80+3pk9Q==
+X-Received: by 2002:a2e:95c6:0:b0:2b9:eb0f:c733 with SMTP id y6-20020a2e95c6000000b002b9eb0fc733mr9069250ljh.35.1692780084435;
+        Wed, 23 Aug 2023 01:41:24 -0700 (PDT)
+Received: from localhost ([165.225.194.205])
+        by smtp.gmail.com with ESMTPSA id l3-20020a1ced03000000b003fe1a96845bsm21520804wmh.2.2023.08.23.01.41.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Aug 2023 01:41:23 -0700 (PDT)
+References: <87r0octho8.fsf@metaspace.dk>
+ <20230822093148.3478340-1-aliceryhl@google.com>
+User-agent: mu4e 1.10.5; emacs 28.2.50
+From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
+ boqun.feng@gmail.com, gary@garyguo.net, linux-kernel@vger.kernel.org,
+ ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org,
+ wedsonaf@gmail.com
+Subject: Re: [PATCH v1] rust: add improved version of
+ `ForeignOwnable::borrow_mut`
+Date: Wed, 23 Aug 2023 10:40:54 +0200
+In-reply-to: <20230822093148.3478340-1-aliceryhl@google.com>
+Message-ID: <87r0nu40cs.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
-> On Wed, 23 Aug 2023 at 12:33, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
-> > > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.1.47 release.
-> > > > There are 194 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > >
-> > > Build results:
-> > >       total: 157 pass: 156 fail: 1
-> > > Failed builds:
-> > >       m68k:sun3_defconfig
-> > > Qemu test results:
-> > >       total: 521 pass: 519 fail: 2
-> > > Failed tests:
-> > >       arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
-> > >       arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
-> > >
-> > > The m68k build failure is
-> > >
-> > > Inconsistent kallsyms data
-> > > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-> > >
-> > > I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
-> > > Nothing to worry about. The f2fs crashes are still seen. They
-> > > also happen for other architectures, so it is not just an arm problem.
-> > > I'll probably just disable all f2fs testing going forward. If so I'll
-> > > send a note clarifying that the lack of reported test failures doesn't
-> > > mean that it works.
-> >
-> > I'll look into this later this week, next week to resolve the f2fs
-> > stuff.  I wanted to get to the other known bug fixes first.
-> >
-> > > For x86 I get the same runtime warning as everyone else.
-> >
-> > Yeah, this is troubling...
-> >
-> > Is it clang only?  I'll dig into this today...
-> 
-> It is seen with gcc-13 and clang-17 with few extra configs.
-> We are not booting defconfig.
-> 
-> The Kconfigs are enabled with KFENCE.
-> 
-> I see this from lore
-> "
-> This is from overnight testing that hit this only in the KCSAN runs.
-> The KASAN and non-debug runs had no trouble.
-> 
-> Thanx, Paul
-> 
-> "
 
-Ok, that's good, it's not going to hit "normal" users...  :)
+Alice Ryhl <aliceryhl@google.com> writes:
 
-> 
-> steps to reproduce:
-> -------------------
-> tuxmake --runtime podman --target-arch x86_64 --toolchain gcc-13
-> --kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2UJAv99Wwi6YMltFjlQD5XRO5x4/config
-> 
-> 
-> Here is the links to details and build details,
-> [1]
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.46-195-g5165f4e9738c/testrun/19256276/suite/log-parser-boot/test/check-kernel-exception/details/
-> 
-> [2]
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2UJAv99Wwi6YMltFjlQD5XRO5x4/
-> 
-> [3]
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2UJAv99Wwi6YMltFjlQD5XRO5x4/config
+> Andreas Hindborg <nmi@metaspace.dk> writes:
+>>> +    /// Borrows a foreign-owned object mutably.
+>>> +    ///
+>>> +    /// This method provides a way to access a foreign-owned value fro=
+m Rust mutably. It provides
+>>> +    /// you with exactly the same abilities as an `&mut Self` when the=
+ value is Rust-owned, except
+>>> +    /// that this method does not let you swap the foreign-owned objec=
+t for another. (That is, it
+>>> +    /// does not let you change the address of the void pointer that t=
+he foreign code is storing.)
+>>=20
+>> How about this:
+>>=20
+>> "For a smart pointer P<T> this method provides mutable access to T if
+>> &mut P<T> would allow mutable access to T. Otherwise it provides
+>> immutable access to T."
+>>=20
+>> The point is that the method provides access to the pointee, not the
+>> smart pointer itself. In fact it is perfectly fine to do a mem::swawp()
+>> for the pointee in the case of Box and depending on interpretation the
+>> sentence "does not let you swap the foreign-owned object for another" is
+>> confusing.
+>
+> Yeah, I agree that the phrasing is somewhat confusing.
+>
+> How about this:
+>
+> /// This method provides a way to access a foreign-owned value from Rust =
+mutably. It provides
+> /// you with exactly the same abilities as an `&mut Self` when the value =
+is Rust-owned, except
+> /// that the address of the object must not be changed.
+> ///
+> /// Note that for types like [`Arc`], an `&mut Arc<T>` only gives you imm=
+utable access to the
+> /// inner value, so this method also only provides immutable access in th=
+at case.
+> ///
+> /// In the case of `Box<T>`, this method gives you the ability to modify =
+the inner `T`, but it
+> /// does not let you change the box itself. That is, you cannot change wh=
+ich allocation the box
+> /// points at.
 
-You are going to force me to use tuxmake again, aren't you...
+Sounds good =F0=9F=91=8D
 
-I'll dig into this after lunch.
-
-greg k-h
+BR Andreas
