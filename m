@@ -1,94 +1,170 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2135.outbound.protection.outlook.com [40.107.10.135])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852569445;
-	Wed, 23 Aug 2023 16:33:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A79BC433C7;
-	Wed, 23 Aug 2023 16:33:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692808381;
-	bh=oAGOZ+ekiLiOmp7hE1/xSBjmF1EMKp3By99T76ldHzg=;
-	h=From:Date:Subject:To:Cc:From;
-	b=KfEEuG4PAxY+ze4/trTba3y0v4nzMF2BU5VQfCVQnFpu9pRUZ7Ux3SN75/QrFpzAo
-	 MFD6Brikt3mf0knjuDtlvfKsjFOVpLszis5h6+dIcBXSXmxFkhf6OeJnMpl0Suhjbp
-	 fXMKS6ja78Kxrp4Ky6hzacwWbjwDctt+8eeWfPbk2uF2qFYibsYCNurqPBr7aWUjNV
-	 jRmSmMi4luN/Q48pxbKV6KufC86IzQPlrKe22/CJA+t0YWHOSRlxtfRx0xHg1DfGBz
-	 h1hmiNhG66WLAZDwpR9GqTB+sD3W1pNbvMMab3higzVyUnatOzoyR4HOscDsYI+kCD
-	 Y02cA9VNqcG8g==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 23 Aug 2023 09:32:50 -0700
-Subject: [PATCH] ASoC: cs42l43: Initialize ret in default case in
- cs42l43_pll_ev()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6131B1ED43
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 17:35:27 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=eOGjbSSOIQkgYetRvP7+7NKEkdDsy7xIz23UAHOwlZnoa5G+qZG//YKHefztEC9P1xTpMz/jaQDz1XdWzCG9oQ+Zm6msBifK2vHvIx4VrslMx0EeOV5L5nkuMJ4mQtHoNOL4wwW6s/sit/2msf8+a5ScwfPLDvKk/rMWK6kcetu0yyjWjaA0PlqNhLXCzC3a9qVZwqxqUyT8xKcZIKigU6ld39vlqu4JRsIdynR3Qd1vI1tqg5fhRImHs1kif6/0HOeIzmexlyvrcly4tm/9VbSu3Mn/hrjgimY+tbOryN6GYEemqhiJFpcfW3VwphhvUOJYC6yHpPNdtIYVs8v4wA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a4cl1WwQdylGkkkKiKL9R6z3n3ImSJe6bjwzqA7wtig=;
+ b=YhFVDg2SplUslDQTAX9C8lBrxlU1WTGPkzGy2SngRk1bNqiDYsyWDAzvMmZcv9PIreHigOlUJksd807FaKa+0idptv+d+oFUSajTsre2tAXdeuOuRYh13aorpu68yymTIh0BejhVkTReGQzdZzBMMgIrjLZps0e3w5m1YvvC4XjnNA98zzfoU3uVDyBPioyGb2jFsNYu0PZrSF4MGPHDvNeAjoNrdHJt0sCU6LQv3KDffBOkKWXO/XY2IezsCcU2P19DKRBcuakUvCSOUSV6siN7bnvaAowmIqhp9cX1LcKWHN+5yYRp26gugQNsxDqgR+OJS6lRJNIZVITd5PKroQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=a4cl1WwQdylGkkkKiKL9R6z3n3ImSJe6bjwzqA7wtig=;
+ b=Lt1LzxKpnNTn/BLwaL2Q3AOtnlXfGbF09daA+CNsQdT4/djHkBtz2Q/MJmsTEX4zmVxK9/h6PqehL9BB+Txz4uRgbOGXKHC9L5ax1jjXzVKx+4WK8ioOzhX3193MI6/WbLCx7x74bKVsvlV70SSiWYPOubPOEq3K8Ri/JXcFJCE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
+ by LO3P265MB1977.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:107::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.26; Wed, 23 Aug
+ 2023 17:35:25 +0000
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::6d3e:8fe2:6cdb:6d3f]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::6d3e:8fe2:6cdb:6d3f%5]) with mapi id 15.20.6699.026; Wed, 23 Aug 2023
+ 17:35:25 +0000
+Date: Wed, 23 Aug 2023 18:35:19 +0100
+From: Gary Guo <gary@garyguo.net>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
+ <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ =?UTF-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin
+ <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, Alice
+ Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 1/2] rust: arc: add explicit `drop()` around
+ `Box::from_raw()`
+Message-ID: <20230823183519.1549cff1.gary@garyguo.net>
+In-Reply-To: <20230823160244.188033-2-ojeda@kernel.org>
+References: <20230823160244.188033-1-ojeda@kernel.org>
+	<20230823160244.188033-2-ojeda@kernel.org>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0400.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:189::9) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230823-cs42l43_pll_ev-init-ret-v1-1-5836f1ad5dad@kernel.org>
-X-B4-Tracking: v=1; b=H4sIALE05mQC/x3MQQqDMBBG4avIrB2ISVqlVxGRaH/bgZBKEkQI3
- t3Q5bd4r1BCFCR6NYUiDknyCxVd29D6deEDlnc1aaWNGrThNVntrZl372ccLEEyR2Telg62h1N
- P9aBa7xGbnP/zOF3XDdE0twtpAAAA
-To: james.schulman@cirrus.com, david.rhodes@cirrus.com, 
- rf@opensource.cirrus.com, ckeepax@opensource.cirrus.com, broonie@kernel.org
-Cc: lgirdwood@gmail.com, ndesaulniers@google.com, trix@redhat.com, 
- alsa-devel@alsa-project.org, patches@opensource.cirrus.com, 
- patches@lists.linux.dev, llvm@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1488; i=nathan@kernel.org;
- h=from:subject:message-id; bh=oAGOZ+ekiLiOmp7hE1/xSBjmF1EMKp3By99T76ldHzg=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCnPTPYo171w2Pom4577NeuFIve5ctWWe6hPO5ci+n2Sl
- vCFvXyKHaUsDGIcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiJqWMDL8NDPbONpAy98zu
- 0lzgG++Uff/7vt1ZdyL9ti07WRGWrM7I8Ej8WpfCI3N3u5163u4vuTd9f/s1nd1pt3cij9BRtfe
- buQA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO3P265MB1977:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3d302485-4413-48ac-b6e8-08dba3ff55bb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	lXe6/Hj0MOhA7DEFfv3G2Q8I3qwp5yPzb52nZfIiQolP1fGEHhCvyYko9Cpfl+oDA+pr1zdmsa66D5XsNdDqNHxFIJ0ARw4jM3hqcvyEexhmsmUdIdsobQWZIOWEGy4h/gyKrEvB0iZZ/TpaFqftbeMhYFthuz5seG6QtqCHuEwK/nCV8Mc3epqzAi46wMC26KtIHvvcwhrtDKxiyhynwygJbTy4PlNuvfzj+SVx/YLFFs/MSyuRIuWs7bz4jw83LlHttpDKBMNvhY3nJFqhje88K9Y4xfIRLC/wk+X/2efA5u2fVoCXgzHhuk5NR1Wz9/40/VH3a6uoSVydSayOCOYnGaLV3i0FlKSNOgPL/NOkW6Ape3P6w0MVRrCGzaJL6mAs0M9YgpKN2us3pBNJrjFd0WP4lQO+50kD/DjTbIsLlR1QOWA2jIPmU7mjbMLXT9+2oN+aGPEx1M9SYh46ofeIO5T62M7PQZVxWP537he3YSoGjIBoA6j+WuvWA6kr9i6UxQzvTi6S5XgBHn693bEck+GaPUlm2b9PKQPuSQdKjtNSgBCAtnVW7GSYPt+iniLpCbEedhTSSu4LriN6qrJyCKjpcZZ2bsohF6wIEXp34xEExkek3kxpfnZDX337fWTLY/knMSoR1f77W8OytLkm7RBVJLb4RnZjd46Mc/U=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(366004)(346002)(136003)(39830400003)(376002)(396003)(451199024)(1800799009)(186009)(36756003)(478600001)(966005)(86362001)(6506007)(6486002)(54906003)(66476007)(66556008)(316002)(6916009)(66946007)(6666004)(41300700001)(6512007)(38100700002)(8676002)(4326008)(8936002)(5660300002)(1076003)(26005)(2616005)(7416002)(83380400001)(2906002)(30290500001)(81973001)(54580400013);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?CqJGPERxjm1oxZTKVMGadf4D+/uw4L+mN2nqUzvpVnz3I0GSCcap1nETfK/B?=
+ =?us-ascii?Q?AzLERv+GwdXt8K8eOYlyHYI96tJiZjvzt1NIn10T45falW3PjLaQGP24XETw?=
+ =?us-ascii?Q?3nSeXc20+UvIRox3kwjwyGSTXW6GO4wtbXfsYdQb1kopIuKe7r0QYXUVVKvL?=
+ =?us-ascii?Q?fcWYzAe78xqqNJm11aqzBS4opzhZi5cTeX7e2pk987cHS4fj5by36zci7U/r?=
+ =?us-ascii?Q?YgPojUSdzI7Is7GpDJMfX99QE1h4MAdGXkFBUM44umXh+9+MGFASL3CAF5vj?=
+ =?us-ascii?Q?Tktge62whpBxYK/b4/9ikMA3/E6fO0YQNIU95NK6EiQWi0j8NXP4EfPoGEYa?=
+ =?us-ascii?Q?H8noSVBC3c4tw5eDr8uaVr7zqahmsCDD50lEZR7bDdHjZXhuwMr2Bx/5/Qv9?=
+ =?us-ascii?Q?66CyNLyKESrGiFxzCFBcMBOGs+2YChTqI4N0VxjLXPi82I7+jbM+JvcotiXN?=
+ =?us-ascii?Q?N6mcT4+vdxeJmH67ei9QNlBHunphYa/2QC/EmKF2g+RJsL4h6r1NbWCprGBb?=
+ =?us-ascii?Q?jddqr42S9dnIUgfsL+IjB3UQEJAz+99ugRDihn+Wfp42D463mRmeejhSvmL3?=
+ =?us-ascii?Q?ukoxHdQuvbNQdMXLdMIrMpOwFIFA/DT31uU/CJlPqAGEe3fYRgGg6suB8L50?=
+ =?us-ascii?Q?wlVxItpfyR7sjJZDG7eVF8blrjTuefTlsSBLubKW8MEnrpUd00i0WURPeu95?=
+ =?us-ascii?Q?pn5S5zwPV37TXGcQhu2aCQDOZJtvbFhwiNw2hnsrp/zdW7NP+XrHdkQc/sJg?=
+ =?us-ascii?Q?D5Yzw+CQ6k3NFsea+Lxvlgm44hd3/dzKsbxh5hTMiO0A4d8Ls3kzx7HOtGu3?=
+ =?us-ascii?Q?I0rtdpSVuyul1ySwQYHjkIABQp3J/Zi+Lkn2OoDsY/XpC6Qs3PCOAb9v2F73?=
+ =?us-ascii?Q?UG6IHfDFe/wZ255UeCEGrUvebSjVmrRIoFrxSdkSm61NzAaAI33SCElVjdMI?=
+ =?us-ascii?Q?BXkcKhcoorP0hWN+8RnsSskAhT3Awhf14DPAjOZ+Avf7EG0fMRAzaOC2a+ZF?=
+ =?us-ascii?Q?/5ay3uUMbBnCI2aHqbPjGqLHjgHmojKddZbi5XMKXdaHk2DXpCkyQKYc5Ljp?=
+ =?us-ascii?Q?Pkyn+9b9H3Tbx76eGK4Rbag46oJ0yyshRyCTGhKZ9EUUX1cAVAqfslbOZhBh?=
+ =?us-ascii?Q?zKG6otc64GVF08kgD4Pjip9WtXzdnJqYb7uXtC/qkuPLQcDJe4tUgBQ5lsN8?=
+ =?us-ascii?Q?YXHMaChmd0DJZbiiHzlCrpZiYq4URE4KitlPbrPKsBynTrLu63OoBjUZkphG?=
+ =?us-ascii?Q?VLnXlB7A+m8+N4NHXKAe9zZbD+2H82fw2wkyz5UNoOWAfqVFm4WxxMH5yt6b?=
+ =?us-ascii?Q?sflprdC/MlhPkQXYtVkmSazJU033znp4RGDcssPk/xPzGI/B9h2p8Mja6Ghe?=
+ =?us-ascii?Q?+P8V8x+0/wc3gqk5doadBV9GVjUPhoop/smmpsB+biqZp3UuORNKmPRP3tG/?=
+ =?us-ascii?Q?jhlCRWeHsAvJFJry86cBCu0ZJnv34TQ/Qc3qNn2mDXXYTuoNnrUSI+VIeWoN?=
+ =?us-ascii?Q?WIZzvhzY/DIZrLbk+h88CQBG4lsYFcQGKyoJhcutbPFEJ6KHjZf1+I9t2frf?=
+ =?us-ascii?Q?qm7xQknZYaLMTEb+6qlZnrTzb50roY/9mJ9kZE+L?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3d302485-4413-48ac-b6e8-08dba3ff55bb
+X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Aug 2023 17:35:25.5315
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Xzvh6A6wf8jDqnn+hb7nzoQXVCMTZXNfo3yUE5CROiwUqkTRo406trPfWBQKksXxXxpvcmatN2pk0Ndr9A2sPQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO3P265MB1977
 
-clang warns (or errors with CONFIG_WERROR=y):
+On Wed, 23 Aug 2023 18:02:42 +0200
+Miguel Ojeda <ojeda@kernel.org> wrote:
 
-  sound/soc/codecs/cs42l43.c:1371:2: error: variable 'ret' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-   1371 |         default:
-        |         ^~~~~~~
-  sound/soc/codecs/cs42l43.c:1377:9: note: uninitialized use occurs here
-   1377 |         return ret;
-        |                ^~~
-  sound/soc/codecs/cs42l43.c:1349:9: note: initialize the variable 'ret' to silence this warning
-   1349 |         int ret;
-        |                ^
-        |                 = 0
-  1 error generated.
+> `Box::from_raw()` is `#[must_use]`, which means the result cannot
+> go unused.
+> 
+> In Rust 1.71.0, this was not detected because the block expression
+> swallows the diagnostic [1]:
+> 
+>     unsafe { Box::from_raw(self.ptr.as_ptr()) };
+> 
+> It would have been detected, however, if the line had been instead:
+> 
+>     unsafe { Box::from_raw(self.ptr.as_ptr()); }
+> 
+> i.e. the semicolon being inside the `unsafe` block, rather than
+> outside.
+> 
+> In Rust 1.72.0, the compiler started warning about this [2], so
+> without this patch we will get:
+> 
+>         error: unused return value of `alloc::boxed::Box::<T>::from_raw` that must be used
+>         --> rust/kernel/sync/arc.rs:302:22  
+>         |
+>     302 |             unsafe { Box::from_raw(self.ptr.as_ptr()) };
+>         |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>         |
+>         = note: call `drop(Box::from_raw(ptr))` if you intend to drop the `Box`
+>         = note: `-D unused-must-use` implied by `-D warnings`
+>     help: use `let _ = ...` to ignore the resulting value
+>         |
+>     302 |             unsafe { let _ = Box::from_raw(self.ptr.as_ptr()); };
+>         |                      +++++++                                 +
+> 
+> Thus add an add an explicit `drop()` as the `#[must_use]`'s
+> annotation suggests (instead of the more general help line).
+> 
+> Link: https://github.com/rust-lang/rust/issues/104253 [1]
+> Link: https://github.com/rust-lang/rust/pull/112529 [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Initialize ret to 0 in the default case, as there was nothing to do for
-other event types.
+Reviewed-by: Gary Guo <gary@garyguo.net>
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1922
-Fixes: fc918cbe874e ("ASoC: cs42l43: Add support for the cs42l43")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/codecs/cs42l43.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/soc/codecs/cs42l43.c b/sound/soc/codecs/cs42l43.c
-index 55a79219af35..18178ffa82f2 100644
---- a/sound/soc/codecs/cs42l43.c
-+++ b/sound/soc/codecs/cs42l43.c
-@@ -1369,6 +1369,7 @@ static int cs42l43_pll_ev(struct snd_soc_dapm_widget *w,
- 			clk_disable_unprepare(priv->mclk);
- 		break;
- 	default:
-+		ret = 0;
- 		break;
- 	}
- 
-
----
-base-commit: 014ee0692f29da8b08fed5da0fa14e04698a50f7
-change-id: 20230823-cs42l43_pll_ev-init-ret-fb1e47ea0605
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+> ---
+>  rust/kernel/sync/arc.rs | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index 172f563976a9..4c14d540a581 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -299,7 +299,7 @@ fn drop(&mut self) {
+>              // The count reached zero, we must free the memory.
+>              //
+>              // SAFETY: The pointer was initialised from the result of `Box::leak`.
+> -            unsafe { Box::from_raw(self.ptr.as_ptr()) };
+> +            unsafe { drop(Box::from_raw(self.ptr.as_ptr())) };
+>          }
+>      }
+>  }
 
