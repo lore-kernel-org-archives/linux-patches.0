@@ -1,18 +1,33 @@
-Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36930A934;
-	Wed, 23 Aug 2023 08:22:53 +0000 (UTC)
-Received: from uucp by elvis.franken.de with local-rmail (Exim 3.36 #1)
-	id 1qYiCO-00071Z-00; Wed, 23 Aug 2023 09:22:40 +0200
-Received: by alpha.franken.de (Postfix, from userid 1000)
-	id 84B26C01A3; Wed, 23 Aug 2023 09:22:02 +0200 (CEST)
-Date: Wed, 23 Aug 2023 09:22:02 +0200
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-mips@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] MIPS: VDSO: Conditionally export __vdso_gettimeofday()
-Message-ID: <ZOWzmgYvb/PCUXxJ@alpha.franken.de>
-References: <20230816-mips-vdso-cond-export-__vdso_gettimeofday-v1-1-fe725254c782@kernel.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137038834
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 08:27:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E052DC433C8;
+	Wed, 23 Aug 2023 08:27:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1692779268;
+	bh=69PE5gQJiEYod7ui+fX3bPowl/3d8H9a0vbiN23RpbU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=F6B+Q51Ark3YyhyQYI+f5ShRZBV6Eb14sfSF9c4jRk1K4blvwvkKmjlavHJ7ZZ5lk
+	 otCmJqhcRJuWT0woMWMAbfXanaF2N99Oi6BxHG3PfimciuxANrvk39zlShnpPIM6O5
+	 9qAGW+cXpHzX9KpJOUHnHvaS/P7i3Dd3eV5GpBi0=
+Date: Wed, 23 Aug 2023 10:27:45 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
+Message-ID: <2023082357-doing-throwback-c9f0@gregkh>
+References: <20230821194122.695845670@linuxfoundation.org>
+ <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
+ <2023082309-veggie-unwoven-a7df@gregkh>
+ <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -21,52 +36,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230816-mips-vdso-cond-export-__vdso_gettimeofday-v1-1-fe725254c782@kernel.org>
+In-Reply-To: <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
 
-On Wed, Aug 16, 2023 at 02:59:23PM -0700, Nathan Chancellor wrote:
-> ld.lld 16.0.0 and newer defaults to '--no-undefined-version', which
-> causes the following error when CONFIG_MIPS_CLOCK_VSYSCALL is not set:
+On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
+> On Wed, 23 Aug 2023 at 12:33, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
+> > > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 6.1.47 release.
+> > > > There are 194 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > >
+> > > Build results:
+> > >       total: 157 pass: 156 fail: 1
+> > > Failed builds:
+> > >       m68k:sun3_defconfig
+> > > Qemu test results:
+> > >       total: 521 pass: 519 fail: 2
+> > > Failed tests:
+> > >       arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
+> > >       arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
+> > >
+> > > The m68k build failure is
+> > >
+> > > Inconsistent kallsyms data
+> > > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
+> > >
+> > > I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
+> > > Nothing to worry about. The f2fs crashes are still seen. They
+> > > also happen for other architectures, so it is not just an arm problem.
+> > > I'll probably just disable all f2fs testing going forward. If so I'll
+> > > send a note clarifying that the lack of reported test failures doesn't
+> > > mean that it works.
+> >
+> > I'll look into this later this week, next week to resolve the f2fs
+> > stuff.  I wanted to get to the other known bug fixes first.
+> >
+> > > For x86 I get the same runtime warning as everyone else.
+> >
+> > Yeah, this is troubling...
+> >
+> > Is it clang only?  I'll dig into this today...
 > 
->   ld.lld: error: version script assignment of 'LINUX_2.6' to symbol '__vdso_gettimeofday' failed: symbol not defined
+> It is seen with gcc-13 and clang-17 with few extra configs.
+> We are not booting defconfig.
 > 
-> Only export __vdso_gettimeofday() when it will be present in the final
-> object file, which clears up the error.
+> The Kconfigs are enabled with KFENCE.
 > 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202308170532.zxFFv25c-lkp@intel.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/mips/vdso/vdso.lds.S | 2 ++
->  1 file changed, 2 insertions(+)
+> I see this from lore
+> "
+> This is from overnight testing that hit this only in the KCSAN runs.
+> The KASAN and non-debug runs had no trouble.
 > 
-> diff --git a/arch/mips/vdso/vdso.lds.S b/arch/mips/vdso/vdso.lds.S
-> index d90b65724d78..836465e3bcb8 100644
-> --- a/arch/mips/vdso/vdso.lds.S
-> +++ b/arch/mips/vdso/vdso.lds.S
-> @@ -94,7 +94,9 @@ VERSION
->  #ifndef CONFIG_MIPS_DISABLE_VDSO
->  	global:
->  		__vdso_clock_gettime;
-> +#ifdef CONFIG_MIPS_CLOCK_VSYSCALL
->  		__vdso_gettimeofday;
-> +#endif
->  		__vdso_clock_getres;
->  #if _MIPS_SIM != _MIPS_SIM_ABI64
->  		__vdso_clock_gettime64;
+> Thanx, Paul
 > 
-> ---
-> base-commit: 2ccdd1b13c591d306f0401d98dedc4bdcd02b421
-> change-id: 20230816-mips-vdso-cond-export-__vdso_gettimeofday-30ab92c716d4
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+> "
 
-applied to mips-next.
+Ok, that's good, it's not going to hit "normal" users...  :)
 
-Thomas.
+> 
+> steps to reproduce:
+> -------------------
+> tuxmake --runtime podman --target-arch x86_64 --toolchain gcc-13
+> --kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2UJAv99Wwi6YMltFjlQD5XRO5x4/config
+> 
+> 
+> Here is the links to details and build details,
+> [1]
+> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.46-195-g5165f4e9738c/testrun/19256276/suite/log-parser-boot/test/check-kernel-exception/details/
+> 
+> [2]
+> https://storage.tuxsuite.com/public/linaro/lkft/builds/2UJAv99Wwi6YMltFjlQD5XRO5x4/
+> 
+> [3]
+> https://storage.tuxsuite.com/public/linaro/lkft/builds/2UJAv99Wwi6YMltFjlQD5XRO5x4/config
 
--- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+You are going to force me to use tuxmake again, aren't you...
+
+I'll dig into this after lunch.
+
+greg k-h
