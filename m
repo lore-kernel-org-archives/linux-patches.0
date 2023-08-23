@@ -1,107 +1,133 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from dmta0002-f.nifty.com (mta-fbsnd00011.nifty.com [106.153.226.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6396AD42
-	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 15:50:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18522C433C7;
-	Wed, 23 Aug 2023 15:50:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692805845;
-	bh=QC0npHwIoJ+yUqO/mq98MMbc1AGocjrHz7+gNcbU17E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ggVv5DBTP8bNnkUnx5W8zpmbkyJYsv7Pok8UboHacBFpKlSXixMykw0ByIuPX8pgv
-	 vYByBnfFkGcNqkSBT4bzadXlFJDPfW6o8FRVEVxwzbhbrDlyt/8DdJ+mvTlfyGmmLc
-	 rSwrjQsmZmClPYnaJ9xRwVEnsHCRaytYXvMLLXss=
-Date: Wed, 23 Aug 2023 17:50:42 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <2023082325-expansion-revoke-1f3a@gregkh>
-References: <20230821194122.695845670@linuxfoundation.org>
- <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
- <2023082309-veggie-unwoven-a7df@gregkh>
- <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
- <2d8a5f48-6c50-4c12-8a3d-23e621c6b722@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0511DAD42
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 15:51:03 +0000 (UTC)
+Received: from HP-Z230 by dmta0014.nifty.com with ESMTP
+          id <20230823154533799.CXBB.104216.HP-Z230@nifty.com>;
+          Thu, 24 Aug 2023 00:45:33 +0900
+Date: Thu, 24 Aug 2023 00:45:33 +0900
+From: Takashi Yano <takashi.yano@nifty.ne.jp>
+To: Takashi Iwai <tiwai@suse.de>
+Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev, sashal@kernel.org,
+ stable@vger.kernel.org, tasos@tasossah.com
+Subject: Re: [PATCH 6.1 110/181] ALSA: ymfpci: Create card with
+ device-managed snd_devm_card_new()
+Message-Id: <20230824004533.eef5bfded08b8af05f71bee9@nifty.ne.jp>
+In-Reply-To: <87h6ophml0.wl-tiwai@suse.de>
+References: <20230403140418.679274299@linuxfoundation.org>
+	<20230823135846.1812-1-takashi.yano@nifty.ne.jp>
+	<87h6ophml0.wl-tiwai@suse.de>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.30; i686-pc-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2d8a5f48-6c50-4c12-8a3d-23e621c6b722@roeck-us.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 23, 2023 at 06:30:13AM -0700, Guenter Roeck wrote:
-> On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
-> > On Wed, 23 Aug 2023 at 12:33, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
-> > > > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
-> > > > > This is the start of the stable review cycle for the 6.1.47 release.
-> > > > > There are 194 patches in this series, all will be posted as a response
-> > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > let me know.
-> > > > >
-> > > > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
-> > > > > Anything received after that time might be too late.
-> > > > >
-> > > >
-> > > > Build results:
-> > > >       total: 157 pass: 156 fail: 1
-> > > > Failed builds:
-> > > >       m68k:sun3_defconfig
-> > > > Qemu test results:
-> > > >       total: 521 pass: 519 fail: 2
-> > > > Failed tests:
-> > > >       arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
-> > > >       arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
-> > > >
-> > > > The m68k build failure is
-> > > >
-> > > > Inconsistent kallsyms data
-> > > > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-> > > >
-> > > > I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
-> > > > Nothing to worry about. The f2fs crashes are still seen. They
-> > > > also happen for other architectures, so it is not just an arm problem.
-> > > > I'll probably just disable all f2fs testing going forward. If so I'll
-> > > > send a note clarifying that the lack of reported test failures doesn't
-> > > > mean that it works.
-> > >
-> > > I'll look into this later this week, next week to resolve the f2fs
-> > > stuff.  I wanted to get to the other known bug fixes first.
-> > >
-> > > > For x86 I get the same runtime warning as everyone else.
-> > >
-> > > Yeah, this is troubling...
-> > >
-> > > Is it clang only?  I'll dig into this today...
+On Wed, 23 Aug 2023 16:15:07 +0200
+Takashi Iwai wrote:
+> On Wed, 23 Aug 2023 15:58:46 +0200,
+> Takashi Yano wrote:
 > > 
-> > It is seen with gcc-13 and clang-17 with few extra configs.
-> > We are not booting defconfig.
+> > Dear Linux Kernel Team,
 > > 
-> > The Kconfigs are enabled with KFENCE.
+> > I had encountered the problem that I reported to debian kernel team:
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1050117
+> > , where I was suggested to report this to upstream.
 > > 
-> I have KFENCE enabled as well, so it may well be that this triggers
-> the warning. I don't see it in 6.4.y or upstream, though.
+> > After a lot of struggle, I found that this issue occurs after the following
+> > commit. The problem happens if a YAMAHA YMF7x4 sound card is present AND the
+> > firmware is missing. Not only the shutdown/reboot problem, but the page fault,
+> > whose error log is being cited following the commit, also occurs in the boot
+> > process.
+> (snip)
+> > I looked into this problem and found the mechanism of the page fault.
+> > 
+> > 1) chip->reg_area_virt is mapped in sound/pci/ymfpci/ymfpci_main.c:
+> >    snd_ymfpci_create() in the initialize process of snd_ymfpci.
+> > 2) The initializing fails due to a lack of the firmware.
+> > 3) The allocated resources are released in drivers/base/devres.c:
+> >    release_nodes().
+> > 4) In the release process 3), reg_area_virt is unmapped before calling
+> >    sound/pci/ymfpci/ymfpci_main.c: snd_ymfpci_free().
+> > 5) The first register access in sound/pci/ymfpci/ymfpci_main.c:
+> >    snd_ymfpci_free() causes page fault because the reg_area_virt is
+> >    already unmapped.
+> > 
+> > Unfortunately, I am not familiar with the linux kernel code, so I am not
+> > sure of the appropriate way how the problem should be fixed.
+> 
+> Thanks for the report and the analysis.  Yes, it's the problem of the
+> device release, and this driver was overlooked while it's been fixed in
+> a few others.
+> 
+> Below is the fix patch.  Let me know if it works for you, then I'll
+> submit to the upstream and let stable branch backporting it later.
 
-Ok, let me rip out all the x86 and objtool patches from this release,
-get it out the door with the good things in there that everyone else
-needs, and then we can focus on this mess...
+Thank you for your amazingly quick reply. :)
+I have confirmed that the following patch solves the problem.
+With this patch, snd_ymfpci_free() no longer seems to be called in
+the release process on error.
 
-Maybe I'll just backport _all_ objtool changes to sync things up better,
-last time I tried that it was a maze of twisty passages, all coated in
-assembly...
+Thank you so much for your help.
 
-thanks,
+> -- 8< --
+> From: Takashi Iwai <tiwai@suse.de>
+> Subject: [PATCH] ALSA: ymfpci: Fix the missing snd_card_free() call at probe
+>  error
+> 
+> Like a few other drivers, YMFPCI driver needs to clean up with
+> snd_card_free() call at an error path of the probe; otherwise the
+> other devres resources are released before the card and it results in
+> the UAF.
+> 
+> This patch uses the helper for handling the probe error gracefully.
+> 
+> Fixes: f33fc1576757 ("ALSA: ymfpci: Create card with device-managed snd_devm_card_new()")
+> Cc: <stable@vger.kernel.org>
+> Reported-by: Takashi Yano <takashi.yano@nifty.ne.jp>
+> Closes: https://lore.kernel.org/r/20230823135846.1812-1-takashi.yano@nifty.ne.jp
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> ---
+>  sound/pci/ymfpci/ymfpci.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sound/pci/ymfpci/ymfpci.c b/sound/pci/ymfpci/ymfpci.c
+> index b033bd290940..48444dda44de 100644
+> --- a/sound/pci/ymfpci/ymfpci.c
+> +++ b/sound/pci/ymfpci/ymfpci.c
+> @@ -152,8 +152,8 @@ static inline int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev, i
+>  void snd_ymfpci_free_gameport(struct snd_ymfpci *chip) { }
+>  #endif /* SUPPORT_JOYSTICK */
+>  
+> -static int snd_card_ymfpci_probe(struct pci_dev *pci,
+> -				 const struct pci_device_id *pci_id)
+> +static int __snd_card_ymfpci_probe(struct pci_dev *pci,
+> +				   const struct pci_device_id *pci_id)
+>  {
+>  	static int dev;
+>  	struct snd_card *card;
+> @@ -348,6 +348,12 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
+>  	return 0;
+>  }
+>  
+> +static int snd_card_ymfpci_probe(struct pci_dev *pci,
+> +				 const struct pci_device_id *pci_id)
+> +{
+> +	return snd_card_free_on_error(&pci->dev, __snd_card_ymfpci_probe(pci, pci_id));
+> +}
+> +
+>  static struct pci_driver ymfpci_driver = {
+>  	.name = KBUILD_MODNAME,
+>  	.id_table = snd_ymfpci_ids,
+> -- 
+> 2.35.3
+> 
 
-greg k-h
+
+-- 
+Takashi Yano <takashi.yano@nifty.ne.jp>
