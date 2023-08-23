@@ -1,103 +1,98 @@
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A782020EE3
-	for <patches@lists.linux.dev>; Tue, 22 Aug 2023 23:56:12 +0000 (UTC)
-Received: from eig-obgw-5008a.ext.cloudfilter.net ([10.0.29.246])
-	by cmsmtp with ESMTP
-	id YUuBqW19eWU1cYbEDqKcYb; Tue, 22 Aug 2023 23:56:05 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id YbECq4IRdSCfdYbECq9a5W; Tue, 22 Aug 2023 23:56:04 +0000
-X-Authority-Analysis: v=2.4 cv=M/1elg8s c=1 sm=1 tr=0 ts=64e54b14
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=EQwu3T12zX-_ASVHoRwA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=sHXcsrcQ2JX7PaJS3xNaWPJAISzumo8tG3P7erCaBfI=; b=Umscmz2J1uDsZ0JCtM72gWzEDo
-	b5rSRI3K/GkdBEDbVtGo626Ksn2M/bBklkIUiArBVIcNZcWkDEl4Nq3nrRjgvj3Tn1faEuIFCC9KH
-	h5xYpKjCsFaHTHDUUk6V4VdC0hTCWWoT7RbM7s7qLUFny2Ez9mCfl+v0BxRpzNIj56Ho9anLPqfYC
-	+DnozoHT/MiOn02+wyNQfpKIzIGNxoPzNw+YcQzBLuPXdfxKSznQZjMbzflTF7bja+h6ZwOO8NOrl
-	4lI/qK1Nl2/coqQjxdYMglNchIOaJygDJX3mV2qIAgSGNX5vBKPBRnJByMMjhgefsTOIq+Yt6HdyA
-	CxbXguVw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:52760 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qYbEA-0020jC-0A;
-	Tue, 22 Aug 2023 17:56:02 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD4E7E2
+	for <patches@lists.linux.dev>; Wed, 23 Aug 2023 00:49:57 +0000 (UTC)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1bba48b0bd2so33870165ad.3
+        for <patches@lists.linux.dev>; Tue, 22 Aug 2023 17:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692751797; x=1693356597;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EwKQQZjmpvwCc7+3qPK6l0MEjC1OGrKphiy40wLGUQM=;
+        b=efFIrKCgCxm3PxjaPMDaWF2SLtMeoq/IeKmE+CdqcjGG4PiYou5I8RnKvWBsOPDCqZ
+         NDysXF877DfGT2emsVhpv1fHAW26nVmdsPHarJTTRApW+ftScFw++2tkL85SLTwaCbT7
+         MFLUMEZvFDPvGb/BIkVq/9ygi0Qt3gWu3XxWII26DiMXcc8DlpKIIo4Vz4D8RJkUtJJR
+         PyGUmjRV5oU2VktQNyixUjmrbX4q73zROnG5hfjXVhjhGdwHUm7MtATIGmeLa1/LXECe
+         q2CHInNlF6Whf7KTxrpPW2FAU9IxUulS/Xw3oL5MSIJo9KR2Y2IQKQ0X6F/MJyj1OO9z
+         OgUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692751797; x=1693356597;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EwKQQZjmpvwCc7+3qPK6l0MEjC1OGrKphiy40wLGUQM=;
+        b=E4yB3sHOwCSPzd1Z3Uacqo/1WUfXIORupM6mNthagnB4i+6QTW4rIpy6UOiHgqk6F+
+         N9tUti3gaFy63kMcclgDIL7yOpLjBDbhJCsk8KZmLEafhepNX/NZ4oRMRrbtV+Jr6+O3
+         3pCiWeCT1FyMYqz+lRq/+6KjR2l+AsM1yS78A5rq1dg6xC9AwinXR4ow58A04A7qqfmz
+         K9OS/8UFZoDLf4P33SMJC5BzGEOR+qA+6IKvYb58aXAXIRhcKkG4LQ3QKuKCgX3+caL9
+         JgVT+w5DXvrgP/LrbKsbM2u7lOFOkZWKZxrJ2yDgmGP8lUqFtV4Zyi0zHUMsjHjyYnPO
+         EmJA==
+X-Gm-Message-State: AOJu0YyyATb49HVFLdjvmAwXx6ugLSI4ScpDPRpM2YIfwJnL0FZ//T1H
+	iCPs2FDk5JJufIx0w/FTpoY=
+X-Google-Smtp-Source: AGHT+IGg7Uqhbuss07EY3xzy+9AeCTRSSN7AcMVUWMoR4rxfLDp3u6ZvlucWPoVnqMsIO8J6MkW0hQ==
+X-Received: by 2002:a17:902:b594:b0:1bc:9c49:f8bc with SMTP id a20-20020a170902b59400b001bc9c49f8bcmr8742401pls.8.1692751796711;
+        Tue, 22 Aug 2023 17:49:56 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id c15-20020a170903234f00b001bc676df6a9sm9599282plh.132.2023.08.22.17.49.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Aug 2023 17:49:56 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Tue, 22 Aug 2023 17:49:54 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
+Message-ID: <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
 References: <20230821194122.695845670@linuxfoundation.org>
-In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <65a9032d-6083-cb4d-78db-9d4e77292fd6@w6rz.net>
-Date: Tue, 22 Aug 2023 16:55:59 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qYbEA-0020jC-0A
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:52760
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfETrmSg8EQfCdcdQ0g5uajSeYdJd2+CPwKpdYkwpVyJrdVzXog07EEAa/9YLoWr/natmzJbEv5t2QnPIQS1v36Sek1pEUK2Uk5X6dhYFZsOZ4vCBj91x
- pMvJi0KJmltIpjjoMCdLg0UHVwOb0yZYBa/p+Ev1NW/VZnVpZZZEWHVzjW1Mm9UyyK1/NaHJA1BxEA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230821194122.695845670@linuxfoundation.org>
 
-On 8/21/23 12:39 PM, Greg Kroah-Hartman wrote:
+On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.47 release.
 > There are 194 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.47-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> 
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Build results:
+	total: 157 pass: 156 fail: 1
+Failed builds:
+	m68k:sun3_defconfig
+Qemu test results:
+	total: 521 pass: 519 fail: 2
+Failed tests:
+	arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
+	arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
 
-Tested-by: Ron Economos <re@w6rz.net>
+The m68k build failure is
 
+Inconsistent kallsyms data
+Try make KALLSYMS_EXTRA_PASS=1 as a workaround
+
+I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
+Nothing to worry about. The f2fs crashes are still seen. They
+also happen for other architectures, so it is not just an arm problem.
+I'll probably just disable all f2fs testing going forward. If so I'll
+send a note clarifying that the lack of reported test failures doesn't
+mean that it works.
+
+For x86 I get the same runtime warning as everyone else.
+
+Guenter
