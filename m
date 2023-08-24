@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E7314A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A64C433C7;
-	Thu, 24 Aug 2023 17:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8712014A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A301C433C7;
+	Thu, 24 Aug 2023 17:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897512;
-	bh=UcjxTtwQI1GeeBM5u2SL5VVcGcP962v2rlpYk5jULBg=;
+	s=korg; t=1692897515;
+	bh=tXmEefL6oFV0bSfxzBojU4RaX4dAcQSXWEI0Oh+UsaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWzU/iXGGRC6UTV2RMtwFD/PdBR7NBxdeBQQ48GXK1JqMMq78q9saZQB2loypkqT1
-	 WjVYf2Uulk3iNsTySJe9dxugBm4FHpOTGz/SAOWBlhmwf8rUU9vvpQ7fBIKzVke+lo
-	 j1NBDZ/FEbmhR7UZWbNGArVAAHc5G+UbGIwaVH44=
+	b=NbLP5cTUy0PFUnBh4IS7X5pwOHxi9ApkMDX3CKVFMqWEQbJh3UMgtPqCRMdzUsgqa
+	 r1Ogny9K7FIjuhmVhk/cdaVOs7t1KnVBLq5a35L3cLqHv3I3BWGttpaiDcdoRs/VUv
+	 w5m+UzKV7BkglufL1PvBtkvKAI5THi3v3Jw2SVV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Tang Bin <tangbin@cmss.chinamobile.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/135] USB: dwc3: qcom: fix NULL-deref on suspend
-Date: Thu, 24 Aug 2023 19:08:50 +0200
-Message-ID: <20230824170619.700622044@linuxfoundation.org>
+Subject: [PATCH 5.10 067/135] virtio-mmio: Use to_virtio_mmio_device() to simply code
+Date: Thu, 24 Aug 2023 19:08:59 +0200
+Message-ID: <20230824170620.104905047@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -43,66 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tang Bin <tangbin@cmss.chinamobile.com>
 
-[ Upstream commit d2d69354226de0b333d4405981f3d9c41ba8430a ]
+[ Upstream commit da98b54d02981de5b07d8044b2a632bf6ba3ac45 ]
 
-The Qualcomm dwc3 glue driver is currently accessing the driver data of
-the child core device during suspend and on wakeup interrupts. This is
-clearly a bad idea as the child may not have probed yet or could have
-been unbound from its driver.
+The file virtio_mmio.c has defined the function to_virtio_mmio_device,
+so use it instead of container_of() to simply code.
 
-The first such layering violation was part of the initial version of the
-driver, but this was later made worse when the hack that accesses the
-driver data of the grand child xhci device to configure the wakeup
-interrupts was added.
-
-Fixing this properly is not that easily done, so add a sanity check to
-make sure that the child driver data is non-NULL before dereferencing it
-for now.
-
-Note that this relies on subtleties like the fact that driver core is
-making sure that the parent is not suspended while the child is probing.
-
-Reported-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/all/20230325165217.31069-4-manivannan.sadhasivam@linaro.org/
-Fixes: d9152161b4bf ("usb: dwc3: Add Qualcomm DWC3 glue layer driver")
-Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-Cc: stable@vger.kernel.org	# 3.18: a872ab303d5d: "usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup"
-Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-ID: <20230607100540.31045-2-johan+linaro@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
+Link: https://lore.kernel.org/r/20210222055724.220-1-tangbin@cmss.chinamobile.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: 55c91fedd03d ("virtio-mmio: don't break lifecycle of vm_dev")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_mmio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index ec8c43231746e..3973f6c18857e 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -306,7 +306,16 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
- /* Only usable in contexts where the role can not change. */
- static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+diff --git a/drivers/virtio/virtio_mmio.c b/drivers/virtio/virtio_mmio.c
+index e8ef0c66e558f..844b949b45c96 100644
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -571,8 +571,7 @@ static void virtio_mmio_release_dev(struct device *_d)
  {
--	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-+	struct dwc3 *dwc;
-+
-+	/*
-+	 * FIXME: Fix this layering violation.
-+	 */
-+	dwc = platform_get_drvdata(qcom->dwc3);
-+
-+	/* Core driver may not have probed yet. */
-+	if (!dwc)
-+		return false;
+ 	struct virtio_device *vdev =
+ 			container_of(_d, struct virtio_device, dev);
+-	struct virtio_mmio_device *vm_dev =
+-			container_of(vdev, struct virtio_mmio_device, vdev);
++	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
+ 	struct platform_device *pdev = vm_dev->pdev;
  
- 	return dwc->xhci;
- }
+ 	devm_kfree(&pdev->dev, vm_dev);
 -- 
 2.40.1
 
