@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E742B111A2
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:59:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688B7C433C7;
-	Thu, 24 Aug 2023 14:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CA5111A2
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:59:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181B2C433C8;
+	Thu, 24 Aug 2023 14:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889186;
-	bh=rcbs7nWe86NZhJT+l7L+YkkrKoxBkPF3Xh4vfQgwch0=;
+	s=korg; t=1692889189;
+	bh=3p0Stv6pVviRKStXiX78s2kLPLYMEgWAzq6LAiJbh/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARO3nk+CG19QbZpiRxLIC5WWyIRQomV/n1gounGZVDiZajljn9KIUuhevzhMbVQLf
-	 HsAW4UYReKYhaTdpNSdKGB63/N2yiSiGYHtxROKRp2/egqC/arQmF8IzeQ7exlQDU9
-	 vrKIP/Vi/cJLmd7LvB3cnYnUB44h4Kz45vd7XNtg=
+	b=nFu1k2xr/yuWeq2IE2/f/J263rqo1VM8eqGz9/K41s3UPWTzXI8xGB+lshiMuWtSo
+	 VGANBmw8UG1ws9TNzlHZqGP5MuYALd2FB5Obq4ovYk2sNUKuszLCCVwO6EK+H8mAT4
+	 QJLK53KG0JAKT8e5AdeJdjBFhsmEAME6Guthk06A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fred Eckert <Frede@cmslaser.com>,
 	William Breathitt Gray <william.gray@linaro.org>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/135] iio: adc: stx104: Implement and utilize register structures
-Date: Thu, 24 Aug 2023 16:49:48 +0200
-Message-ID: <20230824145028.883308735@linuxfoundation.org>
+Subject: [PATCH 5.10 046/135] iio: addac: stx104: Fix race condition for stx104_write_raw()
+Date: Thu, 24 Aug 2023 16:49:49 +0200
+Message-ID: <20230824145028.933319530@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -38,209 +38,70 @@ Content-Transfer-Encoding: 8bit
 
 From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit 6cfd14c54b1f42f29097244c1b6208f8268d7d5b ]
+[ Upstream commit 9740827468cea80c42db29e7171a50e99acf7328 ]
 
-Reduce magic numbers and improve code readability by implementing and
-utilizing named register data structures.
+The priv->chan_out_states array and actual DAC value can become
+mismatched if stx104_write_raw() is called concurrently. Prevent such a
+race condition by utilizing a mutex.
 
-Tested-by: Fred Eckert <Frede@cmslaser.com>
+Fixes: 97a445dad37a ("iio: Add IIO support for the DAC on the Apex Embedded Systems STX104")
 Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/8cb91d5b53e57b066120e42ea07000d6c7ef5543.1657213745.git.william.gray@linaro.org
+Link: https://lore.kernel.org/r/c95c9a77fcef36b2a052282146950f23bbc1ebdc.1680790580.git.william.gray@linaro.org
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stx104.c | 74 +++++++++++++++++++++++++++-------------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ drivers/iio/adc/stx104.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/adc/stx104.c
-index 7552351bfed9e..48a91a95e597b 100644
+index 48a91a95e597b..e110a910235ff 100644
 --- a/drivers/iio/adc/stx104.c
 +++ b/drivers/iio/adc/stx104.c
-@@ -16,6 +16,7 @@
+@@ -15,6 +15,7 @@
+ #include <linux/kernel.h>
  #include <linux/module.h>
  #include <linux/moduleparam.h>
++#include <linux/mutex.h>
  #include <linux/spinlock.h>
-+#include <linux/types.h>
+ #include <linux/types.h>
  
- #define STX104_OUT_CHAN(chan) {				\
- 	.type = IIO_VOLTAGE,				\
-@@ -44,14 +45,36 @@ static unsigned int num_stx104;
- module_param_hw_array(base, uint, ioport, &num_stx104, 0);
- MODULE_PARM_DESC(base, "Apex Embedded Systems STX104 base addresses");
+@@ -69,10 +70,12 @@ struct stx104_reg {
  
-+/**
-+ * struct stx104_reg - device register structure
-+ * @ssr_ad:	Software Strobe Register and ADC Data
-+ * @achan:	ADC Channel
-+ * @dio:	Digital I/O
-+ * @dac:	DAC Channels
-+ * @cir_asr:	Clear Interrupts and ADC Status
-+ * @acr:	ADC Control
-+ * @pccr_fsh:	Pacer Clock Control and FIFO Status MSB
-+ * @acfg:	ADC Configuration
-+ */
-+struct stx104_reg {
-+	u16 ssr_ad;
-+	u8 achan;
-+	u8 dio;
-+	u16 dac[2];
-+	u8 cir_asr;
-+	u8 acr;
-+	u8 pccr_fsh;
-+	u8 acfg;
-+};
-+
  /**
   * struct stx104_iio - IIO device private data structure
++ * @lock: synchronization lock to prevent I/O race conditions
   * @chan_out_states:	channels' output states
-- * @base:		base port address of the IIO device
-+ * @reg:		I/O address offset for the device registers
+  * @reg:		I/O address offset for the device registers
   */
  struct stx104_iio {
++	struct mutex lock;
  	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
--	void __iomem *base;
-+	struct stx104_reg __iomem *reg;
+ 	struct stx104_reg __iomem *reg;
  };
- 
- /**
-@@ -64,7 +87,7 @@ struct stx104_iio {
- struct stx104_gpio {
- 	struct gpio_chip chip;
- 	spinlock_t lock;
--	void __iomem *base;
-+	u8 __iomem *base;
- 	unsigned int out_state;
- };
- 
-@@ -72,6 +95,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	struct iio_chan_spec const *chan, int *val, int *val2, long mask)
- {
- 	struct stx104_iio *const priv = iio_priv(indio_dev);
-+	struct stx104_reg __iomem *const reg = priv->reg;
- 	unsigned int adc_config;
- 	int adbu;
- 	int gain;
-@@ -79,7 +103,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	switch (mask) {
- 	case IIO_CHAN_INFO_HARDWAREGAIN:
- 		/* get gain configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		gain = adc_config & 0x3;
- 
- 		*val = 1 << gain;
-@@ -91,24 +115,26 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 		}
- 
- 		/* select ADC channel */
--		iowrite8(chan->channel | (chan->channel << 4), priv->base + 2);
-+		iowrite8(chan->channel | (chan->channel << 4), &reg->achan);
- 
--		/* trigger ADC sample capture and wait for completion */
--		iowrite8(0, priv->base);
--		while (ioread8(priv->base + 8) & BIT(7));
-+		/* trigger ADC sample capture by writing to the 8-bit
-+		 * Software Strobe Register and wait for completion
-+		 */
-+		iowrite8(0, &reg->ssr_ad);
-+		while (ioread8(&reg->cir_asr) & BIT(7));
- 
--		*val = ioread16(priv->base);
-+		*val = ioread16(&reg->ssr_ad);
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_OFFSET:
- 		/* get ADC bipolar/unipolar configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		adbu = !(adc_config & BIT(2));
- 
- 		*val = -32768 * adbu;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
- 		/* get ADC bipolar/unipolar and gain configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		adbu = !(adc_config & BIT(2));
- 		gain = adc_config & 0x3;
- 
-@@ -130,16 +156,16 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 		/* Only four gain states (x1, x2, x4, x8) */
- 		switch (val) {
- 		case 1:
--			iowrite8(0, priv->base + 11);
-+			iowrite8(0, &priv->reg->acfg);
- 			break;
- 		case 2:
--			iowrite8(1, priv->base + 11);
-+			iowrite8(1, &priv->reg->acfg);
- 			break;
- 		case 4:
--			iowrite8(2, priv->base + 11);
-+			iowrite8(2, &priv->reg->acfg);
- 			break;
- 		case 8:
--			iowrite8(3, priv->base + 11);
-+			iowrite8(3, &priv->reg->acfg);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -153,7 +179,7 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+@@ -178,9 +181,12 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+ 			if ((unsigned int)val > 65535)
  				return -EINVAL;
  
++			mutex_lock(&priv->lock);
++
  			priv->chan_out_states[chan->channel] = val;
--			iowrite16(val, priv->base + 4 + 2 * chan->channel);
-+			iowrite16(val, &priv->reg->dac[chan->channel]);
+ 			iowrite16(val, &priv->reg->dac[chan->channel]);
  
++			mutex_unlock(&priv->lock);
  			return 0;
  		}
-@@ -307,15 +333,15 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	}
+ 		return -EINVAL;
+@@ -351,6 +357,8 @@ static int stx104_probe(struct device *dev, unsigned int id)
  
- 	priv = iio_priv(indio_dev);
--	priv->base = devm_ioport_map(dev, base[id], STX104_EXTENT);
--	if (!priv->base)
-+	priv->reg = devm_ioport_map(dev, base[id], STX104_EXTENT);
-+	if (!priv->reg)
- 		return -ENOMEM;
- 
- 	indio_dev->info = &stx104_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
- 
- 	/* determine if differential inputs */
--	if (ioread8(priv->base + 8) & BIT(5)) {
-+	if (ioread8(&priv->reg->cir_asr) & BIT(5)) {
- 		indio_dev->num_channels = ARRAY_SIZE(stx104_channels_diff);
- 		indio_dev->channels = stx104_channels_diff;
- 	} else {
-@@ -326,14 +352,14 @@ static int stx104_probe(struct device *dev, unsigned int id)
  	indio_dev->name = dev_name(dev);
  
++	mutex_init(&priv->lock);
++
  	/* configure device for software trigger operation */
--	iowrite8(0, priv->base + 9);
-+	iowrite8(0, &priv->reg->acr);
+ 	iowrite8(0, &priv->reg->acr);
  
- 	/* initialize gain setting to x1 */
--	iowrite8(0, priv->base + 11);
-+	iowrite8(0, &priv->reg->acfg);
- 
- 	/* initialize DAC output to 0V */
--	iowrite16(0, priv->base + 4);
--	iowrite16(0, priv->base + 6);
-+	iowrite16(0, &priv->reg->dac[0]);
-+	iowrite16(0, &priv->reg->dac[1]);
- 
- 	stx104gpio->chip.label = dev_name(dev);
- 	stx104gpio->chip.parent = dev;
-@@ -348,7 +374,7 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	stx104gpio->chip.get_multiple = stx104_gpio_get_multiple;
- 	stx104gpio->chip.set = stx104_gpio_set;
- 	stx104gpio->chip.set_multiple = stx104_gpio_set_multiple;
--	stx104gpio->base = priv->base + 3;
-+	stx104gpio->base = &priv->reg->dio;
- 	stx104gpio->out_state = 0x0;
- 
- 	spin_lock_init(&stx104gpio->lock);
 -- 
 2.40.1
 
