@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D13014A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4692C433C8;
-	Thu, 24 Aug 2023 17:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBCF14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685C0C433C8;
+	Thu, 24 Aug 2023 17:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897713;
-	bh=YZS60Dzj90N2a5+/nimLFIrrKgKmTkEETqUC1ST7Fng=;
+	s=korg; t=1692897715;
+	bh=GbbOqtqZ6+T+E4lig/s11tc0G5SNAE1ziGBL0KJfYMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXpcOYx7FukInnqmJI4/URfjEMLNmm85PeDPIm9IW5lIiNHvg08tOi0cAZA4akv8M
-	 Wx5gc5sl2k43uqA6awpIM7BxVlsEwGxtXnOiW6kxn/MYMRZpLuSAKYvsUvYE8vHnOl
-	 RR7RtczkvAI1yyVpzIrdiQcoIEFkHcZopb1KF5eo=
+	b=fbpJttESWlYsYO6IxuW8jYojipxGugy/MMjMyKHVBb3tBdD17budKi8Qbfz9PCAYD
+	 0GswZLBABuCjHkMUqnvsfzUq/bknO48exp3AVfLq0Qp0Rk1k2ang3XNKTJoDkhojYj
+	 Yz8pOrwbalhpFhMspTz8+C9aY1Pkmxdzshn64BIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 124/135] x86/cpu: Clean up SRSO return thunk mess
-Date: Thu, 24 Aug 2023 19:09:56 +0200
-Message-ID: <20230824170622.652078885@linuxfoundation.org>
+Subject: [PATCH 5.10 125/135] x86/cpu: Rename original retbleed methods
+Date: Thu, 24 Aug 2023 19:09:57 +0200
+Message-ID: <20230824170622.684765006@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -41,316 +42,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-commit d43490d0ab824023e11d0b57d0aeec17a6e0ca13 upstream.
+commit d025b7bac07a6e90b6b98b487f88854ad9247c39 upstream.
 
-Use the existing configurable return thunk. There is absolute no
-justification for having created this __x86_return_thunk alternative.
+Rename the original retbleed return thunk and untrain_ret to
+retbleed_return_thunk() and retbleed_untrain_ret().
 
-To clarify, the whole thing looks like:
+No functional changes.
 
-Zen3/4 does:
-
-  srso_alias_untrain_ret:
-	  nop2
-	  lfence
-	  jmp srso_alias_return_thunk
-	  int3
-
-  srso_alias_safe_ret: // aliasses srso_alias_untrain_ret just so
-	  add $8, %rsp
-	  ret
-	  int3
-
-  srso_alias_return_thunk:
-	  call srso_alias_safe_ret
-	  ud2
-
-While Zen1/2 does:
-
-  srso_untrain_ret:
-	  movabs $foo, %rax
-	  lfence
-	  call srso_safe_ret           (jmp srso_return_thunk ?)
-	  int3
-
-  srso_safe_ret: // embedded in movabs instruction
-	  add $8,%rsp
-          ret
-          int3
-
-  srso_return_thunk:
-	  call srso_safe_ret
-	  ud2
-
-While retbleed does:
-
-  zen_untrain_ret:
-	  test $0xcc, %bl
-	  lfence
-	  jmp zen_return_thunk
-          int3
-
-  zen_return_thunk: // embedded in the test instruction
-	  ret
-          int3
-
-Where Zen1/2 flush the BTB entry using the instruction decoder trick
-(test,movabs) Zen3/4 use BTB aliasing. SRSO adds a return sequence
-(srso_safe_ret()) which forces the function return instruction to
-speculate into a trap (UD2).  This RET will then mispredict and
-execution will continue at the return site read from the top of the
-stack.
-
-Pick one of three options at boot (evey function can only ever return
-once).
-
-  [ bp: Fixup commit message uarch details and add them in a comment in
-    the code too. Add a comment about the srso_select_mitigation()
-    dependency on retbleed_select_mitigation(). Add moar ifdeffery for
-    32-bit builds. Add a dummy srso_untrain_ret_alias() definition for
-    32-bit alternatives needing the symbol. ]
-
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Suggested-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121148.842775684@infradead.org
+Link: https://lore.kernel.org/r/20230814121148.909378169@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    5 +++
- arch/x86/kernel/cpu/bugs.c           |   17 ++++++++--
- arch/x86/kernel/vmlinux.lds.S        |    2 -
- arch/x86/lib/retpoline.S             |   58 +++++++++++++++++++++++++----------
- tools/objtool/arch/x86/decode.c      |    2 -
- 5 files changed, 63 insertions(+), 21 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |    8 ++++----
+ arch/x86/kernel/cpu/bugs.c           |    2 +-
+ arch/x86/kernel/vmlinux.lds.S        |    2 +-
+ arch/x86/lib/retpoline.S             |   30 +++++++++++++++---------------
+ tools/objtool/arch/x86/decode.c      |    2 +-
+ tools/objtool/check.c                |    2 +-
+ 6 files changed, 23 insertions(+), 23 deletions(-)
 
 --- a/arch/x86/include/asm/nospec-branch.h
 +++ b/arch/x86/include/asm/nospec-branch.h
-@@ -201,9 +201,14 @@ extern void __x86_return_thunk(void);
+@@ -156,7 +156,7 @@
+ .endm
+ 
+ #ifdef CONFIG_CPU_UNRET_ENTRY
+-#define CALL_ZEN_UNTRAIN_RET	"call zen_untrain_ret"
++#define CALL_ZEN_UNTRAIN_RET	"call retbleed_untrain_ret"
+ #else
+ #define CALL_ZEN_UNTRAIN_RET	""
+ #endif
+@@ -166,7 +166,7 @@
+  * return thunk isn't mapped into the userspace tables (then again, AMD
+  * typically has NO_MELTDOWN).
+  *
+- * While zen_untrain_ret() doesn't clobber anything but requires stack,
++ * While retbleed_untrain_ret() doesn't clobber anything but requires stack,
+  * entry_ibpb() will clobber AX, CX, DX.
+  *
+  * As such, this must be placed after every *SWITCH_TO_KERNEL_CR3 at a point
+@@ -201,11 +201,11 @@ extern void __x86_return_thunk(void);
  static inline void __x86_return_thunk(void) {}
  #endif
  
-+extern void zen_return_thunk(void);
-+extern void srso_return_thunk(void);
-+extern void srso_alias_return_thunk(void);
-+
- extern void zen_untrain_ret(void);
+-extern void zen_return_thunk(void);
++extern void retbleed_return_thunk(void);
+ extern void srso_return_thunk(void);
+ extern void srso_alias_return_thunk(void);
+ 
+-extern void zen_untrain_ret(void);
++extern void retbleed_untrain_ret(void);
  extern void srso_untrain_ret(void);
  extern void srso_untrain_ret_alias(void);
-+
- extern void entry_ibpb(void);
  
- #ifdef CONFIG_RETPOLINE
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -157,8 +157,13 @@ void __init cpu_select_mitigations(void)
- 	l1tf_select_mitigation();
- 	md_clear_select_mitigation();
- 	srbds_select_mitigation();
--	gds_select_mitigation();
-+
-+	/*
-+	 * srso_select_mitigation() depends and must run after
-+	 * retbleed_select_mitigation().
-+	 */
- 	srso_select_mitigation();
-+	gds_select_mitigation();
- }
- 
- /*
-@@ -978,6 +983,9 @@ do_cmd_auto:
- 		setup_force_cpu_cap(X86_FEATURE_RETHUNK);
+@@ -984,7 +984,7 @@ do_cmd_auto:
  		setup_force_cpu_cap(X86_FEATURE_UNRET);
  
-+		if (IS_ENABLED(CONFIG_RETHUNK))
-+			x86_return_thunk = zen_return_thunk;
-+
+ 		if (IS_ENABLED(CONFIG_RETHUNK))
+-			x86_return_thunk = zen_return_thunk;
++			x86_return_thunk = retbleed_return_thunk;
+ 
  		if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
  		    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
- 			pr_err(RETBLEED_UNTRAIN_MSG);
-@@ -2352,10 +2360,13 @@ static void __init srso_select_mitigatio
- 			 */
- 			setup_force_cpu_cap(X86_FEATURE_RETHUNK);
- 
--			if (boot_cpu_data.x86 == 0x19)
-+			if (boot_cpu_data.x86 == 0x19) {
- 				setup_force_cpu_cap(X86_FEATURE_SRSO_ALIAS);
--			else
-+				x86_return_thunk = srso_alias_return_thunk;
-+			} else {
- 				setup_force_cpu_cap(X86_FEATURE_SRSO);
-+				x86_return_thunk = srso_return_thunk;
-+			}
- 			srso_mitigation = SRSO_MITIGATION_SAFE_RET;
- 		} else {
- 			pr_err("WARNING: kernel not compiled with CPU_SRSO.\n");
 --- a/arch/x86/kernel/vmlinux.lds.S
 +++ b/arch/x86/kernel/vmlinux.lds.S
 @@ -518,7 +518,7 @@ INIT_PER_CPU(irq_stack_backing_store);
  #endif
  
  #ifdef CONFIG_RETHUNK
--. = ASSERT((__ret & 0x3f) == 0, "__ret not cacheline-aligned");
-+. = ASSERT((zen_return_thunk & 0x3f) == 0, "zen_return_thunk not cacheline-aligned");
+-. = ASSERT((zen_return_thunk & 0x3f) == 0, "zen_return_thunk not cacheline-aligned");
++. = ASSERT((retbleed_return_thunk & 0x3f) == 0, "retbleed_return_thunk not cacheline-aligned");
  . = ASSERT((srso_safe_ret & 0x3f) == 0, "srso_safe_ret not cacheline-aligned");
  #endif
  
 --- a/arch/x86/lib/retpoline.S
 +++ b/arch/x86/lib/retpoline.S
-@@ -93,21 +93,26 @@ SYM_CODE_END(__x86_indirect_thunk_array)
- 	.section .text.__x86.rethunk_untrain
+@@ -129,32 +129,32 @@ SYM_CODE_END(srso_alias_return_thunk)
  
- SYM_START(srso_untrain_ret_alias, SYM_L_GLOBAL, SYM_A_NONE)
-+	UNWIND_HINT_FUNC
- 	ASM_NOP2
- 	lfence
--	jmp __x86_return_thunk
-+	jmp srso_alias_return_thunk
- SYM_FUNC_END(srso_untrain_ret_alias)
- __EXPORT_THUNK(srso_untrain_ret_alias)
- 
- 	.section .text.__x86.rethunk_safe
-+#else
-+/* dummy definition for alternatives */
-+SYM_START(srso_untrain_ret_alias, SYM_L_GLOBAL, SYM_A_NONE)
-+	ANNOTATE_UNRET_SAFE
-+	ret
-+	int3
-+SYM_FUNC_END(srso_untrain_ret_alias)
- #endif
- 
--/* Needs a definition for the __x86_return_thunk alternative below. */
- SYM_START(srso_safe_ret_alias, SYM_L_GLOBAL, SYM_A_NONE)
--#ifdef CONFIG_CPU_SRSO
- 	add $8, %_ASM_SP
- 	UNWIND_HINT_FUNC
--#endif
- 	ANNOTATE_UNRET_SAFE
- 	ret
- 	int3
-@@ -115,9 +120,16 @@ SYM_FUNC_END(srso_safe_ret_alias)
- 
- 	.section .text.__x86.return_thunk
- 
-+SYM_CODE_START(srso_alias_return_thunk)
-+	UNWIND_HINT_FUNC
-+	ANNOTATE_NOENDBR
-+	call srso_safe_ret_alias
-+	ud2
-+SYM_CODE_END(srso_alias_return_thunk)
-+
  /*
   * Safety details here pertain to the AMD Zen{1,2} microarchitecture:
-- * 1) The RET at __x86_return_thunk must be on a 64 byte boundary, for
-+ * 1) The RET at zen_return_thunk must be on a 64 byte boundary, for
+- * 1) The RET at zen_return_thunk must be on a 64 byte boundary, for
++ * 1) The RET at retbleed_return_thunk must be on a 64 byte boundary, for
   *    alignment within the BTB.
-  * 2) The instruction at zen_untrain_ret must contain, and not
+- * 2) The instruction at zen_untrain_ret must contain, and not
++ * 2) The instruction at retbleed_untrain_ret must contain, and not
   *    end with, the 0xc3 byte of the RET.
-@@ -125,7 +137,7 @@ SYM_FUNC_END(srso_safe_ret_alias)
+  * 3) STIBP must be enabled, or SMT disabled, to prevent the sibling thread
   *    from re-poisioning the BTB prediction.
   */
  	.align 64
--	.skip 64 - (__ret - zen_untrain_ret), 0xcc
-+	.skip 64 - (zen_return_thunk - zen_untrain_ret), 0xcc
- SYM_FUNC_START_NOALIGN(zen_untrain_ret);
+-	.skip 64 - (zen_return_thunk - zen_untrain_ret), 0xcc
+-SYM_FUNC_START_NOALIGN(zen_untrain_ret);
++	.skip 64 - (retbleed_return_thunk - retbleed_untrain_ret), 0xcc
++SYM_FUNC_START_NOALIGN(retbleed_untrain_ret);
  
  	/*
-@@ -133,16 +145,16 @@ SYM_FUNC_START_NOALIGN(zen_untrain_ret);
+-	 * As executed from zen_untrain_ret, this is:
++	 * As executed from retbleed_untrain_ret, this is:
  	 *
  	 *   TEST $0xcc, %bl
  	 *   LFENCE
--	 *   JMP __x86_return_thunk
-+	 *   JMP zen_return_thunk
+-	 *   JMP zen_return_thunk
++	 *   JMP retbleed_return_thunk
  	 *
  	 * Executing the TEST instruction has a side effect of evicting any BTB
  	 * prediction (potentially attacker controlled) attached to the RET, as
--	 * __x86_return_thunk + 1 isn't an instruction boundary at the moment.
-+	 * zen_return_thunk + 1 isn't an instruction boundary at the moment.
+-	 * zen_return_thunk + 1 isn't an instruction boundary at the moment.
++	 * retbleed_return_thunk + 1 isn't an instruction boundary at the moment.
  	 */
  	.byte	0xf6
  
  	/*
--	 * As executed from __x86_return_thunk, this is a plain RET.
-+	 * As executed from zen_return_thunk, this is a plain RET.
+-	 * As executed from zen_return_thunk, this is a plain RET.
++	 * As executed from retbleed_return_thunk, this is a plain RET.
  	 *
  	 * As part of the TEST above, RET is the ModRM byte, and INT3 the imm8.
  	 *
-@@ -154,13 +166,13 @@ SYM_FUNC_START_NOALIGN(zen_untrain_ret);
+@@ -166,13 +166,13 @@ SYM_FUNC_START_NOALIGN(zen_untrain_ret);
  	 * With SMT enabled and STIBP active, a sibling thread cannot poison
  	 * RET's prediction to a type of its choice, but can evict the
  	 * prediction due to competitive sharing. If the prediction is
--	 * evicted, __x86_return_thunk will suffer Straight Line Speculation
-+	 * evicted, zen_return_thunk will suffer Straight Line Speculation
+-	 * evicted, zen_return_thunk will suffer Straight Line Speculation
++	 * evicted, retbleed_return_thunk will suffer Straight Line Speculation
  	 * which will be contained safely by the INT3.
  	 */
--SYM_INNER_LABEL(__ret, SYM_L_GLOBAL)
-+SYM_INNER_LABEL(zen_return_thunk, SYM_L_GLOBAL)
+-SYM_INNER_LABEL(zen_return_thunk, SYM_L_GLOBAL)
++SYM_INNER_LABEL(retbleed_return_thunk, SYM_L_GLOBAL)
  	ret
  	int3
--SYM_CODE_END(__ret)
-+SYM_CODE_END(zen_return_thunk)
+-SYM_CODE_END(zen_return_thunk)
++SYM_CODE_END(retbleed_return_thunk)
  
  	/*
  	 * Ensure the TEST decoding / BTB invalidation is complete.
-@@ -171,7 +183,7 @@ SYM_CODE_END(__ret)
+@@ -183,13 +183,13 @@ SYM_CODE_END(zen_return_thunk)
  	 * Jump back and execute the RET in the middle of the TEST instruction.
  	 * INT3 is for SLS protection.
  	 */
--	jmp __ret
-+	jmp zen_return_thunk
+-	jmp zen_return_thunk
++	jmp retbleed_return_thunk
  	int3
- SYM_FUNC_END(zen_untrain_ret)
- __EXPORT_THUNK(zen_untrain_ret)
-@@ -191,12 +203,19 @@ __EXPORT_THUNK(zen_untrain_ret)
- SYM_START(srso_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
- 	.byte 0x48, 0xb8
+-SYM_FUNC_END(zen_untrain_ret)
+-__EXPORT_THUNK(zen_untrain_ret)
++SYM_FUNC_END(retbleed_untrain_ret)
++__EXPORT_THUNK(retbleed_untrain_ret)
  
-+/*
-+ * This forces the function return instruction to speculate into a trap
-+ * (UD2 in srso_return_thunk() below).  This RET will then mispredict
-+ * and execution will continue at the return site read from the top of
-+ * the stack.
-+ */
- SYM_INNER_LABEL(srso_safe_ret, SYM_L_GLOBAL)
- 	add $8, %_ASM_SP
- 	ret
- 	int3
- 	int3
- 	int3
-+	/* end of movabs */
- 	lfence
- 	call srso_safe_ret
- 	ud2
-@@ -204,12 +223,19 @@ SYM_CODE_END(srso_safe_ret)
- SYM_FUNC_END(srso_untrain_ret)
- __EXPORT_THUNK(srso_untrain_ret)
- 
--SYM_CODE_START(__x86_return_thunk)
-+SYM_CODE_START(srso_return_thunk)
- 	UNWIND_HINT_FUNC
- 	ANNOTATE_NOENDBR
--	ALTERNATIVE_2 "jmp __ret", "call srso_safe_ret", X86_FEATURE_SRSO, \
--			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
-+	call srso_safe_ret
- 	ud2
-+SYM_CODE_END(srso_return_thunk)
-+
-+SYM_CODE_START(__x86_return_thunk)
-+	UNWIND_HINT_FUNC
-+	ANNOTATE_NOENDBR
-+	ANNOTATE_UNRET_SAFE
-+	ret
-+	int3
- SYM_CODE_END(__x86_return_thunk)
- EXPORT_SYMBOL(__x86_return_thunk)
- 
+ /*
+- * SRSO untraining sequence for Zen1/2, similar to zen_untrain_ret()
++ * SRSO untraining sequence for Zen1/2, similar to retbleed_untrain_ret()
+  * above. On kernel entry, srso_untrain_ret() is executed which is a
+  *
+  * movabs $0xccccccc308c48348,%rax
 --- a/tools/objtool/arch/x86/decode.c
 +++ b/tools/objtool/arch/x86/decode.c
 @@ -655,5 +655,5 @@ bool arch_is_rethunk(struct symbol *sym)
  	return !strcmp(sym->name, "__x86_return_thunk") ||
  	       !strcmp(sym->name, "srso_untrain_ret") ||
  	       !strcmp(sym->name, "srso_safe_ret") ||
--	       !strcmp(sym->name, "__ret");
-+	       !strcmp(sym->name, "zen_return_thunk");
+-	       !strcmp(sym->name, "zen_return_thunk");
++	       !strcmp(sym->name, "retbleed_return_thunk");
  }
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1165,7 +1165,7 @@ static int add_jump_destinations(struct
+ 				continue;
+ 
+ 			/*
+-			 * This is a special case for zen_untrain_ret().
++			 * This is a special case for retbleed_untrain_ret().
+ 			 * It jumps to __x86_return_thunk(), but objtool
+ 			 * can't find the thunk's starting RET
+ 			 * instruction, because the RET is also in the
 
 
