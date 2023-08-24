@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0941119B
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F79C433C8;
-	Thu, 24 Aug 2023 14:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2961119B
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1417AC433C7;
+	Thu, 24 Aug 2023 14:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888710;
-	bh=RE0ONZxMGwhzsQHQH0vPTB/Bvp+DUQuTuLscugafPPY=;
+	s=korg; t=1692888713;
+	bh=ejHLyMMv346x/7UzAWw9Ev4k6rt48mJtFRKPlt8nD5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/lhZnUldv6goIGb5Dl0sE1v+Pbjhp4SCOop0PNONkn/kaqZfZ+2MmAXXeEqsKiIx
-	 CNP6+QTOKJ/4bMWZPCW3dBqTVy9W5cma2IXk9+32DWq0e02DSjMfyMvmosoDus2FiL
-	 38N6z2KpJbry0CEdJr2yaCj64RSQ3jCedg7AOLbs=
+	b=NWD3gys5RrYUuYMfnesMXnAfIypbDJLdL6xN7aIswjsJ/3+t9fmBmUk8zxxGXWbxD
+	 7DROajLNsL0/aHTFJm1+vXT+C2yJ7XojUp/nKg7/F6/PBSu8FN6NfbqYOuncJbZHxn
+	 L/E2mFB2e5rC6Vv4wGKnpXqvWf+AZHiwZidwfjQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Clayton Yager <Clayton_Yager@selinc.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/139] selftests: forwarding: tc_actions: Use ncat instead of nc
-Date: Thu, 24 Aug 2023 16:48:46 +0200
-Message-ID: <20230824145023.724470419@linuxfoundation.org>
+Subject: [PATCH 5.15 004/139] macsec: Fix traffic counters/statistics
+Date: Thu, 24 Aug 2023 16:48:47 +0200
+Message-ID: <20230824145023.771676819@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -39,82 +35,248 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Clayton Yager <Clayton_Yager@selinc.com>
 
-[ Upstream commit 5e8670610b93158ffacc3241f835454ff26a3469 ]
+[ Upstream commit 91ec9bd57f3524ff3d86bfb7c9ee5a315019733c ]
 
-The test relies on 'nc' being the netcat version from the nmap project.
-While this seems to be the case on Fedora, it is not the case on Ubuntu,
-resulting in failures such as [1].
+OutOctetsProtected, OutOctetsEncrypted, InOctetsValidated, and
+InOctetsDecrypted were incrementing by the total number of octets in frames
+instead of by the number of octets of User Data in frames.
 
-Fix by explicitly using the 'ncat' utility from the nmap project and the
-skip the test in case it is not installed.
+The Controlled Port statistics ifOutOctets and ifInOctets were incrementing
+by the total number of octets instead of the number of octets of the MSDUs
+plus octets of the destination and source MAC addresses.
 
-[1]
- # timeout set to 0
- # selftests: net/forwarding: tc_actions.sh
- # TEST: gact drop and ok (skip_hw)                                    [ OK ]
- # TEST: mirred egress flower redirect (skip_hw)                       [ OK ]
- # TEST: mirred egress flower mirror (skip_hw)                         [ OK ]
- # TEST: mirred egress matchall mirror (skip_hw)                       [ OK ]
- # TEST: mirred_egress_to_ingress (skip_hw)                            [ OK ]
- # nc: invalid option -- '-'
- # usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
- #         [-m minttl] [-O length] [-P proxy_username] [-p source_port]
- #         [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
- #         [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
- #         [destination] [port]
- # nc: invalid option -- '-'
- # usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
- #         [-m minttl] [-O length] [-P proxy_username] [-p source_port]
- #         [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
- #         [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
- #         [destination] [port]
- # TEST: mirred_egress_to_ingress_tcp (skip_hw)                        [FAIL]
- #       server output check failed
- # INFO: Could not test offloaded functionality
- not ok 80 selftests: net/forwarding: tc_actions.sh # exit=1
+The Controlled Port statistics ifInDiscards and ifInErrors were not
+incrementing each time the counters they aggregate were.
 
-Fixes: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-12-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The Controlled Port statistic ifInErrors was not included in the output of
+macsec_get_stats64 so the value was not present in ip commands output.
+
+The ReceiveSA counters InPktsNotValid, InPktsNotUsingSA, and InPktsUnusedSA
+were not incrementing.
+
+Signed-off-by: Clayton Yager <Clayton_Yager@selinc.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 32d0a49d36a2 ("macsec: use DEV_STATS_INC()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/tc_actions.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c | 58 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 49 insertions(+), 9 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
-index 9c2aca8a4b8de..dd02ed4cacacb 100755
---- a/tools/testing/selftests/net/forwarding/tc_actions.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -8,6 +8,8 @@ NUM_NETIFS=4
- source tc_common.sh
- source lib.sh
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 10b3f4fb2612c..e7af0e7a29678 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -160,6 +160,19 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
+ 	return sa;
+ }
  
-+require_command ncat
++static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
++{
++	struct macsec_rx_sa *sa = NULL;
++	int an;
 +
- tcflags="skip_hw"
++	for (an = 0; an < MACSEC_NUM_AN; an++)	{
++		sa = macsec_rxsa_get(rx_sc->sa[an]);
++		if (sa)
++			break;
++	}
++	return sa;
++}
++
+ static void free_rx_sc_rcu(struct rcu_head *head)
+ {
+ 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
+@@ -493,18 +506,28 @@ static void macsec_encrypt_finish(struct sk_buff *skb, struct net_device *dev)
+ 	skb->protocol = eth_hdr(skb)->h_proto;
+ }
  
- h1_create()
-@@ -174,9 +176,9 @@ mirred_egress_to_ingress_tcp_test()
- 		ip_proto icmp \
- 			action drop
++static unsigned int macsec_msdu_len(struct sk_buff *skb)
++{
++	struct macsec_dev *macsec = macsec_priv(skb->dev);
++	struct macsec_secy *secy = &macsec->secy;
++	bool sci_present = macsec_skb_cb(skb)->has_sci;
++
++	return skb->len - macsec_hdr_len(sci_present) - secy->icv_len;
++}
++
+ static void macsec_count_tx(struct sk_buff *skb, struct macsec_tx_sc *tx_sc,
+ 			    struct macsec_tx_sa *tx_sa)
+ {
++	unsigned int msdu_len = macsec_msdu_len(skb);
+ 	struct pcpu_tx_sc_stats *txsc_stats = this_cpu_ptr(tx_sc->stats);
  
--	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2  &
-+	ip vrf exec v$h1 ncat --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2 &
- 	local rpid=$!
--	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
-+	ip vrf exec v$h1 ncat -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
- 	wait -n $rpid
- 	cmp -s $mirred_e2i_tf1 $mirred_e2i_tf2
- 	check_err $? "server output check failed"
+ 	u64_stats_update_begin(&txsc_stats->syncp);
+ 	if (tx_sc->encrypt) {
+-		txsc_stats->stats.OutOctetsEncrypted += skb->len;
++		txsc_stats->stats.OutOctetsEncrypted += msdu_len;
+ 		txsc_stats->stats.OutPktsEncrypted++;
+ 		this_cpu_inc(tx_sa->stats->OutPktsEncrypted);
+ 	} else {
+-		txsc_stats->stats.OutOctetsProtected += skb->len;
++		txsc_stats->stats.OutOctetsProtected += msdu_len;
+ 		txsc_stats->stats.OutPktsProtected++;
+ 		this_cpu_inc(tx_sa->stats->OutPktsProtected);
+ 	}
+@@ -534,9 +557,10 @@ static void macsec_encrypt_done(struct crypto_async_request *base, int err)
+ 	aead_request_free(macsec_skb_cb(skb)->req);
+ 
+ 	rcu_read_lock_bh();
+-	macsec_encrypt_finish(skb, dev);
+ 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
+-	len = skb->len;
++	/* packet is encrypted/protected so tx_bytes must be calculated */
++	len = macsec_msdu_len(skb) + 2 * ETH_ALEN;
++	macsec_encrypt_finish(skb, dev);
+ 	ret = dev_queue_xmit(skb);
+ 	count_tx(dev, ret, len);
+ 	rcu_read_unlock_bh();
+@@ -695,6 +719,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
+ 
+ 	macsec_skb_cb(skb)->req = req;
+ 	macsec_skb_cb(skb)->tx_sa = tx_sa;
++	macsec_skb_cb(skb)->has_sci = sci_present;
+ 	aead_request_set_callback(req, 0, macsec_encrypt_done, skb);
+ 
+ 	dev_hold(skb->dev);
+@@ -736,15 +761,17 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsLate++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
++		secy->netdev->stats.rx_dropped++;
+ 		return false;
+ 	}
+ 
+ 	if (secy->validate_frames != MACSEC_VALIDATE_DISABLED) {
++		unsigned int msdu_len = macsec_msdu_len(skb);
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		if (hdr->tci_an & MACSEC_TCI_E)
+-			rxsc_stats->stats.InOctetsDecrypted += skb->len;
++			rxsc_stats->stats.InOctetsDecrypted += msdu_len;
+ 		else
+-			rxsc_stats->stats.InOctetsValidated += skb->len;
++			rxsc_stats->stats.InOctetsValidated += msdu_len;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+ 	}
+ 
+@@ -757,6 +784,8 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotValid++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			this_cpu_inc(rx_sa->stats->InPktsNotValid);
++			secy->netdev->stats.rx_errors++;
+ 			return false;
+ 		}
+ 
+@@ -849,9 +878,9 @@ static void macsec_decrypt_done(struct crypto_async_request *base, int err)
+ 
+ 	macsec_finalize_skb(skb, macsec->secy.icv_len,
+ 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
++	len = skb->len;
+ 	macsec_reset_skb(skb, macsec->secy.netdev);
+ 
+-	len = skb->len;
+ 	if (gro_cells_receive(&macsec->gro_cells, skb) == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+ 
+@@ -1042,6 +1071,7 @@ static enum rx_handler_result handle_not_macsec(struct sk_buff *skb)
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoTag++;
+ 			u64_stats_update_end(&secy_stats->syncp);
++			macsec->secy.netdev->stats.rx_dropped++;
+ 			continue;
+ 		}
+ 
+@@ -1151,6 +1181,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&secy_stats->syncp);
+ 		secy_stats->stats.InPktsBadTag++;
+ 		u64_stats_update_end(&secy_stats->syncp);
++		secy->netdev->stats.rx_errors++;
+ 		goto drop_nosa;
+ 	}
+ 
+@@ -1161,11 +1192,15 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		/* If validateFrames is Strict or the C bit in the
+ 		 * SecTAG is set, discard
+ 		 */
++		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
+ 		if (hdr->tci_an & MACSEC_TCI_C ||
+ 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			secy->netdev->stats.rx_errors++;
++			if (active_rx_sa)
++				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+ 		}
+ 
+@@ -1175,6 +1210,8 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsUnusedSA++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
++		if (active_rx_sa)
++			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
+ 		goto deliver;
+ 	}
+ 
+@@ -1195,6 +1232,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsLate++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			macsec->secy.netdev->stats.rx_dropped++;
+ 			goto drop;
+ 		}
+ 	}
+@@ -1223,6 +1261,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ deliver:
+ 	macsec_finalize_skb(skb, secy->icv_len,
+ 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
++	len = skb->len;
+ 	macsec_reset_skb(skb, secy->netdev);
+ 
+ 	if (rx_sa)
+@@ -1230,7 +1269,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	macsec_rxsc_put(rx_sc);
+ 
+ 	skb_orphan(skb);
+-	len = skb->len;
+ 	ret = gro_cells_receive(&macsec->gro_cells, skb);
+ 	if (ret == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+@@ -1272,6 +1310,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
++			macsec->secy.netdev->stats.rx_errors++;
+ 			continue;
+ 		}
+ 
+@@ -3403,6 +3442,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 		return NETDEV_TX_OK;
+ 	}
+ 
++	len = skb->len;
+ 	skb = macsec_encrypt(skb, dev);
+ 	if (IS_ERR(skb)) {
+ 		if (PTR_ERR(skb) != -EINPROGRESS)
+@@ -3413,7 +3453,6 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
+ 
+ 	macsec_encrypt_finish(skb, dev);
+-	len = skb->len;
+ 	ret = dev_queue_xmit(skb);
+ 	count_tx(dev, ret, len);
+ 	return ret;
+@@ -3643,6 +3682,7 @@ static void macsec_get_stats64(struct net_device *dev,
+ 
+ 	s->rx_dropped = dev->stats.rx_dropped;
+ 	s->tx_dropped = dev->stats.tx_dropped;
++	s->rx_errors = dev->stats.rx_errors;
+ }
+ 
+ static int macsec_get_iflink(const struct net_device *dev)
 -- 
 2.40.1
 
