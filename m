@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156DE14A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896A3C433C8;
-	Thu, 24 Aug 2023 17:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB2F14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61342C433C7;
+	Thu, 24 Aug 2023 17:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897698;
-	bh=TIwoDhcGtTPi1gD5Pf5x9e20JYl8qP42N/f3ksjMF3k=;
+	s=korg; t=1692897701;
+	bh=o87A2VSGDm/ODngYAFxx+ZR4DYoSM5f58aF4RSULMTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCFVjUraUKIAd9r3B3SNxIMHJy1vjXo9r4MVHn8lkMTPI8q3GOmAYLGvgE8tDGQ6n
-	 Aj2+d3aCLNtKDNV0hCrIbOg0Bjsb+gJtOrhgNugo4rD2ufNDeJVVbbmFytnolXeC3c
-	 +xMZYFWnMICOwaAEsDEe8nqKl3GqJTJ5rEg9FO54=
+	b=rKYHwH+P5obv7VMvTwm47O0T97IpJwia+dkoneAcP4G9UH8P7Lr0AlMVzCfZb9U+A
+	 06+XoAy1T8HB07huqHiabjBcQfTrd9SJl1r1GaSAaB2L9ALJnNRzA509pd+RRvJccU
+	 zyVFBm34itXpJFOWsAplmsyynSs+YkTN5OJiovqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kees Cook <keescook@chromium.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/135] x86/ibt: Add ANNOTATE_NOENDBR
-Date: Thu, 24 Aug 2023 19:09:55 +0200
-Message-ID: <20230824170622.611914350@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.10 132/135] x86/srso: Disable the mitigation on unaffected configurations
+Date: Thu, 24 Aug 2023 19:10:04 +0200
+Message-ID: <20230824170622.961701641@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -41,110 +38,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit c8c301abeae58ec756b8fcb2178a632bd3c9e284 ]
+commit e9fbc47b818b964ddff5df5b2d5c0f5f32f4a147 upstream.
 
-In order to have objtool warn about code references to !ENDBR
-instruction, we need an annotation to allow this for non-control-flow
-instances -- consider text range checks, text patching, or return
-trampolines etc.
+Skip the srso cmd line parsing which is not needed on Zen1/2 with SMT
+disabled and with the proper microcode applied (latter should be the
+case anyway) as those are not affected.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/r/20220308154317.578968224@infradead.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5a15d8348881 ("x86/srso: Tie SBPB bit setting to microcode patch detection")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230813104517.3346-1-bp@alien8.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/objtool.h       |   16 ++++++++++++++++
- tools/include/linux/objtool.h |   16 ++++++++++++++++
- 2 files changed, 32 insertions(+)
+ arch/x86/kernel/cpu/bugs.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/include/linux/objtool.h
-+++ b/include/linux/objtool.h
-@@ -82,6 +82,12 @@ struct unwind_hint {
- #define STACK_FRAME_NON_STANDARD_FP(func)
- #endif
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2329,8 +2329,10 @@ static void __init srso_select_mitigatio
+ 		 * IBPB microcode has been applied.
+ 		 */
+ 		if ((boot_cpu_data.x86 < 0x19) &&
+-		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED)))
++		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED))) {
+ 			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
++			return;
++		}
+ 	}
  
-+#define ANNOTATE_NOENDBR					\
-+	"986: \n\t"						\
-+	".pushsection .discard.noendbr\n\t"			\
-+	_ASM_PTR " 986b\n\t"					\
-+	".popsection\n\t"
+ 	if (retbleed_mitigation == RETBLEED_MITIGATION_IBPB) {
+@@ -2616,6 +2618,9 @@ static ssize_t gds_show_state(char *buf)
+ 
+ static ssize_t srso_show_state(char *buf)
+ {
++	if (boot_cpu_has(X86_FEATURE_SRSO_NO))
++		return sysfs_emit(buf, "Not affected\n");
 +
- #else /* __ASSEMBLY__ */
- 
- /*
-@@ -128,6 +134,13 @@ struct unwind_hint {
- 	.popsection
- .endm
- 
-+.macro ANNOTATE_NOENDBR
-+.Lhere_\@:
-+	.pushsection .discard.noendbr
-+	.quad	.Lhere_\@
-+	.popsection
-+.endm
-+
- #endif /* __ASSEMBLY__ */
- 
- #else /* !CONFIG_STACK_VALIDATION */
-@@ -138,10 +151,13 @@ struct unwind_hint {
- 	"\n\t"
- #define STACK_FRAME_NON_STANDARD(func)
- #define STACK_FRAME_NON_STANDARD_FP(func)
-+#define ANNOTATE_NOENDBR
- #else
- #define ANNOTATE_INTRA_FUNCTION_CALL
- .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 end=0
- .endm
-+.macro ANNOTATE_NOENDBR
-+.endm
- #endif
- 
- #endif /* CONFIG_STACK_VALIDATION */
---- a/tools/include/linux/objtool.h
-+++ b/tools/include/linux/objtool.h
-@@ -82,6 +82,12 @@ struct unwind_hint {
- #define STACK_FRAME_NON_STANDARD_FP(func)
- #endif
- 
-+#define ANNOTATE_NOENDBR					\
-+	"986: \n\t"						\
-+	".pushsection .discard.noendbr\n\t"			\
-+	_ASM_PTR " 986b\n\t"					\
-+	".popsection\n\t"
-+
- #else /* __ASSEMBLY__ */
- 
- /*
-@@ -128,6 +134,13 @@ struct unwind_hint {
- 	.popsection
- .endm
- 
-+.macro ANNOTATE_NOENDBR
-+.Lhere_\@:
-+	.pushsection .discard.noendbr
-+	.quad	.Lhere_\@
-+	.popsection
-+.endm
-+
- #endif /* __ASSEMBLY__ */
- 
- #else /* !CONFIG_STACK_VALIDATION */
-@@ -138,10 +151,13 @@ struct unwind_hint {
- 	"\n\t"
- #define STACK_FRAME_NON_STANDARD(func)
- #define STACK_FRAME_NON_STANDARD_FP(func)
-+#define ANNOTATE_NOENDBR
- #else
- #define ANNOTATE_INTRA_FUNCTION_CALL
- .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 end=0
- .endm
-+.macro ANNOTATE_NOENDBR
-+.endm
- #endif
- 
- #endif /* CONFIG_STACK_VALIDATION */
+ 	return sysfs_emit(buf, "%s%s\n",
+ 			  srso_strings[srso_mitigation],
+ 			  (cpu_has_ibpb_brtype_microcode() ? "" : ", no microcode"));
 
 
