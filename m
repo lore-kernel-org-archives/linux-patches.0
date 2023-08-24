@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE3814A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:17:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DF5C433C7;
-	Thu, 24 Aug 2023 17:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BB114A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:17:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D69BC433C7;
+	Thu, 24 Aug 2023 17:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897427;
-	bh=DikCKQX8t0NQc7z0qIHAA4uidzuxCvGivfx/934guYI=;
+	s=korg; t=1692897429;
+	bh=WtYzwwyMz682mRpdNzz49ivJyUwYBNuEQ9GXiEwIUJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyN/98d3zAK7Yye6iykVi59d3iTuGh2Tu9aPjOHLV9qtokwzwpUgootnV8D9KsGyq
-	 qDLkmiv4qeTxbSp/5CX1oBCG3kHVVDjsmzHqKaqR0xM0FFLWHUerLmf7BZ9e2QbJPH
-	 q1l7IniKDaSvik9LDIkinMeTDXo8LBlTuiD4csS8=
+	b=XfKn67Mo5O9WYmyxuffSjmVHuif4xcUH3A1pW5MPSt4Smn9OFBbHbTGIfMtuOzXGS
+	 6f/022y6GMRslqVpVkYkUPSgXwytEWGOJ9ZBPh/iyUJlRPL84d/CNdKyPY1aUKPbus
+	 6MH7+G+L6e+Y8oGtCYBVZyMTzh6TZMbk+lYl7VHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pina Chen <pina.chen@mediatek.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	shanzhulig <shanzhulig@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/135] media: v4l2-mem2mem: add lock to protect parameter num_rdy
-Date: Thu, 24 Aug 2023 19:08:19 +0200
-Message-ID: <20230824170618.330618358@linuxfoundation.org>
+Subject: [PATCH 5.10 036/135] drm/amdgpu: Fix potential fence use-after-free v2
+Date: Thu, 24 Aug 2023 19:08:28 +0200
+Message-ID: <20230824170618.709667914@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -42,64 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: shanzhulig <shanzhulig@gmail.com>
 
-[ Upstream commit 56b5c3e67b0f9af3f45cf393be048ee8d8a92694 ]
+[ Upstream commit 2e54154b9f27262efd0cb4f903cc7d5ad1fe9628 ]
 
-Getting below error when using KCSAN to check the driver. Adding lock to
-protect parameter num_rdy when getting the value with function:
-v4l2_m2m_num_src_bufs_ready/v4l2_m2m_num_dst_bufs_ready.
+fence Decrements the reference count before exiting.
+Avoid Race Vulnerabilities for fence use-after-free.
 
-kworker/u16:3: [name:report&]BUG: KCSAN: data-race in v4l2_m2m_buf_queue
-kworker/u16:3: [name:report&]
+v2 (chk): actually fix the use after free and not just move it.
 
-kworker/u16:3: [name:report&]read-write to 0xffffff8105f35b94 of 1 bytes by task 20865 on cpu 7:
-kworker/u16:3:  v4l2_m2m_buf_queue+0xd8/0x10c
-
-Signed-off-by: Pina Chen <pina.chen@mediatek.com>
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: shanzhulig <shanzhulig@gmail.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/media/v4l2-mem2mem.h | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
-index 5a91b548ecc0c..8d52c4506762d 100644
---- a/include/media/v4l2-mem2mem.h
-+++ b/include/media/v4l2-mem2mem.h
-@@ -588,7 +588,14 @@ void v4l2_m2m_buf_queue(struct v4l2_m2m_ctx *m2m_ctx,
- static inline
- unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- {
--	return m2m_ctx->out_q_ctx.num_rdy;
-+	unsigned int num_buf_rdy;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
-+	num_buf_rdy = m2m_ctx->out_q_ctx.num_rdy;
-+	spin_unlock_irqrestore(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
-+
-+	return num_buf_rdy;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index ffd8f5601e28a..e25c3387bcf87 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1517,15 +1517,15 @@ static int amdgpu_cs_wait_all_fences(struct amdgpu_device *adev,
+ 			continue;
  
- /**
-@@ -600,7 +607,14 @@ unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- static inline
- unsigned int v4l2_m2m_num_dst_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- {
--	return m2m_ctx->cap_q_ctx.num_rdy;
-+	unsigned int num_buf_rdy;
-+	unsigned long flags;
+ 		r = dma_fence_wait_timeout(fence, true, timeout);
++		if (r > 0 && fence->error)
++			r = fence->error;
 +
-+	spin_lock_irqsave(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
-+	num_buf_rdy = m2m_ctx->cap_q_ctx.num_rdy;
-+	spin_unlock_irqrestore(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
-+
-+	return num_buf_rdy;
- }
+ 		dma_fence_put(fence);
+ 		if (r < 0)
+ 			return r;
  
- /**
+ 		if (r == 0)
+ 			break;
+-
+-		if (fence->error)
+-			return fence->error;
+ 	}
+ 
+ 	memset(wait, 0, sizeof(*wait));
 -- 
 2.40.1
 
