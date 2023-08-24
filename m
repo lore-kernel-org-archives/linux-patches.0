@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2583F125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:59:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC1BC433C8;
-	Thu, 24 Aug 2023 14:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91494125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:59:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12742C433C7;
+	Thu, 24 Aug 2023 14:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889175;
-	bh=scpoDsskJBjpzmv+nREDDSF+ygVy5JLq9+0UJSdLCAQ=;
+	s=korg; t=1692889178;
+	bh=0u6K/JTr9Rp0RV8/3eAfgyE+EaK36aLbyJibkhOzVq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjqewvOTgoGIeSHYN/T2omV17Qlf0WXudqywMYZIlb2J4byUSqPAcMVlzWTVK27Pf
-	 2THv78sAI8jcPjWSIWfXhmU2CFviK4VaVgZJK9IIogakAPsQKFTUd1r+ozM/fePJ2H
-	 IB02pN5Z3meud5LZfe5vWgf9Be6rDx8Iy9pq1W68=
+	b=MCAXvJvShYRH2NyX151qTM/oIOpaeMIuK8pSWrLMSzMA14iMYvA5vXpgiPPOcf2Me
+	 7TApGXM9Fyq0bPi2/5LEKDJ6pseE6CbZ12mle/xrmfPZ/2qwtnYTFAVDpG8u70s7bi
+	 ZUEWTbUrRRVDproFiL7A/W4MUmbrAVTJgPt5KEwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com,
+	Immad Mir <mirimmad17@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/135] iio: add addac subdirectory
-Date: Thu, 24 Aug 2023 16:49:45 +0200
-Message-ID: <20230824145028.775267055@linuxfoundation.org>
+Subject: [PATCH 5.10 025/135] FS: JFS: Fix null-ptr-deref Read in txBegin
+Date: Thu, 24 Aug 2023 16:49:28 +0200
+Message-ID: <20230824145028.030933993@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -35,76 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Immad Mir <mirimmad17@gmail.com>
 
-[ Upstream commit b62e2e1763cda3a6c494ed754317f19be1249297 ]
+[ Upstream commit 47cfdc338d674d38f4b2f22b7612cc6a2763ba27 ]
 
-For IIO devices that expose both ADC and DAC functionality.
+ Syzkaller reported an issue where txBegin may be called
+ on a superblock in a read-only mounted filesystem which leads
+ to NULL pointer deref. This could be solved by checking if
+ the filesystem is read-only before calling txBegin, and returning
+ with appropiate error code.
 
-Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
-Link: https://lore.kernel.org/r/20211205114045.173612-2-cosmin.tanislav@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
+Reported-By: syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=be7e52c50c5182cc09a09ea6fc456446b2039de3
+
+Signed-off-by: Immad Mir <mirimmad17@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/Kconfig        | 1 +
- drivers/iio/Makefile       | 1 +
- drivers/iio/addac/Kconfig  | 8 ++++++++
- drivers/iio/addac/Makefile | 6 ++++++
- 4 files changed, 16 insertions(+)
- create mode 100644 drivers/iio/addac/Kconfig
- create mode 100644 drivers/iio/addac/Makefile
+ fs/jfs/namei.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iio/Kconfig b/drivers/iio/Kconfig
-index 267553386c710..2ed303aa7de3c 100644
---- a/drivers/iio/Kconfig
-+++ b/drivers/iio/Kconfig
-@@ -70,6 +70,7 @@ config IIO_TRIGGERED_EVENT
+diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
+index 7a55d14cc1af0..f155ad6650bd4 100644
+--- a/fs/jfs/namei.c
++++ b/fs/jfs/namei.c
+@@ -798,6 +798,11 @@ static int jfs_link(struct dentry *old_dentry,
+ 	if (rc)
+ 		goto out;
  
- source "drivers/iio/accel/Kconfig"
- source "drivers/iio/adc/Kconfig"
-+source "drivers/iio/addac/Kconfig"
- source "drivers/iio/afe/Kconfig"
- source "drivers/iio/amplifiers/Kconfig"
- source "drivers/iio/chemical/Kconfig"
-diff --git a/drivers/iio/Makefile b/drivers/iio/Makefile
-index 1712011c0f4a1..d6690e449ccec 100644
---- a/drivers/iio/Makefile
-+++ b/drivers/iio/Makefile
-@@ -15,6 +15,7 @@ obj-$(CONFIG_IIO_TRIGGERED_EVENT) += industrialio-triggered-event.o
++	if (isReadOnly(ip)) {
++		jfs_error(ip->i_sb, "read-only filesystem\n");
++		return -EROFS;
++	}
++
+ 	tid = txBegin(ip->i_sb, 0);
  
- obj-y += accel/
- obj-y += adc/
-+obj-y += addac/
- obj-y += afe/
- obj-y += amplifiers/
- obj-y += buffer/
-diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
-new file mode 100644
-index 0000000000000..2e64d7755d5ea
---- /dev/null
-+++ b/drivers/iio/addac/Kconfig
-@@ -0,0 +1,8 @@
-+#
-+# ADC DAC drivers
-+#
-+# When adding new entries keep the list in alphabetical order
-+
-+menu "Analog to digital and digital to analog converters"
-+
-+endmenu
-diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
-new file mode 100644
-index 0000000000000..b888b9ee12da0
---- /dev/null
-+++ b/drivers/iio/addac/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Makefile for industrial I/O ADDAC drivers
-+#
-+
-+# When adding new entries keep the list in alphabetical order
+ 	mutex_lock_nested(&JFS_IP(dir)->commit_mutex, COMMIT_MUTEX_PARENT);
 -- 
 2.40.1
 
