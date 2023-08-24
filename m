@@ -1,93 +1,91 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3DB100C1
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:58:48 +0000 (UTC)
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-68a3b66f350so6573b3a.3
-        for <patches@lists.linux.dev>; Thu, 24 Aug 2023 08:58:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692892728; x=1693497528;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=56e+b4C/mK4valOujlIcq0N2XDGggcYVhpWinAnjybM=;
-        b=YEliFwZd3Hk9HcfhU8gt37K+KxE91c3fyXTGfEjhePtLq0OJsKvodr7fb78DpBNDDt
-         mRGfahUfSVCHwo/jTypCI24qG7jO7Y9DCjs0Kj9c7ayUWzYv2xa8HPdR6JP5x4plLdEZ
-         Mbij9FQ9z9p1I9P4PosUkD87bhrLRX83js0TBdiJpku3oaza0O8HZXLJ544V3G/ScNNY
-         u1lr/yhwJjuCjdrLvVV3Uuz+r5lxipor4Rj4eGHAI5KUWnGekhyCmfmrG1MV3f8NNFlD
-         ZIKHuXyXMXfLu7qj2ZWWER525kzlpkrRRhIrqn0vyHbGgrbnDYfzKG4LHFSS6jW4hmk2
-         klPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692892728; x=1693497528;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=56e+b4C/mK4valOujlIcq0N2XDGggcYVhpWinAnjybM=;
-        b=DvTMzIo1w52noU6zEDS9amj54AybSkCa15xa/XjU/gDWdCPnViaBOBfJaSW3VeWOL3
-         RVcngBmxlkLURX/8lF6HtOlRPsIOH6cQJqbujBYkXzFeughq3sPEvdPTFDjkkTyH38KN
-         NMNm6MYsXUnUxkbl60u+tp8w1bF5Sun3LbBp6057738MJYm+bLP+Yh4NaIRqIglJniKP
-         m3rTbO9vyIAdukdik5OBsFxAF7zhGp0THw1NyKiDFGOHTRGk8F3p4n03IY0Lcj8TqD4h
-         2e4r9orP3A5lK9KnDje4u22fP7MkDQjBLJu+oiquiBN5r6qGNHZs0bv6uexkjNdJtcDv
-         W3Sg==
-X-Gm-Message-State: AOJu0YzCoGf08HzdnHqwKGGpwuXRszkkSJEo49/gAjAUIw9skHHaYTwP
-	cTzQSE8Xs+qwabc4ucJgjco=
-X-Google-Smtp-Source: AGHT+IHyTrgOO0pnw5NhpoSlYM9QmCFogTbtDea1WgU6bIwzDc6FhdcVrobhqDjDiV1tPxUioSmAGg==
-X-Received: by 2002:a05:6a00:2353:b0:68c:70:d175 with SMTP id j19-20020a056a00235300b0068c0070d175mr990075pfj.13.1692892728249;
-        Thu, 24 Aug 2023 08:58:48 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id f11-20020aa782cb000000b00688965c5227sm11264163pfn.120.2023.08.24.08.58.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Aug 2023 08:58:47 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 24 Aug 2023 08:58:46 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <78a26d15-68eb-4a6f-a092-f7a554aa29e7@roeck-us.net>
-References: <20230821194122.695845670@linuxfoundation.org>
- <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
- <2023082309-veggie-unwoven-a7df@gregkh>
- <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
- <2d8a5f48-6c50-4c12-8a3d-23e621c6b722@roeck-us.net>
- <2023082325-expansion-revoke-1f3a@gregkh>
- <2023082401-arrange-bulk-d42a@gregkh>
- <4b8fcb23-c5e3-4bf1-957f-f0cc717564be@roeck-us.net>
- <2023082459-oxidize-script-77e4@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B971E100C1
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 16:05:45 +0000 (UTC)
+Received: from [10.10.2.52] (unknown [10.10.2.52])
+	by mail.ispras.ru (Postfix) with ESMTPSA id 1FF5840F1DE3;
+	Thu, 24 Aug 2023 16:05:36 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 1FF5840F1DE3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1692893136;
+	bh=caqsQ+c8XbhPmlQ5KZRGIo7T9OsOQPmeBRjdvjOtl3k=;
+	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+	b=K7MyNx8Ik/O9d7LXuyLVLJL355ADYuFNMCAxtQtAi78K6IjMeaiGBxZX65EJltK/v
+	 7kUsdZONsuAN5CDyCq2COSNroAjqql6u6//fZrXoH1NsPyZqGVcuU4g0CXLpFbwgc9
+	 wa4cpjNavkPym3FL9Wt4WOueA0cX6Osu1Wnf0bRs=
+Subject: Re: [PATCH 5.10 000/135] 5.10.191-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230824145027.008282920@linuxfoundation.org>
+From: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Autocrypt: addr=khoroshilov@ispras.ru; prefer-encrypt=mutual; keydata=
+ xsFNBFtq9eIBEACxmOIPDht+aZvO9DGi4TwnZ1WTDnyDVz3Nnh0rlQCK8IssaT6wE5a95VWo
+ iwOWalcL9bJMHQvw60JwZKFjt9oH2bov3xzx/JRCISQB4a4U1J/scWvPtabbB3t+VAodF5KZ
+ vZ2gu/Q/Wa5JZ9aBH0IvNpBAAThFg1rBXKh7wNqrhsQlMLg+zTSK6ZctddNl6RyaJvAmbaTS
+ sSeyUKXiabxHn3BR9jclXfmPLfWuayinBvW4J3vS+bOhbLxeu3MO0dUqeX/Nl8EAhvzo0I2d
+ A0vRu/Ze1wU3EQYT6M8z3i1b3pdLjr/i+MI8Rgijs+TFRAhxRw/+0vHGTg6Pn02t0XkycxQR
+ mhH3v0kVTvMyM7YSI7yXvd0QPxb1RX9AGmvbJu7eylzcq9Jla+/T3pOuWsJkbvbvuFKKmmYY
+ WnAOR7vu/VNVfiy4rM0bfO14cIuEG+yvogcPuMmQGYu6ZwS9IdgZIOAkO57M/6wR0jIyfxrG
+ FV3ietPtVcqeDVrcShKyziRLJ+Xcsg9BLdnImAqVQomYr27pyNMRL5ILuT7uOuAQPDKBksK+
+ l2Fws0d5iUifqnXSPuYxqgS4f8SQLS7ECxvCGVVbkEEng9vkkmyrF6wM86BZ9apPGDFbopiK
+ 7GRxQtSGszVv83abaVb8aDsAudJIp7lLaIuXLZAe1r+ycYpEtQARAQABzSpBbGV4ZXkgS2hv
+ cm9zaGlsb3YgPGtob3Jvc2hpbG92QGlzcHJhcy5ydT7CwX0EEwEIACcFAltq9eICGwMFCRLM
+ AwAFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ2B/JSzCwrEWLaA/+NFZfyhU0vJzFtYsk
+ yaqx8nWZLrAoUK7VcobH0lJH6lfGbarO5JpENaIiTP12YZ4xO+j3GGJtLy2gvnpypGnxmiAl
+ RqPt7WeAIj6oqPrUs2QF7i4SOiPtku/NrysI1zHzlA8yqUduBtam5rdQeLRNCJiEED1fU8sp
+ +DgJBN/OHEDyAag2hu1KFKWuPfQ+QGpXYZb+1NW/hKwvvwCNVyypELAfFnkketFXjIMwHnL8
+ ZPqJZlkvkpxuRXOaXPL9NFhZnC/WS+NJ81L3pr+w6eo3xTPYZvRW8glvqlEDgHqr3uMGIaes
+ nwfRXLHp+TC1ht6efCXzdPyMZ1E7HXQN9foKisI1V5iQFhN+CT3dbsguQI4e10F5ql0TZUJY
+ SMzvY0eObs6TWRdD/Ha7Y5rLmZ54R9sxumpZNcJzktfgm9f0XfeqVEJUn/40MRDD+l2W12Db
+ Jkko+sbtAEw+f+/j3uz8xOE+Uv4kwFC5a6JKgdX88oigHnpAs3FvffP594Loi3ibFrQUW5wH
+ bXh5Ni+l1GKEQ0PHMk+KQQT9L2r9s7C0Nh8XzwdpOshZWsrNSZqcG+01wrmUhyX2uSaoZ07I
+ /+KZURlMSqI71X6lkMWlB3SyThvYhHgnR0EGGTerwM1MaVjHN+Z6lPmsKNxG8lzCeWeZ6peA
+ c5oUHV4WQ8Ux9BM8saLOwU0EW2r14gEQAMz+5u+X7j1/dT4WLVRQaE1Shnd2dKBn2E7fgo/N
+ 4JIY6wHD/DJoWYQpCJjjvBYSonvQsHicvDW8lPh2EXgZ9Fi8AHKT2mVPitVy+uhfWa/0FtsC
+ e3hPfrjTcN7BUcXlIjmptxIoDbvQrNfIWUGdWiyDj4EDfABW/kagXqaBwF2HdcDaNDGggD1c
+ DglA0APjezIyTGnGMKsi5QSSlOLm8OZEJMj5t+JL6QXrruijNb5Asmz5mpRQrak7DpGOskjK
+ fClm/0oy2zDvWuoXJa+dm3YFr43V+c5EIMA4LpGk63Eg+5NltQ/gj0ycgD5o6reCbjLz4R9D
+ JzBezK/KOQuNG5qKUTMbOHWaApZnZ6BDdOVflkV1V+LMo5GvIzkATNLm/7Jj6DmYmXbKoSAY
+ BKZiJWqzNsL1AJtmJA1y5zbWX/W4CpNs8qYMYG8eTNOqunzopEhX7T0cOswcTGArZYygiwDW
+ BuIS83QRc7udMlQg79qyMA5WqS9g9g/iodlssR9weIVoZSjfjhm5NJ3FmaKnb56h6DSvFgsH
+ xCa4s1DGnZGSAtedj8E3ACOsEfu4J/WqXEmvMYNBdGos2YAc+g0hjuOB10BSD98d38xP1vPc
+ qNrztIF+TODAl1dNwU4rCSdGQymsrMVFuXnHMH4G+dHvMAwWauzDbnILHAGFyJtfxVefABEB
+ AAHCwWUEGAEIAA8FAltq9eICGwwFCRLMAwAACgkQ2B/JSzCwrEU3Rg//eFWHXqTQ5CKw4KrX
+ kTFxdXnYKJ5zZB0EzqU6m/FAV7snmygFLbOXYlcMW2Fh306ivj9NKJrlOaPbUzzyDf8dtDAg
+ nSbH156oNJ9NHkz0mrxFMpJA2E5AUemOFx57PUYt93pR2B7bF2zGua4gMC+vorDQZjX9kvrL
+ Kbenh3boFOe1tUaiRRvEltVFLOg+b+CMkKVbLIQe/HkyKJH5MFiHAF7QxnPHaxyO7QbWaUmF
+ 6BHVujxAGvNgkrYJb6dpiNNZSFNRodaSToU5oM+z1dCrNNtN3u4R7AYr6DDIDxoSzR4k0ZaG
+ uSeqh4xxQCD7vLT3JdZDyhYUJgy9mvSXdkXGdBIhVmeLch2gaWNf5UOutVJwdPbIaUDRjVoV
+ Iw6qjKq+mnK3ttuxW5Aeg9Y1OuKEvCVu+U/iEEJxx1JRmVAYq848YqtVPY9DkZdBT4E9dHqO
+ n8lr+XPVyMN6SBXkaR5tB6zSkSDrIw+9uv1LN7QIri43fLqhM950ltlveROEdLL1bI30lYO5
+ J07KmxgOjrvY8X9WOC3O0k/nFpBbbsM4zUrmF6F5wIYO99xafQOlfpUnVtbo3GnBR2LIcPYj
+ SyY3dW28JXo2cftxIOr1edJ+fhcRqYRrPzJrQBZcE2GZjRO8tz6IOMAsc+WMtVfj5grgVHCu
+ kK2E04Fb+Zk1eJvHYRc=
+Message-ID: <e722f48c-2032-8898-84ed-994a4457c62b@ispras.ru>
+Date: Thu, 24 Aug 2023 19:05:35 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2023082459-oxidize-script-77e4@gregkh>
+In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: ru-RU
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 24, 2023 at 05:15:30PM +0200, Greg Kroah-Hartman wrote:
-[ ... ]
-> 
-> This might be an issue on AMD chips, but for some reason, in running
-> this kernel on my systems here, I have no boot warnings at all.  I
-> blamed it on them being only AMD chips.  If that's not the issue then I
-> really have no idea, sorry.
-> 
+On 24.08.2023 17:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.191 release.
 
-AFAIK it depends on the compiler used and on the enabled debug options.
-At some point I lost track about what exactly has to be enabled to see
-the problem. We see it a lot with our (ChromeOS) debug kernel testing
-which has various debug options enabled, to the point where we may
-temporarily remove the warning from the kernel to stop the noise.
+Do you mean 5.10.192 release?
 
-Alternatively, as I had suggested earlier, we could revert all srso patches
-because they only seem to cause trouble. So far I have been resisting that
-because I am concerned that it would make things even worse (like one can
-not really revert a heart surgery without doing even more damage).
-
-Guenter
+--
+Alexey
