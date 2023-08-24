@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8018411C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CBBC433C9;
-	Thu, 24 Aug 2023 14:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3962F11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF26C433AD;
+	Thu, 24 Aug 2023 14:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888937;
-	bh=OyRkmVeW27PMesTvcz23OpbUr0GT/9hRtTtgSVXcxMM=;
+	s=korg; t=1692888940;
+	bh=ssqqoz/zFFlc/ZH51dDPpqxAwiUvgjiHscd9ymVCIc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiV2zkJDaQcItbmIbTdAT5RLTa+WAkHEPgYt9N9aRZqAkosEVmdoXBrbP1v17Nvjv
-	 xrUoK5GRTRY0KflzKCfBuJakio1mAudrTYRe0P+UKdXaDq00iOsPlZHXMUUwq5hlpb
-	 ZzbV8py/18EcOa8pL7s6b4gQJnwkgShNhrkU9Zik=
+	b=GUgxEe6hl0O8O/lBuWWw75VixGC4wt23iF1I3jQLqMSd6fFwbIekopXE9H84Urfp0
+	 crL3mqbL9EcRrWPC//CLnuUNK+ftynWpXXAEvc5LfeJmsyiJdI0d9MHirVszTh4sxT
+	 O1+/rSb/KXGhVbATSx8w+cXzldm/BSmoiJUkBbdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Piotr Gardocki <piotrx.gardocki@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/139] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Thu, 24 Aug 2023 16:50:18 +0200
-Message-ID: <20230824145027.716445866@linuxfoundation.org>
+Subject: [PATCH 5.15 096/139] iavf: fix FDIR rule fields masks validation
+Date: Thu, 24 Aug 2023 16:50:19 +0200
+Message-ID: <20230824145027.757583161@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,52 +36,207 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Piotr Gardocki <piotrx.gardocki@intel.com>
 
-[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
+[ Upstream commit 751969e5b1196821ef78f0aa664a8a97c92c9057 ]
 
-Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
-ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
-in unregister_vlan_dev() with the following testcase:
+Return an error if a field's mask is neither full nor empty. When a mask
+is only partial the field is not being used for rule programming but it
+gives a wrong impression it is used. Fix by returning an error on any
+partial mask to make it clear they are not supported.
+The ip_ver assignment is moved earlier in code to allow using it in
+iavf_validate_fdir_fltr_masks.
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add team1 type team
-  # ip netns exec ns1 ip link add team_slave type veth peer veth2
-  # ip netns exec ns1 ip link set team_slave master team1
-  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set team_slave nomaster
-  # ip netns del ns1
-
-Add S-VLAN tag related features support to team driver. So the team driver
-will always propagate the VLAN info to its slaves.
-
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 527691bf0682 ("iavf: Support IPv4 Flow Director filters")
+Fixes: e90cbc257a6f ("iavf: Support IPv6 Flow Director filters")
+Signed-off-by: Piotr Gardocki <piotrx.gardocki@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/intel/iavf/iavf_ethtool.c    | 10 +++
+ drivers/net/ethernet/intel/iavf/iavf_fdir.c   | 77 ++++++++++++++++++-
+ drivers/net/ethernet/intel/iavf/iavf_fdir.h   |  2 +
+ 3 files changed, 85 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 4dfa9c610974a..f99df92d211e2 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2195,7 +2195,9 @@ static void team_setup(struct net_device *dev)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+index e622b6e6ac2b9..a9a7453d969cb 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+@@ -1275,6 +1275,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		fltr->ip_mask.src_port = fsp->m_u.tcp_ip4_spec.psrc;
+ 		fltr->ip_mask.dst_port = fsp->m_u.tcp_ip4_spec.pdst;
+ 		fltr->ip_mask.tos = fsp->m_u.tcp_ip4_spec.tos;
++		fltr->ip_ver = 4;
+ 		break;
+ 	case AH_V4_FLOW:
+ 	case ESP_V4_FLOW:
+@@ -1286,6 +1287,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		fltr->ip_mask.v4_addrs.dst_ip = fsp->m_u.ah_ip4_spec.ip4dst;
+ 		fltr->ip_mask.spi = fsp->m_u.ah_ip4_spec.spi;
+ 		fltr->ip_mask.tos = fsp->m_u.ah_ip4_spec.tos;
++		fltr->ip_ver = 4;
+ 		break;
+ 	case IPV4_USER_FLOW:
+ 		fltr->ip_data.v4_addrs.src_ip = fsp->h_u.usr_ip4_spec.ip4src;
+@@ -1298,6 +1300,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		fltr->ip_mask.l4_header = fsp->m_u.usr_ip4_spec.l4_4_bytes;
+ 		fltr->ip_mask.tos = fsp->m_u.usr_ip4_spec.tos;
+ 		fltr->ip_mask.proto = fsp->m_u.usr_ip4_spec.proto;
++		fltr->ip_ver = 4;
+ 		break;
+ 	case TCP_V6_FLOW:
+ 	case UDP_V6_FLOW:
+@@ -1316,6 +1319,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		fltr->ip_mask.src_port = fsp->m_u.tcp_ip6_spec.psrc;
+ 		fltr->ip_mask.dst_port = fsp->m_u.tcp_ip6_spec.pdst;
+ 		fltr->ip_mask.tclass = fsp->m_u.tcp_ip6_spec.tclass;
++		fltr->ip_ver = 6;
+ 		break;
+ 	case AH_V6_FLOW:
+ 	case ESP_V6_FLOW:
+@@ -1331,6 +1335,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		       sizeof(struct in6_addr));
+ 		fltr->ip_mask.spi = fsp->m_u.ah_ip6_spec.spi;
+ 		fltr->ip_mask.tclass = fsp->m_u.ah_ip6_spec.tclass;
++		fltr->ip_ver = 6;
+ 		break;
+ 	case IPV6_USER_FLOW:
+ 		memcpy(&fltr->ip_data.v6_addrs.src_ip, fsp->h_u.usr_ip6_spec.ip6src,
+@@ -1347,6 +1352,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		fltr->ip_mask.l4_header = fsp->m_u.usr_ip6_spec.l4_4_bytes;
+ 		fltr->ip_mask.tclass = fsp->m_u.usr_ip6_spec.tclass;
+ 		fltr->ip_mask.proto = fsp->m_u.usr_ip6_spec.l4_proto;
++		fltr->ip_ver = 6;
+ 		break;
+ 	case ETHER_FLOW:
+ 		fltr->eth_data.etype = fsp->h_u.ether_spec.h_proto;
+@@ -1357,6 +1363,10 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
+ 		return -EINVAL;
+ 	}
  
- 	dev->hw_features = TEAM_VLAN_FEATURES |
- 			   NETIF_F_HW_VLAN_CTAG_RX |
--			   NETIF_F_HW_VLAN_CTAG_FILTER;
-+			   NETIF_F_HW_VLAN_CTAG_FILTER |
-+			   NETIF_F_HW_VLAN_STAG_RX |
-+			   NETIF_F_HW_VLAN_STAG_FILTER;
++	err = iavf_validate_fdir_fltr_masks(adapter, fltr);
++	if (err)
++		return err;
++
+ 	if (iavf_fdir_is_dup_fltr(adapter, fltr))
+ 		return -EEXIST;
  
- 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
- 	dev->features |= dev->hw_features;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_fdir.c b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
+index 505e82ebafe47..03e774bd2a5b4 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_fdir.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
+@@ -18,6 +18,79 @@ static const struct in6_addr ipv6_addr_full_mask = {
+ 	}
+ };
+ 
++static const struct in6_addr ipv6_addr_zero_mask = {
++	.in6_u = {
++		.u6_addr8 = {
++			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++		}
++	}
++};
++
++/**
++ * iavf_validate_fdir_fltr_masks - validate Flow Director filter fields masks
++ * @adapter: pointer to the VF adapter structure
++ * @fltr: Flow Director filter data structure
++ *
++ * Returns 0 if all masks of packet fields are either full or empty. Returns
++ * error on at least one partial mask.
++ */
++int iavf_validate_fdir_fltr_masks(struct iavf_adapter *adapter,
++				  struct iavf_fdir_fltr *fltr)
++{
++	if (fltr->eth_mask.etype && fltr->eth_mask.etype != htons(U16_MAX))
++		goto partial_mask;
++
++	if (fltr->ip_ver == 4) {
++		if (fltr->ip_mask.v4_addrs.src_ip &&
++		    fltr->ip_mask.v4_addrs.src_ip != htonl(U32_MAX))
++			goto partial_mask;
++
++		if (fltr->ip_mask.v4_addrs.dst_ip &&
++		    fltr->ip_mask.v4_addrs.dst_ip != htonl(U32_MAX))
++			goto partial_mask;
++
++		if (fltr->ip_mask.tos && fltr->ip_mask.tos != U8_MAX)
++			goto partial_mask;
++	} else if (fltr->ip_ver == 6) {
++		if (memcmp(&fltr->ip_mask.v6_addrs.src_ip, &ipv6_addr_zero_mask,
++			   sizeof(struct in6_addr)) &&
++		    memcmp(&fltr->ip_mask.v6_addrs.src_ip, &ipv6_addr_full_mask,
++			   sizeof(struct in6_addr)))
++			goto partial_mask;
++
++		if (memcmp(&fltr->ip_mask.v6_addrs.dst_ip, &ipv6_addr_zero_mask,
++			   sizeof(struct in6_addr)) &&
++		    memcmp(&fltr->ip_mask.v6_addrs.dst_ip, &ipv6_addr_full_mask,
++			   sizeof(struct in6_addr)))
++			goto partial_mask;
++
++		if (fltr->ip_mask.tclass && fltr->ip_mask.tclass != U8_MAX)
++			goto partial_mask;
++	}
++
++	if (fltr->ip_mask.proto && fltr->ip_mask.proto != U8_MAX)
++		goto partial_mask;
++
++	if (fltr->ip_mask.src_port && fltr->ip_mask.src_port != htons(U16_MAX))
++		goto partial_mask;
++
++	if (fltr->ip_mask.dst_port && fltr->ip_mask.dst_port != htons(U16_MAX))
++		goto partial_mask;
++
++	if (fltr->ip_mask.spi && fltr->ip_mask.spi != htonl(U32_MAX))
++		goto partial_mask;
++
++	if (fltr->ip_mask.l4_header &&
++	    fltr->ip_mask.l4_header != htonl(U32_MAX))
++		goto partial_mask;
++
++	return 0;
++
++partial_mask:
++	dev_err(&adapter->pdev->dev, "Failed to add Flow Director filter, partial masks are not supported\n");
++	return -EOPNOTSUPP;
++}
++
+ /**
+  * iavf_pkt_udp_no_pay_len - the length of UDP packet without payload
+  * @fltr: Flow Director filter data structure
+@@ -263,8 +336,6 @@ iavf_fill_fdir_ip4_hdr(struct iavf_fdir_fltr *fltr,
+ 		VIRTCHNL_ADD_PROTO_HDR_FIELD_BIT(hdr, IPV4, DST);
+ 	}
+ 
+-	fltr->ip_ver = 4;
+-
+ 	return 0;
+ }
+ 
+@@ -309,8 +380,6 @@ iavf_fill_fdir_ip6_hdr(struct iavf_fdir_fltr *fltr,
+ 		VIRTCHNL_ADD_PROTO_HDR_FIELD_BIT(hdr, IPV6, DST);
+ 	}
+ 
+-	fltr->ip_ver = 6;
+-
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_fdir.h b/drivers/net/ethernet/intel/iavf/iavf_fdir.h
+index 33c55c366315b..9eb9f73f6adf3 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_fdir.h
++++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.h
+@@ -110,6 +110,8 @@ struct iavf_fdir_fltr {
+ 	struct virtchnl_fdir_add vc_add_msg;
+ };
+ 
++int iavf_validate_fdir_fltr_masks(struct iavf_adapter *adapter,
++				  struct iavf_fdir_fltr *fltr);
+ int iavf_fill_fdir_add_msg(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr);
+ void iavf_print_fdir_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr);
+ bool iavf_fdir_is_dup_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr);
 -- 
 2.40.1
 
