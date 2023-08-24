@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC738125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:02:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0FCC433C7;
-	Thu, 24 Aug 2023 15:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12F3125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E01FC433C9;
+	Thu, 24 Aug 2023 15:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889377;
-	bh=ZMxO8ZSbns/R9RsVzuppopXHs4/9fgNVbmjrcQ8D/WE=;
+	s=korg; t=1692889380;
+	bh=hshSX3bjjKclFxKntvEwxQmW+zALqzSQEN/P38u5fII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXVXN3Bpw8SRGOw8nE3yy+pXyF3EdbCfkRG1nKbGP9ujxpVEzsNuULPPGRoDQXTS5
-	 otqjbqNyfyEwSeDa7un3yqcurQO56SecXnHsIqFEqdwISJSYKiKAjnYMqHNIDrkYdp
-	 krHUfGwUq7IzWzKSm6Tw7zc6zHPW7ti0ai7lykiU=
+	b=ygde7xtlJI4hCSQPskpbVx1EKbIshcJTn/D2y6MO31lnMPMMCl1W6NP1CZH9/R3sV
+	 GAHVkriYNb/ULdXJQH3/GcjW0sH0pT4rCRT0l3WNdGikdrLl46Pta0w8Qlf1w04ypV
+	 elwCEwEkfsNfPPbnFuegjaotcDwAE4cgAS3/kLOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Valerio <pvalerio@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 114/135] netfilter: set default timeout to 3 secs for sctp shutdown send and recv state
-Date: Thu, 24 Aug 2023 16:50:57 +0200
-Message-ID: <20230824145031.893620678@linuxfoundation.org>
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>
+Subject: [PATCH 5.10 115/135] af_unix: Fix null-ptr-deref in unix_stream_sendpage().
+Date: Thu, 24 Aug 2023 16:50:58 +0200
+Message-ID: <20230824145031.932549371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -36,68 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 9bfab6d23a2865966a4f89a96536fbf23f83bc8c upstream.
+Bing-Jhong Billy Jheng reported null-ptr-deref in unix_stream_sendpage()
+with detailed analysis and a nice repro.
 
-In SCTP protocol, it is using the same timer (T2 timer) for SHUTDOWN and
-SHUTDOWN_ACK retransmission. However in sctp conntrack the default timeout
-value for SCTP_CONNTRACK_SHUTDOWN_ACK_SENT state is 3 secs while it's 300
-msecs for SCTP_CONNTRACK_SHUTDOWN_SEND/RECV state.
+unix_stream_sendpage() tries to add data to the last skb in the peer's
+recv queue without locking the queue.
 
-As Paolo Valerio noticed, this might cause unwanted expiration of the ct
-entry. In my test, with 1s tc netem delay set on the NAT path, after the
-SHUTDOWN is sent, the sctp ct entry enters SCTP_CONNTRACK_SHUTDOWN_SEND
-state. However, due to 300ms (too short) delay, when the SHUTDOWN_ACK is
-sent back from the peer, the sctp ct entry has expired and been deleted,
-and then the SHUTDOWN_ACK has to be dropped.
+If the peer's FD is passed to another socket and the socket's FD is
+passed to the peer, there is a loop between them.  If we close both
+sockets without receiving FD, the sockets will be cleaned up by garbage
+collection.
 
-Also, it is confusing these two sysctl options always show 0 due to all
-timeout values using sec as unit:
+The garbage collection iterates such sockets and unlinks skb with
+FD from the socket's receive queue under the queue's lock.
 
-  net.netfilter.nf_conntrack_sctp_timeout_shutdown_recd = 0
-  net.netfilter.nf_conntrack_sctp_timeout_shutdown_sent = 0
+So, there is a race where unix_stream_sendpage() could access an skb
+locklessly that is being released by garbage collection, resulting in
+use-after-free.
 
-This patch fixes it by also using 3 secs for sctp shutdown send and recv
-state in sctp conntrack, which is also RTO.initial value in SCTP protocol.
+To avoid the issue, unix_stream_sendpage() must lock the peer's recv
+queue.
 
-Note that the very short time value for SCTP_CONNTRACK_SHUTDOWN_SEND/RECV
-was probably used for a rare scenario where SHUTDOWN is sent on 1st path
-but SHUTDOWN_ACK is replied on 2nd path, then a new connection started
-immediately on 1st path. So this patch also moves from SHUTDOWN_SEND/RECV
-to CLOSE when receiving INIT in the ORIGINAL direction.
+Note the issue does not exist in 6.5+ thanks to the recent sendpage()
+refactoring.
 
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Reported-by: Paolo Valerio <pvalerio@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+This patch is originally written by Linus Torvalds.
+
+BUG: unable to handle page fault for address: ffff988004dd6870
+PF: supervisor read access in kernel mode
+PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+PREEMPT SMP PTI
+CPU: 4 PID: 297 Comm: garbage_uaf Not tainted 6.1.46 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:kmem_cache_alloc_node+0xa2/0x1e0
+Code: c0 0f 84 32 01 00 00 41 83 fd ff 74 10 48 8b 00 48 c1 e8 3a 41 39 c5 0f 85 1c 01 00 00 41 8b 44 24 28 49 8b 3c 24 48 8d 4a 40 <49> 8b 1c 06 4c 89 f0 65 48 0f c7 0f 0f 94 c0 84 c0 74 a1 41 8b 44
+RSP: 0018:ffffc9000079fac0 EFLAGS: 00000246
+RAX: 0000000000000070 RBX: 0000000000000005 RCX: 000000000001a284
+RDX: 000000000001a244 RSI: 0000000000400cc0 RDI: 000000000002eee0
+RBP: 0000000000400cc0 R08: 0000000000400cc0 R09: 0000000000000003
+R10: 0000000000000001 R11: 0000000000000000 R12: ffff888003970f00
+R13: 00000000ffffffff R14: ffff988004dd6800 R15: 00000000000000e8
+FS:  00007f174d6f3600(0000) GS:ffff88807db00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffff988004dd6870 CR3: 00000000092be000 CR4: 00000000007506e0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body.cold+0x1a/0x1f
+ ? page_fault_oops+0xa9/0x1e0
+ ? fixup_exception+0x1d/0x310
+ ? exc_page_fault+0xa8/0x150
+ ? asm_exc_page_fault+0x22/0x30
+ ? kmem_cache_alloc_node+0xa2/0x1e0
+ ? __alloc_skb+0x16c/0x1e0
+ __alloc_skb+0x16c/0x1e0
+ alloc_skb_with_frags+0x48/0x1e0
+ sock_alloc_send_pskb+0x234/0x270
+ unix_stream_sendmsg+0x1f5/0x690
+ sock_sendmsg+0x5d/0x60
+ ____sys_sendmsg+0x210/0x260
+ ___sys_sendmsg+0x83/0xd0
+ ? kmem_cache_alloc+0xc6/0x1c0
+ ? avc_disable+0x20/0x20
+ ? percpu_counter_add_batch+0x53/0xc0
+ ? alloc_empty_file+0x5d/0xb0
+ ? alloc_file+0x91/0x170
+ ? alloc_file_pseudo+0x94/0x100
+ ? __fget_light+0x9f/0x120
+ __sys_sendmsg+0x54/0xa0
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x69/0xd3
+RIP: 0033:0x7f174d639a7d
+Code: 28 89 54 24 1c 48 89 74 24 10 89 7c 24 08 e8 8a c1 f4 ff 8b 54 24 1c 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 33 44 89 c7 48 89 44 24 08 e8 de c1 f4 ff 48
+RSP: 002b:00007ffcb563ea50 EFLAGS: 00000293 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f174d639a7d
+RDX: 0000000000000000 RSI: 00007ffcb563eab0 RDI: 0000000000000007
+RBP: 00007ffcb563eb10 R08: 0000000000000000 R09: 00000000ffffffff
+R10: 00000000004040a0 R11: 0000000000000293 R12: 00007ffcb563ec28
+R13: 0000000000401398 R14: 0000000000403e00 R15: 00007f174d72c000
+ </TASK>
+
+Fixes: 869e7c62486e ("net: af_unix: implement stream sendpage support")
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Reviewed-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Co-developed-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_proto_sctp.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/unix/af_unix.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -49,8 +49,8 @@ static const unsigned int sctp_timeouts[
- 	[SCTP_CONNTRACK_COOKIE_WAIT]		= 3 SECS,
- 	[SCTP_CONNTRACK_COOKIE_ECHOED]		= 3 SECS,
- 	[SCTP_CONNTRACK_ESTABLISHED]		= 210 SECS,
--	[SCTP_CONNTRACK_SHUTDOWN_SENT]		= 300 SECS / 1000,
--	[SCTP_CONNTRACK_SHUTDOWN_RECD]		= 300 SECS / 1000,
-+	[SCTP_CONNTRACK_SHUTDOWN_SENT]		= 3 SECS,
-+	[SCTP_CONNTRACK_SHUTDOWN_RECD]		= 3 SECS,
- 	[SCTP_CONNTRACK_SHUTDOWN_ACK_SENT]	= 3 SECS,
- 	[SCTP_CONNTRACK_HEARTBEAT_SENT]		= 30 SECS,
- };
-@@ -105,7 +105,7 @@ static const u8 sctp_conntracks[2][11][S
- 	{
- /*	ORIGINAL	*/
- /*                  sNO, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS */
--/* init         */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCW},
-+/* init         */ {sCL, sCL, sCW, sCE, sES, sCL, sCL, sSA, sCW},
- /* init_ack     */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL},
- /* abort        */ {sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL},
- /* shutdown     */ {sCL, sCL, sCW, sCE, sSS, sSS, sSR, sSA, sCL},
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2008,6 +2008,7 @@ static ssize_t unix_stream_sendpage(stru
+ 
+ 	if (false) {
+ alloc_skb:
++		spin_unlock(&other->sk_receive_queue.lock);
+ 		unix_state_unlock(other);
+ 		mutex_unlock(&unix_sk(other)->iolock);
+ 		newskb = sock_alloc_send_pskb(sk, 0, 0, flags & MSG_DONTWAIT,
+@@ -2047,6 +2048,7 @@ alloc_skb:
+ 		init_scm = false;
+ 	}
+ 
++	spin_lock(&other->sk_receive_queue.lock);
+ 	skb = skb_peek_tail(&other->sk_receive_queue);
+ 	if (tail && tail == skb) {
+ 		skb = newskb;
+@@ -2077,14 +2079,11 @@ alloc_skb:
+ 	refcount_add(size, &sk->sk_wmem_alloc);
+ 
+ 	if (newskb) {
+-		err = unix_scm_to_skb(&scm, skb, false);
+-		if (err)
+-			goto err_state_unlock;
+-		spin_lock(&other->sk_receive_queue.lock);
++		unix_scm_to_skb(&scm, skb, false);
+ 		__skb_queue_tail(&other->sk_receive_queue, newskb);
+-		spin_unlock(&other->sk_receive_queue.lock);
+ 	}
+ 
++	spin_unlock(&other->sk_receive_queue.lock);
+ 	unix_state_unlock(other);
+ 	mutex_unlock(&unix_sk(other)->iolock);
+ 
 
 
