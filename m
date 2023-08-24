@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE27614A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3831CC433C8;
-	Thu, 24 Aug 2023 17:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8A614A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AD9C433CB;
+	Thu, 24 Aug 2023 17:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897587;
-	bh=yQJgCiE4lTgfAiI63e283tlEUbQKIZLN07mSUQTnOvs=;
+	s=korg; t=1692897590;
+	bh=GAY+/bHTM3ySZYqfsODHKHmCxfNylD0OgGd4dOaQ4FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABpwZJSeXUft5lMJcpuS97UiXqZoWjyIdPW4zymC7yrt7niFMG3jjRHUrIohswQsw
-	 zSWy0SIvtNpj4WcabyIjJmGyNnPL1dfvZxj6PepC3yJR3iAZPoVOSwezSthSNS2e/t
-	 9IwxFqZABiLT1rVbRW2Bi4kbEf+SjZrFMf59gWi0=
+	b=jaT1encFadp7HI34DBYjPBNOcml8WH/Vud/WU3mO5PowvwAGw0BKX0orknWuGE+oF
+	 M32rnKgXeCx+Ce1Vd5w2IcQHruzjRUHZngI4h/xbWUY/I9nuNQnoWzyYAJVgPSFzdn
+	 hXemF4wSWZwUXLxbgQKzPdmTM4Y1TUQFg8OIlOAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/135] mmc: meson-gx: fix deferred probing
-Date: Thu, 24 Aug 2023 19:08:55 +0200
-Message-ID: <20230824170619.934812946@linuxfoundation.org>
+Subject: [PATCH 5.10 064/135] tracing/probes: Have process_fetch_insn() take a void * instead of pt_regs
+Date: Thu, 24 Aug 2023 19:08:56 +0200
+Message-ID: <20230824170619.977643566@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -41,43 +40,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Steven Rostedt (VMware) <rostedt@goodmis.org>
 
-[ Upstream commit b8ada54fa1b83f3b6480d4cced71354301750153 ]
+[ Upstream commit 8565a45d0858078b63c7d84074a21a42ba9ebf01 ]
 
-The driver overrides the error codes and IRQ0 returned by platform_get_irq()
-to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the error
-codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
-in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
-so we now can safely ignore it...
+In preparation to allow event probes to use the process_fetch_insn()
+callback in trace_probe_tmpl.h, change the data passed to it from a
+pointer to pt_regs, as the event probe will not be using regs, and make it
+a void pointer instead.
 
-Fixes: cbcaac6d7dd2 ("mmc: meson-gx-mmc: Fix platform_get_irq's error checking")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230617203622.6812-3-s.shtylyov@omp.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Update the process_fetch_insn() callers for kprobe and uprobe events to
+have the regs defined in the function and just typecast the void pointer
+parameter.
+
+Link: https://lkml.kernel.org/r/20210819041842.291622924@goodmis.org
+
+Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: e38e2c6a9efc ("tracing/probes: Fix to update dynamic data counter if fetcharg uses it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_kprobe.c     | 3 ++-
+ kernel/trace/trace_probe_tmpl.h | 6 +++---
+ kernel/trace/trace_uprobe.c     | 3 ++-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
-index 8a345ee2e6cf5..1992eea8b777e 100644
---- a/drivers/mmc/host/meson-gx-mmc.c
-+++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -1159,8 +1159,8 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 		return PTR_ERR(host->regs);
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 41dd17390c732..b882c6519b035 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -1332,9 +1332,10 @@ probe_mem_read(void *dest, void *src, size_t size)
  
- 	host->irq = platform_get_irq(pdev, 0);
--	if (host->irq <= 0)
--		return -EINVAL;
-+	if (host->irq < 0)
-+		return host->irq;
+ /* Note that we don't verify it, since the code does not come from user space */
+ static int
+-process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs, void *dest,
++process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
+ 		   void *base)
+ {
++	struct pt_regs *regs = rec;
+ 	unsigned long val;
  
- 	host->pinctrl = devm_pinctrl_get(&pdev->dev);
- 	if (IS_ERR(host->pinctrl))
+ retry:
+diff --git a/kernel/trace/trace_probe_tmpl.h b/kernel/trace/trace_probe_tmpl.h
+index 29348874ebde7..bbb479b3ba8fd 100644
+--- a/kernel/trace/trace_probe_tmpl.h
++++ b/kernel/trace/trace_probe_tmpl.h
+@@ -54,7 +54,7 @@ fetch_apply_bitfield(struct fetch_insn *code, void *buf)
+  * If dest is NULL, don't store result and return required dynamic data size.
+  */
+ static int
+-process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs,
++process_fetch_insn(struct fetch_insn *code, void *rec,
+ 		   void *dest, void *base);
+ static nokprobe_inline int fetch_store_strlen(unsigned long addr);
+ static nokprobe_inline int
+@@ -190,7 +190,7 @@ __get_data_size(struct trace_probe *tp, struct pt_regs *regs)
+ 
+ /* Store the value of each argument */
+ static nokprobe_inline void
+-store_trace_args(void *data, struct trace_probe *tp, struct pt_regs *regs,
++store_trace_args(void *data, struct trace_probe *tp, void *rec,
+ 		 int header_size, int maxlen)
+ {
+ 	struct probe_arg *arg;
+@@ -205,7 +205,7 @@ store_trace_args(void *data, struct trace_probe *tp, struct pt_regs *regs,
+ 		/* Point the dynamic data area if needed */
+ 		if (unlikely(arg->dynamic))
+ 			*dl = make_data_loc(maxlen, dyndata - base);
+-		ret = process_fetch_insn(arg->code, regs, dl, base);
++		ret = process_fetch_insn(arg->code, rec, dl, base);
+ 		if (unlikely(ret < 0 && arg->dynamic)) {
+ 			*dl = make_data_loc(0, dyndata - base);
+ 		} else {
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index 9900d4e3808cc..f6c47361c154e 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -217,9 +217,10 @@ static unsigned long translate_user_vaddr(unsigned long file_offset)
+ 
+ /* Note that we don't verify it, since the code does not come from user space */
+ static int
+-process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs, void *dest,
++process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
+ 		   void *base)
+ {
++	struct pt_regs *regs = rec;
+ 	unsigned long val;
+ 
+ 	/* 1st stage: get value from context */
 -- 
 2.40.1
 
