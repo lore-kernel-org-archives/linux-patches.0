@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB2F14A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61342C433C7;
-	Thu, 24 Aug 2023 17:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC5214A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B555C433C7;
+	Thu, 24 Aug 2023 17:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897701;
-	bh=o87A2VSGDm/ODngYAFxx+ZR4DYoSM5f58aF4RSULMTM=;
+	s=korg; t=1692897704;
+	bh=0dBS+r9yMNFW6Rrb48P47HorxVRmqi/Brjlb1wSNP2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rKYHwH+P5obv7VMvTwm47O0T97IpJwia+dkoneAcP4G9UH8P7Lr0AlMVzCfZb9U+A
-	 06+XoAy1T8HB07huqHiabjBcQfTrd9SJl1r1GaSAaB2L9ALJnNRzA509pd+RRvJccU
-	 zyVFBm34itXpJFOWsAplmsyynSs+YkTN5OJiovqQ=
+	b=uoO0vc/1cBu7Vx8n9TiMFTCcGE0wuJtu8vsgRQWYIi+Q1cO6OY8r2NKZq6xLXYxBZ
+	 dT++rMB/u1J4H0GgKZ973+LPgT+uXtSSuyJEzJn3pwaVyPhxfz7WFEJbyUOWPHBzGE
+	 ImmP3fDjLLWBYkaga5BX5fWS1zTMrgvmvTqG6H0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 132/135] x86/srso: Disable the mitigation on unaffected configurations
-Date: Thu, 24 Aug 2023 19:10:04 +0200
-Message-ID: <20230824170622.961701641@linuxfoundation.org>
+Subject: [PATCH 5.10 133/135] x86/retpoline,kprobes: Fix position of thunk sections with CONFIG_LTO_CLANG
+Date: Thu, 24 Aug 2023 19:10:05 +0200
+Message-ID: <20230824170623.001551626@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -38,45 +41,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-commit e9fbc47b818b964ddff5df5b2d5c0f5f32f4a147 upstream.
+commit 79cd2a11224eab86d6673fe8a11d2046ae9d2757 upstream.
 
-Skip the srso cmd line parsing which is not needed on Zen1/2 with SMT
-disabled and with the proper microcode applied (latter should be the
-case anyway) as those are not affected.
+The linker script arch/x86/kernel/vmlinux.lds.S matches the thunk
+sections ".text.__x86.*" from arch/x86/lib/retpoline.S as follows:
 
-Fixes: 5a15d8348881 ("x86/srso: Tie SBPB bit setting to microcode patch detection")
+  .text {
+    [...]
+    TEXT_TEXT
+    [...]
+    __indirect_thunk_start = .;
+    *(.text.__x86.*)
+    __indirect_thunk_end = .;
+    [...]
+  }
+
+Macro TEXT_TEXT references TEXT_MAIN which normally expands to only
+".text". However, with CONFIG_LTO_CLANG, TEXT_MAIN becomes
+".text .text.[0-9a-zA-Z_]*" which wrongly matches also the thunk
+sections. The output layout is then different than expected. For
+instance, the currently defined range [__indirect_thunk_start,
+__indirect_thunk_end] becomes empty.
+
+Prevent the problem by using ".." as the first separator, for example,
+".text..__x86.indirect_thunk". This pattern is utilized by other
+explicit section names which start with one of the standard prefixes,
+such as ".text" or ".data", and that need to be individually selected in
+the linker script.
+
+  [ nathan: Fix conflicts with SRSO and fold in fix issue brought up by
+    Andrew Cooper in post-review:
+    https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com ]
+
+Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230813104517.3346-1-bp@alien8.de
+Link: https://lore.kernel.org/r/20230711091952.27944-2-petr.pavlu@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kernel/vmlinux.lds.S |    8 ++++----
+ arch/x86/lib/retpoline.S      |    8 ++++----
+ tools/objtool/check.c         |    2 +-
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2329,8 +2329,10 @@ static void __init srso_select_mitigatio
- 		 * IBPB microcode has been applied.
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -134,7 +134,7 @@ SECTIONS
+ 		KPROBES_TEXT
+ 		ALIGN_ENTRY_TEXT_BEGIN
+ #ifdef CONFIG_CPU_SRSO
+-		*(.text.__x86.rethunk_untrain)
++		*(.text..__x86.rethunk_untrain)
+ #endif
+ 
+ 		ENTRY_TEXT
+@@ -145,7 +145,7 @@ SECTIONS
+ 		 * definition.
  		 */
- 		if ((boot_cpu_data.x86 < 0x19) &&
--		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED)))
-+		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED))) {
- 			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
-+			return;
-+		}
- 	}
+ 		. = srso_alias_untrain_ret | (1 << 2) | (1 << 8) | (1 << 14) | (1 << 20);
+-		*(.text.__x86.rethunk_safe)
++		*(.text..__x86.rethunk_safe)
+ #endif
+ 		ALIGN_ENTRY_TEXT_END
+ 		SOFTIRQENTRY_TEXT
+@@ -155,8 +155,8 @@ SECTIONS
  
- 	if (retbleed_mitigation == RETBLEED_MITIGATION_IBPB) {
-@@ -2616,6 +2618,9 @@ static ssize_t gds_show_state(char *buf)
+ #ifdef CONFIG_RETPOLINE
+ 		__indirect_thunk_start = .;
+-		*(.text.__x86.indirect_thunk)
+-		*(.text.__x86.return_thunk)
++		*(.text..__x86.indirect_thunk)
++		*(.text..__x86.return_thunk)
+ 		__indirect_thunk_end = .;
+ #endif
+ 	} :text =0xcccc
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -11,7 +11,7 @@
+ #include <asm/frame.h>
+ #include <asm/nops.h>
  
- static ssize_t srso_show_state(char *buf)
- {
-+	if (boot_cpu_has(X86_FEATURE_SRSO_NO))
-+		return sysfs_emit(buf, "Not affected\n");
-+
- 	return sysfs_emit(buf, "%s%s\n",
- 			  srso_strings[srso_mitigation],
- 			  (cpu_has_ibpb_brtype_microcode() ? "" : ", no microcode"));
+-	.section .text.__x86.indirect_thunk
++	.section .text..__x86.indirect_thunk
+ 
+ .macro RETPOLINE reg
+ 	ANNOTATE_INTRA_FUNCTION_CALL
+@@ -90,7 +90,7 @@ SYM_CODE_END(__x86_indirect_thunk_array)
+  * As a result, srso_alias_safe_ret() becomes a safe return.
+  */
+ #ifdef CONFIG_CPU_SRSO
+-	.section .text.__x86.rethunk_untrain
++	.section .text..__x86.rethunk_untrain
+ 
+ SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
+ 	UNWIND_HINT_FUNC
+@@ -100,7 +100,7 @@ SYM_START(srso_alias_untrain_ret, SYM_L_
+ SYM_FUNC_END(srso_alias_untrain_ret)
+ __EXPORT_THUNK(srso_alias_untrain_ret)
+ 
+-	.section .text.__x86.rethunk_safe
++	.section .text..__x86.rethunk_safe
+ #else
+ /* dummy definition for alternatives */
+ SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
+@@ -118,7 +118,7 @@ SYM_START(srso_alias_safe_ret, SYM_L_GLO
+ 	int3
+ SYM_FUNC_END(srso_alias_safe_ret)
+ 
+-	.section .text.__x86.return_thunk
++	.section .text..__x86.return_thunk
+ 
+ SYM_CODE_START(srso_alias_return_thunk)
+ 	UNWIND_HINT_FUNC
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -369,7 +369,7 @@ static int decode_instructions(struct ob
+ 
+ 		if (!strcmp(sec->name, ".noinstr.text") ||
+ 		    !strcmp(sec->name, ".entry.text") ||
+-		    !strncmp(sec->name, ".text.__x86.", 12))
++		    !strncmp(sec->name, ".text..__x86.", 13))
+ 			sec->noinstr = true;
+ 
+ 		for (offset = 0; offset < sec->len; offset += insn->len) {
 
 
