@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B275B11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3837AC433C7;
-	Thu, 24 Aug 2023 14:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8018411C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CBBC433C9;
+	Thu, 24 Aug 2023 14:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888934;
-	bh=ZqXMqSGFTK4y2HZnHJYay9/4BD3AFpaWThPFUV+6aUw=;
+	s=korg; t=1692888937;
+	bh=OyRkmVeW27PMesTvcz23OpbUr0GT/9hRtTtgSVXcxMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eezabayfg+vDshjM3NrYGbrsQ9BgCICgj2Mvn0f0eGZSl69IqwXhuZ7ebbTPQtTtd
-	 7xvXeLHx/S2VssqIavVqWA6TqiyGhO5s7tIWuODlLErbxlU3hV0r8cSlLyE0H4JqC/
-	 Qg92wqrQq8FHFICaH5qfgzsWkBnhIqsH3vtlV/Yg=
+	b=KiV2zkJDaQcItbmIbTdAT5RLTa+WAkHEPgYt9N9aRZqAkosEVmdoXBrbP1v17Nvjv
+	 xrUoK5GRTRY0KflzKCfBuJakio1mAudrTYRe0P+UKdXaDq00iOsPlZHXMUUwq5hlpb
+	 ZzbV8py/18EcOa8pL7s6b4gQJnwkgShNhrkU9Zik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tam Nguyen <tamnguyenchi@os.amperecomputing.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 077/139] i2c: designware: Correct length byte validation logic
-Date: Thu, 24 Aug 2023 16:50:00 +0200
-Message-ID: <20230824145027.001473015@linuxfoundation.org>
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 095/139] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Thu, 24 Aug 2023 16:50:18 +0200
+Message-ID: <20230824145027.716445866@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,48 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quan Nguyen <quan@os.amperecomputing.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-commit 49d4db3953cb9004ff94efc0c176e026c820af5a upstream.
+[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
 
-Commit 0daede80f870 ("i2c: designware: Convert driver to using regmap API")
-changes the logic to validate the whole 32-bit return value of
-DW_IC_DATA_CMD register instead of 8-bit LSB without reason.
+Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
+ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
+in unregister_vlan_dev() with the following testcase:
 
-Later, commit f53f15ba5a85 ("i2c: designware: Get right data length"),
-introduced partial fix but not enough because the "tmp > 0" still test
-tmp as 32-bit value and is wrong in case the IC_DATA_CMD[11] is set.
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add team1 type team
+  # ip netns exec ns1 ip link add team_slave type veth peer veth2
+  # ip netns exec ns1 ip link set team_slave master team1
+  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set team_slave nomaster
+  # ip netns del ns1
 
-Revert the logic to just before commit 0daede80f870
-("i2c: designware: Convert driver to using regmap API").
+Add S-VLAN tag related features support to team driver. So the team driver
+will always propagate the VLAN info to its slaves.
 
-Fixes: f53f15ba5a85 ("i2c: designware: Get right data length")
-Fixes: 0daede80f870 ("i2c: designware: Convert driver to using regmap API")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230726080001.337353-2-tamnguyenchi@os.amperecomputing.com
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-master.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/team/team.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -525,9 +525,10 @@ i2c_dw_read(struct dw_i2c_dev *dev)
- 			u32 flags = msgs[dev->msg_read_idx].flags;
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 4dfa9c610974a..f99df92d211e2 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -2195,7 +2195,9 @@ static void team_setup(struct net_device *dev)
  
- 			regmap_read(dev->map, DW_IC_DATA_CMD, &tmp);
-+			tmp &= DW_IC_DATA_CMD_DAT;
- 			/* Ensure length byte is a valid value */
- 			if (flags & I2C_M_RECV_LEN &&
--			    (tmp & DW_IC_DATA_CMD_DAT) <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
-+			    tmp <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
- 				len = i2c_dw_recv_len(dev, tmp);
- 			}
- 			*buf++ = tmp;
+ 	dev->hw_features = TEAM_VLAN_FEATURES |
+ 			   NETIF_F_HW_VLAN_CTAG_RX |
+-			   NETIF_F_HW_VLAN_CTAG_FILTER;
++			   NETIF_F_HW_VLAN_CTAG_FILTER |
++			   NETIF_F_HW_VLAN_STAG_RX |
++			   NETIF_F_HW_VLAN_STAG_FILTER;
+ 
+ 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
+ 	dev->features |= dev->hw_features;
+-- 
+2.40.1
+
 
 
