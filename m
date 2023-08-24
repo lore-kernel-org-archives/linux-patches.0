@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCA214A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF16CC433C7;
-	Thu, 24 Aug 2023 17:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156DE14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896A3C433C8;
+	Thu, 24 Aug 2023 17:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897696;
-	bh=z8zDloZQ+YloSddYAkxtFwGDgbr8aaM4Rc/7pTmLkw8=;
+	s=korg; t=1692897698;
+	bh=TIwoDhcGtTPi1gD5Pf5x9e20JYl8qP42N/f3ksjMF3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXn3jsYz/y/ndWNWfLnJ9cEPe4ICbyq93VK0vG89sX3HKAbig7EcDpVh9bz4Or/pv
-	 wC9LCm60OGHo6TBHT56nAosz27zzRSkRY4naW3iLVWXvDdSxDkIBZ22Ryw0IxpQ+z0
-	 AXUH1r2P1vU+ytlvaL6J2unnqCDXjwCvVpLYBoK4=
+	b=uCFVjUraUKIAd9r3B3SNxIMHJy1vjXo9r4MVHn8lkMTPI8q3GOmAYLGvgE8tDGQ6n
+	 Aj2+d3aCLNtKDNV0hCrIbOg0Bjsb+gJtOrhgNugo4rD2ufNDeJVVbbmFytnolXeC3c
+	 +xMZYFWnMICOwaAEsDEe8nqKl3GqJTJ5rEg9FO54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/135] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Thu, 24 Aug 2023 19:09:21 +0200
-Message-ID: <20230824170621.112184136@linuxfoundation.org>
+Subject: [PATCH 5.10 123/135] x86/ibt: Add ANNOTATE_NOENDBR
+Date: Thu, 24 Aug 2023 19:09:55 +0200
+Message-ID: <20230824170622.611914350@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -42,54 +41,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
+[ Upstream commit c8c301abeae58ec756b8fcb2178a632bd3c9e284 ]
 
-Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
-ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
-in unregister_vlan_dev() with the following testcase:
+In order to have objtool warn about code references to !ENDBR
+instruction, we need an annotation to allow this for non-control-flow
+instances -- consider text range checks, text patching, or return
+trampolines etc.
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add team1 type team
-  # ip netns exec ns1 ip link add team_slave type veth peer veth2
-  # ip netns exec ns1 ip link set team_slave master team1
-  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set team_slave nomaster
-  # ip netns del ns1
-
-Add S-VLAN tag related features support to team driver. So the team driver
-will always propagate the VLAN info to its slaves.
-
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/r/20220308154317.578968224@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/objtool.h       |   16 ++++++++++++++++
+ tools/include/linux/objtool.h |   16 ++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 36c7eae776d44..721b536ce8861 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2195,7 +2195,9 @@ static void team_setup(struct net_device *dev)
+--- a/include/linux/objtool.h
++++ b/include/linux/objtool.h
+@@ -82,6 +82,12 @@ struct unwind_hint {
+ #define STACK_FRAME_NON_STANDARD_FP(func)
+ #endif
  
- 	dev->hw_features = TEAM_VLAN_FEATURES |
- 			   NETIF_F_HW_VLAN_CTAG_RX |
--			   NETIF_F_HW_VLAN_CTAG_FILTER;
-+			   NETIF_F_HW_VLAN_CTAG_FILTER |
-+			   NETIF_F_HW_VLAN_STAG_RX |
-+			   NETIF_F_HW_VLAN_STAG_FILTER;
++#define ANNOTATE_NOENDBR					\
++	"986: \n\t"						\
++	".pushsection .discard.noendbr\n\t"			\
++	_ASM_PTR " 986b\n\t"					\
++	".popsection\n\t"
++
+ #else /* __ASSEMBLY__ */
  
- 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
- 	dev->features |= dev->hw_features;
--- 
-2.40.1
-
+ /*
+@@ -128,6 +134,13 @@ struct unwind_hint {
+ 	.popsection
+ .endm
+ 
++.macro ANNOTATE_NOENDBR
++.Lhere_\@:
++	.pushsection .discard.noendbr
++	.quad	.Lhere_\@
++	.popsection
++.endm
++
+ #endif /* __ASSEMBLY__ */
+ 
+ #else /* !CONFIG_STACK_VALIDATION */
+@@ -138,10 +151,13 @@ struct unwind_hint {
+ 	"\n\t"
+ #define STACK_FRAME_NON_STANDARD(func)
+ #define STACK_FRAME_NON_STANDARD_FP(func)
++#define ANNOTATE_NOENDBR
+ #else
+ #define ANNOTATE_INTRA_FUNCTION_CALL
+ .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 end=0
+ .endm
++.macro ANNOTATE_NOENDBR
++.endm
+ #endif
+ 
+ #endif /* CONFIG_STACK_VALIDATION */
+--- a/tools/include/linux/objtool.h
++++ b/tools/include/linux/objtool.h
+@@ -82,6 +82,12 @@ struct unwind_hint {
+ #define STACK_FRAME_NON_STANDARD_FP(func)
+ #endif
+ 
++#define ANNOTATE_NOENDBR					\
++	"986: \n\t"						\
++	".pushsection .discard.noendbr\n\t"			\
++	_ASM_PTR " 986b\n\t"					\
++	".popsection\n\t"
++
+ #else /* __ASSEMBLY__ */
+ 
+ /*
+@@ -128,6 +134,13 @@ struct unwind_hint {
+ 	.popsection
+ .endm
+ 
++.macro ANNOTATE_NOENDBR
++.Lhere_\@:
++	.pushsection .discard.noendbr
++	.quad	.Lhere_\@
++	.popsection
++.endm
++
+ #endif /* __ASSEMBLY__ */
+ 
+ #else /* !CONFIG_STACK_VALIDATION */
+@@ -138,10 +151,13 @@ struct unwind_hint {
+ 	"\n\t"
+ #define STACK_FRAME_NON_STANDARD(func)
+ #define STACK_FRAME_NON_STANDARD_FP(func)
++#define ANNOTATE_NOENDBR
+ #else
+ #define ANNOTATE_INTRA_FUNCTION_CALL
+ .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 end=0
+ .endm
++.macro ANNOTATE_NOENDBR
++.endm
+ #endif
+ 
+ #endif /* CONFIG_STACK_VALIDATION */
 
 
