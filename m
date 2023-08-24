@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED5911CAE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:02:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4769FC433C7;
-	Thu, 24 Aug 2023 15:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A45B125B1
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:02:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9A5C433CB;
+	Thu, 24 Aug 2023 15:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889322;
-	bh=57BYAYpP67zZgwZuJq+N/Bg4Q+oVZn/lPyygmX908Fc=;
+	s=korg; t=1692889325;
+	bh=cZYDU2kuPHMQRhrLcavhJf7oU58xYZ3BKywjlpT+OFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9hXvUJXoIpSGLnpcHZOBGe4N6F7ZbTiqsU2To6NP5a2wDtz4hgco1qs6RH4gcGG3
-	 GZxnV3Jvbg3fX/wAtvyRgH2BH1z3i78YzSaBMv/VsTmB6dnHcDObqM2XgMYXJtSM0o
-	 eSyxQnXoO+VbNVrbDPprZTq1BZT1uWpMBg32aZHU=
+	b=zPks/gd7Y20qzgyJXnpQkrXnz3Hhl9a7I8gCzx3qV3qqdaNmmnocUCBnmIyqiF3s5
+	 MV4DOkwCXCQwZwcGRKI6iS8chdEIxzm9k835U3yDnl+MzO7zL71ubO/kuJb9MEUoNf
+	 1ntWA+ei8IzV6l31L0pTXaexuO8L9wjDNLbFDHY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Vicente Bergas <vicencb@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/135] netfilter: nft_dynset: disallow object maps
-Date: Thu, 24 Aug 2023 16:50:30 +0200
-Message-ID: <20230824145030.667135217@linuxfoundation.org>
+Subject: [PATCH 5.10 096/135] arm64: dts: rockchip: use USB host by default on rk3399-rock-pi-4
+Date: Thu, 24 Aug 2023 16:50:39 +0200
+Message-ID: <20230824145031.083859224@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -35,34 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Vicente Bergas <vicencb@gmail.com>
 
-[ Upstream commit 23185c6aed1ffb8fc44087880ba2767aba493779 ]
+[ Upstream commit e12f67fe83446432ef16704c22ec23bd1dbcd094 ]
 
-Do not allow to insert elements from datapath to objects maps.
+Based on the board schematics at
+https://dl.radxa.com/rockpi4/docs/hw/rockpi4/rockpi_4c_v12_sch_20200620.pdf
+on page 19 there is an USB Type-A receptacle being used as an USB-OTG port.
 
-Fixes: 8aeff920dcc9 ("netfilter: nf_tables: add stateful object reference to set elements")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+But the Type-A connector is not valid for OTG operation, for this reason
+there is a switch to select host or device role.
+This is non-compliant and error prone because switching is manual.
+So, use host mode as it corresponds for a Type-A receptacle.
+
+Signed-off-by: Vicente Bergas <vicencb@gmail.com>
+Link: https://lore.kernel.org/r/20201201154132.1286-4-vicencb@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Stable-dep-of: cee572756aa2 ("arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_dynset.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index 8d47782b778f1..408b7f5faa5e5 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -138,6 +138,9 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+index 98f52fac13535..6dc6dee6c13e2 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+@@ -671,7 +671,7 @@
  
-+	if (set->flags & NFT_SET_OBJECT)
-+		return -EOPNOTSUPP;
-+
- 	if (set->ops->update == NULL)
- 		return -EOPNOTSUPP;
+ &usbdrd_dwc3_0 {
+ 	status = "okay";
+-	dr_mode = "otg";
++	dr_mode = "host";
+ };
  
+ &usbdrd3_1 {
 -- 
 2.40.1
 
