@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25DD14A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26102C433C9;
-	Thu, 24 Aug 2023 17:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E27B14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3171C433C7;
+	Thu, 24 Aug 2023 17:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897493;
-	bh=0Ch+78c/JG3mjvOjG1C0QDYz3v4rZh2uYJk/sNFGlRM=;
+	s=korg; t=1692897496;
+	bh=PAvWYLzz9eqzXd+nqoAN4AsWt2aUJik65Cs2pAoWkm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZPSpPJvxqpDrGhB6F/93ZouGO9N3To87YpPTwu7WmkVXVo45PE1hL3p4tRMolWQH
-	 0+n3e46jwp+aMu49qk1pcVWQN+oCM8QToRceXGomPME7V2k2Wvx2Dm+N5cKC+AUmtl
-	 2i1LaetZW7Z3kfon8CxmAQEKXE6uolneqW9IdQpo=
+	b=AbRr+HViphoHkz3krBA2Bb+OyENxrlXLJzzqTvCw/SHumw17OQ0S51HdBdMprfY/h
+	 sV6jCYoqBXvimtLyy7IYMeeEWA80mU8TGCLRWS0GuoPIJ7vtkPDij5DM7/7dIGBa3e
+	 cju0gGDV13sPCiRWEBiA4boDdrz3MCnmOSgtmqFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
 	Li Jun <jun.li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/135] usb: chipidea: imx: dont request QoS for imx8ulp
-Date: Thu, 24 Aug 2023 19:08:22 +0200
-Message-ID: <20230824170618.455867256@linuxfoundation.org>
+Subject: [PATCH 5.10 031/135] usb: chipidea: imx: add missing USB PHY DPDM wakeup setting
+Date: Thu, 24 Aug 2023 19:08:23 +0200
+Message-ID: <20230824170618.495616253@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -43,45 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 9a070e8e208995a9d638b538ed7abf28bd6ea6f0 ]
+[ Upstream commit 53d061c19dc4cb68409df6dc11c40389c8c42a75 ]
 
-Use dedicated imx8ulp usb compatible to remove QoS request
-since imx8ulp has no such limitation of imx7ulp: DMA will
-not work if system enters idle.
+USB PHY DPDM wakeup bit is enabled by default, when USB wakeup
+is not required(/sys/.../wakeup is disabled), this bit should be
+disabled, otherwise we will have unexpected wakeup if do USB device
+connect/disconnect while system sleep.
+This bit can be enabled for both host and device mode.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Signed-off-by: Li Jun <jun.li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Acked-by: Peter Chen <peter.chen@kernel.org>
-Message-ID: <20230530104007.1294702-2-xu.yang_2@nxp.com>
+Message-ID: <20230517081907.3410465-3-xu.yang_2@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/chipidea/usbmisc_imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_imx.c b/drivers/usb/chipidea/ci_hdrc_imx.c
-index f798455942844..4d47fe89864d9 100644
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -70,6 +70,10 @@ static const struct ci_hdrc_imx_platform_flag imx7ulp_usb_data = {
- 		CI_HDRC_PMQOS,
- };
+diff --git a/drivers/usb/chipidea/usbmisc_imx.c b/drivers/usb/chipidea/usbmisc_imx.c
+index 425b29168b4d0..9b1d5c11dc340 100644
+--- a/drivers/usb/chipidea/usbmisc_imx.c
++++ b/drivers/usb/chipidea/usbmisc_imx.c
+@@ -135,7 +135,7 @@
+ #define TXVREFTUNE0_MASK		(0xf << 20)
  
-+static const struct ci_hdrc_imx_platform_flag imx8ulp_usb_data = {
-+	.flags = CI_HDRC_SUPPORTS_RUNTIME_PM,
-+};
-+
- static const struct of_device_id ci_hdrc_imx_dt_ids[] = {
- 	{ .compatible = "fsl,imx23-usb", .data = &imx23_usb_data},
- 	{ .compatible = "fsl,imx28-usb", .data = &imx28_usb_data},
-@@ -80,6 +84,7 @@ static const struct of_device_id ci_hdrc_imx_dt_ids[] = {
- 	{ .compatible = "fsl,imx6ul-usb", .data = &imx6ul_usb_data},
- 	{ .compatible = "fsl,imx7d-usb", .data = &imx7d_usb_data},
- 	{ .compatible = "fsl,imx7ulp-usb", .data = &imx7ulp_usb_data},
-+	{ .compatible = "fsl,imx8ulp-usb", .data = &imx8ulp_usb_data},
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, ci_hdrc_imx_dt_ids);
+ #define MX6_USB_OTG_WAKEUP_BITS (MX6_BM_WAKEUP_ENABLE | MX6_BM_VBUS_WAKEUP | \
+-				 MX6_BM_ID_WAKEUP)
++				 MX6_BM_ID_WAKEUP | MX6SX_BM_DPDM_WAKEUP_EN)
+ 
+ struct usbmisc_ops {
+ 	/* It's called once when probe a usb device */
 -- 
 2.40.1
 
