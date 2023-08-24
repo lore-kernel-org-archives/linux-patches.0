@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC212B98
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEFCC433C7;
-	Thu, 24 Aug 2023 14:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6325512B94
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D852AC433C9;
+	Thu, 24 Aug 2023 14:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888898;
-	bh=5WqTcoIHYOO8xCOAukHJuFlTzCWeTEwW0DosCea5RgM=;
+	s=korg; t=1692888901;
+	bh=opTnSMNIR+R65o7QhROTrAXgr1TSY+y6iHiiIToHdSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9k/IZNUk8IuzVmcByAmcM8WUnNz3mxujGf0QknH+IBf83vDc1piMqxJ2AECTXokp
-	 611km1GmtxakfBiwxZ/TfgJ+nKDh9TOllPtVAhiIQknV30mrVuwOaJIfilyONAimtw
-	 +x9MAVDzRP9+TuuMQi5aBCV6JqH1aBZVxdO3i5K0=
+	b=u+9nS6f5D0YMGNqxRNLN5ei9ZnPd/AS5PWs7L8cSyHm03F8APQmCtWCQj6gIJ1dyJ
+	 SrEScuYPC5LcOiLXv4K/egn5yWnFBmnSVdKIgTlPEIKKbEV8Pu/UHgXmbRQe/evd/x
+	 NqKHArVzSwPKtwVr8IiRRGUCii98Jm+8oqOOrV0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kushagra Verma <kushagra765@outlook.com>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/139] usb: dwc3: Fix typos in gadget.c
-Date: Thu, 24 Aug 2023 16:49:36 +0200
-Message-ID: <20230824145025.935667922@linuxfoundation.org>
+Subject: [PATCH 5.15 044/139] iio: addac: stx104: Fix race condition for stx104_write_raw()
+Date: Thu, 24 Aug 2023 16:49:27 +0200
+Message-ID: <20230824145025.536921538@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -34,45 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kushagra Verma <kushagra765@outlook.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit af870d93c706c302a8742d7c751a60a832f7bc64 ]
+[ Upstream commit 9740827468cea80c42db29e7171a50e99acf7328 ]
 
-Fixes the following two typos:
-   1. reinitate -> reinitiate
-   2. revison -> revision
+The priv->chan_out_states array and actual DAC value can become
+mismatched if stx104_write_raw() is called concurrently. Prevent such a
+race condition by utilizing a mutex.
 
-Signed-off-by: Kushagra Verma <kushagra765@outlook.com>
-Link: https://lore.kernel.org/r/HK0PR01MB280110FAB74B4B2ACE32EA5FF8479@HK0PR01MB2801.apcprd01.prod.exchangelabs.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: c8540870af4c ("usb: dwc3: gadget: Improve dwc3_gadget_suspend() and dwc3_gadget_resume()")
+Fixes: 97a445dad37a ("iio: Add IIO support for the DAC on the Apex Embedded Systems STX104")
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/r/c95c9a77fcef36b2a052282146950f23bbc1ebdc.1680790580.git.william.gray@linaro.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/addac/stx104.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index e0c67a256c214..2d5a4d0e63c61 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3531,7 +3531,7 @@ static void dwc3_gadget_endpoint_stream_event(struct dwc3_ep *dep,
- 		 * streams are updated, and the device controller will not be
- 		 * triggered to generate ERDY to move the next stream data. To
- 		 * workaround this and maintain compatibility with various
--		 * hosts, force to reinitate the stream until the host is ready
-+		 * hosts, force to reinitiate the stream until the host is ready
- 		 * instead of waiting for the host to prime the endpoint.
- 		 */
- 		if (DWC3_VER_IS_WITHIN(DWC32, 100A, ANY)) {
-@@ -4059,7 +4059,7 @@ static void dwc3_gadget_hibernation_interrupt(struct dwc3 *dwc,
- 	unsigned int is_ss = evtinfo & BIT(4);
+diff --git a/drivers/iio/addac/stx104.c b/drivers/iio/addac/stx104.c
+index 48a91a95e597b..e110a910235ff 100644
+--- a/drivers/iio/addac/stx104.c
++++ b/drivers/iio/addac/stx104.c
+@@ -15,6 +15,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
++#include <linux/mutex.h>
+ #include <linux/spinlock.h>
+ #include <linux/types.h>
  
- 	/*
--	 * WORKAROUND: DWC3 revison 2.20a with hibernation support
-+	 * WORKAROUND: DWC3 revision 2.20a with hibernation support
- 	 * have a known issue which can cause USB CV TD.9.23 to fail
- 	 * randomly.
- 	 *
+@@ -69,10 +70,12 @@ struct stx104_reg {
+ 
+ /**
+  * struct stx104_iio - IIO device private data structure
++ * @lock: synchronization lock to prevent I/O race conditions
+  * @chan_out_states:	channels' output states
+  * @reg:		I/O address offset for the device registers
+  */
+ struct stx104_iio {
++	struct mutex lock;
+ 	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
+ 	struct stx104_reg __iomem *reg;
+ };
+@@ -178,9 +181,12 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+ 			if ((unsigned int)val > 65535)
+ 				return -EINVAL;
+ 
++			mutex_lock(&priv->lock);
++
+ 			priv->chan_out_states[chan->channel] = val;
+ 			iowrite16(val, &priv->reg->dac[chan->channel]);
+ 
++			mutex_unlock(&priv->lock);
+ 			return 0;
+ 		}
+ 		return -EINVAL;
+@@ -351,6 +357,8 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 
+ 	indio_dev->name = dev_name(dev);
+ 
++	mutex_init(&priv->lock);
++
+ 	/* configure device for software trigger operation */
+ 	iowrite8(0, &priv->reg->acr);
+ 
 -- 
 2.40.1
 
