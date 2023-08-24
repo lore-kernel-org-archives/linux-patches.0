@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5C611C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:56:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377E0C433C8;
-	Thu, 24 Aug 2023 14:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE3911C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:56:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E779AC433C8;
+	Thu, 24 Aug 2023 14:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888984;
-	bh=w14c4BX2ETW/k5hSfYx7Rt2ZSRHS7f6ahMk9vNyIPUo=;
+	s=korg; t=1692888987;
+	bh=qVoMhibI+C3QGGEyfzHR2288OBTNPiFkQ/piapXIWH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3HnzD/DH7EEvxR9Xa+PiTxM50zR/JZnEKOPVuLMKMwjhGwhyaRtbKGcPVUOVqofY
-	 dEOQmk5zr4hjzCbAs+zGHawCtVd+dK3XQSW7Hj7F2DHa2DANYo4plGe+qAv4W2zZUc
-	 M2A1jN6lmt+9qp0B7nXkQedW5C847HmA0yANXTfk=
+	b=nR2JDlm82G0XBOWzNjxc48UR7Bcy2quoW9veY2zwhx1tMUNKJV4t4TN39PZiLDh+e
+	 r8AwYoELy2+P/JRF9FqgqnnvGC41CutHIEA1FL3jSW605B+IPWspk8fihw4/9r2QYd
+	 lmEN+XierwsInwB5+c5Q5C4K6OtywD2yiUrjUQyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/139] ip_vti: fix potential slab-use-after-free in decode_session6
-Date: Thu, 24 Aug 2023 16:50:07 +0200
-Message-ID: <20230824145027.297106720@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 5.15 075/139] tty: serial: fsl_lpuart: Clear the error flags by writing 1 for lpuart32 platforms
+Date: Thu, 24 Aug 2023 16:49:58 +0200
+Message-ID: <20230824145026.912300440@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,48 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 6018a266279b1a75143c7c0804dd08a5fc4c3e0b ]
+commit 282069845af388b08d622ad192b831dcd0549c62 upstream.
 
-When ip_vti device is set to the qdisc of the sfb type, the cb field
-of the sent skb may be modified during enqueuing. Then,
-slab-use-after-free may occur when ip_vti device sends IPv6 packets.
-As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
-_decode_session6.") showed, xfrm_decode_session was originally intended
-only for the receive path. IP6CB(skb)->nhoff is not set during
-transmission. Therefore, set the cb field in the skb to 0 before
-sending packets.
+Do not read the data register to clear the error flags for lpuart32
+platforms, the additional read may cause the receive FIFO underflow
+since the DMA has already read the data register.
+Actually all lpuart32 platforms support write 1 to clear those error
+bits, let's use this method to better clear the error flags.
 
-Fixes: f855691975bb ("xfrm6: Fix the nexthdr offset in _decode_session6.")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 42b68768e51b ("serial: fsl_lpuart: DMA support for 32-bit variant")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230801022304.24251-1-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_vti.c | 4 ++--
+ drivers/tty/serial/fsl_lpuart.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
-index efe25a0172e6f..df23319adc804 100644
---- a/net/ipv4/ip_vti.c
-+++ b/net/ipv4/ip_vti.c
-@@ -287,12 +287,12 @@ static netdev_tx_t vti_tunnel_xmit(struct sk_buff *skb, struct net_device *dev)
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1107,8 +1107,8 @@ static void lpuart_copy_rx_to_tty(struct
+ 		unsigned long sr = lpuart32_read(&sport->port, UARTSTAT);
  
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IP):
--		xfrm_decode_session(skb, &fl, AF_INET);
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+		xfrm_decode_session(skb, &fl, AF_INET);
- 		break;
- 	case htons(ETH_P_IPV6):
--		xfrm_decode_session(skb, &fl, AF_INET6);
- 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
-+		xfrm_decode_session(skb, &fl, AF_INET6);
- 		break;
- 	default:
- 		goto tx_err;
--- 
-2.40.1
-
+ 		if (sr & (UARTSTAT_PE | UARTSTAT_FE)) {
+-			/* Read DR to clear the error flags */
+-			lpuart32_read(&sport->port, UARTDATA);
++			/* Clear the error flags */
++			lpuart32_write(&sport->port, sr, UARTSTAT);
+ 
+ 			if (sr & UARTSTAT_PE)
+ 				sport->port.icount.parity++;
 
 
