@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198CB14A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:20:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90647C433C7;
-	Thu, 24 Aug 2023 17:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D384814A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:20:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58238C433C8;
+	Thu, 24 Aug 2023 17:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897609;
-	bh=crGNLcgC7vSOsfx8YO+AI2R31vkeZYgv8hLYHodnwyA=;
+	s=korg; t=1692897612;
+	bh=84pAnGfzAJ+dphTo7Mb2pCPf+ot1PIv/mAuBxbGudQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDGl/1VYQOD/dsCdLsUpZVyou2o0VrZm9BdtzlXSzH3Yo32vOyVrc4MzS4qcoScLF
-	 0VVT+wrGgOXNVamXp3uCQ+BiTnPaPKFhzbFvAkmNm66JuloI2p/jOzm0ABL9r0Famr
-	 p3f7GFsn5z3Z+brZCrqQhKStx2kQfBkXn4UGPD3U=
+	b=2oXZpNtAcFIk06dGzwzMILulEJwzCpjALVjV4Rt5g854ykgNljWavo8mlOAO8UAPZ
+	 5mWz7uPU37y51eCf2zYsYNzI70+gh82XzQP1LEDaukLOHQezi08v9m2BR9cg9LPgzj
+	 v0Bupp/N1U+2xYbsR6zjdtgZewGLjVTkMJNyi+M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Obbard <chris.obbard@collabora.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/135] arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4
-Date: Thu, 24 Aug 2023 19:09:33 +0200
-Message-ID: <20230824170621.645368037@linuxfoundation.org>
+Subject: [PATCH 5.10 102/135] ASoC: rt5665: add missed regulator_bulk_disable
+Date: Thu, 24 Aug 2023 19:09:34 +0200
+Message-ID: <20230824170621.684523885@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -41,66 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Obbard <chris.obbard@collabora.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit cee572756aa2cb46e959e9797ad4b730b78a050b ]
+[ Upstream commit c163108e706909570f8aa9aa5bcf6806e2b4c98c ]
 
-There is some instablity with some eMMC modules on ROCK Pi 4 SBCs running
-in HS400 mode. This ends up resulting in some block errors after a while
-or after a "heavy" operation utilising the eMMC (e.g. resizing a
-filesystem). An example of these errors is as follows:
+The driver forgets to call regulator_bulk_disable()
 
-    [  289.171014] mmc1: running CQE recovery
-    [  290.048972] mmc1: running CQE recovery
-    [  290.054834] mmc1: running CQE recovery
-    [  290.060817] mmc1: running CQE recovery
-    [  290.061337] blk_update_request: I/O error, dev mmcblk1, sector 1411072 op 0x1:(WRITE) flags 0x800 phys_seg 36 prio class 0
-    [  290.061370] EXT4-fs warning (device mmcblk1p1): ext4_end_bio:348: I/O error 10 writing to inode 29547 starting block 176466)
-    [  290.061484] Buffer I/O error on device mmcblk1p1, logical block 172288
-    [  290.061531] Buffer I/O error on device mmcblk1p1, logical block 172289
-    [  290.061551] Buffer I/O error on device mmcblk1p1, logical block 172290
-    [  290.061574] Buffer I/O error on device mmcblk1p1, logical block 172291
-    [  290.061592] Buffer I/O error on device mmcblk1p1, logical block 172292
-    [  290.061615] Buffer I/O error on device mmcblk1p1, logical block 172293
-    [  290.061632] Buffer I/O error on device mmcblk1p1, logical block 172294
-    [  290.061654] Buffer I/O error on device mmcblk1p1, logical block 172295
-    [  290.061673] Buffer I/O error on device mmcblk1p1, logical block 172296
-    [  290.061695] Buffer I/O error on device mmcblk1p1, logical block 172297
+Add the missed call to fix it.
 
-Disabling the Command Queue seems to stop the CQE recovery from running,
-but doesn't seem to improve the I/O errors. Until this can be investigated
-further, disable HS400 mode on the ROCK Pi 4 SBCs to at least stop I/O
-errors from occurring.
-
-While we are here, set the eMMC maximum clock frequency to 1.5MHz to
-follow the ROCK 4C+.
-
-Fixes: 1b5715c602fd ("arm64: dts: rockchip: add ROCK Pi 4 DTS support")
-Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
-Tested-By: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20230705144255.115299-2-chris.obbard@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_A560D01E3E0A00A85A12F137E4B5205B3508@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt5665.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index 360a31d2c56cc..2f52b91b72152 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -607,9 +607,9 @@
- };
+diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
+index 8a915cdce0fe9..8b73c2d7f1f10 100644
+--- a/sound/soc/codecs/rt5665.c
++++ b/sound/soc/codecs/rt5665.c
+@@ -4472,6 +4472,8 @@ static void rt5665_remove(struct snd_soc_component *component)
+ 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
  
- &sdhci {
-+	max-frequency = <150000000>;
- 	bus-width = <8>;
--	mmc-hs400-1_8v;
--	mmc-hs400-enhanced-strobe;
-+	mmc-hs200-1_8v;
- 	non-removable;
- 	status = "okay";
- };
+ 	regmap_write(rt5665->regmap, RT5665_RESET, 0);
++
++	regulator_bulk_disable(ARRAY_SIZE(rt5665->supplies), rt5665->supplies);
+ }
+ 
+ #ifdef CONFIG_PM
 -- 
 2.40.1
 
