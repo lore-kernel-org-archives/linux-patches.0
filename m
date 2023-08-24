@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0D511C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B3DC433C8;
-	Thu, 24 Aug 2023 15:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2559911C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98676C433C7;
+	Thu, 24 Aug 2023 15:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889256;
-	bh=IT8kB5BnyrDfvarCDq+u4PXJSeWtUWSd8zd3heqFeuY=;
+	s=korg; t=1692889259;
+	bh=lEOippMPUoFntfxkEhs6xg6hvJ9BTe8GI2YCVmyArzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkA8qKk8d+n8ktqNE4RDGZ5npofth48d0BilkLcbJHZ4mMzGZZrAdhdta7WucDDlf
-	 jkZ6FVOid56IpLAmVljlPEZ+XzgvotEv+hFYYI2DnuJmJU+sYa4kyGkM5d+6RJCqNW
-	 6yHsTolVg4tq5MoMmXDDhU6hHM/GlzYv4j94Y+1k=
+	b=fUVEnbhiN6vH/2ddrrFNVpnAc5TdBfdRxko/tVIIA5sgQgEAvoCX+n1wbht7FADsO
+	 Sz/IhyQ3DREI2+umvy/4WBqL7ggeVPJ89QAjDPC8OIg30sJKn2c4gmi5NAHLvaGqZA
+	 DiPifGnmMli+eJZsMVF5msH3cWr8bk1883luxvCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.10 071/135] powerpc/rtas_flash: allow user copy to flash block cache objects
-Date: Thu, 24 Aug 2023 16:50:14 +0200
-Message-ID: <20230824145029.921640361@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yi Yang <yiyang13@huawei.com>,
+	Qiumiao Zhang <zhangqiumiao1@huawei.com>
+Subject: [PATCH 5.10 072/135] tty: n_gsm: fix the UAF caused by race condition in gsm_cleanup_mux
+Date: Thu, 24 Aug 2023 16:50:15 +0200
+Message-ID: <20230824145029.970025566@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -35,68 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-commit 4f3175979e62de3b929bfa54a0db4b87d36257a7 upstream.
+commit 3c4f8333b582487a2d1e02171f1465531cde53e3 upstream.
 
-With hardened usercopy enabled (CONFIG_HARDENED_USERCOPY=y), using the
-/proc/powerpc/rtas/firmware_update interface to prepare a system
-firmware update yields a BUG():
+In commit 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux"), the UAF
+problem is not completely fixed. There is a race condition in
+gsm_cleanup_mux(), which caused this UAF.
 
-  kernel BUG at mm/usercopy.c:102!
-  Oops: Exception in kernel mode, sig: 5 [#1]
-  LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  CPU: 0 PID: 2232 Comm: dd Not tainted 6.5.0-rc3+ #2
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
-  NIP:  c0000000005991d0 LR: c0000000005991cc CTR: 0000000000000000
-  REGS: c0000000148c76a0 TRAP: 0700   Not tainted  (6.5.0-rc3+)
-  MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002242  XER: 0000000c
-  CFAR: c0000000001fbd34 IRQMASK: 0
-  [ ... GPRs omitted ... ]
-  NIP usercopy_abort+0xa0/0xb0
-  LR  usercopy_abort+0x9c/0xb0
-  Call Trace:
-    usercopy_abort+0x9c/0xb0 (unreliable)
-    __check_heap_object+0x1b4/0x1d0
-    __check_object_size+0x2d0/0x380
-    rtas_flash_write+0xe4/0x250
-    proc_reg_write+0xfc/0x160
-    vfs_write+0xfc/0x4e0
-    ksys_write+0x90/0x160
-    system_call_exception+0x178/0x320
-    system_call_common+0x160/0x2c4
+The UAF problem is triggered by the following race:
+task[5046]                     task[5054]
+-----------------------        -----------------------
+gsm_cleanup_mux();
+dlci = gsm->dlci[0];
+mutex_lock(&gsm->mutex);
+                               gsm_cleanup_mux();
+			       dlci = gsm->dlci[0]; //Didn't take the lock
+gsm_dlci_release(gsm->dlci[i]);
+gsm->dlci[i] = NULL;
+mutex_unlock(&gsm->mutex);
+                               mutex_lock(&gsm->mutex);
+			       dlci->dead = true; //UAF
 
-The blocks of the firmware image are copied directly from user memory
-to objects allocated from flash_block_cache, so flash_block_cache must
-be created using kmem_cache_create_usercopy() to mark it safe for user
-access.
+Fix it by assigning values after mutex_lock().
 
-Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-[mpe: Trim and indent oops]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230810-rtas-flash-vs-hardened-usercopy-v2-1-dcf63793a938@linux.ibm.com
+Link: https://syzkaller.appspot.com/text?tag=CrashReport&x=176188b5a80000
+Cc: stable <stable@kernel.org>
+Fixes: 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux")
+Fixes: aa371e96f05d ("tty: n_gsm: fix restart handling via CLD command")
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Co-developed-by: Qiumiao Zhang <zhangqiumiao1@huawei.com>
+Signed-off-by: Qiumiao Zhang <zhangqiumiao1@huawei.com>
+Link: https://lore.kernel.org/r/20230811031121.153237-1-yiyang13@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/rtas_flash.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/n_gsm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/rtas_flash.c
-+++ b/arch/powerpc/kernel/rtas_flash.c
-@@ -710,9 +710,9 @@ static int __init rtas_flash_init(void)
- 	if (!rtas_validate_flash_data.buf)
- 		return -ENOMEM;
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -2159,12 +2159,13 @@ static void gsm_error(struct gsm_mux *gs
+ static void gsm_cleanup_mux(struct gsm_mux *gsm, bool disc)
+ {
+ 	int i;
+-	struct gsm_dlci *dlci = gsm->dlci[0];
++	struct gsm_dlci *dlci;
+ 	struct gsm_msg *txq, *ntxq;
  
--	flash_block_cache = kmem_cache_create("rtas_flash_cache",
--					      RTAS_BLK_SIZE, RTAS_BLK_SIZE, 0,
--					      NULL);
-+	flash_block_cache = kmem_cache_create_usercopy("rtas_flash_cache",
-+						       RTAS_BLK_SIZE, RTAS_BLK_SIZE,
-+						       0, 0, RTAS_BLK_SIZE, NULL);
- 	if (!flash_block_cache) {
- 		printk(KERN_ERR "%s: failed to create block cache\n",
- 				__func__);
+ 	gsm->dead = true;
+ 	mutex_lock(&gsm->mutex);
+ 
++	dlci = gsm->dlci[0];
+ 	if (dlci) {
+ 		if (disc && dlci->state != DLCI_CLOSED) {
+ 			gsm_dlci_begin_close(dlci);
 
 
