@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F1811C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE855C433CA;
-	Thu, 24 Aug 2023 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274B711C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953D0C433C7;
+	Thu, 24 Aug 2023 15:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889292;
-	bh=V8k7ZhV/3kJ21renc+XMpRU0KTWptvJASxST+W1o5xs=;
+	s=korg; t=1692889295;
+	bh=8zZfZTJDBN05/JCraAi4ueKVVkoUoJPjBayRVrDi1ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpfjYUL2wU36g0+VnoXw8O8/6rATKpbIoM6TQUWLV//bMwa7ggZYMpbmcaFdvoREm
-	 STfLXqjOzcYfhjsBZory10bjivHzr092vIzGa4CRATJwwiPJOcOE123jYMJ7YNC7cr
-	 lrQntp0bb+i0XkAZ2Pvueu9U5evjcb1Vju9w0EUU=
+	b=fMYD1qL2F/IAl8h4ULW1BptE9fzHgUfqsCnzjIptgMP1uvvu77e/TngqExatWxukJ
+	 wU1y+6iTH3IWgTo2HvZW/dauUb+spCsTGDI1Bv+dyfcHX2xbXVLCV7LWhGl1poYAWq
+	 XjMy07ZPES3O5wvfxUPo9UfnZf0UtSS5KnT0q7mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Simon Horman <simon.horman@corigine.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 083/135] xfrm: add forgotten nla_policy for XFRMA_MTIMER_THRESH
-Date: Thu, 24 Aug 2023 16:50:26 +0200
-Message-ID: <20230824145030.484094346@linuxfoundation.org>
+Subject: [PATCH 5.10 057/135] usb: cdns3: fix NCM gadget RX speed 20x slow than expection at iMX8QM
+Date: Thu, 24 Aug 2023 16:50:00 +0200
+Message-ID: <20230824145029.357185259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -37,52 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 5e2424708da7207087934c5c75211e8584d553a0 ]
+[ Upstream commit dbe678f6192f27879ac9ff6bc7a1036aad85aae9 ]
 
-The previous commit 4e484b3e969b ("xfrm: rate limit SA mapping change
-message to user space") added one additional attribute named
-XFRMA_MTIMER_THRESH and described its type at compat_policy
-(net/xfrm/xfrm_compat.c).
+At iMX8QM platform, enable NCM gadget and run 'iperf3 -s'.
+At host, run 'iperf3 -V -c fe80::6863:98ff:feef:3e0%enxc6e147509498'
 
-However, the author forgot to also describe the nla_policy at
-xfrma_policy (net/xfrm/xfrm_user.c). Hence, this suppose NLA_U32 (4
-bytes) value can be faked as empty (0 bytes) by a malicious user, which
-leads to 4 bytes overflow read and heap information leak when parsing
-nlattrs.
+[  5]   0.00-1.00   sec  1.55 MBytes  13.0 Mbits/sec   90   4.18 KBytes
+[  5]   1.00-2.00   sec  1.44 MBytes  12.0 Mbits/sec   75   4.18 KBytes
+[  5]   2.00-3.00   sec  1.48 MBytes  12.4 Mbits/sec   75   4.18 KBytes
 
-To exploit this, one malicious user can spray the SLUB objects and then
-leverage this 4 bytes OOB read to leak the heap data into
-x->mapping_maxage (see xfrm_update_ae_params(...)), and leak it to
-userspace via copy_to_user_state_extra(...).
+Expected speed should be bigger than 300Mbits/sec.
 
-The above bug is assigned CVE-2023-3773. To fix it, this commit just
-completes the nla_policy description for XFRMA_MTIMER_THRESH, which
-enforces the length check and avoids such OOB read.
+The root cause of this performance drop was found to be data corruption
+happening at 4K borders in some Ethernet packets, leading to TCP
+checksum errors. This corruption occurs from the position
+(4K - (address & 0x7F)) to 4K. The u_ether function's allocation of
+skb_buff reserves 64B, meaning all RX addresses resemble 0xXXXX0040.
 
-Fixes: 4e484b3e969b ("xfrm: rate limit SA mapping change message to user space")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Force trb_burst_size to 16 can fix this problem.
+
+Cc: stable@vger.kernel.org
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20230518154946.3666662-1-Frank.Li@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/cdns3/gadget.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index d093b4d684a61..8fce2e93bb3b3 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2757,6 +2757,7 @@ const struct nla_policy xfrma_policy[XFRMA_MAX+1] = {
- 	[XFRMA_SET_MARK]	= { .type = NLA_U32 },
- 	[XFRMA_SET_MARK_MASK]	= { .type = NLA_U32 },
- 	[XFRMA_IF_ID]		= { .type = NLA_U32 },
-+	[XFRMA_MTIMER_THRESH]   = { .type = NLA_U32 },
- };
- EXPORT_SYMBOL_GPL(xfrma_policy);
+diff --git a/drivers/usb/cdns3/gadget.c b/drivers/usb/cdns3/gadget.c
+index 24dab7006b823..210c1d6150825 100644
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -2098,6 +2098,19 @@ int cdns3_ep_config(struct cdns3_endpoint *priv_ep, bool enable)
+ 	else
+ 		priv_ep->trb_burst_size = 16;
  
++	/*
++	 * In versions preceding DEV_VER_V2, for example, iMX8QM, there exit the bugs
++	 * in the DMA. These bugs occur when the trb_burst_size exceeds 16 and the
++	 * address is not aligned to 128 Bytes (which is a product of the 64-bit AXI
++	 * and AXI maximum burst length of 16 or 0xF+1, dma_axi_ctrl0[3:0]). This
++	 * results in data corruption when it crosses the 4K border. The corruption
++	 * specifically occurs from the position (4K - (address & 0x7F)) to 4K.
++	 *
++	 * So force trb_burst_size to 16 at such platform.
++	 */
++	if (priv_dev->dev_ver < DEV_VER_V2)
++		priv_ep->trb_burst_size = 16;
++
+ 	mult = min_t(u8, mult, EP_CFG_MULT_MAX);
+ 	buffering = min_t(u8, buffering, EP_CFG_BUFFERING_MAX);
+ 	maxburst = min_t(u8, maxburst, EP_CFG_MAXBURST_MAX);
 -- 
 2.40.1
 
