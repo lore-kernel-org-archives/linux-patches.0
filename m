@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387FF11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EFCC433C7;
-	Thu, 24 Aug 2023 14:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33C211C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74942C433C9;
+	Thu, 24 Aug 2023 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888816;
-	bh=daWoh+ZtSsYvai6Qv1qZBfENXr93hxlCQjIKd5Y2LGg=;
+	s=korg; t=1692888818;
+	bh=QSi4zCrNcmln9VJsCVWQE3XQ8JkjvrMu1dLE3pRh/v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7UooVi3ypEY+meCg+elUAiwt7wROfDn6UI1lfI/XFRHGSGVpeRYEq1nBrbRX71m4
-	 0Dn8QWURqxEShZOoTj1CMmkXu6XFqJuMPaDC30WIb/vG1Yi0lBntbbtXLsf4rd6MBC
-	 dCCJXGD8RbdRK0u2nDPh3wwQCVnmeBmxbNnWMV8Q=
+	b=qMhnF2fXANN+36VqLJFZw2R6gdaE6Xkuet8NE5CwmBmTo/LC9D+uzETKYkPH+modG
+	 9hEyKGIXTLorU8CgGlxOlRHditjrnvODqJOWW40li12FMj+CyB51RknigxAS2vzyIu
+	 AWkESKc3/fGOtAL5wQPSlRRQAXhOLk4txKAqbwcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xu <gaoxu2@hihonor.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Christoph Hellwig <hch@lst.de>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/139] dma-remap: use kvmalloc_array/kvfree for larger dma memory remap
-Date: Thu, 24 Aug 2023 16:48:56 +0200
-Message-ID: <20230824145024.166475953@linuxfoundation.org>
+Subject: [PATCH 5.15 045/139] iio: addac: stx104: Fix race condition when converting analog-to-digital
+Date: Thu, 24 Aug 2023 16:49:28 +0200
+Message-ID: <20230824145025.571967380@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,61 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gaoxu <gaoxu2@hihonor.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit 51ff97d54f02b4444dfc42e380ac4c058e12d5dd ]
+[ Upstream commit 4f9b80aefb9e2f542a49d9ec087cf5919730e1dd ]
 
-If dma_direct_alloc() alloc memory in size of 64MB, the inner function
-dma_common_contiguous_remap() will allocate 128KB memory by invoking
-the function kmalloc_array(). and the kmalloc_array seems to fail to try to
-allocate 128KB mem.
+The ADC conversion procedure requires several device I/O operations
+performed in a particular sequence. If stx104_read_raw() is called
+concurrently, the ADC conversion procedure could be clobbered. Prevent
+such a race condition by utilizing a mutex.
 
-Call trace:
-[14977.928623] qcrosvm: page allocation failure: order:5, mode:0x40cc0
-[14977.928638] dump_backtrace.cfi_jt+0x0/0x8
-[14977.928647] dump_stack_lvl+0x80/0xb8
-[14977.928652] warn_alloc+0x164/0x200
-[14977.928657] __alloc_pages_slowpath+0x9f0/0xb4c
-[14977.928660] __alloc_pages+0x21c/0x39c
-[14977.928662] kmalloc_order+0x48/0x108
-[14977.928666] kmalloc_order_trace+0x34/0x154
-[14977.928668] __kmalloc+0x548/0x7e4
-[14977.928673] dma_direct_alloc+0x11c/0x4f8
-[14977.928678] dma_alloc_attrs+0xf4/0x138
-[14977.928680] gh_vm_ioctl_set_fw_name+0x3c4/0x610 [gunyah]
-[14977.928698] gh_vm_ioctl+0x90/0x14c [gunyah]
-[14977.928705] __arm64_sys_ioctl+0x184/0x210
-
-work around by doing kvmalloc_array instead.
-
-Signed-off-by: Gao Xu <gaoxu2@hihonor.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 4075a283ae83 ("iio: stx104: Add IIO support for the ADC channels")
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/r/2ae5e40eed5006ca735e4c12181a9ff5ced65547.1680790580.git.william.gray@linaro.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/remap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/addac/stx104.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/dma/remap.c b/kernel/dma/remap.c
-index b4526668072e7..27596f3b4aef3 100644
---- a/kernel/dma/remap.c
-+++ b/kernel/dma/remap.c
-@@ -43,13 +43,13 @@ void *dma_common_contiguous_remap(struct page *page, size_t size,
- 	void *vaddr;
- 	int i;
+diff --git a/drivers/iio/addac/stx104.c b/drivers/iio/addac/stx104.c
+index e110a910235ff..b658a75d4e3a8 100644
+--- a/drivers/iio/addac/stx104.c
++++ b/drivers/iio/addac/stx104.c
+@@ -117,6 +117,8 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 			return IIO_VAL_INT;
+ 		}
  
--	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-+	pages = kvmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
- 	if (!pages)
- 		return NULL;
- 	for (i = 0; i < count; i++)
- 		pages[i] = nth_page(page, i);
- 	vaddr = vmap(pages, count, VM_DMA_COHERENT, prot);
--	kfree(pages);
-+	kvfree(pages);
++		mutex_lock(&priv->lock);
++
+ 		/* select ADC channel */
+ 		iowrite8(chan->channel | (chan->channel << 4), &reg->achan);
  
- 	return vaddr;
- }
+@@ -127,6 +129,8 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 		while (ioread8(&reg->cir_asr) & BIT(7));
+ 
+ 		*val = ioread16(&reg->ssr_ad);
++
++		mutex_unlock(&priv->lock);
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		/* get ADC bipolar/unipolar configuration */
 -- 
 2.40.1
 
