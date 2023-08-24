@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279811731
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCA3C433C7;
-	Thu, 24 Aug 2023 14:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D33711C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106FDC433C8;
+	Thu, 24 Aug 2023 14:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889075;
-	bh=6pqmm8jqOqfxen75NH+tVBsm7a1n6zaAlPEIKgYbxKE=;
+	s=korg; t=1692889078;
+	bh=ziT8LjD+H6/mXuzlnivpUnSdMdH6GPHZrgYd7YEQQ40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEsTmJSvqOQiow1muZo8HUtpGH91KpT+Zxl4XWnjJ/1eqgxctsVwp8ITj6P3j+vDA
-	 82J7PH1fL0lrVCbVYxra2A+eLEktKRL+dLDxeK2zIVXu5a0OKHvJTeccSc/+GhgNF+
-	 +c8zU5e+mVAQMCPICAmTI9t6H/YN7/Z9qXrzJr7Q=
+	b=Ql3ZGIwXKU5nK4l9NXzO830OBpO5os1CkC9wXIs+NzsxMySzv0c/1hEdLwRnvHHuq
+	 Zk972Pkklv5mR3gdwFCeQDeJxNKF5tuomNwQZgl+XWhH85osOAeYaywVoqsPp5+TXI
+	 IbGkW47QBVeMfrUoycR10WY/0A32w9uzihh7iKoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Joel Stanley <joel@jms.id.au>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/139] soc: aspeed: socinfo: Add kfree for kstrdup
-Date: Thu, 24 Aug 2023 16:50:29 +0200
-Message-ID: <20230824145028.145688308@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 139/139] x86/srso: Correct the mitigation status when SMT is disabled
+Date: Thu, 24 Aug 2023 16:51:02 +0200
+Message-ID: <20230824145029.438143277@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,37 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit 6e6d847a8ce18ab2fbec4f579f682486a82d2c6b ]
+commit 6405b72e8d17bd1875a56ae52d23ec3cd51b9d66 upstream.
 
-Add kfree() in the later error handling in order to avoid memory leak.
+Specify how is SRSO mitigated when SMT is disabled. Also, correct the
+SMT check for that.
 
-Fixes: e0218dca5787 ("soc: aspeed: Add soc info driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230707021625.7727-1-jiasheng@iscas.ac.cn
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20230810123104.231167-1-joel@jms.id.au
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e9fbc47b818b ("x86/srso: Disable the mitigation on unaffected configurations")
+Suggested-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/20230814200813.p5czl47zssuej7nv@treble
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/aspeed/aspeed-socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/bugs.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-socinfo.c b/drivers/soc/aspeed/aspeed-socinfo.c
-index 1ca140356a084..3f759121dc00a 100644
---- a/drivers/soc/aspeed/aspeed-socinfo.c
-+++ b/drivers/soc/aspeed/aspeed-socinfo.c
-@@ -137,6 +137,7 @@ static int __init aspeed_socinfo_init(void)
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2398,8 +2398,7 @@ static void __init srso_select_mitigatio
+ 		 * Zen1/2 with SMT off aren't vulnerable after the right
+ 		 * IBPB microcode has been applied.
+ 		 */
+-		if ((boot_cpu_data.x86 < 0x19) &&
+-		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED))) {
++		if (boot_cpu_data.x86 < 0x19 && !cpu_smt_possible()) {
+ 			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
+ 			return;
+ 		}
+@@ -2689,7 +2688,7 @@ static ssize_t gds_show_state(char *buf)
+ static ssize_t srso_show_state(char *buf)
+ {
+ 	if (boot_cpu_has(X86_FEATURE_SRSO_NO))
+-		return sysfs_emit(buf, "Not affected\n");
++		return sysfs_emit(buf, "Mitigation: SMT disabled\n");
  
- 	soc_dev = soc_device_register(attrs);
- 	if (IS_ERR(soc_dev)) {
-+		kfree(attrs->machine);
- 		kfree(attrs->soc_id);
- 		kfree(attrs->serial_number);
- 		kfree(attrs);
--- 
-2.40.1
-
+ 	return sysfs_emit(buf, "%s%s\n",
+ 			  srso_strings[srso_mitigation],
 
 
