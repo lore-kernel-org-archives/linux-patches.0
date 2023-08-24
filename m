@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D0A11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB35C433C8;
-	Thu, 24 Aug 2023 15:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F359E11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E065C433C7;
+	Thu, 24 Aug 2023 15:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889303;
-	bh=VvB8+NnBnafph951BpQm6JZe0mqA2YpDjVOxFkGhMbk=;
+	s=korg; t=1692889305;
+	bh=FrpZHTJLGrYQpFhA02gC1dQNXv1veS1RTtlq/oHNi5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nb3CmQ7NXTRv1s6Yy6qlnVXn3z9Zd6arl9Yq57Elcon+BYP9v4PJJ5E2zMgfeQxDP
-	 eRHSHxg7fz0+2FetmH6mu58k6zLTzAj5B5YfyMDfZe3cLhqtZVZ5TeV5oWQZdl6ahE
-	 82xZXowOOImZaPG90fqwz4GEri+VDFmZciLZqHJM=
+	b=fBu9Kx/PiqVWNRBX5pObOa77KZgnARxhBZB4KwtUztNR5EMv2UAfuQDlEZFtWOWK7
+	 kc0YbxgE50iO6PpVQp2V8vW6LaIO3SHdPkj2vu42BQBLnW4wQ7cUbm1G3eynLRTXUn
+	 73VBUtvpl8adBeqrPLVbU6Xtix365W0SeNLvMX38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/135] USB: dwc3: qcom: fix NULL-deref on suspend
-Date: Thu, 24 Aug 2023 16:50:01 +0200
-Message-ID: <20230824145029.401701153@linuxfoundation.org>
+Subject: [PATCH 5.10 059/135] mmc: bcm2835: fix deferred probing
+Date: Thu, 24 Aug 2023 16:50:02 +0200
+Message-ID: <20230824145029.450324835@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -38,66 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit d2d69354226de0b333d4405981f3d9c41ba8430a ]
+[ Upstream commit 71150ac12558bcd9d75e6e24cf7c872c2efd80f3 ]
 
-The Qualcomm dwc3 glue driver is currently accessing the driver data of
-the child core device during suspend and on wakeup interrupts. This is
-clearly a bad idea as the child may not have probed yet or could have
-been unbound from its driver.
+The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the error
+codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+so we now can safely ignore it...
 
-The first such layering violation was part of the initial version of the
-driver, but this was later made worse when the hack that accesses the
-driver data of the grand child xhci device to configure the wakeup
-interrupts was added.
-
-Fixing this properly is not that easily done, so add a sanity check to
-make sure that the child driver data is non-NULL before dereferencing it
-for now.
-
-Note that this relies on subtleties like the fact that driver core is
-making sure that the parent is not suspended while the child is probing.
-
-Reported-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/all/20230325165217.31069-4-manivannan.sadhasivam@linaro.org/
-Fixes: d9152161b4bf ("usb: dwc3: Add Qualcomm DWC3 glue layer driver")
-Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-Cc: stable@vger.kernel.org	# 3.18: a872ab303d5d: "usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup"
-Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-ID: <20230607100540.31045-2-johan+linaro@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 660fc733bd74 ("mmc: bcm2835: Add new driver for the sdhost controller.")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230617203622.6812-2-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/mmc/host/bcm2835.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index ec8c43231746e..3973f6c18857e 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -306,7 +306,16 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
- /* Only usable in contexts where the role can not change. */
- static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
- {
--	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-+	struct dwc3 *dwc;
-+
-+	/*
-+	 * FIXME: Fix this layering violation.
-+	 */
-+	dwc = platform_get_drvdata(qcom->dwc3);
-+
-+	/* Core driver may not have probed yet. */
-+	if (!dwc)
-+		return false;
+diff --git a/drivers/mmc/host/bcm2835.c b/drivers/mmc/host/bcm2835.c
+index 8c2361e662774..985079943be76 100644
+--- a/drivers/mmc/host/bcm2835.c
++++ b/drivers/mmc/host/bcm2835.c
+@@ -1413,8 +1413,8 @@ static int bcm2835_probe(struct platform_device *pdev)
+ 	host->max_clk = clk_get_rate(clk);
  
- 	return dwc->xhci;
- }
+ 	host->irq = platform_get_irq(pdev, 0);
+-	if (host->irq <= 0) {
+-		ret = -EINVAL;
++	if (host->irq < 0) {
++		ret = host->irq;
+ 		goto err;
+ 	}
+ 
 -- 
 2.40.1
 
