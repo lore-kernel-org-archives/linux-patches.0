@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1DD11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505D0C433C8;
-	Thu, 24 Aug 2023 14:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A19811C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1953DC433C8;
+	Thu, 24 Aug 2023 14:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889114;
-	bh=AqO6jOTYVM5CEzproR2D2kbakzzL+2/TmRj3xTT+1Fw=;
+	s=korg; t=1692889117;
+	bh=B90roESOduiAmkozdZbYz9C9lRZ4eD0is4BxkWi65QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIBrH1Wr3/LenCYX9Ze2T9E3S/CPgk6ITiAoIMoiNJwOmi350MfTqRZjey5aQOLfq
-	 ERq1soSeaaaBHsGISPSQL+Enw//IM9srzKwzz3v/Plv+Flc2Vws3NIsqVyAcpk2sae
-	 rBek4K6+8TdTismViLQ2SpLtGhbWKfS04J2+rjI0=
+	b=TWaigQGKJ5UjtGbX1FrQU9V0bRxwgvKAvYaCPs4JX02fPd6leEXXlStgtVtYNYdva
+	 pLwaoesY9RktW+DPF3T5h7xolEWklwKmspSem3o+ZsK+PExJKwlMU2B/aA9Xa/q60X
+	 2bhgv5uuPiV5+R59CgN17T9ft9OMNf6OAygC+Olg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clayton Yager <Clayton_Yager@selinc.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/135] macsec: Fix traffic counters/statistics
-Date: Thu, 24 Aug 2023 16:49:05 +0200
-Message-ID: <20230824145027.124063244@linuxfoundation.org>
+Subject: [PATCH 5.10 020/135] RDMA/mlx5: Return the firmware result upon destroying QP/RQ
+Date: Thu, 24 Aug 2023 16:49:23 +0200
+Message-ID: <20230824145027.816778481@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -35,248 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clayton Yager <Clayton_Yager@selinc.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 91ec9bd57f3524ff3d86bfb7c9ee5a315019733c ]
+[ Upstream commit 22664c06e997087fe37f9ba208008c948571214a ]
 
-OutOctetsProtected, OutOctetsEncrypted, InOctetsValidated, and
-InOctetsDecrypted were incrementing by the total number of octets in frames
-instead of by the number of octets of User Data in frames.
+Previously when destroying a QP/RQ, the result of the firmware
+destruction function was ignored and upper layers weren't informed
+about the failure.
+Which in turn could lead to various problems since when upper layer
+isn't aware of the failure it continues its operation thinking that the
+related QP/RQ was successfully destroyed while it actually wasn't,
+which could lead to the below kernel WARN.
 
-The Controlled Port statistics ifOutOctets and ifInOctets were incrementing
-by the total number of octets instead of the number of octets of the MSDUs
-plus octets of the destination and source MAC addresses.
+Currently, we return the correct firmware destruction status to upper
+layers which in case of the RQ would be mlx5_ib_destroy_wq() which
+was already capable of handling RQ destruction failure or in case of
+a QP to destroy_qp_common(), which now would actually warn upon qp
+destruction failure.
 
-The Controlled Port statistics ifInDiscards and ifInErrors were not
-incrementing each time the counters they aggregate were.
+WARNING: CPU: 3 PID: 995 at drivers/infiniband/core/rdma_core.c:940 uverbs_destroy_ufile_hw+0xcb/0xe0 [ib_uverbs]
+Modules linked in: xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi rdma_cm ib_umad ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core overlay mlx5_core fuse
+CPU: 3 PID: 995 Comm: python3 Not tainted 5.16.0-rc5+ #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:uverbs_destroy_ufile_hw+0xcb/0xe0 [ib_uverbs]
+Code: 41 5c 41 5d 41 5e e9 44 34 f0 e0 48 89 df e8 4c 77 ff ff 49 8b 86 10 01 00 00 48 85 c0 74 a1 4c 89 e7 ff d0 eb 9a 0f 0b eb c1 <0f> 0b be 04 00 00 00 48 89 df e8 b6 f6 ff ff e9 75 ff ff ff 90 0f
+RSP: 0018:ffff8881533e3e78 EFLAGS: 00010287
+RAX: ffff88811b2cf3e0 RBX: ffff888106209700 RCX: 0000000000000000
+RDX: ffff888106209780 RSI: ffff8881533e3d30 RDI: ffff888109b101a0
+RBP: 0000000000000001 R08: ffff888127cb381c R09: 0de9890000000009
+R10: ffff888127cb3800 R11: 0000000000000000 R12: ffff888106209780
+R13: ffff888106209750 R14: ffff888100f20660 R15: 0000000000000000
+FS:  00007f8be353b740(0000) GS:ffff88852c980000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8bd5b117c0 CR3: 000000012cd8a004 CR4: 0000000000370ea0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ib_uverbs_close+0x1a/0x90 [ib_uverbs]
+ __fput+0x82/0x230
+ task_work_run+0x59/0x90
+ exit_to_user_mode_prepare+0x138/0x140
+ syscall_exit_to_user_mode+0x1d/0x50
+ ? __x64_sys_close+0xe/0x40
+ do_syscall_64+0x4a/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7f8be3ae0abb
+Code: 03 00 00 00 0f 05 48 3d 00 f0 ff ff 77 41 c3 48 83 ec 18 89 7c 24 0c e8 83 43 f9 ff 8b 7c 24 0c 41 89 c0 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 35 44 89 c7 89 44 24 0c e8 c1 43 f9 ff 8b 44
+RSP: 002b:00007ffdb51909c0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000557bb7f7c020 RCX: 00007f8be3ae0abb
+RDX: 0000557bb7c74010 RSI: 0000557bb7f14ca0 RDI: 0000000000000005
+RBP: 0000557bb7fbd598 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000293 R12: 0000557bb7fbd5b8
+R13: 0000557bb7fbd5a8 R14: 0000000000001000 R15: 0000557bb7f7c020
+ </TASK>
 
-The Controlled Port statistic ifInErrors was not included in the output of
-macsec_get_stats64 so the value was not present in ip commands output.
-
-The ReceiveSA counters InPktsNotValid, InPktsNotUsingSA, and InPktsUnusedSA
-were not incrementing.
-
-Signed-off-by: Clayton Yager <Clayton_Yager@selinc.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 32d0a49d36a2 ("macsec: use DEV_STATS_INC()")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://lore.kernel.org/r/c6df677f931d18090bafbe7f7dbb9524047b7d9b.1685953497.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 58 +++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 49 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/mlx5/qpc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 4fdb970e34823..6691c941f8bb8 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -159,6 +159,19 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
- 	return sa;
+diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
+index c683d7000168d..9a306da7f9496 100644
+--- a/drivers/infiniband/hw/mlx5/qpc.c
++++ b/drivers/infiniband/hw/mlx5/qpc.c
+@@ -297,8 +297,7 @@ int mlx5_core_destroy_qp(struct mlx5_ib_dev *dev, struct mlx5_core_qp *qp)
+ 	MLX5_SET(destroy_qp_in, in, opcode, MLX5_CMD_OP_DESTROY_QP);
+ 	MLX5_SET(destroy_qp_in, in, qpn, qp->qpn);
+ 	MLX5_SET(destroy_qp_in, in, uid, qp->uid);
+-	mlx5_cmd_exec_in(dev->mdev, destroy_qp, in);
+-	return 0;
++	return mlx5_cmd_exec_in(dev->mdev, destroy_qp, in);
  }
  
-+static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
-+{
-+	struct macsec_rx_sa *sa = NULL;
-+	int an;
-+
-+	for (an = 0; an < MACSEC_NUM_AN; an++)	{
-+		sa = macsec_rxsa_get(rx_sc->sa[an]);
-+		if (sa)
-+			break;
-+	}
-+	return sa;
-+}
-+
- static void free_rx_sc_rcu(struct rcu_head *head)
+ int mlx5_core_set_delay_drop(struct mlx5_ib_dev *dev,
+@@ -542,14 +541,14 @@ int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn)
+ 	return mlx5_cmd_exec_in(dev->mdev, dealloc_xrcd, in);
+ }
+ 
+-static void destroy_rq_tracked(struct mlx5_ib_dev *dev, u32 rqn, u16 uid)
++static int destroy_rq_tracked(struct mlx5_ib_dev *dev, u32 rqn, u16 uid)
  {
- 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
-@@ -497,18 +510,28 @@ static void macsec_encrypt_finish(struct sk_buff *skb, struct net_device *dev)
- 	skb->protocol = eth_hdr(skb)->h_proto;
+ 	u32 in[MLX5_ST_SZ_DW(destroy_rq_in)] = {};
+ 
+ 	MLX5_SET(destroy_rq_in, in, opcode, MLX5_CMD_OP_DESTROY_RQ);
+ 	MLX5_SET(destroy_rq_in, in, rqn, rqn);
+ 	MLX5_SET(destroy_rq_in, in, uid, uid);
+-	mlx5_cmd_exec_in(dev->mdev, destroy_rq, in);
++	return mlx5_cmd_exec_in(dev->mdev, destroy_rq, in);
  }
  
-+static unsigned int macsec_msdu_len(struct sk_buff *skb)
-+{
-+	struct macsec_dev *macsec = macsec_priv(skb->dev);
-+	struct macsec_secy *secy = &macsec->secy;
-+	bool sci_present = macsec_skb_cb(skb)->has_sci;
-+
-+	return skb->len - macsec_hdr_len(sci_present) - secy->icv_len;
-+}
-+
- static void macsec_count_tx(struct sk_buff *skb, struct macsec_tx_sc *tx_sc,
- 			    struct macsec_tx_sa *tx_sa)
+ int mlx5_core_create_rq_tracked(struct mlx5_ib_dev *dev, u32 *in, int inlen,
+@@ -580,8 +579,7 @@ int mlx5_core_destroy_rq_tracked(struct mlx5_ib_dev *dev,
+ 				 struct mlx5_core_qp *rq)
  {
-+	unsigned int msdu_len = macsec_msdu_len(skb);
- 	struct pcpu_tx_sc_stats *txsc_stats = this_cpu_ptr(tx_sc->stats);
- 
- 	u64_stats_update_begin(&txsc_stats->syncp);
- 	if (tx_sc->encrypt) {
--		txsc_stats->stats.OutOctetsEncrypted += skb->len;
-+		txsc_stats->stats.OutOctetsEncrypted += msdu_len;
- 		txsc_stats->stats.OutPktsEncrypted++;
- 		this_cpu_inc(tx_sa->stats->OutPktsEncrypted);
- 	} else {
--		txsc_stats->stats.OutOctetsProtected += skb->len;
-+		txsc_stats->stats.OutOctetsProtected += msdu_len;
- 		txsc_stats->stats.OutPktsProtected++;
- 		this_cpu_inc(tx_sa->stats->OutPktsProtected);
- 	}
-@@ -538,9 +561,10 @@ static void macsec_encrypt_done(struct crypto_async_request *base, int err)
- 	aead_request_free(macsec_skb_cb(skb)->req);
- 
- 	rcu_read_lock_bh();
--	macsec_encrypt_finish(skb, dev);
- 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
--	len = skb->len;
-+	/* packet is encrypted/protected so tx_bytes must be calculated */
-+	len = macsec_msdu_len(skb) + 2 * ETH_ALEN;
-+	macsec_encrypt_finish(skb, dev);
- 	ret = dev_queue_xmit(skb);
- 	count_tx(dev, ret, len);
- 	rcu_read_unlock_bh();
-@@ -699,6 +723,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
- 
- 	macsec_skb_cb(skb)->req = req;
- 	macsec_skb_cb(skb)->tx_sa = tx_sa;
-+	macsec_skb_cb(skb)->has_sci = sci_present;
- 	aead_request_set_callback(req, 0, macsec_encrypt_done, skb);
- 
- 	dev_hold(skb->dev);
-@@ -740,15 +765,17 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		rxsc_stats->stats.InPktsLate++;
- 		u64_stats_update_end(&rxsc_stats->syncp);
-+		secy->netdev->stats.rx_dropped++;
- 		return false;
- 	}
- 
- 	if (secy->validate_frames != MACSEC_VALIDATE_DISABLED) {
-+		unsigned int msdu_len = macsec_msdu_len(skb);
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		if (hdr->tci_an & MACSEC_TCI_E)
--			rxsc_stats->stats.InOctetsDecrypted += skb->len;
-+			rxsc_stats->stats.InOctetsDecrypted += msdu_len;
- 		else
--			rxsc_stats->stats.InOctetsValidated += skb->len;
-+			rxsc_stats->stats.InOctetsValidated += msdu_len;
- 		u64_stats_update_end(&rxsc_stats->syncp);
- 	}
- 
-@@ -761,6 +788,8 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsNotValid++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
-+			this_cpu_inc(rx_sa->stats->InPktsNotValid);
-+			secy->netdev->stats.rx_errors++;
- 			return false;
- 		}
- 
-@@ -853,9 +882,9 @@ static void macsec_decrypt_done(struct crypto_async_request *base, int err)
- 
- 	macsec_finalize_skb(skb, macsec->secy.icv_len,
- 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
-+	len = skb->len;
- 	macsec_reset_skb(skb, macsec->secy.netdev);
- 
--	len = skb->len;
- 	if (gro_cells_receive(&macsec->gro_cells, skb) == NET_RX_SUCCESS)
- 		count_rx(dev, len);
- 
-@@ -1046,6 +1075,7 @@ static enum rx_handler_result handle_not_macsec(struct sk_buff *skb)
- 			u64_stats_update_begin(&secy_stats->syncp);
- 			secy_stats->stats.InPktsNoTag++;
- 			u64_stats_update_end(&secy_stats->syncp);
-+			macsec->secy.netdev->stats.rx_dropped++;
- 			continue;
- 		}
- 
-@@ -1155,6 +1185,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		u64_stats_update_begin(&secy_stats->syncp);
- 		secy_stats->stats.InPktsBadTag++;
- 		u64_stats_update_end(&secy_stats->syncp);
-+		secy->netdev->stats.rx_errors++;
- 		goto drop_nosa;
- 	}
- 
-@@ -1165,11 +1196,15 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		/* If validateFrames is Strict or the C bit in the
- 		 * SecTAG is set, discard
- 		 */
-+		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
- 		if (hdr->tci_an & MACSEC_TCI_C ||
- 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsNotUsingSA++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
-+			secy->netdev->stats.rx_errors++;
-+			if (active_rx_sa)
-+				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
- 			goto drop_nosa;
- 		}
- 
-@@ -1179,6 +1214,8 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		rxsc_stats->stats.InPktsUnusedSA++;
- 		u64_stats_update_end(&rxsc_stats->syncp);
-+		if (active_rx_sa)
-+			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
- 		goto deliver;
- 	}
- 
-@@ -1199,6 +1236,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsLate++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
-+			macsec->secy.netdev->stats.rx_dropped++;
- 			goto drop;
- 		}
- 	}
-@@ -1227,6 +1265,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- deliver:
- 	macsec_finalize_skb(skb, secy->icv_len,
- 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
-+	len = skb->len;
- 	macsec_reset_skb(skb, secy->netdev);
- 
- 	if (rx_sa)
-@@ -1234,7 +1273,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	macsec_rxsc_put(rx_sc);
- 
- 	skb_orphan(skb);
--	len = skb->len;
- 	ret = gro_cells_receive(&macsec->gro_cells, skb);
- 	if (ret == NET_RX_SUCCESS)
- 		count_rx(dev, len);
-@@ -1276,6 +1314,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&secy_stats->syncp);
- 			secy_stats->stats.InPktsNoSCI++;
- 			u64_stats_update_end(&secy_stats->syncp);
-+			macsec->secy.netdev->stats.rx_errors++;
- 			continue;
- 		}
- 
-@@ -3407,6 +3446,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
-+	len = skb->len;
- 	skb = macsec_encrypt(skb, dev);
- 	if (IS_ERR(skb)) {
- 		if (PTR_ERR(skb) != -EINPROGRESS)
-@@ -3417,7 +3457,6 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
- 
- 	macsec_encrypt_finish(skb, dev);
--	len = skb->len;
- 	ret = dev_queue_xmit(skb);
- 	count_tx(dev, ret, len);
- 	return ret;
-@@ -3648,6 +3687,7 @@ static void macsec_get_stats64(struct net_device *dev,
- 
- 	s->rx_dropped = dev->stats.rx_dropped;
- 	s->tx_dropped = dev->stats.tx_dropped;
-+	s->rx_errors = dev->stats.rx_errors;
+ 	destroy_resource_common(dev, rq);
+-	destroy_rq_tracked(dev, rq->qpn, rq->uid);
+-	return 0;
++	return destroy_rq_tracked(dev, rq->qpn, rq->uid);
  }
  
- static int macsec_get_iflink(const struct net_device *dev)
+ static void destroy_sq_tracked(struct mlx5_ib_dev *dev, u32 sqn, u16 uid)
 -- 
 2.40.1
 
