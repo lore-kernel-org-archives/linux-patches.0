@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F346814A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FE3C433C7;
-	Thu, 24 Aug 2023 17:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CFC14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC5CC433C8;
+	Thu, 24 Aug 2023 17:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897598;
-	bh=v1B70v50PojW958jlZiiCPev4IGMRNVVEmnbt5EGgm8=;
+	s=korg; t=1692897601;
+	bh=f6iiAGTMuyeIFjwpL+68Y8En2Kqrkt3aGTMEThFi0FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gw7UWLhmvfEsE9hlmkh5zbZ2eUISQi/AD8QLWEbw9/PEA5dbX5JHYlYln8DoocTgx
-	 IQOHQxJ7EgDDcaF3/tLtFiCVvtdJlSuz8PpvlVCplC+qwBDA8PUuDj+cj3ixEZ1IkR
-	 vgSMT71JEbv/4Lmy2LIqszkQckUPfLPjQcVYopi0=
+	b=wKsLH8CMXAAAJdy5rSyu54E8KLc2wJhc2RwDuiej80L7NYIrmhHdmkyZyQgJA7RRR
+	 ewyaCrL+jlivQ4dm5iHNN1Nayxo/B+XlBWk0qFJJqaHbuguDZU8DXlu3o5kb6axCs4
+	 19owBVmHVCYi5Tnn74pCg0tjWD9WXnCf32/EjCKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Andrii Staikov <andrii.staikov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/135] usb: cdns3: fix NCM gadget RX speed 20x slow than expection at iMX8QM
-Date: Thu, 24 Aug 2023 19:08:49 +0200
-Message-ID: <20230824170619.649555165@linuxfoundation.org>
+Subject: [PATCH 5.10 090/135] i40e: fix misleading debug logs
+Date: Thu, 24 Aug 2023 19:09:22 +0200
+Message-ID: <20230824170621.162760426@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -39,61 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-[ Upstream commit dbe678f6192f27879ac9ff6bc7a1036aad85aae9 ]
+[ Upstream commit 2f2beb8874cb0844e84ad26e990f05f4f13ff63f ]
 
-At iMX8QM platform, enable NCM gadget and run 'iperf3 -s'.
-At host, run 'iperf3 -V -c fe80::6863:98ff:feef:3e0%enxc6e147509498'
+Change "write" into the actual "read" word.
+Change parameters description.
 
-[  5]   0.00-1.00   sec  1.55 MBytes  13.0 Mbits/sec   90   4.18 KBytes
-[  5]   1.00-2.00   sec  1.44 MBytes  12.0 Mbits/sec   75   4.18 KBytes
-[  5]   2.00-3.00   sec  1.48 MBytes  12.4 Mbits/sec   75   4.18 KBytes
-
-Expected speed should be bigger than 300Mbits/sec.
-
-The root cause of this performance drop was found to be data corruption
-happening at 4K borders in some Ethernet packets, leading to TCP
-checksum errors. This corruption occurs from the position
-(4K - (address & 0x7F)) to 4K. The u_ether function's allocation of
-skb_buff reserves 64B, meaning all RX addresses resemble 0xXXXX0040.
-
-Force trb_burst_size to 16 can fix this problem.
-
-Cc: stable@vger.kernel.org
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230518154946.3666662-1-Frank.Li@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7073f46e443e ("i40e: Add AQ commands for NVM Update for X722")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/gadget.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_nvm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/cdns3/gadget.c b/drivers/usb/cdns3/gadget.c
-index 24dab7006b823..210c1d6150825 100644
---- a/drivers/usb/cdns3/gadget.c
-+++ b/drivers/usb/cdns3/gadget.c
-@@ -2098,6 +2098,19 @@ int cdns3_ep_config(struct cdns3_endpoint *priv_ep, bool enable)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+index 7164f4ad81202..6b1996451a4bd 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+@@ -210,11 +210,11 @@ static i40e_status i40e_read_nvm_word_srctl(struct i40e_hw *hw, u16 offset,
+  * @hw: pointer to the HW structure.
+  * @module_pointer: module pointer location in words from the NVM beginning
+  * @offset: offset in words from module start
+- * @words: number of words to write
+- * @data: buffer with words to write to the Shadow RAM
++ * @words: number of words to read
++ * @data: buffer with words to read to the Shadow RAM
+  * @last_command: tells the AdminQ that this is the last command
+  *
+- * Writes a 16 bit words buffer to the Shadow RAM using the admin command.
++ * Reads a 16 bit words buffer to the Shadow RAM using the admin command.
+  **/
+ static i40e_status i40e_read_nvm_aq(struct i40e_hw *hw,
+ 				    u8 module_pointer, u32 offset,
+@@ -234,18 +234,18 @@ static i40e_status i40e_read_nvm_aq(struct i40e_hw *hw,
+ 	 */
+ 	if ((offset + words) > hw->nvm.sr_size)
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: offset %d beyond Shadow RAM limit %d\n",
++			   "NVM read error: offset %d beyond Shadow RAM limit %d\n",
+ 			   (offset + words), hw->nvm.sr_size);
+ 	else if (words > I40E_SR_SECTOR_SIZE_IN_WORDS)
+-		/* We can write only up to 4KB (one sector), in one AQ write */
++		/* We can read only up to 4KB (one sector), in one AQ write */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write fail error: tried to write %d words, limit is %d.\n",
++			   "NVM read fail error: tried to read %d words, limit is %d.\n",
+ 			   words, I40E_SR_SECTOR_SIZE_IN_WORDS);
+ 	else if (((offset + (words - 1)) / I40E_SR_SECTOR_SIZE_IN_WORDS)
+ 		 != (offset / I40E_SR_SECTOR_SIZE_IN_WORDS))
+-		/* A single write cannot spread over two sectors */
++		/* A single read cannot spread over two sectors */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: cannot spread over two sectors in a single write offset=%d words=%d\n",
++			   "NVM read error: cannot spread over two sectors in a single read offset=%d words=%d\n",
+ 			   offset, words);
  	else
- 		priv_ep->trb_burst_size = 16;
- 
-+	/*
-+	 * In versions preceding DEV_VER_V2, for example, iMX8QM, there exit the bugs
-+	 * in the DMA. These bugs occur when the trb_burst_size exceeds 16 and the
-+	 * address is not aligned to 128 Bytes (which is a product of the 64-bit AXI
-+	 * and AXI maximum burst length of 16 or 0xF+1, dma_axi_ctrl0[3:0]). This
-+	 * results in data corruption when it crosses the 4K border. The corruption
-+	 * specifically occurs from the position (4K - (address & 0x7F)) to 4K.
-+	 *
-+	 * So force trb_burst_size to 16 at such platform.
-+	 */
-+	if (priv_dev->dev_ver < DEV_VER_V2)
-+		priv_ep->trb_burst_size = 16;
-+
- 	mult = min_t(u8, mult, EP_CFG_MULT_MAX);
- 	buffering = min_t(u8, buffering, EP_CFG_BUFFERING_MAX);
- 	maxburst = min_t(u8, maxburst, EP_CFG_MAXBURST_MAX);
+ 		ret_code = i40e_aq_read_nvm(hw, module_pointer,
 -- 
 2.40.1
 
