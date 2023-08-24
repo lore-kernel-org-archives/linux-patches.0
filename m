@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C900D11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E01C433C7;
-	Thu, 24 Aug 2023 14:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1AF11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF48C433C7;
+	Thu, 24 Aug 2023 14:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889125;
-	bh=7uMCrYuMnT/UNHqM6PzPuLNmu6rsxYDce0f0xBv6334=;
+	s=korg; t=1692889128;
+	bh=tBV+0eH6nSvrJ42FHh3iNrJBxoelSoOyV5u/nlcPWa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TyDXk+cHUp9TJNnKT60f6iuSAnqJtop8X9Lr+CQ2mHwTWa0apTNawGg0whK6QUvFo
-	 0sFjGlivQw+9wtRofKi1dm5bkoUqVFRvGTEUobLfUinWnDqHM6JYR6qN+SV95Vvw62
-	 lbZc9yJUrjXO4XKFhim+bIXI0bifXfoqnSkyDCqM=
+	b=fQYX49Qm9QEXnWu92RKmFeB+e0Mpnj65TsJ3/95+aRMxO2EujfwWiE8YFuqX9g9hE
+	 sHKudNah8KNQC+/5qwjLR9ZWa3ffHZBiIOrdE3kf0M0ZrwQxSoQQTc/Vxwc/v7pcRp
+	 5Lic5G40K+3/d+H/OI02Y2SG97FsJtAOIT30WQrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eran Ben Elisha <eranbe@mellanox.com>,
+	Aya Levin <ayal@nvidia.com>,
+	Moshe Shemesh <moshe@mellanox.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/135] macsec: use DEV_STATS_INC()
-Date: Thu, 24 Aug 2023 16:49:06 +0200
-Message-ID: <20230824145027.159768707@linuxfoundation.org>
+Subject: [PATCH 5.10 004/135] net/mlx5: Refactor init clock function
+Date: Thu, 24 Aug 2023 16:49:07 +0200
+Message-ID: <20230824145027.200189112@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -37,143 +37,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Eran Ben Elisha <eranbe@mellanox.com>
 
-[ Upstream commit 32d0a49d36a2a306c2e47fe5659361e424f0ed3f ]
+[ Upstream commit 1436de0b991548fd859a00c889b8c4dcbbb5f463 ]
 
-syzbot/KCSAN reported data-races in macsec whenever dev->stats fields
-are updated.
+Function mlx5_init_clock() is responsible for internal PTP related metadata
+initializations. Break mlx5_init_clock() to sub functions, each takes care
+of its own logic.
 
-It appears all of these updates can happen from multiple cpus.
-
-Adopt SMP safe DEV_STATS_INC() to update dev->stats fields.
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Eran Ben Elisha <eranbe@mellanox.com>
+Signed-off-by: Aya Levin <ayal@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@mellanox.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: d00620762565 ("net/mlx5: Skip clock update work when device is in error state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ .../ethernet/mellanox/mlx5/core/lib/clock.c   | 76 +++++++++++++------
+ 1 file changed, 53 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 6691c941f8bb8..2ad15b1d7ffd7 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -765,7 +765,7 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		rxsc_stats->stats.InPktsLate++;
- 		u64_stats_update_end(&rxsc_stats->syncp);
--		secy->netdev->stats.rx_dropped++;
-+		DEV_STATS_INC(secy->netdev, rx_dropped);
- 		return false;
- 	}
- 
-@@ -789,7 +789,7 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
- 			rxsc_stats->stats.InPktsNotValid++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
- 			this_cpu_inc(rx_sa->stats->InPktsNotValid);
--			secy->netdev->stats.rx_errors++;
-+			DEV_STATS_INC(secy->netdev, rx_errors);
- 			return false;
- 		}
- 
-@@ -1075,7 +1075,7 @@ static enum rx_handler_result handle_not_macsec(struct sk_buff *skb)
- 			u64_stats_update_begin(&secy_stats->syncp);
- 			secy_stats->stats.InPktsNoTag++;
- 			u64_stats_update_end(&secy_stats->syncp);
--			macsec->secy.netdev->stats.rx_dropped++;
-+			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
- 			continue;
- 		}
- 
-@@ -1185,7 +1185,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		u64_stats_update_begin(&secy_stats->syncp);
- 		secy_stats->stats.InPktsBadTag++;
- 		u64_stats_update_end(&secy_stats->syncp);
--		secy->netdev->stats.rx_errors++;
-+		DEV_STATS_INC(secy->netdev, rx_errors);
- 		goto drop_nosa;
- 	}
- 
-@@ -1202,7 +1202,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsNotUsingSA++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
--			secy->netdev->stats.rx_errors++;
-+			DEV_STATS_INC(secy->netdev, rx_errors);
- 			if (active_rx_sa)
- 				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
- 			goto drop_nosa;
-@@ -1236,7 +1236,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsLate++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
--			macsec->secy.netdev->stats.rx_dropped++;
-+			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
- 			goto drop;
- 		}
- 	}
-@@ -1277,7 +1277,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	if (ret == NET_RX_SUCCESS)
- 		count_rx(dev, len);
- 	else
--		macsec->secy.netdev->stats.rx_dropped++;
-+		DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
- 
- 	rcu_read_unlock();
- 
-@@ -1314,7 +1314,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&secy_stats->syncp);
- 			secy_stats->stats.InPktsNoSCI++;
- 			u64_stats_update_end(&secy_stats->syncp);
--			macsec->secy.netdev->stats.rx_errors++;
-+			DEV_STATS_INC(macsec->secy.netdev, rx_errors);
- 			continue;
- 		}
- 
-@@ -1333,7 +1333,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			secy_stats->stats.InPktsUnknownSCI++;
- 			u64_stats_update_end(&secy_stats->syncp);
- 		} else {
--			macsec->secy.netdev->stats.rx_dropped++;
-+			DEV_STATS_INC(macsec->secy.netdev, rx_dropped);
- 		}
- 	}
- 
-@@ -3442,7 +3442,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- 
- 	if (!secy->operational) {
- 		kfree_skb(skb);
--		dev->stats.tx_dropped++;
-+		DEV_STATS_INC(dev, tx_dropped);
- 		return NETDEV_TX_OK;
- 	}
- 
-@@ -3450,7 +3450,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- 	skb = macsec_encrypt(skb, dev);
- 	if (IS_ERR(skb)) {
- 		if (PTR_ERR(skb) != -EINPROGRESS)
--			dev->stats.tx_dropped++;
-+			DEV_STATS_INC(dev, tx_dropped);
- 		return NETDEV_TX_OK;
- 	}
- 
-@@ -3685,9 +3685,9 @@ static void macsec_get_stats64(struct net_device *dev,
- 
- 	dev_fetch_sw_netstats(s, dev->tstats);
- 
--	s->rx_dropped = dev->stats.rx_dropped;
--	s->tx_dropped = dev->stats.tx_dropped;
--	s->rx_errors = dev->stats.rx_errors;
-+	s->rx_dropped = atomic_long_read(&dev->stats.__rx_dropped);
-+	s->tx_dropped = atomic_long_read(&dev->stats.__tx_dropped);
-+	s->rx_errors = atomic_long_read(&dev->stats.__rx_errors);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
+index 44a434b1178b5..3fbceb4af54e4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
+@@ -591,20 +591,12 @@ static int mlx5_pps_event(struct notifier_block *nb,
+ 	return NOTIFY_OK;
  }
  
- static int macsec_get_iflink(const struct net_device *dev)
+-void mlx5_init_clock(struct mlx5_core_dev *mdev)
++static void mlx5_timecounter_init(struct mlx5_core_dev *mdev)
+ {
+ 	struct mlx5_clock *clock = &mdev->clock;
+-	u64 overflow_cycles;
+-	u64 ns;
+-	u64 frac = 0;
+ 	u32 dev_freq;
+ 
+ 	dev_freq = MLX5_CAP_GEN(mdev, device_frequency_khz);
+-	if (!dev_freq) {
+-		mlx5_core_warn(mdev, "invalid device_frequency_khz, aborting HW clock init\n");
+-		return;
+-	}
+-	seqlock_init(&clock->lock);
+ 	clock->cycles.read = read_internal_timer;
+ 	clock->cycles.shift = MLX5_CYCLES_SHIFT;
+ 	clock->cycles.mult = clocksource_khz2mult(dev_freq,
+@@ -614,6 +606,15 @@ void mlx5_init_clock(struct mlx5_core_dev *mdev)
+ 
+ 	timecounter_init(&clock->tc, &clock->cycles,
+ 			 ktime_to_ns(ktime_get_real()));
++}
++
++static void mlx5_init_overflow_period(struct mlx5_clock *clock)
++{
++	struct mlx5_core_dev *mdev = container_of(clock, struct mlx5_core_dev, clock);
++	struct mlx5_ib_clock_info *clock_info = mdev->clock_info;
++	u64 overflow_cycles;
++	u64 frac = 0;
++	u64 ns;
+ 
+ 	/* Calculate period in seconds to call the overflow watchdog - to make
+ 	 * sure counter is checked at least twice every wrap around.
+@@ -630,24 +631,53 @@ void mlx5_init_clock(struct mlx5_core_dev *mdev)
+ 	do_div(ns, NSEC_PER_SEC / HZ);
+ 	clock->overflow_period = ns;
+ 
+-	mdev->clock_info =
+-		(struct mlx5_ib_clock_info *)get_zeroed_page(GFP_KERNEL);
+-	if (mdev->clock_info) {
+-		mdev->clock_info->nsec = clock->tc.nsec;
+-		mdev->clock_info->cycles = clock->tc.cycle_last;
+-		mdev->clock_info->mask = clock->cycles.mask;
+-		mdev->clock_info->mult = clock->nominal_c_mult;
+-		mdev->clock_info->shift = clock->cycles.shift;
+-		mdev->clock_info->frac = clock->tc.frac;
+-		mdev->clock_info->overflow_period = clock->overflow_period;
+-	}
+-
+-	INIT_WORK(&clock->pps_info.out_work, mlx5_pps_out);
+ 	INIT_DELAYED_WORK(&clock->overflow_work, mlx5_timestamp_overflow);
+ 	if (clock->overflow_period)
+ 		schedule_delayed_work(&clock->overflow_work, 0);
+ 	else
+-		mlx5_core_warn(mdev, "invalid overflow period, overflow_work is not scheduled\n");
++		mlx5_core_warn(mdev,
++			       "invalid overflow period, overflow_work is not scheduled\n");
++
++	if (clock_info)
++		clock_info->overflow_period = clock->overflow_period;
++}
++
++static void mlx5_init_clock_info(struct mlx5_core_dev *mdev)
++{
++	struct mlx5_clock *clock = &mdev->clock;
++	struct mlx5_ib_clock_info *info;
++
++	mdev->clock_info = (struct mlx5_ib_clock_info *)get_zeroed_page(GFP_KERNEL);
++	if (!mdev->clock_info) {
++		mlx5_core_warn(mdev, "Failed to allocate IB clock info page\n");
++		return;
++	}
++
++	info = mdev->clock_info;
++
++	info->nsec = clock->tc.nsec;
++	info->cycles = clock->tc.cycle_last;
++	info->mask = clock->cycles.mask;
++	info->mult = clock->nominal_c_mult;
++	info->shift = clock->cycles.shift;
++	info->frac = clock->tc.frac;
++}
++
++void mlx5_init_clock(struct mlx5_core_dev *mdev)
++{
++	struct mlx5_clock *clock = &mdev->clock;
++
++	if (!MLX5_CAP_GEN(mdev, device_frequency_khz)) {
++		mlx5_core_warn(mdev, "invalid device_frequency_khz, aborting HW clock init\n");
++		return;
++	}
++
++	seqlock_init(&clock->lock);
++
++	mlx5_timecounter_init(mdev);
++	mlx5_init_clock_info(mdev);
++	mlx5_init_overflow_period(clock);
++	INIT_WORK(&clock->pps_info.out_work, mlx5_pps_out);
+ 
+ 	/* Configure the PHC */
+ 	clock->ptp_info = mlx5_ptp_clock_info;
 -- 
 2.40.1
 
