@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4237811731
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B510BC433C7;
-	Thu, 24 Aug 2023 14:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36DF11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767FDC433C7;
+	Thu, 24 Aug 2023 14:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888733;
-	bh=yqQ+EmpLi0nFN89QQ5n69f9cVqnu3sjGQ5ZRqEW7/6A=;
+	s=korg; t=1692888735;
+	bh=19FxRw+VBm/1ssrqx4LdXsDLFSN3d0csQqQ/upAEiUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIJYYIBeKZL2JG0RuXyx7rG9sVy+v8PNtRaHtqzHzFm16fZufoirmXlq4v5jb+muq
-	 shOUW1R1tC1MMz+OVh8GkIeVouwVI0flKR35vhNpTQ+omovg5Uw2ESaikwDNR0G/a2
-	 6LfHOn7vJiNpBli22jw2nJBhJzmLWqjxgik/Wcx8=
+	b=sx3ZIIbi5ijW40o25wOxfuvq/bFbeaMdrqqO5vuXyA9DhnFJkADnU7+tcYHZKSB7u
+	 UMTDzUj5Wh23U9GPZO3TpJQTQQxk6FpZKyN/CmzQUxd7awNsUdlKcZIdMtM5PS/7ei
+	 sj3DpS7eEnhJT7CUDMlVFGlJ16RIZaAkNPGcclBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/139] HID: logitech-hidpp: Add USB and Bluetooth IDs for the Logitech G915 TKL Keyboard
-Date: Thu, 24 Aug 2023 16:48:57 +0200
-Message-ID: <20230824145024.206121867@linuxfoundation.org>
+Subject: [PATCH 5.15 023/139] thunderbolt: Read retimer NVM authentication status prior tb_retimer_set_inbound_sbtx()
+Date: Thu, 24 Aug 2023 16:49:06 +0200
+Message-ID: <20230824145024.577640501@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,43 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: stuarthayhurst <stuart.a.hayhurst@gmail.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 48aea8b445c422a372cf15915101035a47105421 ]
+[ Upstream commit 1402ba08abae5cfa583ff1a40b99c098a0532d41 ]
 
-Adds the USB and Bluetooth IDs for the Logitech G915 TKL keyboard, for device detection
-For this device, this provides battery reporting on top of hid-generic
+According to the USB4 retimer guide the correct order is immediately
+after sending ENUMERATE_RETIMERS so update the code to follow this.
 
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/thunderbolt/retimer.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index c61da859cd3c6..0ac67dd76574e 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4377,6 +4377,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC086) },
- 	{ /* Logitech G903 Hero Gaming Mouse over USB */
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC091) },
-+	{ /* Logitech G915 TKL Keyboard over USB */
-+	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC343) },
- 	{ /* Logitech G920 Wheel over USB */
- 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_G920_WHEEL),
- 		.driver_data = HIDPP_QUIRK_CLASS_G920 | HIDPP_QUIRK_FORCE_OUTPUT_REPORTS},
-@@ -4392,6 +4394,8 @@ static const struct hid_device_id hidpp_devices[] = {
- 	{ /* MX5500 keyboard over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb30b),
- 	  .driver_data = HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS },
-+	{ /* Logitech G915 TKL keyboard over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb35f) },
- 	{ /* M-RCQ142 V470 Cordless Laser Mouse over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb008) },
- 	{ /* MX Master mouse over Bluetooth */
+diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
+index 566c03105fb8d..1b7ab0bbd1328 100644
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -208,6 +208,21 @@ static ssize_t nvm_authenticate_show(struct device *dev,
+ 	return ret;
+ }
+ 
++static void tb_retimer_nvm_authenticate_status(struct tb_port *port, u32 *status)
++{
++	int i;
++
++	tb_port_dbg(port, "reading NVM authentication status of retimers\n");
++
++	/*
++	 * Before doing anything else, read the authentication status.
++	 * If the retimer has it set, store it for the new retimer
++	 * device instance.
++	 */
++	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++)
++		usb4_port_retimer_nvm_authenticate_status(port, i, &status[i]);
++}
++
+ static void tb_retimer_set_inbound_sbtx(struct tb_port *port)
+ {
+ 	int i;
+@@ -481,18 +496,16 @@ int tb_retimer_scan(struct tb_port *port, bool add)
+ 		return ret;
+ 
+ 	/*
+-	 * Enable sideband channel for each retimer. We can do this
+-	 * regardless whether there is device connected or not.
++	 * Immediately after sending enumerate retimers read the
++	 * authentication status of each retimer.
+ 	 */
+-	tb_retimer_set_inbound_sbtx(port);
++	tb_retimer_nvm_authenticate_status(port, status);
+ 
+ 	/*
+-	 * Before doing anything else, read the authentication status.
+-	 * If the retimer has it set, store it for the new retimer
+-	 * device instance.
++	 * Enable sideband channel for each retimer. We can do this
++	 * regardless whether there is device connected or not.
+ 	 */
+-	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++)
+-		usb4_port_retimer_nvm_authenticate_status(port, i, &status[i]);
++	tb_retimer_set_inbound_sbtx(port);
+ 
+ 	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++) {
+ 		/*
 -- 
 2.40.1
 
