@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502B4125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53DDC433C8;
-	Thu, 24 Aug 2023 15:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33245125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A0BC433C7;
+	Thu, 24 Aug 2023 15:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889408;
-	bh=LBkaizgmm2RtNipaDqLm+mQ5VnhF3NnL/vmqwX9QbAw=;
+	s=korg; t=1692889411;
+	bh=gDZdQMC8xmHlWVRNxVrCcw0QsU40lnsmqfVwqvzEFvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UemOZ7VLrdxwdCKQxy0IfdXO0BEKWP0CNGCGbMcJlyGDMZnMJVNaDc24LR8ys0JTD
-	 zaArnZfjfERpF+BpbAp2OTt+QqX/Dcn/PVARtbTYHcZsqd1T3WkCiuc20CjTjvWCCe
-	 02lWHAZhVcAbjZemSZFFYNqTFPbre+AExGpNkii0=
+	b=ybl1nN8dnubCkn1CKVTsrFfdsLSWJI6Wf98/tmmWD3j+kaBgYbwza54GsGMbnnlRo
+	 db8cCay8QtzdCy2NWcpOF68eSOOCNuwCB6sCA8JeyipyYXV2OEkVlAYwbgnvo0J6LO
+	 77IUQLm4o6wwbykwAm8a7ocvtZNhhL3XiX9GQ134=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sishuai Gong <sishuai.system@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/135] ipvs: fix racy memcpy in proc_do_sync_threshold
-Date: Thu, 24 Aug 2023 16:50:29 +0200
-Message-ID: <20230824145030.623412693@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.10 119/135] x86/cpu: Fix __x86_return_thunk symbol type
+Date: Thu, 24 Aug 2023 16:51:02 +0200
+Message-ID: <20230824145032.137115853@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -37,69 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sishuai Gong <sishuai.system@gmail.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
+commit 77f67119004296a9b2503b377d610e08b08afc2a upstream.
 
-When two threads run proc_do_sync_threshold() in parallel,
-data races could happen between the two memcpy():
+Commit
 
-Thread-1			Thread-2
-memcpy(val, valp, sizeof(val));
-				memcpy(valp, val, sizeof(val));
+  fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
 
-This race might mess up the (struct ctl_table *) table->data,
-so we add a mutex lock to serialize them.
+reimplemented __x86_return_thunk with a mix of SYM_FUNC_START and
+SYM_CODE_END, this is not a sane combination.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
-Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
-Acked-by: Simon Horman <horms@kernel.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since nothing should ever actually 'CALL' this, make it consistently
+CODE.
+
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230814121148.571027074@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/lib/retpoline.S |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 29ec3ef63edc7..d0b64c36471d5 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1802,6 +1802,7 @@ static int
- proc_do_sync_threshold(struct ctl_table *table, int write,
- 		       void *buffer, size_t *lenp, loff_t *ppos)
- {
-+	struct netns_ipvs *ipvs = table->extra2;
- 	int *valp = table->data;
- 	int val[2];
- 	int rc;
-@@ -1811,6 +1812,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		.mode = table->mode,
- 	};
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -204,7 +204,9 @@ SYM_CODE_END(srso_safe_ret)
+ SYM_FUNC_END(srso_untrain_ret)
+ __EXPORT_THUNK(srso_untrain_ret)
  
-+	mutex_lock(&ipvs->sync_mutex);
- 	memcpy(val, valp, sizeof(val));
- 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
- 	if (write) {
-@@ -1820,6 +1822,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		else
- 			memcpy(valp, val, sizeof(val));
- 	}
-+	mutex_unlock(&ipvs->sync_mutex);
- 	return rc;
- }
- 
-@@ -4077,6 +4080,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
- 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
- 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
- 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
-+	tbl[idx].extra2 = ipvs;
- 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
- 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
- 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
--- 
-2.40.1
-
+-SYM_FUNC_START(__x86_return_thunk)
++SYM_CODE_START(__x86_return_thunk)
++	UNWIND_HINT_FUNC
++	ANNOTATE_NOENDBR
+ 	ALTERNATIVE_2 "jmp __ret", "call srso_safe_ret", X86_FEATURE_SRSO, \
+ 			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
+ 	int3
 
 
