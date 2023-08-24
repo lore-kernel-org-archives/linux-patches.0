@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF24412B94
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646C6C433C8;
-	Thu, 24 Aug 2023 14:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC212B98
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEFCC433C7;
+	Thu, 24 Aug 2023 14:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888895;
-	bh=yJOsphVYCeuY2KrfiocFcuc5+ZJOsxVcBfNFO3RLtFE=;
+	s=korg; t=1692888898;
+	bh=5WqTcoIHYOO8xCOAukHJuFlTzCWeTEwW0DosCea5RgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LugEFlgfaUoJK+Yj+209TSINStuJx5j5dMca215HE/AB2k7eWPGjF2j6ZcKJnNLbU
-	 ejbmuDBUuZFZhw9Aoe20n8QQDXiEjrMYrGQafQYsiCX4JvVQ01jYqoU6kUgCMIPpgl
-	 KzwMeIczNmQrhljAi54urrw5Z312WHZCCFqp/Glw=
+	b=B9k/IZNUk8IuzVmcByAmcM8WUnNz3mxujGf0QknH+IBf83vDc1piMqxJ2AECTXokp
+	 611km1GmtxakfBiwxZ/TfgJ+nKDh9TOllPtVAhiIQknV30mrVuwOaJIfilyONAimtw
+	 +x9MAVDzRP9+TuuMQi5aBCV6JqH1aBZVxdO3i5K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Kushagra Verma <kushagra765@outlook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/139] usb: dwc3: Remove DWC3 locking during gadget suspend/resume
-Date: Thu, 24 Aug 2023 16:49:35 +0200
-Message-ID: <20230824145025.882975731@linuxfoundation.org>
+Subject: [PATCH 5.15 053/139] usb: dwc3: Fix typos in gadget.c
+Date: Thu, 24 Aug 2023 16:49:36 +0200
+Message-ID: <20230824145025.935667922@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -34,70 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Kushagra Verma <kushagra765@outlook.com>
 
-[ Upstream commit 5265397f94424eaea596026fd34dc7acf474dcec ]
+[ Upstream commit af870d93c706c302a8742d7c751a60a832f7bc64 ]
 
-Remove the need for making dwc3_gadget_suspend() and dwc3_gadget_resume()
-to be called in a spinlock, as dwc3_gadget_run_stop() could potentially
-take some time to complete.
+Fixes the following two typos:
+   1. reinitate -> reinitiate
+   2. revison -> revision
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20220901193625.8727-3-quic_wcheng@quicinc.com
+Signed-off-by: Kushagra Verma <kushagra765@outlook.com>
+Link: https://lore.kernel.org/r/HK0PR01MB280110FAB74B4B2ACE32EA5FF8479@HK0PR01MB2801.apcprd01.prod.exchangelabs.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: c8540870af4c ("usb: dwc3: gadget: Improve dwc3_gadget_suspend() and dwc3_gadget_resume()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c   | 4 ----
- drivers/usb/dwc3/gadget.c | 5 +++++
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/dwc3/gadget.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index f2e841bc05c70..ac119a88e6c76 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1766,9 +1766,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 	case DWC3_GCTL_PRTCAP_DEVICE:
- 		if (pm_runtime_suspended(dwc->dev))
- 			break;
--		spin_lock_irqsave(&dwc->lock, flags);
- 		dwc3_gadget_suspend(dwc);
--		spin_unlock_irqrestore(&dwc->lock, flags);
- 		synchronize_irq(dwc->irq_gadget);
- 		dwc3_core_exit(dwc);
- 		break;
-@@ -1829,9 +1827,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
- 			return ret;
- 
- 		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE);
--		spin_lock_irqsave(&dwc->lock, flags);
- 		dwc3_gadget_resume(dwc);
--		spin_unlock_irqrestore(&dwc->lock, flags);
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
- 		if (!PMSG_IS_AUTO(msg)) {
 diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index b2ffc98c9e747..e0c67a256c214 100644
+index e0c67a256c214..2d5a4d0e63c61 100644
 --- a/drivers/usb/dwc3/gadget.c
 +++ b/drivers/usb/dwc3/gadget.c
-@@ -4439,12 +4439,17 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+@@ -3531,7 +3531,7 @@ static void dwc3_gadget_endpoint_stream_event(struct dwc3_ep *dep,
+ 		 * streams are updated, and the device controller will not be
+ 		 * triggered to generate ERDY to move the next stream data. To
+ 		 * workaround this and maintain compatibility with various
+-		 * hosts, force to reinitate the stream until the host is ready
++		 * hosts, force to reinitiate the stream until the host is ready
+ 		 * instead of waiting for the host to prime the endpoint.
+ 		 */
+ 		if (DWC3_VER_IS_WITHIN(DWC32, 100A, ANY)) {
+@@ -4059,7 +4059,7 @@ static void dwc3_gadget_hibernation_interrupt(struct dwc3 *dwc,
+ 	unsigned int is_ss = evtinfo & BIT(4);
  
- int dwc3_gadget_suspend(struct dwc3 *dwc)
- {
-+	unsigned long flags;
-+
- 	if (!dwc->gadget_driver)
- 		return 0;
- 
- 	dwc3_gadget_run_stop(dwc, false, false);
-+
-+	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc3_disconnect_gadget(dwc);
- 	__dwc3_gadget_stop(dwc);
-+	spin_unlock_irqrestore(&dwc->lock, flags);
- 
- 	return 0;
- }
+ 	/*
+-	 * WORKAROUND: DWC3 revison 2.20a with hibernation support
++	 * WORKAROUND: DWC3 revision 2.20a with hibernation support
+ 	 * have a known issue which can cause USB CV TD.9.23 to fail
+ 	 * randomly.
+ 	 *
 -- 
 2.40.1
 
