@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E311C111A8
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BD0C433C9;
-	Thu, 24 Aug 2023 14:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCE5111A8
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD6CC433C8;
+	Thu, 24 Aug 2023 14:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692886542;
-	bh=iCXqDsUDa0kmrku0NEKsRYIZsOnBcVJqDMHOapPh2J8=;
+	s=korg; t=1692886545;
+	bh=u/pao4YBnKqtDvOQjiCAh/ojzQMYfgEkexng0fR5Avg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pWJn+TxJcPLlywrVpKC4YbhmVB3crEZkwZptlunfGuGzFiF5l2wFrFibMLNPW2lx
-	 6bs9bnEwFxmwhKbNaPCj0hCMuQcpu8TPxNEYo3cfJcNn6jw+dSzR8EnvjataN07ndF
-	 9ahiH7agcGL/3jjJBadR/gfPyY4HUCeDlJqCoxTs=
+	b=w3/MB00rAb5owCXcKAegGixr2ybEx/uO8ti9q2CX11QVMCyKavkMEl/H28t73mcPR
+	 fNl/bUyyEpcpdElW/4XFUhGLIaHhNP6UkWfWzseCqJP5nkceGHl7cHOlvRXQHr1Lbf
+	 Y3IurgJW/EFUAnoFlWkCxMxusCeCjGQUWQhaYGzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 02/15] x86/cpu: Fix up srso_safe_ret() and __x86_return_thunk()
-Date: Thu, 24 Aug 2023 16:14:58 +0200
-Message-ID: <20230824141447.295186481@linuxfoundation.org>
+Subject: [PATCH 6.1 03/15] x86/alternative: Make custom return thunk unconditional
+Date: Thu, 24 Aug 2023 16:14:59 +0200
+Message-ID: <20230824141447.344456772@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
 References: <20230824141447.155846739@linuxfoundation.org>
@@ -36,46 +36,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-commit af023ef335f13c8b579298fc432daeef609a9e60 upstream.
+commit 095b8303f3835c68ac4a8b6d754ca1c3b6230711 upstream.
 
-  vmlinux.o: warning: objtool: srso_untrain_ret() falls through to next function __x86_return_skl()
-  vmlinux.o: warning: objtool: __x86_return_thunk() falls through to next function __x86_return_skl()
+There is infrastructure to rewrite return thunks to point to any
+random thunk one desires, unwrap that from CALL_THUNKS, which up to
+now was the sole user of that.
 
-This is because these functions (can) end with CALL, which objtool
-does not consider a terminating instruction. Therefore, replace the
-INT3 instruction (which is a non-fatal trap) with UD2 (which is a
-fatal-trap).
+  [ bp: Make the thunks visible on 32-bit and add ifdeffery for the
+    32-bit builds. ]
 
-This indicates execution will not continue past this point.
-
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121148.637802730@infradead.org
+Link: https://lore.kernel.org/r/20230814121148.775293785@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/lib/retpoline.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |    5 +++++
+ arch/x86/kernel/cpu/bugs.c           |    2 ++
+ 2 files changed, 7 insertions(+)
 
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -202,7 +202,7 @@ SYM_INNER_LABEL(srso_safe_ret, SYM_L_GLO
- 	int3
- 	lfence
- 	call srso_safe_ret
--	int3
-+	ud2
- SYM_CODE_END(srso_safe_ret)
- SYM_FUNC_END(srso_untrain_ret)
- __EXPORT_THUNK(srso_untrain_ret)
-@@ -212,7 +212,7 @@ SYM_CODE_START(__x86_return_thunk)
- 	ANNOTATE_NOENDBR
- 	ALTERNATIVE_2 "jmp __ret", "call srso_safe_ret", X86_FEATURE_SRSO, \
- 			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
--	int3
-+	ud2
- SYM_CODE_END(__x86_return_thunk)
- EXPORT_SYMBOL(__x86_return_thunk)
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -210,7 +210,12 @@
+ typedef u8 retpoline_thunk_t[RETPOLINE_THUNK_SIZE];
+ extern retpoline_thunk_t __x86_indirect_thunk_array[];
  
++#ifdef CONFIG_RETHUNK
+ extern void __x86_return_thunk(void);
++#else
++static inline void __x86_return_thunk(void) {}
++#endif
++
+ extern void zen_untrain_ret(void);
+ extern void srso_untrain_ret(void);
+ extern void srso_untrain_ret_alias(void);
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -62,6 +62,8 @@ EXPORT_SYMBOL_GPL(x86_pred_cmd);
+ 
+ static DEFINE_MUTEX(spec_ctrl_mutex);
+ 
++void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
++
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
+ static void update_spec_ctrl(u64 val)
+ {
 
 
