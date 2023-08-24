@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E49411C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10257C433C7;
-	Thu, 24 Aug 2023 14:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F5111C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CBBC433C9;
+	Thu, 24 Aug 2023 14:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888948;
-	bh=l5Lfewx5P5Ywas8Lsf3dBoFxdVGgOIDGkSQkJlkBSJM=;
+	s=korg; t=1692888951;
+	bh=BmgkevON/ymIVT+fIBmoaZjcC1WOXo5MKmfDjBfG/40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dCNweB9oHC/Juq9lsCxxN4rXCVywaCX+jx8odvZdnxCaidNqyj4dyzeXTzGtESIA
-	 eXz+B8Lp++T3vp6Oh+Q34ZkggWCroLIsj8ZSMLLagPY8OkfSwp9HoOzToGAtxwNHb/
-	 CrzDD9mur9pDbE7Vr+zqA9Mv/v8gfFhd2E3CIlMc=
+	b=bh89aSPMXlKujjMDviPu8uMvm+DVielGAAxKRqRfCesWs99ZPWZUTUEnDSuyZ/hvB
+	 izrFEhGaGl0MxY3zm7QV6iTJR2rbszmYdXyDel3ZAaK9lK9ECmwci9xofikW0+QyLv
+	 12zJFkTjob7fkiQ/o/EnFGPdo3mssphMgBBJu43E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/139] sock: Fix misuse of sk_under_memory_pressure()
-Date: Thu, 24 Aug 2023 16:50:22 +0200
-Message-ID: <20230824145027.883338379@linuxfoundation.org>
+Subject: [PATCH 5.15 100/139] net: do not allow gso_size to be set to GSO_BY_FRAGS
+Date: Thu, 24 Aug 2023 16:50:23 +0200
+Message-ID: <20230824145027.924263227@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,72 +42,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2d0c88e84e483982067a82073f6125490ddf3614 ]
+[ Upstream commit b616be6b97688f2f2bd7c4a47ab32f27f94fb2a9 ]
 
-The status of global socket memory pressure is updated when:
+One missing check in virtio_net_hdr_to_skb() allowed
+syzbot to crash kernels again [1]
 
-  a) __sk_mem_raise_allocated():
+Do not allow gso_size to be set to GSO_BY_FRAGS (0xffff),
+because this magic value is used by the kernel.
 
-	enter: sk_memory_allocated(sk) >  sysctl_mem[1]
-	leave: sk_memory_allocated(sk) <= sysctl_mem[0]
+[1]
+general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
+CPU: 0 PID: 5039 Comm: syz-executor401 Not tainted 6.5.0-rc5-next-20230809-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+RIP: 0010:skb_segment+0x1a52/0x3ef0 net/core/skbuff.c:4500
+Code: 00 00 00 e9 ab eb ff ff e8 6b 96 5d f9 48 8b 84 24 00 01 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e ea 21 00 00 48 8b 84 24 00 01
+RSP: 0018:ffffc90003d3f1c8 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 000000000001fffe RCX: 0000000000000000
+RDX: 000000000000000e RSI: ffffffff882a3115 RDI: 0000000000000070
+RBP: ffffc90003d3f378 R08: 0000000000000005 R09: 000000000000ffff
+R10: 000000000000ffff R11: 5ee4a93e456187d6 R12: 000000000001ffc6
+R13: dffffc0000000000 R14: 0000000000000008 R15: 000000000000ffff
+FS: 00005555563f2380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020020000 CR3: 000000001626d000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+udp6_ufo_fragment+0x9d2/0xd50 net/ipv6/udp_offload.c:109
+ipv6_gso_segment+0x5c4/0x17b0 net/ipv6/ip6_offload.c:120
+skb_mac_gso_segment+0x292/0x610 net/core/gso.c:53
+__skb_gso_segment+0x339/0x710 net/core/gso.c:124
+skb_gso_segment include/net/gso.h:83 [inline]
+validate_xmit_skb+0x3a5/0xf10 net/core/dev.c:3625
+__dev_queue_xmit+0x8f0/0x3d60 net/core/dev.c:4329
+dev_queue_xmit include/linux/netdevice.h:3082 [inline]
+packet_xmit+0x257/0x380 net/packet/af_packet.c:276
+packet_snd net/packet/af_packet.c:3087 [inline]
+packet_sendmsg+0x24c7/0x5570 net/packet/af_packet.c:3119
+sock_sendmsg_nosec net/socket.c:727 [inline]
+sock_sendmsg+0xd9/0x180 net/socket.c:750
+____sys_sendmsg+0x6ac/0x940 net/socket.c:2496
+___sys_sendmsg+0x135/0x1d0 net/socket.c:2550
+__sys_sendmsg+0x117/0x1e0 net/socket.c:2579
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7ff27cdb34d9
 
-  b) __sk_mem_reduce_allocated():
-
-	leave: sk_under_memory_pressure(sk) &&
-		sk_memory_allocated(sk) < sysctl_mem[0]
-
-So the conditions of leaving global pressure are inconstant, which
-may lead to the situation that one pressured net-memcg prevents the
-global pressure from being cleared when there is indeed no global
-pressure, thus the global constrains are still in effect unexpectedly
-on the other sockets.
-
-This patch fixes this by ignoring the net-memcg's pressure when
-deciding whether should leave global memory pressure.
-
-Fixes: e1aab161e013 ("socket: initial cgroup code.")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Link: https://lore.kernel.org/r/20230816091226.1542-1-wuyun.abel@bytedance.com
+Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230816142158.1779798-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 6 ++++++
- net/core/sock.c    | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ include/linux/virtio_net.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 93a6717213aeb..6b12b62417e08 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1381,6 +1381,12 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
- 	return sk->sk_prot->memory_pressure != NULL;
- }
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index a960de68ac69e..6047058d67037 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -148,6 +148,10 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
+ 		if (gso_type & SKB_GSO_UDP)
+ 			nh_off -= thlen;
  
-+static inline bool sk_under_global_memory_pressure(const struct sock *sk)
-+{
-+	return sk->sk_prot->memory_pressure &&
-+		!!*sk->sk_prot->memory_pressure;
-+}
++		/* Kernel has a special handling for GSO_BY_FRAGS. */
++		if (gso_size == GSO_BY_FRAGS)
++			return -EINVAL;
 +
- static inline bool sk_under_memory_pressure(const struct sock *sk)
- {
- 	if (!sk->sk_prot->memory_pressure)
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 1f9401d757cbb..ae1e9e2b82557 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2880,7 +2880,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
- 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
- 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
- 
--	if (sk_under_memory_pressure(sk) &&
-+	if (sk_under_global_memory_pressure(sk) &&
- 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
- 		sk_leave_memory_pressure(sk);
- }
+ 		/* Too small packets are not really GSO ones. */
+ 		if (skb->len - nh_off > gso_size) {
+ 			shinfo->gso_size = gso_size;
 -- 
 2.40.1
 
