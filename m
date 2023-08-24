@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAC914A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5B3C433C7;
-	Thu, 24 Aug 2023 17:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8830914A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:20:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09142C433C8;
+	Thu, 24 Aug 2023 17:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897629;
-	bh=Lhux/+oxpqTY9nto6lQLRim13hsKcUXcDSrTK+p/mk8=;
+	s=korg; t=1692897632;
+	bh=X0cVkb4r82Zd3kACm/BanmPDkq3o6quXZKFtT+9yfQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OqY/XW03QnczHH55aQOlbQ5DLxoGTlHOgzBQJLpE0BhvuyuVu0qTPsihfBL11aPDF
-	 RNyJhg3Am6bGS2qAAyZT/M+qMm0lWnhgp+U3zRWJbZmGysHedx/Un8yD0zV5Mey6SM
-	 kBBmhUe6tk1TH4hRivuZ/Y336etkvlxXmJyAF/WY=
+	b=A7rRFyUPDJoNBNIC7q6bL2pCAdJuaob8AgUTshc8v94PThMr+/S7TRPciJNkrLWwi
+	 DnOt/E0CJtFSQJ57Iw/Ms1rFh8Ak0mV0FUAfBqfVHKXU16uPvG4m2/FdsVhx4ZzIsK
+	 hoqQJzy5UNr9KFy06BDdHd7VLous2aUBKUnx2cj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo YU <tsu.yubo@gmail.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Alfred Lee <l00g33k@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/135] riscv: uaccess: Return the number of bytes effectively not copied
-Date: Thu, 24 Aug 2023 19:09:40 +0200
-Message-ID: <20230824170621.949237240@linuxfoundation.org>
+Subject: [PATCH 5.10 091/135] net: dsa: mv88e6xxx: Wait for EEPROM done before HW reset
+Date: Thu, 24 Aug 2023 19:09:23 +0200
+Message-ID: <20230824170621.202822152@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -37,93 +35,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Alfred Lee <l00g33k@gmail.com>
 
-[ Upstream commit 4b05b993900dd3eba0fc83ef5c5ddc7d65d786c6 ]
+[ Upstream commit 23d775f12dcd23d052a4927195f15e970e27ab26 ]
 
-It was reported that the riscv kernel hangs while executing the test
-in [1].
+If the switch is reset during active EEPROM transactions, as in
+just after an SoC reset after power up, the I2C bus transaction
+may be cut short leaving the EEPROM internal I2C state machine
+in the wrong state.  When the switch is reset again, the bad
+state machine state may result in data being read from the wrong
+memory location causing the switch to enter unexpected mode
+rendering it inoperational.
 
-Indeed, the test hangs when trying to write a buffer to a file. The
-problem is that the riscv implementation of raw_copy_from_user() does not
-return the correct number of bytes not written when an exception happens
-and is fixed up, instead it always returns the initial size to copy,
-even if some bytes were actually copied.
-
-generic_perform_write() pre-faults the user pages and bails out if nothing
-can be written, otherwise it will access the userspace buffer: here the
-riscv implementation keeps returning it was not able to copy any byte
-though the pre-faulting indicates otherwise. So generic_perform_write()
-keeps retrying to access the user memory and ends up in an infinite
-loop.
-
-Note that before the commit mentioned in [1] that introduced this
-regression, it worked because generic_perform_write() would bail out if
-only one byte could not be written.
-
-So fix this by returning the number of bytes effectively not written in
-__asm_copy_[to|from]_user() and __clear_user(), as it is expected.
-
-Link: https://lore.kernel.org/linux-riscv/20230309151841.bomov6hq3ybyp42a@debian/ [1]
-Fixes: ebcbd75e3962 ("riscv: Fix the bug in memory access fixup code")
-Reported-by: Bo YU <tsu.yubo@gmail.com>
-Closes: https://lore.kernel.org/linux-riscv/20230309151841.bomov6hq3ybyp42a@debian/#t
-Reported-by: Aurelien Jarno <aurelien@aurel32.net>
-Closes: https://lore.kernel.org/linux-riscv/ZNOnCakhwIeue3yr@aurel32.net/
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-Link: https://lore.kernel.org/r/20230811150604.1621784-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: a3dcb3e7e70c ("net: dsa: mv88e6xxx: Wait for EEPROM done after HW reset")
+Signed-off-by: Alfred Lee <l00g33k@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230815001323.24739-1-l00g33k@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/lib/uaccess.S | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/riscv/lib/uaccess.S b/arch/riscv/lib/uaccess.S
-index 039050172d083..80866dea07418 100644
---- a/arch/riscv/lib/uaccess.S
-+++ b/arch/riscv/lib/uaccess.S
-@@ -19,8 +19,11 @@ ENTRY(__asm_copy_from_user)
- 	li t6, SR_SUM
- 	csrs CSR_STATUS, t6
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 8b2c8546f4c99..177151298d72a 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2310,6 +2310,14 @@ static void mv88e6xxx_hardware_reset(struct mv88e6xxx_chip *chip)
  
--	/* Save for return value */
--	mv	t5, a2
-+	/*
-+	 * Save the terminal address which will be used to compute the number
-+	 * of bytes copied in case of a fixup exception.
-+	 */
-+	add	t5, a0, a2
- 
- 	/*
- 	 * Register allocation for code below:
-@@ -179,7 +182,7 @@ ENTRY(__asm_copy_from_user)
- 10:
- 	/* Disable access to user memory */
- 	csrc CSR_STATUS, t6
--	mv a0, t5
-+	sub a0, t5, a0
- 	ret
- ENDPROC(__asm_copy_to_user)
- ENDPROC(__asm_copy_from_user)
-@@ -231,7 +234,7 @@ ENTRY(__clear_user)
- 11:
- 	/* Disable access to user memory */
- 	csrc CSR_STATUS, t6
--	mv a0, a1
-+	sub a0, a3, a0
- 	ret
- ENDPROC(__clear_user)
- EXPORT_SYMBOL(__clear_user)
+ 	/* If there is a GPIO connected to the reset pin, toggle it */
+ 	if (gpiod) {
++		/* If the switch has just been reset and not yet completed
++		 * loading EEPROM, the reset may interrupt the I2C transaction
++		 * mid-byte, causing the first EEPROM read after the reset
++		 * from the wrong location resulting in the switch booting
++		 * to wrong mode and inoperable.
++		 */
++		mv88e6xxx_g1_wait_eeprom_done(chip);
++
+ 		gpiod_set_value_cansleep(gpiod, 1);
+ 		usleep_range(10000, 20000);
+ 		gpiod_set_value_cansleep(gpiod, 0);
 -- 
 2.40.1
 
