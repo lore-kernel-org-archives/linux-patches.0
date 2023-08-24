@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33245125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A0BC433C7;
-	Thu, 24 Aug 2023 15:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A16F125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C945C433C7;
+	Thu, 24 Aug 2023 15:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889411;
-	bh=gDZdQMC8xmHlWVRNxVrCcw0QsU40lnsmqfVwqvzEFvI=;
+	s=korg; t=1692889413;
+	bh=JcMTKAao5xIr4STs+9Z4wat7QwkEF0kCmkY0q3CaJGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybl1nN8dnubCkn1CKVTsrFfdsLSWJI6Wf98/tmmWD3j+kaBgYbwza54GsGMbnnlRo
-	 db8cCay8QtzdCy2NWcpOF68eSOOCNuwCB6sCA8JeyipyYXV2OEkVlAYwbgnvo0J6LO
-	 77IUQLm4o6wwbykwAm8a7ocvtZNhhL3XiX9GQ134=
+	b=paKe+57GS30GOMc+UasUWrTj2z5ZO6ZriJ3SUHYyFWYGEO8vmwLS29G4yHHzV5bCA
+	 lOn3u/61rxvq6WfwkN3Sva3g1zZpgq6voeg0lACZBXTRvTmhChYdpYgXWhC9RkY6W9
+	 h7m4Tv5vcx/oFnBtk7CYXyEQZuRMlw//gbwRrwBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 119/135] x86/cpu: Fix __x86_return_thunk symbol type
-Date: Thu, 24 Aug 2023 16:51:02 +0200
-Message-ID: <20230824145032.137115853@linuxfoundation.org>
+Subject: [PATCH 5.10 128/135] x86/srso: Explain the untraining sequences a bit more
+Date: Thu, 24 Aug 2023 16:51:11 +0200
+Message-ID: <20230824145032.573875660@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -34,41 +33,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 77f67119004296a9b2503b377d610e08b08afc2a upstream.
+commit 9dbd23e42ff0b10c9b02c9e649c76e5228241a8e upstream.
 
-Commit
+The goal is to eventually have a proper documentation about all this.
 
-  fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-
-reimplemented __x86_return_thunk with a mix of SYM_FUNC_START and
-SYM_CODE_END, this is not a sane combination.
-
-Since nothing should ever actually 'CALL' this, make it consistently
-CODE.
-
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121148.571027074@infradead.org
+Link: https://lore.kernel.org/r/20230814164447.GFZNpZ/64H4lENIe94@fat_crate.local
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/lib/retpoline.S |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/lib/retpoline.S |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 --- a/arch/x86/lib/retpoline.S
 +++ b/arch/x86/lib/retpoline.S
-@@ -204,7 +204,9 @@ SYM_CODE_END(srso_safe_ret)
- SYM_FUNC_END(srso_untrain_ret)
- __EXPORT_THUNK(srso_untrain_ret)
+@@ -128,6 +128,25 @@ SYM_CODE_START(srso_alias_return_thunk)
+ SYM_CODE_END(srso_alias_return_thunk)
  
--SYM_FUNC_START(__x86_return_thunk)
-+SYM_CODE_START(__x86_return_thunk)
-+	UNWIND_HINT_FUNC
-+	ANNOTATE_NOENDBR
- 	ALTERNATIVE_2 "jmp __ret", "call srso_safe_ret", X86_FEATURE_SRSO, \
- 			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
- 	int3
+ /*
++ * Some generic notes on the untraining sequences:
++ *
++ * They are interchangeable when it comes to flushing potentially wrong
++ * RET predictions from the BTB.
++ *
++ * The SRSO Zen1/2 (MOVABS) untraining sequence is longer than the
++ * Retbleed sequence because the return sequence done there
++ * (srso_safe_ret()) is longer and the return sequence must fully nest
++ * (end before) the untraining sequence. Therefore, the untraining
++ * sequence must fully overlap the return sequence.
++ *
++ * Regarding alignment - the instructions which need to be untrained,
++ * must all start at a cacheline boundary for Zen1/2 generations. That
++ * is, instruction sequences starting at srso_safe_ret() and
++ * the respective instruction sequences at retbleed_return_thunk()
++ * must start at a cacheline boundary.
++ */
++
++/*
+  * Safety details here pertain to the AMD Zen{1,2} microarchitecture:
+  * 1) The RET at retbleed_return_thunk must be on a 64 byte boundary, for
+  *    alignment within the BTB.
 
 
