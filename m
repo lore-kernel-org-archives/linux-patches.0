@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64C511C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565E4C433C8;
-	Thu, 24 Aug 2023 15:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B6C11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DA9C433C7;
+	Thu, 24 Aug 2023 15:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889297;
-	bh=t5XLQs3zPIMxJ1plc8R9tWGnqkSLJC8bTIky5DMvWbM=;
+	s=korg; t=1692889300;
+	bh=8b9ucScws4hp3uNwv4Ms+1DZBrRPXIDIr+1UVZfdkLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BcqF4i0YEvaAefdvGSKf6hlq3eB/stiTrtOTLRQ/Z9ZeppUqiifb85cICdsR4wihE
-	 4sFJoRyNcLuEjNFpSsbKAvxLavuZJ5B38vchpExWioxehTg1h3g7hF5mhj4v0Q7jx9
-	 Tbr7WZdvcJFeeWqYSCKg5TRsfIj8GNzqOIJguXe8=
+	b=KdK/zdJYQJ9wBxTdSOn/DRHs96OD22SF81P26MF+w0PFru5RgDu4wc54Z9PKAenoD
+	 +vEV9s0xY8FFSqK8VIInPv0B9GzUgBNn1yxd1YDVvne+M1bKtEAGZn09IoW/tIr1wn
+	 /MIt/D0W0RlxZsnSa3pAqEPargrKMX0TT49NCtC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/135] selftests: mirror_gre_changes: Tighten up the TTL test match
-Date: Thu, 24 Aug 2023 16:50:27 +0200
-Message-ID: <20230824145030.533258481@linuxfoundation.org>
+Subject: [PATCH 5.10 085/135] drm/panel: simple: Fix AUO G121EAN01 panel timings according to the docs
+Date: Thu, 24 Aug 2023 16:50:28 +0200
+Message-ID: <20230824145030.575445553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -38,46 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Machata <petrm@nvidia.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit 855067defa36b1f9effad8c219d9a85b655cf500 ]
+[ Upstream commit e8470c0a7bcaa82f78ad34282d662dd7bd9630c2 ]
 
-This test verifies whether the encapsulated packets have the correct
-configured TTL. It does so by sending ICMP packets through the test
-topology and mirroring them to a gretap netdevice. On a busy host
-however, more than just the test ICMP packets may end up flowing
-through the topology, get mirrored, and counted. This leads to
-potential spurious failures as the test observes much more mirrored
-packets than the sent test packets, and assumes a bug.
+Commit 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4
+panel") added support for this panel model, but the timings it implements
+are very different from what the datasheet describes. I checked both the
+G121EAN01.0 datasheet from [0] and the G121EAN01.4 one from [1] and they
+all have the same timings: for example the LVDS clock typical value is 74.4
+MHz, not 66.7 MHz as implemented.
 
-Fix this by tightening up the mirror action match. Change it from
-matchall to a flower classifier matching on ICMP packets specifically.
+Replace the timings with the ones from the documentation. These timings
+have been tested and the clock frequencies verified with an oscilloscope to
+ensure they are correct.
 
-Fixes: 45315673e0c5 ("selftests: forwarding: Test changes in mirror-to-gretap")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Also use struct display_timing instead of struct drm_display_mode in order
+to also specify the minimum and maximum values.
+
+[0] https://embedded.avnet.com/product/g121ean01-0/
+[1] https://embedded.avnet.com/product/g121ean01-4/
+
+Fixes: 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4 panel")
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230804151239.835216-1-luca.ceresoli@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/mirror_gre_changes.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-simple.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh b/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh
-index 472bd023e2a5f..b501b366367f7 100755
---- a/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh
-+++ b/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh
-@@ -72,7 +72,8 @@ test_span_gre_ttl()
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 7b69f81444ebd..e40321d798981 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1010,21 +1010,21 @@ static const struct panel_desc auo_g104sn02 = {
+ 	},
+ };
  
- 	RET=0
+-static const struct drm_display_mode auo_g121ean01_mode = {
+-	.clock = 66700,
+-	.hdisplay = 1280,
+-	.hsync_start = 1280 + 58,
+-	.hsync_end = 1280 + 58 + 8,
+-	.htotal = 1280 + 58 + 8 + 70,
+-	.vdisplay = 800,
+-	.vsync_start = 800 + 6,
+-	.vsync_end = 800 + 6 + 4,
+-	.vtotal = 800 + 6 + 4 + 10,
++static const struct display_timing auo_g121ean01_timing = {
++	.pixelclock = { 60000000, 74400000, 90000000 },
++	.hactive = { 1280, 1280, 1280 },
++	.hfront_porch = { 20, 50, 100 },
++	.hback_porch = { 20, 50, 100 },
++	.hsync_len = { 30, 100, 200 },
++	.vactive = { 800, 800, 800 },
++	.vfront_porch = { 2, 10, 25 },
++	.vback_porch = { 2, 10, 25 },
++	.vsync_len = { 4, 18, 50 },
+ };
  
--	mirror_install $swp1 ingress $tundev "matchall $tcflags"
-+	mirror_install $swp1 ingress $tundev \
-+		"prot ip flower $tcflags ip_prot icmp"
- 	tc filter add dev $h3 ingress pref 77 prot $prot \
- 		flower ip_ttl 50 action pass
- 
+ static const struct panel_desc auo_g121ean01 = {
+-	.modes = &auo_g121ean01_mode,
+-	.num_modes = 1,
++	.timings = &auo_g121ean01_timing,
++	.num_timings = 1,
+ 	.bpc = 8,
+ 	.size = {
+ 		.width = 261,
 -- 
 2.40.1
 
