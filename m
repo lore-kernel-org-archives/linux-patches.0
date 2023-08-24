@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9551119B
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9B2C433C8;
-	Thu, 24 Aug 2023 14:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32B01119B
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686B9C433C8;
+	Thu, 24 Aug 2023 14:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888860;
-	bh=jltj/H5xCx1bUjyJEiFAiQ+aEbwSGHQMsOAppHVkWqg=;
+	s=korg; t=1692888862;
+	bh=w6Uep2PxyRoMuCEcdxXDauQzEWqusgBp5Ydl+tNOKfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlkYOtsgY8ZBo7fSawvLZlYmZnP6uiiuJDBU3N0vghHpgOZPKQ49JE1w3N56FVF3b
-	 rak5ThVs0tZ+g/JqjwnyTXMNo8M512ouIvSA+jEYEIh7IxclosEdsakqBZNI/0gaDF
-	 qGbFKgge7EuwrEh30Vn9M73acBnEofYilK+ubwA0=
+	b=krsgdj0q+uPWFI8duISnUStcgAuulmDijwRz+ouUBAVzCqPFP5dq5faqL2JBI2hPH
+	 OqMuvZCN9tUP5HPHj3UmSbNJBtQI/UxIVUhLj/WPdr6tNjza/R2sdu53tZ4SknJnfU
+	 ElsudpVBdaeKxsFDgDcvjmgyZH3/S79KHM2iHtPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	xieyongji@bytedance.com,
+	Jason Wang <jasowang@redhat.com>,
+	Maxime Coquelin <maxime.coquelin@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/139] virtio-mmio: dont break lifecycle of vm_dev
-Date: Thu, 24 Aug 2023 16:49:50 +0200
-Message-ID: <20230824145026.568164294@linuxfoundation.org>
+Subject: [PATCH 5.15 068/139] vduse: Use proper spinlock for IRQ injection
+Date: Thu, 24 Aug 2023 16:49:51 +0200
+Message-ID: <20230824145026.620397511@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,58 +37,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Maxime Coquelin <maxime.coquelin@redhat.com>
 
-[ Upstream commit 55c91fedd03d7b9cf0c5199b2eb12b9b8e95281a ]
+[ Upstream commit 7ca26efb09a1543fddb29308ea3b63b66cb5d3ee ]
 
-vm_dev has a separate lifecycle because it has a 'struct device'
-embedded. Thus, having a release callback for it is correct.
+The IRQ injection work used spin_lock_irq() to protect the
+scheduling of the softirq, but spin_lock_bh() should be
+used.
 
-Allocating the vm_dev struct with devres totally breaks this protection,
-though. Instead of waiting for the vm_dev release callback, the memory
-is freed when the platform_device is removed. Resulting in a
-use-after-free when finally the callback is to be called.
+With spin_lock_irq(), we noticed delay of more than 6
+seconds between the time a NAPI polling work is scheduled
+and the time it is executed.
 
-To easily see the problem, compile the kernel with
-CONFIG_DEBUG_KOBJECT_RELEASE and unbind with sysfs.
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Cc: xieyongji@bytedance.com
 
-The fix is easy, don't use devres in this case.
-
-Found during my research about object lifetime problems.
-
-Fixes: 7eb781b1bbb7 ("virtio_mmio: add cleanup for virtio_mmio_probe")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Message-Id: <20230629120526.7184-1-wsa+renesas@sang-engineering.com>
+Suggested-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
+Message-Id: <20230705114505.63274-1-maxime.coquelin@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_mmio.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/virtio/virtio_mmio.c b/drivers/virtio/virtio_mmio.c
-index fe696aafaed86..f4d43d60d710f 100644
---- a/drivers/virtio/virtio_mmio.c
-+++ b/drivers/virtio/virtio_mmio.c
-@@ -572,9 +572,8 @@ static void virtio_mmio_release_dev(struct device *_d)
- 	struct virtio_device *vdev =
- 			container_of(_d, struct virtio_device, dev);
- 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
--	struct platform_device *pdev = vm_dev->pdev;
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index 30ae4237f3dd4..564864f039d20 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -879,10 +879,10 @@ static void vduse_dev_irq_inject(struct work_struct *work)
+ {
+ 	struct vduse_dev *dev = container_of(work, struct vduse_dev, inject);
  
--	devm_kfree(&pdev->dev, vm_dev);
-+	kfree(vm_dev);
+-	spin_lock_irq(&dev->irq_lock);
++	spin_lock_bh(&dev->irq_lock);
+ 	if (dev->config_cb.callback)
+ 		dev->config_cb.callback(dev->config_cb.private);
+-	spin_unlock_irq(&dev->irq_lock);
++	spin_unlock_bh(&dev->irq_lock);
  }
  
- /* Platform device */
-@@ -585,7 +584,7 @@ static int virtio_mmio_probe(struct platform_device *pdev)
- 	unsigned long magic;
- 	int rc;
+ static void vduse_vq_irq_inject(struct work_struct *work)
+@@ -890,10 +890,10 @@ static void vduse_vq_irq_inject(struct work_struct *work)
+ 	struct vduse_virtqueue *vq = container_of(work,
+ 					struct vduse_virtqueue, inject);
  
--	vm_dev = devm_kzalloc(&pdev->dev, sizeof(*vm_dev), GFP_KERNEL);
-+	vm_dev = kzalloc(sizeof(*vm_dev), GFP_KERNEL);
- 	if (!vm_dev)
- 		return -ENOMEM;
+-	spin_lock_irq(&vq->irq_lock);
++	spin_lock_bh(&vq->irq_lock);
+ 	if (vq->ready && vq->cb.callback)
+ 		vq->cb.callback(vq->cb.private);
+-	spin_unlock_irq(&vq->irq_lock);
++	spin_unlock_bh(&vq->irq_lock);
+ }
  
+ static int vduse_dev_queue_irq_work(struct vduse_dev *dev,
 -- 
 2.40.1
 
