@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C8A11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4860EC433C8;
-	Thu, 24 Aug 2023 14:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AB311C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACD7C433C9;
+	Thu, 24 Aug 2023 14:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888774;
-	bh=WiKd1M/+HOkjwcI+t1Ws4CiSVrfK+/xyIHWREWOa3t4=;
+	s=korg; t=1692888777;
+	bh=cRTc8eRyLHrtCb90g9KlXfs0GJ+1q7rJi62JBEFsFQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRQjLox2bblIDJ79jR9zs1hL1do18PLnTl8kbKq4P+e2h+nw2h4OYYIGoUB7d+IVk
-	 QcZvEsO1nKSwnrRpM2JV4DsAyxemS8T4wlpNrs+wG8bXNKRyzGGkUIAC6Ze2knj5e5
-	 rJaw0fZLgIuXS5iOZk+CxLgyVO5Fbh2ELnX/D0NM=
+	b=UKE6IKbMGloJuyJJT63v5kAhwof5LPI92D/5lq3M0GuxT7jZfOFtFTzWYJbdBxG7Z
+	 zATomX89EpGVsvNbQ2xaaaL189haqORbQ/O8mk4WH8x+3CMr9gNnA0EbmAu82dUj6K
+	 apiQajaRpa96IY4UQKKD9R9wtHGClag2jmntdtw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	dengxiang <dengxiang@nfschina.com>,
+	BassCheck <bass@buaa.edu.cn>,
+	Tuo Li <islituo@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/139] ALSA: hda/realtek: Add quirks for Unis H3C Desktop B760 & Q760
-Date: Thu, 24 Aug 2023 16:49:19 +0200
-Message-ID: <20230824145025.178848864@linuxfoundation.org>
+Subject: [PATCH 5.15 037/139] ALSA: hda: fix a possible null-pointer dereference due to data race in snd_hdac_regmap_sync()
+Date: Thu, 24 Aug 2023 16:49:20 +0200
+Message-ID: <20230824145025.219549166@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,57 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: dengxiang <dengxiang@nfschina.com>
+From: Tuo Li <islituo@gmail.com>
 
-[ Upstream commit 73f1c75d5e6bd8ce2a887ef493a66ad1b16ed704 ]
+[ Upstream commit 1f4a08fed450db87fbb5ff5105354158bdbe1a22 ]
 
-These models use NSIWAY amplifiers for internal speaker, but cannot put
-sound outside from these amplifiers. So eapd verbs are needed to initialize
-the amplifiers. They can be added during boot to get working sound out
-of internal speaker.
+The variable codec->regmap is often protected by the lock
+codec->regmap_lock when is accessed. However, it is accessed without
+holding the lock when is accessed in snd_hdac_regmap_sync():
 
-Signed-off-by: dengxiang <dengxiang@nfschina.com>
-Link: https://lore.kernel.org/r/20230703021751.2945750-1-dengxiang@nfschina.com
+  if (codec->regmap)
+
+In my opinion, this may be a harmful race, because if codec->regmap is
+set to NULL right after the condition is checked, a null-pointer
+dereference can occur in the called function regcache_sync():
+
+  map->lock(map->lock_arg); --> Line 360 in drivers/base/regmap/regcache.c
+
+To fix this possible null-pointer dereference caused by data race, the
+mutex_lock coverage is extended to protect the if statement as well as the
+function call to regcache_sync().
+
+[ Note: the lack of the regmap_lock itself is harmless for the current
+  codec driver implementations, as snd_hdac_regmap_sync() is only for
+  PM runtime resume that is prohibited during the codec probe.
+  But the change makes the whole code more consistent, so it's merged
+  as is -- tiwai ]
+
+Reported-by: BassCheck <bass@buaa.edu.cn>
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Link: https://lore.kernel.org/r/20230703031016.1184711-1-islituo@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/hda/hdac_regmap.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 965720b1d1b16..e335f3b5338f7 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10809,6 +10809,7 @@ enum {
- 	ALC897_FIXUP_HP_HSMIC_VERB,
- 	ALC897_FIXUP_LENOVO_HEADSET_MODE,
- 	ALC897_FIXUP_HEADSET_MIC_PIN2,
-+	ALC897_FIXUP_UNIS_H3C_X500S,
- };
- 
- static const struct hda_fixup alc662_fixups[] = {
-@@ -11248,6 +11249,13 @@ static const struct hda_fixup alc662_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
- 	},
-+	[ALC897_FIXUP_UNIS_H3C_X500S] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			{ 0x14, AC_VERB_SET_EAPD_BTLENABLE, 0 },
-+			{}
-+		},
-+	},
- };
- 
- static const struct snd_pci_quirk alc662_fixup_tbl[] = {
-@@ -11409,6 +11417,7 @@ static const struct hda_model_fixup alc662_fixup_models[] = {
- 	{.id = ALC662_FIXUP_USI_HEADSET_MODE, .name = "usi-headset"},
- 	{.id = ALC662_FIXUP_LENOVO_MULTI_CODECS, .name = "dual-codecs"},
- 	{.id = ALC669_FIXUP_ACER_ASPIRE_ETHOS, .name = "aspire-ethos"},
-+	{.id = ALC897_FIXUP_UNIS_H3C_X500S, .name = "unis-h3c-x500s"},
- 	{}
- };
- 
+diff --git a/sound/hda/hdac_regmap.c b/sound/hda/hdac_regmap.c
+index fe3587547cfec..39610a15bcc98 100644
+--- a/sound/hda/hdac_regmap.c
++++ b/sound/hda/hdac_regmap.c
+@@ -597,10 +597,9 @@ EXPORT_SYMBOL_GPL(snd_hdac_regmap_update_raw_once);
+  */
+ void snd_hdac_regmap_sync(struct hdac_device *codec)
+ {
+-	if (codec->regmap) {
+-		mutex_lock(&codec->regmap_lock);
++	mutex_lock(&codec->regmap_lock);
++	if (codec->regmap)
+ 		regcache_sync(codec->regmap);
+-		mutex_unlock(&codec->regmap_lock);
+-	}
++	mutex_unlock(&codec->regmap_lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_regmap_sync);
 -- 
 2.40.1
 
