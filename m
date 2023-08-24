@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D9311C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EB3C433C7;
-	Thu, 24 Aug 2023 14:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43EC11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45354C433C7;
+	Thu, 24 Aug 2023 14:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888782;
-	bh=b7Vq5K41SF4Hrrr5TQtSpLeeF6k5Qd8VpvgD4fcBhV0=;
+	s=korg; t=1692888785;
+	bh=qQBlCikUD6/ILLLtt5ZevKKRzOfEoLp6XnEBvIy2U9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7AfRkNp5UwWGh6h2Cui3S7z7dsQy/fYx07Tswn2rQObiD5wiaoZ7NTokp5Qcoxpn
-	 lc+i+vuH4/l2B6sYiHHRt6xwMZ/8bHcvA1fwQ6ck4ukfTuP0vtYtVYEIbQe2VfXLuh
-	 gzkqL/2hR0NvaKWj3DObyD3gkt4RLljwvIxBVUFI=
+	b=wOA/0ZSJsi2ilcTYG0LsLBSMcreIpYZS1haNvVRTGatahuF/douLaGTX1CdDo+qmt
+	 Xku2/FWs2RMOkCzpU5lQShLBNZzMJXqAQhN9vuY1BipzoohO79Q8sewvgeTsET1aJt
+	 J1G/w3jQg33Bxvdz6Lt2eTWKnmycAxbwTAQgS7H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Lin <chen.lin5@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Cosmin Tanislav <cosmin.tanislav@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/139] ring-buffer: Do not swap cpu_buffer during resize process
-Date: Thu, 24 Aug 2023 16:49:22 +0200
-Message-ID: <20230824145025.308881578@linuxfoundation.org>
+Subject: [PATCH 5.15 040/139] iio: add addac subdirectory
+Date: Thu, 24 Aug 2023 16:49:23 +0200
+Message-ID: <20230824145025.357304584@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,241 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Lin <chen.lin5@zte.com.cn>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-[ Upstream commit 8a96c0288d0737ad77882024974c075345c72011 ]
+[ Upstream commit b62e2e1763cda3a6c494ed754317f19be1249297 ]
 
-When ring_buffer_swap_cpu was called during resize process,
-the cpu buffer was swapped in the middle, resulting in incorrect state.
-Continuing to run in the wrong state will result in oops.
+For IIO devices that expose both ADC and DAC functionality.
 
-This issue can be easily reproduced using the following two scripts:
-/tmp # cat test1.sh
-//#! /bin/sh
-for i in `seq 0 100000`
-do
-         echo 2000 > /sys/kernel/debug/tracing/buffer_size_kb
-         sleep 0.5
-         echo 5000 > /sys/kernel/debug/tracing/buffer_size_kb
-         sleep 0.5
-done
-/tmp # cat test2.sh
-//#! /bin/sh
-for i in `seq 0 100000`
-do
-        echo irqsoff > /sys/kernel/debug/tracing/current_tracer
-        sleep 1
-        echo nop > /sys/kernel/debug/tracing/current_tracer
-        sleep 1
-done
-/tmp # ./test1.sh &
-/tmp # ./test2.sh &
-
-A typical oops log is as follows, sometimes with other different oops logs.
-
-[  231.711293] WARNING: CPU: 0 PID: 9 at kernel/trace/ring_buffer.c:2026 rb_update_pages+0x378/0x3f8
-[  231.713375] Modules linked in:
-[  231.714735] CPU: 0 PID: 9 Comm: kworker/0:1 Tainted: G        W          6.5.0-rc1-00276-g20edcec23f92 #15
-[  231.716750] Hardware name: linux,dummy-virt (DT)
-[  231.718152] Workqueue: events update_pages_handler
-[  231.719714] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  231.721171] pc : rb_update_pages+0x378/0x3f8
-[  231.722212] lr : rb_update_pages+0x25c/0x3f8
-[  231.723248] sp : ffff800082b9bd50
-[  231.724169] x29: ffff800082b9bd50 x28: ffff8000825f7000 x27: 0000000000000000
-[  231.726102] x26: 0000000000000001 x25: fffffffffffff010 x24: 0000000000000ff0
-[  231.728122] x23: ffff0000c3a0b600 x22: ffff0000c3a0b5c0 x21: fffffffffffffe0a
-[  231.730203] x20: ffff0000c3a0b600 x19: ffff0000c0102400 x18: 0000000000000000
-[  231.732329] x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffffe7aa8510
-[  231.734212] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000002
-[  231.736291] x11: ffff8000826998a8 x10: ffff800082b9baf0 x9 : ffff800081137558
-[  231.738195] x8 : fffffc00030e82c8 x7 : 0000000000000000 x6 : 0000000000000001
-[  231.740192] x5 : ffff0000ffbafe00 x4 : 0000000000000000 x3 : 0000000000000000
-[  231.742118] x2 : 00000000000006aa x1 : 0000000000000001 x0 : ffff0000c0007208
-[  231.744196] Call trace:
-[  231.744892]  rb_update_pages+0x378/0x3f8
-[  231.745893]  update_pages_handler+0x1c/0x38
-[  231.746893]  process_one_work+0x1f0/0x468
-[  231.747852]  worker_thread+0x54/0x410
-[  231.748737]  kthread+0x124/0x138
-[  231.749549]  ret_from_fork+0x10/0x20
-[  231.750434] ---[ end trace 0000000000000000 ]---
-[  233.720486] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[  233.721696] Mem abort info:
-[  233.721935]   ESR = 0x0000000096000004
-[  233.722283]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  233.722596]   SET = 0, FnV = 0
-[  233.722805]   EA = 0, S1PTW = 0
-[  233.723026]   FSC = 0x04: level 0 translation fault
-[  233.723458] Data abort info:
-[  233.723734]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[  233.724176]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[  233.724589]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[  233.725075] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000104943000
-[  233.725592] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-[  233.726231] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[  233.726720] Modules linked in:
-[  233.727007] CPU: 0 PID: 9 Comm: kworker/0:1 Tainted: G        W          6.5.0-rc1-00276-g20edcec23f92 #15
-[  233.727777] Hardware name: linux,dummy-virt (DT)
-[  233.728225] Workqueue: events update_pages_handler
-[  233.728655] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  233.729054] pc : rb_update_pages+0x1a8/0x3f8
-[  233.729334] lr : rb_update_pages+0x154/0x3f8
-[  233.729592] sp : ffff800082b9bd50
-[  233.729792] x29: ffff800082b9bd50 x28: ffff8000825f7000 x27: 0000000000000000
-[  233.730220] x26: 0000000000000000 x25: ffff800082a8b840 x24: ffff0000c0102418
-[  233.730653] x23: 0000000000000000 x22: fffffc000304c880 x21: 0000000000000003
-[  233.731105] x20: 00000000000001f4 x19: ffff0000c0102400 x18: ffff800082fcbc58
-[  233.731727] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000001
-[  233.732282] x14: ffff8000825fe0c8 x13: 0000000000000001 x12: 0000000000000000
-[  233.732709] x11: ffff8000826998a8 x10: 0000000000000ae0 x9 : ffff8000801b760c
-[  233.733148] x8 : fefefefefefefeff x7 : 0000000000000018 x6 : ffff0000c03298c0
-[  233.733553] x5 : 0000000000000002 x4 : 0000000000000000 x3 : 0000000000000000
-[  233.733972] x2 : ffff0000c3a0b600 x1 : 0000000000000000 x0 : 0000000000000000
-[  233.734418] Call trace:
-[  233.734593]  rb_update_pages+0x1a8/0x3f8
-[  233.734853]  update_pages_handler+0x1c/0x38
-[  233.735148]  process_one_work+0x1f0/0x468
-[  233.735525]  worker_thread+0x54/0x410
-[  233.735852]  kthread+0x124/0x138
-[  233.736064]  ret_from_fork+0x10/0x20
-[  233.736387] Code: 92400000 910006b5 aa000021 aa0303f7 (f9400060)
-[  233.736959] ---[ end trace 0000000000000000 ]---
-
-After analysis, the seq of the error is as follows [1-5]:
-
-int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
-			int cpu_id)
-{
-	for_each_buffer_cpu(buffer, cpu) {
-		cpu_buffer = buffer->buffers[cpu];
-		//1. get cpu_buffer, aka cpu_buffer(A)
-		...
-		...
-		schedule_work_on(cpu,
-		 &cpu_buffer->update_pages_work);
-		//2. 'update_pages_work' is queue on 'cpu', cpu_buffer(A) is passed to
-		// update_pages_handler, do the update process, set 'update_done' in
-		// complete(&cpu_buffer->update_done) and to wakeup resize process.
-	//---->
-		//3. Just at this moment, ring_buffer_swap_cpu is triggered,
-		//cpu_buffer(A) be swaped to cpu_buffer(B), the max_buffer.
-		//ring_buffer_swap_cpu is called as the 'Call trace' below.
-
-		Call trace:
-		 dump_backtrace+0x0/0x2f8
-		 show_stack+0x18/0x28
-		 dump_stack+0x12c/0x188
-		 ring_buffer_swap_cpu+0x2f8/0x328
-		 update_max_tr_single+0x180/0x210
-		 check_critical_timing+0x2b4/0x2c8
-		 tracer_hardirqs_on+0x1c0/0x200
-		 trace_hardirqs_on+0xec/0x378
-		 el0_svc_common+0x64/0x260
-		 do_el0_svc+0x90/0xf8
-		 el0_svc+0x20/0x30
-		 el0_sync_handler+0xb0/0xb8
-		 el0_sync+0x180/0x1c0
-	//<----
-
-	/* wait for all the updates to complete */
-	for_each_buffer_cpu(buffer, cpu) {
-		cpu_buffer = buffer->buffers[cpu];
-		//4. get cpu_buffer, cpu_buffer(B) is used in the following process,
-		//the state of cpu_buffer(A) and cpu_buffer(B) is totally wrong.
-		//for example, cpu_buffer(A)->update_done will leave be set 1, and will
-		//not 'wait_for_completion' at the next resize round.
-		  if (!cpu_buffer->nr_pages_to_update)
-			continue;
-
-		if (cpu_online(cpu))
-			wait_for_completion(&cpu_buffer->update_done);
-		cpu_buffer->nr_pages_to_update = 0;
-	}
-	...
-}
-	//5. the state of cpu_buffer(A) and cpu_buffer(B) is totally wrong,
-	//Continuing to run in the wrong state, then oops occurs.
-
-Link: https://lore.kernel.org/linux-trace-kernel/202307191558478409990@zte.com.cn
-
-Signed-off-by: Chen Lin <chen.lin5@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
+Link: https://lore.kernel.org/r/20211205114045.173612-2-cosmin.tanislav@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 14 +++++++++++++-
- kernel/trace/trace.c       |  3 ++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/iio/Kconfig        | 1 +
+ drivers/iio/Makefile       | 1 +
+ drivers/iio/addac/Kconfig  | 8 ++++++++
+ drivers/iio/addac/Makefile | 6 ++++++
+ 4 files changed, 16 insertions(+)
+ create mode 100644 drivers/iio/addac/Kconfig
+ create mode 100644 drivers/iio/addac/Makefile
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index e1cef097b0df5..db7cefd196cec 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -535,6 +535,7 @@ struct trace_buffer {
- 	unsigned			flags;
- 	int				cpus;
- 	atomic_t			record_disabled;
-+	atomic_t			resizing;
- 	cpumask_var_t			cpumask;
+diff --git a/drivers/iio/Kconfig b/drivers/iio/Kconfig
+index 2334ad249b462..4fb4321a72cb1 100644
+--- a/drivers/iio/Kconfig
++++ b/drivers/iio/Kconfig
+@@ -70,6 +70,7 @@ config IIO_TRIGGERED_EVENT
  
- 	struct lock_class_key		*reader_lock_key;
-@@ -2137,7 +2138,7 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
+ source "drivers/iio/accel/Kconfig"
+ source "drivers/iio/adc/Kconfig"
++source "drivers/iio/addac/Kconfig"
+ source "drivers/iio/afe/Kconfig"
+ source "drivers/iio/amplifiers/Kconfig"
+ source "drivers/iio/cdc/Kconfig"
+diff --git a/drivers/iio/Makefile b/drivers/iio/Makefile
+index 65e39bd4f9346..8d48c70fee4d3 100644
+--- a/drivers/iio/Makefile
++++ b/drivers/iio/Makefile
+@@ -15,6 +15,7 @@ obj-$(CONFIG_IIO_TRIGGERED_EVENT) += industrialio-triggered-event.o
  
- 	/* prevent another thread from changing buffer sizes */
- 	mutex_lock(&buffer->mutex);
--
-+	atomic_inc(&buffer->resizing);
- 
- 	if (cpu_id == RING_BUFFER_ALL_CPUS) {
- 		/*
-@@ -2276,6 +2277,7 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 		atomic_dec(&buffer->record_disabled);
- 	}
- 
-+	atomic_dec(&buffer->resizing);
- 	mutex_unlock(&buffer->mutex);
- 	return 0;
- 
-@@ -2296,6 +2298,7 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 		}
- 	}
-  out_err_unlock:
-+	atomic_dec(&buffer->resizing);
- 	mutex_unlock(&buffer->mutex);
- 	return err;
- }
-@@ -5497,6 +5500,15 @@ int ring_buffer_swap_cpu(struct trace_buffer *buffer_a,
- 	if (local_read(&cpu_buffer_b->committing))
- 		goto out_dec;
- 
-+	/*
-+	 * When resize is in progress, we cannot swap it because
-+	 * it will mess the state of the cpu buffer.
-+	 */
-+	if (atomic_read(&buffer_a->resizing))
-+		goto out_dec;
-+	if (atomic_read(&buffer_b->resizing))
-+		goto out_dec;
+ obj-y += accel/
+ obj-y += adc/
++obj-y += addac/
+ obj-y += afe/
+ obj-y += amplifiers/
+ obj-y += buffer/
+diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
+new file mode 100644
+index 0000000000000..2e64d7755d5ea
+--- /dev/null
++++ b/drivers/iio/addac/Kconfig
+@@ -0,0 +1,8 @@
++#
++# ADC DAC drivers
++#
++# When adding new entries keep the list in alphabetical order
 +
- 	buffer_a->buffers[cpu] = cpu_buffer_b;
- 	buffer_b->buffers[cpu] = cpu_buffer_a;
- 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index ae7005af78c34..d4c381f06b7b2 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1872,9 +1872,10 @@ update_max_tr_single(struct trace_array *tr, struct task_struct *tsk, int cpu)
- 		 * place on this CPU. We fail to record, but we reset
- 		 * the max trace buffer (no one writes directly to it)
- 		 * and flag that it failed.
-+		 * Another reason is resize is in progress.
- 		 */
- 		trace_array_printk_buf(tr->max_buffer.buffer, _THIS_IP_,
--			"Failed to swap buffers due to commit in progress\n");
-+			"Failed to swap buffers due to commit or resize in progress\n");
- 	}
- 
- 	WARN_ON_ONCE(ret && ret != -EAGAIN && ret != -EBUSY);
++menu "Analog to digital and digital to analog converters"
++
++endmenu
+diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
+new file mode 100644
+index 0000000000000..b888b9ee12da0
+--- /dev/null
++++ b/drivers/iio/addac/Makefile
+@@ -0,0 +1,6 @@
++# SPDX-License-Identifier: GPL-2.0
++#
++# Makefile for industrial I/O ADDAC drivers
++#
++
++# When adding new entries keep the list in alphabetical order
 -- 
 2.40.1
 
