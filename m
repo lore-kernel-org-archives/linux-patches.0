@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF79D14A82
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1046C433C7;
-	Thu, 24 Aug 2023 17:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B42114A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0A6C433C7;
+	Thu, 24 Aug 2023 17:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897485;
-	bh=Wt9NNdV1UnrR9/casUh0yoYAx8UcY3rxk+QDPlC339g=;
+	s=korg; t=1692897487;
+	bh=kbiVKU0JSWqoNhpq7dhaAgwy78WT5PK1+Gt/vcjKHfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArJRMETjonVI3wqT9Ag7RylcH9sEkLNCK0xUYHhfl52S2ngoBgywcTKNYEvrM5/qX
-	 WqtogwtSmJhN+HPSy0A62aPTJFIbaiX+Q5A5ki1Vosz2LMmbM1GV6riwftIIT7BBXX
-	 VYc0JDxFhfCbfmkl41OW1QZtsRHeZO0jIFFM6SK4=
+	b=VX44SGXQAXhvV1u+uW0TFz7wk8cdkpxuzdWHev7DA9gsUCnfqiN2M8ngDImMlOSp7
+	 qIOr/z2UWGx7clLKBvCo86J8DmKOKmr/IVOFTBdxbiBA958tQVgSWLPCDIG62JBwui
+	 2IX4BaeMOKZFoT963QsCXujpH/uF6aavM3MmWrLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <wcheng@codeaurora.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/135] usb: gadget: udc: core: Introduce check_config to verify USB configuration
-Date: Thu, 24 Aug 2023 19:08:47 +0200
-Message-ID: <20230824170619.558675218@linuxfoundation.org>
+Subject: [PATCH 5.10 029/135] media: platform: mediatek: vpu: fix NULL ptr dereference
+Date: Thu, 24 Aug 2023 19:08:21 +0200
+Message-ID: <20230824170618.410502211@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -39,84 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Cheng <wcheng@codeaurora.org>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit ce7d0008c2356626f69f37ef1afce8fbc83fe142 ]
+[ Upstream commit 3df55cd773e8603b623425cc97b05e542854ad27 ]
 
-Some UDCs may have constraints on how many high bandwidth endpoints it can
-support in a certain configuration.  This API allows for the composite
-driver to pass down the total number of endpoints to the UDC so it can verify
-it has the required resources to support the configuration.
+If pdev is NULL, then it is still dereferenced.
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-Link: https://lore.kernel.org/r/1625908395-5498-2-git-send-email-wcheng@codeaurora.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: dbe678f6192f ("usb: cdns3: fix NCM gadget RX speed 20x slow than expection at iMX8QM")
+This fixes this smatch warning:
+
+drivers/media/platform/mediatek/vpu/mtk_vpu.c:570 vpu_load_firmware() warn: address of NULL pointer 'pdev'
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: Yunfei Dong <yunfei.dong@mediatek.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 19 +++++++++++++++++++
- include/linux/usb/gadget.h    |  4 ++++
- 2 files changed, 23 insertions(+)
+ drivers/media/platform/mtk-vpu/mtk_vpu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index 3a3b5a03dda75..14d9d1ee16fc4 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1004,6 +1004,25 @@ int usb_gadget_ep_match_desc(struct usb_gadget *gadget,
- }
- EXPORT_SYMBOL_GPL(usb_gadget_ep_match_desc);
+diff --git a/drivers/media/platform/mtk-vpu/mtk_vpu.c b/drivers/media/platform/mtk-vpu/mtk_vpu.c
+index c62eb212cca92..e7c4b0dd588a9 100644
+--- a/drivers/media/platform/mtk-vpu/mtk_vpu.c
++++ b/drivers/media/platform/mtk-vpu/mtk_vpu.c
+@@ -539,15 +539,17 @@ static int load_requested_vpu(struct mtk_vpu *vpu,
+ int vpu_load_firmware(struct platform_device *pdev)
+ {
+ 	struct mtk_vpu *vpu;
+-	struct device *dev = &pdev->dev;
++	struct device *dev;
+ 	struct vpu_run *run;
+ 	int ret;
  
-+/**
-+ * usb_gadget_check_config - checks if the UDC can support the binded
-+ *	configuration
-+ * @gadget: controller to check the USB configuration
-+ *
-+ * Ensure that a UDC is able to support the requested resources by a
-+ * configuration, and that there are no resource limitations, such as
-+ * internal memory allocated to all requested endpoints.
-+ *
-+ * Returns zero on success, else a negative errno.
-+ */
-+int usb_gadget_check_config(struct usb_gadget *gadget)
-+{
-+	if (gadget->ops->check_config)
-+		return gadget->ops->check_config(gadget);
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(usb_gadget_check_config);
+ 	if (!pdev) {
+-		dev_err(dev, "VPU platform device is invalid\n");
++		pr_err("VPU platform device is invalid\n");
+ 		return -EINVAL;
+ 	}
+ 
++	dev = &pdev->dev;
 +
- /* ------------------------------------------------------------------------- */
+ 	vpu = platform_get_drvdata(pdev);
+ 	run = &vpu->run;
  
- static void usb_gadget_state_work(struct work_struct *work)
-diff --git a/include/linux/usb/gadget.h b/include/linux/usb/gadget.h
-index e7351d64f11fa..11df3d5b40c6b 100644
---- a/include/linux/usb/gadget.h
-+++ b/include/linux/usb/gadget.h
-@@ -326,6 +326,7 @@ struct usb_gadget_ops {
- 	struct usb_ep *(*match_ep)(struct usb_gadget *,
- 			struct usb_endpoint_descriptor *,
- 			struct usb_ss_ep_comp_descriptor *);
-+	int	(*check_config)(struct usb_gadget *gadget);
- };
- 
- /**
-@@ -596,6 +597,7 @@ int usb_gadget_connect(struct usb_gadget *gadget);
- int usb_gadget_disconnect(struct usb_gadget *gadget);
- int usb_gadget_deactivate(struct usb_gadget *gadget);
- int usb_gadget_activate(struct usb_gadget *gadget);
-+int usb_gadget_check_config(struct usb_gadget *gadget);
- #else
- static inline int usb_gadget_frame_number(struct usb_gadget *gadget)
- { return 0; }
-@@ -619,6 +621,8 @@ static inline int usb_gadget_deactivate(struct usb_gadget *gadget)
- { return 0; }
- static inline int usb_gadget_activate(struct usb_gadget *gadget)
- { return 0; }
-+static inline int usb_gadget_check_config(struct usb_gadget *gadget)
-+{ return 0; }
- #endif /* CONFIG_USB_GADGET */
- 
- /*-------------------------------------------------------------------------*/
 -- 
 2.40.1
 
