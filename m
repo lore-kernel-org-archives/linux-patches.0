@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5D111C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:56:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6B9C433C7;
-	Thu, 24 Aug 2023 14:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAA511C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:56:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4147C433C8;
+	Thu, 24 Aug 2023 14:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888965;
-	bh=TXfax9c4mV4lIN7hMVIyhN9JXMIX7u2mtnHlXlZUQxw=;
+	s=korg; t=1692888968;
+	bh=XeygF5EK9fvawY0vJD0vGuwKbM2EsgUbUPcTGtfwsPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvcS3ATGYGURVM7A9s7Yo3rkWdI+aiFEMNh4uI/nIkiH/H7Nkp6AM++Oj8hLjoYMR
-	 xI0dmtkRWsYsiBTXviXvf3qHotFDpP1eStj7cnYKZYyVpGoJ+2HLzyOeElqaHh/7DW
-	 SLOygefXD6F7IPHHpEZfLZi6HaqEziVIhMvl3Xy0=
+	b=gJpiyP4x9sGCDsRT2Azg6Pq0p13iXVn8SUE7iqh5TE/tCIMMwCfG/fk2bDKgNdswt
+	 K0pAl9HFqDVMNa58vRG+b2L+grrS/y5//79K+awyFy6czTJLIyEhbjLOvuikZEdRsi
+	 tg9d/JxKSIxIXvuJhNMcnzmAGTfcgxFYOuuSl84k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tam Nguyen <tamnguyenchi@os.amperecomputing.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 078/139] i2c: designware: Handle invalid SMBus block data response length value
-Date: Thu, 24 Aug 2023 16:50:01 +0200
-Message-ID: <20230824145027.036306380@linuxfoundation.org>
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 105/139] ASoC: meson: axg-tdm-formatter: fix channel slot allocation
+Date: Thu, 24 Aug 2023 16:50:28 +0200
+Message-ID: <20230824145028.105377922@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,57 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-commit 69f035c480d76f12bf061148ccfd578e1099e5fc upstream.
+[ Upstream commit c1f848f12103920ca165758aedb1c10904e193e1 ]
 
-In the I2C_FUNC_SMBUS_BLOCK_DATA case, the invalid length byte value
-(outside of 1-32) of the SMBus block data response from the Slave device
-is not correctly handled by the I2C Designware driver.
+When the tdm lane mask is computed, the driver currently fills the 1st lane
+before moving on to the next. If the stream has less channels than the
+lanes can accommodate, slots will be disabled on the last lanes.
 
-In case IC_EMPTYFIFO_HOLD_MASTER_EN==1, which cannot be detected
-from the registers, the Master can be disabled only if the STOP bit
-is set. Without STOP bit set, the Master remains active, holding the bus
-until receiving a block data response length. This hangs the bus and
-is unrecoverable.
+Unfortunately, the HW distribute channels in a different way. It distribute
+channels in pair on each lanes before moving on the next slots.
 
-Avoid this by issuing another dump read to reach the stop condition when
-an invalid length byte is received.
+This difference leads to problems if a device has an interface with more
+than 1 lane and with more than 2 slots per lane.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230726080001.337353-3-tamnguyenchi@os.amperecomputing.com
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For example: a playback interface with 2 lanes and 4 slots each (total 8
+slots - zero based numbering)
+- Playing a 8ch stream:
+  - All slots activated by the driver
+  - channel #2 will be played on lane #1 - slot #0 following HW placement
+- Playing a 4ch stream:
+  - Lane #1 disabled by the driver
+  - channel #2 will be played on lane #0 - slot #2
+
+This behaviour is obviously not desirable.
+
+Change the way slots are activated on the TDM lanes to follow what the HW
+does and make sure each channel always get mapped to the same slot/lane.
+
+Fixes: 1a11d88f499c ("ASoC: meson: add tdm formatter base driver")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20230809171931.1244502-1-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-master.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ sound/soc/meson/axg-tdm-formatter.c | 42 ++++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
 
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -527,8 +527,19 @@ i2c_dw_read(struct dw_i2c_dev *dev)
- 			regmap_read(dev->map, DW_IC_DATA_CMD, &tmp);
- 			tmp &= DW_IC_DATA_CMD_DAT;
- 			/* Ensure length byte is a valid value */
--			if (flags & I2C_M_RECV_LEN &&
--			    tmp <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
-+			if (flags & I2C_M_RECV_LEN) {
-+				/*
-+				 * if IC_EMPTYFIFO_HOLD_MASTER_EN is set, which cannot be
-+				 * detected from the registers, the controller can be
-+				 * disabled if the STOP bit is set. But it is only set
-+				 * after receiving block data response length in
-+				 * I2C_FUNC_SMBUS_BLOCK_DATA case. That needs to read
-+				 * another byte with STOP bit set when the block data
-+				 * response length is invalid to complete the transaction.
-+				 */
-+				if (!tmp || tmp > I2C_SMBUS_BLOCK_MAX)
-+					tmp = 1;
+diff --git a/sound/soc/meson/axg-tdm-formatter.c b/sound/soc/meson/axg-tdm-formatter.c
+index cab7fa2851aa8..4834cfd163c03 100644
+--- a/sound/soc/meson/axg-tdm-formatter.c
++++ b/sound/soc/meson/axg-tdm-formatter.c
+@@ -30,27 +30,32 @@ int axg_tdm_formatter_set_channel_masks(struct regmap *map,
+ 					struct axg_tdm_stream *ts,
+ 					unsigned int offset)
+ {
+-	unsigned int val, ch = ts->channels;
+-	unsigned long mask;
+-	int i, j;
++	unsigned int ch = ts->channels;
++	u32 val[AXG_TDM_NUM_LANES];
++	int i, j, k;
 +
- 				len = i2c_dw_recv_len(dev, tmp);
- 			}
- 			*buf++ = tmp;
++	/*
++	 * We need to mimick the slot distribution used by the HW to keep the
++	 * channel placement consistent regardless of the number of channel
++	 * in the stream. This is why the odd algorithm below is used.
++	 */
++	memset(val, 0, sizeof(*val) * AXG_TDM_NUM_LANES);
+ 
+ 	/*
+ 	 * Distribute the channels of the stream over the available slots
+-	 * of each TDM lane
++	 * of each TDM lane. We need to go over the 32 slots ...
+ 	 */
+-	for (i = 0; i < AXG_TDM_NUM_LANES; i++) {
+-		val = 0;
+-		mask = ts->mask[i];
+-
+-		for (j = find_first_bit(&mask, 32);
+-		     (j < 32) && ch;
+-		     j = find_next_bit(&mask, 32, j + 1)) {
+-			val |= 1 << j;
+-			ch -= 1;
++	for (i = 0; (i < 32) && ch; i += 2) {
++		/* ... of all the lanes ... */
++		for (j = 0; j < AXG_TDM_NUM_LANES; j++) {
++			/* ... then distribute the channels in pairs */
++			for (k = 0; k < 2; k++) {
++				if ((BIT(i + k) & ts->mask[j]) && ch) {
++					val[j] |= BIT(i + k);
++					ch -= 1;
++				}
++			}
+ 		}
+-
+-		regmap_write(map, offset, val);
+-		offset += regmap_get_reg_stride(map);
+ 	}
+ 
+ 	/*
+@@ -63,6 +68,11 @@ int axg_tdm_formatter_set_channel_masks(struct regmap *map,
+ 		return -EINVAL;
+ 	}
+ 
++	for (i = 0; i < AXG_TDM_NUM_LANES; i++) {
++		regmap_write(map, offset, val[i]);
++		offset += regmap_get_reg_stride(map);
++	}
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(axg_tdm_formatter_set_channel_masks);
+-- 
+2.40.1
+
 
 
