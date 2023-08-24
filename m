@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6F714A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF1CC433C7;
-	Thu, 24 Aug 2023 17:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE27614A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3831CC433C8;
+	Thu, 24 Aug 2023 17:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897584;
-	bh=G7O8w64I1ejbJPk9foQcyXSwVzVIKu2/J918GJw+pxM=;
+	s=korg; t=1692897587;
+	bh=yQJgCiE4lTgfAiI63e283tlEUbQKIZLN07mSUQTnOvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Px8BrszhwsscLHmp5w6E9LF8bIRa9Mzn/RekVnItDnTsAXQIeFTEo7koZCDVTl7Zr
-	 MK6l6lGgfIL9cb86Zlre8t/PyMj/d38hm9g8cYjF1XjmrQa9OeTm6Es3tfk/6MbXkk
-	 4ln+G1tANSHJWG1Thz6/tT5Ozeb3c24EKW8HQRdg=
+	b=ABpwZJSeXUft5lMJcpuS97UiXqZoWjyIdPW4zymC7yrt7niFMG3jjRHUrIohswQsw
+	 zSWy0SIvtNpj4WcabyIjJmGyNnPL1dfvZxj6PepC3yJR3iAZPoVOSwezSthSNS2e/t
+	 9IwxFqZABiLT1rVbRW2Bi4kbEf+SjZrFMf59gWi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/135] mmc: meson-gx: use devm_mmc_alloc_host
-Date: Thu, 24 Aug 2023 19:08:54 +0200
-Message-ID: <20230824170619.882209560@linuxfoundation.org>
+Subject: [PATCH 5.10 063/135] mmc: meson-gx: fix deferred probing
+Date: Thu, 24 Aug 2023 19:08:55 +0200
+Message-ID: <20230824170619.934812946@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,129 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 418f7c2de1334b70fbee790911a1b46503230137 ]
+[ Upstream commit b8ada54fa1b83f3b6480d4cced71354301750153 ]
 
-Use new function devm_mmc_alloc_host() to simplify the code.
+The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the error
+codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+so we now can safely ignore it...
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/728f159b-885f-c78a-1a3d-f55c245250e1@gmail.com
+Fixes: cbcaac6d7dd2 ("mmc: meson-gx-mmc: Fix platform_get_irq's error checking")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230617203622.6812-3-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: b8ada54fa1b8 ("mmc: meson-gx: fix deferred probing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c | 52 +++++++++++----------------------
- 1 file changed, 17 insertions(+), 35 deletions(-)
+ drivers/mmc/host/meson-gx-mmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
-index e89bd6f4b317c..8a345ee2e6cf5 100644
+index 8a345ee2e6cf5..1992eea8b777e 100644
 --- a/drivers/mmc/host/meson-gx-mmc.c
 +++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -1122,7 +1122,7 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	struct mmc_host *mmc;
- 	int ret;
- 
--	mmc = mmc_alloc_host(sizeof(struct meson_host), &pdev->dev);
-+	mmc = devm_mmc_alloc_host(&pdev->dev, sizeof(struct meson_host));
- 	if (!mmc)
- 		return -ENOMEM;
- 	host = mmc_priv(mmc);
-@@ -1138,46 +1138,33 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	host->vqmmc_enabled = false;
- 	ret = mmc_regulator_get_supply(mmc);
- 	if (ret)
--		goto free_host;
-+		return ret;
- 
- 	ret = mmc_of_parse(mmc);
--	if (ret) {
--		if (ret != -EPROBE_DEFER)
--			dev_warn(&pdev->dev, "error parsing DT: %d\n", ret);
--		goto free_host;
--	}
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "error parsing DT\n");
- 
- 	host->data = (struct meson_mmc_data *)
- 		of_device_get_match_data(&pdev->dev);
--	if (!host->data) {
--		ret = -EINVAL;
--		goto free_host;
--	}
-+	if (!host->data)
-+		return -EINVAL;
- 
- 	ret = device_reset_optional(&pdev->dev);
--	if (ret) {
--		dev_err_probe(&pdev->dev, ret, "device reset failed\n");
--		goto free_host;
--	}
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "device reset failed\n");
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	host->regs = devm_ioremap_resource(&pdev->dev, res);
--	if (IS_ERR(host->regs)) {
--		ret = PTR_ERR(host->regs);
--		goto free_host;
--	}
-+	if (IS_ERR(host->regs))
-+		return PTR_ERR(host->regs);
+@@ -1159,8 +1159,8 @@ static int meson_mmc_probe(struct platform_device *pdev)
+ 		return PTR_ERR(host->regs);
  
  	host->irq = platform_get_irq(pdev, 0);
--	if (host->irq <= 0) {
--		ret = -EINVAL;
--		goto free_host;
--	}
-+	if (host->irq <= 0)
-+		return -EINVAL;
+-	if (host->irq <= 0)
+-		return -EINVAL;
++	if (host->irq < 0)
++		return host->irq;
  
  	host->pinctrl = devm_pinctrl_get(&pdev->dev);
--	if (IS_ERR(host->pinctrl)) {
--		ret = PTR_ERR(host->pinctrl);
--		goto free_host;
--	}
-+	if (IS_ERR(host->pinctrl))
-+		return PTR_ERR(host->pinctrl);
- 
- 	host->pins_clk_gate = pinctrl_lookup_state(host->pinctrl,
- 						   "clk-gate");
-@@ -1188,14 +1175,12 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	}
- 
- 	host->core_clk = devm_clk_get(&pdev->dev, "core");
--	if (IS_ERR(host->core_clk)) {
--		ret = PTR_ERR(host->core_clk);
--		goto free_host;
--	}
-+	if (IS_ERR(host->core_clk))
-+		return PTR_ERR(host->core_clk);
- 
- 	ret = clk_prepare_enable(host->core_clk);
- 	if (ret)
--		goto free_host;
-+		return ret;
- 
- 	ret = meson_mmc_clk_init(host);
- 	if (ret)
-@@ -1290,8 +1275,6 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	clk_disable_unprepare(host->mmc_clk);
- err_core_clk:
- 	clk_disable_unprepare(host->core_clk);
--free_host:
--	mmc_free_host(mmc);
- 	return ret;
- }
- 
-@@ -1315,7 +1298,6 @@ static int meson_mmc_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(host->mmc_clk);
- 	clk_disable_unprepare(host->core_clk);
- 
--	mmc_free_host(host->mmc);
- 	return 0;
- }
- 
+ 	if (IS_ERR(host->pinctrl))
 -- 
 2.40.1
 
