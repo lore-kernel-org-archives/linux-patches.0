@@ -1,190 +1,122 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202817F2
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 06:49:57 +0000 (UTC)
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20230824064159euoutp024989149b33e80c78773432a3b79a09e4~_PpTx5xtg1709717097euoutp02g
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 06:41:59 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230824064159euoutp024989149b33e80c78773432a3b79a09e4~_PpTx5xtg1709717097euoutp02g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1692859319;
-	bh=pUmxRM83H3hPfH5q9K2Tm5tvur4KAIlpeP6pDPyB8SM=;
-	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-	b=VTAfBeC5uZFmAUStzw8O+QU8cK6hAAjtsj33fjE6gdJp2grTIBUFVRHztYbiRf3bU
-	 InwUZzx1TyO02XtQS1s5Sgh8EEq51/cCwuY/DHcB/9ZEDCF1M0GBa05lMaaxh4JjJl
-	 /ily2ufwZdzc1JjmKDUKr1UDURbzUQP6gYGmqr7w=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20230824064157eucas1p13dd030b30dfde1d5f8cabce08b9a039b~_PpSdbcbF0594005940eucas1p1C;
-	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges1new.samsung.com (EUCPMTA) with SMTP id AE.8C.42423.5BBF6E46; Thu, 24
-	Aug 2023 07:41:57 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20230824064157eucas1p1023586f5eec1f0bed1464a7a388b3ad3~_PpSAPKed0592305923eucas1p1C;
-	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20230824064157eusmtrp20e977ff431bc6722598ffc56c495d2e7~_PpR-gm__0717307173eusmtrp2T;
-	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
-X-AuditID: cbfec7f2-a3bff7000002a5b7-a9-64e6fbb54379
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id 22.75.14344.5BBF6E46; Thu, 24
-	Aug 2023 07:41:57 +0100 (BST)
-Received: from CAMSVWEXC01.scsc.local (unknown [106.1.227.71]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20230824064157eusmtip246268c6b99399374e45c67e04d59c789~_PpR1RPmk1967019670eusmtip2d;
-	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
-Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) by
-	CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) with Microsoft SMTP
-	Server (TLS) id 15.0.1497.2; Thu, 24 Aug 2023 07:41:57 +0100
-Received: from CAMSVWEXC02.scsc.local ([::1]) by CAMSVWEXC02.scsc.local
-	([fe80::3c08:6c51:fa0a:6384%13]) with mapi id 15.00.1497.012; Thu, 24 Aug
-	2023 07:41:56 +0100
-From: Andreas Hindborg <a.hindborg@samsung.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-CC: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
-	<alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
-	<gary@garyguo.net>, =?iso-8859-1?Q?Bj=F6rn_Roy_Baron?=
-	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice
-	Ryhl <aliceryhl@google.com>, "rust-for-linux@vger.kernel.org"
-	<rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH 1/2] rust: arc: add explicit `drop()` around
- `Box::from_raw()`
-Thread-Topic: [PATCH 1/2] rust: arc: add explicit `drop()` around
-	`Box::from_raw()`
-Thread-Index: AQHZ1duEypdgNEUaJ0yfoLAXoIgAyq/475mA
-Date: Thu, 24 Aug 2023 06:41:55 +0000
-Message-ID: <877cpl7xhp.fsf@samsung.com>
-In-Reply-To: <20230823160244.188033-2-ojeda@kernel.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [106.210.248.72]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620EC288E6
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 13:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFECC433C7;
+	Thu, 24 Aug 2023 13:35:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1692884158;
+	bh=FoeW5Vf0WqDwd9w8w9n1OLSBxvLkKSrUFjawAzxgK5Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=wO6K+J4gYSmVIxvG6AJs8XWztSAYYUx6KQlp04BrJNZZr50PFkHGPYaiuKgByK+hr
+	 ZnZFVK6yk+oQHLDfGQh+uUl3vm8vFVWVeVf5Hj0Astq+d2hzxFMjmSEy54+dBheQso
+	 RdCozM1P21Cs3h2gvuYXQV0+cvVz271OM+5Zqu0g=
+Date: Thu, 24 Aug 2023 15:35:55 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
+Message-ID: <2023082401-arrange-bulk-d42a@gregkh>
+References: <20230821194122.695845670@linuxfoundation.org>
+ <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
+ <2023082309-veggie-unwoven-a7df@gregkh>
+ <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
+ <2d8a5f48-6c50-4c12-8a3d-23e621c6b722@roeck-us.net>
+ <2023082325-expansion-revoke-1f3a@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRmVeSWpSXmKPExsWy7djPc7pbfz9LMTj11tTi7+zt7BYnrjex
-	WHy41sRqcePCfmaLNVsamSwunnnNaHF51xw2i5XzlwNZJy4xWqx/dpjZYsOytYwO3B5LOn8x
-	eeycdZfdY8GmUo9NqzrZPF5snsno8b19D5tHT9smJo/Pm+QCOKK4bFJSczLLUov07RK4Mnb+
-	PM5ccEuk4tHppYwNjDf5uxg5OSQETCQOLf7C3MXIxSEksIJR4t+t9ywQzhdGieXvTrBCOJ8Z
-	JVr2T2aEadl6+DZUYjmjxOMNTexwVf8n3YTqPwPU8nYWVNlKRolr8x8xg/SzCehLXFtzDcwW
-	EVCWaDjwig2kiFngAbPEi+ZNYAlhgRCJMz/uMUEUhUps3HAIyjaSaFnyiAXEZhFQlVgy8S9Y
-	Pa+AhkTvuoVgNqeAucTiK2/AbEYBWYlHK3+xg9jMAuISt57MZ4J4QlBi0ew9zBC2mMS/XQ/Z
-	IGwdibPXn0A9aiCxdek+FghbSWLKlvfMEHP0JG5MncIGYWtLLFv4GuoGQYmTM5+AvS8h8I1T
-	4vHW9VALXCROLN0PtUBY4tXxLewQtozE/53zmSYwas9Cct8sJDtmIdkxC8mOBYwsqxjFU0uL
-	c9NTiw3zUsv1ihNzi0vz0vWS83M3MQKT2ul/xz/tYJz76qPeIUYmDsZDjBIczEoivF98nqUI
-	8aYkVlalFuXHF5XmpBYfYpTmYFES59W2PZksJJCeWJKanZpakFoEk2Xi4JRqYMpnW5t81kSc
-	bVXRwlUB+9ys05s4rvx76fTJqr4u1VbKZWO+kuD6oyeatu5UYJWw28eWlq+iziJQwbNQ5kB3
-	Z/j94Go1td6Hao+TZh8wmbky/M/ag+ambWYysRwFBxlXyMzytdKPnFXmvarI5afW1dK6WefW
-	PK7/dLP5Nusr/dOMvP84Nm1ivNhRtt4z5KCmcevuTzPq6yapzS+5tf/Mt3k80+s6Z9hfXOOq
-	V+KR5qdmF6pg1qP17TTHffajM5rP3/bmCmN/lxSWvXfDg1kGc9VevXmkUjfps46sanP1Q4tD
-	ExQENrxebnEwx/d54bJPjzpcRF7fWFb4YJsFc8Is97rVjo0i278+dJ757ojiYiWW4oxEQy3m
-	ouJEAO+WnSrZAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAKsWRmVeSWpSXmKPExsVy+t/xe7pbfz9LMdgxRcLi7+zt7BYnrjex
-	WHy41sRqcePCfmaLNVsamSwunnnNaHF51xw2i5XzlwNZJy4xWqx/dpjZYsOytYwO3B5LOn8x
-	eeycdZfdY8GmUo9NqzrZPF5snsno8b19D5tHT9smJo/Pm+QCOKL0bIryS0tSFTLyi0tslaIN
-	LYz0DC0t9IxMLPUMjc1jrYxMlfTtbFJSczLLUov07RL0Mnb+PM5ccEuk4tHppYwNjDf5uxg5
-	OSQETCS2Hr7N2sXIxSEksJRR4v2TQ2wQCRmJjV+uskLYwhJ/rnWBxYUEPjJKLHojD9FwhlFi
-	4udjbBDOSkaJO2uXM4NUsQnoS1xbcw3MFhFQlmg48AqsiFngAbPEqjcd7CAJYYEQiTM/7jFB
-	FIVK7G25zw5hG0m0LHnEAmKzCKhKLJn4F2wQr4CGRO+6hcwQZ2xnlPi3TB/E5hQwl1h85Q1Y
-	nFFAVuLRyl9gc5gFxCVuPZnPBPGCgMSSPeeZIWxRiZeP/0G9piNx9voTRgjbQGLr0n0sELaS
-	xJQt75kh5uhJ3Jg6hQ3C1pZYtvA11D2CEidnPmGZwCg9C8m6WUhaZiFpmYWkZQEjyypGkdTS
-	4tz03GIjveLE3OLSvHS95PzcTYzApLTt2M8tOxhXvvqod4iRiYPxEKMEB7OSCO8Xn2cpQrwp
-	iZVVqUX58UWlOanFhxhNgWE0kVlKNDkfmBbzSuINzQxMDU3MLA1MLc2MlcR5PQs6EoUE0hNL
-	UrNTUwtSi2D6mDg4pRqYIp+Wl6QKFS7L0mOu/cPA9rqLPzLcp3KKeWvAPautT96dF3mz2Hz9
-	nOl7Rb41vJ51g0PKxem20nPvD2q5k7q2m8iffR/fe8TpnvOTrlP7Pl5M9tEvZVtcpvfzmuTO
-	OH/lVb8vvl7aJBH3/klnsrvYGsWA7usbPS79DI9/p2Wxe+Xlly7S/4LPycU6qegLta/WDbib
-	sTBlomdK+P6bmx6skF9yYN4Kqd9bjr/2nLKMoU+R9bHvSY60hkNc+4tVsnSlnOcFy/05bvdI
-	ceeRzTrL3j8wmc/3aZ5letTLbE7Wm1aFErfrPTw3/zMs3DHFLPeSkdbcPUd/VOf+rNujfOly
-	3To37pjG2U2zVi58zndQRYmlOCPRUIu5qDgRAJmifW7TAwAA
-X-CMS-MailID: 20230824064157eucas1p1023586f5eec1f0bed1464a7a388b3ad3
-X-Msg-Generator: CA
-X-RootMTR: 20230823160307eucas1p10d2cc77f1ee1c9129681eb585a386521
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230823160307eucas1p10d2cc77f1ee1c9129681eb585a386521
-References: <20230823160244.188033-1-ojeda@kernel.org>
-	<CGME20230823160307eucas1p10d2cc77f1ee1c9129681eb585a386521@eucas1p1.samsung.com>
-	<20230823160244.188033-2-ojeda@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2023082325-expansion-revoke-1f3a@gregkh>
 
+On Wed, Aug 23, 2023 at 05:50:42PM +0200, Greg Kroah-Hartman wrote:
+> On Wed, Aug 23, 2023 at 06:30:13AM -0700, Guenter Roeck wrote:
+> > On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
+> > > On Wed, 23 Aug 2023 at 12:33, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
+> > > > > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
+> > > > > > This is the start of the stable review cycle for the 6.1.47 release.
+> > > > > > There are 194 patches in this series, all will be posted as a response
+> > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > let me know.
+> > > > > >
+> > > > > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
+> > > > > > Anything received after that time might be too late.
+> > > > > >
+> > > > >
+> > > > > Build results:
+> > > > >       total: 157 pass: 156 fail: 1
+> > > > > Failed builds:
+> > > > >       m68k:sun3_defconfig
+> > > > > Qemu test results:
+> > > > >       total: 521 pass: 519 fail: 2
+> > > > > Failed tests:
+> > > > >       arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
+> > > > >       arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
+> > > > >
+> > > > > The m68k build failure is
+> > > > >
+> > > > > Inconsistent kallsyms data
+> > > > > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
+> > > > >
+> > > > > I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
+> > > > > Nothing to worry about. The f2fs crashes are still seen. They
+> > > > > also happen for other architectures, so it is not just an arm problem.
+> > > > > I'll probably just disable all f2fs testing going forward. If so I'll
+> > > > > send a note clarifying that the lack of reported test failures doesn't
+> > > > > mean that it works.
+> > > >
+> > > > I'll look into this later this week, next week to resolve the f2fs
+> > > > stuff.  I wanted to get to the other known bug fixes first.
+> > > >
+> > > > > For x86 I get the same runtime warning as everyone else.
+> > > >
+> > > > Yeah, this is troubling...
+> > > >
+> > > > Is it clang only?  I'll dig into this today...
+> > > 
+> > > It is seen with gcc-13 and clang-17 with few extra configs.
+> > > We are not booting defconfig.
+> > > 
+> > > The Kconfigs are enabled with KFENCE.
+> > > 
+> > I have KFENCE enabled as well, so it may well be that this triggers
+> > the warning. I don't see it in 6.4.y or upstream, though.
+> 
+> Ok, let me rip out all the x86 and objtool patches from this release,
+> get it out the door with the good things in there that everyone else
+> needs, and then we can focus on this mess...
+> 
+> Maybe I'll just backport _all_ objtool changes to sync things up better,
+> last time I tried that it was a maze of twisty passages, all coated in
+> assembly...
 
-Miguel Ojeda <ojeda@kernel.org> writes:
+I got lost in the maze again today, ick.
 
-> `Box::from_raw()` is `#[must_use]`, which means the result cannot
-> go unused.
->
-> In Rust 1.71.0, this was not detected because the block expression
-> swallows the diagnostic [1]:
->
->     unsafe { Box::from_raw(self.ptr.as_ptr()) };
->
-> It would have been detected, however, if the line had been instead:
->
->     unsafe { Box::from_raw(self.ptr.as_ptr()); }
->
-> i.e. the semicolon being inside the `unsafe` block, rather than
-> outside.
->
-> In Rust 1.72.0, the compiler started warning about this [2], so
-> without this patch we will get:
->
->         error: unused return value of `alloc::boxed::Box::<T>::from_raw` =
-that must be used
->         --> rust/kernel/sync/arc.rs:302:22
->         |
->     302 |             unsafe { Box::from_raw(self.ptr.as_ptr()) };
->         |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->         |
->         =3D note: call `drop(Box::from_raw(ptr))` if you intend to drop t=
-he `Box`
->         =3D note: `-D unused-must-use` implied by `-D warnings`
->     help: use `let _ =3D ...` to ignore the resulting value
->         |
->     302 |             unsafe { let _ =3D Box::from_raw(self.ptr.as_ptr())=
-; };
->         |                      +++++++                                 +
->
-> Thus add an add an explicit `drop()` as the `#[must_use]`'s
-> annotation suggests (instead of the more general help line).
->
-> Link: https://protect2.fireeye.com/v1/url?k=3D9e9028e1-ff1b3dd7-9e91a3ae-=
-74fe485cbff1-f2bfda5f7702c68e&q=3D1&e=3D66bd90a6-86db-48e7-8538-c118c3f45ba=
-a&u=3Dhttps%3A%2F%2Fgithub.com%2Frust-lang%2Frust%2Fissues%2F104253 [1]
-> Link: https://protect2.fireeye.com/v1/url?k=3D89300613-e8bb1325-89318d5c-=
-74fe485cbff1-fcf76e46b008b25a&q=3D1&e=3D66bd90a6-86db-48e7-8538-c118c3f45ba=
-a&u=3Dhttps%3A%2F%2Fgithub.com%2Frust-lang%2Frust%2Fpull%2F112529 [2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
+Anyway, I give up.  I'm just going to push out a -rc1 with just these
+changes in it today, and if people are upset about the runtime warning,
+then they can provide a working backport of this objtool patch.
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
+Ideally, the CPU vendor who is causing this mess will do that, as it's
+their issue we are spending all of this time on, not Linux's issue.
 
->  rust/kernel/sync/arc.rs | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-> index 172f563976a9..4c14d540a581 100644
-> --- a/rust/kernel/sync/arc.rs
-> +++ b/rust/kernel/sync/arc.rs
-> @@ -299,7 +299,7 @@ fn drop(&mut self) {
->              // The count reached zero, we must free the memory.
->              //
->              // SAFETY: The pointer was initialised from the result of `B=
-ox::leak`.
-> -            unsafe { Box::from_raw(self.ptr.as_ptr()) };
-> +            unsafe { drop(Box::from_raw(self.ptr.as_ptr())) };
->          }
->      }
->  }
+Also, oddly, I can not reproduce this problem here on my hardware at
+all.  Maybe because it's an AMD processor?  If so, makes sense, as the
+SRSO issue is only for Intel chips.
+
+thanks,
+
+greg k-h
