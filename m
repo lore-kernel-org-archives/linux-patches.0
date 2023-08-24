@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECF514A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5E6C433C7;
-	Thu, 24 Aug 2023 17:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A49C14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF24DC433C8;
+	Thu, 24 Aug 2023 17:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897391;
-	bh=kgwjh9GgoJZTA8akukoljMW9zyF4q7wm7nwaTtwe0c0=;
+	s=korg; t=1692897394;
+	bh=YQX6ZvAG92cb8AhIbV31HOeiAhtTtFPwr3W0Fjwbavw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uq+v++Ijqkwb0rNkclOJ359ekz5KxZL08SOubJBa5WUgYHuickfBhtG8PWy9tmAOF
-	 ix0fA232xpyoPokEfrbixXwfq57lZ+pg8J7tDcr+HhtP2PHMhKpLAVxquG2fkQq/E6
-	 YEm5ST6nhsQnvnkvAtcANkk6CLX98/VuqgSICV+Q=
+	b=DmF6JvrKXiwdCbccFhF7q+/cOv7vVhWdKD26hB8W3NXg1lNzoupQG1/eHwj7RYc6S
+	 F4DjHMFT/Ei+RKwKRwysaXdmzrBiQNvqg6hHFwPx7G9u8VLqzBgJeNGMK3jpS1XxjE
+	 DMGoCyMhtbFIjp1S4DVP3Jiq+49i0bb0VTJWpTw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
+	syzbot+cd311b1e43cc25f90d18@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/135] ovl: check type and offset of struct vfsmount in ovl_entry
-Date: Thu, 24 Aug 2023 19:08:13 +0200
-Message-ID: <20230824170618.056072299@linuxfoundation.org>
+Subject: [PATCH 5.10 022/135] udf: Fix uninitialized array access for some pathnames
+Date: Thu, 24 Aug 2023 19:08:14 +0200
+Message-ID: <20230824170618.104153737@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,59 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit f723edb8a532cd26e1ff0a2b271d73762d48f762 ]
+[ Upstream commit 028f6055c912588e6f72722d89c30b401bbcf013 ]
 
-Porting overlayfs to the new amount api I started experiencing random
-crashes that couldn't be explained easily. So after much debugging and
-reasoning it became clear that struct ovl_entry requires the point to
-struct vfsmount to be the first member and of type struct vfsmount.
+For filenames that begin with . and are between 2 and 5 characters long,
+UDF charset conversion code would read uninitialized memory in the
+output buffer. The only practical impact is that the name may be prepended a
+"unification hash" when it is not actually needed but still it is good
+to fix this.
 
-During the port I added a new member at the beginning of struct
-ovl_entry which broke all over the place in the form of random crashes
-and cache corruptions. While there's a comment in ovl_free_fs() to the
-effect of "Hack! Reuse ofs->layers as a vfsmount array before freeing
-it" there's no such comment on struct ovl_entry which makes this easy to
-trip over.
-
-Add a comment and two static asserts for both the offset and the type of
-pointer in struct ovl_entry.
-
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reported-by: syzbot+cd311b1e43cc25f90d18@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/000000000000e2638a05fe9dc8f9@google.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/ovl_entry.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/udf/unicode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/ovl_entry.h b/fs/overlayfs/ovl_entry.h
-index b208eba5d0b64..b58a0140d78d5 100644
---- a/fs/overlayfs/ovl_entry.h
-+++ b/fs/overlayfs/ovl_entry.h
-@@ -30,6 +30,7 @@ struct ovl_sb {
- };
+diff --git a/fs/udf/unicode.c b/fs/udf/unicode.c
+index 622569007b530..2142cbd1dde24 100644
+--- a/fs/udf/unicode.c
++++ b/fs/udf/unicode.c
+@@ -247,7 +247,7 @@ static int udf_name_from_CS0(struct super_block *sb,
+ 	}
  
- struct ovl_layer {
-+	/* ovl_free_fs() relies on @mnt being the first member! */
- 	struct vfsmount *mnt;
- 	/* Trap in ovl inode cache */
- 	struct inode *trap;
-@@ -40,6 +41,14 @@ struct ovl_layer {
- 	int fsid;
- };
- 
-+/*
-+ * ovl_free_fs() relies on @mnt being the first member when unmounting
-+ * the private mounts created for each layer. Let's check both the
-+ * offset and type.
-+ */
-+static_assert(offsetof(struct ovl_layer, mnt) == 0);
-+static_assert(__same_type(typeof_member(struct ovl_layer, mnt), struct vfsmount *));
-+
- struct ovl_path {
- 	const struct ovl_layer *layer;
- 	struct dentry *dentry;
+ 	if (translate) {
+-		if (str_o_len <= 2 && str_o[0] == '.' &&
++		if (str_o_len > 0 && str_o_len <= 2 && str_o[0] == '.' &&
+ 		    (str_o_len == 1 || str_o[1] == '.'))
+ 			needsCRC = 1;
+ 		if (needsCRC) {
 -- 
 2.40.1
 
