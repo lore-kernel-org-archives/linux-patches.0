@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F87A13FE8
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EF8C433C7;
-	Thu, 24 Aug 2023 17:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F9F13FE8
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B77CC433C8;
+	Thu, 24 Aug 2023 17:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897568;
-	bh=VQbFu4rrFDl+2kvFc0XMJzf4w12XEE2B8b3tkSQv+Y4=;
+	s=korg; t=1692897570;
+	bh=J5RfBnCDhzqVXZf4/m2SL2cy98nxieuvgwOKIztBrho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPBoDXc8SvIOdnVZOJ0YBt+RmaQI4EVWEYtSgkBWvSkgvOYEIJwps01G39MNhG1l4
-	 6T/prRn77AYUkwpI6ZUC1wCqBZOkJx2OxWDhWc3aDvfGUK5nGJdZTuGm8Mfx77tOdt
-	 coAVSqfKxfP8R3YiGmr1PIy/e3PR4RKnerltF18g=
+	b=rH+XjLSrnIIDr547vgPd4BVMMFGIXEvuYebsVlhAdJI695TrEp2IF9V95M82C3CpN
+	 rX+sdS9Rqh9eKRpgJZAxJRMef0BLUUEa08oj1c8JBklB3uGwBma6Uo/CviWNd5WgkJ
+	 +OounQmMmY+Jc7e/8rLsree4dGzsjZfbwYwpBhXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sishuai Gong <sishuai.system@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/135] drm/panel: simple: Fix AUO G121EAN01 panel timings according to the docs
-Date: Thu, 24 Aug 2023 19:09:17 +0200
-Message-ID: <20230824170620.931143214@linuxfoundation.org>
+Subject: [PATCH 5.10 086/135] ipvs: fix racy memcpy in proc_do_sync_threshold
+Date: Thu, 24 Aug 2023 19:09:18 +0200
+Message-ID: <20230824170620.971774868@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,75 +42,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Sishuai Gong <sishuai.system@gmail.com>
 
-[ Upstream commit e8470c0a7bcaa82f78ad34282d662dd7bd9630c2 ]
+[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
 
-Commit 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4
-panel") added support for this panel model, but the timings it implements
-are very different from what the datasheet describes. I checked both the
-G121EAN01.0 datasheet from [0] and the G121EAN01.4 one from [1] and they
-all have the same timings: for example the LVDS clock typical value is 74.4
-MHz, not 66.7 MHz as implemented.
+When two threads run proc_do_sync_threshold() in parallel,
+data races could happen between the two memcpy():
 
-Replace the timings with the ones from the documentation. These timings
-have been tested and the clock frequencies verified with an oscilloscope to
-ensure they are correct.
+Thread-1			Thread-2
+memcpy(val, valp, sizeof(val));
+				memcpy(valp, val, sizeof(val));
 
-Also use struct display_timing instead of struct drm_display_mode in order
-to also specify the minimum and maximum values.
+This race might mess up the (struct ctl_table *) table->data,
+so we add a mutex lock to serialize them.
 
-[0] https://embedded.avnet.com/product/g121ean01-0/
-[1] https://embedded.avnet.com/product/g121ean01-4/
-
-Fixes: 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4 panel")
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804151239.835216-1-luca.ceresoli@bootlin.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
+Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
+Acked-by: Simon Horman <horms@kernel.org>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 7b69f81444ebd..e40321d798981 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1010,21 +1010,21 @@ static const struct panel_desc auo_g104sn02 = {
- 	},
- };
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 29ec3ef63edc7..d0b64c36471d5 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1802,6 +1802,7 @@ static int
+ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		       void *buffer, size_t *lenp, loff_t *ppos)
+ {
++	struct netns_ipvs *ipvs = table->extra2;
+ 	int *valp = table->data;
+ 	int val[2];
+ 	int rc;
+@@ -1811,6 +1812,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		.mode = table->mode,
+ 	};
  
--static const struct drm_display_mode auo_g121ean01_mode = {
--	.clock = 66700,
--	.hdisplay = 1280,
--	.hsync_start = 1280 + 58,
--	.hsync_end = 1280 + 58 + 8,
--	.htotal = 1280 + 58 + 8 + 70,
--	.vdisplay = 800,
--	.vsync_start = 800 + 6,
--	.vsync_end = 800 + 6 + 4,
--	.vtotal = 800 + 6 + 4 + 10,
-+static const struct display_timing auo_g121ean01_timing = {
-+	.pixelclock = { 60000000, 74400000, 90000000 },
-+	.hactive = { 1280, 1280, 1280 },
-+	.hfront_porch = { 20, 50, 100 },
-+	.hback_porch = { 20, 50, 100 },
-+	.hsync_len = { 30, 100, 200 },
-+	.vactive = { 800, 800, 800 },
-+	.vfront_porch = { 2, 10, 25 },
-+	.vback_porch = { 2, 10, 25 },
-+	.vsync_len = { 4, 18, 50 },
- };
++	mutex_lock(&ipvs->sync_mutex);
+ 	memcpy(val, valp, sizeof(val));
+ 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
+ 	if (write) {
+@@ -1820,6 +1822,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		else
+ 			memcpy(valp, val, sizeof(val));
+ 	}
++	mutex_unlock(&ipvs->sync_mutex);
+ 	return rc;
+ }
  
- static const struct panel_desc auo_g121ean01 = {
--	.modes = &auo_g121ean01_mode,
--	.num_modes = 1,
-+	.timings = &auo_g121ean01_timing,
-+	.num_timings = 1,
- 	.bpc = 8,
- 	.size = {
- 		.width = 261,
+@@ -4077,6 +4080,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
+ 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
+ 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
+ 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
++	tbl[idx].extra2 = ipvs;
+ 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
+ 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
+ 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
 -- 
 2.40.1
 
