@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7DF12B9C
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:15:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD2FC433C8;
-	Thu, 24 Aug 2023 17:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE3C12B9C
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A18C433C7;
+	Thu, 24 Aug 2023 17:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897359;
-	bh=N/gtn/Jk1DxEEqAmpXRcgKEw3neRMJZa5DZWc9R18Vs=;
+	s=korg; t=1692897362;
+	bh=9ng7+gjTvXR3BleGUtcEwM5nYqJtj7cPGfCoEML3/nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ooeIH7ZmwjkI1v/fEG/Idp98Fd224zMHsYWu6xXoc7l45Gwb3nbkgQR0iRYJSEbF5
-	 bWLi7i/MUsnhU595NUoajJGOjFaW0a1xr726lj4v2tWro3qVtiV0GViheTnfXHwBUP
-	 omwWoj4gjnxeaHTAdLp91A1gNRjcSYRXJkT2cj1Q=
+	b=DphmrsX0H5lGQ1Q1fBHOgsGAhY9BJbySXz7x0vKJY2+5LEx463REW/FAYUrsMkt7z
+	 NnlZunFt9R/SN2c6O6q/thCW2HKFk7fOeSht8CegaNdpT2mCFRVxW4Fwsz9WO5+gsr
+	 AseQfIQUizAMr3rRw0yGTROMw+s1pl4wU1Vjx8X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Thierry Reding <treding@nvidia.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/135] PCI: tegra194: Fix possible array out of bounds access
-Date: Thu, 24 Aug 2023 19:08:03 +0200
-Message-ID: <20230824170617.586701550@linuxfoundation.org>
+Subject: [PATCH 5.10 012/135] ARM: dts: imx6dl: prtrvt, prtvt7, prti6q, prtwd2: fix USB related warnings
+Date: Thu, 24 Aug 2023 19:08:04 +0200
+Message-ID: <20230824170617.638081971@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -42,64 +40,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 205b3d02d57ce6dce96f6d2b9c230f56a9bf9817 ]
+[ Upstream commit 1d14bd943fa2bbdfda1efbcc080b298fed5f1803 ]
 
-Add check to fix the possible array out of bounds violation by
-making speed equal to GEN1_CORE_CLK_FREQ when its value is more
-than the size of "pcie_gen_freq" array. This array has size of
-four but possible speed (CLS) values are from "0 to 0xF". So,
-"speed - 1" values are "-1 to 0xE".
+Fix USB-related warnings in prtrvt, prtvt7, prti6q and prtwd2 device trees
+by disabling unused usbphynop1 and usbphynop2 USB PHYs and providing proper
+configuration for the over-current detection. This fixes the following
+warnings with the current kernel:
+ usb_phy_generic usbphynop1: dummy supplies not allowed for exclusive requests
+ usb_phy_generic usbphynop2: dummy supplies not allowed for exclusive requests
+ imx_usb 2184200.usb: No over current polarity defined
 
-Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://lore.kernel.org/lkml/72b9168b-d4d6-4312-32ea-69358df2f2d0@nvidia.com/
-Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+By the way, fix over-current detection on usbotg port for prtvt7, prti6q
+and prtwd2 boards. Only prtrvt do not have OC on USB OTG port.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/imx6dl-prtrvt.dts   |  4 ++++
+ arch/arm/boot/dts/imx6qdl-prti6q.dtsi | 11 ++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 1222f5749bc67..a215777df96c7 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -239,6 +239,7 @@
- #define EP_STATE_ENABLED	1
+diff --git a/arch/arm/boot/dts/imx6dl-prtrvt.dts b/arch/arm/boot/dts/imx6dl-prtrvt.dts
+index 5ac84445e9cc1..90e01de8c2c15 100644
+--- a/arch/arm/boot/dts/imx6dl-prtrvt.dts
++++ b/arch/arm/boot/dts/imx6dl-prtrvt.dts
+@@ -126,6 +126,10 @@ &usbh1 {
+ 	status = "disabled";
+ };
  
- static const unsigned int pcie_gen_freq[] = {
-+	GEN1_CORE_CLK_FREQ,	/* PCI_EXP_LNKSTA_CLS == 0; undefined */
- 	GEN1_CORE_CLK_FREQ,
- 	GEN2_CORE_CLK_FREQ,
- 	GEN3_CORE_CLK_FREQ,
-@@ -470,7 +471,11 @@ static irqreturn_t tegra_pcie_ep_irq_thread(int irq, void *arg)
- 
- 	speed = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_LNKSTA) &
- 		PCI_EXP_LNKSTA_CLS;
--	clk_set_rate(pcie->core_clk, pcie_gen_freq[speed - 1]);
++&usbotg {
++	disable-over-current;
++};
 +
-+	if (speed >= ARRAY_SIZE(pcie_gen_freq))
-+		speed = 0;
+ &vpu {
+ 	status = "disabled";
+ };
+diff --git a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
+index 19578f660b092..70dfa07a16981 100644
+--- a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
+@@ -69,6 +69,7 @@ &usbh1 {
+ 	vbus-supply = <&reg_usb_h1_vbus>;
+ 	phy_type = "utmi";
+ 	dr_mode = "host";
++	disable-over-current;
+ 	status = "okay";
+ };
+ 
+@@ -78,10 +79,18 @@ &usbotg {
+ 	pinctrl-0 = <&pinctrl_usbotg>;
+ 	phy_type = "utmi";
+ 	dr_mode = "host";
+-	disable-over-current;
++	over-current-active-low;
+ 	status = "okay";
+ };
+ 
++&usbphynop1 {
++	status = "disabled";
++};
 +
-+	clk_set_rate(pcie->core_clk, pcie_gen_freq[speed]);
- 
- 	/* If EP doesn't advertise L1SS, just return */
- 	val = dw_pcie_readl_dbi(pci, pcie->cfg_link_cap_l1sub);
-@@ -973,7 +978,11 @@ static int tegra_pcie_dw_host_init(struct pcie_port *pp)
- 
- 	speed = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_LNKSTA) &
- 		PCI_EXP_LNKSTA_CLS;
--	clk_set_rate(pcie->core_clk, pcie_gen_freq[speed - 1]);
++&usbphynop2 {
++	status = "disabled";
++};
 +
-+	if (speed >= ARRAY_SIZE(pcie_gen_freq))
-+		speed = 0;
-+
-+	clk_set_rate(pcie->core_clk, pcie_gen_freq[speed]);
- 
- 	tegra_pcie_enable_interrupts(pp);
- 
+ &usdhc1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_usdhc1>;
 -- 
 2.40.1
 
