@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE98411731
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6A8C4167D;
-	Thu, 24 Aug 2023 15:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED2811731
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:04:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E1DC433C7;
+	Thu, 24 Aug 2023 15:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889455;
-	bh=XbJa6aBwNWa1R7CnrZoOBhHQG+zOse2wRr7005bLTeY=;
+	s=korg; t=1692889458;
+	bh=ayBJRZCvt2084hc1IRrtsSpfdEvtOtwkL+oa3E/MWV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xumChxvv4OIYmmxfFuxQL533VPjQ8vPQg/KLMoLDosTVtkvo2vLnY/I3CWr6i8KFe
-	 EJsOk9ggkMf0EdOPmtOI987qTMjMyiNZktQh5puwXvdKfp1poHfJf9Bsw/Boy1aZ/7
-	 dpaIn4B5anaA9LxlBXTv//Dx3JVIg/zmofT5Fhws=
+	b=NsyPB7suXueGR8MWraC/Es6csvyDeDJk6nAZC7S43O4HfsKyBCT5rst5tP9ON4Sgw
+	 FzLXHVw1NyEWIe6/Zhrv1PvJPhdgFH/z/O9rIr2D6oeEM7oqN0rLt/uX/3fQOAMWBC
+	 yuRfEM5gL9JuPoYZu8O6mdnDICeqXU2vioOsDIRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 127/135] x86/cpu: Cleanup the untrain mess
-Date: Thu, 24 Aug 2023 16:51:10 +0200
-Message-ID: <20230824145032.524041514@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 118/135] mmc: f-sdh30: fix order of function calls in sdhci_f_sdh30_remove
+Date: Thu, 24 Aug 2023 16:51:01 +0200
+Message-ID: <20230824145032.090093001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -34,91 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Yangtao Li <frank.li@vivo.com>
 
-commit e7c25c441e9e0fa75b4c83e0b26306b702cfe90d upstream.
+commit 58abdd80b93b09023ca03007b608685c41e3a289 upstream.
 
-Since there can only be one active return_thunk, there only needs be
-one (matching) untrain_ret. It fundamentally doesn't make sense to
-allow multiple untrain_ret at the same time.
+The order of function calls in sdhci_f_sdh30_remove is wrong,
+let's call sdhci_pltfm_unregister first.
 
-Fold all the 3 different untrain methods into a single (temporary)
-helper stub.
-
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121149.042774962@infradead.org
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 5def5c1c15bf ("mmc: sdhci-f-sdh30: Replace with sdhci_pltfm")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230727070051.17778-62-frank.li@vivo.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |   12 ++++--------
- arch/x86/kernel/cpu/bugs.c           |    1 +
- arch/x86/lib/retpoline.S             |    7 +++++++
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ drivers/mmc/host/sdhci_f_sdh30.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -156,9 +156,9 @@
- .endm
- 
- #ifdef CONFIG_CPU_UNRET_ENTRY
--#define CALL_ZEN_UNTRAIN_RET	"call retbleed_untrain_ret"
-+#define CALL_UNTRAIN_RET	"call entry_untrain_ret"
- #else
--#define CALL_ZEN_UNTRAIN_RET	""
-+#define CALL_UNTRAIN_RET	""
- #endif
- 
- /*
-@@ -177,14 +177,9 @@
- 	defined(CONFIG_CPU_SRSO)
- 	ANNOTATE_UNRET_END
- 	ALTERNATIVE_2 "",						\
--	              CALL_ZEN_UNTRAIN_RET, X86_FEATURE_UNRET,		\
-+		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
- 		      "call entry_ibpb", X86_FEATURE_ENTRY_IBPB
- #endif
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -188,12 +188,14 @@ static int sdhci_f_sdh30_remove(struct p
+ {
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+ 	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
 -
--#ifdef CONFIG_CPU_SRSO
--	ALTERNATIVE_2 "", "call srso_untrain_ret", X86_FEATURE_SRSO, \
--			  "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
--#endif
- .endm
+-	clk_disable_unprepare(priv->clk_iface);
+-	clk_disable_unprepare(priv->clk);
++	struct clk *clk_iface = priv->clk_iface;
++	struct clk *clk = priv->clk;
  
- #else /* __ASSEMBLY__ */
-@@ -209,6 +204,7 @@ extern void retbleed_untrain_ret(void);
- extern void srso_untrain_ret(void);
- extern void srso_alias_untrain_ret(void);
+ 	sdhci_pltfm_unregister(pdev);
  
-+extern void entry_untrain_ret(void);
- extern void entry_ibpb(void);
- 
- #ifdef CONFIG_RETPOLINE
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2359,6 +2359,7 @@ static void __init srso_select_mitigatio
- 			 * like ftrace, static_call, etc.
- 			 */
- 			setup_force_cpu_cap(X86_FEATURE_RETHUNK);
-+			setup_force_cpu_cap(X86_FEATURE_UNRET);
- 
- 			if (boot_cpu_data.x86 == 0x19) {
- 				setup_force_cpu_cap(X86_FEATURE_SRSO_ALIAS);
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -230,6 +230,13 @@ SYM_CODE_START(srso_return_thunk)
- 	ud2
- SYM_CODE_END(srso_return_thunk)
- 
-+SYM_FUNC_START(entry_untrain_ret)
-+	ALTERNATIVE_2 "jmp retbleed_untrain_ret", \
-+		      "jmp srso_untrain_ret", X86_FEATURE_SRSO, \
-+		      "jmp srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
-+SYM_FUNC_END(entry_untrain_ret)
-+__EXPORT_THUNK(entry_untrain_ret)
++	clk_disable_unprepare(clk_iface);
++	clk_disable_unprepare(clk);
 +
- SYM_CODE_START(__x86_return_thunk)
- 	UNWIND_HINT_FUNC
- 	ANNOTATE_NOENDBR
+ 	return 0;
+ }
+ 
 
 
