@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6097C1119B
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D8DC433C7;
-	Thu, 24 Aug 2023 14:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9551119B
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9B2C433C8;
+	Thu, 24 Aug 2023 14:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888857;
-	bh=Na26/LHSTxghy5O7pY7BhTFMHTJAF9aPdtKv12Om0KU=;
+	s=korg; t=1692888860;
+	bh=jltj/H5xCx1bUjyJEiFAiQ+aEbwSGHQMsOAppHVkWqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13mRVd96zD0Xv552fkQkUsbJx0MsaNtfu5tr41XwMnxiZVzSItWH4Lj80bHA5xMwL
-	 AqxXMRs0l5Ny9EXvODXv1OcRDijiyYrvn3AU/e8Os4ZfwYLi+joqZH8EcrJuFKAkDb
-	 x6m8HqZ63gTFw+zqvpsLpJucaqH1QGtIBMcQ2hfM=
+	b=DlkYOtsgY8ZBo7fSawvLZlYmZnP6uiiuJDBU3N0vghHpgOZPKQ49JE1w3N56FVF3b
+	 rak5ThVs0tZ+g/JqjwnyTXMNo8M512ouIvSA+jEYEIh7IxclosEdsakqBZNI/0gaDF
+	 qGbFKgge7EuwrEh30Vn9M73acBnEofYilK+ubwA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/139] btrfs: move out now unused BG from the reclaim list
-Date: Thu, 24 Aug 2023 16:49:49 +0200
-Message-ID: <20230824145026.527997766@linuxfoundation.org>
+Subject: [PATCH 5.15 067/139] virtio-mmio: dont break lifecycle of vm_dev
+Date: Thu, 24 Aug 2023 16:49:50 +0200
+Message-ID: <20230824145026.568164294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,50 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naota@elisp.net>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit a9f189716cf15913c453299d72f69c51a9b0f86b ]
+[ Upstream commit 55c91fedd03d7b9cf0c5199b2eb12b9b8e95281a ]
 
-An unused block group is easy to remove to free up space and should be
-reclaimed fast. Such block group can often already be a target of the
-reclaim process. As we check list_empty(&bg->bg_list), we keep it in the
-reclaim list. That block group is never reclaimed until the file system
-is filled e.g. up to 75%.
+vm_dev has a separate lifecycle because it has a 'struct device'
+embedded. Thus, having a release callback for it is correct.
 
-Instead, we can move unused block group to the unused list and delete it
-fast.
+Allocating the vm_dev struct with devres totally breaks this protection,
+though. Instead of waiting for the vm_dev release callback, the memory
+is freed when the platform_device is removed. Resulting in a
+use-after-free when finally the callback is to be called.
 
-Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+To easily see the problem, compile the kernel with
+CONFIG_DEBUG_KOBJECT_RELEASE and unbind with sysfs.
+
+The fix is easy, don't use devres in this case.
+
+Found during my research about object lifetime problems.
+
+Fixes: 7eb781b1bbb7 ("virtio_mmio: add cleanup for virtio_mmio_probe")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Message-Id: <20230629120526.7184-1-wsa+renesas@sang-engineering.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_mmio.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index d24cef671c1aa..4ca6828586af5 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1475,11 +1475,14 @@ void btrfs_mark_bg_unused(struct btrfs_block_group *bg)
- {
- 	struct btrfs_fs_info *fs_info = bg->fs_info;
+diff --git a/drivers/virtio/virtio_mmio.c b/drivers/virtio/virtio_mmio.c
+index fe696aafaed86..f4d43d60d710f 100644
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -572,9 +572,8 @@ static void virtio_mmio_release_dev(struct device *_d)
+ 	struct virtio_device *vdev =
+ 			container_of(_d, struct virtio_device, dev);
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
+-	struct platform_device *pdev = vm_dev->pdev;
  
-+	trace_btrfs_add_unused_block_group(bg);
- 	spin_lock(&fs_info->unused_bgs_lock);
- 	if (list_empty(&bg->bg_list)) {
- 		btrfs_get_block_group(bg);
--		trace_btrfs_add_unused_block_group(bg);
- 		list_add_tail(&bg->bg_list, &fs_info->unused_bgs);
-+	} else {
-+		/* Pull out the block group from the reclaim_bgs list. */
-+		list_move_tail(&bg->bg_list, &fs_info->unused_bgs);
- 	}
- 	spin_unlock(&fs_info->unused_bgs_lock);
+-	devm_kfree(&pdev->dev, vm_dev);
++	kfree(vm_dev);
  }
+ 
+ /* Platform device */
+@@ -585,7 +584,7 @@ static int virtio_mmio_probe(struct platform_device *pdev)
+ 	unsigned long magic;
+ 	int rc;
+ 
+-	vm_dev = devm_kzalloc(&pdev->dev, sizeof(*vm_dev), GFP_KERNEL);
++	vm_dev = kzalloc(sizeof(*vm_dev), GFP_KERNEL);
+ 	if (!vm_dev)
+ 		return -ENOMEM;
+ 
 -- 
 2.40.1
 
