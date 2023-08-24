@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C2011C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E11C433C8;
-	Thu, 24 Aug 2023 14:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25A611C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DBBC433C9;
+	Thu, 24 Aug 2023 14:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889051;
-	bh=kn5U04wt/x+mdGTzL3UCnk/p0FmMVh3g1zG1KIj1CBY=;
+	s=korg; t=1692889053;
+	bh=I9F1+4aPrNCfVDeUTuyJ+5OdRTlw1yyRI4FOml5T7rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVuCBrxgNQuC2xfWs/EoShhcWENGbQtKqkAtDpVIvUME9YTg09OgVjT5yTDQecoQG
-	 WokuhWwmHigtIl+QcgEts34u6bqfXeVJ6dxasmz+72Mc+s6asKYbFaVyuFacLihwoo
-	 PXN7QTfnFE9YCSrMpoujTDnKAqsJNwJGijWiLG+s=
+	b=iiZq920TT1yUsbS4zLTP71dagMfj3/JvoprgJIBWbLDbGsMg16AapHC9YHjLL+j0w
+	 NGfPK5Z5SQqo/YQwwFdE4CDlHp4c+3d6CCWxseJmRNFJL61ICMZUQm7cV/rgHFVvsB
+	 TGKOYa9pGNYitAaM/ewD8EG/+4UVVu334C/e/9bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/139] serial: 8250: Fix oops for port->pm on uart_change_pm()
-Date: Thu, 24 Aug 2023 16:50:32 +0200
-Message-ID: <20230824145028.259796631@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 136/139] x86/srso: Disable the mitigation on unaffected configurations
+Date: Thu, 24 Aug 2023 16:50:59 +0200
+Message-ID: <20230824145029.328447509@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -34,44 +33,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit dfe2aeb226fd5e19b0ee795f4f6ed8bc494c1534 ]
+commit e9fbc47b818b964ddff5df5b2d5c0f5f32f4a147 upstream.
 
-Unloading a hardware specific 8250 driver can produce error "Unable to
-handle kernel paging request at virtual address" about ten seconds after
-unloading the driver. This happens on uart_hangup() calling
-uart_change_pm().
+Skip the srso cmd line parsing which is not needed on Zen1/2 with SMT
+disabled and with the proper microcode applied (latter should be the
+case anyway) as those are not affected.
 
-Turns out commit 04e82793f068 ("serial: 8250: Reinit port->pm on port
-specific driver unbind") was only a partial fix. If the hardware specific
-driver has initialized port->pm function, we need to clear port->pm too.
-Just reinitializing port->ops does not do this. Otherwise serial8250_pm()
-will call port->pm() instead of serial8250_do_pm().
-
-Fixes: 04e82793f068 ("serial: 8250: Reinit port->pm on port specific driver unbind")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20230804131553.52927-1-tony@atomide.com
+Fixes: 5a15d8348881 ("x86/srso: Tie SBPB bit setting to microcode patch detection")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230813104517.3346-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/bugs.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index ad5b742a68cd0..74e477016f255 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -3274,6 +3274,7 @@ void serial8250_init_port(struct uart_8250_port *up)
- 	struct uart_port *port = &up->port;
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2399,8 +2399,10 @@ static void __init srso_select_mitigatio
+ 		 * IBPB microcode has been applied.
+ 		 */
+ 		if ((boot_cpu_data.x86 < 0x19) &&
+-		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED)))
++		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED))) {
+ 			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
++			return;
++		}
+ 	}
  
- 	spin_lock_init(&port->lock);
-+	port->pm = NULL;
- 	port->ops = &serial8250_pops;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_8250_CONSOLE);
+ 	if (retbleed_mitigation == RETBLEED_MITIGATION_IBPB) {
+@@ -2686,6 +2688,9 @@ static ssize_t gds_show_state(char *buf)
  
--- 
-2.40.1
-
+ static ssize_t srso_show_state(char *buf)
+ {
++	if (boot_cpu_has(X86_FEATURE_SRSO_NO))
++		return sysfs_emit(buf, "Not affected\n");
++
+ 	return sysfs_emit(buf, "%s%s\n",
+ 			  srso_strings[srso_mitigation],
+ 			  (cpu_has_ibpb_brtype_microcode() ? "" : ", no microcode"));
 
 
