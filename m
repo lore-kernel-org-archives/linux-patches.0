@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210A711C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EA1C433C8;
-	Thu, 24 Aug 2023 14:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF1511C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7113AC433C7;
+	Thu, 24 Aug 2023 14:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888794;
-	bh=IkZYmu/9DtOMACRTanRdmPTR1qp+WkLcNNrRBpRH/b0=;
+	s=korg; t=1692888796;
+	bh=p8w2QVooL7wivf4uWr4axtOJBtNmzlsB7SHpU42FF3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsDyanBXvy70HBlc96WQKi9Vvntz3cnz3WyIuNuypTUHsKaEbx2euxmOkhstouM5U
-	 0QEX44xlryT+x+9mfT9YaijXY9irUkggD+KkxtSQ8LSWEtpzSUs4+fqnKWQsVQTQ8c
-	 uFVUubsVeAtM4G8qfosRPbUAZf7SGDdeVg+EX08U=
+	b=ZCq0SfSU1OlUbL5KZ60kvET2E9aIx5woE3LJYzxhQfyeQcS9fkE/k6wDFcnEwMGa9
+	 IaRGN7hgv+UVA0dJ9Lhq4ZoRvf4+I+xUTldWW5NH4r67N1Spyl72IcW+pDYPc5CxV7
+	 0ItvceJjhdKlIBgSkdZSZKxss67i9WsARz0Jd/TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Morandini <marco.morandini@polimi.it>,
-	Jiri Kosina <jkosina@suse.cz>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/139] HID: add quirk for 03f0:464a HP Elite Presenter Mouse
-Date: Thu, 24 Aug 2023 16:48:59 +0200
-Message-ID: <20230824145024.280306679@linuxfoundation.org>
+Subject: [PATCH 5.15 043/139] iio: stx104: Move to addac subdirectory
+Date: Thu, 24 Aug 2023 16:49:26 +0200
+Message-ID: <20230824145025.494698946@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,52 +35,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Morandini <marco.morandini@polimi.it>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit 0db117359e47750d8bd310d19f13e1c4ef7fc26a ]
+[ Upstream commit 955c2aa9cff2dd07ff798ca8c883398731687972 ]
 
-HP Elite Presenter Mouse HID Record Descriptor shows
-two mouses (Repord ID 0x1 and 0x2), one keypad (Report ID 0x5),
-two Consumer Controls (Report IDs 0x6 and 0x3).
-Previous to this commit it registers one mouse, one keypad
-and one Consumer Control, and it was usable only as a
-digitl laser pointer (one of the two mouses). This patch defines
-the 464a USB device ID and enables the HID_QUIRK_MULTI_INPUT
-quirk for it, allowing to use the device both as a mouse
-and a digital laser pointer.
+The stx104 driver supports both ADC and DAC functionality.
 
-Signed-off-by: Marco Morandini <marco.morandini@polimi.it>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/r/20220815222921.138945-1-william.gray@linaro.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ MAINTAINERS                         |  2 +-
+ drivers/iio/adc/Kconfig             | 16 ----------------
+ drivers/iio/adc/Makefile            |  1 -
+ drivers/iio/addac/Kconfig           | 16 ++++++++++++++++
+ drivers/iio/addac/Makefile          |  1 +
+ drivers/iio/{adc => addac}/stx104.c |  0
+ 6 files changed, 18 insertions(+), 18 deletions(-)
+ rename drivers/iio/{adc => addac}/stx104.c (100%)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 5daec769df7ae..5fceefb3c707e 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -593,6 +593,7 @@
- #define USB_DEVICE_ID_UGCI_FIGHTING	0x0030
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e6b53e76651be..9216b9c85ce92 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1250,7 +1250,7 @@ APEX EMBEDDED SYSTEMS STX104 IIO DRIVER
+ M:	William Breathitt Gray <vilhelm.gray@gmail.com>
+ L:	linux-iio@vger.kernel.org
+ S:	Maintained
+-F:	drivers/iio/adc/stx104.c
++F:	drivers/iio/addac/stx104.c
  
- #define USB_VENDOR_ID_HP		0x03f0
-+#define USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A		0x464a
- #define USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A	0x0a4a
- #define USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0B4A	0x0b4a
- #define USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE		0x134a
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index c7c06aa958c4d..96ca7d981ee20 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -96,6 +96,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0B4A), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE_094A), HID_QUIRK_ALWAYS_POLL },
+ APM DRIVER
+ M:	Jiri Kosina <jikos@kernel.org>
+diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
+index af168e1c9fdb5..86b83dc7b7d99 100644
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -991,22 +991,6 @@ config STMPE_ADC
+ 	  Say yes here to build support for ST Microelectronics STMPE
+ 	  built-in ADC block (stmpe811).
+ 
+-config STX104
+-	tristate "Apex Embedded Systems STX104 driver"
+-	depends on PC104 && X86
+-	select ISA_BUS_API
+-	select GPIOLIB
+-	help
+-	  Say yes here to build support for the Apex Embedded Systems STX104
+-	  integrated analog PC/104 card.
+-
+-	  This driver supports the 16 channels of single-ended (8 channels of
+-	  differential) analog inputs, 2 channels of analog output, 4 digital
+-	  inputs, and 4 digital outputs provided by the STX104.
+-
+-	  The base port addresses for the devices may be configured via the base
+-	  array module parameter.
+-
+ config SUN4I_GPADC
+ 	tristate "Support for the Allwinner SoCs GPADC"
+ 	depends on IIO
+diff --git a/drivers/iio/adc/Makefile b/drivers/iio/adc/Makefile
+index d68550f493e34..13668c4cfbaf6 100644
+--- a/drivers/iio/adc/Makefile
++++ b/drivers/iio/adc/Makefile
+@@ -85,7 +85,6 @@ obj-$(CONFIG_ROCKCHIP_SARADC) += rockchip_saradc.o
+ obj-$(CONFIG_RZG2L_ADC) += rzg2l_adc.o
+ obj-$(CONFIG_SC27XX_ADC) += sc27xx_adc.o
+ obj-$(CONFIG_SPEAR_ADC) += spear_adc.o
+-obj-$(CONFIG_STX104) += stx104.o
+ obj-$(CONFIG_SUN4I_GPADC) += sun4i-gpadc-iio.o
+ obj-$(CONFIG_STM32_ADC_CORE) += stm32-adc-core.o
+ obj-$(CONFIG_STM32_ADC) += stm32-adc.o
+diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
+index 2e64d7755d5ea..1f598670e84fb 100644
+--- a/drivers/iio/addac/Kconfig
++++ b/drivers/iio/addac/Kconfig
+@@ -5,4 +5,20 @@
+ 
+ menu "Analog to digital and digital to analog converters"
+ 
++config STX104
++	tristate "Apex Embedded Systems STX104 driver"
++	depends on PC104 && X86
++	select ISA_BUS_API
++	select GPIOLIB
++	help
++	  Say yes here to build support for the Apex Embedded Systems STX104
++	  integrated analog PC/104 card.
++
++	  This driver supports the 16 channels of single-ended (8 channels of
++	  differential) analog inputs, 2 channels of analog output, 4 digital
++	  inputs, and 4 digital outputs provided by the STX104.
++
++	  The base port addresses for the devices may be configured via the base
++	  array module parameter.
++
+ endmenu
+diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
+index b888b9ee12da0..8629145233544 100644
+--- a/drivers/iio/addac/Makefile
++++ b/drivers/iio/addac/Makefile
+@@ -4,3 +4,4 @@
+ #
+ 
+ # When adding new entries keep the list in alphabetical order
++obj-$(CONFIG_STX104) += stx104.o
+diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/addac/stx104.c
+similarity index 100%
+rename from drivers/iio/adc/stx104.c
+rename to drivers/iio/addac/stx104.c
 -- 
 2.40.1
 
