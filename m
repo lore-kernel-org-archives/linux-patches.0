@@ -1,77 +1,195 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1974288EB
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 16:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB98C433CA;
-	Thu, 24 Aug 2023 16:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2091812B9C
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F32BC433C7;
+	Thu, 24 Aug 2023 17:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692895221;
-	bh=4e06H7VcbeP0wJI+cNsJmxHmi54j3RoRZWY0z6/rWLM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IRFvXzN7U7fH2Vqh9ICN+vGBH+5S2BX4sKsuBMm7Tg4eknKTe0OZDCh/ufYNmzRTh
-	 f040ZPz4veBtvTIrsd4eg/5Gd/FVhRn2GpVWC3PfVdhkgIitZ/7dTlsXbHR3T2LLW1
-	 dnT63sWg7d0nqo8F9P34R4ExT9EXb7YOU6mw2OSQ=
-Date: Thu, 24 Aug 2023 18:40:18 +0200
+	s=korg; t=1692897352;
+	bh=d5dwJwqrJlGTbWBMJ34OuiTAqtm5kQ315v1IpPqwEQw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=iBWSfDzAOm5vk1QThb+s6GeSyvT1ZyZk1bua2AxLv/BfKXu890yhTU0kAZdIRORey
+	 lAOWWf+z3m+53TOevheFGCmilXyL/eaY9n+X3ccVi3g5eH0aCcDpQVeqSayBE8kjxe
+	 xFO2dg8PzU/XM9stYA465u5gaRTEh6e6FYzz/LEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <2023082404-ion-jaunt-a14f@gregkh>
-References: <20230821194122.695845670@linuxfoundation.org>
- <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
- <2023082309-veggie-unwoven-a7df@gregkh>
- <CA+G9fYvwxuVpSn24YvtdNXaofg2JtZDREatOpDsKTVJX+nFN3Q@mail.gmail.com>
- <2d8a5f48-6c50-4c12-8a3d-23e621c6b722@roeck-us.net>
- <2023082325-expansion-revoke-1f3a@gregkh>
- <2023082401-arrange-bulk-d42a@gregkh>
- <4b8fcb23-c5e3-4bf1-957f-f0cc717564be@roeck-us.net>
- <2023082459-oxidize-script-77e4@gregkh>
- <78a26d15-68eb-4a6f-a092-f7a554aa29e7@roeck-us.net>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/135] mmc: sdhci-f-sdh30: Replace with sdhci_pltfm
+Date: Thu, 24 Aug 2023 19:07:53 +0200
+Message-ID: <20230824170617.154241965@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
+References: <20230824170617.074557800@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <78a26d15-68eb-4a6f-a092-f7a554aa29e7@roeck-us.net>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 24, 2023 at 08:58:46AM -0700, Guenter Roeck wrote:
-> On Thu, Aug 24, 2023 at 05:15:30PM +0200, Greg Kroah-Hartman wrote:
-> [ ... ]
-> > 
-> > This might be an issue on AMD chips, but for some reason, in running
-> > this kernel on my systems here, I have no boot warnings at all.  I
-> > blamed it on them being only AMD chips.  If that's not the issue then I
-> > really have no idea, sorry.
-> > 
-> 
-> AFAIK it depends on the compiler used and on the enabled debug options.
-> At some point I lost track about what exactly has to be enabled to see
-> the problem. We see it a lot with our (ChromeOS) debug kernel testing
-> which has various debug options enabled, to the point where we may
-> temporarily remove the warning from the kernel to stop the noise.
-> 
-> Alternatively, as I had suggested earlier, we could revert all srso patches
-> because they only seem to cause trouble. So far I have been resisting that
-> because I am concerned that it would make things even worse (like one can
-> not really revert a heart surgery without doing even more damage).
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-If you don't want the feature, you can disable it at build time (I
-think), and I know you can disable it at runtime.  But there are groups
-out that that "need" this, to solve a known security hole in some cpus,
-so it is required for them.  To remove the code entirely would not be
-good for them, so I will say, if they are the ones that need this, they
-should help fix this warning, no one else should be seeing it :)
+------------------
 
-thanks,
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-greg k-h
+[ Upstream commit 5def5c1c15bf22934ee227af85c1716762f3829f ]
+
+Even if sdhci_pltfm_pmops is specified for PM, this driver doesn't apply
+sdhci_pltfm, so the structure is not correctly referenced in PM functions.
+This applies sdhci_pltfm to this driver to fix this issue.
+
+- Call sdhci_pltfm_init() instead of sdhci_alloc_host() and
+  other functions that covered by sdhci_pltfm.
+- Move ops and quirks to sdhci_pltfm_data
+- Replace sdhci_priv() with own private function sdhci_f_sdh30_priv().
+
+Fixes: 87a507459f49 ("mmc: sdhci: host: add new f_sdh30")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230630004533.26644-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/mmc/host/sdhci_f_sdh30.c | 60 ++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
+
+diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
+index 6c4f43e112826..8876fd1c7eee0 100644
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -26,9 +26,16 @@ struct f_sdhost_priv {
+ 	bool enable_cmd_dat_delay;
+ };
+ 
++static void *sdhci_f_sdhost_priv(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++
++	return sdhci_pltfm_priv(pltfm_host);
++}
++
+ static void sdhci_f_sdh30_soft_voltage_switch(struct sdhci_host *host)
+ {
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 	u32 ctrl = 0;
+ 
+ 	usleep_range(2500, 3000);
+@@ -61,7 +68,7 @@ static unsigned int sdhci_f_sdh30_get_min_clock(struct sdhci_host *host)
+ 
+ static void sdhci_f_sdh30_reset(struct sdhci_host *host, u8 mask)
+ {
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 	u32 ctl;
+ 
+ 	if (sdhci_readw(host, SDHCI_CLOCK_CONTROL) == 0)
+@@ -85,30 +92,32 @@ static const struct sdhci_ops sdhci_f_sdh30_ops = {
+ 	.set_uhs_signaling = sdhci_set_uhs_signaling,
+ };
+ 
++static const struct sdhci_pltfm_data sdhci_f_sdh30_pltfm_data = {
++	.ops = &sdhci_f_sdh30_ops,
++	.quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC
++		| SDHCI_QUIRK_INVERTED_WRITE_PROTECT,
++	.quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE
++		|  SDHCI_QUIRK2_TUNING_WORK_AROUND,
++};
++
+ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host;
+ 	struct device *dev = &pdev->dev;
+-	int irq, ctrl = 0, ret = 0;
++	int ctrl = 0, ret = 0;
+ 	struct f_sdhost_priv *priv;
++	struct sdhci_pltfm_host *pltfm_host;
+ 	u32 reg = 0;
+ 
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	host = sdhci_alloc_host(dev, sizeof(struct f_sdhost_priv));
++	host = sdhci_pltfm_init(pdev, &sdhci_f_sdh30_pltfm_data,
++				sizeof(struct f_sdhost_priv));
+ 	if (IS_ERR(host))
+ 		return PTR_ERR(host);
+ 
+-	priv = sdhci_priv(host);
++	pltfm_host = sdhci_priv(host);
++	priv = sdhci_pltfm_priv(pltfm_host);
+ 	priv->dev = dev;
+ 
+-	host->quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
+-		       SDHCI_QUIRK_INVERTED_WRITE_PROTECT;
+-	host->quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE |
+-			SDHCI_QUIRK2_TUNING_WORK_AROUND;
+-
+ 	priv->enable_cmd_dat_delay = device_property_read_bool(dev,
+ 						"fujitsu,cmd-dat-delay-select");
+ 
+@@ -116,18 +125,6 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err;
+ 
+-	platform_set_drvdata(pdev, host);
+-
+-	host->hw_name = "f_sdh30";
+-	host->ops = &sdhci_f_sdh30_ops;
+-	host->irq = irq;
+-
+-	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(host->ioaddr)) {
+-		ret = PTR_ERR(host->ioaddr);
+-		goto err;
+-	}
+-
+ 	if (dev_of_node(dev)) {
+ 		sdhci_get_of_property(pdev);
+ 
+@@ -182,23 +179,20 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ err_clk:
+ 	clk_disable_unprepare(priv->clk_iface);
+ err:
+-	sdhci_free_host(host);
++	sdhci_pltfm_free(pdev);
++
+ 	return ret;
+ }
+ 
+ static int sdhci_f_sdh30_remove(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
+-
+-	sdhci_remove_host(host, readl(host->ioaddr + SDHCI_INT_STATUS) ==
+-			  0xffffffff);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 
+ 	clk_disable_unprepare(priv->clk_iface);
+ 	clk_disable_unprepare(priv->clk);
+ 
+-	sdhci_free_host(host);
+-	platform_set_drvdata(pdev, NULL);
++	sdhci_pltfm_unregister(pdev);
+ 
+ 	return 0;
+ }
+-- 
+2.40.1
+
+
+
