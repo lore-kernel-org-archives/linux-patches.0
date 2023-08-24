@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB1C11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047C0C433C9;
-	Thu, 24 Aug 2023 14:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387FF11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EFCC433C7;
+	Thu, 24 Aug 2023 14:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888813;
-	bh=h/QcA3fGrjF00B4Wq2mQj5/KuiR8OVivlVM7/IMtBkI=;
+	s=korg; t=1692888816;
+	bh=daWoh+ZtSsYvai6Qv1qZBfENXr93hxlCQjIKd5Y2LGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoC3wns8y5o4yaIADh5RwHBCCM4OpaXh+xwobXEN60F21vt+0p72+d6TJ4z8oU1/h
-	 4I/p4CW8uCrRQG+pLof1/SYR5rIjoZSHx95VXrSZTj3ZEVvWMQyDxYy83nmI1O+3zD
-	 AhdGLK6NAEpAS1CcjWdUqxmi2phhPpQW+huJP+ik=
+	b=P7UooVi3ypEY+meCg+elUAiwt7wROfDn6UI1lfI/XFRHGSGVpeRYEq1nBrbRX71m4
+	 0Dn8QWURqxEShZOoTj1CMmkXu6XFqJuMPaDC30WIb/vG1Yi0lBntbbtXLsf4rd6MBC
+	 dCCJXGD8RbdRK0u2nDPh3wwQCVnmeBmxbNnWMV8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Gao Xu <gaoxu2@hihonor.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/139] media: platform: mediatek: vpu: fix NULL ptr dereference
-Date: Thu, 24 Aug 2023 16:49:05 +0200
-Message-ID: <20230824145024.533992737@linuxfoundation.org>
+Subject: [PATCH 5.15 013/139] dma-remap: use kvmalloc_array/kvfree for larger dma memory remap
+Date: Thu, 24 Aug 2023 16:48:56 +0200
+Message-ID: <20230824145024.166475953@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,48 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: gaoxu <gaoxu2@hihonor.com>
 
-[ Upstream commit 3df55cd773e8603b623425cc97b05e542854ad27 ]
+[ Upstream commit 51ff97d54f02b4444dfc42e380ac4c058e12d5dd ]
 
-If pdev is NULL, then it is still dereferenced.
+If dma_direct_alloc() alloc memory in size of 64MB, the inner function
+dma_common_contiguous_remap() will allocate 128KB memory by invoking
+the function kmalloc_array(). and the kmalloc_array seems to fail to try to
+allocate 128KB mem.
 
-This fixes this smatch warning:
+Call trace:
+[14977.928623] qcrosvm: page allocation failure: order:5, mode:0x40cc0
+[14977.928638] dump_backtrace.cfi_jt+0x0/0x8
+[14977.928647] dump_stack_lvl+0x80/0xb8
+[14977.928652] warn_alloc+0x164/0x200
+[14977.928657] __alloc_pages_slowpath+0x9f0/0xb4c
+[14977.928660] __alloc_pages+0x21c/0x39c
+[14977.928662] kmalloc_order+0x48/0x108
+[14977.928666] kmalloc_order_trace+0x34/0x154
+[14977.928668] __kmalloc+0x548/0x7e4
+[14977.928673] dma_direct_alloc+0x11c/0x4f8
+[14977.928678] dma_alloc_attrs+0xf4/0x138
+[14977.928680] gh_vm_ioctl_set_fw_name+0x3c4/0x610 [gunyah]
+[14977.928698] gh_vm_ioctl+0x90/0x14c [gunyah]
+[14977.928705] __arm64_sys_ioctl+0x184/0x210
 
-drivers/media/platform/mediatek/vpu/mtk_vpu.c:570 vpu_load_firmware() warn: address of NULL pointer 'pdev'
+work around by doing kvmalloc_array instead.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Gao Xu <gaoxu2@hihonor.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mtk-vpu/mtk_vpu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/dma/remap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/mtk-vpu/mtk_vpu.c b/drivers/media/platform/mtk-vpu/mtk_vpu.c
-index 7f1647da0ade0..af59cc52fdd73 100644
---- a/drivers/media/platform/mtk-vpu/mtk_vpu.c
-+++ b/drivers/media/platform/mtk-vpu/mtk_vpu.c
-@@ -562,15 +562,17 @@ static int load_requested_vpu(struct mtk_vpu *vpu,
- int vpu_load_firmware(struct platform_device *pdev)
- {
- 	struct mtk_vpu *vpu;
--	struct device *dev = &pdev->dev;
-+	struct device *dev;
- 	struct vpu_run *run;
- 	int ret;
+diff --git a/kernel/dma/remap.c b/kernel/dma/remap.c
+index b4526668072e7..27596f3b4aef3 100644
+--- a/kernel/dma/remap.c
++++ b/kernel/dma/remap.c
+@@ -43,13 +43,13 @@ void *dma_common_contiguous_remap(struct page *page, size_t size,
+ 	void *vaddr;
+ 	int i;
  
- 	if (!pdev) {
--		dev_err(dev, "VPU platform device is invalid\n");
-+		pr_err("VPU platform device is invalid\n");
- 		return -EINVAL;
- 	}
+-	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
++	pages = kvmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
+ 	if (!pages)
+ 		return NULL;
+ 	for (i = 0; i < count; i++)
+ 		pages[i] = nth_page(page, i);
+ 	vaddr = vmap(pages, count, VM_DMA_COHERENT, prot);
+-	kfree(pages);
++	kvfree(pages);
  
-+	dev = &pdev->dev;
-+
- 	vpu = platform_get_drvdata(pdev);
- 	run = &vpu->run;
- 
+ 	return vaddr;
+ }
 -- 
 2.40.1
 
