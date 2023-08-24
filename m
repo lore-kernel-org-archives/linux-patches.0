@@ -1,76 +1,143 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FA72890D
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF42C433CA;
-	Thu, 24 Aug 2023 14:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A462890D
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CC1C433CA;
+	Thu, 24 Aug 2023 14:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692886517;
-	bh=o0EE7y63G0ZO/5dLZPpbvVdAQEgCUAkSDwslwWdrZs0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFtxnKBlCswLp9c3DeqHeOoeQmfNOot3Kc1Jm1xF9jkmJMBvn54qW7tFQbqrnoy2y
-	 ky2NOBcY4L9lZpM+i8Lw9F8IB8/Fzrbv3HnfDaVbguT1VopS0IwIrqXegfc7F7G5gx
-	 9pOLSO8BP3EXE7Uo34hNsY5dD2NzW0bJ1O9CxuPc=
+	s=korg; t=1692886519;
+	bh=3Wqno6RgI+vOlKjniGktCHYNmHd4A0HX3224LcWaxSI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=EJXvIoKjzerkEaWFcbMx//3QE+fbT1XiRG6LQbCOFvWl5GL8HOTjIKzxnTxn2Wq8c
+	 tCInKx3l2mfe9N+dRVCE1I42Aqhn+c/nTRyRylI+4eL97LVV77HLUgeHJcutPeEM6Y
+	 RhLxrqWAfFyabbJ7HxbUqGKMJcpksjkqI8HEjKX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 01/15] x86/cpu: Fix __x86_return_thunk symbol type
-Date: Thu, 24 Aug 2023 16:14:57 +0200
-Message-ID: <20230824141447.245338999@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 6.1 00/15] 6.1.48-rc1 review
+Date: Thu, 24 Aug 2023 16:14:56 +0200
+Message-ID: <20230824141447.155846739@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
-References: <20230824141447.155846739@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.48-rc1
+X-KernelTest-Deadline: 2023-08-26T14:14+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+This is the start of the stable review cycle for the 6.1.48 release.
+There are 15 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 77f67119004296a9b2503b377d610e08b08afc2a upstream.
+Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
+Anything received after that time might be too late.
 
-Commit
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
 
-  fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+thanks,
 
-reimplemented __x86_return_thunk with a mix of SYM_FUNC_START and
-SYM_CODE_END, this is not a sane combination.
+greg k-h
 
-Since nothing should ever actually 'CALL' this, make it consistently
-CODE.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121148.571027074@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/lib/retpoline.S |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.48-rc1
 
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -207,7 +207,9 @@ SYM_CODE_END(srso_safe_ret)
- SYM_FUNC_END(srso_untrain_ret)
- __EXPORT_THUNK(srso_untrain_ret)
- 
--SYM_FUNC_START(__x86_return_thunk)
-+SYM_CODE_START(__x86_return_thunk)
-+	UNWIND_HINT_FUNC
-+	ANNOTATE_NOENDBR
- 	ALTERNATIVE_2 "jmp __ret", "call srso_safe_ret", X86_FEATURE_SRSO, \
- 			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
- 	int3
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/srso: Correct the mitigation status when SMT is disabled
+
+Peter Zijlstra <peterz@infradead.org>
+    objtool/x86: Fixup frame-pointer vs rethunk
+
+Petr Pavlu <petr.pavlu@suse.com>
+    x86/retpoline,kprobes: Fix position of thunk sections with CONFIG_LTO_CLANG
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/srso: Disable the mitigation on unaffected configurations
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/CPU/AMD: Fix the DIV(0) initial fix attempt
+
+Sean Christopherson <seanjc@google.com>
+    x86/retpoline: Don't clobber RFLAGS during srso_safe_ret()
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/static_call: Fix __static_call_fixup()
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/srso: Explain the untraining sequences a bit more
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/cpu: Cleanup the untrain mess
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/cpu: Rename srso_(.*)_alias to srso_alias_\1
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/cpu: Rename original retbleed methods
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/cpu: Clean up SRSO return thunk mess
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/alternative: Make custom return thunk unconditional
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/cpu: Fix up srso_safe_ret() and __x86_return_thunk()
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/cpu: Fix __x86_return_thunk symbol type
+
+
+-------------
+
+Diffstat:
+
+ Documentation/admin-guide/hw-vuln/srso.rst |   4 +-
+ Makefile                                   |   4 +-
+ arch/x86/include/asm/entry-common.h        |   1 +
+ arch/x86/include/asm/nospec-branch.h       |  28 +++---
+ arch/x86/kernel/cpu/amd.c                  |   1 +
+ arch/x86/kernel/cpu/bugs.c                 |  28 +++++-
+ arch/x86/kernel/static_call.c              |  13 +++
+ arch/x86/kernel/traps.c                    |   2 -
+ arch/x86/kernel/vmlinux.lds.S              |  20 ++--
+ arch/x86/kvm/svm/svm.c                     |   2 +
+ arch/x86/lib/retpoline.S                   | 141 ++++++++++++++++++++---------
+ tools/objtool/arch/x86/decode.c            |   2 +-
+ tools/objtool/check.c                      |  21 +++--
+ 13 files changed, 182 insertions(+), 85 deletions(-)
 
 
