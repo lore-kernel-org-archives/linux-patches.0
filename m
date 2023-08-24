@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF1511C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7113AC433C7;
-	Thu, 24 Aug 2023 14:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75A211C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48102C433C7;
+	Thu, 24 Aug 2023 14:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888796;
-	bh=p8w2QVooL7wivf4uWr4axtOJBtNmzlsB7SHpU42FF3U=;
+	s=korg; t=1692888799;
+	bh=bWHt5JVe2EAe4t62MVvYxBx1nYbkzGuz+76t81loYD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCq0SfSU1OlUbL5KZ60kvET2E9aIx5woE3LJYzxhQfyeQcS9fkE/k6wDFcnEwMGa9
-	 IaRGN7hgv+UVA0dJ9Lhq4ZoRvf4+I+xUTldWW5NH4r67N1Spyl72IcW+pDYPc5CxV7
-	 0ItvceJjhdKlIBgSkdZSZKxss67i9WsARz0Jd/TI=
+	b=NIwkzaiLHJCehd0rs3tHGpgGGGyfiamXoMR55LoB3fCbFSpOTZ5D1pwQIHebTJrQo
+	 4S1yXpTF+XPjabNzw8gyU0PXB9xYDNl/e+T/YPPwVakPUDXPQvdkTp+ipLFUkwVDSi
+	 3UFqYv2uHuym1wrInen3nbSRnM5WolCxD+lW3E9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/139] iio: stx104: Move to addac subdirectory
-Date: Thu, 24 Aug 2023 16:49:26 +0200
-Message-ID: <20230824145025.494698946@linuxfoundation.org>
+Subject: [PATCH 5.15 017/139] RDMA/mlx5: Return the firmware result upon destroying QP/RQ
+Date: Thu, 24 Aug 2023 16:49:00 +0200
+Message-ID: <20230824145024.330983336@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,117 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 955c2aa9cff2dd07ff798ca8c883398731687972 ]
+[ Upstream commit 22664c06e997087fe37f9ba208008c948571214a ]
 
-The stx104 driver supports both ADC and DAC functionality.
+Previously when destroying a QP/RQ, the result of the firmware
+destruction function was ignored and upper layers weren't informed
+about the failure.
+Which in turn could lead to various problems since when upper layer
+isn't aware of the failure it continues its operation thinking that the
+related QP/RQ was successfully destroyed while it actually wasn't,
+which could lead to the below kernel WARN.
 
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/20220815222921.138945-1-william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
+Currently, we return the correct firmware destruction status to upper
+layers which in case of the RQ would be mlx5_ib_destroy_wq() which
+was already capable of handling RQ destruction failure or in case of
+a QP to destroy_qp_common(), which now would actually warn upon qp
+destruction failure.
+
+WARNING: CPU: 3 PID: 995 at drivers/infiniband/core/rdma_core.c:940 uverbs_destroy_ufile_hw+0xcb/0xe0 [ib_uverbs]
+Modules linked in: xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi rdma_cm ib_umad ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core overlay mlx5_core fuse
+CPU: 3 PID: 995 Comm: python3 Not tainted 5.16.0-rc5+ #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:uverbs_destroy_ufile_hw+0xcb/0xe0 [ib_uverbs]
+Code: 41 5c 41 5d 41 5e e9 44 34 f0 e0 48 89 df e8 4c 77 ff ff 49 8b 86 10 01 00 00 48 85 c0 74 a1 4c 89 e7 ff d0 eb 9a 0f 0b eb c1 <0f> 0b be 04 00 00 00 48 89 df e8 b6 f6 ff ff e9 75 ff ff ff 90 0f
+RSP: 0018:ffff8881533e3e78 EFLAGS: 00010287
+RAX: ffff88811b2cf3e0 RBX: ffff888106209700 RCX: 0000000000000000
+RDX: ffff888106209780 RSI: ffff8881533e3d30 RDI: ffff888109b101a0
+RBP: 0000000000000001 R08: ffff888127cb381c R09: 0de9890000000009
+R10: ffff888127cb3800 R11: 0000000000000000 R12: ffff888106209780
+R13: ffff888106209750 R14: ffff888100f20660 R15: 0000000000000000
+FS:  00007f8be353b740(0000) GS:ffff88852c980000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8bd5b117c0 CR3: 000000012cd8a004 CR4: 0000000000370ea0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ib_uverbs_close+0x1a/0x90 [ib_uverbs]
+ __fput+0x82/0x230
+ task_work_run+0x59/0x90
+ exit_to_user_mode_prepare+0x138/0x140
+ syscall_exit_to_user_mode+0x1d/0x50
+ ? __x64_sys_close+0xe/0x40
+ do_syscall_64+0x4a/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7f8be3ae0abb
+Code: 03 00 00 00 0f 05 48 3d 00 f0 ff ff 77 41 c3 48 83 ec 18 89 7c 24 0c e8 83 43 f9 ff 8b 7c 24 0c 41 89 c0 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 35 44 89 c7 89 44 24 0c e8 c1 43 f9 ff 8b 44
+RSP: 002b:00007ffdb51909c0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000557bb7f7c020 RCX: 00007f8be3ae0abb
+RDX: 0000557bb7c74010 RSI: 0000557bb7f14ca0 RDI: 0000000000000005
+RBP: 0000557bb7fbd598 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000293 R12: 0000557bb7fbd5b8
+R13: 0000557bb7fbd5a8 R14: 0000000000001000 R15: 0000557bb7f7c020
+ </TASK>
+
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://lore.kernel.org/r/c6df677f931d18090bafbe7f7dbb9524047b7d9b.1685953497.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                         |  2 +-
- drivers/iio/adc/Kconfig             | 16 ----------------
- drivers/iio/adc/Makefile            |  1 -
- drivers/iio/addac/Kconfig           | 16 ++++++++++++++++
- drivers/iio/addac/Makefile          |  1 +
- drivers/iio/{adc => addac}/stx104.c |  0
- 6 files changed, 18 insertions(+), 18 deletions(-)
- rename drivers/iio/{adc => addac}/stx104.c (100%)
+ drivers/infiniband/hw/mlx5/qpc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e6b53e76651be..9216b9c85ce92 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1250,7 +1250,7 @@ APEX EMBEDDED SYSTEMS STX104 IIO DRIVER
- M:	William Breathitt Gray <vilhelm.gray@gmail.com>
- L:	linux-iio@vger.kernel.org
- S:	Maintained
--F:	drivers/iio/adc/stx104.c
-+F:	drivers/iio/addac/stx104.c
+diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
+index 8844eacf2380e..e508c0753dd37 100644
+--- a/drivers/infiniband/hw/mlx5/qpc.c
++++ b/drivers/infiniband/hw/mlx5/qpc.c
+@@ -297,8 +297,7 @@ int mlx5_core_destroy_qp(struct mlx5_ib_dev *dev, struct mlx5_core_qp *qp)
+ 	MLX5_SET(destroy_qp_in, in, opcode, MLX5_CMD_OP_DESTROY_QP);
+ 	MLX5_SET(destroy_qp_in, in, qpn, qp->qpn);
+ 	MLX5_SET(destroy_qp_in, in, uid, qp->uid);
+-	mlx5_cmd_exec_in(dev->mdev, destroy_qp, in);
+-	return 0;
++	return mlx5_cmd_exec_in(dev->mdev, destroy_qp, in);
+ }
  
- APM DRIVER
- M:	Jiri Kosina <jikos@kernel.org>
-diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
-index af168e1c9fdb5..86b83dc7b7d99 100644
---- a/drivers/iio/adc/Kconfig
-+++ b/drivers/iio/adc/Kconfig
-@@ -991,22 +991,6 @@ config STMPE_ADC
- 	  Say yes here to build support for ST Microelectronics STMPE
- 	  built-in ADC block (stmpe811).
+ int mlx5_core_set_delay_drop(struct mlx5_ib_dev *dev,
+@@ -548,14 +547,14 @@ int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn)
+ 	return mlx5_cmd_exec_in(dev->mdev, dealloc_xrcd, in);
+ }
  
--config STX104
--	tristate "Apex Embedded Systems STX104 driver"
--	depends on PC104 && X86
--	select ISA_BUS_API
--	select GPIOLIB
--	help
--	  Say yes here to build support for the Apex Embedded Systems STX104
--	  integrated analog PC/104 card.
--
--	  This driver supports the 16 channels of single-ended (8 channels of
--	  differential) analog inputs, 2 channels of analog output, 4 digital
--	  inputs, and 4 digital outputs provided by the STX104.
--
--	  The base port addresses for the devices may be configured via the base
--	  array module parameter.
--
- config SUN4I_GPADC
- 	tristate "Support for the Allwinner SoCs GPADC"
- 	depends on IIO
-diff --git a/drivers/iio/adc/Makefile b/drivers/iio/adc/Makefile
-index d68550f493e34..13668c4cfbaf6 100644
---- a/drivers/iio/adc/Makefile
-+++ b/drivers/iio/adc/Makefile
-@@ -85,7 +85,6 @@ obj-$(CONFIG_ROCKCHIP_SARADC) += rockchip_saradc.o
- obj-$(CONFIG_RZG2L_ADC) += rzg2l_adc.o
- obj-$(CONFIG_SC27XX_ADC) += sc27xx_adc.o
- obj-$(CONFIG_SPEAR_ADC) += spear_adc.o
--obj-$(CONFIG_STX104) += stx104.o
- obj-$(CONFIG_SUN4I_GPADC) += sun4i-gpadc-iio.o
- obj-$(CONFIG_STM32_ADC_CORE) += stm32-adc-core.o
- obj-$(CONFIG_STM32_ADC) += stm32-adc.o
-diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
-index 2e64d7755d5ea..1f598670e84fb 100644
---- a/drivers/iio/addac/Kconfig
-+++ b/drivers/iio/addac/Kconfig
-@@ -5,4 +5,20 @@
+-static void destroy_rq_tracked(struct mlx5_ib_dev *dev, u32 rqn, u16 uid)
++static int destroy_rq_tracked(struct mlx5_ib_dev *dev, u32 rqn, u16 uid)
+ {
+ 	u32 in[MLX5_ST_SZ_DW(destroy_rq_in)] = {};
  
- menu "Analog to digital and digital to analog converters"
+ 	MLX5_SET(destroy_rq_in, in, opcode, MLX5_CMD_OP_DESTROY_RQ);
+ 	MLX5_SET(destroy_rq_in, in, rqn, rqn);
+ 	MLX5_SET(destroy_rq_in, in, uid, uid);
+-	mlx5_cmd_exec_in(dev->mdev, destroy_rq, in);
++	return mlx5_cmd_exec_in(dev->mdev, destroy_rq, in);
+ }
  
-+config STX104
-+	tristate "Apex Embedded Systems STX104 driver"
-+	depends on PC104 && X86
-+	select ISA_BUS_API
-+	select GPIOLIB
-+	help
-+	  Say yes here to build support for the Apex Embedded Systems STX104
-+	  integrated analog PC/104 card.
-+
-+	  This driver supports the 16 channels of single-ended (8 channels of
-+	  differential) analog inputs, 2 channels of analog output, 4 digital
-+	  inputs, and 4 digital outputs provided by the STX104.
-+
-+	  The base port addresses for the devices may be configured via the base
-+	  array module parameter.
-+
- endmenu
-diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
-index b888b9ee12da0..8629145233544 100644
---- a/drivers/iio/addac/Makefile
-+++ b/drivers/iio/addac/Makefile
-@@ -4,3 +4,4 @@
- #
+ int mlx5_core_create_rq_tracked(struct mlx5_ib_dev *dev, u32 *in, int inlen,
+@@ -586,8 +585,7 @@ int mlx5_core_destroy_rq_tracked(struct mlx5_ib_dev *dev,
+ 				 struct mlx5_core_qp *rq)
+ {
+ 	destroy_resource_common(dev, rq);
+-	destroy_rq_tracked(dev, rq->qpn, rq->uid);
+-	return 0;
++	return destroy_rq_tracked(dev, rq->qpn, rq->uid);
+ }
  
- # When adding new entries keep the list in alphabetical order
-+obj-$(CONFIG_STX104) += stx104.o
-diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/addac/stx104.c
-similarity index 100%
-rename from drivers/iio/adc/stx104.c
-rename to drivers/iio/addac/stx104.c
+ static void destroy_sq_tracked(struct mlx5_ib_dev *dev, u32 sqn, u16 uid)
 -- 
 2.40.1
 
