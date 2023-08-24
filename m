@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462C811C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B985CC433B6;
-	Thu, 24 Aug 2023 14:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3E611C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8ECC433CD;
+	Thu, 24 Aug 2023 14:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888747;
-	bh=YAT9fqsiZKzI3ubIev0JTNq9tK2aOlpv+dBB585EpPY=;
+	s=korg; t=1692888749;
+	bh=9BgpmCh2TK37oz++8FSQEYQRTmmRj4XvsahykOaevLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vlaw9KWmLZd+nC2s9mxQjvw7BM/+OfMXIpcazvzleAM5aet1rAS3HZTVgepVMEjZB
-	 IiauPTjsoy4Su9+U1A7AJnZVireDpVZxjUxSlD+6qQ4uylEe1n6Nws2GCXcF4ZIViG
-	 5iyBxgXUTgcg1SWl2xBCLBEJEPdn7TFsfdX674sw=
+	b=RoaVIMVcaNTXMTo11ngGE9tBsMKV+sQ2Fm9GI+KIhwN/Km6TC1YyIj4Zifxszyj9Z
+	 LvOhwCLsxW0xPuBCrYKK10fxQDAsoOHIGSa1FKe6jN90owR6yfhr08meoYHTNLX4Sa
+	 wADSW6jXj9U8Y+61KjuLDCc+/Ez6sowjnX3kl4Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/139] pcmcia: rsrc_nonstatic: Fix memory leak in nonstatic_release_resource_db()
-Date: Thu, 24 Aug 2023 16:49:10 +0200
-Message-ID: <20230824145024.762135126@linuxfoundation.org>
+Subject: [PATCH 5.15 028/139] firewire: net: fix use after free in fwnet_finish_incoming_packet()
+Date: Thu, 24 Aug 2023 16:49:11 +0200
+Message-ID: <20230824145024.809784960@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -34,63 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit c85fd9422fe0f5d667305efb27f56d09eab120b0 ]
+[ Upstream commit 3ff256751a2853e1ffaa36958ff933ccc98c6cb5 ]
 
-When nonstatic_release_resource_db() frees all resources associated
-with an PCMCIA socket, it forgets to free socket_data too, causing
-a memory leak observable with kmemleak:
+The netif_rx() function frees the skb so we can't dereference it to
+save the skb->len.
 
-unreferenced object 0xc28d1000 (size 64):
-  comm "systemd-udevd", pid 297, jiffies 4294898478 (age 194.484s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 f0 85 0e c3 00 00 00 00  ................
-    00 00 00 00 0c 10 8d c2 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffda4245>] __kmem_cache_alloc_node+0x2d7/0x4a0
-    [<7e51f0c8>] kmalloc_trace+0x31/0xa4
-    [<d52b4ca0>] nonstatic_init+0x24/0x1a4 [pcmcia_rsrc]
-    [<a2f13e08>] pcmcia_register_socket+0x200/0x35c [pcmcia_core]
-    [<a728be1b>] yenta_probe+0x4d8/0xa70 [yenta_socket]
-    [<c48fac39>] pci_device_probe+0x99/0x194
-    [<84b7c690>] really_probe+0x181/0x45c
-    [<8060fe6e>] __driver_probe_device+0x75/0x1f4
-    [<b9b76f43>] driver_probe_device+0x28/0xac
-    [<648b766f>] __driver_attach+0xeb/0x1e4
-    [<6e9659eb>] bus_for_each_dev+0x61/0xb4
-    [<25a669f3>] driver_attach+0x1e/0x28
-    [<d8671d6b>] bus_add_driver+0x102/0x20c
-    [<df0d323c>] driver_register+0x5b/0x120
-    [<942cd8a4>] __pci_register_driver+0x44/0x4c
-    [<e536027e>] __UNIQUE_ID___addressable_cleanup_module188+0x1c/0xfffff000 [iTCO_vendor_support]
-
-Fix this by freeing socket_data too.
-
-Tested on a Acer Travelmate 4002WLMi by manually binding/unbinding
-the yenta_cardbus driver (yenta_socket).
-
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Message-ID: <20230512184529.5094-1-W_Armin@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_3B3D24B66ED66A6BB73CC0E63C6A14E45109@qq.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firewire/net.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index 1cac528707111..e6c90c0bb7646 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -1053,6 +1053,8 @@ static void nonstatic_release_resource_db(struct pcmcia_socket *s)
- 		q = p->next;
- 		kfree(p);
+diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
+index 4c3fd2eed1da4..beba0a56bb9ae 100644
+--- a/drivers/firewire/net.c
++++ b/drivers/firewire/net.c
+@@ -488,7 +488,7 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
+ 					struct sk_buff *skb, u16 source_node_id,
+ 					bool is_broadcast, u16 ether_type)
+ {
+-	int status;
++	int status, len;
+ 
+ 	switch (ether_type) {
+ 	case ETH_P_ARP:
+@@ -542,13 +542,15 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
+ 		}
+ 		skb->protocol = protocol;
  	}
 +
-+	kfree(data);
- }
++	len = skb->len;
+ 	status = netif_rx(skb);
+ 	if (status == NET_RX_DROP) {
+ 		net->stats.rx_errors++;
+ 		net->stats.rx_dropped++;
+ 	} else {
+ 		net->stats.rx_packets++;
+-		net->stats.rx_bytes += skb->len;
++		net->stats.rx_bytes += len;
+ 	}
  
- 
+ 	return 0;
 -- 
 2.40.1
 
