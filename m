@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F8211701
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52764C433C8;
-	Thu, 24 Aug 2023 14:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB0711701
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6124AC433C8;
+	Thu, 24 Aug 2023 14:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888721;
-	bh=VRN0+1MgvXpVMK+iqPvx2E0hyMCdkrgIOjCCHc8nGmo=;
+	s=korg; t=1692888724;
+	bh=1xWcTzTqhts4na7iwP9dRhB+Kb4NZ+xpp87k5BsdAMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D30VsXgIh9Vd0E/HrFAZniewcG9bxqPv8G4krdGC2mBIjumvPi9GLTLOiaC7wEI4B
-	 RH0DxVSO0TrN9ut6zY+1qclouH2UvZ3Ni2i/HR4Uzn10ErvZHOxnGpak/DDYAhtkZ+
-	 Te8HC+mrP+maJwclJx/PMag5GrhaeTELa08loF5I=
+	b=JmXFnZ4T+sVzOipn43PfxKCa+5aRpPelxE2avas5PFsTMjYqWDvG4T7EXk2tPBZbU
+	 UcwrG8BX2snjj8vFxCW6y0KhEJv2D1YIcbJ2j5oZPkQEpVVotNDa74BkxtthGt7+ti
+	 ALuv1SbrbvJqJeYFOxy5aVwHTVSXsx4VV8j/NoNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Maxim Mikityanskiy <maximmi@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/139] net/tls: Multi-threaded calls to TX tls_dev_del
-Date: Thu, 24 Aug 2023 16:48:50 +0200
-Message-ID: <20230824145023.915967084@linuxfoundation.org>
+Subject: [PATCH 5.15 008/139] net: tls: avoid discarding data on record close
+Date: Thu, 24 Aug 2023 16:48:51 +0200
+Message-ID: <20230824145023.957773771@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,171 +35,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tariq Toukan <tariqt@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7adc91e0c93901a0eeeea10665d0feb48ffde2d4 ]
+[ Upstream commit 6b47808f223c70ff564f9b363446d2a5fa1e05b2 ]
 
-Multiple TLS device-offloaded contexts can be added in parallel via
-concurrent calls to .tls_dev_add, while calls to .tls_dev_del are
-sequential in tls_device_gc_task.
+TLS records end with a 16B tag. For TLS device offload we only
+need to make space for this tag in the stream, the device will
+generate and replace it with the actual calculated tag.
 
-This is not a sustainable behavior. This creates a rate gap between add
-and del operations (addition rate outperforms the deletion rate).  When
-running for enough time, the TLS device resources could get exhausted,
-failing to offload new connections.
+Long time ago the code would just re-reference the head frag
+which mostly worked but was suboptimal because it prevented TCP
+from combining the record into a single skb frag. I'm not sure
+if it was correct as the first frag may be shorter than the tag.
 
-Replace the single-threaded garbage collector work with a per-context
-alternative, so they can be handled on several cores in parallel. Use
-a new dedicated destruct workqueue for this.
+The commit under fixes tried to replace that with using the page
+frag and if the allocation failed rolling back the data, if record
+was long enough. It achieves better fragment coalescing but is
+also buggy.
 
-Tested with mlx5 device:
-Before: 22141 add/sec,   103 del/sec
-After:  11684 add/sec, 11684 del/sec
+We don't roll back the iterator, so unless we're at the end of
+send we'll skip the data we designated as tag and start the
+next record as if the rollback never happened.
+There's also the possibility that the record was constructed
+with MSG_MORE and the data came from a different syscall and
+we already told the user space that we "got it".
 
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Maxim Mikityanskiy <maximmi@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Allocate a single dummy page and use it as fallback.
+
+Found by code inspection, and proven by forcing allocation
+failures.
+
+Fixes: e7b159a48ba6 ("net/tls: remove the record tail optimization")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 6b47808f223c ("net: tls: avoid discarding data on record close")
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tls.h    |  2 ++
- net/tls/tls_device.c | 63 ++++++++++++++++++++++----------------------
- 2 files changed, 33 insertions(+), 32 deletions(-)
+ net/tls/tls_device.c | 64 +++++++++++++++++++++++---------------------
+ 1 file changed, 33 insertions(+), 31 deletions(-)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index bf3d63a527885..eda0015c5c592 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -179,6 +179,8 @@ struct tls_offload_context_tx {
- 
- 	struct scatterlist sg_tx_data[MAX_SKB_FRAGS];
- 	void (*sk_destruct)(struct sock *sk);
-+	struct work_struct destruct_work;
-+	struct tls_context *ctx;
- 	u8 driver_state[] __aligned(8);
- 	/* The TLS layer reserves room for driver specific state
- 	 * Currently the belief is that there is not enough
 diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 19ba57245777b..8012bd86437c9 100644
+index 8012bd86437c9..88785196a8966 100644
 --- a/net/tls/tls_device.c
 +++ b/net/tls/tls_device.c
-@@ -45,10 +45,8 @@
-  */
- static DECLARE_RWSEM(device_offload_lock);
- 
--static void tls_device_gc_task(struct work_struct *work);
-+static struct workqueue_struct *destruct_wq __read_mostly;
- 
--static DECLARE_WORK(tls_device_gc_work, tls_device_gc_task);
--static LIST_HEAD(tls_device_gc_list);
- static LIST_HEAD(tls_device_list);
+@@ -51,6 +51,8 @@ static LIST_HEAD(tls_device_list);
  static LIST_HEAD(tls_device_down_list);
  static DEFINE_SPINLOCK(tls_device_lock);
-@@ -67,29 +65,17 @@ static void tls_device_free_ctx(struct tls_context *ctx)
- 	tls_ctx_free(NULL, ctx);
- }
  
--static void tls_device_gc_task(struct work_struct *work)
-+static void tls_device_tx_del_task(struct work_struct *work)
++static struct page *dummy_page;
++
+ static void tls_device_free_ctx(struct tls_context *ctx)
  {
--	struct tls_context *ctx, *tmp;
--	unsigned long flags;
--	LIST_HEAD(gc_list);
--
--	spin_lock_irqsave(&tls_device_lock, flags);
--	list_splice_init(&tls_device_gc_list, &gc_list);
--	spin_unlock_irqrestore(&tls_device_lock, flags);
--
--	list_for_each_entry_safe(ctx, tmp, &gc_list, list) {
--		struct net_device *netdev = ctx->netdev;
-+	struct tls_offload_context_tx *offload_ctx =
-+		container_of(work, struct tls_offload_context_tx, destruct_work);
-+	struct tls_context *ctx = offload_ctx->ctx;
-+	struct net_device *netdev = ctx->netdev;
- 
--		if (netdev && ctx->tx_conf == TLS_HW) {
--			netdev->tlsdev_ops->tls_dev_del(netdev, ctx,
--							TLS_OFFLOAD_CTX_DIR_TX);
--			dev_put(netdev);
--			ctx->netdev = NULL;
--		}
--
--		list_del(&ctx->list);
--		tls_device_free_ctx(ctx);
--	}
-+	netdev->tlsdev_ops->tls_dev_del(netdev, ctx, TLS_OFFLOAD_CTX_DIR_TX);
-+	dev_put(netdev);
-+	ctx->netdev = NULL;
-+	tls_device_free_ctx(ctx);
+ 	if (ctx->tx_conf == TLS_HW) {
+@@ -297,36 +299,33 @@ static int tls_push_record(struct sock *sk,
+ 	return tls_push_sg(sk, ctx, offload_ctx->sg_tx_data, 0, flags);
  }
  
- static void tls_device_queue_ctx_destruction(struct tls_context *ctx)
-@@ -103,16 +89,15 @@ static void tls_device_queue_ctx_destruction(struct tls_context *ctx)
- 		return;
- 	}
+-static int tls_device_record_close(struct sock *sk,
+-				   struct tls_context *ctx,
+-				   struct tls_record_info *record,
+-				   struct page_frag *pfrag,
+-				   unsigned char record_type)
++static void tls_device_record_close(struct sock *sk,
++				    struct tls_context *ctx,
++				    struct tls_record_info *record,
++				    struct page_frag *pfrag,
++				    unsigned char record_type)
+ {
+ 	struct tls_prot_info *prot = &ctx->prot_info;
+-	int ret;
++	struct page_frag dummy_tag_frag;
  
-+	list_del(&ctx->list); /* Remove from tls_device_list / tls_device_down_list */
- 	async_cleanup = ctx->netdev && ctx->tx_conf == TLS_HW;
- 	if (async_cleanup) {
--		list_move_tail(&ctx->list, &tls_device_gc_list);
-+		struct tls_offload_context_tx *offload_ctx = tls_offload_ctx_tx(ctx);
- 
--		/* schedule_work inside the spinlock
-+		/* queue_work inside the spinlock
- 		 * to make sure tls_device_down waits for that work.
- 		 */
--		schedule_work(&tls_device_gc_work);
+ 	/* append tag
+ 	 * device will fill in the tag, we just need to append a placeholder
+ 	 * use socket memory to improve coalescing (re-using a single buffer
+ 	 * increases frag count)
+-	 * if we can't allocate memory now, steal some back from data
++	 * if we can't allocate memory now use the dummy page
+ 	 */
+-	if (likely(skb_page_frag_refill(prot->tag_size, pfrag,
+-					sk->sk_allocation))) {
+-		ret = 0;
+-		tls_append_frag(record, pfrag, prot->tag_size);
 -	} else {
--		list_del(&ctx->list);
-+		queue_work(destruct_wq, &offload_ctx->destruct_work);
+-		ret = prot->tag_size;
+-		if (record->len <= prot->overhead_size)
+-			return -ENOMEM;
++	if (unlikely(pfrag->size - pfrag->offset < prot->tag_size) &&
++	    !skb_page_frag_refill(prot->tag_size, pfrag, sk->sk_allocation)) {
++		dummy_tag_frag.page = dummy_page;
++		dummy_tag_frag.offset = 0;
++		pfrag = &dummy_tag_frag;
  	}
- 	spin_unlock_irqrestore(&tls_device_lock, flags);
++	tls_append_frag(record, pfrag, prot->tag_size);
  
-@@ -1115,6 +1100,9 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
- 	start_marker_record->len = 0;
- 	start_marker_record->num_frags = 0;
- 
-+	INIT_WORK(&offload_ctx->destruct_work, tls_device_tx_del_task);
-+	offload_ctx->ctx = ctx;
-+
- 	INIT_LIST_HEAD(&offload_ctx->records_list);
- 	list_add_tail(&start_marker_record->list, &offload_ctx->records_list);
- 	spin_lock_init(&offload_ctx->lock);
-@@ -1372,7 +1360,7 @@ static int tls_device_down(struct net_device *netdev)
- 
- 	up_write(&device_offload_lock);
- 
--	flush_work(&tls_device_gc_work);
-+	flush_workqueue(destruct_wq);
- 
- 	return NOTIFY_DONE;
+ 	/* fill prepend */
+ 	tls_fill_prepend(ctx, skb_frag_address(&record->frags[0]),
+ 			 record->len - prot->overhead_size,
+ 			 record_type);
+-	return ret;
  }
-@@ -1413,12 +1401,23 @@ static struct notifier_block tls_dev_notifier = {
  
- int __init tls_device_init(void)
+ static int tls_create_new_record(struct tls_offload_context_tx *offload_ctx,
+@@ -502,18 +501,8 @@ static int tls_push_data(struct sock *sk,
+ 
+ 		if (done || record->len >= max_open_record_len ||
+ 		    (record->num_frags >= MAX_SKB_FRAGS - 1)) {
+-			rc = tls_device_record_close(sk, tls_ctx, record,
+-						     pfrag, record_type);
+-			if (rc) {
+-				if (rc > 0) {
+-					size += rc;
+-				} else {
+-					size = orig_size;
+-					destroy_record(record);
+-					ctx->open_record = NULL;
+-					break;
+-				}
+-			}
++			tls_device_record_close(sk, tls_ctx, record,
++						pfrag, record_type);
+ 
+ 			rc = tls_push_record(sk,
+ 					     tls_ctx,
+@@ -1403,14 +1392,26 @@ int __init tls_device_init(void)
  {
--	return register_netdevice_notifier(&tls_dev_notifier);
-+	int err;
-+
+ 	int err;
+ 
+-	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
+-	if (!destruct_wq)
++	dummy_page = alloc_page(GFP_KERNEL);
++	if (!dummy_page)
+ 		return -ENOMEM;
+ 
 +	destruct_wq = alloc_workqueue("ktls_device_destruct", 0, 0);
-+	if (!destruct_wq)
-+		return -ENOMEM;
++	if (!destruct_wq) {
++		err = -ENOMEM;
++		goto err_free_dummy;
++	}
 +
-+	err = register_netdevice_notifier(&tls_dev_notifier);
-+	if (err)
-+		destroy_workqueue(destruct_wq);
+ 	err = register_netdevice_notifier(&tls_dev_notifier);
+ 	if (err)
+-		destroy_workqueue(destruct_wq);
++		goto err_destroy_wq;
+ 
++	return 0;
 +
-+	return err;
++err_destroy_wq:
++	destroy_workqueue(destruct_wq);
++err_free_dummy:
++	put_page(dummy_page);
+ 	return err;
  }
  
- void __exit tls_device_cleanup(void)
- {
- 	unregister_netdevice_notifier(&tls_dev_notifier);
--	flush_work(&tls_device_gc_work);
-+	flush_workqueue(destruct_wq);
-+	destroy_workqueue(destruct_wq);
+@@ -1420,4 +1421,5 @@ void __exit tls_device_cleanup(void)
+ 	flush_workqueue(destruct_wq);
+ 	destroy_workqueue(destruct_wq);
  	clean_acked_data_flush();
++	put_page(dummy_page);
  }
 -- 
 2.40.1
