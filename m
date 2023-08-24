@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F30F14A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02216C433C7;
-	Thu, 24 Aug 2023 17:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCA214A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:21:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF16CC433C7;
+	Thu, 24 Aug 2023 17:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897693;
-	bh=XDGaD6hap1ClgRMDXD5brLAvyb/MTyzWZi0uYFcUc2A=;
+	s=korg; t=1692897696;
+	bh=z8zDloZQ+YloSddYAkxtFwGDgbr8aaM4Rc/7pTmLkw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIoO+zk18Vem3e8h3ffurGevHz7gtfQuZbFDTajynvspx91YGRUhIaw4sJfBiG9WX
-	 VlFhU8efFait5tMM/6tEi/Lk8n/JIAZjCPJQGcivMGSWsm1acmzdoD97Za1m0zqqHY
-	 dtrCTfWiJPiKdrSuK0wWdTrgFymNQ5F42mWTERaw=
+	b=jXn3jsYz/y/ndWNWfLnJ9cEPe4ICbyq93VK0vG89sX3HKAbig7EcDpVh9bz4Or/pv
+	 wC9LCm60OGHo6TBHT56nAosz27zzRSkRY4naW3iLVWXvDdSxDkIBZ22Ryw0IxpQ+z0
+	 AXUH1r2P1vU+ytlvaL6J2unnqCDXjwCvVpLYBoK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/135] arm64: dts: rockchip: add SPDIF node for ROCK Pi 4
-Date: Thu, 24 Aug 2023 19:09:30 +0200
-Message-ID: <20230824170621.522408757@linuxfoundation.org>
+Subject: [PATCH 5.10 089/135] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Thu, 24 Aug 2023 19:09:21 +0200
+Message-ID: <20230824170621.112184136@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,70 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 697dd494cb1cf56acfb764214a1e4788e4d1a983 ]
+[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
 
-Add a SPDIF audio-graph-card to ROCK Pi 4 device tree.
+Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
+ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
+in unregister_vlan_dev() with the following testcase:
 
-It's not enabled by default since all dma channels are used by
-the (already) enabled i2s0/1/2 and the pin is muxed with GPIO4_C5
-which might be in use already.
-If enabled SPDIF_TX will be available at pin #15.
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add team1 type team
+  # ip netns exec ns1 ip link add team_slave type veth peer veth2
+  # ip netns exec ns1 ip link set team_slave master team1
+  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set team_slave nomaster
+  # ip netns del ns1
 
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20210618181256.27992-6-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Stable-dep-of: cee572756aa2 ("arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4")
+Add S-VLAN tag related features support to team driver. So the team driver
+will always propagate the VLAN info to its slaves.
+
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3399-rock-pi-4.dtsi   | 26 +++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/net/team/team.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index f80cdb021f7fc..fcd8eeabf53b6 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -37,6 +37,23 @@
- 		dais = <&i2s0_p0>;
- 	};
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 36c7eae776d44..721b536ce8861 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -2195,7 +2195,9 @@ static void team_setup(struct net_device *dev)
  
-+	sound-dit {
-+		compatible = "audio-graph-card";
-+		label = "SPDIF";
-+		dais = <&spdif_p0>;
-+	};
-+
-+	spdif-dit {
-+		compatible = "linux,spdif-dit";
-+		#sound-dai-cells = <0>;
-+
-+		port {
-+			dit_p0_0: endpoint {
-+				remote-endpoint = <&spdif_p0_0>;
-+			};
-+		};
-+	};
-+
- 	vcc12v_dcin: dc-12v {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vcc12v_dcin";
-@@ -625,6 +642,15 @@
- 	status = "okay";
- };
+ 	dev->hw_features = TEAM_VLAN_FEATURES |
+ 			   NETIF_F_HW_VLAN_CTAG_RX |
+-			   NETIF_F_HW_VLAN_CTAG_FILTER;
++			   NETIF_F_HW_VLAN_CTAG_FILTER |
++			   NETIF_F_HW_VLAN_STAG_RX |
++			   NETIF_F_HW_VLAN_STAG_FILTER;
  
-+&spdif {
-+
-+	spdif_p0: port {
-+		spdif_p0_0: endpoint {
-+			remote-endpoint = <&dit_p0_0>;
-+		};
-+	};
-+};
-+
- &tcphy0 {
- 	status = "okay";
- };
+ 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
+ 	dev->features |= dev->hw_features;
 -- 
 2.40.1
 
