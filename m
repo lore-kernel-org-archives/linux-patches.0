@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46714111A8
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:16:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CEEC433C8;
-	Thu, 24 Aug 2023 14:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2675288EC
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE4EC433C7;
+	Thu, 24 Aug 2023 14:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692886563;
-	bh=HQ8bPOu5wruvzUErKDn/m+eSOSUgyJex25sIu/IVKak=;
+	s=korg; t=1692888696;
+	bh=p3NpI9nLbEH3pDJOR95VYufBYGYbPvLfteQstLCh94o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAQ+a8nZ2OZT9Xi7DiiEid9cKLxl+SKm1mcTeWg76IkewpPSScXklnz317nMbTG4g
-	 ZhuCu1bHWIDSTvvHOfedoTe5TSdU+6C0XgoUIoeuBh/dp+8QbQmKfg4g2x2TcdUW3I
-	 bnOYnPr35jreEboHhhwWzEhgs/KslqWyPLPnSP8w=
+	b=OOZg43NH6t+rPQDSmsF/9X/oTN85hslx1EZKjWv0c89G4Rd/RB6+8IBev6ENiZTcU
+	 Vy257oWKLrSMrz9HmkEyp/uqZruT1DFLeVIltXHT0jUPnF9Gdf28MLdkzszQyi3M0z
+	 W5G2kzY0tRpRBSj9MOoqqV0NWMNr4bofq1rS+YCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Bricart <christian@bricart.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 6.1 09/15] x86/static_call: Fix __static_call_fixup()
-Date: Thu, 24 Aug 2023 16:15:05 +0200
-Message-ID: <20230824141447.611980994@linuxfoundation.org>
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/139] mmc: sdhci-f-sdh30: Replace with sdhci_pltfm
+Date: Thu, 24 Aug 2023 16:48:44 +0200
+Message-ID: <20230824145023.633955291@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
-References: <20230824141447.155846739@linuxfoundation.org>
+In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
+References: <20230824145023.559380953@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,51 +38,155 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 54097309620ef0dc2d7083783dc521c6a5fef957 upstream.
+[ Upstream commit 5def5c1c15bf22934ee227af85c1716762f3829f ]
 
-Christian reported spurious module load crashes after some of Song's
-module memory layout patches.
+Even if sdhci_pltfm_pmops is specified for PM, this driver doesn't apply
+sdhci_pltfm, so the structure is not correctly referenced in PM functions.
+This applies sdhci_pltfm to this driver to fix this issue.
 
-Turns out that if the very last instruction on the very last page of the
-module is a 'JMP __x86_return_thunk' then __static_call_fixup() will
-trip a fault and die.
+- Call sdhci_pltfm_init() instead of sdhci_alloc_host() and
+  other functions that covered by sdhci_pltfm.
+- Move ops and quirks to sdhci_pltfm_data
+- Replace sdhci_priv() with own private function sdhci_f_sdh30_priv().
 
-And while the module rework made this slightly more likely to happen,
-it's always been possible.
-
-Fixes: ee88d363d156 ("x86,static_call: Use alternative RET encoding")
-Reported-by: Christian Bricart <christian@bricart.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lkml.kernel.org/r/20230816104419.GA982867@hirez.programming.kicks-ass.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 87a507459f49 ("mmc: sdhci: host: add new f_sdh30")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230630004533.26644-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/static_call.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/mmc/host/sdhci_f_sdh30.c | 60 ++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -184,6 +184,19 @@ EXPORT_SYMBOL_GPL(arch_static_call_trans
-  */
- bool __static_call_fixup(void *tramp, u8 op, void *dest)
- {
-+	unsigned long addr = (unsigned long)tramp;
-+	/*
-+	 * Not all .return_sites are a static_call trampoline (most are not).
-+	 * Check if the 3 bytes after the return are still kernel text, if not,
-+	 * then this definitely is not a trampoline and we need not worry
-+	 * further.
-+	 *
-+	 * This avoids the memcmp() below tripping over pagefaults etc..
-+	 */
-+	if (((addr >> PAGE_SHIFT) != ((addr + 7) >> PAGE_SHIFT)) &&
-+	    !kernel_text_address(addr + 7))
-+		return false;
+diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
+index 6c4f43e112826..8876fd1c7eee0 100644
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -26,9 +26,16 @@ struct f_sdhost_priv {
+ 	bool enable_cmd_dat_delay;
+ };
+ 
++static void *sdhci_f_sdhost_priv(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
 +
- 	if (memcmp(tramp+5, tramp_ud, 3)) {
- 		/* Not a trampoline site, not our problem. */
- 		return false;
++	return sdhci_pltfm_priv(pltfm_host);
++}
++
+ static void sdhci_f_sdh30_soft_voltage_switch(struct sdhci_host *host)
+ {
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 	u32 ctrl = 0;
+ 
+ 	usleep_range(2500, 3000);
+@@ -61,7 +68,7 @@ static unsigned int sdhci_f_sdh30_get_min_clock(struct sdhci_host *host)
+ 
+ static void sdhci_f_sdh30_reset(struct sdhci_host *host, u8 mask)
+ {
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 	u32 ctl;
+ 
+ 	if (sdhci_readw(host, SDHCI_CLOCK_CONTROL) == 0)
+@@ -85,30 +92,32 @@ static const struct sdhci_ops sdhci_f_sdh30_ops = {
+ 	.set_uhs_signaling = sdhci_set_uhs_signaling,
+ };
+ 
++static const struct sdhci_pltfm_data sdhci_f_sdh30_pltfm_data = {
++	.ops = &sdhci_f_sdh30_ops,
++	.quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC
++		| SDHCI_QUIRK_INVERTED_WRITE_PROTECT,
++	.quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE
++		|  SDHCI_QUIRK2_TUNING_WORK_AROUND,
++};
++
+ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host;
+ 	struct device *dev = &pdev->dev;
+-	int irq, ctrl = 0, ret = 0;
++	int ctrl = 0, ret = 0;
+ 	struct f_sdhost_priv *priv;
++	struct sdhci_pltfm_host *pltfm_host;
+ 	u32 reg = 0;
+ 
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	host = sdhci_alloc_host(dev, sizeof(struct f_sdhost_priv));
++	host = sdhci_pltfm_init(pdev, &sdhci_f_sdh30_pltfm_data,
++				sizeof(struct f_sdhost_priv));
+ 	if (IS_ERR(host))
+ 		return PTR_ERR(host);
+ 
+-	priv = sdhci_priv(host);
++	pltfm_host = sdhci_priv(host);
++	priv = sdhci_pltfm_priv(pltfm_host);
+ 	priv->dev = dev;
+ 
+-	host->quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
+-		       SDHCI_QUIRK_INVERTED_WRITE_PROTECT;
+-	host->quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE |
+-			SDHCI_QUIRK2_TUNING_WORK_AROUND;
+-
+ 	priv->enable_cmd_dat_delay = device_property_read_bool(dev,
+ 						"fujitsu,cmd-dat-delay-select");
+ 
+@@ -116,18 +125,6 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err;
+ 
+-	platform_set_drvdata(pdev, host);
+-
+-	host->hw_name = "f_sdh30";
+-	host->ops = &sdhci_f_sdh30_ops;
+-	host->irq = irq;
+-
+-	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(host->ioaddr)) {
+-		ret = PTR_ERR(host->ioaddr);
+-		goto err;
+-	}
+-
+ 	if (dev_of_node(dev)) {
+ 		sdhci_get_of_property(pdev);
+ 
+@@ -182,23 +179,20 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ err_clk:
+ 	clk_disable_unprepare(priv->clk_iface);
+ err:
+-	sdhci_free_host(host);
++	sdhci_pltfm_free(pdev);
++
+ 	return ret;
+ }
+ 
+ static int sdhci_f_sdh30_remove(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
+-
+-	sdhci_remove_host(host, readl(host->ioaddr + SDHCI_INT_STATUS) ==
+-			  0xffffffff);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 
+ 	clk_disable_unprepare(priv->clk_iface);
+ 	clk_disable_unprepare(priv->clk);
+ 
+-	sdhci_free_host(host);
+-	platform_set_drvdata(pdev, NULL);
++	sdhci_pltfm_unregister(pdev);
+ 
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
