@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E8E125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:02:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA085C433C7;
-	Thu, 24 Aug 2023 15:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA02125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:02:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA16C433C8;
+	Thu, 24 Aug 2023 15:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889328;
-	bh=uWRKON8yIK2DblxC9jvFEh+CxgSoMwpPfELcFO6R2Ss=;
+	s=korg; t=1692889330;
+	bh=biGY35qh2KAszFisnOrTclpW7DKlrij9XqK1+BQtS0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2S3sVgWLNPBBnCQ+9uLZU1YjXdWqm8bZPluEdfEyQ8vBVBMnIbJ1ZZsb3AwdUS9+
-	 n4G/P3lyZq3zdHvaz8s1ohl2Qgg6XXi0jUlzLf/GYZFLnvW+AIIitOSlRojiVXxnEW
-	 kCRzAJFRNH61H5qPSddcNH+cJ6zQ1qJEkPGOyWDA=
+	b=W+pMBjAZjYJE2W9EPetXEy5mGq/MmUPxeI33ZPaxTSLtokY8F/fNkyf/eKNwmap0e
+	 juk0ZMSX1tRvP4ZgqLEL4j+MnNNWLfPPgfX9yCMQ8uYPLPTpFcWznc7ZHrAoNzOii/
+	 dm2bOm9LcBWSLNQ8mesZPZbwCaHF0antrL9xu4yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Bee <knaerzche@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/135] arm64: dts: rockchip: add ES8316 codec for ROCK Pi 4
-Date: Thu, 24 Aug 2023 16:50:40 +0200
-Message-ID: <20230824145031.136536875@linuxfoundation.org>
+Subject: [PATCH 5.10 098/135] arm64: dts: rockchip: add SPDIF node for ROCK Pi 4
+Date: Thu, 24 Aug 2023 16:50:41 +0200
+Message-ID: <20230824145031.183381199@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -37,74 +37,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Bee <knaerzche@gmail.com>
 
-[ Upstream commit 65bd2b8bdb3bddc37bea695789713916327e1c1f ]
+[ Upstream commit 697dd494cb1cf56acfb764214a1e4788e4d1a983 ]
 
-ROCK Pi 4 boards have the codec connected to i2s0 and it is accessible
-via i2c1 address 0x11.
-Add an audio-graph-card for it.
+Add a SPDIF audio-graph-card to ROCK Pi 4 device tree.
+
+It's not enabled by default since all dma channels are used by
+the (already) enabled i2s0/1/2 and the pin is muxed with GPIO4_C5
+which might be in use already.
+If enabled SPDIF_TX will be available at pin #15.
 
 Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20210618181256.27992-5-knaerzche@gmail.com
+Link: https://lore.kernel.org/r/20210618181256.27992-6-knaerzche@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Stable-dep-of: cee572756aa2 ("arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3399-rock-pi-4.dtsi   | 28 +++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ .../boot/dts/rockchip/rk3399-rock-pi-4.dtsi   | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index 6dc6dee6c13e2..f80cdb021f7fc 100644
+index f80cdb021f7fc..fcd8eeabf53b6 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -31,6 +31,12 @@
- 		reset-gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW>;
+@@ -37,6 +37,23 @@
+ 		dais = <&i2s0_p0>;
  	};
  
-+	sound {
++	sound-dit {
 +		compatible = "audio-graph-card";
-+		label = "Analog";
-+		dais = <&i2s0_p0>;
++		label = "SPDIF";
++		dais = <&spdif_p0>;
++	};
++
++	spdif-dit {
++		compatible = "linux,spdif-dit";
++		#sound-dai-cells = <0>;
++
++		port {
++			dit_p0_0: endpoint {
++				remote-endpoint = <&spdif_p0_0>;
++			};
++		};
 +	};
 +
  	vcc12v_dcin: dc-12v {
  		compatible = "regulator-fixed";
  		regulator-name = "vcc12v_dcin";
-@@ -417,6 +423,20 @@
- 	i2c-scl-rising-time-ns = <300>;
- 	i2c-scl-falling-time-ns = <15>;
+@@ -625,6 +642,15 @@
  	status = "okay";
-+
-+	es8316: codec@11 {
-+		compatible = "everest,es8316";
-+		reg = <0x11>;
-+		clocks = <&cru SCLK_I2S_8CH_OUT>;
-+		clock-names = "mclk";
-+		#sound-dai-cells = <0>;
-+
-+		port {
-+			es8316_p0_0: endpoint {
-+				remote-endpoint = <&i2s0_p0_0>;
-+			};
-+		};
-+	};
  };
  
- &i2c3 {
-@@ -435,6 +455,14 @@
- 	rockchip,playback-channels = <8>;
- 	rockchip,capture-channels = <8>;
- 	status = "okay";
++&spdif {
 +
-+	i2s0_p0: port {
-+		i2s0_p0_0: endpoint {
-+			dai-format = "i2s";
-+			mclk-fs = <256>;
-+			remote-endpoint = <&es8316_p0_0>;
++	spdif_p0: port {
++		spdif_p0_0: endpoint {
++			remote-endpoint = <&dit_p0_0>;
 +		};
 +	};
++};
++
+ &tcphy0 {
+ 	status = "okay";
  };
- 
- &i2s1 {
 -- 
 2.40.1
 
