@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA8DFC07
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C92C433C9;
-	Thu, 24 Aug 2023 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE2FFC07
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E79C433C8;
+	Thu, 24 Aug 2023 14:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888882;
-	bh=kR9yMCPS0UL4PdnjPz4SISKxbvb85zQ0O1jCJQ1qkww=;
+	s=korg; t=1692888884;
+	bh=atUlay1FdAgJVtZw3uUJ3T7SdKN3u15P7y65vi8LfZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rv/ArUMBjNjEb49MvasEoFaJS2yiYoWi9KfYjUWnMEpRW5pVvxaaA/qepsaulV/Io
-	 dfkMNfaEq32mNVtWVloDjtW4tdKhm7E9daRTU0Yk53IGVHJtEpC1j7eiU0t/osntF6
-	 c+hhU4OJkf262Y+ePSmEPrQjUsw0YVsMRNWxdZX0=
+	b=JcZQUKq7wMrYDChL2n9pmjCvj2Jm9+HFVOAKeJIfTZjfr1uosbAQEzw8vFUcRthaN
+	 bwR2M3UdREfRM4BVBozqDNl+0Odd2R7qCAhm/sdT9IejL4jxxf0zEr8oOAiY/Bp+qr
+	 w6GCbJiC5Pp5nbJ5RzF0wZ33safLneZVPFEtlpVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yi Yang <yiyang13@huawei.com>,
-	Qiumiao Zhang <zhangqiumiao1@huawei.com>
-Subject: [PATCH 5.15 074/139] tty: n_gsm: fix the UAF caused by race condition in gsm_cleanup_mux
-Date: Thu, 24 Aug 2023 16:49:57 +0200
-Message-ID: <20230824145026.882347695@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	hersen wu <hersenxs.wu@amd.com>,
+	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 048/139] drm/amd/display: save restore hdcp state when display is unplugged from mst hub
+Date: Thu, 24 Aug 2023 16:49:31 +0200
+Message-ID: <20230824145025.692586202@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,59 +38,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yi Yang <yiyang13@huawei.com>
+From: hersen wu <hersenxs.wu@amd.com>
 
-commit 3c4f8333b582487a2d1e02171f1465531cde53e3 upstream.
+[ Upstream commit 82986fd631fa04bcedaefe11a6b3767601cbe84f ]
 
-In commit 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux"), the UAF
-problem is not completely fixed. There is a race condition in
-gsm_cleanup_mux(), which caused this UAF.
+[Why]
+connector hdcp properties are lost after display is
+unplgged from mst hub. connector is destroyed with
+dm_dp_mst_connector_destroy. when display is plugged
+back, hdcp is not desired and it wouldnt be enabled.
 
-The UAF problem is triggered by the following race:
-task[5046]                     task[5054]
------------------------        -----------------------
-gsm_cleanup_mux();
-dlci = gsm->dlci[0];
-mutex_lock(&gsm->mutex);
-                               gsm_cleanup_mux();
-			       dlci = gsm->dlci[0]; //Didn't take the lock
-gsm_dlci_release(gsm->dlci[i]);
-gsm->dlci[i] = NULL;
-mutex_unlock(&gsm->mutex);
-                               mutex_lock(&gsm->mutex);
-			       dlci->dead = true; //UAF
+[How]
+save hdcp properties into hdcp_work within
+amdgpu_dm_atomic_commit_tail. If the same display is
+plugged back with same display index, its hdcp
+properties will be retrieved from hdcp_work within
+dm_dp_mst_get_modes.
 
-Fix it by assigning values after mutex_lock().
-
-Link: https://syzkaller.appspot.com/text?tag=CrashReport&x=176188b5a80000
-Cc: stable <stable@kernel.org>
-Fixes: 9b9c8195f3f0 ("tty: n_gsm: fix UAF in gsm_cleanup_mux")
-Fixes: aa371e96f05d ("tty: n_gsm: fix restart handling via CLD command")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Co-developed-by: Qiumiao Zhang <zhangqiumiao1@huawei.com>
-Signed-off-by: Qiumiao Zhang <zhangqiumiao1@huawei.com>
-Link: https://lore.kernel.org/r/20230811031121.153237-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: hersen wu <hersenxs.wu@amd.com>
+Reviewed-by: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: cdff36a0217a ("drm/amd/display: fix access hdcp_workqueue assert")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 24 ++++++++++++++++-
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.h    | 14 ++++++++++
+ .../display/amdgpu_dm/amdgpu_dm_mst_types.c   | 26 +++++++++++++++++++
+ 3 files changed, 63 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -2387,12 +2387,13 @@ static void gsm_error(struct gsm_mux *gs
- static void gsm_cleanup_mux(struct gsm_mux *gsm, bool disc)
- {
- 	int i;
--	struct gsm_dlci *dlci = gsm->dlci[0];
-+	struct gsm_dlci *dlci;
- 	struct gsm_msg *txq, *ntxq;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 7bd38d927b18c..41be9606726e9 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9612,11 +9612,33 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ 			continue;
+ 		}
  
- 	gsm->dead = true;
- 	mutex_lock(&gsm->mutex);
+-		if (is_content_protection_different(new_con_state, old_con_state, connector, adev->dm.hdcp_workqueue))
++		if (is_content_protection_different(new_con_state, old_con_state, connector, adev->dm.hdcp_workqueue)) {
++			/* when display is unplugged from mst hub, connctor will
++			 * be destroyed within dm_dp_mst_connector_destroy. connector
++			 * hdcp perperties, like type, undesired, desired, enabled,
++			 * will be lost. So, save hdcp properties into hdcp_work within
++			 * amdgpu_dm_atomic_commit_tail. if the same display is
++			 * plugged back with same display index, its hdcp properties
++			 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++			 */
++
++			if (aconnector->dc_link && aconnector->dc_sink &&
++				aconnector->dc_link->type == dc_connection_mst_branch) {
++				struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
++				struct hdcp_workqueue *hdcp_w =
++					&hdcp_work[aconnector->dc_link->link_index];
++
++				hdcp_w->hdcp_content_type[connector->index] =
++					new_con_state->hdcp_content_type;
++				hdcp_w->content_protection[connector->index] =
++					new_con_state->content_protection;
++			}
++
+ 			hdcp_update_display(
+ 				adev->dm.hdcp_workqueue, aconnector->dc_link->link_index, aconnector,
+ 				new_con_state->hdcp_content_type,
+ 				new_con_state->content_protection == DRM_MODE_CONTENT_PROTECTION_DESIRED);
++    }
+ 	}
+ #endif
  
-+	dlci = gsm->dlci[0];
- 	if (dlci) {
- 		if (disc && dlci->state != DLCI_CLOSED) {
- 			gsm_dlci_begin_close(dlci);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+index 09294ff122fea..bbbf7d0eff82f 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+@@ -52,6 +52,20 @@ struct hdcp_workqueue {
+ 	struct mod_hdcp_link link;
+ 
+ 	enum mod_hdcp_encryption_status encryption_status;
++
++	/* when display is unplugged from mst hub, connctor will be
++	 * destroyed within dm_dp_mst_connector_destroy. connector
++	 * hdcp perperties, like type, undesired, desired, enabled,
++	 * will be lost. So, save hdcp properties into hdcp_work within
++	 * amdgpu_dm_atomic_commit_tail. if the same display is
++	 * plugged back with same display index, its hdcp properties
++	 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++	 */
++	/* un-desired, desired, enabled */
++	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	/* hdcp1.x, hdcp2.x */
++	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_INDEX];
++
+ 	uint8_t max_link;
+ 
+ 	uint8_t *srm;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 7a3fee71a867a..e1e0be6dd22ca 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -32,6 +32,10 @@
+ #include "amdgpu_dm.h"
+ #include "amdgpu_dm_mst_types.h"
+ 
++#ifdef CONFIG_DRM_AMD_DC_HDCP
++#include "amdgpu_dm_hdcp.h"
++#endif
++
+ #include "dc.h"
+ #include "dm_helpers.h"
+ 
+@@ -315,6 +319,28 @@ static int dm_dp_mst_get_modes(struct drm_connector *connector)
+ 		/* dc_link_add_remote_sink returns a new reference */
+ 		aconnector->dc_sink = dc_sink;
+ 
++		/* when display is unplugged from mst hub, connctor will be
++		 * destroyed within dm_dp_mst_connector_destroy. connector
++		 * hdcp perperties, like type, undesired, desired, enabled,
++		 * will be lost. So, save hdcp properties into hdcp_work within
++		 * amdgpu_dm_atomic_commit_tail. if the same display is
++		 * plugged back with same display index, its hdcp properties
++		 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
++		 */
++#ifdef CONFIG_DRM_AMD_DC_HDCP
++		if (aconnector->dc_sink && connector->state) {
++			struct drm_device *dev = connector->dev;
++			struct amdgpu_device *adev = drm_to_adev(dev);
++			struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
++			struct hdcp_workqueue *hdcp_w = &hdcp_work[aconnector->dc_link->link_index];
++
++			connector->state->hdcp_content_type =
++			hdcp_w->hdcp_content_type[connector->index];
++			connector->state->content_protection =
++			hdcp_w->content_protection[connector->index];
++		}
++#endif
++
+ 		if (aconnector->dc_sink) {
+ 			amdgpu_dm_update_freesync_caps(
+ 					connector, aconnector->edid);
+-- 
+2.40.1
+
 
 
