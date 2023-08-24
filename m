@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B51C111A8
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C468C433C7;
-	Thu, 24 Aug 2023 14:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E311C111A8
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BD0C433C9;
+	Thu, 24 Aug 2023 14:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692886539;
-	bh=ziT8LjD+H6/mXuzlnivpUnSdMdH6GPHZrgYd7YEQQ40=;
+	s=korg; t=1692886542;
+	bh=iCXqDsUDa0kmrku0NEKsRYIZsOnBcVJqDMHOapPh2J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XcPo/5GNdUbx64RH2ftkaUcbgFCPu9C6+HaEfRO83A+E1U+ziDDBXii4qWtIg0rdV
-	 r5JtPpG2vuFFq05ETHbXYddh/x2MjlT89y0cAIKemiW2t8hKFo7BhMCrrN1gQHwkTC
-	 EPV63Q58o5a69/wtwpIIWjoltZ/PwlALgGbAbdLg=
+	b=1pWJn+TxJcPLlywrVpKC4YbhmVB3crEZkwZptlunfGuGzFiF5l2wFrFibMLNPW2lx
+	 6bs9bnEwFxmwhKbNaPCj0hCMuQcpu8TPxNEYo3cfJcNn6jw+dSzR8EnvjataN07ndF
+	 9ahiH7agcGL/3jjJBadR/gfPyY4HUCeDlJqCoxTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 15/15] x86/srso: Correct the mitigation status when SMT is disabled
-Date: Thu, 24 Aug 2023 16:15:11 +0200
-Message-ID: <20230824141447.863010001@linuxfoundation.org>
+Subject: [PATCH 6.1 02/15] x86/cpu: Fix up srso_safe_ret() and __x86_return_thunk()
+Date: Thu, 24 Aug 2023 16:14:58 +0200
+Message-ID: <20230824141447.295186481@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
 References: <20230824141447.155846739@linuxfoundation.org>
@@ -34,43 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 6405b72e8d17bd1875a56ae52d23ec3cd51b9d66 upstream.
+commit af023ef335f13c8b579298fc432daeef609a9e60 upstream.
 
-Specify how is SRSO mitigated when SMT is disabled. Also, correct the
-SMT check for that.
+  vmlinux.o: warning: objtool: srso_untrain_ret() falls through to next function __x86_return_skl()
+  vmlinux.o: warning: objtool: __x86_return_thunk() falls through to next function __x86_return_skl()
 
-Fixes: e9fbc47b818b ("x86/srso: Disable the mitigation on unaffected configurations")
-Suggested-by: Josh Poimboeuf <jpoimboe@kernel.org>
+This is because these functions (can) end with CALL, which objtool
+does not consider a terminating instruction. Therefore, replace the
+INT3 instruction (which is a non-fatal trap) with UD2 (which is a
+fatal-trap).
+
+This indicates execution will not continue past this point.
+
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20230814200813.p5czl47zssuej7nv@treble
+Link: https://lore.kernel.org/r/20230814121148.637802730@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/x86/lib/retpoline.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2398,8 +2398,7 @@ static void __init srso_select_mitigatio
- 		 * Zen1/2 with SMT off aren't vulnerable after the right
- 		 * IBPB microcode has been applied.
- 		 */
--		if ((boot_cpu_data.x86 < 0x19) &&
--		    (!cpu_smt_possible() || (cpu_smt_control == CPU_SMT_DISABLED))) {
-+		if (boot_cpu_data.x86 < 0x19 && !cpu_smt_possible()) {
- 			setup_force_cpu_cap(X86_FEATURE_SRSO_NO);
- 			return;
- 		}
-@@ -2689,7 +2688,7 @@ static ssize_t gds_show_state(char *buf)
- static ssize_t srso_show_state(char *buf)
- {
- 	if (boot_cpu_has(X86_FEATURE_SRSO_NO))
--		return sysfs_emit(buf, "Not affected\n");
-+		return sysfs_emit(buf, "Mitigation: SMT disabled\n");
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -202,7 +202,7 @@ SYM_INNER_LABEL(srso_safe_ret, SYM_L_GLO
+ 	int3
+ 	lfence
+ 	call srso_safe_ret
+-	int3
++	ud2
+ SYM_CODE_END(srso_safe_ret)
+ SYM_FUNC_END(srso_untrain_ret)
+ __EXPORT_THUNK(srso_untrain_ret)
+@@ -212,7 +212,7 @@ SYM_CODE_START(__x86_return_thunk)
+ 	ANNOTATE_NOENDBR
+ 	ALTERNATIVE_2 "jmp __ret", "call srso_safe_ret", X86_FEATURE_SRSO, \
+ 			"call srso_safe_ret_alias", X86_FEATURE_SRSO_ALIAS
+-	int3
++	ud2
+ SYM_CODE_END(__x86_return_thunk)
+ EXPORT_SYMBOL(__x86_return_thunk)
  
- 	return sysfs_emit(buf, "%s%s\n",
- 			  srso_strings[srso_mitigation],
 
 
