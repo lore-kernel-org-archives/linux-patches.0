@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2900914A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D109C433C8;
-	Thu, 24 Aug 2023 17:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011BC14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724D5C433C8;
+	Thu, 24 Aug 2023 17:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897383;
-	bh=Ia9GELrbjgKt7UGBmAWp2c5rWqGlT5jKBQ8VK67ka7o=;
+	s=korg; t=1692897385;
+	bh=6SY7ZTCSa69IfmqnZnWeMkrjqZ5pfB27uTX5wKJnllE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxfsUj+4xaHewXbdUYkAym2E/VxcLlCBqkgjP9rqhb4M66cXwCo3kiGJskO5FJCMa
-	 rDGreXQVG3so9WGg6/c/sc8q1y0bVDyaZtvva+OOKBp0CF+K4i6atGAusuTju7wfz/
-	 CytMucXSE3SSzZRuCK4sQwNWH8E2BnfNhQ6mQwF8=
+	b=viqnFZJVH5w6Qp5qR/RP5G2qoxLF2ACcQ1cvMdZTXOAJvVYZLclQYbrGOUmv/BIDK
+	 fKuisIFLo7FduMSoRVThs9VZHR0XmHw+slTais319ryoojj3sU08Lw1jcvRBo5hf9A
+	 twTeSdDT1go5bUpRDUfRA+KabfPBzvtttd8kNUlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Morandini <marco.morandini@polimi.it>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Clayton Yager <Clayton_Yager@selinc.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/135] HID: add quirk for 03f0:464a HP Elite Presenter Mouse
-Date: Thu, 24 Aug 2023 19:08:11 +0200
-Message-ID: <20230824170617.973372071@linuxfoundation.org>
+Subject: [PATCH 5.10 002/135] macsec: Fix traffic counters/statistics
+Date: Thu, 24 Aug 2023 19:07:54 +0200
+Message-ID: <20230824170617.193481314@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,52 +40,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Morandini <marco.morandini@polimi.it>
+From: Clayton Yager <Clayton_Yager@selinc.com>
 
-[ Upstream commit 0db117359e47750d8bd310d19f13e1c4ef7fc26a ]
+[ Upstream commit 91ec9bd57f3524ff3d86bfb7c9ee5a315019733c ]
 
-HP Elite Presenter Mouse HID Record Descriptor shows
-two mouses (Repord ID 0x1 and 0x2), one keypad (Report ID 0x5),
-two Consumer Controls (Report IDs 0x6 and 0x3).
-Previous to this commit it registers one mouse, one keypad
-and one Consumer Control, and it was usable only as a
-digitl laser pointer (one of the two mouses). This patch defines
-the 464a USB device ID and enables the HID_QUIRK_MULTI_INPUT
-quirk for it, allowing to use the device both as a mouse
-and a digital laser pointer.
+OutOctetsProtected, OutOctetsEncrypted, InOctetsValidated, and
+InOctetsDecrypted were incrementing by the total number of octets in frames
+instead of by the number of octets of User Data in frames.
 
-Signed-off-by: Marco Morandini <marco.morandini@polimi.it>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+The Controlled Port statistics ifOutOctets and ifInOctets were incrementing
+by the total number of octets instead of the number of octets of the MSDUs
+plus octets of the destination and source MAC addresses.
+
+The Controlled Port statistics ifInDiscards and ifInErrors were not
+incrementing each time the counters they aggregate were.
+
+The Controlled Port statistic ifInErrors was not included in the output of
+macsec_get_stats64 so the value was not present in ip commands output.
+
+The ReceiveSA counters InPktsNotValid, InPktsNotUsingSA, and InPktsUnusedSA
+were not incrementing.
+
+Signed-off-by: Clayton Yager <Clayton_Yager@selinc.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 32d0a49d36a2 ("macsec: use DEV_STATS_INC()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/macsec.c | 58 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 49 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 2b658d820b800..6712d99ad80da 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -582,6 +582,7 @@
- #define USB_DEVICE_ID_UGCI_FIGHTING	0x0030
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 4fdb970e34823..6691c941f8bb8 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -159,6 +159,19 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
+ 	return sa;
+ }
  
- #define USB_VENDOR_ID_HP		0x03f0
-+#define USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A		0x464a
- #define USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A	0x0a4a
- #define USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0B4A	0x0b4a
- #define USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE		0x134a
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 9f1fcbea19eb7..4229e5de06745 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -96,6 +96,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0B4A), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_PIXART_OEM_USB_OPTICAL_MOUSE_094A), HID_QUIRK_ALWAYS_POLL },
++static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
++{
++	struct macsec_rx_sa *sa = NULL;
++	int an;
++
++	for (an = 0; an < MACSEC_NUM_AN; an++)	{
++		sa = macsec_rxsa_get(rx_sc->sa[an]);
++		if (sa)
++			break;
++	}
++	return sa;
++}
++
+ static void free_rx_sc_rcu(struct rcu_head *head)
+ {
+ 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
+@@ -497,18 +510,28 @@ static void macsec_encrypt_finish(struct sk_buff *skb, struct net_device *dev)
+ 	skb->protocol = eth_hdr(skb)->h_proto;
+ }
+ 
++static unsigned int macsec_msdu_len(struct sk_buff *skb)
++{
++	struct macsec_dev *macsec = macsec_priv(skb->dev);
++	struct macsec_secy *secy = &macsec->secy;
++	bool sci_present = macsec_skb_cb(skb)->has_sci;
++
++	return skb->len - macsec_hdr_len(sci_present) - secy->icv_len;
++}
++
+ static void macsec_count_tx(struct sk_buff *skb, struct macsec_tx_sc *tx_sc,
+ 			    struct macsec_tx_sa *tx_sa)
+ {
++	unsigned int msdu_len = macsec_msdu_len(skb);
+ 	struct pcpu_tx_sc_stats *txsc_stats = this_cpu_ptr(tx_sc->stats);
+ 
+ 	u64_stats_update_begin(&txsc_stats->syncp);
+ 	if (tx_sc->encrypt) {
+-		txsc_stats->stats.OutOctetsEncrypted += skb->len;
++		txsc_stats->stats.OutOctetsEncrypted += msdu_len;
+ 		txsc_stats->stats.OutPktsEncrypted++;
+ 		this_cpu_inc(tx_sa->stats->OutPktsEncrypted);
+ 	} else {
+-		txsc_stats->stats.OutOctetsProtected += skb->len;
++		txsc_stats->stats.OutOctetsProtected += msdu_len;
+ 		txsc_stats->stats.OutPktsProtected++;
+ 		this_cpu_inc(tx_sa->stats->OutPktsProtected);
+ 	}
+@@ -538,9 +561,10 @@ static void macsec_encrypt_done(struct crypto_async_request *base, int err)
+ 	aead_request_free(macsec_skb_cb(skb)->req);
+ 
+ 	rcu_read_lock_bh();
+-	macsec_encrypt_finish(skb, dev);
+ 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
+-	len = skb->len;
++	/* packet is encrypted/protected so tx_bytes must be calculated */
++	len = macsec_msdu_len(skb) + 2 * ETH_ALEN;
++	macsec_encrypt_finish(skb, dev);
+ 	ret = dev_queue_xmit(skb);
+ 	count_tx(dev, ret, len);
+ 	rcu_read_unlock_bh();
+@@ -699,6 +723,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
+ 
+ 	macsec_skb_cb(skb)->req = req;
+ 	macsec_skb_cb(skb)->tx_sa = tx_sa;
++	macsec_skb_cb(skb)->has_sci = sci_present;
+ 	aead_request_set_callback(req, 0, macsec_encrypt_done, skb);
+ 
+ 	dev_hold(skb->dev);
+@@ -740,15 +765,17 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsLate++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
++		secy->netdev->stats.rx_dropped++;
+ 		return false;
+ 	}
+ 
+ 	if (secy->validate_frames != MACSEC_VALIDATE_DISABLED) {
++		unsigned int msdu_len = macsec_msdu_len(skb);
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		if (hdr->tci_an & MACSEC_TCI_E)
+-			rxsc_stats->stats.InOctetsDecrypted += skb->len;
++			rxsc_stats->stats.InOctetsDecrypted += msdu_len;
+ 		else
+-			rxsc_stats->stats.InOctetsValidated += skb->len;
++			rxsc_stats->stats.InOctetsValidated += msdu_len;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+ 	}
+ 
+@@ -761,6 +788,8 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotValid++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			this_cpu_inc(rx_sa->stats->InPktsNotValid);
++			secy->netdev->stats.rx_errors++;
+ 			return false;
+ 		}
+ 
+@@ -853,9 +882,9 @@ static void macsec_decrypt_done(struct crypto_async_request *base, int err)
+ 
+ 	macsec_finalize_skb(skb, macsec->secy.icv_len,
+ 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
++	len = skb->len;
+ 	macsec_reset_skb(skb, macsec->secy.netdev);
+ 
+-	len = skb->len;
+ 	if (gro_cells_receive(&macsec->gro_cells, skb) == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+ 
+@@ -1046,6 +1075,7 @@ static enum rx_handler_result handle_not_macsec(struct sk_buff *skb)
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoTag++;
+ 			u64_stats_update_end(&secy_stats->syncp);
++			macsec->secy.netdev->stats.rx_dropped++;
+ 			continue;
+ 		}
+ 
+@@ -1155,6 +1185,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&secy_stats->syncp);
+ 		secy_stats->stats.InPktsBadTag++;
+ 		u64_stats_update_end(&secy_stats->syncp);
++		secy->netdev->stats.rx_errors++;
+ 		goto drop_nosa;
+ 	}
+ 
+@@ -1165,11 +1196,15 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		/* If validateFrames is Strict or the C bit in the
+ 		 * SecTAG is set, discard
+ 		 */
++		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
+ 		if (hdr->tci_an & MACSEC_TCI_C ||
+ 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			secy->netdev->stats.rx_errors++;
++			if (active_rx_sa)
++				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+ 		}
+ 
+@@ -1179,6 +1214,8 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsUnusedSA++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
++		if (active_rx_sa)
++			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
+ 		goto deliver;
+ 	}
+ 
+@@ -1199,6 +1236,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsLate++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			macsec->secy.netdev->stats.rx_dropped++;
+ 			goto drop;
+ 		}
+ 	}
+@@ -1227,6 +1265,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ deliver:
+ 	macsec_finalize_skb(skb, secy->icv_len,
+ 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
++	len = skb->len;
+ 	macsec_reset_skb(skb, secy->netdev);
+ 
+ 	if (rx_sa)
+@@ -1234,7 +1273,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	macsec_rxsc_put(rx_sc);
+ 
+ 	skb_orphan(skb);
+-	len = skb->len;
+ 	ret = gro_cells_receive(&macsec->gro_cells, skb);
+ 	if (ret == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+@@ -1276,6 +1314,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
++			macsec->secy.netdev->stats.rx_errors++;
+ 			continue;
+ 		}
+ 
+@@ -3407,6 +3446,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 		return NETDEV_TX_OK;
+ 	}
+ 
++	len = skb->len;
+ 	skb = macsec_encrypt(skb, dev);
+ 	if (IS_ERR(skb)) {
+ 		if (PTR_ERR(skb) != -EINPROGRESS)
+@@ -3417,7 +3457,6 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
+ 
+ 	macsec_encrypt_finish(skb, dev);
+-	len = skb->len;
+ 	ret = dev_queue_xmit(skb);
+ 	count_tx(dev, ret, len);
+ 	return ret;
+@@ -3648,6 +3687,7 @@ static void macsec_get_stats64(struct net_device *dev,
+ 
+ 	s->rx_dropped = dev->stats.rx_dropped;
+ 	s->tx_dropped = dev->stats.tx_dropped;
++	s->rx_errors = dev->stats.rx_errors;
+ }
+ 
+ static int macsec_get_iflink(const struct net_device *dev)
 -- 
 2.40.1
 
