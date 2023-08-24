@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC4A11731
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F32AC433C8;
-	Thu, 24 Aug 2023 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B1111C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06325C433C8;
+	Thu, 24 Aug 2023 14:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888923;
-	bh=v0ib4EBcdhM5QR1Bg6CRdYMiLSOZJqU2t7Cu/lWLRNc=;
+	s=korg; t=1692888926;
+	bh=LBkaizgmm2RtNipaDqLm+mQ5VnhF3NnL/vmqwX9QbAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6dXDhMIl6VV6coJmCkpTK+wx9WUjyxw7d8NyUERZlCvHSm4EFZgHpGXbfEx/UvT+
-	 wk2uZRA32eiMAsdLNRXePOBiDQ+NvYb6KkrT/SfJPONsipdl5sRRxYxNGLOjqTDeVs
-	 avxjfGpgGmCZMLcVK0e+MWVUnGQtv84+uZh34ONM=
+	b=N1O4daiaQnJCl3bPmDBXgCajsRUnvJ/zVkrSDDqK9DhYjis+Uy1mJpc1DEclDymtd
+	 u8Y/x6k60KT2nQzEIVW4wMuMv1WNKvmYPinOmeWtsWHgB8XJ/seo0/EtdDrlTteS+0
+	 1hk16UgCSaNOTkLIosuF3V7OegZnvRXEM9OvdoeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lonial con <kongln9170@gmail.com>,
+	Sishuai Gong <sishuai.system@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/139] netfilter: nf_tables: deactivate catchall elements in next generation
-Date: Thu, 24 Aug 2023 16:50:14 +0200
-Message-ID: <20230824145027.560899851@linuxfoundation.org>
+Subject: [PATCH 5.15 092/139] ipvs: fix racy memcpy in proc_do_sync_threshold
+Date: Thu, 24 Aug 2023 16:50:15 +0200
+Message-ID: <20230824145027.605352585@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -35,46 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Sishuai Gong <sishuai.system@gmail.com>
 
-[ Upstream commit 90e5b3462efa37b8bba82d7c4e63683856e188af ]
+[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
 
-When flushing, individual set elements are disabled in the next
-generation via the ->flush callback.
+When two threads run proc_do_sync_threshold() in parallel,
+data races could happen between the two memcpy():
 
-Catchall elements are not disabled.  This is incorrect and may lead to
-double-deactivations of catchall elements which then results in memory
-leaks:
+Thread-1			Thread-2
+memcpy(val, valp, sizeof(val));
+				memcpy(valp, val, sizeof(val));
 
-WARNING: CPU: 1 PID: 3300 at include/net/netfilter/nf_tables.h:1172 nft_map_deactivate+0x549/0x730
-CPU: 1 PID: 3300 Comm: nft Not tainted 6.5.0-rc5+ #60
-RIP: 0010:nft_map_deactivate+0x549/0x730
- [..]
- ? nft_map_deactivate+0x549/0x730
- nf_tables_delset+0xb66/0xeb0
+This race might mess up the (struct ctl_table *) table->data,
+so we add a mutex lock to serialize them.
 
-(the warn is due to nft_use_dec() detecting underflow).
-
-Fixes: aaa31047a6d2 ("netfilter: nftables: add catch-all set element support")
-Reported-by: lonial con <kongln9170@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
+Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
+Acked-by: Simon Horman <horms@kernel.org>
+Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 1e84314fe334a..1e2d1e4bdb74d 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6719,6 +6719,7 @@ static int nft_set_catchall_flush(const struct nft_ctx *ctx,
- 		ret = __nft_set_catchall_flush(ctx, set, &elem);
- 		if (ret < 0)
- 			break;
-+		nft_set_elem_change_active(ctx->net, set, ext);
- 	}
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 29ec3ef63edc7..d0b64c36471d5 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1802,6 +1802,7 @@ static int
+ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		       void *buffer, size_t *lenp, loff_t *ppos)
+ {
++	struct netns_ipvs *ipvs = table->extra2;
+ 	int *valp = table->data;
+ 	int val[2];
+ 	int rc;
+@@ -1811,6 +1812,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		.mode = table->mode,
+ 	};
  
- 	return ret;
++	mutex_lock(&ipvs->sync_mutex);
+ 	memcpy(val, valp, sizeof(val));
+ 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
+ 	if (write) {
+@@ -1820,6 +1822,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		else
+ 			memcpy(valp, val, sizeof(val));
+ 	}
++	mutex_unlock(&ipvs->sync_mutex);
+ 	return rc;
+ }
+ 
+@@ -4077,6 +4080,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
+ 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
+ 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
+ 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
++	tbl[idx].extra2 = ipvs;
+ 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
+ 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
+ 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
 -- 
 2.40.1
 
