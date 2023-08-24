@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB6A11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:00:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71072C433C8;
-	Thu, 24 Aug 2023 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C3811C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:00:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E73C433C8;
+	Thu, 24 Aug 2023 15:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889233;
-	bh=Sm/ZJ8l1R3DdTYFes552ntbOga/iLMroGccfMcQmpt0=;
+	s=korg; t=1692889236;
+	bh=hJ1UqpnfH/ZMxXl2s2GXa0MOo6xo/B/kGEmshFtX5+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xhSuxSjJlypgpQG5hTy+DySoQbT8weIgtD2NhwqmU6R39bvP6/a8QDM51L6gPey4M
-	 jn3zyndm0pJr1VsQPcJNSJNRVUk6oO8AWjTIqWhH65x9AAhGAO/yMhPOACdvOEefPJ
-	 upAFKFawsNpYFaH8iRLhQ28yqari3Jg59X8fS4bE=
+	b=EYuugy5XeQyvSjmryjUGFY8yJNTokYPyW4pW/qL3blXT5PUkFnWMjLpcAFOJE/Evi
+	 mX0UC9cYtmh15HG7xjT0d5KaNIw5XZTF29h/dnEhK508dAAOc1c1VJcTAL2Vwas8jf
+	 8yA2Kctv+IDQUZGkFtOi9+8XXNNnYEobCYF0YBFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <wcheng@codeaurora.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/135] usb: gadget: udc: core: Introduce check_config to verify USB configuration
-Date: Thu, 24 Aug 2023 16:49:58 +0200
-Message-ID: <20230824145029.274443774@linuxfoundation.org>
+Subject: [PATCH 5.10 064/135] tracing/probes: Have process_fetch_insn() take a void * instead of pt_regs
+Date: Thu, 24 Aug 2023 16:50:07 +0200
+Message-ID: <20230824145029.644699064@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -34,84 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <wcheng@codeaurora.org>
+From: Steven Rostedt (VMware) <rostedt@goodmis.org>
 
-[ Upstream commit ce7d0008c2356626f69f37ef1afce8fbc83fe142 ]
+[ Upstream commit 8565a45d0858078b63c7d84074a21a42ba9ebf01 ]
 
-Some UDCs may have constraints on how many high bandwidth endpoints it can
-support in a certain configuration.  This API allows for the composite
-driver to pass down the total number of endpoints to the UDC so it can verify
-it has the required resources to support the configuration.
+In preparation to allow event probes to use the process_fetch_insn()
+callback in trace_probe_tmpl.h, change the data passed to it from a
+pointer to pt_regs, as the event probe will not be using regs, and make it
+a void pointer instead.
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-Link: https://lore.kernel.org/r/1625908395-5498-2-git-send-email-wcheng@codeaurora.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: dbe678f6192f ("usb: cdns3: fix NCM gadget RX speed 20x slow than expection at iMX8QM")
+Update the process_fetch_insn() callers for kprobe and uprobe events to
+have the regs defined in the function and just typecast the void pointer
+parameter.
+
+Link: https://lkml.kernel.org/r/20210819041842.291622924@goodmis.org
+
+Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: e38e2c6a9efc ("tracing/probes: Fix to update dynamic data counter if fetcharg uses it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 19 +++++++++++++++++++
- include/linux/usb/gadget.h    |  4 ++++
- 2 files changed, 23 insertions(+)
+ kernel/trace/trace_kprobe.c     | 3 ++-
+ kernel/trace/trace_probe_tmpl.h | 6 +++---
+ kernel/trace/trace_uprobe.c     | 3 ++-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index 3a3b5a03dda75..14d9d1ee16fc4 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1004,6 +1004,25 @@ int usb_gadget_ep_match_desc(struct usb_gadget *gadget,
- }
- EXPORT_SYMBOL_GPL(usb_gadget_ep_match_desc);
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 41dd17390c732..b882c6519b035 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -1332,9 +1332,10 @@ probe_mem_read(void *dest, void *src, size_t size)
  
-+/**
-+ * usb_gadget_check_config - checks if the UDC can support the binded
-+ *	configuration
-+ * @gadget: controller to check the USB configuration
-+ *
-+ * Ensure that a UDC is able to support the requested resources by a
-+ * configuration, and that there are no resource limitations, such as
-+ * internal memory allocated to all requested endpoints.
-+ *
-+ * Returns zero on success, else a negative errno.
-+ */
-+int usb_gadget_check_config(struct usb_gadget *gadget)
-+{
-+	if (gadget->ops->check_config)
-+		return gadget->ops->check_config(gadget);
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(usb_gadget_check_config);
-+
- /* ------------------------------------------------------------------------- */
+ /* Note that we don't verify it, since the code does not come from user space */
+ static int
+-process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs, void *dest,
++process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
+ 		   void *base)
+ {
++	struct pt_regs *regs = rec;
+ 	unsigned long val;
  
- static void usb_gadget_state_work(struct work_struct *work)
-diff --git a/include/linux/usb/gadget.h b/include/linux/usb/gadget.h
-index e7351d64f11fa..11df3d5b40c6b 100644
---- a/include/linux/usb/gadget.h
-+++ b/include/linux/usb/gadget.h
-@@ -326,6 +326,7 @@ struct usb_gadget_ops {
- 	struct usb_ep *(*match_ep)(struct usb_gadget *,
- 			struct usb_endpoint_descriptor *,
- 			struct usb_ss_ep_comp_descriptor *);
-+	int	(*check_config)(struct usb_gadget *gadget);
- };
+ retry:
+diff --git a/kernel/trace/trace_probe_tmpl.h b/kernel/trace/trace_probe_tmpl.h
+index 29348874ebde7..bbb479b3ba8fd 100644
+--- a/kernel/trace/trace_probe_tmpl.h
++++ b/kernel/trace/trace_probe_tmpl.h
+@@ -54,7 +54,7 @@ fetch_apply_bitfield(struct fetch_insn *code, void *buf)
+  * If dest is NULL, don't store result and return required dynamic data size.
+  */
+ static int
+-process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs,
++process_fetch_insn(struct fetch_insn *code, void *rec,
+ 		   void *dest, void *base);
+ static nokprobe_inline int fetch_store_strlen(unsigned long addr);
+ static nokprobe_inline int
+@@ -190,7 +190,7 @@ __get_data_size(struct trace_probe *tp, struct pt_regs *regs)
  
- /**
-@@ -596,6 +597,7 @@ int usb_gadget_connect(struct usb_gadget *gadget);
- int usb_gadget_disconnect(struct usb_gadget *gadget);
- int usb_gadget_deactivate(struct usb_gadget *gadget);
- int usb_gadget_activate(struct usb_gadget *gadget);
-+int usb_gadget_check_config(struct usb_gadget *gadget);
- #else
- static inline int usb_gadget_frame_number(struct usb_gadget *gadget)
- { return 0; }
-@@ -619,6 +621,8 @@ static inline int usb_gadget_deactivate(struct usb_gadget *gadget)
- { return 0; }
- static inline int usb_gadget_activate(struct usb_gadget *gadget)
- { return 0; }
-+static inline int usb_gadget_check_config(struct usb_gadget *gadget)
-+{ return 0; }
- #endif /* CONFIG_USB_GADGET */
+ /* Store the value of each argument */
+ static nokprobe_inline void
+-store_trace_args(void *data, struct trace_probe *tp, struct pt_regs *regs,
++store_trace_args(void *data, struct trace_probe *tp, void *rec,
+ 		 int header_size, int maxlen)
+ {
+ 	struct probe_arg *arg;
+@@ -205,7 +205,7 @@ store_trace_args(void *data, struct trace_probe *tp, struct pt_regs *regs,
+ 		/* Point the dynamic data area if needed */
+ 		if (unlikely(arg->dynamic))
+ 			*dl = make_data_loc(maxlen, dyndata - base);
+-		ret = process_fetch_insn(arg->code, regs, dl, base);
++		ret = process_fetch_insn(arg->code, rec, dl, base);
+ 		if (unlikely(ret < 0 && arg->dynamic)) {
+ 			*dl = make_data_loc(0, dyndata - base);
+ 		} else {
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index 9900d4e3808cc..f6c47361c154e 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -217,9 +217,10 @@ static unsigned long translate_user_vaddr(unsigned long file_offset)
  
- /*-------------------------------------------------------------------------*/
+ /* Note that we don't verify it, since the code does not come from user space */
+ static int
+-process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs, void *dest,
++process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
+ 		   void *base)
+ {
++	struct pt_regs *regs = rec;
+ 	unsigned long val;
+ 
+ 	/* 1st stage: get value from context */
 -- 
 2.40.1
 
