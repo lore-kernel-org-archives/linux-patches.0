@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11A411C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CE4C433C7;
-	Thu, 24 Aug 2023 14:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6FD11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33FCC433C7;
+	Thu, 24 Aug 2023 14:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889106;
-	bh=O8kScKukh1LDMqrmWF15iyuzEtXh+N6WpWuwb2CwZXQ=;
+	s=korg; t=1692889109;
+	bh=o2IqFnUcWgwXaNrTe6YVXa6Uxkksg/fyQ6w2Ge9kjdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHX3L6bHTAjh2UnFo8txkhQcvgzKCc7z6oCLH6bvt4OGBLjFd8j7q86MIMFkfdr38
-	 9aPkjFtjAxZ3WYY5c5p13PAwEMDjLz0iX28CQ+NdKsRVVLB9TcfUHt3Q9CNti6C/90
-	 axrPsKc04npKfj6z8RVee30QH+Bb/NIoZzvKF3Qo=
+	b=PpteXMJqGLZ2XVnTZrpS4HYcmV9DxvwIadD9MMeySuNN8Rf+f8CSKb/0Gnm6c7ISA
+	 zVEG6Pj9/Lf/93D9y6mLaPx9caNof7N8fiJmLOeCPa5CFhB++SdaqIPh70G+ynaZ6f
+	 KmGQ5EsAnIFV/CpDCdoZtwG6xHNfP1xyB1Zj+f7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xu <gaoxu2@hihonor.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Christoph Hellwig <hch@lst.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lang Yu <Lang.Yu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/135] dma-remap: use kvmalloc_array/kvfree for larger dma memory remap
-Date: Thu, 24 Aug 2023 16:49:20 +0200
-Message-ID: <20230824145027.701593391@linuxfoundation.org>
+Subject: [PATCH 5.10 018/135] drm/amdgpu: install stub fence into potential unused fence pointers
+Date: Thu, 24 Aug 2023 16:49:21 +0200
+Message-ID: <20230824145027.741846128@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -36,61 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gaoxu <gaoxu2@hihonor.com>
+From: Lang Yu <Lang.Yu@amd.com>
 
-[ Upstream commit 51ff97d54f02b4444dfc42e380ac4c058e12d5dd ]
+[ Upstream commit 187916e6ed9d0c3b3abc27429f7a5f8c936bd1f0 ]
 
-If dma_direct_alloc() alloc memory in size of 64MB, the inner function
-dma_common_contiguous_remap() will allocate 128KB memory by invoking
-the function kmalloc_array(). and the kmalloc_array seems to fail to try to
-allocate 128KB mem.
+When using cpu to update page tables, vm update fences are unused.
+Install stub fence into these fence pointers instead of NULL
+to avoid NULL dereference when calling dma_fence_wait() on them.
 
-Call trace:
-[14977.928623] qcrosvm: page allocation failure: order:5, mode:0x40cc0
-[14977.928638] dump_backtrace.cfi_jt+0x0/0x8
-[14977.928647] dump_stack_lvl+0x80/0xb8
-[14977.928652] warn_alloc+0x164/0x200
-[14977.928657] __alloc_pages_slowpath+0x9f0/0xb4c
-[14977.928660] __alloc_pages+0x21c/0x39c
-[14977.928662] kmalloc_order+0x48/0x108
-[14977.928666] kmalloc_order_trace+0x34/0x154
-[14977.928668] __kmalloc+0x548/0x7e4
-[14977.928673] dma_direct_alloc+0x11c/0x4f8
-[14977.928678] dma_alloc_attrs+0xf4/0x138
-[14977.928680] gh_vm_ioctl_set_fw_name+0x3c4/0x610 [gunyah]
-[14977.928698] gh_vm_ioctl+0x90/0x14c [gunyah]
-[14977.928705] __arm64_sys_ioctl+0x184/0x210
-
-work around by doing kvmalloc_array instead.
-
-Signed-off-by: Gao Xu <gaoxu2@hihonor.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Lang Yu <Lang.Yu@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/remap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/dma/remap.c b/kernel/dma/remap.c
-index 905c3fa005f10..5bff061993102 100644
---- a/kernel/dma/remap.c
-+++ b/kernel/dma/remap.c
-@@ -43,13 +43,13 @@ void *dma_common_contiguous_remap(struct page *page, size_t size,
- 	void *vaddr;
- 	int i;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 8445bb7ae06ab..3b4724d60868f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2155,6 +2155,7 @@ struct amdgpu_bo_va *amdgpu_vm_bo_add(struct amdgpu_device *adev,
+ 	amdgpu_vm_bo_base_init(&bo_va->base, vm, bo);
  
--	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-+	pages = kvmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
- 	if (!pages)
- 		return NULL;
- 	for (i = 0; i < count; i++)
- 		pages[i] = nth_page(page, i);
- 	vaddr = vmap(pages, count, VM_DMA_COHERENT, prot);
--	kfree(pages);
-+	kvfree(pages);
+ 	bo_va->ref_count = 1;
++	bo_va->last_pt_update = dma_fence_get_stub();
+ 	INIT_LIST_HEAD(&bo_va->valids);
+ 	INIT_LIST_HEAD(&bo_va->invalids);
  
- 	return vaddr;
- }
+@@ -2867,7 +2868,8 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
+ 	else
+ 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
+-	vm->last_update = NULL;
++
++	vm->last_update = dma_fence_get_stub();
+ 	vm->last_unlocked = dma_fence_get_stub();
+ 
+ 	mutex_init(&vm->eviction_lock);
+@@ -3042,7 +3044,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
+ 	}
+ 	dma_fence_put(vm->last_update);
+-	vm->last_update = NULL;
++	vm->last_update = dma_fence_get_stub();
+ 	vm->is_compute_context = true;
+ 
+ 	if (vm->pasid) {
 -- 
 2.40.1
 
