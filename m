@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169E214A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8726EC433C7;
-	Thu, 24 Aug 2023 17:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E7314A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:18:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A64C433C7;
+	Thu, 24 Aug 2023 17:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897509;
-	bh=mtX9/JcztyHXhc3kSSZUeWa6hQOUtYYNZ3BSKEk+rlY=;
+	s=korg; t=1692897512;
+	bh=UcjxTtwQI1GeeBM5u2SL5VVcGcP962v2rlpYk5jULBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGtRbl9R7+1ceKE9tPuED7x6iGujqTIeK5LNzadWB2enGulhb76avmZ+nVHycBg3G
-	 t9Jj6IEhvigNsLE8g9mFD45VYfHRQ96IdhjjT4mAscMrzWI3ZTiofREla3OHYLKBNG
-	 BEv4M9Gom4IH5jc+yxBfwIuh7L5JK2dld+d9Heqg=
+	b=GWzU/iXGGRC6UTV2RMtwFD/PdBR7NBxdeBQQ48GXK1JqMMq78q9saZQB2loypkqT1
+	 WjVYf2Uulk3iNsTySJe9dxugBm4FHpOTGz/SAOWBlhmwf8rUU9vvpQ7fBIKzVke+lo
+	 j1NBDZ/FEbmhR7UZWbNGArVAAHc5G+UbGIwaVH44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Immad Mir <mirimmad17@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/135] FS: JFS: Check for read-only mounted filesystem in txBegin
-Date: Thu, 24 Aug 2023 19:08:18 +0200
-Message-ID: <20230824170618.281634052@linuxfoundation.org>
+Subject: [PATCH 5.10 058/135] USB: dwc3: qcom: fix NULL-deref on suspend
+Date: Thu, 24 Aug 2023 19:08:50 +0200
+Message-ID: <20230824170619.700622044@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,37 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Immad Mir <mirimmad17@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 95e2b352c03b0a86c5717ba1d24ea20969abcacc ]
+[ Upstream commit d2d69354226de0b333d4405981f3d9c41ba8430a ]
 
- This patch adds a check for read-only mounted filesystem
- in txBegin before starting a transaction potentially saving
- from NULL pointer deref.
+The Qualcomm dwc3 glue driver is currently accessing the driver data of
+the child core device during suspend and on wakeup interrupts. This is
+clearly a bad idea as the child may not have probed yet or could have
+been unbound from its driver.
 
-Signed-off-by: Immad Mir <mirimmad17@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+The first such layering violation was part of the initial version of the
+driver, but this was later made worse when the hack that accesses the
+driver data of the grand child xhci device to configure the wakeup
+interrupts was added.
+
+Fixing this properly is not that easily done, so add a sanity check to
+make sure that the child driver data is non-NULL before dereferencing it
+for now.
+
+Note that this relies on subtleties like the fact that driver core is
+making sure that the parent is not suspended while the child is probing.
+
+Reported-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/all/20230325165217.31069-4-manivannan.sadhasivam@linaro.org/
+Fixes: d9152161b4bf ("usb: dwc3: Add Qualcomm DWC3 glue layer driver")
+Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+Cc: stable@vger.kernel.org	# 3.18: a872ab303d5d: "usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup"
+Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <20230607100540.31045-2-johan+linaro@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_txnmgr.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-index c8ce7f1bc5942..6f6a5b9203d3f 100644
---- a/fs/jfs/jfs_txnmgr.c
-+++ b/fs/jfs/jfs_txnmgr.c
-@@ -354,6 +354,11 @@ tid_t txBegin(struct super_block *sb, int flag)
- 	jfs_info("txBegin: flag = 0x%x", flag);
- 	log = JFS_SBI(sb)->log;
- 
-+	if (!log) {
-+		jfs_error(sb, "read-only filesystem\n");
-+		return 0;
-+	}
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index ec8c43231746e..3973f6c18857e 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -306,7 +306,16 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+ /* Only usable in contexts where the role can not change. */
+ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+ {
+-	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
++	struct dwc3 *dwc;
 +
- 	TXN_LOCK();
++	/*
++	 * FIXME: Fix this layering violation.
++	 */
++	dwc = platform_get_drvdata(qcom->dwc3);
++
++	/* Core driver may not have probed yet. */
++	if (!dwc)
++		return false;
  
- 	INCREMENT(TxStat.txBegin);
+ 	return dwc->xhci;
+ }
 -- 
 2.40.1
 
