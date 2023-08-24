@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC9511C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE41C433C7;
-	Thu, 24 Aug 2023 14:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794C611C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A0EC433C8;
+	Thu, 24 Aug 2023 14:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888763;
-	bh=U0eIEKSt4OQjBfn1H3Tf/Ov92yvJZOToucofV9V4W6M=;
+	s=korg; t=1692888766;
+	bh=TNe6QAOPeDW4U1BJJ2f8Eij3HrtMN4Z3TYjBA/e2pJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AApKwEya5pmJUSPUxmLaR1sw0wd2D33SFdljlJVTzkLpBcMuLqrzP3GJSWJ5AsV0F
-	 ztajvxPPEgADVm3Og9aZ9vzK6Vdhy1Z5Il+rnEfU5HPo632BRiE6rJ//h8ICy485Pg
-	 Lwr5Px0FS3IWhEeOgXlD6Nkndrqbfa8ptHH27KXY=
+	b=Nqt1LDu/BdM6f1AJgFeWRbrH5oqWf0JOAYY02puVf6NTyNLSfSf7RYZ9cG6BA6Wj1
+	 CFZuEUPj3NRZ5fR0dgzl43ngLJzdvDslx6KGkLmz3V7cNoJ36FEUNGVVdvgqXnRNlG
+	 +5dt3jSsH6g6p9kRc3EYAiJciT8XfoQulBSAYQQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lang Yu <Lang.Yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Edward Lo <loyuantsung@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/139] drm/amdgpu: install stub fence into potential unused fence pointers
-Date: Thu, 24 Aug 2023 16:48:58 +0200
-Message-ID: <20230824145024.239654518@linuxfoundation.org>
+Subject: [PATCH 5.15 033/139] fs/ntfs3: Enhance sanity check while generating attr_list
+Date: Thu, 24 Aug 2023 16:49:16 +0200
+Message-ID: <20230824145025.045811178@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,54 +35,197 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lang Yu <Lang.Yu@amd.com>
+From: Edward Lo <loyuantsung@gmail.com>
 
-[ Upstream commit 187916e6ed9d0c3b3abc27429f7a5f8c936bd1f0 ]
+[ Upstream commit fdec309c7672cbee4dc0229ee4cbb33c948a1bdd ]
 
-When using cpu to update page tables, vm update fences are unused.
-Install stub fence into these fence pointers instead of NULL
-to avoid NULL dereference when calling dma_fence_wait() on them.
+ni_create_attr_list uses WARN_ON to catch error cases while generating
+attribute list, which only prints out stack trace and may not be enough.
+This repalces them with more proper error handling flow.
 
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Lang Yu <Lang.Yu@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[   59.666332] BUG: kernel NULL pointer dereference, address: 000000000000000e
+[   59.673268] #PF: supervisor read access in kernel mode
+[   59.678354] #PF: error_code(0x0000) - not-present page
+[   59.682831] PGD 8000000005ff1067 P4D 8000000005ff1067 PUD 7dee067 PMD 0
+[   59.688556] Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+[   59.692642] CPU: 0 PID: 198 Comm: poc Tainted: G    B   W          6.2.0-rc1+ #4
+[   59.698868] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[   59.708795] RIP: 0010:ni_create_attr_list+0x505/0x860
+[   59.713657] Code: 7e 10 e8 5e d0 d0 ff 45 0f b7 76 10 48 8d 7b 16 e8 00 d1 d0 ff 66 44 89 73 16 4d 8d 75 0e 4c 89 f7 e8 3f d0 d0 ff 4c 8d8
+[   59.731559] RSP: 0018:ffff88800a56f1e0 EFLAGS: 00010282
+[   59.735691] RAX: 0000000000000001 RBX: ffff88800b7b5088 RCX: ffffffffb83079fe
+[   59.741792] RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffffffffbb7f9fc0
+[   59.748423] RBP: ffff88800a56f3a8 R08: ffff88800b7b50a0 R09: fffffbfff76ff3f9
+[   59.754654] R10: ffffffffbb7f9fc7 R11: fffffbfff76ff3f8 R12: ffff88800b756180
+[   59.761552] R13: 0000000000000000 R14: 000000000000000e R15: 0000000000000050
+[   59.768323] FS:  00007feaa8c96440(0000) GS:ffff88806d400000(0000) knlGS:0000000000000000
+[   59.776027] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   59.781395] CR2: 00007f3a2e0b1000 CR3: 000000000a5bc000 CR4: 00000000000006f0
+[   59.787607] Call Trace:
+[   59.790271]  <TASK>
+[   59.792488]  ? __pfx_ni_create_attr_list+0x10/0x10
+[   59.797235]  ? kernel_text_address+0xd3/0xe0
+[   59.800856]  ? unwind_get_return_address+0x3e/0x60
+[   59.805101]  ? __kasan_check_write+0x18/0x20
+[   59.809296]  ? preempt_count_sub+0x1c/0xd0
+[   59.813421]  ni_ins_attr_ext+0x52c/0x5c0
+[   59.817034]  ? __pfx_ni_ins_attr_ext+0x10/0x10
+[   59.821926]  ? __vfs_setxattr+0x121/0x170
+[   59.825718]  ? __vfs_setxattr_noperm+0x97/0x300
+[   59.829562]  ? __vfs_setxattr_locked+0x145/0x170
+[   59.833987]  ? vfs_setxattr+0x137/0x2a0
+[   59.836732]  ? do_setxattr+0xce/0x150
+[   59.839807]  ? setxattr+0x126/0x140
+[   59.842353]  ? path_setxattr+0x164/0x180
+[   59.845275]  ? __x64_sys_setxattr+0x71/0x90
+[   59.848838]  ? do_syscall_64+0x3f/0x90
+[   59.851898]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   59.857046]  ? stack_depot_save+0x17/0x20
+[   59.860299]  ni_insert_attr+0x1ba/0x420
+[   59.863104]  ? __pfx_ni_insert_attr+0x10/0x10
+[   59.867069]  ? preempt_count_sub+0x1c/0xd0
+[   59.869897]  ? _raw_spin_unlock_irqrestore+0x2b/0x50
+[   59.874088]  ? __create_object+0x3ae/0x5d0
+[   59.877865]  ni_insert_resident+0xc4/0x1c0
+[   59.881430]  ? __pfx_ni_insert_resident+0x10/0x10
+[   59.886355]  ? kasan_save_alloc_info+0x1f/0x30
+[   59.891117]  ? __kasan_kmalloc+0x8b/0xa0
+[   59.894383]  ntfs_set_ea+0x90d/0xbf0
+[   59.897703]  ? __pfx_ntfs_set_ea+0x10/0x10
+[   59.901011]  ? kernel_text_address+0xd3/0xe0
+[   59.905308]  ? __kernel_text_address+0x16/0x50
+[   59.909811]  ? unwind_get_return_address+0x3e/0x60
+[   59.914898]  ? __pfx_stack_trace_consume_entry+0x10/0x10
+[   59.920250]  ? arch_stack_walk+0xa2/0x100
+[   59.924560]  ? filter_irq_stacks+0x27/0x80
+[   59.928722]  ntfs_setxattr+0x405/0x440
+[   59.932512]  ? __pfx_ntfs_setxattr+0x10/0x10
+[   59.936634]  ? kvmalloc_node+0x2d/0x120
+[   59.940378]  ? kasan_save_stack+0x41/0x60
+[   59.943870]  ? kasan_save_stack+0x2a/0x60
+[   59.947719]  ? kasan_set_track+0x29/0x40
+[   59.951417]  ? kasan_save_alloc_info+0x1f/0x30
+[   59.955733]  ? __kasan_kmalloc+0x8b/0xa0
+[   59.959598]  ? __kmalloc_node+0x68/0x150
+[   59.963163]  ? kvmalloc_node+0x2d/0x120
+[   59.966490]  ? vmemdup_user+0x2b/0xa0
+[   59.969060]  __vfs_setxattr+0x121/0x170
+[   59.972456]  ? __pfx___vfs_setxattr+0x10/0x10
+[   59.976008]  __vfs_setxattr_noperm+0x97/0x300
+[   59.981562]  __vfs_setxattr_locked+0x145/0x170
+[   59.986100]  vfs_setxattr+0x137/0x2a0
+[   59.989964]  ? __pfx_vfs_setxattr+0x10/0x10
+[   59.993616]  ? __kasan_check_write+0x18/0x20
+[   59.997425]  do_setxattr+0xce/0x150
+[   60.000304]  setxattr+0x126/0x140
+[   60.002967]  ? __pfx_setxattr+0x10/0x10
+[   60.006471]  ? __virt_addr_valid+0xcb/0x140
+[   60.010461]  ? __call_rcu_common.constprop.0+0x1c7/0x330
+[   60.016037]  ? debug_smp_processor_id+0x1b/0x30
+[   60.021008]  ? kasan_quarantine_put+0x5b/0x190
+[   60.025545]  ? putname+0x84/0xa0
+[   60.027910]  ? __kasan_slab_free+0x11e/0x1b0
+[   60.031483]  ? putname+0x84/0xa0
+[   60.033986]  ? preempt_count_sub+0x1c/0xd0
+[   60.036876]  ? __mnt_want_write+0xae/0x100
+[   60.040738]  ? mnt_want_write+0x8f/0x150
+[   60.044317]  path_setxattr+0x164/0x180
+[   60.048096]  ? __pfx_path_setxattr+0x10/0x10
+[   60.052096]  ? strncpy_from_user+0x175/0x1c0
+[   60.056482]  ? debug_smp_processor_id+0x1b/0x30
+[   60.059848]  ? fpregs_assert_state_consistent+0x6b/0x80
+[   60.064557]  __x64_sys_setxattr+0x71/0x90
+[   60.068892]  do_syscall_64+0x3f/0x90
+[   60.072868]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   60.077523] RIP: 0033:0x7feaa86e4469
+[   60.080915] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 088
+[   60.097353] RSP: 002b:00007ffdbd8311e8 EFLAGS: 00000286 ORIG_RAX: 00000000000000bc
+[   60.103386] RAX: ffffffffffffffda RBX: 9461c5e290baac00 RCX: 00007feaa86e4469
+[   60.110322] RDX: 00007ffdbd831fe0 RSI: 00007ffdbd831305 RDI: 00007ffdbd831263
+[   60.116808] RBP: 00007ffdbd836180 R08: 0000000000000001 R09: 00007ffdbd836268
+[   60.123879] R10: 000000000000007d R11: 0000000000000286 R12: 0000000000400500
+[   60.130540] R13: 00007ffdbd836260 R14: 0000000000000000 R15: 0000000000000000
+[   60.136553]  </TASK>
+[   60.138818] Modules linked in:
+[   60.141839] CR2: 000000000000000e
+[   60.144831] ---[ end trace 0000000000000000 ]---
+[   60.149058] RIP: 0010:ni_create_attr_list+0x505/0x860
+[   60.153975] Code: 7e 10 e8 5e d0 d0 ff 45 0f b7 76 10 48 8d 7b 16 e8 00 d1 d0 ff 66 44 89 73 16 4d 8d 75 0e 4c 89 f7 e8 3f d0 d0 ff 4c 8d8
+[   60.172443] RSP: 0018:ffff88800a56f1e0 EFLAGS: 00010282
+[   60.176246] RAX: 0000000000000001 RBX: ffff88800b7b5088 RCX: ffffffffb83079fe
+[   60.182752] RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffffffffbb7f9fc0
+[   60.189949] RBP: ffff88800a56f3a8 R08: ffff88800b7b50a0 R09: fffffbfff76ff3f9
+[   60.196950] R10: ffffffffbb7f9fc7 R11: fffffbfff76ff3f8 R12: ffff88800b756180
+[   60.203671] R13: 0000000000000000 R14: 000000000000000e R15: 0000000000000050
+[   60.209595] FS:  00007feaa8c96440(0000) GS:ffff88806d400000(0000) knlGS:0000000000000000
+[   60.216299] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   60.222276] CR2: 00007f3a2e0b1000 CR3: 000000000a5bc000 CR4: 00000000000006f0
+
+Signed-off-by: Edward Lo <loyuantsung@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ntfs3/frecord.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 0e4554950e072..788611a50a68e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2260,6 +2260,7 @@ struct amdgpu_bo_va *amdgpu_vm_bo_add(struct amdgpu_device *adev,
- 	amdgpu_vm_bo_base_init(&bo_va->base, vm, bo);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index d24e12d348d49..9a1744955d1cf 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -849,6 +849,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	if (err)
+ 		goto out1;
  
- 	bo_va->ref_count = 1;
-+	bo_va->last_pt_update = dma_fence_get_stub();
- 	INIT_LIST_HEAD(&bo_va->valids);
- 	INIT_LIST_HEAD(&bo_va->invalids);
++	err = -EINVAL;
+ 	/* Call mi_remove_attr() in reverse order to keep pointers 'arr_move' valid. */
+ 	while (to_free > 0) {
+ 		struct ATTRIB *b = arr_move[--nb];
+@@ -857,7 +858,8 @@ int ni_create_attr_list(struct ntfs_inode *ni)
  
-@@ -2974,7 +2975,8 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm)
- 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
- 	else
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
--	vm->last_update = NULL;
-+
-+	vm->last_update = dma_fence_get_stub();
- 	vm->last_unlocked = dma_fence_get_stub();
+ 		attr = mi_insert_attr(mi, b->type, Add2Ptr(b, name_off),
+ 				      b->name_len, asize, name_off);
+-		WARN_ON(!attr);
++		if (!attr)
++			goto out1;
  
- 	mutex_init(&vm->eviction_lock);
-@@ -3117,7 +3119,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
+ 		mi_get_ref(mi, &le_b[nb]->ref);
+ 		le_b[nb]->id = attr->id;
+@@ -867,17 +869,20 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 		attr->id = le_b[nb]->id;
+ 
+ 		/* Remove from primary record. */
+-		WARN_ON(!mi_remove_attr(NULL, &ni->mi, b));
++		if (!mi_remove_attr(NULL, &ni->mi, b))
++			goto out1;
+ 
+ 		if (to_free <= asize)
+ 			break;
+ 		to_free -= asize;
+-		WARN_ON(!nb);
++		if (!nb)
++			goto out1;
  	}
- 	dma_fence_put(vm->last_update);
--	vm->last_update = NULL;
-+	vm->last_update = dma_fence_get_stub();
- 	vm->is_compute_context = true;
  
- 	/* Free the shadow bo for compute VM */
+ 	attr = mi_insert_attr(&ni->mi, ATTR_LIST, NULL, 0,
+ 			      lsize + SIZEOF_RESIDENT, SIZEOF_RESIDENT);
+-	WARN_ON(!attr);
++	if (!attr)
++		goto out1;
+ 
+ 	attr->non_res = 0;
+ 	attr->flags = 0;
+@@ -897,9 +902,10 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	kfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.size = 0;
++	return err;
+ 
+ out:
+-	return err;
++	return 0;
+ }
+ 
+ /*
 -- 
 2.40.1
 
