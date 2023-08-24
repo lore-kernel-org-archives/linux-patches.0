@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72A111C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:00:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D51C433C8;
-	Thu, 24 Aug 2023 15:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B2E11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC98FC433C7;
+	Thu, 24 Aug 2023 15:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889214;
-	bh=EJlF6o6y88y2smz4P9Dnx6eohGOJdm1UM+Or26I37k4=;
+	s=korg; t=1692889217;
+	bh=aCRFN9Q/SRg1QS5Scwz67Heyi8mb6JJ2lm2ek5z5cwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1P2BzZ79GwJJ/3f27KNWGz15+TNk0835VP7p+ZoEMyBWMfuYhfWkTbdaX4qFJitzu
-	 m9QH3EkY9e51PN/TK9+xns858uZoBRcvolcFVMDb1R02bzX6lJe7qwVGeeq8ScnhNl
-	 5GlLKkLYDIM7Z67vISIeCMMYd3Ogqop6mAT3sTMU=
+	b=kHU5VXq6skv13GNi8lY14ddzM8TB5sSQpaayhBlXrEg8c/GR6yY/E6gO3hXjrEXiM
+	 Mok8KbmvScvPAL+qickEwI0SSXv4tGfozN/csxPNcrNDQNgkBlnmHBffkN+2nrXep6
+	 pge0TcBRpqAdZzLOLTiyhyoWFAfTHe7hqxBU3H8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pina Chen <pina.chen@mediatek.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Prashanth K <quic_prashk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/135] media: v4l2-mem2mem: add lock to protect parameter num_rdy
-Date: Thu, 24 Aug 2023 16:49:30 +0200
-Message-ID: <20230824145028.110408599@linuxfoundation.org>
+Subject: [PATCH 5.10 028/135] usb: gadget: u_serial: Avoid spinlock recursion in __gs_console_push
+Date: Thu, 24 Aug 2023 16:49:31 +0200
+Message-ID: <20230824145028.144740570@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -36,64 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit 56b5c3e67b0f9af3f45cf393be048ee8d8a92694 ]
+[ Upstream commit e5990469943c711cb00bfde6338d2add6c6d0bfe ]
 
-Getting below error when using KCSAN to check the driver. Adding lock to
-protect parameter num_rdy when getting the value with function:
-v4l2_m2m_num_src_bufs_ready/v4l2_m2m_num_dst_bufs_ready.
+When serial console over USB is enabled, gs_console_connect
+queues gs_console_work, where it acquires the spinlock and
+queues the usb request, and this request goes to gadget layer.
+Now consider a situation where gadget layer prints something
+to dmesg, this will eventually call gs_console_write() which
+requires cons->lock. And this causes spinlock recursion. Avoid
+this by excluding usb_ep_queue from the spinlock.
 
-kworker/u16:3: [name:report&]BUG: KCSAN: data-race in v4l2_m2m_buf_queue
-kworker/u16:3: [name:report&]
+ spin_lock_irqsave //needs cons->lock
+ gs_console_write
+	.
+	.
+ _printk
+ __warn_printk
+ dev_warn/pr_err
+	.
+	.
+ [USB Gadget Layer]
+	.
+	.
+ usb_ep_queue
+ gs_console_work
+ __gs_console_push // acquires cons->lock
+ process_one_work
 
-kworker/u16:3: [name:report&]read-write to 0xffffff8105f35b94 of 1 bytes by task 20865 on cpu 7:
-kworker/u16:3:  v4l2_m2m_buf_queue+0xd8/0x10c
-
-Signed-off-by: Pina Chen <pina.chen@mediatek.com>
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Link: https://lore.kernel.org/r/1683638872-6885-1-git-send-email-quic_prashk@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/media/v4l2-mem2mem.h | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/u_serial.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
-index 5a91b548ecc0c..8d52c4506762d 100644
---- a/include/media/v4l2-mem2mem.h
-+++ b/include/media/v4l2-mem2mem.h
-@@ -588,7 +588,14 @@ void v4l2_m2m_buf_queue(struct v4l2_m2m_ctx *m2m_ctx,
- static inline
- unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- {
--	return m2m_ctx->out_q_ctx.num_rdy;
-+	unsigned int num_buf_rdy;
-+	unsigned long flags;
+diff --git a/drivers/usb/gadget/function/u_serial.c b/drivers/usb/gadget/function/u_serial.c
+index 3b5a6430e2418..a717b53847a8e 100644
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -917,8 +917,11 @@ static void __gs_console_push(struct gs_console *cons)
+ 	}
+ 
+ 	req->length = size;
 +
-+	spin_lock_irqsave(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
-+	num_buf_rdy = m2m_ctx->out_q_ctx.num_rdy;
-+	spin_unlock_irqrestore(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
-+
-+	return num_buf_rdy;
++	spin_unlock_irq(&cons->lock);
+ 	if (usb_ep_queue(ep, req, GFP_ATOMIC))
+ 		req->length = 0;
++	spin_lock_irq(&cons->lock);
  }
  
- /**
-@@ -600,7 +607,14 @@ unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- static inline
- unsigned int v4l2_m2m_num_dst_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- {
--	return m2m_ctx->cap_q_ctx.num_rdy;
-+	unsigned int num_buf_rdy;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
-+	num_buf_rdy = m2m_ctx->cap_q_ctx.num_rdy;
-+	spin_unlock_irqrestore(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
-+
-+	return num_buf_rdy;
- }
- 
- /**
+ static void gs_console_work(struct work_struct *work)
 -- 
 2.40.1
 
