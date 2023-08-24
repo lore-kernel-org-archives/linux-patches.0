@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F41111C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B5FC433C8;
-	Thu, 24 Aug 2023 14:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B275B11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3837AC433C7;
+	Thu, 24 Aug 2023 14:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888931;
-	bh=gutcnvLFxv1/k56o5J4sRtWOEzzigEjTuXbHdWcFPlo=;
+	s=korg; t=1692888934;
+	bh=ZqXMqSGFTK4y2HZnHJYay9/4BD3AFpaWThPFUV+6aUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+ibOuFIuHasAdJiXiq8xIrMAZR1205z+VulLpkuCdnx0zyl02XRaR+Zzd6h7EVK3
-	 iabJMUUZ+kMKNVIdJBtWzha7aOYtZvd5lRPB0Ekm9AZ80rl/6hp7Ps7GkcZ0g7qoLW
-	 vjib4F5T2YGNdzjPEI5sUWsV7Q4dJu9XSwYbHQik=
+	b=Eezabayfg+vDshjM3NrYGbrsQ9BgCICgj2Mvn0f0eGZSl69IqwXhuZ7ebbTPQtTtd
+	 7xvXeLHx/S2VssqIavVqWA6TqiyGhO5s7tIWuODlLErbxlU3hV0r8cSlLyE0H4JqC/
+	 Qg92wqrQq8FHFICaH5qfgzsWkBnhIqsH3vtlV/Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/139] net: phy: broadcom: stub c45 read/write for 54810
-Date: Thu, 24 Aug 2023 16:50:17 +0200
-Message-ID: <20230824145027.681331045@linuxfoundation.org>
+	Tam Nguyen <tamnguyenchi@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.15 077/139] i2c: designware: Correct length byte validation logic
+Date: Thu, 24 Aug 2023 16:50:00 +0200
+Message-ID: <20230824145027.001473015@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,58 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Quan Nguyen <quan@os.amperecomputing.com>
 
-[ Upstream commit 096516d092d54604d590827d05b1022c8f326639 ]
+commit 49d4db3953cb9004ff94efc0c176e026c820af5a upstream.
 
-The 54810 does not support c45. The mmd_phy_indirect accesses return
-arbirtary values leading to odd behavior like saying it supports EEE
-when it doesn't. We also see that reading/writing these non-existent
-MMD registers leads to phy instability in some cases.
+Commit 0daede80f870 ("i2c: designware: Convert driver to using regmap API")
+changes the logic to validate the whole 32-bit return value of
+DW_IC_DATA_CMD register instead of 8-bit LSB without reason.
 
-Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Later, commit f53f15ba5a85 ("i2c: designware: Get right data length"),
+introduced partial fix but not enough because the "tmp > 0" still test
+tmp as 32-bit value and is wrong in case the IC_DATA_CMD[11] is set.
+
+Revert the logic to just before commit 0daede80f870
+("i2c: designware: Convert driver to using regmap API").
+
+Fixes: f53f15ba5a85 ("i2c: designware: Get right data length")
+Fixes: 0daede80f870 ("i2c: designware: Convert driver to using regmap API")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
+Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20230726080001.337353-2-tamnguyenchi@os.amperecomputing.com
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/broadcom.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/i2c/busses/i2c-designware-master.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
-index b330efb98209b..f3b39af83a272 100644
---- a/drivers/net/phy/broadcom.c
-+++ b/drivers/net/phy/broadcom.c
-@@ -412,6 +412,17 @@ static int bcm54xx_resume(struct phy_device *phydev)
- 	return bcm54xx_config_init(phydev);
- }
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -525,9 +525,10 @@ i2c_dw_read(struct dw_i2c_dev *dev)
+ 			u32 flags = msgs[dev->msg_read_idx].flags;
  
-+static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
-+			      u16 val)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int bcm54811_config_init(struct phy_device *phydev)
- {
- 	int err, reg;
-@@ -832,6 +843,8 @@ static struct phy_driver broadcom_drivers[] = {
- 	.get_strings	= bcm_phy_get_strings,
- 	.get_stats	= bcm54xx_get_stats,
- 	.probe		= bcm54xx_phy_probe,
-+	.read_mmd	= bcm54810_read_mmd,
-+	.write_mmd	= bcm54810_write_mmd,
- 	.config_init    = bcm54xx_config_init,
- 	.config_aneg    = bcm5481_config_aneg,
- 	.config_intr    = bcm_phy_config_intr,
--- 
-2.40.1
-
+ 			regmap_read(dev->map, DW_IC_DATA_CMD, &tmp);
++			tmp &= DW_IC_DATA_CMD_DAT;
+ 			/* Ensure length byte is a valid value */
+ 			if (flags & I2C_M_RECV_LEN &&
+-			    (tmp & DW_IC_DATA_CMD_DAT) <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
++			    tmp <= I2C_SMBUS_BLOCK_MAX && tmp > 0) {
+ 				len = i2c_dw_recv_len(dev, tmp);
+ 			}
+ 			*buf++ = tmp;
 
 
