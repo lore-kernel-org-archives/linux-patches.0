@@ -1,20 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FEA10979
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:15:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394B6C433C9;
-	Thu, 24 Aug 2023 15:15:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692890132;
-	bh=7VwnL8Kqzeq/1ZeBjWepo2f0bRj2CCuGL8qstPVUiak=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nHIv7ex7FzG16L2QvDe6PfYu3Hz4NWLkw816pWVMEPHEwl2yIjDnb4Y8b2U7Eq69q
-	 LP9CxepPtbWO6geH9xnSly7ZDyasq7ubHKE5qxGqVu6dm6WuIpJok54XlZdrHQynSo
-	 azLi5RWhOx/7vW+4MmhXQMlsG9h/jO/EpQVja7K4=
-Date: Thu, 24 Aug 2023 17:15:30 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3DB100C1
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:58:48 +0000 (UTC)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-68a3b66f350so6573b3a.3
+        for <patches@lists.linux.dev>; Thu, 24 Aug 2023 08:58:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692892728; x=1693497528;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=56e+b4C/mK4valOujlIcq0N2XDGggcYVhpWinAnjybM=;
+        b=YEliFwZd3Hk9HcfhU8gt37K+KxE91c3fyXTGfEjhePtLq0OJsKvodr7fb78DpBNDDt
+         mRGfahUfSVCHwo/jTypCI24qG7jO7Y9DCjs0Kj9c7ayUWzYv2xa8HPdR6JP5x4plLdEZ
+         Mbij9FQ9z9p1I9P4PosUkD87bhrLRX83js0TBdiJpku3oaza0O8HZXLJ544V3G/ScNNY
+         u1lr/yhwJjuCjdrLvVV3Uuz+r5lxipor4Rj4eGHAI5KUWnGekhyCmfmrG1MV3f8NNFlD
+         ZIKHuXyXMXfLu7qj2ZWWER525kzlpkrRRhIrqn0vyHbGgrbnDYfzKG4LHFSS6jW4hmk2
+         klPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692892728; x=1693497528;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=56e+b4C/mK4valOujlIcq0N2XDGggcYVhpWinAnjybM=;
+        b=DvTMzIo1w52noU6zEDS9amj54AybSkCa15xa/XjU/gDWdCPnViaBOBfJaSW3VeWOL3
+         RVcngBmxlkLURX/8lF6HtOlRPsIOH6cQJqbujBYkXzFeughq3sPEvdPTFDjkkTyH38KN
+         NMNm6MYsXUnUxkbl60u+tp8w1bF5Sun3LbBp6057738MJYm+bLP+Yh4NaIRqIglJniKP
+         m3rTbO9vyIAdukdik5OBsFxAF7zhGp0THw1NyKiDFGOHTRGk8F3p4n03IY0Lcj8TqD4h
+         2e4r9orP3A5lK9KnDje4u22fP7MkDQjBLJu+oiquiBN5r6qGNHZs0bv6uexkjNdJtcDv
+         W3Sg==
+X-Gm-Message-State: AOJu0YzCoGf08HzdnHqwKGGpwuXRszkkSJEo49/gAjAUIw9skHHaYTwP
+	cTzQSE8Xs+qwabc4ucJgjco=
+X-Google-Smtp-Source: AGHT+IHyTrgOO0pnw5NhpoSlYM9QmCFogTbtDea1WgU6bIwzDc6FhdcVrobhqDjDiV1tPxUioSmAGg==
+X-Received: by 2002:a05:6a00:2353:b0:68c:70:d175 with SMTP id j19-20020a056a00235300b0068c0070d175mr990075pfj.13.1692892728249;
+        Thu, 24 Aug 2023 08:58:48 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id f11-20020aa782cb000000b00688965c5227sm11264163pfn.120.2023.08.24.08.58.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Aug 2023 08:58:47 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 24 Aug 2023 08:58:46 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -23,7 +50,7 @@ Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 Subject: Re: [PATCH 6.1 000/194] 6.1.47-rc1 review
-Message-ID: <2023082459-oxidize-script-77e4@gregkh>
+Message-ID: <78a26d15-68eb-4a6f-a092-f7a554aa29e7@roeck-us.net>
 References: <20230821194122.695845670@linuxfoundation.org>
  <991b93d2-9fde-4233-97d5-1133a9360d02@roeck-us.net>
  <2023082309-veggie-unwoven-a7df@gregkh>
@@ -32,6 +59,7 @@ References: <20230821194122.695845670@linuxfoundation.org>
  <2023082325-expansion-revoke-1f3a@gregkh>
  <2023082401-arrange-bulk-d42a@gregkh>
  <4b8fcb23-c5e3-4bf1-957f-f0cc717564be@roeck-us.net>
+ <2023082459-oxidize-script-77e4@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,115 +68,26 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4b8fcb23-c5e3-4bf1-957f-f0cc717564be@roeck-us.net>
+In-Reply-To: <2023082459-oxidize-script-77e4@gregkh>
 
-On Thu, Aug 24, 2023 at 08:08:19AM -0700, Guenter Roeck wrote:
-> On Thu, Aug 24, 2023 at 03:35:55PM +0200, Greg Kroah-Hartman wrote:
-> > On Wed, Aug 23, 2023 at 05:50:42PM +0200, Greg Kroah-Hartman wrote:
-> > > On Wed, Aug 23, 2023 at 06:30:13AM -0700, Guenter Roeck wrote:
-> > > > On Wed, Aug 23, 2023 at 01:47:39PM +0530, Naresh Kamboju wrote:
-> > > > > On Wed, 23 Aug 2023 at 12:33, Greg Kroah-Hartman
-> > > > > <gregkh@linuxfoundation.org> wrote:
-> > > > > >
-> > > > > > On Tue, Aug 22, 2023 at 05:49:54PM -0700, Guenter Roeck wrote:
-> > > > > > > On Mon, Aug 21, 2023 at 09:39:39PM +0200, Greg Kroah-Hartman wrote:
-> > > > > > > > This is the start of the stable review cycle for the 6.1.47 release.
-> > > > > > > > There are 194 patches in this series, all will be posted as a response
-> > > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > > let me know.
-> > > > > > > >
-> > > > > > > > Responses should be made by Wed, 23 Aug 2023 19:40:45 +0000.
-> > > > > > > > Anything received after that time might be too late.
-> > > > > > > >
-> > > > > > >
-> > > > > > > Build results:
-> > > > > > >       total: 157 pass: 156 fail: 1
-> > > > > > > Failed builds:
-> > > > > > >       m68k:sun3_defconfig
-> > > > > > > Qemu test results:
-> > > > > > >       total: 521 pass: 519 fail: 2
-> > > > > > > Failed tests:
-> > > > > > >       arm:fuji-bmc:aspeed_g5_defconfig:notests:mem1G:mtd128,0,8,1:net,nic:aspeed-bmc-facebook-fuji:f2fs
-> > > > > > >       arm:bletchley-bmc,fmc-model=mt25qu02g,spi-model=mt25qu02g:aspeed_g5_defconfig:notests:mem1G:mtd256:net,nic:aspeed-bmc-facebook-bletchley:f2fs
-> > > > > > >
-> > > > > > > The m68k build failure is
-> > > > > > >
-> > > > > > > Inconsistent kallsyms data
-> > > > > > > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-> > > > > > >
-> > > > > > > I already have KALLSYMS_EXTRA_PASS=1 enabled, so that doesn't help.
-> > > > > > > Nothing to worry about. The f2fs crashes are still seen. They
-> > > > > > > also happen for other architectures, so it is not just an arm problem.
-> > > > > > > I'll probably just disable all f2fs testing going forward. If so I'll
-> > > > > > > send a note clarifying that the lack of reported test failures doesn't
-> > > > > > > mean that it works.
-> > > > > >
-> > > > > > I'll look into this later this week, next week to resolve the f2fs
-> > > > > > stuff.  I wanted to get to the other known bug fixes first.
-> > > > > >
-> > > > > > > For x86 I get the same runtime warning as everyone else.
-> > > > > >
-> > > > > > Yeah, this is troubling...
-> > > > > >
-> > > > > > Is it clang only?  I'll dig into this today...
-> > > > > 
-> > > > > It is seen with gcc-13 and clang-17 with few extra configs.
-> > > > > We are not booting defconfig.
-> > > > > 
-> > > > > The Kconfigs are enabled with KFENCE.
-> > > > > 
-> > > > I have KFENCE enabled as well, so it may well be that this triggers
-> > > > the warning. I don't see it in 6.4.y or upstream, though.
-> > > 
-> > > Ok, let me rip out all the x86 and objtool patches from this release,
-> > > get it out the door with the good things in there that everyone else
-> > > needs, and then we can focus on this mess...
-> > > 
-> > > Maybe I'll just backport _all_ objtool changes to sync things up better,
-> > > last time I tried that it was a maze of twisty passages, all coated in
-> > > assembly...
-> > 
-> > I got lost in the maze again today, ick.
-> > 
-> > Anyway, I give up.  I'm just going to push out a -rc1 with just these
-> > changes in it today, and if people are upset about the runtime warning,
-> > then they can provide a working backport of this objtool patch.
-> > 
+On Thu, Aug 24, 2023 at 05:15:30PM +0200, Greg Kroah-Hartman wrote:
+[ ... ]
 > 
-> Or maybe just revert all srso patches.
-
-Hah, I wish.
-
-{sigh}
-
-I've notified the patch authors about this, hopefully they can come up
-with something.
-
-> > Ideally, the CPU vendor who is causing this mess will do that, as it's
-> > their issue we are spending all of this time on, not Linux's issue.
-> > 
-> > Also, oddly, I can not reproduce this problem here on my hardware at
-> > all.  Maybe because it's an AMD processor?  If so, makes sense, as the
-> > SRSO issue is only for Intel chips.
-> > 
+> This might be an issue on AMD chips, but for some reason, in running
+> this kernel on my systems here, I have no boot warnings at all.  I
+> blamed it on them being only AMD chips.  If that's not the issue then I
+> really have no idea, sorry.
 > 
-> Apparently I am lost in the maze as well. I am quite sure that SRSO
-> only applies to AMD CPUs, and
-> 
-> arch/x86/Kconfig:config CPU_SRSO
-> arch/x86/Kconfig:         Enable the SRSO mitigation needed on AMD Zen1-4 machines.
-> 
-> seems to confirm that. What am I missing ? Do you mean the warning that
-> was supposed to be fixed with the objtool patch(es) is only seen on Intel
-> chips ?
 
-Ah, sorry, my confusion (too many different cpu bugs lately)
+AFAIK it depends on the compiler used and on the enabled debug options.
+At some point I lost track about what exactly has to be enabled to see
+the problem. We see it a lot with our (ChromeOS) debug kernel testing
+which has various debug options enabled, to the point where we may
+temporarily remove the warning from the kernel to stop the noise.
 
-This might be an issue on AMD chips, but for some reason, in running
-this kernel on my systems here, I have no boot warnings at all.  I
-blamed it on them being only AMD chips.  If that's not the issue then I
-really have no idea, sorry.
+Alternatively, as I had suggested earlier, we could revert all srso patches
+because they only seem to cause trouble. So far I have been resisting that
+because I am concerned that it would make things even worse (like one can
+not really revert a heart surgery without doing even more damage).
 
-thanks,
-
-greg k-h
+Guenter
