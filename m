@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E8511C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F4FC433C8;
-	Thu, 24 Aug 2023 14:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB3911C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B989FC433C7;
+	Thu, 24 Aug 2023 14:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889020;
-	bh=6HmQINafmzLMbwOML/C22Q3IXpJKKtJj/Ua/h9StJWk=;
+	s=korg; t=1692889023;
+	bh=NbEfo0EWIyQ/tXUk+FKMuyRDeCXsxoTt1h88Tc60jM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kSgf5QPaUx0Ut142jPb0UoH4ZXHMEl14zBqhzjIRXKVXtnArlsAeysk/SAlg2c4eV
-	 CoFxPwVNatzabezGkF4eaXSkeibhXcKN4OfLUBDQMo3HtgUiTOOgxPVZOp2LrnWeJ+
-	 kZPcNk0sWLl93zZTdIgyOLor5zoDZQTyqh0Ej6Zg=
+	b=ELkEwi1J0/hsmmC+PY3rA3XY+FcI8tqfuyaUjwOS6TqIIsdDmKAPuH8EluAFREA9T
+	 toNrrZ64/EI0Xd7If4Mm5g9Bh/0MQRkfH0tKAnjhj1yg6lquqm3+kmfHu30ddH0P6d
+	 DCOp0a5l2ennd3jcQpQp5XR6hDBdIZWdmCt/yZpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo YU <tsu.yubo@gmail.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/139] riscv: uaccess: Return the number of bytes effectively not copied
-Date: Thu, 24 Aug 2023 16:50:31 +0200
-Message-ID: <20230824145028.227698172@linuxfoundation.org>
+Subject: [PATCH 5.15 126/139] objtool: Add frame-pointer-specific function ignore
+Date: Thu, 24 Aug 2023 16:50:49 +0200
+Message-ID: <20230824145028.935904558@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -38,86 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Josh Poimboeuf <jpoimboe@redhat.com>
 
-[ Upstream commit 4b05b993900dd3eba0fc83ef5c5ddc7d65d786c6 ]
+[ Upstream commit e028c4f7ac7ca8c96126fe46c54ab3d56ffe6a66 ]
 
-It was reported that the riscv kernel hangs while executing the test
-in [1].
+Add a CONFIG_FRAME_POINTER-specific version of
+STACK_FRAME_NON_STANDARD() for the case where a function is
+intentionally missing frame pointer setup, but otherwise needs
+objtool/ORC coverage when frame pointers are disabled.
 
-Indeed, the test hangs when trying to write a buffer to a file. The
-problem is that the riscv implementation of raw_copy_from_user() does not
-return the correct number of bytes not written when an exception happens
-and is fixed up, instead it always returns the initial size to copy,
-even if some bytes were actually copied.
+Link: https://lkml.kernel.org/r/163163047364.489837.17377799909553689661.stgit@devnote2
 
-generic_perform_write() pre-faults the user pages and bails out if nothing
-can be written, otherwise it will access the userspace buffer: here the
-riscv implementation keeps returning it was not able to copy any byte
-though the pre-faulting indicates otherwise. So generic_perform_write()
-keeps retrying to access the user memory and ends up in an infinite
-loop.
-
-Note that before the commit mentioned in [1] that introduced this
-regression, it worked because generic_perform_write() would bail out if
-only one byte could not be written.
-
-So fix this by returning the number of bytes effectively not written in
-__asm_copy_[to|from]_user() and __clear_user(), as it is expected.
-
-Link: https://lore.kernel.org/linux-riscv/20230309151841.bomov6hq3ybyp42a@debian/ [1]
-Fixes: ebcbd75e3962 ("riscv: Fix the bug in memory access fixup code")
-Reported-by: Bo YU <tsu.yubo@gmail.com>
-Closes: https://lore.kernel.org/linux-riscv/20230309151841.bomov6hq3ybyp42a@debian/#t
-Reported-by: Aurelien Jarno <aurelien@aurel32.net>
-Closes: https://lore.kernel.org/linux-riscv/ZNOnCakhwIeue3yr@aurel32.net/
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-Link: https://lore.kernel.org/r/20230811150604.1621784-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Reviewed-by: Masami Hiramatsu <mhiramat@kernel.org>
+Tested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: c8c301abeae5 ("x86/ibt: Add ANNOTATE_NOENDBR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/lib/uaccess.S | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/linux/objtool.h       | 12 ++++++++++++
+ tools/include/linux/objtool.h | 12 ++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/arch/riscv/lib/uaccess.S b/arch/riscv/lib/uaccess.S
-index 2c7c1c5026af3..4fe436a0eec2c 100644
---- a/arch/riscv/lib/uaccess.S
-+++ b/arch/riscv/lib/uaccess.S
-@@ -19,8 +19,11 @@ ENTRY(__asm_copy_from_user)
- 	li t6, SR_SUM
- 	csrs CSR_STATUS, t6
+diff --git a/include/linux/objtool.h b/include/linux/objtool.h
+index a2042c4186864..d59e69df821eb 100644
+--- a/include/linux/objtool.h
++++ b/include/linux/objtool.h
+@@ -71,6 +71,17 @@ struct unwind_hint {
+ 	static void __used __section(".discard.func_stack_frame_non_standard") \
+ 		*__func_stack_frame_non_standard_##func = func
  
--	/* Save for return value */
--	mv	t5, a2
-+	/*
-+	 * Save the terminal address which will be used to compute the number
-+	 * of bytes copied in case of a fixup exception.
-+	 */
-+	add	t5, a0, a2
++/*
++ * STACK_FRAME_NON_STANDARD_FP() is a frame-pointer-specific function ignore
++ * for the case where a function is intentionally missing frame pointer setup,
++ * but otherwise needs objtool/ORC coverage when frame pointers are disabled.
++ */
++#ifdef CONFIG_FRAME_POINTER
++#define STACK_FRAME_NON_STANDARD_FP(func) STACK_FRAME_NON_STANDARD(func)
++#else
++#define STACK_FRAME_NON_STANDARD_FP(func)
++#endif
++
+ #else /* __ASSEMBLY__ */
  
- 	/*
- 	 * Register allocation for code below:
-@@ -178,7 +181,7 @@ ENTRY(__asm_copy_from_user)
- 10:
- 	/* Disable access to user memory */
- 	csrc CSR_STATUS, t6
--	mv a0, t5
-+	sub a0, t5, a0
- 	ret
- ENDPROC(__asm_copy_to_user)
- ENDPROC(__asm_copy_from_user)
-@@ -230,7 +233,7 @@ ENTRY(__clear_user)
- 11:
- 	/* Disable access to user memory */
- 	csrc CSR_STATUS, t6
--	mv a0, a1
-+	sub a0, a3, a0
- 	ret
- ENDPROC(__clear_user)
- EXPORT_SYMBOL(__clear_user)
+ /*
+@@ -132,6 +143,7 @@ struct unwind_hint {
+ #define UNWIND_HINT(sp_reg, sp_offset, type, end)	\
+ 	"\n\t"
+ #define STACK_FRAME_NON_STANDARD(func)
++#define STACK_FRAME_NON_STANDARD_FP(func)
+ #else
+ #define ANNOTATE_INTRA_FUNCTION_CALL
+ .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 end=0
+diff --git a/tools/include/linux/objtool.h b/tools/include/linux/objtool.h
+index a2042c4186864..d59e69df821eb 100644
+--- a/tools/include/linux/objtool.h
++++ b/tools/include/linux/objtool.h
+@@ -71,6 +71,17 @@ struct unwind_hint {
+ 	static void __used __section(".discard.func_stack_frame_non_standard") \
+ 		*__func_stack_frame_non_standard_##func = func
+ 
++/*
++ * STACK_FRAME_NON_STANDARD_FP() is a frame-pointer-specific function ignore
++ * for the case where a function is intentionally missing frame pointer setup,
++ * but otherwise needs objtool/ORC coverage when frame pointers are disabled.
++ */
++#ifdef CONFIG_FRAME_POINTER
++#define STACK_FRAME_NON_STANDARD_FP(func) STACK_FRAME_NON_STANDARD(func)
++#else
++#define STACK_FRAME_NON_STANDARD_FP(func)
++#endif
++
+ #else /* __ASSEMBLY__ */
+ 
+ /*
+@@ -132,6 +143,7 @@ struct unwind_hint {
+ #define UNWIND_HINT(sp_reg, sp_offset, type, end)	\
+ 	"\n\t"
+ #define STACK_FRAME_NON_STANDARD(func)
++#define STACK_FRAME_NON_STANDARD_FP(func)
+ #else
+ #define ANNOTATE_INTRA_FUNCTION_CALL
+ .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 end=0
 -- 
 2.40.1
 
