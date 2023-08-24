@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060B414A82
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C397C433C7;
-	Thu, 24 Aug 2023 17:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C2514A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:17:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3752DC433C8;
+	Thu, 24 Aug 2023 17:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897454;
-	bh=L7apelAQKVga/1cRnPyO6C7MwLuttBoAlpBx/cxcjnI=;
+	s=korg; t=1692897457;
+	bh=SO8WX+LFmxXr6UUmFFPArPhPPckXGDD2R/YBK9GJ1GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMZJP1dcNTcvgQRocE87CJVmlwI4hwxkwkBvDV0hA5hqVXjp6mC4OoLYFoBwJ99C2
-	 WBzS+u1wx9EXDuhH520UfDLgoLPaRn2o96MQ3f1ptg2lKaR19mH2/MD3crZjKOwGtC
-	 6Ruu7qYgiNua4lnb9tLZHSSBs4gHwPcQulvn3aNo=
+	b=qiA5VDNBUZhR7iEBHnPWW+xWCDMmVIKcaE7Y17lCMerM6c7udNxHyhhtDCYsp/dLg
+	 ZwmTHPV//Kn7abqUvZu3kpA42DJdKT0JfrRJ53kS52c6f1kpihQUsV53FeaFVrkpXU
+	 fZzmBmu5Og290F7L0b0MoxnFGJhtPzJ4gDDccW9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fred Eckert <Frede@cmslaser.com>,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Prashanth K <quic_prashk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/135] iio: adc: stx104: Implement and utilize register structures
-Date: Thu, 24 Aug 2023 19:08:37 +0200
-Message-ID: <20230824170619.085017447@linuxfoundation.org>
+Subject: [PATCH 5.10 028/135] usb: gadget: u_serial: Avoid spinlock recursion in __gs_console_push
+Date: Thu, 24 Aug 2023 19:08:20 +0200
+Message-ID: <20230824170618.376785621@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -41,211 +39,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit 6cfd14c54b1f42f29097244c1b6208f8268d7d5b ]
+[ Upstream commit e5990469943c711cb00bfde6338d2add6c6d0bfe ]
 
-Reduce magic numbers and improve code readability by implementing and
-utilizing named register data structures.
+When serial console over USB is enabled, gs_console_connect
+queues gs_console_work, where it acquires the spinlock and
+queues the usb request, and this request goes to gadget layer.
+Now consider a situation where gadget layer prints something
+to dmesg, this will eventually call gs_console_write() which
+requires cons->lock. And this causes spinlock recursion. Avoid
+this by excluding usb_ep_queue from the spinlock.
 
-Tested-by: Fred Eckert <Frede@cmslaser.com>
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/8cb91d5b53e57b066120e42ea07000d6c7ef5543.1657213745.git.william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
+ spin_lock_irqsave //needs cons->lock
+ gs_console_write
+	.
+	.
+ _printk
+ __warn_printk
+ dev_warn/pr_err
+	.
+	.
+ [USB Gadget Layer]
+	.
+	.
+ usb_ep_queue
+ gs_console_work
+ __gs_console_push // acquires cons->lock
+ process_one_work
+
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Link: https://lore.kernel.org/r/1683638872-6885-1-git-send-email-quic_prashk@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stx104.c | 74 +++++++++++++++++++++++++++-------------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ drivers/usb/gadget/function/u_serial.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/adc/stx104.c
-index 7552351bfed9e..48a91a95e597b 100644
---- a/drivers/iio/adc/stx104.c
-+++ b/drivers/iio/adc/stx104.c
-@@ -16,6 +16,7 @@
- #include <linux/module.h>
- #include <linux/moduleparam.h>
- #include <linux/spinlock.h>
-+#include <linux/types.h>
- 
- #define STX104_OUT_CHAN(chan) {				\
- 	.type = IIO_VOLTAGE,				\
-@@ -44,14 +45,36 @@ static unsigned int num_stx104;
- module_param_hw_array(base, uint, ioport, &num_stx104, 0);
- MODULE_PARM_DESC(base, "Apex Embedded Systems STX104 base addresses");
- 
-+/**
-+ * struct stx104_reg - device register structure
-+ * @ssr_ad:	Software Strobe Register and ADC Data
-+ * @achan:	ADC Channel
-+ * @dio:	Digital I/O
-+ * @dac:	DAC Channels
-+ * @cir_asr:	Clear Interrupts and ADC Status
-+ * @acr:	ADC Control
-+ * @pccr_fsh:	Pacer Clock Control and FIFO Status MSB
-+ * @acfg:	ADC Configuration
-+ */
-+struct stx104_reg {
-+	u16 ssr_ad;
-+	u8 achan;
-+	u8 dio;
-+	u16 dac[2];
-+	u8 cir_asr;
-+	u8 acr;
-+	u8 pccr_fsh;
-+	u8 acfg;
-+};
-+
- /**
-  * struct stx104_iio - IIO device private data structure
-  * @chan_out_states:	channels' output states
-- * @base:		base port address of the IIO device
-+ * @reg:		I/O address offset for the device registers
-  */
- struct stx104_iio {
- 	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
--	void __iomem *base;
-+	struct stx104_reg __iomem *reg;
- };
- 
- /**
-@@ -64,7 +87,7 @@ struct stx104_iio {
- struct stx104_gpio {
- 	struct gpio_chip chip;
- 	spinlock_t lock;
--	void __iomem *base;
-+	u8 __iomem *base;
- 	unsigned int out_state;
- };
- 
-@@ -72,6 +95,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	struct iio_chan_spec const *chan, int *val, int *val2, long mask)
- {
- 	struct stx104_iio *const priv = iio_priv(indio_dev);
-+	struct stx104_reg __iomem *const reg = priv->reg;
- 	unsigned int adc_config;
- 	int adbu;
- 	int gain;
-@@ -79,7 +103,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	switch (mask) {
- 	case IIO_CHAN_INFO_HARDWAREGAIN:
- 		/* get gain configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		gain = adc_config & 0x3;
- 
- 		*val = 1 << gain;
-@@ -91,24 +115,26 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 		}
- 
- 		/* select ADC channel */
--		iowrite8(chan->channel | (chan->channel << 4), priv->base + 2);
-+		iowrite8(chan->channel | (chan->channel << 4), &reg->achan);
- 
--		/* trigger ADC sample capture and wait for completion */
--		iowrite8(0, priv->base);
--		while (ioread8(priv->base + 8) & BIT(7));
-+		/* trigger ADC sample capture by writing to the 8-bit
-+		 * Software Strobe Register and wait for completion
-+		 */
-+		iowrite8(0, &reg->ssr_ad);
-+		while (ioread8(&reg->cir_asr) & BIT(7));
- 
--		*val = ioread16(priv->base);
-+		*val = ioread16(&reg->ssr_ad);
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_OFFSET:
- 		/* get ADC bipolar/unipolar configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		adbu = !(adc_config & BIT(2));
- 
- 		*val = -32768 * adbu;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
- 		/* get ADC bipolar/unipolar and gain configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		adbu = !(adc_config & BIT(2));
- 		gain = adc_config & 0x3;
- 
-@@ -130,16 +156,16 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 		/* Only four gain states (x1, x2, x4, x8) */
- 		switch (val) {
- 		case 1:
--			iowrite8(0, priv->base + 11);
-+			iowrite8(0, &priv->reg->acfg);
- 			break;
- 		case 2:
--			iowrite8(1, priv->base + 11);
-+			iowrite8(1, &priv->reg->acfg);
- 			break;
- 		case 4:
--			iowrite8(2, priv->base + 11);
-+			iowrite8(2, &priv->reg->acfg);
- 			break;
- 		case 8:
--			iowrite8(3, priv->base + 11);
-+			iowrite8(3, &priv->reg->acfg);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -153,7 +179,7 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 				return -EINVAL;
- 
- 			priv->chan_out_states[chan->channel] = val;
--			iowrite16(val, priv->base + 4 + 2 * chan->channel);
-+			iowrite16(val, &priv->reg->dac[chan->channel]);
- 
- 			return 0;
- 		}
-@@ -307,15 +333,15 @@ static int stx104_probe(struct device *dev, unsigned int id)
+diff --git a/drivers/usb/gadget/function/u_serial.c b/drivers/usb/gadget/function/u_serial.c
+index 3b5a6430e2418..a717b53847a8e 100644
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -917,8 +917,11 @@ static void __gs_console_push(struct gs_console *cons)
  	}
  
- 	priv = iio_priv(indio_dev);
--	priv->base = devm_ioport_map(dev, base[id], STX104_EXTENT);
--	if (!priv->base)
-+	priv->reg = devm_ioport_map(dev, base[id], STX104_EXTENT);
-+	if (!priv->reg)
- 		return -ENOMEM;
+ 	req->length = size;
++
++	spin_unlock_irq(&cons->lock);
+ 	if (usb_ep_queue(ep, req, GFP_ATOMIC))
+ 		req->length = 0;
++	spin_lock_irq(&cons->lock);
+ }
  
- 	indio_dev->info = &stx104_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
- 
- 	/* determine if differential inputs */
--	if (ioread8(priv->base + 8) & BIT(5)) {
-+	if (ioread8(&priv->reg->cir_asr) & BIT(5)) {
- 		indio_dev->num_channels = ARRAY_SIZE(stx104_channels_diff);
- 		indio_dev->channels = stx104_channels_diff;
- 	} else {
-@@ -326,14 +352,14 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	indio_dev->name = dev_name(dev);
- 
- 	/* configure device for software trigger operation */
--	iowrite8(0, priv->base + 9);
-+	iowrite8(0, &priv->reg->acr);
- 
- 	/* initialize gain setting to x1 */
--	iowrite8(0, priv->base + 11);
-+	iowrite8(0, &priv->reg->acfg);
- 
- 	/* initialize DAC output to 0V */
--	iowrite16(0, priv->base + 4);
--	iowrite16(0, priv->base + 6);
-+	iowrite16(0, &priv->reg->dac[0]);
-+	iowrite16(0, &priv->reg->dac[1]);
- 
- 	stx104gpio->chip.label = dev_name(dev);
- 	stx104gpio->chip.parent = dev;
-@@ -348,7 +374,7 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	stx104gpio->chip.get_multiple = stx104_gpio_get_multiple;
- 	stx104gpio->chip.set = stx104_gpio_set;
- 	stx104gpio->chip.set_multiple = stx104_gpio_set_multiple;
--	stx104gpio->base = priv->base + 3;
-+	stx104gpio->base = &priv->reg->dio;
- 	stx104gpio->out_state = 0x0;
- 
- 	spin_lock_init(&stx104gpio->lock);
+ static void gs_console_work(struct work_struct *work)
 -- 
 2.40.1
 
