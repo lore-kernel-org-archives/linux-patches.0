@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EB114A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F65C433C8;
-	Thu, 24 Aug 2023 17:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537E014A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE820C433C8;
+	Thu, 24 Aug 2023 17:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897576;
-	bh=tp9fPZiJC0PEwntfMShu0+1Zdf91yNnIG26MxFoppo8=;
+	s=korg; t=1692897579;
+	bh=aTNKDsZvg8S1UBupcPaTWCNX2n4maXavKX++P0YHvlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUDJhmpDNsCt/mon3LlO9kiTubeBXB/ycXqWOFMgel0i3+11+l6SPIr6+ErjCDMA7
-	 HNNQCcp8zItEm+lrzYOTtKZxFErMKRYQvtQLTpPX42VoCEibOS9TElrWM/x7rIW8AI
-	 ZdlsIqGpSy9kNSfzl3JvrmgZxkLcWD5ema5DcyjU=
+	b=yIOKcas11iCU7N7gN2GM4mqCB7G/8xYDmRW8fxPc60OI1aoFZbvDHeSNV7LoTdRkz
+	 ziGj/7ZeEmwKc7eLOf+PMpnGVZTHJtWvt/jKyanDzu3VlPNN+j0pltbUwUbTGKO3cK
+	 yhNlZz+601RgPserjH+3oqRdmyZu7I+Nz3NlUMcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/135] netfilter: nft_dynset: disallow object maps
-Date: Thu, 24 Aug 2023 19:09:19 +0200
-Message-ID: <20230824170621.021660969@linuxfoundation.org>
+Subject: [PATCH 5.10 088/135] net: phy: broadcom: stub c45 read/write for 54810
+Date: Thu, 24 Aug 2023 19:09:20 +0200
+Message-ID: <20230824170621.071833641@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -40,34 +41,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit 23185c6aed1ffb8fc44087880ba2767aba493779 ]
+[ Upstream commit 096516d092d54604d590827d05b1022c8f326639 ]
 
-Do not allow to insert elements from datapath to objects maps.
+The 54810 does not support c45. The mmd_phy_indirect accesses return
+arbirtary values leading to odd behavior like saying it supports EEE
+when it doesn't. We also see that reading/writing these non-existent
+MMD registers leads to phy instability in some cases.
 
-Fixes: 8aeff920dcc9 ("netfilter: nf_tables: add stateful object reference to set elements")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_dynset.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/broadcom.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index 8d47782b778f1..408b7f5faa5e5 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -138,6 +138,9 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
+diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
+index 0cde17bd743f3..a664faa8f01f6 100644
+--- a/drivers/net/phy/broadcom.c
++++ b/drivers/net/phy/broadcom.c
+@@ -404,6 +404,17 @@ static int bcm54xx_resume(struct phy_device *phydev)
+ 	return bcm54xx_config_init(phydev);
+ }
  
-+	if (set->flags & NFT_SET_OBJECT)
-+		return -EOPNOTSUPP;
++static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
++{
++	return -EOPNOTSUPP;
++}
 +
- 	if (set->ops->update == NULL)
- 		return -EOPNOTSUPP;
- 
++static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
++			      u16 val)
++{
++	return -EOPNOTSUPP;
++}
++
+ static int bcm54811_config_init(struct phy_device *phydev)
+ {
+ 	int err, reg;
+@@ -841,6 +852,8 @@ static struct phy_driver broadcom_drivers[] = {
+ 	.phy_id_mask    = 0xfffffff0,
+ 	.name           = "Broadcom BCM54810",
+ 	/* PHY_GBIT_FEATURES */
++	.read_mmd	= bcm54810_read_mmd,
++	.write_mmd	= bcm54810_write_mmd,
+ 	.config_init    = bcm54xx_config_init,
+ 	.config_aneg    = bcm5481_config_aneg,
+ 	.ack_interrupt  = bcm_phy_ack_intr,
 -- 
 2.40.1
 
