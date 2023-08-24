@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C4711C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB261C433C7;
-	Thu, 24 Aug 2023 14:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8CB11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:58:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17D2C433C8;
+	Thu, 24 Aug 2023 14:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889081;
-	bh=T82elz/Mzk1cXvPlWpg1cg7DtdTN/UDdY1gVR9SgCWk=;
+	s=korg; t=1692889084;
+	bh=p3NpI9nLbEH3pDJOR95VYufBYGYbPvLfteQstLCh94o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+QEsHoE1Omq0xSUuaQo++Q2LLTnORN9OGZnWZRFhsqz3168komCZE5+9C8BZSh0Q
-	 j4DebKaaDnMWD7mS6sXf0nxAli8AERS35JFdT8LAhRxxKhzPUnXra6LSgDNpzVVq6K
-	 u6YkuXVbn3vCCeJysTcvGUCYUAAX3qhEljIO+WX0=
+	b=OpBpzFs5pBeHQP4q8tqIcd4rjyYqhC+Mh8dibRbaxHN6gRle+XINtE82Zv/FfPwUg
+	 KKwUIpwQExw0so6k3wxSRBHza0BLzE8A09zvlZFMYJ8IoB++UFwnaOGaU30pPcxNb6
+	 fgLZXgvgMiy06UnPHWbylNvnl9B9nzzosja7StuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 5.15 138/139] objtool/x86: Fixup frame-pointer vs rethunk
-Date: Thu, 24 Aug 2023 16:51:01 +0200
-Message-ID: <20230824145029.401557244@linuxfoundation.org>
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/135] mmc: sdhci-f-sdh30: Replace with sdhci_pltfm
+Date: Thu, 24 Aug 2023 16:49:04 +0200
+Message-ID: <20230824145027.078587031@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
-References: <20230824145023.559380953@linuxfoundation.org>
+In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
+References: <20230824145027.008282920@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,62 +38,155 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit dbf46008775516f7f25c95b7760041c286299783 upstream.
+[ Upstream commit 5def5c1c15bf22934ee227af85c1716762f3829f ]
 
-For stack-validation of a frame-pointer build, objtool validates that
-every CALL instruction is preceded by a frame-setup. The new SRSO
-return thunks violate this with their RSB stuffing trickery.
+Even if sdhci_pltfm_pmops is specified for PM, this driver doesn't apply
+sdhci_pltfm, so the structure is not correctly referenced in PM functions.
+This applies sdhci_pltfm to this driver to fix this issue.
 
-Extend the __fentry__ exception to also cover the embedded_insn case
-used for this. This cures:
+- Call sdhci_pltfm_init() instead of sdhci_alloc_host() and
+  other functions that covered by sdhci_pltfm.
+- Move ops and quirks to sdhci_pltfm_data
+- Replace sdhci_priv() with own private function sdhci_f_sdh30_priv().
 
-  vmlinux.o: warning: objtool: srso_untrain_ret+0xd: call without frame pointer save/setup
-
-Fixes: 4ae68b26c3ab ("objtool/x86: Fix SRSO mess")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20230816115921.GH980931@hirez.programming.kicks-ass.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 87a507459f49 ("mmc: sdhci: host: add new f_sdh30")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230630004533.26644-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/mmc/host/sdhci_f_sdh30.c | 60 ++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2174,12 +2174,17 @@ static int decode_sections(struct objtoo
+diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
+index 6c4f43e112826..8876fd1c7eee0 100644
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -26,9 +26,16 @@ struct f_sdhost_priv {
+ 	bool enable_cmd_dat_delay;
+ };
+ 
++static void *sdhci_f_sdhost_priv(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++
++	return sdhci_pltfm_priv(pltfm_host);
++}
++
+ static void sdhci_f_sdh30_soft_voltage_switch(struct sdhci_host *host)
+ {
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 	u32 ctrl = 0;
+ 
+ 	usleep_range(2500, 3000);
+@@ -61,7 +68,7 @@ static unsigned int sdhci_f_sdh30_get_min_clock(struct sdhci_host *host)
+ 
+ static void sdhci_f_sdh30_reset(struct sdhci_host *host, u8 mask)
+ {
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 	u32 ctl;
+ 
+ 	if (sdhci_readw(host, SDHCI_CLOCK_CONTROL) == 0)
+@@ -85,30 +92,32 @@ static const struct sdhci_ops sdhci_f_sdh30_ops = {
+ 	.set_uhs_signaling = sdhci_set_uhs_signaling,
+ };
+ 
++static const struct sdhci_pltfm_data sdhci_f_sdh30_pltfm_data = {
++	.ops = &sdhci_f_sdh30_ops,
++	.quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC
++		| SDHCI_QUIRK_INVERTED_WRITE_PROTECT,
++	.quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE
++		|  SDHCI_QUIRK2_TUNING_WORK_AROUND,
++};
++
+ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host;
+ 	struct device *dev = &pdev->dev;
+-	int irq, ctrl = 0, ret = 0;
++	int ctrl = 0, ret = 0;
+ 	struct f_sdhost_priv *priv;
++	struct sdhci_pltfm_host *pltfm_host;
+ 	u32 reg = 0;
+ 
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	host = sdhci_alloc_host(dev, sizeof(struct f_sdhost_priv));
++	host = sdhci_pltfm_init(pdev, &sdhci_f_sdh30_pltfm_data,
++				sizeof(struct f_sdhost_priv));
+ 	if (IS_ERR(host))
+ 		return PTR_ERR(host);
+ 
+-	priv = sdhci_priv(host);
++	pltfm_host = sdhci_priv(host);
++	priv = sdhci_pltfm_priv(pltfm_host);
+ 	priv->dev = dev;
+ 
+-	host->quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
+-		       SDHCI_QUIRK_INVERTED_WRITE_PROTECT;
+-	host->quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE |
+-			SDHCI_QUIRK2_TUNING_WORK_AROUND;
+-
+ 	priv->enable_cmd_dat_delay = device_property_read_bool(dev,
+ 						"fujitsu,cmd-dat-delay-select");
+ 
+@@ -116,18 +125,6 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err;
+ 
+-	platform_set_drvdata(pdev, host);
+-
+-	host->hw_name = "f_sdh30";
+-	host->ops = &sdhci_f_sdh30_ops;
+-	host->irq = irq;
+-
+-	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(host->ioaddr)) {
+-		ret = PTR_ERR(host->ioaddr);
+-		goto err;
+-	}
+-
+ 	if (dev_of_node(dev)) {
+ 		sdhci_get_of_property(pdev);
+ 
+@@ -182,23 +179,20 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ err_clk:
+ 	clk_disable_unprepare(priv->clk_iface);
+ err:
+-	sdhci_free_host(host);
++	sdhci_pltfm_free(pdev);
++
+ 	return ret;
+ }
+ 
+ static int sdhci_f_sdh30_remove(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+-	struct f_sdhost_priv *priv = sdhci_priv(host);
+-
+-	sdhci_remove_host(host, readl(host->ioaddr + SDHCI_INT_STATUS) ==
+-			  0xffffffff);
++	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+ 
+ 	clk_disable_unprepare(priv->clk_iface);
+ 	clk_disable_unprepare(priv->clk);
+ 
+-	sdhci_free_host(host);
+-	platform_set_drvdata(pdev, NULL);
++	sdhci_pltfm_unregister(pdev);
+ 
  	return 0;
  }
- 
--static bool is_fentry_call(struct instruction *insn)
-+static bool is_special_call(struct instruction *insn)
- {
--	if (insn->type == INSN_CALL &&
--	    insn->call_dest &&
--	    insn->call_dest->fentry)
--		return true;
-+	if (insn->type == INSN_CALL) {
-+		struct symbol *dest = insn->call_dest;
-+
-+		if (!dest)
-+			return false;
-+
-+		if (dest->fentry)
-+			return true;
-+	}
- 
- 	return false;
- }
-@@ -3125,7 +3130,7 @@ static int validate_branch(struct objtoo
- 			if (ret)
- 				return ret;
- 
--			if (!no_fp && func && !is_fentry_call(insn) &&
-+			if (!no_fp && func && !is_special_call(insn) &&
- 			    !has_valid_stack_frame(&state)) {
- 				WARN_FUNC("call without frame pointer save/setup",
- 					  sec, insn->offset);
+-- 
+2.40.1
+
 
 
