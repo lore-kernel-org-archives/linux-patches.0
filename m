@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F09125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077EDC433C8;
-	Thu, 24 Aug 2023 15:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502B4125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:03:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53DDC433C8;
+	Thu, 24 Aug 2023 15:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889405;
-	bh=i/GK284GDr2wfTD3VvdtsqjZyd1h7uMlvVsmGn4n4as=;
+	s=korg; t=1692889408;
+	bh=LBkaizgmm2RtNipaDqLm+mQ5VnhF3NnL/vmqwX9QbAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIa/bfjdX88OTaPBQ7yZMdYHkd79LuEenxT4FXNYTQDDL6ALoH8AGmU+4ZtdPEDkN
-	 +eZpiuAJq6H78ugA+ENA0H+hKWqNAwcVNteBkETPcRKGT7fYpelBJ985JPOZaF9NWL
-	 hTJt/g4xuzG6oGFm8qWCMn32M1k0iYI5VdSSxlPs=
+	b=UemOZ7VLrdxwdCKQxy0IfdXO0BEKWP0CNGCGbMcJlyGDMZnMJVNaDc24LR8ys0JTD
+	 zaArnZfjfERpF+BpbAp2OTt+QqX/Dcn/PVARtbTYHcZsqd1T3WkCiuc20CjTjvWCCe
+	 02lWHAZhVcAbjZemSZFFYNqTFPbre+AExGpNkii0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicente Bergas <vicencb@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sishuai Gong <sishuai.system@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/135] arm64: dts: rockchip: fix supplies on rk3399-rock-pi-4
-Date: Thu, 24 Aug 2023 16:50:38 +0200
-Message-ID: <20230824145031.042620920@linuxfoundation.org>
+Subject: [PATCH 5.10 086/135] ipvs: fix racy memcpy in proc_do_sync_threshold
+Date: Thu, 24 Aug 2023 16:50:29 +0200
+Message-ID: <20230824145030.623412693@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -35,63 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vicente Bergas <vicencb@gmail.com>
+From: Sishuai Gong <sishuai.system@gmail.com>
 
-[ Upstream commit 328c6112787bf7562dbea638840366cd197868d6 ]
+[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
 
-Based on the board schematics at
-https://dl.radxa.com/rockpi4/docs/hw/rockpi4/rockpi_4c_v12_sch_20200620.pdf
-on page 18:
-vcc_lan is not controllable by software, it is just an analog LC filter.
-Because of this, it can not be turned off-in-suspend.
+When two threads run proc_do_sync_threshold() in parallel,
+data races could happen between the two memcpy():
 
-and on page 17:
-vcc_cam and vcc_mipi are not voltage regulators, they are just switches.
-So, the voltage range is not applicable.
-This silences an error message about not being able to adjust the voltage.
+Thread-1			Thread-2
+memcpy(val, valp, sizeof(val));
+				memcpy(valp, val, sizeof(val));
 
-Signed-off-by: Vicente Bergas <vicencb@gmail.com>
-Link: https://lore.kernel.org/r/20201201154132.1286-2-vicencb@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Stable-dep-of: cee572756aa2 ("arm64: dts: rockchip: Disable HS400 for eMMC on ROCK Pi 4")
+This race might mess up the (struct ctl_table *) table->data,
+so we add a mutex lock to serialize them.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
+Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
+Acked-by: Simon Horman <horms@kernel.org>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 8 --------
- 1 file changed, 8 deletions(-)
+ net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index 64df643391194..98f52fac13535 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -111,10 +111,6 @@
- 		regulator-boot-on;
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
--
--		regulator-state-mem {
--			regulator-off-in-suspend;
--		};
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 29ec3ef63edc7..d0b64c36471d5 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1802,6 +1802,7 @@ static int
+ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		       void *buffer, size_t *lenp, loff_t *ppos)
+ {
++	struct netns_ipvs *ipvs = table->extra2;
+ 	int *valp = table->data;
+ 	int val[2];
+ 	int rc;
+@@ -1811,6 +1812,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		.mode = table->mode,
  	};
  
- 	vdd_log: vdd-log {
-@@ -362,8 +358,6 @@
- 				regulator-name = "vcc_cam";
- 				regulator-always-on;
- 				regulator-boot-on;
--				regulator-min-microvolt = <3300000>;
--				regulator-max-microvolt = <3300000>;
- 				regulator-state-mem {
- 					regulator-off-in-suspend;
- 				};
-@@ -373,8 +367,6 @@
- 				regulator-name = "vcc_mipi";
- 				regulator-always-on;
- 				regulator-boot-on;
--				regulator-min-microvolt = <3300000>;
--				regulator-max-microvolt = <3300000>;
- 				regulator-state-mem {
- 					regulator-off-in-suspend;
- 				};
++	mutex_lock(&ipvs->sync_mutex);
+ 	memcpy(val, valp, sizeof(val));
+ 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
+ 	if (write) {
+@@ -1820,6 +1822,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		else
+ 			memcpy(valp, val, sizeof(val));
+ 	}
++	mutex_unlock(&ipvs->sync_mutex);
+ 	return rc;
+ }
+ 
+@@ -4077,6 +4080,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
+ 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
+ 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
+ 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
++	tbl[idx].extra2 = ipvs;
+ 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
+ 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
+ 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
 -- 
 2.40.1
 
