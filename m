@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70E214A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:17:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590EFC433C8;
-	Thu, 24 Aug 2023 17:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9885814A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:17:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D76C433C8;
+	Thu, 24 Aug 2023 17:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897476;
-	bh=pcF6sCQ6OOjstGttDVt9Kx0Gf5WabVM5fAETBoI+iJg=;
+	s=korg; t=1692897479;
+	bh=qEk+betpUMtRItRN4PC20dso89MyCtrx+XRM5jYlKEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHa8E4teTLQUSdyhA34Clc9nRJtGsYkM4A6ZSW5l0+Cb72EBcP+/yNxrIqRJxVn2X
-	 om4/HWZGeVqIB1D8lVTBMTX6SSa1zrraZcExOfOjhq75EGSahOuafIGR63cLBuL9R6
-	 O6iK/DOTDno+uAO4Q4w1mJu/GqgNXirswfC7NFWQ=
+	b=DBlg1qv/iYWXPSba9p0lCfNOK5hi4My8CrSoWoTLXzARAydK4zQdlhQkGHPYbYZGX
+	 iFp/EsM7/NCjZAnIDvjtg83gdKfI3aaz+2VdDhocGYvAN9O7vqYyO9voR78gQYxshD
+	 MBhomyChEv1gJP+grwxLG4kSbyorczaVKxAxSblw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Serge Semin <fancer.lancer@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/135] irqchip/mips-gic: Get rid of the reliance on irq_cpu_online()
-Date: Thu, 24 Aug 2023 19:08:44 +0200
-Message-ID: <20230824170619.420713020@linuxfoundation.org>
+Subject: [PATCH 5.10 053/135] irqchip/mips-gic: Use raw spinlock for gic_lock
+Date: Thu, 24 Aug 2023 19:08:45 +0200
+Message-ID: <20230824170619.459861969@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -41,97 +41,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit dd098a0e031928cf88c89f7577d31821e1f0e6de ]
+[ Upstream commit 3d6a0e4197c04599d75d85a608c8bb16a630a38c ]
 
-The MIPS GIC driver uses irq_cpu_online() to go and program the
-per-CPU interrupts. However, this method iterates over all IRQs
-in the system, despite only 3 per-CPU interrupts being of interest.
+Since we may hold gic_lock in hardirq context, use raw spinlock
+makes more sense given that it is for low-level interrupt handling
+routine and the critical section is small.
 
-Let's be terribly bold and do the iteration ourselves. To ensure
-mutual exclusion, hold the gic_lock spinlock that is otherwise
-taken while dealing with these interrupts.
+Fixes BUG:
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+[    0.426106] =============================
+[    0.426257] [ BUG: Invalid wait context ]
+[    0.426422] 6.3.0-rc7-next-20230421-dirty #54 Not tainted
+[    0.426638] -----------------------------
+[    0.426766] swapper/0/1 is trying to lock:
+[    0.426954] ffffffff8104e7b8 (gic_lock){....}-{3:3}, at: gic_set_type+0x30/08
+
+Fixes: 95150ae8b330 ("irqchip: mips-gic: Implement irq_set_type callback")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Tested-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/20211021170414.3341522-3-maz@kernel.org
-Stable-dep-of: 3d6a0e4197c0 ("irqchip/mips-gic: Use raw spinlock for gic_lock")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230424103156.66753-3-jiaxun.yang@flygoat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mips-gic.c | 37 ++++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ drivers/irqchip/irq-mips-gic.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
-index 8ada91bdbe4d0..7e4a9e75b49be 100644
+index 7e4a9e75b49be..fc25b900cef71 100644
 --- a/drivers/irqchip/irq-mips-gic.c
 +++ b/drivers/irqchip/irq-mips-gic.c
-@@ -382,24 +382,35 @@ static void gic_unmask_local_irq_all_vpes(struct irq_data *d)
- 	spin_unlock_irqrestore(&gic_lock, flags);
+@@ -48,7 +48,7 @@ void __iomem *mips_gic_base;
+ 
+ static DEFINE_PER_CPU_READ_MOSTLY(unsigned long[GIC_MAX_LONGS], pcpu_masks);
+ 
+-static DEFINE_SPINLOCK(gic_lock);
++static DEFINE_RAW_SPINLOCK(gic_lock);
+ static struct irq_domain *gic_irq_domain;
+ static int gic_shared_intrs;
+ static unsigned int gic_cpu_pin;
+@@ -209,7 +209,7 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
+ 
+ 	irq = GIC_HWIRQ_TO_SHARED(d->hwirq);
+ 
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 	switch (type & IRQ_TYPE_SENSE_MASK) {
+ 	case IRQ_TYPE_EDGE_FALLING:
+ 		pol = GIC_POL_FALLING_EDGE;
+@@ -249,7 +249,7 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
+ 	else
+ 		irq_set_chip_handler_name_locked(d, &gic_level_irq_controller,
+ 						 handle_level_irq, NULL);
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -267,7 +267,7 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 		return -EINVAL;
+ 
+ 	/* Assumption : cpumask refers to a single CPU */
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 
+ 	/* Re-route this IRQ */
+ 	write_gic_map_vp(irq, BIT(mips_cm_vp_id(cpu)));
+@@ -278,7 +278,7 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
+ 		set_bit(irq, per_cpu_ptr(pcpu_masks, cpu));
+ 
+ 	irq_data_update_effective_affinity(d, cpumask_of(cpu));
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
+ 
+ 	return IRQ_SET_MASK_OK;
+ }
+@@ -356,12 +356,12 @@ static void gic_mask_local_irq_all_vpes(struct irq_data *d)
+ 	cd = irq_data_get_irq_chip_data(d);
+ 	cd->mask = false;
+ 
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 	for_each_online_cpu(cpu) {
+ 		write_gic_vl_other(mips_cm_vp_id(cpu));
+ 		write_gic_vo_rmask(BIT(intr));
+ 	}
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
  }
  
--static void gic_all_vpes_irq_cpu_online(struct irq_data *d)
-+static void gic_all_vpes_irq_cpu_online(void)
- {
--	struct gic_all_vpes_chip_data *cd;
--	unsigned int intr;
-+	static const unsigned int local_intrs[] = {
-+		GIC_LOCAL_INT_TIMER,
-+		GIC_LOCAL_INT_PERFCTR,
-+		GIC_LOCAL_INT_FDC,
-+	};
-+	unsigned long flags;
-+	int i;
+ static void gic_unmask_local_irq_all_vpes(struct irq_data *d)
+@@ -374,12 +374,12 @@ static void gic_unmask_local_irq_all_vpes(struct irq_data *d)
+ 	cd = irq_data_get_irq_chip_data(d);
+ 	cd->mask = true;
  
--	intr = GIC_HWIRQ_TO_LOCAL(d->hwirq);
--	cd = irq_data_get_irq_chip_data(d);
-+	spin_lock_irqsave(&gic_lock, flags);
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 	for_each_online_cpu(cpu) {
+ 		write_gic_vl_other(mips_cm_vp_id(cpu));
+ 		write_gic_vo_smask(BIT(intr));
+ 	}
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
+ }
  
--	write_gic_vl_map(mips_gic_vx_map_reg(intr), cd->map);
--	if (cd->mask)
--		write_gic_vl_smask(BIT(intr));
-+	for (i = 0; i < ARRAY_SIZE(local_intrs); i++) {
-+		unsigned int intr = local_intrs[i];
-+		struct gic_all_vpes_chip_data *cd;
-+
-+		cd = &gic_all_vpes_chip_data[intr];
-+		write_gic_vl_map(mips_gic_vx_map_reg(intr), cd->map);
-+		if (cd->mask)
-+			write_gic_vl_smask(BIT(intr));
-+	}
-+
-+	spin_unlock_irqrestore(&gic_lock, flags);
+ static void gic_all_vpes_irq_cpu_online(void)
+@@ -392,7 +392,7 @@ static void gic_all_vpes_irq_cpu_online(void)
+ 	unsigned long flags;
+ 	int i;
+ 
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(local_intrs); i++) {
+ 		unsigned int intr = local_intrs[i];
+@@ -404,7 +404,7 @@ static void gic_all_vpes_irq_cpu_online(void)
+ 			write_gic_vl_smask(BIT(intr));
+ 	}
+ 
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
  }
  
  static struct irq_chip gic_all_vpes_local_irq_controller = {
- 	.name			= "MIPS GIC Local",
- 	.irq_mask		= gic_mask_local_irq_all_vpes,
- 	.irq_unmask		= gic_unmask_local_irq_all_vpes,
--	.irq_cpu_online		= gic_all_vpes_irq_cpu_online,
- };
+@@ -434,11 +434,11 @@ static int gic_shared_irq_domain_map(struct irq_domain *d, unsigned int virq,
  
- static void __gic_irq_dispatch(void)
-@@ -480,6 +491,10 @@ static int gic_irq_domain_map(struct irq_domain *d, unsigned int virq,
- 	intr = GIC_HWIRQ_TO_LOCAL(hwirq);
- 	map = GIC_MAP_PIN_MAP_TO_PIN | gic_cpu_pin;
+ 	data = irq_get_irq_data(virq);
  
-+	/*
-+	 * If adding support for more per-cpu interrupts, keep the the
-+	 * array in gic_all_vpes_irq_cpu_online() in sync.
-+	 */
- 	switch (intr) {
- 	case GIC_LOCAL_INT_TIMER:
- 		/* CONFIG_MIPS_CMP workaround (see __gic_init) */
-@@ -710,8 +725,8 @@ static int gic_cpu_startup(unsigned int cpu)
- 	/* Clear all local IRQ masks (ie. disable all local interrupts) */
- 	write_gic_vl_rmask(~0);
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 	write_gic_map_pin(intr, GIC_MAP_PIN_MAP_TO_PIN | gic_cpu_pin);
+ 	write_gic_map_vp(intr, BIT(mips_cm_vp_id(cpu)));
+ 	irq_data_update_effective_affinity(data, cpumask_of(cpu));
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
  
--	/* Invoke irq_cpu_online callbacks to enable desired interrupts */
--	irq_cpu_online();
-+	/* Enable desired interrupts */
-+	gic_all_vpes_irq_cpu_online();
+ 	return 0;
+ }
+@@ -533,12 +533,12 @@ static int gic_irq_domain_map(struct irq_domain *d, unsigned int virq,
+ 	if (!gic_local_irq_is_routable(intr))
+ 		return -EPERM;
+ 
+-	spin_lock_irqsave(&gic_lock, flags);
++	raw_spin_lock_irqsave(&gic_lock, flags);
+ 	for_each_online_cpu(cpu) {
+ 		write_gic_vl_other(mips_cm_vp_id(cpu));
+ 		write_gic_vo_map(mips_gic_vx_map_reg(intr), map);
+ 	}
+-	spin_unlock_irqrestore(&gic_lock, flags);
++	raw_spin_unlock_irqrestore(&gic_lock, flags);
  
  	return 0;
  }
