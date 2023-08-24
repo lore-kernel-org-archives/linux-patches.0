@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DA614A81
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC4EC433C8;
-	Thu, 24 Aug 2023 17:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB1A14A81
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28FBC433C8;
+	Thu, 24 Aug 2023 17:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897416;
-	bh=zpz/j6V2jRPDq9ie+X/Gfvb2FNrrzUTqyJ6lvlar8RY=;
+	s=korg; t=1692897419;
+	bh=G863Lx7sYxgXCm5ifK3hZFFcdvS91Rs+OPCV1HgAJQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MclF3DBw26upabiI5q1RUo2tJooyTE7PefOSdkbuOyuy0B/aPgdnBnoDxL1OPaRRi
-	 TH0yzyqBMa9d9CuQ6EeN4Dhi/GC2+Rt+59LA5Of0jn1kyS7KTygU+alcpFWlK79ZZm
-	 dslhc2uaqCya34nDKsrKRbQtyc5l2QJsD13kPG4c=
+	b=fs9YauORxOZHfIEv3NNFHksc4dfE4nYWMi8+CbyyGvlItZSwwbGbw71+Hmm2fQgn+
+	 7wW1lsaaJDUSr6pTpGGQ+h4vMOfSH1qUvDL99M/ODETBa4C3ICojHPsdSCX9coga0s
+	 WY1eClqrEnVgWjwISNM/YX8DA/yGl/I5X2c5imBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	hackyzh002 <hackyzh002@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/135] drm/radeon: Fix integer overflow in radeon_cs_parser_init
-Date: Thu, 24 Aug 2023 19:07:59 +0200
-Message-ID: <20230824170617.414873559@linuxfoundation.org>
+Subject: [PATCH 5.10 008/135] ALSA: emu10k1: roll up loops in DSP setup code for Audigy
+Date: Thu, 24 Aug 2023 19:08:00 +0200
+Message-ID: <20230824170617.462365509@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -35,43 +34,157 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: hackyzh002 <hackyzh002@gmail.com>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit f828b681d0cd566f86351c0b913e6cb6ed8c7b9c ]
+[ Upstream commit 8cabf83c7aa54530e699be56249fb44f9505c4f3 ]
 
-The type of size is unsigned, if size is 0x40000000, there will be an
-integer overflow, size will be zero after size *= sizeof(uint32_t),
-will cause uninitialized memory to be referenced later
+There is no apparent reason for the massive code duplication.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: hackyzh002 <hackyzh002@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Link: https://lore.kernel.org/r/20230510173917.3073107-3-oswald.buddenhagen@gmx.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_cs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/emu10k1/emufx.c | 112 +++-----------------------------------
+ 1 file changed, 9 insertions(+), 103 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_cs.c b/drivers/gpu/drm/radeon/radeon_cs.c
-index a78b60b62caf2..87a57e5588a28 100644
---- a/drivers/gpu/drm/radeon/radeon_cs.c
-+++ b/drivers/gpu/drm/radeon/radeon_cs.c
-@@ -271,7 +271,8 @@ int radeon_cs_parser_init(struct radeon_cs_parser *p, void *data)
- {
- 	struct drm_radeon_cs *cs = data;
- 	uint64_t *chunk_array_ptr;
--	unsigned size, i;
-+	u64 size;
-+	unsigned i;
- 	u32 ring = RADEON_CS_RING_GFX;
- 	s32 priority = 0;
+diff --git a/sound/pci/emu10k1/emufx.c b/sound/pci/emu10k1/emufx.c
+index 4e76ed0e91d5d..e17b93b25d2ff 100644
+--- a/sound/pci/emu10k1/emufx.c
++++ b/sound/pci/emu10k1/emufx.c
+@@ -1560,14 +1560,8 @@ A_OP(icode, &ptr, iMAC0, A_GPR(var), A_GPR(var), A_GPR(vol), A_EXTIN(input))
+ 	gpr += 2;
  
+ 	/* Master volume (will be renamed later) */
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+0+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+0+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+1+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+1+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+2+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+2+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+3+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+3+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+4+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+4+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+5+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+5+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+6+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+6+SND_EMU10K1_PLAYBACK_CHANNELS));
+-	A_OP(icode, &ptr, iMAC0, A_GPR(playback+7+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+7+SND_EMU10K1_PLAYBACK_CHANNELS));
++	for (z = 0; z < 8; z++)
++		A_OP(icode, &ptr, iMAC0, A_GPR(playback+z+SND_EMU10K1_PLAYBACK_CHANNELS), A_C_00000000, A_GPR(gpr), A_GPR(playback+z+SND_EMU10K1_PLAYBACK_CHANNELS));
+ 	snd_emu10k1_init_mono_control(&controls[nctl++], "Wave Master Playback Volume", gpr, 0);
+ 	gpr += 2;
+ 
+@@ -1651,102 +1645,14 @@ A_OP(icode, &ptr, iMAC0, A_GPR(var), A_GPR(var), A_GPR(vol), A_EXTIN(input))
+ 			dev_dbg(emu->card->dev, "emufx.c: gpr=0x%x, tmp=0x%x\n",
+ 			       gpr, tmp);
+ 			*/
+-			/* For the EMU1010: How to get 32bit values from the DSP. High 16bits into L, low 16bits into R. */
+-			/* A_P16VIN(0) is delayed by one sample,
+-			 * so all other A_P16VIN channels will need to also be delayed
+-			 */
+-			/* Left ADC in. 1 of 2 */
+ 			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_P16VIN(0x0), A_FXBUS2(0) );
+-			/* Right ADC in 1 of 2 */
+-			gpr_map[gpr++] = 0x00000000;
+-			/* Delaying by one sample: instead of copying the input
+-			 * value A_P16VIN to output A_FXBUS2 as in the first channel,
+-			 * we use an auxiliary register, delaying the value by one
+-			 * sample
+-			 */
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(2) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x1), A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(4) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x2), A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(6) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x3), A_C_00000000, A_C_00000000);
+-			/* For 96kHz mode */
+-			/* Left ADC in. 2 of 2 */
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(0x8) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x4), A_C_00000000, A_C_00000000);
+-			/* Right ADC in 2 of 2 */
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(0xa) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x5), A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(0xc) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x6), A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr - 1), A_FXBUS2(0xe) );
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x7), A_C_00000000, A_C_00000000);
+-			/* Pavel Hofman - we still have voices, A_FXBUS2s, and
+-			 * A_P16VINs available -
+-			 * let's add 8 more capture channels - total of 16
+-			 */
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x10));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x8),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x12));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0x9),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x14));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0xa),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x16));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0xb),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x18));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0xc),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x1a));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0xd),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x1c));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0xe),
+-			     A_C_00000000, A_C_00000000);
+-			gpr_map[gpr++] = 0x00000000;
+-			snd_emu10k1_audigy_dsp_convert_32_to_2x16(icode, &ptr, tmp,
+-								  bit_shifter16,
+-								  A_GPR(gpr - 1),
+-								  A_FXBUS2(0x1e));
+-			A_OP(icode, &ptr, iACC3, A_GPR(gpr - 1), A_P16VIN(0xf),
+-			     A_C_00000000, A_C_00000000);
++			/* A_P16VIN(0) is delayed by one sample, so all other A_P16VIN channels
++			 * will need to also be delayed; we use an auxiliary register for that. */
++			for (z = 1; z < 0x10; z++) {
++				snd_emu10k1_audigy_dsp_convert_32_to_2x16( icode, &ptr, tmp, bit_shifter16, A_GPR(gpr), A_FXBUS2(z * 2) );
++				A_OP(icode, &ptr, iACC3, A_GPR(gpr), A_P16VIN(z), A_C_00000000, A_C_00000000);
++				gpr_map[gpr++] = 0x00000000;
++			}
+ 		}
+ 
+ #if 0
 -- 
 2.40.1
 
