@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A9311C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812F0C433C7;
-	Thu, 24 Aug 2023 14:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD7711C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B72C433C7;
+	Thu, 24 Aug 2023 14:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888942;
-	bh=+sFargaihwgm15ffu6uZJ0nrsrDAHpWAZJsDTsQpM6c=;
+	s=korg; t=1692888945;
+	bh=7dh0ScVxzgnWnlNn1oxE9/hBlDpmK9TUJ6HFHDgWNz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjcTuix3oBPB4S9bkUxw3tMNuBasOLbhopcS0RVXpNoXKes9Plznspj3pF8cLVGTx
-	 wwh4XFL5Kog3H6iIRqu8UiKh6wWIycJtPL/aC0E7G838izkQHwgGYtMhzQuGMGqKhK
-	 xJ6Ng9IDYRM/f/s5RJHrEsJgpXcxEvAIyUm7x1CE=
+	b=QwZp5/KmuKzCRRXpWWtUSb/9SX9QFua7f5dO5YWuouWEeC4mn+fNpih/qskZL/+8i
+	 hEZGfd2KP/CFoKwFesgw+zbsZT+czgqzEtV51jr2QQGV2WZceyvJIxKweumLjVskUY
+	 ECvL+5VTvXIkhW+ToUWjSzV0t2OvzsVwAbMc4spI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Alfred Lee <l00g33k@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/139] i40e: fix misleading debug logs
-Date: Thu, 24 Aug 2023 16:50:20 +0200
-Message-ID: <20230824145027.796841220@linuxfoundation.org>
+Subject: [PATCH 5.15 098/139] net: dsa: mv88e6xxx: Wait for EEPROM done before HW reset
+Date: Thu, 24 Aug 2023 16:50:21 +0200
+Message-ID: <20230824145027.844566044@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,65 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Alfred Lee <l00g33k@gmail.com>
 
-[ Upstream commit 2f2beb8874cb0844e84ad26e990f05f4f13ff63f ]
+[ Upstream commit 23d775f12dcd23d052a4927195f15e970e27ab26 ]
 
-Change "write" into the actual "read" word.
-Change parameters description.
+If the switch is reset during active EEPROM transactions, as in
+just after an SoC reset after power up, the I2C bus transaction
+may be cut short leaving the EEPROM internal I2C state machine
+in the wrong state.  When the switch is reset again, the bad
+state machine state may result in data being read from the wrong
+memory location causing the switch to enter unexpected mode
+rendering it inoperational.
 
-Fixes: 7073f46e443e ("i40e: Add AQ commands for NVM Update for X722")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: a3dcb3e7e70c ("net: dsa: mv88e6xxx: Wait for EEPROM done after HW reset")
+Signed-off-by: Alfred Lee <l00g33k@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230815001323.24739-1-l00g33k@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_nvm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-index 82af180cc5ee5..b7556a6c27589 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-@@ -210,11 +210,11 @@ static int i40e_read_nvm_word_srctl(struct i40e_hw *hw, u16 offset,
-  * @hw: pointer to the HW structure.
-  * @module_pointer: module pointer location in words from the NVM beginning
-  * @offset: offset in words from module start
-- * @words: number of words to write
-- * @data: buffer with words to write to the Shadow RAM
-+ * @words: number of words to read
-+ * @data: buffer with words to read to the Shadow RAM
-  * @last_command: tells the AdminQ that this is the last command
-  *
-- * Writes a 16 bit words buffer to the Shadow RAM using the admin command.
-+ * Reads a 16 bit words buffer to the Shadow RAM using the admin command.
-  **/
- static int i40e_read_nvm_aq(struct i40e_hw *hw,
- 			    u8 module_pointer, u32 offset,
-@@ -234,18 +234,18 @@ static int i40e_read_nvm_aq(struct i40e_hw *hw,
- 	 */
- 	if ((offset + words) > hw->nvm.sr_size)
- 		i40e_debug(hw, I40E_DEBUG_NVM,
--			   "NVM write error: offset %d beyond Shadow RAM limit %d\n",
-+			   "NVM read error: offset %d beyond Shadow RAM limit %d\n",
- 			   (offset + words), hw->nvm.sr_size);
- 	else if (words > I40E_SR_SECTOR_SIZE_IN_WORDS)
--		/* We can write only up to 4KB (one sector), in one AQ write */
-+		/* We can read only up to 4KB (one sector), in one AQ write */
- 		i40e_debug(hw, I40E_DEBUG_NVM,
--			   "NVM write fail error: tried to write %d words, limit is %d.\n",
-+			   "NVM read fail error: tried to read %d words, limit is %d.\n",
- 			   words, I40E_SR_SECTOR_SIZE_IN_WORDS);
- 	else if (((offset + (words - 1)) / I40E_SR_SECTOR_SIZE_IN_WORDS)
- 		 != (offset / I40E_SR_SECTOR_SIZE_IN_WORDS))
--		/* A single write cannot spread over two sectors */
-+		/* A single read cannot spread over two sectors */
- 		i40e_debug(hw, I40E_DEBUG_NVM,
--			   "NVM write error: cannot spread over two sectors in a single write offset=%d words=%d\n",
-+			   "NVM read error: cannot spread over two sectors in a single read offset=%d words=%d\n",
- 			   offset, words);
- 	else
- 		ret_code = i40e_aq_read_nvm(hw, module_pointer,
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index ac1560fa29e45..7e93b72f9b541 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2588,6 +2588,14 @@ static void mv88e6xxx_hardware_reset(struct mv88e6xxx_chip *chip)
+ 
+ 	/* If there is a GPIO connected to the reset pin, toggle it */
+ 	if (gpiod) {
++		/* If the switch has just been reset and not yet completed
++		 * loading EEPROM, the reset may interrupt the I2C transaction
++		 * mid-byte, causing the first EEPROM read after the reset
++		 * from the wrong location resulting in the switch booting
++		 * to wrong mode and inoperable.
++		 */
++		mv88e6xxx_g1_wait_eeprom_done(chip);
++
+ 		gpiod_set_value_cansleep(gpiod, 1);
+ 		usleep_range(10000, 20000);
+ 		gpiod_set_value_cansleep(gpiod, 0);
 -- 
 2.40.1
 
