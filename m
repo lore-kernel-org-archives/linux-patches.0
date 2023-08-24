@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3962F11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF26C433AD;
-	Thu, 24 Aug 2023 14:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A9311C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812F0C433C7;
+	Thu, 24 Aug 2023 14:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888940;
-	bh=ssqqoz/zFFlc/ZH51dDPpqxAwiUvgjiHscd9ymVCIc8=;
+	s=korg; t=1692888942;
+	bh=+sFargaihwgm15ffu6uZJ0nrsrDAHpWAZJsDTsQpM6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GUgxEe6hl0O8O/lBuWWw75VixGC4wt23iF1I3jQLqMSd6fFwbIekopXE9H84Urfp0
-	 crL3mqbL9EcRrWPC//CLnuUNK+ftynWpXXAEvc5LfeJmsyiJdI0d9MHirVszTh4sxT
-	 O1+/rSb/KXGhVbATSx8w+cXzldm/BSmoiJUkBbdw=
+	b=zjcTuix3oBPB4S9bkUxw3tMNuBasOLbhopcS0RVXpNoXKes9Plznspj3pF8cLVGTx
+	 wwh4XFL5Kog3H6iIRqu8UiKh6wWIycJtPL/aC0E7G838izkQHwgGYtMhzQuGMGqKhK
+	 xJ6Ng9IDYRM/f/s5RJHrEsJgpXcxEvAIyUm7x1CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Gardocki <piotrx.gardocki@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Andrii Staikov <andrii.staikov@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/139] iavf: fix FDIR rule fields masks validation
-Date: Thu, 24 Aug 2023 16:50:19 +0200
-Message-ID: <20230824145027.757583161@linuxfoundation.org>
+Subject: [PATCH 5.15 097/139] i40e: fix misleading debug logs
+Date: Thu, 24 Aug 2023 16:50:20 +0200
+Message-ID: <20230824145027.796841220@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,207 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piotr Gardocki <piotrx.gardocki@intel.com>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-[ Upstream commit 751969e5b1196821ef78f0aa664a8a97c92c9057 ]
+[ Upstream commit 2f2beb8874cb0844e84ad26e990f05f4f13ff63f ]
 
-Return an error if a field's mask is neither full nor empty. When a mask
-is only partial the field is not being used for rule programming but it
-gives a wrong impression it is used. Fix by returning an error on any
-partial mask to make it clear they are not supported.
-The ip_ver assignment is moved earlier in code to allow using it in
-iavf_validate_fdir_fltr_masks.
+Change "write" into the actual "read" word.
+Change parameters description.
 
-Fixes: 527691bf0682 ("iavf: Support IPv4 Flow Director filters")
-Fixes: e90cbc257a6f ("iavf: Support IPv6 Flow Director filters")
-Signed-off-by: Piotr Gardocki <piotrx.gardocki@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Fixes: 7073f46e443e ("i40e: Add AQ commands for NVM Update for X722")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/iavf/iavf_ethtool.c    | 10 +++
- drivers/net/ethernet/intel/iavf/iavf_fdir.c   | 77 ++++++++++++++++++-
- drivers/net/ethernet/intel/iavf/iavf_fdir.h   |  2 +
- 3 files changed, 85 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_nvm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index e622b6e6ac2b9..a9a7453d969cb 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -1275,6 +1275,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		fltr->ip_mask.src_port = fsp->m_u.tcp_ip4_spec.psrc;
- 		fltr->ip_mask.dst_port = fsp->m_u.tcp_ip4_spec.pdst;
- 		fltr->ip_mask.tos = fsp->m_u.tcp_ip4_spec.tos;
-+		fltr->ip_ver = 4;
- 		break;
- 	case AH_V4_FLOW:
- 	case ESP_V4_FLOW:
-@@ -1286,6 +1287,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		fltr->ip_mask.v4_addrs.dst_ip = fsp->m_u.ah_ip4_spec.ip4dst;
- 		fltr->ip_mask.spi = fsp->m_u.ah_ip4_spec.spi;
- 		fltr->ip_mask.tos = fsp->m_u.ah_ip4_spec.tos;
-+		fltr->ip_ver = 4;
- 		break;
- 	case IPV4_USER_FLOW:
- 		fltr->ip_data.v4_addrs.src_ip = fsp->h_u.usr_ip4_spec.ip4src;
-@@ -1298,6 +1300,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		fltr->ip_mask.l4_header = fsp->m_u.usr_ip4_spec.l4_4_bytes;
- 		fltr->ip_mask.tos = fsp->m_u.usr_ip4_spec.tos;
- 		fltr->ip_mask.proto = fsp->m_u.usr_ip4_spec.proto;
-+		fltr->ip_ver = 4;
- 		break;
- 	case TCP_V6_FLOW:
- 	case UDP_V6_FLOW:
-@@ -1316,6 +1319,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		fltr->ip_mask.src_port = fsp->m_u.tcp_ip6_spec.psrc;
- 		fltr->ip_mask.dst_port = fsp->m_u.tcp_ip6_spec.pdst;
- 		fltr->ip_mask.tclass = fsp->m_u.tcp_ip6_spec.tclass;
-+		fltr->ip_ver = 6;
- 		break;
- 	case AH_V6_FLOW:
- 	case ESP_V6_FLOW:
-@@ -1331,6 +1335,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		       sizeof(struct in6_addr));
- 		fltr->ip_mask.spi = fsp->m_u.ah_ip6_spec.spi;
- 		fltr->ip_mask.tclass = fsp->m_u.ah_ip6_spec.tclass;
-+		fltr->ip_ver = 6;
- 		break;
- 	case IPV6_USER_FLOW:
- 		memcpy(&fltr->ip_data.v6_addrs.src_ip, fsp->h_u.usr_ip6_spec.ip6src,
-@@ -1347,6 +1352,7 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		fltr->ip_mask.l4_header = fsp->m_u.usr_ip6_spec.l4_4_bytes;
- 		fltr->ip_mask.tclass = fsp->m_u.usr_ip6_spec.tclass;
- 		fltr->ip_mask.proto = fsp->m_u.usr_ip6_spec.l4_proto;
-+		fltr->ip_ver = 6;
- 		break;
- 	case ETHER_FLOW:
- 		fltr->eth_data.etype = fsp->h_u.ether_spec.h_proto;
-@@ -1357,6 +1363,10 @@ iavf_add_fdir_fltr_info(struct iavf_adapter *adapter, struct ethtool_rx_flow_spe
- 		return -EINVAL;
- 	}
- 
-+	err = iavf_validate_fdir_fltr_masks(adapter, fltr);
-+	if (err)
-+		return err;
-+
- 	if (iavf_fdir_is_dup_fltr(adapter, fltr))
- 		return -EEXIST;
- 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_fdir.c b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-index 505e82ebafe47..03e774bd2a5b4 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.c
-@@ -18,6 +18,79 @@ static const struct in6_addr ipv6_addr_full_mask = {
- 	}
- };
- 
-+static const struct in6_addr ipv6_addr_zero_mask = {
-+	.in6_u = {
-+		.u6_addr8 = {
-+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+		}
-+	}
-+};
-+
-+/**
-+ * iavf_validate_fdir_fltr_masks - validate Flow Director filter fields masks
-+ * @adapter: pointer to the VF adapter structure
-+ * @fltr: Flow Director filter data structure
-+ *
-+ * Returns 0 if all masks of packet fields are either full or empty. Returns
-+ * error on at least one partial mask.
-+ */
-+int iavf_validate_fdir_fltr_masks(struct iavf_adapter *adapter,
-+				  struct iavf_fdir_fltr *fltr)
-+{
-+	if (fltr->eth_mask.etype && fltr->eth_mask.etype != htons(U16_MAX))
-+		goto partial_mask;
-+
-+	if (fltr->ip_ver == 4) {
-+		if (fltr->ip_mask.v4_addrs.src_ip &&
-+		    fltr->ip_mask.v4_addrs.src_ip != htonl(U32_MAX))
-+			goto partial_mask;
-+
-+		if (fltr->ip_mask.v4_addrs.dst_ip &&
-+		    fltr->ip_mask.v4_addrs.dst_ip != htonl(U32_MAX))
-+			goto partial_mask;
-+
-+		if (fltr->ip_mask.tos && fltr->ip_mask.tos != U8_MAX)
-+			goto partial_mask;
-+	} else if (fltr->ip_ver == 6) {
-+		if (memcmp(&fltr->ip_mask.v6_addrs.src_ip, &ipv6_addr_zero_mask,
-+			   sizeof(struct in6_addr)) &&
-+		    memcmp(&fltr->ip_mask.v6_addrs.src_ip, &ipv6_addr_full_mask,
-+			   sizeof(struct in6_addr)))
-+			goto partial_mask;
-+
-+		if (memcmp(&fltr->ip_mask.v6_addrs.dst_ip, &ipv6_addr_zero_mask,
-+			   sizeof(struct in6_addr)) &&
-+		    memcmp(&fltr->ip_mask.v6_addrs.dst_ip, &ipv6_addr_full_mask,
-+			   sizeof(struct in6_addr)))
-+			goto partial_mask;
-+
-+		if (fltr->ip_mask.tclass && fltr->ip_mask.tclass != U8_MAX)
-+			goto partial_mask;
-+	}
-+
-+	if (fltr->ip_mask.proto && fltr->ip_mask.proto != U8_MAX)
-+		goto partial_mask;
-+
-+	if (fltr->ip_mask.src_port && fltr->ip_mask.src_port != htons(U16_MAX))
-+		goto partial_mask;
-+
-+	if (fltr->ip_mask.dst_port && fltr->ip_mask.dst_port != htons(U16_MAX))
-+		goto partial_mask;
-+
-+	if (fltr->ip_mask.spi && fltr->ip_mask.spi != htonl(U32_MAX))
-+		goto partial_mask;
-+
-+	if (fltr->ip_mask.l4_header &&
-+	    fltr->ip_mask.l4_header != htonl(U32_MAX))
-+		goto partial_mask;
-+
-+	return 0;
-+
-+partial_mask:
-+	dev_err(&adapter->pdev->dev, "Failed to add Flow Director filter, partial masks are not supported\n");
-+	return -EOPNOTSUPP;
-+}
-+
- /**
-  * iavf_pkt_udp_no_pay_len - the length of UDP packet without payload
-  * @fltr: Flow Director filter data structure
-@@ -263,8 +336,6 @@ iavf_fill_fdir_ip4_hdr(struct iavf_fdir_fltr *fltr,
- 		VIRTCHNL_ADD_PROTO_HDR_FIELD_BIT(hdr, IPV4, DST);
- 	}
- 
--	fltr->ip_ver = 4;
--
- 	return 0;
- }
- 
-@@ -309,8 +380,6 @@ iavf_fill_fdir_ip6_hdr(struct iavf_fdir_fltr *fltr,
- 		VIRTCHNL_ADD_PROTO_HDR_FIELD_BIT(hdr, IPV6, DST);
- 	}
- 
--	fltr->ip_ver = 6;
--
- 	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_fdir.h b/drivers/net/ethernet/intel/iavf/iavf_fdir.h
-index 33c55c366315b..9eb9f73f6adf3 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_fdir.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.h
-@@ -110,6 +110,8 @@ struct iavf_fdir_fltr {
- 	struct virtchnl_fdir_add vc_add_msg;
- };
- 
-+int iavf_validate_fdir_fltr_masks(struct iavf_adapter *adapter,
-+				  struct iavf_fdir_fltr *fltr);
- int iavf_fill_fdir_add_msg(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr);
- void iavf_print_fdir_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr);
- bool iavf_fdir_is_dup_fltr(struct iavf_adapter *adapter, struct iavf_fdir_fltr *fltr);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+index 82af180cc5ee5..b7556a6c27589 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+@@ -210,11 +210,11 @@ static int i40e_read_nvm_word_srctl(struct i40e_hw *hw, u16 offset,
+  * @hw: pointer to the HW structure.
+  * @module_pointer: module pointer location in words from the NVM beginning
+  * @offset: offset in words from module start
+- * @words: number of words to write
+- * @data: buffer with words to write to the Shadow RAM
++ * @words: number of words to read
++ * @data: buffer with words to read to the Shadow RAM
+  * @last_command: tells the AdminQ that this is the last command
+  *
+- * Writes a 16 bit words buffer to the Shadow RAM using the admin command.
++ * Reads a 16 bit words buffer to the Shadow RAM using the admin command.
+  **/
+ static int i40e_read_nvm_aq(struct i40e_hw *hw,
+ 			    u8 module_pointer, u32 offset,
+@@ -234,18 +234,18 @@ static int i40e_read_nvm_aq(struct i40e_hw *hw,
+ 	 */
+ 	if ((offset + words) > hw->nvm.sr_size)
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: offset %d beyond Shadow RAM limit %d\n",
++			   "NVM read error: offset %d beyond Shadow RAM limit %d\n",
+ 			   (offset + words), hw->nvm.sr_size);
+ 	else if (words > I40E_SR_SECTOR_SIZE_IN_WORDS)
+-		/* We can write only up to 4KB (one sector), in one AQ write */
++		/* We can read only up to 4KB (one sector), in one AQ write */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write fail error: tried to write %d words, limit is %d.\n",
++			   "NVM read fail error: tried to read %d words, limit is %d.\n",
+ 			   words, I40E_SR_SECTOR_SIZE_IN_WORDS);
+ 	else if (((offset + (words - 1)) / I40E_SR_SECTOR_SIZE_IN_WORDS)
+ 		 != (offset / I40E_SR_SECTOR_SIZE_IN_WORDS))
+-		/* A single write cannot spread over two sectors */
++		/* A single read cannot spread over two sectors */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: cannot spread over two sectors in a single write offset=%d words=%d\n",
++			   "NVM read error: cannot spread over two sectors in a single read offset=%d words=%d\n",
+ 			   offset, words);
+ 	else
+ 		ret_code = i40e_aq_read_nvm(hw, module_pointer,
 -- 
 2.40.1
 
