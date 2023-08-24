@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9B1288EC
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6589CC433C9;
-	Thu, 24 Aug 2023 14:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30711119B
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434EFC433C8;
+	Thu, 24 Aug 2023 14:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888704;
-	bh=D4/U8J/Ui3QwqP3b/DGvbfgeCzxj1O72ldF8rLmfMGQ=;
+	s=korg; t=1692888707;
+	bh=PldhRRoP8qHsc0YlCqNd67rjCBUAlYf1Ytt3SFRgVNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BFrIJUOF3Jy5ANedrVU/MoZFqC+XAkRC4mHiUIBu9RXUkfJTLmIctxXUP9Be6k+nk
-	 TWII+ALhyoQRPdNxlkUf7M+zVLqxTvffOId/yVWPLW4ZKP6icx7WqoV4LUrb1sY2iz
-	 IHt7rGZxCRvx1vDVVZdNX6ZqVN/idMsxmNOvzHzg=
+	b=yZZtRJ8RRwx7VXQ6XwiN5YUjylowEprvt2UQeJcTJWivUuHMn3o6XFWg4ZDTQ6N2u
+	 tFRpkeQVc3FXCyVVotNbJhMm+OsTzk0wHMqGv7yRYHUtHTCVqEkGjw4ochZPO1Nson
+	 zLPwlCahLK2p403u/OV6l8SkJnwbzerEJibxRkbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/139] ASoC: SOF: Intel: fix SoundWire/HDaudio mutual exclusion
-Date: Thu, 24 Aug 2023 16:48:55 +0200
-Message-ID: <20230824145024.122290445@linuxfoundation.org>
+Subject: [PATCH 5.15 002/139] selftests: forwarding: tc_actions: cleanup temporary files when test is aborted
+Date: Thu, 24 Aug 2023 16:48:45 +0200
+Message-ID: <20230824145023.675190635@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,59 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit f751b99255cacd9ffe8c4bbf99767ad670cee1f7 ]
+[ Upstream commit f58531716ced8975a4ade108ef4af35f98722af7 ]
 
-The functionality described in Commit 61bef9e68dca ("ASoC: SOF: Intel: hda: enforce exclusion between HDaudio and SoundWire")
-does not seem to be properly implemented with two issues that need to
-be corrected.
+remove temporary files created by 'mirred_egress_to_ingress_tcp' test
+in the cleanup() handler. Also, change variable names to avoid clashing
+with globals from lib.sh.
 
-a) The test used is incorrect when DisplayAudio codecs are not supported.
-
-b) Conversely when only Display Audio codecs can be found, we do want
-to start the SoundWire links, if any. That will help add the relevant
-topologies and machine descriptors, and identify cases where the
-SoundWire information in ACPI needs to be modified with a quirk.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://lore.kernel.org/r/20230606222529.57156-2-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://lore.kernel.org/r/091649045a017fc00095ecbb75884e5681f7025f.1676368027.git.dcaratti@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5e8670610b93 ("selftests: forwarding: tc_actions: Use ncat instead of nc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ .../selftests/net/forwarding/tc_actions.sh       | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index 35cbef171f4a3..038d09f6203aa 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -1040,12 +1040,22 @@ static int hda_generic_machine_select(struct snd_sof_dev *sdev)
- 			pdata->machine = hda_mach;
- 			pdata->tplg_filename = tplg_filename;
+diff --git a/tools/testing/selftests/net/forwarding/tc_actions.sh b/tools/testing/selftests/net/forwarding/tc_actions.sh
+index 1e27031288c81..9c2aca8a4b8de 100755
+--- a/tools/testing/selftests/net/forwarding/tc_actions.sh
++++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
+@@ -155,10 +155,10 @@ gact_trap_test()
  
--			if (codec_num == 2) {
-+			if (codec_num == 2 ||
-+			    (codec_num == 1 && !HDA_IDISP_CODEC(bus->codec_mask))) {
- 				/*
- 				 * Prevent SoundWire links from starting when an external
- 				 * HDaudio codec is used
- 				 */
- 				hda_mach->mach_params.link_mask = 0;
-+			} else {
-+				/*
-+				 * Allow SoundWire links to start when no external HDaudio codec
-+				 * was detected. This will not create a SoundWire card but
-+				 * will help detect if any SoundWire codec reports as ATTACHED.
-+				 */
-+				struct sof_intel_hda_dev *hdev = sdev->pdata->hw_pdata;
+ mirred_egress_to_ingress_tcp_test()
+ {
+-	local tmpfile=$(mktemp) tmpfile1=$(mktemp)
++	mirred_e2i_tf1=$(mktemp) mirred_e2i_tf2=$(mktemp)
+ 
+ 	RET=0
+-	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$tmpfile
++	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$mirred_e2i_tf1
+ 	tc filter add dev $h1 protocol ip pref 100 handle 100 egress flower \
+ 		$tcflags ip_proto tcp src_ip 192.0.2.1 dst_ip 192.0.2.2 \
+ 			action ct commit nat src addr 192.0.2.2 pipe \
+@@ -174,11 +174,11 @@ mirred_egress_to_ingress_tcp_test()
+ 		ip_proto icmp \
+ 			action drop
+ 
+-	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $tmpfile1  &
++	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $mirred_e2i_tf2  &
+ 	local rpid=$!
+-	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$tmpfile
++	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$mirred_e2i_tf1
+ 	wait -n $rpid
+-	cmp -s $tmpfile $tmpfile1
++	cmp -s $mirred_e2i_tf1 $mirred_e2i_tf2
+ 	check_err $? "server output check failed"
+ 
+ 	$MZ $h1 -c 10 -p 64 -a $h1mac -b $h1mac -A 192.0.2.1 -B 192.0.2.1 \
+@@ -195,7 +195,7 @@ mirred_egress_to_ingress_tcp_test()
+ 	tc filter del dev $h1 egress protocol ip pref 101 handle 101 flower
+ 	tc filter del dev $h1 ingress protocol ip pref 102 handle 102 flower
+ 
+-	rm -f $tmpfile $tmpfile1
++	rm -f $mirred_e2i_tf1 $mirred_e2i_tf2
+ 	log_test "mirred_egress_to_ingress_tcp ($tcflags)"
+ }
+ 
+@@ -224,6 +224,8 @@ setup_prepare()
+ 
+ cleanup()
+ {
++	local tf
 +
-+				hda_mach->mach_params.link_mask = hdev->info.link_mask;
- 			}
- 		}
- 	}
+ 	pre_cleanup
+ 
+ 	switch_destroy
+@@ -234,6 +236,8 @@ cleanup()
+ 
+ 	ip link set $swp2 address $swp2origmac
+ 	ip link set $swp1 address $swp1origmac
++
++	for tf in $mirred_e2i_tf1 $mirred_e2i_tf2; do rm -f $tf; done
+ }
+ 
+ mirred_egress_redirect_test()
 -- 
 2.40.1
 
