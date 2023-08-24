@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32B01119B
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686B9C433C8;
-	Thu, 24 Aug 2023 14:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEE51119B
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:54:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EECC433C7;
+	Thu, 24 Aug 2023 14:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888862;
-	bh=w6Uep2PxyRoMuCEcdxXDauQzEWqusgBp5Ydl+tNOKfk=;
+	s=korg; t=1692888865;
+	bh=6MWdwX7iCyNW+hHBq44rFA8lzf7iFe4fQJakWeGfrE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krsgdj0q+uPWFI8duISnUStcgAuulmDijwRz+ouUBAVzCqPFP5dq5faqL2JBI2hPH
-	 OqMuvZCN9tUP5HPHj3UmSbNJBtQI/UxIVUhLj/WPdr6tNjza/R2sdu53tZ4SknJnfU
-	 ElsudpVBdaeKxsFDgDcvjmgyZH3/S79KHM2iHtPI=
+	b=YTX3SoNsJrNJHS4ayL0Z0mJqE8criN6ls2gaFtyI5uHK9I6sWEJwPRZGx14JReFlm
+	 nSNj6IHkuS98FG7ZJpL+Cd6G+8eCLQXltyuJsWfEA48+QqS2mG9FYleNB1F7l6Wam0
+	 HiDiOcPHDZstiGL7k5V41i4rSudPa6wh+3FoD2+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xieyongji@bytedance.com,
-	Jason Wang <jasowang@redhat.com>,
-	Maxime Coquelin <maxime.coquelin@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/139] vduse: Use proper spinlock for IRQ injection
-Date: Thu, 24 Aug 2023 16:49:51 +0200
-Message-ID: <20230824145026.620397511@linuxfoundation.org>
+Subject: [PATCH 5.15 069/139] cifs: fix potential oops in cifs_oplock_break
+Date: Thu, 24 Aug 2023 16:49:52 +0200
+Message-ID: <20230824145026.656526489@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,62 +37,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Coquelin <maxime.coquelin@redhat.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 7ca26efb09a1543fddb29308ea3b63b66cb5d3ee ]
+[ Upstream commit e8f5f849ffce24490eb9449e98312b66c0dba76f ]
 
-The IRQ injection work used spin_lock_irq() to protect the
-scheduling of the softirq, but spin_lock_bh() should be
-used.
+With deferred close we can have closes that race with lease breaks,
+and so with the current checks for whether to send the lease response,
+oplock_response(), this can mean that an unmount (kill_sb) can occur
+just before we were checking if the tcon->ses is valid.  See below:
 
-With spin_lock_irq(), we noticed delay of more than 6
-seconds between the time a NAPI polling work is scheduled
-and the time it is executed.
+[Fri Aug  4 04:12:50 2023] RIP: 0010:cifs_oplock_break+0x1f7/0x5b0 [cifs]
+[Fri Aug  4 04:12:50 2023] Code: 7d a8 48 8b 7d c0 c0 e9 02 48 89 45 b8 41 89 cf e8 3e f5 ff ff 4c 89 f7 41 83 e7 01 e8 82 b3 03 f2 49 8b 45 50 48 85 c0 74 5e <48> 83 78 60 00 74 57 45 84 ff 75 52 48 8b 43 98 48 83 eb 68 48 39
+[Fri Aug  4 04:12:50 2023] RSP: 0018:ffffb30607ddbdf8 EFLAGS: 00010206
+[Fri Aug  4 04:12:50 2023] RAX: 632d223d32612022 RBX: ffff97136944b1e0 RCX: 0000000080100009
+[Fri Aug  4 04:12:50 2023] RDX: 0000000000000001 RSI: 0000000080100009 RDI: ffff97136944b188
+[Fri Aug  4 04:12:50 2023] RBP: ffffb30607ddbe58 R08: 0000000000000001 R09: ffffffffc08e0900
+[Fri Aug  4 04:12:50 2023] R10: 0000000000000001 R11: 000000000000000f R12: ffff97136944b138
+[Fri Aug  4 04:12:50 2023] R13: ffff97149147c000 R14: ffff97136944b188 R15: 0000000000000000
+[Fri Aug  4 04:12:50 2023] FS:  0000000000000000(0000) GS:ffff9714f7c00000(0000) knlGS:0000000000000000
+[Fri Aug  4 04:12:50 2023] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[Fri Aug  4 04:12:50 2023] CR2: 00007fd8de9c7590 CR3: 000000011228e000 CR4: 0000000000350ef0
+[Fri Aug  4 04:12:50 2023] Call Trace:
+[Fri Aug  4 04:12:50 2023]  <TASK>
+[Fri Aug  4 04:12:50 2023]  process_one_work+0x225/0x3d0
+[Fri Aug  4 04:12:50 2023]  worker_thread+0x4d/0x3e0
+[Fri Aug  4 04:12:50 2023]  ? process_one_work+0x3d0/0x3d0
+[Fri Aug  4 04:12:50 2023]  kthread+0x12a/0x150
+[Fri Aug  4 04:12:50 2023]  ? set_kthread_struct+0x50/0x50
+[Fri Aug  4 04:12:50 2023]  ret_from_fork+0x22/0x30
+[Fri Aug  4 04:12:50 2023]  </TASK>
 
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Cc: xieyongji@bytedance.com
+To fix this change the ordering of the checks before sending the oplock_response
+to first check if the openFileList is empty.
 
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
-Message-Id: <20230705114505.63274-1-maxime.coquelin@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Fixes: da787d5b7498 ("SMB3: Do not send lease break acknowledgment if all file handles have been closed")
+Suggested-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/cifs/file.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 30ae4237f3dd4..564864f039d20 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -879,10 +879,10 @@ static void vduse_dev_irq_inject(struct work_struct *work)
- {
- 	struct vduse_dev *dev = container_of(work, struct vduse_dev, inject);
+diff --git a/fs/cifs/file.c b/fs/cifs/file.c
+index e65fbae9e804b..369620e82b84d 100644
+--- a/fs/cifs/file.c
++++ b/fs/cifs/file.c
+@@ -4865,9 +4865,11 @@ void cifs_oplock_break(struct work_struct *work)
+ 	struct cifsFileInfo *cfile = container_of(work, struct cifsFileInfo,
+ 						  oplock_break);
+ 	struct inode *inode = d_inode(cfile->dentry);
++	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+ 	struct cifsInodeInfo *cinode = CIFS_I(inode);
+-	struct cifs_tcon *tcon = tlink_tcon(cfile->tlink);
+-	struct TCP_Server_Info *server = tcon->ses->server;
++	struct cifs_tcon *tcon;
++	struct TCP_Server_Info *server;
++	struct tcon_link *tlink;
+ 	int rc = 0;
+ 	bool purge_cache = false, oplock_break_cancelled;
+ 	__u64 persistent_fid, volatile_fid;
+@@ -4876,6 +4878,12 @@ void cifs_oplock_break(struct work_struct *work)
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
  
--	spin_lock_irq(&dev->irq_lock);
-+	spin_lock_bh(&dev->irq_lock);
- 	if (dev->config_cb.callback)
- 		dev->config_cb.callback(dev->config_cb.private);
--	spin_unlock_irq(&dev->irq_lock);
-+	spin_unlock_bh(&dev->irq_lock);
++	tlink = cifs_sb_tlink(cifs_sb);
++	if (IS_ERR(tlink))
++		goto out;
++	tcon = tlink_tcon(tlink);
++	server = tcon->ses->server;
++
+ 	server->ops->downgrade_oplock(server, cinode, cfile->oplock_level,
+ 				      cfile->oplock_epoch, &purge_cache);
+ 
+@@ -4925,18 +4933,19 @@ void cifs_oplock_break(struct work_struct *work)
+ 	/*
+ 	 * MS-SMB2 3.2.5.19.1 and 3.2.5.19.2 (and MS-CIFS 3.2.5.42) do not require
+ 	 * an acknowledgment to be sent when the file has already been closed.
+-	 * check for server null, since can race with kill_sb calling tree disconnect.
+ 	 */
+ 	spin_lock(&cinode->open_file_lock);
+-	if (tcon->ses && tcon->ses->server && !oplock_break_cancelled &&
+-					!list_empty(&cinode->openFileList)) {
++	/* check list empty since can race with kill_sb calling tree disconnect */
++	if (!oplock_break_cancelled && !list_empty(&cinode->openFileList)) {
+ 		spin_unlock(&cinode->open_file_lock);
+-		rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
+-						volatile_fid, net_fid, cinode);
++		rc = server->ops->oplock_response(tcon, persistent_fid,
++						  volatile_fid, net_fid, cinode);
+ 		cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
+ 	} else
+ 		spin_unlock(&cinode->open_file_lock);
+ 
++	cifs_put_tlink(tlink);
++out:
+ 	cifs_done_oplock_break(cinode);
  }
  
- static void vduse_vq_irq_inject(struct work_struct *work)
-@@ -890,10 +890,10 @@ static void vduse_vq_irq_inject(struct work_struct *work)
- 	struct vduse_virtqueue *vq = container_of(work,
- 					struct vduse_virtqueue, inject);
- 
--	spin_lock_irq(&vq->irq_lock);
-+	spin_lock_bh(&vq->irq_lock);
- 	if (vq->ready && vq->cb.callback)
- 		vq->cb.callback(vq->cb.private);
--	spin_unlock_irq(&vq->irq_lock);
-+	spin_unlock_bh(&vq->irq_lock);
- }
- 
- static int vduse_dev_queue_irq_work(struct vduse_dev *dev,
 -- 
 2.40.1
 
