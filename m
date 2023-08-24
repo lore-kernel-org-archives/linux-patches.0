@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FA911C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71D1C433C8;
-	Thu, 24 Aug 2023 14:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0683D11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:52:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80201C433C7;
+	Thu, 24 Aug 2023 14:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888758;
-	bh=feGQl3AYoMHj72KWyZFAXXH6nLhS5tdc8c2kFQbpuOg=;
+	s=korg; t=1692888760;
+	bh=xcY2kgZkc5f2veSIXJdZK821k1QOu6rHUlfj/MUtHLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O67b5ixZmpGUEzUJZ8FqODkYN6+RpHbjRdUcjnDLOio5MxMyj+F+KuOTa6hsg2WBM
-	 A9iYl8YANuG7k2JkZw9AUPuurvuHK6THCnPUTciLvGMj8dXj5ted44Aa5a4Iyo6QnZ
-	 Ol02tHy1xXCWRCHv0iAvIVO9iLk1L1GhtfV08sO4=
+	b=ETg4xcBdHafGh9n8BoKyJ+psHE42zpxeSdrLZbX6buAomtmZirkqbgLjgtIqgNk73
+	 FWkPgbvO3EBGzuV/mrvUVTnlgHrrWZ1/na0qv+LiwIT/Pkxgo+PwZ361N2C1ZXhNz1
+	 vLdtXNV9j4/eaTSLrSKBwGwvm5OOeTiTtAn/m54E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Anderson <ruinairas1992@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	shanzhulig <shanzhulig@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/139] Bluetooth: btusb: Add MT7922 bluetooth ID for the Asus Ally
-Date: Thu, 24 Aug 2023 16:49:14 +0200
-Message-ID: <20230824145024.955770664@linuxfoundation.org>
+Subject: [PATCH 5.15 032/139] drm/amdgpu: Fix potential fence use-after-free v2
+Date: Thu, 24 Aug 2023 16:49:15 +0200
+Message-ID: <20230824145025.000626603@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,35 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Anderson <ruinairas1992@gmail.com>
+From: shanzhulig <shanzhulig@gmail.com>
 
-[ Upstream commit fa01eba11f0e57c767a5eab5291c7a01407a00be ]
+[ Upstream commit 2e54154b9f27262efd0cb4f903cc7d5ad1fe9628 ]
 
-Adding the device ID from the Asus Ally gets the bluetooth working
-on the device.
+fence Decrements the reference count before exiting.
+Avoid Race Vulnerabilities for fence use-after-free.
 
-Signed-off-by: Matthew Anderson <ruinairas1992@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2 (chk): actually fix the use after free and not just move it.
+
+Signed-off-by: shanzhulig <shanzhulig@gmail.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 9eb2267bd3a02..15d253325fd8a 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -475,6 +475,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe0d9), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0f5), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
- 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 2fd4d8ad7e40d..4b01188385b28 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1541,15 +1541,15 @@ static int amdgpu_cs_wait_all_fences(struct amdgpu_device *adev,
+ 			continue;
+ 
+ 		r = dma_fence_wait_timeout(fence, true, timeout);
++		if (r > 0 && fence->error)
++			r = fence->error;
++
+ 		dma_fence_put(fence);
+ 		if (r < 0)
+ 			return r;
+ 
+ 		if (r == 0)
+ 			break;
+-
+-		if (fence->error)
+-			return fence->error;
+ 	}
+ 
+ 	memset(wait, 0, sizeof(*wait));
 -- 
 2.40.1
 
