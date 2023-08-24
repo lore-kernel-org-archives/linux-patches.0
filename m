@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B6C11C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DA9C433C7;
-	Thu, 24 Aug 2023 15:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D0A11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 15:01:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB35C433C8;
+	Thu, 24 Aug 2023 15:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889300;
-	bh=8b9ucScws4hp3uNwv4Ms+1DZBrRPXIDIr+1UVZfdkLg=;
+	s=korg; t=1692889303;
+	bh=VvB8+NnBnafph951BpQm6JZe0mqA2YpDjVOxFkGhMbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdK/zdJYQJ9wBxTdSOn/DRHs96OD22SF81P26MF+w0PFru5RgDu4wc54Z9PKAenoD
-	 +vEV9s0xY8FFSqK8VIInPv0B9GzUgBNn1yxd1YDVvne+M1bKtEAGZn09IoW/tIr1wn
-	 /MIt/D0W0RlxZsnSa3pAqEPargrKMX0TT49NCtC4=
+	b=Nb3CmQ7NXTRv1s6Yy6qlnVXn3z9Zd6arl9Yq57Elcon+BYP9v4PJJ5E2zMgfeQxDP
+	 eRHSHxg7fz0+2FetmH6mu58k6zLTzAj5B5YfyMDfZe3cLhqtZVZ5TeV5oWQZdl6ahE
+	 82xZXowOOImZaPG90fqwz4GEri+VDFmZciLZqHJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/135] drm/panel: simple: Fix AUO G121EAN01 panel timings according to the docs
-Date: Thu, 24 Aug 2023 16:50:28 +0200
-Message-ID: <20230824145030.575445553@linuxfoundation.org>
+Subject: [PATCH 5.10 058/135] USB: dwc3: qcom: fix NULL-deref on suspend
+Date: Thu, 24 Aug 2023 16:50:01 +0200
+Message-ID: <20230824145029.401701153@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -35,75 +38,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit e8470c0a7bcaa82f78ad34282d662dd7bd9630c2 ]
+[ Upstream commit d2d69354226de0b333d4405981f3d9c41ba8430a ]
 
-Commit 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4
-panel") added support for this panel model, but the timings it implements
-are very different from what the datasheet describes. I checked both the
-G121EAN01.0 datasheet from [0] and the G121EAN01.4 one from [1] and they
-all have the same timings: for example the LVDS clock typical value is 74.4
-MHz, not 66.7 MHz as implemented.
+The Qualcomm dwc3 glue driver is currently accessing the driver data of
+the child core device during suspend and on wakeup interrupts. This is
+clearly a bad idea as the child may not have probed yet or could have
+been unbound from its driver.
 
-Replace the timings with the ones from the documentation. These timings
-have been tested and the clock frequencies verified with an oscilloscope to
-ensure they are correct.
+The first such layering violation was part of the initial version of the
+driver, but this was later made worse when the hack that accesses the
+driver data of the grand child xhci device to configure the wakeup
+interrupts was added.
 
-Also use struct display_timing instead of struct drm_display_mode in order
-to also specify the minimum and maximum values.
+Fixing this properly is not that easily done, so add a sanity check to
+make sure that the child driver data is non-NULL before dereferencing it
+for now.
 
-[0] https://embedded.avnet.com/product/g121ean01-0/
-[1] https://embedded.avnet.com/product/g121ean01-4/
+Note that this relies on subtleties like the fact that driver core is
+making sure that the parent is not suspended while the child is probing.
 
-Fixes: 03e909acd95a ("drm/panel: simple: Add support for AUO G121EAN01.4 panel")
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804151239.835216-1-luca.ceresoli@bootlin.com
+Reported-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/all/20230325165217.31069-4-manivannan.sadhasivam@linaro.org/
+Fixes: d9152161b4bf ("usb: dwc3: Add Qualcomm DWC3 glue layer driver")
+Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+Cc: stable@vger.kernel.org	# 3.18: a872ab303d5d: "usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup"
+Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <20230607100540.31045-2-johan+linaro@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 7b69f81444ebd..e40321d798981 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1010,21 +1010,21 @@ static const struct panel_desc auo_g104sn02 = {
- 	},
- };
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index ec8c43231746e..3973f6c18857e 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -306,7 +306,16 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+ /* Only usable in contexts where the role can not change. */
+ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+ {
+-	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
++	struct dwc3 *dwc;
++
++	/*
++	 * FIXME: Fix this layering violation.
++	 */
++	dwc = platform_get_drvdata(qcom->dwc3);
++
++	/* Core driver may not have probed yet. */
++	if (!dwc)
++		return false;
  
--static const struct drm_display_mode auo_g121ean01_mode = {
--	.clock = 66700,
--	.hdisplay = 1280,
--	.hsync_start = 1280 + 58,
--	.hsync_end = 1280 + 58 + 8,
--	.htotal = 1280 + 58 + 8 + 70,
--	.vdisplay = 800,
--	.vsync_start = 800 + 6,
--	.vsync_end = 800 + 6 + 4,
--	.vtotal = 800 + 6 + 4 + 10,
-+static const struct display_timing auo_g121ean01_timing = {
-+	.pixelclock = { 60000000, 74400000, 90000000 },
-+	.hactive = { 1280, 1280, 1280 },
-+	.hfront_porch = { 20, 50, 100 },
-+	.hback_porch = { 20, 50, 100 },
-+	.hsync_len = { 30, 100, 200 },
-+	.vactive = { 800, 800, 800 },
-+	.vfront_porch = { 2, 10, 25 },
-+	.vback_porch = { 2, 10, 25 },
-+	.vsync_len = { 4, 18, 50 },
- };
- 
- static const struct panel_desc auo_g121ean01 = {
--	.modes = &auo_g121ean01_mode,
--	.num_modes = 1,
-+	.timings = &auo_g121ean01_timing,
-+	.num_timings = 1,
- 	.bpc = 8,
- 	.size = {
- 		.width = 261,
+ 	return dwc->xhci;
+ }
 -- 
 2.40.1
 
