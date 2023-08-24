@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2675288EC
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE4EC433C7;
-	Thu, 24 Aug 2023 14:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6CD288EC
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:51:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAC7C433C8;
+	Thu, 24 Aug 2023 14:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888696;
-	bh=p3NpI9nLbEH3pDJOR95VYufBYGYbPvLfteQstLCh94o=;
+	s=korg; t=1692888699;
+	bh=yN8hmtuOKlMfOrYZWfOSX8WF5S5TpNEcHEy9ZgUT/8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOZg43NH6t+rPQDSmsF/9X/oTN85hslx1EZKjWv0c89G4Rd/RB6+8IBev6ENiZTcU
-	 Vy257oWKLrSMrz9HmkEyp/uqZruT1DFLeVIltXHT0jUPnF9Gdf28MLdkzszQyi3M0z
-	 W5G2kzY0tRpRBSj9MOoqqV0NWMNr4bofq1rS+YCs=
+	b=f9r4kwu4lmNU5NQECVgJitaMDFIOLMVwRfsxVckQDDBgEhbA6C95NHAM224qVsOeW
+	 lTLwg+v/tyPcd0MKi4xf592R4v+nkNfnpJHzo0ArqGKuJjb54jIdKcccK4IK5ypf1I
+	 9pfUz5CJVpsh5g60hoCzUKDI+haPZitMkfNPjIS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/139] mmc: sdhci-f-sdh30: Replace with sdhci_pltfm
-Date: Thu, 24 Aug 2023 16:48:44 +0200
-Message-ID: <20230824145023.633955291@linuxfoundation.org>
+Subject: [PATCH 5.15 010/139] ARM: dts: imx6dl: prtrvt, prtvt7, prti6q, prtwd2: fix USB related warnings
+Date: Thu, 24 Aug 2023 16:48:53 +0200
+Message-ID: <20230824145024.031581038@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,153 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 5def5c1c15bf22934ee227af85c1716762f3829f ]
+[ Upstream commit 1d14bd943fa2bbdfda1efbcc080b298fed5f1803 ]
 
-Even if sdhci_pltfm_pmops is specified for PM, this driver doesn't apply
-sdhci_pltfm, so the structure is not correctly referenced in PM functions.
-This applies sdhci_pltfm to this driver to fix this issue.
+Fix USB-related warnings in prtrvt, prtvt7, prti6q and prtwd2 device trees
+by disabling unused usbphynop1 and usbphynop2 USB PHYs and providing proper
+configuration for the over-current detection. This fixes the following
+warnings with the current kernel:
+ usb_phy_generic usbphynop1: dummy supplies not allowed for exclusive requests
+ usb_phy_generic usbphynop2: dummy supplies not allowed for exclusive requests
+ imx_usb 2184200.usb: No over current polarity defined
 
-- Call sdhci_pltfm_init() instead of sdhci_alloc_host() and
-  other functions that covered by sdhci_pltfm.
-- Move ops and quirks to sdhci_pltfm_data
-- Replace sdhci_priv() with own private function sdhci_f_sdh30_priv().
+By the way, fix over-current detection on usbotg port for prtvt7, prti6q
+and prtwd2 boards. Only prtrvt do not have OC on USB OTG port.
 
-Fixes: 87a507459f49 ("mmc: sdhci: host: add new f_sdh30")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230630004533.26644-1-hayashi.kunihiko@socionext.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_f_sdh30.c | 60 ++++++++++++++------------------
- 1 file changed, 27 insertions(+), 33 deletions(-)
+ arch/arm/boot/dts/imx6dl-prtrvt.dts   |  4 ++++
+ arch/arm/boot/dts/imx6qdl-prti6q.dtsi | 11 ++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
-index 6c4f43e112826..8876fd1c7eee0 100644
---- a/drivers/mmc/host/sdhci_f_sdh30.c
-+++ b/drivers/mmc/host/sdhci_f_sdh30.c
-@@ -26,9 +26,16 @@ struct f_sdhost_priv {
- 	bool enable_cmd_dat_delay;
+diff --git a/arch/arm/boot/dts/imx6dl-prtrvt.dts b/arch/arm/boot/dts/imx6dl-prtrvt.dts
+index 5ac84445e9cc1..90e01de8c2c15 100644
+--- a/arch/arm/boot/dts/imx6dl-prtrvt.dts
++++ b/arch/arm/boot/dts/imx6dl-prtrvt.dts
+@@ -126,6 +126,10 @@ &usbh1 {
+ 	status = "disabled";
  };
  
-+static void *sdhci_f_sdhost_priv(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+
-+	return sdhci_pltfm_priv(pltfm_host);
-+}
-+
- static void sdhci_f_sdh30_soft_voltage_switch(struct sdhci_host *host)
- {
--	struct f_sdhost_priv *priv = sdhci_priv(host);
-+	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
- 	u32 ctrl = 0;
- 
- 	usleep_range(2500, 3000);
-@@ -61,7 +68,7 @@ static unsigned int sdhci_f_sdh30_get_min_clock(struct sdhci_host *host)
- 
- static void sdhci_f_sdh30_reset(struct sdhci_host *host, u8 mask)
- {
--	struct f_sdhost_priv *priv = sdhci_priv(host);
-+	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
- 	u32 ctl;
- 
- 	if (sdhci_readw(host, SDHCI_CLOCK_CONTROL) == 0)
-@@ -85,30 +92,32 @@ static const struct sdhci_ops sdhci_f_sdh30_ops = {
- 	.set_uhs_signaling = sdhci_set_uhs_signaling,
- };
- 
-+static const struct sdhci_pltfm_data sdhci_f_sdh30_pltfm_data = {
-+	.ops = &sdhci_f_sdh30_ops,
-+	.quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC
-+		| SDHCI_QUIRK_INVERTED_WRITE_PROTECT,
-+	.quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE
-+		|  SDHCI_QUIRK2_TUNING_WORK_AROUND,
++&usbotg {
++	disable-over-current;
 +};
 +
- static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- {
- 	struct sdhci_host *host;
- 	struct device *dev = &pdev->dev;
--	int irq, ctrl = 0, ret = 0;
-+	int ctrl = 0, ret = 0;
- 	struct f_sdhost_priv *priv;
-+	struct sdhci_pltfm_host *pltfm_host;
- 	u32 reg = 0;
+ &vpu {
+ 	status = "disabled";
+ };
+diff --git a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
+index 19578f660b092..70dfa07a16981 100644
+--- a/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-prti6q.dtsi
+@@ -69,6 +69,7 @@ &usbh1 {
+ 	vbus-supply = <&reg_usb_h1_vbus>;
+ 	phy_type = "utmi";
+ 	dr_mode = "host";
++	disable-over-current;
+ 	status = "okay";
+ };
  
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
--
--	host = sdhci_alloc_host(dev, sizeof(struct f_sdhost_priv));
-+	host = sdhci_pltfm_init(pdev, &sdhci_f_sdh30_pltfm_data,
-+				sizeof(struct f_sdhost_priv));
- 	if (IS_ERR(host))
- 		return PTR_ERR(host);
+@@ -78,10 +79,18 @@ &usbotg {
+ 	pinctrl-0 = <&pinctrl_usbotg>;
+ 	phy_type = "utmi";
+ 	dr_mode = "host";
+-	disable-over-current;
++	over-current-active-low;
+ 	status = "okay";
+ };
  
--	priv = sdhci_priv(host);
-+	pltfm_host = sdhci_priv(host);
-+	priv = sdhci_pltfm_priv(pltfm_host);
- 	priv->dev = dev;
- 
--	host->quirks = SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
--		       SDHCI_QUIRK_INVERTED_WRITE_PROTECT;
--	host->quirks2 = SDHCI_QUIRK2_SUPPORT_SINGLE |
--			SDHCI_QUIRK2_TUNING_WORK_AROUND;
--
- 	priv->enable_cmd_dat_delay = device_property_read_bool(dev,
- 						"fujitsu,cmd-dat-delay-select");
- 
-@@ -116,18 +125,6 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err;
- 
--	platform_set_drvdata(pdev, host);
--
--	host->hw_name = "f_sdh30";
--	host->ops = &sdhci_f_sdh30_ops;
--	host->irq = irq;
--
--	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(host->ioaddr)) {
--		ret = PTR_ERR(host->ioaddr);
--		goto err;
--	}
--
- 	if (dev_of_node(dev)) {
- 		sdhci_get_of_property(pdev);
- 
-@@ -182,23 +179,20 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- err_clk:
- 	clk_disable_unprepare(priv->clk_iface);
- err:
--	sdhci_free_host(host);
-+	sdhci_pltfm_free(pdev);
++&usbphynop1 {
++	status = "disabled";
++};
 +
- 	return ret;
- }
- 
- static int sdhci_f_sdh30_remove(struct platform_device *pdev)
- {
- 	struct sdhci_host *host = platform_get_drvdata(pdev);
--	struct f_sdhost_priv *priv = sdhci_priv(host);
--
--	sdhci_remove_host(host, readl(host->ioaddr + SDHCI_INT_STATUS) ==
--			  0xffffffff);
-+	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
- 
- 	clk_disable_unprepare(priv->clk_iface);
- 	clk_disable_unprepare(priv->clk);
- 
--	sdhci_free_host(host);
--	platform_set_drvdata(pdev, NULL);
-+	sdhci_pltfm_unregister(pdev);
- 
- 	return 0;
- }
++&usbphynop2 {
++	status = "disabled";
++};
++
+ &usdhc1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_usdhc1>;
 -- 
 2.40.1
 
