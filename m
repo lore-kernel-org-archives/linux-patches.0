@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B1111C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06325C433C8;
-	Thu, 24 Aug 2023 14:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E15B11C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:55:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0763C433C8;
+	Thu, 24 Aug 2023 14:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888926;
-	bh=LBkaizgmm2RtNipaDqLm+mQ5VnhF3NnL/vmqwX9QbAw=;
+	s=korg; t=1692888929;
+	bh=d8DrmTca19cwKdoV/LMjC8HLZxXsFlzBtbI2h8zHFPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1O4daiaQnJCl3bPmDBXgCajsRUnvJ/zVkrSDDqK9DhYjis+Uy1mJpc1DEclDymtd
-	 u8Y/x6k60KT2nQzEIVW4wMuMv1WNKvmYPinOmeWtsWHgB8XJ/seo0/EtdDrlTteS+0
-	 1hk16UgCSaNOTkLIosuF3V7OegZnvRXEM9OvdoeE=
+	b=HiSeI+T6Q3bSEbsVhLEJbgtb0cMO41i2KIeVUzcYg5VIQha71WmXyZmGA6zGC13tJ
+	 9LTTkaTAOxrMbqXBNJIFd5rcEWF+qrjeEZFTZJgxpCim361xmFn4Vzyay8gpr6wUD3
+	 GS3V0pYTJpj27T8+1KY1y8dcpGLanw1bG9QDea4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sishuai Gong <sishuai.system@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/139] ipvs: fix racy memcpy in proc_do_sync_threshold
-Date: Thu, 24 Aug 2023 16:50:15 +0200
-Message-ID: <20230824145027.605352585@linuxfoundation.org>
+Subject: [PATCH 5.15 093/139] netfilter: nft_dynset: disallow object maps
+Date: Thu, 24 Aug 2023 16:50:16 +0200
+Message-ID: <20230824145027.642127565@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -37,67 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sishuai Gong <sishuai.system@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
+[ Upstream commit 23185c6aed1ffb8fc44087880ba2767aba493779 ]
 
-When two threads run proc_do_sync_threshold() in parallel,
-data races could happen between the two memcpy():
+Do not allow to insert elements from datapath to objects maps.
 
-Thread-1			Thread-2
-memcpy(val, valp, sizeof(val));
-				memcpy(valp, val, sizeof(val));
-
-This race might mess up the (struct ctl_table *) table->data,
-so we add a mutex lock to serialize them.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
-Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
-Acked-by: Simon Horman <horms@kernel.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+Fixes: 8aeff920dcc9 ("netfilter: nf_tables: add stateful object reference to set elements")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nft_dynset.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 29ec3ef63edc7..d0b64c36471d5 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1802,6 +1802,7 @@ static int
- proc_do_sync_threshold(struct ctl_table *table, int write,
- 		       void *buffer, size_t *lenp, loff_t *ppos)
- {
-+	struct netns_ipvs *ipvs = table->extra2;
- 	int *valp = table->data;
- 	int val[2];
- 	int rc;
-@@ -1811,6 +1812,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		.mode = table->mode,
- 	};
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 29c7ae8789e95..73e606372b05d 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -191,6 +191,9 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 	if (IS_ERR(set))
+ 		return PTR_ERR(set);
  
-+	mutex_lock(&ipvs->sync_mutex);
- 	memcpy(val, valp, sizeof(val));
- 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
- 	if (write) {
-@@ -1820,6 +1822,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		else
- 			memcpy(valp, val, sizeof(val));
- 	}
-+	mutex_unlock(&ipvs->sync_mutex);
- 	return rc;
- }
++	if (set->flags & NFT_SET_OBJECT)
++		return -EOPNOTSUPP;
++
+ 	if (set->ops->update == NULL)
+ 		return -EOPNOTSUPP;
  
-@@ -4077,6 +4080,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
- 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
- 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
- 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
-+	tbl[idx].extra2 = ipvs;
- 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
- 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
- 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
 -- 
 2.40.1
 
