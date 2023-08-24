@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F9F13FE8
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B77CC433C8;
-	Thu, 24 Aug 2023 17:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C216A13FE8
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 17:19:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472C7C433C8;
+	Thu, 24 Aug 2023 17:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692897570;
-	bh=J5RfBnCDhzqVXZf4/m2SL2cy98nxieuvgwOKIztBrho=;
+	s=korg; t=1692897573;
+	bh=KCPjnVI7fpyzFQNZmG7IIPWjU2QkmQXlF4ntY/J/JsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rH+XjLSrnIIDr547vgPd4BVMMFGIXEvuYebsVlhAdJI695TrEp2IF9V95M82C3CpN
-	 rX+sdS9Rqh9eKRpgJZAxJRMef0BLUUEa08oj1c8JBklB3uGwBma6Uo/CviWNd5WgkJ
-	 +OounQmMmY+Jc7e/8rLsree4dGzsjZfbwYwpBhXs=
+	b=ibyuyeoEeJgJl+2Yji4b2zUrMZKzi668wXRCPL30Oifp8S+RdQM/64K+xfyg6tL9R
+	 ZiHMJWkmBIP0IDwIoF6ssbNi+4SGBiSkvAFKHjsklwO2G6HhGQ1+g4HqNruEsbrwHi
+	 hUtecQVG2aUIi8cOqdvR5177GxsiaT/rSQqemGv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sishuai Gong <sishuai.system@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/135] ipvs: fix racy memcpy in proc_do_sync_threshold
-Date: Thu, 24 Aug 2023 19:09:18 +0200
-Message-ID: <20230824170620.971774868@linuxfoundation.org>
+Subject: [PATCH 5.10 060/135] mmc: sunxi: fix deferred probing
+Date: Thu, 24 Aug 2023 19:08:52 +0200
+Message-ID: <20230824170619.792529890@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 References: <20230824170617.074557800@linuxfoundation.org>
@@ -42,67 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sishuai Gong <sishuai.system@gmail.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
+[ Upstream commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 ]
 
-When two threads run proc_do_sync_threshold() in parallel,
-data races could happen between the two memcpy():
+The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the error
+codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+so we now can safely ignore it...
 
-Thread-1			Thread-2
-memcpy(val, valp, sizeof(val));
-				memcpy(valp, val, sizeof(val));
-
-This race might mess up the (struct ctl_table *) table->data,
-so we add a mutex lock to serialize them.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
-Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
-Acked-by: Simon Horman <horms@kernel.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mmc/host/sunxi-mmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 29ec3ef63edc7..d0b64c36471d5 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1802,6 +1802,7 @@ static int
- proc_do_sync_threshold(struct ctl_table *table, int write,
- 		       void *buffer, size_t *lenp, loff_t *ppos)
- {
-+	struct netns_ipvs *ipvs = table->extra2;
- 	int *valp = table->data;
- 	int val[2];
- 	int rc;
-@@ -1811,6 +1812,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		.mode = table->mode,
- 	};
+diff --git a/drivers/mmc/host/sunxi-mmc.c b/drivers/mmc/host/sunxi-mmc.c
+index 9215069c61560..b834fde3f9eda 100644
+--- a/drivers/mmc/host/sunxi-mmc.c
++++ b/drivers/mmc/host/sunxi-mmc.c
+@@ -1317,8 +1317,8 @@ static int sunxi_mmc_resource_request(struct sunxi_mmc_host *host,
+ 		return ret;
  
-+	mutex_lock(&ipvs->sync_mutex);
- 	memcpy(val, valp, sizeof(val));
- 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
- 	if (write) {
-@@ -1820,6 +1822,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
- 		else
- 			memcpy(valp, val, sizeof(val));
+ 	host->irq = platform_get_irq(pdev, 0);
+-	if (host->irq <= 0) {
+-		ret = -EINVAL;
++	if (host->irq < 0) {
++		ret = host->irq;
+ 		goto error_disable_mmc;
  	}
-+	mutex_unlock(&ipvs->sync_mutex);
- 	return rc;
- }
  
-@@ -4077,6 +4080,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
- 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
- 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
- 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
-+	tbl[idx].extra2 = ipvs;
- 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
- 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
- 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
 -- 
 2.40.1
 
