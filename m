@@ -1,143 +1,146 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A462890D
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CC1C433CA;
-	Thu, 24 Aug 2023 14:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8C12890D
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4280C433CC;
+	Thu, 24 Aug 2023 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692886519;
-	bh=3Wqno6RgI+vOlKjniGktCHYNmHd4A0HX3224LcWaxSI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EJXvIoKjzerkEaWFcbMx//3QE+fbT1XiRG6LQbCOFvWl5GL8HOTjIKzxnTxn2Wq8c
-	 tCInKx3l2mfe9N+dRVCE1I42Aqhn+c/nTRyRylI+4eL97LVV77HLUgeHJcutPeEM6Y
-	 RhLxrqWAfFyabbJ7HxbUqGKMJcpksjkqI8HEjKX4=
+	s=korg; t=1692886525;
+	bh=3135AucRp8HDUEViMDZIo4HxElcW+T/JS/MJul3oUKQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=THwNT3q9RUkzVyMOPmNo+CdQm1B0ehxW2WoIgkKFtmOAx0SLh3URpbDZDX7KkP3ML
+	 UdsJeIzGNG/sdL9+RJ5kkjNmhV1aDWvw7nmIOEHQCNjLGxc8HasaooPzMtLIwd4+Ky
+	 LUPF6oaKQiADhqM9H4TjNYUPUG5lb3kJ2IK/0Hu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 6.1 00/15] 6.1.48-rc1 review
-Date: Thu, 24 Aug 2023 16:14:56 +0200
-Message-ID: <20230824141447.155846739@linuxfoundation.org>
+	Srikanth Aithal <sraithal@amd.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 10/15] x86/retpoline: Dont clobber RFLAGS during srso_safe_ret()
+Date: Thu, 24 Aug 2023 16:15:06 +0200
+Message-ID: <20230824141447.659017387@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
+References: <20230824141447.155846739@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.48-rc1
-X-KernelTest-Deadline: 2023-08-26T14:14+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.48 release.
-There are 15 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Sean Christopherson <seanjc@google.com>
 
-Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
-Anything received after that time might be too late.
+commit ba5ca5e5e6a1d55923e88b4a83da452166f5560e upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
+Use LEA instead of ADD when adjusting %rsp in srso_safe_ret{,_alias}()
+so as to avoid clobbering flags.  Drop one of the INT3 instructions to
+account for the LEA consuming one more byte than the ADD.
 
-thanks,
+KVM's emulator makes indirect calls into a jump table of sorts, where
+the destination of each call is a small blob of code that performs fast
+emulation by executing the target instruction with fixed operands.
 
-greg k-h
+E.g. to emulate ADC, fastop() invokes adcb_al_dl():
 
--------------
-Pseudo-Shortlog of commits:
+  adcb_al_dl:
+    <+0>:  adc    %dl,%al
+    <+2>:  jmp    <__x86_return_thunk>
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.48-rc1
+A major motivation for doing fast emulation is to leverage the CPU to
+handle consumption and manipulation of arithmetic flags, i.e. RFLAGS is
+both an input and output to the target of the call.  fastop() collects
+the RFLAGS result by pushing RFLAGS onto the stack and popping them back
+into a variable (held in %rdi in this case):
 
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/srso: Correct the mitigation status when SMT is disabled
+  asm("push %[flags]; popf; " CALL_NOSPEC " ; pushf; pop %[flags]\n"
 
-Peter Zijlstra <peterz@infradead.org>
-    objtool/x86: Fixup frame-pointer vs rethunk
+  <+71>: mov    0xc0(%r8),%rdx
+  <+78>: mov    0x100(%r8),%rcx
+  <+85>: push   %rdi
+  <+86>: popf
+  <+87>: call   *%rsi
+  <+89>: nop
+  <+90>: nop
+  <+91>: nop
+  <+92>: pushf
+  <+93>: pop    %rdi
 
-Petr Pavlu <petr.pavlu@suse.com>
-    x86/retpoline,kprobes: Fix position of thunk sections with CONFIG_LTO_CLANG
+and then propagating the arithmetic flags into the vCPU's emulator state:
 
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/srso: Disable the mitigation on unaffected configurations
+  ctxt->eflags = (ctxt->eflags & ~EFLAGS_MASK) | (flags & EFLAGS_MASK);
 
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/CPU/AMD: Fix the DIV(0) initial fix attempt
+  <+64>:  and    $0xfffffffffffff72a,%r9
+  <+94>:  and    $0x8d5,%edi
+  <+109>: or     %rdi,%r9
+  <+122>: mov    %r9,0x10(%r8)
 
-Sean Christopherson <seanjc@google.com>
-    x86/retpoline: Don't clobber RFLAGS during srso_safe_ret()
+The failures can be most easily reproduced by running the "emulator"
+test in KVM-Unit-Tests.
 
-Peter Zijlstra <peterz@infradead.org>
-    x86/static_call: Fix __static_call_fixup()
+If you're feeling a bit of deja vu, see commit b63f20a778c8
+("x86/retpoline: Don't clobber RFLAGS during CALL_NOSPEC on i386").
 
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/srso: Explain the untraining sequences a bit more
+In addition, this breaks booting of clang-compiled guest on
+a gcc-compiled host where the host contains the %rsp-modifying SRSO
+mitigations.
 
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpu: Cleanup the untrain mess
+  [ bp: Massage commit message, extend, remove addresses. ]
 
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpu: Rename srso_(.*)_alias to srso_alias_\1
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Closes: https://lore.kernel.org/all/de474347-122d-54cd-eabf-9dcc95ab9eae@amd.com
+Reported-by: Srikanth Aithal <sraithal@amd.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20230810013334.GA5354@dev-arch.thelio-3990X/
+Link: https://lore.kernel.org/r/20230811155255.250835-1-seanjc@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/x86/lib/retpoline.S |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpu: Rename original retbleed methods
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpu: Clean up SRSO return thunk mess
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/alternative: Make custom return thunk unconditional
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpu: Fix up srso_safe_ret() and __x86_return_thunk()
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpu: Fix __x86_return_thunk symbol type
-
-
--------------
-
-Diffstat:
-
- Documentation/admin-guide/hw-vuln/srso.rst |   4 +-
- Makefile                                   |   4 +-
- arch/x86/include/asm/entry-common.h        |   1 +
- arch/x86/include/asm/nospec-branch.h       |  28 +++---
- arch/x86/kernel/cpu/amd.c                  |   1 +
- arch/x86/kernel/cpu/bugs.c                 |  28 +++++-
- arch/x86/kernel/static_call.c              |  13 +++
- arch/x86/kernel/traps.c                    |   2 -
- arch/x86/kernel/vmlinux.lds.S              |  20 ++--
- arch/x86/kvm/svm/svm.c                     |   2 +
- arch/x86/lib/retpoline.S                   | 141 ++++++++++++++++++++---------
- tools/objtool/arch/x86/decode.c            |   2 +-
- tools/objtool/check.c                      |  21 +++--
- 13 files changed, 182 insertions(+), 85 deletions(-)
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -113,7 +113,7 @@ SYM_FUNC_END(srso_alias_untrain_ret)
+ #endif
+ 
+ SYM_START(srso_alias_safe_ret, SYM_L_GLOBAL, SYM_A_NONE)
+-	add $8, %_ASM_SP
++	lea 8(%_ASM_SP), %_ASM_SP
+ 	UNWIND_HINT_FUNC
+ 	ANNOTATE_UNRET_SAFE
+ 	ret
+@@ -213,7 +213,7 @@ __EXPORT_THUNK(retbleed_untrain_ret)
+  * SRSO untraining sequence for Zen1/2, similar to retbleed_untrain_ret()
+  * above. On kernel entry, srso_untrain_ret() is executed which is a
+  *
+- * movabs $0xccccccc308c48348,%rax
++ * movabs $0xccccc30824648d48,%rax
+  *
+  * and when the return thunk executes the inner label srso_safe_ret()
+  * later, it is a stack manipulation and a RET which is mispredicted and
+@@ -232,11 +232,10 @@ SYM_START(srso_untrain_ret, SYM_L_GLOBAL
+  * the stack.
+  */
+ SYM_INNER_LABEL(srso_safe_ret, SYM_L_GLOBAL)
+-	add $8, %_ASM_SP
++	lea 8(%_ASM_SP), %_ASM_SP
+ 	ret
+ 	int3
+ 	int3
+-	int3
+ 	/* end of movabs */
+ 	lfence
+ 	call srso_safe_ret
 
 
