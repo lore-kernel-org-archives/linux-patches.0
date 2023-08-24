@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AB011C86
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3A2C433C7;
-	Thu, 24 Aug 2023 14:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DB611C86
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:53:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E29C433C8;
+	Thu, 24 Aug 2023 14:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692888835;
-	bh=S+NAw85SeaAXxTs07N/Q1btLZxfEw/en6Ntj4jqr0Xg=;
+	s=korg; t=1692888838;
+	bh=hmTw7dDUE37M+EfxXfZICbjw5EgPKiXrMCcbuz9kjek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+ZEAgk124qPRn2DdoDLJtPb3gJjzBCu1VvI+eKp5J+mzoILBUTm9ayYE42POaY9M
-	 AJeAW+MAxHCddAccGqfDhtuBq+jdDZ58T3qcyXqZF8d5t7fatFMFjeyWp8FzIuhBwE
-	 9+qSVF3TMJ9RLA1RcfZPlTXQo91v+Mc6nDOuKODY=
+	b=QzPN+u7jCU9wTGDpPLr394vpBTeA4GwiI3p4k8L56AKo5LtL92jp2W2m9Iwaayy8E
+	 RzK9RxlGL3ZWXnQ13aei6lTbNSEz6lCeXEPJPR2ZsiVD2aQn5doY+jSJ9dKVDX8F4k
+	 pv+/MwfoD/tzFmgFOhCGOjJ3zfHJAiu/DUzUAaoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Li Jun <jun.li@nxp.com>,
 	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
 	Krishna Kurapati <quic_kriskura@quicinc.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/139] USB: dwc3: qcom: fix NULL-deref on suspend
-Date: Thu, 24 Aug 2023 16:49:42 +0200
-Message-ID: <20230824145026.195079999@linuxfoundation.org>
+Subject: [PATCH 5.15 060/139] USB: dwc3: fix use-after-free on core driver unbind
+Date: Thu, 24 Aug 2023 16:49:43 +0200
+Message-ID: <20230824145026.235900069@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -40,64 +41,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit d2d69354226de0b333d4405981f3d9c41ba8430a ]
+[ Upstream commit e3dbb657571509044be15184a13134fa7c1fdca1 ]
 
-The Qualcomm dwc3 glue driver is currently accessing the driver data of
-the child core device during suspend and on wakeup interrupts. This is
-clearly a bad idea as the child may not have probed yet or could have
-been unbound from its driver.
+Some dwc3 glue drivers are currently accessing the driver data of the
+child core device directly, which is clearly a bad idea as the child may
+not have probed yet or may have been unbound from its driver.
 
-The first such layering violation was part of the initial version of the
-driver, but this was later made worse when the hack that accesses the
-driver data of the grand child xhci device to configure the wakeup
-interrupts was added.
+As a workaround until the glue drivers have been fixed, clear the driver
+data pointer before allowing the glue parent device to runtime suspend
+to prevent its driver from accessing data that has been freed during
+unbind.
 
-Fixing this properly is not that easily done, so add a sanity check to
-make sure that the child driver data is non-NULL before dereferencing it
-for now.
-
-Note that this relies on subtleties like the fact that driver core is
-making sure that the parent is not suspended while the child is probing.
-
-Reported-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/all/20230325165217.31069-4-manivannan.sadhasivam@linaro.org/
-Fixes: d9152161b4bf ("usb: dwc3: Add Qualcomm DWC3 glue layer driver")
+Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
 Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-Cc: stable@vger.kernel.org	# 3.18: a872ab303d5d: "usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup"
+Cc: stable@vger.kernel.org      # 5.12
+Cc: Li Jun <jun.li@nxp.com>
 Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
 Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-ID: <20230607100540.31045-2-johan+linaro@kernel.org>
+Message-ID: <20230607100540.31045-3-johan+linaro@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 73c0c381e5d05..0180350a2c95c 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -306,7 +306,16 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
- /* Only usable in contexts where the role can not change. */
- static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
- {
--	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-+	struct dwc3 *dwc;
-+
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index ac119a88e6c76..6377b9cf81a59 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1719,6 +1719,11 @@ static int dwc3_remove(struct platform_device *pdev)
+ 	pm_runtime_allow(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
 +	/*
-+	 * FIXME: Fix this layering violation.
++	 * HACK: Clear the driver data, which is currently accessed by parent
++	 * glue drivers, before allowing the parent to suspend.
 +	 */
-+	dwc = platform_get_drvdata(qcom->dwc3);
-+
-+	/* Core driver may not have probed yet. */
-+	if (!dwc)
-+		return false;
++	platform_set_drvdata(pdev, NULL);
+ 	pm_runtime_set_suspended(&pdev->dev);
  
- 	return dwc->xhci;
- }
+ 	dwc3_free_event_buffers(dwc);
 -- 
 2.40.1
 
