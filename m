@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE64C134A3
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DE4C433C7;
-	Thu, 24 Aug 2023 14:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEB8134A1
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:57:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F71C433C8;
+	Thu, 24 Aug 2023 14:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889056;
-	bh=MbjjBAQP2sseTVUEUuPFpe1E5vPeODbUIKon84/yZdg=;
+	s=korg; t=1692889059;
+	bh=ogb8c5+e5ob+kz4HLGZ1nfAimY3Azz4UbOohnc/VHuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzYhBW8EMuDrSmFJPHRmwx6fW9e2av+OsTJJLHqRgQqoG0R9pRzcSB9ixVP9jXiWR
-	 m2+HpoOQ+TmMgfnY3sWZ0z4ngD9czUqEGHB46YRrScSQ1VzNiqrmK7AoMi1PQ9pMTm
-	 ptCewMO+Bn+umSxyX49ZW5pasYjh7NN9kkRwuhLM=
+	b=elxDRkpjlgA08DVCCeDlttZwY6m3eWxI/gZHvNzzhVKusDPYXmLGpWd7SGD0yHL2s
+	 XIMbF1dGKRSt5wYiSmZMxWp4Hr2tXyb+JD5rW9h8IE22NMvZWOvaT5rJejj6f4T7Rk
+	 LWubFUVk9m+aJ+m2nUtbz94QvaLnezvMXtvuc1ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.15 137/139] x86/retpoline,kprobes: Fix position of thunk sections with CONFIG_LTO_CLANG
-Date: Thu, 24 Aug 2023 16:51:00 +0200
-Message-ID: <20230824145029.369493245@linuxfoundation.org>
+	dengxiang <dengxiang@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 110/139] ALSA: usb-audio: Add support for Mythware XA001AU capture and playback interfaces.
+Date: Thu, 24 Aug 2023 16:50:33 +0200
+Message-ID: <20230824145028.300962306@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
 References: <20230824145023.559380953@linuxfoundation.org>
@@ -36,132 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: dengxiang <dengxiang@nfschina.com>
 
-commit 79cd2a11224eab86d6673fe8a11d2046ae9d2757 upstream.
+commit 788449ae57f4273111b779bbcaad552b67f517d5 upstream.
 
-The linker script arch/x86/kernel/vmlinux.lds.S matches the thunk
-sections ".text.__x86.*" from arch/x86/lib/retpoline.S as follows:
+This patch adds a USB quirk for Mythware XA001AU USB interface.
 
-  .text {
-    [...]
-    TEXT_TEXT
-    [...]
-    __indirect_thunk_start = .;
-    *(.text.__x86.*)
-    __indirect_thunk_end = .;
-    [...]
-  }
-
-Macro TEXT_TEXT references TEXT_MAIN which normally expands to only
-".text". However, with CONFIG_LTO_CLANG, TEXT_MAIN becomes
-".text .text.[0-9a-zA-Z_]*" which wrongly matches also the thunk
-sections. The output layout is then different than expected. For
-instance, the currently defined range [__indirect_thunk_start,
-__indirect_thunk_end] becomes empty.
-
-Prevent the problem by using ".." as the first separator, for example,
-".text..__x86.indirect_thunk". This pattern is utilized by other
-explicit section names which start with one of the standard prefixes,
-such as ".text" or ".data", and that need to be individually selected in
-the linker script.
-
-  [ nathan: Fix conflicts with SRSO and fold in fix issue brought up by
-    Andrew Cooper in post-review:
-    https://lore.kernel.org/20230803230323.1478869-1-andrew.cooper3@citrix.com ]
-
-Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230711091952.27944-2-petr.pavlu@suse.com
+Signed-off-by: dengxiang <dengxiang@nfschina.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230803024437.370069-1-dengxiang@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/vmlinux.lds.S |    8 ++++----
- arch/x86/lib/retpoline.S      |    8 ++++----
- tools/objtool/check.c         |    2 +-
- 3 files changed, 9 insertions(+), 9 deletions(-)
+ sound/usb/quirks-table.h |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -134,7 +134,7 @@ SECTIONS
- 		KPROBES_TEXT
- 		ALIGN_ENTRY_TEXT_BEGIN
- #ifdef CONFIG_CPU_SRSO
--		*(.text.__x86.rethunk_untrain)
-+		*(.text..__x86.rethunk_untrain)
- #endif
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -4431,6 +4431,35 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 		}
+ 	}
+ },
++{
++	/* Advanced modes of the Mythware XA001AU.
++	 * For the standard mode, Mythware XA001AU has ID ffad:a001
++	 */
++	USB_DEVICE_VENDOR_SPEC(0xffad, 0xa001),
++	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
++		.vendor_name = "Mythware",
++		.product_name = "XA001AU",
++		.ifnum = QUIRK_ANY_INTERFACE,
++		.type = QUIRK_COMPOSITE,
++		.data = (const struct snd_usb_audio_quirk[]) {
++			{
++				.ifnum = 0,
++				.type = QUIRK_IGNORE_INTERFACE,
++			},
++			{
++				.ifnum = 1,
++				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
++			},
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
++			},
++			{
++				.ifnum = -1
++			}
++		}
++	}
++},
  
- 		ENTRY_TEXT
-@@ -145,7 +145,7 @@ SECTIONS
- 		 * definition.
- 		 */
- 		. = srso_alias_untrain_ret | (1 << 2) | (1 << 8) | (1 << 14) | (1 << 20);
--		*(.text.__x86.rethunk_safe)
-+		*(.text..__x86.rethunk_safe)
- #endif
- 		ALIGN_ENTRY_TEXT_END
- 		SOFTIRQENTRY_TEXT
-@@ -155,8 +155,8 @@ SECTIONS
- 
- #ifdef CONFIG_RETPOLINE
- 		__indirect_thunk_start = .;
--		*(.text.__x86.indirect_thunk)
--		*(.text.__x86.return_thunk)
-+		*(.text..__x86.indirect_thunk)
-+		*(.text..__x86.return_thunk)
- 		__indirect_thunk_end = .;
- #endif
- 	} :text =0xcccc
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -11,7 +11,7 @@
- #include <asm/frame.h>
- #include <asm/nops.h>
- 
--	.section .text.__x86.indirect_thunk
-+	.section .text..__x86.indirect_thunk
- 
- .macro RETPOLINE reg
- 	ANNOTATE_INTRA_FUNCTION_CALL
-@@ -90,7 +90,7 @@ SYM_CODE_END(__x86_indirect_thunk_array)
-  * As a result, srso_alias_safe_ret() becomes a safe return.
-  */
- #ifdef CONFIG_CPU_SRSO
--	.section .text.__x86.rethunk_untrain
-+	.section .text..__x86.rethunk_untrain
- 
- SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
- 	UNWIND_HINT_FUNC
-@@ -100,7 +100,7 @@ SYM_START(srso_alias_untrain_ret, SYM_L_
- SYM_FUNC_END(srso_alias_untrain_ret)
- __EXPORT_THUNK(srso_alias_untrain_ret)
- 
--	.section .text.__x86.rethunk_safe
-+	.section .text..__x86.rethunk_safe
- #else
- /* dummy definition for alternatives */
- SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
-@@ -118,7 +118,7 @@ SYM_START(srso_alias_safe_ret, SYM_L_GLO
- 	int3
- SYM_FUNC_END(srso_alias_safe_ret)
- 
--	.section .text.__x86.return_thunk
-+	.section .text..__x86.return_thunk
- 
- SYM_CODE_START(srso_alias_return_thunk)
- 	UNWIND_HINT_FUNC
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -370,7 +370,7 @@ static int decode_instructions(struct ob
- 
- 		if (!strcmp(sec->name, ".noinstr.text") ||
- 		    !strcmp(sec->name, ".entry.text") ||
--		    !strncmp(sec->name, ".text.__x86.", 12))
-+		    !strncmp(sec->name, ".text..__x86.", 13))
- 			sec->noinstr = true;
- 
- 		for (offset = 0; offset < sec->sh.sh_size; offset += insn->len) {
+ #undef USB_DEVICE_VENDOR_SPEC
+ #undef USB_AUDIO_DEVICE
 
 
