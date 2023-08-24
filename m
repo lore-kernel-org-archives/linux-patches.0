@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DD1125AE
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:59:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F75C433C7;
-	Thu, 24 Aug 2023 14:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AE9125AE
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 14:59:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CF8C433C8;
+	Thu, 24 Aug 2023 14:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1692889150;
-	bh=7+5WthgXWzd2RfhUEKSk/p9KX6NAsYuDFLPkMzE7Rvo=;
+	s=korg; t=1692889153;
+	bh=3K7DmQgLp+34c6FKhZYLaydjAXccA5YSzHgcxyMpof4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGcCaW3SqKhDYZZJpkhkW/Y41Q0R7j4Zi7PeznfEfMtCdHxD01xwwHkS++k7b8V9p
-	 BHLdJiaFPK9NbOUrvGsjBcpEt96KMZzakvvyAYFvwotwTpbOe9vlRS/wkSp9RGYYKs
-	 mn0pOYERKQHC+A1Ij8U6wGLXJJKuXKbWpOnr40Ws=
+	b=DWS76LHrWnweh9My6pIK/K4p/qZ/46wSWqcGWE1ojbaii9rIuSaozNz+BG3wHU280
+	 GkjmCN+HbUVpbbsYY2D/7uosw4xGa8/Bp/+UENCyehK5aMNTR/YMFkrCveKzKbHoTj
+	 Izgip1dYx2QYx4ALksORO34rDrlfZJwl2GDyoOdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
+	Zhengping Jiang <jiangzp@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/135] pcmcia: rsrc_nonstatic: Fix memory leak in nonstatic_release_resource_db()
-Date: Thu, 24 Aug 2023 16:49:36 +0200
-Message-ID: <20230824145028.349122864@linuxfoundation.org>
+Subject: [PATCH 5.10 034/135] Bluetooth: L2CAP: Fix use-after-free
+Date: Thu, 24 Aug 2023 16:49:37 +0200
+Message-ID: <20230824145028.397316871@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230824145027.008282920@linuxfoundation.org>
 References: <20230824145027.008282920@linuxfoundation.org>
@@ -34,63 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Zhengping Jiang <jiangzp@google.com>
 
-[ Upstream commit c85fd9422fe0f5d667305efb27f56d09eab120b0 ]
+[ Upstream commit f752a0b334bb95fe9b42ecb511e0864e2768046f ]
 
-When nonstatic_release_resource_db() frees all resources associated
-with an PCMCIA socket, it forgets to free socket_data too, causing
-a memory leak observable with kmemleak:
+Fix potential use-after-free in l2cap_le_command_rej.
 
-unreferenced object 0xc28d1000 (size 64):
-  comm "systemd-udevd", pid 297, jiffies 4294898478 (age 194.484s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 f0 85 0e c3 00 00 00 00  ................
-    00 00 00 00 0c 10 8d c2 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffda4245>] __kmem_cache_alloc_node+0x2d7/0x4a0
-    [<7e51f0c8>] kmalloc_trace+0x31/0xa4
-    [<d52b4ca0>] nonstatic_init+0x24/0x1a4 [pcmcia_rsrc]
-    [<a2f13e08>] pcmcia_register_socket+0x200/0x35c [pcmcia_core]
-    [<a728be1b>] yenta_probe+0x4d8/0xa70 [yenta_socket]
-    [<c48fac39>] pci_device_probe+0x99/0x194
-    [<84b7c690>] really_probe+0x181/0x45c
-    [<8060fe6e>] __driver_probe_device+0x75/0x1f4
-    [<b9b76f43>] driver_probe_device+0x28/0xac
-    [<648b766f>] __driver_attach+0xeb/0x1e4
-    [<6e9659eb>] bus_for_each_dev+0x61/0xb4
-    [<25a669f3>] driver_attach+0x1e/0x28
-    [<d8671d6b>] bus_add_driver+0x102/0x20c
-    [<df0d323c>] driver_register+0x5b/0x120
-    [<942cd8a4>] __pci_register_driver+0x44/0x4c
-    [<e536027e>] __UNIQUE_ID___addressable_cleanup_module188+0x1c/0xfffff000 [iTCO_vendor_support]
-
-Fix this by freeing socket_data too.
-
-Tested on a Acer Travelmate 4002WLMi by manually binding/unbinding
-the yenta_cardbus driver (yenta_socket).
-
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Message-ID: <20230512184529.5094-1-W_Armin@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhengping Jiang <jiangzp@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index 69a6e9a5d6d26..6e90927e65769 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -1053,6 +1053,8 @@ static void nonstatic_release_resource_db(struct pcmcia_socket *s)
- 		q = p->next;
- 		kfree(p);
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 568f0f072b3df..7b40e4737a2bb 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6370,9 +6370,14 @@ static inline int l2cap_le_command_rej(struct l2cap_conn *conn,
+ 	if (!chan)
+ 		goto done;
+ 
++	chan = l2cap_chan_hold_unless_zero(chan);
++	if (!chan)
++		goto done;
 +
-+	kfree(data);
- }
+ 	l2cap_chan_lock(chan);
+ 	l2cap_chan_del(chan, ECONNREFUSED);
+ 	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
  
- 
+ done:
+ 	mutex_unlock(&conn->chan_lock);
 -- 
 2.40.1
 
