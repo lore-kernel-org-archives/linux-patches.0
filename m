@@ -1,157 +1,190 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161AA7F
-	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 02:29:12 +0000 (UTC)
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1bf078d5fb7so43078595ad.0
-        for <patches@lists.linux.dev>; Wed, 23 Aug 2023 19:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692844152; x=1693448952;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zKCXhB2d9eEsIabhRkYFGz83DNRkbGFKkcNsgtOAWX4=;
-        b=ffn7fTgO+vYmAGFEXgt8aPjndNN4bdpbtFiNTdc6aWN6ml2+aCOQXSZGX59R5hYrO2
-         /RJphiz+Po1O/vVKcqrH2acU/cwlfbiT22E+QT2+q/p2hNZoW7oTfBPSnvKe5STxP/Rx
-         KzXLR3QZJfvX7nRfz22pFhc6nvH2RXPvNARUSZUIjy54XOgKIzgDF/W1pxbcVp69T2M/
-         eSDNTrlpJOsyCm8Imqnk/PPO/aiRHnWZA8Lb22F3gd6fm/s8iZ7GZmc6fSZBgHqoheYA
-         Fc2A+11G8hO/h8B1yZb8otIy258fw45MJp94p3WS5E2KFZHCwPv7874VghCoBL+NgusO
-         ZLzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692844152; x=1693448952;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zKCXhB2d9eEsIabhRkYFGz83DNRkbGFKkcNsgtOAWX4=;
-        b=VBusiN4eiwYg8LZS8S2pb/2kOT7tYz59Fc5RW1A1DCT62WaoiHqmLGPi6Gcl8Si/60
-         399AWlX6U6eaYKQ+tiLhN7c0QjxVsU/MG+w+kyFSxNu1bPMNuOYZuE1vXW6fEgKK9dTX
-         YqGaoWE6ax8byzyCP28tiZaUmrkvhg13RWR1xl/lawUJeYh76e6m4p1YTGdlY4NJ/DnD
-         db+3r79PxZ68eI+3yteZ6+QS7hJeRyYjC5XsQY6FQVPsSohM6M8kDzYtt+iAUa0zpVQs
-         JsIBa3E6g2QcFA6TOVPP8t3n1Xvxqk4yOPsR49ewgGQ6XnMvCH3O04ezc2lbcGEk5HHd
-         5tYg==
-X-Gm-Message-State: AOJu0YyW36iXWO4vvuLvww4YhSFjXNuv7M6mHdCuq8/GR+wAcpSG4jE9
-	hZTalPEigSsAIynd4SXP+Do=
-X-Google-Smtp-Source: AGHT+IEgoVqccPkY6NNtb9xdY3HJrJDVSmeLCx3iVcKjBL6dZsYoK+YU+LymbLU204An74vBUJLA6g==
-X-Received: by 2002:a17:902:d507:b0:1bf:3c10:1d70 with SMTP id b7-20020a170902d50700b001bf3c101d70mr13711414plg.6.1692844152344;
-        Wed, 23 Aug 2023 19:29:12 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id kx14-20020a170902f94e00b001b567bbe82dsm11568484plb.150.2023.08.23.19.29.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Aug 2023 19:29:12 -0700 (PDT)
-Message-ID: <db8c6795-0632-4288-98a9-d22e50c689ac@gmail.com>
-Date: Wed, 23 Aug 2023 23:28:34 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202817F2
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 06:49:57 +0000 (UTC)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20230824064159euoutp024989149b33e80c78773432a3b79a09e4~_PpTx5xtg1709717097euoutp02g
+	for <patches@lists.linux.dev>; Thu, 24 Aug 2023 06:41:59 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230824064159euoutp024989149b33e80c78773432a3b79a09e4~_PpTx5xtg1709717097euoutp02g
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1692859319;
+	bh=pUmxRM83H3hPfH5q9K2Tm5tvur4KAIlpeP6pDPyB8SM=;
+	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
+	b=VTAfBeC5uZFmAUStzw8O+QU8cK6hAAjtsj33fjE6gdJp2grTIBUFVRHztYbiRf3bU
+	 InwUZzx1TyO02XtQS1s5Sgh8EEq51/cCwuY/DHcB/9ZEDCF1M0GBa05lMaaxh4JjJl
+	 /ily2ufwZdzc1JjmKDUKr1UDURbzUQP6gYGmqr7w=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+	20230824064157eucas1p13dd030b30dfde1d5f8cabce08b9a039b~_PpSdbcbF0594005940eucas1p1C;
+	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+	eusmges1new.samsung.com (EUCPMTA) with SMTP id AE.8C.42423.5BBF6E46; Thu, 24
+	Aug 2023 07:41:57 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+	20230824064157eucas1p1023586f5eec1f0bed1464a7a388b3ad3~_PpSAPKed0592305923eucas1p1C;
+	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20230824064157eusmtrp20e977ff431bc6722598ffc56c495d2e7~_PpR-gm__0717307173eusmtrp2T;
+	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
+X-AuditID: cbfec7f2-a3bff7000002a5b7-a9-64e6fbb54379
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+	eusmgms2.samsung.com (EUCPMTA) with SMTP id 22.75.14344.5BBF6E46; Thu, 24
+	Aug 2023 07:41:57 +0100 (BST)
+Received: from CAMSVWEXC01.scsc.local (unknown [106.1.227.71]) by
+	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20230824064157eusmtip246268c6b99399374e45c67e04d59c789~_PpR1RPmk1967019670eusmtip2d;
+	Thu, 24 Aug 2023 06:41:57 +0000 (GMT)
+Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) by
+	CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) with Microsoft SMTP
+	Server (TLS) id 15.0.1497.2; Thu, 24 Aug 2023 07:41:57 +0100
+Received: from CAMSVWEXC02.scsc.local ([::1]) by CAMSVWEXC02.scsc.local
+	([fe80::3c08:6c51:fa0a:6384%13]) with mapi id 15.00.1497.012; Thu, 24 Aug
+	2023 07:41:56 +0100
+From: Andreas Hindborg <a.hindborg@samsung.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+CC: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
+	<alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
+	<gary@garyguo.net>, =?iso-8859-1?Q?Bj=F6rn_Roy_Baron?=
+	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice
+	Ryhl <aliceryhl@google.com>, "rust-for-linux@vger.kernel.org"
+	<rust-for-linux@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: Re: [PATCH 1/2] rust: arc: add explicit `drop()` around
+ `Box::from_raw()`
+Thread-Topic: [PATCH 1/2] rust: arc: add explicit `drop()` around
+	`Box::from_raw()`
+Thread-Index: AQHZ1duEypdgNEUaJ0yfoLAXoIgAyq/475mA
+Date: Thu, 24 Aug 2023 06:41:55 +0000
+Message-ID: <877cpl7xhp.fsf@samsung.com>
+In-Reply-To: <20230823160244.188033-2-ojeda@kernel.org>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [106.210.248.72]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] rust: upgrade to Rust 1.72.0
-Content-Language: en-US
-To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
- <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org,
- linux-doc@vger.kernel.org
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRmVeSWpSXmKPExsWy7djPc7pbfz9LMTj11tTi7+zt7BYnrjex
+	WHy41sRqcePCfmaLNVsamSwunnnNaHF51xw2i5XzlwNZJy4xWqx/dpjZYsOytYwO3B5LOn8x
+	eeycdZfdY8GmUo9NqzrZPF5snsno8b19D5tHT9smJo/Pm+QCOKK4bFJSczLLUov07RK4Mnb+
+	PM5ccEuk4tHppYwNjDf5uxg5OSQETCQOLf7C3MXIxSEksIJR4t+t9ywQzhdGieXvTrBCOJ8Z
+	JVr2T2aEadl6+DZUYjmjxOMNTexwVf8n3YTqPwPU8nYWVNlKRolr8x8xg/SzCehLXFtzDcwW
+	EVCWaDjwig2kiFngAbPEi+ZNYAlhgRCJMz/uMUEUhUps3HAIyjaSaFnyiAXEZhFQlVgy8S9Y
+	Pa+AhkTvuoVgNqeAucTiK2/AbEYBWYlHK3+xg9jMAuISt57MZ4J4QlBi0ew9zBC2mMS/XQ/Z
+	IGwdibPXn0A9aiCxdek+FghbSWLKlvfMEHP0JG5MncIGYWtLLFv4GuoGQYmTM5+AvS8h8I1T
+	4vHW9VALXCROLN0PtUBY4tXxLewQtozE/53zmSYwas9Cct8sJDtmIdkxC8mOBYwsqxjFU0uL
+	c9NTiw3zUsv1ihNzi0vz0vWS83M3MQKT2ul/xz/tYJz76qPeIUYmDsZDjBIczEoivF98nqUI
+	8aYkVlalFuXHF5XmpBYfYpTmYFES59W2PZksJJCeWJKanZpakFoEk2Xi4JRqYMpnW5t81kSc
+	bVXRwlUB+9ys05s4rvx76fTJqr4u1VbKZWO+kuD6oyeatu5UYJWw28eWlq+iziJQwbNQ5kB3
+	Z/j94Go1td6Hao+TZh8wmbky/M/ag+ambWYysRwFBxlXyMzytdKPnFXmvarI5afW1dK6WefW
+	PK7/dLP5Nusr/dOMvP84Nm1ivNhRtt4z5KCmcevuTzPq6yapzS+5tf/Mt3k80+s6Z9hfXOOq
+	V+KR5qdmF6pg1qP17TTHffajM5rP3/bmCmN/lxSWvXfDg1kGc9VevXmkUjfps46sanP1Q4tD
+	ExQENrxebnEwx/d54bJPjzpcRF7fWFb4YJsFc8Is97rVjo0i278+dJ757ojiYiWW4oxEQy3m
+	ouJEAO+WnSrZAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAKsWRmVeSWpSXmKPExsVy+t/xe7pbfz9LMdgxRcLi7+zt7BYnrjex
+	WHy41sRqcePCfmaLNVsamSwunnnNaHF51xw2i5XzlwNZJy4xWqx/dpjZYsOytYwO3B5LOn8x
+	eeycdZfdY8GmUo9NqzrZPF5snsno8b19D5tHT9smJo/Pm+QCOKL0bIryS0tSFTLyi0tslaIN
+	LYz0DC0t9IxMLPUMjc1jrYxMlfTtbFJSczLLUov07RL0Mnb+PM5ccEuk4tHppYwNjDf5uxg5
+	OSQETCS2Hr7N2sXIxSEksJRR4v2TQ2wQCRmJjV+uskLYwhJ/rnWBxYUEPjJKLHojD9FwhlFi
+	4udjbBDOSkaJO2uXM4NUsQnoS1xbcw3MFhFQlmg48AqsiFngAbPEqjcd7CAJYYEQiTM/7jFB
+	FIVK7G25zw5hG0m0LHnEAmKzCKhKLJn4F2wQr4CGRO+6hcwQZ2xnlPi3TB/E5hQwl1h85Q1Y
+	nFFAVuLRyl9gc5gFxCVuPZnPBPGCgMSSPeeZIWxRiZeP/0G9piNx9voTRgjbQGLr0n0sELaS
+	xJQt75kh5uhJ3Jg6hQ3C1pZYtvA11D2CEidnPmGZwCg9C8m6WUhaZiFpmYWkZQEjyypGkdTS
+	4tz03GIjveLE3OLSvHS95PzcTYzApLTt2M8tOxhXvvqod4iRiYPxEKMEB7OSCO8Xn2cpQrwp
+	iZVVqUX58UWlOanFhxhNgWE0kVlKNDkfmBbzSuINzQxMDU3MLA1MLc2MlcR5PQs6EoUE0hNL
+	UrNTUwtSi2D6mDg4pRqYIp+Wl6QKFS7L0mOu/cPA9rqLPzLcp3KKeWvAPautT96dF3mz2Hz9
+	nOl7Rb41vJ51g0PKxem20nPvD2q5k7q2m8iffR/fe8TpnvOTrlP7Pl5M9tEvZVtcpvfzmuTO
+	OH/lVb8vvl7aJBH3/klnsrvYGsWA7usbPS79DI9/p2Wxe+Xlly7S/4LPycU6qegLta/WDbib
+	sTBlomdK+P6bmx6skF9yYN4Kqd9bjr/2nLKMoU+R9bHvSY60hkNc+4tVsnSlnOcFy/05bvdI
+	ceeRzTrL3j8wmc/3aZ5letTLbE7Wm1aFErfrPTw3/zMs3DHFLPeSkdbcPUd/VOf+rNujfOly
+	3To37pjG2U2zVi58zndQRYmlOCPRUIu5qDgRAJmifW7TAwAA
+X-CMS-MailID: 20230824064157eucas1p1023586f5eec1f0bed1464a7a388b3ad3
+X-Msg-Generator: CA
+X-RootMTR: 20230823160307eucas1p10d2cc77f1ee1c9129681eb585a386521
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20230823160307eucas1p10d2cc77f1ee1c9129681eb585a386521
 References: <20230823160244.188033-1-ojeda@kernel.org>
- <20230823160244.188033-3-ojeda@kernel.org>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230823160244.188033-3-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+	<CGME20230823160307eucas1p10d2cc77f1ee1c9129681eb585a386521@eucas1p1.samsung.com>
+	<20230823160244.188033-2-ojeda@kernel.org>
 
-On 8/23/23 13:02, Miguel Ojeda wrote:
-> This is the second upgrade to the Rust toolchain, from 1.71.1 to 1.72.0
-> (i.e. the latest) [1].
-> 
-> See the upgrade policy [2] and the comments on the first upgrade in
-> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
-> 
-> # Unstable features
-> 
-> No unstable features (that we use) were stabilized.
-> 
-> Therefore, the only unstable feature allowed to be used outside
-> the `kernel` crate is still `new_uninit`, though other code to be
-> upstreamed may increase the list.
-> 
-> Please see [3] for details.
-> 
-> # Other improvements
-> 
-> Previously, the compiler could incorrectly generate a `.eh_frame`
-> section under `-Cpanic=abort`. We were hitting this bug in our
-> old `rust` branch [4]. Gary fixed the issue in Rust 1.72.0 [5].
-> 
-> # Required changes
-> 
-> For the upgrade, the following changes are required:
-> 
->    - A call to `Box::from_raw` in `rust/kernel/sync/arc.rs` now requires
->      an explicit `drop()` call. See previous patch for details.
-> 
-> # `alloc` upgrade and reviewing
-> 
-> The vast majority of changes are due to our `alloc` fork being upgraded
-> at once.
-> 
-> There are two kinds of changes to be aware of: the ones coming from
-> upstream, which we should follow as closely as possible, and the updates
-> needed in our added fallible APIs to keep them matching the newer
-> infallible APIs coming from upstream.
-> 
-> Instead of taking a look at the diff of this patch, an alternative
-> approach is reviewing a diff of the changes between upstream `alloc` and
-> the kernel's. This allows to easily inspect the kernel additions only,
-> especially to check if the fallible methods we already have still match
-> the infallible ones in the new version coming from upstream.
-> 
-> Another approach is reviewing the changes introduced in the additions in
-> the kernel fork between the two versions. This is useful to spot
-> potentially unintended changes to our additions.
-> 
-> To apply these approaches, one may follow steps similar to the following
-> to generate a pair of patches that show the differences between upstream
-> Rust and the kernel (for the subset of `alloc` we use) before and after
-> applying this patch:
-> 
->      # Get the difference with respect to the old version.
->      git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->      git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->          cut -d/ -f3- |
->          grep -Fv README.md |
->          xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->      git -C linux diff --patch-with-stat --summary -R > old.patch
->      git -C linux restore rust/alloc
-> 
->      # Apply this patch.
->      git -C linux am rust-upgrade.patch
-> 
->      # Get the difference with respect to the new version.
->      git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->      git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->          cut -d/ -f3- |
->          grep -Fv README.md |
->          xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->      git -C linux diff --patch-with-stat --summary -R > new.patch
->      git -C linux restore rust/alloc
-> 
-> Now one may check the `new.patch` to take a look at the additions (first
-> approach) or at the difference between those two patches (second
-> approach). For the latter, a side-by-side tool is recommended.
-> 
-> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1720-2023-08-24 [1]
-> Link: https://rust-for-linux.com/rust-version-policy [2]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1012 [4]
-> Link: https://github.com/rust-lang/rust/pull/112403 [5]
+
+Miguel Ojeda <ojeda@kernel.org> writes:
+
+> `Box::from_raw()` is `#[must_use]`, which means the result cannot
+> go unused.
+>
+> In Rust 1.71.0, this was not detected because the block expression
+> swallows the diagnostic [1]:
+>
+>     unsafe { Box::from_raw(self.ptr.as_ptr()) };
+>
+> It would have been detected, however, if the line had been instead:
+>
+>     unsafe { Box::from_raw(self.ptr.as_ptr()); }
+>
+> i.e. the semicolon being inside the `unsafe` block, rather than
+> outside.
+>
+> In Rust 1.72.0, the compiler started warning about this [2], so
+> without this patch we will get:
+>
+>         error: unused return value of `alloc::boxed::Box::<T>::from_raw` =
+that must be used
+>         --> rust/kernel/sync/arc.rs:302:22
+>         |
+>     302 |             unsafe { Box::from_raw(self.ptr.as_ptr()) };
+>         |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>         |
+>         =3D note: call `drop(Box::from_raw(ptr))` if you intend to drop t=
+he `Box`
+>         =3D note: `-D unused-must-use` implied by `-D warnings`
+>     help: use `let _ =3D ...` to ignore the resulting value
+>         |
+>     302 |             unsafe { let _ =3D Box::from_raw(self.ptr.as_ptr())=
+; };
+>         |                      +++++++                                 +
+>
+> Thus add an add an explicit `drop()` as the `#[must_use]`'s
+> annotation suggests (instead of the more general help line).
+>
+> Link: https://protect2.fireeye.com/v1/url?k=3D9e9028e1-ff1b3dd7-9e91a3ae-=
+74fe485cbff1-f2bfda5f7702c68e&q=3D1&e=3D66bd90a6-86db-48e7-8538-c118c3f45ba=
+a&u=3Dhttps%3A%2F%2Fgithub.com%2Frust-lang%2Frust%2Fissues%2F104253 [1]
+> Link: https://protect2.fireeye.com/v1/url?k=3D89300613-e8bb1325-89318d5c-=
+74fe485cbff1-fcf76e46b008b25a&q=3D1&e=3D66bd90a6-86db-48e7-8538-c118c3f45ba=
+a&u=3Dhttps%3A%2F%2Fgithub.com%2Frust-lang%2Frust%2Fpull%2F112529 [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
-> [...]
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+
+Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
+
+>  rust/kernel/sync/arc.rs | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index 172f563976a9..4c14d540a581 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -299,7 +299,7 @@ fn drop(&mut self) {
+>              // The count reached zero, we must free the memory.
+>              //
+>              // SAFETY: The pointer was initialised from the result of `B=
+ox::leak`.
+> -            unsafe { Box::from_raw(self.ptr.as_ptr()) };
+> +            unsafe { drop(Box::from_raw(self.ptr.as_ptr())) };
+>          }
+>      }
+>  }
