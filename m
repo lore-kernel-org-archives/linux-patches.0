@@ -1,181 +1,222 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05ACCA52
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 12:18:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1692965890; x=1724501890;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=pKrWa/+guseK12hSWiHg8JwVCS7BT39n7+hjvajt3Hs=;
-  b=VS03x/pPUQAEWSAWxjG5mIqKP7tf3Z4x/DBajLnX//UsvYc7a8EV1J69
-   8BQs/K/IcVYnEg8vEKH3SoJ4xl+9fc1hub/OVW7OIKX63v/Ek3i75ySoo
-   hbNggfzoG79i5KlDhfV38UwIJNKFUBFbZY0iYpBP4Lol9dfB+/du9JQTV
-   Og9awrLSk2YIIaqMtHyg4KJKzFamSWS17DTrgNj7kEadQQ+vwT7U96BwN
-   U3TmGTKA6xRwrm0HoyHgHvuO014CeWyvANLqQgYInsbcxSKafW+87w/sf
-   ettp8Zvg7ekqTqrCDNdCjHuWrN89WtuVDzVxw8XYjVflV2BakkmACqxO2
-   Q==;
-X-IronPort-AV: E=Sophos;i="6.02,195,1688454000"; 
-   d="asc'?scan'208";a="168288541"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Aug 2023 05:16:56 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
- chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Fri, 25 Aug 2023 05:16:51 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Fri, 25 Aug 2023 05:16:48 -0700
-Date: Fri, 25 Aug 2023 13:16:07 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
-Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
-Message-ID: <20230825-radish-gong-b42f53b3e6ad@wendy>
-References: <20230824141447.155846739@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195A8D2FD
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 12:19:58 +0000 (UTC)
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-44e8f9f3cceso395868137.1
+        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 05:19:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692965997; x=1693570797;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eWVoS962+5v+XMJivPj4ADWDoZA4XJSt9iO3IWvAP3I=;
+        b=zVuFIpyHDuk3QWOS/fSRWIeSSe4JP4cXr3RPZ/vEjXsa93xfKC+8m0/g7tf6DMamqB
+         458JfYLk5nbHGiSGosW/V0BvggDryG3PzsPsQEKeyM7L2Xlil/iJA+7RBq2s6KvFaWle
+         8aMVmoqstfs7qkU5BLiBvZ3BB/3zhWpmRb5+yCuwRk5U/n4tVK0c1fnXLNEME1Q8QIcl
+         7M1BVepJRq4AHWH2cZpS0HMBIOx0lnXl/2vPOPMdjJyQqx8Lk8m1jfFgtvC6DUi8jIPA
+         H5cWxJUb3F0Pf9eJqKeN0X4BPZdfLQCIexWBFzEgEWPAJw/nZq2MaZwQnKW3RorkFxJb
+         5/6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692965997; x=1693570797;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eWVoS962+5v+XMJivPj4ADWDoZA4XJSt9iO3IWvAP3I=;
+        b=fl0IjpUDyK4riciJ/k+vZqAyCSSUT09B0y8fLyadxjPv7EwbxNcqOuPoRzuHaFOMIJ
+         jbRDoCF5odKzxq0eC1OnsVAHw6UB0Eghk8I6OIEVj75hr5yU6j2/qnWxtYg1S657TkcE
+         e4qYoQGOd0NVUQp03q2t6qdnfGIRmE7wYBUXBKsv1/K5KreYz37v52bHQ+xDfKa8shWY
+         khzVHHA92ez94oNz64APHtrIeoX+YQcPL8KRADHm5qOFixYIcTxTl4lSjV2xX2pSJVvJ
+         N9XBjMvLyc1rw9DlXkx+sCy+dfR0or6dyIyEThAj3elHpkc+eGqF8YBQVEsSXCAf9PPV
+         fDjQ==
+X-Gm-Message-State: AOJu0YxQ6KZFUGcnNN8WKcbmdWoWwTbqgrBcPkuoSuhaWa4oxPqPVb7T
+	o/nXnmpVuna7YyUW1TGODQ+EsnA4k4OzAx3+wJAt0Q==
+X-Google-Smtp-Source: AGHT+IGAzBJu1U4ZveBua1HdVCYaS9q1v7fDgzyHKuP8pRC5Ec7GO9UGe/UxaB/YLIaSbVFA4rzWdorcSNnyZyhc7aw=
+X-Received: by 2002:a67:ce15:0:b0:44e:a18a:2514 with SMTP id
+ s21-20020a67ce15000000b0044ea18a2514mr3193080vsl.33.1692965997673; Fri, 25
+ Aug 2023 05:19:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="nkFZEeQSBoq7Dahz"
-Content-Disposition: inline
-In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
-
---nkFZEeQSBoq7Dahz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230824170617.074557800@linuxfoundation.org>
+In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 25 Aug 2023 17:49:46 +0530
+Message-ID: <CA+G9fYurCBZt7Q3fU9NtXrBUHXzCTAY6g+xsu_BzU7nxNcy2DA@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 24, 2023 at 04:14:56PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.48 release.
-> There are 15 patches in this series, all will be posted as a response
+On Thu, 24 Aug 2023 at 22:47, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.192 release.
+> There are 135 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-
-SRSO mitigations are probably not in the slightest bit relevant for me,
-but I didn't get a chance to retest the previous stable release after
-the build got unbricked for RISC-V, so:
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-
-Fix for the build issue I saw should be on it's way to Linus today, so
-I guess the original fix you were backporting & its fix should end up
-back in your queue soonTM.
-
-Thanks,
-Conor.
-
->=20
-> Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
+>
+> Responses should be made by Sat, 26 Aug 2023 17:05:50 +0000.
 > Anything received after that time might be too late.
->=20
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-=
-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.192-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.1.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
 > and the diffstat can be found below.
->=20
+>
 > thanks,
->=20
+>
 > greg k-h
->=20
-> -------------
-> Pseudo-Shortlog of commits:
->=20
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 6.1.48-rc1
->=20
-> Borislav Petkov (AMD) <bp@alien8.de>
->     x86/srso: Correct the mitigation status when SMT is disabled
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     objtool/x86: Fixup frame-pointer vs rethunk
->=20
-> Petr Pavlu <petr.pavlu@suse.com>
->     x86/retpoline,kprobes: Fix position of thunk sections with CONFIG_LTO=
-_CLANG
->=20
-> Borislav Petkov (AMD) <bp@alien8.de>
->     x86/srso: Disable the mitigation on unaffected configurations
->=20
-> Borislav Petkov (AMD) <bp@alien8.de>
->     x86/CPU/AMD: Fix the DIV(0) initial fix attempt
->=20
-> Sean Christopherson <seanjc@google.com>
->     x86/retpoline: Don't clobber RFLAGS during srso_safe_ret()
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/static_call: Fix __static_call_fixup()
->=20
-> Borislav Petkov (AMD) <bp@alien8.de>
->     x86/srso: Explain the untraining sequences a bit more
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/cpu: Cleanup the untrain mess
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/cpu: Rename srso_(.*)_alias to srso_alias_\1
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/cpu: Rename original retbleed methods
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/cpu: Clean up SRSO return thunk mess
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/alternative: Make custom return thunk unconditional
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/cpu: Fix up srso_safe_ret() and __x86_return_thunk()
->=20
-> Peter Zijlstra <peterz@infradead.org>
->     x86/cpu: Fix __x86_return_thunk symbol type
->=20
->=20
-> -------------
->=20
-> Diffstat:
->=20
->  Documentation/admin-guide/hw-vuln/srso.rst |   4 +-
->  Makefile                                   |   4 +-
->  arch/x86/include/asm/entry-common.h        |   1 +
->  arch/x86/include/asm/nospec-branch.h       |  28 +++---
->  arch/x86/kernel/cpu/amd.c                  |   1 +
->  arch/x86/kernel/cpu/bugs.c                 |  28 +++++-
->  arch/x86/kernel/static_call.c              |  13 +++
->  arch/x86/kernel/traps.c                    |   2 -
->  arch/x86/kernel/vmlinux.lds.S              |  20 ++--
->  arch/x86/kvm/svm/svm.c                     |   2 +
->  arch/x86/lib/retpoline.S                   | 141 ++++++++++++++++++++---=
-------
->  tools/objtool/arch/x86/decode.c            |   2 +-
->  tools/objtool/check.c                      |  21 +++--
->  13 files changed, 182 insertions(+), 85 deletions(-)
->=20
->=20
 
---nkFZEeQSBoq7Dahz
-Content-Type: application/pgp-signature; name="signature.asc"
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
------BEGIN PGP SIGNATURE-----
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZOibhwAKCRB4tDGHoIJi
-0ir9APwJNOqXyqbbaUtHMlbqI/DUrcQjWxsS98/PmHK//Tp7JgEAyhMga4q+QApr
-kaPHLpoRzYPdyy8r/pOeGIvbCdPg3A4=
-=tUo8
------END PGP SIGNATURE-----
+NOTE:
+1)
+LTP syscalls chown02 and fchown02 test failures on NFS mounted filesystem
+on arm64 Rpi4 will be investigated further.
 
---nkFZEeQSBoq7Dahz--
+## Build
+* kernel: 5.10.191-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.10.y
+* git commit: da59b7b5c515edab9a57efd37b031b5b97e6c1cc
+* git describe: v5.10.190-136-gda59b7b5c515
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.190-136-gda59b7b5c515
+
+## Test Regressions (compared to v5.10.191)
+
+## Metric Regressions (compared to v5.10.191)
+
+## Test Fixes (compared to v5.10.191)
+
+## Metric Fixes (compared to v5.10.191)
+
+## Test result summary
+total: 98769, pass: 80650, fail: 1588, skip: 16473, xfail: 58
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 116 total, 116 passed, 0 failed
+* arm64: 43 total, 43 passed, 0 failed
+* i386: 34 total, 34 passed, 0 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 4 total, 0 passed, 4 failed
+* powerpc: 26 total, 25 passed, 1 failed
+* riscv: 12 total, 11 passed, 1 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 36 total, 36 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
