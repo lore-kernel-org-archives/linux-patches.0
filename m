@@ -1,136 +1,181 @@
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2076.outbound.protection.outlook.com [40.107.100.76])
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713F6C8F3
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 10:15:19 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ITtmEM1VqPRI3wubhU2AlDpGeZyUolWRpjklUtylk5/3abgA7mzWrSrGQKH9rTg7yBXcZNcRFq795vXl2rB1Gt8QHErcgzL68BrNRvEbSbDAor40aS/RdPNL68Enwhoyout/DZS5JwpEm6VVfHW5oAqDFTj07eZWtz9Xjqqn7FwnJKNcrysK6prVxXCcfvvWWnZ273HQK6DM8pqBeu+nkcg5nsInXrqA3y851Z3g9rFPH7/A1ohu907Xkh8lQXofuEAF+pWjV4NHYWg92c9zBmj4QWIIAki+t82xqT4jxAssh2RPFhtbzjxslbtqxqG3NAbUdxBGslOJB+wAr9wU8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lUSMHK27Taad8TDXd6xfubD06oLoueIndVR761+Jc80=;
- b=dqrxDbDfU1EijnOAVOPZm3d2f8TggstpfJiDxU/ZbBKwa/OllzYBsUFGQYVpFxSTLRsi11bEpmQwsxFtrxcKOIB3hNw7dohipUdI+6cOP5wI0Hl6kKVHFplTLd2ViCor9l6hJ1Dz+A6SD8laP06Xl5gIDE8OmmS9hlzfi7AZA2AhXPzFXJLA4PmC47OvAejXb9rQ1DHM5AEvIdXWoTyZ9NTl7P7w4jD0apf0c+yFiZQfU5SVoDoHw2aVK80PRaLm2IiJoJ6Nk89JI154Mn1XvFI2pMbYwdxU1mRjif6RuPeBMzFC64w5MbULaCDVywQbTGEnT7UmPGL/XH3FM4Ffww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lUSMHK27Taad8TDXd6xfubD06oLoueIndVR761+Jc80=;
- b=tTRD/IuqOX/eC/DTxES7NCNg+4P7syRy7ToK6QfQxaKF6+hyHliFjj88LYH54uLN+6ipSgVb7xqPqM8eEqN0gNncNQ0tkenZ5rtL+PumFD5VkjfVgmLai1BISLAZne4yhU9NbFKG3al3VQYPv0knq+GRtzF9OBHAjvkXFzm8KCMG+1+c4ViDv41/swTljqgNUZrEPTvd5b8Ie2w6Q8EvW77f6jBLCknxO5lpGsN3eiFtt7+pXxwa8cIuOvaa45pWD1tL0Qu18VS0OQVK4YKqJiuZtwFs/HNulRNYrKtAWj5w7pxxCJcCx/wAwMwtRxHCq3pBaCoM8/bXUtvTmD7aMA==
-Received: from SA9P223CA0028.NAMP223.PROD.OUTLOOK.COM (2603:10b6:806:26::33)
- by IA1PR12MB8537.namprd12.prod.outlook.com (2603:10b6:208:453::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.27; Fri, 25 Aug
- 2023 10:15:15 +0000
-Received: from SN1PEPF0002636A.namprd02.prod.outlook.com
- (2603:10b6:806:26:cafe::bc) by SA9P223CA0028.outlook.office365.com
- (2603:10b6:806:26::33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.33 via Frontend
- Transport; Fri, 25 Aug 2023 10:15:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SN1PEPF0002636A.mail.protection.outlook.com (10.167.241.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6699.14 via Frontend Transport; Fri, 25 Aug 2023 10:15:14 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Fri, 25 Aug 2023
- 03:15:03 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Fri, 25 Aug
- 2023 03:15:02 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Fri, 25 Aug 2023 03:15:02 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05ACCA52
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 12:18:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1692965890; x=1724501890;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pKrWa/+guseK12hSWiHg8JwVCS7BT39n7+hjvajt3Hs=;
+  b=VS03x/pPUQAEWSAWxjG5mIqKP7tf3Z4x/DBajLnX//UsvYc7a8EV1J69
+   8BQs/K/IcVYnEg8vEKH3SoJ4xl+9fc1hub/OVW7OIKX63v/Ek3i75ySoo
+   hbNggfzoG79i5KlDhfV38UwIJNKFUBFbZY0iYpBP4Lol9dfB+/du9JQTV
+   Og9awrLSk2YIIaqMtHyg4KJKzFamSWS17DTrgNj7kEadQQ+vwT7U96BwN
+   U3TmGTKA6xRwrm0HoyHgHvuO014CeWyvANLqQgYInsbcxSKafW+87w/sf
+   ettp8Zvg7ekqTqrCDNdCjHuWrN89WtuVDzVxw8XYjVflV2BakkmACqxO2
+   Q==;
+X-IronPort-AV: E=Sophos;i="6.02,195,1688454000"; 
+   d="asc'?scan'208";a="168288541"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 25 Aug 2023 05:16:56 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
+ chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Fri, 25 Aug 2023 05:16:51 -0700
+Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Fri, 25 Aug 2023 05:16:48 -0700
+Date: Fri, 25 Aug 2023 13:16:07 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
-	<stable@vger.kernel.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
 Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
-In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
+Message-ID: <20230825-radish-gong-b42f53b3e6ad@wendy>
 References: <20230824141447.155846739@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <21d07c5b-9599-4150-a9ab-a37037248f11@rnnvmail204.nvidia.com>
-Date: Fri, 25 Aug 2023 03:15:02 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002636A:EE_|IA1PR12MB8537:EE_
-X-MS-Office365-Filtering-Correlation-Id: ebe7bcc6-9b4e-4eb3-bd45-08dba5542ccb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	cFoy52F1ySMD+u51LEmOL5ttWQlDDYa179utcOMnhphguL53bys1Yo6O9LOJRO7jgIMXN7fHE6Z6QH5/zM0hhyMy4zt9jgg+PncHyGqx2riSyJJ74IZF67wS+NHCEoJ8yGlOF2Y8phblYekN/gxIkYu4NHvkns0CLbXZLESrsuw5YsDOCIc/yMg2i93qbNDckKy/6h0Mmv68HdMvCoK2L8E8pUukq1QUMG3DGsV6LetPt3TAkLu/C73vizGLmQmhfY5QsKc5jf0zns2oenqpkB9JZnfGCiMJmyzh8+LEIgIKFBu8XorJQ3zrrTy85/Bh8adl1MVAF/gzJgfZkj8ln0nSIknEKxBV71dd7MOK3DcbGpe0eUM8LBARgFLIfc2JudzI3On2VeqYl4qangeE7xf87oZtl6gwVygOcw+CQaUpyeZpwRnXEKp3vDSFVRhxp2Uzc4Oxpe7x78pBzsdktuR1sbVZewyJOy4+FxyeNI4vC2Wa7shRSFCKh69fv5uOJAnbVL6wO8jEPY4g7r/xImHfdeFwu5TedGHap0y83K/QonUb9RrHa3upWvrWk3JT4T60hhaRCc1arjGSq0KBe22N8Xj/KUGgFmXPT1Z24wxYTi0eyd9qLGMsXGNK9MHFQ/L7hfsc0/eqdEgPqvZkaVBxAHJWoU1FJ2x/wRkCJaevL8oEesJIJFnm2XYYi1yVku3/+kyJ66yfKRpzpmJ/BN688HN5Pd7Vn2A8qWyrxw5aVFjKBHwMIT0Y7M7gHfcXQlq+6a4sC+Erc88/bzo3vV4w8QSFG7e5EG73x20NMbM=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(376002)(346002)(39860400002)(396003)(136003)(186009)(82310400011)(1800799009)(451199024)(46966006)(36840700001)(40470700004)(40460700003)(5660300002)(4326008)(8676002)(8936002)(426003)(336012)(47076005)(7416002)(36860700001)(26005)(82740400003)(7636003)(356005)(70586007)(70206006)(54906003)(6916009)(40480700001)(316002)(478600001)(966005)(31686004)(41300700001)(2906002)(86362001)(31696002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2023 10:15:14.8880
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ebe7bcc6-9b4e-4eb3-bd45-08dba5542ccb
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF0002636A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8537
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="nkFZEeQSBoq7Dahz"
+Content-Disposition: inline
+In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
 
-On Thu, 24 Aug 2023 16:14:56 +0200, Greg Kroah-Hartman wrote:
+--nkFZEeQSBoq7Dahz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Aug 24, 2023 at 04:14:56PM +0200, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.48 release.
 > There are 15 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+
+SRSO mitigations are probably not in the slightest bit relevant for me,
+but I didn't get a chance to retest the previous stable release after
+the build got unbricked for RISC-V, so:
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+
+Fix for the build issue I saw should be on it's way to Linus today, so
+I guess the original fix you were backporting & its fix should end up
+back in your queue soonTM.
+
+Thanks,
+Conor.
+
+>=20
 > Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
 > Anything received after that time might be too late.
-> 
+>=20
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-=
+rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.1.y
 > and the diffstat can be found below.
-> 
+>=20
 > thanks,
-> 
+>=20
 > greg k-h
+>=20
+> -------------
+> Pseudo-Shortlog of commits:
+>=20
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Linux 6.1.48-rc1
+>=20
+> Borislav Petkov (AMD) <bp@alien8.de>
+>     x86/srso: Correct the mitigation status when SMT is disabled
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     objtool/x86: Fixup frame-pointer vs rethunk
+>=20
+> Petr Pavlu <petr.pavlu@suse.com>
+>     x86/retpoline,kprobes: Fix position of thunk sections with CONFIG_LTO=
+_CLANG
+>=20
+> Borislav Petkov (AMD) <bp@alien8.de>
+>     x86/srso: Disable the mitigation on unaffected configurations
+>=20
+> Borislav Petkov (AMD) <bp@alien8.de>
+>     x86/CPU/AMD: Fix the DIV(0) initial fix attempt
+>=20
+> Sean Christopherson <seanjc@google.com>
+>     x86/retpoline: Don't clobber RFLAGS during srso_safe_ret()
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/static_call: Fix __static_call_fixup()
+>=20
+> Borislav Petkov (AMD) <bp@alien8.de>
+>     x86/srso: Explain the untraining sequences a bit more
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/cpu: Cleanup the untrain mess
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/cpu: Rename srso_(.*)_alias to srso_alias_\1
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/cpu: Rename original retbleed methods
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/cpu: Clean up SRSO return thunk mess
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/alternative: Make custom return thunk unconditional
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/cpu: Fix up srso_safe_ret() and __x86_return_thunk()
+>=20
+> Peter Zijlstra <peterz@infradead.org>
+>     x86/cpu: Fix __x86_return_thunk symbol type
+>=20
+>=20
+> -------------
+>=20
+> Diffstat:
+>=20
+>  Documentation/admin-guide/hw-vuln/srso.rst |   4 +-
+>  Makefile                                   |   4 +-
+>  arch/x86/include/asm/entry-common.h        |   1 +
+>  arch/x86/include/asm/nospec-branch.h       |  28 +++---
+>  arch/x86/kernel/cpu/amd.c                  |   1 +
+>  arch/x86/kernel/cpu/bugs.c                 |  28 +++++-
+>  arch/x86/kernel/static_call.c              |  13 +++
+>  arch/x86/kernel/traps.c                    |   2 -
+>  arch/x86/kernel/vmlinux.lds.S              |  20 ++--
+>  arch/x86/kvm/svm/svm.c                     |   2 +
+>  arch/x86/lib/retpoline.S                   | 141 ++++++++++++++++++++---=
+------
+>  tools/objtool/arch/x86/decode.c            |   2 +-
+>  tools/objtool/check.c                      |  21 +++--
+>  13 files changed, 182 insertions(+), 85 deletions(-)
+>=20
+>=20
 
-All tests passing for Tegra ...
+--nkFZEeQSBoq7Dahz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Test results for stable-v6.1:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    125 tests:	125 pass, 0 fail
+-----BEGIN PGP SIGNATURE-----
 
-Linux version:	6.1.48-rc1-gc079d0dd788a
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZOibhwAKCRB4tDGHoIJi
+0ir9APwJNOqXyqbbaUtHMlbqI/DUrcQjWxsS98/PmHK//Tp7JgEAyhMga4q+QApr
+kaPHLpoRzYPdyy8r/pOeGIvbCdPg3A4=
+=tUo8
+-----END PGP SIGNATURE-----
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
+--nkFZEeQSBoq7Dahz--
