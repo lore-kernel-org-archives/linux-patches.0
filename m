@@ -1,43 +1,43 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB1C2D5
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 09:09:13 +0000 (UTC)
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-3fef56f7223so5994185e9.3
-        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 02:09:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B213FC2D6
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 09:27:03 +0000 (UTC)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2bbbda48904so9946261fa.2
+        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 02:27:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692954552; x=1693559352;
+        d=gmail.com; s=20221208; t=1692955621; x=1693560421;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BlCKPb+gS/u8b2HNdafG02mmprfB5qP1z6F3xKmLKkc=;
-        b=lyxwtosEE9udg9BUrGOeVC9n09rQIpZ8DTt9AoyUcY0b5Y92IIfHnNqAQWvxCwHxUk
-         yVrNgSxXiRXv8tV43Qc9zyreubVDqRmDxm3E8xJzP85ZcDsSEAV/X3qd87sp4IhUfb2X
-         JGlJ6IVHSnujSpAqjcacuvrwewTPdYrbjkl5vGLIjGKax3BZwfoNZXhHR5V1GK9PhT0c
-         UZ09uZS7xA465aBMkiTjuFLBXKjlqUrZq77MfVntfSZ1+YRT6sI3G+U4tDoHGP+T+bR+
-         5a2455/WmeoV9X6ZsZ9SRNgAMOeQB1ARBkld5qdl+2qbg066TzG7FLYOT7YoqYJC+O1Y
-         LePw==
+        bh=KLIb34o/c+wgzIaI/W11TTHPilZqFrAIi5zxpEV+WKs=;
+        b=V1BBvQD4G90DCb299wtQXfUEAJ1bztqjrdw+aAAdTdRWdoctYobMF3nVLQuADEVO4X
+         xMbFyGnykB7bQXxP1ieAE0IJMilAIeqCOpL2/X9RCRuIgFaJdVcJjof/DOuqSZPSgZRo
+         scSyhf4yQkMw0uN/+YBSNZ8H9oD5rcpO4tIoZyvnJ720CRCs+f4UUsY19sKhEXCO8Z3u
+         zDtnhEN/GEYhNA/S+8gKaBWLHEBYOQYBVvTNphfFrUVgbLF+RQ7u25WlcjWq35R7Aiv+
+         9Wk55ScAEzYez9XipE0Xi6H+IkaCnZB+bgaQS+/Hz3Vfs9lHO5TbFn7Z6Rg/1tXHDmZt
+         qd4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692954552; x=1693559352;
+        d=1e100.net; s=20221208; t=1692955621; x=1693560421;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BlCKPb+gS/u8b2HNdafG02mmprfB5qP1z6F3xKmLKkc=;
-        b=f3Hb0PXTUnuSO94ccZITr88U4/jff1wWhr+NNc5qG4mxs2pZkjF9Pbw2IIfhHIi8CK
-         zZsBN5lJC/YMW8GvtMWI1TnLLS+FsZXEejwZIRkTRxIkFzZ4QMll8Z62M0bMKbVnqmoD
-         aJIhDSpyenU7EVj4z/yiq7xPvRYqxJ2RN+QG+/+CI+hAugAY3K16GIa32h4UCBqGSmBB
-         rb7318+GymwQkcUSe8WXLu55/uJvfwUL8gn3AbeKStjzwqY/FD6NkzqH6q2+v7rwRz6L
-         eI7CPdtSxSm84V0S3cnqfnstT5pGUsOmBPmwu3JbIBgG/pgc59JJ2pfpu6UT9keDlaSo
-         yPtw==
-X-Gm-Message-State: AOJu0YxPThXXswAvQo8zHD5F8+DdzBVTMWEgKJ7FKAhkTNw58ret2Ht/
-	kGSa5FwO8GTl+Yov+Fv3Yrk=
-X-Google-Smtp-Source: AGHT+IEEvUTNIeIpX92kaNzNg6zFx0Ysh39VmTXqvkAAIcYoZFcL0Lm/wke4qo/TJ3e3dEM4nes60A==
-X-Received: by 2002:a05:600c:2248:b0:3fe:2bb1:11ba with SMTP id a8-20020a05600c224800b003fe2bb111bamr14300392wmm.27.1692954551583;
-        Fri, 25 Aug 2023 02:09:11 -0700 (PDT)
+        bh=KLIb34o/c+wgzIaI/W11TTHPilZqFrAIi5zxpEV+WKs=;
+        b=REPQHRF2ooHeii2IvOX7MNmcPWTEHXnqNJfbQ+J1Smy9QGCXThSxgCAVjO9exfNnEq
+         gu5SK+woLqVI2F7Z+bG0aEk9DE+y10DWr8kOj7BXQ+AS6psoSWBegtmuMbc0Z4V/fuXQ
+         aCSoZEdBeXHNbH9mVQNsrMzzEyE6eT8cSz0dZBDMylLO7pB2R08KGkpPEbk10BRyrLy7
+         ZWIPC4ARavn9jNM1v3V5sPvS0M6MC0AR19mwtlja1rrsfTJnr4N2UGqG5Gb1FZVlKy4o
+         BpxSHy2Pk417K6DQxdM2kf0lNtpsSRC/CTE4jz2P5M93PsHhyw9ukGryGyzHXJVc4er3
+         3gAQ==
+X-Gm-Message-State: AOJu0YxfhR79f06EKbm4Nd7rRboW2aGZGWIghlrevQ9G2XMVsIUuV5PD
+	+dK9N+iDptbX8rjTYTvlEjM=
+X-Google-Smtp-Source: AGHT+IHYhHBLG9CXKu+Ohjgnk3IxaJx2daiJS9dlj7TsOItg+c1Ie1PNjZnVBA78LhBEvYYvEvr4Fw==
+X-Received: by 2002:a2e:8053:0:b0:2bc:d7d6:2588 with SMTP id p19-20020a2e8053000000b002bcd7d62588mr6472711ljg.17.1692955621075;
+        Fri, 25 Aug 2023 02:27:01 -0700 (PDT)
 Received: from debian ([167.98.27.226])
-        by smtp.gmail.com with ESMTPSA id p18-20020a5d4e12000000b00317731a6e07sm1612026wrt.62.2023.08.25.02.09.10
+        by smtp.gmail.com with ESMTPSA id 2-20020a05600c248200b003fee567235bsm4573443wms.1.2023.08.25.02.27.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 02:09:11 -0700 (PDT)
-Date: Fri, 25 Aug 2023 10:09:09 +0100
+        Fri, 25 Aug 2023 02:27:00 -0700 (PDT)
+Date: Fri, 25 Aug 2023 10:26:59 +0100
 From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
 	rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 5.15 000/139] 5.15.128-rc1 review
-Message-ID: <ZOhvtS9fxHHLpZW3@debian>
-References: <20230824145023.559380953@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
+Message-ID: <ZOhz4/8Q8XjIqpCy@debian>
+References: <20230824141447.155846739@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,22 +57,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
+In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
 
 Hi Greg,
 
-On Thu, Aug 24, 2023 at 04:48:43PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.128 release.
-> There are 139 patches in this series, all will be posted as a response
+On Thu, Aug 24, 2023 at 04:14:56PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.48 release.
+> There are 15 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Sat, 26 Aug 2023 14:49:55 +0000.
+> Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
 > Anything received after that time might be too late.
 
 Build test (gcc version 12.3.1 20230625):
-mips: 62 configs -> no failure
-arm: 99 configs -> no failure
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
 arm64: 3 configs -> no failure
 x86_64: 4 configs -> no failure
 alpha allmodconfig -> no failure
@@ -83,16 +83,55 @@ s390 allmodconfig -> no failure
 xtensa allmodconfig -> no failure
 
 Boot test:
-x86_64: Booted on my test laptop. No regression.
-x86_64: Booted on qemu. No regression. [1]
+x86_64: Booted on my test laptop. Warning on boot.
+x86_64: Booted on qemu. Warning on boot. [1]
 arm64: Booted on rpi4b (4GB model). No regression. [2]
 mips: Booted on ci20 board. No regression. [3]
 
-[1]. https://openqa.qa.codethink.co.uk/tests/4793
-[2]. https://openqa.qa.codethink.co.uk/tests/4794
-[3]. https://openqa.qa.codethink.co.uk/tests/4784
+[1]. https://openqa.qa.codethink.co.uk/tests/4787
+[2]. https://openqa.qa.codethink.co.uk/tests/4796
+[3]. https://openqa.qa.codethink.co.uk/tests/4795
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+
+[    0.154501] ------------[ cut here ]------------
+[    0.154505] missing return thunk: __alt_instructions_end+0x21b2/0x21d0-srso_untrain_ret+0x0/0x2: e9 17 81 f8 fe
+[    0.154517] WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:572 apply_returns+0x1cb/0x200
+[    0.154524] Modules linked in:
+[    0.154526] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.1.48-rc1-c079d0dd788a+ #1
+[    0.154529] Hardware name: LENOVO 4287CTO/4287CTO, BIOS 8DET68WW (1.38 ) 04/11/2013
+[    0.154531] RIP: 0010:apply_returns+0x1cb/0x200
+[    0.154534] Code: 5b 01 00 0f 85 0b ff ff ff 49 89 e8 b9 05 00 00 00 4c 89 f2 48 89 ee 48 c7 c7 38 16 4f b8 c6 05 f5 d1 5b 01 01 e8 85 8e 05 00 <0f> 0b e9 e3 fe ff ff c7 84 24 81 00 00 00 cc cc cc cc 42 c7 44 38
+[    0.154536] RSP: 0000:ffffffffb8803e30 EFLAGS: 00010282
+[    0.154539] RAX: 0000000000000000 RBX: ffffffffb906d7b4 RCX: 0000000000000000
+[    0.154541] RDX: 0000000000000003 RSI: 0000000000004ffb RDI: 00000000ffffffff
+[    0.154542] RBP: ffffffffb9079962 R08: 0000000000000000 R09: 00000000ffffefff
+[    0.154544] R10: ffffffffb8803cc0 R11: ffffffffb88cc1e8 R12: ffffffffb906d7d4
+[    0.154545] R13: cccccccccccccccc R14: ffffffffb8001a7e R15: 0000000000000004
+[    0.154547] FS:  0000000000000000(0000) GS:ffff936dd6200000(0000) knlGS:0000000000000000
+[    0.154549] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    0.154551] CR2: ffff936dde5ff000 CR3: 000000013b40a001 CR4: 00000000000606f0
+[    0.154553] Call Trace:
+[    0.154556]  <TASK>
+[    0.154559]  ? __warn+0x79/0xc0
+[    0.154565]  ? apply_returns+0x1cb/0x200
+[    0.154567]  ? report_bug+0xee/0x170
+[    0.154572]  ? prb_read_valid+0x17/0x20
+[    0.154578]  ? handle_bug+0x42/0x70
+[    0.154581]  ? exc_invalid_op+0x14/0x70
+[    0.154583]  ? asm_exc_invalid_op+0x16/0x20
+[    0.154586]  ? retbleed_return_thunk+0x7e/0x7e
+[    0.154591]  ? apply_returns+0x1cb/0x200
+[    0.154594]  ? apply_retpolines+0x1f5/0x2c0
+[    0.154598]  alternative_instructions+0x4d/0xfc
+[    0.154604]  arch_cpu_finalize_init+0x28/0x47
+[    0.154607]  start_kernel+0x66c/0x70e
+[    0.154612]  secondary_startup_64_no_verify+0xce/0xdb
+[    0.154618]  </TASK>
+[    0.154619] ---[ end trace 0000000000000000 ]---
+
+
 
 -- 
 Regards
