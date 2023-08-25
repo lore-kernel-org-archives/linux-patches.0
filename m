@@ -1,76 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2072.outbound.protection.outlook.com [40.107.243.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49783C8C4;
-	Fri, 25 Aug 2023 10:00:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FDCC433C8;
-	Fri, 25 Aug 2023 10:00:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1692957634;
-	bh=NlJEoUDiLOj2R8N+CsSnvr2CsNGd9IvbYJ8CFvIoZQE=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=rcnTa2XOqrSic0xJnKkBx6+7jOm2zOAfWAQ0lILYMJnNIWBPhCOeKdXvMvnhNzJbb
-	 /jZc+PLlY8M7hWWQQclOK5JYkZKCWbiNRxPFSw4odGkF6wmYqSn1m+JX9NJJ98jQTk
-	 C6bgwcSdq0f8YEiL+eW2cJyQdPhtDRAIXtphGQkdtKa0GarvHrfZpjbX5CwGGnw56N
-	 FtGE8Eju24C+kbldEVZE5/fJFF0Tn12uvVX8EuO10s2jVgDlKHamRyfJasfS2bQcSX
-	 MrCkoF8u5XbiXiegbL6qOBpkef7xOIkVasJeie4Y4KGE7cyFC0UV9mqYHC8tYVYBiz
-	 NbnX10MmY6GQw==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0B9C2EB
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 10:14:21 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=I9K35MYtodZALGuvMVhSM2y/2E65c7P+WDgeB8DE/V1eEzuwOhe83Rsq8UdcGW0xBGdszzua/7GQyxCl0erhwv8KxgLAvRnFXlUIZAFj9EqSROpSNVALFDwOFwSkG2nbRxAQ2mAzugmqhCrUNh7rx++wfQ8Bdg7lKysoXX0siJuf6yb2erHVvvarNxpFMLKb8qg12t3a8SAeMy4Af9VrfFmwiOZPvxhubwB2jVP2AVKsP3X8ivMLE1VRXoK9Vq52YcoBizk1+K7if8a1bi/Tr4uaf+TwmdjJaH6YXTaR242K+iRhZfx/0cOLEwYHcabwUeGzUr785apQglvS4V205A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iM2YM2TI4VmZsYnOh1TTMuQPAUygxSqB3z6n8qTN20M=;
+ b=FVbaNLDZnziaIcnLYgmkTFYNpgJTQmS7FomvMUm3duFegRCqPFtYU27ib2/ACvBOiaF+3X8AamUMOmKRuFGiWoyDLjbJ75bpck0twieId0Uq8BSDg1gLuCXTt+SotZFgV7sz59Mweb3QvhdYS+knXFE0mwlzuLOiWNYKz4bR0rr7bpz9A+ZLCBuRxow9Xi67BWHmkTd+ERVjeT5GftfNbphwd0rp1ycTA92VyYK1cxoxZ+JeWKbFNYu7ymZyqjIrH6/y6r9Ow1+nBReZb1Qh3dF8PLvUE8WW1qH/y9tlA67HziwkQfprcQ0V0zNPiYKBHErhWWyI6jZSMUPa7qKiBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iM2YM2TI4VmZsYnOh1TTMuQPAUygxSqB3z6n8qTN20M=;
+ b=C7bwVvNg9YLz/66a1/83MJzeRAQhDeXihkeFhHYfgXOtO2Nl63tzQzsa02p/oUY/dl1yAWbiyacTAyuFWskjXRKcVTbYeogkldFUJOhBdB2gejvtz8R8yXhlaoU5kFDlGaHQ455mHBxLkZQnEWsDE2QVvSi+amVDx4OgGOmAXStSTCJkFaRAKCcFyDNtqUA74eh0SjMgZn5aOrELFJYo2RObeVCXvTL5c5IcJOaMq23PC7a+H/baPoqHrw/kHkOaxhFpujSfbLCPGfvMZZr8PtpprdhofxPj8QUln1NmU/zSZJ95ZRELa3WjTuh3bq+8sgyYD/gWFT1hwyVbapFwsg==
+Received: from DS7PR05CA0012.namprd05.prod.outlook.com (2603:10b6:5:3b9::17)
+ by LV2PR12MB5848.namprd12.prod.outlook.com (2603:10b6:408:173::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.27; Fri, 25 Aug
+ 2023 10:14:19 +0000
+Received: from CO1PEPF000044F1.namprd05.prod.outlook.com
+ (2603:10b6:5:3b9:cafe::3b) by DS7PR05CA0012.outlook.office365.com
+ (2603:10b6:5:3b9::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6723.19 via Frontend
+ Transport; Fri, 25 Aug 2023 10:14:18 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CO1PEPF000044F1.mail.protection.outlook.com (10.167.241.71) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6699.14 via Frontend Transport; Fri, 25 Aug 2023 10:14:18 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Fri, 25 Aug 2023
+ 03:14:04 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.37; Fri, 25 Aug 2023 03:14:04 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Fri, 25 Aug 2023 03:14:04 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
+In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
+References: <20230824170617.074557800@linuxfoundation.org>
+X-NVConfidentiality: public
 Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] wifi: rtw89: Fix clang -Wimplicit-fallthrough in
- rtw89_query_sar()
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: 
- <20230822-rtw89-tas-clang-implicit-fallthrough-v1-1-5cb73f0fa976@kernel.org>
-References: 
- <20230822-rtw89-tas-clang-implicit-fallthrough-v1-1-5cb73f0fa976@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: pkshih@realtek.com, ndesaulniers@google.com, trix@redhat.com,
- damon.chen@realtek.com, linux-wireless@vger.kernel.org,
- patches@lists.linux.dev, llvm@lists.linux.dev,
- Nathan Chancellor <nathan@kernel.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <169295763062.1850672.8467746571200324221.kvalo@kernel.org>
-Date: Fri, 25 Aug 2023 10:00:32 +0000 (UTC)
+Message-ID: <826b587c-c622-4f30-b584-dc8cc3756313@drhqmail201.nvidia.com>
+Date: Fri, 25 Aug 2023 03:14:04 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F1:EE_|LV2PR12MB5848:EE_
+X-MS-Office365-Filtering-Correlation-Id: 63116770-ae9a-4ea4-59c0-08dba5540b30
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	sUDfXm31JV7J6QT5pzjppQhOQoqR//E3mYvRn/Xyk6sMHU8uTY8khba+atJpDIhEo2EYgbgLhQUE8ShoT4jl3tjl3rW3G00AVApbr5ljtLRWUNUYDMHu2ctOqeNe3zKzRaoqWEvastLW7SCNpYvY8HVh6hIGND4XXVqdOByCFUTzrEusY3AGSxP2xfiF1R8B3ttLAS9ybRs4N9l0jPvNTdsCHFxgAR8S42zy5E2val763pjGav9cJN6nBFyNim7JgJp91S4dyrcpniQqpzOaUrYoxuXfXRWtiFBjUC9OErUxAMCV7mBNsZO1LLv2tXp5Pe8JWBZVDzUIozxVEKfpD8OGR2Hs2t0i0XWQxkRYm/rDIyi+59Cc68IQVTSRGZlX8rKGmqbg5QZjazytwqIRSdxfX13VJ1la2nVWGEIoHlzXD24m5y094jUEBGvLOzzxTyWgZsTWQe6eFcZR13r+xasSlY57kFBHi2CAD9nEOMGCo8HUb27L/uTBatTU0lPnPINETa7iuvaGLt4o8xuQgn2r4sdKrhysA0GpKpUF0QLt3sGkyJozbBo84MjfrNeTMmx1WQRZpXx4a1JW6EGETTNf4gI8r9qNssZzqpqlZUmHA21fNM6OGKMIgSPufesJq7Or+QPuSriOZdzPTN7fUiDEFtE0vKGYv0ryWb6yKunOsw7Qh/sdTA1ciPClMGRv8HzqGI0nUeBMTf0WnGX2KChnAgD1Yvh4drX/2q1epEfjYYW1SQfwFo54wZqgq0r7mXUqf+rIaoQnOTbUeJxBlrg3LHaUWgCkWNBnYnE34Ww=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(396003)(376002)(39860400002)(136003)(346002)(451199024)(82310400011)(1800799009)(186009)(46966006)(36840700001)(40470700004)(31686004)(356005)(31696002)(86362001)(82740400003)(7636003)(40460700003)(478600001)(966005)(5660300002)(70206006)(316002)(6916009)(2906002)(54906003)(4326008)(8676002)(8936002)(70586007)(40480700001)(426003)(336012)(26005)(36860700001)(47076005)(7416002)(41300700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2023 10:14:18.5829
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 63116770-ae9a-4ea4-59c0-08dba5540b30
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000044F1.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5848
 
-Nathan Chancellor <nathan@kernel.org> wrote:
-
-> clang warns (or errors with CONFIG_WERROR=y):
+On Thu, 24 Aug 2023 19:07:52 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.192 release.
+> There are 135 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->   drivers/net/wireless/realtek/rtw89/sar.c:216:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
->     216 |                 case RTW89_TAS_STATE_DPR_FORBID:
->         |                 ^
->   drivers/net/wireless/realtek/rtw89/sar.c:216:3: note: insert 'break;' to avoid fall-through
->     216 |                 case RTW89_TAS_STATE_DPR_FORBID:
->         |                 ^
->         |                 break;
->   1 error generated.
+> Responses should be made by Sat, 26 Aug 2023 17:05:50 +0000.
+> Anything received after that time might be too late.
 > 
-> Clang is a little more pedantic than GCC, which does not warn when
-> falling through to a case that is just break or return. Clang's version
-> is more in line with the kernel's own stance in deprecated.rst, which
-> states that all switch/case blocks must end in either break,
-> fallthrough, continue, goto, or return. Add the missing break to silence
-> the warning.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.192-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 > 
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1921
-> Fixes: eb2624f55ad1 ("wifi: rtw89: Introduce Time Averaged SAR (TAS) feature")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+> thanks,
+> 
+> greg k-h
 
-Patch applied to wireless-next.git, thanks.
+All tests passing for Tegra ...
 
-78d84f35d2c3 wifi: rtw89: Fix clang -Wimplicit-fallthrough in rtw89_query_sar()
+Test results for stable-v5.10:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    75 tests:	75 pass, 0 fail
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20230822-rtw89-tas-clang-implicit-fallthrough-v1-1-5cb73f0fa976@kernel.org/
+Linux version:	5.10.192-rc1-g78bdf347b342
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
+Jon
