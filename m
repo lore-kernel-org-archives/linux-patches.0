@@ -1,45 +1,45 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB299101F2
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 14:24:31 +0000 (UTC)
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-68c3b9f83f4so43081b3a.2
-        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 07:24:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1D02CA9
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 15:37:39 +0000 (UTC)
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-68a6f6a66e1so881262b3a.2
+        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 08:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692973471; x=1693578271;
+        d=gmail.com; s=20221208; t=1692977858; x=1693582658;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vHyka2U6Y9QLR3iBbxMxEWSzu/iMnQI0MUngbRlsFAY=;
-        b=BRzIOGxuRosXrZwg7/OsmumCL3DVKh3ipGfPDi7BQNgjqFv/K4e0DeFlCr6B9ScpJq
-         tqhWrH3jBZ3JCUmy2nO/aJ99fqoda8abgk505EcnjRILOKbEQoUDhIdrY4s1YtUlSQmy
-         TpRPjkHL6+i1lhltwha+HSuEM3tQ89i1GyhmGfaERgalGjlkhSm8rpPV0QOg3DyRnm5X
-         ioNUCdsgXRo/Is7OidNH7wvAL1UDGdrF8S5GNRutFqo8OXIZWGJRHcb0eRNUUvP26L3j
-         trdtwFz8rEt8HDzw18kjjJvsyjev6lD3yRtb55T+vQOsggThF56tEMhSwUhz2RCNODof
-         eraw==
+        bh=e+saBHYK+xhBpnjSnJ33QCnhXDW63MFo57oZwPs45eo=;
+        b=SFewzDuqul+WkUO3DOSumcOuLxkTx9ljg/4eRbxd8u26cqvLb5PzxpYIh7umhQ40MY
+         1HVAjUgCGGbPOtBOS3qOBiOqns8klVbhWTGyeD+YGb8VWdFmHd/LC70gUlX95YpsOEqF
+         A5MMDbgcVvCZNCHF8xvNhGfI0Cat3NMtvOQG9IXr1+qqEuJIQNEmJvXmUIBHEJym1aR7
+         /dgzOLhNzjFgmG84z+d2e16siDCyRIO5PFu+AGyGtu54dtfU40MVz8LH32HYV/0CxQ5j
+         EqSt3ZbApBLXNpNUjed6oB21DVHHvtV4Q3BbYRIlTTk5U9bbPXqKNsvJxxLawW3P5nqk
+         7bcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692973471; x=1693578271;
+        d=1e100.net; s=20221208; t=1692977858; x=1693582658;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vHyka2U6Y9QLR3iBbxMxEWSzu/iMnQI0MUngbRlsFAY=;
-        b=Rv7Am5bcfOD8bSSwc24hwjvF+vqO5MFugFYCAIUqmP9VZX9Xs8J5zVKGENQ2RWIW94
-         vWu29UekrBQFqvDLJkEkqeKr3NWLduTGaZgvDnz2J3epOx6BKogsrwDvbqc8E1KNYJTK
-         6yZamBpPrk/jppH5kKdYK2oZ1FTHwBmsJGDbeQ+YzdsNMnqADSgeMsfbJ8Fwt/XIwEtI
-         AC/eGIe1/r5p+Zj14n+XhcUmoGzN8PEoF7Hf6UMeJC65AiQtw0OW3KEK5Bf8IFia3F4r
-         9Thq6h3fkeFehCMF815T33Ji1FGE8j+KxcMD4gPqE+LrvWBB98HHQvU9VB4PoWhN63ug
-         on/Q==
-X-Gm-Message-State: AOJu0YxbFw7DjL1jfA1pn1bYA8d6HbRu/Kypzd6B3lp5QKD9rWfLSGHA
-	gtO1QZZDVxY9o0vU4eGTJOs=
-X-Google-Smtp-Source: AGHT+IFVem110PP4tmF7Ev+4kTdchTFejqRzAwBbt3fP8YY3TzU76qliEjKgB2szc8YRyFlqWUssoQ==
-X-Received: by 2002:a05:6a00:1581:b0:68b:4e07:133f with SMTP id u1-20020a056a00158100b0068b4e07133fmr11558479pfk.7.1692973470973;
-        Fri, 25 Aug 2023 07:24:30 -0700 (PDT)
+        bh=e+saBHYK+xhBpnjSnJ33QCnhXDW63MFo57oZwPs45eo=;
+        b=JtRNAQ6FhhcNR3UWZTzSmtLIEIxXgGWL2vMK1ju8CPf4Z4nVWRsKr7BsyBRekJOG7z
+         zrT22PkgQPfIrBiWM4JgAo3y/3pXAMlE01RYa/lxaa117um5wl4jAgCfA/6u342U2NJl
+         tAIoAO6h7BH+dTdFfx9FiSkXb6nZ5ARWa5snkpU3mMkdMAoLsbeJe0/HpYzYDPFY52Lh
+         pSHUfjsxwQ+78RfToImeQweuiWiEaQQ29HVq7EwcvAbiUb/E742wXXyVSHOZIfbCwq3T
+         qE3nqsu9blAdznfMERyS3mnzleBG0CSKxZVOxA7iYC/hNEnuQyz4PGRDbrMW6h2SN2XA
+         kGfA==
+X-Gm-Message-State: AOJu0YxR8BRZVnQTp1xh9piPmvza2cvkCk3J+zjophsWwsLKJWvetT7c
+	Poa7guyZNYZhQ//s/M1OP+Y=
+X-Google-Smtp-Source: AGHT+IHIcpWzIAbpWHjgF/1AlkdUYfEc+qeKCCfqVXekZK/bA3hhdjFFMu4sjsYr4aB45ClFqBsoRQ==
+X-Received: by 2002:a05:6a20:3246:b0:14c:1db8:5c5 with SMTP id hm6-20020a056a20324600b0014c1db805c5mr3314671pzc.27.1692977858565;
+        Fri, 25 Aug 2023 08:37:38 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id y1-20020aa78541000000b006879493aca0sm1623555pfn.26.2023.08.25.07.24.30
+        by smtp.gmail.com with ESMTPSA id f15-20020a170902ff0f00b001b801044466sm1856594plj.114.2023.08.25.08.37.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 07:24:30 -0700 (PDT)
+        Fri, 25 Aug 2023 08:37:37 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 25 Aug 2023 07:24:29 -0700
+Date: Fri, 25 Aug 2023 08:37:36 -0700
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -49,7 +49,7 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
-Message-ID: <fb1c3952-1d72-4f9d-bc93-2988bcde462e@roeck-us.net>
+Message-ID: <cb6af915-a92d-428d-89a6-44406660c312@roeck-us.net>
 References: <20230824170617.074557800@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,24 +71,14 @@ On Thu, Aug 24, 2023 at 07:07:52PM +0200, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 
-Testing is not complete, but early feedback: All riscv32 boot tests
-crash badly with errors such as
+Build results:
+	total: 159 pass: 159 fail: 0
+Qemu test results:
+	total: 487 pass: 469 fail: 18
+Failed tests:
+	<all riscv32>
 
-Starting syslogd: OK
-Starting klogd: OK
-/etc/init.d/S02sysctl: line 68: syntax error: EOF in backquote substitution
-/etc/init.d/S20seedrng: line 33: syntax error: unexpected end of file (expecting ";;")
-Starting network: /bin/sh: syntax error: unterminated quoted string
-sed: unmatched '/'
-/bin/sh: syntax error: unterminated quoted string
-FAIL
-/etc/init.d/S55runtest: line 48: syntax error: EOF in backquote substitution
-
-This is no longer seen after reverting the following patches.
-
-92609bb3a1f8 riscv: uaccess: Return the number of bytes effectively not copied
-e06648704417 riscv: lib: uaccess: fix CSR_STATUS SR_SUM bit
-20704d763646 riscv: lib: uaccess: fold fixups into body
-4f503bad920e riscv: __asm_copy_to-from_user: Optimize unaligned memory access and pipeline stall
+As already reported, all riscv32 boot tests fail. The failure
+is no longer seen after reverting the riscv specific patches.
 
 Guenter
