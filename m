@@ -1,66 +1,84 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5336101
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 08:08:41 +0000 (UTC)
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-48d0e695fa1so444865e0c.1
-        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 01:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692950920; x=1693555720;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6QcQszMmxdJXwrdj7qv0i9KCRG16x6Uvx3Pa+z1CyMw=;
-        b=kEtf7/dJtTkeGYA9DS3Z7w0+USux+OmEZxVGCz29NkVWX3Qsq3XmhIxosoEibdvlge
-         4kmMeo9X53/5rlLa4p2CGlpDlmsCvSeaH0IKkM3p0YX0ZSgdo6FhQrFm8DSA+/HsPwNs
-         Pdtqggstnu370CZL4cGFTUMqwRXpkVk1EAupqfBGoCFn2zu1qO8jNUtTTkty8KOa46Vp
-         oH3ebYMo8M04POs8Yf7S+PbOMfGyqDx//XmIlrvcgiZASOt56kIdPdDkK8Ck/45lXwhM
-         3mpNpnLHi9PZ31O6pv8fH/7rZ5A1uAk1u5sF4Q9Z/OniV6tKFgQPVwhjX9Pm5HttSW0G
-         /JoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692950920; x=1693555720;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6QcQszMmxdJXwrdj7qv0i9KCRG16x6Uvx3Pa+z1CyMw=;
-        b=JonO4hVdrFJmHEI7Z3Fo1KQOO0+0po6frIQKPcwe7QN35ZZ8vItT7dDXb8w22iCNux
-         KrL1zsjIiXf3hkjMpnzNPKxLGtQ8Dlbsn6pRC7ETSOwy3mO7xEyDdi+U/8DFCn2xjUH4
-         iDYf5+sqdLGh5tTk+WZayfZqPqk2LC0MNMzIugwq9TrCP2ztVbLg3q++91PF+KWcbV28
-         2OqkCfjyMhf6E34Xxd8sM4sXlKWnP0KHII47ju+zBg567rpmLrJAm1sIQJzuh2QVFELK
-         ZPONz/YEoJnJutduPiVLKTM/WKqZBF2XWNf826HtXu7w146l9KFoNDScEZ2fa/cwwr1P
-         Hbpg==
-X-Gm-Message-State: AOJu0YzWn0ltH/W8vO0vjtzAAl6mqRt62ZNW0g0PL0sIHSH7Buvwvh/7
-	vep6GvayuFKZEysIhTjONWRCd10yUmq5EF/pp92oAw==
-X-Google-Smtp-Source: AGHT+IGKlUoZqLtAuC5n6U8/S/LEQzMs7GSNBs/X3ca/L9sMnytTCYWAR49NLSPWdqYY3WSdtWOyVrio55hiXGg7eeY=
-X-Received: by 2002:a05:6122:c56:b0:48d:392c:c7d9 with SMTP id
- i22-20020a0561220c5600b0048d392cc7d9mr5516493vkr.6.1692950919958; Fri, 25 Aug
- 2023 01:08:39 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB481FD3
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 08:13:23 +0000 (UTC)
+Received: from eig-obgw-6008a.ext.cloudfilter.net ([10.0.30.227])
+	by cmsmtp with ESMTP
+	id ZKF9qkZjhEoVsZRv1qTWl9; Fri, 25 Aug 2023 08:11:47 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id ZRv0qwvMGTpvbZRv0qwCOo; Fri, 25 Aug 2023 08:11:46 +0000
+X-Authority-Analysis: v=2.4 cv=JcqvEGGV c=1 sm=1 tr=0 ts=64e86243
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=-AzgORsN3iX8tt9mf90A:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=SCiWYzsVolO7w3Wa+gemxZXSn/MaqliOj3WbUz/Gx98=; b=LPSeodhK9q21GrZsAs44/bozZv
+	EkesParxpwODw878cGIEu78ujaMZzrVaj7Bx3LREfelEI4/ja+LB9yXmEEoMttQHf/MMxnv0pss2G
+	lYeCCEvexpGg2sF03N6TvfOj3xrjIDvWEPqljaZWTnx/1t+ALXXeKh2C931XoROFLYYYq0676mHXf
+	fL2bcVYdmtYrqsJXZW4LRWz09kljcNFBgpivqUkMiB6bfxGY53pURkSGkglDk4TmD9xNcW7bX5UEK
+	hLZZCVF6jeFs6DR5JsHuJDfW/ecJK6dJ1OzaUkpmA9+uA19yjJTuhasQNSDza41T/f32cTqy/PH85
+	rhfnORmw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53070 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qZRuy-0014FF-0W;
+	Fri, 25 Aug 2023 02:11:44 -0600
+Subject: Re: [PATCH 5.15 000/139] 5.15.128-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230824145023.559380953@linuxfoundation.org>
+In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <90797d76-4a3b-8e39-62f0-f7da1d61e47d@w6rz.net>
+Date: Fri, 25 Aug 2023 01:11:42 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230824145023.559380953@linuxfoundation.org>
-In-Reply-To: <20230824145023.559380953@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 25 Aug 2023 13:38:28 +0530
-Message-ID: <CA+G9fYvNipSR9HDcWT7F6j+yvy87jsbzLG-vUQSGH-o2JQv4nQ@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/139] 5.15.128-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chuck Lever <chuck.lever@oracle.com>, 
-	Jeff Layton <jlayton@kernel.org>, Christian Brauner <brauner@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	linux-nfs@vger.kernel.org, LTP List <ltp@lists.linux.it>, 
-	Sherry Yang <sherry.yang@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qZRuy-0014FF-0W
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53070
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfBpdyLpLCPN2j6uEh7w+c9k1aWrXnzsuMLPkkGaEA6Qmnm85Jye0gXHJGYGGO1IVumHJzzjSokvIN4aBScKz5MqscmqJaikQbwkNiUFeyl8XLkNlLLEH
+ yyTnek1a3SmnZ/r95r4kVytrGGW611hF+t0s27gKL5kLeJBYfVOBKUP8ec9fBAangaSb9ohGxQTnXg==
 
-On Thu, 24 Aug 2023 at 20:22, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
+On 8/24/23 7:48 AM, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 5.15.128 release.
 > There are 139 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -70,58 +88,16 @@ On Thu, 24 Aug 2023 at 20:22, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.128-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.128-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-The same test regressions found on stable-rc linux.5.15.y as reported
-on stable-rc linux.6.1.y branch. LTP syscalls chown02 and fchown02 fails
-on arm64 Rpi4 device with the NFS rootfile system.
+Tested-by: Ron Economos <re@w6rz.net>
 
-Test log:
---------
-chown02.c:46: TPASS: chown(testfile1, 0, 0) passed
-chown02.c:46: TPASS: chown(testfile2, 0, 0) passed
-chown02.c:58: TFAIL: testfile2: wrong mode permissions 0100700, expected 0102700
-
-fchown02.c:57: TPASS: fchown(3, 0, 0) passed
-fchown02.c:57: TPASS: fchown(4, 0, 0) passed
-fchown02.c:67: TFAIL: testfile2: wrong mode permissions 0100700,
-expected 0102700
-
-  Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-NOTE:
-Do we need a backport patch ?
-
-  nfsd: use vfs setgid helper
-    commit 2d8ae8c417db284f598dffb178cc01e7db0f1821 upstream.
-
-
-## Build
-* kernel: 5.15.128-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: 00e5f0b76767cab779762a1d27fc17c1cf2a3606
-* git describe: v5.15.127-140-g00e5f0b76767
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.127-140-g00e5f0b76767
-
-## Test Regressions (compared to v5.15.127)
-* bcm2711-rpi-4-b, ltp-syscalls
-  - chown02
-  - fchown02
-
-* bcm2711-rpi-4-b-clang, ltp-syscalls
-  - chown02
-  - fchown02
-
---
-Linaro LKFT
-https://lkft.linaro.org
