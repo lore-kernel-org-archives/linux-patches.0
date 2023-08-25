@@ -1,81 +1,89 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CD418003
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 18:00:15 +0000 (UTC)
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-54290603887so682111a12.1
-        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 11:00:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB653107A8
+	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 18:12:36 +0000 (UTC)
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-34cad4e6a34so1477525ab.0
+        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 11:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692986415; x=1693591215;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dTGOHpLCghqFrKN/eG+RlHSLAI5UV3j2Aq7spVq32nI=;
-        b=mDxH8FzC0k8We0/YQN5LGSp11gGbDLEx03QIYAIGfn3uIbh33ngtC+NrcJEnjWPqQt
-         gi8RkRoAEwusx+7SlYNoRhmg8OuX3EHwNmLNNdgmj0SVSL2K1jcfRt/iIszeANoqrk9I
-         oD/7wy2VZrUtEGq8A+w3pXCMKrUlBAQzx3ghair5yCDe6CmoXPb1kBAaZu/McmdAIsY9
-         5m7delawhdwTAid516waO+TmCtTUKmV5OUOCJQhDXufpDmLREJeIF48en8/FOUlWdVA7
-         MM0UqzOX9Idu//n1R+AMDrK+hr+XoPaPQL5TY+EA9CXwWmOGzxBo4Q9C4mcdA9G5jI2q
-         MWyg==
+        d=linuxfoundation.org; s=google; t=1692987156; x=1693591956;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C7fASciw8k4HY5gXvLmNNZpvPMF/wBHDgCKHYnbqgSM=;
+        b=dK7KblEm0EswR6B8cyEjjhuWM7XS5qtPbE8Bgf7VcqBX3yZ220qH2zXenViyhB/z2V
+         cDxsqXZbJuNty3TjV3VlHU1dPU2xshi6sXMQ3YdiLEUZDuuHLPI27Xt13w8tyEBcylm/
+         sCCiEk4ftwmOsGJVDSy2AxrS67UXgDB0TIzaU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692986415; x=1693591215;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dTGOHpLCghqFrKN/eG+RlHSLAI5UV3j2Aq7spVq32nI=;
-        b=AJ5/MkBlnrfdTJ/YKPUSeN2E18nVc/Uk52jlcug9rb420C8wy5JfB9WnodgiZ4zbzH
-         eH7HbbNzAGTmvkDbNmvrLeIvjKTM+4H1PQob/7uOJfSTkk5FIzacl05mrkjwYL3P453Q
-         wdqmZPNm+nd41KPRS7BRbqBaQVSeTiSR0zFFMUJQOZIJcxYzxH9XmOe3ipza1RcChUok
-         rmfsO2iewNCkDnHQL6zYL4GcWfWLzQPeFY8PFVTJt+cIVS0ifZkQu8RWgMyQI4S6KVAu
-         CRqZ+6EBh4PX2MMkvpFJ7jaBraWy0VSc+3JHcJ8S9A3wbvFL5Bf6zN0D9OEQrH4F5kYj
-         I3uA==
-X-Gm-Message-State: AOJu0YyU85BPhIZZnFrLSYr2AfoSi3Oap9tP1whvPVElmHQA8bQzFjUt
-	mUXV+WEMLJ9EmDBBTXDMV/9zBZ1WiPffssmRnds=
-X-Google-Smtp-Source: AGHT+IGbmnWJ3gBrg1stH0g/5v7ANGHxVRCdm4d42EaMLTJeTb+ZjbwwAZWv91ujsSbmUsfaAxUew0HqmFwF+iFCGpA=
-X-Received: by 2002:a17:90b:3b8f:b0:26d:28a8:5880 with SMTP id
- pc15-20020a17090b3b8f00b0026d28a85880mr16340536pjb.32.1692986415286; Fri, 25
- Aug 2023 11:00:15 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692987156; x=1693591956;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C7fASciw8k4HY5gXvLmNNZpvPMF/wBHDgCKHYnbqgSM=;
+        b=IvVLyxK9InC2gpOd1T3j7HsZuGidY2be9A2Qki0N5VOtbbom+AbSLiaq7NdPrt6e6O
+         QWQLWY2rnqEQVXgcPOyNaWfghyK3OKvZk0g2z2Iniwo3A2gcpB5p7b4o5cJq92lDlcRR
+         YSk7TPv74qbKkpVRf1xiuVLy/a/V5mbLWqh4B07+S8GiTWobcKWWqabnhAkPIpQj5c2n
+         ZB24AFlVlfAfAkTAPtMrLI8GocPc0tTVQ5tDk0RX3M9SaMqchCE0/RzduWkBM3EiiWiE
+         gtei29qj8yMQ+2MufcMbTQJRlcbYQMwTLjXBFHe2hsypMeynPyvF0oGMvTtmrKQ32HHk
+         0rNw==
+X-Gm-Message-State: AOJu0Yxm5+tAoXKZVWcvEaIk44NICxdrffW9d+otqy451aAr56YbD3F1
+	nBZjHxGJOxn63FocH5tzdckHMA==
+X-Google-Smtp-Source: AGHT+IGClfzFcJ7TBPEQJdIsOSwJoe5p987iA5e84iRE5OkoNUjcWnuB8Xp2vTjF0Tgmd9qMMc9Gng==
+X-Received: by 2002:a92:c00f:0:b0:349:67b0:6045 with SMTP id q15-20020a92c00f000000b0034967b06045mr19074524ild.3.1692987155806;
+        Fri, 25 Aug 2023 11:12:35 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id w9-20020a92d2c9000000b0034886587bdcsm683452ilg.18.2023.08.25.11.12.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Aug 2023 11:12:35 -0700 (PDT)
+Message-ID: <631bbec0-ce5e-9bff-d645-fa24b04e9ff3@linuxfoundation.org>
+Date: Fri, 25 Aug 2023 12:12:34 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230824145023.559380953@linuxfoundation.org> <61314350-629a-f870-e203-270d66b13a54@gmail.com>
-In-Reply-To: <61314350-629a-f870-e203-270d66b13a54@gmail.com>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Fri, 25 Aug 2023 11:00:04 -0700
-Message-ID: <CAJq+SaD=0=MAti0fcif_cGjXi_BBEnswgurZ+ZcRFjPCdkM64Q@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/139] 5.15.128-rc1 review
-To: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230824141447.155846739@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> > This is the start of the stable review cycle for the 5.15.128 release.
-> > There are 139 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Sat, 26 Aug 2023 14:49:55 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.128-rc1.gz
-> > or in the git tree and branch at:
-> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
+On 8/24/23 08:14, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.48 release.
+> There are 15 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.48-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Thanks.
+thanks,
+-- Shuah
+
