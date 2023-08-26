@@ -1,62 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00386F9D5
-	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 15:49:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490D7C433C8;
-	Sat, 26 Aug 2023 15:49:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693064941;
-	bh=cyldISG9CgG+prslJEU2swFaz2IVHWHkfUssWaglIbY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BkO7D9m31dVgW09P317TX6bbwjJd2vbdbkSwPnTNx7cr4VxB00Rt/NcKZes/qaKhM
-	 vD+Mu4rBjle5llFO3J2v55TbtaLL48ebNt/KDj3KEtQXX3rZKngJiZNr6dTGWI66W8
-	 Ogbnh6rDfWHusT2q/S8SkXlTflydq7tahmO4qj+Y=
-Date: Sat, 26 Aug 2023 17:48:59 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/149] 6.1.46-rc1 review
-Message-ID: <2023082627-tabasco-concave-1366@gregkh>
-References: <20230813211718.757428827@linuxfoundation.org>
- <b392e1a8-b987-4993-bd45-035db9415a6e@roeck-us.net>
- <2023081631-uproar-tapered-2221@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DF5F9D5
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 15:54:55 +0000 (UTC)
+Received: from [192.168.1.103] (31.173.83.180) by msexch01.omp.ru
+ (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Sat, 26 Aug
+ 2023 18:39:43 +0300
+Subject: Re: [PATCH 5.10 059/135] mmc: bcm2835: fix deferred probing
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, Ulf Hansson <ulf.hansson@linaro.org>, Sasha
+ Levin <sashal@kernel.org>
+References: <20230824145027.008282920@linuxfoundation.org>
+ <20230824145029.450324835@linuxfoundation.org>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
+Organization: Open Mobile Platform
+Message-ID: <c82889ec-2751-613a-01b3-63a12728f7a7@omp.ru>
+Date: Sat, 26 Aug 2023 18:39:42 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2023081631-uproar-tapered-2221@gregkh>
+In-Reply-To: <20230824145029.450324835@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [31.173.83.180]
+X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
+ (10.188.4.12)
+X-KSE-ServerInfo: msexch01.omp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 5.9.59, Database issued on: 08/26/2023 15:24:21
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 59
+X-KSE-AntiSpam-Info: Lua profiles 179455 [Aug 25 2023]
+X-KSE-AntiSpam-Info: Version: 5.9.59.0
+X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
+X-KSE-AntiSpam-Info: LuaCore: 527 527 5bb611be2ca2baa31d984ccbf4ef4415504fc308
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: {relay has no DNS name}
+X-KSE-AntiSpam-Info: {SMTP from is not routable}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 31.173.83.180 in (user)
+ b.barracudacentral.org}
+X-KSE-AntiSpam-Info:
+	127.0.0.199:7.1.2;31.173.83.180:7.1.2;lore.kernel.org:7.1.1;omp.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
+X-KSE-AntiSpam-Info: FromAlignment: s
+X-KSE-AntiSpam-Info: {rdns complete}
+X-KSE-AntiSpam-Info: {fromrtbl complete}
+X-KSE-AntiSpam-Info: ApMailHostAddress: 31.173.83.180
+X-KSE-AntiSpam-Info: Rate: 59
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=none header.from=omp.ru;spf=none
+ smtp.mailfrom=omp.ru;dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 08/26/2023 15:28:00
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 8/26/2023 11:36:00 AM
+X-KSE-Attachment-Filter-Triggered-Rules: Clean
+X-KSE-Attachment-Filter-Triggered-Filters: Clean
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-On Wed, Aug 16, 2023 at 06:26:47PM +0200, Greg Kroah-Hartman wrote:
-> On Mon, Aug 14, 2023 at 07:04:57AM -0700, Guenter Roeck wrote:
-> > On Sun, Aug 13, 2023 at 11:17:25PM +0200, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.1.46 release.
-> > > There are 149 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
-> > > Responses should be made by Tue, 15 Aug 2023 21:16:53 +0000.
-> > > Anything received after that time might be too late.
-> > 
-> > Booting with f2fs root file systems still crashes in this release
-> > candidate. Would it make sense to mark f2fs as broken in v6.1.y ?
+On 8/24/23 5:50 PM, Greg Kroah-Hartman wrote:
+
+> From: Sergey Shtylyov <s.shtylyov@omp.ru>
 > 
-> Ick, yeah, let me dig into this next week and figure out what went
-> wrong...
+> [ Upstream commit 71150ac12558bcd9d75e6e24cf7c872c2efd80f3 ]
+> 
+> The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+> to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+> permanently instead of the deferred probing. Switch to propagating the error
+> codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+> in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+> so we now can safely ignore it...
+> 
+> Fixes: 660fc733bd74 ("mmc: bcm2835: Add new driver for the sdhost controller.")
+> Cc: stable@vger.kernel.org # v5.19+
 
-I've now pushed out 6.1.49-rc1 with the last 3 f2fs patches reverted,
-and a single objtool fix.  Hopefully that should resolve this issue, if
-not, please let me know.
+   After a glance at the driver, the patch seems safe to be applied to 5.10.y,
+despite I tried to limit it to 5.19.y and newer...
 
-thanks,
+> Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+> Link: https://lore.kernel.org/r/20230617203622.6812-2-s.shtylyov@omp.ru
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+[...]
 
-greg k-h
+MBR, Sergey
