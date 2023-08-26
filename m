@@ -1,114 +1,97 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48461198AA
-	for <patches@lists.linux.dev>; Fri, 25 Aug 2023 23:57:57 +0000 (UTC)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37PNmNBv014063;
-	Fri, 25 Aug 2023 23:57:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KoF9wl0GgT/DGQMTTMM+L3Y9798bfjFqBmcVrq7K6TI=;
- b=J5smUHO3d7od2mnkGJT18rbAS6IDALWlKS7PkdPESVzM5CQLjxgyXPUpxd7s+AHGOcAM
- 3jPphnkmEJ5G83LfazTCTSC+oKwK+lj5I9wss2Eax+fBwLG22YhM1fJ0Ru5PIDDdds/0
- 8J1euS4zjz8USAivGHRa0mILaPeh05tLiJn9rY7hmk14BUXBaH5Ef4fa3hGTBNjJzTa6
- Efm3679yJ4OWY6i2IvFbvnt1HN8NUfZ096OdG1bLxgIY6uS0yb2UL+Vxc18wOvAZ/6fe
- 5mMFh0p51YTUw9GfJNlvhquFtRdAv4sA0jot5hVAJbmmRlTbIzdzrap33FeKNfEg7KUL 1w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3spmtxt3kq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Aug 2023 23:57:54 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37PNvr39017061
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Aug 2023 23:57:53 GMT
-Received: from [10.110.6.4] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 25 Aug
- 2023 16:57:51 -0700
-Message-ID: <c229f00b-5e8b-b010-70bd-3478216c65a3@quicinc.com>
-Date: Fri, 25 Aug 2023 16:57:51 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5714F37F
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 01:23:44 +0000 (UTC)
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1bdc243d62bso11395515ad.3
+        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 18:23:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693013023; x=1693617823;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=acKCK1DDVsUgCwVPQW4+BV+8s2HfSsnrUrjpFkgd9wk=;
+        b=qZzFJ5Q5ESQ/8whIlhrjVp3nDjACHbnMZsluegvq6Ojinxc/067Osp2qbIlyw9OjoC
+         GrRln/+N7K+EJ6CyNvvc+wOUkgfi4l1q64Ul9uSGNiBBZAVF8RivtDyeN7Ha+sTyJOaS
+         LD/odcRNwB6O+gi1HjaHmDlF86++rjIJKEQ75ax2Mt4my1mA8ngmS7J7CH7ueAo62NGh
+         rmJDnzO84abFyXgzrzbSc0TZ8HkmvG7Bk4tGOnSBPpvE0bvVIuhs9dluaoWv8GjcnWtM
+         C3vb1aRCOnNEmeBc+8DIEHu3MJjtbU/oTaEjJwT/5Q+VpaLm82ujhnXu4CqBfchy1pUI
+         SPaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693013023; x=1693617823;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=acKCK1DDVsUgCwVPQW4+BV+8s2HfSsnrUrjpFkgd9wk=;
+        b=MeQWVTODHrcBzHmlX/E/w3De9m4jP0AviwxXFXr9a/26qA/JVNZZ8VsQe7cI/6q/oX
+         Av9si0hrnVfCZaJYDnQJqV0H4h7w5vnBwAljQx1wfmI+qiEI8JmyzWUwavDWWAlfiIJt
+         SIAMNWMekQh+EDWlHdmGoDR8vOVsVycjXoq8QW3VoQpnIh7E70XMWkIVFqxbQOHy91Tv
+         xlW80Y6nV27fBmCFynhHsqf4MwaLfhRAsIEEUdaYqNSXz+OQOlEPRysER710c0FdUh/+
+         eEPSKTgK08L09vkdO6iguFKvKpcTZN6aD8hkvdgc44ekIjsTY6rqs0+dUhEYnTOp6hCQ
+         RCLA==
+X-Gm-Message-State: AOJu0YxEHEtFndWQ6vNxwdBsgla46ImhBFUM1oZcu1W3MtDTi/JWLLID
+	+bkVj+l+Ey6AYpKo6SlU/fk=
+X-Google-Smtp-Source: AGHT+IH4NYnJm+tQgvR+rYaA45h9XoYuEpTCK8oT0lwl1wjhA9qrHf69HItpzuopdJJAAu87CUg0YQ==
+X-Received: by 2002:a17:903:2642:b0:1ac:8be5:8787 with SMTP id je2-20020a170903264200b001ac8be58787mr14537859plb.21.1693013023425;
+        Fri, 25 Aug 2023 18:23:43 -0700 (PDT)
+Received: from debian.me ([103.124.138.83])
+        by smtp.gmail.com with ESMTPSA id z1-20020a170903018100b001bdb167f6ebsm2429875plg.94.2023.08.25.18.23.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Aug 2023 18:23:42 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id D2F5C82EFB85; Sat, 26 Aug 2023 08:23:38 +0700 (WIB)
+Date: Sat, 26 Aug 2023 08:23:38 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
+Message-ID: <ZOlUGhlro_v6cvo4@debian.me>
+References: <20230824141447.155846739@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dp: Add newlines to debug printks
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>
-References: <20230825230109.2264345-1-swboyd@chromium.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230825230109.2264345-1-swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PNniYBoW1ULYTyXTx-ztQig96nOHizxK
-X-Proofpoint-GUID: PNniYBoW1ULYTyXTx-ztQig96nOHizxK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-25_19,2023-08-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=698
- mlxscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308250214
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Nr1MUEtNaDq7pJ3e"
+Content-Disposition: inline
+In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
 
 
+--Nr1MUEtNaDq7pJ3e
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8/25/2023 4:01 PM, Stephen Boyd wrote:
-> These debug printks are missing newlines, causing drm debug logs to be
-> hard to read. Add newlines so that the messages are on their own line.
-> 
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   drivers/gpu/drm/msm/dp/dp_link.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index 42427129acea..6375daaeb98e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -1090,7 +1090,7 @@ int dp_link_process_request(struct dp_link *dp_link)
->   	} else if (dp_link_read_psr_error_status(link)) {
->   		DRM_ERROR("PSR IRQ_HPD received\n");
->   	} else if (dp_link_psr_capability_changed(link)) {
-> -		drm_dbg_dp(link->drm_dev, "PSR Capability changed");
-> +		drm_dbg_dp(link->drm_dev, "PSR Capability changed\n");
->   	} else {
->   		ret = dp_link_process_link_status_update(link);
->   		if (!ret) {
-> @@ -1107,7 +1107,7 @@ int dp_link_process_request(struct dp_link *dp_link)
->   		}
->   	}
->   
-> -	drm_dbg_dp(link->drm_dev, "sink request=%#x",
-> +	drm_dbg_dp(link->drm_dev, "sink request=%#x\n",
->   				dp_link->sink_request);
+On Thu, Aug 24, 2023 at 04:14:56PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.48 release.
+> There are 15 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-perhaps we can move sink_request to the previous line itself with this 
-patch and we can avoid the line break.
+Successfully compiled and installed bindeb-pkgs on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-But thats a very minor comment, otherwise LGTM
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+--=20
+An old man doll... just what I always wanted! - Clara
 
->   	return ret;
->   }
-> 
-> base-commit: 706a741595047797872e669b3101429ab8d378ef
+--Nr1MUEtNaDq7pJ3e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZOlUFQAKCRD2uYlJVVFO
+o0YxAQCzDPWVI01UQ8OMk0c1w4/zdbNTbiH8jmHRdhQjtJBpzwEAj6mpdQtFZ0/5
+1WEuBsFeXqk/B+fVxLzQRakwl/wcWws=
+=AgPL
+-----END PGP SIGNATURE-----
+
+--Nr1MUEtNaDq7pJ3e--
