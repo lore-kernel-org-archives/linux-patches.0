@@ -1,99 +1,183 @@
-Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF54FD2E5
-	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 15:45:33 +0000 (UTC)
-Received: from [192.168.1.103] (31.173.83.180) by msexch01.omp.ru
- (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Sat, 26 Aug
- 2023 18:45:31 +0300
-Subject: Re: [PATCH 5.10 060/135] mmc: sunxi: fix deferred probing
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, Jernej Skrabec <jernej.skrabec@gmail.com>, Ulf
- Hansson <ulf.hansson@linaro.org>, Sasha Levin <sashal@kernel.org>
-References: <20230824145027.008282920@linuxfoundation.org>
- <20230824145029.491674578@linuxfoundation.org>
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
-Organization: Open Mobile Platform
-Message-ID: <2d1fbbd4-7edf-74d1-8297-b48c71cc26aa@omp.ru>
-Date: Sat, 26 Aug 2023 18:45:30 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B50D2E5
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 15:48:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454F5C433C8;
+	Sat, 26 Aug 2023 15:48:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1693064886;
+	bh=XBSKoCynkB5uUk7Cmd0q27rLs4WRFA9sQbdUVAGZRUA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FG1X29l8lmvjMWzxW14xryxfOE4rvgW1qqCklz2kglRyKvROxvHBhWvhg600dlz09
+	 3eshsjcLMbkSC204IIt8UyjqIG4YTNWxcYrFc1CwbXr87A8swtHRCgS8p5QSHj98qK
+	 KXUhNO9KY8su7amnVjVk6sxQnNNO6wGF3Y89BRTo=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 6.1 1/4] objtool/x86: Fix SRSO mess
+Date: Sat, 26 Aug 2023 17:47:57 +0200
+Message-ID: <20230826154625.526531990@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230826154625.450325166@linuxfoundation.org>
+References: <20230826154625.450325166@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230824145029.491674578@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [31.173.83.180]
-X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
- (10.188.4.12)
-X-KSE-ServerInfo: msexch01.omp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 5.9.59, Database issued on: 08/26/2023 15:34:29
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 59
-X-KSE-AntiSpam-Info: Lua profiles 179455 [Aug 25 2023]
-X-KSE-AntiSpam-Info: Version: 5.9.59.0
-X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
-X-KSE-AntiSpam-Info: LuaCore: 527 527 5bb611be2ca2baa31d984ccbf4ef4415504fc308
-X-KSE-AntiSpam-Info: {rep_avail}
-X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: {relay has no DNS name}
-X-KSE-AntiSpam-Info: {SMTP from is not routable}
-X-KSE-AntiSpam-Info: {Found in DNSBL: 31.173.83.180 in (user)
- b.barracudacentral.org}
-X-KSE-AntiSpam-Info:
-	31.173.83.180:7.1.2;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;omp.ru:7.1.1;lore.kernel.org:7.1.1
-X-KSE-AntiSpam-Info: FromAlignment: s
-X-KSE-AntiSpam-Info: {rdns complete}
-X-KSE-AntiSpam-Info: {fromrtbl complete}
-X-KSE-AntiSpam-Info: ApMailHostAddress: 31.173.83.180
-X-KSE-AntiSpam-Info: Rate: 59
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dmarc=none header.from=omp.ru;spf=none
- smtp.mailfrom=omp.ru;dkim=none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Heuristic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 08/26/2023 15:38:00
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 8/26/2023 11:36:00 AM
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+Content-Transfer-Encoding: 8bit
 
-On 8/24/23 5:50 PM, Greg Kroah-Hartman wrote:
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-> From: Sergey Shtylyov <s.shtylyov@omp.ru>
-> 
-> [ Upstream commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 ]
-> 
-> The driver overrides the error codes and IRQ0 returned by platform_get_irq()
-> to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-> permanently instead of the deferred probing. Switch to propagating the error
-> codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
-> in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
-> so we now can safely ignore it...
-> 
-> Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
-> Cc: stable@vger.kernel.org # v5.19+
+------------------
 
-   After a glance at the driver, the patch too seems safe to be applied to 5.10.y,
-despite I tried to limit it to 5.19.y and newer...
+From: Peter Zijlstra <peterz@infradead.org>
 
-> Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-> Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-[...]
+commit 4ae68b26c3ab5a82aa271e6e9fc9b1a06e1d6b40 upstream.
 
-MBR, Sergey
+Objtool --rethunk does two things:
+
+ - it collects all (tail) call's of __x86_return_thunk and places them
+   into .return_sites. These are typically compiler generated, but
+   RET also emits this same.
+
+ - it fudges the validation of the __x86_return_thunk symbol; because
+   this symbol is inside another instruction, it can't actually find
+   the instruction pointed to by the symbol offset and gets upset.
+
+Because these two things pertained to the same symbol, there was no
+pressing need to separate these two separate things.
+
+However, alas, along comes SRSO and more crazy things to deal with
+appeared.
+
+The SRSO patch itself added the following symbol names to identify as
+rethunk:
+
+  'srso_untrain_ret', 'srso_safe_ret' and '__ret'
+
+Where '__ret' is the old retbleed return thunk, 'srso_safe_ret' is a
+new similarly embedded return thunk, and 'srso_untrain_ret' is
+completely unrelated to anything the above does (and was only included
+because of that INT3 vs UD2 issue fixed previous).
+
+Clear things up by adding a second category for the embedded instruction
+thing.
+
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230814121148.704502245@infradead.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ tools/objtool/arch/x86/decode.c      |   11 +++++++----
+ tools/objtool/check.c                |   22 +++++++++++++++++++++-
+ tools/objtool/include/objtool/arch.h |    1 +
+ tools/objtool/include/objtool/elf.h  |    1 +
+ 4 files changed, 30 insertions(+), 5 deletions(-)
+
+--- a/tools/objtool/arch/x86/decode.c
++++ b/tools/objtool/arch/x86/decode.c
+@@ -796,8 +796,11 @@ bool arch_is_retpoline(struct symbol *sy
+ 
+ bool arch_is_rethunk(struct symbol *sym)
+ {
+-	return !strcmp(sym->name, "__x86_return_thunk") ||
+-	       !strcmp(sym->name, "srso_untrain_ret") ||
+-	       !strcmp(sym->name, "srso_safe_ret") ||
+-	       !strcmp(sym->name, "retbleed_return_thunk");
++	return !strcmp(sym->name, "__x86_return_thunk");
++}
++
++bool arch_is_embedded_insn(struct symbol *sym)
++{
++	return !strcmp(sym->name, "retbleed_return_thunk") ||
++	       !strcmp(sym->name, "srso_safe_ret");
+ }
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1164,16 +1164,33 @@ static int add_ignore_alternatives(struc
+ 	return 0;
+ }
+ 
++/*
++ * Symbols that replace INSN_CALL_DYNAMIC, every (tail) call to such a symbol
++ * will be added to the .retpoline_sites section.
++ */
+ __weak bool arch_is_retpoline(struct symbol *sym)
+ {
+ 	return false;
+ }
+ 
++/*
++ * Symbols that replace INSN_RETURN, every (tail) call to such a symbol
++ * will be added to the .return_sites section.
++ */
+ __weak bool arch_is_rethunk(struct symbol *sym)
+ {
+ 	return false;
+ }
+ 
++/*
++ * Symbols that are embedded inside other instructions, because sometimes crazy
++ * code exists. These are mostly ignored for validation purposes.
++ */
++__weak bool arch_is_embedded_insn(struct symbol *sym)
++{
++	return false;
++}
++
+ #define NEGATIVE_RELOC	((void *)-1L)
+ 
+ static struct reloc *insn_reloc(struct objtool_file *file, struct instruction *insn)
+@@ -1437,7 +1454,7 @@ static int add_jump_destinations(struct
+ 			 * middle of another instruction.  Objtool only
+ 			 * knows about the outer instruction.
+ 			 */
+-			if (sym && sym->return_thunk) {
++			if (sym && sym->embedded_insn) {
+ 				add_return_call(file, insn, false);
+ 				continue;
+ 			}
+@@ -2327,6 +2344,9 @@ static int classify_symbols(struct objto
+ 			if (arch_is_rethunk(func))
+ 				func->return_thunk = true;
+ 
++			if (arch_is_embedded_insn(func))
++				func->embedded_insn = true;
++
+ 			if (!strcmp(func->name, "__fentry__"))
+ 				func->fentry = true;
+ 
+--- a/tools/objtool/include/objtool/arch.h
++++ b/tools/objtool/include/objtool/arch.h
+@@ -90,6 +90,7 @@ int arch_decode_hint_reg(u8 sp_reg, int
+ 
+ bool arch_is_retpoline(struct symbol *sym);
+ bool arch_is_rethunk(struct symbol *sym);
++bool arch_is_embedded_insn(struct symbol *sym);
+ 
+ int arch_rewrite_retpolines(struct objtool_file *file);
+ 
+--- a/tools/objtool/include/objtool/elf.h
++++ b/tools/objtool/include/objtool/elf.h
+@@ -60,6 +60,7 @@ struct symbol {
+ 	u8 return_thunk      : 1;
+ 	u8 fentry            : 1;
+ 	u8 profiling_func    : 1;
++	u8 embedded_insn     : 1;
+ 	struct list_head pv_target;
+ };
+ 
+
+
