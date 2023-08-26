@@ -1,140 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232818F73
-	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 10:14:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF23C433C8;
-	Sat, 26 Aug 2023 10:14:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693044865;
-	bh=ybJLI7slSflIl+uCX3TYBYBC5GHQl2DQcKNHoInEn50=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAAE7E
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 10:39:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C34BC433C8;
+	Sat, 26 Aug 2023 10:38:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1693046341;
+	bh=RitoIFSZhjW5UlBYkipkGZOhMn5wsY+KxH7kfSkDkH4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=q/JD85vEeAtbXgMNR8W6kTlnPWuLvDWJpSBRh12YbykjA5i9PC4pn0khiJp8m1Ehj
-	 jR+io8bHTOGmb8KAfoC/DD5VV8K809CLe5ic2thhSgB4jlBzjw2vZ/uPMmGX4AiQzR
-	 /GCe3xVipGJpI8L4LuhhMzN9z78qyUXgi+xYRy+U=
-Date: Sat, 26 Aug 2023 12:14:22 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ivan Mikhaylov <fr0st61te@gmail.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 066/135] net/ncsi: change from ndo_set_mac_address
- to dev_set_mac_address
-Message-ID: <2023082659-operable-citadel-bdda@gregkh>
+	b=CVlRu76SpcLwJW2Xx3+H65Q6/71FC6ThyRmb25EmtkpLFcMmTmPx1Aq+dhyCx2g72
+	 EfNbA5QawXnZYviGDB9fh21pmHIn0WcXJ7lOhlXsjJnMNm0WfKBKT0NdXqLQmNtrHm
+	 FuqyH4giU4NrkRZ/jAwWQ8/dQOivnAix4lv+nWaC2bGDuKWZ089GFy/KHCYFIDolXF
+	 dbsmu4JpD5fby9bazqObbsFrTgZMUwQ8vbtnmHBedkh24tVPHpLjRGsyk0FcUSffrQ
+	 kniY8tHOkNlZDrKq1i2eG+6WAWacqNOVBoX0LcW9Pmr+P3AnZooUOcmE4M6KuvHQcb
+	 eGBi8DQjln03g==
+Date: Sat, 26 Aug 2023 11:38:56 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
+Message-ID: <20230826-huddle-designed-952a01db6e88@spud>
 References: <20230824170617.074557800@linuxfoundation.org>
- <20230824170620.057993946@linuxfoundation.org>
- <739b18f9dc2ae6cde7b1060ee8071d7687b5d4e3.camel@gmail.com>
- <2023082507-breezy-eastward-da6d@gregkh>
- <e81e0014604bc8cf6f387c67875e43dc9a339815.camel@gmail.com>
+ <fb1c3952-1d72-4f9d-bc93-2988bcde462e@roeck-us.net>
+ <2023082636-postnasal-cobalt-5ab5@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="rghNHbswWVpEDuGH"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e81e0014604bc8cf6f387c67875e43dc9a339815.camel@gmail.com>
+In-Reply-To: <2023082636-postnasal-cobalt-5ab5@gregkh>
 
-On Fri, Aug 25, 2023 at 11:38:02AM +0300, Ivan Mikhaylov wrote:
-> On Fri, 2023-08-25 at 09:16 +0200, Greg Kroah-Hartman wrote:
-> > On Fri, Aug 25, 2023 at 09:24:46AM +0300, Ivan Mikhaylov wrote:
-> > > On Thu, 2023-08-24 at 19:08 +0200, Greg Kroah-Hartman wrote:
-> > > > 5.10-stable review patch.  If anyone has any objections, please
-> > > > let
-> > > > me know.
-> > > > 
-> > > > ------------------
-> > > > 
-> > > > From: Ivan Mikhaylov <fr0st61te@gmail.com>
-> > > > 
-> > > > [ Upstream commit 790071347a0a1a89e618eedcd51c687ea783aeb3 ]
-> > > > 
-> > > > Change ndo_set_mac_address to dev_set_mac_address because
-> > > > dev_set_mac_address provides a way to notify network layer about
-> > > > MAC
-> > > > change. In other case, services may not aware about MAC change
-> > > > and
-> > > > keep
-> > > > using old one which set from network adapter driver.
-> > > > 
-> > > > As example, DHCP client from systemd do not update MAC address
-> > > > without
-> > > > notification from net subsystem which leads to the problem with
-> > > > acquiring
-> > > > the right address from DHCP server.
-> > > > 
-> > > > Fixes: cb10c7c0dfd9e ("net/ncsi: Add NCSI Broadcom OEM command")
-> > > > Cc: stable@vger.kernel.org # v6.0+ 2f38e84 net/ncsi: make one
-> > > > oem_gma
-> > > > function for all mfr id
-> > > > Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-> > > > Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
-> > > > Reviewed-by: Simon Horman <simon.horman@corigine.com>
-> > > > Signed-off-by: David S. Miller <davem@davemloft.net>
-> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > > ---
-> > > >  net/ncsi/ncsi-rsp.c | 5 +++--
-> > > >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-> > > > index 888ccc2d4e34b..47ffb790ff99f 100644
-> > > > --- a/net/ncsi/ncsi-rsp.c
-> > > > +++ b/net/ncsi/ncsi-rsp.c
-> > > > @@ -616,7 +616,6 @@ static int
-> > > > ncsi_rsp_handler_oem_mlx_gma(struct
-> > > > ncsi_request *nr)
-> > > >  {
-> > > >         struct ncsi_dev_priv *ndp = nr->ndp;
-> > > >         struct net_device *ndev = ndp->ndev.dev;
-> > > > -       const struct net_device_ops *ops = ndev->netdev_ops;
-> > > >         struct ncsi_rsp_oem_pkt *rsp;
-> > > >         struct sockaddr saddr;
-> > > >         int ret = 0;
-> > > > @@ -630,7 +629,9 @@ static int
-> > > > ncsi_rsp_handler_oem_mlx_gma(struct
-> > > > ncsi_request *nr)
-> > > >         /* Set the flag for GMA command which should only be
-> > > > called
-> > > > once */
-> > > >         ndp->gma_flag = 1;
-> > > >  
-> > > > -       ret = ops->ndo_set_mac_address(ndev, &saddr);
-> > > > +       rtnl_lock();
-> > > > +       ret = dev_set_mac_address(ndev, &saddr, NULL);
-> > > > +       rtnl_unlock();
-> > > >         if (ret < 0)
-> > > >                 netdev_warn(ndev, "NCSI: 'Writing mac address to
-> > > > device failed\n");
-> > > >  
-> > > 
-> > > Greg, we had conversation in the past about this particular
-> > > patchset
-> > > series:
-> > > https://www.spinics.net/lists/stable-commits/msg308587.html
-> > > 
-> > > Just one patch is not enough, I didn't test it either on linux
-> > > kernel
-> > > version < 6.0 , also I saw the Sasha's commits about the same for
-> > > 5.4,
-> > > 5.10, 5.15 and answered to him about necessity of two patchsets
-> > > instead
-> > > of one on 19 aug.
-> > 
-> > Ah, so I should also include commit 74b449b98dcc ("net/ncsi: make one
-> > oem_gma function for all mfr id"), right?
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> Greg, yes, that's right and I'm not sure if these two patches applies
-> well for 5.x stable releases.
 
-Thanks, I've dropped this one patch for now , and will revisit this
-after this release to see if both work in these trees.
+--rghNHbswWVpEDuGH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-greg k-h
+On Sat, Aug 26, 2023 at 12:08:20PM +0200, Greg Kroah-Hartman wrote:
+> On Fri, Aug 25, 2023 at 07:24:29AM -0700, Guenter Roeck wrote:
+> > On Thu, Aug 24, 2023 at 07:07:52PM +0200, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 5.10.192 release.
+> > > There are 135 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, plea=
+se
+> > > let me know.
+> > >=20
+> > > Responses should be made by Sat, 26 Aug 2023 17:05:50 +0000.
+> > > Anything received after that time might be too late.
+> > >=20
+> >=20
+> > Testing is not complete, but early feedback: All riscv32 boot tests
+> > crash badly with errors such as
+> >=20
+> > Starting syslogd: OK
+> > Starting klogd: OK
+> > /etc/init.d/S02sysctl: line 68: syntax error: EOF in backquote substitu=
+tion
+> > /etc/init.d/S20seedrng: line 33: syntax error: unexpected end of file (=
+expecting ";;")
+> > Starting network: /bin/sh: syntax error: unterminated quoted string
+> > sed: unmatched '/'
+> > /bin/sh: syntax error: unterminated quoted string
+> > FAIL
+> > /etc/init.d/S55runtest: line 48: syntax error: EOF in backquote substit=
+ution
+> >=20
+> > This is no longer seen after reverting the following patches.
+> >=20
+> > 92609bb3a1f8 riscv: uaccess: Return the number of bytes effectively not=
+ copied
+> > e06648704417 riscv: lib: uaccess: fix CSR_STATUS SR_SUM bit
+> > 20704d763646 riscv: lib: uaccess: fold fixups into body
+> > 4f503bad920e riscv: __asm_copy_to-from_user: Optimize unaligned memory =
+access and pipeline stall
+>=20
+> Thanks for the review, I'll go drop all of the riscv patches here.
+> Really, we shouldn't be adding any of them to any kernels older than
+> 5.15 these days as I do not think anyone using that cpu is using those
+> older kernels (or at least I sure hope not...)
+
+I know one of the main cpu IP vendors does run a 5.10 based tree, but
+that thing is both an abomination of out-of-tree patches to core arch
+code & about 100 releases out of date, therefore not really worth
+factoring. Anyone in their right mind should be running something
+significantly more recent than 5.10 for riscv.
+
+--rghNHbswWVpEDuGH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZOnWQAAKCRB4tDGHoIJi
+0kUfAP4xb16YY0T200gX/E1eNIUB6qJFsOkRpKFiBXmHgVR2SQEA21dQYFqO1WY5
+d6spP/yOL5Q39bkLnWSMl0Tafpw3dws=
+=/L3h
+-----END PGP SIGNATURE-----
+
+--rghNHbswWVpEDuGH--
