@@ -1,150 +1,152 @@
-Received: from CO1PR02CU002.outbound.protection.outlook.com (mail-westus2azon11010010.outbound.protection.outlook.com [52.101.46.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E707437C
-	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 06:51:34 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RDUEcgESG+DIN09/gFnWTvsp0qmM/r8JfPinHSGI5Xh92IcJ0t8ar+B/pypXYtHanSqjHxRYfq08gaBYgxWigyWbLncTqj/0eFI9zDF6TwtdJEC5TizYtDic1DIVfTv/qySi5pc5cl16V4jsKW/NLvTv7IdHRLkhGUXFtV8LUCR61KPC0MZP31cK6PdbFESJbbSFW1AMNT+f3pZVZw+56XWIDws/nBKH2gxbj1hLN6molI1uZ7Jvwy9nZf9rQRvhFhEhQL2QsNQi8xaadrbdTIqcPJmRxET8KjYsrVS5gzClki+0GwrBquS64NySUQ4o1jPqoDO9XqIaPVJqvAhVDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7WfokacAEfpnHRZAMyUlc9EptW1OcI5/DsUYAgXeXlc=;
- b=bVMH8GuLbC0AxMsHGj4PoEv4PEmvuinFE1N521RoO7XEpJ3NvTUThbT5fNRAr6LCXS4N6ostfkfm8byO4wqBJAK/DezT6UeiPncTW/2vHCMtXhm+cGPMTwljFgHlotBgzyFlsL7r8BQjTYGcY0ihkjtsAbmr+7Tt14XIYYEmhWIwKPMt9X9aaZZZGHY7LS12PeaOVqm/n4dpkETPIk5m0/0/py3ehA6aPhww7RGirJZtm+gPqvMVLe6vhlrTeHwzrEkX1Fjd7rIJ0cfR0JcoYezfGbpIOnqhe5e6667aVSmUXCuwgxGXCynkIesHOOKRhywZEaLXRWWu1c/KjcHVew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vmware.com; dmarc=pass action=none header.from=vmware.com;
- dkim=pass header.d=vmware.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmware.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7WfokacAEfpnHRZAMyUlc9EptW1OcI5/DsUYAgXeXlc=;
- b=SK1I2wLtspvtylgJ0kz8pnEwfTzKQ0gGbCyNTZYjX7C5lEa+mNKUP1qaSucrKx6sAeas3uJq2oQ/x0jMb98CIAoLd6kD2bnYW67naCj3zhhkhG99yNog9/lrSCzox1vzjXWz7ZUomX7CJG+dFkahBoBzNTwd8cFUHOb2im15AmA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vmware.com;
-Received: from CO6PR05MB7796.namprd05.prod.outlook.com (2603:10b6:5:340::19)
- by DM4PR05MB9512.namprd05.prod.outlook.com (2603:10b6:8:108::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.34; Sat, 26 Aug
- 2023 06:51:31 +0000
-Received: from CO6PR05MB7796.namprd05.prod.outlook.com
- ([fe80::3299:1bf1:faa7:8a02]) by CO6PR05MB7796.namprd05.prod.outlook.com
- ([fe80::3299:1bf1:faa7:8a02%7]) with mapi id 15.20.6699.028; Sat, 26 Aug 2023
- 06:51:31 +0000
-From: Vamsi Krishna Brahmajosyula <vbrahmajosyula@vmware.com>
-To: stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org,
-	patches@lists.linux.dev,
-	pablo@netfilter.org,
-	kadlec@blackhole.kfki.hu,
-	fw@strlen.de,
-	davem@davemloft.net,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	amakhalov@vmware.com,
-	srinidhir@vmware.com,
-	vsirnapalli@vmware.com,
-	akaher@vmware.com,
-	tkundu@vmware.com,
-	keerthanak@vmware.com,
-	psinghchauha@vmware.com,
-	Vimal Agrawal <vimal.agrawal@sophos.com>
-Subject: [PATCH v4.19.y] netfilter: nf_queue: fix socket leak
-Date: Sat, 26 Aug 2023 06:50:56 +0000
-Message-Id: <20230826065055.4691-1-vbrahmajosyula@vmware.com>
-X-Mailer: git-send-email 2.39.2
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BY3PR05CA0009.namprd05.prod.outlook.com
- (2603:10b6:a03:254::14) To CO6PR05MB7796.namprd05.prod.outlook.com
- (2603:10b6:5:340::19)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B466F1371
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 08:45:27 +0000 (UTC)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2bcb89b476bso24441821fa.1
+        for <patches@lists.linux.dev>; Sat, 26 Aug 2023 01:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693039525; x=1693644325;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HBPeLGUAtVO0USbU1Yk7uoBTmd4OjEFwwRL+82RfIoU=;
+        b=I+hNkSebw7bIjmSdswc4ETvWrfjQhIqqY+AzDHmp9zFCeMNWaVgsoY8i/SRQOvrGuV
+         b3JnxqtDDyzX2Kt1PThI2M905f+tlLAY0nyXfocWLTW/OEDyW9R8OXLDjOHpNv7g+ewS
+         DAypWh0w7Q/Z0Jbn/x65RVdMo+UHYQpplrP8u7k+iEjxRxHnNuyuWmXJLl0zdyrte9Ed
+         q48hqzmZCvbqXi2nSNObFJjihjdATpkFNl77hVfruJ2tTYjItUzggpQ0lNXVoBjZ4h0u
+         nUrfd2YP9SS84IuSp/IaK2ZSGFPf1dAOwCcnkGEEGhAg5iLIge4tAkaWXELqT/l+vXvW
+         uLdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693039525; x=1693644325;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HBPeLGUAtVO0USbU1Yk7uoBTmd4OjEFwwRL+82RfIoU=;
+        b=GwPMDVsmgYIjnG9NsvY1gKaLa+aXzKPMQqKzW3NZRsX5GmZ6oTQqVldrfEqdkwlhNu
+         JQJHOn8Y7J2kO5Ck064Z52dT74i+KFI7pOls2favOdr2rxbyKlOjDNqTahqTMSNF15fb
+         XUEx/XG2zrfOS2Ec9Q2VqcfEmSM0UokOQ/Z8zObW49j26u74/fDK/PRqvjxa9R+4v0eA
+         up76OsVQCO2A9k1MEykj/76NQWca53yKoettWyOMoQ3E84tEVdTZOxk3Fcu86XxlCSzV
+         NcZ5QKdgyPGHgrc3yvai6fyIxHCv+C/mfp2VTqb9WwWzRWfvoqLU1bLlIrWbohYuL2eI
+         VFXQ==
+X-Gm-Message-State: AOJu0YxlDaav/vJAot1vKho/ZDlpWdGAIFHxDJ8yPA9VyiCujC5Te/rf
+	hcubRYJspY/bazP3swFnyBs=
+X-Google-Smtp-Source: AGHT+IHJ5zcjFrIN0QeJxxkD/ZHmLjGuxoaGhiieRGHGeCha2xLp4jN/svXjDeyG9xlQkN75QRRrZg==
+X-Received: by 2002:a2e:9e09:0:b0:2b6:dac0:affe with SMTP id e9-20020a2e9e09000000b002b6dac0affemr15375800ljk.31.1693039525121;
+        Sat, 26 Aug 2023 01:45:25 -0700 (PDT)
+Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
+        by smtp.gmail.com with ESMTPSA id y24-20020a1c4b18000000b003fc01189b0dsm4306875wma.42.2023.08.26.01.45.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Aug 2023 01:45:23 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id E5A50BE2DE0; Sat, 26 Aug 2023 10:45:22 +0200 (CEST)
+Date: Sat, 26 Aug 2023 10:45:22 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de, conor@kernel.org, peterz@infradead.org
+Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
+Message-ID: <ZOm7oqwTJiVW6Uvu@eldamar.lan>
+References: <20230824141447.155846739@linuxfoundation.org>
+ <ZOhz4/8Q8XjIqpCy@debian>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR05MB7796:EE_|DM4PR05MB9512:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2954ab88-62d2-448e-e7cf-08dba600e129
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	8M2KQdFriL0r2uiD+MelKWTxy4rBlHC8beJKcO4xTmn+OHfbTCWjytMs6xBvaweRV1KxYYsLN7kIx0Gq4ZZvP4h1qul9odcace3cK9l1SZQBa8KqPY7gpWGfNpK0H0+7NJp4pKfkBHXbV1RpCjLSBAMJcx+jdW/w50HQ5hGssUgrxbbxQbYKjymq/LQ1vR2G9Abszi001cl3RxEkoQFeffFlg6dNjOrrtRlFe3gISC3CTny1xzweXx8GbgKZ92qPBzCz3BQU+LjRBF7TBfKjShyb9U2pMVYp7rG8sz63NEr7hTbZiwvyAhs1Wxx4CLlcshIR4XTp9GTcUZnB7sYJ9unabMSRCZmWm/WnYz4sk5tY1+98dyEboehx5h4hGq7dBQvxangk97hU81Y8gE+8xqHRCUFKzwUE0ibVHxYdQvc+LPKJJ816x+oUjJMtqvjyM4/zh570/krnTAITkNoUh6xJ8lfD9ZM8MKMu2uIa35m6xgIV701ekkpnnN9+L+Toa0BhrU/2TscxQMs18E/8gHykSdwOapmrhCJhetGAfR8VL69oWwMbfnRQXWRzM6ezK6UrwjLzi4dsMeoekiOFAyeD6gPl/N8vD6XqRkSBlXwsuoYtGB68zTCXqCIvMwFpsd6177dhea4gry2Xv2qonmKlFv/4IVImR4WTDeofuqh0R67gGUThxfXqNSalmxT3nRej8Bx0FXokhZKx6SmHKNM05ENUWXnap75sEL1H+wI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR05MB7796.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(39860400002)(396003)(366004)(346002)(1800799009)(186009)(451199024)(66946007)(66556008)(66476007)(6916009)(316002)(38350700002)(966005)(478600001)(38100700002)(41300700001)(7416002)(2906002)(36756003)(86362001)(5660300002)(8936002)(8676002)(4326008)(1076003)(26005)(2616005)(83380400001)(52116002)(6486002)(6506007)(12101799020)(6512007)(6666004);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zcbNjPnoqbk9Ur74q9hxnbZFfYfl97iOhFq5aPK+ouGtTZoMy3qo9eZBk5uJ?=
- =?us-ascii?Q?URBkYO8+aSUXFtBatt9eTOcSRBVPrgwn3XxBGBxiYUnfKSXR+0NjGnerS7PR?=
- =?us-ascii?Q?CSD/bYP6lexpib+Itv6XT2NLpmOfAEA57br6C+Pwj0HwqYRSZniRDbQT9KsV?=
- =?us-ascii?Q?xova7pIO6yN7EAs1p1eEZYU7irazl5JrOg2AayCewSDAVOMycaVE2eStqBDL?=
- =?us-ascii?Q?1I4Jfk9REeWe6iSitv5ypJADpo4hpDpyyzdz/+4n6jHyM3bZQ33dX/tBitaI?=
- =?us-ascii?Q?fSmoEhDo1eGM9aub0wVSem7rgfUnzS9KlY0l/a+1EqYBORAGUbxM58qoal2p?=
- =?us-ascii?Q?6pGt84IUcuqhC7w7aqiT6IuJnsv3jKjJDtRmpsYEiLSsFCp2WdiGKknyXqeH?=
- =?us-ascii?Q?ZsTCWzeG3DeDq03NuE69Z3OYMct4Kn7ls+m8zOZX8DVRIt94CjwvUaykd8PH?=
- =?us-ascii?Q?fJVtfz5btBl4wzRH86Ojou/MXCIQpiKJUyX6V8PqMhY3q1aG1xgJoRNe0RrB?=
- =?us-ascii?Q?S8zh04bxwfFfDwHNqtK9dKN7fWT+uYZdp/CsDa3n+y9UF6Jynf4jr9bPtdZr?=
- =?us-ascii?Q?umEJAcRjuWoqrEuIUvXzVPj3WI2t+mvgsc2xxfISUICfbseZNgfhegPoQvy7?=
- =?us-ascii?Q?WcGK+XmYkln1U/sNeP3Yc5b98fYuu2ZOrdMAFa6Qq8EP06jrlorJkPEmuPy5?=
- =?us-ascii?Q?IA0rbV/R8/+KTiYythO3TTOSpgQ/1UsngNur+FgrYKpSM2JtO7IbpWJqaE4B?=
- =?us-ascii?Q?f/PX+Ew45nQHFSeO8JNkOd1K8mCv3cpOTwr7u49jizd7idFX5fCl0sZGUM98?=
- =?us-ascii?Q?ORNf/1DGClcR2sLIIoEiSYQ3YtCkBFT8iuL1e0nrU7kb34uDZctO9Gj3DJ+P?=
- =?us-ascii?Q?hbmg0ZxHkHZhkoAtCJFB7aTZPrBtb9LbYrKFm//GWPy5lwzBjwMk2pLP0mzw?=
- =?us-ascii?Q?VqWzhk/eo6vh55h2s4hK5ZMMcsjVYjphV/mz7IfLrtT0nUq9/ZfUmuPHVroI?=
- =?us-ascii?Q?A+33zyRMf1XzDufmXgTI5Ce7lI+spsB1rh4xvFloOlcmU3wS314UTnCixSJO?=
- =?us-ascii?Q?qkiQR0Mh+vRJ4mISPhtxn8m+gIMDcG4+vlvSNkOO/TFADuGvnlQ+ekvQR+Q1?=
- =?us-ascii?Q?2PW1LZKnvFkt5hhUb9Gy6DO6CC49kYqBI32yC6gIbGxb12y7El/1O88lk3DJ?=
- =?us-ascii?Q?8k8NxSdk3Fh2ky9VNFCMic84RM0AhvbP/R27QTPKL9G7LDr7jyuelHVwSkEi?=
- =?us-ascii?Q?ih4yjOZVrGfFbqPkRH6eHDGJkLFWxmsnE6oBfRhXO7dgrPSLoTWkxAIKZiA7?=
- =?us-ascii?Q?SlbYgiDTJ7ikJrFjDUl7FHQB78aSqW6E6TAYU6+QrdsQaDSWKqwaUJIfSQiP?=
- =?us-ascii?Q?QSx5zFciNWBF1kEhLP/AvO853Lfp+CnyoEt+oGL76PQf/MSss7kYI5MJ4X4z?=
- =?us-ascii?Q?SttYghraumJIs0Ud+z0UfTFHX+RyDK9MR2mK0Gl+jupqPgqe0+hYFKD8JNJR?=
- =?us-ascii?Q?L+Ajdktw9PfRtRiQZUdedU/DHP46E1t0ugz7RUvEL/AYR9zkO+OoSjAp8Hfy?=
- =?us-ascii?Q?VTxipaJzTX5tT1mrGt0V8tXEYCWXgoXKEAn4niuCem1gJ42SEwP2bKD5JlCL?=
- =?us-ascii?Q?qw=3D=3D?=
-X-OriginatorOrg: vmware.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2954ab88-62d2-448e-e7cf-08dba600e129
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR05MB7796.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2023 06:51:31.3135
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: plpO+WYkOJDwfcF5sMlwkJDIC29EbaqUlAp8psfddTVVzRUxYOftZQxEg6taL9CWCmLKVV9deFHCCsZisASz92W3JB9LrA0XNKXK89UYO6w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR05MB9512
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZOhz4/8Q8XjIqpCy@debian>
 
-Removal of the sock_hold got lost when backporting commit c3873070247d
-("netfilter: nf_queue: fix possible use-after-free") to 4.19
+Hi
+On Fri, Aug 25, 2023 at 10:26:59AM +0100, Sudip Mukherjee (Codethink) wrote:
+> Hi Greg,
+> 
+> On Thu, Aug 24, 2023 at 04:14:56PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.48 release.
+> > There are 15 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sat, 26 Aug 2023 14:14:28 +0000.
+> > Anything received after that time might be too late.
+> 
+> Build test (gcc version 12.3.1 20230625):
+> mips: 52 configs -> no failure
+> arm: 100 configs -> no failure
+> arm64: 3 configs -> no failure
+> x86_64: 4 configs -> no failure
+> alpha allmodconfig -> no failure
+> csky allmodconfig -> no failure
+> powerpc allmodconfig -> no failure
+> riscv allmodconfig -> no failure
+> s390 allmodconfig -> no failure
+> xtensa allmodconfig -> no failure
+> 
+> Boot test:
+> x86_64: Booted on my test laptop. Warning on boot.
+> x86_64: Booted on qemu. Warning on boot. [1]
+> arm64: Booted on rpi4b (4GB model). No regression. [2]
+> mips: Booted on ci20 board. No regression. [3]
+> 
+> [1]. https://openqa.qa.codethink.co.uk/tests/4787
+> [2]. https://openqa.qa.codethink.co.uk/tests/4796
+> [3]. https://openqa.qa.codethink.co.uk/tests/4795
+> 
+> Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+> 
+> 
+> [    0.154501] ------------[ cut here ]------------
+> [    0.154505] missing return thunk: __alt_instructions_end+0x21b2/0x21d0-srso_untrain_ret+0x0/0x2: e9 17 81 f8 fe
+> [    0.154517] WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:572 apply_returns+0x1cb/0x200
+> [    0.154524] Modules linked in:
+> [    0.154526] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.1.48-rc1-c079d0dd788a+ #1
+> [    0.154529] Hardware name: LENOVO 4287CTO/4287CTO, BIOS 8DET68WW (1.38 ) 04/11/2013
+> [    0.154531] RIP: 0010:apply_returns+0x1cb/0x200
+> [    0.154534] Code: 5b 01 00 0f 85 0b ff ff ff 49 89 e8 b9 05 00 00 00 4c 89 f2 48 89 ee 48 c7 c7 38 16 4f b8 c6 05 f5 d1 5b 01 01 e8 85 8e 05 00 <0f> 0b e9 e3 fe ff ff c7 84 24 81 00 00 00 cc cc cc cc 42 c7 44 38
+> [    0.154536] RSP: 0000:ffffffffb8803e30 EFLAGS: 00010282
+> [    0.154539] RAX: 0000000000000000 RBX: ffffffffb906d7b4 RCX: 0000000000000000
+> [    0.154541] RDX: 0000000000000003 RSI: 0000000000004ffb RDI: 00000000ffffffff
+> [    0.154542] RBP: ffffffffb9079962 R08: 0000000000000000 R09: 00000000ffffefff
+> [    0.154544] R10: ffffffffb8803cc0 R11: ffffffffb88cc1e8 R12: ffffffffb906d7d4
+> [    0.154545] R13: cccccccccccccccc R14: ffffffffb8001a7e R15: 0000000000000004
+> [    0.154547] FS:  0000000000000000(0000) GS:ffff936dd6200000(0000) knlGS:0000000000000000
+> [    0.154549] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [    0.154551] CR2: ffff936dde5ff000 CR3: 000000013b40a001 CR4: 00000000000606f0
+> [    0.154553] Call Trace:
+> [    0.154556]  <TASK>
+> [    0.154559]  ? __warn+0x79/0xc0
+> [    0.154565]  ? apply_returns+0x1cb/0x200
+> [    0.154567]  ? report_bug+0xee/0x170
+> [    0.154572]  ? prb_read_valid+0x17/0x20
+> [    0.154578]  ? handle_bug+0x42/0x70
+> [    0.154581]  ? exc_invalid_op+0x14/0x70
+> [    0.154583]  ? asm_exc_invalid_op+0x16/0x20
+> [    0.154586]  ? retbleed_return_thunk+0x7e/0x7e
+> [    0.154591]  ? apply_returns+0x1cb/0x200
+> [    0.154594]  ? apply_retpolines+0x1f5/0x2c0
+> [    0.154598]  alternative_instructions+0x4d/0xfc
+> [    0.154604]  arch_cpu_finalize_init+0x28/0x47
+> [    0.154607]  start_kernel+0x66c/0x70e
+> [    0.154612]  secondary_startup_64_no_verify+0xce/0xdb
+> [    0.154618]  </TASK>
+> [    0.154619] ---[ end trace 0000000000000000 ]---
 
-Fixes: 34dc4a6a7f26 ("netfilter: nf_queue: fix possible use-after-free") in 4.19
+Seeing this as well, but see some context in the thread in the
+previous cycle (where then those patches were not included);
 
-Fixed in 4.14 with
-https://lore.kernel.org/all/20221024112958.115275475@linuxfoundation.org/
+https://lore.kernel.org/stable/2023082212-pregnant-lizard-80e0@gregkh/
 
-Signed-off-by: Vimal Agrawal <vimal.agrawal@sophos.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-[vbrahmajosyula: The fix to the backport was missed in 4.19]
-Signed-off-by: Vamsi Krishna Brahmajosyula <vbrahmajosyula@vmware.com>
----
- net/netfilter/nf_queue.c | 2 --
- 1 file changed, 2 deletions(-)
+Apart for the above regression, no other regressions spotted. 
 
-diff --git a/net/netfilter/nf_queue.c b/net/netfilter/nf_queue.c
-index 84c59de27882..b3a0385290a1 100644
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -93,8 +93,6 @@ bool nf_queue_entry_get_refs(struct nf_queue_entry *entry)
- 		dev_hold(state->in);
- 	if (state->out)
- 		dev_hold(state->out);
--	if (state->sk)
--		sock_hold(state->sk);
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
- 	if (entry->skb->nf_bridge) {
- 		struct net_device *physdev;
--- 
-2.39.2
+Tested-by: Salvatore Bonaccorso <carnil@debian.org> 
 
+Regards,
+Salvatore
