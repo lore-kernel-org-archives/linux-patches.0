@@ -1,97 +1,173 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BL0PR02CU006.outbound.protection.outlook.com (mail-eastusazon11013008.outbound.protection.outlook.com [52.101.54.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5714F37F
-	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 01:23:44 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1bdc243d62bso11395515ad.3
-        for <patches@lists.linux.dev>; Fri, 25 Aug 2023 18:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693013023; x=1693617823;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=acKCK1DDVsUgCwVPQW4+BV+8s2HfSsnrUrjpFkgd9wk=;
-        b=qZzFJ5Q5ESQ/8whIlhrjVp3nDjACHbnMZsluegvq6Ojinxc/067Osp2qbIlyw9OjoC
-         GrRln/+N7K+EJ6CyNvvc+wOUkgfi4l1q64Ul9uSGNiBBZAVF8RivtDyeN7Ha+sTyJOaS
-         LD/odcRNwB6O+gi1HjaHmDlF86++rjIJKEQ75ax2Mt4my1mA8ngmS7J7CH7ueAo62NGh
-         rmJDnzO84abFyXgzrzbSc0TZ8HkmvG7Bk4tGOnSBPpvE0bvVIuhs9dluaoWv8GjcnWtM
-         C3vb1aRCOnNEmeBc+8DIEHu3MJjtbU/oTaEjJwT/5Q+VpaLm82ujhnXu4CqBfchy1pUI
-         SPaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693013023; x=1693617823;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=acKCK1DDVsUgCwVPQW4+BV+8s2HfSsnrUrjpFkgd9wk=;
-        b=MeQWVTODHrcBzHmlX/E/w3De9m4jP0AviwxXFXr9a/26qA/JVNZZ8VsQe7cI/6q/oX
-         Av9si0hrnVfCZaJYDnQJqV0H4h7w5vnBwAljQx1wfmI+qiEI8JmyzWUwavDWWAlfiIJt
-         SIAMNWMekQh+EDWlHdmGoDR8vOVsVycjXoq8QW3VoQpnIh7E70XMWkIVFqxbQOHy91Tv
-         xlW80Y6nV27fBmCFynhHsqf4MwaLfhRAsIEEUdaYqNSXz+OQOlEPRysER710c0FdUh/+
-         eEPSKTgK08L09vkdO6iguFKvKpcTZN6aD8hkvdgc44ekIjsTY6rqs0+dUhEYnTOp6hCQ
-         RCLA==
-X-Gm-Message-State: AOJu0YxEHEtFndWQ6vNxwdBsgla46ImhBFUM1oZcu1W3MtDTi/JWLLID
-	+bkVj+l+Ey6AYpKo6SlU/fk=
-X-Google-Smtp-Source: AGHT+IH4NYnJm+tQgvR+rYaA45h9XoYuEpTCK8oT0lwl1wjhA9qrHf69HItpzuopdJJAAu87CUg0YQ==
-X-Received: by 2002:a17:903:2642:b0:1ac:8be5:8787 with SMTP id je2-20020a170903264200b001ac8be58787mr14537859plb.21.1693013023425;
-        Fri, 25 Aug 2023 18:23:43 -0700 (PDT)
-Received: from debian.me ([103.124.138.83])
-        by smtp.gmail.com with ESMTPSA id z1-20020a170903018100b001bdb167f6ebsm2429875plg.94.2023.08.25.18.23.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 18:23:42 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id D2F5C82EFB85; Sat, 26 Aug 2023 08:23:38 +0700 (WIB)
-Date: Sat, 26 Aug 2023 08:23:38 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 00/15] 6.1.48-rc1 review
-Message-ID: <ZOlUGhlro_v6cvo4@debian.me>
-References: <20230824141447.155846739@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FDAA45
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 02:26:18 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ajctW6ZWEFuQNmcmZNrlc6AlB1QFqeH2pj0KTYufVg7K5V4lDWTM9nHtPuisqD0e5wjpHukrHsLlLwru4MMgAoGPD+mFIUBpRhVcrGZD5Lt9qc4CtQOYklFKFQPJpMmQsyrb5YYQY795rhi4MkXm2VMqNjQpaurJq536qq+WKRXqAeMMXycmm8HkgbzfXhs37YV8QyV/DA6lJ6bV/3PpF77seLvB+hR7THAcKOX8LqFAskK+10pXmB9MBIE5R//js4WDXOAenYW5pBrTv5hSrynWOugrEY9eZhS0opd0heltP1p/+28uzstZf+r7Y0dB4HWb0gEZ4lN8ri+N8dgHCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EuWk8xUZ1AkOK94Lb9X6dnCUkPL/9elKIr1nvgLD2NI=;
+ b=Zl0J+rnAzsxf49UzIOkDvY9AYPF4wu8mFgbo4iCd+kOmD2v6L5qmnDGEqr5PN2BQFJlOTJSpuWA5FjX49WZxXctHCIBxcz7waRlApnxIvmX3W9L/SiPi7pIcLyvQQaCn3Uu5+Th58yqCRBvdgvpCLsoOKfIN23CxegHDLxoeAfk2aew7+ADnTLn7hmibIafJfWWFsy+fZ6WB1kjRTj32AN+JgF0cWvT8A1yWNv8LgEyY3/+Oak09c8pExu7jTGJQijS3fssefUffbEVpAuvJc6Sa4qf6xz/798mO2VybNxdAJINSzlSvf3y+5+V2Q02pOoe0kFPSFnLn6fz9OvjZnA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vmware.com; dmarc=pass action=none header.from=vmware.com;
+ dkim=pass header.d=vmware.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmware.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EuWk8xUZ1AkOK94Lb9X6dnCUkPL/9elKIr1nvgLD2NI=;
+ b=0EfWgqlrN38zxo2s081wjNjx3bynr3FSDhM5ZK6Di3o3fOf1ISr8EbD+cOvuJ0ESJBEZTl6l710xwulOpxJ9jtZv7HVC8L50PEOQ2VDI1mdsW6jHWb1kTO5+WsjhGS1UEOjgyRJhQkInCmyS2KOrOdrpsux17fZ23jw4hK6cNuc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vmware.com;
+Received: from DM6PR05MB5292.namprd05.prod.outlook.com (2603:10b6:5:5a::30) by
+ PH7PR05MB10343.namprd05.prod.outlook.com (2603:10b6:510:2f8::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.34; Sat, 26 Aug
+ 2023 02:26:15 +0000
+Received: from DM6PR05MB5292.namprd05.prod.outlook.com
+ ([fe80::dc67:6f45:fb66:add7]) by DM6PR05MB5292.namprd05.prod.outlook.com
+ ([fe80::dc67:6f45:fb66:add7%3]) with mapi id 15.20.6699.034; Sat, 26 Aug 2023
+ 02:26:15 +0000
+From: Srish Srinivasan <ssrish@vmware.com>
+To: stable@vger.kernel.org
+Cc: gregkh@linuxfoundation.org,
+	patches@lists.linux.dev,
+	borrello@diag.uniroma1.it,
+	peterz@infradead.org,
+	pauld@redhat.com,
+	rostedt@goodmis.org,
+	sashal@kernel.org,
+	mingo@redhat.com,
+	linux-kernel@vger.kernel.org,
+	akaher@vmware.com,
+	vsirnapalli@vmware.com,
+	amakhalov@vmware.com,
+	tkundu@vmware.com,
+	keerthanak@vmware.com,
+	srinidhir@vmware.com,
+	kashwindayan@vmware.com,
+	vbrahmajosyula@vmware.com,
+	Srish Srinivasan <ssrish@vmware.com>
+Subject: [PATCH v4.19.y] sched/rt: pick_next_rt_entity(): check list_entry
+Date: Sat, 26 Aug 2023 07:45:35 +0530
+Message-Id: <20230826021535.9065-1-ssrish@vmware.com>
+X-Mailer: git-send-email 2.17.1
+Content-Type: text/plain
+X-ClientProxiedBy: MA0P287CA0013.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:d9::13) To DM6PR05MB5292.namprd05.prod.outlook.com
+ (2603:10b6:5:5a::30)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Nr1MUEtNaDq7pJ3e"
-Content-Disposition: inline
-In-Reply-To: <20230824141447.155846739@linuxfoundation.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR05MB5292:EE_|PH7PR05MB10343:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6bcbed87-83f6-4687-d228-08dba5dbd26a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	AxX4C7qi8G3VpHi9C4mx3gc36N9DPV2L9xkWJ8KzmdH/vML7KJRk5TpKyHihL2OKZD2uXg2L5F5p2lwNH80h1WsPDcQZ/U45IWkwiv4Nr4Z7WN0lTAiLmwDYDzzJflPokxjmDtfG13oa+9kuCGVFmeFB6R5jhq+bzPcpsJU8Iph2eCyLt9YFS2nnlVfRYaP4azngRGH+V14VeFvmnJw+7Kymu39KpmoXtLVZDVG5yzRtdNfMimAlNc+y/TqL9gxDMKStCCN4BdZd337KngO8PlydetvuPOdReF9Nh+kakUTSLEkosE5FQ2gcnqVhKtNEF1R/AL7j8Kdpgv8Ct5seZKr150gPLt4KJIutUzGjRTizNS3rptrCTNGyVOp2WnzzD0Axx27PXpz/upyTqqbYsTZOHjHruXG+I+fsnKxpIlTjRWRW0H+joGgOLqrEUekMEqurY0PXlu9lW4cPXseprVPdhC1am9b4dHwkayufwoUQ8esTIvkeKFxUjExxZ5mv95Hm2pQ/c2N5YpiFPtuwCUpr4GLLvySYo5dHR32rkjD41c/S0jH/Mf9gqVzVG7/4AxglW3dUyyN8R8f5xw1pyno976KgTk5d61GCrNrxIYv4TRP7DTal9LWdq8OiORYE2rMdW/7kmnM8NHtpfT5fdZk1WdwQrumEXpmqdsN1pkffCVW0VceU8I+SG+RxSvNMD8/osjEp5H65KPk9y77gE712XmOVgUeD8vp7bzIVick=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR05MB5292.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(346002)(396003)(136003)(366004)(39860400002)(451199024)(1800799009)(186009)(83380400001)(478600001)(966005)(26005)(12101799020)(1076003)(2616005)(6486002)(6512007)(107886003)(52116002)(6506007)(6666004)(86362001)(5660300002)(2906002)(7416002)(6916009)(316002)(38100700002)(38350700002)(66946007)(66556008)(66476007)(4326008)(36756003)(8936002)(8676002)(41300700001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?92XL1iiEh2v2E/zzRrb440zr41WxN6CaF3R8GfZ7P5VHoRNok0/SdSfmFLrI?=
+ =?us-ascii?Q?9JphvC9bdy2i+JHp3FJMHvEI5oYJOF9GEZMjq44fQI70qMnQ+RYuRyIoxki7?=
+ =?us-ascii?Q?KA5sLVX4gM/gdKFuWahMhZx3RhGnTKACK2+m5KKNaYrjtrhGqxsOV3qzuw12?=
+ =?us-ascii?Q?0cyYu6awuEuh4kkHb/WKoIzQfyAIRKH8kWcKCOllNbU8T7+uMfiVpuaZ8aiz?=
+ =?us-ascii?Q?CSbC/Yyz5V1ye2EyNUe049Jge4eFlUzaZO6amRFOm4UrPxR5WvGvlmtUHHGB?=
+ =?us-ascii?Q?3t7AAGXmnDgS8ZYYf4VRP8ZRMkkJcmMuRZyOmb5XbMIRWg16Llw87PeWJnFC?=
+ =?us-ascii?Q?Sp+prv1ZjQoohIg/sRq2IHbB1WDG/D+v8+ZuLEWiSlYJHEt5ODi41e29MMBp?=
+ =?us-ascii?Q?8Mx5ArWGJ43lbZAzTvUY73q0B7XFXM63oBZOUHAmy/44tWA1/CoIAjyUGbmb?=
+ =?us-ascii?Q?e5bwx13L8AB9KTpopEgETrVjyVE1u5eR3VrwlTrmdV0U6xrqcXj9YwQ0PkdH?=
+ =?us-ascii?Q?y4KQa+E/GG0X49gigJ04T5o8lQ27h7cDhgMDivixrJcsIu7Zr7UrioHMvufT?=
+ =?us-ascii?Q?mJ62Mttc5/uhJIfJz98OSh1EbSGv8WDT/ugu/qBmWyEIq3eSzc17nTLdvvvs?=
+ =?us-ascii?Q?+XamFR2f891mp7QjWX6liIYsEweTdQ/Cjn+V/UYD0LTnXDjQchOiKe0y92Jm?=
+ =?us-ascii?Q?VE4xfqSDSuF0BfT+xiApmffqpgwcXX2cp6umZdyCxRZaYpRqATB1246dmyeH?=
+ =?us-ascii?Q?xKCMwzwPjdVfJbE92NDA0CDBI++BNrLknG2/4GkoFvdF489fKMF+AefGU00Q?=
+ =?us-ascii?Q?Qa6/xY7xHrVhmu6OciBYvQ8UV8ZOwkHiVg25Itc30ppkcixqbMVwa/TUf8ie?=
+ =?us-ascii?Q?UnIdEcRKsqkZ02XkkKhuyhQ18dCiPeqsH7VKphv6XqQ3OkJQNs8PJHm3JoGD?=
+ =?us-ascii?Q?5I9SFcXZRXgB3xumuocyjmiIxyZxdkMMufkXALBscRi3xdkYibURk/7PZm9U?=
+ =?us-ascii?Q?nycx/u2c07GSHT8dushz/wacGM28eib7iW523qk+zo2NNvhjfQiaFQ3OilrC?=
+ =?us-ascii?Q?DXRlp1s0tBi+M4kt4xWOcWlZ3cGwd6SdkwUEghk4CmAni7D2R0IWe0QudmHO?=
+ =?us-ascii?Q?PLeuH8RKOpk/+fa60eq9UWqg/Nt1kun6HCGSGraCUM58D0p0KwsJu4CwGLMq?=
+ =?us-ascii?Q?6895DuBcaIry5cmswljfMeDtXaZ09vsqJA84npnAEAIx/aK3IUWkGdPwrezq?=
+ =?us-ascii?Q?f9+h3LAHFpNf+3biiu92hy8wsZ4JsX15aS0hTNuPzu/U2A0MXU+gjRuma83E?=
+ =?us-ascii?Q?u5pbyUpFRL/4Z9GuYLg59Pxt7xGRd8np/6+prYyDtBCkoKw5iAacsxN5U8rU?=
+ =?us-ascii?Q?RDdj9Kr0CCUzViF1KimWzrrsqGDTXnFwgO8yW1j40wkk9km+kUJlnp4PjWz+?=
+ =?us-ascii?Q?YVvCZ0TVDFA5iwuv/r6wobxw4QocsmxCYSV23NDD/iv1WSawUY93efWQc1Jt?=
+ =?us-ascii?Q?luAH5xXoyeD1ErB7+RAid9aC56s60xNVssCUwxah4NKckKrSHKeBdaH4I4/L?=
+ =?us-ascii?Q?0MI4ONCDjpTbFik8+GNCj7FKActE9Qu6Rofta4mA?=
+X-OriginatorOrg: vmware.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6bcbed87-83f6-4687-d228-08dba5dbd26a
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR05MB5292.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2023 02:26:15.1056
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SYF6wxq0KhlemsnUb9xYWla29JEwmBfvQlpa4eNTQD+tOe/AJ9pFibHkAo4aVTTOQ/4an/KcuDHVR7xZcDL8lw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR05MB10343
 
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
---Nr1MUEtNaDq7pJ3e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+commit 7c4a5b89a0b5a57a64b601775b296abf77a9fe97 upstream.
 
-On Thu, Aug 24, 2023 at 04:14:56PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.48 release.
-> There are 15 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+Commit 326587b84078 ("sched: fix goto retry in pick_next_task_rt()")
+removed any path which could make pick_next_rt_entity() return NULL.
+However, BUG_ON(!rt_se) in _pick_next_task_rt() (the only caller of
+pick_next_rt_entity()) still checks the error condition, which can
+never happen, since list_entry() never returns NULL.
+Remove the BUG_ON check, and instead emit a warning in the only
+possible error condition here: the queue being empty which should
+never happen.
 
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
+Fixes: 326587b84078 ("sched: fix goto retry in pick_next_task_rt()")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20230128-list-entry-null-check-sched-v3-1-b1a71bd1ac6b@diag.uniroma1.it
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Srish: Fixes CVE-2023-1077: sched/rt: pick_next_rt_entity(): check list_entry
+	     An insufficient list empty checking in pick_next_rt_entity().
+	     The _pick_next_task_rt() checks pick_next_rt_entity() returns
+	     NULL or not but pick_next_rt_entity() never returns NULL.
+	     So, even if the list is empty, _pick_next_task_rt() continues
+	     its process.]
+Signed-off-by: Srish Srinivasan <ssrish@vmware.com>
+---
+ kernel/sched/rt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 9c6c3572b..394c66442 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -1522,6 +1522,8 @@ static struct sched_rt_entity *pick_next_rt_entity(struct rq *rq,
+ 	BUG_ON(idx >= MAX_RT_PRIO);
 
---=20
-An old man doll... just what I always wanted! - Clara
+ 	queue = array->queue + idx;
++	if (SCHED_WARN_ON(list_empty(queue)))
++		return NULL;
+ 	next = list_entry(queue->next, struct sched_rt_entity, run_list);
 
---Nr1MUEtNaDq7pJ3e
-Content-Type: application/pgp-signature; name="signature.asc"
+ 	return next;
+@@ -1535,7 +1537,8 @@ static struct task_struct *_pick_next_task_rt(struct rq *rq)
 
------BEGIN PGP SIGNATURE-----
+ 	do {
+ 		rt_se = pick_next_rt_entity(rq, rt_rq);
+-		BUG_ON(!rt_se);
++		if (unlikely(!rt_se))
++			return NULL;
+ 		rt_rq = group_rt_rq(rt_se);
+ 	} while (rt_rq);
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZOlUFQAKCRD2uYlJVVFO
-o0YxAQCzDPWVI01UQ8OMk0c1w4/zdbNTbiH8jmHRdhQjtJBpzwEAj6mpdQtFZ0/5
-1WEuBsFeXqk/B+fVxLzQRakwl/wcWws=
-=AgPL
------END PGP SIGNATURE-----
+--
+2.35.6
 
---Nr1MUEtNaDq7pJ3e--
