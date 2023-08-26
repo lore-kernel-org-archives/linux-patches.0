@@ -1,88 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156BC7E
-	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 11:22:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035FEC433C7;
-	Sat, 26 Aug 2023 11:22:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693048928;
-	bh=fyswWCvolm2y6M4a91+O6ddbkgFK7oDmD1bgTfuHkRI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QiZw78cJZrox80FpImQplJf7bRThtISkxjvnU+T4bGie45ydhn7zeHyAc8cjxcCmw
-	 xH2ClnZJXNkDv9fRtLCPWeyQHkKbcZI7OvshFRB170uoZXGkyUo9BmJvh2HY/9ntHk
-	 HZNcmO/QdCFyLk8cdUeZ1eM2cTtbLVt3I3YueX44=
-Date: Sat, 26 Aug 2023 13:22:05 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
-Message-ID: <2023082633-shininess-sponsor-f747@gregkh>
-References: <20230824170617.074557800@linuxfoundation.org>
- <fb1c3952-1d72-4f9d-bc93-2988bcde462e@roeck-us.net>
- <2023082636-postnasal-cobalt-5ab5@gregkh>
- <20230826-huddle-designed-952a01db6e88@spud>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF54FD2E5
+	for <patches@lists.linux.dev>; Sat, 26 Aug 2023 15:45:33 +0000 (UTC)
+Received: from [192.168.1.103] (31.173.83.180) by msexch01.omp.ru
+ (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Sat, 26 Aug
+ 2023 18:45:31 +0300
+Subject: Re: [PATCH 5.10 060/135] mmc: sunxi: fix deferred probing
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, Jernej Skrabec <jernej.skrabec@gmail.com>, Ulf
+ Hansson <ulf.hansson@linaro.org>, Sasha Levin <sashal@kernel.org>
+References: <20230824145027.008282920@linuxfoundation.org>
+ <20230824145029.491674578@linuxfoundation.org>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
+Organization: Open Mobile Platform
+Message-ID: <2d1fbbd4-7edf-74d1-8297-b48c71cc26aa@omp.ru>
+Date: Sat, 26 Aug 2023 18:45:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230826-huddle-designed-952a01db6e88@spud>
+In-Reply-To: <20230824145029.491674578@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [31.173.83.180]
+X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
+ (10.188.4.12)
+X-KSE-ServerInfo: msexch01.omp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 5.9.59, Database issued on: 08/26/2023 15:34:29
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 59
+X-KSE-AntiSpam-Info: Lua profiles 179455 [Aug 25 2023]
+X-KSE-AntiSpam-Info: Version: 5.9.59.0
+X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
+X-KSE-AntiSpam-Info: LuaCore: 527 527 5bb611be2ca2baa31d984ccbf4ef4415504fc308
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: {relay has no DNS name}
+X-KSE-AntiSpam-Info: {SMTP from is not routable}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 31.173.83.180 in (user)
+ b.barracudacentral.org}
+X-KSE-AntiSpam-Info:
+	31.173.83.180:7.1.2;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;omp.ru:7.1.1;lore.kernel.org:7.1.1
+X-KSE-AntiSpam-Info: FromAlignment: s
+X-KSE-AntiSpam-Info: {rdns complete}
+X-KSE-AntiSpam-Info: {fromrtbl complete}
+X-KSE-AntiSpam-Info: ApMailHostAddress: 31.173.83.180
+X-KSE-AntiSpam-Info: Rate: 59
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=none header.from=omp.ru;spf=none
+ smtp.mailfrom=omp.ru;dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 08/26/2023 15:38:00
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 8/26/2023 11:36:00 AM
+X-KSE-Attachment-Filter-Triggered-Rules: Clean
+X-KSE-Attachment-Filter-Triggered-Filters: Clean
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-On Sat, Aug 26, 2023 at 11:38:56AM +0100, Conor Dooley wrote:
-> On Sat, Aug 26, 2023 at 12:08:20PM +0200, Greg Kroah-Hartman wrote:
-> > On Fri, Aug 25, 2023 at 07:24:29AM -0700, Guenter Roeck wrote:
-> > > On Thu, Aug 24, 2023 at 07:07:52PM +0200, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 5.10.192 release.
-> > > > There are 135 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Sat, 26 Aug 2023 17:05:50 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > 
-> > > Testing is not complete, but early feedback: All riscv32 boot tests
-> > > crash badly with errors such as
-> > > 
-> > > Starting syslogd: OK
-> > > Starting klogd: OK
-> > > /etc/init.d/S02sysctl: line 68: syntax error: EOF in backquote substitution
-> > > /etc/init.d/S20seedrng: line 33: syntax error: unexpected end of file (expecting ";;")
-> > > Starting network: /bin/sh: syntax error: unterminated quoted string
-> > > sed: unmatched '/'
-> > > /bin/sh: syntax error: unterminated quoted string
-> > > FAIL
-> > > /etc/init.d/S55runtest: line 48: syntax error: EOF in backquote substitution
-> > > 
-> > > This is no longer seen after reverting the following patches.
-> > > 
-> > > 92609bb3a1f8 riscv: uaccess: Return the number of bytes effectively not copied
-> > > e06648704417 riscv: lib: uaccess: fix CSR_STATUS SR_SUM bit
-> > > 20704d763646 riscv: lib: uaccess: fold fixups into body
-> > > 4f503bad920e riscv: __asm_copy_to-from_user: Optimize unaligned memory access and pipeline stall
-> > 
-> > Thanks for the review, I'll go drop all of the riscv patches here.
-> > Really, we shouldn't be adding any of them to any kernels older than
-> > 5.15 these days as I do not think anyone using that cpu is using those
-> > older kernels (or at least I sure hope not...)
+On 8/24/23 5:50 PM, Greg Kroah-Hartman wrote:
+
+> From: Sergey Shtylyov <s.shtylyov@omp.ru>
 > 
-> I know one of the main cpu IP vendors does run a 5.10 based tree, but
-> that thing is both an abomination of out-of-tree patches to core arch
-> code & about 100 releases out of date, therefore not really worth
-> factoring. Anyone in their right mind should be running something
-> significantly more recent than 5.10 for riscv.
+> [ Upstream commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 ]
+> 
+> The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+> to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+> permanently instead of the deferred probing. Switch to propagating the error
+> codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+> in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+> so we now can safely ignore it...
+> 
+> Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
+> Cc: stable@vger.kernel.org # v5.19+
 
-Thanks for the verification.  Anyone using such an abomination of a
-tree, gets their support from the creator of such an abomination :)
+   After a glance at the driver, the patch too seems safe to be applied to 5.10.y,
+despite I tried to limit it to 5.19.y and newer...
 
-greg k-h
+> Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+> Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+> Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+[...]
+
+MBR, Sergey
