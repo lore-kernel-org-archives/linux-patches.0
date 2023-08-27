@@ -1,91 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD022115
-	for <patches@lists.linux.dev>; Sun, 27 Aug 2023 09:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85DCC433C7;
-	Sun, 27 Aug 2023 09:16:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693127775;
-	bh=ifhjfbkF54pu+s9QfpyKHg00vpepv27xfMggy8lwBDo=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=NlixN4kAH5c107A+QAdeHcqQZTc45048/1gTK+x8B44TRtXdy/z3Wv2pdsiDQw2H6
-	 oQziRAIOX2OI8C2kAUcDDEGp8/2/gMh+NPbtCMUYTV3qxqUCSZLidd+uOTqQBAMt9q
-	 GrJkCj7yA8jDZyCyVVwMP+l2ttcNuRzDztC71vRk=
-Subject: Patch "netfilter: nf_queue: fix socket leak" has been added to the 4.19-stable tree
-To: 20221024112958.115275475@linuxfoundation.org,akaher@vmware.com,amakhalov@vmware.com,coreteam@netfilter.org,davem@davemloft.net,fw@strlen.de,gregkh@linuxfoundation.org,kadlec@blackhole.kfki.hu,keerthanak@vmware.com,pablo@netfilter.org,patches@lists.linux.dev,psinghchauha@vmware.com,srinidhir@vmware.com,tkundu@vmware.com,vbrahmajosyula@vmware.com,vimal.agrawal@sophos.com,vsirnapalli@vmware.com
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Sun, 27 Aug 2023 11:16:12 +0200
-In-Reply-To: <20230826065055.4691-1-vbrahmajosyula@vmware.com>
-Message-ID: <2023082712-sublet-foam-fc54@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E61D62F
+	for <patches@lists.linux.dev>; Sun, 27 Aug 2023 10:49:23 +0000 (UTC)
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-34bbe9e916cso8311755ab.0
+        for <patches@lists.linux.dev>; Sun, 27 Aug 2023 03:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693133362; x=1693738162;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pW7IzFA0mTX34WomjctbyWOYGPZAXEGhbrFXLCtnqaw=;
+        b=g7rTEQDet1fKpExTG3EFTT+sTkjp6iso3Fb71bHkDwSLdvG+tEl60fXwUO36YPt1ir
+         RkMZJ2HP7sMC37Woi9psbrpESHQ6jzJoKq8XdOon64ARpxGcOvn5i9CUjgW6BRMCZuMW
+         xSX5gEuKphIvTRK1KbMx1VTnqj5n7mHMuSwFs1024dYCkrpEbeqCkwNMFDF0Oha9F+5U
+         f3BczKeElsrModFN+xniZOnEnE6zlPny6wUazEjYFFpeTS6zyj9+wdfWmvpYOpLPHMmQ
+         +hDodKK7ZVXCh//t4BKhYK1ztJrUpW6WEZ7kuH6sLo1L3yCX5G53R+KGHjU/tSoZ2xSp
+         njqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693133362; x=1693738162;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pW7IzFA0mTX34WomjctbyWOYGPZAXEGhbrFXLCtnqaw=;
+        b=EtR+6c4QWn0IsQDFRpcciLJTOGXbf8mZjFUWa3Cc6Ac/PcLrrmhfBsx4UwY5pp6rim
+         60QChk+64Qb7nn7cvqtGIEqpEWI7qTG0+RFMEKjoutOb24M/IBo1ZSSLVA8+hAGRmd/g
+         INxFw+qR2VFw9c133nwhlJqLR62tUkzW4QXl4Tp/Vy/mozNwUqEWmqN239VfoBWDUa1s
+         6Ii7B1//KVv7fl+cU7D6LcnD++WaNJ+0mjcn+Q73qc2/3z7gCUASKn5pEiOEQwNFB/aX
+         mD5bThsFw2DP9MK55eZsAYses4Rx5kvQtecLNt7YKetK1/JbTLstLzrhW8SVY3dMJiFK
+         Z+wQ==
+X-Gm-Message-State: AOJu0Yx52LMdjXkGaVVclYeBBN4mdHPas1KNlnM76z3irj1H6kfA7LEy
+	qoYFvuSkyBXJBLN3RSgGXkEBmCJiK80=
+X-Google-Smtp-Source: AGHT+IHZK+KETXES93aurwx91PrqJAtM8/WBWNO/krX25zFGiQVPK+XzbIEnEQQkbS5TXtzQVqTg1w==
+X-Received: by 2002:a05:6e02:2181:b0:34c:e4c6:c51c with SMTP id j1-20020a056e02218100b0034ce4c6c51cmr6174119ila.9.1693133362040;
+        Sun, 27 Aug 2023 03:49:22 -0700 (PDT)
+Received: from debian.me ([103.124.138.83])
+        by smtp.gmail.com with ESMTPSA id f5-20020a170902ce8500b001b04c2023e3sm5068240plg.218.2023.08.27.03.49.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Aug 2023 03:49:21 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 0D8418158460; Sun, 27 Aug 2023 17:49:15 +0700 (WIB)
+Date: Sun, 27 Aug 2023 17:49:15 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 0/4] 6.1.49-rc1 review
+Message-ID: <ZOsqK0NvgddvFQkD@debian.me>
+References: <20230826154625.450325166@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="LAOyK7J7JXf1jAJC"
+Content-Disposition: inline
+In-Reply-To: <20230826154625.450325166@linuxfoundation.org>
 
 
-This is a note to let you know that I've just added the patch titled
+--LAOyK7J7JXf1jAJC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    netfilter: nf_queue: fix socket leak
+On Sat, Aug 26, 2023 at 05:47:56PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.49 release.
+> There are 4 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-to the 4.19-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Successfully compiled and installed bindeb-pkgs on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-The filename of the patch is:
-     netfilter-nf_queue-fix-socket-leak.patch
-and it can be found in the queue-4.19 subdirectory.
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
+--=20
+An old man doll... just what I always wanted! - Clara
 
+--LAOyK7J7JXf1jAJC
+Content-Type: application/pgp-signature; name="signature.asc"
 
-From vbrahmajosyula@vmware.com  Sun Aug 27 11:12:19 2023
-From: Vamsi Krishna Brahmajosyula <vbrahmajosyula@vmware.com>
-Date: Sat, 26 Aug 2023 06:50:56 +0000
-Subject: netfilter: nf_queue: fix socket leak
-To: stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev, pablo@netfilter.org, kadlec@blackhole.kfki.hu, fw@strlen.de, davem@davemloft.net, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, amakhalov@vmware.com, srinidhir@vmware.com, vsirnapalli@vmware.com, akaher@vmware.com, tkundu@vmware.com, keerthanak@vmware.com, psinghchauha@vmware.com, Vimal Agrawal <vimal.agrawal@sophos.com>
-Message-ID: <20230826065055.4691-1-vbrahmajosyula@vmware.com>
+-----BEGIN PGP SIGNATURE-----
 
-From: Vamsi Krishna Brahmajosyula <vbrahmajosyula@vmware.com>
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZOsqJgAKCRD2uYlJVVFO
+o0WeAQDF56rn55bfNoItb91KPLkJZYyGOPOwXraSMp+r2n89bwEAhkQUfswTlIgK
+vAU9NK3a5gHRUqX3gUjdWCem3mlqJQI=
+=NDqK
+-----END PGP SIGNATURE-----
 
-Removal of the sock_hold got lost when backporting commit c3873070247d
-("netfilter: nf_queue: fix possible use-after-free") to 4.19
-
-Fixes: 34dc4a6a7f26 ("netfilter: nf_queue: fix possible use-after-free") in 4.19
-
-Fixed in 4.14 with
-https://lore.kernel.org/all/20221024112958.115275475@linuxfoundation.org/
-
-Signed-off-by: Vimal Agrawal <vimal.agrawal@sophos.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-[vbrahmajosyula: The fix to the backport was missed in 4.19]
-Signed-off-by: Vamsi Krishna Brahmajosyula <vbrahmajosyula@vmware.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/netfilter/nf_queue.c |    2 --
- 1 file changed, 2 deletions(-)
-
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -93,8 +93,6 @@ bool nf_queue_entry_get_refs(struct nf_q
- 		dev_hold(state->in);
- 	if (state->out)
- 		dev_hold(state->out);
--	if (state->sk)
--		sock_hold(state->sk);
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
- 	if (entry->skb->nf_bridge) {
- 		struct net_device *physdev;
-
-
-Patches currently in stable-queue which might be from vbrahmajosyula@vmware.com are
-
-queue-4.19/netfilter-nf_queue-fix-socket-leak.patch
+--LAOyK7J7JXf1jAJC--
