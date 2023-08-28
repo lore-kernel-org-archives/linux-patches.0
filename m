@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293958BE0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6B1C433C7;
-	Mon, 28 Aug 2023 10:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B59A94D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60182C433C7;
+	Mon, 28 Aug 2023 10:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218256;
-	bh=U4KTzJpsC+vS1fGwNeAzB+AW95m/yt7i/szij4MHEYA=;
+	s=korg; t=1693218258;
+	bh=Ns8MnXGXxMctdcwr1othEUqSdKqAr8V27oQywVVr0os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHG9q7TJcuT33EKNr2iMtMLeK8RU418d7Or4r1h5blynvX7p3jKJ4/8K5mjRXXTg+
-	 TUcJMkb3wiZhegLLAcDQuumGiGoeR+A9w8542amFEEtgk8RfD5pLRIFw5kLjOlLV9Q
-	 HfkhJsgbmq/0xslSLd1PY3KaeH7Dab1X7gaCrLCw=
+	b=lJhiTB0hig5dKvknYfOtWJW71gClle6+fKBnW5z4jcYNvvhYTdlhyOsw1dXrrwXQu
+	 ozAGE+58UaqEeTMWPePAS9xXAA7lH1lzIWsByY+E7DoK3PTx18dqDm2m7nEQYo82s7
+	 0EqA5M1QMD3dQ/MfMWVnOsso1263jUO5rKNs+DMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <David.Laight@ACULAB.COM>,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	hackyzh002 <hackyzh002@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 021/129] iio: adc: stx104: Utilize iomap interface
-Date: Mon, 28 Aug 2023 12:11:55 +0200
-Message-ID: <20230828101153.832173326@linuxfoundation.org>
+Subject: [PATCH 4.19 003/129] drm/radeon: Fix integer overflow in radeon_cs_parser_init
+Date: Mon, 28 Aug 2023 12:11:37 +0200
+Message-ID: <20230828101153.163973118@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -36,210 +35,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: hackyzh002 <hackyzh002@gmail.com>
 
-[ Upstream commit 73b8390cc27e096ab157be261ccc4eaaa6db87af ]
+[ Upstream commit f828b681d0cd566f86351c0b913e6cb6ed8c7b9c ]
 
-This driver doesn't need to access I/O ports directly via inb()/outb()
-and friends. This patch abstracts such access by calling ioport_map()
-to enable the use of more typical ioread8()/iowrite8() I/O memory
-accessor calls.
+The type of size is unsigned, if size is 0x40000000, there will be an
+integer overflow, size will be zero after size *= sizeof(uint32_t),
+will cause uninitialized memory to be referenced later
 
-Suggested-by: David Laight <David.Laight@ACULAB.COM>
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/64673797df382c52fc32fce24348b25a0b05e73a.1652201921.git.william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: hackyzh002 <hackyzh002@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stx104.c | 56 +++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/radeon/radeon_cs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/adc/stx104.c
-index 0662ca199eb0b..bdc4281d9fdaf 100644
---- a/drivers/iio/adc/stx104.c
-+++ b/drivers/iio/adc/stx104.c
-@@ -59,7 +59,7 @@ MODULE_PARM_DESC(base, "Apex Embedded Systems STX104 base addresses");
-  */
- struct stx104_iio {
- 	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
--	unsigned int base;
-+	void __iomem *base;
- };
- 
- /**
-@@ -72,7 +72,7 @@ struct stx104_iio {
- struct stx104_gpio {
- 	struct gpio_chip chip;
- 	spinlock_t lock;
--	unsigned int base;
-+	void __iomem *base;
- 	unsigned int out_state;
- };
- 
-@@ -87,7 +87,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	switch (mask) {
- 	case IIO_CHAN_INFO_HARDWAREGAIN:
- 		/* get gain configuration */
--		adc_config = inb(priv->base + 11);
-+		adc_config = ioread8(priv->base + 11);
- 		gain = adc_config & 0x3;
- 
- 		*val = 1 << gain;
-@@ -99,24 +99,24 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 		}
- 
- 		/* select ADC channel */
--		outb(chan->channel | (chan->channel << 4), priv->base + 2);
-+		iowrite8(chan->channel | (chan->channel << 4), priv->base + 2);
- 
- 		/* trigger ADC sample capture and wait for completion */
--		outb(0, priv->base);
--		while (inb(priv->base + 8) & BIT(7));
-+		iowrite8(0, priv->base);
-+		while (ioread8(priv->base + 8) & BIT(7));
- 
--		*val = inw(priv->base);
-+		*val = ioread16(priv->base);
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_OFFSET:
- 		/* get ADC bipolar/unipolar configuration */
--		adc_config = inb(priv->base + 11);
-+		adc_config = ioread8(priv->base + 11);
- 		adbu = !(adc_config & BIT(2));
- 
- 		*val = -32768 * adbu;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
- 		/* get ADC bipolar/unipolar and gain configuration */
--		adc_config = inb(priv->base + 11);
-+		adc_config = ioread8(priv->base + 11);
- 		adbu = !(adc_config & BIT(2));
- 		gain = adc_config & 0x3;
- 
-@@ -138,16 +138,16 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 		/* Only four gain states (x1, x2, x4, x8) */
- 		switch (val) {
- 		case 1:
--			outb(0, priv->base + 11);
-+			iowrite8(0, priv->base + 11);
- 			break;
- 		case 2:
--			outb(1, priv->base + 11);
-+			iowrite8(1, priv->base + 11);
- 			break;
- 		case 4:
--			outb(2, priv->base + 11);
-+			iowrite8(2, priv->base + 11);
- 			break;
- 		case 8:
--			outb(3, priv->base + 11);
-+			iowrite8(3, priv->base + 11);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -161,7 +161,7 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 				return -EINVAL;
- 
- 			priv->chan_out_states[chan->channel] = val;
--			outw(val, priv->base + 4 + 2 * chan->channel);
-+			iowrite16(val, priv->base + 4 + 2 * chan->channel);
- 
- 			return 0;
- 		}
-@@ -230,7 +230,7 @@ static int stx104_gpio_get(struct gpio_chip *chip, unsigned int offset)
- 	if (offset >= 4)
- 		return -EINVAL;
- 
--	return !!(inb(stx104gpio->base) & BIT(offset));
-+	return !!(ioread8(stx104gpio->base) & BIT(offset));
- }
- 
- static int stx104_gpio_get_multiple(struct gpio_chip *chip, unsigned long *mask,
-@@ -238,7 +238,7 @@ static int stx104_gpio_get_multiple(struct gpio_chip *chip, unsigned long *mask,
+diff --git a/drivers/gpu/drm/radeon/radeon_cs.c b/drivers/gpu/drm/radeon/radeon_cs.c
+index 1ae31dbc61c64..5e61abb3dce5c 100644
+--- a/drivers/gpu/drm/radeon/radeon_cs.c
++++ b/drivers/gpu/drm/radeon/radeon_cs.c
+@@ -265,7 +265,8 @@ int radeon_cs_parser_init(struct radeon_cs_parser *p, void *data)
  {
- 	struct stx104_gpio *const stx104gpio = gpiochip_get_data(chip);
+ 	struct drm_radeon_cs *cs = data;
+ 	uint64_t *chunk_array_ptr;
+-	unsigned size, i;
++	u64 size;
++	unsigned i;
+ 	u32 ring = RADEON_CS_RING_GFX;
+ 	s32 priority = 0;
  
--	*bits = inb(stx104gpio->base);
-+	*bits = ioread8(stx104gpio->base);
- 
- 	return 0;
- }
-@@ -260,7 +260,7 @@ static void stx104_gpio_set(struct gpio_chip *chip, unsigned int offset,
- 	else
- 		stx104gpio->out_state &= ~mask;
- 
--	outb(stx104gpio->out_state, stx104gpio->base);
-+	iowrite8(stx104gpio->out_state, stx104gpio->base);
- 
- 	spin_unlock_irqrestore(&stx104gpio->lock, flags);
- }
-@@ -287,7 +287,7 @@ static void stx104_gpio_set_multiple(struct gpio_chip *chip,
- 
- 	stx104gpio->out_state &= ~*mask;
- 	stx104gpio->out_state |= *mask & *bits;
--	outb(stx104gpio->out_state, stx104gpio->base);
-+	iowrite8(stx104gpio->out_state, stx104gpio->base);
- 
- 	spin_unlock_irqrestore(&stx104gpio->lock, flags);
- }
-@@ -314,11 +314,16 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 		return -EBUSY;
- 	}
- 
-+	priv = iio_priv(indio_dev);
-+	priv->base = devm_ioport_map(dev, base[id], STX104_EXTENT);
-+	if (!priv->base)
-+		return -ENOMEM;
-+
- 	indio_dev->info = &stx104_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
- 
- 	/* determine if differential inputs */
--	if (inb(base[id] + 8) & BIT(5)) {
-+	if (ioread8(priv->base + 8) & BIT(5)) {
- 		indio_dev->num_channels = ARRAY_SIZE(stx104_channels_diff);
- 		indio_dev->channels = stx104_channels_diff;
- 	} else {
-@@ -329,18 +334,15 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	indio_dev->name = dev_name(dev);
- 	indio_dev->dev.parent = dev;
- 
--	priv = iio_priv(indio_dev);
--	priv->base = base[id];
--
- 	/* configure device for software trigger operation */
--	outb(0, base[id] + 9);
-+	iowrite8(0, priv->base + 9);
- 
- 	/* initialize gain setting to x1 */
--	outb(0, base[id] + 11);
-+	iowrite8(0, priv->base + 11);
- 
- 	/* initialize DAC output to 0V */
--	outw(0, base[id] + 4);
--	outw(0, base[id] + 6);
-+	iowrite16(0, priv->base + 4);
-+	iowrite16(0, priv->base + 6);
- 
- 	stx104gpio->chip.label = dev_name(dev);
- 	stx104gpio->chip.parent = dev;
-@@ -355,7 +357,7 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	stx104gpio->chip.get_multiple = stx104_gpio_get_multiple;
- 	stx104gpio->chip.set = stx104_gpio_set;
- 	stx104gpio->chip.set_multiple = stx104_gpio_set_multiple;
--	stx104gpio->base = base[id] + 3;
-+	stx104gpio->base = priv->base + 3;
- 	stx104gpio->out_state = 0x0;
- 
- 	spin_lock_init(&stx104gpio->lock);
 -- 
 2.40.1
 
