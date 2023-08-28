@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E9411C98
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89938C116A4;
-	Mon, 28 Aug 2023 10:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC1511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C25C43397;
+	Mon, 28 Aug 2023 10:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219772;
-	bh=tFOPIGC4P8QbrhABZJoikB9H/xp5XMFnn06PRjbvn7o=;
+	s=korg; t=1693219776;
+	bh=2CTF3BOB1aYXxLCYQRQ3sjE0btyuK2MhyA6Nk9Wb/gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfKQEBMSHYXYLYZLvJ6W7xRQ+prqyzdZjDWbc8b0Gy4C8iqoebCDJx8nvDl3P3V/z
-	 y8XYhFO9hdZCB9wq+BbuQltOXbfOc+s6ZapDbAh6uMrl4WwMOXZe8mYFV3fMGzjwJn
-	 ve0Zv/cOJv9FSwyOyxybYkdufynBBaGCQZaOAQJM=
+	b=vNWKn8O3NO2hkirJAvLEyyYOnvJRg2k3KJTD2UX5IfaKKwTVHvgd+muvIgY/iiuNu
+	 b2Ulg8UZamHGeqJn6THFNxlXDci4Be0Ra52kBa3gI0Y+iywCUo3V94E4u3gyUwtzFX
+	 LIKOdl6ENb/5wC+AkYqVig7J8cX3YMPVAXMrX28Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 39/84] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
-Date: Mon, 28 Aug 2023 12:13:56 +0200
-Message-ID: <20230828101150.595205899@linuxfoundation.org>
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.10 66/84] cgroup/cpuset: Rename functions dealing with DEADLINE accounting
+Date: Mon, 28 Aug 2023 12:14:23 +0200
+Message-ID: <20230828101151.497943039@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -43,68 +41,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
+commit ad3a557daf6915296a43ef97a3e9c48e076c9dd8 upstream.
 
-Negative ifindexes are illegal, but the kernel does not validate the
-ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
-the kernel generating a warning [1] when such an ifindex is specified.
+rebuild_root_domains() and update_tasks_root_domain() have neutral
+names, but actually deal with DEADLINE bandwidth accounting.
 
-Fix by rejecting negative ifindexes.
+Rename them to use 'dl_' prefix so that intent is more clear.
 
-[1]
-WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
-[...]
-Call Trace:
- <TASK>
- register_netdevice+0x69a/0x1490 net/core/dev.c:10081
- br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
- rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
- __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
- rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
- rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
- netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
- netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:728 [inline]
- sock_sendmsg+0xd9/0x180 net/socket.c:751
- ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
- ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
- __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+No functional change.
 
-Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
-Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cgroup/cpuset.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index ffa97613314ff..021dcfdae2835 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3296,6 +3296,9 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (ifm->ifi_index > 0) {
- 		link_specified = true;
- 		dev = __dev_get_by_index(net, ifm->ifi_index);
-+	} else if (ifm->ifi_index < 0) {
-+		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
-+		return -EINVAL;
- 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
- 		link_specified = true;
- 		dev = rtnl_dev_get(net, NULL, tb[IFLA_ALT_IFNAME], ifname);
--- 
-2.40.1
-
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -912,7 +912,7 @@ done:
+ 	return ndoms;
+ }
+ 
+-static void update_tasks_root_domain(struct cpuset *cs)
++static void dl_update_tasks_root_domain(struct cpuset *cs)
+ {
+ 	struct css_task_iter it;
+ 	struct task_struct *task;
+@@ -925,7 +925,7 @@ static void update_tasks_root_domain(str
+ 	css_task_iter_end(&it);
+ }
+ 
+-static void rebuild_root_domains(void)
++static void dl_rebuild_rd_accounting(void)
+ {
+ 	struct cpuset *cs = NULL;
+ 	struct cgroup_subsys_state *pos_css;
+@@ -953,7 +953,7 @@ static void rebuild_root_domains(void)
+ 
+ 		rcu_read_unlock();
+ 
+-		update_tasks_root_domain(cs);
++		dl_update_tasks_root_domain(cs);
+ 
+ 		rcu_read_lock();
+ 		css_put(&cs->css);
+@@ -967,7 +967,7 @@ partition_and_rebuild_sched_domains(int
+ {
+ 	mutex_lock(&sched_domains_mutex);
+ 	partition_sched_domains_locked(ndoms_new, doms_new, dattr_new);
+-	rebuild_root_domains();
++	dl_rebuild_rd_accounting();
+ 	mutex_unlock(&sched_domains_mutex);
+ }
+ 
 
 
