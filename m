@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4694B611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD1FC433C8;
-	Mon, 28 Aug 2023 10:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8D1611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85598C433C7;
+	Mon, 28 Aug 2023 10:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219293;
-	bh=K+V1i/SKzk/WSodUns4mggUynNmDF09yh3LFDJbolrw=;
+	s=korg; t=1693219295;
+	bh=H38HM8y5xef1TZVguQPsCQZ7qWoWO9WdazVfi5UsB58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHjo1jW3vjLEaJOlwSuVkkwzDEPxHoZfPUoKO9plOwtTHzTmNDZ+NyEq8h724PlJ+
-	 dkOhOaghQqOj+wvD/wgQRislrAMv5yZ59YdroH03zfOOQiZjed9v7X+7IPqV93F7Er
-	 xOMLokQhh4HwGPOJ00kDDhTNTZT2ecrnhafPkEAs=
+	b=qiuCOtdQU3UzkmUt+cYmlWxMcZmjaZv9JWHRVk8MOETpUa/B7hX7FyDCa413zXFmT
+	 cIr5FgwdA0xsNmN7m0cwvHsZfSOkZ7wAY4P04SdKiJEGdkQjv3yLQe2t4wKFvQZdpw
+	 /hMrOwy605v/wMuLpfXyTmUKP54vHZgmTHmtbKUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Woody Suwalski <terraluna977@gmail.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.4 143/158] PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus
-Date: Mon, 28 Aug 2023 12:14:00 +0200
-Message-ID: <20230828101202.406402253@linuxfoundation.org>
+	Anusha Srivatsa <anusha.srivatsa@intel.com>,
+	Manasi Navare <manasi.d.navare@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.4 144/158] drm/display/dp: Fix the DP DSC Receiver cap size
+Date: Mon, 28 Aug 2023 12:14:01 +0200
+Message-ID: <20230828101202.453079752@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -37,119 +36,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-commit cc22522fd55e257c86d340ae9aedc122e705a435 upstream.
+commit 5ad1ab30ac0809d2963ddcf39ac34317a24a2f17 upstream.
 
-40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-changed acpiphp hotplug to use pci_assign_unassigned_bridge_resources()
-which depends on bridge being available, however enable_slot() can be
-called without bridge associated:
+DP DSC Receiver Capabilities are exposed via DPCD 60h-6Fh.
+Fix the DSC RECEIVER CAP SIZE accordingly.
 
-  1. Legitimate case of hotplug on root bus (widely used in virt world)
+Fixes: ffddc4363c28 ("drm/dp: Add DP DSC DPCD receiver capability size define and missing SHIFT")
+Cc: Anusha Srivatsa <anusha.srivatsa@intel.com>
+Cc: Manasi Navare <manasi.d.navare@intel.com>
+Cc: <stable@vger.kernel.org> # v5.0+
 
-  2. A (misbehaving) firmware, that sends ACPI Bus Check notifications to
-     non existing root ports (Dell Inspiron 7352/0W6WV0), which end up at
-     enable_slot(..., bridge = 0) where bus has no bridge assigned to it.
-     acpihp doesn't know that it's a bridge, and bus specific 'PCI
-     subsystem' can't augment ACPI context with bridge information since
-     the PCI device to get this data from is/was not available.
-
-Issue is easy to reproduce with QEMU's 'pc' machine, which supports PCI
-hotplug on hostbridge slots. To reproduce, boot kernel at commit
-40613da52b13 in VM started with following CLI (assuming guest root fs is
-installed on sda1 partition):
-
-  # qemu-system-x86_64 -M pc -m 1G -enable-kvm -cpu host \
-        -monitor stdio -serial file:serial.log           \
-        -kernel arch/x86/boot/bzImage                    \
-        -append "root=/dev/sda1 console=ttyS0"           \
-        guest_disk.img
-
-Once guest OS is fully booted at qemu prompt:
-
-  (qemu) device_add e1000
-
-(check serial.log) it will cause NULL pointer dereference at:
-
-  void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge)
-  {
-    struct pci_bus *parent = bridge->subordinate;
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-
-   ? pci_assign_unassigned_bridge_resources+0x1f/0x260
-   enable_slot+0x21f/0x3e0
-   acpiphp_hotplug_notify+0x13d/0x260
-   acpi_device_hotplug+0xbc/0x540
-   acpi_hotplug_work_fn+0x15/0x20
-   process_one_work+0x1f7/0x370
-   worker_thread+0x45/0x3b0
-
-The issue was discovered on Dell Inspiron 7352/0W6WV0 laptop with following
-sequence:
-
-  1. Suspend to RAM
-  2. Wake up with the same backtrace being observed:
-  3. 2nd suspend to RAM attempt makes laptop freeze
-
-Fix it by using __pci_bus_assign_resources() instead of
-pci_assign_unassigned_bridge_resources() as we used to do, but only in case
-when bus doesn't have a bridge associated (to cover for the case of ACPI
-event on hostbridge or non existing root port).
-
-That lets us keep hotplug on root bus working like it used to and at the
-same time keeps resource reassignment usable on root ports (and other 1st
-level bridges) that was fixed by 40613da52b13.
-
-Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-Link: https://lore.kernel.org/r/20230726123518.2361181-2-imammedo@redhat.com
-Reported-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/r/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230818044436.177806-1-ankit.k.nautiyal@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/drm/drm_dp_helper.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -496,6 +496,7 @@ static void enable_slot(struct acpiphp_s
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
-+		LIST_HEAD(add_list);
- 		int max, pass;
+--- a/include/drm/drm_dp_helper.h
++++ b/include/drm/drm_dp_helper.h
+@@ -1052,7 +1052,7 @@ u8 drm_dp_get_adjust_request_pre_emphasi
  
- 		acpiphp_rescan_slot(slot);
-@@ -509,10 +510,15 @@ static void enable_slot(struct acpiphp_s
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
-+					if (pci_is_root_bus(bus))
-+						__pci_bus_size_bridges(dev->subordinate, &add_list);
- 				}
- 			}
- 		}
--		pci_assign_unassigned_bridge_resources(bus->self);
-+		if (pci_is_root_bus(bus))
-+			__pci_bus_assign_resources(bus, &add_list, NULL);
-+		else
-+			pci_assign_unassigned_bridge_resources(bus->self);
- 	}
+ #define DP_BRANCH_OUI_HEADER_SIZE	0xc
+ #define DP_RECEIVER_CAP_SIZE		0xf
+-#define DP_DSC_RECEIVER_CAP_SIZE        0xf
++#define DP_DSC_RECEIVER_CAP_SIZE        0x10 /* DSC Capabilities 0x60 through 0x6F */
+ #define EDP_PSR_RECEIVER_CAP_SIZE	2
+ #define EDP_DISPLAY_CTL_CAP_SIZE	3
  
- 	acpiphp_sanitize_bus(bus);
 
 
