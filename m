@@ -1,79 +1,82 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B20F125CF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 13:17:20 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-d7830c5b20aso4053291276.0
-        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 06:17:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1693228640; x=1693833440;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MGYTgGJyz9hK6P1W5cYWJ37ojkoun6scwiaYLpf40GM=;
-        b=PDCzEuB4+vOFbmlh9WJaVjW8tsiEFTj81FSUQotQQVuJyuddJBEM6FCZABer6pd7gz
-         qZP9Jjhj7qU+ei9c6IIh1aVkpKKiXLZxr1qnGL9qczFSYStHkCYvpRv8JTnM7UF/705j
-         gOpAC2ZDoVUm2R4RV/xkBw/VcwedpwWOiBS6k37BLE3C9ihOwrn0uCEGaiGE2ug+0LKa
-         uO5mhSGt4DE13AGsazbGDfCsya1jdMG5KrKt+5b5Am4HsMtGpn5A+/YztZfQo+gBQzJE
-         lVP0EqmMGzwE9nyUKvlROzTt1GMY0rNpAs8fTnre9C8bq5H19nk0OZBW1ZfKwSK74dkO
-         g8BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693228640; x=1693833440;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MGYTgGJyz9hK6P1W5cYWJ37ojkoun6scwiaYLpf40GM=;
-        b=EZ1PEzo6PGv2rqo2E+w1wI9++9WVNyCcx0Ym90J/YkpuZ8hkOXjngr979nGZIRkhIy
-         mptG2X9apbtEd74KcIr5R5aUFoK3Sw63mflvKkIgZXzvcRdpxvMyH/GiB58uhLjuhbjq
-         Y4AeG36eh7DdJ1H5j2bRRaJLe7ve2I6+3ljtSD9b9m+Ipbr9yvFbK/1rWNpmCtfOjWg7
-         34VHnAgp9fv1H+VBwbC4AyAC9Qv1pduL8b02tP9FlSOE/oRCQVW3HLDJyWrWqq9NgfIJ
-         wqzeI6aeeUCOpWxjbaw9hGh2auwefmSyM/zUcKk+9LPIZIIPeZDphzgw+0FGQzG1KFT1
-         2M7g==
-X-Gm-Message-State: AOJu0Yz3br5W4PLtNckQQ56n/oqMDf8LR4B0RMs+Zu+62/nH2QFO114t
-	eJL4b5oZUOoCIMjFli+Bbryht3oA0dvgWyHHKP6UNQ==
-X-Google-Smtp-Source: AGHT+IF472zwt+zJU5bvh6KBEPeZ/osWrL9kS5Td1S0IJH6vipNayQJ/MzpTXVzXkB4GiGqUispoj9X4m11CdMwjvSY=
-X-Received: by 2002:a25:27c5:0:b0:d66:9fcb:1fc1 with SMTP id
- n188-20020a2527c5000000b00d669fcb1fc1mr22835256ybn.24.1693228639796; Mon, 28
- Aug 2023 06:17:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CF411C9D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 13:55:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1693230933; x=1724766933;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zP+aR1qLi8yYPI0boF+W89QBgdXfE3+6S0i6OY6bCxA=;
+  b=INBEg34DyMv1aj6xeq5ROaG22mKRZGM+JpdfmbR5W8j+ZHFPKLhE1ygO
+   MQ6zUlkYZ2+jPLQ8aRxjSZ3wXXnTgLq9DYKMzFF3aAwk9jNSMUdGFb1/T
+   Rh23UfMmhvxAJ9L/NBs8FlMuc5Ki/31YbatuZ/VFuOYMvDb8N2fZNuVmw
+   9fKNT3kqea2p/bXEmFwPTu68AnHeDx7HQ52sxTLJyCc0MVb2huDtdexdq
+   5IMvcZSH8xFjFwa4BuILqBb/sdkd8CAGuM3XT9g3KLsNu+7sa9TQGBN7L
+   R2gglxh2FCYToXuFKLnw5gvpTq+ksvpSn4jWrKk65ycb+iQMgxrobP/aN
+   w==;
+X-IronPort-AV: E=Sophos;i="6.02,207,1688454000"; 
+   d="asc'?scan'208";a="168669658"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 28 Aug 2023 06:55:12 -0700
+Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Mon, 28 Aug 2023 06:54:36 -0700
+Received: from wendy (10.10.85.11) by chn-vm-ex03.mchp-main.com (10.10.85.151)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Mon, 28 Aug 2023 06:54:33 -0700
+Date: Mon, 28 Aug 2023 14:53:51 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
+Subject: Re: [PATCH 6.1 000/122] 6.1.50-rc1 review
+Message-ID: <20230828-clasp-reformat-1d6c70a835dd@wendy>
+References: <20230828101156.480754469@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230823160244.188033-1-ojeda@kernel.org> <20230823160244.188033-3-ojeda@kernel.org>
-In-Reply-To: <20230823160244.188033-3-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 28 Aug 2023 15:17:08 +0200
-Message-ID: <CAH5fLgjDf9VP4BWp9zX1iv9KiUhA6y+p2Cp2L6-3mR=KS_ExDQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rust: upgrade to Rust 1.72.0
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, 
-	linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="+9/25Ag1w0lpe2Cj"
+Content-Disposition: inline
+In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 
-On Wed, Aug 23, 2023 at 6:03=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
-> This is the second upgrade to the Rust toolchain, from 1.71.1 to 1.72.0
-> (i.e. the latest) [1].
->
-> See the upgrade policy [2] and the comments on the first upgrade in
-> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
->
-> [...]
->
-> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1=
-720-2023-08-24 [1]
-> Link: https://rust-for-linux.com/rust-version-policy [2]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1012 [4]
-> Link: https://github.com/rust-lang/rust/pull/112403 [5]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+--+9/25Ag1w0lpe2Cj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+On Mon, Aug 28, 2023 at 12:11:55PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.50 release.
+> There are 122 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+
+Thanks,
+Conor.
+
+--+9/25Ag1w0lpe2Cj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZOym7wAKCRB4tDGHoIJi
+0t/CAP99hGJt04bJe6pBAhOYBVGxtUChtUyQtPDCVKdfwkviMgD8CGUrKV+uSPhg
+NnrpBgREctlIF3C+aiyuJUHcsSEMCww=
+=mRPi
+-----END PGP SIGNATURE-----
+
+--+9/25Ag1w0lpe2Cj--
