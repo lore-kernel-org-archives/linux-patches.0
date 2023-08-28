@@ -1,180 +1,123 @@
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C896126
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 11:31:25 +0000 (UTC)
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230828112152euoutp01045cfe717d460e07dc409823eb37ce9c~-iC0YsR6t1734517345euoutp01R
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 11:21:52 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230828112152euoutp01045cfe717d460e07dc409823eb37ce9c~-iC0YsR6t1734517345euoutp01R
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1693221712;
-	bh=VQPiQZ6BlJOv7UycB/t5qmClTXP5K+iValXtnswktQs=;
-	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-	b=bKTesSLcdSWCtAEzPYbMrEhtIxPldXOJH0WLtyGV/KWxOfa6ZVrzFmcvzkTOdT3GI
-	 g8HTvhpfcEQ1hFqv+XFa8NEE+xlKMwLH1VBIDx5QYx76awPko89pL4d5zX6nUoTrdA
-	 WGKmhK6SxKcVWuUZIZMft5UxlIlC/eB8BVO2Wz3Y=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20230828112151eucas1p2211c1c044945d76975c5cee44f3be17b~-iC0Exmga2794827948eucas1p2N;
-	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-	eusmges3new.samsung.com (EUCPMTA) with SMTP id CC.B3.37758.F438CE46; Mon, 28
-	Aug 2023 12:21:51 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d~-iCzrf_N92792827928eucas1p2O;
-	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20230828112151eusmtrp255b7d9d3f203c26a979f5e6e1dfaefa5~-iCzqwsBN0113301133eusmtrp2i;
-	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
-X-AuditID: cbfec7f5-7ffff7000002937e-d5-64ec834ff7df
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id 26.7C.14344.F438CE46; Mon, 28
-	Aug 2023 12:21:51 +0100 (BST)
-Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20230828112151eusmtip22b02f52c7432cc1694d03f92cc5371d9~-iCzf-P-23182131821eusmtip2p;
-	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
-Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) by
-	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) with Microsoft SMTP
-	Server (TLS) id 15.0.1497.2; Mon, 28 Aug 2023 12:21:50 +0100
-Received: from CAMSVWEXC02.scsc.local ([::1]) by CAMSVWEXC02.scsc.local
-	([fe80::3c08:6c51:fa0a:6384%13]) with mapi id 15.00.1497.012; Mon, 28 Aug
-	2023 12:21:50 +0100
-From: Andreas Hindborg <a.hindborg@samsung.com>
-To: Alice Ryhl <aliceryhl@google.com>
-CC: "rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>,
-	"Tejun Heo" <tj@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, Lai Jiangshan
-	<jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, "Alex
- Gaynor" <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
-	<gary@garyguo.net>, =?iso-8859-1?Q?Bj=F6rn_Roy_Baron?=
-	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v4 4/7] rust: workqueue: add helper for defining
- work_struct fields
-Thread-Topic: [PATCH v4 4/7] rust: workqueue: add helper for defining
-	work_struct fields
-Thread-Index: AQHZ2aHWyjhGrDdcWUuOhpl6ciq6/A==
-Date: Mon, 28 Aug 2023 11:21:50 +0000
-Message-ID: <87y1hvtnsi.fsf@samsung.com>
-In-Reply-To: <20230828104807.1581592-5-aliceryhl@google.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [106.110.32.64]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D5411C9A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 12:45:43 +0000 (UTC)
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-44d5696fad1so727489137.1
+        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 05:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693226742; x=1693831542;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VTdd850krtmWOtzkmq2Um5vO5DePaECfmrOyvFGNw0A=;
+        b=Cl4kvMCHEE66Ya0Go8DA39JpS4V1fIu0PIESwO0nFk8jbH8PGbH+CcJhRg/H4db+xu
+         90Ouxfl5VQ8e3ZNihXfNkROCddPI8nHa6ihNn0xIia50OBkLRoS+kkH9kQiJxXIgMJ5i
+         1HCtKLUHJfs110V+xnWhWaQMIduOBhQrpTWpCzH6yl9gmzyOiVgximeqfee2XAwHIL30
+         XYL1eqyfVRUdPgUYMkCDZlJFilTN+4nE4c492dX1GTQ+CvKRD0PdtkOWvGwQ4xjaZtXE
+         XoL45paXRbVv00CLxyGJ+h5C4F0aOtjMjGbmLpY6MSToKwTadNC9m8YVqodTMf4nHuHc
+         z9xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693226742; x=1693831542;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VTdd850krtmWOtzkmq2Um5vO5DePaECfmrOyvFGNw0A=;
+        b=OsX60DG06G/FA9eA6vyu3+KjXpJ/H5/eWH2TsrCnKW91A6LmDWzlbFUezypKzlCrab
+         Kd/gFhrKWyR04BnXjLnQte8vfUrfGr0ti8K77CUb7pXfq723NYGSdsDVkFMbuChQ8RfL
+         +eemMgTPP73DosJnM+WFZMMa9sb+cM6kCo7/wTHaQQ4c0RuERoLI+mjFTD7sC/sowNiW
+         nRTosSAxZuLTgbeVQZFb5AJDBAnpQQs0Zuxs7zjCkzC5MixkD/P696mVnw3bcLDqyLnx
+         LZWY5hgFAEGqlCR6jBtM8VlrNnpfzKaN/VOx+EjcjW4tOWAVIEwS7QG/dR5coKYdYeDu
+         TFxA==
+X-Gm-Message-State: AOJu0YyInHpy+d7tGYRulET5bCzf7OXqswosi0ytpa1gZ5C3Efl6bRW4
+	nZhVDFUd0ZgGguCFW3EqbvlFuS8/l0WWZbNOedQQWw==
+X-Google-Smtp-Source: AGHT+IEdtTtOwloNSd4mKOu1fuHlpzN9wjd8g8mWnEVcCo/jqSV0UrXEouOfLDsQ4b3Si8PKFIfpCo1vgB6+TlUNSw8=
+X-Received: by 2002:a05:6102:533:b0:44d:42c4:f4c0 with SMTP id
+ m19-20020a056102053300b0044d42c4f4c0mr14199635vsa.3.1693226742327; Mon, 28
+ Aug 2023 05:45:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDKsWRmVeSWpSXmKPExsWy7djP87r+zW9SDI5d07H4O3s7u8WJ600s
-	Fh+uNbFa3Liwn9lizZZGJouLZ14zWkxdu5vJ4vKuOWwWK+cvZ7S4fOISo8X6Z4eZLX4tP8po
-	sWHZWkYHXo8lnb+YPHbOusvusWBTqcemVZ1sHi82z2T0+N6+h82jp20Tk8fnTXIBHFFcNimp
-	OZllqUX6dglcGb3LdzAVHBWpeHl7LnMD4zaBLkZODgkBE4nD16eydzFycQgJrGCUeLn+KwtI
-	QkjgC6PEqnk1EInPjBJLPjcxwnRM+bCHHaJoOaPE+TZ/uKJjv1dDJc4wSqyYqgyRWMkoMe1G
-	O1g3m4C+xLU115hBbBEBVYkztxrYQGxmgaUsEjcuyIDYwgKREo8e7GWFqImSmNl4iRHC1pP4
-	MbERzGYB6t049wDYMl4BDYmWWdfB4pwCNhJbGheDvcAoICvxaOUvdoj54hK3nsxngvhAUGLR
-	7D3MELaYxL9dD9kgbB2Js9efQH1pILF16T4WCFtR4lrPTUaIOXoSN6ZOgbpZW2LZwtfMEDcI
-	Spyc+YQF5GEJgTYuidf7pkENdZFoW98EtVhY4tXxLewQtozE/53zmSYwas9Cct8sJDtmIdkx
-	C8mOBYwsqxjFU0uLc9NTi43zUsv1ihNzi0vz0vWS83M3MQIT3Ol/x7/uYFzx6qPeIUYmDsZD
-	jBIczEoivJccX6UI8aYkVlalFuXHF5XmpBYfYpTmYFES59W2PZksJJCeWJKanZpakFoEk2Xi
-	4JRqYFL+vv7yBEcu1eKmw3e+LYi6Lx8a+V+v/1J2W6nI1EcvHkSsmSAf6f5DzkbAUnRBza3N
-	RY1rNa9stFom/Jlvmi6zQvSFha/2t4U18Jc15Jbf28BWmxomrv79VdKsj/GXJRKYf7t9dkjP
-	mHQ5aJ+O07Vpkv7rpqveWfD5wn5965oi97Y5KxYp7vIW/Vp1RHbHrVlnY+WfOy5zrWx4JG4q
-	GyB4eIqV+9rUPzwLFR6F1Qo3TW658ERANP7P1gqfxWcn/J97/oqJQcH2f7oPl5b9dgzduGAt
-	z5bdNjnlj15xrH3j/2vdAf3XXYL8755vejlp7uQp780V5zc16lmF9Ol7XVbun2lYJpm1Yfup
-	JWJCt4qVWIozEg21mIuKEwFqsNfV3wMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJKsWRmVeSWpSXmKPExsVy+t/xe7r+zW9SDJ48F7X4O3s7u8WJ600s
-	Fh+uNbFa3Liwn9lizZZGJouLZ14zWkxdu5vJ4vKuOWwWK+cvZ7S4fOISo8X6Z4eZLX4tP8po
-	sWHZWkYHXo8lnb+YPHbOusvusWBTqcemVZ1sHi82z2T0+N6+h82jp20Tk8fnTXIBHFF6NkX5
-	pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6Gb3LdzAVHBWp
-	eHl7LnMD4zaBLkZODgkBE4kpH/awdzFycQgJLGWUWHNzKhNEQkZi45errBC2sMSfa11sILaQ
-	wEdGibZlARD2GUaJj6+ZIJpXMkp8unifGSTBJqAvcW3NNTBbREBV4sytBjaQImaBpSwSv17e
-	YwFJCAtESjx6sJcVoihKYsvMXSwQtp7Ej4mNjCA2C1DzxrkH2EFsXgENiZZZ1xkhNudK7J72
-	G+wiTgEbiS2Ni8F6GQVkJR6t/AVWzywgLnHryXyobwQkluw5zwxhi0q8fPwP6jMdibPXnzBC
-	2AYSW5fuY4GwFSWu9dxkhJijJ3Fj6hQ2CFtbYtnC18wQ9whKnJz5hGUCo/QsJOtmIWmZhaRl
-	FpKWBYwsqxhFUkuLc9Nzi430ihNzi0vz0vWS83M3MQLT1LZjP7fsYFz56qPeIUYmDsZDjBIc
-	zEoivJccX6UI8aYkVlalFuXHF5XmpBYfYjQFhtFEZinR5HxgoswriTc0MzA1NDGzNDC1NDNW
-	Euf1LOhIFBJITyxJzU5NLUgtgulj4uCUamBSX//gbenzF7xmJx5/jjt/Ob+r6M2tfdobsndx
-	W6hJ2LE+D8l6v/2ywbXNt6NP8E+36LsSLLM0bkmgUJ3AA8HafVNmyO5qMDMP+BTol1RatP/2
-	MuG3kedXhnfwbP5gtWZCljJPvn7qi6kBOuFOUjG3lN4//b4wde4yP+VtTzdf+6Tf4uq4Romx
-	Y12MlW5IdMbuZsk6Bf9rO24pOE4/dLC39ErJ1kVFTBNOhfm7pH2Sn3vq5peKWbdWTwiqPr1x
-	MkPYrYtiNXO+XZ8QsfrKovPHdvTFLT6gmX29gEOKZ7LEpFX5osXdWu9y3s9ZsX/yiqRtu3pW
-	8eyS+WTl63zW2/i+5YeMOG6By9od92573zqUoMRSnJFoqMVcVJwIAHH6aoDcAwAA
-X-CMS-MailID: 20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d
-X-Msg-Generator: CA
-X-RootMTR: 20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d
-References: <20230828104807.1581592-1-aliceryhl@google.com>
-	<20230828104807.1581592-5-aliceryhl@google.com>
-	<CGME20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d@eucas1p2.samsung.com>
+References: <20230828101153.030066927@linuxfoundation.org>
+In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 28 Aug 2023 18:15:30 +0530
+Message-ID: <CA+G9fYuQXq7-jkL59MMKfRbqqB509T3nQdtcW+4wVW_QRovx5g@mail.gmail.com>
+Subject: Re: [PATCH 4.19 000/129] 4.19.293-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Tony Lindgren <tony@atomide.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Arnd Bergmann <arnd@arndb.de>, Anders Roxell <anders.roxell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, 28 Aug 2023 at 15:54, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.293 release.
+> There are 129 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.19.293-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+
+Results from Linaro=E2=80=99s test farm.
+Regressions on arm.
+
+stable-rc linux-4.19.y arm gcc-12 builds fails with
+following warnings / errors.
+
+Build errors:
+--------------
+drivers/bus/ti-sysc.c: In function 'sysc_reset':
+drivers/bus/ti-sysc.c:982:15: error: implicit declaration of function
+'sysc_read_sysconfig' [-Werror=3Dimplicit-function-declaration]
+  982 |         val =3D sysc_read_sysconfig(ddata);
+      |               ^~~~~~~~~~~~~~~~~~~
+cc1: some warnings being treated as errors
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 
-Alice Ryhl <aliceryhl@google.com> writes:
+ > Tony Lindgren <tony@atomide.com>
+ >   bus: ti-sysc: Flush posted write on enable before reset
 
-> The main challenge with defining `work_struct` fields is making sure
-> that the function pointer stored in the `work_struct` is appropriate for
-> the work item type it is embedded in. It needs to know the offset of the
-> `work_struct` field being used (even if there are several!) so that it
-> can do a `container_of`, and it needs to know the type of the work item
-> so that it can call into the right user-provided code. All of this needs
-> to happen in a way that provides a safe API to the user, so that users
-> of the workqueue cannot mix up the function pointers.
->
-> There are three important pieces that are relevant when doing this:
->
->  * The pointer type.
->  * The work item struct. This is what the pointer points at.
->  * The `work_struct` field. This is a field of the work item struct.
->
-> This patch introduces a separate trait for each piece. The pointer type
-> is given a `WorkItemPointer` trait, which pointer types need to
-> implement to be usable with the workqueue. This trait will be
-> implemented for `Arc` and `Box` in a later patch in this patchset.
-> Implementing this trait is unsafe because this is where the
-> `container_of` operation happens, but user-code will not need to
-> implement it themselves.
->
-> The work item struct should then implement the `WorkItem` trait. This
-> trait is where user-code specifies what they want to happen when a work
-> item is executed. It also specifies what the correct pointer type is.
->
-> Finally, to make the work item struct know the offset of its
-> `work_struct` field, we use a trait called `HasWork<T, ID>`. If a type
-> implements this trait, then the type declares that, at the given offset,
-> there is a field of type `Work<T, ID>`. The trait is marked unsafe
-> because the OFFSET constant must be correct, but we provide an
-> `impl_has_work!` macro that can safely implement `HasWork<T>` on a type.
-> The macro expands to something that only compiles if the specified field
-> really has the type `Work<T>`. It is used like this:
->
-> ```
-> struct MyWorkItem {
->     work_field: Work<MyWorkItem, 1>,
-> }
->
-> impl_has_work! {
->     impl HasWork<MyWorkItem, 1> for MyWorkItem { self.work_field }
-> }
-> ```
->
-> Note that since the `Work` type is annotated with an id, you can have
-> several `work_struct` fields by using a different id for each one.
->
-> Co-developed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> ---
+bus: ti-sysc: Flush posted write on enable before reset
+commit 34539b442b3bc7d5bf10164750302b60b91f18a7 upstream.
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
+The above commit is causing this build warnings / errors.
+
+Links,
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2UbpNRPtHJcx6nk8e60a=
+mSmKgZ3/
+
+
+steps to reproduce:
+tuxmake --runtime podman --target-arch arm --toolchain gcc-12
+--kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2UbpNRPtHJ=
+cx6nk8e60amSmKgZ3/config
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
