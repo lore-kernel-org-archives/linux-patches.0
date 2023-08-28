@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11629469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87570C433C8;
-	Mon, 28 Aug 2023 10:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB64469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E27C433C8;
+	Mon, 28 Aug 2023 10:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218908;
-	bh=ki5xnY9fCWPhU2B5LWi3NM7BEOI3j4CSWvpRN5PqFGw=;
+	s=korg; t=1693218911;
+	bh=F86vrD8I+sQP5e40iuNceCqRxUj4mWrLpSdpeIlAHGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ws6wH3I9TcPiFnKMql1OhckCD7WGx8wpHhx6f6mHtq99SrNQyMvXJTg64wcObpim1
-	 vZG5OC6m/jIp2fS/S+SNvuKmDDEhydzgXo6vzUa9DeS/3V6SDa/fyD8Qv1wLBciLnT
-	 ACMOd0vkU1PeV3u6a+4BcDMD6KMNkAsh2EQTEzTk=
+	b=Bq8Ul26ngbaJG+BjnD/Ejj+NAklpMX7xjWU3Yowi4NMoOaybJH3Pr/cO7Vr2aZsdW
+	 RXes66v/y7nww7Bmhgmqv7RfGY1WbdVNYDbSgglF1FqHUOWMWYPnlLhKhu0KwKW0hR
+	 8YZk4zlC0qLI+9AZsKWZ/vSJh9mtHs773wAUOGAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/122] dma-buf/sw_sync: Avoid recursive lock during fence signal
-Date: Mon, 28 Aug 2023 12:13:52 +0200
-Message-ID: <20230828101200.311507972@linuxfoundation.org>
+Subject: [PATCH 6.1 118/122] gpio: sim: dispose of irq mappings before destroying the irq_sim domain
+Date: Mon, 28 Aug 2023 12:13:53 +0200
+Message-ID: <20230828101200.352990407@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -35,83 +34,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
+[ Upstream commit ab4109f91b328ff5cb5e1279f64d443241add2d1 ]
 
-If a signal callback releases the sw_sync fence, that will trigger a
-deadlock as the timeline_fence_release recurses onto the fence->lock
-(used both for signaling and the the timeline tree).
+If a GPIO simulator device is unbound with interrupts still requested,
+we will hit a use-after-free issue in __irq_domain_deactivate_irq(). The
+owner of the irq domain must dispose of all mappings before destroying
+the domain object.
 
-To avoid that, temporarily hold an extra reference to the signalled
-fences until after we drop the lock.
-
-(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
-which avoids some potential UAF issues with the original patch.)
-
-v2: Remove now obsolete comment, use list_move_tail() and
-    list_del_init()
-
-Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: cb8c474e79be ("gpio: sim: new testing module")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sw_sync.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpio/gpio-sim.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index 348b3a9170fa4..7f5ed1aa7a9f8 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -191,6 +191,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
-  */
- static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- {
-+	LIST_HEAD(signalled);
- 	struct sync_pt *pt, *next;
- 
- 	trace_sync_timeline(obj);
-@@ -203,21 +204,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- 		if (!timeline_fence_signaled(&pt->base))
- 			break;
- 
--		list_del_init(&pt->link);
-+		dma_fence_get(&pt->base);
-+
-+		list_move_tail(&pt->link, &signalled);
- 		rb_erase(&pt->node, &obj->pt_tree);
- 
--		/*
--		 * A signal callback may release the last reference to this
--		 * fence, causing it to be freed. That operation has to be
--		 * last to avoid a use after free inside this loop, and must
--		 * be after we remove the fence from the timeline in order to
--		 * prevent deadlocking on timeline->lock inside
--		 * timeline_fence_release().
--		 */
- 		dma_fence_signal_locked(&pt->base);
- 	}
- 
- 	spin_unlock_irq(&obj->lock);
-+
-+	list_for_each_entry_safe(pt, next, &signalled, link) {
-+		list_del_init(&pt->link);
-+		dma_fence_put(&pt->base);
-+	}
+diff --git a/drivers/gpio/gpio-sim.c b/drivers/gpio/gpio-sim.c
+index fef12e57b1f13..3fa123bb72ee1 100644
+--- a/drivers/gpio/gpio-sim.c
++++ b/drivers/gpio/gpio-sim.c
+@@ -290,6 +290,15 @@ static void gpio_sim_mutex_destroy(void *data)
+ 	mutex_destroy(lock);
  }
  
- /**
++static void gpio_sim_dispose_mappings(void *data)
++{
++	struct gpio_sim_chip *chip = data;
++	unsigned int i;
++
++	for (i = 0; i < chip->gc.ngpio; i++)
++		irq_dispose_mapping(irq_find_mapping(chip->irq_sim, i));
++}
++
+ static void gpio_sim_sysfs_remove(void *data)
+ {
+ 	struct gpio_sim_chip *chip = data;
+@@ -402,6 +411,10 @@ static int gpio_sim_add_bank(struct fwnode_handle *swnode, struct device *dev)
+ 	if (IS_ERR(chip->irq_sim))
+ 		return PTR_ERR(chip->irq_sim);
+ 
++	ret = devm_add_action_or_reset(dev, gpio_sim_dispose_mappings, chip);
++	if (ret)
++		return ret;
++
+ 	mutex_init(&chip->lock);
+ 	ret = devm_add_action_or_reset(dev, gpio_sim_mutex_destroy,
+ 				       &chip->lock);
 -- 
 2.40.1
 
