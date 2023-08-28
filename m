@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4195B469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B826FC433C8;
-	Mon, 28 Aug 2023 10:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DD1469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A67EC433C9;
+	Mon, 28 Aug 2023 10:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218792;
-	bh=tTYMbkp25MNIwVvkGTRdFXSKfUb/onGkRfkQq7G3Dlg=;
+	s=korg; t=1693218794;
+	bh=ysIcuP4OdMm8bGfzMbhNUhxEyywVtIumrd1Fy6phjdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfOnsYlQU+BddUPyfSj3T+tUmNuON0HmvOzYvbl1x6mD3U4CRSGQu4d9uZGB12BH3
-	 2RFaZzSkmE2nZ6FfSj+WMkfZnxWbCvkiTko6QYcQIxYUrVKu/vQPTtoTsHDyf0PWLH
-	 q8/ug/wFLcdCGNO/l9vq2fKw3HpMgqeur+g/rWbU=
+	b=u5rQUnKjqPHQSl+HFHjG9Z0R3M7Y5rwy06GWFhxW8Z5d5IpgP3vNIOduhIAT7BGKW
+	 PudJJEVkVbzcdlMRCPRBl81yh2j/myf+5okaXBkZLsK/j06u3+p1UWbOt0sJdJcTHF
+	 /p5S6KGKTfihLG9jUk5ADwj2PPIM2MQlJyhy5QP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Rak <brak@vultr.com>,
-	Amaan Cheval <amaan.cheval@gmail.com>,
-	Eric Wheeler <kvm@lists.ewheeler.net>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 056/122] [PATCH 6.1] KVM: x86/mmu: Fix an sign-extension bug with mmu_seq that hangs vCPUs
-Date: Mon, 28 Aug 2023 12:12:51 +0200
-Message-ID: <20230828101158.286647136@linuxfoundation.org>
+	Alessio Igor Bogani <alessio.bogani@elettra.eu>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 6.1 047/122] igb: Avoid starting unnecessary workqueues
+Date: Mon, 28 Aug 2023 12:12:42 +0200
+Message-ID: <20230828101157.979542915@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -35,76 +37,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
 
-Upstream commit ba6e3fe25543 ("KVM: x86/mmu: Grab mmu_invalidate_seq in
-kvm_faultin_pfn()") unknowingly fixed the bug in v6.3 when refactoring
-how KVM tracks the sequence counter snapshot.
+[ Upstream commit b888c510f7b3d64ca75fc0f43b4a4bd1a611312f ]
 
-Take the vCPU's mmu_seq snapshot as an "unsigned long" instead of an "int"
-when checking to see if a page fault is stale, as the sequence count is
-stored as an "unsigned long" everywhere else in KVM.  This fixes a bug
-where KVM will effectively hang vCPUs due to always thinking page faults
-are stale, which results in KVM refusing to "fix" faults.
+If ptp_clock_register() fails or CONFIG_PTP isn't enabled, avoid starting
+PTP related workqueues.
 
-mmu_invalidate_seq (née mmu_notifier_seq) is a sequence counter used when
-KVM is handling page faults to detect if userspace mappings relevant to
-the guest were invalidated between snapshotting the counter and acquiring
-mmu_lock, i.e. to ensure that the userspace mapping KVM is using to
-resolve the page fault is fresh.  If KVM sees that the counter has
-changed, KVM simply resumes the guest without fixing the fault.
+In this way we can fix this:
+ BUG: unable to handle page fault for address: ffffc9000440b6f8
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 100000067 P4D 100000067 PUD 1001e0067 PMD 107dc5067 PTE 0
+ Oops: 0000 [#1] PREEMPT SMP
+ [...]
+ Workqueue: events igb_ptp_overflow_check
+ RIP: 0010:igb_rd32+0x1f/0x60
+ [...]
+ Call Trace:
+  igb_ptp_read_82580+0x20/0x50
+  timecounter_read+0x15/0x60
+  igb_ptp_overflow_check+0x1a/0x50
+  process_one_work+0x1cb/0x3c0
+  worker_thread+0x53/0x3f0
+  ? rescuer_thread+0x370/0x370
+  kthread+0x142/0x160
+  ? kthread_associate_blkcg+0xc0/0xc0
+  ret_from_fork+0x1f/0x30
 
-What _should_ happen is that the source of the mmu_notifier invalidations
-eventually goes away, mmu_invalidate_seq becomes stable, and KVM can once
-again fix guest page fault(s).
-
-But for a long-lived VM and/or a VM that the host just doesn't particularly
-like, it's possible for a VM to be on the receiving end of 2 billion (with
-a B) mmu_notifier invalidations.  When that happens, bit 31 will be set in
-mmu_invalidate_seq.  This causes the value to be turned into a 32-bit
-negative value when implicitly cast to an "int" by is_page_fault_stale(),
-and then sign-extended into a 64-bit unsigned when the signed "int" is
-implicitly cast back to an "unsigned long" on the call to
-mmu_invalidate_retry_hva().
-
-As a result of the casting and sign-extension, given a sequence counter of
-e.g. 0x8002dc25, mmu_invalidate_retry_hva() ends up doing
-
-	if (0x8002dc25 != 0xffffffff8002dc25)
-
-and signals that the page fault is stale and needs to be retried even
-though the sequence counter is stable, and KVM effectively hangs any vCPU
-that takes a page fault (EPT violation or #NPF when TDP is enabled).
-
-Reported-by: Brian Rak <brak@vultr.com>
-Reported-by: Amaan Cheval <amaan.cheval@gmail.com>
-Reported-by: Eric Wheeler <kvm@lists.ewheeler.net>
-Closes: https://lore.kernel.org/all/f023d927-52aa-7e08-2ee5-59a2fbc65953@gameservers.com
-Fixes: a955cad84cda ("KVM: x86/mmu: Retry page fault if root is invalidated by memslot update")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1f6e8178d685 ("igb: Prevent dropped Tx timestamps via work items and interrupts.")
+Fixes: d339b1331616 ("igb: add PTP Hardware Clock code")
+Signed-off-by: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821171927.2203644-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_ptp.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -4212,7 +4212,8 @@ static int kvm_faultin_pfn(struct kvm_vc
-  * root was invalidated by a memslot update or a relevant mmu_notifier fired.
-  */
- static bool is_page_fault_stale(struct kvm_vcpu *vcpu,
--				struct kvm_page_fault *fault, int mmu_seq)
-+				struct kvm_page_fault *fault,
-+				unsigned long mmu_seq)
- {
- 	struct kvm_mmu_page *sp = to_shadow_page(vcpu->arch.mmu->root.hpa);
+diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
+index 15e57460e19ea..07171e574e7d7 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ptp.c
++++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
+@@ -1404,18 +1404,6 @@ void igb_ptp_init(struct igb_adapter *adapter)
+ 		return;
+ 	}
  
+-	spin_lock_init(&adapter->tmreg_lock);
+-	INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
+-
+-	if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
+-		INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
+-				  igb_ptp_overflow_check);
+-
+-	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
+-	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
+-
+-	igb_ptp_reset(adapter);
+-
+ 	adapter->ptp_clock = ptp_clock_register(&adapter->ptp_caps,
+ 						&adapter->pdev->dev);
+ 	if (IS_ERR(adapter->ptp_clock)) {
+@@ -1425,6 +1413,18 @@ void igb_ptp_init(struct igb_adapter *adapter)
+ 		dev_info(&adapter->pdev->dev, "added PHC on %s\n",
+ 			 adapter->netdev->name);
+ 		adapter->ptp_flags |= IGB_PTP_ENABLED;
++
++		spin_lock_init(&adapter->tmreg_lock);
++		INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
++
++		if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
++			INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
++					  igb_ptp_overflow_check);
++
++		adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
++		adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
++
++		igb_ptp_reset(adapter);
+ 	}
+ }
+ 
+-- 
+2.40.1
+
 
 
