@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5352911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FABC433C7;
-	Mon, 28 Aug 2023 10:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E9511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EE0C433C7;
+	Mon, 28 Aug 2023 10:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218502;
-	bh=5oLpYWasGzVao5EmQMlZB8whQwpkO3G2F90Z7bhweqY=;
+	s=korg; t=1693218504;
+	bh=xQ3lYAaxiBgvidac/tJ6r3qYRaGJSt9DrvBn6wH6U/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM94XUS6eeQTxI+HB0faAVaY2fyJFHcp1sRKl0cv18r/HxKDRU8y1LwOXD4kWazhc
-	 8PApSIlMV0X/HJ0I6ZoSrQczioKQufx3hyPEbEBIFEPFHLt+2FFOXH4nacDRQakQxI
-	 hyIYxPuUP6bZpOCvN8QPN0E97c4O4epTytvgyMfI=
+	b=bKZCVHWXwc/cQIJV+kFvfzPeasOwhvQd+8DdhsLkew8IzLdI4H1qbSf3F9K5rex/C
+	 29DFe6+jJoLXcMg1Igft8j7FETAH2YgaFgmR65kMrrpyqye5e7WngACEu6YPPU9ddU
+	 k0UplM40sxCT6W+4MTm/D4ddix2m9c44fJyvOc8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 110/129] ibmveth: Use dcbf rather than dcbfl
-Date: Mon, 28 Aug 2023 12:13:24 +0200
-Message-ID: <20230828101157.262407559@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 4.19 111/129] nfsd: Fix race to FREE_STATEID and cl_revoked
+Date: Mon, 28 Aug 2023 12:13:25 +0200
+Message-ID: <20230828101157.292757915@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -39,34 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit bfedba3b2c7793ce127680bc8f70711e05ec7a17 upstream.
+commit 3b816601e279756e781e6c4d9b3f3bd21a72ac67 upstream.
 
-When building for power4, newer binutils don't recognise the "dcbfl"
-extended mnemonic.
+We have some reports of linux NFS clients that cannot satisfy a linux knfsd
+server that always sets SEQ4_STATUS_RECALLABLE_STATE_REVOKED even though
+those clients repeatedly walk all their known state using TEST_STATEID and
+receive NFS4_OK for all.
 
-dcbfl RA, RB is equivalent to dcbf RA, RB, 1.
+Its possible for revoke_delegation() to set NFS4_REVOKED_DELEG_STID, then
+nfsd4_free_stateid() finds the delegation and returns NFS4_OK to
+FREE_STATEID.  Afterward, revoke_delegation() moves the same delegation to
+cl_revoked.  This would produce the observed client/server effect.
 
-Switch to "dcbf" to avoid the build error.
+Fix this by ensuring that the setting of sc_type to NFS4_REVOKED_DELEG_STID
+and move to cl_revoked happens within the same cl_lock.  This will allow
+nfsd4_free_stateid() to properly remove the delegation from cl_revoked.
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2217103
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2176575
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Cc: stable@vger.kernel.org # v4.17+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |    2 +-
+ fs/nfsd/nfs4state.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -209,7 +209,7 @@ static inline void ibmveth_flush_buffer(
- 	unsigned long offset;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1019,9 +1019,9 @@ static void revoke_delegation(struct nfs
+ 	WARN_ON(!list_empty(&dp->dl_recall_lru));
  
- 	for (offset = 0; offset < length; offset += SMP_CACHE_BYTES)
--		asm("dcbfl %0,%1" :: "b" (addr), "r" (offset));
-+		asm("dcbf %0,%1,1" :: "b" (addr), "r" (offset));
- }
- 
- /* replenish the buffers for a pool.  note that we don't need to
+ 	if (clp->cl_minorversion) {
++		spin_lock(&clp->cl_lock);
+ 		dp->dl_stid.sc_type = NFS4_REVOKED_DELEG_STID;
+ 		refcount_inc(&dp->dl_stid.sc_count);
+-		spin_lock(&clp->cl_lock);
+ 		list_add(&dp->dl_recall_lru, &clp->cl_revoked);
+ 		spin_unlock(&clp->cl_lock);
+ 	}
 
 
