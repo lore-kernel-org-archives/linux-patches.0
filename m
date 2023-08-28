@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41183611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C22C433C7;
-	Mon, 28 Aug 2023 10:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4220611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777D3C433C7;
+	Mon, 28 Aug 2023 10:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219407;
-	bh=e5yipL7LhOvQVAGHMQzq/IjSk5Ku2NEQc0jz8cQh1mY=;
+	s=korg; t=1693219409;
+	bh=WJP7shysYYMuqnL/RVzjXTx1e/HjXiFKz8cX0Qz/jc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1jL1BZdyT21/R2A4F/7y0FbzEfMsCOQFWKVrGnXKkNuh1te9AH4wkMdI2nsNQ3qa
-	 8JQax3UfOIhnIMgz8LETl3g7rC4KV5QNszopuaCjzUoFyyL2dU4ZWMMR0Rixw7U+yr
-	 e1UKNIReh0L7nqxtqY1lX/4wcjIp8+Ph0JVWeLFE=
+	b=Jq3JsM/uGT2KTNQwBPAbuccQB9v0ZNPHgZ5H+LgAXVJTv0kfuN8bjF/6w6HE9+nZI
+	 HXFI9PF/xwfJ43GYjFm1vaEJkB0gQ7XscHfgBjv1rHn7sDjILNQTBgad/omGj5jdf6
+	 7qfrABjmjiCwKJ2SokT19WqysoTz5vQhikIYZD1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BassCheck <bass@buaa.edu.cn>,
-	Tuo Li <islituo@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 17/89] ALSA: pcm: Fix potential data race at PCM memory allocation helpers
-Date: Mon, 28 Aug 2023 12:13:18 +0200
-Message-ID: <20230828101150.752276145@linuxfoundation.org>
+Subject: [PATCH 5.15 26/89] tracing: Fix memleak due to race between current_tracer and trace
+Date: Mon, 28 Aug 2023 12:13:27 +0200
+Message-ID: <20230828101151.060721695@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,109 +40,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit bd55842ed998a622ba6611fe59b3358c9f76773d ]
+[ Upstream commit eecb91b9f98d6427d4af5fdb8f108f52572a39e7 ]
 
-The PCM memory allocation helpers have a sanity check against too many
-buffer allocations.  However, the check is performed without a proper
-lock and the allocation isn't serialized; this allows user to allocate
-more memories than predefined max size.
+Kmemleak report a leak in graph_trace_open():
 
-Practically seen, this isn't really a big problem, as it's more or
-less some "soft limit" as a sanity check, and it's not possible to
-allocate unlimitedly.  But it's still better to address this for more
-consistent behavior.
+  unreferenced object 0xffff0040b95f4a00 (size 128):
+    comm "cat", pid 204981, jiffies 4301155872 (age 99771.964s)
+    hex dump (first 32 bytes):
+      e0 05 e7 b4 ab 7d 00 00 0b 00 01 00 00 00 00 00 .....}..........
+      f4 00 01 10 00 a0 ff ff 00 00 00 00 65 00 10 00 ............e...
+    backtrace:
+      [<000000005db27c8b>] kmem_cache_alloc_trace+0x348/0x5f0
+      [<000000007df90faa>] graph_trace_open+0xb0/0x344
+      [<00000000737524cd>] __tracing_open+0x450/0xb10
+      [<0000000098043327>] tracing_open+0x1a0/0x2a0
+      [<00000000291c3876>] do_dentry_open+0x3c0/0xdc0
+      [<000000004015bcd6>] vfs_open+0x98/0xd0
+      [<000000002b5f60c9>] do_open+0x520/0x8d0
+      [<00000000376c7820>] path_openat+0x1c0/0x3e0
+      [<00000000336a54b5>] do_filp_open+0x14c/0x324
+      [<000000002802df13>] do_sys_openat2+0x2c4/0x530
+      [<0000000094eea458>] __arm64_sys_openat+0x130/0x1c4
+      [<00000000a71d7881>] el0_svc_common.constprop.0+0xfc/0x394
+      [<00000000313647bf>] do_el0_svc+0xac/0xec
+      [<000000002ef1c651>] el0_svc+0x20/0x30
+      [<000000002fd4692a>] el0_sync_handler+0xb0/0xb4
+      [<000000000c309c35>] el0_sync+0x160/0x180
 
-The patch covers the size check in do_alloc_pages() with the
-card->memory_mutex, and increases the allocated size there for
-preventing the further overflow.  When the actual allocation fails,
-the size is decreased accordingly.
+The root cause is descripted as follows:
 
-Reported-by: BassCheck <bass@buaa.edu.cn>
-Reported-by: Tuo Li <islituo@gmail.com>
-Link: https://lore.kernel.org/r/CADm8Tek6t0WedK+3Y6rbE5YEt19tML8BUL45N2ji4ZAz1KcN_A@mail.gmail.com
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230703112430.30634-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  __tracing_open() {  // 1. File 'trace' is being opened;
+    ...
+    *iter->trace = *tr->current_trace;  // 2. Tracer 'function_graph' is
+                                        //    currently set;
+    ...
+    iter->trace->open(iter);  // 3. Call graph_trace_open() here,
+                              //    and memory are allocated in it;
+    ...
+  }
+
+  s_start() {  // 4. The opened file is being read;
+    ...
+    *iter->trace = *tr->current_trace;  // 5. If tracer is switched to
+                                        //    'nop' or others, then memory
+                                        //    in step 3 are leaked!!!
+    ...
+  }
+
+To fix it, in s_start(), close tracer before switching then reopen the
+new tracer after switching. And some tracers like 'wakeup' may not update
+'iter->private' in some cases when reopen, then it should be cleared
+to avoid being mistakenly closed again.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230817125539.1646321-1-zhengyejian1@huawei.com
+
+Fixes: d7350c3f4569 ("tracing/core: make the read callbacks reentrants")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_memory.c | 44 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 8 deletions(-)
+ kernel/trace/trace.c              | 9 ++++++++-
+ kernel/trace/trace_irqsoff.c      | 3 ++-
+ kernel/trace/trace_sched_wakeup.c | 2 ++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/pcm_memory.c b/sound/core/pcm_memory.c
-index f1470590239e5..711e71016a7c3 100644
---- a/sound/core/pcm_memory.c
-+++ b/sound/core/pcm_memory.c
-@@ -31,20 +31,51 @@ static unsigned long max_alloc_per_card = 32UL * 1024UL * 1024UL;
- module_param(max_alloc_per_card, ulong, 0644);
- MODULE_PARM_DESC(max_alloc_per_card, "Max total allocation bytes per card.");
- 
-+static void __update_allocated_size(struct snd_card *card, ssize_t bytes)
-+{
-+	card->total_pcm_alloc_bytes += bytes;
-+}
-+
-+static void update_allocated_size(struct snd_card *card, ssize_t bytes)
-+{
-+	mutex_lock(&card->memory_mutex);
-+	__update_allocated_size(card, bytes);
-+	mutex_unlock(&card->memory_mutex);
-+}
-+
-+static void decrease_allocated_size(struct snd_card *card, size_t bytes)
-+{
-+	mutex_lock(&card->memory_mutex);
-+	WARN_ON(card->total_pcm_alloc_bytes < bytes);
-+	__update_allocated_size(card, -(ssize_t)bytes);
-+	mutex_unlock(&card->memory_mutex);
-+}
-+
- static int do_alloc_pages(struct snd_card *card, int type, struct device *dev,
- 			  size_t size, struct snd_dma_buffer *dmab)
- {
- 	int err;
- 
-+	/* check and reserve the requested size */
-+	mutex_lock(&card->memory_mutex);
- 	if (max_alloc_per_card &&
--	    card->total_pcm_alloc_bytes + size > max_alloc_per_card)
-+	    card->total_pcm_alloc_bytes + size > max_alloc_per_card) {
-+		mutex_unlock(&card->memory_mutex);
- 		return -ENOMEM;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index edc58133ed5ed..8769cd18f622f 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4108,8 +4108,15 @@ static void *s_start(struct seq_file *m, loff_t *pos)
+ 	 * will point to the same string as current_trace->name.
+ 	 */
+ 	mutex_lock(&trace_types_lock);
+-	if (unlikely(tr->current_trace && iter->trace->name != tr->current_trace->name))
++	if (unlikely(tr->current_trace && iter->trace->name != tr->current_trace->name)) {
++		/* Close iter->trace before switching to the new current tracer */
++		if (iter->trace->close)
++			iter->trace->close(iter);
+ 		*iter->trace = *tr->current_trace;
++		/* Reopen the new current tracer */
++		if (iter->trace->open)
++			iter->trace->open(iter);
 +	}
-+	__update_allocated_size(card, size);
-+	mutex_unlock(&card->memory_mutex);
+ 	mutex_unlock(&trace_types_lock);
  
- 	err = snd_dma_alloc_pages(type, dev, size, dmab);
- 	if (!err) {
--		mutex_lock(&card->memory_mutex);
--		card->total_pcm_alloc_bytes += dmab->bytes;
--		mutex_unlock(&card->memory_mutex);
-+		/* the actual allocation size might be bigger than requested,
-+		 * and we need to correct the account
-+		 */
-+		if (dmab->bytes != size)
-+			update_allocated_size(card, dmab->bytes - size);
-+	} else {
-+		/* take back on allocation failure */
-+		decrease_allocated_size(card, size);
- 	}
- 	return err;
- }
-@@ -53,10 +84,7 @@ static void do_free_pages(struct snd_card *card, struct snd_dma_buffer *dmab)
+ #ifdef CONFIG_TRACER_MAX_TRACE
+diff --git a/kernel/trace/trace_irqsoff.c b/kernel/trace/trace_irqsoff.c
+index 590b3d51afae9..ba37f768e2f27 100644
+--- a/kernel/trace/trace_irqsoff.c
++++ b/kernel/trace/trace_irqsoff.c
+@@ -231,7 +231,8 @@ static void irqsoff_trace_open(struct trace_iterator *iter)
  {
- 	if (!dmab->area)
- 		return;
--	mutex_lock(&card->memory_mutex);
--	WARN_ON(card->total_pcm_alloc_bytes < dmab->bytes);
--	card->total_pcm_alloc_bytes -= dmab->bytes;
--	mutex_unlock(&card->memory_mutex);
-+	decrease_allocated_size(card, dmab->bytes);
- 	snd_dma_free_pages(dmab);
- 	dmab->area = NULL;
+ 	if (is_graph(iter->tr))
+ 		graph_trace_open(iter);
+-
++	else
++		iter->private = NULL;
  }
+ 
+ static void irqsoff_trace_close(struct trace_iterator *iter)
+diff --git a/kernel/trace/trace_sched_wakeup.c b/kernel/trace/trace_sched_wakeup.c
+index 2402de520eca7..b239bfaa51ae8 100644
+--- a/kernel/trace/trace_sched_wakeup.c
++++ b/kernel/trace/trace_sched_wakeup.c
+@@ -168,6 +168,8 @@ static void wakeup_trace_open(struct trace_iterator *iter)
+ {
+ 	if (is_graph(iter->tr))
+ 		graph_trace_open(iter);
++	else
++		iter->private = NULL;
+ }
+ 
+ static void wakeup_trace_close(struct trace_iterator *iter)
 -- 
 2.40.1
 
