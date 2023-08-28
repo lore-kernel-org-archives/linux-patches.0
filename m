@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF5611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FEFC433C7;
-	Mon, 28 Aug 2023 10:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC8F611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC47C433C7;
+	Mon, 28 Aug 2023 10:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219426;
-	bh=DKcu2fjgUbgAfk32Q/6u0LW1ow2zxPd27ddQCNk72xU=;
+	s=korg; t=1693219429;
+	bh=aUwte5xAa7Ov/eVPU7wJ0JoIDir+KVMYXds6BTzq7HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDk0R+aVES29I+7jBBLNrCfQkZNWZQ5T3b7/VKTYQdUikkH7lPVD8cEyhbJud31Xk
-	 iDVmGvUQZJEogdEqK7ehszFpbINETw5jdBDVVlPwzUP2NTTSA4Iwq5NGLaC4tym0SO
-	 GbVGGRwvnTa4aVrMIZGBfP926vDTqLv2fd5r8F44=
+	b=hmIWIIxFg6ikHg54L4krNc02Kir8d/IXDoksjJIrV+7cJ96iQn8dQVEvFYIR1eK4L
+	 000VY5fQtXUGKwPxljAgUbuYwo2g7y6dl8hkHVBxpQMc3RmyNCyin6dzQshSjluTG7
+	 /bk8hn6VNSPNOR3iwgrbD0Ygd2ohQYTJMQE21O+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Doug Berger <opendmb@gmail.com>,
+	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 32/89] net: bcmgenet: Fix return value check for fixed_phy_register()
-Date: Mon, 28 Aug 2023 12:13:33 +0200
-Message-ID: <20230828101151.263227041@linuxfoundation.org>
+Subject: [PATCH 5.15 33/89] net: validate veth and vxcan peer ifindexes
+Date: Mon, 28 Aug 2023 12:13:34 +0200
+Message-ID: <20230828101151.298045436@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,36 +42,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 32bbe64a1386065ab2aef8ce8cae7c689d0add6e ]
+[ Upstream commit f534f6581ec084fe94d6759f7672bd009794b07e ]
 
-The fixed_phy_register() function returns error pointers and never
-returns NULL. Update the checks accordingly.
+veth and vxcan need to make sure the ifindexes of the peer
+are not negative, core does not validate this.
 
-Fixes: b0ba512e25d7 ("net: bcmgenet: enable driver to work without a device tree")
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Acked-by: Doug Berger <opendmb@gmail.com>
+Using iproute2 with user-space-level checking removed:
+
+Before:
+
+  # ./ip link add index 10 type veth peer index -1
+  # ip link show
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:74:b2:03 brd ff:ff:ff:ff:ff:ff
+  10: veth1@veth0: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 8a:90:ff:57:6d:5d brd ff:ff:ff:ff:ff:ff
+  -1: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether ae:ed:18:e6:fa:7f brd ff:ff:ff:ff:ff:ff
+
+Now:
+
+  $ ./ip link add index 10 type veth peer index -1
+  Error: ifindex can't be negative.
+
+This problem surfaced in net-next because an explicit WARN()
+was added, the root cause is older.
+
+Fixes: e6f8f1a739b6 ("veth: Allow to create peer link with given ifindex")
+Fixes: a8f820a380a2 ("can: add Virtual CAN Tunnel driver (vxcan)")
+Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmmii.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/vxcan.c |  7 +------
+ drivers/net/veth.c      |  5 +----
+ include/net/rtnetlink.h |  4 ++--
+ net/core/rtnetlink.c    | 22 ++++++++++++++++++----
+ 4 files changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmmii.c b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-index 8c800d9c11b78..bfe90cacbd073 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -571,7 +571,7 @@ static int bcmgenet_mii_pd_init(struct bcmgenet_priv *priv)
- 		};
+diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
+index be5566168d0f3..afd9060c5421c 100644
+--- a/drivers/net/can/vxcan.c
++++ b/drivers/net/can/vxcan.c
+@@ -179,12 +179,7 @@ static int vxcan_newlink(struct net *net, struct net_device *dev,
  
- 		phydev = fixed_phy_register(PHY_POLL, &fphy_status, NULL);
--		if (!phydev || IS_ERR(phydev)) {
-+		if (IS_ERR(phydev)) {
- 			dev_err(kdev, "failed to register fixed PHY device\n");
- 			return -ENODEV;
- 		}
+ 		nla_peer = data[VXCAN_INFO_PEER];
+ 		ifmp = nla_data(nla_peer);
+-		err = rtnl_nla_parse_ifla(peer_tb,
+-					  nla_data(nla_peer) +
+-					  sizeof(struct ifinfomsg),
+-					  nla_len(nla_peer) -
+-					  sizeof(struct ifinfomsg),
+-					  NULL);
++		err = rtnl_nla_parse_ifinfomsg(peer_tb, nla_peer, extack);
+ 		if (err < 0)
+ 			return err;
+ 
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 41cb9179e8b79..45ee44f66e77d 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1654,10 +1654,7 @@ static int veth_newlink(struct net *src_net, struct net_device *dev,
+ 
+ 		nla_peer = data[VETH_INFO_PEER];
+ 		ifmp = nla_data(nla_peer);
+-		err = rtnl_nla_parse_ifla(peer_tb,
+-					  nla_data(nla_peer) + sizeof(struct ifinfomsg),
+-					  nla_len(nla_peer) - sizeof(struct ifinfomsg),
+-					  NULL);
++		err = rtnl_nla_parse_ifinfomsg(peer_tb, nla_peer, extack);
+ 		if (err < 0)
+ 			return err;
+ 
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index 9f48733bfd21c..a2a74e0e5c494 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -175,8 +175,8 @@ struct net_device *rtnl_create_link(struct net *net, const char *ifname,
+ int rtnl_delete_link(struct net_device *dev);
+ int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm);
+ 
+-int rtnl_nla_parse_ifla(struct nlattr **tb, const struct nlattr *head, int len,
+-			struct netlink_ext_ack *exterr);
++int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
++			     struct netlink_ext_ack *exterr);
+ struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
+ 
+ #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index b055e196f5306..03dd8dc9e1425 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -2173,13 +2173,27 @@ static int rtnl_dump_ifinfo(struct sk_buff *skb, struct netlink_callback *cb)
+ 	return err;
+ }
+ 
+-int rtnl_nla_parse_ifla(struct nlattr **tb, const struct nlattr *head, int len,
+-			struct netlink_ext_ack *exterr)
++int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
++			     struct netlink_ext_ack *exterr)
+ {
+-	return nla_parse_deprecated(tb, IFLA_MAX, head, len, ifla_policy,
++	const struct ifinfomsg *ifmp;
++	const struct nlattr *attrs;
++	size_t len;
++
++	ifmp = nla_data(nla_peer);
++	attrs = nla_data(nla_peer) + sizeof(struct ifinfomsg);
++	len = nla_len(nla_peer) - sizeof(struct ifinfomsg);
++
++	if (ifmp->ifi_index < 0) {
++		NL_SET_ERR_MSG_ATTR(exterr, nla_peer,
++				    "ifindex can't be negative");
++		return -EINVAL;
++	}
++
++	return nla_parse_deprecated(tb, IFLA_MAX, attrs, len, ifla_policy,
+ 				    exterr);
+ }
+-EXPORT_SYMBOL(rtnl_nla_parse_ifla);
++EXPORT_SYMBOL(rtnl_nla_parse_ifinfomsg);
+ 
+ struct net *rtnl_link_get_net(struct net *src_net, struct nlattr *tb[])
+ {
 -- 
 2.40.1
 
