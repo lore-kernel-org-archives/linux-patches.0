@@ -1,155 +1,198 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1272011C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB10C433C8;
-	Mon, 28 Aug 2023 10:49:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219753;
-	bh=DLU+4R/srGFt8wWkovC0d3lQdJSuToHHIYh+yHvMLfY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0SPm8DHbpNM+zvRU7L6wd8HibWdAbso5m5mfUaNScGrStBS1Fw85x8BBAiA3QA7L
-	 le1SUgBtA3fufZuySTbSs0Qsf0a2ujl8tSnx3ogvaoHya1Fkln56kKDeCyMajY/R/L
-	 DsOsJbn13u1imIk7kOFAtNKBME2sHc1+qKEKtB40=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Woody Suwalski <terraluna977@gmail.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.10 59/84] PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus
-Date: Mon, 28 Aug 2023 12:14:16 +0200
-Message-ID: <20230828101151.262435703@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
-References: <20230828101149.146126827@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4E411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:16 +0000 (UTC)
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-5219ceead33so2373452a12.2
+        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 03:49:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1693219754; x=1693824554;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EpAYUAyxWxnw3jUtIWPiJWYZLbp2zAaEuj7yHabOWqc=;
+        b=XzTJ/q1sd8jr6ASWsMnGU20/8iQtEMTzUJFSZU++Q4JKU51YXFSxOeNCJEVl/khJm6
+         AtD492RaXxEUPcNkxt4gJxVCji38QYzs+hnYmZEZdVYlluWZN+RSttUG1W0ZLBwu7Pwg
+         R8X9uAen9oQqaO7cnNtgqh2kVCgvNPhvAxTzvmjB7zRya6BssAHCx1P8gc78gVETHMbs
+         i1SqFq6Iea/ZQYTnF3XT2IsCjCmAg2IcFnuygH3AK73NAXjFLv+PrIIa/z+xEeQJOioF
+         wdZbT+RNvUbtmL5tXRzrJFwxji5i1BGa+xVkTXRjXoxHihu++OWQ8oE8BuJQP3Fdfs/z
+         PcPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693219754; x=1693824554;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EpAYUAyxWxnw3jUtIWPiJWYZLbp2zAaEuj7yHabOWqc=;
+        b=G6XmPmHJkIdMKgQwcf+O5dEr3VYpiwegdc7XsqmL0fR+wgyMke5K+yGe2I6gHtxm1p
+         tc1pk3/GhR2nprO1XURQpNsKlS8wuYBpr6fe6uULv1/DqUbZ/QM6kaejvpeTb7IdwEEg
+         s24kAf2spk0P9qK8raym37x0hdQ2inhCcqWz4H05O+r0KYsqA9bt7pvrSX9xsPTp0I5I
+         k5zS4bjBvyXqVkEPltnfzRoidrE7lreW5kAzRYuIw8VVFRJATCT/0R5s4T4z7t1w3Lwe
+         3rFCjekQktO0efXJKQFF0+u/K6jd/AUvBC+2Grkyl7Ig6VDmD3I80Ia+FveqSNtDwZrC
+         FpTA==
+X-Gm-Message-State: AOJu0YwLs91rPOOVGRp21TTTqCyJstETCgvagaV0GwZe4KFibHuA7Arj
+	EZvwSMffr/8HN5MrpIZqX98PUhM7PsdTerc=
+X-Google-Smtp-Source: AGHT+IEQrG+gVweyEWQVJLcIHo0Q1u7H8GGDQBphbzbzjWfrMy8pyrBtRjUaysHe+JWs6smqdp5iXyOp9w/9lug=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a50:d696:0:b0:522:1d2e:e553 with SMTP id
+ r22-20020a50d696000000b005221d2ee553mr432512edi.8.1693219754366; Mon, 28 Aug
+ 2023 03:49:14 -0700 (PDT)
+Date: Mon, 28 Aug 2023 10:48:05 +0000
+In-Reply-To: <20230828104807.1581592-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20230828104807.1581592-1-aliceryhl@google.com>
+X-Mailer: git-send-email 2.42.0.rc1.204.g551eb34607-goog
+Message-ID: <20230828104807.1581592-6-aliceryhl@google.com>
+Subject: [PATCH v4 5/7] rust: workqueue: implement `WorkItemPointer` for
+ pointer types
+From: Alice Ryhl <aliceryhl@google.com>
+To: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>, 
+	Miguel Ojeda <ojeda@kernel.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, 
+	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Martin Rodriguez Reboredo <yakoyoku@gmail.com>, 
+	Andreas Hindborg <nmi@metaspace.dk>
+Content-Type: text/plain; charset="UTF-8"
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+This implements the `WorkItemPointer` trait for the pointer types that
+you are likely to use the workqueue with. The `Arc` type is for
+reference counted objects, and the `Pin<Box<T>>` type is for objects
+where the caller has exclusive ownership of the object.
 
-------------------
-
-From: Igor Mammedov <imammedo@redhat.com>
-
-commit cc22522fd55e257c86d340ae9aedc122e705a435 upstream.
-
-40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-changed acpiphp hotplug to use pci_assign_unassigned_bridge_resources()
-which depends on bridge being available, however enable_slot() can be
-called without bridge associated:
-
-  1. Legitimate case of hotplug on root bus (widely used in virt world)
-
-  2. A (misbehaving) firmware, that sends ACPI Bus Check notifications to
-     non existing root ports (Dell Inspiron 7352/0W6WV0), which end up at
-     enable_slot(..., bridge = 0) where bus has no bridge assigned to it.
-     acpihp doesn't know that it's a bridge, and bus specific 'PCI
-     subsystem' can't augment ACPI context with bridge information since
-     the PCI device to get this data from is/was not available.
-
-Issue is easy to reproduce with QEMU's 'pc' machine, which supports PCI
-hotplug on hostbridge slots. To reproduce, boot kernel at commit
-40613da52b13 in VM started with following CLI (assuming guest root fs is
-installed on sda1 partition):
-
-  # qemu-system-x86_64 -M pc -m 1G -enable-kvm -cpu host \
-        -monitor stdio -serial file:serial.log           \
-        -kernel arch/x86/boot/bzImage                    \
-        -append "root=/dev/sda1 console=ttyS0"           \
-        guest_disk.img
-
-Once guest OS is fully booted at qemu prompt:
-
-  (qemu) device_add e1000
-
-(check serial.log) it will cause NULL pointer dereference at:
-
-  void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge)
-  {
-    struct pci_bus *parent = bridge->subordinate;
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-
-   ? pci_assign_unassigned_bridge_resources+0x1f/0x260
-   enable_slot+0x21f/0x3e0
-   acpiphp_hotplug_notify+0x13d/0x260
-   acpi_device_hotplug+0xbc/0x540
-   acpi_hotplug_work_fn+0x15/0x20
-   process_one_work+0x1f7/0x370
-   worker_thread+0x45/0x3b0
-
-The issue was discovered on Dell Inspiron 7352/0W6WV0 laptop with following
-sequence:
-
-  1. Suspend to RAM
-  2. Wake up with the same backtrace being observed:
-  3. 2nd suspend to RAM attempt makes laptop freeze
-
-Fix it by using __pci_bus_assign_resources() instead of
-pci_assign_unassigned_bridge_resources() as we used to do, but only in case
-when bus doesn't have a bridge associated (to cover for the case of ACPI
-event on hostbridge or non existing root port).
-
-That lets us keep hotplug on root bus working like it used to and at the
-same time keeps resource reassignment usable on root ports (and other 1st
-level bridges) that was fixed by 40613da52b13.
-
-Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-Link: https://lore.kernel.org/r/20230726123518.2361181-2-imammedo@redhat.com
-Reported-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/r/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Andreas Hindborg (Samsung) <nmi@metaspace.dk>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 ---
- drivers/pci/hotplug/acpiphp_glue.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+v3 -> v4:
+ * No changes.
 
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -489,6 +489,7 @@ static void enable_slot(struct acpiphp_s
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
-+		LIST_HEAD(add_list);
- 		int max, pass;
- 
- 		acpiphp_rescan_slot(slot);
-@@ -502,10 +503,15 @@ static void enable_slot(struct acpiphp_s
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
-+					if (pci_is_root_bus(bus))
-+						__pci_bus_size_bridges(dev->subordinate, &add_list);
- 				}
- 			}
- 		}
--		pci_assign_unassigned_bridge_resources(bus->self);
-+		if (pci_is_root_bus(bus))
-+			__pci_bus_assign_resources(bus, &add_list, NULL);
-+		else
-+			pci_assign_unassigned_bridge_resources(bus->self);
- 	}
- 
- 	acpiphp_sanitize_bus(bus);
+ rust/kernel/workqueue.rs | 97 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 96 insertions(+), 1 deletion(-)
 
+diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+index 251541f1cd68..c1334c48b96b 100644
+--- a/rust/kernel/workqueue.rs
++++ b/rust/kernel/workqueue.rs
+@@ -28,8 +28,10 @@
+ //!
+ //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
+ 
+-use crate::{bindings, prelude::*, sync::LockClassKey, types::Opaque};
++use crate::{bindings, prelude::*, sync::Arc, sync::LockClassKey, types::Opaque};
++use alloc::boxed::Box;
+ use core::marker::PhantomData;
++use core::pin::Pin;
+ 
+ /// Creates a [`Work`] initialiser with the given name and a newly-created lock class.
+ #[macro_export]
+@@ -363,6 +365,99 @@ unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workqueue::Work<$work_typ
+     )*};
+ }
+ 
++unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Arc<T>
++where
++    T: WorkItem<ID, Pointer = Self>,
++    T: HasWork<T, ID>,
++{
++    unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
++        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
++        let ptr = ptr as *mut Work<T, ID>;
++        // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
++        let ptr = unsafe { T::work_container_of(ptr) };
++        // SAFETY: This pointer comes from `Arc::into_raw` and we've been given back ownership.
++        let arc = unsafe { Arc::from_raw(ptr) };
++
++        T::run(arc)
++    }
++}
++
++unsafe impl<T, const ID: u64> RawWorkItem<ID> for Arc<T>
++where
++    T: WorkItem<ID, Pointer = Self>,
++    T: HasWork<T, ID>,
++{
++    type EnqueueOutput = Result<(), Self>;
++
++    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
++    where
++        F: FnOnce(*mut bindings::work_struct) -> bool,
++    {
++        // Casting between const and mut is not a problem as long as the pointer is a raw pointer.
++        let ptr = Arc::into_raw(self).cast_mut();
++
++        // SAFETY: Pointers into an `Arc` point at a valid value.
++        let work_ptr = unsafe { T::raw_get_work(ptr) };
++        // SAFETY: `raw_get_work` returns a pointer to a valid value.
++        let work_ptr = unsafe { Work::raw_get(work_ptr) };
++
++        if queue_work_on(work_ptr) {
++            Ok(())
++        } else {
++            // SAFETY: The work queue has not taken ownership of the pointer.
++            Err(unsafe { Arc::from_raw(ptr) })
++        }
++    }
++}
++
++unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Pin<Box<T>>
++where
++    T: WorkItem<ID, Pointer = Self>,
++    T: HasWork<T, ID>,
++{
++    unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
++        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
++        let ptr = ptr as *mut Work<T, ID>;
++        // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
++        let ptr = unsafe { T::work_container_of(ptr) };
++        // SAFETY: This pointer comes from `Arc::into_raw` and we've been given back ownership.
++        let boxed = unsafe { Box::from_raw(ptr) };
++        // SAFETY: The box was already pinned when it was enqueued.
++        let pinned = unsafe { Pin::new_unchecked(boxed) };
++
++        T::run(pinned)
++    }
++}
++
++unsafe impl<T, const ID: u64> RawWorkItem<ID> for Pin<Box<T>>
++where
++    T: WorkItem<ID, Pointer = Self>,
++    T: HasWork<T, ID>,
++{
++    type EnqueueOutput = ();
++
++    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
++    where
++        F: FnOnce(*mut bindings::work_struct) -> bool,
++    {
++        // SAFETY: We're not going to move `self` or any of its fields, so its okay to temporarily
++        // remove the `Pin` wrapper.
++        let boxed = unsafe { Pin::into_inner_unchecked(self) };
++        let ptr = Box::into_raw(boxed);
++
++        // SAFETY: Pointers into a `Box` point at a valid value.
++        let work_ptr = unsafe { T::raw_get_work(ptr) };
++        // SAFETY: `raw_get_work` returns a pointer to a valid value.
++        let work_ptr = unsafe { Work::raw_get(work_ptr) };
++
++        if !queue_work_on(work_ptr) {
++            // SAFETY: This method requires exclusive ownership of the box, so it cannot be in a
++            // workqueue.
++            unsafe { ::core::hint::unreachable_unchecked() }
++        }
++    }
++}
++
+ /// Returns the system work queue (`system_wq`).
+ ///
+ /// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
+-- 
+2.42.0.rc1.204.g551eb34607-goog
 
