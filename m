@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD8711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E9DC433C8;
-	Mon, 28 Aug 2023 10:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0AF11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F60FC433C9;
+	Mon, 28 Aug 2023 10:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218209;
-	bh=1XxHwvnLNu+sQgWZEDJauhnfbDQ3H6UmhsMhK3qDiNI=;
+	s=korg; t=1693218211;
+	bh=jQMpYP+TkuLMOmDQEIiw4iPtrs+K0krQpRV2ULu+owo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSpVeliPeuyGLy5W3H2SH1d9XGBs1ls4YpxDIGx0hqN3qQZvTTLMvmLJKhNappg2n
-	 Wx+AK2Cz7pEfXYGhM9SIBDoF8HY0nFPE08VErEerYWk85ndDa1Sl0Vyu56Lj84NNIP
-	 f6OZSNLKP06GQ8zQB2PWhHZhWMSJ5Bdek06Q5Tmg=
+	b=ZU5YvcVFNaKYA2FjXqW5osPzr8j1OT/y6Ml+rslK/X60Ob8gwa4ff+DRH8VpqB7hd
+	 oO5H16G7rNn5PQD5yR0mBYbKMhcH/vTMmI1kkyQycZQkuUw6bqlPlZ/Ed1EmDx6gv4
+	 W//gKmVwDW2gEPnrzlihFLlLAGw+0qv7c+LmGEr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanath S <Sanath.S@amd.com>,
-	Sanjay R Mehta <sanju.mehta@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.4 108/129] thunderbolt: Fix Thunderbolt 3 display flickering issue on 2nd hot plug onwards
-Date: Mon, 28 Aug 2023 12:13:07 +0200
-Message-ID: <20230828101200.949726065@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 109/129] can: raw: add missing refcount for memory leak fix
+Date: Mon, 28 Aug 2023 12:13:08 +0200
+Message-ID: <20230828101200.993327219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -41,52 +41,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay R Mehta <sanju.mehta@amd.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 583893a66d731f5da010a3fa38a0460e05f0149b upstream.
+commit c275a176e4b69868576e543409927ae75e3a3288 upstream.
 
-Previously, on unplug events, the TMU mode was disabled first
-followed by the Time Synchronization Handshake, irrespective of
-whether the tb_switch_tmu_rate_write() API was successful or not.
+Commit ee8b94c8510c ("can: raw: fix receiver memory leak") introduced
+a new reference to the CAN netdevice that has assigned CAN filters.
+But this new ro->dev reference did not maintain its own refcount which
+lead to another KASAN use-after-free splat found by Eric Dumazet.
 
-However, this caused a problem with Thunderbolt 3 (TBT3)
-devices, as the TSPacketInterval bits were always enabled by default,
-leading the host router to assume that the device router's TMU was
-already enabled and preventing it from initiating the Time
-Synchronization Handshake. As a result, TBT3 monitors experienced
-display flickering from the second hot plug onwards.
+This patch ensures a proper refcount for the CAN nedevice.
 
-To address this issue, we have modified the code to only disable the
-Time Synchronization Handshake during TMU disable if the
-tb_switch_tmu_rate_write() function is successful. This ensures that
-the TBT3 devices function correctly and eliminates the display
-flickering issue.
-
-Co-developed-by: Sanath S <Sanath.S@amd.com>
-Signed-off-by: Sanath S <Sanath.S@amd.com>
-Signed-off-by: Sanjay R Mehta <sanju.mehta@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-[ USB4v2 introduced support for uni-directional TMU mode as part of
-  d49b4f043d63 ("thunderbolt: Add support for enhanced uni-directional TMU mode")
-  This is not a stable candidate commit, so adjust the code for backport. ]
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
+Reported-by: Eric Dumazet <edumazet@google.com>
+Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/r/20230821144547.6658-3-socketcan@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tmu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/can/raw.c |   35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
---- a/drivers/thunderbolt/tmu.c
-+++ b/drivers/thunderbolt/tmu.c
-@@ -415,7 +415,8 @@ int tb_switch_tmu_disable(struct tb_swit
- 		 * uni-directional mode and we don't want to change it's TMU
- 		 * mode.
- 		 */
--		tb_switch_tmu_rate_write(sw, TB_SWITCH_TMU_RATE_OFF);
-+		ret = tb_switch_tmu_rate_write(sw, TB_SWITCH_TMU_RATE_OFF);
-+			return ret;
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -85,6 +85,7 @@ struct raw_sock {
+ 	int bound;
+ 	int ifindex;
+ 	struct net_device *dev;
++	netdevice_tracker dev_tracker;
+ 	struct list_head notifier;
+ 	int loopback;
+ 	int recv_own_msgs;
+@@ -285,8 +286,10 @@ static void raw_notify(struct raw_sock *
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
+ 		/* remove current filters & unregister */
+-		if (ro->bound)
++		if (ro->bound) {
+ 			raw_disable_allfilters(dev_net(dev), dev, sk);
++			netdev_put(dev, &ro->dev_tracker);
++		}
  
- 		tb_port_tmu_time_sync_disable(up);
- 		ret = tb_port_tmu_time_sync_disable(down);
+ 		if (ro->count > 1)
+ 			kfree(ro->filter);
+@@ -391,10 +394,12 @@ static int raw_release(struct socket *so
+ 
+ 	/* remove current filters & unregister */
+ 	if (ro->bound) {
+-		if (ro->dev)
++		if (ro->dev) {
+ 			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
+-		else
++			netdev_put(ro->dev, &ro->dev_tracker);
++		} else {
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
++		}
+ 	}
+ 
+ 	if (ro->count > 1)
+@@ -445,10 +450,10 @@ static int raw_bind(struct socket *sock,
+ 			goto out;
+ 		}
+ 		if (dev->type != ARPHRD_CAN) {
+-			dev_put(dev);
+ 			err = -ENODEV;
+-			goto out;
++			goto out_put_dev;
+ 		}
++
+ 		if (!(dev->flags & IFF_UP))
+ 			notify_enetdown = 1;
+ 
+@@ -456,7 +461,9 @@ static int raw_bind(struct socket *sock,
+ 
+ 		/* filters set by default/setsockopt */
+ 		err = raw_enable_allfilters(sock_net(sk), dev, sk);
+-		dev_put(dev);
++		if (err)
++			goto out_put_dev;
++
+ 	} else {
+ 		ifindex = 0;
+ 
+@@ -467,18 +474,28 @@ static int raw_bind(struct socket *sock,
+ 	if (!err) {
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+-			if (ro->dev)
++			if (ro->dev) {
+ 				raw_disable_allfilters(dev_net(ro->dev),
+ 						       ro->dev, sk);
+-			else
++				/* drop reference to old ro->dev */
++				netdev_put(ro->dev, &ro->dev_tracker);
++			} else {
+ 				raw_disable_allfilters(sock_net(sk), NULL, sk);
++			}
+ 		}
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
++		/* bind() ok -> hold a reference for new ro->dev */
+ 		ro->dev = dev;
++		if (ro->dev)
++			netdev_hold(ro->dev, &ro->dev_tracker, GFP_KERNEL);
+ 	}
+ 
+- out:
++out_put_dev:
++	/* remove potential reference from dev_get_by_index() */
++	if (dev)
++		dev_put(dev);
++out:
+ 	release_sock(sk);
+ 	rtnl_unlock();
+ 
 
 
