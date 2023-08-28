@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EE911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0B1C433C9;
-	Mon, 28 Aug 2023 10:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB4E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB99C433C8;
+	Mon, 28 Aug 2023 10:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217833;
-	bh=ujLExOIIbhAws6yZlcipBu4aAVRnI8x3H6NxpZbPeuY=;
+	s=korg; t=1693217836;
+	bh=EU4Yxsczc7dHLGQKDTirQebEqfH1RQugIv+GJctzvu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uODE7Gd+VVvq1D6Le/PB1XuR1vsnlJp9AyrOAwXK2riFgykiKEgp8TsG31X+b5FxP
-	 /6n8eB8u3ItOOesNoo4dL1+XKOMVkTgVV4eTNhiQ86P5jqKZTsfToHflYGCUV/n5x9
-	 DvYMglg9vjtPz2dTbsfsfnnuqT+1CaljxWRCcMJw=
+	b=yVM7Mb6xR3MYPBZG36vWi0uElvS8rOG+9ViNao/qh+VMaOg8gjAslJjlTjGmrajPw
+	 vIY9keYSO5fhj/IYYdfjUzpAZSiC/0FSNKTYp5YNvjsNPCQtKY4rUIq1936CzSktDS
+	 tLYaydP+814QJmIlqcp1rkJLhWGFrmFzV//dP9IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 57/57] dma-buf/sw_sync: Avoid recursive lock during fence signal
-Date: Mon, 28 Aug 2023 12:13:17 +0200
-Message-ID: <20230828101146.410338460@linuxfoundation.org>
+Subject: [PATCH 4.14 42/57] sock: annotate data-races around prot->memory_pressure
+Date: Mon, 28 Aug 2023 12:13:02 +0200
+Message-ID: <20230828101145.815775798@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -35,83 +36,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
+[ Upstream commit 76f33296d2e09f63118db78125c95ef56df438e9 ]
 
-If a signal callback releases the sw_sync fence, that will trigger a
-deadlock as the timeline_fence_release recurses onto the fence->lock
-(used both for signaling and the the timeline tree).
+*prot->memory_pressure is read/writen locklessly, we need
+to add proper annotations.
 
-To avoid that, temporarily hold an extra reference to the signalled
-fences until after we drop the lock.
+A recent commit added a new race, it is time to audit all accesses.
 
-(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
-which avoids some potential UAF issues with the original patch.)
-
-v2: Remove now obsolete comment, use list_move_tail() and
-    list_del_init()
-
-Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 2d0c88e84e48 ("sock: Fix misuse of sk_under_memory_pressure()")
+Fixes: 4d93df0abd50 ("[SCTP]: Rewrite of sctp buffer management code")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Abel Wu <wuyun.abel@bytedance.com>
+Reviewed-by: Shakeel Butt <shakeelb@google.com>
+Link: https://lore.kernel.org/r/20230818015132.2699348-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sw_sync.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ include/net/sock.h | 7 ++++---
+ net/sctp/socket.c  | 2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index 114b36674af42..29a4e2bb61f03 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -201,6 +201,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
-  */
- static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 1937deba0849b..7b42ddca4decb 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1115,6 +1115,7 @@ struct proto {
+ 	/*
+ 	 * Pressure flag: try to collapse.
+ 	 * Technical note: it is used by multiple contexts non atomically.
++	 * Make sure to use READ_ONCE()/WRITE_ONCE() for all reads/writes.
+ 	 * All the __sk_mem_schedule() is of this nature: accounting
+ 	 * is strict, actions are advisory and have some latency.
+ 	 */
+@@ -1214,7 +1215,7 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
+ static inline bool sk_under_global_memory_pressure(const struct sock *sk)
  {
-+	LIST_HEAD(signalled);
- 	struct sync_pt *pt, *next;
- 
- 	trace_sync_timeline(obj);
-@@ -213,21 +214,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- 		if (!timeline_fence_signaled(&pt->base))
- 			break;
- 
--		list_del_init(&pt->link);
-+		dma_fence_get(&pt->base);
-+
-+		list_move_tail(&pt->link, &signalled);
- 		rb_erase(&pt->node, &obj->pt_tree);
- 
--		/*
--		 * A signal callback may release the last reference to this
--		 * fence, causing it to be freed. That operation has to be
--		 * last to avoid a use after free inside this loop, and must
--		 * be after we remove the fence from the timeline in order to
--		 * prevent deadlocking on timeline->lock inside
--		 * timeline_fence_release().
--		 */
- 		dma_fence_signal_locked(&pt->base);
- 	}
- 
- 	spin_unlock_irq(&obj->lock);
-+
-+	list_for_each_entry_safe(pt, next, &signalled, link) {
-+		list_del_init(&pt->link);
-+		dma_fence_put(&pt->base);
-+	}
+ 	return sk->sk_prot->memory_pressure &&
+-		!!*sk->sk_prot->memory_pressure;
++		!!READ_ONCE(*sk->sk_prot->memory_pressure);
  }
  
- /**
+ static inline bool sk_under_memory_pressure(const struct sock *sk)
+@@ -1226,7 +1227,7 @@ static inline bool sk_under_memory_pressure(const struct sock *sk)
+ 	    mem_cgroup_under_socket_pressure(sk->sk_memcg))
+ 		return true;
+ 
+-	return !!*sk->sk_prot->memory_pressure;
++	return !!READ_ONCE(*sk->sk_prot->memory_pressure);
+ }
+ 
+ static inline long
+@@ -1280,7 +1281,7 @@ proto_memory_pressure(struct proto *prot)
+ {
+ 	if (!prot->memory_pressure)
+ 		return false;
+-	return !!*prot->memory_pressure;
++	return !!READ_ONCE(*prot->memory_pressure);
+ }
+ 
+ 
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 9414dcb376d26..e5c3c37108e4e 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -110,7 +110,7 @@ struct percpu_counter sctp_sockets_allocated;
+ 
+ static void sctp_enter_memory_pressure(struct sock *sk)
+ {
+-	sctp_memory_pressure = 1;
++	WRITE_ONCE(sctp_memory_pressure, 1);
+ }
+ 
+ 
 -- 
 2.40.1
 
