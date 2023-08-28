@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51D711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F7AC433C8;
-	Mon, 28 Aug 2023 10:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8597A11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18E6C433C7;
+	Mon, 28 Aug 2023 10:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218335;
-	bh=fk6u7AqTKXX+G3HG0ibI59Pm67rMhTmVpPJAMRVX76E=;
+	s=korg; t=1693218338;
+	bh=tqFUd5ZV14fE3qhQDs0TfSH7UEpOhfvk6tBe8tcvCBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vS6aj4Vnz0fs6fKszPWJ3sx5QysgJG9Ix244Jqaw9zs6T59dUcwXBkIhlPQ7LppE6
-	 8Yyyw6ppzy2muRQj5QXQJ3XY82n9WAVj/HolFcgGSxLKxwVL8k7ldn88SgCYKXkYJK
-	 kxPpygBBeXmSfRZGfi/D2us6svrndUb47flh/6Tg=
+	b=YDRGVoNqsRySaHUSnlc+Llvj+kLYtE+dUicsP/MWzXDxxKXKmL+pu4EwJfExMZFyI
+	 MdEQEVy2/ut2UkIJHt0bmK9ZxruKawhZoF0Xe6VF/Nje9b7gOwrUL+1dPdfkEv+foH
+	 +1vovSxY5G9NXOuQ6ROeWKHZgxvsOiRflllTgsCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 4.19 050/129] powerpc/rtas_flash: allow user copy to flash block cache objects
-Date: Mon, 28 Aug 2023 12:12:24 +0200
-Message-ID: <20230828101155.089509724@linuxfoundation.org>
+	xiaoshoukui <xiaoshoukui@ruijie.com.cn>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.19 051/129] btrfs: fix BUG_ON condition in btrfs_cancel_balance
+Date: Mon, 28 Aug 2023 12:12:25 +0200
+Message-ID: <20230828101155.134462293@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,68 +39,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: xiaoshoukui <xiaoshoukui@gmail.com>
 
-commit 4f3175979e62de3b929bfa54a0db4b87d36257a7 upstream.
+commit 29eefa6d0d07e185f7bfe9576f91e6dba98189c2 upstream.
 
-With hardened usercopy enabled (CONFIG_HARDENED_USERCOPY=y), using the
-/proc/powerpc/rtas/firmware_update interface to prepare a system
-firmware update yields a BUG():
+Pausing and canceling balance can race to interrupt balance lead to BUG_ON
+panic in btrfs_cancel_balance. The BUG_ON condition in btrfs_cancel_balance
+does not take this race scenario into account.
 
-  kernel BUG at mm/usercopy.c:102!
-  Oops: Exception in kernel mode, sig: 5 [#1]
-  LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  CPU: 0 PID: 2232 Comm: dd Not tainted 6.5.0-rc3+ #2
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
-  NIP:  c0000000005991d0 LR: c0000000005991cc CTR: 0000000000000000
-  REGS: c0000000148c76a0 TRAP: 0700   Not tainted  (6.5.0-rc3+)
-  MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002242  XER: 0000000c
-  CFAR: c0000000001fbd34 IRQMASK: 0
-  [ ... GPRs omitted ... ]
-  NIP usercopy_abort+0xa0/0xb0
-  LR  usercopy_abort+0x9c/0xb0
+However, the race condition has no other side effects. We can fix that.
+
+Reproducing it with panic trace like this:
+
+  kernel BUG at fs/btrfs/volumes.c:4618!
+  RIP: 0010:btrfs_cancel_balance+0x5cf/0x6a0
   Call Trace:
-    usercopy_abort+0x9c/0xb0 (unreliable)
-    __check_heap_object+0x1b4/0x1d0
-    __check_object_size+0x2d0/0x380
-    rtas_flash_write+0xe4/0x250
-    proc_reg_write+0xfc/0x160
-    vfs_write+0xfc/0x4e0
-    ksys_write+0x90/0x160
-    system_call_exception+0x178/0x320
-    system_call_common+0x160/0x2c4
+   <TASK>
+   ? do_nanosleep+0x60/0x120
+   ? hrtimer_nanosleep+0xb7/0x1a0
+   ? sched_core_clone_cookie+0x70/0x70
+   btrfs_ioctl_balance_ctl+0x55/0x70
+   btrfs_ioctl+0xa46/0xd20
+   __x64_sys_ioctl+0x7d/0xa0
+   do_syscall_64+0x38/0x80
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-The blocks of the firmware image are copied directly from user memory
-to objects allocated from flash_block_cache, so flash_block_cache must
-be created using kmem_cache_create_usercopy() to mark it safe for user
-access.
+  Race scenario as follows:
+  > mutex_unlock(&fs_info->balance_mutex);
+  > --------------------
+  > .......issue pause and cancel req in another thread
+  > --------------------
+  > ret = __btrfs_balance(fs_info);
+  >
+  > mutex_lock(&fs_info->balance_mutex);
+  > if (ret == -ECANCELED && atomic_read(&fs_info->balance_pause_req)) {
+  >         btrfs_info(fs_info, "balance: paused");
+  >         btrfs_exclop_balance(fs_info, BTRFS_EXCLOP_BALANCE_PAUSED);
+  > }
 
-Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-[mpe: Trim and indent oops]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230810-rtas-flash-vs-hardened-usercopy-v2-1-dcf63793a938@linux.ibm.com
+CC: stable@vger.kernel.org # 4.19+
+Signed-off-by: xiaoshoukui <xiaoshoukui@ruijie.com.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/rtas_flash.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/volumes.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/rtas_flash.c
-+++ b/arch/powerpc/kernel/rtas_flash.c
-@@ -714,9 +714,9 @@ static int __init rtas_flash_init(void)
- 	if (!rtas_validate_flash_data.buf)
- 		return -ENOMEM;
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -4106,8 +4106,7 @@ int btrfs_cancel_balance(struct btrfs_fs
+ 		}
+ 	}
  
--	flash_block_cache = kmem_cache_create("rtas_flash_cache",
--					      RTAS_BLK_SIZE, RTAS_BLK_SIZE, 0,
--					      NULL);
-+	flash_block_cache = kmem_cache_create_usercopy("rtas_flash_cache",
-+						       RTAS_BLK_SIZE, RTAS_BLK_SIZE,
-+						       0, 0, RTAS_BLK_SIZE, NULL);
- 	if (!flash_block_cache) {
- 		printk(KERN_ERR "%s: failed to create block cache\n",
- 				__func__);
+-	BUG_ON(fs_info->balance_ctl ||
+-		test_bit(BTRFS_FS_BALANCE_RUNNING, &fs_info->flags));
++	ASSERT(!test_bit(BTRFS_FS_BALANCE_RUNNING, &fs_info->flags));
+ 	atomic_dec(&fs_info->balance_cancel_req);
+ 	mutex_unlock(&fs_info->balance_mutex);
+ 	return 0;
 
 
