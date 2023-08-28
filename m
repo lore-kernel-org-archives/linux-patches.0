@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D8611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225EDC433C9;
-	Mon, 28 Aug 2023 10:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCB511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58E4C433C7;
+	Mon, 28 Aug 2023 10:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218981;
-	bh=lEFMJ5c70/JyhSLffvLSmsbWV21R8iigdNNZ6D7jSpY=;
+	s=korg; t=1693218984;
+	bh=RHP+BzWfp2Zmsii+WvabpKmNLcY7dxcyMS/8gacqFoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/ZoqajXK9Q6uF/mE+nOOnAqzrphqJgTywqAullfW1wKFgME0mQH/d2bhc3jKT3+p
-	 1fy8R8m/Jxy7IhuXX6C8WyLt37r6clyUuPkrnVs9m79dPX9fGfpN8IoN5BACMpvbwM
-	 Nrg7fGC1ZXgxXjt1BmeuCp2kGkR86W8fxblwFGxM=
+	b=DTN4kwU/83vTfba8YJC+46b8t2EcnkAuleshXXDV/9pa/s7DH9vPo6FuC7RbzmDk0
+	 nIP/P6jeDsxn4N2EBdgz++3HkmQ3velQVK9txgGkAh995JZRSmNqPRSs+fhTPQ9KtW
+	 +phmRsVorxVjoyJ+chSXirCE99jt9LI9scqOA9kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fred Eckert <Frede@cmslaser.com>,
-	William Breathitt Gray <william.gray@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Clayton Yager <Clayton_Yager@selinc.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/158] iio: adc: stx104: Implement and utilize register structures
-Date: Mon, 28 Aug 2023 12:12:07 +0200
-Message-ID: <20230828101158.356304018@linuxfoundation.org>
+Subject: [PATCH 5.4 004/158] macsec: Fix traffic counters/statistics
+Date: Mon, 28 Aug 2023 12:11:41 +0200
+Message-ID: <20230828101157.463748457@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -41,211 +40,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Clayton Yager <Clayton_Yager@selinc.com>
 
-[ Upstream commit 6cfd14c54b1f42f29097244c1b6208f8268d7d5b ]
+[ Upstream commit 91ec9bd57f3524ff3d86bfb7c9ee5a315019733c ]
 
-Reduce magic numbers and improve code readability by implementing and
-utilizing named register data structures.
+OutOctetsProtected, OutOctetsEncrypted, InOctetsValidated, and
+InOctetsDecrypted were incrementing by the total number of octets in frames
+instead of by the number of octets of User Data in frames.
 
-Tested-by: Fred Eckert <Frede@cmslaser.com>
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
-Link: https://lore.kernel.org/r/8cb91d5b53e57b066120e42ea07000d6c7ef5543.1657213745.git.william.gray@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
+The Controlled Port statistics ifOutOctets and ifInOctets were incrementing
+by the total number of octets instead of the number of octets of the MSDUs
+plus octets of the destination and source MAC addresses.
+
+The Controlled Port statistics ifInDiscards and ifInErrors were not
+incrementing each time the counters they aggregate were.
+
+The Controlled Port statistic ifInErrors was not included in the output of
+macsec_get_stats64 so the value was not present in ip commands output.
+
+The ReceiveSA counters InPktsNotValid, InPktsNotUsingSA, and InPktsUnusedSA
+were not incrementing.
+
+Signed-off-by: Clayton Yager <Clayton_Yager@selinc.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 32d0a49d36a2 ("macsec: use DEV_STATS_INC()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stx104.c | 74 +++++++++++++++++++++++++++-------------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ drivers/net/macsec.c | 58 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 49 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/adc/stx104.c
-index 112362f7d3943..6712da1b818c9 100644
---- a/drivers/iio/adc/stx104.c
-+++ b/drivers/iio/adc/stx104.c
-@@ -16,6 +16,7 @@
- #include <linux/module.h>
- #include <linux/moduleparam.h>
- #include <linux/spinlock.h>
-+#include <linux/types.h>
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index f729f55f6a174..dcabff57efa73 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -317,6 +317,19 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
+ 	return sa;
+ }
  
- #define STX104_OUT_CHAN(chan) {				\
- 	.type = IIO_VOLTAGE,				\
-@@ -44,14 +45,36 @@ static unsigned int num_stx104;
- module_param_hw_array(base, uint, ioport, &num_stx104, 0);
- MODULE_PARM_DESC(base, "Apex Embedded Systems STX104 base addresses");
- 
-+/**
-+ * struct stx104_reg - device register structure
-+ * @ssr_ad:	Software Strobe Register and ADC Data
-+ * @achan:	ADC Channel
-+ * @dio:	Digital I/O
-+ * @dac:	DAC Channels
-+ * @cir_asr:	Clear Interrupts and ADC Status
-+ * @acr:	ADC Control
-+ * @pccr_fsh:	Pacer Clock Control and FIFO Status MSB
-+ * @acfg:	ADC Configuration
-+ */
-+struct stx104_reg {
-+	u16 ssr_ad;
-+	u8 achan;
-+	u8 dio;
-+	u16 dac[2];
-+	u8 cir_asr;
-+	u8 acr;
-+	u8 pccr_fsh;
-+	u8 acfg;
-+};
++static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
++{
++	struct macsec_rx_sa *sa = NULL;
++	int an;
 +
- /**
-  * struct stx104_iio - IIO device private data structure
-  * @chan_out_states:	channels' output states
-- * @base:		base port address of the IIO device
-+ * @reg:		I/O address offset for the device registers
-  */
- struct stx104_iio {
- 	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
--	void __iomem *base;
-+	struct stx104_reg __iomem *reg;
- };
- 
- /**
-@@ -64,7 +87,7 @@ struct stx104_iio {
- struct stx104_gpio {
- 	struct gpio_chip chip;
- 	spinlock_t lock;
--	void __iomem *base;
-+	u8 __iomem *base;
- 	unsigned int out_state;
- };
- 
-@@ -72,6 +95,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	struct iio_chan_spec const *chan, int *val, int *val2, long mask)
++	for (an = 0; an < MACSEC_NUM_AN; an++)	{
++		sa = macsec_rxsa_get(rx_sc->sa[an]);
++		if (sa)
++			break;
++	}
++	return sa;
++}
++
+ static void free_rx_sc_rcu(struct rcu_head *head)
  {
- 	struct stx104_iio *const priv = iio_priv(indio_dev);
-+	struct stx104_reg __iomem *const reg = priv->reg;
- 	unsigned int adc_config;
- 	int adbu;
- 	int gain;
-@@ -79,7 +103,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 	switch (mask) {
- 	case IIO_CHAN_INFO_HARDWAREGAIN:
- 		/* get gain configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		gain = adc_config & 0x3;
+ 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
+@@ -561,18 +574,28 @@ static void macsec_encrypt_finish(struct sk_buff *skb, struct net_device *dev)
+ 	skb->protocol = eth_hdr(skb)->h_proto;
+ }
  
- 		*val = 1 << gain;
-@@ -91,24 +115,26 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
- 		}
++static unsigned int macsec_msdu_len(struct sk_buff *skb)
++{
++	struct macsec_dev *macsec = macsec_priv(skb->dev);
++	struct macsec_secy *secy = &macsec->secy;
++	bool sci_present = macsec_skb_cb(skb)->has_sci;
++
++	return skb->len - macsec_hdr_len(sci_present) - secy->icv_len;
++}
++
+ static void macsec_count_tx(struct sk_buff *skb, struct macsec_tx_sc *tx_sc,
+ 			    struct macsec_tx_sa *tx_sa)
+ {
++	unsigned int msdu_len = macsec_msdu_len(skb);
+ 	struct pcpu_tx_sc_stats *txsc_stats = this_cpu_ptr(tx_sc->stats);
  
- 		/* select ADC channel */
--		iowrite8(chan->channel | (chan->channel << 4), priv->base + 2);
-+		iowrite8(chan->channel | (chan->channel << 4), &reg->achan);
+ 	u64_stats_update_begin(&txsc_stats->syncp);
+ 	if (tx_sc->encrypt) {
+-		txsc_stats->stats.OutOctetsEncrypted += skb->len;
++		txsc_stats->stats.OutOctetsEncrypted += msdu_len;
+ 		txsc_stats->stats.OutPktsEncrypted++;
+ 		this_cpu_inc(tx_sa->stats->OutPktsEncrypted);
+ 	} else {
+-		txsc_stats->stats.OutOctetsProtected += skb->len;
++		txsc_stats->stats.OutOctetsProtected += msdu_len;
+ 		txsc_stats->stats.OutPktsProtected++;
+ 		this_cpu_inc(tx_sa->stats->OutPktsProtected);
+ 	}
+@@ -602,9 +625,10 @@ static void macsec_encrypt_done(struct crypto_async_request *base, int err)
+ 	aead_request_free(macsec_skb_cb(skb)->req);
  
--		/* trigger ADC sample capture and wait for completion */
--		iowrite8(0, priv->base);
--		while (ioread8(priv->base + 8) & BIT(7));
-+		/* trigger ADC sample capture by writing to the 8-bit
-+		 * Software Strobe Register and wait for completion
-+		 */
-+		iowrite8(0, &reg->ssr_ad);
-+		while (ioread8(&reg->cir_asr) & BIT(7));
+ 	rcu_read_lock_bh();
+-	macsec_encrypt_finish(skb, dev);
+ 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
+-	len = skb->len;
++	/* packet is encrypted/protected so tx_bytes must be calculated */
++	len = macsec_msdu_len(skb) + 2 * ETH_ALEN;
++	macsec_encrypt_finish(skb, dev);
+ 	ret = dev_queue_xmit(skb);
+ 	count_tx(dev, ret, len);
+ 	rcu_read_unlock_bh();
+@@ -760,6 +784,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
  
--		*val = ioread16(priv->base);
-+		*val = ioread16(&reg->ssr_ad);
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_OFFSET:
- 		/* get ADC bipolar/unipolar configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		adbu = !(adc_config & BIT(2));
+ 	macsec_skb_cb(skb)->req = req;
+ 	macsec_skb_cb(skb)->tx_sa = tx_sa;
++	macsec_skb_cb(skb)->has_sci = sci_present;
+ 	aead_request_set_callback(req, 0, macsec_encrypt_done, skb);
  
- 		*val = -32768 * adbu;
- 		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
- 		/* get ADC bipolar/unipolar and gain configuration */
--		adc_config = ioread8(priv->base + 11);
-+		adc_config = ioread8(&reg->acfg);
- 		adbu = !(adc_config & BIT(2));
- 		gain = adc_config & 0x3;
- 
-@@ -130,16 +156,16 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 		/* Only four gain states (x1, x2, x4, x8) */
- 		switch (val) {
- 		case 1:
--			iowrite8(0, priv->base + 11);
-+			iowrite8(0, &priv->reg->acfg);
- 			break;
- 		case 2:
--			iowrite8(1, priv->base + 11);
-+			iowrite8(1, &priv->reg->acfg);
- 			break;
- 		case 4:
--			iowrite8(2, priv->base + 11);
-+			iowrite8(2, &priv->reg->acfg);
- 			break;
- 		case 8:
--			iowrite8(3, priv->base + 11);
-+			iowrite8(3, &priv->reg->acfg);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -153,7 +179,7 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
- 				return -EINVAL;
- 
- 			priv->chan_out_states[chan->channel] = val;
--			iowrite16(val, priv->base + 4 + 2 * chan->channel);
-+			iowrite16(val, &priv->reg->dac[chan->channel]);
- 
- 			return 0;
- 		}
-@@ -307,15 +333,15 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 	dev_hold(skb->dev);
+@@ -800,15 +825,17 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsLate++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
++		secy->netdev->stats.rx_dropped++;
+ 		return false;
  	}
  
- 	priv = iio_priv(indio_dev);
--	priv->base = devm_ioport_map(dev, base[id], STX104_EXTENT);
--	if (!priv->base)
-+	priv->reg = devm_ioport_map(dev, base[id], STX104_EXTENT);
-+	if (!priv->reg)
- 		return -ENOMEM;
+ 	if (secy->validate_frames != MACSEC_VALIDATE_DISABLED) {
++		unsigned int msdu_len = macsec_msdu_len(skb);
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		if (hdr->tci_an & MACSEC_TCI_E)
+-			rxsc_stats->stats.InOctetsDecrypted += skb->len;
++			rxsc_stats->stats.InOctetsDecrypted += msdu_len;
+ 		else
+-			rxsc_stats->stats.InOctetsValidated += skb->len;
++			rxsc_stats->stats.InOctetsValidated += msdu_len;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+ 	}
  
- 	indio_dev->info = &stx104_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
+@@ -821,6 +848,8 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotValid++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			this_cpu_inc(rx_sa->stats->InPktsNotValid);
++			secy->netdev->stats.rx_errors++;
+ 			return false;
+ 		}
  
- 	/* determine if differential inputs */
--	if (ioread8(priv->base + 8) & BIT(5)) {
-+	if (ioread8(&priv->reg->cir_asr) & BIT(5)) {
- 		indio_dev->num_channels = ARRAY_SIZE(stx104_channels_diff);
- 		indio_dev->channels = stx104_channels_diff;
- 	} else {
-@@ -327,14 +353,14 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	indio_dev->dev.parent = dev;
+@@ -906,9 +935,9 @@ static void macsec_decrypt_done(struct crypto_async_request *base, int err)
  
- 	/* configure device for software trigger operation */
--	iowrite8(0, priv->base + 9);
-+	iowrite8(0, &priv->reg->acr);
+ 	macsec_finalize_skb(skb, macsec->secy.icv_len,
+ 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
++	len = skb->len;
+ 	macsec_reset_skb(skb, macsec->secy.netdev);
  
- 	/* initialize gain setting to x1 */
--	iowrite8(0, priv->base + 11);
-+	iowrite8(0, &priv->reg->acfg);
+-	len = skb->len;
+ 	if (gro_cells_receive(&macsec->gro_cells, skb) == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
  
- 	/* initialize DAC output to 0V */
--	iowrite16(0, priv->base + 4);
--	iowrite16(0, priv->base + 6);
-+	iowrite16(0, &priv->reg->dac[0]);
-+	iowrite16(0, &priv->reg->dac[1]);
+@@ -1050,6 +1079,7 @@ static void handle_not_macsec(struct sk_buff *skb)
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoTag++;
+ 			u64_stats_update_end(&secy_stats->syncp);
++			macsec->secy.netdev->stats.rx_dropped++;
+ 			continue;
+ 		}
  
- 	stx104gpio->chip.label = dev_name(dev);
- 	stx104gpio->chip.parent = dev;
-@@ -349,7 +375,7 @@ static int stx104_probe(struct device *dev, unsigned int id)
- 	stx104gpio->chip.get_multiple = stx104_gpio_get_multiple;
- 	stx104gpio->chip.set = stx104_gpio_set;
- 	stx104gpio->chip.set_multiple = stx104_gpio_set_multiple;
--	stx104gpio->base = priv->base + 3;
-+	stx104gpio->base = &priv->reg->dio;
- 	stx104gpio->out_state = 0x0;
+@@ -1161,6 +1191,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&secy_stats->syncp);
+ 		secy_stats->stats.InPktsBadTag++;
+ 		u64_stats_update_end(&secy_stats->syncp);
++		secy->netdev->stats.rx_errors++;
+ 		goto drop_nosa;
+ 	}
  
- 	spin_lock_init(&stx104gpio->lock);
+@@ -1171,11 +1202,15 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		/* If validateFrames is Strict or the C bit in the
+ 		 * SecTAG is set, discard
+ 		 */
++		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
+ 		if (hdr->tci_an & MACSEC_TCI_C ||
+ 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			secy->netdev->stats.rx_errors++;
++			if (active_rx_sa)
++				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+ 		}
+ 
+@@ -1185,6 +1220,8 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsUnusedSA++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
++		if (active_rx_sa)
++			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
+ 		goto deliver;
+ 	}
+ 
+@@ -1202,6 +1239,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsLate++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
++			macsec->secy.netdev->stats.rx_dropped++;
+ 			goto drop;
+ 		}
+ 	}
+@@ -1230,6 +1268,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ deliver:
+ 	macsec_finalize_skb(skb, secy->icv_len,
+ 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
++	len = skb->len;
+ 	macsec_reset_skb(skb, secy->netdev);
+ 
+ 	if (rx_sa)
+@@ -1237,7 +1276,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	macsec_rxsc_put(rx_sc);
+ 
+ 	skb_orphan(skb);
+-	len = skb->len;
+ 	ret = gro_cells_receive(&macsec->gro_cells, skb);
+ 	if (ret == NET_RX_SUCCESS)
+ 		count_rx(dev, len);
+@@ -1279,6 +1317,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 			u64_stats_update_begin(&secy_stats->syncp);
+ 			secy_stats->stats.InPktsNoSCI++;
+ 			u64_stats_update_end(&secy_stats->syncp);
++			macsec->secy.netdev->stats.rx_errors++;
+ 			continue;
+ 		}
+ 
+@@ -2735,6 +2774,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 		return NETDEV_TX_OK;
+ 	}
+ 
++	len = skb->len;
+ 	skb = macsec_encrypt(skb, dev);
+ 	if (IS_ERR(skb)) {
+ 		if (PTR_ERR(skb) != -EINPROGRESS)
+@@ -2745,7 +2785,6 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
+ 
+ 	macsec_encrypt_finish(skb, dev);
+-	len = skb->len;
+ 	ret = dev_queue_xmit(skb);
+ 	count_tx(dev, ret, len);
+ 	return ret;
+@@ -2959,6 +2998,7 @@ static void macsec_get_stats64(struct net_device *dev,
+ 
+ 	s->rx_dropped = dev->stats.rx_dropped;
+ 	s->tx_dropped = dev->stats.tx_dropped;
++	s->rx_errors = dev->stats.rx_errors;
+ }
+ 
+ static int macsec_get_iflink(const struct net_device *dev)
 -- 
 2.40.1
 
