@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45E011C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370B5C433C7;
-	Mon, 28 Aug 2023 10:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8636111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0233EC433C8;
+	Mon, 28 Aug 2023 10:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218032;
-	bh=MdUPY3DjX0aC/BFLk+NWZ8lY9rq7g9KK3zGXHxIWzdw=;
+	s=korg; t=1693218035;
+	bh=RU8ST0BJ5dO2vciq63rbULuf2wEXcvwgzwBta/fQBwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDREr0vThc+fDakZUkEeS2NsJbnsY7qbp50opiHN3eROQJc0U2GigIsQCghKt+ytp
-	 34Pqsok0uBvura/TE0h386LIOsnPZ4xceOuurUTWrvqJsHKIRk54yzdPrei8n1sjt9
-	 awuleTAUpSalQVV9xENw2Y8PDZbKsmdNy3i9kxv4=
+	b=grUt83cCmruZwjPeb7Wv4fImlXUjc+xrb4HOllhk+Owopi+fFHcBF+bkEB0CQanb7
+	 4eEpWtBBK72gdOJ/VdxDMFa5jtc6oHYMn0GShVAOKw8+Pv7VwZhAjMQYR62kmSQLRn
+	 eT7dqdUbFx3/UIJ12Sh0bXYT3TvnPSNoK5av0gQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Andrii Staikov <andrii.staikov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 041/129] net/sched: fix a qdisc modification with ambiguous command request
-Date: Mon, 28 Aug 2023 12:12:00 +0200
-Message-ID: <20230828101158.736876687@linuxfoundation.org>
+Subject: [PATCH 6.4 042/129] i40e: fix potential NULL pointer dereferencing of pf->vf i40e_sync_vsi_filters()
+Date: Mon, 28 Aug 2023 12:12:01 +0200
+Message-ID: <20230828101158.771329322@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -44,136 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-[ Upstream commit da71714e359b64bd7aab3bd56ec53f307f058133 ]
+[ Upstream commit 9525a3c38accd2e186f52443e35e633e296cc7f5 ]
 
-When replacing an existing root qdisc, with one that is of the same kind, the
-request boils down to essentially a parameterization change  i.e not one that
-requires allocation and grafting of a new qdisc. syzbot was able to create a
-scenario which resulted in a taprio qdisc replacing an existing taprio qdisc
-with a combination of NLM_F_CREATE, NLM_F_REPLACE and NLM_F_EXCL leading to
-create and graft scenario.
-The fix ensures that only when the qdisc kinds are different that we should
-allow a create and graft, otherwise it goes into the "change" codepath.
+Add check for pf->vf not being NULL before dereferencing
+pf->vf[vsi->vf_id] in updating VSI filter sync.
+Add a similar check before dereferencing !pf->vf[vsi->vf_id].trusted
+in the condition for clearing promisc mode bit.
 
-While at it, fix the code and comments to improve readability.
-
-While syzbot was able to create the issue, it did not zone on the root cause.
-Analysis from Vladimir Oltean <vladimir.oltean@nxp.com> helped narrow it down.
-
-v1->V2 changes:
-- remove "inline" function definition (Vladmir)
-- remove extrenous braces in branches (Vladmir)
-- change inline function names (Pedro)
-- Run tdc tests (Victor)
-v2->v3 changes:
-- dont break else/if (Simon)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/20230816225759.g25x76kmgzya2gei@skbuf/T/
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes: c87c938f62d8 ("i40e: Add VF VLAN pruning")
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 53 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index aa6b1fe651519..e9eaf637220e9 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1547,10 +1547,28 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 	return 0;
- }
- 
-+static bool req_create_or_replace(struct nlmsghdr *n)
-+{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_REPLACE);
-+}
-+
-+static bool req_create_exclusive(struct nlmsghdr *n)
-+{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_EXCL);
-+}
-+
-+static bool req_change(struct nlmsghdr *n)
-+{
-+	return (!(n->nlmsg_flags & NLM_F_CREATE) &&
-+		!(n->nlmsg_flags & NLM_F_REPLACE) &&
-+		!(n->nlmsg_flags & NLM_F_EXCL));
-+}
-+
- /*
-  * Create/change qdisc.
-  */
--
- static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 			   struct netlink_ext_ack *extack)
- {
-@@ -1644,27 +1662,35 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				 *
- 				 *   We know, that some child q is already
- 				 *   attached to this parent and have choice:
--				 *   either to change it or to create/graft new one.
-+				 *   1) change it or 2) create/graft new one.
-+				 *   If the requested qdisc kind is different
-+				 *   than the existing one, then we choose graft.
-+				 *   If they are the same then this is "change"
-+				 *   operation - just let it fallthrough..
- 				 *
- 				 *   1. We are allowed to create/graft only
--				 *   if CREATE and REPLACE flags are set.
-+				 *   if the request is explicitly stating
-+				 *   "please create if it doesn't exist".
- 				 *
--				 *   2. If EXCL is set, requestor wanted to say,
--				 *   that qdisc tcm_handle is not expected
-+				 *   2. If the request is to exclusive create
-+				 *   then the qdisc tcm_handle is not expected
- 				 *   to exist, so that we choose create/graft too.
- 				 *
- 				 *   3. The last case is when no flags are set.
-+				 *   This will happen when for example tc
-+				 *   utility issues a "change" command.
- 				 *   Alas, it is sort of hole in API, we
- 				 *   cannot decide what to do unambiguously.
--				 *   For now we select create/graft, if
--				 *   user gave KIND, which does not match existing.
-+				 *   For now we select create/graft.
- 				 */
--				if ((n->nlmsg_flags & NLM_F_CREATE) &&
--				    (n->nlmsg_flags & NLM_F_REPLACE) &&
--				    ((n->nlmsg_flags & NLM_F_EXCL) ||
--				     (tca[TCA_KIND] &&
--				      nla_strcmp(tca[TCA_KIND], q->ops->id))))
--					goto create_n_graft;
-+				if (tca[TCA_KIND] &&
-+				    nla_strcmp(tca[TCA_KIND], q->ops->id)) {
-+					if (req_create_or_replace(n) ||
-+					    req_create_exclusive(n))
-+						goto create_n_graft;
-+					else if (req_change(n))
-+						goto create_n_graft2;
-+				}
- 			}
- 		}
- 	} else {
-@@ -1698,6 +1724,7 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 		NL_SET_ERR_MSG(extack, "Qdisc not found. To create specify NLM_F_CREATE flag");
- 		return -ENOENT;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index b847bd105b16e..5d21cb4ef6301 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -2615,7 +2615,7 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
+ 			retval = i40e_correct_mac_vlan_filters
+ 				(vsi, &tmp_add_list, &tmp_del_list,
+ 				 vlan_filters);
+-		else
++		else if (pf->vf)
+ 			retval = i40e_correct_vf_mac_vlan_filters
+ 				(vsi, &tmp_add_list, &tmp_del_list,
+ 				 vlan_filters, pf->vf[vsi->vf_id].trusted);
+@@ -2788,7 +2788,8 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
  	}
-+create_n_graft2:
- 	if (clid == TC_H_INGRESS) {
- 		if (dev_ingress_queue(dev)) {
- 			q = qdisc_create(dev, dev_ingress_queue(dev),
+ 
+ 	/* if the VF is not trusted do not do promisc */
+-	if ((vsi->type == I40E_VSI_SRIOV) && !pf->vf[vsi->vf_id].trusted) {
++	if (vsi->type == I40E_VSI_SRIOV && pf->vf &&
++	    !pf->vf[vsi->vf_id].trusted) {
+ 		clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 		goto out;
+ 	}
 -- 
 2.40.1
 
