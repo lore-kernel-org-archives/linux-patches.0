@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86566FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A83C433C8;
-	Mon, 28 Aug 2023 10:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B156FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2529BC433C9;
+	Mon, 28 Aug 2023 10:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219804;
-	bh=o1yY+5ByqqjhnZT4OfGlhZ96sHhyA73Y4FUdrVkE9Io=;
+	s=korg; t=1693219807;
+	bh=9XMAmSwksTgUpeSTYZ0R0ntinrxg0G3QrkflwwgiIX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3dO3PSXN1q8guJyDBCWmXbZC0nFRWfhnHmjSVicJWxnjLVc/sFciUpp+9ZN635ib
-	 IuwtGD3rZgH6bdj2c1bOQaj1cjkMcqunUDDDxg7kri9E5+XdFiJM0yP1oC1qOHiqz7
-	 Vbg0fhqSrpU8MhusjrOmRq8nfXZeMyITB/xoTwgU=
+	b=mBzporTktaUNlZINJTOJji+U6nO51gn/zgw0Dp/SbnrFBjS4Ui2AKLj5a9SPCbNdV
+	 QIxX++phhL1PESKIh9yTr+OWlIXy4DYst7zgWBmra1jSC7aLKsUehXkHxfVuP8C1+v
+	 TtHjzTG5slknD08cmQFC0U96qQPI4nRWi93aOcRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Vlastimil Babka <Vbabka@suse.cz>,
+	Qian Cai <qcai@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 78/84] dma-buf/sw_sync: Avoid recursive lock during fence signal
-Date: Mon, 28 Aug 2023 12:14:35 +0200
-Message-ID: <20230828101151.930392870@linuxfoundation.org>
+Subject: [PATCH 5.10 79/84] mm,hwpoison: refactor get_any_page
+Date: Mon, 28 Aug 2023 12:14:36 +0200
+Message-ID: <20230828101151.965205685@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -35,83 +38,193 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Oscar Salvador <osalvador@suse.de>
 
-[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
+[ Upstream commit 8295d535e2aa198bdf65a4045d622df38955ffe2 ]
 
-If a signal callback releases the sw_sync fence, that will trigger a
-deadlock as the timeline_fence_release recurses onto the fence->lock
-(used both for signaling and the the timeline tree).
+Patch series "HWPoison: Refactor get page interface", v2.
 
-To avoid that, temporarily hold an extra reference to the signalled
-fences until after we drop the lock.
+This patch (of 3):
 
-(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
-which avoids some potential UAF issues with the original patch.)
+When we want to grab a refcount via get_any_page, we call __get_any_page
+that calls get_hwpoison_page to get the actual refcount.
 
-v2: Remove now obsolete comment, use list_move_tail() and
-    list_del_init()
+get_any_page() is only there because we have a sort of retry mechanism in
+case the page we met is unknown to us or if we raced with an allocation.
 
-Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Also __get_any_page() prints some messages about the page type in case the
+page was a free page or the page type was unknown, but if anything, we
+only need to print a message in case the pagetype was unknown, as that is
+reporting an error down the chain.
+
+Let us merge get_any_page() and __get_any_page(), and let the message be
+printed in soft_offline_page.  While we are it, we can also remove the
+'pfn' parameter as it is no longer used.
+
+Link: https://lkml.kernel.org/r/20201204102558.31607-1-osalvador@suse.de
+Link: https://lkml.kernel.org/r/20201204102558.31607-2-osalvador@suse.de
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Acked-by: Vlastimil Babka <Vbabka@suse.cz>
+Cc: Qian Cai <qcai@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: e2c1ab070fdc ("mm: memory-failure: fix unexpected return value in soft_offline_page()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sw_sync.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ mm/memory-failure.c | 101 +++++++++++++++++++-------------------------
+ 1 file changed, 43 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index 348b3a9170fa4..7f5ed1aa7a9f8 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -191,6 +191,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index b21dd4a793926..71fd546dbdc37 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -1690,70 +1690,51 @@ EXPORT_SYMBOL(unpoison_memory);
+ 
+ /*
+  * Safely get reference count of an arbitrary page.
+- * Returns 0 for a free page, -EIO for a zero refcount page
+- * that is not free, and 1 for any other page type.
+- * For 1 the page is returned with increased page count, otherwise not.
++ * Returns 0 for a free page, 1 for an in-use page, -EIO for a page-type we
++ * cannot handle and -EBUSY if we raced with an allocation.
++ * We only incremented refcount in case the page was already in-use and it is
++ * a known type we can handle.
   */
- static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+-static int __get_any_page(struct page *p, unsigned long pfn, int flags)
++static int get_any_page(struct page *p, int flags)
  {
-+	LIST_HEAD(signalled);
- 	struct sync_pt *pt, *next;
+-	int ret;
++	int ret = 0, pass = 0;
++	bool count_increased = false;
  
- 	trace_sync_timeline(obj);
-@@ -203,21 +204,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- 		if (!timeline_fence_signaled(&pt->base))
- 			break;
- 
--		list_del_init(&pt->link);
-+		dma_fence_get(&pt->base);
+ 	if (flags & MF_COUNT_INCREASED)
+-		return 1;
+-
+-	/*
+-	 * When the target page is a free hugepage, just remove it
+-	 * from free hugepage list.
+-	 */
+-	if (!get_hwpoison_page(p)) {
+-		if (PageHuge(p)) {
+-			pr_info("%s: %#lx free huge page\n", __func__, pfn);
+-			ret = 0;
+-		} else if (is_free_buddy_page(p)) {
+-			pr_info("%s: %#lx free buddy page\n", __func__, pfn);
+-			ret = 0;
+-		} else if (page_count(p)) {
+-			/* raced with allocation */
++		count_increased = true;
 +
-+		list_move_tail(&pt->link, &signalled);
- 		rb_erase(&pt->node, &obj->pt_tree);
- 
++try_again:
++	if (!count_increased && !get_hwpoison_page(p)) {
++		if (page_count(p)) {
++			/* We raced with an allocation, retry. */
++			if (pass++ < 3)
++				goto try_again;
+ 			ret = -EBUSY;
+-		} else {
+-			pr_info("%s: %#lx: unknown zero refcount page type %lx\n",
+-				__func__, pfn, p->flags);
++		} else if (!PageHuge(p) && !is_free_buddy_page(p)) {
++			/* We raced with put_page, retry. */
++			if (pass++ < 3)
++				goto try_again;
+ 			ret = -EIO;
+ 		}
+ 	} else {
+-		/* Not a free page */
+-		ret = 1;
+-	}
+-	return ret;
+-}
+-
+-static int get_any_page(struct page *page, unsigned long pfn, int flags)
+-{
+-	int ret = __get_any_page(page, pfn, flags);
+-
+-	if (ret == -EBUSY)
+-		ret = __get_any_page(page, pfn, flags);
+-
+-	if (ret == 1 && !PageHuge(page) &&
+-	    !PageLRU(page) && !__PageMovable(page)) {
 -		/*
--		 * A signal callback may release the last reference to this
--		 * fence, causing it to be freed. That operation has to be
--		 * last to avoid a use after free inside this loop, and must
--		 * be after we remove the fence from the timeline in order to
--		 * prevent deadlocking on timeline->lock inside
--		 * timeline_fence_release().
+-		 * Try to free it.
 -		 */
- 		dma_fence_signal_locked(&pt->base);
+-		put_page(page);
+-		shake_page(page, 1);
+-
+-		/*
+-		 * Did it turn free?
+-		 */
+-		ret = __get_any_page(page, pfn, 0);
+-		if (ret == 1 && !PageLRU(page)) {
+-			/* Drop page reference which is from __get_any_page() */
+-			put_page(page);
+-			pr_info("soft_offline: %#lx: unknown non LRU page type %lx (%pGp)\n",
+-				pfn, page->flags, &page->flags);
+-			return -EIO;
++		if (PageHuge(p) || PageLRU(p) || __PageMovable(p)) {
++			ret = 1;
++		} else {
++			/*
++			 * A page we cannot handle. Check whether we can turn
++			 * it into something we can handle.
++			 */
++			if (pass++ < 3) {
++				put_page(p);
++				shake_page(p, 1);
++				count_increased = false;
++				goto try_again;
++			}
++			put_page(p);
++			ret = -EIO;
+ 		}
  	}
- 
- 	spin_unlock_irq(&obj->lock);
 +
-+	list_for_each_entry_safe(pt, next, &signalled, link) {
-+		list_del_init(&pt->link);
-+		dma_fence_put(&pt->base);
-+	}
+ 	return ret;
  }
  
- /**
+@@ -1922,7 +1903,7 @@ int soft_offline_page(unsigned long pfn, int flags)
+ 		return -EIO;
+ 
+ 	if (PageHWPoison(page)) {
+-		pr_info("soft offline: %#lx page already poisoned\n", pfn);
++		pr_info("%s: %#lx page already poisoned\n", __func__, pfn);
+ 		if (flags & MF_COUNT_INCREASED)
+ 			put_page(page);
+ 		return 0;
+@@ -1930,17 +1911,21 @@ int soft_offline_page(unsigned long pfn, int flags)
+ 
+ retry:
+ 	get_online_mems();
+-	ret = get_any_page(page, pfn, flags);
++	ret = get_any_page(page, flags);
+ 	put_online_mems();
+ 
+-	if (ret > 0)
++	if (ret > 0) {
+ 		ret = soft_offline_in_use_page(page);
+-	else if (ret == 0)
++	} else if (ret == 0) {
+ 		if (soft_offline_free_page(page) && try_again) {
+ 			try_again = false;
+ 			flags &= ~MF_COUNT_INCREASED;
+ 			goto retry;
+ 		}
++	} else if (ret == -EIO) {
++		pr_info("%s: %#lx: unknown page type: %lx (%pGP)\n",
++			 __func__, pfn, page->flags, &page->flags);
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.40.1
 
