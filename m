@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3C6611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86800C433C7;
-	Mon, 28 Aug 2023 10:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8244611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F4CC433C7;
+	Mon, 28 Aug 2023 10:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219489;
-	bh=QUBOK8IqmeeCLe+VdtT9NLzzYMC5CxNIaptwXiD3L8Q=;
+	s=korg; t=1693219492;
+	bh=L0WJYFQQtHbmge/VBymJmHhUicKvnOSqBAHGFo5JTcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbOoVhqjiG5FXezJG0p4xR8yWB4iEyXHzMqMWkgDFxqgsLH0yVdQWfFjOITbDc4Ak
-	 1O2yc9s1cszQvRyGCc5B6udPZVVXyk8XIGgioEhLFrJwyV+zHRb9IoRkfiNbGgIDt+
-	 PDPGe40lGM8fX2S4ImTkXvXcEsfGbK+fRLwvPRhs=
+	b=pcqEOWrholWp5pOe1vnbocoBZZcn8atN1+7wQjrSKLNZkmRgM5dn95N35ihVBjI6V
+	 UwOGrc36W0XYibmi4TtW3iPyp5SIXrZtFcvIR3goqMz2c56f72cff0JrjAdjbY7UkY
+	 /ETHciFyMT11Z2+GSp9jiztXtkATmlMSCNRGhDx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	vnagarnaik@google.com,
-	shuah@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 25/89] tracing: Fix cpu buffers unavailable due to record_disabled missed
-Date: Mon, 28 Aug 2023 12:13:26 +0200
-Message-ID: <20230828101151.022727826@linuxfoundation.org>
+Subject: [PATCH 5.15 16/89] fbdev: fix potential OOB read in fast_imageblit()
+Date: Mon, 28 Aug 2023 12:13:17 +0200
+Message-ID: <20230828101150.713918880@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -43,71 +40,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit b71645d6af10196c46cbe3732de2ea7d36b3ff6d ]
+[ Upstream commit c2d22806aecb24e2de55c30a06e5d6eb297d161d ]
 
-Trace ring buffer can no longer record anything after executing
-following commands at the shell prompt:
+There is a potential OOB read at fast_imageblit, for
+"colortab[(*src >> 4)]" can become a negative value due to
+"const char *s = image->data, *src".
+This change makes sure the index for colortab always positive
+or zero.
 
-  # cd /sys/kernel/tracing
-  # cat tracing_cpumask
-  fff
-  # echo 0 > tracing_cpumask
-  # echo 1 > snapshot
-  # echo fff > tracing_cpumask
-  # echo 1 > tracing_on
-  # echo "hello world" > trace_marker
-  -bash: echo: write error: Bad file descriptor
+Similar commit:
+https://patchwork.kernel.org/patch/11746067
 
-The root cause is that:
-  1. After `echo 0 > tracing_cpumask`, 'record_disabled' of cpu buffers
-     in 'tr->array_buffer.buffer' became 1 (see tracing_set_cpumask());
-  2. After `echo 1 > snapshot`, 'tr->array_buffer.buffer' is swapped
-     with 'tr->max_buffer.buffer', then the 'record_disabled' became 0
-     (see update_max_tr());
-  3. After `echo fff > tracing_cpumask`, the 'record_disabled' become -1;
-Then array_buffer and max_buffer are both unavailable due to value of
-'record_disabled' is not 0.
+Potential bug report:
+https://groups.google.com/g/syzkaller-bugs/c/9ubBXKeKXf4/m/k-QXy4UgAAAJ
 
-To fix it, enable or disable both array_buffer and max_buffer at the same
-time in tracing_set_cpumask().
-
-Link: https://lkml.kernel.org/r/20230805033816.3284594-2-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <vnagarnaik@google.com>
-Cc: <shuah@kernel.org>
-Fixes: 71babb2705e2 ("tracing: change CPU ring buffer state from tracing_cpumask")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/video/fbdev/core/sysimgblt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index d4c381f06b7b2..edc58133ed5ed 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5171,11 +5171,17 @@ int tracing_set_cpumask(struct trace_array *tr,
- 				!cpumask_test_cpu(cpu, tracing_cpumask_new)) {
- 			atomic_inc(&per_cpu_ptr(tr->array_buffer.data, cpu)->disabled);
- 			ring_buffer_record_disable_cpu(tr->array_buffer.buffer, cpu);
-+#ifdef CONFIG_TRACER_MAX_TRACE
-+			ring_buffer_record_disable_cpu(tr->max_buffer.buffer, cpu);
-+#endif
- 		}
- 		if (!cpumask_test_cpu(cpu, tr->tracing_cpumask) &&
- 				cpumask_test_cpu(cpu, tracing_cpumask_new)) {
- 			atomic_dec(&per_cpu_ptr(tr->array_buffer.data, cpu)->disabled);
- 			ring_buffer_record_enable_cpu(tr->array_buffer.buffer, cpu);
-+#ifdef CONFIG_TRACER_MAX_TRACE
-+			ring_buffer_record_enable_cpu(tr->max_buffer.buffer, cpu);
-+#endif
- 		}
- 	}
- 	arch_spin_unlock(&tr->max_lock);
+diff --git a/drivers/video/fbdev/core/sysimgblt.c b/drivers/video/fbdev/core/sysimgblt.c
+index 335e92b813fc4..665ef7a0a2495 100644
+--- a/drivers/video/fbdev/core/sysimgblt.c
++++ b/drivers/video/fbdev/core/sysimgblt.c
+@@ -189,7 +189,7 @@ static void fast_imageblit(const struct fb_image *image, struct fb_info *p,
+ 	u32 fgx = fgcolor, bgx = bgcolor, bpp = p->var.bits_per_pixel;
+ 	u32 ppw = 32/bpp, spitch = (image->width + 7)/8;
+ 	u32 bit_mask, eorx, shift;
+-	const char *s = image->data, *src;
++	const u8 *s = image->data, *src;
+ 	u32 *dst;
+ 	const u32 *tab;
+ 	size_t tablen;
 -- 
 2.40.1
 
