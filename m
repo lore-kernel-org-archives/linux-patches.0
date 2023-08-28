@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B0711C97
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15099C433C7;
-	Mon, 28 Aug 2023 10:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D06211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B40C433C8;
+	Mon, 28 Aug 2023 10:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218626;
-	bh=EPA5f3y/WJdc4NXun6Q3xvNAVUGRtQ+h9CkJa96eLj8=;
+	s=korg; t=1693218629;
+	bh=BwsgbxZvH+ZxmPDroh9x3ELfInhKWxplo1fzT1Q8DGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sraZ3C7up9fMCGmDXlVjvdsndzjNT+uyyJ75KZLQMsnih8J0xAmwgxRWvN++QuIuL
-	 +2fbBh3gAOK75/C0OPiEqOg/MMZzVSUp0L1jPX/snXjttZtcaDGKjNLUyomEe7afox
-	 p70n8G/vdG5jKTHFDG0gnoGI6xk07/JwVz3OGIcw=
+	b=W8LdLHyeBCDEUrGlJFTuZAKZisTRR/FIlL9sUTJWExFWs7JZvXybdOfPagG5z3kaD
+	 CiVKtyc8S999PbaOE2D/ViOHyZfI416ww5ihhe7VoVozz4vDPa0s9UZB5MdhWGB9s5
+	 YmgaVt9IdSZPMO/A9nQ4xky+DrEfO9i5B+LaO2Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/122] octeontx2-af: SDP: fix receive link config
-Date: Mon, 28 Aug 2023 12:12:21 +0200
-Message-ID: <20230828101157.302782251@linuxfoundation.org>
+Subject: [PATCH 6.1 027/122] devlink: move code to a dedicated directory
+Date: Mon, 28 Aug 2023 12:12:22 +0200
+Message-ID: <20230828101157.332802472@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -42,43 +41,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 05f3d5bc23524bed6f043dfe6b44da687584f9fb ]
+[ Upstream commit f05bd8ebeb69c803efd6d8a76d96b7fcd7011094 ]
 
-On SDP interfaces, frame oversize and undersize errors are
-observed as driver is not considering packet sizes of all
-subscribers of the link before updating the link config.
+The devlink code is hard to navigate with 13kLoC in one file.
+I really like the way Michal split the ethtool into per-command
+files and core. It'd probably be too much to split it all up,
+but we can at least separate the core parts out of the per-cmd
+implementations and put it in a directory so that new commands
+can be separate files.
 
-This patch fixes the same.
+Move the code, subsequent commit will do a partial split.
 
-Fixes: 9b7dd87ac071 ("octeontx2-af: Support to modify min/max allowed packet lengths")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230817063006.10366-1-hkelam@marvell.com
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2ebbc9752d06 ("devlink: add missing unregister linecard notification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ MAINTAINERS                                | 2 +-
+ net/Makefile                               | 1 +
+ net/core/Makefile                          | 1 -
+ net/devlink/Makefile                       | 3 +++
+ net/{core/devlink.c => devlink/leftover.c} | 0
+ 5 files changed, 5 insertions(+), 2 deletions(-)
+ create mode 100644 net/devlink/Makefile
+ rename net/{core/devlink.c => devlink/leftover.c} (100%)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 705325431dec3..5541e284cd3f0 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -4005,9 +4005,10 @@ int rvu_mbox_handler_nix_set_hw_frs(struct rvu *rvu, struct nix_frs_cfg *req,
- 	if (link < 0)
- 		return NIX_AF_ERR_RX_LINK_INVALID;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 379387e20a96d..07a9c274c0e29 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -6027,7 +6027,7 @@ S:	Supported
+ F:	Documentation/networking/devlink
+ F:	include/net/devlink.h
+ F:	include/uapi/linux/devlink.h
+-F:	net/core/devlink.c
++F:	net/devlink/
  
--	nix_find_link_frs(rvu, req, pcifunc);
- 
- linkcfg:
-+	nix_find_link_frs(rvu, req, pcifunc);
+ DH ELECTRONICS IMX6 DHCOM BOARD SUPPORT
+ M:	Christoph Niedermaier <cniedermaier@dh-electronics.com>
+diff --git a/net/Makefile b/net/Makefile
+index 6a62e5b273781..0914bea9c335f 100644
+--- a/net/Makefile
++++ b/net/Makefile
+@@ -23,6 +23,7 @@ obj-$(CONFIG_BPFILTER)		+= bpfilter/
+ obj-$(CONFIG_PACKET)		+= packet/
+ obj-$(CONFIG_NET_KEY)		+= key/
+ obj-$(CONFIG_BRIDGE)		+= bridge/
++obj-$(CONFIG_NET_DEVLINK)	+= devlink/
+ obj-$(CONFIG_NET_DSA)		+= dsa/
+ obj-$(CONFIG_ATALK)		+= appletalk/
+ obj-$(CONFIG_X25)		+= x25/
+diff --git a/net/core/Makefile b/net/core/Makefile
+index 5857cec87b839..10edd66a8a372 100644
+--- a/net/core/Makefile
++++ b/net/core/Makefile
+@@ -33,7 +33,6 @@ obj-$(CONFIG_LWTUNNEL) += lwtunnel.o
+ obj-$(CONFIG_LWTUNNEL_BPF) += lwt_bpf.o
+ obj-$(CONFIG_DST_CACHE) += dst_cache.o
+ obj-$(CONFIG_HWBM) += hwbm.o
+-obj-$(CONFIG_NET_DEVLINK) += devlink.o
+ obj-$(CONFIG_GRO_CELLS) += gro_cells.o
+ obj-$(CONFIG_FAILOVER) += failover.o
+ obj-$(CONFIG_NET_SOCK_MSG) += skmsg.o
+diff --git a/net/devlink/Makefile b/net/devlink/Makefile
+new file mode 100644
+index 0000000000000..3a60959f71eea
+--- /dev/null
++++ b/net/devlink/Makefile
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0
 +
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_RX_LINKX_CFG(link));
- 	cfg = (cfg & ~(0xFFFFULL << 16)) | ((u64)req->maxlen << 16);
- 	if (req->update_minlen)
++obj-y := leftover.o
+diff --git a/net/core/devlink.c b/net/devlink/leftover.c
+similarity index 100%
+rename from net/core/devlink.c
+rename to net/devlink/leftover.c
 -- 
 2.40.1
 
