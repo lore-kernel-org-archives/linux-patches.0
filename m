@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6640411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93F2C433C8;
-	Mon, 28 Aug 2023 10:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB1F11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2039C433C8;
+	Mon, 28 Aug 2023 10:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219584;
-	bh=UZUxV8fOSr95ODFe6ytZUaWahFRESP2o/jwqPIxnAc8=;
+	s=korg; t=1693219587;
+	bh=Xus3TVobtE0TwlMg8Uz2cvyhSzUPIRcyk65KcELof90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcAv9iGSyKlYpq59Im2NlLVTlVtVJHHhNh1sDI1PvW5YGContRycy8Zz7Buk/92mk
-	 yagItQ54Z+CsXNCC8z5lexuAxEkhn/DNZreRtM9e7K4sDaY5fA9uqaig2ZaINcvOli
-	 2fbNLEIMc8rIyEHfb68+VlQcQgrbakbO+jl7ZPS4=
+	b=g+y0jiHhzlb2cJfrwFwEVrCexBKNOHRNprcVDYytFdvY89fUR3+SiTw18JdqGHO4Y
+	 zdma/+i9yM0Ho6AiIoJ3tTLafbyudSRQbEbfA9Or4RNRwQFR/YC2MnvayKfvwoH4eU
+	 8VFUuQPkdpIgt4YOXWvrTpedvbHJEwpR9lI9x0wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Rik van Riel <riel@surriel.com>,
-	Mike Rappoport <rppt@kernel.org>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 5.15 89/89] mm,ima,kexec,of: use memblock_free_late from ima_free_kexec_buffer
-Date: Mon, 28 Aug 2023 12:14:30 +0200
-Message-ID: <20230828101153.258035606@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 81/89] can: raw: add missing refcount for memory leak fix
+Date: Mon, 28 Aug 2023 12:14:22 +0200
+Message-ID: <20230828101152.950133638@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -41,44 +41,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit f0362a253606e2031f8d61c74195d4d6556e12a4 upstream.
+commit c275a176e4b69868576e543409927ae75e3a3288 upstream.
 
-The code calling ima_free_kexec_buffer runs long after the memblock
-allocator has already been torn down, potentially resulting in a use
-after free in memblock_isolate_range.
+Commit ee8b94c8510c ("can: raw: fix receiver memory leak") introduced
+a new reference to the CAN netdevice that has assigned CAN filters.
+But this new ro->dev reference did not maintain its own refcount which
+lead to another KASAN use-after-free splat found by Eric Dumazet.
 
-With KASAN or KFENCE, this use after free will result in a BUG
-from the idle task, and a subsequent kernel panic.
+This patch ensures a proper refcount for the CAN nedevice.
 
-Switch ima_free_kexec_buffer over to memblock_free_late to avoid
-that issue.
-
-Fixes: fee3ff99bc67 ("powerpc: Move arch independent ima kexec functions to drivers/of/kexec.c")
-Cc: stable@kernel.org
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Suggested-by: Mike Rappoport <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20230817135759.0888e5ef@imladris.surriel.com
-Signed-off-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Mike Rappoport (IBM) <rppt@kernel.org>
+Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
+Reported-by: Eric Dumazet <edumazet@google.com>
+Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/r/20230821144547.6658-3-socketcan@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/kexec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/can/raw.c |   34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
---- a/drivers/of/kexec.c
-+++ b/drivers/of/kexec.c
-@@ -187,8 +187,8 @@ int ima_free_kexec_buffer(void)
- 	if (ret)
- 		return ret;
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -283,8 +283,10 @@ static void raw_notify(struct raw_sock *
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
+ 		/* remove current filters & unregister */
+-		if (ro->bound)
++		if (ro->bound) {
+ 			raw_disable_allfilters(dev_net(dev), dev, sk);
++			dev_put(dev);
++		}
  
--	return memblock_free(addr, size);
--
-+	memblock_free_late(addr, size);
-+	return 0;
- }
+ 		if (ro->count > 1)
+ 			kfree(ro->filter);
+@@ -388,10 +390,12 @@ static int raw_release(struct socket *so
  
- /**
+ 	/* remove current filters & unregister */
+ 	if (ro->bound) {
+-		if (ro->dev)
++		if (ro->dev) {
+ 			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
+-		else
++			dev_put(ro->dev);
++		} else {
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
++		}
+ 	}
+ 
+ 	if (ro->count > 1)
+@@ -442,10 +446,10 @@ static int raw_bind(struct socket *sock,
+ 			goto out;
+ 		}
+ 		if (dev->type != ARPHRD_CAN) {
+-			dev_put(dev);
+ 			err = -ENODEV;
+-			goto out;
++			goto out_put_dev;
+ 		}
++
+ 		if (!(dev->flags & IFF_UP))
+ 			notify_enetdown = 1;
+ 
+@@ -453,7 +457,9 @@ static int raw_bind(struct socket *sock,
+ 
+ 		/* filters set by default/setsockopt */
+ 		err = raw_enable_allfilters(sock_net(sk), dev, sk);
+-		dev_put(dev);
++		if (err)
++			goto out_put_dev;
++
+ 	} else {
+ 		ifindex = 0;
+ 
+@@ -464,18 +470,28 @@ static int raw_bind(struct socket *sock,
+ 	if (!err) {
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+-			if (ro->dev)
++			if (ro->dev) {
+ 				raw_disable_allfilters(dev_net(ro->dev),
+ 						       ro->dev, sk);
+-			else
++				/* drop reference to old ro->dev */
++				dev_put(ro->dev);
++			} else {
+ 				raw_disable_allfilters(sock_net(sk), NULL, sk);
++			}
+ 		}
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
++		/* bind() ok -> hold a reference for new ro->dev */
+ 		ro->dev = dev;
++		if (ro->dev)
++			dev_hold(ro->dev);
+ 	}
+ 
+- out:
++out_put_dev:
++	/* remove potential reference from dev_get_by_index() */
++	if (dev)
++		dev_put(dev);
++out:
+ 	release_sock(sk);
+ 	rtnl_unlock();
+ 
 
 
