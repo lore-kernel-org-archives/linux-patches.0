@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF0211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BD5C433C8;
-	Mon, 28 Aug 2023 10:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A67E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C53CC433C7;
+	Mon, 28 Aug 2023 10:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218518;
-	bh=UpJi16ePkKZQmFGz767v0tVAxABgzTQcBO9AxRHefkc=;
+	s=korg; t=1693218521;
+	bh=iCBFNabSWzdWVUzMAi2GZ7mh6/oHmH62Zdd/2kZYnX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQ/JnqtJYyIIMqs5pVgQdgyBTYMV9v33FdDH8v+g1nXBVXYDyJ3FWJDmAh0IWqzby
-	 bFH+g5lwO0tGZOB/ESIScy+DdNFVNhVjxq57ZyVVg+y5bWvlM3REcBt/9D4InNxh6t
-	 4SCmDNAUS2d6CUqE/eoaIWyDghgVYfmVE89Lm0xU=
+	b=DEohYPp6APqNI/rNlMn953GycGpcddiLxJMajplpiPj379vljaLCynCyzgJSzICxm
+	 Kw98yKIeSBTo+4Xg/6NpczBZQoXF3KRLvPfwIjFxUwyo6/3g+VX6n8oOYJtpJgtFR3
+	 7asf8AMybdfGDux826inkqkLF6A9TcVZ6237YjE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Remi Pommarel <repk@triplefau.lt>,
+	Sven Eckelmann <sven@narfation.org>,
 	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 4.19 115/129] batman-adv: Fix TT global entry leak when client roamed back
-Date: Mon, 28 Aug 2023 12:13:29 +0200
-Message-ID: <20230828101157.439740591@linuxfoundation.org>
+Subject: [PATCH 4.19 116/129] batman-adv: Fix batadv_v_ogm_aggr_send memory leak
+Date: Mon, 28 Aug 2023 12:13:30 +0200
+Message-ID: <20230828101157.468755706@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -41,83 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Remi Pommarel <repk@triplefau.lt>
 
-commit d25ddb7e788d34cf27ff1738d11a87cb4b67d446 upstream.
+commit 421d467dc2d483175bad4fb76a31b9e5a3d744cf upstream.
 
-When a client roamed back to a node before it got time to destroy the
-pending local entry (i.e. within the same originator interval) the old
-global one is directly removed from hash table and left as such.
+When batadv_v_ogm_aggr_send is called for an inactive interface, the skb
+is silently dropped by batadv_v_ogm_send_to_if() but never freed causing
+the following memory leak:
 
-But because this entry had an extra reference taken at lookup (i.e using
-batadv_tt_global_hash_find) there is no way its memory will be reclaimed
-at any time causing the following memory leak:
-
-  unreferenced object 0xffff0000073c8000 (size 18560):
-    comm "softirq", pid 0, jiffies 4294907738 (age 228.644s)
+  unreferenced object 0xffff00000c164800 (size 512):
+    comm "kworker/u8:1", pid 2648, jiffies 4295122303 (age 97.656s)
     hex dump (first 32 bytes):
-      06 31 ac 12 c7 7a 05 00 01 00 00 00 00 00 00 00  .1...z..........
-      2c ad be 08 00 80 ff ff 6c b6 be 08 00 80 ff ff  ,.......l.......
+      00 80 af 09 00 00 ff ff e1 09 00 00 75 01 60 83  ............u.`.
+      1f 00 00 00 b8 00 00 00 15 00 05 00 da e3 d3 64  ...............d
     backtrace:
-      [<00000000ee6e0ffa>] kmem_cache_alloc+0x1b4/0x300
-      [<000000000ff2fdbc>] batadv_tt_global_add+0x700/0xe20
-      [<00000000443897c7>] _batadv_tt_update_changes+0x21c/0x790
-      [<000000005dd90463>] batadv_tt_update_changes+0x3c/0x110
-      [<00000000a2d7fc57>] batadv_tt_tvlv_unicast_handler_v1+0xafc/0xe10
-      [<0000000011793f2a>] batadv_tvlv_containers_process+0x168/0x2b0
-      [<00000000b7cbe2ef>] batadv_recv_unicast_tvlv+0xec/0x1f4
-      [<0000000042aef1d8>] batadv_batman_skb_recv+0x25c/0x3a0
-      [<00000000bbd8b0a2>] __netif_receive_skb_core.isra.0+0x7a8/0xe90
-      [<000000004033d428>] __netif_receive_skb_one_core+0x64/0x74
-      [<000000000f39a009>] __netif_receive_skb+0x48/0xe0
-      [<00000000f2cd8888>] process_backlog+0x174/0x344
-      [<00000000507d6564>] __napi_poll+0x58/0x1f4
-      [<00000000b64ef9eb>] net_rx_action+0x504/0x590
-      [<00000000056fa5e4>] _stext+0x1b8/0x418
-      [<00000000878879d6>] run_ksoftirqd+0x74/0xa4
-  unreferenced object 0xffff00000bae1a80 (size 56):
-    comm "softirq", pid 0, jiffies 4294910888 (age 216.092s)
-    hex dump (first 32 bytes):
-      00 78 b1 0b 00 00 ff ff 0d 50 00 00 00 00 00 00  .x.......P......
-      00 00 00 00 00 00 00 00 50 c8 3c 07 00 00 ff ff  ........P.<.....
-    backtrace:
-      [<00000000ee6e0ffa>] kmem_cache_alloc+0x1b4/0x300
-      [<00000000d9aaa49e>] batadv_tt_global_add+0x53c/0xe20
-      [<00000000443897c7>] _batadv_tt_update_changes+0x21c/0x790
-      [<000000005dd90463>] batadv_tt_update_changes+0x3c/0x110
-      [<00000000a2d7fc57>] batadv_tt_tvlv_unicast_handler_v1+0xafc/0xe10
-      [<0000000011793f2a>] batadv_tvlv_containers_process+0x168/0x2b0
-      [<00000000b7cbe2ef>] batadv_recv_unicast_tvlv+0xec/0x1f4
-      [<0000000042aef1d8>] batadv_batman_skb_recv+0x25c/0x3a0
-      [<00000000bbd8b0a2>] __netif_receive_skb_core.isra.0+0x7a8/0xe90
-      [<000000004033d428>] __netif_receive_skb_one_core+0x64/0x74
-      [<000000000f39a009>] __netif_receive_skb+0x48/0xe0
-      [<00000000f2cd8888>] process_backlog+0x174/0x344
-      [<00000000507d6564>] __napi_poll+0x58/0x1f4
-      [<00000000b64ef9eb>] net_rx_action+0x504/0x590
-      [<00000000056fa5e4>] _stext+0x1b8/0x418
-      [<00000000878879d6>] run_ksoftirqd+0x74/0xa4
+      [<0000000007ad20f6>] __kmalloc_track_caller+0x1a8/0x310
+      [<00000000d1029e55>] kmalloc_reserve.constprop.0+0x70/0x13c
+      [<000000008b9d4183>] __alloc_skb+0xec/0x1fc
+      [<00000000c7af5051>] __netdev_alloc_skb+0x48/0x23c
+      [<00000000642ee5f5>] batadv_v_ogm_aggr_send+0x50/0x36c
+      [<0000000088660bd7>] batadv_v_ogm_aggr_work+0x24/0x40
+      [<0000000042fc2606>] process_one_work+0x3b0/0x610
+      [<000000002f2a0b1c>] worker_thread+0xa0/0x690
+      [<0000000059fae5d4>] kthread+0x1fc/0x210
+      [<000000000c587d3a>] ret_from_fork+0x10/0x20
 
-Releasing the extra reference from batadv_tt_global_hash_find even at
-roam back when batadv_tt_global_free is called fixes this memory leak.
+Free the skb in that case to fix this leak.
 
 Cc: stable@vger.kernel.org
-Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
+Fixes: 0da0035942d4 ("batman-adv: OGMv2 - add basic infrastructure")
 Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by; Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/batman-adv/bat_v_ogm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -793,7 +793,6 @@ check_roaming:
- 		if (roamed_back) {
- 			batadv_tt_global_free(bat_priv, tt_global,
- 					      "Roaming canceled");
--			tt_global = NULL;
- 		} else {
- 			/* The global entry has to be marked as ROAMING and
- 			 * has to be kept for consistency purpose
+--- a/net/batman-adv/bat_v_ogm.c
++++ b/net/batman-adv/bat_v_ogm.c
+@@ -119,8 +119,10 @@ static void batadv_v_ogm_send_to_if(stru
+ {
+ 	struct batadv_priv *bat_priv = netdev_priv(hard_iface->soft_iface);
+ 
+-	if (hard_iface->if_status != BATADV_IF_ACTIVE)
++	if (hard_iface->if_status != BATADV_IF_ACTIVE) {
++		kfree_skb(skb);
+ 		return;
++	}
+ 
+ 	batadv_inc_counter(bat_priv, BATADV_CNT_MGMT_TX);
+ 	batadv_add_counter(bat_priv, BATADV_CNT_MGMT_TX_BYTES,
 
 
