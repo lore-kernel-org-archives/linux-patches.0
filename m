@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E17E11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:38:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75D0C433C7;
-	Mon, 28 Aug 2023 10:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A6811C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:38:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3169C433C8;
+	Mon, 28 Aug 2023 10:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219118;
-	bh=2A128fV4NOQ4gLlsTDtHgq4mWpjdhWcMrGXCs2ilrsw=;
+	s=korg; t=1693219121;
+	bh=I6OGIFdAyN9PIuY62gaQoiHjVSP3fLM3KJfKUMvOm4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=li1ZOkzE96ep6VQtub1O9uzwTLqiRnkE/YCSdf0gIFwrtTuB7rajl5D1q9WPqL4b9
-	 iYhOsMOYVrGaFdpyMDfrUa2t+EpUH9CsX5MvkARcGyrYfkH65d7afCIIGksNQHhI4w
-	 GN04/igq5WaoSZ3FhtdMj5ypcrdvc2w2A8nvZnnE=
+	b=eDezf8c2Pd2S3NtRYoBWtaRaxdDloPCOenEFrAt5A+TxIyE1OVGI9nLpzOFC5DZKT
+	 05LVaLCskqySfRtFtzqD/Dw2Y0ScO2ZQP/inf407FyacqaAUj+hrAwsB+DdV9CTLhc
+	 ccr9AQw7cN9QeISs9dwFqGWDa4HgiwA+73c/D17U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 080/158] ARM: dts: imx: Set default tuning step for imx6sx usdhc
-Date: Mon, 28 Aug 2023 12:12:57 +0200
-Message-ID: <20230828101159.980835805@linuxfoundation.org>
+Subject: [PATCH 5.4 081/158] ASoC: rt5665: add missed regulator_bulk_disable
+Date: Mon, 28 Aug 2023 12:12:58 +0200
+Message-ID: <20230828101200.010460011@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -41,61 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 0a2b96e42a0284c4fc03022236f656a085ca714a ]
+[ Upstream commit c163108e706909570f8aa9aa5bcf6806e2b4c98c ]
 
-If the tuning step is not set, the tuning step is set to 1.
-For some sd cards, the following Tuning timeout will occur.
+The driver forgets to call regulator_bulk_disable()
 
-Tuning failed, falling back to fixed sampling clock
+Add the missed call to fix it.
 
-So set the default tuning step. This refers to the NXP vendor's
-commit below:
-
-https://github.com/nxp-imx/linux-imx/blob/lf-6.1.y/
-arch/arm/boot/dts/imx6sx.dtsi#L1108-L1109
-
-Fixes: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_A560D01E3E0A00A85A12F137E4B5205B3508@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6sx.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/rt5665.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
-index f50fd581e1276..3dc1e97e145cd 100644
---- a/arch/arm/boot/dts/imx6sx.dtsi
-+++ b/arch/arm/boot/dts/imx6sx.dtsi
-@@ -958,6 +958,8 @@
- 					 <&clks IMX6SX_CLK_USDHC1>;
- 				clock-names = "ipg", "ahb", "per";
- 				bus-width = <4>;
-+				fsl,tuning-start-tap = <20>;
-+				fsl,tuning-step= <2>;
- 				status = "disabled";
- 			};
+diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
+index 68299ce26d3e4..648e0708007e1 100644
+--- a/sound/soc/codecs/rt5665.c
++++ b/sound/soc/codecs/rt5665.c
+@@ -4472,6 +4472,8 @@ static void rt5665_remove(struct snd_soc_component *component)
+ 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
  
-@@ -970,6 +972,8 @@
- 					 <&clks IMX6SX_CLK_USDHC2>;
- 				clock-names = "ipg", "ahb", "per";
- 				bus-width = <4>;
-+				fsl,tuning-start-tap = <20>;
-+				fsl,tuning-step= <2>;
- 				status = "disabled";
- 			};
+ 	regmap_write(rt5665->regmap, RT5665_RESET, 0);
++
++	regulator_bulk_disable(ARRAY_SIZE(rt5665->supplies), rt5665->supplies);
+ }
  
-@@ -982,6 +986,8 @@
- 					 <&clks IMX6SX_CLK_USDHC3>;
- 				clock-names = "ipg", "ahb", "per";
- 				bus-width = <4>;
-+				fsl,tuning-start-tap = <20>;
-+				fsl,tuning-step= <2>;
- 				status = "disabled";
- 			};
- 
+ #ifdef CONFIG_PM
 -- 
 2.40.1
 
