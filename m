@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ED911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D6CC433C7;
-	Mon, 28 Aug 2023 10:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF5011C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC7AC433C8;
+	Mon, 28 Aug 2023 10:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218407;
-	bh=Uz/S1gFlME7P9UfH8NtP8CQZ0ro5bfZBINCbnb9Ga1A=;
+	s=korg; t=1693218410;
+	bh=pSociHBazhWxV4kc7GWjSC87dJDCOnxiyT9mH9d4gwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaqduJWfef2lcHu8knU8fWPl3O7uC8hPjLyepgMcOm2klWR5rsUnhShbiK+r7e999
-	 IprM3nRiTwR5OER6iOSAxMuLISy9IDPNqgL08vax4CL99cLsDgtInluP2zQMIdNvQs
-	 VWnvnocR8LxRodke8lRhRxr8sxHdjSM/shTox/3w=
+	b=kctfXpcpdaTt9vEclKIITeXgAzLEupO7tkBaYeiApV9/xIoelHY47zMU6oezZVKRE
+	 R+W3VuSe3vBQyyHppGOeexeBOG7GOZ41jJZNmOjlHOmTwWVmZ2gY6tIpSt74qfb2tq
+	 qAOPMWAON8GxJGMfe1MurXKjZrNRTXHsnmIcqLx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jason Xing <kernelxing@tencent.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 076/129] net: fix the RTO timer retransmitting skb every 1ms if linear option is enabled
-Date: Mon, 28 Aug 2023 12:12:50 +0200
-Message-ID: <20230828101156.139162146@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 4.19 077/129] net: xfrm: Amend XFRMA_SEC_CTX nla_policy structure
+Date: Mon, 28 Aug 2023 12:12:51 +0200
+Message-ID: <20230828101156.178780909@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,51 +39,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit e4dd0d3a2f64b8bd8029ec70f52bdbebd0644408 upstream.
+commit d1e0e61d617ba17aa516db707aa871387566bbf7 upstream.
 
-In the real workload, I encountered an issue which could cause the RTO
-timer to retransmit the skb per 1ms with linear option enabled. The amount
-of lost-retransmitted skbs can go up to 1000+ instantly.
+According to all consumers code of attrs[XFRMA_SEC_CTX], like
 
-The root cause is that if the icsk_rto happens to be zero in the 6th round
-(which is the TCP_THIN_LINEAR_RETRIES value), then it will always be zero
-due to the changed calculation method in tcp_retransmit_timer() as follows:
+* verify_sec_ctx_len(), convert to xfrm_user_sec_ctx*
+* xfrm_state_construct(), call security_xfrm_state_alloc whose prototype
+is int security_xfrm_state_alloc(.., struct xfrm_user_sec_ctx *sec_ctx);
+* copy_from_user_sec_ctx(), convert to xfrm_user_sec_ctx *
+...
 
-icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX);
+It seems that the expected parsing result for XFRMA_SEC_CTX should be
+structure xfrm_user_sec_ctx, and the current xfrm_sec_ctx is confusing
+and misleading (Luckily, they happen to have same size 8 bytes).
 
-Above line could be converted to
-icsk->icsk_rto = min(0 << 1, TCP_RTO_MAX) = 0
+This commit amend the policy structure to xfrm_user_sec_ctx to avoid
+ambiguity.
 
-Therefore, the timer expires so quickly without any doubt.
-
-I read through the RFC 6298 and found that the RTO value can be rounded
-up to a certain value, in Linux, say TCP_RTO_MIN as default, which is
-regarded as the lower bound in this patch as suggested by Eric.
-
-Fixes: 36e31b0af587 ("net: TCP thin linear timeouts")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: cf5cb79f6946 ("[XFRM] netlink: Establish an attribute policy")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_timer.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -549,7 +549,9 @@ out_reset_timer:
- 	    tcp_stream_is_thin(tp) &&
- 	    icsk->icsk_retransmits <= TCP_THIN_LINEAR_RETRIES) {
- 		icsk->icsk_backoff = 0;
--		icsk->icsk_rto = min(__tcp_set_rto(tp), TCP_RTO_MAX);
-+		icsk->icsk_rto = clamp(__tcp_set_rto(tp),
-+				       tcp_rto_min(sk),
-+				       TCP_RTO_MAX);
- 	} else {
- 		/* Use normal (exponential) backoff */
- 		icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX);
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2582,7 +2582,7 @@ static const struct nla_policy xfrma_pol
+ 	[XFRMA_ALG_COMP]	= { .len = sizeof(struct xfrm_algo) },
+ 	[XFRMA_ENCAP]		= { .len = sizeof(struct xfrm_encap_tmpl) },
+ 	[XFRMA_TMPL]		= { .len = sizeof(struct xfrm_user_tmpl) },
+-	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_sec_ctx) },
++	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_user_sec_ctx) },
+ 	[XFRMA_LTIME_VAL]	= { .len = sizeof(struct xfrm_lifetime_cur) },
+ 	[XFRMA_REPLAY_VAL]	= { .len = sizeof(struct xfrm_replay_state) },
+ 	[XFRMA_REPLAY_THRESH]	= { .type = NLA_U32 },
 
 
