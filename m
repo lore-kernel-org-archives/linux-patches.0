@@ -1,33 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A816FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E21C433C7;
-	Mon, 28 Aug 2023 10:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934FD6FAF;
+	Mon, 28 Aug 2023 10:19:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5FAC433C7;
+	Mon, 28 Aug 2023 10:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217941;
-	bh=oMri1BRhwMl9d0g1ZR9AvkaCs8FXr6zEuXiNFNgCcKU=;
+	s=korg; t=1693217944;
+	bh=EJ+2FRpR64R9HkOHWigcvnITZ7Gh2+h4XI0tdaeTp7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UoDDJSljNoxjESGMyyNez+UTNqh2y2USQSlJx8hPgxsnDlhG3q6y+D+LM4krzg2Ox
-	 L6HReOSSc1qXYCdeZvJJRVOQEmFR4zjoRYQuTxeYEqjwfESOA6ZOJJqJPrsYxPF3wq
-	 vvJ5ajeJ4Ep9EooXeMa1yynME441W18Xkq4s9rX8=
+	b=0f24V8eHxBu/CUCHrpDw+I0tVx7Nx2Dk2R39xGzDdwAPt17w82A6tnCpAzn35U7X7
+	 rLaoWFoBELRwhQaJYccj6gBAfOz8Z86gwcnvLVYtYO620mkRESmdPKNJFA+zylPtjk
+	 svITJUDb1v/cFrZFolK+M5G6tcGNAYOFM82aqnt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Ebner <f.ebner@proxmox.com>,
-	Siva Reddy Kallam <siva.kallam@broadcom.com>,
-	Prashant Sreedharan <prashant@broadcom.com>,
-	Michael Chan <mchan@broadcom.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Krishnanand Prabhu <krishnanand.prabhu@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	linux-wireless@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org,
+	Simon Horman <horms@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 036/129] tg3: Use slab_build_skb() when needed
-Date: Mon, 28 Aug 2023 12:11:55 +0200
-Message-ID: <20230828101158.583818028@linuxfoundation.org>
+Subject: [PATCH 6.4 010/129] wifi: iwlwifi: mvm: add dependency for PTP clock
+Date: Mon, 28 Aug 2023 12:11:29 +0200
+Message-ID: <20230828101157.719066172@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -46,51 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 99b415fe8986803ba0eaf6b8897b16edc8fe7ec2 ]
+[ Upstream commit 609a1bcd7bebac90a1b443e9fed47fd48dac5799 ]
 
-The tg3 driver will use kmalloc() under some conditions. Check the
-frag_size and use slab_build_skb() when frag_size is 0. Silences
-the warning introduced by commit ce098da1497c ("skbuff: Introduce
-slab_build_skb()"):
+When the code to use the PTP HW clock was added, it didn't update
+the Kconfig entry for the PTP dependency, leading to build errors,
+so update the Kconfig entry to depend on PTP_1588_CLOCK_OPTIONAL.
 
-	Use slab_build_skb() instead
-	...
-	tg3_poll_work+0x638/0xf90 [tg3]
+aarch64-linux-ld: drivers/net/wireless/intel/iwlwifi/mvm/ptp.o: in function `iwl_mvm_ptp_init':
+drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:294: undefined reference to `ptp_clock_register'
+drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:294:(.text+0xce8): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `ptp_clock_register'
+aarch64-linux-ld: drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:301: undefined reference to `ptp_clock_index'
+drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:301:(.text+0xd18): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `ptp_clock_index'
+aarch64-linux-ld: drivers/net/wireless/intel/iwlwifi/mvm/ptp.o: in function `iwl_mvm_ptp_remove':
+drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:315: undefined reference to `ptp_clock_index'
+drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:315:(.text+0xe80): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `ptp_clock_index'
+aarch64-linux-ld: drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:319: undefined reference to `ptp_clock_unregister'
+drivers/net/wireless/intel/iwlwifi/mvm/ptp.c:319:(.text+0xeac): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `ptp_clock_unregister'
 
-Fixes: ce098da1497c ("skbuff: Introduce slab_build_skb()")
-Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-Closes: https://lore.kernel.org/all/1bd4cb9c-4eb8-3bdb-3e05-8689817242d1@proxmox.com
-Cc: Siva Reddy Kallam <siva.kallam@broadcom.com>
-Cc: Prashant Sreedharan <prashant@broadcom.com>
-Cc: Michael Chan <mchan@broadcom.com>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230818175417.never.273-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1595ecce1cf3 ("wifi: iwlwifi: mvm: add support for PTP HW clock (PHC)")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202308110447.4QSJHmFH-lkp@intel.com/
+Cc: Krishnanand Prabhu <krishnanand.prabhu@intel.com>
+Cc: Luca Coelho <luciano.coelho@intel.com>
+Cc: Gregory Greenman <gregory.greenman@intel.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: netdev@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Acked-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230812052947.22913-1-rdunlap@infradead.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 5ef073a79ce94..cb2810f175ccd 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -6881,7 +6881,10 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
- 
- 			ri->data = NULL;
- 
--			skb = build_skb(data, frag_size);
-+			if (frag_size)
-+				skb = build_skb(data, frag_size);
-+			else
-+				skb = slab_build_skb(data);
- 			if (!skb) {
- 				tg3_frag_free(frag_size != 0, data);
- 				goto drop_it_no_recycle;
+diff --git a/drivers/net/wireless/intel/iwlwifi/Kconfig b/drivers/net/wireless/intel/iwlwifi/Kconfig
+index b20409f8c13ab..20971304fdef4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/Kconfig
++++ b/drivers/net/wireless/intel/iwlwifi/Kconfig
+@@ -66,6 +66,7 @@ config IWLMVM
+ 	tristate "Intel Wireless WiFi MVM Firmware support"
+ 	select WANT_DEV_COREDUMP
+ 	depends on MAC80211
++	depends on PTP_1588_CLOCK_OPTIONAL
+ 	help
+ 	  This is the driver that supports the MVM firmware. The list
+ 	  of the devices that use this firmware is available here:
 -- 
 2.40.1
 
