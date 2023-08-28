@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69625611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD622C433C7;
-	Mon, 28 Aug 2023 10:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D263611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C96FC433C7;
+	Mon, 28 Aug 2023 10:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219326;
-	bh=meYLforkHCvoq+qDqWSjO9pwFOxQBvJUZrxD5HRVDZo=;
+	s=korg; t=1693219329;
+	bh=SjgJlWmomEEk+Y5k9uzooq4F1dY4k75q/ZTNiWEK5LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2VREX8DtnScP9QRrCcIa81TXSIsJpuCNw92MeqxQ4Rd5q6GHSV/0XmkwRXVSJ99s
-	 A/WqarA8MaV1OORZ/r0NMSeOHACovUuB9/ouPcB+JJRruUhTq2nf0a6IEzmz2aOLUt
-	 E7MHSZiMGrNQ8eAP5nTkd9rru52ejKfd8xhFvL1k=
+	b=pkARaXiUIljM+b9nhP1mfT1gDFTEgjEdjLMS3T4IciHGPr+prBbNGM4GE4ByQXVqb
+	 KH9uQK7dySpFzh5uuaxnNQa2MxlmCiDTNR52EFMKHW1SP4c9X2yCf9sq+6iFrurJsb
+	 QVBWFspqZkvJCwjurQZpxHZP+l2hPyBcpjaprmd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 154/158] scsi: snic: Fix double free in snic_tgt_create()
-Date: Mon, 28 Aug 2023 12:14:11 +0200
-Message-ID: <20230828101202.928712787@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 128/158] net: remove bond_slave_has_mac_rcu()
+Date: Mon, 28 Aug 2023 12:13:45 +0200
+Message-ID: <20230828101201.732341197@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -39,41 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 1bd3a76880b2bce017987cf53780b372cf59528e upstream.
+[ Upstream commit 8b0fdcdc3a7d44aff907f0103f5ffb86b12bfe71 ]
 
-Commit 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add()
-fails") fixed the memory leak caused by dev_set_name() when device_add()
-failed. However, it did not consider that 'tgt' has already been released
-when put_device(&tgt->dev) is called. Remove kfree(tgt) in the error path
-to avoid double free of 'tgt' and move put_device(&tgt->dev) after the
-removed kfree(tgt) to avoid a use-after-free.
+No caller since v3.16.
 
-Fixes: 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add() fails")
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Link: https://lore.kernel.org/r/20230819083941.164365-1-wangzhu9@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: e74216b8def3 ("bonding: fix macvlan over alb bond support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/snic/snic_disc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/net/bonding.h | 14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/scsi/snic/snic_disc.c
-+++ b/drivers/scsi/snic/snic_disc.c
-@@ -317,12 +317,11 @@ snic_tgt_create(struct snic *snic, struc
- 			      "Snic Tgt: device_add, with err = %d\n",
- 			      ret);
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index a3698f0fb2a6d..4e1e589aae057 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -685,20 +685,6 @@ static inline struct slave *bond_slave_has_mac(struct bonding *bond,
+ 	return NULL;
+ }
  
--		put_device(&tgt->dev);
- 		put_device(&snic->shost->shost_gendev);
- 		spin_lock_irqsave(snic->shost->host_lock, flags);
- 		list_del(&tgt->list);
- 		spin_unlock_irqrestore(snic->shost->host_lock, flags);
--		kfree(tgt);
-+		put_device(&tgt->dev);
- 		tgt = NULL;
- 
- 		return tgt;
+-/* Caller must hold rcu_read_lock() for read */
+-static inline struct slave *bond_slave_has_mac_rcu(struct bonding *bond,
+-					       const u8 *mac)
+-{
+-	struct list_head *iter;
+-	struct slave *tmp;
+-
+-	bond_for_each_slave_rcu(bond, tmp, iter)
+-		if (ether_addr_equal_64bits(mac, tmp->dev->dev_addr))
+-			return tmp;
+-
+-	return NULL;
+-}
+-
+ /* Caller must hold rcu_read_lock() for read */
+ static inline bool bond_slave_has_mac_rx(struct bonding *bond, const u8 *mac)
+ {
+-- 
+2.40.1
+
 
 
