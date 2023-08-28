@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC5D11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4470CC433C7;
-	Mon, 28 Aug 2023 10:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A53511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD35C433C7;
+	Mon, 28 Aug 2023 10:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218457;
-	bh=cwOz45leAZMmWcSEh9Hd4p4uOz2dQa6colaYi56PqZg=;
+	s=korg; t=1693218460;
+	bh=BLg3V32j1Bp0S3RcDwV7JHQ3W3p7mUHE2SEO2ssKAnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGDFUfwwoLuWEORYEPH1OhKFs5lBRHDgmaXUuCrqqkd1AXaaMS0F+MUFvbVyVWe+k
-	 xD6OdlnwfsBeMZNaRG/vjrCLGfI136v0xkz04eubgWeyiCUzvD8Pu7XefEl9p5+7AD
-	 ehw/1hPO1kRj0DCyk9OynSQKDAek5GKOQwHtV1UA=
+	b=GS3xtcm98I3w5CQwZmB9L/M7nhhZpZEqdZxQM8dMzU0iwnxMGq9FfuniZi/DWYOyB
+	 tX/+wdp6nohA5FTuzf5EoRcpV//WIaUeCv7xod6eNNLU3RhjBtY7qVHHSR1gi2foKe
+	 DCAAZ3a9eBEmzokVufvuFZG9iMTJF870WfvHmZkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Naveen N Rao <naveen@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 095/129] powerpc: Fail build if using recordmcount with binutils v2.37
-Date: Mon, 28 Aug 2023 12:13:09 +0200
-Message-ID: <20230828101156.813408282@linuxfoundation.org>
+Subject: [PATCH 4.19 096/129] dm integrity: increase RECALC_SECTORS to improve recalculate speed
+Date: Mon, 28 Aug 2023 12:13:10 +0200
+Message-ID: <20230828101156.843596312@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -41,52 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 25ea739ea1d4d3de41acc4f4eb2d1a97eee0eb75 ]
+[ Upstream commit b1a2b9332050c7ae32a22c2c74bc443e39f37b23 ]
 
-binutils v2.37 drops unused section symbols, which prevents recordmcount
-from capturing mcount locations in sections that have no non-weak
-symbols. This results in a build failure with a message such as:
-	Cannot find symbol for section 12: .text.perf_callchain_kernel.
-	kernel/events/callchain.o: failed
+Increase RECALC_SECTORS because it improves recalculate speed slightly
+(from 390kiB/s to 410kiB/s).
 
-The change to binutils was reverted for v2.38, so this behavior is
-specific to binutils v2.37:
-https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=c09c8b42021180eee9495bd50d8b35e683d3901b
-
-Objtool is able to cope with such sections, so this issue is specific to
-recordmcount.
-
-Fail the build and print a warning if binutils v2.37 is detected and if
-we are using recordmcount.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230530061436.56925-1-naveen@kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@redhat.com>
+Stable-dep-of: 6d50eb472593 ("dm integrity: reduce vmalloc space footprint on 32-bit architectures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/Makefile | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-integrity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index 2fad158173485..daddada1a3902 100644
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -439,3 +439,11 @@ checkbin:
- 		echo -n '*** Please use a different binutils version.' ; \
- 		false ; \
- 	fi
-+	@if test "x${CONFIG_FTRACE_MCOUNT_USE_RECORDMCOUNT}" = "xy" -a \
-+		"x${CONFIG_LD_IS_BFD}" = "xy" -a \
-+		"${CONFIG_LD_VERSION}" = "23700" ; then \
-+		echo -n '*** binutils 2.37 drops unused section symbols, which recordmcount ' ; \
-+		echo 'is unable to handle.' ; \
-+		echo '*** Please use a different binutils version.' ; \
-+		false ; \
-+	fi
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 0a4e440948f0d..eead731a1aeda 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -33,7 +33,7 @@
+ #define MIN_LOG2_INTERLEAVE_SECTORS	3
+ #define MAX_LOG2_INTERLEAVE_SECTORS	31
+ #define METADATA_WORKQUEUE_MAX_ACTIVE	16
+-#define RECALC_SECTORS			8192
++#define RECALC_SECTORS			32768
+ #define RECALC_WRITE_SUPER		16
+ 
+ /*
 -- 
 2.40.1
 
