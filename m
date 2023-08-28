@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBE4469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C9FC433C8;
-	Mon, 28 Aug 2023 10:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01344469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A072C433C8;
+	Mon, 28 Aug 2023 10:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218742;
-	bh=4nCGffygssluaBL8gm132E6gaRbQe3rlb4nqOD8XHh4=;
+	s=korg; t=1693218744;
+	bh=vJW8WipR9n+9EYEUzxEOpcVIibnM8IomNqA+EqzBgfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/3tvvxeXB9w9AjTluEOv3AKF+MmnITBT3OlIxFY8VDFWYwfW1Bd1uIaqknaPt6uf
-	 ETdZjEpDrwpa6/9jyTZP0lD+l8MxoLAqYlgKqaP6VjYnCZ0JRK5wa1C4vIbfZaXe+L
-	 40KUia+NMUoaryHDMJArFtui4UFKnojeGvWEVhMQ=
+	b=Mfv/WBK5fxj0WVlerTHeOMGWWgls2vnNlXlgQeAu3Ss1vMjynQSTRKcNIs8CdjBuc
+	 Q3raxNw9dzhM7QBTpjN98iuW+SUUEj3OyibISsrooNyd9ffzouwQUCdIGhM+BrtBRf
+	 9tmURyB53wvRM1vk/1C/D4DHNu+2Wfg2JwwrgvME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.1 067/122] clk: Fix slab-out-of-bounds error in devm_clk_release()
-Date: Mon, 28 Aug 2023 12:13:02 +0200
-Message-ID: <20230828101158.667243054@linuxfoundation.org>
+	stable@kernel.org,
+	Rik van Riel <riel@surriel.com>,
+	Mike Rappoport <rppt@kernel.org>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.1 068/122] mm,ima,kexec,of: use memblock_free_late from ima_free_kexec_buffer
+Date: Mon, 28 Aug 2023 12:13:03 +0200
+Message-ID: <20230828101158.711325423@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -39,146 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 66fbfb35da47f391bdadf9fa7ceb88af4faa9022 upstream.
+commit f0362a253606e2031f8d61c74195d4d6556e12a4 upstream.
 
-Problem can be reproduced by unloading snd_soc_simple_card, because in
-devm_get_clk_from_child() devres data is allocated as `struct clk`, but
-devm_clk_release() expects devres data to be `struct devm_clk_state`.
+The code calling ima_free_kexec_buffer runs long after the memblock
+allocator has already been torn down, potentially resulting in a use
+after free in memblock_isolate_range.
 
-KASAN report:
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in devm_clk_release+0x20/0x54
- Read of size 8 at addr ffffff800ee09688 by task (udev-worker)/287
+With KASAN or KFENCE, this use after free will result in a BUG
+from the idle task, and a subsequent kernel panic.
 
- Call trace:
-  dump_backtrace+0xe8/0x11c
-  show_stack+0x1c/0x30
-  dump_stack_lvl+0x60/0x78
-  print_report+0x150/0x450
-  kasan_report+0xa8/0xf0
-  __asan_load8+0x78/0xa0
-  devm_clk_release+0x20/0x54
-  release_nodes+0x84/0x120
-  devres_release_all+0x144/0x210
-  device_unbind_cleanup+0x1c/0xac
-  really_probe+0x2f0/0x5b0
-  __driver_probe_device+0xc0/0x1f0
-  driver_probe_device+0x68/0x120
-  __driver_attach+0x140/0x294
-  bus_for_each_dev+0xec/0x160
-  driver_attach+0x38/0x44
-  bus_add_driver+0x24c/0x300
-  driver_register+0xf0/0x210
-  __platform_driver_register+0x48/0x54
-  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
-  do_one_initcall+0xac/0x340
-  do_init_module+0xd0/0x300
-  load_module+0x2ba4/0x3100
-  __do_sys_init_module+0x2c8/0x300
-  __arm64_sys_init_module+0x48/0x5c
-  invoke_syscall+0x64/0x190
-  el0_svc_common.constprop.0+0x124/0x154
-  do_el0_svc+0x44/0xdc
-  el0_svc+0x14/0x50
-  el0t_64_sync_handler+0xec/0x11c
-  el0t_64_sync+0x14c/0x150
+Switch ima_free_kexec_buffer over to memblock_free_late to avoid
+that issue.
 
- Allocated by task 287:
-  kasan_save_stack+0x38/0x60
-  kasan_set_track+0x28/0x40
-  kasan_save_alloc_info+0x20/0x30
-  __kasan_kmalloc+0xac/0xb0
-  __kmalloc_node_track_caller+0x6c/0x1c4
-  __devres_alloc_node+0x44/0xb4
-  devm_get_clk_from_child+0x44/0xa0
-  asoc_simple_parse_clk+0x1b8/0x1dc [snd_soc_simple_card_utils]
-  simple_parse_node.isra.0+0x1ec/0x230 [snd_soc_simple_card]
-  simple_dai_link_of+0x1bc/0x334 [snd_soc_simple_card]
-  __simple_for_each_link+0x2ec/0x320 [snd_soc_simple_card]
-  asoc_simple_probe+0x468/0x4dc [snd_soc_simple_card]
-  platform_probe+0x90/0xf0
-  really_probe+0x118/0x5b0
-  __driver_probe_device+0xc0/0x1f0
-  driver_probe_device+0x68/0x120
-  __driver_attach+0x140/0x294
-  bus_for_each_dev+0xec/0x160
-  driver_attach+0x38/0x44
-  bus_add_driver+0x24c/0x300
-  driver_register+0xf0/0x210
-  __platform_driver_register+0x48/0x54
-  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
-  do_one_initcall+0xac/0x340
-  do_init_module+0xd0/0x300
-  load_module+0x2ba4/0x3100
-  __do_sys_init_module+0x2c8/0x300
-  __arm64_sys_init_module+0x48/0x5c
-  invoke_syscall+0x64/0x190
-  el0_svc_common.constprop.0+0x124/0x154
-  do_el0_svc+0x44/0xdc
-  el0_svc+0x14/0x50
-  el0t_64_sync_handler+0xec/0x11c
-  el0t_64_sync+0x14c/0x150
-
- The buggy address belongs to the object at ffffff800ee09600
-  which belongs to the cache kmalloc-256 of size 256
- The buggy address is located 136 bytes inside of
-  256-byte region [ffffff800ee09600, ffffff800ee09700)
-
- The buggy address belongs to the physical page:
- page:000000002d97303b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x4ee08
- head:000000002d97303b order:1 compound_mapcount:0 compound_pincount:0
- flags: 0x10200(slab|head|zone=0)
- raw: 0000000000010200 0000000000000000 dead000000000122 ffffff8002c02480
- raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffffff800ee09580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ffffff800ee09600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ffffff800ee09680: 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-                       ^
-  ffffff800ee09700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ffffff800ee09780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ==================================================================
-
-Fixes: abae8e57e49a ("clk: generalize devm_clk_get() a bit")
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Link: https://lore.kernel.org/r/20230805084847.3110586-1-andrej.skvortzov@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: fee3ff99bc67 ("powerpc: Move arch independent ima kexec functions to drivers/of/kexec.c")
+Cc: stable@kernel.org
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Suggested-by: Mike Rappoport <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20230817135759.0888e5ef@imladris.surriel.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/clk-devres.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/of/kexec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -205,18 +205,19 @@ EXPORT_SYMBOL(devm_clk_put);
- struct clk *devm_get_clk_from_child(struct device *dev,
- 				    struct device_node *np, const char *con_id)
- {
--	struct clk **ptr, *clk;
-+	struct devm_clk_state *state;
-+	struct clk *clk;
+--- a/drivers/of/kexec.c
++++ b/drivers/of/kexec.c
+@@ -184,7 +184,8 @@ int __init ima_free_kexec_buffer(void)
+ 	if (ret)
+ 		return ret;
  
--	ptr = devres_alloc(devm_clk_release, sizeof(*ptr), GFP_KERNEL);
--	if (!ptr)
-+	state = devres_alloc(devm_clk_release, sizeof(*state), GFP_KERNEL);
-+	if (!state)
- 		return ERR_PTR(-ENOMEM);
+-	return memblock_phys_free(addr, size);
++	memblock_free_late(addr, size);
++	return 0;
+ }
+ #endif
  
- 	clk = of_clk_get_by_name(np, con_id);
- 	if (!IS_ERR(clk)) {
--		*ptr = clk;
--		devres_add(dev, ptr);
-+		state->clk = clk;
-+		devres_add(dev, state);
- 	} else {
--		devres_free(ptr);
-+		devres_free(state);
- 	}
- 
- 	return clk;
 
 
