@@ -1,474 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C0611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0C5C433C7;
-	Mon, 28 Aug 2023 10:50:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219846;
-	bh=CFaNEnSp6NWZRsi1u9OXSVfCW7/uxGuvl+WdrmhwYv8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSqAj9QrDK8Z2Qv1JMbE2rUrfNUUBMhma3agqj81RQgBFRwLulcarN/mH0xqTAAD/
-	 WeYnWiGeaXYpSsrxhirkRn9+605v+uUqewHa2lOKZO2ZnC7eQA7KiwTsG8gzkksW24
-	 qdnW0IHqOth5BTMupPGq5TB6FEIBU9NDvsw/QbkE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>
-Subject: [PATCH 5.10 67/84] sched/cpuset: Bring back cpuset_mutex
-Date: Mon, 28 Aug 2023 12:14:24 +0200
-Message-ID: <20230828101151.545100118@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
-References: <20230828101149.146126827@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C896126
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 11:31:25 +0000 (UTC)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230828112152euoutp01045cfe717d460e07dc409823eb37ce9c~-iC0YsR6t1734517345euoutp01R
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 11:21:52 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230828112152euoutp01045cfe717d460e07dc409823eb37ce9c~-iC0YsR6t1734517345euoutp01R
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1693221712;
+	bh=VQPiQZ6BlJOv7UycB/t5qmClTXP5K+iValXtnswktQs=;
+	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
+	b=bKTesSLcdSWCtAEzPYbMrEhtIxPldXOJH0WLtyGV/KWxOfa6ZVrzFmcvzkTOdT3GI
+	 g8HTvhpfcEQ1hFqv+XFa8NEE+xlKMwLH1VBIDx5QYx76awPko89pL4d5zX6nUoTrdA
+	 WGKmhK6SxKcVWuUZIZMft5UxlIlC/eB8BVO2Wz3Y=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+	20230828112151eucas1p2211c1c044945d76975c5cee44f3be17b~-iC0Exmga2794827948eucas1p2N;
+	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+	eusmges3new.samsung.com (EUCPMTA) with SMTP id CC.B3.37758.F438CE46; Mon, 28
+	Aug 2023 12:21:51 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d~-iCzrf_N92792827928eucas1p2O;
+	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20230828112151eusmtrp255b7d9d3f203c26a979f5e6e1dfaefa5~-iCzqwsBN0113301133eusmtrp2i;
+	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
+X-AuditID: cbfec7f5-7ffff7000002937e-d5-64ec834ff7df
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+	eusmgms2.samsung.com (EUCPMTA) with SMTP id 26.7C.14344.F438CE46; Mon, 28
+	Aug 2023 12:21:51 +0100 (BST)
+Received: from CAMSVWEXC02.scsc.local (unknown [106.1.227.72]) by
+	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20230828112151eusmtip22b02f52c7432cc1694d03f92cc5371d9~-iCzf-P-23182131821eusmtip2p;
+	Mon, 28 Aug 2023 11:21:51 +0000 (GMT)
+Received: from CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) by
+	CAMSVWEXC02.scsc.local (2002:6a01:e348::6a01:e348) with Microsoft SMTP
+	Server (TLS) id 15.0.1497.2; Mon, 28 Aug 2023 12:21:50 +0100
+Received: from CAMSVWEXC02.scsc.local ([::1]) by CAMSVWEXC02.scsc.local
+	([fe80::3c08:6c51:fa0a:6384%13]) with mapi id 15.00.1497.012; Mon, 28 Aug
+	2023 12:21:50 +0100
+From: Andreas Hindborg <a.hindborg@samsung.com>
+To: Alice Ryhl <aliceryhl@google.com>
+CC: "rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>,
+	"Tejun Heo" <tj@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, Lai Jiangshan
+	<jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, "Alex
+ Gaynor" <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
+	<gary@garyguo.net>, =?iso-8859-1?Q?Bj=F6rn_Roy_Baron?=
+	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v4 4/7] rust: workqueue: add helper for defining
+ work_struct fields
+Thread-Topic: [PATCH v4 4/7] rust: workqueue: add helper for defining
+	work_struct fields
+Thread-Index: AQHZ2aHWyjhGrDdcWUuOhpl6ciq6/A==
+Date: Mon, 28 Aug 2023 11:21:50 +0000
+Message-ID: <87y1hvtnsi.fsf@samsung.com>
+In-Reply-To: <20230828104807.1581592-5-aliceryhl@google.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [106.110.32.64]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-5.10-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Juri Lelli <juri.lelli@redhat.com>
-
-commit 111cd11bbc54850f24191c52ff217da88a5e639b upstream.
-
-Turns out percpu_cpuset_rwsem - commit 1243dc518c9d ("cgroup/cpuset:
-Convert cpuset_mutex to percpu_rwsem") - wasn't such a brilliant idea,
-as it has been reported to cause slowdowns in workloads that need to
-change cpuset configuration frequently and it is also not implementing
-priority inheritance (which causes troubles with realtime workloads).
-
-Convert percpu_cpuset_rwsem back to regular cpuset_mutex. Also grab it
-only for SCHED_DEADLINE tasks (other policies don't care about stable
-cpusets anyway).
-
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ Fix conflict in kernel/cgroup/cpuset.c due to pulling new functions or
-  comment that don't exist on 5.10 or the usage of different cpu hotplug
-  lock whenever replacing the rwsem with mutex. Remove BUG_ON() for
-  rwsem that doesn't exist on mainline. ]
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/cpuset.h |    8 ++---
- kernel/cgroup/cpuset.c |   78 +++++++++++++++++++++++--------------------------
- kernel/sched/core.c    |   22 +++++++++----
- 3 files changed, 57 insertions(+), 51 deletions(-)
-
---- a/include/linux/cpuset.h
-+++ b/include/linux/cpuset.h
-@@ -55,8 +55,8 @@ extern void cpuset_init_smp(void);
- extern void cpuset_force_rebuild(void);
- extern void cpuset_update_active_cpus(void);
- extern void cpuset_wait_for_hotplug(void);
--extern void cpuset_read_lock(void);
--extern void cpuset_read_unlock(void);
-+extern void cpuset_lock(void);
-+extern void cpuset_unlock(void);
- extern void cpuset_cpus_allowed(struct task_struct *p, struct cpumask *mask);
- extern void cpuset_cpus_allowed_fallback(struct task_struct *p);
- extern nodemask_t cpuset_mems_allowed(struct task_struct *p);
-@@ -178,8 +178,8 @@ static inline void cpuset_update_active_
- 
- static inline void cpuset_wait_for_hotplug(void) { }
- 
--static inline void cpuset_read_lock(void) { }
--static inline void cpuset_read_unlock(void) { }
-+static inline void cpuset_lock(void) { }
-+static inline void cpuset_unlock(void) { }
- 
- static inline void cpuset_cpus_allowed(struct task_struct *p,
- 				       struct cpumask *mask)
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -334,16 +334,16 @@ static struct cpuset top_cpuset = {
-  * guidelines for accessing subsystem state in kernel/cgroup.c
-  */
- 
--DEFINE_STATIC_PERCPU_RWSEM(cpuset_rwsem);
-+static DEFINE_MUTEX(cpuset_mutex);
- 
--void cpuset_read_lock(void)
-+void cpuset_lock(void)
- {
--	percpu_down_read(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- }
- 
--void cpuset_read_unlock(void)
-+void cpuset_unlock(void)
- {
--	percpu_up_read(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- }
- 
- static DEFINE_SPINLOCK(callback_lock);
-@@ -930,7 +930,7 @@ static void dl_rebuild_rd_accounting(voi
- 	struct cpuset *cs = NULL;
- 	struct cgroup_subsys_state *pos_css;
- 
--	percpu_rwsem_assert_held(&cpuset_rwsem);
-+	lockdep_assert_held(&cpuset_mutex);
- 	lockdep_assert_cpus_held();
- 	lockdep_assert_held(&sched_domains_mutex);
- 
-@@ -991,7 +991,7 @@ static void rebuild_sched_domains_locked
- 	int ndoms;
- 
- 	lockdep_assert_cpus_held();
--	percpu_rwsem_assert_held(&cpuset_rwsem);
-+	lockdep_assert_held(&cpuset_mutex);
- 
- 	/*
- 	 * If we have raced with CPU hotplug, return early to avoid
-@@ -1042,9 +1042,9 @@ static void rebuild_sched_domains_locked
- void rebuild_sched_domains(void)
- {
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	rebuild_sched_domains_locked();
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- }
- 
-@@ -1160,7 +1160,7 @@ static int update_parent_subparts_cpumas
- 	int new_prs;
- 	bool part_error = false;	/* Partition error? */
- 
--	percpu_rwsem_assert_held(&cpuset_rwsem);
-+	lockdep_assert_held(&cpuset_mutex);
- 
- 	/*
- 	 * The parent must be a partition root.
-@@ -1490,7 +1490,7 @@ static void update_sibling_cpumasks(stru
- 	struct cpuset *sibling;
- 	struct cgroup_subsys_state *pos_css;
- 
--	percpu_rwsem_assert_held(&cpuset_rwsem);
-+	lockdep_assert_held(&cpuset_mutex);
- 
- 	/*
- 	 * Check all its siblings and call update_cpumasks_hier()
-@@ -2157,7 +2157,7 @@ static int cpuset_can_attach(struct cgro
- 	cpuset_attach_old_cs = task_cs(cgroup_taskset_first(tset, &css));
- 	cs = css_cs(css);
- 
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 
- 	/* allow moving tasks into an empty cpuset if on default hierarchy */
- 	ret = -ENOSPC;
-@@ -2181,7 +2181,7 @@ static int cpuset_can_attach(struct cgro
- 	cs->attach_in_progress++;
- 	ret = 0;
- out_unlock:
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	return ret;
- }
- 
-@@ -2193,11 +2193,11 @@ static void cpuset_cancel_attach(struct
- 	cgroup_taskset_first(tset, &css);
- 	cs = css_cs(css);
- 
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	cs->attach_in_progress--;
- 	if (!cs->attach_in_progress)
- 		wake_up(&cpuset_attach_wq);
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- }
- 
- /*
-@@ -2221,7 +2221,7 @@ static void cpuset_attach(struct cgroup_
- 	cs = css_cs(css);
- 
- 	lockdep_assert_cpus_held();	/* see cgroup_attach_lock() */
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 
- 	/* prepare for attach */
- 	if (cs == &top_cpuset)
-@@ -2275,7 +2275,7 @@ static void cpuset_attach(struct cgroup_
- 	if (!cs->attach_in_progress)
- 		wake_up(&cpuset_attach_wq);
- 
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- }
- 
- /* The various types of files and directories in a cpuset file system */
-@@ -2307,7 +2307,7 @@ static int cpuset_write_u64(struct cgrou
- 	int retval = 0;
- 
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs)) {
- 		retval = -ENODEV;
- 		goto out_unlock;
-@@ -2343,7 +2343,7 @@ static int cpuset_write_u64(struct cgrou
- 		break;
- 	}
- out_unlock:
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- 	return retval;
- }
-@@ -2356,7 +2356,7 @@ static int cpuset_write_s64(struct cgrou
- 	int retval = -ENODEV;
- 
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs))
- 		goto out_unlock;
- 
-@@ -2369,7 +2369,7 @@ static int cpuset_write_s64(struct cgrou
- 		break;
- 	}
- out_unlock:
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- 	return retval;
- }
-@@ -2410,7 +2410,7 @@ static ssize_t cpuset_write_resmask(stru
- 	flush_work(&cpuset_hotplug_work);
- 
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs))
- 		goto out_unlock;
- 
-@@ -2434,7 +2434,7 @@ static ssize_t cpuset_write_resmask(stru
- 
- 	free_cpuset(trialcs);
- out_unlock:
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- 	kernfs_unbreak_active_protection(of->kn);
- 	css_put(&cs->css);
-@@ -2567,13 +2567,13 @@ static ssize_t sched_partition_write(str
- 
- 	css_get(&cs->css);
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	if (!is_cpuset_online(cs))
- 		goto out_unlock;
- 
- 	retval = update_prstate(cs, val);
- out_unlock:
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- 	css_put(&cs->css);
- 	return retval ?: nbytes;
-@@ -2781,7 +2781,7 @@ static int cpuset_css_online(struct cgro
- 		return 0;
- 
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 
- 	set_bit(CS_ONLINE, &cs->flags);
- 	if (is_spread_page(parent))
-@@ -2832,7 +2832,7 @@ static int cpuset_css_online(struct cgro
- 	cpumask_copy(cs->effective_cpus, parent->cpus_allowed);
- 	spin_unlock_irq(&callback_lock);
- out_unlock:
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- 	return 0;
- }
-@@ -2853,7 +2853,7 @@ static void cpuset_css_offline(struct cg
- 	struct cpuset *cs = css_cs(css);
- 
- 	get_online_cpus();
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 
- 	if (is_partition_root(cs))
- 		update_prstate(cs, 0);
-@@ -2872,7 +2872,7 @@ static void cpuset_css_offline(struct cg
- 	cpuset_dec();
- 	clear_bit(CS_ONLINE, &cs->flags);
- 
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 	put_online_cpus();
- }
- 
-@@ -2885,7 +2885,7 @@ static void cpuset_css_free(struct cgrou
- 
- static void cpuset_bind(struct cgroup_subsys_state *root_css)
- {
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 	spin_lock_irq(&callback_lock);
- 
- 	if (is_in_v2_mode()) {
-@@ -2898,7 +2898,7 @@ static void cpuset_bind(struct cgroup_su
- 	}
- 
- 	spin_unlock_irq(&callback_lock);
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- }
- 
- /*
-@@ -2940,8 +2940,6 @@ struct cgroup_subsys cpuset_cgrp_subsys
- 
- int __init cpuset_init(void)
- {
--	BUG_ON(percpu_init_rwsem(&cpuset_rwsem));
--
- 	BUG_ON(!alloc_cpumask_var(&top_cpuset.cpus_allowed, GFP_KERNEL));
- 	BUG_ON(!alloc_cpumask_var(&top_cpuset.effective_cpus, GFP_KERNEL));
- 	BUG_ON(!zalloc_cpumask_var(&top_cpuset.subparts_cpus, GFP_KERNEL));
-@@ -3013,7 +3011,7 @@ hotplug_update_tasks_legacy(struct cpuse
- 	is_empty = cpumask_empty(cs->cpus_allowed) ||
- 		   nodes_empty(cs->mems_allowed);
- 
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 
- 	/*
- 	 * Move tasks to the nearest ancestor with execution resources,
-@@ -3023,7 +3021,7 @@ hotplug_update_tasks_legacy(struct cpuse
- 	if (is_empty)
- 		remove_tasks_in_empty_cpuset(cs);
- 
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- }
- 
- static void
-@@ -3073,14 +3071,14 @@ static void cpuset_hotplug_update_tasks(
- retry:
- 	wait_event(cpuset_attach_wq, cs->attach_in_progress == 0);
- 
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 
- 	/*
- 	 * We have raced with task attaching. We wait until attaching
- 	 * is finished, so we won't attach a task to an empty cpuset.
- 	 */
- 	if (cs->attach_in_progress) {
--		percpu_up_write(&cpuset_rwsem);
-+		mutex_unlock(&cpuset_mutex);
- 		goto retry;
- 	}
- 
-@@ -3152,7 +3150,7 @@ update_tasks:
- 		hotplug_update_tasks_legacy(cs, &new_cpus, &new_mems,
- 					    cpus_updated, mems_updated);
- 
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- }
- 
- /**
-@@ -3182,7 +3180,7 @@ static void cpuset_hotplug_workfn(struct
- 	if (on_dfl && !alloc_cpumasks(NULL, &tmp))
- 		ptmp = &tmp;
- 
--	percpu_down_write(&cpuset_rwsem);
-+	mutex_lock(&cpuset_mutex);
- 
- 	/* fetch the available cpus/mems and find out which changed how */
- 	cpumask_copy(&new_cpus, cpu_active_mask);
-@@ -3239,7 +3237,7 @@ static void cpuset_hotplug_workfn(struct
- 		update_tasks_nodemask(&top_cpuset);
- 	}
- 
--	percpu_up_write(&cpuset_rwsem);
-+	mutex_unlock(&cpuset_mutex);
- 
- 	/* if cpus or mems changed, we need to propagate to descendants */
- 	if (cpus_updated || mems_updated) {
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5221,6 +5221,7 @@ static int __sched_setscheduler(struct t
- 	int reset_on_fork;
- 	int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
- 	struct rq *rq;
-+	bool cpuset_locked = false;
- 
- 	/* The pi code expects interrupts enabled */
- 	BUG_ON(pi && in_interrupt());
-@@ -5318,8 +5319,14 @@ recheck:
- 			return retval;
- 	}
- 
--	if (pi)
--		cpuset_read_lock();
-+	/*
-+	 * SCHED_DEADLINE bandwidth accounting relies on stable cpusets
-+	 * information.
-+	 */
-+	if (dl_policy(policy) || dl_policy(p->policy)) {
-+		cpuset_locked = true;
-+		cpuset_lock();
-+	}
- 
- 	/*
- 	 * Make sure no PI-waiters arrive (or leave) while we are
-@@ -5395,8 +5402,8 @@ change:
- 	if (unlikely(oldpolicy != -1 && oldpolicy != p->policy)) {
- 		policy = oldpolicy = -1;
- 		task_rq_unlock(rq, p, &rf);
--		if (pi)
--			cpuset_read_unlock();
-+		if (cpuset_locked)
-+			cpuset_unlock();
- 		goto recheck;
- 	}
- 
-@@ -5462,7 +5469,8 @@ change:
- 	task_rq_unlock(rq, p, &rf);
- 
- 	if (pi) {
--		cpuset_read_unlock();
-+		if (cpuset_locked)
-+			cpuset_unlock();
- 		rt_mutex_adjust_pi(p);
- 	}
- 
-@@ -5474,8 +5482,8 @@ change:
- 
- unlock:
- 	task_rq_unlock(rq, p, &rf);
--	if (pi)
--		cpuset_read_unlock();
-+	if (cpuset_locked)
-+		cpuset_unlock();
- 	return retval;
- }
- 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDKsWRmVeSWpSXmKPExsWy7djP87r+zW9SDI5d07H4O3s7u8WJ600s
+	Fh+uNbFa3Liwn9lizZZGJouLZ14zWkxdu5vJ4vKuOWwWK+cvZ7S4fOISo8X6Z4eZLX4tP8po
+	sWHZWkYHXo8lnb+YPHbOusvusWBTqcemVZ1sHi82z2T0+N6+h82jp20Tk8fnTXIBHFFcNimp
+	OZllqUX6dglcGb3LdzAVHBWpeHl7LnMD4zaBLkZODgkBE4nD16eydzFycQgJrGCUeLn+KwtI
+	QkjgC6PEqnk1EInPjBJLPjcxwnRM+bCHHaJoOaPE+TZ/uKJjv1dDJc4wSqyYqgyRWMkoMe1G
+	O1g3m4C+xLU115hBbBEBVYkztxrYQGxmgaUsEjcuyIDYwgKREo8e7GWFqImSmNl4iRHC1pP4
+	MbERzGYB6t049wDYMl4BDYmWWdfB4pwCNhJbGheDvcAoICvxaOUvdoj54hK3nsxngvhAUGLR
+	7D3MELaYxL9dD9kgbB2Js9efQH1pILF16T4WCFtR4lrPTUaIOXoSN6ZOgbpZW2LZwtfMEDcI
+	Spyc+YQF5GEJgTYuidf7pkENdZFoW98EtVhY4tXxLewQtozE/53zmSYwas9Cct8sJDtmIdkx
+	C8mOBYwsqxjFU0uLc9NTi43zUsv1ihNzi0vz0vWS83M3MQIT3Ol/x7/uYFzx6qPeIUYmDsZD
+	jBIczEoivJccX6UI8aYkVlalFuXHF5XmpBYfYpTmYFES59W2PZksJJCeWJKanZpakFoEk2Xi
+	4JRqYFL+vv7yBEcu1eKmw3e+LYi6Lx8a+V+v/1J2W6nI1EcvHkSsmSAf6f5DzkbAUnRBza3N
+	RY1rNa9stFom/Jlvmi6zQvSFha/2t4U18Jc15Jbf28BWmxomrv79VdKsj/GXJRKYf7t9dkjP
+	mHQ5aJ+O07Vpkv7rpqveWfD5wn5965oi97Y5KxYp7vIW/Vp1RHbHrVlnY+WfOy5zrWx4JG4q
+	GyB4eIqV+9rUPzwLFR6F1Qo3TW658ERANP7P1gqfxWcn/J97/oqJQcH2f7oPl5b9dgzduGAt
+	z5bdNjnlj15xrH3j/2vdAf3XXYL8755vejlp7uQp780V5zc16lmF9Ol7XVbun2lYJpm1Yfup
+	JWJCt4qVWIozEg21mIuKEwFqsNfV3wMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJKsWRmVeSWpSXmKPExsVy+t/xe7r+zW9SDJ48F7X4O3s7u8WJ600s
+	Fh+uNbFa3Liwn9lizZZGJouLZ14zWkxdu5vJ4vKuOWwWK+cvZ7S4fOISo8X6Z4eZLX4tP8po
+	sWHZWkYHXo8lnb+YPHbOusvusWBTqcemVZ1sHi82z2T0+N6+h82jp20Tk8fnTXIBHFF6NkX5
+	pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6Gb3LdzAVHBWp
+	eHl7LnMD4zaBLkZODgkBE4kpH/awdzFycQgJLGWUWHNzKhNEQkZi45errBC2sMSfa11sILaQ
+	wEdGibZlARD2GUaJj6+ZIJpXMkp8unifGSTBJqAvcW3NNTBbREBV4sytBjaQImaBpSwSv17e
+	YwFJCAtESjx6sJcVoihKYsvMXSwQtp7Ej4mNjCA2C1DzxrkH2EFsXgENiZZZ1xkhNudK7J72
+	G+wiTgEbiS2Ni8F6GQVkJR6t/AVWzywgLnHryXyobwQkluw5zwxhi0q8fPwP6jMdibPXnzBC
+	2AYSW5fuY4GwFSWu9dxkhJijJ3Fj6hQ2CFtbYtnC18wQ9whKnJz5hGUCo/QsJOtmIWmZhaRl
+	FpKWBYwsqxhFUkuLc9Nzi430ihNzi0vz0vWS83M3MQLT1LZjP7fsYFz56qPeIUYmDsZDjBIc
+	zEoivJccX6UI8aYkVlalFuXHF5XmpBYfYjQFhtFEZinR5HxgoswriTc0MzA1NDGzNDC1NDNW
+	Euf1LOhIFBJITyxJzU5NLUgtgulj4uCUamBSX//gbenzF7xmJx5/jjt/Ob+r6M2tfdobsndx
+	W6hJ2LE+D8l6v/2ywbXNt6NP8E+36LsSLLM0bkmgUJ3AA8HafVNmyO5qMDMP+BTol1RatP/2
+	MuG3kedXhnfwbP5gtWZCljJPvn7qi6kBOuFOUjG3lN4//b4wde4yP+VtTzdf+6Tf4uq4Romx
+	Y12MlW5IdMbuZsk6Bf9rO24pOE4/dLC39ErJ1kVFTBNOhfm7pH2Sn3vq5peKWbdWTwiqPr1x
+	MkPYrYtiNXO+XZ8QsfrKovPHdvTFLT6gmX29gEOKZ7LEpFX5osXdWu9y3s9ZsX/yiqRtu3pW
+	8eyS+WTl63zW2/i+5YeMOG6By9od92573zqUoMRSnJFoqMVcVJwIAHH6aoDcAwAA
+X-CMS-MailID: 20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d
+X-Msg-Generator: CA
+X-RootMTR: 20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d
+References: <20230828104807.1581592-1-aliceryhl@google.com>
+	<20230828104807.1581592-5-aliceryhl@google.com>
+	<CGME20230828112151eucas1p2371f4cf778e6265e8ac5baf8ea91be4d@eucas1p2.samsung.com>
 
 
+Alice Ryhl <aliceryhl@google.com> writes:
+
+> The main challenge with defining `work_struct` fields is making sure
+> that the function pointer stored in the `work_struct` is appropriate for
+> the work item type it is embedded in. It needs to know the offset of the
+> `work_struct` field being used (even if there are several!) so that it
+> can do a `container_of`, and it needs to know the type of the work item
+> so that it can call into the right user-provided code. All of this needs
+> to happen in a way that provides a safe API to the user, so that users
+> of the workqueue cannot mix up the function pointers.
+>
+> There are three important pieces that are relevant when doing this:
+>
+>  * The pointer type.
+>  * The work item struct. This is what the pointer points at.
+>  * The `work_struct` field. This is a field of the work item struct.
+>
+> This patch introduces a separate trait for each piece. The pointer type
+> is given a `WorkItemPointer` trait, which pointer types need to
+> implement to be usable with the workqueue. This trait will be
+> implemented for `Arc` and `Box` in a later patch in this patchset.
+> Implementing this trait is unsafe because this is where the
+> `container_of` operation happens, but user-code will not need to
+> implement it themselves.
+>
+> The work item struct should then implement the `WorkItem` trait. This
+> trait is where user-code specifies what they want to happen when a work
+> item is executed. It also specifies what the correct pointer type is.
+>
+> Finally, to make the work item struct know the offset of its
+> `work_struct` field, we use a trait called `HasWork<T, ID>`. If a type
+> implements this trait, then the type declares that, at the given offset,
+> there is a field of type `Work<T, ID>`. The trait is marked unsafe
+> because the OFFSET constant must be correct, but we provide an
+> `impl_has_work!` macro that can safely implement `HasWork<T>` on a type.
+> The macro expands to something that only compiles if the specified field
+> really has the type `Work<T>`. It is used like this:
+>
+> ```
+> struct MyWorkItem {
+>     work_field: Work<MyWorkItem, 1>,
+> }
+>
+> impl_has_work! {
+>     impl HasWork<MyWorkItem, 1> for MyWorkItem { self.work_field }
+> }
+> ```
+>
+> Note that since the `Work` type is annotated with an id, you can have
+> several `work_struct` fields by using a different id for each one.
+>
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+
+Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
