@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA1F11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016EFC433C7;
-	Mon, 28 Aug 2023 10:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD8711C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E9DC433C8;
+	Mon, 28 Aug 2023 10:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218206;
-	bh=XyR3yJ5gMjW+wMkk01IXk98sbdbTupWSZvAZXgGcH3Y=;
+	s=korg; t=1693218209;
+	bh=1XxHwvnLNu+sQgWZEDJauhnfbDQ3H6UmhsMhK3qDiNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCFSIbQMgO8+RIYpE45oTJva1Kd+HnbLPTAqqmJu79Bk0GwA2qydeVX0nMZd0sitC
-	 mcr2oT9DQ8VpFjeB582A+5xWmfkWQ5Z+rjkYzzH89GSXchLkUE0/F0Qg5BY0E/XJpg
-	 1eFAUzt5HRJrQ8SGQ0bTQXHtITXGtxj9g7OyIRbc=
+	b=HSpVeliPeuyGLy5W3H2SH1d9XGBs1ls4YpxDIGx0hqN3qQZvTTLMvmLJKhNappg2n
+	 Wx+AK2Cz7pEfXYGhM9SIBDoF8HY0nFPE08VErEerYWk85ndDa1Sl0Vyu56Lj84NNIP
+	 f6OZSNLKP06GQ8zQB2PWhHZhWMSJ5Bdek06Q5Tmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Woody Suwalski <terraluna977@gmail.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.4 107/129] PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus
-Date: Mon, 28 Aug 2023 12:13:06 +0200
-Message-ID: <20230828101200.916376784@linuxfoundation.org>
+	Sanath S <Sanath.S@amd.com>,
+	Sanjay R Mehta <sanju.mehta@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.4 108/129] thunderbolt: Fix Thunderbolt 3 display flickering issue on 2nd hot plug onwards
+Date: Mon, 28 Aug 2023 12:13:07 +0200
+Message-ID: <20230828101200.949726065@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -37,119 +35,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Sanjay R Mehta <sanju.mehta@amd.com>
 
-commit cc22522fd55e257c86d340ae9aedc122e705a435 upstream.
+commit 583893a66d731f5da010a3fa38a0460e05f0149b upstream.
 
-40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-changed acpiphp hotplug to use pci_assign_unassigned_bridge_resources()
-which depends on bridge being available, however enable_slot() can be
-called without bridge associated:
+Previously, on unplug events, the TMU mode was disabled first
+followed by the Time Synchronization Handshake, irrespective of
+whether the tb_switch_tmu_rate_write() API was successful or not.
 
-  1. Legitimate case of hotplug on root bus (widely used in virt world)
+However, this caused a problem with Thunderbolt 3 (TBT3)
+devices, as the TSPacketInterval bits were always enabled by default,
+leading the host router to assume that the device router's TMU was
+already enabled and preventing it from initiating the Time
+Synchronization Handshake. As a result, TBT3 monitors experienced
+display flickering from the second hot plug onwards.
 
-  2. A (misbehaving) firmware, that sends ACPI Bus Check notifications to
-     non existing root ports (Dell Inspiron 7352/0W6WV0), which end up at
-     enable_slot(..., bridge = 0) where bus has no bridge assigned to it.
-     acpihp doesn't know that it's a bridge, and bus specific 'PCI
-     subsystem' can't augment ACPI context with bridge information since
-     the PCI device to get this data from is/was not available.
+To address this issue, we have modified the code to only disable the
+Time Synchronization Handshake during TMU disable if the
+tb_switch_tmu_rate_write() function is successful. This ensures that
+the TBT3 devices function correctly and eliminates the display
+flickering issue.
 
-Issue is easy to reproduce with QEMU's 'pc' machine, which supports PCI
-hotplug on hostbridge slots. To reproduce, boot kernel at commit
-40613da52b13 in VM started with following CLI (assuming guest root fs is
-installed on sda1 partition):
-
-  # qemu-system-x86_64 -M pc -m 1G -enable-kvm -cpu host \
-        -monitor stdio -serial file:serial.log           \
-        -kernel arch/x86/boot/bzImage                    \
-        -append "root=/dev/sda1 console=ttyS0"           \
-        guest_disk.img
-
-Once guest OS is fully booted at qemu prompt:
-
-  (qemu) device_add e1000
-
-(check serial.log) it will cause NULL pointer dereference at:
-
-  void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge)
-  {
-    struct pci_bus *parent = bridge->subordinate;
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-
-   ? pci_assign_unassigned_bridge_resources+0x1f/0x260
-   enable_slot+0x21f/0x3e0
-   acpiphp_hotplug_notify+0x13d/0x260
-   acpi_device_hotplug+0xbc/0x540
-   acpi_hotplug_work_fn+0x15/0x20
-   process_one_work+0x1f7/0x370
-   worker_thread+0x45/0x3b0
-
-The issue was discovered on Dell Inspiron 7352/0W6WV0 laptop with following
-sequence:
-
-  1. Suspend to RAM
-  2. Wake up with the same backtrace being observed:
-  3. 2nd suspend to RAM attempt makes laptop freeze
-
-Fix it by using __pci_bus_assign_resources() instead of
-pci_assign_unassigned_bridge_resources() as we used to do, but only in case
-when bus doesn't have a bridge associated (to cover for the case of ACPI
-event on hostbridge or non existing root port).
-
-That lets us keep hotplug on root bus working like it used to and at the
-same time keeps resource reassignment usable on root ports (and other 1st
-level bridges) that was fixed by 40613da52b13.
-
-Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-Link: https://lore.kernel.org/r/20230726123518.2361181-2-imammedo@redhat.com
-Reported-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/r/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Co-developed-by: Sanath S <Sanath.S@amd.com>
+Signed-off-by: Sanath S <Sanath.S@amd.com>
+Signed-off-by: Sanjay R Mehta <sanju.mehta@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+[ USB4v2 introduced support for uni-directional TMU mode as part of
+  d49b4f043d63 ("thunderbolt: Add support for enhanced uni-directional TMU mode")
+  This is not a stable candidate commit, so adjust the code for backport. ]
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/tmu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -498,6 +498,7 @@ static void enable_slot(struct acpiphp_s
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
-+		LIST_HEAD(add_list);
- 		int max, pass;
+--- a/drivers/thunderbolt/tmu.c
++++ b/drivers/thunderbolt/tmu.c
+@@ -415,7 +415,8 @@ int tb_switch_tmu_disable(struct tb_swit
+ 		 * uni-directional mode and we don't want to change it's TMU
+ 		 * mode.
+ 		 */
+-		tb_switch_tmu_rate_write(sw, TB_SWITCH_TMU_RATE_OFF);
++		ret = tb_switch_tmu_rate_write(sw, TB_SWITCH_TMU_RATE_OFF);
++			return ret;
  
- 		acpiphp_rescan_slot(slot);
-@@ -511,10 +512,15 @@ static void enable_slot(struct acpiphp_s
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
-+					if (pci_is_root_bus(bus))
-+						__pci_bus_size_bridges(dev->subordinate, &add_list);
- 				}
- 			}
- 		}
--		pci_assign_unassigned_bridge_resources(bus->self);
-+		if (pci_is_root_bus(bus))
-+			__pci_bus_assign_resources(bus, &add_list, NULL);
-+		else
-+			pci_assign_unassigned_bridge_resources(bus->self);
- 	}
- 
- 	acpiphp_sanitize_bus(bus);
+ 		tb_port_tmu_time_sync_disable(up);
+ 		ret = tb_port_tmu_time_sync_disable(down);
 
 
