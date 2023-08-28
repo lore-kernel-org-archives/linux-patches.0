@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5490A11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FC8C433C7;
-	Mon, 28 Aug 2023 10:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B69E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA4EC433C8;
+	Mon, 28 Aug 2023 10:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217972;
-	bh=08WVwCRM6XMyfKMNFoRtbl/C21PkLKnr5mI1iI3kwmg=;
+	s=korg; t=1693217974;
+	bh=XV5JX4T3LdUPfKqSETlHBPiUgjJYus2C5+7kiNdJLEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HioDEGNLkJrcBePE3/UGg8SeXT5VX51XItS9wHFnihfrq2yK5DrzCAL0pD1ArZ56T
-	 TXDBAkJwEonjjF3805V2eei0A4E2f7ciH4LGwgqxe9ofmK6XJArMH/1aiEifrPNT0n
-	 MhaqD+FVDwv2+f7f4ZubTSa6l9Lqt3DJY6VHhyN4=
+	b=T/wvnxz4dDFA1Rk7gawM8oI54JpIMmdlETv2ZuVugvmgPXM7J1D+TYTzMXXXtc0j8
+	 OaAaEDJvXTFPJF7sS3/bmqRc8jpsTvYAOMoIXhyesMvf+3exEJvT2Ly5LxiQdZ7ndw
+	 idNiANM2N3mqzSnK2VuwBDXdj1Pfuzmf1PcgMFqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	susan.zheng@veritas.com,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 049/129] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
-Date: Mon, 28 Aug 2023 12:12:08 +0200
-Message-ID: <20230828101159.017113952@linuxfoundation.org>
+Subject: [PATCH 6.4 050/129] bonding: fix macvlan over alb bond support
+Date: Mon, 28 Aug 2023 12:12:09 +0200
+Message-ID: <20230828101159.046940425@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -43,66 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
+[ Upstream commit e74216b8def3803e98ae536de78733e9d7f3b109 ]
 
-Negative ifindexes are illegal, but the kernel does not validate the
-ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
-the kernel generating a warning [1] when such an ifindex is specified.
+The commit 14af9963ba1e ("bonding: Support macvlans on top of tlb/rlb mode
+bonds") aims to enable the use of macvlans on top of rlb bond mode. However,
+the current rlb bond mode only handles ARP packets to update remote neighbor
+entries. This causes an issue when a macvlan is on top of the bond, and
+remote devices send packets to the macvlan using the bond's MAC address
+as the destination. After delivering the packets to the macvlan, the macvlan
+will rejects them as the MAC address is incorrect. Consequently, this commit
+makes macvlan over bond non-functional.
 
-Fix by rejecting negative ifindexes.
+To address this problem, one potential solution is to check for the presence
+of a macvlan port on the bond device using netif_is_macvlan_port(bond->dev)
+and return NULL in the rlb_arp_xmit() function. However, this approach
+doesn't fully resolve the situation when a VLAN exists between the bond and
+macvlan.
 
-[1]
-WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
-[...]
-Call Trace:
- <TASK>
- register_netdevice+0x69a/0x1490 net/core/dev.c:10081
- br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
- rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
- __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
- rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
- rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
- netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
- netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:728 [inline]
- sock_sendmsg+0xd9/0x180 net/socket.c:751
- ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
- ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
- __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+So let's just do a partial revert for commit 14af9963ba1e in rlb_arp_xmit().
+As the comment said, Don't modify or load balance ARPs that do not originate
+locally.
 
-Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
-Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
+Fixes: 14af9963ba1e ("bonding: Support macvlans on top of tlb/rlb mode bonds")
+Reported-by: susan.zheng@veritas.com
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2117816
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/bonding/bond_alb.c |  6 +++---
+ include/net/bonding.h          | 11 +----------
+ 2 files changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index baa323ca37c42..fd6d2430d40ff 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3560,6 +3560,9 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (ifm->ifi_index > 0) {
- 		link_specified = true;
- 		dev = __dev_get_by_index(net, ifm->ifi_index);
-+	} else if (ifm->ifi_index < 0) {
-+		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
-+		return -EINVAL;
- 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
- 		link_specified = true;
- 		dev = rtnl_dev_get(net, tb);
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index b9dbad3a8af82..fc5da5d7744da 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -660,10 +660,10 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
+ 		return NULL;
+ 	arp = (struct arp_pkt *)skb_network_header(skb);
+ 
+-	/* Don't modify or load balance ARPs that do not originate locally
+-	 * (e.g.,arrive via a bridge).
++	/* Don't modify or load balance ARPs that do not originate
++	 * from the bond itself or a VLAN directly above the bond.
+ 	 */
+-	if (!bond_slave_has_mac_rx(bond, arp->mac_src))
++	if (!bond_slave_has_mac_rcu(bond, arp->mac_src))
+ 		return NULL;
+ 
+ 	dev = ip_dev_find(dev_net(bond->dev), arp->ip_src);
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index 59955ac331578..6e4e406d8cd20 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -724,23 +724,14 @@ static inline struct slave *bond_slave_has_mac(struct bonding *bond,
+ }
+ 
+ /* Caller must hold rcu_read_lock() for read */
+-static inline bool bond_slave_has_mac_rx(struct bonding *bond, const u8 *mac)
++static inline bool bond_slave_has_mac_rcu(struct bonding *bond, const u8 *mac)
+ {
+ 	struct list_head *iter;
+ 	struct slave *tmp;
+-	struct netdev_hw_addr *ha;
+ 
+ 	bond_for_each_slave_rcu(bond, tmp, iter)
+ 		if (ether_addr_equal_64bits(mac, tmp->dev->dev_addr))
+ 			return true;
+-
+-	if (netdev_uc_empty(bond->dev))
+-		return false;
+-
+-	netdev_for_each_uc_addr(ha, bond->dev)
+-		if (ether_addr_equal_64bits(mac, ha->addr))
+-			return true;
+-
+ 	return false;
+ }
+ 
 -- 
 2.40.1
 
