@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B4C11C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723D6C433C8;
-	Mon, 28 Aug 2023 10:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C097F11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D58AC433C8;
+	Mon, 28 Aug 2023 10:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217855;
-	bh=hfkFqopCkaiXFsJi4s2NvH9vghZYi3GXW36a4LGe6kU=;
+	s=korg; t=1693217858;
+	bh=KDoaFPaehos2gUDRLbOSQnDqJL1BrHZ1++thCPkYlQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzzjrZ4VgSx726/PCvhGYd38KVUr0h//PPHb8aMcL00Sk4Qi5LeLsJHUV4ERmech/
-	 wAuj+Gm/OCkY/9QPA7UtOqOYDnEJuBhJ285DwDFkS2NfPNm/fVdCp3RMT44b8WfSYB
-	 P2RgfM4vnG5TeH27yngsDnSUV93LRWfybp8a4MHg=
+	b=0zU+yhnngBIyHyQ4935P0J19ACZX9mAdbDYpSuTJqF8nGXKGsz23mQ526Q8Xz/TYY
+	 ZEgbFPbxYVUfAYqbHCyqTE+pXMNNc7wPUl0OsxlZUTxyw1NT1QqVPWWzjfolrVUVHg
+	 bmIg/GtzE7+1+n3sJQvRhIPOdwiSq24zgzNywpp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 4.14 49/57] batman-adv: Fix TT global entry leak when client roamed back
-Date: Mon, 28 Aug 2023 12:13:09 +0200
-Message-ID: <20230828101146.070352490@linuxfoundation.org>
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.14 40/57] net: phy: broadcom: stub c45 read/write for 54810
+Date: Mon, 28 Aug 2023 12:13:00 +0200
+Message-ID: <20230828101145.730594925@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -39,85 +40,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit d25ddb7e788d34cf27ff1738d11a87cb4b67d446 upstream.
+commit 096516d092d54604d590827d05b1022c8f326639 upstream.
 
-When a client roamed back to a node before it got time to destroy the
-pending local entry (i.e. within the same originator interval) the old
-global one is directly removed from hash table and left as such.
+The 54810 does not support c45. The mmd_phy_indirect accesses return
+arbirtary values leading to odd behavior like saying it supports EEE
+when it doesn't. We also see that reading/writing these non-existent
+MMD registers leads to phy instability in some cases.
 
-But because this entry had an extra reference taken at lookup (i.e using
-batadv_tt_global_hash_find) there is no way its memory will be reclaimed
-at any time causing the following memory leak:
-
-  unreferenced object 0xffff0000073c8000 (size 18560):
-    comm "softirq", pid 0, jiffies 4294907738 (age 228.644s)
-    hex dump (first 32 bytes):
-      06 31 ac 12 c7 7a 05 00 01 00 00 00 00 00 00 00  .1...z..........
-      2c ad be 08 00 80 ff ff 6c b6 be 08 00 80 ff ff  ,.......l.......
-    backtrace:
-      [<00000000ee6e0ffa>] kmem_cache_alloc+0x1b4/0x300
-      [<000000000ff2fdbc>] batadv_tt_global_add+0x700/0xe20
-      [<00000000443897c7>] _batadv_tt_update_changes+0x21c/0x790
-      [<000000005dd90463>] batadv_tt_update_changes+0x3c/0x110
-      [<00000000a2d7fc57>] batadv_tt_tvlv_unicast_handler_v1+0xafc/0xe10
-      [<0000000011793f2a>] batadv_tvlv_containers_process+0x168/0x2b0
-      [<00000000b7cbe2ef>] batadv_recv_unicast_tvlv+0xec/0x1f4
-      [<0000000042aef1d8>] batadv_batman_skb_recv+0x25c/0x3a0
-      [<00000000bbd8b0a2>] __netif_receive_skb_core.isra.0+0x7a8/0xe90
-      [<000000004033d428>] __netif_receive_skb_one_core+0x64/0x74
-      [<000000000f39a009>] __netif_receive_skb+0x48/0xe0
-      [<00000000f2cd8888>] process_backlog+0x174/0x344
-      [<00000000507d6564>] __napi_poll+0x58/0x1f4
-      [<00000000b64ef9eb>] net_rx_action+0x504/0x590
-      [<00000000056fa5e4>] _stext+0x1b8/0x418
-      [<00000000878879d6>] run_ksoftirqd+0x74/0xa4
-  unreferenced object 0xffff00000bae1a80 (size 56):
-    comm "softirq", pid 0, jiffies 4294910888 (age 216.092s)
-    hex dump (first 32 bytes):
-      00 78 b1 0b 00 00 ff ff 0d 50 00 00 00 00 00 00  .x.......P......
-      00 00 00 00 00 00 00 00 50 c8 3c 07 00 00 ff ff  ........P.<.....
-    backtrace:
-      [<00000000ee6e0ffa>] kmem_cache_alloc+0x1b4/0x300
-      [<00000000d9aaa49e>] batadv_tt_global_add+0x53c/0xe20
-      [<00000000443897c7>] _batadv_tt_update_changes+0x21c/0x790
-      [<000000005dd90463>] batadv_tt_update_changes+0x3c/0x110
-      [<00000000a2d7fc57>] batadv_tt_tvlv_unicast_handler_v1+0xafc/0xe10
-      [<0000000011793f2a>] batadv_tvlv_containers_process+0x168/0x2b0
-      [<00000000b7cbe2ef>] batadv_recv_unicast_tvlv+0xec/0x1f4
-      [<0000000042aef1d8>] batadv_batman_skb_recv+0x25c/0x3a0
-      [<00000000bbd8b0a2>] __netif_receive_skb_core.isra.0+0x7a8/0xe90
-      [<000000004033d428>] __netif_receive_skb_one_core+0x64/0x74
-      [<000000000f39a009>] __netif_receive_skb+0x48/0xe0
-      [<00000000f2cd8888>] process_backlog+0x174/0x344
-      [<00000000507d6564>] __napi_poll+0x58/0x1f4
-      [<00000000b64ef9eb>] net_rx_action+0x504/0x590
-      [<00000000056fa5e4>] _stext+0x1b8/0x418
-      [<00000000878879d6>] run_ksoftirqd+0x74/0xa4
-
-Releasing the extra reference from batadv_tt_global_hash_find even at
-roam back when batadv_tt_global_free is called fixes this memory leak.
-
-Cc: stable@vger.kernel.org
-Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by; Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[florian: resolved conflicts in 4.14]
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/phy/broadcom.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -791,7 +791,6 @@ check_roaming:
- 		if (roamed_back) {
- 			batadv_tt_global_free(bat_priv, tt_global,
- 					      "Roaming canceled");
--			tt_global = NULL;
- 		} else {
- 			/* The global entry has to be marked as ROAMING and
- 			 * has to be kept for consistency purpose
+--- a/drivers/net/phy/broadcom.c
++++ b/drivers/net/phy/broadcom.c
+@@ -403,6 +403,17 @@ static int bcm5482_read_status(struct ph
+ 	return err;
+ }
+ 
++static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
++{
++	return -EOPNOTSUPP;
++}
++
++static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
++			      u16 val)
++{
++	return -EOPNOTSUPP;
++}
++
+ static int bcm5481_config_aneg(struct phy_device *phydev)
+ {
+ 	struct device_node *np = phydev->mdio.dev.of_node;
+@@ -650,6 +661,8 @@ static struct phy_driver broadcom_driver
+ 	.name           = "Broadcom BCM54810",
+ 	.features       = PHY_GBIT_FEATURES,
+ 	.flags          = PHY_HAS_INTERRUPT,
++	.read_mmd	= bcm54810_read_mmd,
++	.write_mmd	= bcm54810_write_mmd,
+ 	.config_init    = bcm54xx_config_init,
+ 	.config_aneg    = bcm5481_config_aneg,
+ 	.read_status    = genphy_read_status,
 
 
