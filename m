@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DA911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5218C433C8;
-	Mon, 28 Aug 2023 10:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EE911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0B1C433C9;
+	Mon, 28 Aug 2023 10:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217831;
-	bh=GdnSNhXEH5FoMD8PEgPzsAFs8cFVJcifxeBaWg6Dm9A=;
+	s=korg; t=1693217833;
+	bh=ujLExOIIbhAws6yZlcipBu4aAVRnI8x3H6NxpZbPeuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xrw1Ksk4jS1fRhFsu9Dnl9t1tR5l++1YR0P2YyCZPdxaiQJKlo0mAVe818vuQ4Km1
-	 9VpeV47V6H04FjhcQzr0pnXd1/mn8z9myx6Uq5eKHe4PUzjgEM1OXLy3YLmJcQ1lsj
-	 QVhGYclmqS8/DccLJElLolmIh6PZelI8lacciUFQ=
+	b=uODE7Gd+VVvq1D6Le/PB1XuR1vsnlJp9AyrOAwXK2riFgykiKEgp8TsG31X+b5FxP
+	 /6n8eB8u3ItOOesNoo4dL1+XKOMVkTgVV4eTNhiQ86P5jqKZTsfToHflYGCUV/n5x9
+	 DvYMglg9vjtPz2dTbsfsfnnuqT+1CaljxWRCcMJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.14 56/57] scsi: core: raid_class: Remove raid_component_add()
-Date: Mon, 28 Aug 2023 12:13:16 +0200
-Message-ID: <20230828101146.367171252@linuxfoundation.org>
+	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+	Rob Clark <robdclark@chromium.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 57/57] dma-buf/sw_sync: Avoid recursive lock during fence signal
+Date: Mon, 28 Aug 2023 12:13:17 +0200
+Message-ID: <20230828101146.410338460@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -34,98 +35,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Rob Clark <robdclark@chromium.org>
 
-commit 60c5fd2e8f3c42a5abc565ba9876ead1da5ad2b7 upstream.
+[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
 
-The raid_component_add() function was added to the kernel tree via patch
-"[SCSI] embryonic RAID class" (2005). Remove this function since it never
-has had any callers in the Linux kernel. And also raid_component_release()
-is only used in raid_component_add(), so it is also removed.
+If a signal callback releases the sw_sync fence, that will trigger a
+deadlock as the timeline_fence_release recurses onto the fence->lock
+(used both for signaling and the the timeline tree).
 
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Link: https://lore.kernel.org/r/20230822015254.184270-1-wangzhu9@huawei.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Fixes: 04b5b5cb0136 ("scsi: core: Fix possible memory leak if device_add() fails")
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To avoid that, temporarily hold an extra reference to the signalled
+fences until after we drop the lock.
+
+(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
+which avoids some potential UAF issues with the original patch.)
+
+v2: Remove now obsolete comment, use list_move_tail() and
+    list_del_init()
+
+Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/raid_class.c  |   48 ---------------------------------------------
- include/linux/raid_class.h |    4 ---
- 2 files changed, 52 deletions(-)
+ drivers/dma-buf/sw_sync.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/scsi/raid_class.c
-+++ b/drivers/scsi/raid_class.c
-@@ -209,54 +209,6 @@ raid_attr_ro_state(level);
- raid_attr_ro_fn(resync);
- raid_attr_ro_state_fn(state);
- 
--static void raid_component_release(struct device *dev)
--{
--	struct raid_component *rc =
--		container_of(dev, struct raid_component, dev);
--	dev_printk(KERN_ERR, rc->dev.parent, "COMPONENT RELEASE\n");
--	put_device(rc->dev.parent);
--	kfree(rc);
--}
--
--int raid_component_add(struct raid_template *r,struct device *raid_dev,
--		       struct device *component_dev)
--{
--	struct device *cdev =
--		attribute_container_find_class_device(&r->raid_attrs.ac,
--						      raid_dev);
--	struct raid_component *rc;
--	struct raid_data *rd = dev_get_drvdata(cdev);
--	int err;
--
--	rc = kzalloc(sizeof(*rc), GFP_KERNEL);
--	if (!rc)
--		return -ENOMEM;
--
--	INIT_LIST_HEAD(&rc->node);
--	device_initialize(&rc->dev);
--	rc->dev.release = raid_component_release;
--	rc->dev.parent = get_device(component_dev);
--	rc->num = rd->component_count++;
--
--	dev_set_name(&rc->dev, "component-%d", rc->num);
--	list_add_tail(&rc->node, &rd->component_list);
--	rc->dev.class = &raid_class.class;
--	err = device_add(&rc->dev);
--	if (err)
--		goto err_out;
--
--	return 0;
--
--err_out:
--	put_device(&rc->dev);
--	list_del(&rc->node);
--	rd->component_count--;
--	put_device(component_dev);
--	kfree(rc);
--	return err;
--}
--EXPORT_SYMBOL(raid_component_add);
--
- struct raid_template *
- raid_class_attach(struct raid_function_template *ft)
+diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
+index 114b36674af42..29a4e2bb61f03 100644
+--- a/drivers/dma-buf/sw_sync.c
++++ b/drivers/dma-buf/sw_sync.c
+@@ -201,6 +201,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
+  */
+ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
  {
---- a/include/linux/raid_class.h
-+++ b/include/linux/raid_class.h
-@@ -77,7 +77,3 @@ DEFINE_RAID_ATTRIBUTE(enum raid_state, s
- 	
- struct raid_template *raid_class_attach(struct raid_function_template *);
- void raid_class_release(struct raid_template *);
--
--int __must_check raid_component_add(struct raid_template *, struct device *,
--				    struct device *);
--
++	LIST_HEAD(signalled);
+ 	struct sync_pt *pt, *next;
+ 
+ 	trace_sync_timeline(obj);
+@@ -213,21 +214,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+ 		if (!timeline_fence_signaled(&pt->base))
+ 			break;
+ 
+-		list_del_init(&pt->link);
++		dma_fence_get(&pt->base);
++
++		list_move_tail(&pt->link, &signalled);
+ 		rb_erase(&pt->node, &obj->pt_tree);
+ 
+-		/*
+-		 * A signal callback may release the last reference to this
+-		 * fence, causing it to be freed. That operation has to be
+-		 * last to avoid a use after free inside this loop, and must
+-		 * be after we remove the fence from the timeline in order to
+-		 * prevent deadlocking on timeline->lock inside
+-		 * timeline_fence_release().
+-		 */
+ 		dma_fence_signal_locked(&pt->base);
+ 	}
+ 
+ 	spin_unlock_irq(&obj->lock);
++
++	list_for_each_entry_safe(pt, next, &signalled, link) {
++		list_del_init(&pt->link);
++		dma_fence_put(&pt->base);
++	}
+ }
+ 
+ /**
+-- 
+2.40.1
+
 
 
