@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEA1469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E8CC433C9;
-	Mon, 28 Aug 2023 10:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD652469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF17C433C8;
+	Mon, 28 Aug 2023 10:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218897;
-	bh=tjzUFQMql9rsgz5aQ0LNvo1gRYhw8HXgEkoyp4W5X9I=;
+	s=korg; t=1693218900;
+	bh=FGEh7L7Cu1UtvwrHqggls9gTbL47jO3cxX28GT3qZls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlVwGojwCgUk+x6Oy8Ds5SYGadgW+zjKR67jU0reCbL1r0U5n+Bu1fBKkij6GoYq9
-	 tFKri3CBakiN7cXOVmmNcAyAKYwYO0p4DrI3pwSb2Derjzvfie8UpLNdvFEEl60nW+
-	 +5FPtUF0wQqGFiZjejGRNCOQLAwKTAi2N4O1jXR0=
+	b=rBCuCg+foFZo6HlicUSFJNn6qmXT5kYhr/z/OGg1+mvNNzwMICZgD6+4oGhpfztW4
+	 gRpahrkr1+s8ztxdWwjez44s/ue8D13rheEUE0yMU8uiSN+XajtIIg7JoDpEeXBrUv
+	 DEE0vaI80127d+HbG1DZFY8mQoMXF0Dmri3H/wWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Chris Paterson <Chris.Paterson2@renesas.com>,
 	Biju Das <biju.das.jz@bp.renesas.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/122] clk: Fix undefined reference to `clk_rate_exclusive_{get,put}
-Date: Mon, 28 Aug 2023 12:13:48 +0200
-Message-ID: <20230828101200.183148904@linuxfoundation.org>
+Subject: [PATCH 6.1 114/122] pinctrl: renesas: rzg2l: Fix NULL pointer dereference in rzg2l_dt_subnode_to_map()
+Date: Mon, 28 Aug 2023 12:13:49 +0200
+Message-ID: <20230828101200.217469741@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -43,142 +43,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 2746f13f6f1df7999001d6595b16f789ecc28ad1 ]
+[ Upstream commit 661efa2284bbc2338da0424e219603f034072c74 ]
 
-The COMMON_CLK config is not enabled in some of the architectures.
-This causes below build issues:
+Fix the below random NULL pointer crash during boot by serializing
+pinctrl group and function creation/remove calls in
+rzg2l_dt_subnode_to_map() with mutex lock.
 
-pwm-rz-mtu3.c:(.text+0x114):
-undefined reference to `clk_rate_exclusive_put'
-pwm-rz-mtu3.c:(.text+0x32c):
-undefined reference to `clk_rate_exclusive_get'
+Crash log:
+    pc : __pi_strcmp+0x20/0x140
+    lr : pinmux_func_name_to_selector+0x68/0xa4
+    Call trace:
+    __pi_strcmp+0x20/0x140
+    pinmux_generic_add_function+0x34/0xcc
+    rzg2l_dt_subnode_to_map+0x314/0x44c
+    rzg2l_dt_node_to_map+0x164/0x194
+    pinctrl_dt_to_map+0x218/0x37c
+    create_pinctrl+0x70/0x3d8
 
-Fix these issues by moving clk_rate_exclusive_{get,put} inside COMMON_CLK
-code block, as clk.c is enabled by COMMON_CLK.
+While at it, add comments for bitmap_lock and lock.
 
-Fixes: 55e9b8b7b806 ("clk: add clk_rate_exclusive api")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202307251752.vLfmmhYm-lkp@intel.com/
+Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
+Tested-by: Chris Paterson <Chris.Paterson2@renesas.com>
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230725175140.361479-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230815131558.33787-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/clk.h | 80 ++++++++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 40 deletions(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/clk.h b/include/linux/clk.h
-index 1ef0133242374..06f1b292f8a00 100644
---- a/include/linux/clk.h
-+++ b/include/linux/clk.h
-@@ -183,6 +183,39 @@ int clk_get_scaled_duty_cycle(struct clk *clk, unsigned int scale);
-  */
- bool clk_is_match(const struct clk *p, const struct clk *q);
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index fd11d28e5a1e4..2a617832a7e60 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -11,6 +11,7 @@
+ #include <linux/io.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of_device.h>
+ #include <linux/of_irq.h>
+ #include <linux/pinctrl/pinconf-generic.h>
+@@ -146,10 +147,11 @@ struct rzg2l_pinctrl {
+ 	struct gpio_chip		gpio_chip;
+ 	struct pinctrl_gpio_range	gpio_range;
+ 	DECLARE_BITMAP(tint_slot, RZG2L_TINT_MAX_INTERRUPT);
+-	spinlock_t			bitmap_lock;
++	spinlock_t			bitmap_lock; /* protect tint_slot bitmap */
+ 	unsigned int			hwirq[RZG2L_TINT_MAX_INTERRUPT];
  
-+/**
-+ * clk_rate_exclusive_get - get exclusivity over the rate control of a
-+ *                          producer
-+ * @clk: clock source
-+ *
-+ * This function allows drivers to get exclusive control over the rate of a
-+ * provider. It prevents any other consumer to execute, even indirectly,
-+ * opereation which could alter the rate of the provider or cause glitches
-+ *
-+ * If exlusivity is claimed more than once on clock, even by the same driver,
-+ * the rate effectively gets locked as exclusivity can't be preempted.
-+ *
-+ * Must not be called from within atomic context.
-+ *
-+ * Returns success (0) or negative errno.
-+ */
-+int clk_rate_exclusive_get(struct clk *clk);
+-	spinlock_t			lock;
++	spinlock_t			lock; /* lock read/write registers */
++	struct mutex			mutex; /* serialize adding groups and functions */
+ };
+ 
+ static const unsigned int iolh_groupa_mA[] = { 2, 4, 8, 12 };
+@@ -359,11 +361,13 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
+ 		name = np->name;
+ 	}
+ 
++	mutex_lock(&pctrl->mutex);
 +
-+/**
-+ * clk_rate_exclusive_put - release exclusivity over the rate control of a
-+ *                          producer
-+ * @clk: clock source
-+ *
-+ * This function allows drivers to release the exclusivity it previously got
-+ * from clk_rate_exclusive_get()
-+ *
-+ * The caller must balance the number of clk_rate_exclusive_get() and
-+ * clk_rate_exclusive_put() calls.
-+ *
-+ * Must not be called from within atomic context.
-+ */
-+void clk_rate_exclusive_put(struct clk *clk);
+ 	/* Register a single pin group listing all the pins we read from DT */
+ 	gsel = pinctrl_generic_add_group(pctldev, name, pins, num_pinmux, NULL);
+ 	if (gsel < 0) {
+ 		ret = gsel;
+-		goto done;
++		goto unlock;
+ 	}
+ 
+ 	/*
+@@ -377,6 +381,8 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
+ 		goto remove_group;
+ 	}
+ 
++	mutex_unlock(&pctrl->mutex);
 +
- #else
+ 	maps[idx].type = PIN_MAP_TYPE_MUX_GROUP;
+ 	maps[idx].data.mux.group = name;
+ 	maps[idx].data.mux.function = name;
+@@ -388,6 +394,8 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
  
- static inline int clk_notifier_register(struct clk *clk,
-@@ -236,6 +269,13 @@ static inline bool clk_is_match(const struct clk *p, const struct clk *q)
- 	return p == q;
- }
+ remove_group:
+ 	pinctrl_generic_remove_group(pctldev, gsel);
++unlock:
++	mutex_unlock(&pctrl->mutex);
+ done:
+ 	*index = idx;
+ 	kfree(configs);
+@@ -1501,6 +1509,7 @@ static int rzg2l_pinctrl_probe(struct platform_device *pdev)
  
-+static inline int clk_rate_exclusive_get(struct clk *clk)
-+{
-+	return 0;
-+}
-+
-+static inline void clk_rate_exclusive_put(struct clk *clk) {}
-+
- #endif
+ 	spin_lock_init(&pctrl->lock);
+ 	spin_lock_init(&pctrl->bitmap_lock);
++	mutex_init(&pctrl->mutex);
  
- #ifdef CONFIG_HAVE_CLK_PREPARE
-@@ -583,38 +623,6 @@ struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
-  */
- struct clk *devm_get_clk_from_child(struct device *dev,
- 				    struct device_node *np, const char *con_id);
--/**
-- * clk_rate_exclusive_get - get exclusivity over the rate control of a
-- *                          producer
-- * @clk: clock source
-- *
-- * This function allows drivers to get exclusive control over the rate of a
-- * provider. It prevents any other consumer to execute, even indirectly,
-- * opereation which could alter the rate of the provider or cause glitches
-- *
-- * If exlusivity is claimed more than once on clock, even by the same driver,
-- * the rate effectively gets locked as exclusivity can't be preempted.
-- *
-- * Must not be called from within atomic context.
-- *
-- * Returns success (0) or negative errno.
-- */
--int clk_rate_exclusive_get(struct clk *clk);
--
--/**
-- * clk_rate_exclusive_put - release exclusivity over the rate control of a
-- *                          producer
-- * @clk: clock source
-- *
-- * This function allows drivers to release the exclusivity it previously got
-- * from clk_rate_exclusive_get()
-- *
-- * The caller must balance the number of clk_rate_exclusive_get() and
-- * clk_rate_exclusive_put() calls.
-- *
-- * Must not be called from within atomic context.
-- */
--void clk_rate_exclusive_put(struct clk *clk);
+ 	platform_set_drvdata(pdev, pctrl);
  
- /**
-  * clk_enable - inform the system when the clock source should be running.
-@@ -974,14 +982,6 @@ static inline void clk_bulk_put_all(int num_clks, struct clk_bulk_data *clks) {}
- 
- static inline void devm_clk_put(struct device *dev, struct clk *clk) {}
- 
--
--static inline int clk_rate_exclusive_get(struct clk *clk)
--{
--	return 0;
--}
--
--static inline void clk_rate_exclusive_put(struct clk *clk) {}
--
- static inline int clk_enable(struct clk *clk)
- {
- 	return 0;
 -- 
 2.40.1
 
