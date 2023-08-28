@@ -1,218 +1,148 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B774011C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB465C433CB;
-	Mon, 28 Aug 2023 10:49:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219756;
-	bh=FOoCWd1wWNKvpf/SIsOhS9oFXrTgnycRdaafr2917oE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6rvvQGgtoziIX5dS2SbFP04LLWznjMbHdah8uAkaNqKYg6JHF1K4ZBuYdYxNa+xR
-	 9Kp3jll45j5PKYkFgzgjsHN7RLlCeBe8mcnmyDK3nKoh9H3qeltp1rYcDcaxyAvNNh
-	 BheTqMrwWJtcFBU8ZjRDvEEz2RsItAq0enXYuhNY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	security@openanolis.org,
-	Ziming Zhang <ezrakiez@gmail.com>,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>,
-	Niels De Graef <ndegraef@redhat.com>
-Subject: [PATCH 5.10 60/84] drm/vmwgfx: Fix shader stage validation
-Date: Mon, 28 Aug 2023 12:14:17 +0200
-Message-ID: <20230828101151.293053597@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
-References: <20230828101149.146126827@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A3411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:17 +0000 (UTC)
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-d74711fd72eso3651427276.3
+        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 03:49:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1693219757; x=1693824557;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=v7MHrwaqRQcEpiQUM63plXyMym72xBHnTiBqMbx7wZw=;
+        b=AMPWN1b/UHqT75qKL7kIoe84TxjmLd12ffSET1Hw3zrmkOFwbRpVrKJO0Cmu7vKTqw
+         jfM29FhtKEndG/pyh+fyXScGgQ140AUwIHMKysjW4X30MuZL6l1pHcgbC8sMj6pGTcQg
+         2Ri1T9Ff9aeccFLlJ7RFWqFTXHKVbYFBdd+Z/df0DE/2fxuDdKIYf27868XQW/VMM1TO
+         zbX6u8EEd7oD6xVBxHDRTMcxMHou4uyuSZBG7YFDP7dVo5k0nGnqDwM3WA9RLTHJp56j
+         4lJ4E+8lhveVrs7QXiPHz6Sord4FCuGSmK8HAEvJRIQb9QAYu1p22PwiEw3zNHdwAPIp
+         DUJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693219757; x=1693824557;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v7MHrwaqRQcEpiQUM63plXyMym72xBHnTiBqMbx7wZw=;
+        b=H0Lw1iRc8iSYPkn4/YGS1lrBlkmASjmVG8Ks8Ys1PRUE6NxT6mRMDp7Z3YxRjEBcuf
+         5F/OMXndj8HaLIpCy3O06yULNqvOGTP5BjHAYrGI15nWW+6gB8uJrAFU7bOZxVruySXw
+         u6+v8OxlFNwkoRK1Odmqi79TyisHzL94XKEvk3tl0hUe5RKNknLS1Ivm1i9fkIRmxRDi
+         +sWLGBqvfhdokJ2n5KOcIPf4hLFHvcYad5rggEfK6Vkg95zmWBEUhLeqGKFGJYsd37P0
+         UF9XfkGS+EMFx9zayFN7vJI7N+YpgKfZbJ48dULTBJC0A08AJtNUirPOP5HfV+qe1rnM
+         v2Lw==
+X-Gm-Message-State: AOJu0Yxkt0Sz/V+rU+P1uznNghEyat8o4krca/261aSzKdjCqsVQePXk
+	ei8h3jPhbey7fghGMxNG8hjEKeM4IOqUPmI=
+X-Google-Smtp-Source: AGHT+IG68V4CQ3Yh0kd1RgiLluj29FsB8LO+ZlUEBBe9LgdPfKf4r19liQXmPNdRsJc4iZq4rzAmSeqTtzQT/Do=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a25:d6c7:0:b0:d4b:df05:3500 with SMTP id
+ n190-20020a25d6c7000000b00d4bdf053500mr875605ybg.11.1693219756887; Mon, 28
+ Aug 2023 03:49:16 -0700 (PDT)
+Date: Mon, 28 Aug 2023 10:48:06 +0000
+In-Reply-To: <20230828104807.1581592-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20230828104807.1581592-1-aliceryhl@google.com>
+X-Mailer: git-send-email 2.42.0.rc1.204.g551eb34607-goog
+Message-ID: <20230828104807.1581592-7-aliceryhl@google.com>
+Subject: [PATCH v4 6/7] rust: workqueue: add `try_spawn` helper method
+From: Alice Ryhl <aliceryhl@google.com>
+To: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>, 
+	Miguel Ojeda <ojeda@kernel.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, 
+	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Martin Rodriguez Reboredo <yakoyoku@gmail.com>, 
+	Andreas Hindborg <nmi@metaspace.dk>
+Content-Type: text/plain; charset="UTF-8"
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+This adds a convenience method that lets you spawn a closure for
+execution on a workqueue. This will be the most convenient way to use
+workqueues, but it is fallible because it needs to allocate memory.
 
-------------------
-
-From: Zack Rusin <zackr@vmware.com>
-
-commit 14abdfae508228a7307f7491b5c4215ae70c6542 upstream.
-
-For multiple commands the driver was not correctly validating the shader
-stages resulting in possible kernel oopses. The validation code was only.
-if ever, checking the upper bound on the shader stages but never a lower
-bound (valid shader stages start at 1 not 0).
-
-Fixes kernel oopses ending up in vmw_binding_add, e.g.:
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 1 PID: 2443 Comm: testcase Not tainted 6.3.0-rc4-vmwgfx #1
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-RIP: 0010:vmw_binding_add+0x4c/0x140 [vmwgfx]
-Code: 7e 30 49 83 ff 0e 0f 87 ea 00 00 00 4b 8d 04 7f 89 d2 89 cb 48 c1 e0 03 4c 8b b0 40 3d 93 c0 48 8b 80 48 3d 93 c0 49 0f af de <48> 03 1c d0 4c 01 e3 49 8>
-RSP: 0018:ffffb8014416b968 EFLAGS: 00010206
-RAX: ffffffffc0933ec0 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 00000000ffffffff RSI: ffffb8014416b9c0 RDI: ffffb8014316f000
-RBP: ffffb8014416b998 R08: 0000000000000003 R09: 746f6c735f726564
-R10: ffffffffaaf2bda0 R11: 732e676e69646e69 R12: ffffb8014316f000
-R13: ffffb8014416b9c0 R14: 0000000000000040 R15: 0000000000000006
-FS:  00007fba8c0af740(0000) GS:ffff8a1277c80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000007c0933eb8 CR3: 0000000118244001 CR4: 00000000003706e0
-Call Trace:
- <TASK>
- vmw_view_bindings_add+0xf5/0x1b0 [vmwgfx]
- ? ___drm_dbg+0x8a/0xb0 [drm]
- vmw_cmd_dx_set_shader_res+0x8f/0xc0 [vmwgfx]
- vmw_execbuf_process+0x590/0x1360 [vmwgfx]
- vmw_execbuf_ioctl+0x173/0x370 [vmwgfx]
- ? __drm_dev_dbg+0xb4/0xe0 [drm]
- ? __pfx_vmw_execbuf_ioctl+0x10/0x10 [vmwgfx]
- drm_ioctl_kernel+0xbc/0x160 [drm]
- drm_ioctl+0x2d2/0x580 [drm]
- ? __pfx_vmw_execbuf_ioctl+0x10/0x10 [vmwgfx]
- ? do_fault+0x1a6/0x420
- vmw_generic_ioctl+0xbd/0x180 [vmwgfx]
- vmw_unlocked_ioctl+0x19/0x20 [vmwgfx]
- __x64_sys_ioctl+0x96/0xd0
- do_syscall_64+0x5d/0x90
- ? handle_mm_fault+0xe4/0x2f0
- ? debug_smp_processor_id+0x1b/0x30
- ? fpregs_assert_state_consistent+0x2e/0x50
- ? exit_to_user_mode_prepare+0x40/0x180
- ? irqentry_exit_to_user_mode+0xd/0x20
- ? irqentry_exit+0x3f/0x50
- ? exc_page_fault+0x8b/0x180
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Cc: security@openanolis.org
-Reported-by: Ziming Zhang <ezrakiez@gmail.com>
-Testcase-found-by: Niels De Graef <ndegraef@redhat.com>
-Fixes: d80efd5cb3de ("drm/vmwgfx: Initial DX support")
-Cc: <stable@vger.kernel.org> # v4.3+
-Reviewed-by: Maaz Mombasawala<mombasawalam@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230616190934.54828-1-zack@kde.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Andreas Hindborg (Samsung) <nmi@metaspace.dk>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h     |   13 +++++++++++++
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |   29 +++++++++++------------------
- 2 files changed, 24 insertions(+), 18 deletions(-)
+v3 -> v4:
+ * Use new `new_work!` macro.
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -1606,4 +1606,17 @@ static inline void vmw_mmio_write(u32 va
- {
- 	WRITE_ONCE(*addr, value);
- }
+ rust/kernel/workqueue.rs | 43 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+index c1334c48b96b..40ccc53f6e93 100644
+--- a/rust/kernel/workqueue.rs
++++ b/rust/kernel/workqueue.rs
+@@ -29,6 +29,7 @@
+ //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
+ 
+ use crate::{bindings, prelude::*, sync::Arc, sync::LockClassKey, types::Opaque};
++use alloc::alloc::AllocError;
+ use alloc::boxed::Box;
+ use core::marker::PhantomData;
+ use core::pin::Pin;
+@@ -96,6 +97,44 @@ pub fn enqueue<W, const ID: u64>(&self, w: W) -> W::EnqueueOutput
+             })
+         }
+     }
 +
-+static inline bool vmw_shadertype_is_valid(enum vmw_sm_type shader_model,
-+					   u32 shader_type)
-+{
-+	SVGA3dShaderType max_allowed = SVGA3D_SHADERTYPE_PREDX_MAX;
++    /// Tries to spawn the given function or closure as a work item.
++    ///
++    /// This method can fail because it allocates memory to store the work item.
++    pub fn try_spawn<T: 'static + Send + FnOnce()>(&self, func: T) -> Result<(), AllocError> {
++        let init = pin_init!(ClosureWork {
++            work <- new_work!("Queue::try_spawn"),
++            func: Some(func),
++        });
 +
-+	if (shader_model >= VMW_SM_5)
-+		max_allowed = SVGA3D_SHADERTYPE_MAX;
-+	else if (shader_model >= VMW_SM_4)
-+		max_allowed = SVGA3D_SHADERTYPE_DX10_MAX;
-+	return shader_type >= SVGA3D_SHADERTYPE_MIN && shader_type < max_allowed;
++        self.enqueue(Box::pin_init(init).map_err(|_| AllocError)?);
++        Ok(())
++    }
 +}
 +
- #endif
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1998,7 +1998,7 @@ static int vmw_cmd_set_shader(struct vmw
- 
- 	cmd = container_of(header, typeof(*cmd), header);
- 
--	if (cmd->body.type >= SVGA3D_SHADERTYPE_PREDX_MAX) {
-+	if (!vmw_shadertype_is_valid(VMW_SM_LEGACY, cmd->body.type)) {
- 		VMW_DEBUG_USER("Illegal shader type %u.\n",
- 			       (unsigned int) cmd->body.type);
- 		return -EINVAL;
-@@ -2120,8 +2120,6 @@ vmw_cmd_dx_set_single_constant_buffer(st
- 				      SVGA3dCmdHeader *header)
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetSingleConstantBuffer);
--	SVGA3dShaderType max_shader_num = has_sm5_context(dev_priv) ?
--		SVGA3D_NUM_SHADERTYPE : SVGA3D_NUM_SHADERTYPE_DX10;
- 
- 	struct vmw_resource *res = NULL;
- 	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
-@@ -2138,6 +2136,14 @@ vmw_cmd_dx_set_single_constant_buffer(st
- 	if (unlikely(ret != 0))
- 		return ret;
- 
-+	if (!vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type) ||
-+	    cmd->body.slot >= SVGA3D_DX_MAX_CONSTBUFFERS) {
-+		VMW_DEBUG_USER("Illegal const buffer shader %u slot %u.\n",
-+			       (unsigned int) cmd->body.type,
-+			       (unsigned int) cmd->body.slot);
-+		return -EINVAL;
-+	}
++/// A helper type used in `try_spawn`.
++#[pin_data]
++struct ClosureWork<T> {
++    #[pin]
++    work: Work<ClosureWork<T>>,
++    func: Option<T>,
++}
 +
- 	binding.bi.ctx = ctx_node->ctx;
- 	binding.bi.res = res;
- 	binding.bi.bt = vmw_ctx_binding_cb;
-@@ -2146,14 +2152,6 @@ vmw_cmd_dx_set_single_constant_buffer(st
- 	binding.size = cmd->body.sizeInBytes;
- 	binding.slot = cmd->body.slot;
++impl<T> ClosureWork<T> {
++    fn project(self: Pin<&mut Self>) -> &mut Option<T> {
++        // SAFETY: The `func` field is not structurally pinned.
++        unsafe { &mut self.get_unchecked_mut().func }
++    }
++}
++
++impl<T: FnOnce()> WorkItem for ClosureWork<T> {
++    type Pointer = Pin<Box<Self>>;
++
++    fn run(mut this: Pin<Box<Self>>) {
++        if let Some(func) = this.as_mut().project().take() {
++            (func)()
++        }
++    }
+ }
  
--	if (binding.shader_slot >= max_shader_num ||
--	    binding.slot >= SVGA3D_DX_MAX_CONSTBUFFERS) {
--		VMW_DEBUG_USER("Illegal const buffer shader %u slot %u.\n",
--			       (unsigned int) cmd->body.type,
--			       (unsigned int) binding.slot);
--		return -EINVAL;
--	}
--
- 	vmw_binding_add(ctx_node->staged, &binding.bi, binding.shader_slot,
- 			binding.slot);
+ /// A raw work item.
+@@ -365,6 +404,10 @@ unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workqueue::Work<$work_typ
+     )*};
+ }
  
-@@ -2174,15 +2172,13 @@ static int vmw_cmd_dx_set_shader_res(str
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetShaderResources) =
- 		container_of(header, typeof(*cmd), header);
--	SVGA3dShaderType max_allowed = has_sm5_context(dev_priv) ?
--		SVGA3D_SHADERTYPE_MAX : SVGA3D_SHADERTYPE_DX10_MAX;
- 
- 	u32 num_sr_view = (cmd->header.size - sizeof(cmd->body)) /
- 		sizeof(SVGA3dShaderResourceViewId);
- 
- 	if ((u64) cmd->body.startView + (u64) num_sr_view >
- 	    (u64) SVGA3D_DX_MAX_SRVIEWS ||
--	    cmd->body.type >= max_allowed) {
-+	    !vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type)) {
- 		VMW_DEBUG_USER("Invalid shader binding.\n");
- 		return -EINVAL;
- 	}
-@@ -2206,8 +2202,6 @@ static int vmw_cmd_dx_set_shader(struct
- 				 SVGA3dCmdHeader *header)
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetShader);
--	SVGA3dShaderType max_allowed = has_sm5_context(dev_priv) ?
--		SVGA3D_SHADERTYPE_MAX : SVGA3D_SHADERTYPE_DX10_MAX;
- 	struct vmw_resource *res = NULL;
- 	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
- 	struct vmw_ctx_bindinfo_shader binding;
-@@ -2218,8 +2212,7 @@ static int vmw_cmd_dx_set_shader(struct
- 
- 	cmd = container_of(header, typeof(*cmd), header);
- 
--	if (cmd->body.type >= max_allowed ||
--	    cmd->body.type < SVGA3D_SHADERTYPE_MIN) {
-+	if (!vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type)) {
- 		VMW_DEBUG_USER("Illegal shader type %u.\n",
- 			       (unsigned int) cmd->body.type);
- 		return -EINVAL;
-
++impl_has_work! {
++    impl<T> HasWork<Self> for ClosureWork<T> { self.work }
++}
++
+ unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Arc<T>
+ where
+     T: WorkItem<ID, Pointer = Self>,
+-- 
+2.42.0.rc1.204.g551eb34607-goog
 
