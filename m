@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E3F11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA25C433C8;
-	Mon, 28 Aug 2023 10:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3728E11C8D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC4CC433C7;
+	Mon, 28 Aug 2023 10:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219556;
-	bh=tE6ioatjtpqbQON4QRo46+gsn2jVHmqC6Xaj2BIJCNQ=;
+	s=korg; t=1693219559;
+	bh=NxT4VX+ju7RFKrAeSZWG3f998ftvQjEvvNjPyJuva48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wQUqNwNL3wzCyLhHBIn4gXVZoC1HhxL41FRFN7m2+K8nHpHz7Uql5Kx6T1809GTV
-	 WS45YRmsKZJS4LcsaGWogE2UIq6PlxsO7qYJdFWnPeJ3vJvWO7zLUha/xlZNQMfO/x
-	 /FWthVb7qNYFE72Fq2+ghp5kdbS3gwCWPxMrG0ws=
+	b=ebeQUDweR+OfGwIMnM4reGtdBfps7vzp6ugIxhxKeXyRQcO73HQkwVvFEbX/pArba
+	 fvkx/nIBnxfRlvwkv1CR/2kePV4jb0r4E8gyjISn49xluY+YDdZzxgrk63gANY1fej
+	 eu8+mIzAd6yrVdCn2wD0dJo/AwBX3zrs6GxsurzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Jhong <dylan@andestech.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 51/89] mm: add a call to flush_cache_vmap() in vmap_pfn()
-Date: Mon, 28 Aug 2023 12:13:52 +0200
-Message-ID: <20230828101151.882852347@linuxfoundation.org>
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>
+Subject: [PATCH 5.15 78/89] sched/deadline: Create DL BW alloc, free & check overflow interface
+Date: Mon, 28 Aug 2023 12:14:19 +0200
+Message-ID: <20230828101152.842066987@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,55 +41,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
 
-commit a50420c79731fc5cf27ad43719c1091e842a2606 upstream.
+commit 85989106feb734437e2d598b639991b9185a43a6 upstream.
 
-flush_cache_vmap() must be called after new vmalloc mappings are installed
-in the page table in order to allow architectures to make sure the new
-mapping is visible.
+While moving a set of tasks between exclusive cpusets,
+cpuset_can_attach() -> task_can_attach() calls dl_cpu_busy(..., p) for
+DL BW overflow checking and per-task DL BW allocation on the destination
+root_domain for the DL tasks in this set.
 
-It could lead to a panic since on some architectures (like powerpc),
-the page table walker could see the wrong pte value and trigger a
-spurious page fault that can not be resolved (see commit f1cb8f9beba8
-("powerpc/64s/radix: avoid ptesync after set_pte and
-ptep_set_access_flags")).
+This approach has the issue of not freeing already allocated DL BW in
+the following error cases:
 
-But actually the patch is aiming at riscv: the riscv specification
-allows the caching of invalid entries in the TLB, and since we recently
-removed the vmalloc page fault handling, we now need to emit a tlb
-shootdown whenever a new vmalloc mapping is emitted
-(https://lore.kernel.org/linux-riscv/20230725132246.817726-1-alexghiti@rivosinc.com/).
-That's a temporary solution, there are ways to avoid that :)
+(1) The set of tasks includes multiple DL tasks and DL BW overflow
+    checking fails for one of the subsequent DL tasks.
 
-Link: https://lkml.kernel.org/r/20230809164633.1556126-1-alexghiti@rivosinc.com
-Fixes: 3e9a9e256b1e ("mm: add a vmap_pfn function")
-Reported-by: Dylan Jhong <dylan@andestech.com>
-Closes: https://lore.kernel.org/linux-riscv/ZMytNY2J8iyjbPPy@atctrx.andestech.com/
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Reviewed-by: Dylan Jhong <dylan@andestech.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(2) Another controller next to the cpuset controller which is attached
+    to the same cgroup fails in its can_attach().
+
+To address this problem rework dl_cpu_busy():
+
+(1) Split it into dl_bw_check_overflow() & dl_bw_alloc() and add a
+    dedicated dl_bw_free().
+
+(2) dl_bw_alloc() & dl_bw_free() take a `u64 dl_bw` parameter instead of
+    a `struct task_struct *p` used in dl_cpu_busy(). This allows to
+    allocate DL BW for a set of tasks too rather than only for a single
+    task.
+
+Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/sched.h   |    2 +
+ kernel/sched/core.c     |    4 +--
+ kernel/sched/deadline.c |   53 ++++++++++++++++++++++++++++++++++++------------
+ kernel/sched/sched.h    |    2 -
+ 4 files changed, 45 insertions(+), 16 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -2806,6 +2806,10 @@ void *vmap_pfn(unsigned long *pfns, unsi
- 		free_vm_area(area);
- 		return NULL;
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1798,6 +1798,8 @@ current_restore_flags(unsigned long orig
+ 
+ extern int cpuset_cpumask_can_shrink(const struct cpumask *cur, const struct cpumask *trial);
+ extern int task_can_attach(struct task_struct *p, const struct cpumask *cs_effective_cpus);
++extern int dl_bw_alloc(int cpu, u64 dl_bw);
++extern void dl_bw_free(int cpu, u64 dl_bw);
+ #ifdef CONFIG_SMP
+ extern void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask);
+ extern int set_cpus_allowed_ptr(struct task_struct *p, const struct cpumask *new_mask);
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8814,7 +8814,7 @@ int task_can_attach(struct task_struct *
+ 
+ 		if (unlikely(cpu >= nr_cpu_ids))
+ 			return -EINVAL;
+-		ret = dl_cpu_busy(cpu, p);
++		ret = dl_bw_alloc(cpu, p->dl.dl_bw);
  	}
-+
-+	flush_cache_vmap((unsigned long)area->addr,
-+			 (unsigned long)area->addr + count * PAGE_SIZE);
-+
- 	return area->addr;
+ 
+ out:
+@@ -9099,7 +9099,7 @@ static void cpuset_cpu_active(void)
+ static int cpuset_cpu_inactive(unsigned int cpu)
+ {
+ 	if (!cpuhp_tasks_frozen) {
+-		int ret = dl_cpu_busy(cpu, NULL);
++		int ret = dl_bw_check_overflow(cpu);
+ 
+ 		if (ret)
+ 			return ret;
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2898,26 +2898,38 @@ int dl_cpuset_cpumask_can_shrink(const s
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(vmap_pfn);
+ 
+-int dl_cpu_busy(int cpu, struct task_struct *p)
++enum dl_bw_request {
++	dl_bw_req_check_overflow = 0,
++	dl_bw_req_alloc,
++	dl_bw_req_free
++};
++
++static int dl_bw_manage(enum dl_bw_request req, int cpu, u64 dl_bw)
+ {
+-	unsigned long flags, cap;
++	unsigned long flags;
+ 	struct dl_bw *dl_b;
+-	bool overflow;
++	bool overflow = 0;
+ 
+ 	rcu_read_lock_sched();
+ 	dl_b = dl_bw_of(cpu);
+ 	raw_spin_lock_irqsave(&dl_b->lock, flags);
+-	cap = dl_bw_capacity(cpu);
+-	overflow = __dl_overflow(dl_b, cap, 0, p ? p->dl.dl_bw : 0);
+ 
+-	if (!overflow && p) {
+-		/*
+-		 * We reserve space for this task in the destination
+-		 * root_domain, as we can't fail after this point.
+-		 * We will free resources in the source root_domain
+-		 * later on (see set_cpus_allowed_dl()).
+-		 */
+-		__dl_add(dl_b, p->dl.dl_bw, dl_bw_cpus(cpu));
++	if (req == dl_bw_req_free) {
++		__dl_sub(dl_b, dl_bw, dl_bw_cpus(cpu));
++	} else {
++		unsigned long cap = dl_bw_capacity(cpu);
++
++		overflow = __dl_overflow(dl_b, cap, 0, dl_bw);
++
++		if (req == dl_bw_req_alloc && !overflow) {
++			/*
++			 * We reserve space in the destination
++			 * root_domain, as we can't fail after this point.
++			 * We will free resources in the source root_domain
++			 * later on (see set_cpus_allowed_dl()).
++			 */
++			__dl_add(dl_b, dl_bw, dl_bw_cpus(cpu));
++		}
+ 	}
+ 
+ 	raw_spin_unlock_irqrestore(&dl_b->lock, flags);
+@@ -2925,6 +2937,21 @@ int dl_cpu_busy(int cpu, struct task_str
+ 
+ 	return overflow ? -EBUSY : 0;
+ }
++
++int dl_bw_check_overflow(int cpu)
++{
++	return dl_bw_manage(dl_bw_req_check_overflow, cpu, 0);
++}
++
++int dl_bw_alloc(int cpu, u64 dl_bw)
++{
++	return dl_bw_manage(dl_bw_req_alloc, cpu, dl_bw);
++}
++
++void dl_bw_free(int cpu, u64 dl_bw)
++{
++	dl_bw_manage(dl_bw_req_free, cpu, dl_bw);
++}
+ #endif
+ 
+ #ifdef CONFIG_SCHED_DEBUG
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -349,7 +349,7 @@ extern void __getparam_dl(struct task_st
+ extern bool __checkparam_dl(const struct sched_attr *attr);
+ extern bool dl_param_changed(struct task_struct *p, const struct sched_attr *attr);
+ extern int  dl_cpuset_cpumask_can_shrink(const struct cpumask *cur, const struct cpumask *trial);
+-extern int  dl_cpu_busy(int cpu, struct task_struct *p);
++extern int  dl_bw_check_overflow(int cpu);
+ 
+ #ifdef CONFIG_CGROUP_SCHED
+ 
 
 
