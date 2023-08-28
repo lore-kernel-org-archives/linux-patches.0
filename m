@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDB211C96
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A35AC433C8;
-	Mon, 28 Aug 2023 10:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A848111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26785C433C7;
+	Mon, 28 Aug 2023 10:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218681;
-	bh=HV160Rtq+con/wRq5mBpxdY1LxWkNoIDUSk8UDZmZWU=;
+	s=korg; t=1693218684;
+	bh=BaMMbEUDgztlG+X22YwN4s87hAmE63YSRAP2NjbIEcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZAdrtV2YfekHYYGCuFCtAF5ZLhRKmyOM5tQPSAg2RP0P2HYRg8sH53FNpJe+HuqN
-	 HJeGZUcfj6oHYtYGNSAu20igaFNHKZ/5ruuYWvVZF3SV+SJvR24kuqeOYtWkXMFCl0
-	 5C7HRUSTbRW5OG/FH8GgpDofduqOFFxx1DopEiWo=
+	b=Oa3KPFVvYjijDtFEYS6ENkW30LrzMEFtRHFOkY1Hm/OBAgNks1Bte6kreIM0Y/p8u
+	 +GQ2Mi9NQ5V4CZgvwqlHH1iQLFVgnwRFfMdQYlZ1eTYzQ3fMDkR8tnkaPfMF0Iqb7s
+	 bShp3Svk0Ac3N0APb5Ceux6PvrVXntqeD9egUHjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/122] selftests: bonding: do not set port down before adding to bond
-Date: Mon, 28 Aug 2023 12:12:40 +0200
-Message-ID: <20230828101157.902342410@linuxfoundation.org>
+Subject: [PATCH 6.1 019/122] s390/zcrypt: fix reply buffer calculations for CCA replies
+Date: Mon, 28 Aug 2023 12:12:14 +0200
+Message-ID: <20230828101157.081213172@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -41,46 +41,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit be809424659c2844a2d7ab653aacca4898538023 ]
+[ Upstream commit 4cfca532ddc3474b3fc42592d0e4237544344b1a ]
 
-Before adding a port to bond, it need to be set down first. In the
-lacpdu test the author set the port down specifically. But commit
-a4abfa627c38 ("net: rtnetlink: Enslave device before bringing it up")
-changed the operation order, the kernel will set the port down _after_
-adding to bond. So all the ports will be down at last and the test failed.
+The length information for available buffer space for CCA
+replies is covered with two fields in the T6 header prepended
+on each CCA reply: fromcardlen1 and fromcardlen2. The sum of
+these both values must not exceed the AP bus limit for this
+card (24KB for CEX8, 12KB CEX7 and older) minus the always
+present headers.
 
-In fact, the veth interfaces are already inactive when added. This
-means there's no need to set them down again before adding to the bond.
-Let's just remove the link down operation.
+The current code adjusted the fromcardlen2 value in case
+of exceeding the AP bus limit when there was a non-zero
+value given from userspace. Some tests now showed that this
+was the wrong assumption. Instead the userspace value given for
+this field should always be trusted and if the sum of the
+two fields exceeds the AP bus limit for this card the first
+field fromcardlen1 should be adjusted instead.
 
-Fixes: a4abfa627c38 ("net: rtnetlink: Enslave device before bringing it up")
-Reported-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Closes: https://lore.kernel.org/netdev/a0ef07c7-91b0-94bd-240d-944a330fcabd@huawei.com/
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20230817082459.1685972-1-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So now the calculation is done with this new insight in mind.
+Also some additional checks for overflow have been introduced
+and some comments to provide some documentation for future
+maintainers of this complicated calculation code.
+
+Furthermore the 128 bytes of fix overhead which is used
+in the current code is not correct. Investigations showed
+that for a reply always the same two header structs are
+prepended before a possible payload. So this is also fixed
+with this patch.
+
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/drivers/net/bonding/bond-break-lacpdu-tx.sh     | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/crypto/zcrypt_msgtype6.c | 35 ++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond-break-lacpdu-tx.sh b/tools/testing/selftests/drivers/net/bonding/bond-break-lacpdu-tx.sh
-index 47ab90596acb2..6358df5752f90 100755
---- a/tools/testing/selftests/drivers/net/bonding/bond-break-lacpdu-tx.sh
-+++ b/tools/testing/selftests/drivers/net/bonding/bond-break-lacpdu-tx.sh
-@@ -57,8 +57,8 @@ ip link add name veth2-bond type veth peer name veth2-end
+diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
+index 37c01aaa21a2b..84e3ad290f6ba 100644
+--- a/drivers/s390/crypto/zcrypt_msgtype6.c
++++ b/drivers/s390/crypto/zcrypt_msgtype6.c
+@@ -1154,23 +1154,36 @@ static long zcrypt_msgtype6_send_cprb(bool userspace, struct zcrypt_queue *zq,
+ 				      struct ica_xcRB *xcrb,
+ 				      struct ap_message *ap_msg)
+ {
+-	int rc;
+ 	struct response_type *rtype = ap_msg->private;
+ 	struct {
+ 		struct type6_hdr hdr;
+ 		struct CPRBX cprbx;
+ 		/* ... more data blocks ... */
+ 	} __packed * msg = ap_msg->msg;
+-
+-	/*
+-	 * Set the queue's reply buffer length minus 128 byte padding
+-	 * as reply limit for the card firmware.
+-	 */
+-	msg->hdr.fromcardlen1 = min_t(unsigned int, msg->hdr.fromcardlen1,
+-				      zq->reply.bufsize - 128);
+-	if (msg->hdr.fromcardlen2)
+-		msg->hdr.fromcardlen2 =
+-			zq->reply.bufsize - msg->hdr.fromcardlen1 - 128;
++	unsigned int max_payload_size;
++	int rc, delta;
++
++	/* calculate maximum payload for this card and msg type */
++	max_payload_size = zq->reply.bufsize - sizeof(struct type86_fmt2_msg);
++
++	/* limit each of the two from fields to the maximum payload size */
++	msg->hdr.fromcardlen1 = min(msg->hdr.fromcardlen1, max_payload_size);
++	msg->hdr.fromcardlen2 = min(msg->hdr.fromcardlen2, max_payload_size);
++
++	/* calculate delta if the sum of both exceeds max payload size */
++	delta = msg->hdr.fromcardlen1 + msg->hdr.fromcardlen2
++		- max_payload_size;
++	if (delta > 0) {
++		/*
++		 * Sum exceeds maximum payload size, prune fromcardlen1
++		 * (always trust fromcardlen2)
++		 */
++		if (delta > msg->hdr.fromcardlen1) {
++			rc = -EINVAL;
++			goto out;
++		}
++		msg->hdr.fromcardlen1 -= delta;
++	}
  
- # add ports
- ip link set fbond master fab-br0
--ip link set veth1-bond down master fbond
--ip link set veth2-bond down master fbond
-+ip link set veth1-bond master fbond
-+ip link set veth2-bond master fbond
- 
- # bring up
- ip link set veth1-end up
+ 	init_completion(&rtype->work);
+ 	rc = ap_queue_message(zq->queue, ap_msg);
 -- 
 2.40.1
 
