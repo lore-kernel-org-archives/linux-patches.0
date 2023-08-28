@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95F946A0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3FCC433C7;
-	Mon, 28 Aug 2023 10:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B6F8BE0
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7FFC433C8;
+	Mon, 28 Aug 2023 10:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217880;
-	bh=gcAxDgt2QHhx5BQELOJ15QwSe0zqF8jbqiKCBRmkQrU=;
+	s=korg; t=1693217883;
+	bh=7P6cFtPZZb6mbs/rs88B0AtWf7SsqBVhQuNoN6P2B6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjHS3fo/jLpU4uCq7rzH/SnOmLmYenzCABwIzw245kemXkZECG2puXDKAUELCx8Gw
-	 xHWfinXw8e28gTM5humRN3RF/w8jrYBLMmbQUPLGjsZtqfpAqKeLVO6AyF5MYk7mU4
-	 AsLESHcVhdN8sL5LoaADDHpeE5BdMkK4OvzXbdWE=
+	b=qrJlbYVR3rOXgsE1jcdvf8+2xO9IQG4ZW5T9oKnhSz9xDgyOJcFHRt773jfKuXzwn
+	 3Uv5nqI4QctZ45vVUCYfrj2M1/CrC55rtkBUyxXus0M8mXL4sHuBKfQbK+Mu5ic/Ir
+	 Oi9f9hJJKoXAtTbUOYnHh+2HGDeH5jzorFp9MGTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 016/129] octeontx2-af: SDP: fix receive link config
-Date: Mon, 28 Aug 2023 12:11:35 +0200
-Message-ID: <20230828101157.937686244@linuxfoundation.org>
+Subject: [PATCH 6.4 017/129] devlink: add missing unregister linecard notification
+Date: Mon, 28 Aug 2023 12:11:36 +0200
+Message-ID: <20230828101157.967073403@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -42,43 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 05f3d5bc23524bed6f043dfe6b44da687584f9fb ]
+[ Upstream commit 2ebbc9752d06bb1d01201fe632cb6da033b0248d ]
 
-On SDP interfaces, frame oversize and undersize errors are
-observed as driver is not considering packet sizes of all
-subscribers of the link before updating the link config.
+Cited fixes commit introduced linecard notifications for register,
+however it didn't add them for unregister. Fix that by adding them.
 
-This patch fixes the same.
-
-Fixes: 9b7dd87ac071 ("octeontx2-af: Support to modify min/max allowed packet lengths")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230817063006.10366-1-hkelam@marvell.com
+Fixes: c246f9b5fd61 ("devlink: add support to create line card and expose to user")
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230817125240.2144794-1-jiri@resnulli.us
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/devlink/leftover.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 8cdf91a5bf44f..49c1dbe5ec788 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -4016,9 +4016,10 @@ int rvu_mbox_handler_nix_set_hw_frs(struct rvu *rvu, struct nix_frs_cfg *req,
- 	if (link < 0)
- 		return NIX_AF_ERR_RX_LINK_INVALID;
+diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
+index 790e61b2a9404..6ef6090eeffe5 100644
+--- a/net/devlink/leftover.c
++++ b/net/devlink/leftover.c
+@@ -6739,6 +6739,7 @@ void devlink_notify_unregister(struct devlink *devlink)
+ 	struct devlink_param_item *param_item;
+ 	struct devlink_trap_item *trap_item;
+ 	struct devlink_port *devlink_port;
++	struct devlink_linecard *linecard;
+ 	struct devlink_rate *rate_node;
+ 	struct devlink_region *region;
+ 	unsigned long port_index;
+@@ -6767,6 +6768,8 @@ void devlink_notify_unregister(struct devlink *devlink)
  
--	nix_find_link_frs(rvu, req, pcifunc);
+ 	xa_for_each(&devlink->ports, port_index, devlink_port)
+ 		devlink_port_notify(devlink_port, DEVLINK_CMD_PORT_DEL);
++	list_for_each_entry_reverse(linecard, &devlink->linecard_list, list)
++		devlink_linecard_notify(linecard, DEVLINK_CMD_LINECARD_DEL);
+ 	devlink_notify(devlink, DEVLINK_CMD_DEL);
+ }
  
- linkcfg:
-+	nix_find_link_frs(rvu, req, pcifunc);
-+
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_RX_LINKX_CFG(link));
- 	cfg = (cfg & ~(0xFFFFULL << 16)) | ((u64)req->maxlen << 16);
- 	if (req->update_minlen)
 -- 
 2.40.1
 
