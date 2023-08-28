@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDD9611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20AE5C433C7;
-	Mon, 28 Aug 2023 10:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD19C611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB557C433C8;
+	Mon, 28 Aug 2023 10:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219390;
-	bh=HPdGTd8pWBjG5JdXtpXp1iSsaDfpNWx+jB/R36POKBs=;
+	s=korg; t=1693219393;
+	bh=kZ4tHB+Ux55YX+larYKA67CMMkDUatDRK4/zblYzdp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCBEHco24+7e3jTg4qgQZ58vvzu4HVxR4oXTRG2DUuKAsftsHV9RlnXgWeiiEIAXf
-	 MSfjfL6LFvyFD6TFznUYy9KcXofWYvaYv+1ulfOL033kGeOjgcDXPb5vo8Z7aas1P1
-	 seNpeIcfsUi4bn8l5r4JCBNKdvsfb7lWX8hipZqU=
+	b=UD4Da/VemkEEt0M9GqZkUkTG1+yOZDGxaUHQOzESap2IpRDL3J9PP/OjaXGpQYcPQ
+	 MNM7V+qsWtCBmg0TNRQCsFS9Ir1rGVr2S0YZZVPJVCuDoCSTDNfNrOtXzsacmZZ6F/
+	 IvXC9htfzd823iDCOwXoCUc02GRzbjHzKmOS/5wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/89] PCI: acpiphp: Reassign resources on bridge if necessary
-Date: Mon, 28 Aug 2023 12:13:06 +0200
-Message-ID: <20230828101150.350629730@linuxfoundation.org>
+Subject: [PATCH 5.15 06/89] dlm: improve plock logging if interrupted
+Date: Mon, 28 Aug 2023 12:13:07 +0200
+Message-ID: <20230828101150.380707361@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,81 +40,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 ]
+[ Upstream commit bcfad4265cedf3adcac355e994ef9771b78407bd ]
 
-When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
-if bridge windows programmed by firmware are not large enough.
+This patch changes the log level if a plock is removed when interrupted
+from debug to info. Additional it signals now that the plock entity was
+removed to let the user know what's happening.
 
-Reproducer:
-  $ qemu-kvm -monitor stdio -M q35  -m 4G \
-      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
-      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
-      disk_image
+If on a dev_write() a pending plock cannot be find it will signal that
+it might have been removed because wait interruption.
 
- wait till linux guest boots, then hotplug device:
-   (qemu) device_add qxl,bus=rp1
+Before this patch there might be a "dev_write no op ..." info message
+and the users can only guess that the plock was removed before because
+the wait interruption. To be sure that is the case we log both messages
+on the same log level.
 
- hotplug on guest side fails with:
-   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
-   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
-   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
-   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
-   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
-   qxl 0000:01:00.0: enabling device (0000 -> 0003)
-   Unable to create vram_mapping
-   qxl: probe of 0000:01:00.0 failed with error -12
+Let both message be logged on info layer because it should not happened
+a lot and if it happens it should be clear why the op was not found.
 
-However when using native PCIe hotplug
-  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
-it works fine, since kernel attempts to reassign unused resources.
-
-Use the same machinery as native PCIe hotplug to (re)assign resources.
-
-Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/dlm/plock.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/hotplug/acpiphp_glue.c b/drivers/pci/hotplug/acpiphp_glue.c
-index f031302ad4019..44c0b025f09e1 100644
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -489,7 +489,6 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
--		LIST_HEAD(add_list);
- 		int max, pass;
+diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
+index f3482e936cc25..f74d5a28ad27c 100644
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -161,11 +161,12 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
  
- 		acpiphp_rescan_slot(slot);
-@@ -503,12 +502,10 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
--					__pci_bus_size_bridges(dev->subordinate,
--							       &add_list);
- 				}
- 			}
- 		}
--		__pci_bus_assign_resources(bus, &add_list, NULL);
-+		pci_assign_unassigned_bridge_resources(bus->self);
- 	}
+ 	rv = wait_event_killable(recv_wq, (op->done != 0));
+ 	if (rv == -ERESTARTSYS) {
+-		log_debug(ls, "%s: wait killed %llx", __func__,
+-			  (unsigned long long)number);
+ 		spin_lock(&ops_lock);
+ 		list_del(&op->list);
+ 		spin_unlock(&ops_lock);
++		log_print("%s: wait interrupted %x %llx, op removed",
++			  __func__, ls->ls_global_id,
++			  (unsigned long long)number);
+ 		dlm_release_plock_op(op);
+ 		do_unlock_close(ls, number, file, fl);
+ 		goto out;
+@@ -469,8 +470,8 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 		else
+ 			wake_up(&recv_wq);
+ 	} else
+-		log_print("dev_write no op %x %llx", info.fsid,
+-			  (unsigned long long)info.number);
++		log_print("%s: no op %x %llx - may got interrupted?", __func__,
++			  info.fsid, (unsigned long long)info.number);
+ 	return count;
+ }
  
- 	acpiphp_sanitize_bus(bus);
 -- 
 2.40.1
 
