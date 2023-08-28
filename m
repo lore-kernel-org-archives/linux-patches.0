@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA015611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:40:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF0DC433C8;
-	Mon, 28 Aug 2023 10:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B23611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:40:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2439BC433C7;
+	Mon, 28 Aug 2023 10:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219212;
-	bh=S8T13xVrvB2f0FTKHsL/fIxgFkOmmsivTI2WlkJ4XRk=;
+	s=korg; t=1693219215;
+	bh=hcvnsli01lIw9wnDBZxawog+1NRNxo53o1zvcMjX8pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtvtTyowhFBA2u7x5WhcztTMDcWJNxcDpDpDWd+nOV1DZNofvZWI4HMtvbGLwSXy3
-	 KdzzNPl+koH6XWpYYne43rtagz7hsIG2OfStWo6O52CzVupQv17ugBGcaMtp99luEJ
-	 uzu9BzeHcM9h+DKQ44z26tf6Cu4uCW0MWfOjW+iA=
+	b=mWLzJdMUyRVdyjUFWJtGtl8t/bE4ytOl49wfz3B9dZZledF0PCa6MFLSszwOcz3sf
+	 DTMcxHNQvv5iNpoDtKbyQRCXaTFPYLZp0eBLyVu9E6u6wB67FsXkuUeHCau8+lLT4O
+	 JgUnpHntNxfAkCXqr1dCwrqib317O5EkLDK8hAfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Nicolin Chen <nicoleotsuka@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 114/158] ASoC: fsl_sai: Add new added registers and new bit definition
-Date: Mon, 28 Aug 2023 12:13:31 +0200
-Message-ID: <20230828101201.159383895@linuxfoundation.org>
+Subject: [PATCH 5.4 097/158] dlm: replace usage of found with dedicated list iterator variable
+Date: Mon, 28 Aug 2023 12:13:14 +0200
+Message-ID: <20230828101200.584133900@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -42,200 +41,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Jakob Koschel <jakobkoschel@gmail.com>
 
-[ Upstream commit 0b2cbce6898600aae5e87285f1c2000162d59c76 ]
+[ Upstream commit dc1acd5c94699389a9ed023e94dd860c846ea1f6 ]
 
-On i.MX8MQ/i.MX8MN/i.MX8MM platform, the sai IP is upgraded.
-There are some new registers and new bit definition. This
-patch is to complete the register list.
+To move the list iterator variable into the list_for_each_entry_*()
+macro in the future it should be avoided to use the list iterator
+variable after the loop body.
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Acked-by: Nicolin Chen <nicoleotsuka@gmail.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/r/1600323079-5317-2-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 269f399dc19f ("ASoC: fsl_sai: Disable bit clock with transmitter")
+To *never* use the list iterator variable after the loop it was
+concluded to use a separate iterator variable instead of a
+found boolean [1].
+
+This removes the need to use a found variable and simply checking if
+the variable was set, can determine if the break/goto was hit.
+
+Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
+Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 23 ++++++++++++++++
- sound/soc/fsl/fsl_sai.h | 59 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 82 insertions(+)
+ fs/dlm/lock.c    | 53 +++++++++++++++++++++++-------------------------
+ fs/dlm/plock.c   | 24 +++++++++++-----------
+ fs/dlm/recover.c | 39 +++++++++++++++++------------------
+ 3 files changed, 56 insertions(+), 60 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 23f0b5ee000c3..ebca0778d3f57 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -810,6 +810,8 @@ static struct reg_default fsl_sai_reg_defaults_ofs8[] = {
- 	{FSL_SAI_RCR4(8), 0},
- 	{FSL_SAI_RCR5(8), 0},
- 	{FSL_SAI_RMR, 0},
-+	{FSL_SAI_MCTL, 0},
-+	{FSL_SAI_MDIV, 0},
- };
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index b6242071583e0..86d645d02d55c 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -1856,7 +1856,7 @@ static void del_timeout(struct dlm_lkb *lkb)
+ void dlm_scan_timeout(struct dlm_ls *ls)
+ {
+ 	struct dlm_rsb *r;
+-	struct dlm_lkb *lkb;
++	struct dlm_lkb *lkb = NULL, *iter;
+ 	int do_cancel, do_warn;
+ 	s64 wait_us;
  
- static bool fsl_sai_readable_reg(struct device *dev, unsigned int reg)
-@@ -850,6 +852,18 @@ static bool fsl_sai_readable_reg(struct device *dev, unsigned int reg)
- 	case FSL_SAI_RFR6:
- 	case FSL_SAI_RFR7:
- 	case FSL_SAI_RMR:
-+	case FSL_SAI_MCTL:
-+	case FSL_SAI_MDIV:
-+	case FSL_SAI_VERID:
-+	case FSL_SAI_PARAM:
-+	case FSL_SAI_TTCTN:
-+	case FSL_SAI_RTCTN:
-+	case FSL_SAI_TTCTL:
-+	case FSL_SAI_TBCTN:
-+	case FSL_SAI_TTCAP:
-+	case FSL_SAI_RTCTL:
-+	case FSL_SAI_RBCTN:
-+	case FSL_SAI_RTCAP:
- 		return true;
- 	default:
- 		return false;
-@@ -864,6 +878,10 @@ static bool fsl_sai_volatile_reg(struct device *dev, unsigned int reg)
- 	if (reg == FSL_SAI_TCSR(ofs) || reg == FSL_SAI_RCSR(ofs))
- 		return true;
+@@ -1867,27 +1867,28 @@ void dlm_scan_timeout(struct dlm_ls *ls)
+ 		do_cancel = 0;
+ 		do_warn = 0;
+ 		mutex_lock(&ls->ls_timeout_mutex);
+-		list_for_each_entry(lkb, &ls->ls_timeout, lkb_time_list) {
++		list_for_each_entry(iter, &ls->ls_timeout, lkb_time_list) {
  
-+	/* Set VERID and PARAM be volatile for reading value in probe */
-+	if (ofs == 8 && (reg == FSL_SAI_VERID || reg == FSL_SAI_PARAM))
-+		return true;
-+
- 	switch (reg) {
- 	case FSL_SAI_TFR0:
- 	case FSL_SAI_TFR1:
-@@ -917,6 +935,10 @@ static bool fsl_sai_writeable_reg(struct device *dev, unsigned int reg)
- 	case FSL_SAI_TDR7:
- 	case FSL_SAI_TMR:
- 	case FSL_SAI_RMR:
-+	case FSL_SAI_MCTL:
-+	case FSL_SAI_MDIV:
-+	case FSL_SAI_TTCTL:
-+	case FSL_SAI_RTCTL:
- 		return true;
- 	default:
- 		return false;
-@@ -965,6 +987,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
+ 			wait_us = ktime_to_us(ktime_sub(ktime_get(),
+-					      		lkb->lkb_timestamp));
++							iter->lkb_timestamp));
  
- 	if (sai->soc_data->reg_offset == 8) {
- 		fsl_sai_regmap_config.reg_defaults = fsl_sai_reg_defaults_ofs8;
-+		fsl_sai_regmap_config.max_register = FSL_SAI_MDIV;
- 		fsl_sai_regmap_config.num_reg_defaults =
- 			ARRAY_SIZE(fsl_sai_reg_defaults_ofs8);
+-			if ((lkb->lkb_exflags & DLM_LKF_TIMEOUT) &&
+-			    wait_us >= (lkb->lkb_timeout_cs * 10000))
++			if ((iter->lkb_exflags & DLM_LKF_TIMEOUT) &&
++			    wait_us >= (iter->lkb_timeout_cs * 10000))
+ 				do_cancel = 1;
+ 
+-			if ((lkb->lkb_flags & DLM_IFL_WATCH_TIMEWARN) &&
++			if ((iter->lkb_flags & DLM_IFL_WATCH_TIMEWARN) &&
+ 			    wait_us >= dlm_config.ci_timewarn_cs * 10000)
+ 				do_warn = 1;
+ 
+ 			if (!do_cancel && !do_warn)
+ 				continue;
+-			hold_lkb(lkb);
++			hold_lkb(iter);
++			lkb = iter;
+ 			break;
+ 		}
+ 		mutex_unlock(&ls->ls_timeout_mutex);
+ 
+-		if (!do_cancel && !do_warn)
++		if (!lkb)
+ 			break;
+ 
+ 		r = lkb->lkb_resource;
+@@ -5241,21 +5242,18 @@ void dlm_recover_waiters_pre(struct dlm_ls *ls)
+ 
+ static struct dlm_lkb *find_resend_waiter(struct dlm_ls *ls)
+ {
+-	struct dlm_lkb *lkb;
+-	int found = 0;
++	struct dlm_lkb *lkb = NULL, *iter;
+ 
+ 	mutex_lock(&ls->ls_waiters_mutex);
+-	list_for_each_entry(lkb, &ls->ls_waiters, lkb_wait_reply) {
+-		if (lkb->lkb_flags & DLM_IFL_RESEND) {
+-			hold_lkb(lkb);
+-			found = 1;
++	list_for_each_entry(iter, &ls->ls_waiters, lkb_wait_reply) {
++		if (iter->lkb_flags & DLM_IFL_RESEND) {
++			hold_lkb(iter);
++			lkb = iter;
+ 			break;
+ 		}
  	}
-diff --git a/sound/soc/fsl/fsl_sai.h b/sound/soc/fsl/fsl_sai.h
-index afaef20272342..156ee28077b76 100644
---- a/sound/soc/fsl/fsl_sai.h
-+++ b/sound/soc/fsl/fsl_sai.h
-@@ -14,6 +14,8 @@
- 			 SNDRV_PCM_FMTBIT_S32_LE)
+ 	mutex_unlock(&ls->ls_waiters_mutex);
  
- /* SAI Register Map Register */
-+#define FSL_SAI_VERID	0x00 /* SAI Version ID Register */
-+#define FSL_SAI_PARAM	0x04 /* SAI Parameter Register */
- #define FSL_SAI_TCSR(ofs)	(0x00 + ofs) /* SAI Transmit Control */
- #define FSL_SAI_TCR1(ofs)	(0x04 + ofs) /* SAI Transmit Configuration 1 */
- #define FSL_SAI_TCR2(ofs)	(0x08 + ofs) /* SAI Transmit Configuration 2 */
-@@ -37,6 +39,10 @@
- #define FSL_SAI_TFR6	0x58 /* SAI Transmit FIFO 6 */
- #define FSL_SAI_TFR7	0x5C /* SAI Transmit FIFO 7 */
- #define FSL_SAI_TMR	0x60 /* SAI Transmit Mask */
-+#define FSL_SAI_TTCTL	0x70 /* SAI Transmit Timestamp Control Register */
-+#define FSL_SAI_TTCTN	0x74 /* SAI Transmit Timestamp Counter Register */
-+#define FSL_SAI_TBCTN	0x78 /* SAI Transmit Bit Counter Register */
-+#define FSL_SAI_TTCAP	0x7C /* SAI Transmit Timestamp Capture */
- #define FSL_SAI_RCSR(ofs)	(0x80 + ofs) /* SAI Receive Control */
- #define FSL_SAI_RCR1(ofs)	(0x84 + ofs)/* SAI Receive Configuration 1 */
- #define FSL_SAI_RCR2(ofs)	(0x88 + ofs) /* SAI Receive Configuration 2 */
-@@ -60,6 +66,13 @@
- #define FSL_SAI_RFR6	0xd8 /* SAI Receive FIFO 6 */
- #define FSL_SAI_RFR7	0xdc /* SAI Receive FIFO 7 */
- #define FSL_SAI_RMR	0xe0 /* SAI Receive Mask */
-+#define FSL_SAI_RTCTL	0xf0 /* SAI Receive Timestamp Control Register */
-+#define FSL_SAI_RTCTN	0xf4 /* SAI Receive Timestamp Counter Register */
-+#define FSL_SAI_RBCTN	0xf8 /* SAI Receive Bit Counter Register */
-+#define FSL_SAI_RTCAP	0xfc /* SAI Receive Timestamp Capture */
-+
-+#define FSL_SAI_MCTL	0x100 /* SAI MCLK Control Register */
-+#define FSL_SAI_MDIV	0x104 /* SAI MCLK Divide Register */
+-	if (!found)
+-		lkb = NULL;
+ 	return lkb;
+ }
  
- #define FSL_SAI_xCSR(tx, ofs)	(tx ? FSL_SAI_TCSR(ofs) : FSL_SAI_RCSR(ofs))
- #define FSL_SAI_xCR1(tx, ofs)	(tx ? FSL_SAI_TCR1(ofs) : FSL_SAI_RCR1(ofs))
-@@ -73,6 +86,7 @@
+@@ -5914,37 +5912,36 @@ int dlm_user_adopt_orphan(struct dlm_ls *ls, struct dlm_user_args *ua_tmp,
+ 		     int mode, uint32_t flags, void *name, unsigned int namelen,
+ 		     unsigned long timeout_cs, uint32_t *lkid)
+ {
+-	struct dlm_lkb *lkb;
++	struct dlm_lkb *lkb = NULL, *iter;
+ 	struct dlm_user_args *ua;
+ 	int found_other_mode = 0;
+-	int found = 0;
+ 	int rv = 0;
  
- /* SAI Transmit/Receive Control Register */
- #define FSL_SAI_CSR_TERE	BIT(31)
-+#define FSL_SAI_CSR_SE		BIT(30)
- #define FSL_SAI_CSR_FR		BIT(25)
- #define FSL_SAI_CSR_SR		BIT(24)
- #define FSL_SAI_CSR_xF_SHIFT	16
-@@ -106,6 +120,7 @@
- #define FSL_SAI_CR2_MSEL(ID)	((ID) << 26)
- #define FSL_SAI_CR2_BCP		BIT(25)
- #define FSL_SAI_CR2_BCD_MSTR	BIT(24)
-+#define FSL_SAI_CR2_BYP		BIT(23) /* BCLK bypass */
- #define FSL_SAI_CR2_DIV_MASK	0xff
+ 	mutex_lock(&ls->ls_orphans_mutex);
+-	list_for_each_entry(lkb, &ls->ls_orphans, lkb_ownqueue) {
+-		if (lkb->lkb_resource->res_length != namelen)
++	list_for_each_entry(iter, &ls->ls_orphans, lkb_ownqueue) {
++		if (iter->lkb_resource->res_length != namelen)
+ 			continue;
+-		if (memcmp(lkb->lkb_resource->res_name, name, namelen))
++		if (memcmp(iter->lkb_resource->res_name, name, namelen))
+ 			continue;
+-		if (lkb->lkb_grmode != mode) {
++		if (iter->lkb_grmode != mode) {
+ 			found_other_mode = 1;
+ 			continue;
+ 		}
  
- /* SAI Transmit and Receive Configuration 3 Register */
-@@ -115,6 +130,13 @@
- #define FSL_SAI_CR3_WDFL_MASK	0x1f
+-		found = 1;
+-		list_del_init(&lkb->lkb_ownqueue);
+-		lkb->lkb_flags &= ~DLM_IFL_ORPHAN;
+-		*lkid = lkb->lkb_id;
++		lkb = iter;
++		list_del_init(&iter->lkb_ownqueue);
++		iter->lkb_flags &= ~DLM_IFL_ORPHAN;
++		*lkid = iter->lkb_id;
+ 		break;
+ 	}
+ 	mutex_unlock(&ls->ls_orphans_mutex);
  
- /* SAI Transmit and Receive Configuration 4 Register */
-+
-+#define FSL_SAI_CR4_FCONT	BIT(28)
-+#define FSL_SAI_CR4_FCOMB_SHIFT BIT(26)
-+#define FSL_SAI_CR4_FCOMB_SOFT  BIT(27)
-+#define FSL_SAI_CR4_FCOMB_MASK  (0x3 << 26)
-+#define FSL_SAI_CR4_FPACK_8     (0x2 << 24)
-+#define FSL_SAI_CR4_FPACK_16    (0x3 << 24)
- #define FSL_SAI_CR4_FRSZ(x)	(((x) - 1) << 16)
- #define FSL_SAI_CR4_FRSZ_MASK	(0x1f << 16)
- #define FSL_SAI_CR4_SYWD(x)	(((x) - 1) << 8)
-@@ -132,6 +154,43 @@
- #define FSL_SAI_CR5_FBT(x)	((x) << 8)
- #define FSL_SAI_CR5_FBT_MASK	(0x1f << 8)
+-	if (!found && found_other_mode) {
++	if (!lkb && found_other_mode) {
+ 		rv = -EAGAIN;
+ 		goto out;
+ 	}
  
-+/* SAI MCLK Control Register */
-+#define FSL_SAI_MCTL_MCLK_EN	BIT(30)	/* MCLK Enable */
-+#define FSL_SAI_MCTL_MSEL_MASK	(0x3 << 24)
-+#define FSL_SAI_MCTL_MSEL(ID)   ((ID) << 24)
-+#define FSL_SAI_MCTL_MSEL_BUS	0
-+#define FSL_SAI_MCTL_MSEL_MCLK1	BIT(24)
-+#define FSL_SAI_MCTL_MSEL_MCLK2	BIT(25)
-+#define FSL_SAI_MCTL_MSEL_MCLK3	(BIT(24) | BIT(25))
-+#define FSL_SAI_MCTL_DIV_EN	BIT(23)
-+#define FSL_SAI_MCTL_DIV_MASK	0xFF
-+
-+/* SAI VERID Register */
-+#define FSL_SAI_VERID_MAJOR_SHIFT   24
-+#define FSL_SAI_VERID_MAJOR_MASK    GENMASK(31, 24)
-+#define FSL_SAI_VERID_MINOR_SHIFT   16
-+#define FSL_SAI_VERID_MINOR_MASK    GENMASK(23, 16)
-+#define FSL_SAI_VERID_FEATURE_SHIFT 0
-+#define FSL_SAI_VERID_FEATURE_MASK  GENMASK(15, 0)
-+#define FSL_SAI_VERID_EFIFO_EN	    BIT(0)
-+#define FSL_SAI_VERID_TSTMP_EN	    BIT(1)
-+
-+/* SAI PARAM Register */
-+#define FSL_SAI_PARAM_SPF_SHIFT	    16
-+#define FSL_SAI_PARAM_SPF_MASK	    GENMASK(19, 16)
-+#define FSL_SAI_PARAM_WPF_SHIFT	    8
-+#define FSL_SAI_PARAM_WPF_MASK	    GENMASK(11, 8)
-+#define FSL_SAI_PARAM_DLN_MASK	    GENMASK(3, 0)
-+
-+/* SAI MCLK Divide Register */
-+#define FSL_SAI_MDIV_MASK	    0xFFFFF
-+
-+/* SAI timestamp and bitcounter */
-+#define FSL_SAI_xTCTL_TSEN         BIT(0)
-+#define FSL_SAI_xTCTL_TSINC        BIT(1)
-+#define FSL_SAI_xTCTL_RTSC         BIT(8)
-+#define FSL_SAI_xTCTL_RBC          BIT(9)
-+
- /* SAI type */
- #define FSL_SAI_DMA		BIT(0)
- #define FSL_SAI_USE_AC97	BIT(1)
+-	if (!found) {
++	if (!lkb) {
+ 		rv = -ENOENT;
+ 		goto out;
+ 	}
+diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
+index f74d5a28ad27c..95f4662c1209a 100644
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -434,9 +434,9 @@ static ssize_t dev_read(struct file *file, char __user *u, size_t count,
+ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 			 loff_t *ppos)
+ {
++	struct plock_op *op = NULL, *iter;
+ 	struct dlm_plock_info info;
+-	struct plock_op *op;
+-	int found = 0, do_callback = 0;
++	int do_callback = 0;
+ 
+ 	if (count != sizeof(info))
+ 		return -EINVAL;
+@@ -448,23 +448,23 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 		return -EINVAL;
+ 
+ 	spin_lock(&ops_lock);
+-	list_for_each_entry(op, &recv_list, list) {
+-		if (op->info.fsid == info.fsid &&
+-		    op->info.number == info.number &&
+-		    op->info.owner == info.owner) {
+-			list_del_init(&op->list);
+-			memcpy(&op->info, &info, sizeof(info));
+-			if (op->data)
++	list_for_each_entry(iter, &recv_list, list) {
++		if (iter->info.fsid == info.fsid &&
++		    iter->info.number == info.number &&
++		    iter->info.owner == info.owner) {
++			list_del_init(&iter->list);
++			memcpy(&iter->info, &info, sizeof(info));
++			if (iter->data)
+ 				do_callback = 1;
+ 			else
+-				op->done = 1;
+-			found = 1;
++				iter->done = 1;
++			op = iter;
+ 			break;
+ 		}
+ 	}
+ 	spin_unlock(&ops_lock);
+ 
+-	if (found) {
++	if (op) {
+ 		if (do_callback)
+ 			dlm_plock_callback(op);
+ 		else
+diff --git a/fs/dlm/recover.c b/fs/dlm/recover.c
+index 8928e99dfd47d..df18f38a02734 100644
+--- a/fs/dlm/recover.c
++++ b/fs/dlm/recover.c
+@@ -732,10 +732,9 @@ void dlm_recovered_lock(struct dlm_rsb *r)
+ 
+ static void recover_lvb(struct dlm_rsb *r)
+ {
+-	struct dlm_lkb *lkb, *high_lkb = NULL;
++	struct dlm_lkb *big_lkb = NULL, *iter, *high_lkb = NULL;
+ 	uint32_t high_seq = 0;
+ 	int lock_lvb_exists = 0;
+-	int big_lock_exists = 0;
+ 	int lvblen = r->res_ls->ls_lvblen;
+ 
+ 	if (!rsb_flag(r, RSB_NEW_MASTER2) &&
+@@ -751,37 +750,37 @@ static void recover_lvb(struct dlm_rsb *r)
+ 	/* we are the new master, so figure out if VALNOTVALID should
+ 	   be set, and set the rsb lvb from the best lkb available. */
+ 
+-	list_for_each_entry(lkb, &r->res_grantqueue, lkb_statequeue) {
+-		if (!(lkb->lkb_exflags & DLM_LKF_VALBLK))
++	list_for_each_entry(iter, &r->res_grantqueue, lkb_statequeue) {
++		if (!(iter->lkb_exflags & DLM_LKF_VALBLK))
+ 			continue;
+ 
+ 		lock_lvb_exists = 1;
+ 
+-		if (lkb->lkb_grmode > DLM_LOCK_CR) {
+-			big_lock_exists = 1;
++		if (iter->lkb_grmode > DLM_LOCK_CR) {
++			big_lkb = iter;
+ 			goto setflag;
+ 		}
+ 
+-		if (((int)lkb->lkb_lvbseq - (int)high_seq) >= 0) {
+-			high_lkb = lkb;
+-			high_seq = lkb->lkb_lvbseq;
++		if (((int)iter->lkb_lvbseq - (int)high_seq) >= 0) {
++			high_lkb = iter;
++			high_seq = iter->lkb_lvbseq;
+ 		}
+ 	}
+ 
+-	list_for_each_entry(lkb, &r->res_convertqueue, lkb_statequeue) {
+-		if (!(lkb->lkb_exflags & DLM_LKF_VALBLK))
++	list_for_each_entry(iter, &r->res_convertqueue, lkb_statequeue) {
++		if (!(iter->lkb_exflags & DLM_LKF_VALBLK))
+ 			continue;
+ 
+ 		lock_lvb_exists = 1;
+ 
+-		if (lkb->lkb_grmode > DLM_LOCK_CR) {
+-			big_lock_exists = 1;
++		if (iter->lkb_grmode > DLM_LOCK_CR) {
++			big_lkb = iter;
+ 			goto setflag;
+ 		}
+ 
+-		if (((int)lkb->lkb_lvbseq - (int)high_seq) >= 0) {
+-			high_lkb = lkb;
+-			high_seq = lkb->lkb_lvbseq;
++		if (((int)iter->lkb_lvbseq - (int)high_seq) >= 0) {
++			high_lkb = iter;
++			high_seq = iter->lkb_lvbseq;
+ 		}
+ 	}
+ 
+@@ -790,7 +789,7 @@ static void recover_lvb(struct dlm_rsb *r)
+ 		goto out;
+ 
+ 	/* lvb is invalidated if only NL/CR locks remain */
+-	if (!big_lock_exists)
++	if (!big_lkb)
+ 		rsb_set_flag(r, RSB_VALNOTVALID);
+ 
+ 	if (!r->res_lvbptr) {
+@@ -799,9 +798,9 @@ static void recover_lvb(struct dlm_rsb *r)
+ 			goto out;
+ 	}
+ 
+-	if (big_lock_exists) {
+-		r->res_lvbseq = lkb->lkb_lvbseq;
+-		memcpy(r->res_lvbptr, lkb->lkb_lvbptr, lvblen);
++	if (big_lkb) {
++		r->res_lvbseq = big_lkb->lkb_lvbseq;
++		memcpy(r->res_lvbptr, big_lkb->lkb_lvbptr, lvblen);
+ 	} else if (high_lkb) {
+ 		r->res_lvbseq = high_lkb->lkb_lvbseq;
+ 		memcpy(r->res_lvbptr, high_lkb->lkb_lvbptr, lvblen);
 -- 
 2.40.1
 
