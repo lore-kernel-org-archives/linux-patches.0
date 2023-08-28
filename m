@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613C0611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8981C433C7;
-	Mon, 28 Aug 2023 10:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3C6611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86800C433C7;
+	Mon, 28 Aug 2023 10:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219487;
-	bh=gpBB2ObSXgrLT9mSkO437JuusM7XEmgaRbr21WtHQK0=;
+	s=korg; t=1693219489;
+	bh=QUBOK8IqmeeCLe+VdtT9NLzzYMC5CxNIaptwXiD3L8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBVW/MW4NoaYPFHw7khCM4c4Wa4Y6DdxH+eAVDaShVwPxgmI57Wmc7I6QzSPoHp22
-	 BuOcZzPXksMsIkPliFq8f2Edx46NmkWfU88qhdRpbH7fO5PDsB00DJVkT5iJoXHL06
-	 sCEiwf15Rh7FDnT75iWwBw1ACahXydbgVCRLcTlc=
+	b=kbOoVhqjiG5FXezJG0p4xR8yWB4iEyXHzMqMWkgDFxqgsLH0yVdQWfFjOITbDc4Ak
+	 1O2yc9s1cszQvRyGCc5B6udPZVVXyk8XIGgioEhLFrJwyV+zHRb9IoRkfiNbGgIDt+
+	 PDPGe40lGM8fX2S4ImTkXvXcEsfGbK+fRLwvPRhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	mhiramat@kernel.org,
+	vnagarnaik@google.com,
+	shuah@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/89] can: raw: fix lockdep issue in raw_release()
-Date: Mon, 28 Aug 2023 12:13:25 +0200
-Message-ID: <20230828101150.988023449@linuxfoundation.org>
+Subject: [PATCH 5.15 25/89] tracing: Fix cpu buffers unavailable due to record_disabled missed
+Date: Mon, 28 Aug 2023 12:13:26 +0200
+Message-ID: <20230828101151.022727826@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -43,157 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 11c9027c983e9e4b408ee5613b6504d24ebd85be ]
+[ Upstream commit b71645d6af10196c46cbe3732de2ea7d36b3ff6d ]
 
-syzbot complained about a lockdep issue [1]
+Trace ring buffer can no longer record anything after executing
+following commands at the shell prompt:
 
-Since raw_bind() and raw_setsockopt() first get RTNL
-before locking the socket, we must adopt the same order in raw_release()
+  # cd /sys/kernel/tracing
+  # cat tracing_cpumask
+  fff
+  # echo 0 > tracing_cpumask
+  # echo 1 > snapshot
+  # echo fff > tracing_cpumask
+  # echo 1 > tracing_on
+  # echo "hello world" > trace_marker
+  -bash: echo: write error: Bad file descriptor
 
-[1]
-WARNING: possible circular locking dependency detected
-6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0 Not tainted
-------------------------------------------------------
-syz-executor.0/14110 is trying to acquire lock:
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1708 [inline]
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: raw_bind+0xb1/0xab0 net/can/raw.c:435
+The root cause is that:
+  1. After `echo 0 > tracing_cpumask`, 'record_disabled' of cpu buffers
+     in 'tr->array_buffer.buffer' became 1 (see tracing_set_cpumask());
+  2. After `echo 1 > snapshot`, 'tr->array_buffer.buffer' is swapped
+     with 'tr->max_buffer.buffer', then the 'record_disabled' became 0
+     (see update_max_tr());
+  3. After `echo fff > tracing_cpumask`, the 'record_disabled' become -1;
+Then array_buffer and max_buffer are both unavailable due to value of
+'record_disabled' is not 0.
 
-but task is already holding lock:
-ffffffff8e3df368 (rtnl_mutex){+.+.}-{3:3}, at: raw_bind+0xa7/0xab0 net/can/raw.c:434
+To fix it, enable or disable both array_buffer and max_buffer at the same
+time in tracing_set_cpumask().
 
-which lock already depends on the new lock.
+Link: https://lkml.kernel.org/r/20230805033816.3284594-2-zhengyejian1@huawei.com
 
-the existing dependency chain (in reverse order) is:
-
--> #1 (rtnl_mutex){+.+.}-{3:3}:
-__mutex_lock_common kernel/locking/mutex.c:603 [inline]
-__mutex_lock+0x181/0x1340 kernel/locking/mutex.c:747
-raw_release+0x1c6/0x9b0 net/can/raw.c:391
-__sock_release+0xcd/0x290 net/socket.c:654
-sock_close+0x1c/0x20 net/socket.c:1386
-__fput+0x3fd/0xac0 fs/file_table.c:384
-task_work_run+0x14d/0x240 kernel/task_work.c:179
-resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
-exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
-exit_to_user_mode_prepare+0x210/0x240 kernel/entry/common.c:204
-__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
-syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:297
-do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
--> #0 (sk_lock-AF_CAN){+.+.}-{0:0}:
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-other info that might help us debug this:
-
-Possible unsafe locking scenario:
-
-CPU0 CPU1
----- ----
-lock(rtnl_mutex);
-        lock(sk_lock-AF_CAN);
-        lock(rtnl_mutex);
-lock(sk_lock-AF_CAN);
-
-*** DEADLOCK ***
-
-1 lock held by syz-executor.0/14110:
-
-stack backtrace:
-CPU: 0 PID: 14110 Comm: syz-executor.0 Not tainted 6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
-check_noncircular+0x311/0x3f0 kernel/locking/lockdep.c:2195
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd89007cb29
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd890d2a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-RAX: ffffffffffffffda RBX: 00007fd89019bf80 RCX: 00007fd89007cb29
-RDX: 0000000000000010 RSI: 0000000020000040 RDI: 0000000000000003
-RBP: 00007fd8900c847a R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd89019bf80 R15: 00007ffebf8124f8
-</TASK>
-
-Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: stable@vger.kernel.org
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/all/20230720114438.172434-1-edumazet@google.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: <mhiramat@kernel.org>
+Cc: <vnagarnaik@google.com>
+Cc: <shuah@kernel.org>
+Fixes: 71babb2705e2 ("tracing: change CPU ring buffer state from tracing_cpumask")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/raw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index afa76ce0bf608..c02df37894ff9 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -383,9 +383,9 @@ static int raw_release(struct socket *sock)
- 	list_del(&ro->notifier);
- 	spin_unlock(&raw_notifier_lock);
- 
-+	rtnl_lock();
- 	lock_sock(sk);
- 
--	rtnl_lock();
- 	/* remove current filters & unregister */
- 	if (ro->bound) {
- 		if (ro->dev)
-@@ -402,12 +402,13 @@ static int raw_release(struct socket *sock)
- 	ro->dev = NULL;
- 	ro->count = 0;
- 	free_percpu(ro->uniq);
--	rtnl_unlock();
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
- 
- 	release_sock(sk);
-+	rtnl_unlock();
-+
- 	sock_put(sk);
- 
- 	return 0;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index d4c381f06b7b2..edc58133ed5ed 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5171,11 +5171,17 @@ int tracing_set_cpumask(struct trace_array *tr,
+ 				!cpumask_test_cpu(cpu, tracing_cpumask_new)) {
+ 			atomic_inc(&per_cpu_ptr(tr->array_buffer.data, cpu)->disabled);
+ 			ring_buffer_record_disable_cpu(tr->array_buffer.buffer, cpu);
++#ifdef CONFIG_TRACER_MAX_TRACE
++			ring_buffer_record_disable_cpu(tr->max_buffer.buffer, cpu);
++#endif
+ 		}
+ 		if (!cpumask_test_cpu(cpu, tr->tracing_cpumask) &&
+ 				cpumask_test_cpu(cpu, tracing_cpumask_new)) {
+ 			atomic_dec(&per_cpu_ptr(tr->array_buffer.data, cpu)->disabled);
+ 			ring_buffer_record_enable_cpu(tr->array_buffer.buffer, cpu);
++#ifdef CONFIG_TRACER_MAX_TRACE
++			ring_buffer_record_enable_cpu(tr->max_buffer.buffer, cpu);
++#endif
+ 		}
+ 	}
+ 	arch_spin_unlock(&tr->max_lock);
 -- 
 2.40.1
 
