@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA6911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600A3C433C7;
-	Mon, 28 Aug 2023 10:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD7611C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC3CC433C8;
+	Mon, 28 Aug 2023 10:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218975;
-	bh=YhJPENx1eoWqDNTOIYR+bkDC5y9D5yFKN2c+0iJNPno=;
+	s=korg; t=1693218978;
+	bh=PVMEQymqrs08cGsUwGN90wrnriEUDRjVD8a+SWve8SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzOtlrPJWZ7sVIvhgAw+2Od48GrcduCfhumFwxLl5vZJEOb5xtfegaN0gbBbqm4KF
-	 kNzJ6Jb6JOjQaqpvS4kUsIjzy3rF7/OFhjHIXalexf7JctutczPFXX25KclU0Xry9g
-	 A+SgwuBZeJaxtaljRVCn2nAndu4c4alc0y+OhnYQ=
+	b=KyOoTdQnevb3GSIR9MITFiyLZu3Lhg9d7QGSz0CZ49N0MEPv6rwDNJfmUtRWSX2fq
+	 +exOvexNFZDAoAeSYywhTFcDIQx7BioUf6vu1u7wYHBi2bfHajYXkskSRC/MzPnKX6
+	 6Q6j+ZvfcEDYtdC45zn8khhsS6lx+42tpzFj4oy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>,
+	David Laight <David.Laight@ACULAB.COM>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 028/158] iio: add addac subdirectory
-Date: Mon, 28 Aug 2023 12:12:05 +0200
-Message-ID: <20230828101158.296690442@linuxfoundation.org>
+Subject: [PATCH 5.4 029/158] iio: adc: stx104: Utilize iomap interface
+Date: Mon, 28 Aug 2023 12:12:06 +0200
+Message-ID: <20230828101158.327061207@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,76 +42,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit b62e2e1763cda3a6c494ed754317f19be1249297 ]
+[ Upstream commit 73b8390cc27e096ab157be261ccc4eaaa6db87af ]
 
-For IIO devices that expose both ADC and DAC functionality.
+This driver doesn't need to access I/O ports directly via inb()/outb()
+and friends. This patch abstracts such access by calling ioport_map()
+to enable the use of more typical ioread8()/iowrite8() I/O memory
+accessor calls.
 
-Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
-Link: https://lore.kernel.org/r/20211205114045.173612-2-cosmin.tanislav@analog.com
+Suggested-by: David Laight <David.Laight@ACULAB.COM>
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/64673797df382c52fc32fce24348b25a0b05e73a.1652201921.git.william.gray@linaro.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/Kconfig        | 1 +
- drivers/iio/Makefile       | 1 +
- drivers/iio/addac/Kconfig  | 8 ++++++++
- drivers/iio/addac/Makefile | 6 ++++++
- 4 files changed, 16 insertions(+)
- create mode 100644 drivers/iio/addac/Kconfig
- create mode 100644 drivers/iio/addac/Makefile
+ drivers/iio/adc/stx104.c | 56 +++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/iio/Kconfig b/drivers/iio/Kconfig
-index 5bd51853b15ec..3c0da322ece74 100644
---- a/drivers/iio/Kconfig
-+++ b/drivers/iio/Kconfig
-@@ -70,6 +70,7 @@ config IIO_TRIGGERED_EVENT
+diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/adc/stx104.c
+index f87bbc711ccc0..112362f7d3943 100644
+--- a/drivers/iio/adc/stx104.c
++++ b/drivers/iio/adc/stx104.c
+@@ -51,7 +51,7 @@ MODULE_PARM_DESC(base, "Apex Embedded Systems STX104 base addresses");
+  */
+ struct stx104_iio {
+ 	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
+-	unsigned int base;
++	void __iomem *base;
+ };
  
- source "drivers/iio/accel/Kconfig"
- source "drivers/iio/adc/Kconfig"
-+source "drivers/iio/addac/Kconfig"
- source "drivers/iio/afe/Kconfig"
- source "drivers/iio/amplifiers/Kconfig"
- source "drivers/iio/chemical/Kconfig"
-diff --git a/drivers/iio/Makefile b/drivers/iio/Makefile
-index bff682ad1cfbb..96fd43b2ef7c1 100644
---- a/drivers/iio/Makefile
-+++ b/drivers/iio/Makefile
-@@ -15,6 +15,7 @@ obj-$(CONFIG_IIO_TRIGGERED_EVENT) += industrialio-triggered-event.o
+ /**
+@@ -64,7 +64,7 @@ struct stx104_iio {
+ struct stx104_gpio {
+ 	struct gpio_chip chip;
+ 	spinlock_t lock;
+-	unsigned int base;
++	void __iomem *base;
+ 	unsigned int out_state;
+ };
  
- obj-y += accel/
- obj-y += adc/
-+obj-y += addac/
- obj-y += afe/
- obj-y += amplifiers/
- obj-y += buffer/
-diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
-new file mode 100644
-index 0000000000000..2e64d7755d5ea
---- /dev/null
-+++ b/drivers/iio/addac/Kconfig
-@@ -0,0 +1,8 @@
-+#
-+# ADC DAC drivers
-+#
-+# When adding new entries keep the list in alphabetical order
+@@ -79,7 +79,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_HARDWAREGAIN:
+ 		/* get gain configuration */
+-		adc_config = inb(priv->base + 11);
++		adc_config = ioread8(priv->base + 11);
+ 		gain = adc_config & 0x3;
+ 
+ 		*val = 1 << gain;
+@@ -91,24 +91,24 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 		}
+ 
+ 		/* select ADC channel */
+-		outb(chan->channel | (chan->channel << 4), priv->base + 2);
++		iowrite8(chan->channel | (chan->channel << 4), priv->base + 2);
+ 
+ 		/* trigger ADC sample capture and wait for completion */
+-		outb(0, priv->base);
+-		while (inb(priv->base + 8) & BIT(7));
++		iowrite8(0, priv->base);
++		while (ioread8(priv->base + 8) & BIT(7));
+ 
+-		*val = inw(priv->base);
++		*val = ioread16(priv->base);
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		/* get ADC bipolar/unipolar configuration */
+-		adc_config = inb(priv->base + 11);
++		adc_config = ioread8(priv->base + 11);
+ 		adbu = !(adc_config & BIT(2));
+ 
+ 		*val = -32768 * adbu;
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		/* get ADC bipolar/unipolar and gain configuration */
+-		adc_config = inb(priv->base + 11);
++		adc_config = ioread8(priv->base + 11);
+ 		adbu = !(adc_config & BIT(2));
+ 		gain = adc_config & 0x3;
+ 
+@@ -130,16 +130,16 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+ 		/* Only four gain states (x1, x2, x4, x8) */
+ 		switch (val) {
+ 		case 1:
+-			outb(0, priv->base + 11);
++			iowrite8(0, priv->base + 11);
+ 			break;
+ 		case 2:
+-			outb(1, priv->base + 11);
++			iowrite8(1, priv->base + 11);
+ 			break;
+ 		case 4:
+-			outb(2, priv->base + 11);
++			iowrite8(2, priv->base + 11);
+ 			break;
+ 		case 8:
+-			outb(3, priv->base + 11);
++			iowrite8(3, priv->base + 11);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -153,7 +153,7 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+ 				return -EINVAL;
+ 
+ 			priv->chan_out_states[chan->channel] = val;
+-			outw(val, priv->base + 4 + 2 * chan->channel);
++			iowrite16(val, priv->base + 4 + 2 * chan->channel);
+ 
+ 			return 0;
+ 		}
+@@ -222,7 +222,7 @@ static int stx104_gpio_get(struct gpio_chip *chip, unsigned int offset)
+ 	if (offset >= 4)
+ 		return -EINVAL;
+ 
+-	return !!(inb(stx104gpio->base) & BIT(offset));
++	return !!(ioread8(stx104gpio->base) & BIT(offset));
+ }
+ 
+ static int stx104_gpio_get_multiple(struct gpio_chip *chip, unsigned long *mask,
+@@ -230,7 +230,7 @@ static int stx104_gpio_get_multiple(struct gpio_chip *chip, unsigned long *mask,
+ {
+ 	struct stx104_gpio *const stx104gpio = gpiochip_get_data(chip);
+ 
+-	*bits = inb(stx104gpio->base);
++	*bits = ioread8(stx104gpio->base);
+ 
+ 	return 0;
+ }
+@@ -252,7 +252,7 @@ static void stx104_gpio_set(struct gpio_chip *chip, unsigned int offset,
+ 	else
+ 		stx104gpio->out_state &= ~mask;
+ 
+-	outb(stx104gpio->out_state, stx104gpio->base);
++	iowrite8(stx104gpio->out_state, stx104gpio->base);
+ 
+ 	spin_unlock_irqrestore(&stx104gpio->lock, flags);
+ }
+@@ -279,7 +279,7 @@ static void stx104_gpio_set_multiple(struct gpio_chip *chip,
+ 
+ 	stx104gpio->out_state &= ~*mask;
+ 	stx104gpio->out_state |= *mask & *bits;
+-	outb(stx104gpio->out_state, stx104gpio->base);
++	iowrite8(stx104gpio->out_state, stx104gpio->base);
+ 
+ 	spin_unlock_irqrestore(&stx104gpio->lock, flags);
+ }
+@@ -306,11 +306,16 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 		return -EBUSY;
+ 	}
+ 
++	priv = iio_priv(indio_dev);
++	priv->base = devm_ioport_map(dev, base[id], STX104_EXTENT);
++	if (!priv->base)
++		return -ENOMEM;
 +
-+menu "Analog to digital and digital to analog converters"
-+
-+endmenu
-diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
-new file mode 100644
-index 0000000000000..b888b9ee12da0
---- /dev/null
-+++ b/drivers/iio/addac/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Makefile for industrial I/O ADDAC drivers
-+#
-+
-+# When adding new entries keep the list in alphabetical order
+ 	indio_dev->info = &stx104_info;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 
+ 	/* determine if differential inputs */
+-	if (inb(base[id] + 8) & BIT(5)) {
++	if (ioread8(priv->base + 8) & BIT(5)) {
+ 		indio_dev->num_channels = ARRAY_SIZE(stx104_channels_diff);
+ 		indio_dev->channels = stx104_channels_diff;
+ 	} else {
+@@ -321,18 +326,15 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 	indio_dev->name = dev_name(dev);
+ 	indio_dev->dev.parent = dev;
+ 
+-	priv = iio_priv(indio_dev);
+-	priv->base = base[id];
+-
+ 	/* configure device for software trigger operation */
+-	outb(0, base[id] + 9);
++	iowrite8(0, priv->base + 9);
+ 
+ 	/* initialize gain setting to x1 */
+-	outb(0, base[id] + 11);
++	iowrite8(0, priv->base + 11);
+ 
+ 	/* initialize DAC output to 0V */
+-	outw(0, base[id] + 4);
+-	outw(0, base[id] + 6);
++	iowrite16(0, priv->base + 4);
++	iowrite16(0, priv->base + 6);
+ 
+ 	stx104gpio->chip.label = dev_name(dev);
+ 	stx104gpio->chip.parent = dev;
+@@ -347,7 +349,7 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 	stx104gpio->chip.get_multiple = stx104_gpio_get_multiple;
+ 	stx104gpio->chip.set = stx104_gpio_set;
+ 	stx104gpio->chip.set_multiple = stx104_gpio_set_multiple;
+-	stx104gpio->base = base[id] + 3;
++	stx104gpio->base = priv->base + 3;
+ 	stx104gpio->out_state = 0x0;
+ 
+ 	spin_lock_init(&stx104gpio->lock);
 -- 
 2.40.1
 
