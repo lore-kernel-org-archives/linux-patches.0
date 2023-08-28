@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBA611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373EFC433C8;
-	Mon, 28 Aug 2023 10:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C8911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB0AC433C7;
+	Mon, 28 Aug 2023 10:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218360;
-	bh=0RFv3cj5Lb/ICX7ZbkJxaVGzFQw0gBP+PXSVfoih0tI=;
+	s=korg; t=1693218363;
+	bh=rUyASpT8XeKq9MgIqYZV4w8ZH31YOEfGel0GulK4hdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGg484bEkOfwsjKj2J8JH0PssgVcsKVwKO6NbNa8ekgWf+LgDUhcMkXWdyZOTQrtW
-	 0noOxKV4rOM5rZjvmqrefH257jlw9nyw81GE1/VaOPuCIA28/mEjPnaXxlkupluzLK
-	 CgIMxFv806rzt94mkZu+F5BF8rlMpY7ib5uJnxyM=
+	b=fIvTHmEUz4yNWDZm9bSCvIaYh1jxLPYFH4p4dIJnAWjxm0KZBMVHejWY4bxpddviw
+	 cRnq3W/B1UiQM8KVKM8135nzTLn1x7wk9tT/kzYYiLW9DBUskkZ4qDjoLsp10IuaWJ
+	 zxa8AIEN9geN+7412YWvnzbP2mrYqwJVfQUKJcC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Len Brown <len.brown@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Fred Eckert <Frede@cmslaser.com>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 031/129] x86/topology: Fix erroneous smp_num_siblings on Intel Hybrid platforms
-Date: Mon, 28 Aug 2023 12:12:05 +0200
-Message-ID: <20230828101154.250176418@linuxfoundation.org>
+Subject: [PATCH 4.19 022/129] iio: adc: stx104: Implement and utilize register structures
+Date: Mon, 28 Aug 2023 12:11:56 +0200
+Message-ID: <20230828101153.873079432@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -43,93 +41,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit edc0a2b5957652f4685ef3516f519f84807087db ]
+[ Upstream commit 6cfd14c54b1f42f29097244c1b6208f8268d7d5b ]
 
-Traditionally, all CPUs in a system have identical numbers of SMT
-siblings.  That changes with hybrid processors where some logical CPUs
-have a sibling and others have none.
+Reduce magic numbers and improve code readability by implementing and
+utilizing named register data structures.
 
-Today, the CPU boot code sets the global variable smp_num_siblings when
-every CPU thread is brought up. The last thread to boot will overwrite
-it with the number of siblings of *that* thread. That last thread to
-boot will "win". If the thread is a Pcore, smp_num_siblings == 2.  If it
-is an Ecore, smp_num_siblings == 1.
-
-smp_num_siblings describes if the *system* supports SMT.  It should
-specify the maximum number of SMT threads among all cores.
-
-Ensure that smp_num_siblings represents the system-wide maximum number
-of siblings by always increasing its value. Never allow it to decrease.
-
-On MeteorLake-P platform, this fixes a problem that the Ecore CPUs are
-not updated in any cpu sibling map because the system is treated as an
-UP system when probing Ecore CPUs.
-
-Below shows part of the CPU topology information before and after the
-fix, for both Pcore and Ecore CPU (cpu0 is Pcore, cpu 12 is Ecore).
-...
--/sys/devices/system/cpu/cpu0/topology/package_cpus:000fff
--/sys/devices/system/cpu/cpu0/topology/package_cpus_list:0-11
-+/sys/devices/system/cpu/cpu0/topology/package_cpus:3fffff
-+/sys/devices/system/cpu/cpu0/topology/package_cpus_list:0-21
-...
--/sys/devices/system/cpu/cpu12/topology/package_cpus:001000
--/sys/devices/system/cpu/cpu12/topology/package_cpus_list:12
-+/sys/devices/system/cpu/cpu12/topology/package_cpus:3fffff
-+/sys/devices/system/cpu/cpu12/topology/package_cpus_list:0-21
-
-Notice that the "before" 'package_cpus_list' has only one CPU.  This
-means that userspace tools like lscpu will see a little laptop like
-an 11-socket system:
-
--Core(s) per socket:  1
--Socket(s):           11
-+Core(s) per socket:  16
-+Socket(s):           1
-
-This is also expected to make the scheduler do rather wonky things
-too.
-
-[ dhansen: remove CPUID detail from changelog, add end user effects ]
-
-CC: stable@kernel.org
-Fixes: bbb65d2d365e ("x86: use cpuid vector 0xb when available for detecting cpu topology")
-Fixes: 95f3d39ccf7a ("x86/cpu/topology: Provide detect_extended_topology_early()")
-Suggested-by: Len Brown <len.brown@intel.com>
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/20230323015640.27906-1-rui.zhang%40intel.com
+Tested-by: Fred Eckert <Frede@cmslaser.com>
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/r/8cb91d5b53e57b066120e42ea07000d6c7ef5543.1657213745.git.william.gray@linaro.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/topology.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/adc/stx104.c | 74 +++++++++++++++++++++++++++-------------
+ 1 file changed, 50 insertions(+), 24 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/topology.c b/arch/x86/kernel/cpu/topology.c
-index 71ca064e37948..31fe56a90cbf8 100644
---- a/arch/x86/kernel/cpu/topology.c
-+++ b/arch/x86/kernel/cpu/topology.c
-@@ -44,7 +44,7 @@ int detect_extended_topology_early(struct cpuinfo_x86 *c)
- 	 * initial apic id, which also represents 32-bit extended x2apic id.
- 	 */
- 	c->initial_apicid = edx;
--	smp_num_siblings = LEVEL_MAX_SIBLINGS(ebx);
-+	smp_num_siblings = max_t(int, smp_num_siblings, LEVEL_MAX_SIBLINGS(ebx));
- #endif
- 	return 0;
- }
-@@ -68,7 +68,8 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
- 	 * Populate HT related information from sub-leaf level 0.
- 	 */
- 	cpuid_count(0xb, SMT_LEVEL, &eax, &ebx, &ecx, &edx);
--	core_level_siblings = smp_num_siblings = LEVEL_MAX_SIBLINGS(ebx);
-+	core_level_siblings = LEVEL_MAX_SIBLINGS(ebx);
-+	smp_num_siblings = max_t(int, smp_num_siblings, LEVEL_MAX_SIBLINGS(ebx));
- 	core_plus_mask_width = ht_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/adc/stx104.c
+index bdc4281d9fdaf..c25523ecebab2 100644
+--- a/drivers/iio/adc/stx104.c
++++ b/drivers/iio/adc/stx104.c
+@@ -24,6 +24,7 @@
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
+ #include <linux/spinlock.h>
++#include <linux/types.h>
  
- 	sub_index = 1;
+ #define STX104_OUT_CHAN(chan) {				\
+ 	.type = IIO_VOLTAGE,				\
+@@ -52,14 +53,36 @@ static unsigned int num_stx104;
+ module_param_hw_array(base, uint, ioport, &num_stx104, 0);
+ MODULE_PARM_DESC(base, "Apex Embedded Systems STX104 base addresses");
+ 
++/**
++ * struct stx104_reg - device register structure
++ * @ssr_ad:	Software Strobe Register and ADC Data
++ * @achan:	ADC Channel
++ * @dio:	Digital I/O
++ * @dac:	DAC Channels
++ * @cir_asr:	Clear Interrupts and ADC Status
++ * @acr:	ADC Control
++ * @pccr_fsh:	Pacer Clock Control and FIFO Status MSB
++ * @acfg:	ADC Configuration
++ */
++struct stx104_reg {
++	u16 ssr_ad;
++	u8 achan;
++	u8 dio;
++	u16 dac[2];
++	u8 cir_asr;
++	u8 acr;
++	u8 pccr_fsh;
++	u8 acfg;
++};
++
+ /**
+  * struct stx104_iio - IIO device private data structure
+  * @chan_out_states:	channels' output states
+- * @base:		base port address of the IIO device
++ * @reg:		I/O address offset for the device registers
+  */
+ struct stx104_iio {
+ 	unsigned int chan_out_states[STX104_NUM_OUT_CHAN];
+-	void __iomem *base;
++	struct stx104_reg __iomem *reg;
+ };
+ 
+ /**
+@@ -72,7 +95,7 @@ struct stx104_iio {
+ struct stx104_gpio {
+ 	struct gpio_chip chip;
+ 	spinlock_t lock;
+-	void __iomem *base;
++	u8 __iomem *base;
+ 	unsigned int out_state;
+ };
+ 
+@@ -80,6 +103,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 	struct iio_chan_spec const *chan, int *val, int *val2, long mask)
+ {
+ 	struct stx104_iio *const priv = iio_priv(indio_dev);
++	struct stx104_reg __iomem *const reg = priv->reg;
+ 	unsigned int adc_config;
+ 	int adbu;
+ 	int gain;
+@@ -87,7 +111,7 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_HARDWAREGAIN:
+ 		/* get gain configuration */
+-		adc_config = ioread8(priv->base + 11);
++		adc_config = ioread8(&reg->acfg);
+ 		gain = adc_config & 0x3;
+ 
+ 		*val = 1 << gain;
+@@ -99,24 +123,26 @@ static int stx104_read_raw(struct iio_dev *indio_dev,
+ 		}
+ 
+ 		/* select ADC channel */
+-		iowrite8(chan->channel | (chan->channel << 4), priv->base + 2);
++		iowrite8(chan->channel | (chan->channel << 4), &reg->achan);
+ 
+-		/* trigger ADC sample capture and wait for completion */
+-		iowrite8(0, priv->base);
+-		while (ioread8(priv->base + 8) & BIT(7));
++		/* trigger ADC sample capture by writing to the 8-bit
++		 * Software Strobe Register and wait for completion
++		 */
++		iowrite8(0, &reg->ssr_ad);
++		while (ioread8(&reg->cir_asr) & BIT(7));
+ 
+-		*val = ioread16(priv->base);
++		*val = ioread16(&reg->ssr_ad);
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		/* get ADC bipolar/unipolar configuration */
+-		adc_config = ioread8(priv->base + 11);
++		adc_config = ioread8(&reg->acfg);
+ 		adbu = !(adc_config & BIT(2));
+ 
+ 		*val = -32768 * adbu;
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		/* get ADC bipolar/unipolar and gain configuration */
+-		adc_config = ioread8(priv->base + 11);
++		adc_config = ioread8(&reg->acfg);
+ 		adbu = !(adc_config & BIT(2));
+ 		gain = adc_config & 0x3;
+ 
+@@ -138,16 +164,16 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+ 		/* Only four gain states (x1, x2, x4, x8) */
+ 		switch (val) {
+ 		case 1:
+-			iowrite8(0, priv->base + 11);
++			iowrite8(0, &priv->reg->acfg);
+ 			break;
+ 		case 2:
+-			iowrite8(1, priv->base + 11);
++			iowrite8(1, &priv->reg->acfg);
+ 			break;
+ 		case 4:
+-			iowrite8(2, priv->base + 11);
++			iowrite8(2, &priv->reg->acfg);
+ 			break;
+ 		case 8:
+-			iowrite8(3, priv->base + 11);
++			iowrite8(3, &priv->reg->acfg);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -161,7 +187,7 @@ static int stx104_write_raw(struct iio_dev *indio_dev,
+ 				return -EINVAL;
+ 
+ 			priv->chan_out_states[chan->channel] = val;
+-			iowrite16(val, priv->base + 4 + 2 * chan->channel);
++			iowrite16(val, &priv->reg->dac[chan->channel]);
+ 
+ 			return 0;
+ 		}
+@@ -315,15 +341,15 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 	}
+ 
+ 	priv = iio_priv(indio_dev);
+-	priv->base = devm_ioport_map(dev, base[id], STX104_EXTENT);
+-	if (!priv->base)
++	priv->reg = devm_ioport_map(dev, base[id], STX104_EXTENT);
++	if (!priv->reg)
+ 		return -ENOMEM;
+ 
+ 	indio_dev->info = &stx104_info;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 
+ 	/* determine if differential inputs */
+-	if (ioread8(priv->base + 8) & BIT(5)) {
++	if (ioread8(&priv->reg->cir_asr) & BIT(5)) {
+ 		indio_dev->num_channels = ARRAY_SIZE(stx104_channels_diff);
+ 		indio_dev->channels = stx104_channels_diff;
+ 	} else {
+@@ -335,14 +361,14 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 	indio_dev->dev.parent = dev;
+ 
+ 	/* configure device for software trigger operation */
+-	iowrite8(0, priv->base + 9);
++	iowrite8(0, &priv->reg->acr);
+ 
+ 	/* initialize gain setting to x1 */
+-	iowrite8(0, priv->base + 11);
++	iowrite8(0, &priv->reg->acfg);
+ 
+ 	/* initialize DAC output to 0V */
+-	iowrite16(0, priv->base + 4);
+-	iowrite16(0, priv->base + 6);
++	iowrite16(0, &priv->reg->dac[0]);
++	iowrite16(0, &priv->reg->dac[1]);
+ 
+ 	stx104gpio->chip.label = dev_name(dev);
+ 	stx104gpio->chip.parent = dev;
+@@ -357,7 +383,7 @@ static int stx104_probe(struct device *dev, unsigned int id)
+ 	stx104gpio->chip.get_multiple = stx104_gpio_get_multiple;
+ 	stx104gpio->chip.set = stx104_gpio_set;
+ 	stx104gpio->chip.set_multiple = stx104_gpio_set_multiple;
+-	stx104gpio->base = priv->base + 3;
++	stx104gpio->base = &priv->reg->dio;
+ 	stx104gpio->out_state = 0x0;
+ 
+ 	spin_lock_init(&stx104gpio->lock);
 -- 
 2.40.1
 
