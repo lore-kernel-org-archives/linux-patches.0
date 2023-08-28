@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A707A11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C160C433C8;
-	Mon, 28 Aug 2023 10:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA7311C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D645CC433C8;
+	Mon, 28 Aug 2023 10:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218557;
-	bh=IjUGECT6qRqIvFKo5MLj3o60ZnaEHsSyPpjFjEf7RZY=;
+	s=korg; t=1693218560;
+	bh=s3rASLW+Q82ni6FayfndvZGk7xYX5BOL76wIPcwm32s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QD0tWTFUXKAtGMYGYgoey8f91+2nfNyTx6xB4CIzzCgz3O6ex3upbA0A/tPMFRvwK
-	 HgMn7u82bJZeM1lAstQTvGKoXacrEkYdV4xTo6jd88IbSu6viZcYoE+iS7JF11tqR6
-	 1K21iVt4loHL5HpGD+9Ho5VKhCMAEAfNFskR7akA=
+	b=SWGDjrAk2kLyHFT+sLyxnB/Y0g0x/JrReS8IIZA/DHbbYr0zLx1wnEl/BpcTrAWNw
+	 U8LSCb5woH1Qq45DWGOmg3XyJnm5x3cBv9+2eS2nkmriR4myP5rG1ap8TiYWTzFGqO
+	 H26Ar9kaEY+W9DymzpElIN8KzIaMtFjVOCQQ1X8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Feng Tang <feng.tang@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.19 120/129] x86/fpu: Set X86_FEATURE_OSXSAVE feature after enabling OSXSAVE in CR4
-Date: Mon, 28 Aug 2023 12:13:34 +0200
-Message-ID: <20230828101157.609588570@linuxfoundation.org>
+	Yibin Ding <yibin.ding@unisoc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 121/129] mmc: block: Fix in_flight[issue_type] value error
+Date: Mon, 28 Aug 2023 12:13:35 +0200
+Message-ID: <20230828101157.638612575@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,62 +40,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Tang <feng.tang@intel.com>
+From: Yibin Ding <yibin.ding@unisoc.com>
 
-commit 2c66ca3949dc701da7f4c9407f2140ae425683a5 upstream.
+commit 4b430d4ac99750ee2ae2f893f1055c7af1ec3dc5 upstream.
 
-0-Day found a 34.6% regression in stress-ng's 'af-alg' test case, and
-bisected it to commit b81fac906a8f ("x86/fpu: Move FPU initialization into
-arch_cpu_finalize_init()"), which optimizes the FPU init order, and moves
-the CR4_OSXSAVE enabling into a later place:
+For a completed request, after the mmc_blk_mq_complete_rq(mq, req)
+function is executed, the bitmap_tags corresponding to the
+request will be cleared, that is, the request will be regarded as
+idle. If the request is acquired by a different type of process at
+this time, the issue_type of the request may change. It further
+caused the value of mq->in_flight[issue_type] to be abnormal,
+and a large number of requests could not be sent.
 
-   arch_cpu_finalize_init
-       identify_boot_cpu
-	   identify_cpu
-	       generic_identify
-                   get_cpu_cap --> setup cpu capability
-       ...
-       fpu__init_cpu
-           fpu__init_cpu_xstate
-               cr4_set_bits(X86_CR4_OSXSAVE);
+p1:					      p2:
+mmc_blk_mq_complete_rq
+  blk_mq_free_request
+					      blk_mq_get_request
+					        blk_mq_rq_ctx_init
+mmc_blk_mq_dec_in_flight
+  mmc_issue_type(mq, req)
 
-As the FPU is not yet initialized the CPU capability setup fails to set
-X86_FEATURE_OSXSAVE. Many security module like 'camellia_aesni_avx_x86_64'
-depend on this feature and therefore fail to load, causing the regression.
+This strategy can ensure the consistency of issue_type
+before and after executing mmc_blk_mq_complete_rq.
 
-Cure this by setting X86_FEATURE_OSXSAVE feature right after OSXSAVE
-enabling.
-
-[ tglx: Moved it into the actual BSP FPU initialization code and added a comment ]
-
-Fixes: b81fac906a8f ("x86/fpu: Move FPU initialization into arch_cpu_finalize_init()")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Feng Tang <feng.tang@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Fixes: 81196976ed94 ("mmc: block: Add blk-mq support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/202307192135.203ac24e-oliver.sang@intel.com
-Link: https://lore.kernel.org/lkml/20230823065747.92257-1-feng.tang@intel.com
+Signed-off-by: Yibin Ding <yibin.ding@unisoc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230802023023.1318134-1-yunlong.xing@unisoc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mmc/core/block.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -811,6 +811,14 @@ void __init fpu__init_system_xstate(void
- 	fpu__init_prepare_fx_sw_frame();
- 	setup_init_fpu_buf();
- 	setup_xstate_comp();
-+
-+	/*
-+	 * CPU capabilities initialization runs before FPU init. So
-+	 * X86_FEATURE_OSXSAVE is not set. Now that XSAVE is completely
-+	 * functional, set the feature bit so depending code works.
-+	 */
-+	setup_force_cpu_cap(X86_FEATURE_OSXSAVE);
-+
- 	print_xstate_offset_size();
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -1976,15 +1976,16 @@ static void mmc_blk_mq_poll_completion(s
+ 	mmc_blk_urgent_bkops(mq, mqrq);
+ }
  
- 	pr_info("x86/fpu: Enabled xstate features 0x%llx, context size is %d bytes, using '%s' format.\n",
+-static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq, struct request *req)
++static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq,
++				     struct request_queue *q,
++				     enum mmc_issue_type issue_type)
+ {
+-	struct request_queue *q = req->q;
+ 	unsigned long flags;
+ 	bool put_card;
+ 
+ 	spin_lock_irqsave(q->queue_lock, flags);
+ 
+-	mq->in_flight[mmc_issue_type(mq, req)] -= 1;
++	mq->in_flight[issue_type] -= 1;
+ 
+ 	put_card = (mmc_tot_in_flight(mq) == 0);
+ 
+@@ -1996,9 +1997,11 @@ static void mmc_blk_mq_dec_in_flight(str
+ 
+ static void mmc_blk_mq_post_req(struct mmc_queue *mq, struct request *req)
+ {
++	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
+ 	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
+ 	struct mmc_request *mrq = &mqrq->brq.mrq;
+ 	struct mmc_host *host = mq->card->host;
++	struct request_queue *q = req->q;
+ 
+ 	mmc_post_req(host, mrq, 0);
+ 
+@@ -2011,7 +2014,7 @@ static void mmc_blk_mq_post_req(struct m
+ 	else
+ 		blk_mq_complete_request(req);
+ 
+-	mmc_blk_mq_dec_in_flight(mq, req);
++	mmc_blk_mq_dec_in_flight(mq, q, issue_type);
+ }
+ 
+ void mmc_blk_mq_recovery(struct mmc_queue *mq)
 
 
