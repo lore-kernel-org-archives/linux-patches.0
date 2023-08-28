@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E587611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BD8C433C7;
-	Mon, 28 Aug 2023 10:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75B211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353EFC433C8;
+	Mon, 28 Aug 2023 10:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217789;
-	bh=AOKE6DNagsbjlFmqmP3BwOliQWtvedveFzcHi6+LeHQ=;
+	s=korg; t=1693217792;
+	bh=ARU5hobl07qgwXkx/0GdbT8SLDpTtEAnjRDM0bv5Wko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5eHl80SPaggbYouISpChAtOR5KNPjToXwkkbXVR1pSP1keEPg7NxeMw/LLC4fCyn
-	 pkz/xF4Ux4QIeQzcjvSH27fHCkUk3Gb5j1hOc6LE0pjIOTE8L0ATcR5CUCHlEDDIEX
-	 wIWjsXEcBFYdGJD3QKZMIYACVRWR+kdFSdaSrSo0=
+	b=MBbDkpEBG4emmyDWYpxwUm568tj/QGi2scJCipd55p8fKCsk8pgpnjMpMN//UzGL+
+	 5QDNGv3iXdlI1QUqHBVWJArLXpqBBjYHZ+O6XymTp45vpfv4NrRKcIwlvkqX5FjsmX
+	 R+0avjd20mx+SuDvG3c80tojkqYfirOjZekTLGkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 4.14 39/57] net: xfrm: Amend XFRMA_SEC_CTX nla_policy structure
-Date: Mon, 28 Aug 2023 12:12:59 +0200
-Message-ID: <20230828101145.699158960@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 12/57] media: platform: mediatek: vpu: fix NULL ptr dereference
+Date: Mon, 28 Aug 2023 12:12:32 +0200
+Message-ID: <20230828101144.648649759@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -39,43 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit d1e0e61d617ba17aa516db707aa871387566bbf7 upstream.
+[ Upstream commit 3df55cd773e8603b623425cc97b05e542854ad27 ]
 
-According to all consumers code of attrs[XFRMA_SEC_CTX], like
+If pdev is NULL, then it is still dereferenced.
 
-* verify_sec_ctx_len(), convert to xfrm_user_sec_ctx*
-* xfrm_state_construct(), call security_xfrm_state_alloc whose prototype
-is int security_xfrm_state_alloc(.., struct xfrm_user_sec_ctx *sec_ctx);
-* copy_from_user_sec_ctx(), convert to xfrm_user_sec_ctx *
-...
+This fixes this smatch warning:
 
-It seems that the expected parsing result for XFRMA_SEC_CTX should be
-structure xfrm_user_sec_ctx, and the current xfrm_sec_ctx is confusing
-and misleading (Luckily, they happen to have same size 8 bytes).
+drivers/media/platform/mediatek/vpu/mtk_vpu.c:570 vpu_load_firmware() warn: address of NULL pointer 'pdev'
 
-This commit amend the policy structure to xfrm_user_sec_ctx to avoid
-ambiguity.
-
-Fixes: cf5cb79f6946 ("[XFRM] netlink: Establish an attribute policy")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: Yunfei Dong <yunfei.dong@mediatek.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/mtk-vpu/mtk_vpu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2514,7 +2514,7 @@ static const struct nla_policy xfrma_pol
- 	[XFRMA_ALG_COMP]	= { .len = sizeof(struct xfrm_algo) },
- 	[XFRMA_ENCAP]		= { .len = sizeof(struct xfrm_encap_tmpl) },
- 	[XFRMA_TMPL]		= { .len = sizeof(struct xfrm_user_tmpl) },
--	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_sec_ctx) },
-+	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_user_sec_ctx) },
- 	[XFRMA_LTIME_VAL]	= { .len = sizeof(struct xfrm_lifetime_cur) },
- 	[XFRMA_REPLAY_VAL]	= { .len = sizeof(struct xfrm_replay_state) },
- 	[XFRMA_REPLAY_THRESH]	= { .type = NLA_U32 },
+diff --git a/drivers/media/platform/mtk-vpu/mtk_vpu.c b/drivers/media/platform/mtk-vpu/mtk_vpu.c
+index 019a5e7e1a402..de5e732b1f0b6 100644
+--- a/drivers/media/platform/mtk-vpu/mtk_vpu.c
++++ b/drivers/media/platform/mtk-vpu/mtk_vpu.c
+@@ -536,16 +536,18 @@ static int load_requested_vpu(struct mtk_vpu *vpu,
+ int vpu_load_firmware(struct platform_device *pdev)
+ {
+ 	struct mtk_vpu *vpu;
+-	struct device *dev = &pdev->dev;
++	struct device *dev;
+ 	struct vpu_run *run;
+ 	const struct firmware *vpu_fw = NULL;
+ 	int ret;
+ 
+ 	if (!pdev) {
+-		dev_err(dev, "VPU platform device is invalid\n");
++		pr_err("VPU platform device is invalid\n");
+ 		return -EINVAL;
+ 	}
+ 
++	dev = &pdev->dev;
++
+ 	vpu = platform_get_drvdata(pdev);
+ 	run = &vpu->run;
+ 
+-- 
+2.40.1
+
 
 
