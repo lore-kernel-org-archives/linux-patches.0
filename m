@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516D211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8F7C433C9;
-	Mon, 28 Aug 2023 10:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E9411C98
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89938C116A4;
+	Mon, 28 Aug 2023 10:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219770;
-	bh=zfJ2rlpyZ0zCl7fnr6AEQ702CPRrwdnZdqE+D6UlUVo=;
+	s=korg; t=1693219772;
+	bh=tFOPIGC4P8QbrhABZJoikB9H/xp5XMFnn06PRjbvn7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KeyK73jsW5faNAiQbmI5CDY3krOvzBrdPh6+ngxeVBE2W+uykEaZS/+UxoDJK8vUP
-	 Q/sPk+hGn6MCaV2KOqFZVh6FaPCLbJnutTpOXNJlW1CetmsiVbYNKHij1JcFeZcxcW
-	 T0VOA91qIrI6lIneyuZLWgApghL7bNdPOM1ZK+c0=
+	b=sfKQEBMSHYXYLYZLvJ6W7xRQ+prqyzdZjDWbc8b0Gy4C8iqoebCDJx8nvDl3P3V/z
+	 y8XYhFO9hdZCB9wq+BbuQltOXbfOc+s6ZapDbAh6uMrl4WwMOXZe8mYFV3fMGzjwJn
+	 ve0Zv/cOJv9FSwyOyxybYkdufynBBaGCQZaOAQJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>
-Subject: [PATCH 5.10 65/84] timers/nohz: Switch to ONESHOT_STOPPED in the low-res handler when the tick is stopped
-Date: Mon, 28 Aug 2023 12:14:22 +0200
-Message-ID: <20230828101151.467793828@linuxfoundation.org>
+	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 39/84] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
+Date: Mon, 28 Aug 2023 12:13:56 +0200
+Message-ID: <20230828101150.595205899@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -40,58 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 62c1256d544747b38e77ca9b5bfe3a26f9592576 upstream.
+[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
 
-When tick_nohz_stop_tick() stops the tick and high resolution timers are
-disabled, then the clock event device is not put into ONESHOT_STOPPED
-mode. This can lead to spurious timer interrupts with some clock event
-device drivers that don't shut down entirely after firing.
+Negative ifindexes are illegal, but the kernel does not validate the
+ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
+the kernel generating a warning [1] when such an ifindex is specified.
 
-Eliminate these by putting the device into ONESHOT_STOPPED mode at points
-where it is not being reprogrammed. When there are no timers active, then
-tick_program_event() with KTIME_MAX can be used to stop the device. When
-there is a timer active, the device can be stopped at the next tick (any
-new timer added by timers will reprogram the tick).
+Fix by rejecting negative ifindexes.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20220422141446.915024-1-npiggin@gmail.com
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1]
+WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
+[...]
+Call Trace:
+ <TASK>
+ register_netdevice+0x69a/0x1490 net/core/dev.c:10081
+ br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
+ rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
+ __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
+ rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
+ rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
+ netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
+ sock_sendmsg_nosec net/socket.c:728 [inline]
+ sock_sendmsg+0xd9/0x180 net/socket.c:751
+ ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
+ ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
+ __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
+Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/core/rtnetlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -884,6 +884,8 @@ static void tick_nohz_stop_tick(struct t
- 	if (unlikely(expires == KTIME_MAX)) {
- 		if (ts->nohz_mode == NOHZ_MODE_HIGHRES)
- 			hrtimer_cancel(&ts->sched_timer);
-+		else
-+			tick_program_event(KTIME_MAX, 1);
- 		return;
- 	}
- 
-@@ -1274,9 +1276,15 @@ static void tick_nohz_handler(struct clo
- 	tick_sched_do_timer(ts, now);
- 	tick_sched_handle(ts, regs);
- 
--	/* No need to reprogram if we are running tickless  */
--	if (unlikely(ts->tick_stopped))
-+	if (unlikely(ts->tick_stopped)) {
-+		/*
-+		 * The clockevent device is not reprogrammed, so change the
-+		 * clock event device to ONESHOT_STOPPED to avoid spurious
-+		 * interrupts on devices which might not be truly one shot.
-+		 */
-+		tick_program_event(KTIME_MAX, 1);
- 		return;
-+	}
- 
- 	hrtimer_forward(&ts->sched_timer, now, TICK_NSEC);
- 	tick_program_event(hrtimer_get_expires(&ts->sched_timer), 1);
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index ffa97613314ff..021dcfdae2835 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3296,6 +3296,9 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (ifm->ifi_index > 0) {
+ 		link_specified = true;
+ 		dev = __dev_get_by_index(net, ifm->ifi_index);
++	} else if (ifm->ifi_index < 0) {
++		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
++		return -EINVAL;
+ 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
+ 		link_specified = true;
+ 		dev = rtnl_dev_get(net, NULL, tb[IFLA_ALT_IFNAME], ifname);
+-- 
+2.40.1
+
 
 
