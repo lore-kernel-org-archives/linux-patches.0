@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3EC11C9A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC92C433C8;
-	Mon, 28 Aug 2023 10:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1A011C96
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6C3C433C8;
+	Mon, 28 Aug 2023 10:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218653;
-	bh=7bsitJEjCSpuPdbMY0zb75R11LOSh2UTloGhiE9Mseg=;
+	s=korg; t=1693218656;
+	bh=dWTUDuSrwZ6JWJ9HAIXqNccT/ryMBbK1gzGJGgNM2eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKttQ6L7L92aGxBqILP7WxzHBQ0pjyRJPPd4VNoJJgW5QQGJsrMetfW/qBPJAQ7W7
-	 7xxtzlTBbksMCMoqXV0p+La3WuxqX1Wb733eSQ9n9MwsO5t7E8kAIX227ykj6qjCl5
-	 4X3Bq5IMCUh/ZXslLpwx682Fue1f4srGa/M/cLB4=
+	b=dXH8ZXl1oYJYn7z5gsMsG5Su+cTODi1CQInIzef3a3piyy+RKpa5QRLD/0uzh2CYL
+	 rKTPDnPZ3p3UXuIRKTQMzUpxe0rIUR2kP4qdKN+zZTfk9FvhqL/Unu+8g8JfGEY+cb
+	 kpGeRFoq9z2YjQsN3UGdj5f/X7Q3ifqRNbs3i2H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhe <yuzhe@nfschina.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/122] s390/zcrypt: remove unnecessary (void *) conversions
-Date: Mon, 28 Aug 2023 12:12:13 +0200
-Message-ID: <20230828101157.050831997@linuxfoundation.org>
+Subject: [PATCH 6.1 036/122] selftests: mlxsw: Fix test failure on Spectrum-4
+Date: Mon, 28 Aug 2023 12:12:31 +0200
+Message-ID: <20230828101157.608139261@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -42,74 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhe <yuzhe@nfschina.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 72c2112ce9d72e6c40dd893f32187a3d34453113 ]
+[ Upstream commit f520489e99a35b0a5257667274fbe9afd2d8c50b ]
 
-Pointer variables of void * type do not require type cast.
+Remove assumptions about shared buffer cell size and instead query the
+cell size from devlink. Adjust the test to send small packets that fit
+inside a single cell.
 
-Signed-off-by: Yu Zhe <yuzhe@nfschina.com>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20230303052155.21072-1-yuzhe@nfschina.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Stable-dep-of: 4cfca532ddc3 ("s390/zcrypt: fix reply buffer calculations for CCA replies")
+Tested on Spectrum-{1,2,3,4}.
+
+Fixes: 4735402173e6 ("mlxsw: spectrum: Extend to support Spectrum-4 ASIC")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/f7dfbf3c4d1cb23838d9eb99bab09afaa320c4ca.1692268427.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ .../selftests/drivers/net/mlxsw/sharedbuffer.sh  | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
-index f99a9ef42116f..37c01aaa21a2b 100644
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -926,8 +926,7 @@ static void zcrypt_msgtype6_receive(struct ap_queue *aq,
- 		.type = TYPE82_RSP_CODE,
- 		.reply_code = REP82_ERROR_MACHINE_FAILURE,
- 	};
--	struct response_type *resp_type =
--		(struct response_type *)msg->private;
-+	struct response_type *resp_type = msg->private;
- 	struct type86x_reply *t86r;
- 	int len;
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+index 7d9e73a43a49b..0c47faff9274b 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+@@ -98,12 +98,12 @@ sb_occ_etc_check()
  
-@@ -982,8 +981,7 @@ static void zcrypt_msgtype6_receive_ep11(struct ap_queue *aq,
- 		.type = TYPE82_RSP_CODE,
- 		.reply_code = REP82_ERROR_MACHINE_FAILURE,
- 	};
--	struct response_type *resp_type =
--		(struct response_type *)msg->private;
-+	struct response_type *resp_type = msg->private;
- 	struct type86_ep11_reply *t86r;
- 	int len;
- 
-@@ -1157,7 +1155,7 @@ static long zcrypt_msgtype6_send_cprb(bool userspace, struct zcrypt_queue *zq,
- 				      struct ap_message *ap_msg)
+ port_pool_test()
  {
- 	int rc;
--	struct response_type *rtype = (struct response_type *)(ap_msg->private);
-+	struct response_type *rtype = ap_msg->private;
- 	struct {
- 		struct type6_hdr hdr;
- 		struct CPRBX cprbx;
-@@ -1243,7 +1241,7 @@ static long zcrypt_msgtype6_send_ep11_cprb(bool userspace, struct zcrypt_queue *
- {
- 	int rc;
- 	unsigned int lfmt;
--	struct response_type *rtype = (struct response_type *)(ap_msg->private);
-+	struct response_type *rtype = ap_msg->private;
- 	struct {
- 		struct type6_hdr hdr;
- 		struct ep11_cprb cprbx;
-@@ -1365,7 +1363,7 @@ static long zcrypt_msgtype6_rng(struct zcrypt_queue *zq,
- 		short int verb_length;
- 		short int key_length;
- 	} __packed * msg = ap_msg->msg;
--	struct response_type *rtype = (struct response_type *)(ap_msg->private);
-+	struct response_type *rtype = ap_msg->private;
- 	int rc;
+-	local exp_max_occ=288
++	local exp_max_occ=$(devlink_cell_size_get)
+ 	local max_occ
  
- 	msg->cprbx.domain = AP_QID_QUEUE(zq->queue->qid);
+ 	devlink sb occupancy clearmax $DEVLINK_DEV
+ 
+-	$MZ $h1 -c 1 -p 160 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
++	$MZ $h1 -c 1 -p 10 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
+ 		-t ip -q
+ 
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+@@ -126,12 +126,12 @@ port_pool_test()
+ 
+ port_tc_ip_test()
+ {
+-	local exp_max_occ=288
++	local exp_max_occ=$(devlink_cell_size_get)
+ 	local max_occ
+ 
+ 	devlink sb occupancy clearmax $DEVLINK_DEV
+ 
+-	$MZ $h1 -c 1 -p 160 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
++	$MZ $h1 -c 1 -p 10 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
+ 		-t ip -q
+ 
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+@@ -154,16 +154,12 @@ port_tc_ip_test()
+ 
+ port_tc_arp_test()
+ {
+-	local exp_max_occ=96
++	local exp_max_occ=$(devlink_cell_size_get)
+ 	local max_occ
+ 
+-	if [[ $MLXSW_CHIP != "mlxsw_spectrum" ]]; then
+-		exp_max_occ=144
+-	fi
+-
+ 	devlink sb occupancy clearmax $DEVLINK_DEV
+ 
+-	$MZ $h1 -c 1 -p 160 -a $h1mac -A 192.0.1.1 -t arp -q
++	$MZ $h1 -c 1 -p 10 -a $h1mac -A 192.0.1.1 -t arp -q
+ 
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+ 
 -- 
 2.40.1
 
