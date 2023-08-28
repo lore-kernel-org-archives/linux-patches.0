@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3A211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71984C433C7;
-	Mon, 28 Aug 2023 10:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063D211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA75C433CC;
+	Mon, 28 Aug 2023 10:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218236;
-	bh=HBfXq3ZOK2Grq1OG8ggHQK2tai5PZsNbrpJz8G6A+fY=;
+	s=korg; t=1693218239;
+	bh=anLnGYoYXzpHDPRtZw+jCbyjdKMuwwpetxs3BYp2E/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBCO7HrByN0sk2kMiifZCMJJGrKOMI8Isr0UFsGtqmyu7lUJfs9lONxQZVgSbpxmK
-	 UluKNQIVO+gvyhdeW167oLdg3N7ePdFIQ/+TZTGd7by6DM9IpzMRp+Taun6H+5CtUd
-	 aSH7xR+DxGBY9CnueICRDogH0KQ9A/gvw2Eo7xxw=
+	b=Ud0Zo8oe3wq+44waN2EmJhKYPEvlzNt1RjQo/MgGlt4SBri8sjP8DDT39sBwQhTwN
+	 OdWlab0ggnmg4K9LN2NE204EOxNqKZE8I2Vnyd2c45dnMcgveccXEpvc5Qct/dcwUY
+	 pwxeNg1HCqbGUXmBgheHJEOzX0daZV3tbdTEBapU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BassCheck <bass@buaa.edu.cn>,
-	Tuo Li <islituo@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 015/129] gfs2: Fix possible data races in gfs2_show_options()
-Date: Mon, 28 Aug 2023 12:11:49 +0200
-Message-ID: <20230828101153.627410177@linuxfoundation.org>
+Subject: [PATCH 4.19 016/129] pcmcia: rsrc_nonstatic: Fix memory leak in nonstatic_release_resource_db()
+Date: Mon, 28 Aug 2023 12:11:50 +0200
+Message-ID: <20230828101153.661141205@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -41,84 +39,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 6fa0a72cbbe45db4ed967a51f9e6f4e3afe61d20 ]
+[ Upstream commit c85fd9422fe0f5d667305efb27f56d09eab120b0 ]
 
-Some fields such as gt_logd_secs of the struct gfs2_tune are accessed
-without holding the lock gt_spin in gfs2_show_options():
+When nonstatic_release_resource_db() frees all resources associated
+with an PCMCIA socket, it forgets to free socket_data too, causing
+a memory leak observable with kmemleak:
 
-  val = sdp->sd_tune.gt_logd_secs;
-  if (val != 30)
-    seq_printf(s, ",commit=%d", val);
+unreferenced object 0xc28d1000 (size 64):
+  comm "systemd-udevd", pid 297, jiffies 4294898478 (age 194.484s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 f0 85 0e c3 00 00 00 00  ................
+    00 00 00 00 0c 10 8d c2 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffda4245>] __kmem_cache_alloc_node+0x2d7/0x4a0
+    [<7e51f0c8>] kmalloc_trace+0x31/0xa4
+    [<d52b4ca0>] nonstatic_init+0x24/0x1a4 [pcmcia_rsrc]
+    [<a2f13e08>] pcmcia_register_socket+0x200/0x35c [pcmcia_core]
+    [<a728be1b>] yenta_probe+0x4d8/0xa70 [yenta_socket]
+    [<c48fac39>] pci_device_probe+0x99/0x194
+    [<84b7c690>] really_probe+0x181/0x45c
+    [<8060fe6e>] __driver_probe_device+0x75/0x1f4
+    [<b9b76f43>] driver_probe_device+0x28/0xac
+    [<648b766f>] __driver_attach+0xeb/0x1e4
+    [<6e9659eb>] bus_for_each_dev+0x61/0xb4
+    [<25a669f3>] driver_attach+0x1e/0x28
+    [<d8671d6b>] bus_add_driver+0x102/0x20c
+    [<df0d323c>] driver_register+0x5b/0x120
+    [<942cd8a4>] __pci_register_driver+0x44/0x4c
+    [<e536027e>] __UNIQUE_ID___addressable_cleanup_module188+0x1c/0xfffff000 [iTCO_vendor_support]
 
-And thus can cause data races when gfs2_show_options() and other functions
-such as gfs2_reconfigure() are concurrently executed:
+Fix this by freeing socket_data too.
 
-  spin_lock(&gt->gt_spin);
-  gt->gt_logd_secs = newargs->ar_commit;
+Tested on a Acer Travelmate 4002WLMi by manually binding/unbinding
+the yenta_cardbus driver (yenta_socket).
 
-To fix these possible data races, the lock sdp->sd_tune.gt_spin is
-acquired before accessing the fields of gfs2_tune and released after these
-accesses.
-
-Further changes by Andreas:
-
-- Don't hold the spin lock over the seq_printf operations.
-
-Reported-by: BassCheck <bass@buaa.edu.cn>
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Message-ID: <20230512184529.5094-1-W_Armin@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/pcmcia/rsrc_nonstatic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index bb0eaa4638e3c..29157f7d9663d 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1374,7 +1374,14 @@ static int gfs2_show_options(struct seq_file *s, struct dentry *root)
- {
- 	struct gfs2_sbd *sdp = root->d_sb->s_fs_info;
- 	struct gfs2_args *args = &sdp->sd_args;
--	int val;
-+	unsigned int logd_secs, statfs_slow, statfs_quantum, quota_quantum;
-+
-+	spin_lock(&sdp->sd_tune.gt_spin);
-+	logd_secs = sdp->sd_tune.gt_logd_secs;
-+	quota_quantum = sdp->sd_tune.gt_quota_quantum;
-+	statfs_quantum = sdp->sd_tune.gt_statfs_quantum;
-+	statfs_slow = sdp->sd_tune.gt_statfs_slow;
-+	spin_unlock(&sdp->sd_tune.gt_spin);
- 
- 	if (is_ancestor(root, sdp->sd_master_dir))
- 		seq_puts(s, ",meta");
-@@ -1429,17 +1436,14 @@ static int gfs2_show_options(struct seq_file *s, struct dentry *root)
+diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
+index 123420cac6b54..b75b12c2c702d 100644
+--- a/drivers/pcmcia/rsrc_nonstatic.c
++++ b/drivers/pcmcia/rsrc_nonstatic.c
+@@ -1056,6 +1056,8 @@ static void nonstatic_release_resource_db(struct pcmcia_socket *s)
+ 		q = p->next;
+ 		kfree(p);
  	}
- 	if (args->ar_discard)
- 		seq_puts(s, ",discard");
--	val = sdp->sd_tune.gt_logd_secs;
--	if (val != 30)
--		seq_printf(s, ",commit=%d", val);
--	val = sdp->sd_tune.gt_statfs_quantum;
--	if (val != 30)
--		seq_printf(s, ",statfs_quantum=%d", val);
--	else if (sdp->sd_tune.gt_statfs_slow)
-+	if (logd_secs != 30)
-+		seq_printf(s, ",commit=%d", logd_secs);
-+	if (statfs_quantum != 30)
-+		seq_printf(s, ",statfs_quantum=%d", statfs_quantum);
-+	else if (statfs_slow)
- 		seq_puts(s, ",statfs_quantum=0");
--	val = sdp->sd_tune.gt_quota_quantum;
--	if (val != 60)
--		seq_printf(s, ",quota_quantum=%d", val);
-+	if (quota_quantum != 60)
-+		seq_printf(s, ",quota_quantum=%d", quota_quantum);
- 	if (args->ar_statfs_percent)
- 		seq_printf(s, ",statfs_percent=%d", args->ar_statfs_percent);
- 	if (args->ar_errors != GFS2_ERRORS_DEFAULT) {
++
++	kfree(data);
+ }
+ 
+ 
 -- 
 2.40.1
 
