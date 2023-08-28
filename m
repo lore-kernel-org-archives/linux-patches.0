@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB1811C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:22:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E990C433C8;
-	Mon, 28 Aug 2023 10:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766B411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:22:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9748C433C7;
+	Mon, 28 Aug 2023 10:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218148;
-	bh=4g8dpvswpuJ2joIZakB8xs6Ayn6giuNeZ+XXOERsCXo=;
+	s=korg; t=1693218151;
+	bh=xXoyrM+fzErGoWcDhp9KGlfQpmFCtYz+J07oCviPflM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R72Ir/96ZtHfuTDxfTPEd1qDKvvdiFbbxKqL4iN/IwG4mHaNS3gycDg24NeGOGrYS
-	 /oUjGaFC1/BJvyE8Wb1OmIHZMbGaVrNoVFvbID1vB+1pneEOazYBnzS2/HXZeYJChA
-	 /E07nE3octZNHYl+PUnoiLIFh28GLMvDTJCM2u5g=
+	b=YbKZhmhJKUBPeuQAlPMWVO4xUP4df44CoWibQ/vVACQCjb+8duERTiFjB6ml8utK1
+	 lGWuP8cwAqmWNfCOqp0ClZ9FbxeJg6uIqvrhBgLQefeQVlrzeLIEETG6Y7Tu6AS0nK
+	 4cEviUQgIUHJ/UUgICaQsKA6mTHI/YZHqg1jvyWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 113/129] scsi: snic: Fix double free in snic_tgt_create()
-Date: Mon, 28 Aug 2023 12:13:12 +0200
-Message-ID: <20230828101201.120121319@linuxfoundation.org>
+Subject: [PATCH 6.4 114/129] scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW major version > 5
+Date: Mon, 28 Aug 2023 12:13:13 +0200
+Message-ID: <20230828101201.156567196@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -39,41 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-commit 1bd3a76880b2bce017987cf53780b372cf59528e upstream.
+commit c422fbd5cb58c9a078172ae1e9750971b738a197 upstream.
 
-Commit 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add()
-fails") fixed the memory leak caused by dev_set_name() when device_add()
-failed. However, it did not consider that 'tgt' has already been released
-when put_device(&tgt->dev) is called. Remove kfree(tgt) in the error path
-to avoid double free of 'tgt' and move put_device(&tgt->dev) after the
-removed kfree(tgt) to avoid a use-after-free.
+The qunipro_g4_sel clear is also needed for new platforms with major
+version > 5. Fix the version check to take this into account.
 
-Fixes: 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add() fails")
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Link: https://lore.kernel.org/r/20230819083941.164365-1-wangzhu9@huawei.com
+Fixes: 9c02aa24bf40 ("scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5")
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230821-topic-sm8x50-upstream-ufs-major-5-plus-v2-1-f42a4b712e58@linaro.org
+Reviewed-by: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/snic/snic_disc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ufs/host/ufs-qcom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/snic/snic_disc.c
-+++ b/drivers/scsi/snic/snic_disc.c
-@@ -303,12 +303,11 @@ snic_tgt_create(struct snic *snic, struc
- 			      "Snic Tgt: device_add, with err = %d\n",
- 			      ret);
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -225,7 +225,7 @@ static void ufs_qcom_select_unipro_mode(
+ 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
+ 		   REG_UFS_CFG1);
  
--		put_device(&tgt->dev);
- 		put_device(&snic->shost->shost_gendev);
- 		spin_lock_irqsave(snic->shost->host_lock, flags);
- 		list_del(&tgt->list);
- 		spin_unlock_irqrestore(snic->shost->host_lock, flags);
--		kfree(tgt);
-+		put_device(&tgt->dev);
- 		tgt = NULL;
+-	if (host->hw_ver.major == 0x05)
++	if (host->hw_ver.major >= 0x05)
+ 		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
  
- 		return tgt;
+ 	/* make sure above configuration is applied before we return */
 
 
