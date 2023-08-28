@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5BD611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5B3C433C9;
-	Mon, 28 Aug 2023 10:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8E1611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5079C433C8;
+	Mon, 28 Aug 2023 10:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219279;
-	bh=2RYgA0Xm596eFNYg3YX2gRDx/VI/5DMK+IRlfLyurfE=;
+	s=korg; t=1693219282;
+	bh=MNZ22KkZNghR2IfkLSw4sPcNZsLHKPYIXkhtblOFFDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVTNws1tM2TCNUgWGEeCvZUdDGYOygZooVA37eB4SwB/jzrrpy67wO15+O90hog5A
-	 2bU7w9NObq4nj9CXt29jBDR1+vPyISdegsM+qNuxmR7jJIKiPUeN2GY9a665rkQUez
-	 ExO+rEoWpFZpeUmMkQMNO+qlv0aMf7z+ztGAdZJ4=
+	b=2tRcJgyhW+LJipdrgzA8gkkwG1dYQpkJKaqjJFywfklgsYL76fL0zUtDCBPjTkK3m
+	 UEypOl/m+/a98+D8+zYS5TQcgnxHypE7JAkUbfs/x9s9udXq1ZE2DNxLtWSwcAf429
+	 D2fY1ocDKt4le2irBXNDkytV83/XlTwW4IJcgdTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
+	syzbot+f8812454d9b3ac00d282@syzkaller.appspotmail.com,
 	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.4 138/158] batman-adv: Fix batadv_v_ogm_aggr_send memory leak
-Date: Mon, 28 Aug 2023 12:13:55 +0200
-Message-ID: <20230828101202.191212746@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 139/158] batman-adv: Hold rtnl lock during MTU update via netlink
+Date: Mon, 28 Aug 2023 12:13:56 +0200
+Message-ID: <20230828101202.222488327@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,56 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 421d467dc2d483175bad4fb76a31b9e5a3d744cf upstream.
+commit 987aae75fc1041072941ffb622b45ce2359a99b9 upstream.
 
-When batadv_v_ogm_aggr_send is called for an inactive interface, the skb
-is silently dropped by batadv_v_ogm_send_to_if() but never freed causing
-the following memory leak:
+The automatic recalculation of the maximum allowed MTU is usually triggered
+by code sections which are already rtnl lock protected by callers outside
+of batman-adv. But when the fragmentation setting is changed via
+batman-adv's own batadv genl family, then the rtnl lock is not yet taken.
 
-  unreferenced object 0xffff00000c164800 (size 512):
-    comm "kworker/u8:1", pid 2648, jiffies 4295122303 (age 97.656s)
-    hex dump (first 32 bytes):
-      00 80 af 09 00 00 ff ff e1 09 00 00 75 01 60 83  ............u.`.
-      1f 00 00 00 b8 00 00 00 15 00 05 00 da e3 d3 64  ...............d
-    backtrace:
-      [<0000000007ad20f6>] __kmalloc_track_caller+0x1a8/0x310
-      [<00000000d1029e55>] kmalloc_reserve.constprop.0+0x70/0x13c
-      [<000000008b9d4183>] __alloc_skb+0xec/0x1fc
-      [<00000000c7af5051>] __netdev_alloc_skb+0x48/0x23c
-      [<00000000642ee5f5>] batadv_v_ogm_aggr_send+0x50/0x36c
-      [<0000000088660bd7>] batadv_v_ogm_aggr_work+0x24/0x40
-      [<0000000042fc2606>] process_one_work+0x3b0/0x610
-      [<000000002f2a0b1c>] worker_thread+0xa0/0x690
-      [<0000000059fae5d4>] kthread+0x1fc/0x210
-      [<000000000c587d3a>] ret_from_fork+0x10/0x20
+But dev_set_mtu requires that the caller holds the rtnl lock because it
+uses netdevice notifiers. And this code will then fail the check for this
+lock:
 
-Free the skb in that case to fix this leak.
+  RTNL: assertion failed at net/core/dev.c (1953)
 
 Cc: stable@vger.kernel.org
-Fixes: 0da0035942d4 ("batman-adv: OGMv2 - add basic infrastructure")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Reported-by: syzbot+f8812454d9b3ac00d282@syzkaller.appspotmail.com
+Fixes: c6a953cce8d0 ("batman-adv: Trigger events for auto adjusted MTU")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821-batadv-missing-mtu-rtnl-lock-v1-1-1c5a7bfe861e@narfation.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_ogm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/batman-adv/netlink.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/batman-adv/bat_v_ogm.c
-+++ b/net/batman-adv/bat_v_ogm.c
-@@ -122,8 +122,10 @@ static void batadv_v_ogm_send_to_if(stru
- {
- 	struct batadv_priv *bat_priv = netdev_priv(hard_iface->soft_iface);
+--- a/net/batman-adv/netlink.c
++++ b/net/batman-adv/netlink.c
+@@ -496,7 +496,10 @@ static int batadv_netlink_set_mesh(struc
+ 		attr = info->attrs[BATADV_ATTR_FRAGMENTATION_ENABLED];
  
--	if (hard_iface->if_status != BATADV_IF_ACTIVE)
-+	if (hard_iface->if_status != BATADV_IF_ACTIVE) {
-+		kfree_skb(skb);
- 		return;
-+	}
+ 		atomic_set(&bat_priv->fragmentation, !!nla_get_u8(attr));
++
++		rtnl_lock();
+ 		batadv_update_min_mtu(bat_priv->soft_iface);
++		rtnl_unlock();
+ 	}
  
- 	batadv_inc_counter(bat_priv, BATADV_CNT_MGMT_TX);
- 	batadv_add_counter(bat_priv, BATADV_CNT_MGMT_TX_BYTES,
+ 	if (info->attrs[BATADV_ATTR_GW_BANDWIDTH_DOWN]) {
 
 
