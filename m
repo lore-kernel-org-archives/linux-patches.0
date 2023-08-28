@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9B811C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF6DC433CA;
-	Mon, 28 Aug 2023 10:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD16711C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE7C433C7;
+	Mon, 28 Aug 2023 10:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219761;
-	bh=vnm6pKBjxKVM/sm1c5TW9aghuTwrbPt1okEutJT9eco=;
+	s=korg; t=1693219764;
+	bh=Z092d5NLjo7Ug59mMqxLITYylBl62zxmI8w5Fy2htLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BibeAJDgNQNjM4yFEVpp0zOIR5UgKtSJgA24uuS6umGs7tMZ1fPgWh6rTqJDCZ+hp
-	 bgFArQ0vYRAEQnifR5k+YzRbv2YAYgBq5MXz/0D4Tpd9V4samqV8m1aSAGCR4RyFkH
-	 oQCn5GY5QjM6TxWoHEASFB0AX5suB/vX3F8ORfG8=
+	b=VHqNCATkOxTK/sSwX6OLKiFFLhKKbwYxNMrVPOeBJpCYunVL2idJqwjgntcXIhfH0
+	 1LwU/z4Wrr9ZCdz8nxOLCUW2G5ie9UmQa4LHS0Vut7PgRTm3UeS1F29JYAw57EJ6I7
+	 qCdGYw2zP/0X+rXYqP+M5YnV4dxXbxrkxYSyxPEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Feng Tang <feng.tang@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 62/84] x86/fpu: Set X86_FEATURE_OSXSAVE feature after enabling OSXSAVE in CR4
-Date: Mon, 28 Aug 2023 12:14:19 +0200
-Message-ID: <20230828101151.362291771@linuxfoundation.org>
+	Paul McKenney <paulmck@kernel.org>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH 5.10 63/84] torture: Fix hang during kthread shutdown phase
+Date: Mon, 28 Aug 2023 12:14:20 +0200
+Message-ID: <20230828101151.397401371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -40,62 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Tang <feng.tang@intel.com>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit 2c66ca3949dc701da7f4c9407f2140ae425683a5 upstream.
+commit d52d3a2bf408ff86f3a79560b5cce80efb340239 upstream.
 
-0-Day found a 34.6% regression in stress-ng's 'af-alg' test case, and
-bisected it to commit b81fac906a8f ("x86/fpu: Move FPU initialization into
-arch_cpu_finalize_init()"), which optimizes the FPU init order, and moves
-the CR4_OSXSAVE enabling into a later place:
+During rcutorture shutdown, the rcu_torture_cleanup() function calls
+torture_cleanup_begin(), which sets the fullstop global variable to
+FULLSTOP_RMMOD. This causes the rcutorture threads for readers and
+fakewriters to exit all of their "while" loops and start shutting down.
 
-   arch_cpu_finalize_init
-       identify_boot_cpu
-	   identify_cpu
-	       generic_identify
-                   get_cpu_cap --> setup cpu capability
-       ...
-       fpu__init_cpu
-           fpu__init_cpu_xstate
-               cr4_set_bits(X86_CR4_OSXSAVE);
+They then call torture_kthread_stopping(), which in turn waits for
+kthread_stop() to be called.  However, rcu_torture_cleanup() has
+not yet called kthread_stop() on those threads, and before it gets a
+chance to do so, multiple instances of torture_kthread_stopping() invoke
+schedule_timeout_interruptible(1) in a tight loop.  Tracing confirms that
+TIMER_SOFTIRQ can then continuously execute timer callbacks.  If that
+TIMER_SOFTIRQ preempts the task executing rcu_torture_cleanup(), that
+task might never invoke kthread_stop().
 
-As the FPU is not yet initialized the CPU capability setup fails to set
-X86_FEATURE_OSXSAVE. Many security module like 'camellia_aesni_avx_x86_64'
-depend on this feature and therefore fail to load, causing the regression.
+This commit improves this situation by increasing the timeout passed to
+schedule_timeout_interruptible() from one jiffy to 1/20th of a second.
+This change prevents TIMER_SOFTIRQ from monopolizing its CPU, thus
+allowing rcu_torture_cleanup() to carry out the needed kthread_stop()
+invocations.  Testing has shown 100 runs of TREE07 passing reliably,
+as oppose to the tens-of-percent failure rates seen beforehand.
 
-Cure this by setting X86_FEATURE_OSXSAVE feature right after OSXSAVE
-enabling.
-
-[ tglx: Moved it into the actual BSP FPU initialization code and added a comment ]
-
-Fixes: b81fac906a8f ("x86/fpu: Move FPU initialization into arch_cpu_finalize_init()")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Feng Tang <feng.tang@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/202307192135.203ac24e-oliver.sang@intel.com
-Link: https://lore.kernel.org/lkml/20230823065747.92257-1-feng.tang@intel.com
+Cc: Paul McKenney <paulmck@kernel.org>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Cc: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.0.x
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Tested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/torture.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -892,6 +892,14 @@ void __init fpu__init_system_xstate(void
- 	setup_init_fpu_buf();
- 	setup_xstate_comp_offsets();
- 	setup_supervisor_only_offsets();
-+
-+	/*
-+	 * CPU capabilities initialization runs before FPU init. So
-+	 * X86_FEATURE_OSXSAVE is not set. Now that XSAVE is completely
-+	 * functional, set the feature bit so depending code works.
-+	 */
-+	setup_force_cpu_cap(X86_FEATURE_OSXSAVE);
-+
- 	print_xstate_offset_size();
- 
- 	pr_info("x86/fpu: Enabled xstate features 0x%llx, context size is %d bytes, using '%s' format.\n",
+--- a/kernel/torture.c
++++ b/kernel/torture.c
+@@ -788,7 +788,7 @@ void torture_kthread_stopping(char *titl
+ 	VERBOSE_TOROUT_STRING(buf);
+ 	while (!kthread_should_stop()) {
+ 		torture_shutdown_absorb(title);
+-		schedule_timeout_uninterruptible(1);
++		schedule_timeout_uninterruptible(HZ / 20);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(torture_kthread_stopping);
 
 
