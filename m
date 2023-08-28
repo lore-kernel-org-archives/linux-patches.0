@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E67411C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06EDC433C9;
-	Mon, 28 Aug 2023 10:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C1E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6718CC433C7;
+	Mon, 28 Aug 2023 10:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218366;
-	bh=5brn3LF2dCgcToTvqvZU3yHBuBC+Mb0n+OpnPuyn8bc=;
+	s=korg; t=1693218368;
+	bh=PwcMliAun47Qb1lqmojJoJrdTm1FUp+OfbSWnwBA1Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubZvD/8UZGrzwOgRVwnuX3WQNbnbH14qyIF7mcLOdR0HZX851zY76SSZdLotU4oCJ
-	 H0ltgi+MPLpzu6ZUQOT/fuCz4P3ZAMl2FDZdyaB6YOgoO4HPeOf5ntS+wa1m2u8lf8
-	 D7EKAJzTcZp3G4RnfRb7eJn6m8wkrfvdA6/75ywg=
+	b=pW4tWsGUumumU1PNcJlr29Is6a6s8VlkfqFlZR5hAqd0HOFZB7q37MdNt3/3jquf6
+	 rfwFkL6wHdx4/X9HMWlObeQKAzg2+kip3DNVPHROMuyE9Ohf5E3idQnaYgPv/hZyMo
+	 GQwrxxhP1lCh5nFXodWVFC/HJAw0BD6K/uHPjQBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 054/129] xfrm: interface: rename xfrm_interface.c to xfrm_interface_core.c
-Date: Mon, 28 Aug 2023 12:12:28 +0200
-Message-ID: <20230828101155.264807940@linuxfoundation.org>
+Subject: [PATCH 4.19 063/129] sock: Fix misuse of sk_under_memory_pressure()
+Date: Mon, 28 Aug 2023 12:12:37 +0200
+Message-ID: <20230828101155.630185239@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,40 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eyal Birger <eyal.birger@gmail.com>
+From: Abel Wu <wuyun.abel@bytedance.com>
 
-[ Upstream commit ee9a113ab63468137802898bcd2c598998c96938 ]
+[ Upstream commit 2d0c88e84e483982067a82073f6125490ddf3614 ]
 
-This change allows adding additional files to the xfrm_interface module.
+The status of global socket memory pressure is updated when:
 
-Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
-Link: https://lore.kernel.org/r/20221203084659.1837829-2-eyal.birger@gmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Stable-dep-of: 53223f2ed1ef ("xfrm: fix slab-use-after-free in decode_session6")
+  a) __sk_mem_raise_allocated():
+
+	enter: sk_memory_allocated(sk) >  sysctl_mem[1]
+	leave: sk_memory_allocated(sk) <= sysctl_mem[0]
+
+  b) __sk_mem_reduce_allocated():
+
+	leave: sk_under_memory_pressure(sk) &&
+		sk_memory_allocated(sk) < sysctl_mem[0]
+
+So the conditions of leaving global pressure are inconstant, which
+may lead to the situation that one pressured net-memcg prevents the
+global pressure from being cleared when there is indeed no global
+pressure, thus the global constrains are still in effect unexpectedly
+on the other sockets.
+
+This patch fixes this by ignoring the net-memcg's pressure when
+deciding whether should leave global memory pressure.
+
+Fixes: e1aab161e013 ("socket: initial cgroup code.")
+Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Link: https://lore.kernel.org/r/20230816091226.1542-1-wuyun.abel@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/Makefile                                    | 2 ++
- net/xfrm/{xfrm_interface.c => xfrm_interface_core.c} | 0
- 2 files changed, 2 insertions(+)
- rename net/xfrm/{xfrm_interface.c => xfrm_interface_core.c} (100%)
+ include/net/sock.h | 6 ++++++
+ net/core/sock.c    | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/Makefile b/net/xfrm/Makefile
-index fbc4552d17b85..6e5e307f985e4 100644
---- a/net/xfrm/Makefile
-+++ b/net/xfrm/Makefile
-@@ -3,6 +3,8 @@
- # Makefile for the XFRM subsystem.
- #
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 72739f72e4b90..bcb1901ac13a5 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1265,6 +1265,12 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
+ 	return sk->sk_prot->memory_pressure != NULL;
+ }
  
-+xfrm_interface-$(CONFIG_XFRM_INTERFACE) += xfrm_interface_core.o
++static inline bool sk_under_global_memory_pressure(const struct sock *sk)
++{
++	return sk->sk_prot->memory_pressure &&
++		!!*sk->sk_prot->memory_pressure;
++}
 +
- obj-$(CONFIG_XFRM) := xfrm_policy.o xfrm_state.o xfrm_hash.o \
- 		      xfrm_input.o xfrm_output.o \
- 		      xfrm_sysctl.o xfrm_replay.o xfrm_device.o
-diff --git a/net/xfrm/xfrm_interface.c b/net/xfrm/xfrm_interface_core.c
-similarity index 100%
-rename from net/xfrm/xfrm_interface.c
-rename to net/xfrm/xfrm_interface_core.c
+ static inline bool sk_under_memory_pressure(const struct sock *sk)
+ {
+ 	if (!sk->sk_prot->memory_pressure)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 3e6da3694a5a5..4e3ed80a68ceb 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2538,7 +2538,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
+ 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
+ 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
+ 
+-	if (sk_under_memory_pressure(sk) &&
++	if (sk_under_global_memory_pressure(sk) &&
+ 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
+ 		sk_leave_memory_pressure(sk);
+ }
 -- 
 2.40.1
 
