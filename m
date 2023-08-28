@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC8F611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC47C433C7;
-	Mon, 28 Aug 2023 10:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6290B611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BBBC433C8;
+	Mon, 28 Aug 2023 10:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219429;
-	bh=aUwte5xAa7Ov/eVPU7wJ0JoIDir+KVMYXds6BTzq7HU=;
+	s=korg; t=1693219432;
+	bh=QX2pkKmc/EcQqKNRd4smOC28ZgUbAnGASTQ4Da0BIfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmIWIIxFg6ikHg54L4krNc02Kir8d/IXDoksjJIrV+7cJ96iQn8dQVEvFYIR1eK4L
-	 000VY5fQtXUGKwPxljAgUbuYwo2g7y6dl8hkHVBxpQMc3RmyNCyin6dzQshSjluTG7
-	 /bk8hn6VNSPNOR3iwgrbD0Ygd2ohQYTJMQE21O+E=
+	b=l8D4ES5XLcIFfjpIAQvezht+LvyfKtZvPbL5BD6KMhTMEITnuWIP0JbFydUzUaEiy
+	 hHvi3KkRZw8HnFOqZpi7C5eo7kgjTreL0XoZOvM7qaANgAaiVlN4kevv3fA53VEgca
+	 zPsFxi/pT3EGJIQeoJxRrEXkdfAas2BcPo7yq6QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/89] net: validate veth and vxcan peer ifindexes
-Date: Mon, 28 Aug 2023 12:13:34 +0200
-Message-ID: <20230828101151.298045436@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 34/89] ice: fix receive buffer size miscalculation
+Date: Mon, 28 Aug 2023 12:13:35 +0200
+Message-ID: <20230828101151.327760092@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,135 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit f534f6581ec084fe94d6759f7672bd009794b07e ]
+[ Upstream commit 10083aef784031fa9f06c19a1b182e6fad5338d9 ]
 
-veth and vxcan need to make sure the ifindexes of the peer
-are not negative, core does not validate this.
+The driver is misconfiguring the hardware for some values of MTU such that
+it could use multiple descriptors to receive a packet when it could have
+simply used one.
 
-Using iproute2 with user-space-level checking removed:
+Change the driver to use a round-up instead of the result of a shift, as
+the shift can truncate the lower bits of the size, and result in the
+problem noted above. It also aligns this driver with similar code in i40e.
 
-Before:
+The insidiousness of this problem is that everything works with the wrong
+size, it's just not working as well as it could, as some MTU sizes end up
+using two or more descriptors, and there is no way to tell that is
+happening without looking at ice_trace or a bus analyzer.
 
-  # ./ip link add index 10 type veth peer index -1
-  # ip link show
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-  2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
-    link/ether 52:54:00:74:b2:03 brd ff:ff:ff:ff:ff:ff
-  10: veth1@veth0: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 8a:90:ff:57:6d:5d brd ff:ff:ff:ff:ff:ff
-  -1: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether ae:ed:18:e6:fa:7f brd ff:ff:ff:ff:ff:ff
-
-Now:
-
-  $ ./ip link add index 10 type veth peer index -1
-  Error: ifindex can't be negative.
-
-This problem surfaced in net-next because an explicit WARN()
-was added, the root cause is older.
-
-Fixes: e6f8f1a739b6 ("veth: Allow to create peer link with given ifindex")
-Fixes: a8f820a380a2 ("can: add Virtual CAN Tunnel driver (vxcan)")
-Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/vxcan.c |  7 +------
- drivers/net/veth.c      |  5 +----
- include/net/rtnetlink.h |  4 ++--
- net/core/rtnetlink.c    | 22 ++++++++++++++++++----
- 4 files changed, 22 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
-index be5566168d0f3..afd9060c5421c 100644
---- a/drivers/net/can/vxcan.c
-+++ b/drivers/net/can/vxcan.c
-@@ -179,12 +179,7 @@ static int vxcan_newlink(struct net *net, struct net_device *dev,
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index 533a953f15acb..09525dbeccfec 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -359,7 +359,8 @@ static int ice_setup_rx_ctx(struct ice_ring *ring)
+ 	/* Receive Packet Data Buffer Size.
+ 	 * The Packet Data Buffer Size is defined in 128 byte units.
+ 	 */
+-	rlan_ctx.dbuf = ring->rx_buf_len >> ICE_RLAN_CTX_DBUF_S;
++	rlan_ctx.dbuf = DIV_ROUND_UP(ring->rx_buf_len,
++				     BIT_ULL(ICE_RLAN_CTX_DBUF_S));
  
- 		nla_peer = data[VXCAN_INFO_PEER];
- 		ifmp = nla_data(nla_peer);
--		err = rtnl_nla_parse_ifla(peer_tb,
--					  nla_data(nla_peer) +
--					  sizeof(struct ifinfomsg),
--					  nla_len(nla_peer) -
--					  sizeof(struct ifinfomsg),
--					  NULL);
-+		err = rtnl_nla_parse_ifinfomsg(peer_tb, nla_peer, extack);
- 		if (err < 0)
- 			return err;
- 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 41cb9179e8b79..45ee44f66e77d 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1654,10 +1654,7 @@ static int veth_newlink(struct net *src_net, struct net_device *dev,
- 
- 		nla_peer = data[VETH_INFO_PEER];
- 		ifmp = nla_data(nla_peer);
--		err = rtnl_nla_parse_ifla(peer_tb,
--					  nla_data(nla_peer) + sizeof(struct ifinfomsg),
--					  nla_len(nla_peer) - sizeof(struct ifinfomsg),
--					  NULL);
-+		err = rtnl_nla_parse_ifinfomsg(peer_tb, nla_peer, extack);
- 		if (err < 0)
- 			return err;
- 
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index 9f48733bfd21c..a2a74e0e5c494 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -175,8 +175,8 @@ struct net_device *rtnl_create_link(struct net *net, const char *ifname,
- int rtnl_delete_link(struct net_device *dev);
- int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm);
- 
--int rtnl_nla_parse_ifla(struct nlattr **tb, const struct nlattr *head, int len,
--			struct netlink_ext_ack *exterr);
-+int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
-+			     struct netlink_ext_ack *exterr);
- struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
- 
- #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index b055e196f5306..03dd8dc9e1425 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2173,13 +2173,27 @@ static int rtnl_dump_ifinfo(struct sk_buff *skb, struct netlink_callback *cb)
- 	return err;
- }
- 
--int rtnl_nla_parse_ifla(struct nlattr **tb, const struct nlattr *head, int len,
--			struct netlink_ext_ack *exterr)
-+int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
-+			     struct netlink_ext_ack *exterr)
- {
--	return nla_parse_deprecated(tb, IFLA_MAX, head, len, ifla_policy,
-+	const struct ifinfomsg *ifmp;
-+	const struct nlattr *attrs;
-+	size_t len;
-+
-+	ifmp = nla_data(nla_peer);
-+	attrs = nla_data(nla_peer) + sizeof(struct ifinfomsg);
-+	len = nla_len(nla_peer) - sizeof(struct ifinfomsg);
-+
-+	if (ifmp->ifi_index < 0) {
-+		NL_SET_ERR_MSG_ATTR(exterr, nla_peer,
-+				    "ifindex can't be negative");
-+		return -EINVAL;
-+	}
-+
-+	return nla_parse_deprecated(tb, IFLA_MAX, attrs, len, ifla_policy,
- 				    exterr);
- }
--EXPORT_SYMBOL(rtnl_nla_parse_ifla);
-+EXPORT_SYMBOL(rtnl_nla_parse_ifinfomsg);
- 
- struct net *rtnl_link_get_net(struct net *src_net, struct nlattr *tb[])
- {
+ 	/* use 32 byte descriptors */
+ 	rlan_ctx.dsize = 1;
 -- 
 2.40.1
 
