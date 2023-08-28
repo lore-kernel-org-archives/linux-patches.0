@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008B66FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79939C433C9;
-	Mon, 28 Aug 2023 10:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFDA8BE0
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2E0C433C7;
+	Mon, 28 Aug 2023 10:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219818;
-	bh=3teD5aaKIaPv6T0CA0EdUcyIvpqsJdAzjQky7woqXw8=;
+	s=korg; t=1693219821;
+	bh=7yK52mSQixDEg609TzokxM0zKnE18DMRdF0PXUr+tD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VrDLoE/KC9hnPVYylecazHaq0hgmMAn/adS9KgmJwCmndtr/ifRHJC0nYiDYV0rbs
-	 Wv9A5QIQ4uDDhMcvXjMbI5VvmzI2Lom5bLok0ofzbs4RPR8y2qsFsEGIdqjdjdqiK1
-	 WMWzpdbAEKSFRuAKk388ro2+zxwT5Yp0Mkm4nEvU=
+	b=zTh21a4Jt4ToZd3JSccFMZA/ULzoBVhAqNDk7H9LyZt4aj9F22McDXddneijxNXpK
+	 YL8Ecp4UGMlTAuOkWs2DG21IC9N8xq94xkhmPJ3k25/FNIH6VIpd2nKeDcBBlIA+l9
+	 oxmrgNRfAI18wGDYKabtPeJVb5IJbc1T/vgO4ivQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	=?UTF-8?q?Philip=20M=C3=BCller?= <philm@manjaro.org>
-Subject: [PATCH 5.10 83/84] ASoC: Intel: sof_sdw: include rt711.h for RT711 JD mode
-Date: Mon, 28 Aug 2023 12:14:40 +0200
-Message-ID: <20230828101152.088045445@linuxfoundation.org>
+	Oscar Salvador <osalvador@suse.de>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 84/84] mm,hwpoison: fix printing of page flags
+Date: Mon, 28 Aug 2023 12:14:41 +0200
+Message-ID: <20230828101152.119646244@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -36,147 +37,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Oscar Salvador <osalvador@suse.de>
 
-commit 8e6c00f1fdea9fdf727969d7485d417240d2a1f9 upstream.
+commit 6696d2a6f38c0beedf03c381edfc392ecf7631b4 upstream.
 
-We don't need to redefine enum rt711_jd_src.
+Format %pG expects a lower case 'p' in order to print the flags.
+Fix it.
 
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20210712203240.46960-7-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Philip Müller <philm@manjaro.org>
+Link: https://lkml.kernel.org/r/20210108085202.4506-1-osalvador@suse.de
+Fixes: 8295d535e2aa ("mm,hwpoison: refactor get_any_page")
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/sof_sdw.c        |   23 ++++++++++++-----------
- sound/soc/intel/boards/sof_sdw_common.h |    5 -----
- 2 files changed, 12 insertions(+), 16 deletions(-)
+ mm/memory-failure.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -13,8 +13,9 @@
- #include <sound/soc.h>
- #include <sound/soc-acpi.h>
- #include "sof_sdw_common.h"
-+#include "../../codecs/rt711.h"
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -1928,7 +1928,7 @@ retry:
+ 			ret = -EBUSY;
+ 		}
+ 	} else if (ret == -EIO) {
+-		pr_info("%s: %#lx: unknown page type: %lx (%pGP)\n",
++		pr_info("%s: %#lx: unknown page type: %lx (%pGp)\n",
+ 			 __func__, pfn, page->flags, &page->flags);
+ 	}
  
--unsigned long sof_sdw_quirk = SOF_RT711_JD_SRC_JD1;
-+unsigned long sof_sdw_quirk = RT711_JD1;
- static int quirk_override = -1;
- module_param_named(quirk, quirk_override, int, 0444);
- MODULE_PARM_DESC(quirk, "Board-specific quirk override");
-@@ -63,7 +64,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "09C6")
- 		},
--		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
-+		.driver_data = (void *)(RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX),
- 	},
- 	{
-@@ -73,7 +74,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0983")
- 		},
--		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
-+		.driver_data = (void *)(RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX),
- 	},
- 	{
-@@ -82,7 +83,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "098F"),
- 		},
--		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
-+		.driver_data = (void *)(RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX |
- 					SOF_SDW_FOUR_SPK),
- 	},
-@@ -92,7 +93,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0990"),
- 		},
--		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
-+		.driver_data = (void *)(RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX |
- 					SOF_SDW_FOUR_SPK),
- 	},
-@@ -114,7 +115,7 @@ static const struct dmi_system_id sof_sd
- 				  "Tiger Lake Client Platform"),
- 		},
- 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
--					SOF_RT711_JD_SRC_JD1 |
-+					RT711_JD1 |
- 					SOF_SDW_PCH_DMIC |
- 					SOF_SSP_PORT(SOF_I2S_SSP2)),
- 	},
-@@ -125,7 +126,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A3E")
- 		},
- 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
--					SOF_RT711_JD_SRC_JD2 |
-+					RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX),
- 	},
- 	{
-@@ -135,7 +136,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A5E")
- 		},
- 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
--					SOF_RT711_JD_SRC_JD2 |
-+					RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX |
- 					SOF_SDW_FOUR_SPK),
- 	},
-@@ -173,7 +174,7 @@ static const struct dmi_system_id sof_sd
- 		},
- 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
- 					SOF_SDW_PCH_DMIC |
--					SOF_RT711_JD_SRC_JD2),
-+					RT711_JD2),
- 	},
- 	/* TigerLake-SDCA devices */
- 	{
-@@ -183,7 +184,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A32")
- 		},
- 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
--					SOF_RT711_JD_SRC_JD2 |
-+					RT711_JD2 |
- 					SOF_RT715_DAI_ID_FIX |
- 					SOF_SDW_FOUR_SPK),
- 	},
-@@ -194,7 +195,7 @@ static const struct dmi_system_id sof_sd
- 			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Alder Lake Client Platform"),
- 		},
--		.driver_data = (void *)(SOF_RT711_JD_SRC_JD1 |
-+		.driver_data = (void *)(RT711_JD1 |
- 					SOF_SDW_TGL_HDMI |
- 					SOF_RT715_DAI_ID_FIX |
- 					SOF_SDW_PCH_DMIC),
---- a/sound/soc/intel/boards/sof_sdw_common.h
-+++ b/sound/soc/intel/boards/sof_sdw_common.h
-@@ -23,11 +23,6 @@
- #define SDW_MAX_GROUPS 9
- 
- enum {
--	SOF_RT711_JD_SRC_JD1 = 1,
--	SOF_RT711_JD_SRC_JD2 = 2,
--};
--
--enum {
- 	SOF_PRE_TGL_HDMI_COUNT = 3,
- 	SOF_TGL_HDMI_COUNT = 4,
- };
 
 
