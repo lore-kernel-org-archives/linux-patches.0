@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96955611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F49C433C9;
-	Mon, 28 Aug 2023 10:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDEF611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7460C433C7;
+	Mon, 28 Aug 2023 10:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219465;
-	bh=yBYDjRJf+mEO6t3p+k352pY3cMmhu+AHDD8xUDp9P7k=;
+	s=korg; t=1693219468;
+	bh=DL5RuGUvkdVdDeMCqffq+XXwsnb7sZMp2q+THiLvi0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2v0BKDoA5IVTuUCH/DO0+XIodJF3CkfSFDBPjlnVp/Jtfj2vpm7lTFNCsf31OW63B
-	 IRKK+hgfK0/nnu8q+2lQO2aqLGfzZO4bEQ6/XdXI1W7aL/NrIp3RntQz9+Vvi+x/ZQ
-	 Z1F2P5KvAMrl1SBjMK8SdpCrohvM2jIS4pdYhHXg=
+	b=QLZa7mBpIf5jlD5LpiuJ80Ei1NcGchqK2rGG1ucad07NAxy68qGOi5NpDWZT3wbmf
+	 NJazECVfAb+ShePnAHAsp9rKtneIJaPRzhhzUcK0NoynZrXCEiGivRwFOIc8RbC4EL
+	 1hNE2wstf1tGZfJftU/w1utUBfO+PUsQVrvXDtyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	Ivan Mikhaylov <fr0st61te@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 45/89] net/ncsi: change from ndo_set_mac_address to dev_set_mac_address
-Date: Mon, 28 Aug 2023 12:13:46 +0200
-Message-ID: <20230828101151.684010399@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 19/89] jbd2: remove journal_clean_one_cp_list()
+Date: Mon, 28 Aug 2023 12:13:20 +0200
+Message-ID: <20230828101150.813318897@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -41,50 +41,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Mikhaylov <fr0st61te@gmail.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 790071347a0a1a89e618eedcd51c687ea783aeb3 upstream.
+[ Upstream commit b98dba273a0e47dbfade89c9af73c5b012a4eabb ]
 
-Change ndo_set_mac_address to dev_set_mac_address because
-dev_set_mac_address provides a way to notify network layer about MAC
-change. In other case, services may not aware about MAC change and keep
-using old one which set from network adapter driver.
+journal_clean_one_cp_list() and journal_shrink_one_cp_list() are almost
+the same, so merge them into journal_shrink_one_cp_list(), remove the
+nr_to_scan parameter, always scan and try to free the whole checkpoint
+list.
 
-As example, DHCP client from systemd do not update MAC address without
-notification from net subsystem which leads to the problem with acquiring
-the right address from DHCP server.
-
-Fixes: cb10c7c0dfd9e ("net/ncsi: Add NCSI Broadcom OEM command")
-Cc: stable@vger.kernel.org # v6.0+ 2f38e84 net/ncsi: make one oem_gma function for all mfr id
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-rsp.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/jbd2/checkpoint.c        | 75 +++++++++----------------------------
+ include/trace/events/jbd2.h | 12 ++----
+ 2 files changed, 21 insertions(+), 66 deletions(-)
 
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -616,7 +616,6 @@ static int ncsi_rsp_handler_oem_gma(stru
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index c1f543e86170a..ab72aeb766a74 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -349,50 +349,10 @@ int jbd2_cleanup_journal_tail(journal_t *journal)
+ 
+ /* Checkpoint list management */
+ 
+-/*
+- * journal_clean_one_cp_list
+- *
+- * Find all the written-back checkpoint buffers in the given list and
+- * release them. If 'destroy' is set, clean all buffers unconditionally.
+- *
+- * Called with j_list_lock held.
+- * Returns 1 if we freed the transaction, 0 otherwise.
+- */
+-static int journal_clean_one_cp_list(struct journal_head *jh, bool destroy)
+-{
+-	struct journal_head *last_jh;
+-	struct journal_head *next_jh = jh;
+-
+-	if (!jh)
+-		return 0;
+-
+-	last_jh = jh->b_cpprev;
+-	do {
+-		jh = next_jh;
+-		next_jh = jh->b_cpnext;
+-
+-		if (!destroy && __cp_buffer_busy(jh))
+-			return 0;
+-
+-		if (__jbd2_journal_remove_checkpoint(jh))
+-			return 1;
+-		/*
+-		 * This function only frees up some memory
+-		 * if possible so we dont have an obligation
+-		 * to finish processing. Bail out if preemption
+-		 * requested:
+-		 */
+-		if (need_resched())
+-			return 0;
+-	} while (jh != last_jh);
+-
+-	return 0;
+-}
+-
+ /*
+  * journal_shrink_one_cp_list
+  *
+- * Find 'nr_to_scan' written-back checkpoint buffers in the given list
++ * Find all the written-back checkpoint buffers in the given list
+  * and try to release them. If the whole transaction is released, set
+  * the 'released' parameter. Return the number of released checkpointed
+  * buffers.
+@@ -400,15 +360,15 @@ static int journal_clean_one_cp_list(struct journal_head *jh, bool destroy)
+  * Called with j_list_lock held.
+  */
+ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+-						unsigned long *nr_to_scan,
+-						bool *released)
++						bool destroy, bool *released)
  {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
- 	struct net_device *ndev = ndp->ndev.dev;
--	const struct net_device_ops *ops = ndev->netdev_ops;
- 	struct ncsi_rsp_oem_pkt *rsp;
- 	struct sockaddr saddr;
- 	u32 mac_addr_off = 0;
-@@ -643,7 +642,9 @@ static int ncsi_rsp_handler_oem_gma(stru
- 	/* Set the flag for GMA command which should only be called once */
- 	ndp->gma_flag = 1;
+ 	struct journal_head *last_jh;
+ 	struct journal_head *next_jh = jh;
+ 	unsigned long nr_freed = 0;
+ 	int ret;
  
--	ret = ops->ndo_set_mac_address(ndev, &saddr);
-+	rtnl_lock();
-+	ret = dev_set_mac_address(ndev, &saddr, NULL);
-+	rtnl_unlock();
- 	if (ret < 0)
- 		netdev_warn(ndev, "NCSI: 'Writing mac address to device failed\n");
+-	if (!jh || *nr_to_scan == 0)
++	*released = false;
++	if (!jh)
+ 		return 0;
  
+ 	last_jh = jh->b_cpprev;
+@@ -416,8 +376,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+ 		jh = next_jh;
+ 		next_jh = jh->b_cpnext;
+ 
+-		(*nr_to_scan)--;
+-		if (__cp_buffer_busy(jh))
++		if (!destroy && __cp_buffer_busy(jh))
+ 			continue;
+ 
+ 		nr_freed++;
+@@ -429,7 +388,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
+ 
+ 		if (need_resched())
+ 			break;
+-	} while (jh != last_jh && *nr_to_scan);
++	} while (jh != last_jh);
+ 
+ 	return nr_freed;
+ }
+@@ -447,11 +406,11 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ 						  unsigned long *nr_to_scan)
+ {
+ 	transaction_t *transaction, *last_transaction, *next_transaction;
+-	bool released;
++	bool __maybe_unused released;
+ 	tid_t first_tid = 0, last_tid = 0, next_tid = 0;
+ 	tid_t tid = 0;
+ 	unsigned long nr_freed = 0;
+-	unsigned long nr_scanned = *nr_to_scan;
++	unsigned long freed;
+ 
+ again:
+ 	spin_lock(&journal->j_list_lock);
+@@ -480,10 +439,11 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ 		transaction = next_transaction;
+ 		next_transaction = transaction->t_cpnext;
+ 		tid = transaction->t_tid;
+-		released = false;
+ 
+-		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_list,
+-						       nr_to_scan, &released);
++		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
++						   false, &released);
++		nr_freed += freed;
++		(*nr_to_scan) -= min(*nr_to_scan, freed);
+ 		if (*nr_to_scan == 0)
+ 			break;
+ 		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+@@ -504,9 +464,8 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ 	if (*nr_to_scan && next_tid)
+ 		goto again;
+ out:
+-	nr_scanned -= *nr_to_scan;
+ 	trace_jbd2_shrink_checkpoint_list(journal, first_tid, tid, last_tid,
+-					  nr_freed, nr_scanned, next_tid);
++					  nr_freed, next_tid);
+ 
+ 	return nr_freed;
+ }
+@@ -522,7 +481,7 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ {
+ 	transaction_t *transaction, *last_transaction, *next_transaction;
+-	int ret;
++	bool released;
+ 
+ 	transaction = journal->j_checkpoint_transactions;
+ 	if (!transaction)
+@@ -533,8 +492,8 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ 	do {
+ 		transaction = next_transaction;
+ 		next_transaction = transaction->t_cpnext;
+-		ret = journal_clean_one_cp_list(transaction->t_checkpoint_list,
+-						destroy);
++		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
++					   destroy, &released);
+ 		/*
+ 		 * This function only frees up some memory if possible so we
+ 		 * dont have an obligation to finish processing. Bail out if
+@@ -547,7 +506,7 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ 		 * avoids pointless scanning of transactions which still
+ 		 * weren't checkpointed.
+ 		 */
+-		if (!ret)
++		if (!released)
+ 			return;
+ 	} while (transaction != last_transaction);
+ }
+diff --git a/include/trace/events/jbd2.h b/include/trace/events/jbd2.h
+index 29414288ea3e0..34ce197bd76e0 100644
+--- a/include/trace/events/jbd2.h
++++ b/include/trace/events/jbd2.h
+@@ -462,11 +462,9 @@ TRACE_EVENT(jbd2_shrink_scan_exit,
+ TRACE_EVENT(jbd2_shrink_checkpoint_list,
+ 
+ 	TP_PROTO(journal_t *journal, tid_t first_tid, tid_t tid, tid_t last_tid,
+-		 unsigned long nr_freed, unsigned long nr_scanned,
+-		 tid_t next_tid),
++		 unsigned long nr_freed, tid_t next_tid),
+ 
+-	TP_ARGS(journal, first_tid, tid, last_tid, nr_freed,
+-		nr_scanned, next_tid),
++	TP_ARGS(journal, first_tid, tid, last_tid, nr_freed, next_tid),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(dev_t, dev)
+@@ -474,7 +472,6 @@ TRACE_EVENT(jbd2_shrink_checkpoint_list,
+ 		__field(tid_t, tid)
+ 		__field(tid_t, last_tid)
+ 		__field(unsigned long, nr_freed)
+-		__field(unsigned long, nr_scanned)
+ 		__field(tid_t, next_tid)
+ 	),
+ 
+@@ -484,15 +481,14 @@ TRACE_EVENT(jbd2_shrink_checkpoint_list,
+ 		__entry->tid		= tid;
+ 		__entry->last_tid	= last_tid;
+ 		__entry->nr_freed	= nr_freed;
+-		__entry->nr_scanned	= nr_scanned;
+ 		__entry->next_tid	= next_tid;
+ 	),
+ 
+ 	TP_printk("dev %d,%d shrink transaction %u-%u(%u) freed %lu "
+-		  "scanned %lu next transaction %u",
++		  "next transaction %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  __entry->first_tid, __entry->tid, __entry->last_tid,
+-		  __entry->nr_freed, __entry->nr_scanned, __entry->next_tid)
++		  __entry->nr_freed, __entry->next_tid)
+ );
+ 
+ #endif /* _TRACE_JBD2_H */
+-- 
+2.40.1
+
 
 
