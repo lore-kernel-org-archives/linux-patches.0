@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E832411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D826C433C8;
-	Mon, 28 Aug 2023 10:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDE911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D988C433C9;
+	Mon, 28 Aug 2023 10:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219101;
-	bh=7lEjAI5w6yk287++WOYM1+4lyaVovJfT31+yby27oTM=;
+	s=korg; t=1693219104;
+	bh=OQI1L7703gR+Yz2xJkZ3RQxTOjSNU4v6/n5JMhD+TWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQlgzkWTYd7uMmPARnhmAxSeQQQg1IbyxqYRmGUkIyI+Ymp1pBxoWr1nt8WpdCisb
-	 STXLG2PruNT/wRA8XiSDCR1F1MSkCydFJEvveDRYVbeVnzCgVuuZ9xNp6CrcfKMLtK
-	 zbjSmNR2q0r5eVh2YIzNyWsZUk5GQw58hlVDV7UA=
+	b=oNYVD+cxx0vnmw2A/5acujOZaFQQ1t2W7p9zi6oboD/8F7C10ru2kqPiviXuw0vSO
+	 O1m22CJiMiT55gfXjkol+VYlAtJftL38NDqD1NhuwjiZ5RBtfEMoMc6qKmWDPbzDoc
+	 Y2i2AGIHzgMuUmElxLrLr9xtGPFyEa/4BXV5AN1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/158] net: do not allow gso_size to be set to GSO_BY_FRAGS
-Date: Mon, 28 Aug 2023 12:12:51 +0200
-Message-ID: <20230828101159.779148348@linuxfoundation.org>
+Subject: [PATCH 5.4 075/158] bus: ti-sysc: Improve reset to work with modules with no sysconfig
+Date: Mon, 28 Aug 2023 12:12:52 +0200
+Message-ID: <20230828101159.808470237@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -47,88 +39,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit b616be6b97688f2f2bd7c4a47ab32f27f94fb2a9 ]
+[ Upstream commit ab4d309d8708035bd323b2e2446eb68cda5e61e5 ]
 
-One missing check in virtio_net_hdr_to_skb() allowed
-syzbot to crash kernels again [1]
+At least display susbsystem (DSS) has modules with no sysconfig registers
+and rely on custom function for module reset handling. Let's make reset
+work with that too.
 
-Do not allow gso_size to be set to GSO_BY_FRAGS (0xffff),
-because this magic value is used by the kernel.
-
-[1]
-general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 0 PID: 5039 Comm: syz-executor401 Not tainted 6.5.0-rc5-next-20230809-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-RIP: 0010:skb_segment+0x1a52/0x3ef0 net/core/skbuff.c:4500
-Code: 00 00 00 e9 ab eb ff ff e8 6b 96 5d f9 48 8b 84 24 00 01 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e ea 21 00 00 48 8b 84 24 00 01
-RSP: 0018:ffffc90003d3f1c8 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 000000000001fffe RCX: 0000000000000000
-RDX: 000000000000000e RSI: ffffffff882a3115 RDI: 0000000000000070
-RBP: ffffc90003d3f378 R08: 0000000000000005 R09: 000000000000ffff
-R10: 000000000000ffff R11: 5ee4a93e456187d6 R12: 000000000001ffc6
-R13: dffffc0000000000 R14: 0000000000000008 R15: 000000000000ffff
-FS: 00005555563f2380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020020000 CR3: 000000001626d000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-udp6_ufo_fragment+0x9d2/0xd50 net/ipv6/udp_offload.c:109
-ipv6_gso_segment+0x5c4/0x17b0 net/ipv6/ip6_offload.c:120
-skb_mac_gso_segment+0x292/0x610 net/core/gso.c:53
-__skb_gso_segment+0x339/0x710 net/core/gso.c:124
-skb_gso_segment include/net/gso.h:83 [inline]
-validate_xmit_skb+0x3a5/0xf10 net/core/dev.c:3625
-__dev_queue_xmit+0x8f0/0x3d60 net/core/dev.c:4329
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-packet_xmit+0x257/0x380 net/packet/af_packet.c:276
-packet_snd net/packet/af_packet.c:3087 [inline]
-packet_sendmsg+0x24c7/0x5570 net/packet/af_packet.c:3119
-sock_sendmsg_nosec net/socket.c:727 [inline]
-sock_sendmsg+0xd9/0x180 net/socket.c:750
-____sys_sendmsg+0x6ac/0x940 net/socket.c:2496
-___sys_sendmsg+0x135/0x1d0 net/socket.c:2550
-__sys_sendmsg+0x117/0x1e0 net/socket.c:2579
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7ff27cdb34d9
-
-Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230816142158.1779798-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Stable-dep-of: 34539b442b3b ("bus: ti-sysc: Flush posted write on enable before reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bus/ti-sysc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index a960de68ac69e..6047058d67037 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -148,6 +148,10 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 		if (gso_type & SKB_GSO_UDP)
- 			nh_off -= thlen;
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 44aeceaccfa48..c2808d118568e 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -1809,7 +1809,7 @@ static int sysc_reset(struct sysc *ddata)
  
-+		/* Kernel has a special handling for GSO_BY_FRAGS. */
-+		if (gso_size == GSO_BY_FRAGS)
-+			return -EINVAL;
-+
- 		/* Too small packets are not really GSO ones. */
- 		if (skb->len - nh_off > gso_size) {
- 			shinfo->gso_size = gso_size;
+ 	sysc_offset = ddata->offsets[SYSC_SYSCONFIG];
+ 
+-	if (ddata->legacy_mode || sysc_offset < 0 ||
++	if (ddata->legacy_mode ||
+ 	    ddata->cap->regbits->srst_shift < 0 ||
+ 	    ddata->cfg.quirks & SYSC_QUIRK_NO_RESET_ON_INIT)
+ 		return 0;
+@@ -1819,9 +1819,11 @@ static int sysc_reset(struct sysc *ddata)
+ 	if (ddata->pre_reset_quirk)
+ 		ddata->pre_reset_quirk(ddata);
+ 
+-	sysc_val = sysc_read_sysconfig(ddata);
+-	sysc_val |= sysc_mask;
+-	sysc_write(ddata, sysc_offset, sysc_val);
++	if (sysc_offset >= 0) {
++		sysc_val = sysc_read_sysconfig(ddata);
++		sysc_val |= sysc_mask;
++		sysc_write(ddata, sysc_offset, sysc_val);
++	}
+ 
+ 	if (ddata->cfg.srst_udelay)
+ 		usleep_range(ddata->cfg.srst_udelay,
 -- 
 2.40.1
 
