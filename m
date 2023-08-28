@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B7B11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1BFC433C8;
-	Mon, 28 Aug 2023 10:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A2A11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531DCC433C8;
+	Mon, 28 Aug 2023 10:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218343;
-	bh=gLm9jmY/bgswGBw2rVaKehHB9iqWimGbSlznW1OAqI8=;
+	s=korg; t=1693218346;
+	bh=xO4M9RAJBEYhgjbhYDX/Y54LSY+9WLsRxuKLnj+Vwc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gso2h5ypyoGbbqBIZVid0q185WsSETxoq7kus1SAOCNw8+l9B636ZYHUQC/jW9EVo
-	 Ht+mIywM6zFJxNBEJMx6lrHsfKw89AjWubdM3hKPaQ989+TrCSEQKYlvVcgb6e9/kE
-	 rqHTC5C+cq867oojntuHH+9I4RA1AEpDTOwqe5Uk=
+	b=MJk5u5VANW52TRMAfz+G6jVBQYU/o1W9YcuWHuLYdsxqLsB84MC3amTt92rYwm/lZ
+	 1wrsYof60f8CXxFvvI6Af48pD4ebWq34akM5LzSg6k8IAIDgqfu9NzjJC5iC3Pl/w5
+	 6Gq6QkHHKQwme6qFDcjDeLsCXVFcWMhDHtMNSLLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@c-s.fr>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 052/129] net: xfrm: Fix xfrm_address_filter OOB read
-Date: Mon, 28 Aug 2023 12:12:26 +0200
-Message-ID: <20230828101155.176149066@linuxfoundation.org>
+Subject: [PATCH 4.19 026/129] powerpc/mm: Move pgtable_t into platform headers
+Date: Mon, 28 Aug 2023 12:12:00 +0200
+Message-ID: <20230828101154.024643278@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,200 +41,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Christophe Leroy <christophe.leroy@c-s.fr>
 
-[ Upstream commit dfa73c17d55b921e1d4e154976de35317e43a93a ]
+[ Upstream commit d09780f3a8d48fd49136d7bae8f0ae30de7f261a ]
 
-We found below OOB crash:
+This patch move pgtable_t into platform headers.
 
-[   44.211730] ==================================================================
-[   44.212045] BUG: KASAN: slab-out-of-bounds in memcmp+0x8b/0xb0
-[   44.212045] Read of size 8 at addr ffff88800870f320 by task poc.xfrm/97
-[   44.212045]
-[   44.212045] CPU: 0 PID: 97 Comm: poc.xfrm Not tainted 6.4.0-rc7-00072-gdad9774deaf1-dirty #4
-[   44.212045] Call Trace:
-[   44.212045]  <TASK>
-[   44.212045]  dump_stack_lvl+0x37/0x50
-[   44.212045]  print_report+0xcc/0x620
-[   44.212045]  ? __virt_addr_valid+0xf3/0x170
-[   44.212045]  ? memcmp+0x8b/0xb0
-[   44.212045]  kasan_report+0xb2/0xe0
-[   44.212045]  ? memcmp+0x8b/0xb0
-[   44.212045]  kasan_check_range+0x39/0x1c0
-[   44.212045]  memcmp+0x8b/0xb0
-[   44.212045]  xfrm_state_walk+0x21c/0x420
-[   44.212045]  ? __pfx_dump_one_state+0x10/0x10
-[   44.212045]  xfrm_dump_sa+0x1e2/0x290
-[   44.212045]  ? __pfx_xfrm_dump_sa+0x10/0x10
-[   44.212045]  ? __kernel_text_address+0xd/0x40
-[   44.212045]  ? kasan_unpoison+0x27/0x60
-[   44.212045]  ? mutex_lock+0x60/0xe0
-[   44.212045]  ? __pfx_mutex_lock+0x10/0x10
-[   44.212045]  ? kasan_save_stack+0x22/0x50
-[   44.212045]  netlink_dump+0x322/0x6c0
-[   44.212045]  ? __pfx_netlink_dump+0x10/0x10
-[   44.212045]  ? mutex_unlock+0x7f/0xd0
-[   44.212045]  ? __pfx_mutex_unlock+0x10/0x10
-[   44.212045]  __netlink_dump_start+0x353/0x430
-[   44.212045]  xfrm_user_rcv_msg+0x3a4/0x410
-[   44.212045]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[   44.212045]  ? __pfx_xfrm_user_rcv_msg+0x10/0x10
-[   44.212045]  ? __pfx_xfrm_dump_sa+0x10/0x10
-[   44.212045]  ? __pfx_xfrm_dump_sa_done+0x10/0x10
-[   44.212045]  ? __stack_depot_save+0x382/0x4e0
-[   44.212045]  ? filter_irq_stacks+0x1c/0x70
-[   44.212045]  ? kasan_save_stack+0x32/0x50
-[   44.212045]  ? kasan_save_stack+0x22/0x50
-[   44.212045]  ? kasan_set_track+0x25/0x30
-[   44.212045]  ? __kasan_slab_alloc+0x59/0x70
-[   44.212045]  ? kmem_cache_alloc_node+0xf7/0x260
-[   44.212045]  ? kmalloc_reserve+0xab/0x120
-[   44.212045]  ? __alloc_skb+0xcf/0x210
-[   44.212045]  ? netlink_sendmsg+0x509/0x700
-[   44.212045]  ? sock_sendmsg+0xde/0xe0
-[   44.212045]  ? __sys_sendto+0x18d/0x230
-[   44.212045]  ? __x64_sys_sendto+0x71/0x90
-[   44.212045]  ? do_syscall_64+0x3f/0x90
-[   44.212045]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   44.212045]  ? netlink_sendmsg+0x509/0x700
-[   44.212045]  ? sock_sendmsg+0xde/0xe0
-[   44.212045]  ? __sys_sendto+0x18d/0x230
-[   44.212045]  ? __x64_sys_sendto+0x71/0x90
-[   44.212045]  ? do_syscall_64+0x3f/0x90
-[   44.212045]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   44.212045]  ? kasan_save_stack+0x22/0x50
-[   44.212045]  ? kasan_set_track+0x25/0x30
-[   44.212045]  ? kasan_save_free_info+0x2e/0x50
-[   44.212045]  ? __kasan_slab_free+0x10a/0x190
-[   44.212045]  ? kmem_cache_free+0x9c/0x340
-[   44.212045]  ? netlink_recvmsg+0x23c/0x660
-[   44.212045]  ? sock_recvmsg+0xeb/0xf0
-[   44.212045]  ? __sys_recvfrom+0x13c/0x1f0
-[   44.212045]  ? __x64_sys_recvfrom+0x71/0x90
-[   44.212045]  ? do_syscall_64+0x3f/0x90
-[   44.212045]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   44.212045]  ? copyout+0x3e/0x50
-[   44.212045]  netlink_rcv_skb+0xd6/0x210
-[   44.212045]  ? __pfx_xfrm_user_rcv_msg+0x10/0x10
-[   44.212045]  ? __pfx_netlink_rcv_skb+0x10/0x10
-[   44.212045]  ? __pfx_sock_has_perm+0x10/0x10
-[   44.212045]  ? mutex_lock+0x8d/0xe0
-[   44.212045]  ? __pfx_mutex_lock+0x10/0x10
-[   44.212045]  xfrm_netlink_rcv+0x44/0x50
-[   44.212045]  netlink_unicast+0x36f/0x4c0
-[   44.212045]  ? __pfx_netlink_unicast+0x10/0x10
-[   44.212045]  ? netlink_recvmsg+0x500/0x660
-[   44.212045]  netlink_sendmsg+0x3b7/0x700
-[   44.212045]  ? __pfx_netlink_sendmsg+0x10/0x10
-[   44.212045]  ? __pfx_netlink_sendmsg+0x10/0x10
-[   44.212045]  sock_sendmsg+0xde/0xe0
-[   44.212045]  __sys_sendto+0x18d/0x230
-[   44.212045]  ? __pfx___sys_sendto+0x10/0x10
-[   44.212045]  ? rcu_core+0x44a/0xe10
-[   44.212045]  ? __rseq_handle_notify_resume+0x45b/0x740
-[   44.212045]  ? _raw_spin_lock_irq+0x81/0xe0
-[   44.212045]  ? __pfx___rseq_handle_notify_resume+0x10/0x10
-[   44.212045]  ? __pfx_restore_fpregs_from_fpstate+0x10/0x10
-[   44.212045]  ? __pfx_blkcg_maybe_throttle_current+0x10/0x10
-[   44.212045]  ? __pfx_task_work_run+0x10/0x10
-[   44.212045]  __x64_sys_sendto+0x71/0x90
-[   44.212045]  do_syscall_64+0x3f/0x90
-[   44.212045]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   44.212045] RIP: 0033:0x44b7da
-[   44.212045] RSP: 002b:00007ffdc8838548 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-[   44.212045] RAX: ffffffffffffffda RBX: 00007ffdc8839978 RCX: 000000000044b7da
-[   44.212045] RDX: 0000000000000038 RSI: 00007ffdc8838770 RDI: 0000000000000003
-[   44.212045] RBP: 00007ffdc88385b0 R08: 00007ffdc883858c R09: 000000000000000c
-[   44.212045] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-[   44.212045] R13: 00007ffdc8839968 R14: 00000000004c37d0 R15: 0000000000000001
-[   44.212045]  </TASK>
-[   44.212045]
-[   44.212045] Allocated by task 97:
-[   44.212045]  kasan_save_stack+0x22/0x50
-[   44.212045]  kasan_set_track+0x25/0x30
-[   44.212045]  __kasan_kmalloc+0x7f/0x90
-[   44.212045]  __kmalloc_node_track_caller+0x5b/0x140
-[   44.212045]  kmemdup+0x21/0x50
-[   44.212045]  xfrm_dump_sa+0x17d/0x290
-[   44.212045]  netlink_dump+0x322/0x6c0
-[   44.212045]  __netlink_dump_start+0x353/0x430
-[   44.212045]  xfrm_user_rcv_msg+0x3a4/0x410
-[   44.212045]  netlink_rcv_skb+0xd6/0x210
-[   44.212045]  xfrm_netlink_rcv+0x44/0x50
-[   44.212045]  netlink_unicast+0x36f/0x4c0
-[   44.212045]  netlink_sendmsg+0x3b7/0x700
-[   44.212045]  sock_sendmsg+0xde/0xe0
-[   44.212045]  __sys_sendto+0x18d/0x230
-[   44.212045]  __x64_sys_sendto+0x71/0x90
-[   44.212045]  do_syscall_64+0x3f/0x90
-[   44.212045]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[   44.212045]
-[   44.212045] The buggy address belongs to the object at ffff88800870f300
-[   44.212045]  which belongs to the cache kmalloc-64 of size 64
-[   44.212045] The buggy address is located 32 bytes inside of
-[   44.212045]  allocated 36-byte region [ffff88800870f300, ffff88800870f324)
-[   44.212045]
-[   44.212045] The buggy address belongs to the physical page:
-[   44.212045] page:00000000e4de16ee refcount:1 mapcount:0 mapping:000000000 ...
-[   44.212045] flags: 0x100000000000200(slab|node=0|zone=1)
-[   44.212045] page_type: 0xffffffff()
-[   44.212045] raw: 0100000000000200 ffff888004c41640 dead000000000122 0000000000000000
-[   44.212045] raw: 0000000000000000 0000000080200020 00000001ffffffff 0000000000000000
-[   44.212045] page dumped because: kasan: bad access detected
-[   44.212045]
-[   44.212045] Memory state around the buggy address:
-[   44.212045]  ffff88800870f200: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[   44.212045]  ffff88800870f280: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
-[   44.212045] >ffff88800870f300: 00 00 00 00 04 fc fc fc fc fc fc fc fc fc fc fc
-[   44.212045]                                ^
-[   44.212045]  ffff88800870f380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   44.212045]  ffff88800870f400: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   44.212045] ==================================================================
+It gets rid of the CONFIG_PPC_64K_PAGES case for PPC64
+as nohash/64 doesn't support CONFIG_PPC_64K_PAGES.
 
-By investigating the code, we find the root cause of this OOB is the lack
-of checks in xfrm_dump_sa(). The buggy code allows a malicious user to pass
-arbitrary value of filter->splen/dplen. Hence, with crafted xfrm states,
-the attacker can achieve 8 bytes heap OOB read, which causes info leak.
-
-  if (attrs[XFRMA_ADDRESS_FILTER]) {
-    filter = kmemdup(nla_data(attrs[XFRMA_ADDRESS_FILTER]),
-        sizeof(*filter), GFP_KERNEL);
-    if (filter == NULL)
-      return -ENOMEM;
-    // NO MORE CHECKS HERE !!!
-  }
-
-This patch fixes the OOB by adding necessary boundary checks, just like
-the code in pfkey_dump() function.
-
-Fixes: d3623099d350 ("ipsec: add support of limited SA dump")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Signed-off-by: Christophe Leroy <christophe.leroy@c-s.fr>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Stable-dep-of: 66b2ca086210 ("powerpc/64s/radix: Fix soft dirty tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/powerpc/include/asm/book3s/32/mmu-hash.h |  2 ++
+ arch/powerpc/include/asm/book3s/64/mmu.h      |  9 +++++++++
+ arch/powerpc/include/asm/nohash/32/mmu.h      |  4 ++++
+ arch/powerpc/include/asm/nohash/64/mmu.h      |  4 ++++
+ arch/powerpc/include/asm/page.h               | 14 --------------
+ 5 files changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 94c7ebc26c48e..03322e015eaed 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1036,6 +1036,15 @@ static int xfrm_dump_sa(struct sk_buff *skb, struct netlink_callback *cb)
- 					 sizeof(*filter), GFP_KERNEL);
- 			if (filter == NULL)
- 				return -ENOMEM;
+diff --git a/arch/powerpc/include/asm/book3s/32/mmu-hash.h b/arch/powerpc/include/asm/book3s/32/mmu-hash.h
+index e38c91388c40f..5bd26c218b94f 100644
+--- a/arch/powerpc/include/asm/book3s/32/mmu-hash.h
++++ b/arch/powerpc/include/asm/book3s/32/mmu-hash.h
+@@ -42,6 +42,8 @@ struct ppc_bat {
+ 	u32 batu;
+ 	u32 batl;
+ };
 +
-+			/* see addr_match(), (prefix length >> 5) << 2
-+			 * will be used to compare xfrm_address_t
-+			 */
-+			if (filter->splen > (sizeof(xfrm_address_t) << 3) ||
-+			    filter->dplen > (sizeof(xfrm_address_t) << 3)) {
-+				kfree(filter);
-+				return -EINVAL;
-+			}
- 		}
++typedef struct page *pgtable_t;
+ #endif /* !__ASSEMBLY__ */
  
- 		if (attrs[XFRMA_PROTO])
+ /*
+diff --git a/arch/powerpc/include/asm/book3s/64/mmu.h b/arch/powerpc/include/asm/book3s/64/mmu.h
+index 9c8c669a6b6a3..488e7ed07e967 100644
+--- a/arch/powerpc/include/asm/book3s/64/mmu.h
++++ b/arch/powerpc/include/asm/book3s/64/mmu.h
+@@ -2,6 +2,8 @@
+ #ifndef _ASM_POWERPC_BOOK3S_64_MMU_H_
+ #define _ASM_POWERPC_BOOK3S_64_MMU_H_
+ 
++#include <asm/page.h>
++
+ #ifndef __ASSEMBLY__
+ /*
+  * Page size definition
+@@ -24,6 +26,13 @@ struct mmu_psize_def {
+ };
+ extern struct mmu_psize_def mmu_psize_defs[MMU_PAGE_COUNT];
+ 
++/*
++ * For BOOK3s 64 with 4k and 64K linux page size
++ * we want to use pointers, because the page table
++ * actually store pfn
++ */
++typedef pte_t *pgtable_t;
++
+ #endif /* __ASSEMBLY__ */
+ 
+ /* 64-bit classic hash table MMU */
+diff --git a/arch/powerpc/include/asm/nohash/32/mmu.h b/arch/powerpc/include/asm/nohash/32/mmu.h
+index af0e8b54876ab..f61f933a4cd8c 100644
+--- a/arch/powerpc/include/asm/nohash/32/mmu.h
++++ b/arch/powerpc/include/asm/nohash/32/mmu.h
+@@ -16,4 +16,8 @@
+ #include <asm/nohash/32/mmu-8xx.h>
+ #endif
+ 
++#ifndef __ASSEMBLY__
++typedef struct page *pgtable_t;
++#endif
++
+ #endif /* _ASM_POWERPC_NOHASH_32_MMU_H_ */
+diff --git a/arch/powerpc/include/asm/nohash/64/mmu.h b/arch/powerpc/include/asm/nohash/64/mmu.h
+index 87871d027b75e..e6585480dfc40 100644
+--- a/arch/powerpc/include/asm/nohash/64/mmu.h
++++ b/arch/powerpc/include/asm/nohash/64/mmu.h
+@@ -5,4 +5,8 @@
+ /* Freescale Book-E software loaded TLB or Book-3e (ISA 2.06+) MMU */
+ #include <asm/nohash/mmu-book3e.h>
+ 
++#ifndef __ASSEMBLY__
++typedef struct page *pgtable_t;
++#endif
++
+ #endif /* _ASM_POWERPC_NOHASH_64_MMU_H_ */
+diff --git a/arch/powerpc/include/asm/page.h b/arch/powerpc/include/asm/page.h
+index f6a1265face29..ddfb4b965e5bd 100644
+--- a/arch/powerpc/include/asm/page.h
++++ b/arch/powerpc/include/asm/page.h
+@@ -335,20 +335,6 @@ void arch_free_page(struct page *page, int order);
+ #endif
+ 
+ struct vm_area_struct;
+-#ifdef CONFIG_PPC_BOOK3S_64
+-/*
+- * For BOOK3s 64 with 4k and 64K linux page size
+- * we want to use pointers, because the page table
+- * actually store pfn
+- */
+-typedef pte_t *pgtable_t;
+-#else
+-#if defined(CONFIG_PPC_64K_PAGES) && defined(CONFIG_PPC64)
+-typedef pte_t *pgtable_t;
+-#else
+-typedef struct page *pgtable_t;
+-#endif
+-#endif
+ 
+ #include <asm-generic/memory_model.h>
+ #endif /* __ASSEMBLY__ */
 -- 
 2.40.1
 
