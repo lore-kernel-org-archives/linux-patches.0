@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766B411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:22:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9748C433C7;
-	Mon, 28 Aug 2023 10:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E14511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:22:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F7FC433C8;
+	Mon, 28 Aug 2023 10:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218151;
-	bh=xXoyrM+fzErGoWcDhp9KGlfQpmFCtYz+J07oCviPflM=;
+	s=korg; t=1693218154;
+	bh=Zkmq97mguyW6SXUs0VGE8pCj0B49Ebt4kS6r9J+IrG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YbKZhmhJKUBPeuQAlPMWVO4xUP4df44CoWibQ/vVACQCjb+8duERTiFjB6ml8utK1
-	 lGWuP8cwAqmWNfCOqp0ClZ9FbxeJg6uIqvrhBgLQefeQVlrzeLIEETG6Y7Tu6AS0nK
-	 4cEviUQgIUHJ/UUgICaQsKA6mTHI/YZHqg1jvyWI=
+	b=mvzQ+ZvnkKnPHmaJ+XUuBgb5JwznnGZmWNHXzHN/c5g4mmFsL036dHjzumC8djwIG
+	 4BwTpi4eTrGUiqwn2wsKRFbI8IJMi9pMr00BiXpkbvgC7nU5pyt34c/mJRm3n87C0N
+	 i4Iv2tSnsYqOCuUYwgziA1mpBs4h8ADML/Ld+xZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+	Zhu Wang <wangzhu9@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 114/129] scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW major version > 5
-Date: Mon, 28 Aug 2023 12:13:13 +0200
-Message-ID: <20230828101201.156567196@linuxfoundation.org>
+Subject: [PATCH 6.4 115/129] scsi: core: raid_class: Remove raid_component_add()
+Date: Mon, 28 Aug 2023 12:13:14 +0200
+Message-ID: <20230828101201.195563745@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -42,35 +40,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Zhu Wang <wangzhu9@huawei.com>
 
-commit c422fbd5cb58c9a078172ae1e9750971b738a197 upstream.
+commit 60c5fd2e8f3c42a5abc565ba9876ead1da5ad2b7 upstream.
 
-The qunipro_g4_sel clear is also needed for new platforms with major
-version > 5. Fix the version check to take this into account.
+The raid_component_add() function was added to the kernel tree via patch
+"[SCSI] embryonic RAID class" (2005). Remove this function since it never
+has had any callers in the Linux kernel. And also raid_component_release()
+is only used in raid_component_add(), so it is also removed.
 
-Fixes: 9c02aa24bf40 ("scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5")
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230821-topic-sm8x50-upstream-ufs-major-5-plus-v2-1-f42a4b712e58@linaro.org
-Reviewed-by: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
+Link: https://lore.kernel.org/r/20230822015254.184270-1-wangzhu9@huawei.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: 04b5b5cb0136 ("scsi: core: Fix possible memory leak if device_add() fails")
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-qcom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/raid_class.c  |   48 ---------------------------------------------
+ include/linux/raid_class.h |    4 ---
+ 2 files changed, 52 deletions(-)
 
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -225,7 +225,7 @@ static void ufs_qcom_select_unipro_mode(
- 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
- 		   REG_UFS_CFG1);
+--- a/drivers/scsi/raid_class.c
++++ b/drivers/scsi/raid_class.c
+@@ -209,54 +209,6 @@ raid_attr_ro_state(level);
+ raid_attr_ro_fn(resync);
+ raid_attr_ro_state_fn(state);
  
--	if (host->hw_ver.major == 0x05)
-+	if (host->hw_ver.major >= 0x05)
- 		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
- 
- 	/* make sure above configuration is applied before we return */
+-static void raid_component_release(struct device *dev)
+-{
+-	struct raid_component *rc =
+-		container_of(dev, struct raid_component, dev);
+-	dev_printk(KERN_ERR, rc->dev.parent, "COMPONENT RELEASE\n");
+-	put_device(rc->dev.parent);
+-	kfree(rc);
+-}
+-
+-int raid_component_add(struct raid_template *r,struct device *raid_dev,
+-		       struct device *component_dev)
+-{
+-	struct device *cdev =
+-		attribute_container_find_class_device(&r->raid_attrs.ac,
+-						      raid_dev);
+-	struct raid_component *rc;
+-	struct raid_data *rd = dev_get_drvdata(cdev);
+-	int err;
+-
+-	rc = kzalloc(sizeof(*rc), GFP_KERNEL);
+-	if (!rc)
+-		return -ENOMEM;
+-
+-	INIT_LIST_HEAD(&rc->node);
+-	device_initialize(&rc->dev);
+-	rc->dev.release = raid_component_release;
+-	rc->dev.parent = get_device(component_dev);
+-	rc->num = rd->component_count++;
+-
+-	dev_set_name(&rc->dev, "component-%d", rc->num);
+-	list_add_tail(&rc->node, &rd->component_list);
+-	rc->dev.class = &raid_class.class;
+-	err = device_add(&rc->dev);
+-	if (err)
+-		goto err_out;
+-
+-	return 0;
+-
+-err_out:
+-	put_device(&rc->dev);
+-	list_del(&rc->node);
+-	rd->component_count--;
+-	put_device(component_dev);
+-	kfree(rc);
+-	return err;
+-}
+-EXPORT_SYMBOL(raid_component_add);
+-
+ struct raid_template *
+ raid_class_attach(struct raid_function_template *ft)
+ {
+--- a/include/linux/raid_class.h
++++ b/include/linux/raid_class.h
+@@ -77,7 +77,3 @@ DEFINE_RAID_ATTRIBUTE(enum raid_state, s
+ 	
+ struct raid_template *raid_class_attach(struct raid_function_template *);
+ void raid_class_release(struct raid_template *);
+-
+-int __must_check raid_component_add(struct raid_template *, struct device *,
+-				    struct device *);
+-
 
 
