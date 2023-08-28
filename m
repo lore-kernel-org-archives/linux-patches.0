@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EC711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E3EC433C9;
-	Mon, 28 Aug 2023 10:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF65111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AF9C433C7;
+	Mon, 28 Aug 2023 10:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217963;
-	bh=k2F8HFJ25wfG8SuxTa+pB4xMFPxqD8tsvgJNWZOArpI=;
+	s=korg; t=1693217966;
+	bh=gpHcxNeJIrE/fxyR99Mo7FtDGn96C587qYfBXnhFPo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdnS2NpJQqgnuUxrSjmnTKv/oO2iAV/AvKLK7ck9qs/KOzMzvFtUiBEsr4FfVCNq2
-	 JZp8QZkGHfXrY+gqXIwRdJMI2lsTBbdGrCWU2F218etRNVd2uo2A01FmF6qG6KMcgA
-	 eRpc9r5uWhuRtQ4/8yqCmWx7yxkbdsXqfuDUkFOA=
+	b=nOf4ULkVFECPrV4ks/jp/ncan/ZCbqrGRBjlt4/qmqUtgBCaQ60szyfiHu/XyxKxl
+	 WCjMsSS2uhjM0+b5XtbwV3CNUt28Zm7bEn3wOERDwpFaA2W/VIv93bjpq+7TsoBpR5
+	 Dr8pIIInkd98ekZ+//DZ7nCI1se2kCmm46y8W50U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 038/129] can: isotp: fix support for transmission of SF without flow control
-Date: Mon, 28 Aug 2023 12:11:57 +0200
-Message-ID: <20230828101158.645922569@linuxfoundation.org>
+Subject: [PATCH 6.4 047/129] netfilter: nf_tables: fix out of memory error handling
+Date: Mon, 28 Aug 2023 12:12:06 +0200
+Message-ID: <20230828101158.941656303@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -40,85 +40,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0bfe71159230bab79ee230225ae12ffecbb69f3e ]
+[ Upstream commit 5e1be4cdc98c989d5387ce94ff15b5ad06a5b681 ]
 
-The original implementation had a very simple handling for single frame
-transmissions as it just sent the single frame without a timeout handling.
+Several instances of pipapo_resize() don't propagate allocation failures,
+this causes a crash when fault injection is enabled for gfp_kernel slabs.
 
-With the new echo frame handling the echo frame was also introduced for
-single frames but the former exception ('simple without timers') has been
-maintained by accident. This leads to a 1 second timeout when closing the
-socket and to an -ECOMM error when CAN_ISOTP_WAIT_TX_DONE is selected.
-
-As the echo handling is always active (also for single frames) remove the
-wrong extra condition for single frames.
-
-Fixes: 9f39d36530e5 ("can: isotp: add support for transmission without flow control")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/r/20230821144547.6658-2-socketcan@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index ca9d728d6d727..9d498a886a586 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -188,12 +188,6 @@ static bool isotp_register_rxid(struct isotp_sock *so)
- 	return (isotp_bc_flags(so) == 0);
- }
- 
--static bool isotp_register_txecho(struct isotp_sock *so)
--{
--	/* all modes but SF_BROADCAST register for tx echo skbs */
--	return (isotp_bc_flags(so) != CAN_ISOTP_SF_BROADCAST);
--}
--
- static enum hrtimer_restart isotp_rx_timer_handler(struct hrtimer *hrtimer)
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 352180b123fc7..58bd514260b90 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -902,12 +902,14 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
+ static int pipapo_insert(struct nft_pipapo_field *f, const uint8_t *k,
+ 			 int mask_bits)
  {
- 	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
-@@ -1209,7 +1203,7 @@ static int isotp_release(struct socket *sock)
- 	lock_sock(sk);
+-	int rule = f->rules++, group, ret, bit_offset = 0;
++	int rule = f->rules, group, ret, bit_offset = 0;
  
- 	/* remove current filters & unregister */
--	if (so->bound && isotp_register_txecho(so)) {
-+	if (so->bound) {
- 		if (so->ifindex) {
- 			struct net_device *dev;
+-	ret = pipapo_resize(f, f->rules - 1, f->rules);
++	ret = pipapo_resize(f, f->rules, f->rules + 1);
+ 	if (ret)
+ 		return ret;
  
-@@ -1332,14 +1326,12 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
- 				isotp_rcv, sk, "isotp", sk);
++	f->rules++;
++
+ 	for (group = 0; group < f->groups; group++) {
+ 		int i, v;
+ 		u8 mask;
+@@ -1052,7 +1054,9 @@ static int pipapo_expand(struct nft_pipapo_field *f,
+ 			step++;
+ 			if (step >= len) {
+ 				if (!masks) {
+-					pipapo_insert(f, base, 0);
++					err = pipapo_insert(f, base, 0);
++					if (err < 0)
++						return err;
+ 					masks = 1;
+ 				}
+ 				goto out;
+@@ -1235,6 +1239,9 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 		else
+ 			ret = pipapo_expand(f, start, end, f->groups * f->bb);
  
--	if (isotp_register_txecho(so)) {
--		/* no consecutive frame echo skb in flight */
--		so->cfecho = 0;
-+	/* no consecutive frame echo skb in flight */
-+	so->cfecho = 0;
++		if (ret < 0)
++			return ret;
++
+ 		if (f->bsize > bsize_max)
+ 			bsize_max = f->bsize;
  
--		/* register for echo skb's */
--		can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
--				isotp_rcv_echo, sk, "isotpe", sk);
--	}
-+	/* register for echo skb's */
-+	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
-+			isotp_rcv_echo, sk, "isotpe", sk);
- 
- 	dev_put(dev);
- 
-@@ -1560,7 +1552,7 @@ static void isotp_notify(struct isotp_sock *so, unsigned long msg,
- 	case NETDEV_UNREGISTER:
- 		lock_sock(sk);
- 		/* remove current filters & unregister */
--		if (so->bound && isotp_register_txecho(so)) {
-+		if (so->bound) {
- 			if (isotp_register_rxid(so))
- 				can_rx_unregister(dev_net(dev), dev, so->rxid,
- 						  SINGLE_MASK(so->rxid),
 -- 
 2.40.1
 
