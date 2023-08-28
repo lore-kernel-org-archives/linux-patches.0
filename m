@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7408BE0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8538DC433C7;
-	Mon, 28 Aug 2023 10:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8836FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D045C433C7;
+	Mon, 28 Aug 2023 10:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219683;
-	bh=bnVFHSggZtcu20Sl1ptFqT3WLw1+tCmgEVLyg4xNcfs=;
+	s=korg; t=1693219686;
+	bh=w//VUv9aUNd4f+mZDg0jEffixjvyG7prfxEB1rHz6fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y89fVPHyod+e8SbT00w0PqFNA880Jojp2expcer5uLtLQWTskB27t2VL24VRqPa5P
-	 lN//OVV3juOy82ojkZBM5UJVQWz1jN259De6EJId3TFIdGHbDpXtv6HQp0dj3k0sWh
-	 U7EiaxoQihsn5zuSXj4RZy4ASTG17G9iBRu0qcDM=
+	b=fF+4qdBN7LTlP5VEeA6NG0VTkCB2nm8UDqJF3L8aRUs86n1A92P2o22A4vQCRU8mw
+	 Ibd4YT6kEU1em8j3TEMHG/gFezzwqCfgAxV3Lbsq71aRE92bB9UWxOftmP0ddlhUz9
+	 DAa1Bf7f5A+k6oRUoUoRK+AmRr4EwjQMTBxZdpDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 07/84] fs: dlm: add pid to debug log
-Date: Mon, 28 Aug 2023 12:13:24 +0200
-Message-ID: <20230828101149.416033169@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.10 34/84] ice: fix receive buffer size miscalculation
+Date: Mon, 28 Aug 2023 12:13:51 +0200
+Message-ID: <20230828101150.415479056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -40,37 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit 19d7ca051d303622c423b4cb39e6bde5d177328b ]
+[ Upstream commit 10083aef784031fa9f06c19a1b182e6fad5338d9 ]
 
-This patch adds the pid information which requested the lock operation
-to the debug log output.
+The driver is misconfiguring the hardware for some values of MTU such that
+it could use multiple descriptors to receive a packet when it could have
+simply used one.
 
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
+Change the driver to use a round-up instead of the result of a shift, as
+the shift can truncate the lower bits of the size, and result in the
+problem noted above. It also aligns this driver with similar code in i40e.
+
+The insidiousness of this problem is that everything works with the wrong
+size, it's just not working as well as it could, as some MTU sizes end up
+using two or more descriptors, and there is no way to tell that is
+happening without looking at ice_trace or a bus analyzer.
+
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/plock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
-index 95f4662c1209a..f685d56a4f909 100644
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -164,9 +164,9 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
- 		spin_lock(&ops_lock);
- 		list_del(&op->list);
- 		spin_unlock(&ops_lock);
--		log_print("%s: wait interrupted %x %llx, op removed",
-+		log_print("%s: wait interrupted %x %llx pid %d, op removed",
- 			  __func__, ls->ls_global_id,
--			  (unsigned long long)number);
-+			  (unsigned long long)number, op->info.pid);
- 		dlm_release_plock_op(op);
- 		do_unlock_close(ls, number, file, fl);
- 		goto out;
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index 1929847b8c404..59df4c9bd8f90 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -353,7 +353,8 @@ int ice_setup_rx_ctx(struct ice_ring *ring)
+ 	/* Receive Packet Data Buffer Size.
+ 	 * The Packet Data Buffer Size is defined in 128 byte units.
+ 	 */
+-	rlan_ctx.dbuf = ring->rx_buf_len >> ICE_RLAN_CTX_DBUF_S;
++	rlan_ctx.dbuf = DIV_ROUND_UP(ring->rx_buf_len,
++				     BIT_ULL(ICE_RLAN_CTX_DBUF_S));
+ 
+ 	/* use 32 byte descriptors */
+ 	rlan_ctx.dsize = 1;
 -- 
 2.40.1
 
