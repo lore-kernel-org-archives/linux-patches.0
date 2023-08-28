@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F47D11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1930C433C7;
-	Mon, 28 Aug 2023 10:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A31611C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADE3C433C9;
+	Mon, 28 Aug 2023 10:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218513;
-	bh=kbg5hcrnhSDZvj5NaRaHcMIW8hVk89RId3BZnDd3uJA=;
+	s=korg; t=1693218515;
+	bh=0ZWCJNhmfDVOQ0JuW1fX5iH0WmLDZslQw4QJoRLJjEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhcIIbnRPxW8uOVSXDDLk92F+2ym4IpIrgIUQY/drqbuD0PFkaBHMTN0SzvhoiUb9
-	 skjXaEuhy75AcPMjXSTzRQ8lQJJVwNpRkE9tHWR52hKqL+RBzZ0UVOBfZZT3+5Lxmk
-	 lj53WhId3S8NYTHX5Qvc2D2LGqMc5UeCLPMgVuPU=
+	b=ZHoeIXRrNs9ZZuIaofdQFbdzJ71qid5li+/2LeBGgIfsTo5RN3ZRa+czwpbmJk+3V
+	 OX/nAkOqrQwbClhp6ibZlbsHGsKCZgV/wvLotG03ugi2qAelRMXdMfP3QqKbYes1EK
+	 5l4RysXJbbSPD9oOW4FBc2xFoM33uVEMmYFwnDDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 4.19 114/129] batman-adv: Do not get eth header before batadv_check_management_packet
-Date: Mon, 28 Aug 2023 12:13:28 +0200
-Message-ID: <20230828101157.401907793@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 088/129] Revert "tty: serial: fsl_lpuart: drop earlycon entry for i.MX8QXP"
+Date: Mon, 28 Aug 2023 12:13:02 +0200
+Message-ID: <20230828101156.591551195@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,122 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit eac27a41ab641de074655d2932fc7f8cdb446881 upstream.
+[ Upstream commit 4e9679738a918d8a482ac6a2cb2bb871f094bb84 ]
 
-If received skb in batadv_v_elp_packet_recv or batadv_v_ogm_packet_recv
-is either cloned or non linearized then its data buffer will be
-reallocated by batadv_check_management_packet when skb_cow or
-skb_linearize get called. Thus geting ethernet header address inside
-skb data buffer before batadv_check_management_packet had any chance to
-reallocate it could lead to the following kernel panic:
+Revert commit b4b844930f27 ("tty: serial: fsl_lpuart: drop earlycon entry
+for i.MX8QXP"), because this breaks earlycon support on imx8qm/imx8qxp.
+While it is true that for earlycon there is no difference between
+i.MX8QXP and i.MX7ULP (for now at least), there are differences
+regarding clocks and fixups for wakeup support. For that reason it was
+deemed unacceptable to add the imx7ulp compatible to device tree in
+order to get earlycon working again.
 
-  Unable to handle kernel paging request at virtual address ffffff8020ab069a
-  Mem abort info:
-    ESR = 0x96000007
-    EC = 0x25: DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-    FSC = 0x07: level 3 translation fault
-  Data abort info:
-    ISV = 0, ISS = 0x00000007
-    CM = 0, WnR = 0
-  swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000040f45000
-  [ffffff8020ab069a] pgd=180000007fffa003, p4d=180000007fffa003, pud=180000007fffa003, pmd=180000007fefe003, pte=0068000020ab0706
-  Internal error: Oops: 96000007 [#1] SMP
-  Modules linked in: ahci_mvebu libahci_platform libahci dvb_usb_af9035 dvb_usb_dib0700 dib0070 dib7000m dibx000_common ath11k_pci ath10k_pci ath10k_core mwl8k_new nf_nat_sip nf_conntrack_sip xhci_plat_hcd xhci_hcd nf_nat_pptp nf_conntrack_pptp at24 sbsa_gwdt
-  CPU: 1 PID: 16 Comm: ksoftirqd/1 Not tainted 5.15.42-00066-g3242268d425c-dirty #550
-  Hardware name: A8k (DT)
-  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : batadv_is_my_mac+0x60/0xc0
-  lr : batadv_v_ogm_packet_recv+0x98/0x5d0
-  sp : ffffff8000183820
-  x29: ffffff8000183820 x28: 0000000000000001 x27: ffffff8014f9af00
-  x26: 0000000000000000 x25: 0000000000000543 x24: 0000000000000003
-  x23: ffffff8020ab0580 x22: 0000000000000110 x21: ffffff80168ae880
-  x20: 0000000000000000 x19: ffffff800b561000 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 00dc098924ae0032
-  x14: 0f0405433e0054b0 x13: ffffffff00000080 x12: 0000004000000001
-  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-  x8 : 0000000000000000 x7 : ffffffc076dae000 x6 : ffffff8000183700
-  x5 : ffffffc00955e698 x4 : ffffff80168ae000 x3 : ffffff80059cf000
-  x2 : ffffff800b561000 x1 : ffffff8020ab0696 x0 : ffffff80168ae880
-  Call trace:
-   batadv_is_my_mac+0x60/0xc0
-   batadv_v_ogm_packet_recv+0x98/0x5d0
-   batadv_batman_skb_recv+0x1b8/0x244
-   __netif_receive_skb_core.isra.0+0x440/0xc74
-   __netif_receive_skb_one_core+0x14/0x20
-   netif_receive_skb+0x68/0x140
-   br_pass_frame_up+0x70/0x80
-   br_handle_frame_finish+0x108/0x284
-   br_handle_frame+0x190/0x250
-   __netif_receive_skb_core.isra.0+0x240/0xc74
-   __netif_receive_skb_list_core+0x6c/0x90
-   netif_receive_skb_list_internal+0x1f4/0x310
-   napi_complete_done+0x64/0x1d0
-   gro_cell_poll+0x7c/0xa0
-   __napi_poll+0x34/0x174
-   net_rx_action+0xf8/0x2a0
-   _stext+0x12c/0x2ac
-   run_ksoftirqd+0x4c/0x7c
-   smpboot_thread_fn+0x120/0x210
-   kthread+0x140/0x150
-   ret_from_fork+0x10/0x20
-  Code: f9403844 eb03009f 54fffee1 f94
-
-Thus ethernet header address should only be fetched after
-batadv_check_management_packet has been called.
-
-Fixes: 0da0035942d4 ("batman-adv: OGMv2 - add basic infrastructure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20211124073109.805088-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e0edfdc15863 ("tty: serial: fsl_lpuart: add earlycon for imx8ulp platform")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_v_elp.c |    3 ++-
- net/batman-adv/bat_v_ogm.c |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/batman-adv/bat_v_elp.c
-+++ b/net/batman-adv/bat_v_elp.c
-@@ -513,7 +513,7 @@ int batadv_v_elp_packet_recv(struct sk_b
- 	struct batadv_priv *bat_priv = netdev_priv(if_incoming->soft_iface);
- 	struct batadv_elp_packet *elp_packet;
- 	struct batadv_hard_iface *primary_if;
--	struct ethhdr *ethhdr = (struct ethhdr *)skb_mac_header(skb);
-+	struct ethhdr *ethhdr;
- 	bool res;
- 	int ret = NET_RX_DROP;
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 36321d810d36f..573086aac2c82 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -2136,6 +2136,7 @@ static int __init lpuart32_imx_early_console_setup(struct earlycon_device *devic
+ OF_EARLYCON_DECLARE(lpuart, "fsl,vf610-lpuart", lpuart_early_console_setup);
+ OF_EARLYCON_DECLARE(lpuart32, "fsl,ls1021a-lpuart", lpuart32_early_console_setup);
+ OF_EARLYCON_DECLARE(lpuart32, "fsl,imx7ulp-lpuart", lpuart32_imx_early_console_setup);
++OF_EARLYCON_DECLARE(lpuart32, "fsl,imx8qxp-lpuart", lpuart32_imx_early_console_setup);
+ EARLYCON_DECLARE(lpuart, lpuart_early_console_setup);
+ EARLYCON_DECLARE(lpuart32, lpuart32_early_console_setup);
  
-@@ -521,6 +521,7 @@ int batadv_v_elp_packet_recv(struct sk_b
- 	if (!res)
- 		goto free_skb;
- 
-+	ethhdr = eth_hdr(skb);
- 	if (batadv_is_my_mac(bat_priv, ethhdr->h_source))
- 		goto free_skb;
- 
---- a/net/batman-adv/bat_v_ogm.c
-+++ b/net/batman-adv/bat_v_ogm.c
-@@ -832,7 +832,7 @@ int batadv_v_ogm_packet_recv(struct sk_b
- {
- 	struct batadv_priv *bat_priv = netdev_priv(if_incoming->soft_iface);
- 	struct batadv_ogm2_packet *ogm_packet;
--	struct ethhdr *ethhdr = eth_hdr(skb);
-+	struct ethhdr *ethhdr;
- 	int ogm_offset;
- 	u8 *packet_pos;
- 	int ret = NET_RX_DROP;
-@@ -846,6 +846,7 @@ int batadv_v_ogm_packet_recv(struct sk_b
- 	if (!batadv_check_management_packet(skb, if_incoming, BATADV_OGM2_HLEN))
- 		goto free_skb;
- 
-+	ethhdr = eth_hdr(skb);
- 	if (batadv_is_my_mac(bat_priv, ethhdr->h_source))
- 		goto free_skb;
- 
+-- 
+2.40.1
+
 
 
