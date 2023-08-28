@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C57411C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2684C433C7;
-	Mon, 28 Aug 2023 10:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3589A11C8D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B3CC433C8;
+	Mon, 28 Aug 2023 10:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217850;
-	bh=hPbkbhIWCKlSFMcGExZBxO/1hHvxWd59oai/d8yAIdM=;
+	s=korg; t=1693217853;
+	bh=ERDH9VJby5iqFTAfHFSXpzrVVwSCW9uG70a9WHkgkTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGqitWtRC6O0esmS+JCmVOXpBqzCbMJlQUp9pURTA7MOUc0kMzjuxDvqNfwFL0bqL
-	 Au96JEiwCPGjJf/BxFKBab8UDDeT32AfLm0rL+nACfnr/ABK219xeElpVB7zCWXEu0
-	 sHPwKsXuEJDQbI0Tr5tw+1OKEO2/R4Y7x9tjjgrk=
+	b=Mwukb2T297bPY4sOtocNJk/y8Eq4aCs9rgWHXRiCNuqqgtAG0X+htJ/3hBWRr4vrZ
+	 Z22bEjov9VddwCnmS61cYRmD6gShSR/we0CKnIM8IBC/GYlcCMZvcm4t0Gfzodh+L+
+	 GCmk+7fdX/w9ClF7oLWWNc3wqjH2pNxCKWsCiZaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Remi Pommarel <repk@triplefau.lt>,
 	Sven Eckelmann <sven@narfation.org>,
 	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 4.14 47/57] batman-adv: Trigger events for auto adjusted MTU
-Date: Mon, 28 Aug 2023 12:13:07 +0200
-Message-ID: <20230828101145.993218934@linuxfoundation.org>
+Subject: [PATCH 4.14 48/57] batman-adv: Do not get eth header before batadv_check_management_packet
+Date: Mon, 28 Aug 2023 12:13:08 +0200
+Message-ID: <20230828101146.025063154@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -39,38 +40,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Remi Pommarel <repk@triplefau.lt>
 
-commit c6a953cce8d0438391e6da48c8d0793d3fbfcfa6 upstream.
+commit eac27a41ab641de074655d2932fc7f8cdb446881 upstream.
 
-If an interface changes the MTU, it is expected that an NETDEV_PRECHANGEMTU
-and NETDEV_CHANGEMTU notification events is triggered. This worked fine for
-.ndo_change_mtu based changes because core networking code took care of it.
-But for auto-adjustments after hard-interfaces changes, these events were
-simply missing.
+If received skb in batadv_v_elp_packet_recv or batadv_v_ogm_packet_recv
+is either cloned or non linearized then its data buffer will be
+reallocated by batadv_check_management_packet when skb_cow or
+skb_linearize get called. Thus geting ethernet header address inside
+skb data buffer before batadv_check_management_packet had any chance to
+reallocate it could lead to the following kernel panic:
 
-Due to this problem, non-batman-adv components weren't aware of MTU changes
-and thus couldn't perform their own tasks correctly.
+  Unable to handle kernel paging request at virtual address ffffff8020ab069a
+  Mem abort info:
+    ESR = 0x96000007
+    EC = 0x25: DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x07: level 3 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000007
+    CM = 0, WnR = 0
+  swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000040f45000
+  [ffffff8020ab069a] pgd=180000007fffa003, p4d=180000007fffa003, pud=180000007fffa003, pmd=180000007fefe003, pte=0068000020ab0706
+  Internal error: Oops: 96000007 [#1] SMP
+  Modules linked in: ahci_mvebu libahci_platform libahci dvb_usb_af9035 dvb_usb_dib0700 dib0070 dib7000m dibx000_common ath11k_pci ath10k_pci ath10k_core mwl8k_new nf_nat_sip nf_conntrack_sip xhci_plat_hcd xhci_hcd nf_nat_pptp nf_conntrack_pptp at24 sbsa_gwdt
+  CPU: 1 PID: 16 Comm: ksoftirqd/1 Not tainted 5.15.42-00066-g3242268d425c-dirty #550
+  Hardware name: A8k (DT)
+  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : batadv_is_my_mac+0x60/0xc0
+  lr : batadv_v_ogm_packet_recv+0x98/0x5d0
+  sp : ffffff8000183820
+  x29: ffffff8000183820 x28: 0000000000000001 x27: ffffff8014f9af00
+  x26: 0000000000000000 x25: 0000000000000543 x24: 0000000000000003
+  x23: ffffff8020ab0580 x22: 0000000000000110 x21: ffffff80168ae880
+  x20: 0000000000000000 x19: ffffff800b561000 x18: 0000000000000000
+  x17: 0000000000000000 x16: 0000000000000000 x15: 00dc098924ae0032
+  x14: 0f0405433e0054b0 x13: ffffffff00000080 x12: 0000004000000001
+  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+  x8 : 0000000000000000 x7 : ffffffc076dae000 x6 : ffffff8000183700
+  x5 : ffffffc00955e698 x4 : ffffff80168ae000 x3 : ffffff80059cf000
+  x2 : ffffff800b561000 x1 : ffffff8020ab0696 x0 : ffffff80168ae880
+  Call trace:
+   batadv_is_my_mac+0x60/0xc0
+   batadv_v_ogm_packet_recv+0x98/0x5d0
+   batadv_batman_skb_recv+0x1b8/0x244
+   __netif_receive_skb_core.isra.0+0x440/0xc74
+   __netif_receive_skb_one_core+0x14/0x20
+   netif_receive_skb+0x68/0x140
+   br_pass_frame_up+0x70/0x80
+   br_handle_frame_finish+0x108/0x284
+   br_handle_frame+0x190/0x250
+   __netif_receive_skb_core.isra.0+0x240/0xc74
+   __netif_receive_skb_list_core+0x6c/0x90
+   netif_receive_skb_list_internal+0x1f4/0x310
+   napi_complete_done+0x64/0x1d0
+   gro_cell_poll+0x7c/0xa0
+   __napi_poll+0x34/0x174
+   net_rx_action+0xf8/0x2a0
+   _stext+0x12c/0x2ac
+   run_ksoftirqd+0x4c/0x7c
+   smpboot_thread_fn+0x120/0x210
+   kthread+0x140/0x150
+   ret_from_fork+0x10/0x20
+  Code: f9403844 eb03009f 54fffee1 f94
 
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Thus ethernet header address should only be fetched after
+batadv_check_management_packet has been called.
+
+Fixes: 0da0035942d4 ("batman-adv: OGMv2 - add basic infrastructure")
 Cc: stable@vger.kernel.org
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/hard-interface.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/bat_v_elp.c |    3 ++-
+ net/batman-adv/bat_v_ogm.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/hard-interface.c
-+++ b/net/batman-adv/hard-interface.c
-@@ -625,7 +625,7 @@ out:
- /* adjusts the MTU if a new interface with a smaller MTU appeared. */
- void batadv_update_min_mtu(struct net_device *soft_iface)
- {
--	soft_iface->mtu = batadv_hardif_min_mtu(soft_iface);
-+	dev_set_mtu(soft_iface, batadv_hardif_min_mtu(soft_iface));
+--- a/net/batman-adv/bat_v_elp.c
++++ b/net/batman-adv/bat_v_elp.c
+@@ -507,7 +507,7 @@ int batadv_v_elp_packet_recv(struct sk_b
+ 	struct batadv_priv *bat_priv = netdev_priv(if_incoming->soft_iface);
+ 	struct batadv_elp_packet *elp_packet;
+ 	struct batadv_hard_iface *primary_if;
+-	struct ethhdr *ethhdr = (struct ethhdr *)skb_mac_header(skb);
++	struct ethhdr *ethhdr;
+ 	bool res;
+ 	int ret = NET_RX_DROP;
  
- 	/* Check if the local translate table should be cleaned up to match a
- 	 * new (and smaller) MTU.
+@@ -515,6 +515,7 @@ int batadv_v_elp_packet_recv(struct sk_b
+ 	if (!res)
+ 		goto free_skb;
+ 
++	ethhdr = eth_hdr(skb);
+ 	if (batadv_is_my_mac(bat_priv, ethhdr->h_source))
+ 		goto free_skb;
+ 
+--- a/net/batman-adv/bat_v_ogm.c
++++ b/net/batman-adv/bat_v_ogm.c
+@@ -831,7 +831,7 @@ int batadv_v_ogm_packet_recv(struct sk_b
+ {
+ 	struct batadv_priv *bat_priv = netdev_priv(if_incoming->soft_iface);
+ 	struct batadv_ogm2_packet *ogm_packet;
+-	struct ethhdr *ethhdr = eth_hdr(skb);
++	struct ethhdr *ethhdr;
+ 	int ogm_offset;
+ 	u8 *packet_pos;
+ 	int ret = NET_RX_DROP;
+@@ -845,6 +845,7 @@ int batadv_v_ogm_packet_recv(struct sk_b
+ 	if (!batadv_check_management_packet(skb, if_incoming, BATADV_OGM2_HLEN))
+ 		goto free_skb;
+ 
++	ethhdr = eth_hdr(skb);
+ 	if (batadv_is_my_mac(bat_priv, ethhdr->h_source))
+ 		goto free_skb;
+ 
 
 
