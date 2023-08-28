@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0FE11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBA3C433C7;
-	Mon, 28 Aug 2023 10:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DE711C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:47:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94B4C433C7;
+	Mon, 28 Aug 2023 10:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219650;
-	bh=V8ucc3Z3tsAf2SMoCfHeteAFLkIz01fAsSShwwFtFq4=;
+	s=korg; t=1693219653;
+	bh=DDI6c8uQC1071dFc7MJ17Ck0savIFZVXFQnILJucDQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMxI/8+QBwCVugzGe54rOAvFUhq22GMz53XocRTRnINwT9io+vyYK1cYbKCbQR5nm
-	 gih6fDVLjzUBahTZfo2dQhFppeBXJF1w45l5p3gvHHOTe5PzYii5E8IXBAZ3dVZ6bi
-	 loRYgIXavBhOP4Yb4lk826wbZEPldSKStn3u5io0=
+	b=sOu1Kxa9Ao/ONty5V18GzumjB9qvF4tk85QKkTgUHkX2M10AZ1qFBqyz99KAIwlSf
+	 9nVFa3Kjpn7gQBqHtwVsowDakFUCvS/EoIu0bi6EC2w8mt4XavNBVfv/DMyoU8Lit4
+	 MZQZMsGxHAbyV3tPkQsH1/uC0sRW24BPyNd8gJnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 23/84] rbd: retrieve and check lock owner twice before blocklisting
-Date: Mon, 28 Aug 2023 12:13:40 +0200
-Message-ID: <20230828101150.000780397@linuxfoundation.org>
+Subject: [PATCH 5.10 06/84] dlm: replace usage of found with dedicated list iterator variable
+Date: Mon, 28 Aug 2023 12:13:23 +0200
+Message-ID: <20230828101149.374692947@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -40,102 +41,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Jakob Koschel <jakobkoschel@gmail.com>
 
-[ Upstream commit 588159009d5b7a09c3e5904cffddbe4a4e170301 ]
+[ Upstream commit dc1acd5c94699389a9ed023e94dd860c846ea1f6 ]
 
-An attempt to acquire exclusive lock can race with the current lock
-owner closing the image:
+To move the list iterator variable into the list_for_each_entry_*()
+macro in the future it should be avoided to use the list iterator
+variable after the loop body.
 
-1. lock is held by client123, rbd_lock() returns -EBUSY
-2. get_lock_owner_info() returns client123 instance details
-3. client123 closes the image, lock is released
-4. find_watcher() returns 0 as there is no matching watcher anymore
-5. client123 instance gets erroneously blocklisted
+To *never* use the list iterator variable after the loop it was
+concluded to use a separate iterator variable instead of a
+found boolean [1].
 
-Particularly impacted is mirror snapshot scheduler in snapshot-based
-mirroring since it happens to open and close images a lot (images are
-opened only for as long as it takes to take the next mirror snapshot,
-the same client instance is used for all images).
+This removes the need to use a found variable and simply checking if
+the variable was set, can determine if the break/goto was hit.
 
-To reduce the potential for erroneous blocklisting, retrieve the lock
-owner again after find_watcher() returns 0.  If it's still there, make
-sure it matches the previously detected lock owner.
-
-Cc: stable@vger.kernel.org # f38cb9d9c204: rbd: make get_lock_owner_info() return a single locker or NULL
-Cc: stable@vger.kernel.org # 8ff2c64c9765: rbd: harden get_lock_owner_info() a bit
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
+Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rbd.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ fs/dlm/lock.c    | 53 +++++++++++++++++++++++-------------------------
+ fs/dlm/plock.c   | 24 +++++++++++-----------
+ fs/dlm/recover.c | 39 +++++++++++++++++------------------
+ 3 files changed, 56 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/block/rbd.c b/drivers/block/rbd.c
-index dcb43c633c5e7..60d3a143ff450 100644
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3914,6 +3914,15 @@ static void wake_lock_waiters(struct rbd_device *rbd_dev, int result)
- 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index dde9afb6747ba..51ab06308bc73 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -1856,7 +1856,7 @@ static void del_timeout(struct dlm_lkb *lkb)
+ void dlm_scan_timeout(struct dlm_ls *ls)
+ {
+ 	struct dlm_rsb *r;
+-	struct dlm_lkb *lkb;
++	struct dlm_lkb *lkb = NULL, *iter;
+ 	int do_cancel, do_warn;
+ 	s64 wait_us;
+ 
+@@ -1867,27 +1867,28 @@ void dlm_scan_timeout(struct dlm_ls *ls)
+ 		do_cancel = 0;
+ 		do_warn = 0;
+ 		mutex_lock(&ls->ls_timeout_mutex);
+-		list_for_each_entry(lkb, &ls->ls_timeout, lkb_time_list) {
++		list_for_each_entry(iter, &ls->ls_timeout, lkb_time_list) {
+ 
+ 			wait_us = ktime_to_us(ktime_sub(ktime_get(),
+-					      		lkb->lkb_timestamp));
++							iter->lkb_timestamp));
+ 
+-			if ((lkb->lkb_exflags & DLM_LKF_TIMEOUT) &&
+-			    wait_us >= (lkb->lkb_timeout_cs * 10000))
++			if ((iter->lkb_exflags & DLM_LKF_TIMEOUT) &&
++			    wait_us >= (iter->lkb_timeout_cs * 10000))
+ 				do_cancel = 1;
+ 
+-			if ((lkb->lkb_flags & DLM_IFL_WATCH_TIMEWARN) &&
++			if ((iter->lkb_flags & DLM_IFL_WATCH_TIMEWARN) &&
+ 			    wait_us >= dlm_config.ci_timewarn_cs * 10000)
+ 				do_warn = 1;
+ 
+ 			if (!do_cancel && !do_warn)
+ 				continue;
+-			hold_lkb(lkb);
++			hold_lkb(iter);
++			lkb = iter;
+ 			break;
+ 		}
+ 		mutex_unlock(&ls->ls_timeout_mutex);
+ 
+-		if (!do_cancel && !do_warn)
++		if (!lkb)
+ 			break;
+ 
+ 		r = lkb->lkb_resource;
+@@ -5241,21 +5242,18 @@ void dlm_recover_waiters_pre(struct dlm_ls *ls)
+ 
+ static struct dlm_lkb *find_resend_waiter(struct dlm_ls *ls)
+ {
+-	struct dlm_lkb *lkb;
+-	int found = 0;
++	struct dlm_lkb *lkb = NULL, *iter;
+ 
+ 	mutex_lock(&ls->ls_waiters_mutex);
+-	list_for_each_entry(lkb, &ls->ls_waiters, lkb_wait_reply) {
+-		if (lkb->lkb_flags & DLM_IFL_RESEND) {
+-			hold_lkb(lkb);
+-			found = 1;
++	list_for_each_entry(iter, &ls->ls_waiters, lkb_wait_reply) {
++		if (iter->lkb_flags & DLM_IFL_RESEND) {
++			hold_lkb(iter);
++			lkb = iter;
+ 			break;
+ 		}
+ 	}
+ 	mutex_unlock(&ls->ls_waiters_mutex);
+ 
+-	if (!found)
+-		lkb = NULL;
+ 	return lkb;
  }
  
-+static bool locker_equal(const struct ceph_locker *lhs,
-+			 const struct ceph_locker *rhs)
-+{
-+	return lhs->id.name.type == rhs->id.name.type &&
-+	       lhs->id.name.num == rhs->id.name.num &&
-+	       !strcmp(lhs->id.cookie, rhs->id.cookie) &&
-+	       ceph_addr_equal_no_type(&lhs->info.addr, &rhs->info.addr);
-+}
-+
- static void free_locker(struct ceph_locker *locker)
+@@ -5914,37 +5912,36 @@ int dlm_user_adopt_orphan(struct dlm_ls *ls, struct dlm_user_args *ua_tmp,
+ 		     int mode, uint32_t flags, void *name, unsigned int namelen,
+ 		     unsigned long timeout_cs, uint32_t *lkid)
  {
- 	if (locker)
-@@ -4025,11 +4034,11 @@ static int find_watcher(struct rbd_device *rbd_dev,
- static int rbd_try_lock(struct rbd_device *rbd_dev)
- {
- 	struct ceph_client *client = rbd_dev->rbd_client->client;
--	struct ceph_locker *locker;
-+	struct ceph_locker *locker, *refreshed_locker;
- 	int ret;
+-	struct dlm_lkb *lkb;
++	struct dlm_lkb *lkb = NULL, *iter;
+ 	struct dlm_user_args *ua;
+ 	int found_other_mode = 0;
+-	int found = 0;
+ 	int rv = 0;
  
- 	for (;;) {
--		locker = NULL;
-+		locker = refreshed_locker = NULL;
- 
- 		ret = rbd_lock(rbd_dev);
- 		if (ret != -EBUSY)
-@@ -4049,6 +4058,16 @@ static int rbd_try_lock(struct rbd_device *rbd_dev)
- 		if (ret)
- 			goto out; /* request lock or error */
- 
-+		refreshed_locker = get_lock_owner_info(rbd_dev);
-+		if (IS_ERR(refreshed_locker)) {
-+			ret = PTR_ERR(refreshed_locker);
-+			refreshed_locker = NULL;
-+			goto out;
-+		}
-+		if (!refreshed_locker ||
-+		    !locker_equal(locker, refreshed_locker))
-+			goto again;
-+
- 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
- 			 ENTITY_NAME(locker->id.name));
- 
-@@ -4070,10 +4089,12 @@ static int rbd_try_lock(struct rbd_device *rbd_dev)
+ 	mutex_lock(&ls->ls_orphans_mutex);
+-	list_for_each_entry(lkb, &ls->ls_orphans, lkb_ownqueue) {
+-		if (lkb->lkb_resource->res_length != namelen)
++	list_for_each_entry(iter, &ls->ls_orphans, lkb_ownqueue) {
++		if (iter->lkb_resource->res_length != namelen)
+ 			continue;
+-		if (memcmp(lkb->lkb_resource->res_name, name, namelen))
++		if (memcmp(iter->lkb_resource->res_name, name, namelen))
+ 			continue;
+-		if (lkb->lkb_grmode != mode) {
++		if (iter->lkb_grmode != mode) {
+ 			found_other_mode = 1;
+ 			continue;
  		}
  
- again:
-+		free_locker(refreshed_locker);
- 		free_locker(locker);
+-		found = 1;
+-		list_del_init(&lkb->lkb_ownqueue);
+-		lkb->lkb_flags &= ~DLM_IFL_ORPHAN;
+-		*lkid = lkb->lkb_id;
++		lkb = iter;
++		list_del_init(&iter->lkb_ownqueue);
++		iter->lkb_flags &= ~DLM_IFL_ORPHAN;
++		*lkid = iter->lkb_id;
+ 		break;
+ 	}
+ 	mutex_unlock(&ls->ls_orphans_mutex);
+ 
+-	if (!found && found_other_mode) {
++	if (!lkb && found_other_mode) {
+ 		rv = -EAGAIN;
+ 		goto out;
  	}
  
- out:
-+	free_locker(refreshed_locker);
- 	free_locker(locker);
- 	return ret;
- }
+-	if (!found) {
++	if (!lkb) {
+ 		rv = -ENOENT;
+ 		goto out;
+ 	}
+diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
+index f74d5a28ad27c..95f4662c1209a 100644
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -434,9 +434,9 @@ static ssize_t dev_read(struct file *file, char __user *u, size_t count,
+ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 			 loff_t *ppos)
+ {
++	struct plock_op *op = NULL, *iter;
+ 	struct dlm_plock_info info;
+-	struct plock_op *op;
+-	int found = 0, do_callback = 0;
++	int do_callback = 0;
+ 
+ 	if (count != sizeof(info))
+ 		return -EINVAL;
+@@ -448,23 +448,23 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 		return -EINVAL;
+ 
+ 	spin_lock(&ops_lock);
+-	list_for_each_entry(op, &recv_list, list) {
+-		if (op->info.fsid == info.fsid &&
+-		    op->info.number == info.number &&
+-		    op->info.owner == info.owner) {
+-			list_del_init(&op->list);
+-			memcpy(&op->info, &info, sizeof(info));
+-			if (op->data)
++	list_for_each_entry(iter, &recv_list, list) {
++		if (iter->info.fsid == info.fsid &&
++		    iter->info.number == info.number &&
++		    iter->info.owner == info.owner) {
++			list_del_init(&iter->list);
++			memcpy(&iter->info, &info, sizeof(info));
++			if (iter->data)
+ 				do_callback = 1;
+ 			else
+-				op->done = 1;
+-			found = 1;
++				iter->done = 1;
++			op = iter;
+ 			break;
+ 		}
+ 	}
+ 	spin_unlock(&ops_lock);
+ 
+-	if (found) {
++	if (op) {
+ 		if (do_callback)
+ 			dlm_plock_callback(op);
+ 		else
+diff --git a/fs/dlm/recover.c b/fs/dlm/recover.c
+index 8928e99dfd47d..df18f38a02734 100644
+--- a/fs/dlm/recover.c
++++ b/fs/dlm/recover.c
+@@ -732,10 +732,9 @@ void dlm_recovered_lock(struct dlm_rsb *r)
+ 
+ static void recover_lvb(struct dlm_rsb *r)
+ {
+-	struct dlm_lkb *lkb, *high_lkb = NULL;
++	struct dlm_lkb *big_lkb = NULL, *iter, *high_lkb = NULL;
+ 	uint32_t high_seq = 0;
+ 	int lock_lvb_exists = 0;
+-	int big_lock_exists = 0;
+ 	int lvblen = r->res_ls->ls_lvblen;
+ 
+ 	if (!rsb_flag(r, RSB_NEW_MASTER2) &&
+@@ -751,37 +750,37 @@ static void recover_lvb(struct dlm_rsb *r)
+ 	/* we are the new master, so figure out if VALNOTVALID should
+ 	   be set, and set the rsb lvb from the best lkb available. */
+ 
+-	list_for_each_entry(lkb, &r->res_grantqueue, lkb_statequeue) {
+-		if (!(lkb->lkb_exflags & DLM_LKF_VALBLK))
++	list_for_each_entry(iter, &r->res_grantqueue, lkb_statequeue) {
++		if (!(iter->lkb_exflags & DLM_LKF_VALBLK))
+ 			continue;
+ 
+ 		lock_lvb_exists = 1;
+ 
+-		if (lkb->lkb_grmode > DLM_LOCK_CR) {
+-			big_lock_exists = 1;
++		if (iter->lkb_grmode > DLM_LOCK_CR) {
++			big_lkb = iter;
+ 			goto setflag;
+ 		}
+ 
+-		if (((int)lkb->lkb_lvbseq - (int)high_seq) >= 0) {
+-			high_lkb = lkb;
+-			high_seq = lkb->lkb_lvbseq;
++		if (((int)iter->lkb_lvbseq - (int)high_seq) >= 0) {
++			high_lkb = iter;
++			high_seq = iter->lkb_lvbseq;
+ 		}
+ 	}
+ 
+-	list_for_each_entry(lkb, &r->res_convertqueue, lkb_statequeue) {
+-		if (!(lkb->lkb_exflags & DLM_LKF_VALBLK))
++	list_for_each_entry(iter, &r->res_convertqueue, lkb_statequeue) {
++		if (!(iter->lkb_exflags & DLM_LKF_VALBLK))
+ 			continue;
+ 
+ 		lock_lvb_exists = 1;
+ 
+-		if (lkb->lkb_grmode > DLM_LOCK_CR) {
+-			big_lock_exists = 1;
++		if (iter->lkb_grmode > DLM_LOCK_CR) {
++			big_lkb = iter;
+ 			goto setflag;
+ 		}
+ 
+-		if (((int)lkb->lkb_lvbseq - (int)high_seq) >= 0) {
+-			high_lkb = lkb;
+-			high_seq = lkb->lkb_lvbseq;
++		if (((int)iter->lkb_lvbseq - (int)high_seq) >= 0) {
++			high_lkb = iter;
++			high_seq = iter->lkb_lvbseq;
+ 		}
+ 	}
+ 
+@@ -790,7 +789,7 @@ static void recover_lvb(struct dlm_rsb *r)
+ 		goto out;
+ 
+ 	/* lvb is invalidated if only NL/CR locks remain */
+-	if (!big_lock_exists)
++	if (!big_lkb)
+ 		rsb_set_flag(r, RSB_VALNOTVALID);
+ 
+ 	if (!r->res_lvbptr) {
+@@ -799,9 +798,9 @@ static void recover_lvb(struct dlm_rsb *r)
+ 			goto out;
+ 	}
+ 
+-	if (big_lock_exists) {
+-		r->res_lvbseq = lkb->lkb_lvbseq;
+-		memcpy(r->res_lvbptr, lkb->lkb_lvbptr, lvblen);
++	if (big_lkb) {
++		r->res_lvbseq = big_lkb->lkb_lvbseq;
++		memcpy(r->res_lvbptr, big_lkb->lkb_lvbptr, lvblen);
+ 	} else if (high_lkb) {
+ 		r->res_lvbseq = high_lkb->lkb_lvbseq;
+ 		memcpy(r->res_lvbptr, high_lkb->lkb_lvbptr, lvblen);
 -- 
 2.40.1
 
