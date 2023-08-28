@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE5111C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB4CC433C8;
-	Mon, 28 Aug 2023 10:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9353A11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FC1C433C8;
+	Mon, 28 Aug 2023 10:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218382;
-	bh=/lTPQDvbpAAMUoPATOkJF40EWIk+K/GaDB0v3YrCYIY=;
+	s=korg; t=1693218385;
+	bh=o4TQMlEnn/q7WiH4I3iAjK7oQ0OGD9Bg26RN9vC+j5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPVsv9+fRBRkrGLj++5r21+nbKOO6WyQgbxdcLb1coae0Pvl6UA0xxm5rsRPuE8K+
-	 RiDVJ1umMie9rzzWBSFN7pkDeWdKofE0BYwajyzuiPMPXvRTyEZpaPbMQt7xC0VZt/
-	 qx0p1f2BCZoRanfd4BG/0CtGAAiwnrtkYiJCWroI=
+	b=01GqR1qzoeqrrtuwRLiX/GrnmcdwjAAuQvwQ6M+6ehafkMIjg7AHvCL5wc964QiJT
+	 YT0Wk+fWOhIBkiIG2oMAcbKJSdHKLejFyXxTKGSAbUiUY+LKL7gxSDHK+lmPFMSzzG
+	 h7wfq8vMYVmE3z86Lh3ng8J1Yy11Z2p/GUDJ3GAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	dengxiang <dengxiang@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 068/129] ALSA: usb-audio: Add support for Mythware XA001AU capture and playback interfaces.
-Date: Mon, 28 Aug 2023 12:12:42 +0200
-Message-ID: <20230828101155.815161386@linuxfoundation.org>
+	Russell Harmon <russ@har.mn>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 4.19 069/129] cifs: Release folio lock on fscache read hit.
+Date: Mon, 28 Aug 2023 12:12:43 +0200
+Message-ID: <20230828101155.860135373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -39,57 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: dengxiang <dengxiang@nfschina.com>
+From: Russell Harmon via samba-technical <samba-technical@lists.samba.org>
 
-commit 788449ae57f4273111b779bbcaad552b67f517d5 upstream.
+commit 69513dd669e243928f7450893190915a88f84a2b upstream.
 
-This patch adds a USB quirk for Mythware XA001AU USB interface.
+Under the current code, when cifs_readpage_worker is called, the call
+contract is that the callee should unlock the page. This is documented
+in the read_folio section of Documentation/filesystems/vfs.rst as:
 
-Signed-off-by: dengxiang <dengxiang@nfschina.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230803024437.370069-1-dengxiang@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> The filesystem should unlock the folio once the read has completed,
+> whether it was successful or not.
+
+Without this change, when fscache is in use and cache hit occurs during
+a read, the page lock is leaked, producing the following stack on
+subsequent reads (via mmap) to the page:
+
+$ cat /proc/3890/task/12864/stack
+[<0>] folio_wait_bit_common+0x124/0x350
+[<0>] filemap_read_folio+0xad/0xf0
+[<0>] filemap_fault+0x8b1/0xab0
+[<0>] __do_fault+0x39/0x150
+[<0>] do_fault+0x25c/0x3e0
+[<0>] __handle_mm_fault+0x6ca/0xc70
+[<0>] handle_mm_fault+0xe9/0x350
+[<0>] do_user_addr_fault+0x225/0x6c0
+[<0>] exc_page_fault+0x84/0x1b0
+[<0>] asm_exc_page_fault+0x27/0x30
+
+This requires a reboot to resolve; it is a deadlock.
+
+Note however that the call to cifs_readpage_from_fscache does mark the
+page clean, but does not free the folio lock. This happens in
+__cifs_readpage_from_fscache on success. Releasing the lock at that
+point however is not appropriate as cifs_readahead also calls
+cifs_readpage_from_fscache and *does* unconditionally release the lock
+after its return. This change therefore effectively makes
+cifs_readpage_worker work like cifs_readahead.
+
+Signed-off-by: Russell Harmon <russ@har.mn>
+Acked-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ fs/cifs/file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -3677,5 +3677,34 @@ ALC1220_VB_DESKTOP(0x26ce, 0x0a01), /* A
- 		}
- 	}
- },
-+{
-+	/* Advanced modes of the Mythware XA001AU.
-+	 * For the standard mode, Mythware XA001AU has ID ffad:a001
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0xffad, 0xa001),
-+	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
-+		.vendor_name = "Mythware",
-+		.product_name = "XA001AU",
-+		.ifnum = QUIRK_ANY_INTERFACE,
-+		.type = QUIRK_COMPOSITE,
-+		.data = (const struct snd_usb_audio_quirk[]) {
-+			{
-+				.ifnum = 0,
-+				.type = QUIRK_IGNORE_INTERFACE,
-+			},
-+			{
-+				.ifnum = 1,
-+				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
-+			},
-+			{
-+				.ifnum = 2,
-+				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
-+			},
-+			{
-+				.ifnum = -1
-+			}
-+		}
-+	}
-+},
+--- a/fs/cifs/file.c
++++ b/fs/cifs/file.c
+@@ -3991,9 +3991,9 @@ static int cifs_readpage_worker(struct f
  
- #undef USB_DEVICE_VENDOR_SPEC
+ io_error:
+ 	kunmap(page);
+-	unlock_page(page);
+ 
+ read_complete:
++	unlock_page(page);
+ 	return rc;
+ }
+ 
 
 
