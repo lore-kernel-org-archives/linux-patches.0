@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E9C11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62658C433C7;
-	Mon, 28 Aug 2023 10:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4DB8BE0
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34609C433C8;
+	Mon, 28 Aug 2023 10:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218247;
-	bh=CO/3503KQEmfBcwsmEmbLLnYUEVr5nggNLXx1hmodPg=;
+	s=korg; t=1693218250;
+	bh=SbB1ZVX+loGfxj7tk60wjp0VkbC/iz7Lp+vugOYXzF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7JewtuSOJdnWDtgAGY4g+vt+bK8m/uEVUr1ZTPKqFLilj+0Kw41OmdN09LR/qs+Z
-	 kZHtTawvCr1MPs57PqDJ/fP79HimnY+jtAzugn61DIh/4N6iI7AilFIxOfWkG5FUd6
-	 NslCnUI+Da8atRZmC7I+aBU9XPMb5LYdW/c1jCLU=
+	b=q2/u6JZG+j2Bdlzric6HroP/YiTRGcsISN/fZjRJNCz7HbesfKTDtW0IC5ZJRQRbz
+	 a5YDkq2Dk6b/IIwZ5VdZlQgX8rLWW8fUfMCK34ybjbSzp338hVkGhEhr9v2YG+uCAT
+	 VHRxPcjGmHWsU7IyNW25WuCGIRA3ezFySO5W6gnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	linux-um@lists.infradead.org,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 019/129] IMA: allow/fix UML builds
-Date: Mon, 28 Aug 2023 12:11:53 +0200
-Message-ID: <20230828101153.770623384@linuxfoundation.org>
+Subject: [PATCH 4.19 002/129] selftests: forwarding: tc_flower: Relax success criterion
+Date: Mon, 28 Aug 2023 12:11:36 +0200
+Message-ID: <20230828101153.123633584@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -45,54 +44,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 644f17412f5acf01a19af9d04a921937a2bc86c6 ]
+[ Upstream commit 9ee37e53e7687654b487fc94e82569377272a7a8 ]
 
-UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
-NO_IOMEM).
+The test checks that filters that match on source or destination MAC
+were only hit once. A host can send more than one packet with a given
+source or destination MAC, resulting in failures.
 
-Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
+Fix by relaxing the success criterion and instead check that the filters
+were not hit zero times. Using tc_check_at_least_x_packets() is also an
+option, but it is not available in older kernels.
 
-ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
-ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
-ld: security/integrity/ima/ima_init.o: in function `ima_init':
-ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
-ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
-ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
-ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
-
-Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
-is set, regardless of the UML Kconfig setting.
-This updates TCG_TPM from =m to =y and fixes the linker errors.
-
-Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
-Cc: Stable <stable@vger.kernel.org> # v5.14+
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-um@lists.infradead.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 07e5c75184a1 ("selftests: forwarding: Introduce tc flower matching tests")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230808141503.4060661-13-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/tc_flower.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
-index 3ec45028a8c54..cd32fe3311afe 100644
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -7,7 +7,7 @@ config IMA
- 	select CRYPTO_HMAC
- 	select CRYPTO_SHA1
- 	select CRYPTO_HASH_INFO
--	select TCG_TPM if HAS_IOMEM && !UML
-+	select TCG_TPM if HAS_IOMEM
- 	select TCG_TIS if TCG_TPM && X86
- 	select TCG_CRB if TCG_TPM && ACPI
- 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
+diff --git a/tools/testing/selftests/net/forwarding/tc_flower.sh b/tools/testing/selftests/net/forwarding/tc_flower.sh
+index 20d1077e5a3de..85faef980887a 100755
+--- a/tools/testing/selftests/net/forwarding/tc_flower.sh
++++ b/tools/testing/selftests/net/forwarding/tc_flower.sh
+@@ -48,8 +48,8 @@ match_dst_mac_test()
+ 	tc_check_packets "dev $h2 ingress" 101 1
+ 	check_fail $? "Matched on a wrong filter"
+ 
+-	tc_check_packets "dev $h2 ingress" 102 1
+-	check_err $? "Did not match on correct filter"
++	tc_check_packets "dev $h2 ingress" 102 0
++	check_fail $? "Did not match on correct filter"
+ 
+ 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
+ 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
+@@ -74,8 +74,8 @@ match_src_mac_test()
+ 	tc_check_packets "dev $h2 ingress" 101 1
+ 	check_fail $? "Matched on a wrong filter"
+ 
+-	tc_check_packets "dev $h2 ingress" 102 1
+-	check_err $? "Did not match on correct filter"
++	tc_check_packets "dev $h2 ingress" 102 0
++	check_fail $? "Did not match on correct filter"
+ 
+ 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
+ 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
 -- 
 2.40.1
 
