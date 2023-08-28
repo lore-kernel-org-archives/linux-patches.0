@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BB4611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAAFC433C9;
-	Mon, 28 Aug 2023 10:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE4B611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D7DC433C7;
+	Mon, 28 Aug 2023 10:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218861;
-	bh=d7PYB6n1RBTGvEYlefvWJqwFexPsLJlByIaCIVwjqU0=;
+	s=korg; t=1693218863;
+	bh=4QEmGJThwrBxw3lulIuKPNi5bKIQUhXDF8uSw29zlRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfhef+e47NKkE+kzlV1GBohoFQiHXjp9GAO8auI+a1fkKCxGC+JKREqsxw9688vio
-	 wxpOh7Ner19RsXiiCwytHs3cs2laMpmXzdoXBT4IyK7VTszkEXzh6VCFJbwisyRaDx
-	 /T8SYHjoKROM+zEXG6nHIaP7b+7xxt0BZ6GNeD7Q=
+	b=qtW/GzU8eLbNg87EKV3DTMMB/SZE+7KNLhrUB4NOWcnim1iEEOYfy4E1J6XUTABSM
+	 khvt2HCVn3ec9pFi5biFv9TpVWlUSr5rwCjZYiPFWpFpf4HVMbclOMV79gQRSMepWZ
+	 IJpFz2SoPPr6AAOGRfVqjEBpn499qXN7PZF4FCF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 109/122] can: raw: add missing refcount for memory leak fix
-Date: Mon, 28 Aug 2023 12:13:44 +0200
-Message-ID: <20230828101200.048328158@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Chanho Min <chanho.min@lge.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 083/122] lib/clz_ctz.c: Fix __clzdi2() and __ctzdi2() for 32-bit kernels
+Date: Mon, 28 Aug 2023 12:13:18 +0200
+Message-ID: <20230828101159.176016124@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -41,120 +41,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Helge Deller <deller@gmx.de>
 
-commit c275a176e4b69868576e543409927ae75e3a3288 upstream.
+commit 382d4cd1847517ffcb1800fd462b625db7b2ebea upstream.
 
-Commit ee8b94c8510c ("can: raw: fix receiver memory leak") introduced
-a new reference to the CAN netdevice that has assigned CAN filters.
-But this new ro->dev reference did not maintain its own refcount which
-lead to another KASAN use-after-free splat found by Eric Dumazet.
+The gcc compiler translates on some architectures the 64-bit
+__builtin_clzll() function to a call to the libgcc function __clzdi2(),
+which should take a 64-bit parameter on 32- and 64-bit platforms.
 
-This patch ensures a proper refcount for the CAN nedevice.
+But in the current kernel code, the built-in __clzdi2() function is
+defined to operate (wrongly) on 32-bit parameters if BITS_PER_LONG ==
+32, thus the return values on 32-bit kernels are in the range from
+[0..31] instead of the expected [0..63] range.
 
-Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
-Reported-by: Eric Dumazet <edumazet@google.com>
-Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/r/20230821144547.6658-3-socketcan@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch fixes the in-kernel functions __clzdi2() and __ctzdi2() to
+take a 64-bit parameter on 32-bit kernels as well, thus it makes the
+functions identical for 32- and 64-bit kernels.
+
+This bug went unnoticed since kernel 3.11 for over 10 years, and here
+are some possible reasons for that:
+
+ a) Some architectures have assembly instructions to count the bits and
+    which are used instead of calling __clzdi2(), e.g. on x86 the bsr
+    instruction and on ppc cntlz is used. On such architectures the
+    wrong __clzdi2() implementation isn't used and as such the bug has
+    no effect and won't be noticed.
+
+ b) Some architectures link to libgcc.a, and the in-kernel weak
+    functions get replaced by the correct 64-bit variants from libgcc.a.
+
+ c) __builtin_clzll() and __clzdi2() doesn't seem to be used in many
+    places in the kernel, and most likely only in uncritical functions,
+    e.g. when printing hex values via seq_put_hex_ll(). The wrong return
+    value will still print the correct number, but just in a wrong
+    formatting (e.g. with too many leading zeroes).
+
+ d) 32-bit kernels aren't used that much any longer, so they are less
+    tested.
+
+A trivial testcase to verify if the currently running 32-bit kernel is
+affected by the bug is to look at the output of /proc/self/maps:
+
+Here the kernel uses a correct implementation of __clzdi2():
+
+  root@debian:~# cat /proc/self/maps
+  00010000-00019000 r-xp 00000000 08:05 787324     /usr/bin/cat
+  00019000-0001a000 rwxp 00009000 08:05 787324     /usr/bin/cat
+  0001a000-0003b000 rwxp 00000000 00:00 0          [heap]
+  f7551000-f770d000 r-xp 00000000 08:05 794765     /usr/lib/hppa-linux-gnu/libc.so.6
+  ...
+
+and this kernel uses the broken implementation of __clzdi2():
+
+  root@debian:~# cat /proc/self/maps
+  0000000010000-0000000019000 r-xp 00000000 000000008:000000005 787324  /usr/bin/cat
+  0000000019000-000000001a000 rwxp 000000009000 000000008:000000005 787324  /usr/bin/cat
+  000000001a000-000000003b000 rwxp 00000000 00:00 0  [heap]
+  00000000f73d1000-00000000f758d000 r-xp 00000000 000000008:000000005 794765  /usr/lib/hppa-linux-gnu/libc.so.6
+  ...
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 4df87bb7b6a22 ("lib: add weak clz/ctz functions")
+Cc: Chanho Min <chanho.min@lge.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: stable@vger.kernel.org # v3.11+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/raw.c |   35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ lib/clz_ctz.c |   32 ++++++--------------------------
+ 1 file changed, 6 insertions(+), 26 deletions(-)
 
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -85,6 +85,7 @@ struct raw_sock {
- 	int bound;
- 	int ifindex;
- 	struct net_device *dev;
-+	netdevice_tracker dev_tracker;
- 	struct list_head notifier;
- 	int loopback;
- 	int recv_own_msgs;
-@@ -285,8 +286,10 @@ static void raw_notify(struct raw_sock *
- 	case NETDEV_UNREGISTER:
- 		lock_sock(sk);
- 		/* remove current filters & unregister */
--		if (ro->bound)
-+		if (ro->bound) {
- 			raw_disable_allfilters(dev_net(dev), dev, sk);
-+			netdev_put(dev, &ro->dev_tracker);
-+		}
+--- a/lib/clz_ctz.c
++++ b/lib/clz_ctz.c
+@@ -28,36 +28,16 @@ int __weak __clzsi2(int val)
+ }
+ EXPORT_SYMBOL(__clzsi2);
  
- 		if (ro->count > 1)
- 			kfree(ro->filter);
-@@ -391,10 +394,12 @@ static int raw_release(struct socket *so
+-int __weak __clzdi2(long val);
+-int __weak __ctzdi2(long val);
+-#if BITS_PER_LONG == 32
+-
+-int __weak __clzdi2(long val)
++int __weak __clzdi2(u64 val);
++int __weak __clzdi2(u64 val)
+ {
+-	return 32 - fls((int)val);
++	return 64 - fls64(val);
+ }
+ EXPORT_SYMBOL(__clzdi2);
  
- 	/* remove current filters & unregister */
- 	if (ro->bound) {
--		if (ro->dev)
-+		if (ro->dev) {
- 			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
--		else
-+			netdev_put(ro->dev, &ro->dev_tracker);
-+		} else {
- 			raw_disable_allfilters(sock_net(sk), NULL, sk);
-+		}
- 	}
- 
- 	if (ro->count > 1)
-@@ -445,10 +450,10 @@ static int raw_bind(struct socket *sock,
- 			goto out;
- 		}
- 		if (dev->type != ARPHRD_CAN) {
--			dev_put(dev);
- 			err = -ENODEV;
--			goto out;
-+			goto out_put_dev;
- 		}
-+
- 		if (!(dev->flags & IFF_UP))
- 			notify_enetdown = 1;
- 
-@@ -456,7 +461,9 @@ static int raw_bind(struct socket *sock,
- 
- 		/* filters set by default/setsockopt */
- 		err = raw_enable_allfilters(sock_net(sk), dev, sk);
--		dev_put(dev);
-+		if (err)
-+			goto out_put_dev;
-+
- 	} else {
- 		ifindex = 0;
- 
-@@ -467,18 +474,28 @@ static int raw_bind(struct socket *sock,
- 	if (!err) {
- 		if (ro->bound) {
- 			/* unregister old filters */
--			if (ro->dev)
-+			if (ro->dev) {
- 				raw_disable_allfilters(dev_net(ro->dev),
- 						       ro->dev, sk);
--			else
-+				/* drop reference to old ro->dev */
-+				netdev_put(ro->dev, &ro->dev_tracker);
-+			} else {
- 				raw_disable_allfilters(sock_net(sk), NULL, sk);
-+			}
- 		}
- 		ro->ifindex = ifindex;
- 		ro->bound = 1;
-+		/* bind() ok -> hold a reference for new ro->dev */
- 		ro->dev = dev;
-+		if (ro->dev)
-+			netdev_hold(ro->dev, &ro->dev_tracker, GFP_KERNEL);
- 	}
- 
-- out:
-+out_put_dev:
-+	/* remove potential reference from dev_get_by_index() */
-+	if (dev)
-+		dev_put(dev);
-+out:
- 	release_sock(sk);
- 	rtnl_unlock();
- 
+-int __weak __ctzdi2(long val)
++int __weak __ctzdi2(u64 val);
++int __weak __ctzdi2(u64 val)
+ {
+-	return __ffs((u32)val);
++	return __ffs64(val);
+ }
+ EXPORT_SYMBOL(__ctzdi2);
+-
+-#elif BITS_PER_LONG == 64
+-
+-int __weak __clzdi2(long val)
+-{
+-	return 64 - fls64((u64)val);
+-}
+-EXPORT_SYMBOL(__clzdi2);
+-
+-int __weak __ctzdi2(long val)
+-{
+-	return __ffs64((u64)val);
+-}
+-EXPORT_SYMBOL(__ctzdi2);
+-
+-#else
+-#error BITS_PER_LONG not 32 or 64
+-#endif
 
 
