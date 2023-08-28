@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7934469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375C5C433C7;
-	Mon, 28 Aug 2023 10:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C147469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB74C433C8;
+	Mon, 28 Aug 2023 10:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218714;
-	bh=MDzATaLmlsIkIZmLEuRWsWapcq4CCTMS9h49S8LHGVA=;
+	s=korg; t=1693218717;
+	bh=nNRdEpPlfnw8r5Fj7xeIRM5d9YI9/Ha73iakJfEVzTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeumuYvYS+My37/DhpX8MGpeIvvFoJVRhwCXvf4EiNHdg0MRhpe6I50r8uiXLk7S0
-	 JTL3zieem9yGwcdLLV+EekNe4fUhaNHjyw79g0dKW4xe9JRHtGDkuwzChjybiRNjfH
-	 s2WOawBM3cZnv/j/SxQq7GFkVnsPX8x0cAqrpN1Y=
+	b=m7eD7hm4mPeaDIvLCsxcrcW2HoXndHXQKhZuLCpysTT9OSFx2AQKipWJYePWp5rXZ
+	 C8zZUrNUQ/cQ9HOeSkX4udJ3/G7/+N5UDtOtPGuqcEVfmtVARe0KF7p1wCDI1grV49
+	 g/tVVI9zx6EoFosLUGmSBOPkqN6+QRwPBAU/pT84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 058/122] io_uring: extract a io_msg_install_complete helper
-Date: Mon, 28 Aug 2023 12:12:53 +0200
-Message-ID: <20230828101158.361876129@linuxfoundation.org>
+Subject: [PATCH 6.1 059/122] io_uring/msg_ring: move double lock/unlock helpers higher up
+Date: Mon, 28 Aug 2023 12:12:54 +0200
+Message-ID: <20230828101158.398763949@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -39,91 +38,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-Commit 172113101641cf1f9628c528ec790cb809f2b704 upstream.
+Commit 423d5081d0451faa59a707e57373801da5b40141 upstream.
 
-Extract a helper called io_msg_install_complete() from io_msg_send_fd(),
-will be used later.
+In preparation for needing them somewhere else, move them and get rid of
+the unused 'issue_flags' for the unlock side.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/1500ca1054cc4286a3ee1c60aacead57fcdfa02a.1670384893.git.asml.silence@gmail.com
+No functional changes in this patch.
+
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/msg_ring.c |   38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ io_uring/msg_ring.c |   47 +++++++++++++++++++++++------------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
 --- a/io_uring/msg_ring.c
 +++ b/io_uring/msg_ring.c
-@@ -94,40 +94,25 @@ static struct file *io_msg_grab_file(str
- 	return file;
+@@ -24,6 +24,28 @@ struct io_msg {
+ 	u32 flags;
+ };
+ 
++static void io_double_unlock_ctx(struct io_ring_ctx *octx)
++{
++	mutex_unlock(&octx->uring_lock);
++}
++
++static int io_double_lock_ctx(struct io_ring_ctx *octx,
++			      unsigned int issue_flags)
++{
++	/*
++	 * To ensure proper ordering between the two ctxs, we can only
++	 * attempt a trylock on the target. If that fails and we already have
++	 * the source ctx lock, punt to io-wq.
++	 */
++	if (!(issue_flags & IO_URING_F_UNLOCKED)) {
++		if (!mutex_trylock(&octx->uring_lock))
++			return -EAGAIN;
++		return 0;
++	}
++	mutex_lock(&octx->uring_lock);
++	return 0;
++}
++
+ void io_msg_ring_cleanup(struct io_kiocb *req)
+ {
+ 	struct io_msg *msg = io_kiocb_to_cmd(req, struct io_msg);
+@@ -51,29 +73,6 @@ static int io_msg_ring_data(struct io_ki
+ 	return -EOVERFLOW;
  }
  
--static int io_msg_send_fd(struct io_kiocb *req, unsigned int issue_flags)
-+static int io_msg_install_complete(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_ring_ctx *target_ctx = req->file->private_data;
- 	struct io_msg *msg = io_kiocb_to_cmd(req, struct io_msg);
--	struct io_ring_ctx *ctx = req->ctx;
- 	struct file *src_file = msg->src_file;
- 	int ret;
- 
--	if (msg->len)
--		return -EINVAL;
--	if (target_ctx == ctx)
--		return -EINVAL;
--	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
--		return -EBADFD;
--	if (!src_file) {
--		src_file = io_msg_grab_file(req, issue_flags);
--		if (!src_file)
--			return -EBADF;
--		msg->src_file = src_file;
--		req->flags |= REQ_F_NEED_CLEANUP;
+-static void io_double_unlock_ctx(struct io_ring_ctx *octx,
+-				 unsigned int issue_flags)
+-{
+-	mutex_unlock(&octx->uring_lock);
+-}
+-
+-static int io_double_lock_ctx(struct io_ring_ctx *octx,
+-			      unsigned int issue_flags)
+-{
+-	/*
+-	 * To ensure proper ordering between the two ctxs, we can only
+-	 * attempt a trylock on the target. If that fails and we already have
+-	 * the source ctx lock, punt to io-wq.
+-	 */
+-	if (!(issue_flags & IO_URING_F_UNLOCKED)) {
+-		if (!mutex_trylock(&octx->uring_lock))
+-			return -EAGAIN;
+-		return 0;
 -	}
+-	mutex_lock(&octx->uring_lock);
+-	return 0;
+-}
 -
- 	if (unlikely(io_double_lock_ctx(target_ctx, issue_flags)))
- 		return -EAGAIN;
- 
- 	ret = __io_fixed_fd_install(target_ctx, src_file, msg->dst_fd);
- 	if (ret < 0)
- 		goto out_unlock;
-+
- 	msg->src_file = NULL;
- 	req->flags &= ~REQ_F_NEED_CLEANUP;
- 
- 	if (msg->flags & IORING_MSG_RING_CQE_SKIP)
- 		goto out_unlock;
--
- 	/*
- 	 * If this fails, the target still received the file descriptor but
- 	 * wasn't notified of the fact. This means that if this request
-@@ -141,6 +126,25 @@ out_unlock:
+ static struct file *io_msg_grab_file(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_msg *msg = io_kiocb_to_cmd(req, struct io_msg);
+@@ -122,7 +121,7 @@ static int io_msg_install_complete(struc
+ 	if (!io_post_aux_cqe(target_ctx, msg->user_data, ret, 0, true))
+ 		ret = -EOVERFLOW;
+ out_unlock:
+-	io_double_unlock_ctx(target_ctx, issue_flags);
++	io_double_unlock_ctx(target_ctx);
  	return ret;
  }
  
-+static int io_msg_send_fd(struct io_kiocb *req, unsigned int issue_flags)
-+{
-+	struct io_ring_ctx *target_ctx = req->file->private_data;
-+	struct io_msg *msg = io_kiocb_to_cmd(req, struct io_msg);
-+	struct io_ring_ctx *ctx = req->ctx;
-+	struct file *src_file = msg->src_file;
-+
-+	if (target_ctx == ctx)
-+		return -EINVAL;
-+	if (!src_file) {
-+		src_file = io_msg_grab_file(req, issue_flags);
-+		if (!src_file)
-+			return -EBADF;
-+		msg->src_file = src_file;
-+		req->flags |= REQ_F_NEED_CLEANUP;
-+	}
-+	return io_msg_install_complete(req, issue_flags);
-+}
-+
- int io_msg_ring_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- {
- 	struct io_msg *msg = io_kiocb_to_cmd(req, struct io_msg);
 
 
