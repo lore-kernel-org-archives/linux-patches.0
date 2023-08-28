@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D5311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70E1C433C7;
-	Mon, 28 Aug 2023 10:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E3F11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA25C433C8;
+	Mon, 28 Aug 2023 10:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219554;
-	bh=UCH6at7pqT3cw/jreFYEcF0lQ9/DxbP7n6e8CKKKk64=;
+	s=korg; t=1693219556;
+	bh=tE6ioatjtpqbQON4QRo46+gsn2jVHmqC6Xaj2BIJCNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDGfq7R0gpS4LKwJDne/ogo83BNFw0WItKhz42MdSZkFKkFOT2nYfcZtOGceexvyF
-	 nK2Fg2S+oCKy3aCKmgZAbFLuW+hFtPo2SMti+yZ3bgf3U16pMzpZ0taaK9UFkNI0xZ
-	 VHkKXtu743jPG/d1sjc8TtKAS2RtwZtTlPgzF7Is=
+	b=2wQUqNwNL3wzCyLhHBIn4gXVZoC1HhxL41FRFN7m2+K8nHpHz7Uql5Kx6T1809GTV
+	 WS45YRmsKZJS4LcsaGWogE2UIq6PlxsO7qYJdFWnPeJ3vJvWO7zLUha/xlZNQMfO/x
+	 /FWthVb7qNYFE72Fq2+ghp5kdbS3gwCWPxMrG0ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.15 77/89] cgroup/cpuset: Iterate only if DEADLINE tasks are present
-Date: Mon, 28 Aug 2023 12:14:18 +0200
-Message-ID: <20230828101152.809970505@linuxfoundation.org>
+	Dylan Jhong <dylan@andestech.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 51/89] mm: add a call to flush_cache_vmap() in vmap_pfn()
+Date: Mon, 28 Aug 2023 12:13:52 +0200
+Message-ID: <20230828101151.882852347@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -41,39 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit c0f78fd5edcf29b2822ac165f9248a6c165e8554 upstream.
+commit a50420c79731fc5cf27ad43719c1091e842a2606 upstream.
 
-update_tasks_root_domain currently iterates over all tasks even if no
-DEADLINE task is present on the cpuset/root domain for which bandwidth
-accounting is being rebuilt. This has been reported to introduce 10+ ms
-delays on suspend-resume operations.
+flush_cache_vmap() must be called after new vmalloc mappings are installed
+in the page table in order to allow architectures to make sure the new
+mapping is visible.
 
-Skip the costly iteration for cpusets that don't contain DEADLINE tasks.
+It could lead to a panic since on some architectures (like powerpc),
+the page table walker could see the wrong pte value and trigger a
+spurious page fault that can not be resolved (see commit f1cb8f9beba8
+("powerpc/64s/radix: avoid ptesync after set_pte and
+ptep_set_access_flags")).
 
-Reported-by: Qais Yousef (Google) <qyousef@layalina.io>
-Link: https://lore.kernel.org/lkml/20230206221428.2125324-1-qyousef@layalina.io/
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+But actually the patch is aiming at riscv: the riscv specification
+allows the caching of invalid entries in the TLB, and since we recently
+removed the vmalloc page fault handling, we now need to emit a tlb
+shootdown whenever a new vmalloc mapping is emitted
+(https://lore.kernel.org/linux-riscv/20230725132246.817726-1-alexghiti@rivosinc.com/).
+That's a temporary solution, there are ways to avoid that :)
+
+Link: https://lkml.kernel.org/r/20230809164633.1556126-1-alexghiti@rivosinc.com
+Fixes: 3e9a9e256b1e ("mm: add a vmap_pfn function")
+Reported-by: Dylan Jhong <dylan@andestech.com>
+Closes: https://lore.kernel.org/linux-riscv/ZMytNY2J8iyjbPPy@atctrx.andestech.com/
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reviewed-by: Dylan Jhong <dylan@andestech.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/vmalloc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -966,6 +966,9 @@ static void dl_update_tasks_root_domain(
- 	struct css_task_iter it;
- 	struct task_struct *task;
- 
-+	if (cs->nr_deadline_tasks == 0)
-+		return;
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -2806,6 +2806,10 @@ void *vmap_pfn(unsigned long *pfns, unsi
+ 		free_vm_area(area);
+ 		return NULL;
+ 	}
 +
- 	css_task_iter_start(&cs->css, 0, &it);
- 
- 	while ((task = css_task_iter_next(&it)))
++	flush_cache_vmap((unsigned long)area->addr,
++			 (unsigned long)area->addr + count * PAGE_SIZE);
++
+ 	return area->addr;
+ }
+ EXPORT_SYMBOL_GPL(vmap_pfn);
 
 
