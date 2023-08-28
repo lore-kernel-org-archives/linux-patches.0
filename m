@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64E911C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2715AC433C7;
-	Mon, 28 Aug 2023 10:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C57411C8D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2684C433C7;
+	Mon, 28 Aug 2023 10:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217847;
-	bh=4waX+xwhTxjkOtv58dTlhNyn/Ds5ffIGHW0jmj14w44=;
+	s=korg; t=1693217850;
+	bh=hPbkbhIWCKlSFMcGExZBxO/1hHvxWd59oai/d8yAIdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gY0/fKCq5HajyIx9bS3ie0U9FfvlMHejKJ/8q+tiLCo+unBdOFwNpOo4/hQRyCiAc
-	 WHtWJEX+l1DyzFNuxU9WBo/jZmS0IQxEciR3X1DE4AULIEZIq+8LWdkaFa8bvXYD2l
-	 eUAeAtd/z6BVQzBR5v3gWRtXaM1oov5JhbaSaGjo=
+	b=rGqitWtRC6O0esmS+JCmVOXpBqzCbMJlQUp9pURTA7MOUc0kMzjuxDvqNfwFL0bqL
+	 Au96JEiwCPGjJf/BxFKBab8UDDeT32AfLm0rL+nACfnr/ABK219xeElpVB7zCWXEu0
+	 sHPwKsXuEJDQbI0Tr5tw+1OKEO2/R4Y7x9tjjgrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.14 46/57] ibmveth: Use dcbf rather than dcbfl
-Date: Mon, 28 Aug 2023 12:13:06 +0200
-Message-ID: <20230828101145.963010792@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 4.14 47/57] batman-adv: Trigger events for auto adjusted MTU
+Date: Mon, 28 Aug 2023 12:13:07 +0200
+Message-ID: <20230828101145.993218934@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -39,34 +39,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit bfedba3b2c7793ce127680bc8f70711e05ec7a17 upstream.
+commit c6a953cce8d0438391e6da48c8d0793d3fbfcfa6 upstream.
 
-When building for power4, newer binutils don't recognise the "dcbfl"
-extended mnemonic.
+If an interface changes the MTU, it is expected that an NETDEV_PRECHANGEMTU
+and NETDEV_CHANGEMTU notification events is triggered. This worked fine for
+.ndo_change_mtu based changes because core networking code took care of it.
+But for auto-adjustments after hard-interfaces changes, these events were
+simply missing.
 
-dcbfl RA, RB is equivalent to dcbf RA, RB, 1.
+Due to this problem, non-batman-adv components weren't aware of MTU changes
+and thus couldn't perform their own tasks correctly.
 
-Switch to "dcbf" to avoid the build error.
-
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |    2 +-
+ net/batman-adv/hard-interface.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -209,7 +209,7 @@ static inline void ibmveth_flush_buffer(
- 	unsigned long offset;
+--- a/net/batman-adv/hard-interface.c
++++ b/net/batman-adv/hard-interface.c
+@@ -625,7 +625,7 @@ out:
+ /* adjusts the MTU if a new interface with a smaller MTU appeared. */
+ void batadv_update_min_mtu(struct net_device *soft_iface)
+ {
+-	soft_iface->mtu = batadv_hardif_min_mtu(soft_iface);
++	dev_set_mtu(soft_iface, batadv_hardif_min_mtu(soft_iface));
  
- 	for (offset = 0; offset < length; offset += SMP_CACHE_BYTES)
--		asm("dcbfl %0,%1" :: "b" (addr), "r" (offset));
-+		asm("dcbf %0,%1,1" :: "b" (addr), "r" (offset));
- }
- 
- /* replenish the buffers for a pool.  note that we don't need to
+ 	/* Check if the local translate table should be cleaned up to match a
+ 	 * new (and smaller) MTU.
 
 
