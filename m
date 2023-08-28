@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F9811C97
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6382FC433C7;
-	Mon, 28 Aug 2023 10:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B0711C97
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15099C433C7;
+	Mon, 28 Aug 2023 10:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218623;
-	bh=RNZMRI7r3RVPV14HFvRvyr+YeaEmXSY+H2qehQM82qM=;
+	s=korg; t=1693218626;
+	bh=EPA5f3y/WJdc4NXun6Q3xvNAVUGRtQ+h9CkJa96eLj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkuWoYKK8j0YoFE9pj8tZEhor1YM9TJXeK0Px2mYDfjYtQ0m3dQt6C4I1hZ79RTkr
-	 a3ACJXY7AJHWAlNyoqYzBQP5N/bPd159TpUqZiPqqZ1sk+G3PcSE0oo1Io+GTIbQQ2
-	 5UpJwKVT5rloqRiWlU9xhLRdU+VKwvujjxsj6BP0=
+	b=sraZ3C7up9fMCGmDXlVjvdsndzjNT+uyyJ75KZLQMsnih8J0xAmwgxRWvN++QuIuL
+	 +2fbBh3gAOK75/C0OPiEqOg/MMZzVSUp0L1jPX/snXjttZtcaDGKjNLUyomEe7afox
+	 p70n8G/vdG5jKTHFDG0gnoGI6xk07/JwVz3OGIcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/122] can: raw: fix lockdep issue in raw_release()
-Date: Mon, 28 Aug 2023 12:12:12 +0200
-Message-ID: <20230828101157.021413398@linuxfoundation.org>
+Subject: [PATCH 6.1 026/122] octeontx2-af: SDP: fix receive link config
+Date: Mon, 28 Aug 2023 12:12:21 +0200
+Message-ID: <20230828101157.302782251@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -43,157 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 11c9027c983e9e4b408ee5613b6504d24ebd85be ]
+[ Upstream commit 05f3d5bc23524bed6f043dfe6b44da687584f9fb ]
 
-syzbot complained about a lockdep issue [1]
+On SDP interfaces, frame oversize and undersize errors are
+observed as driver is not considering packet sizes of all
+subscribers of the link before updating the link config.
 
-Since raw_bind() and raw_setsockopt() first get RTNL
-before locking the socket, we must adopt the same order in raw_release()
+This patch fixes the same.
 
-[1]
-WARNING: possible circular locking dependency detected
-6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0 Not tainted
-------------------------------------------------------
-syz-executor.0/14110 is trying to acquire lock:
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1708 [inline]
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: raw_bind+0xb1/0xab0 net/can/raw.c:435
-
-but task is already holding lock:
-ffffffff8e3df368 (rtnl_mutex){+.+.}-{3:3}, at: raw_bind+0xa7/0xab0 net/can/raw.c:434
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (rtnl_mutex){+.+.}-{3:3}:
-__mutex_lock_common kernel/locking/mutex.c:603 [inline]
-__mutex_lock+0x181/0x1340 kernel/locking/mutex.c:747
-raw_release+0x1c6/0x9b0 net/can/raw.c:391
-__sock_release+0xcd/0x290 net/socket.c:654
-sock_close+0x1c/0x20 net/socket.c:1386
-__fput+0x3fd/0xac0 fs/file_table.c:384
-task_work_run+0x14d/0x240 kernel/task_work.c:179
-resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
-exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
-exit_to_user_mode_prepare+0x210/0x240 kernel/entry/common.c:204
-__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
-syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:297
-do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
--> #0 (sk_lock-AF_CAN){+.+.}-{0:0}:
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-other info that might help us debug this:
-
-Possible unsafe locking scenario:
-
-CPU0 CPU1
----- ----
-lock(rtnl_mutex);
-        lock(sk_lock-AF_CAN);
-        lock(rtnl_mutex);
-lock(sk_lock-AF_CAN);
-
-*** DEADLOCK ***
-
-1 lock held by syz-executor.0/14110:
-
-stack backtrace:
-CPU: 0 PID: 14110 Comm: syz-executor.0 Not tainted 6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
-check_noncircular+0x311/0x3f0 kernel/locking/lockdep.c:2195
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd89007cb29
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd890d2a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-RAX: ffffffffffffffda RBX: 00007fd89019bf80 RCX: 00007fd89007cb29
-RDX: 0000000000000010 RSI: 0000000020000040 RDI: 0000000000000003
-RBP: 00007fd8900c847a R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd89019bf80 R15: 00007ffebf8124f8
-</TASK>
-
-Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: stable@vger.kernel.org
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/all/20230720114438.172434-1-edumazet@google.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 9b7dd87ac071 ("octeontx2-af: Support to modify min/max allowed packet lengths")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230817063006.10366-1-hkelam@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/raw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index 1cd2c8748c26a..0dd3259357a35 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -386,9 +386,9 @@ static int raw_release(struct socket *sock)
- 	list_del(&ro->notifier);
- 	spin_unlock(&raw_notifier_lock);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 705325431dec3..5541e284cd3f0 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -4005,9 +4005,10 @@ int rvu_mbox_handler_nix_set_hw_frs(struct rvu *rvu, struct nix_frs_cfg *req,
+ 	if (link < 0)
+ 		return NIX_AF_ERR_RX_LINK_INVALID;
  
-+	rtnl_lock();
- 	lock_sock(sk);
+-	nix_find_link_frs(rvu, req, pcifunc);
  
--	rtnl_lock();
- 	/* remove current filters & unregister */
- 	if (ro->bound) {
- 		if (ro->dev)
-@@ -405,12 +405,13 @@ static int raw_release(struct socket *sock)
- 	ro->dev = NULL;
- 	ro->count = 0;
- 	free_percpu(ro->uniq);
--	rtnl_unlock();
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
- 
- 	release_sock(sk);
-+	rtnl_unlock();
+ linkcfg:
++	nix_find_link_frs(rvu, req, pcifunc);
 +
- 	sock_put(sk);
- 
- 	return 0;
+ 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_RX_LINKX_CFG(link));
+ 	cfg = (cfg & ~(0xFFFFULL << 16)) | ((u64)req->maxlen << 16);
+ 	if (req->update_minlen)
 -- 
 2.40.1
 
