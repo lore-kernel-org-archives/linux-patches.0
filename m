@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826E6469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0233AC433C7;
-	Mon, 28 Aug 2023 10:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBE4469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C9FC433C8;
+	Mon, 28 Aug 2023 10:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218739;
-	bh=oy+Pal+COYsu+Z9HIGn/sV7J6mCqs5BFjJxCTC7YzEQ=;
+	s=korg; t=1693218742;
+	bh=4nCGffygssluaBL8gm132E6gaRbQe3rlb4nqOD8XHh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dz7599DsKAX+jzdgXle3MAuUCYnmoiEtbWEDOhAE34tPNHWib6LBGdk3EGh2vg8Gt
-	 w01BNb/TW/oUYBJ/BUmHWc3fHTcku9Ef8F/OIs9rgAqIDWPI6yuaGXcwAn4Wp6+Mdo
-	 vqWXh4aLo3UTG/QdvLmfdFmRkpFVBtbt+wPp2bvA=
+	b=R/3tvvxeXB9w9AjTluEOv3AKF+MmnITBT3OlIxFY8VDFWYwfW1Bd1uIaqknaPt6uf
+	 ETdZjEpDrwpa6/9jyTZP0lD+l8MxoLAqYlgKqaP6VjYnCZ0JRK5wa1C4vIbfZaXe+L
+	 40KUia+NMUoaryHDMJArFtui4UFKnojeGvWEVhMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/122] net/sched: fix a qdisc modification with ambiguous command request
-Date: Mon, 28 Aug 2023 12:12:44 +0200
-Message-ID: <20230828101158.041939492@linuxfoundation.org>
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.1 067/122] clk: Fix slab-out-of-bounds error in devm_clk_release()
+Date: Mon, 28 Aug 2023 12:13:02 +0200
+Message-ID: <20230828101158.667243054@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -44,138 +39,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Andrey Skvortsov <andrej.skvortzov@gmail.com>
 
-[ Upstream commit da71714e359b64bd7aab3bd56ec53f307f058133 ]
+commit 66fbfb35da47f391bdadf9fa7ceb88af4faa9022 upstream.
 
-When replacing an existing root qdisc, with one that is of the same kind, the
-request boils down to essentially a parameterization change  i.e not one that
-requires allocation and grafting of a new qdisc. syzbot was able to create a
-scenario which resulted in a taprio qdisc replacing an existing taprio qdisc
-with a combination of NLM_F_CREATE, NLM_F_REPLACE and NLM_F_EXCL leading to
-create and graft scenario.
-The fix ensures that only when the qdisc kinds are different that we should
-allow a create and graft, otherwise it goes into the "change" codepath.
+Problem can be reproduced by unloading snd_soc_simple_card, because in
+devm_get_clk_from_child() devres data is allocated as `struct clk`, but
+devm_clk_release() expects devres data to be `struct devm_clk_state`.
 
-While at it, fix the code and comments to improve readability.
+KASAN report:
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in devm_clk_release+0x20/0x54
+ Read of size 8 at addr ffffff800ee09688 by task (udev-worker)/287
 
-While syzbot was able to create the issue, it did not zone on the root cause.
-Analysis from Vladimir Oltean <vladimir.oltean@nxp.com> helped narrow it down.
+ Call trace:
+  dump_backtrace+0xe8/0x11c
+  show_stack+0x1c/0x30
+  dump_stack_lvl+0x60/0x78
+  print_report+0x150/0x450
+  kasan_report+0xa8/0xf0
+  __asan_load8+0x78/0xa0
+  devm_clk_release+0x20/0x54
+  release_nodes+0x84/0x120
+  devres_release_all+0x144/0x210
+  device_unbind_cleanup+0x1c/0xac
+  really_probe+0x2f0/0x5b0
+  __driver_probe_device+0xc0/0x1f0
+  driver_probe_device+0x68/0x120
+  __driver_attach+0x140/0x294
+  bus_for_each_dev+0xec/0x160
+  driver_attach+0x38/0x44
+  bus_add_driver+0x24c/0x300
+  driver_register+0xf0/0x210
+  __platform_driver_register+0x48/0x54
+  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
+  do_one_initcall+0xac/0x340
+  do_init_module+0xd0/0x300
+  load_module+0x2ba4/0x3100
+  __do_sys_init_module+0x2c8/0x300
+  __arm64_sys_init_module+0x48/0x5c
+  invoke_syscall+0x64/0x190
+  el0_svc_common.constprop.0+0x124/0x154
+  do_el0_svc+0x44/0xdc
+  el0_svc+0x14/0x50
+  el0t_64_sync_handler+0xec/0x11c
+  el0t_64_sync+0x14c/0x150
 
-v1->V2 changes:
-- remove "inline" function definition (Vladmir)
-- remove extrenous braces in branches (Vladmir)
-- change inline function names (Pedro)
-- Run tdc tests (Victor)
-v2->v3 changes:
-- dont break else/if (Simon)
+ Allocated by task 287:
+  kasan_save_stack+0x38/0x60
+  kasan_set_track+0x28/0x40
+  kasan_save_alloc_info+0x20/0x30
+  __kasan_kmalloc+0xac/0xb0
+  __kmalloc_node_track_caller+0x6c/0x1c4
+  __devres_alloc_node+0x44/0xb4
+  devm_get_clk_from_child+0x44/0xa0
+  asoc_simple_parse_clk+0x1b8/0x1dc [snd_soc_simple_card_utils]
+  simple_parse_node.isra.0+0x1ec/0x230 [snd_soc_simple_card]
+  simple_dai_link_of+0x1bc/0x334 [snd_soc_simple_card]
+  __simple_for_each_link+0x2ec/0x320 [snd_soc_simple_card]
+  asoc_simple_probe+0x468/0x4dc [snd_soc_simple_card]
+  platform_probe+0x90/0xf0
+  really_probe+0x118/0x5b0
+  __driver_probe_device+0xc0/0x1f0
+  driver_probe_device+0x68/0x120
+  __driver_attach+0x140/0x294
+  bus_for_each_dev+0xec/0x160
+  driver_attach+0x38/0x44
+  bus_add_driver+0x24c/0x300
+  driver_register+0xf0/0x210
+  __platform_driver_register+0x48/0x54
+  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
+  do_one_initcall+0xac/0x340
+  do_init_module+0xd0/0x300
+  load_module+0x2ba4/0x3100
+  __do_sys_init_module+0x2c8/0x300
+  __arm64_sys_init_module+0x48/0x5c
+  invoke_syscall+0x64/0x190
+  el0_svc_common.constprop.0+0x124/0x154
+  do_el0_svc+0x44/0xdc
+  el0_svc+0x14/0x50
+  el0t_64_sync_handler+0xec/0x11c
+  el0t_64_sync+0x14c/0x150
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/20230816225759.g25x76kmgzya2gei@skbuf/T/
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ The buggy address belongs to the object at ffffff800ee09600
+  which belongs to the cache kmalloc-256 of size 256
+ The buggy address is located 136 bytes inside of
+  256-byte region [ffffff800ee09600, ffffff800ee09700)
+
+ The buggy address belongs to the physical page:
+ page:000000002d97303b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x4ee08
+ head:000000002d97303b order:1 compound_mapcount:0 compound_pincount:0
+ flags: 0x10200(slab|head|zone=0)
+ raw: 0000000000010200 0000000000000000 dead000000000122 ffffff8002c02480
+ raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ffffff800ee09580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  ffffff800ee09600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ffffff800ee09680: 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                       ^
+  ffffff800ee09700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  ffffff800ee09780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ==================================================================
+
+Fixes: abae8e57e49a ("clk: generalize devm_clk_get() a bit")
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Link: https://lore.kernel.org/r/20230805084847.3110586-1-andrej.skvortzov@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c | 53 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ drivers/clk/clk-devres.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 01d07e6a68119..e8f988e1c7e64 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1550,10 +1550,28 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 	return 0;
- }
- 
-+static bool req_create_or_replace(struct nlmsghdr *n)
-+{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_REPLACE);
-+}
-+
-+static bool req_create_exclusive(struct nlmsghdr *n)
-+{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_EXCL);
-+}
-+
-+static bool req_change(struct nlmsghdr *n)
-+{
-+	return (!(n->nlmsg_flags & NLM_F_CREATE) &&
-+		!(n->nlmsg_flags & NLM_F_REPLACE) &&
-+		!(n->nlmsg_flags & NLM_F_EXCL));
-+}
-+
- /*
-  * Create/change qdisc.
-  */
--
- static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 			   struct netlink_ext_ack *extack)
+--- a/drivers/clk/clk-devres.c
++++ b/drivers/clk/clk-devres.c
+@@ -205,18 +205,19 @@ EXPORT_SYMBOL(devm_clk_put);
+ struct clk *devm_get_clk_from_child(struct device *dev,
+ 				    struct device_node *np, const char *con_id)
  {
-@@ -1647,27 +1665,35 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				 *
- 				 *   We know, that some child q is already
- 				 *   attached to this parent and have choice:
--				 *   either to change it or to create/graft new one.
-+				 *   1) change it or 2) create/graft new one.
-+				 *   If the requested qdisc kind is different
-+				 *   than the existing one, then we choose graft.
-+				 *   If they are the same then this is "change"
-+				 *   operation - just let it fallthrough..
- 				 *
- 				 *   1. We are allowed to create/graft only
--				 *   if CREATE and REPLACE flags are set.
-+				 *   if the request is explicitly stating
-+				 *   "please create if it doesn't exist".
- 				 *
--				 *   2. If EXCL is set, requestor wanted to say,
--				 *   that qdisc tcm_handle is not expected
-+				 *   2. If the request is to exclusive create
-+				 *   then the qdisc tcm_handle is not expected
- 				 *   to exist, so that we choose create/graft too.
- 				 *
- 				 *   3. The last case is when no flags are set.
-+				 *   This will happen when for example tc
-+				 *   utility issues a "change" command.
- 				 *   Alas, it is sort of hole in API, we
- 				 *   cannot decide what to do unambiguously.
--				 *   For now we select create/graft, if
--				 *   user gave KIND, which does not match existing.
-+				 *   For now we select create/graft.
- 				 */
--				if ((n->nlmsg_flags & NLM_F_CREATE) &&
--				    (n->nlmsg_flags & NLM_F_REPLACE) &&
--				    ((n->nlmsg_flags & NLM_F_EXCL) ||
--				     (tca[TCA_KIND] &&
--				      nla_strcmp(tca[TCA_KIND], q->ops->id))))
--					goto create_n_graft;
-+				if (tca[TCA_KIND] &&
-+				    nla_strcmp(tca[TCA_KIND], q->ops->id)) {
-+					if (req_create_or_replace(n) ||
-+					    req_create_exclusive(n))
-+						goto create_n_graft;
-+					else if (req_change(n))
-+						goto create_n_graft2;
-+				}
- 			}
- 		}
+-	struct clk **ptr, *clk;
++	struct devm_clk_state *state;
++	struct clk *clk;
+ 
+-	ptr = devres_alloc(devm_clk_release, sizeof(*ptr), GFP_KERNEL);
+-	if (!ptr)
++	state = devres_alloc(devm_clk_release, sizeof(*state), GFP_KERNEL);
++	if (!state)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	clk = of_clk_get_by_name(np, con_id);
+ 	if (!IS_ERR(clk)) {
+-		*ptr = clk;
+-		devres_add(dev, ptr);
++		state->clk = clk;
++		devres_add(dev, state);
  	} else {
-@@ -1701,6 +1727,7 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 		NL_SET_ERR_MSG(extack, "Qdisc not found. To create specify NLM_F_CREATE flag");
- 		return -ENOENT;
+-		devres_free(ptr);
++		devres_free(state);
  	}
-+create_n_graft2:
- 	if (clid == TC_H_INGRESS) {
- 		if (dev_ingress_queue(dev)) {
- 			q = qdisc_create(dev, dev_ingress_queue(dev),
--- 
-2.40.1
-
+ 
+ 	return clk;
 
 
