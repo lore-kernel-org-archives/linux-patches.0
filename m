@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1618D611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFF2C433C7;
-	Mon, 28 Aug 2023 10:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7180611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5892CC433C7;
+	Mon, 28 Aug 2023 10:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219306;
-	bh=jaWM2jGrSEUaIBr6NzZxleYcvEx2Z/sw6qwGZ5ezF74=;
+	s=korg; t=1693219309;
+	bh=9ZYdu7WmT7EOq43bNgHExxTx62qDQqJIJ7V4HZikT9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pe713LkwFjUbL7LQg/I77Bn26jefeeoDASnYLNiWFlMsd5MIzqUydTlTI3tMXcrZR
-	 5flM7AQ7bn5qRC49/KebawFfsfW1q2+GMysbBYS84H2mvLjzNtathilyWhsYWzUqiT
-	 0CdU0d985jQouq/etnKp6NPyXW550asGBr8+IW2c=
+	b=qGFD/ZE4ZH/B3w712yLwAdl6bZWSBVm7OEpM4bl/miUOcKq2DT+jWRn7d+quel9LD
+	 hdpZ3thwDd/ix2WZY+m3S3wEOCbyg/riin0cnyEKjuSYM/J7ctd7dISGUz8QzV5/Gr
+	 7lqhaK5tCvq0AeU3U7At/DudpVC9NfYZ7gTCkrXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 147/158] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
-Date: Mon, 28 Aug 2023 12:14:04 +0200
-Message-ID: <20230828101202.599892982@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 148/158] ALSA: pcm: Fix build error on m68k and others
+Date: Mon, 28 Aug 2023 12:14:05 +0200
+Message-ID: <20230828101202.647786424@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -42,68 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 upstream.
+commit 467fd0e82b6265b8e6cc078a70bd7592574d5c83 upstream.
 
-Negative ifindexes are illegal, but the kernel does not validate the
-ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
-the kernel generating a warning [1] when such an ifindex is specified.
+The commit 3ad796cbc36a ("ALSA: pcm: Use SG-buffer only when direct
+DMA is available") introduced a check of the DMA type and this caused
+a build error on m68k (and possibly some others) due to the lack of
+dma_is_direct() definition.  Since the check is needed only for
+CONFIG_SND_DMA_SGBUF enablement (i.e. solely x86), use #ifdef instead
+of IS_ENABLED() for avoiding such a build error.
 
-Fix by rejecting negative ifindexes.
-
-[1]
-WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
-[...]
-Call Trace:
- <TASK>
- register_netdevice+0x69a/0x1490 net/core/dev.c:10081
- br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
- rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
- __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
- rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
- rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
- netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
- netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:728 [inline]
- sock_sendmsg+0xd9/0x180 net/socket.c:751
- ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
- ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
- __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
-Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3ad796cbc36a ("ALSA: pcm: Use SG-buffer only when direct DMA is available")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20200707111225.26826-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/core/pcm_memory.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3076,9 +3076,12 @@ replay:
- 		ifname[0] = '\0';
+--- a/sound/core/pcm_memory.c
++++ b/sound/core/pcm_memory.c
+@@ -66,8 +66,9 @@ static int do_alloc_pages(struct snd_car
+ 	__update_allocated_size(card, size);
+ 	mutex_unlock(&card->memory_mutex);
  
- 	ifm = nlmsg_data(nlh);
--	if (ifm->ifi_index > 0)
-+	if (ifm->ifi_index > 0) {
- 		dev = __dev_get_by_index(net, ifm->ifi_index);
--	else {
-+	} else if (ifm->ifi_index < 0) {
-+		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
-+		return -EINVAL;
-+	} else {
- 		if (ifname[0])
- 			dev = __dev_get_by_name(net, ifname);
+-	if (IS_ENABLED(CONFIG_SND_DMA_SGBUF) &&
+-	    (type == SNDRV_DMA_TYPE_DEV_SG || type == SNDRV_DMA_TYPE_DEV_UC_SG) &&
++
++#ifdef CONFIG_SND_DMA_SGBUF
++	if ((type == SNDRV_DMA_TYPE_DEV_SG || type == SNDRV_DMA_TYPE_DEV_UC_SG) &&
+ 	    !dma_is_direct(get_dma_ops(dev))) {
+ 		/* mutate to continuous page allocation */
+ 		dev_dbg(dev, "Use continuous page allocator\n");
+@@ -76,6 +77,7 @@ static int do_alloc_pages(struct snd_car
  		else
+ 			type = SNDRV_DMA_TYPE_DEV_UC;
+ 	}
++#endif /* CONFIG_SND_DMA_SGBUF */
+ 
+ 	err = snd_dma_alloc_pages(type, dev, size, dmab);
+ 	if (!err) {
 
 
