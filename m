@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E97469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F596C433C7;
-	Mon, 28 Aug 2023 10:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C20469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E72DC433C7;
+	Mon, 28 Aug 2023 10:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218769;
-	bh=ZE1k5kyy/7iHxMxcCJvJNiv9QrbbUlmsm7gLVQyTrlU=;
+	s=korg; t=1693218772;
+	bh=/MEV30OOwz3UNR5faw0PkjLTROE/wzzcEsXSZ/yOmR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HcFx7lU7371OU7t7AxIfUAS/z3PdF2oGQCSVuKabFshgjCpLJQY1Ey69t080Qsl9i
-	 1bbqjZmdu4Q28z2eXqGVjKFTVi4cXp0ykXjc6xPF4neIuBCzSazrNAQ2gi8xtp+BNs
-	 /0/2ntU0/bdY1PHR3WxAdmvqV9CAEjyHRWpRJty4=
+	b=VjXTNVUAaqPbyENUwl4/iVGBOzYLNQ+jva8KB3WzY7Ls2stksP9mU1e0oWVvgNXX8
+	 ZlDFSrWK9+kf1vFoqY+Y86HO23xWg8Gaxm7wi8PJj9qW4L/rJ9MtDQ+egZ0iOH/DP1
+	 pO+iICOj+pRjU4TdtzNoDSBnkvS7NCxuUyA/WuEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/122] i40e: fix potential NULL pointer dereferencing of pf->vf i40e_sync_vsi_filters()
-Date: Mon, 28 Aug 2023 12:12:45 +0200
-Message-ID: <20230828101158.079985006@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.1 077/122] batman-adv: Trigger events for auto adjusted MTU
+Date: Mon, 28 Aug 2023 12:13:12 +0200
+Message-ID: <20230828101158.979412393@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -43,51 +39,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 9525a3c38accd2e186f52443e35e633e296cc7f5 ]
+commit c6a953cce8d0438391e6da48c8d0793d3fbfcfa6 upstream.
 
-Add check for pf->vf not being NULL before dereferencing
-pf->vf[vsi->vf_id] in updating VSI filter sync.
-Add a similar check before dereferencing !pf->vf[vsi->vf_id].trusted
-in the condition for clearing promisc mode bit.
+If an interface changes the MTU, it is expected that an NETDEV_PRECHANGEMTU
+and NETDEV_CHANGEMTU notification events is triggered. This worked fine for
+.ndo_change_mtu based changes because core networking code took care of it.
+But for auto-adjustments after hard-interfaces changes, these events were
+simply missing.
 
-Fixes: c87c938f62d8 ("i40e: Add VF VLAN pruning")
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Due to this problem, non-batman-adv components weren't aware of MTU changes
+and thus couldn't perform their own tasks correctly.
+
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/batman-adv/hard-interface.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 0e01b1927c1c6..08ccf0024ce1a 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -2615,7 +2615,7 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
- 			retval = i40e_correct_mac_vlan_filters
- 				(vsi, &tmp_add_list, &tmp_del_list,
- 				 vlan_filters);
--		else
-+		else if (pf->vf)
- 			retval = i40e_correct_vf_mac_vlan_filters
- 				(vsi, &tmp_add_list, &tmp_del_list,
- 				 vlan_filters, pf->vf[vsi->vf_id].trusted);
-@@ -2788,7 +2788,8 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
- 	}
+--- a/net/batman-adv/hard-interface.c
++++ b/net/batman-adv/hard-interface.c
+@@ -630,7 +630,7 @@ out:
+  */
+ void batadv_update_min_mtu(struct net_device *soft_iface)
+ {
+-	soft_iface->mtu = batadv_hardif_min_mtu(soft_iface);
++	dev_set_mtu(soft_iface, batadv_hardif_min_mtu(soft_iface));
  
- 	/* if the VF is not trusted do not do promisc */
--	if ((vsi->type == I40E_VSI_SRIOV) && !pf->vf[vsi->vf_id].trusted) {
-+	if (vsi->type == I40E_VSI_SRIOV && pf->vf &&
-+	    !pf->vf[vsi->vf_id].trusted) {
- 		clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
- 		goto out;
- 	}
--- 
-2.40.1
-
+ 	/* Check if the local translate table should be cleaned up to match a
+ 	 * new (and smaller) MTU.
 
 
