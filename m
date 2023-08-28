@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6FE11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E00C433C7;
-	Mon, 28 Aug 2023 10:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772D711C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0A9C433C8;
+	Mon, 28 Aug 2023 10:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218432;
-	bh=3Qsf900KtZq0UAj1lQKcM2r1S3go7O8JQnQbzrWSmfs=;
+	s=korg; t=1693218435;
+	bh=esHf/9YF+LKkgXXJny6twYX6Dg3P59JDD1NRjHV5B98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xj6RLkJ1EFQCTL7deBF16IVxe0LnvSExsg39kXoMaDJVG/M6BMI8vixRitVmW4YSM
-	 ZZLDtmwlaKWZiMFQZBZ5T1C7rrVCOKMZ117UJCWfSjRK7XPwoVPFX9bizZRWNWkBqy
-	 5SLjFwwP/GSJ+1+y3il8R49UUgEymc406QyApraU=
+	b=Fq2CHK+PvwF8jS3FukPdBFbeaP8zX3lkzLPhQveqyoN0TYmw/I7xYGpiB21AhjrWz
+	 +VjUhY3rJNnS4JIpxTfOIpGc3kUQJkpqWlye4S6R9ZpBp5YUSeH9UWlQdNjWB2pLJj
+	 bQw8zSpFJr8OR/flPjyQ6+4jJtMXpCYVcQSJNEIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 084/129] fs: dlm: use dlm_plock_info for do_unlock_close
-Date: Mon, 28 Aug 2023 12:12:58 +0200
-Message-ID: <20230828101156.434962734@linuxfoundation.org>
+Subject: [PATCH 4.19 057/129] ip_vti: fix potential slab-use-after-free in decode_session6
+Date: Mon, 28 Aug 2023 12:12:31 +0200
+Message-ID: <20230828101155.383138820@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,64 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 4d413ae9ced4180c0e2114553c3a7560b509b0f8 ]
+[ Upstream commit 6018a266279b1a75143c7c0804dd08a5fc4c3e0b ]
 
-This patch refactors do_unlock_close() by using only struct dlm_plock_info
-as a parameter.
+When ip_vti device is set to the qdisc of the sfb type, the cb field
+of the sent skb may be modified during enqueuing. Then,
+slab-use-after-free may occur when ip_vti device sends IPv6 packets.
+As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
+_decode_session6.") showed, xfrm_decode_session was originally intended
+only for the receive path. IP6CB(skb)->nhoff is not set during
+transmission. Therefore, set the cb field in the skb to 0 before
+sending packets.
 
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
+Fixes: f855691975bb ("xfrm6: Fix the nexthdr offset in _decode_session6.")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/plock.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ net/ipv4/ip_vti.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
-index 7c9e873a01b78..4a5452fd87cb0 100644
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -83,8 +83,7 @@ static void send_op(struct plock_op *op)
-    abandoned waiter.  So, we have to insert the unlock-close when the
-    lock call is interrupted. */
+diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
+index 15c71b08c2df4..a3536dfe9b16b 100644
+--- a/net/ipv4/ip_vti.c
++++ b/net/ipv4/ip_vti.c
+@@ -319,12 +319,12 @@ static netdev_tx_t vti_tunnel_xmit(struct sk_buff *skb, struct net_device *dev)
  
--static void do_unlock_close(struct dlm_ls *ls, u64 number,
--			    struct file *file, struct file_lock *fl)
-+static void do_unlock_close(const struct dlm_plock_info *info)
- {
- 	struct plock_op *op;
- 
-@@ -93,15 +92,12 @@ static void do_unlock_close(struct dlm_ls *ls, u64 number,
- 		return;
- 
- 	op->info.optype		= DLM_PLOCK_OP_UNLOCK;
--	op->info.pid		= fl->fl_pid;
--	op->info.fsid		= ls->ls_global_id;
--	op->info.number		= number;
-+	op->info.pid		= info->pid;
-+	op->info.fsid		= info->fsid;
-+	op->info.number		= info->number;
- 	op->info.start		= 0;
- 	op->info.end		= OFFSET_MAX;
--	if (fl->fl_lmops && fl->fl_lmops->lm_grant)
--		op->info.owner	= (__u64) fl->fl_pid;
--	else
--		op->info.owner	= (__u64)(long) fl->fl_owner;
-+	op->info.owner		= info->owner;
- 
- 	op->info.flags |= DLM_PLOCK_FL_CLOSE;
- 	send_op(op);
-@@ -171,7 +167,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
- 			  __func__, ls->ls_global_id,
- 			  (unsigned long long)number, op->info.pid);
- 		dlm_release_plock_op(op);
--		do_unlock_close(ls, number, file, fl);
-+		do_unlock_close(&op->info);
- 		goto out;
- 	}
- 
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+-		xfrm_decode_session(skb, &fl, AF_INET);
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET);
+ 		break;
+ 	case htons(ETH_P_IPV6):
+-		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		break;
+ 	default:
+ 		goto tx_err;
 -- 
 2.40.1
 
