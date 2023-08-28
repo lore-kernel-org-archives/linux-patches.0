@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6067A469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D468DC433C7;
-	Mon, 28 Aug 2023 10:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11629469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87570C433C8;
+	Mon, 28 Aug 2023 10:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218906;
-	bh=CVG/sUN9nSJrYcnvMNPkXmWNPeczgFNgd5LbLZHwgLI=;
+	s=korg; t=1693218908;
+	bh=ki5xnY9fCWPhU2B5LWi3NM7BEOI3j4CSWvpRN5PqFGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TN6rWoMPogTGB8P89+bvVlQHsgh1dbt+81Hd9i3yKqeaqSuOloJwMMfrZHeCwVjGW
-	 qVjUSz63DyfZZP/R/1KkA4wg39otrCjHogr+U9tHLZZSbjPhTJZfPwgZpWLvVPuroQ
-	 2dP8UG8PZlRLF163wQYzJI9ssI9ul2z8gU+gXtKM=
+	b=Ws6wH3I9TcPiFnKMql1OhckCD7WGx8wpHhx6f6mHtq99SrNQyMvXJTg64wcObpim1
+	 vZG5OC6m/jIp2fS/S+SNvuKmDDEhydzgXo6vzUa9DeS/3V6SDa/fyD8Qv1wLBciLnT
+	 ACMOd0vkU1PeV3u6a+4BcDMD6KMNkAsh2EQTEzTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+	Rob Clark <robdclark@chromium.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/122] pinctrl: renesas: rza2: Add lock around pinctrl_generic{{add,remove}_group,{add,remove}_function}
-Date: Mon, 28 Aug 2023 12:13:51 +0200
-Message-ID: <20230828101200.277285413@linuxfoundation.org>
+Subject: [PATCH 6.1 117/122] dma-buf/sw_sync: Avoid recursive lock during fence signal
+Date: Mon, 28 Aug 2023 12:13:52 +0200
+Message-ID: <20230828101200.311507972@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -34,94 +35,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 8fcc1c40b747069644db6102c1d84c942c9d4d86 ]
+[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
 
-The pinctrl group and function creation/remove calls expect
-caller to take care of locking. Add lock around these functions.
+If a signal callback releases the sw_sync fence, that will trigger a
+deadlock as the timeline_fence_release recurses onto the fence->lock
+(used both for signaling and the the timeline tree).
 
-Fixes: b59d0e782706 ("pinctrl: Add RZ/A2 pin and gpio controller")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230815131558.33787-4-biju.das.jz@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+To avoid that, temporarily hold an extra reference to the signalled
+fences until after we drop the lock.
+
+(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
+which avoids some potential UAF issues with the original patch.)
+
+v2: Remove now obsolete comment, use list_move_tail() and
+    list_del_init()
+
+Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rza2.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/dma-buf/sw_sync.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rza2.c b/drivers/pinctrl/renesas/pinctrl-rza2.c
-index c0a04f1ee994e..12126e30dc20f 100644
---- a/drivers/pinctrl/renesas/pinctrl-rza2.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rza2.c
-@@ -14,6 +14,7 @@
- #include <linux/gpio/driver.h>
- #include <linux/io.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of_device.h>
- #include <linux/pinctrl/pinmux.h>
+diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
+index 348b3a9170fa4..7f5ed1aa7a9f8 100644
+--- a/drivers/dma-buf/sw_sync.c
++++ b/drivers/dma-buf/sw_sync.c
+@@ -191,6 +191,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
+  */
+ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+ {
++	LIST_HEAD(signalled);
+ 	struct sync_pt *pt, *next;
  
-@@ -46,6 +47,7 @@ struct rza2_pinctrl_priv {
- 	struct pinctrl_dev *pctl;
- 	struct pinctrl_gpio_range gpio_range;
- 	int npins;
-+	struct mutex mutex; /* serialize adding groups and functions */
- };
+ 	trace_sync_timeline(obj);
+@@ -203,21 +204,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
+ 		if (!timeline_fence_signaled(&pt->base))
+ 			break;
  
- #define RZA2_PDR(port)		(0x0000 + (port) * 2)	/* Direction 16-bit */
-@@ -358,10 +360,14 @@ static int rza2_dt_node_to_map(struct pinctrl_dev *pctldev,
- 		psel_val[i] = MUX_FUNC(value);
+-		list_del_init(&pt->link);
++		dma_fence_get(&pt->base);
++
++		list_move_tail(&pt->link, &signalled);
+ 		rb_erase(&pt->node, &obj->pt_tree);
+ 
+-		/*
+-		 * A signal callback may release the last reference to this
+-		 * fence, causing it to be freed. That operation has to be
+-		 * last to avoid a use after free inside this loop, and must
+-		 * be after we remove the fence from the timeline in order to
+-		 * prevent deadlocking on timeline->lock inside
+-		 * timeline_fence_release().
+-		 */
+ 		dma_fence_signal_locked(&pt->base);
  	}
  
-+	mutex_lock(&priv->mutex);
+ 	spin_unlock_irq(&obj->lock);
 +
- 	/* Register a single pin group listing all the pins we read from DT */
- 	gsel = pinctrl_generic_add_group(pctldev, np->name, pins, npins, NULL);
--	if (gsel < 0)
--		return gsel;
-+	if (gsel < 0) {
-+		ret = gsel;
-+		goto unlock;
++	list_for_each_entry_safe(pt, next, &signalled, link) {
++		list_del_init(&pt->link);
++		dma_fence_put(&pt->base);
 +	}
+ }
  
- 	/*
- 	 * Register a single group function where the 'data' is an array PSEL
-@@ -390,6 +396,8 @@ static int rza2_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	(*map)->data.mux.function = np->name;
- 	*num_maps = 1;
- 
-+	mutex_unlock(&priv->mutex);
-+
- 	return 0;
- 
- remove_function:
-@@ -398,6 +406,9 @@ static int rza2_dt_node_to_map(struct pinctrl_dev *pctldev,
- remove_group:
- 	pinctrl_generic_remove_group(pctldev, gsel);
- 
-+unlock:
-+	mutex_unlock(&priv->mutex);
-+
- 	dev_err(priv->dev, "Unable to parse DT node %s\n", np->name);
- 
- 	return ret;
-@@ -473,6 +484,8 @@ static int rza2_pinctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->base))
- 		return PTR_ERR(priv->base);
- 
-+	mutex_init(&priv->mutex);
-+
- 	platform_set_drvdata(pdev, priv);
- 
- 	priv->npins = (int)(uintptr_t)of_device_get_match_data(&pdev->dev) *
+ /**
 -- 
 2.40.1
 
