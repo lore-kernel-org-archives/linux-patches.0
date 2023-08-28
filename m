@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCB511C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58E4C433C7;
-	Mon, 28 Aug 2023 10:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7587D11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DAFC433C8;
+	Mon, 28 Aug 2023 10:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218984;
-	bh=RHP+BzWfp2Zmsii+WvabpKmNLcY7dxcyMS/8gacqFoU=;
+	s=korg; t=1693218987;
+	bh=p6m0ecwV0lDfVoFRe8+qxqIUYxrOsks0YMmOEsycRk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTN4kwU/83vTfba8YJC+46b8t2EcnkAuleshXXDV/9pa/s7DH9vPo6FuC7RbzmDk0
-	 nIP/P6jeDsxn4N2EBdgz++3HkmQ3velQVK9txgGkAh995JZRSmNqPRSs+fhTPQ9KtW
-	 +phmRsVorxVjoyJ+chSXirCE99jt9LI9scqOA9kM=
+	b=UD55Ik2RvI56LYdumEdBG7PP15IwIJcWS9UG6DbKSJxffLv5Ud6jeZMtEmvb6OGWK
+	 53WCZQeKlwb6JBu4Ps4LTUW2JP0BXrZ2yVlCi57U6N8p5uJccmSVYC7xkG5HV2XksZ
+	 +ctYyUllti5jjF7AgMSrr9OSE7v2puS8JZ9OJnVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clayton Yager <Clayton_Yager@selinc.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	William Breathitt Gray <william.gray@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 004/158] macsec: Fix traffic counters/statistics
-Date: Mon, 28 Aug 2023 12:11:41 +0200
-Message-ID: <20230828101157.463748457@linuxfoundation.org>
+Subject: [PATCH 5.4 031/158] iio: stx104: Move to addac subdirectory
+Date: Mon, 28 Aug 2023 12:12:08 +0200
+Message-ID: <20230828101158.393396227@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,248 +40,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clayton Yager <Clayton_Yager@selinc.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-[ Upstream commit 91ec9bd57f3524ff3d86bfb7c9ee5a315019733c ]
+[ Upstream commit 955c2aa9cff2dd07ff798ca8c883398731687972 ]
 
-OutOctetsProtected, OutOctetsEncrypted, InOctetsValidated, and
-InOctetsDecrypted were incrementing by the total number of octets in frames
-instead of by the number of octets of User Data in frames.
+The stx104 driver supports both ADC and DAC functionality.
 
-The Controlled Port statistics ifOutOctets and ifInOctets were incrementing
-by the total number of octets instead of the number of octets of the MSDUs
-plus octets of the destination and source MAC addresses.
-
-The Controlled Port statistics ifInDiscards and ifInErrors were not
-incrementing each time the counters they aggregate were.
-
-The Controlled Port statistic ifInErrors was not included in the output of
-macsec_get_stats64 so the value was not present in ip commands output.
-
-The ReceiveSA counters InPktsNotValid, InPktsNotUsingSA, and InPktsUnusedSA
-were not incrementing.
-
-Signed-off-by: Clayton Yager <Clayton_Yager@selinc.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 32d0a49d36a2 ("macsec: use DEV_STATS_INC()")
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Link: https://lore.kernel.org/r/20220815222921.138945-1-william.gray@linaro.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 58 +++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 49 insertions(+), 9 deletions(-)
+ MAINTAINERS                         |  2 +-
+ drivers/iio/adc/Kconfig             | 16 ----------------
+ drivers/iio/adc/Makefile            |  1 -
+ drivers/iio/addac/Kconfig           | 16 ++++++++++++++++
+ drivers/iio/addac/Makefile          |  1 +
+ drivers/iio/{adc => addac}/stx104.c |  0
+ 6 files changed, 18 insertions(+), 18 deletions(-)
+ rename drivers/iio/{adc => addac}/stx104.c (100%)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index f729f55f6a174..dcabff57efa73 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -317,6 +317,19 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
- 	return sa;
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 34d3497f11772..2040c2f76dcf7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1101,7 +1101,7 @@ APEX EMBEDDED SYSTEMS STX104 IIO DRIVER
+ M:	William Breathitt Gray <vilhelm.gray@gmail.com>
+ L:	linux-iio@vger.kernel.org
+ S:	Maintained
+-F:	drivers/iio/adc/stx104.c
++F:	drivers/iio/addac/stx104.c
  
-+static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
-+{
-+	struct macsec_rx_sa *sa = NULL;
-+	int an;
+ APM DRIVER
+ M:	Jiri Kosina <jikos@kernel.org>
+diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
+index cb57880842991..b39d5ad157449 100644
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -840,22 +840,6 @@ config STMPE_ADC
+ 	  Say yes here to build support for ST Microelectronics STMPE
+ 	  built-in ADC block (stmpe811).
+ 
+-config STX104
+-	tristate "Apex Embedded Systems STX104 driver"
+-	depends on PC104 && X86
+-	select ISA_BUS_API
+-	select GPIOLIB
+-	help
+-	  Say yes here to build support for the Apex Embedded Systems STX104
+-	  integrated analog PC/104 card.
+-
+-	  This driver supports the 16 channels of single-ended (8 channels of
+-	  differential) analog inputs, 2 channels of analog output, 4 digital
+-	  inputs, and 4 digital outputs provided by the STX104.
+-
+-	  The base port addresses for the devices may be configured via the base
+-	  array module parameter.
+-
+ config SUN4I_GPADC
+ 	tristate "Support for the Allwinner SoCs GPADC"
+ 	depends on IIO
+diff --git a/drivers/iio/adc/Makefile b/drivers/iio/adc/Makefile
+index ef9cc485fb674..d0b11502102ed 100644
+--- a/drivers/iio/adc/Makefile
++++ b/drivers/iio/adc/Makefile
+@@ -72,7 +72,6 @@ obj-$(CONFIG_RCAR_GYRO_ADC) += rcar-gyroadc.o
+ obj-$(CONFIG_ROCKCHIP_SARADC) += rockchip_saradc.o
+ obj-$(CONFIG_SC27XX_ADC) += sc27xx_adc.o
+ obj-$(CONFIG_SPEAR_ADC) += spear_adc.o
+-obj-$(CONFIG_STX104) += stx104.o
+ obj-$(CONFIG_SUN4I_GPADC) += sun4i-gpadc-iio.o
+ obj-$(CONFIG_STM32_ADC_CORE) += stm32-adc-core.o
+ obj-$(CONFIG_STM32_ADC) += stm32-adc.o
+diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
+index 2e64d7755d5ea..1f598670e84fb 100644
+--- a/drivers/iio/addac/Kconfig
++++ b/drivers/iio/addac/Kconfig
+@@ -5,4 +5,20 @@
+ 
+ menu "Analog to digital and digital to analog converters"
+ 
++config STX104
++	tristate "Apex Embedded Systems STX104 driver"
++	depends on PC104 && X86
++	select ISA_BUS_API
++	select GPIOLIB
++	help
++	  Say yes here to build support for the Apex Embedded Systems STX104
++	  integrated analog PC/104 card.
 +
-+	for (an = 0; an < MACSEC_NUM_AN; an++)	{
-+		sa = macsec_rxsa_get(rx_sc->sa[an]);
-+		if (sa)
-+			break;
-+	}
-+	return sa;
-+}
++	  This driver supports the 16 channels of single-ended (8 channels of
++	  differential) analog inputs, 2 channels of analog output, 4 digital
++	  inputs, and 4 digital outputs provided by the STX104.
 +
- static void free_rx_sc_rcu(struct rcu_head *head)
- {
- 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
-@@ -561,18 +574,28 @@ static void macsec_encrypt_finish(struct sk_buff *skb, struct net_device *dev)
- 	skb->protocol = eth_hdr(skb)->h_proto;
- }
- 
-+static unsigned int macsec_msdu_len(struct sk_buff *skb)
-+{
-+	struct macsec_dev *macsec = macsec_priv(skb->dev);
-+	struct macsec_secy *secy = &macsec->secy;
-+	bool sci_present = macsec_skb_cb(skb)->has_sci;
++	  The base port addresses for the devices may be configured via the base
++	  array module parameter.
 +
-+	return skb->len - macsec_hdr_len(sci_present) - secy->icv_len;
-+}
-+
- static void macsec_count_tx(struct sk_buff *skb, struct macsec_tx_sc *tx_sc,
- 			    struct macsec_tx_sa *tx_sa)
- {
-+	unsigned int msdu_len = macsec_msdu_len(skb);
- 	struct pcpu_tx_sc_stats *txsc_stats = this_cpu_ptr(tx_sc->stats);
+ endmenu
+diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
+index b888b9ee12da0..8629145233544 100644
+--- a/drivers/iio/addac/Makefile
++++ b/drivers/iio/addac/Makefile
+@@ -4,3 +4,4 @@
+ #
  
- 	u64_stats_update_begin(&txsc_stats->syncp);
- 	if (tx_sc->encrypt) {
--		txsc_stats->stats.OutOctetsEncrypted += skb->len;
-+		txsc_stats->stats.OutOctetsEncrypted += msdu_len;
- 		txsc_stats->stats.OutPktsEncrypted++;
- 		this_cpu_inc(tx_sa->stats->OutPktsEncrypted);
- 	} else {
--		txsc_stats->stats.OutOctetsProtected += skb->len;
-+		txsc_stats->stats.OutOctetsProtected += msdu_len;
- 		txsc_stats->stats.OutPktsProtected++;
- 		this_cpu_inc(tx_sa->stats->OutPktsProtected);
- 	}
-@@ -602,9 +625,10 @@ static void macsec_encrypt_done(struct crypto_async_request *base, int err)
- 	aead_request_free(macsec_skb_cb(skb)->req);
- 
- 	rcu_read_lock_bh();
--	macsec_encrypt_finish(skb, dev);
- 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
--	len = skb->len;
-+	/* packet is encrypted/protected so tx_bytes must be calculated */
-+	len = macsec_msdu_len(skb) + 2 * ETH_ALEN;
-+	macsec_encrypt_finish(skb, dev);
- 	ret = dev_queue_xmit(skb);
- 	count_tx(dev, ret, len);
- 	rcu_read_unlock_bh();
-@@ -760,6 +784,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
- 
- 	macsec_skb_cb(skb)->req = req;
- 	macsec_skb_cb(skb)->tx_sa = tx_sa;
-+	macsec_skb_cb(skb)->has_sci = sci_present;
- 	aead_request_set_callback(req, 0, macsec_encrypt_done, skb);
- 
- 	dev_hold(skb->dev);
-@@ -800,15 +825,17 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		rxsc_stats->stats.InPktsLate++;
- 		u64_stats_update_end(&rxsc_stats->syncp);
-+		secy->netdev->stats.rx_dropped++;
- 		return false;
- 	}
- 
- 	if (secy->validate_frames != MACSEC_VALIDATE_DISABLED) {
-+		unsigned int msdu_len = macsec_msdu_len(skb);
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		if (hdr->tci_an & MACSEC_TCI_E)
--			rxsc_stats->stats.InOctetsDecrypted += skb->len;
-+			rxsc_stats->stats.InOctetsDecrypted += msdu_len;
- 		else
--			rxsc_stats->stats.InOctetsValidated += skb->len;
-+			rxsc_stats->stats.InOctetsValidated += msdu_len;
- 		u64_stats_update_end(&rxsc_stats->syncp);
- 	}
- 
-@@ -821,6 +848,8 @@ static bool macsec_post_decrypt(struct sk_buff *skb, struct macsec_secy *secy, u
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsNotValid++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
-+			this_cpu_inc(rx_sa->stats->InPktsNotValid);
-+			secy->netdev->stats.rx_errors++;
- 			return false;
- 		}
- 
-@@ -906,9 +935,9 @@ static void macsec_decrypt_done(struct crypto_async_request *base, int err)
- 
- 	macsec_finalize_skb(skb, macsec->secy.icv_len,
- 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
-+	len = skb->len;
- 	macsec_reset_skb(skb, macsec->secy.netdev);
- 
--	len = skb->len;
- 	if (gro_cells_receive(&macsec->gro_cells, skb) == NET_RX_SUCCESS)
- 		count_rx(dev, len);
- 
-@@ -1050,6 +1079,7 @@ static void handle_not_macsec(struct sk_buff *skb)
- 			u64_stats_update_begin(&secy_stats->syncp);
- 			secy_stats->stats.InPktsNoTag++;
- 			u64_stats_update_end(&secy_stats->syncp);
-+			macsec->secy.netdev->stats.rx_dropped++;
- 			continue;
- 		}
- 
-@@ -1161,6 +1191,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		u64_stats_update_begin(&secy_stats->syncp);
- 		secy_stats->stats.InPktsBadTag++;
- 		u64_stats_update_end(&secy_stats->syncp);
-+		secy->netdev->stats.rx_errors++;
- 		goto drop_nosa;
- 	}
- 
-@@ -1171,11 +1202,15 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		/* If validateFrames is Strict or the C bit in the
- 		 * SecTAG is set, discard
- 		 */
-+		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
- 		if (hdr->tci_an & MACSEC_TCI_C ||
- 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsNotUsingSA++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
-+			secy->netdev->stats.rx_errors++;
-+			if (active_rx_sa)
-+				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
- 			goto drop_nosa;
- 		}
- 
-@@ -1185,6 +1220,8 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		rxsc_stats->stats.InPktsUnusedSA++;
- 		u64_stats_update_end(&rxsc_stats->syncp);
-+		if (active_rx_sa)
-+			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
- 		goto deliver;
- 	}
- 
-@@ -1202,6 +1239,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsLate++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
-+			macsec->secy.netdev->stats.rx_dropped++;
- 			goto drop;
- 		}
- 	}
-@@ -1230,6 +1268,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- deliver:
- 	macsec_finalize_skb(skb, secy->icv_len,
- 			    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
-+	len = skb->len;
- 	macsec_reset_skb(skb, secy->netdev);
- 
- 	if (rx_sa)
-@@ -1237,7 +1276,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	macsec_rxsc_put(rx_sc);
- 
- 	skb_orphan(skb);
--	len = skb->len;
- 	ret = gro_cells_receive(&macsec->gro_cells, skb);
- 	if (ret == NET_RX_SUCCESS)
- 		count_rx(dev, len);
-@@ -1279,6 +1317,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 			u64_stats_update_begin(&secy_stats->syncp);
- 			secy_stats->stats.InPktsNoSCI++;
- 			u64_stats_update_end(&secy_stats->syncp);
-+			macsec->secy.netdev->stats.rx_errors++;
- 			continue;
- 		}
- 
-@@ -2735,6 +2774,7 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
-+	len = skb->len;
- 	skb = macsec_encrypt(skb, dev);
- 	if (IS_ERR(skb)) {
- 		if (PTR_ERR(skb) != -EINPROGRESS)
-@@ -2745,7 +2785,6 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- 	macsec_count_tx(skb, &macsec->secy.tx_sc, macsec_skb_cb(skb)->tx_sa);
- 
- 	macsec_encrypt_finish(skb, dev);
--	len = skb->len;
- 	ret = dev_queue_xmit(skb);
- 	count_tx(dev, ret, len);
- 	return ret;
-@@ -2959,6 +2998,7 @@ static void macsec_get_stats64(struct net_device *dev,
- 
- 	s->rx_dropped = dev->stats.rx_dropped;
- 	s->tx_dropped = dev->stats.tx_dropped;
-+	s->rx_errors = dev->stats.rx_errors;
- }
- 
- static int macsec_get_iflink(const struct net_device *dev)
+ # When adding new entries keep the list in alphabetical order
++obj-$(CONFIG_STX104) += stx104.o
+diff --git a/drivers/iio/adc/stx104.c b/drivers/iio/addac/stx104.c
+similarity index 100%
+rename from drivers/iio/adc/stx104.c
+rename to drivers/iio/addac/stx104.c
 -- 
 2.40.1
 
