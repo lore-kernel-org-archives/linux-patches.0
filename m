@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C8C63A2
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5C7C433C8;
-	Mon, 28 Aug 2023 10:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008B66FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79939C433C9;
+	Mon, 28 Aug 2023 10:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219816;
-	bh=IfHsrz1KpTyF1ixXdkG/eObr7j7f9YHHkZ7R2CIK/gY=;
+	s=korg; t=1693219818;
+	bh=3teD5aaKIaPv6T0CA0EdUcyIvpqsJdAzjQky7woqXw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liQ9sX2q261hBvtnBgPadAPGcdAQedar70Hmmkzi9ZM5kzKXFuNDC08b4qWgRW7zj
-	 jsXqdsr7OSyC0rIJWie0jR68uteNKBcS0vrM/EJe3CL4XssNmCkWvRvJX/LGKOuJtp
-	 DhOMmjCBl4zq4GI2UXuhXaflJ32xkQaqFHFijXoA=
+	b=VrDLoE/KC9hnPVYylecazHaq0hgmMAn/adS9KgmJwCmndtr/ifRHJC0nYiDYV0rbs
+	 Wv9A5QIQ4uDDhMcvXjMbI5VvmzI2Lom5bLok0ofzbs4RPR8y2qsFsEGIdqjdjdqiK1
+	 WMWzpdbAEKSFRuAKk388ro2+zxwT5Yp0Mkm4nEvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 82/84] mm: memory-failure: fix unexpected return value in soft_offline_page()
-Date: Mon, 28 Aug 2023 12:14:39 +0200
-Message-ID: <20230828101152.057636437@linuxfoundation.org>
+	Rander Wang <rander.wang@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Philip=20M=C3=BCller?= <philm@manjaro.org>
+Subject: [PATCH 5.10 83/84] ASoC: Intel: sof_sdw: include rt711.h for RT711 JD mode
+Date: Mon, 28 Aug 2023 12:14:40 +0200
+Message-ID: <20230828101152.088045445@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -35,58 +36,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit e2c1ab070fdc81010ec44634838d24fce9ff9e53 ]
+commit 8e6c00f1fdea9fdf727969d7485d417240d2a1f9 upstream.
 
-When page_handle_poison() fails to handle the hugepage or free page in
-retry path, soft_offline_page() will return 0 while -EBUSY is expected in
-this case.
+We don't need to redefine enum rt711_jd_src.
 
-Consequently the user will think soft_offline_page succeeds while it in
-fact failed.  So the user will not try again later in this case.
-
-Link: https://lkml.kernel.org/r/20230627112808.1275241-1-linmiaohe@huawei.com
-Fixes: b94e02822deb ("mm,hwpoison: try to narrow window race for free pages")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20210712203240.46960-7-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Philip Müller <philm@manjaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c        |   23 ++++++++++++-----------
+ sound/soc/intel/boards/sof_sdw_common.h |    5 -----
+ 2 files changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index 6375fe9be87b6..0c08e803ed42d 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1919,10 +1919,13 @@ int soft_offline_page(unsigned long pfn, int flags)
- 	if (ret > 0) {
- 		ret = soft_offline_in_use_page(page);
- 	} else if (ret == 0) {
--		if (!page_handle_poison(page, true, false) && try_again) {
--			try_again = false;
--			flags &= ~MF_COUNT_INCREASED;
--			goto retry;
-+		if (!page_handle_poison(page, true, false)) {
-+			if (try_again) {
-+				try_again = false;
-+				flags &= ~MF_COUNT_INCREASED;
-+				goto retry;
-+			}
-+			ret = -EBUSY;
- 		}
- 	} else if (ret == -EIO) {
- 		pr_info("%s: %#lx: unknown page type: %lx (%pGP)\n",
--- 
-2.40.1
-
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -13,8 +13,9 @@
+ #include <sound/soc.h>
+ #include <sound/soc-acpi.h>
+ #include "sof_sdw_common.h"
++#include "../../codecs/rt711.h"
+ 
+-unsigned long sof_sdw_quirk = SOF_RT711_JD_SRC_JD1;
++unsigned long sof_sdw_quirk = RT711_JD1;
+ static int quirk_override = -1;
+ module_param_named(quirk, quirk_override, int, 0444);
+ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
+@@ -63,7 +64,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "09C6")
+ 		},
+-		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
++		.driver_data = (void *)(RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX),
+ 	},
+ 	{
+@@ -73,7 +74,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0983")
+ 		},
+-		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
++		.driver_data = (void *)(RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX),
+ 	},
+ 	{
+@@ -82,7 +83,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "098F"),
+ 		},
+-		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
++		.driver_data = (void *)(RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX |
+ 					SOF_SDW_FOUR_SPK),
+ 	},
+@@ -92,7 +93,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0990"),
+ 		},
+-		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
++		.driver_data = (void *)(RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX |
+ 					SOF_SDW_FOUR_SPK),
+ 	},
+@@ -114,7 +115,7 @@ static const struct dmi_system_id sof_sd
+ 				  "Tiger Lake Client Platform"),
+ 		},
+ 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+-					SOF_RT711_JD_SRC_JD1 |
++					RT711_JD1 |
+ 					SOF_SDW_PCH_DMIC |
+ 					SOF_SSP_PORT(SOF_I2S_SSP2)),
+ 	},
+@@ -125,7 +126,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A3E")
+ 		},
+ 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+-					SOF_RT711_JD_SRC_JD2 |
++					RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX),
+ 	},
+ 	{
+@@ -135,7 +136,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A5E")
+ 		},
+ 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+-					SOF_RT711_JD_SRC_JD2 |
++					RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX |
+ 					SOF_SDW_FOUR_SPK),
+ 	},
+@@ -173,7 +174,7 @@ static const struct dmi_system_id sof_sd
+ 		},
+ 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+ 					SOF_SDW_PCH_DMIC |
+-					SOF_RT711_JD_SRC_JD2),
++					RT711_JD2),
+ 	},
+ 	/* TigerLake-SDCA devices */
+ 	{
+@@ -183,7 +184,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A32")
+ 		},
+ 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+-					SOF_RT711_JD_SRC_JD2 |
++					RT711_JD2 |
+ 					SOF_RT715_DAI_ID_FIX |
+ 					SOF_SDW_FOUR_SPK),
+ 	},
+@@ -194,7 +195,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Alder Lake Client Platform"),
+ 		},
+-		.driver_data = (void *)(SOF_RT711_JD_SRC_JD1 |
++		.driver_data = (void *)(RT711_JD1 |
+ 					SOF_SDW_TGL_HDMI |
+ 					SOF_RT715_DAI_ID_FIX |
+ 					SOF_SDW_PCH_DMIC),
+--- a/sound/soc/intel/boards/sof_sdw_common.h
++++ b/sound/soc/intel/boards/sof_sdw_common.h
+@@ -23,11 +23,6 @@
+ #define SDW_MAX_GROUPS 9
+ 
+ enum {
+-	SOF_RT711_JD_SRC_JD1 = 1,
+-	SOF_RT711_JD_SRC_JD2 = 2,
+-};
+-
+-enum {
+ 	SOF_PRE_TGL_HDMI_COUNT = 3,
+ 	SOF_TGL_HDMI_COUNT = 4,
+ };
 
 
