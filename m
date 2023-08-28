@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B66611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0992EC433C8;
-	Mon, 28 Aug 2023 10:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BB4611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAAFC433C9;
+	Mon, 28 Aug 2023 10:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218858;
-	bh=nGXoV96PpPH5mCgYsTY1PoLzc77VQon832HbgP+9xKU=;
+	s=korg; t=1693218861;
+	bh=d7PYB6n1RBTGvEYlefvWJqwFexPsLJlByIaCIVwjqU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgRWpinGwspwIt0Ysk2sYU7uDmc1UwgvjqhkHUguRSkpigtVdr7dddBOHJ/K+ySYo
-	 Dgna5zObbJeIbcbss00w0c6rm8dYOpo1H2aa8rTqSIL2vZLCUx0bbaHbL7PF1TLqXu
-	 jElAcamC+7+JRy6QC+lFFKXlKOJxvfJTMBnmA82Y=
+	b=yfhef+e47NKkE+kzlV1GBohoFQiHXjp9GAO8auI+a1fkKCxGC+JKREqsxw9688vio
+	 wxpOh7Ner19RsXiiCwytHs3cs2laMpmXzdoXBT4IyK7VTszkEXzh6VCFJbwisyRaDx
+	 /T8SYHjoKROM+zEXG6nHIaP7b+7xxt0BZ6GNeD7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f8812454d9b3ac00d282@syzkaller.appspotmail.com,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 082/122] batman-adv: Hold rtnl lock during MTU update via netlink
-Date: Mon, 28 Aug 2023 12:13:17 +0200
-Message-ID: <20230828101159.146200801@linuxfoundation.org>
+Subject: [PATCH 6.1 109/122] can: raw: add missing refcount for memory leak fix
+Date: Mon, 28 Aug 2023 12:13:44 +0200
+Message-ID: <20230828101200.048328158@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -41,45 +41,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 987aae75fc1041072941ffb622b45ce2359a99b9 upstream.
+commit c275a176e4b69868576e543409927ae75e3a3288 upstream.
 
-The automatic recalculation of the maximum allowed MTU is usually triggered
-by code sections which are already rtnl lock protected by callers outside
-of batman-adv. But when the fragmentation setting is changed via
-batman-adv's own batadv genl family, then the rtnl lock is not yet taken.
+Commit ee8b94c8510c ("can: raw: fix receiver memory leak") introduced
+a new reference to the CAN netdevice that has assigned CAN filters.
+But this new ro->dev reference did not maintain its own refcount which
+lead to another KASAN use-after-free splat found by Eric Dumazet.
 
-But dev_set_mtu requires that the caller holds the rtnl lock because it
-uses netdevice notifiers. And this code will then fail the check for this
-lock:
+This patch ensures a proper refcount for the CAN nedevice.
 
-  RTNL: assertion failed at net/core/dev.c (1953)
-
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+f8812454d9b3ac00d282@syzkaller.appspotmail.com
-Fixes: c6a953cce8d0 ("batman-adv: Trigger events for auto adjusted MTU")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230821-batadv-missing-mtu-rtnl-lock-v1-1-1c5a7bfe861e@narfation.org
+Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
+Reported-by: Eric Dumazet <edumazet@google.com>
+Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/r/20230821144547.6658-3-socketcan@hartkopp.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/netlink.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/can/raw.c |   35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
---- a/net/batman-adv/netlink.c
-+++ b/net/batman-adv/netlink.c
-@@ -495,7 +495,10 @@ static int batadv_netlink_set_mesh(struc
- 		attr = info->attrs[BATADV_ATTR_FRAGMENTATION_ENABLED];
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -85,6 +85,7 @@ struct raw_sock {
+ 	int bound;
+ 	int ifindex;
+ 	struct net_device *dev;
++	netdevice_tracker dev_tracker;
+ 	struct list_head notifier;
+ 	int loopback;
+ 	int recv_own_msgs;
+@@ -285,8 +286,10 @@ static void raw_notify(struct raw_sock *
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
+ 		/* remove current filters & unregister */
+-		if (ro->bound)
++		if (ro->bound) {
+ 			raw_disable_allfilters(dev_net(dev), dev, sk);
++			netdev_put(dev, &ro->dev_tracker);
++		}
  
- 		atomic_set(&bat_priv->fragmentation, !!nla_get_u8(attr));
-+
-+		rtnl_lock();
- 		batadv_update_min_mtu(bat_priv->soft_iface);
-+		rtnl_unlock();
+ 		if (ro->count > 1)
+ 			kfree(ro->filter);
+@@ -391,10 +394,12 @@ static int raw_release(struct socket *so
+ 
+ 	/* remove current filters & unregister */
+ 	if (ro->bound) {
+-		if (ro->dev)
++		if (ro->dev) {
+ 			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
+-		else
++			netdev_put(ro->dev, &ro->dev_tracker);
++		} else {
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
++		}
  	}
  
- 	if (info->attrs[BATADV_ATTR_GW_BANDWIDTH_DOWN]) {
+ 	if (ro->count > 1)
+@@ -445,10 +450,10 @@ static int raw_bind(struct socket *sock,
+ 			goto out;
+ 		}
+ 		if (dev->type != ARPHRD_CAN) {
+-			dev_put(dev);
+ 			err = -ENODEV;
+-			goto out;
++			goto out_put_dev;
+ 		}
++
+ 		if (!(dev->flags & IFF_UP))
+ 			notify_enetdown = 1;
+ 
+@@ -456,7 +461,9 @@ static int raw_bind(struct socket *sock,
+ 
+ 		/* filters set by default/setsockopt */
+ 		err = raw_enable_allfilters(sock_net(sk), dev, sk);
+-		dev_put(dev);
++		if (err)
++			goto out_put_dev;
++
+ 	} else {
+ 		ifindex = 0;
+ 
+@@ -467,18 +474,28 @@ static int raw_bind(struct socket *sock,
+ 	if (!err) {
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+-			if (ro->dev)
++			if (ro->dev) {
+ 				raw_disable_allfilters(dev_net(ro->dev),
+ 						       ro->dev, sk);
+-			else
++				/* drop reference to old ro->dev */
++				netdev_put(ro->dev, &ro->dev_tracker);
++			} else {
+ 				raw_disable_allfilters(sock_net(sk), NULL, sk);
++			}
+ 		}
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
++		/* bind() ok -> hold a reference for new ro->dev */
+ 		ro->dev = dev;
++		if (ro->dev)
++			netdev_hold(ro->dev, &ro->dev_tracker, GFP_KERNEL);
+ 	}
+ 
+- out:
++out_put_dev:
++	/* remove potential reference from dev_get_by_index() */
++	if (dev)
++		dev_put(dev);
++out:
+ 	release_sock(sk);
+ 	rtnl_unlock();
+ 
 
 
