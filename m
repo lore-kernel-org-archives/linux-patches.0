@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87A4611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A473C433C7;
-	Mon, 28 Aug 2023 10:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF376611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30176C433C8;
+	Mon, 28 Aug 2023 10:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218830;
-	bh=J2era8vTEqx6OOkKf1EP/VdcSWCLuzWpK5zzF+T/gXc=;
+	s=korg; t=1693218833;
+	bh=KxvcsIN2Q8nGQ1rDystgEo3sbuVZ4r69ffXhLfhwnTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUrzBDN7FoMzbimB31KOK0+ULKrkjxa3LKVZe9WQP39FqQjMt7NaoLAUmdYyVGJ4G
-	 a7S4dVaXrwHKB5MARTi0lK272q9cbTiMWAXfbYwx3vAi23D34mLUdxLgvsyfexE1kl
-	 MFDaOb2msveGaXoaPRsLx+J2aoaPBlg+LZ5VvOwc=
+	b=mEIrcfWvJWdRxLkzQ+GaAspaTNOpOLDaFj6w9kEeUE7t6axdpGioBH8oLJhK2QTH9
+	 A2fhblUwTqEkPZie3c/34aoRcbBfZEfeaYvOW+U8n15RUpk50bZz7ZsvMljbsceSfM
+	 eAZrXVHI+d0NstZ+9MzYOT4N0EpHbCn4jdIBedPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Sherry Yang <sherry.yang@oracle.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.1 099/122] nfs: use vfs setgid helper
-Date: Mon, 28 Aug 2023 12:13:34 +0200
-Message-ID: <20230828101159.694722877@linuxfoundation.org>
+Subject: [PATCH 6.1 100/122] nfsd: use vfs setgid helper
+Date: Mon, 28 Aug 2023 12:13:35 +0200
+Message-ID: <20230828101159.733955856@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -42,77 +44,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 4f704d9a8352f5c0a8fcdb6213b934630342bd44 upstream.
+commit 2d8ae8c417db284f598dffb178cc01e7db0f1821 upstream.
 
 We've aligned setgid behavior over multiple kernel releases. The details
-can be found in the following two merge messages:
-cf619f891971 ("Merge tag 'fs.ovl.setgid.v6.2')
-426b4ca2d6a5 ("Merge tag 'fs.setgid.v6.0')
+can be found in commit cf619f891971 ("Merge tag 'fs.ovl.setgid.v6.2' of
+git://git.kernel.org/pub/scm/linux/kernel/git/vfs/idmapping") and
+commit 426b4ca2d6a5 ("Merge tag 'fs.setgid.v6.0' of
+git://git.kernel.org/pub/scm/linux/kernel/git/brauner/linux").
 Consistent setgid stripping behavior is now encapsulated in the
 setattr_should_drop_sgid() helper which is used by all filesystems that
-strip setgid bits outside of vfs proper. Switch nfs to rely on this
-helper as well. Without this patch the setgid stripping tests in
-xfstests will fail.
+strip setgid bits outside of vfs proper. Usually ATTR_KILL_SGID is
+raised in e.g., chown_common() and is subject to the
+setattr_should_drop_sgid() check to determine whether the setgid bit can
+be retained. Since nfsd is raising ATTR_KILL_SGID unconditionally it
+will cause notify_change() to strip it even if the caller had the
+necessary privileges to retain it. Ensure that nfsd only raises
+ATR_KILL_SGID if the caller lacks the necessary privileges to retain the
+setgid bit.
 
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Message-Id: <20230313-fs-nfs-setgid-v2-1-9a59f436cfc0@kernel.org>
+Without this patch the setgid stripping tests in LTP will fail:
+
+> As you can see, the problem is S_ISGID (0002000) was dropped on a
+> non-group-executable file while chown was invoked by super-user, while
+
+[...]
+
+> fchown02.c:66: TFAIL: testfile2: wrong mode permissions 0100700, expected 0102700
+
+[...]
+
+> chown02.c:57: TFAIL: testfile2: wrong mode permissions 0100700, expected 0102700
+
+With this patch all tests pass.
+
+Reported-by: Sherry Yang <sherry.yang@oracle.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ Harshit: backport to 6.1.y:
-  fs/internal.h -- minor conflict due to code change differences.
-  include/linux/fs.h -- Used struct user_namespace *mnt_userns
-                        instead of struct mnt_idmap *idmap
-  fs/nfs/inode.c -- Used init_user_ns instead of nop_mnt_idmap ]
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[Harshit: backport to 6.1.y:
+ Use init_user_ns instead of nop_mnt_idmap as we don't have
+ commit abf08576afe3 ("fs: port vfs_*() helpers to struct mnt_idmap")]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/attr.c          |    1 +
- fs/internal.h      |    2 --
- fs/nfs/inode.c     |    4 +---
- include/linux/fs.h |    2 ++
- 4 files changed, 4 insertions(+), 5 deletions(-)
+ fs/nfsd/vfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/attr.c
-+++ b/fs/attr.c
-@@ -47,6 +47,7 @@ int setattr_should_drop_sgid(struct user
- 		return ATTR_KILL_SGID;
- 	return 0;
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -321,7 +321,9 @@ nfsd_sanitize_attrs(struct inode *inode,
+ 				iap->ia_mode &= ~S_ISGID;
+ 		} else {
+ 			/* set ATTR_KILL_* bits and let VFS handle it */
+-			iap->ia_valid |= (ATTR_KILL_SUID | ATTR_KILL_SGID);
++			iap->ia_valid |= ATTR_KILL_SUID;
++			iap->ia_valid |=
++				setattr_should_drop_sgid(&init_user_ns, inode);
+ 		}
+ 	}
  }
-+EXPORT_SYMBOL(setattr_should_drop_sgid);
- 
- /**
-  * setattr_should_drop_suidgid - determine whether the set{g,u}id bit needs to
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -242,5 +242,3 @@ ssize_t __kernel_write_iter(struct file
- /*
-  * fs/attr.c
-  */
--int setattr_should_drop_sgid(struct user_namespace *mnt_userns,
--			     const struct inode *inode);
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -717,9 +717,7 @@ void nfs_setattr_update_inode(struct ino
- 		if ((attr->ia_valid & ATTR_KILL_SUID) != 0 &&
- 		    inode->i_mode & S_ISUID)
- 			inode->i_mode &= ~S_ISUID;
--		if ((attr->ia_valid & ATTR_KILL_SGID) != 0 &&
--		    (inode->i_mode & (S_ISGID | S_IXGRP)) ==
--		     (S_ISGID | S_IXGRP))
-+		if (setattr_should_drop_sgid(&init_user_ns, inode))
- 			inode->i_mode &= ~S_ISGID;
- 		if ((attr->ia_valid & ATTR_MODE) != 0) {
- 			int mode = attr->ia_mode & S_IALLUGO;
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3120,6 +3120,8 @@ extern struct inode *new_inode(struct su
- extern void free_inode_nonrcu(struct inode *inode);
- extern int setattr_should_drop_suidgid(struct user_namespace *, struct inode *);
- extern int file_remove_privs(struct file *);
-+int setattr_should_drop_sgid(struct user_namespace *mnt_userns,
-+			     const struct inode *inode);
- 
- /*
-  * This must be used for allocating filesystems specific inodes to set
 
 
