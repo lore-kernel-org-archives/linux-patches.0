@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158E211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C111C433C8;
-	Mon, 28 Aug 2023 10:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5C611C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5908BC433C7;
+	Mon, 28 Aug 2023 10:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218479;
-	bh=FXOob6T5Fs1FL5rjxOfqIfLzADxdiyVhFB6lA6EQtqY=;
+	s=korg; t=1693218482;
+	bh=b85vrmcYeoZ4o+G9dl7YU3cf3cbyuFbw9c2ub8D4J7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpiusjRZSsaHQgckatbYTLISGrXtArbWTIgxMn+HtuPKIW0xkI/h0i+V6LZjUbMdF
-	 0OltK4vMll1tZH9U8dIOnjui42pR/dqFcxSFB3HHNCwmQvOI0bJ4q3gzB9NTJI2Hdq
-	 R1fc6wpbJ4pJmOoDPcrF9+7JgyRkwO/6M4OnKbNg=
+	b=Ot2+4f2E04Wsc4UlJY4MyF8J9F4YMK+WIS37DUT2f2YE1ehSkyd8YTRTa2gxDIFeQ
+	 3rQ6IXMrXWNf4yvbfczDOi3nu740fCWdumsKdohJmxmQG8LeTASZpfE7dudAQ6uH/w
+	 MXFCbCgl+Di6Fjg1qCnPAn96aqljZEartzL6+etc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Alessio Igor Bogani <alessio.bogani@elettra.eu>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 103/129] dccp: annotate data-races in dccp_poll()
-Date: Mon, 28 Aug 2023 12:13:17 +0200
-Message-ID: <20230828101157.054489635@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 4.19 104/129] igb: Avoid starting unnecessary workqueues
+Date: Mon, 28 Aug 2023 12:13:18 +0200
+Message-ID: <20230828101157.084248829@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,80 +43,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
 
-[ Upstream commit cba3f1786916063261e3e5ccbb803abc325b24ef ]
+[ Upstream commit b888c510f7b3d64ca75fc0f43b4a4bd1a611312f ]
 
-We changed tcp_poll() over time, bug never updated dccp.
+If ptp_clock_register() fails or CONFIG_PTP isn't enabled, avoid starting
+PTP related workqueues.
 
-Note that we also could remove dccp instead of maintaining it.
+In this way we can fix this:
+ BUG: unable to handle page fault for address: ffffc9000440b6f8
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 100000067 P4D 100000067 PUD 1001e0067 PMD 107dc5067 PTE 0
+ Oops: 0000 [#1] PREEMPT SMP
+ [...]
+ Workqueue: events igb_ptp_overflow_check
+ RIP: 0010:igb_rd32+0x1f/0x60
+ [...]
+ Call Trace:
+  igb_ptp_read_82580+0x20/0x50
+  timecounter_read+0x15/0x60
+  igb_ptp_overflow_check+0x1a/0x50
+  process_one_work+0x1cb/0x3c0
+  worker_thread+0x53/0x3f0
+  ? rescuer_thread+0x370/0x370
+  kthread+0x142/0x160
+  ? kthread_associate_blkcg+0xc0/0xc0
+  ret_from_fork+0x1f/0x30
 
-Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230818015820.2701595-1-edumazet@google.com
+Fixes: 1f6e8178d685 ("igb: Prevent dropped Tx timestamps via work items and interrupts.")
+Fixes: d339b1331616 ("igb: add PTP Hardware Clock code")
+Signed-off-by: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821171927.2203644-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/proto.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_ptp.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/net/dccp/proto.c b/net/dccp/proto.c
-index 27de4dc1ff512..c4ea0159ce2e8 100644
---- a/net/dccp/proto.c
-+++ b/net/dccp/proto.c
-@@ -328,11 +328,15 @@ EXPORT_SYMBOL_GPL(dccp_disconnect);
- __poll_t dccp_poll(struct file *file, struct socket *sock,
- 		       poll_table *wait)
- {
--	__poll_t mask;
- 	struct sock *sk = sock->sk;
-+	__poll_t mask;
-+	u8 shutdown;
-+	int state;
- 
- 	sock_poll_wait(file, sock, wait);
--	if (sk->sk_state == DCCP_LISTEN)
-+
-+	state = inet_sk_state_load(sk);
-+	if (state == DCCP_LISTEN)
- 		return inet_csk_listen_poll(sk);
- 
- 	/* Socket is not locked. We are protected from async events
-@@ -341,20 +345,21 @@ __poll_t dccp_poll(struct file *file, struct socket *sock,
- 	 */
- 
- 	mask = 0;
--	if (sk->sk_err)
-+	if (READ_ONCE(sk->sk_err))
- 		mask = EPOLLERR;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
- 
--	if (sk->sk_shutdown == SHUTDOWN_MASK || sk->sk_state == DCCP_CLOSED)
-+	if (shutdown == SHUTDOWN_MASK || state == DCCP_CLOSED)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
- 
- 	/* Connected? */
--	if ((1 << sk->sk_state) & ~(DCCPF_REQUESTING | DCCPF_RESPOND)) {
-+	if ((1 << state) & ~(DCCPF_REQUESTING | DCCPF_RESPOND)) {
- 		if (atomic_read(&sk->sk_rmem_alloc) > 0)
- 			mask |= EPOLLIN | EPOLLRDNORM;
- 
--		if (!(sk->sk_shutdown & SEND_SHUTDOWN)) {
-+		if (!(shutdown & SEND_SHUTDOWN)) {
- 			if (sk_stream_is_writeable(sk)) {
- 				mask |= EPOLLOUT | EPOLLWRNORM;
- 			} else {  /* send SIGIO later */
-@@ -372,7 +377,6 @@ __poll_t dccp_poll(struct file *file, struct socket *sock,
+diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
+index 29ced6b74d364..be2e743e65de9 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ptp.c
++++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
+@@ -1181,18 +1181,6 @@ void igb_ptp_init(struct igb_adapter *adapter)
+ 		return;
  	}
- 	return mask;
- }
--
- EXPORT_SYMBOL_GPL(dccp_poll);
  
- int dccp_ioctl(struct sock *sk, int cmd, unsigned long arg)
+-	spin_lock_init(&adapter->tmreg_lock);
+-	INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
+-
+-	if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
+-		INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
+-				  igb_ptp_overflow_check);
+-
+-	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
+-	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
+-
+-	igb_ptp_reset(adapter);
+-
+ 	adapter->ptp_clock = ptp_clock_register(&adapter->ptp_caps,
+ 						&adapter->pdev->dev);
+ 	if (IS_ERR(adapter->ptp_clock)) {
+@@ -1202,6 +1190,18 @@ void igb_ptp_init(struct igb_adapter *adapter)
+ 		dev_info(&adapter->pdev->dev, "added PHC on %s\n",
+ 			 adapter->netdev->name);
+ 		adapter->ptp_flags |= IGB_PTP_ENABLED;
++
++		spin_lock_init(&adapter->tmreg_lock);
++		INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
++
++		if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
++			INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
++					  igb_ptp_overflow_check);
++
++		adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
++		adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
++
++		igb_ptp_reset(adapter);
+ 	}
+ }
+ 
 -- 
 2.40.1
 
