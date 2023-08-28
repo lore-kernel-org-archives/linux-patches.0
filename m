@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB7D11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14038C433C9;
-	Mon, 28 Aug 2023 10:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DE311C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9285C433C7;
+	Mon, 28 Aug 2023 10:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219157;
-	bh=wCIN06NMehadfHkTvQmcFOlJ3+wXCnBxpCDuqCeSIYk=;
+	s=korg; t=1693219160;
+	bh=2ROo+oMbMLaJzU7CCo7INavdjgU9sfLVRfiO50WpHQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMK0Xf66N+Z+GGEgJTqRvvDRyRDoi7ednMXBQwjTqWabs7pGI44e6StGQ4KoSnHd7
-	 /TjcO5kqIxg8egrIMyTH/TGD7R5bN9hCzJtbbonfTGQrRWHZRjJiaLaOI6SdP6vMJA
-	 ELAhsQGyg3vNJGjxP/jpQDH4KiE3YlbciB283Xbw=
+	b=DZ3INM0vd2940JvYA/v/lbZqJS47WjQ3tqLp1wZIvz9ndAf1ujSLsOK5i3/zfUWnE
+	 KZfAuvhdLXOwOqd6PHyXKCOM0yi/X0cCOMEZbyd5MfiLqviEGailBmUvBMdfhpsiIe
+	 hxGmyt3OGjfuZcSHLEN1alJKotu7HziZE3rEsTpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 066/158] xfrm: add NULL check in xfrm_update_ae_params
-Date: Mon, 28 Aug 2023 12:12:43 +0200
-Message-ID: <20230828101159.506527976@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 093/158] mmc: f-sdh30: fix order of function calls in sdhci_f_sdh30_remove
+Date: Mon, 28 Aug 2023 12:13:10 +0200
+Message-ID: <20230828101200.437695371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -35,110 +35,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 00374d9b6d9f932802b55181be9831aa948e5b7c ]
+commit 58abdd80b93b09023ca03007b608685c41e3a289 upstream.
 
-Normally, x->replay_esn and x->preplay_esn should be allocated at
-xfrm_alloc_replay_state_esn(...) in xfrm_state_construct(...), hence the
-xfrm_update_ae_params(...) is okay to update them. However, the current
-implementation of xfrm_new_ae(...) allows a malicious user to directly
-dereference a NULL pointer and crash the kernel like below.
+The order of function calls in sdhci_f_sdh30_remove is wrong,
+let's call sdhci_pltfm_unregister first.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 8253067 P4D 8253067 PUD 8e0e067 PMD 0
-Oops: 0002 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 0 PID: 98 Comm: poc.npd Not tainted 6.4.0-rc7-00072-gdad9774deaf1 #8
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.o4
-RIP: 0010:memcpy_orig+0xad/0x140
-Code: e8 4c 89 5f e0 48 8d 7f e0 73 d2 83 c2 20 48 29 d6 48 29 d7 83 fa 10 72 34 4c 8b 06 4c 8b 4e 08 c
-RSP: 0018:ffff888008f57658 EFLAGS: 00000202
-RAX: 0000000000000000 RBX: ffff888008bd0000 RCX: ffffffff8238e571
-RDX: 0000000000000018 RSI: ffff888007f64844 RDI: 0000000000000000
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffff888008f57818
-R13: ffff888007f64aa4 R14: 0000000000000000 R15: 0000000000000000
-FS:  00000000014013c0(0000) GS:ffff88806d600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 00000000054d8000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? __die+0x1f/0x70
- ? page_fault_oops+0x1e8/0x500
- ? __pfx_is_prefetch.constprop.0+0x10/0x10
- ? __pfx_page_fault_oops+0x10/0x10
- ? _raw_spin_unlock_irqrestore+0x11/0x40
- ? fixup_exception+0x36/0x460
- ? _raw_spin_unlock_irqrestore+0x11/0x40
- ? exc_page_fault+0x5e/0xc0
- ? asm_exc_page_fault+0x26/0x30
- ? xfrm_update_ae_params+0xd1/0x260
- ? memcpy_orig+0xad/0x140
- ? __pfx__raw_spin_lock_bh+0x10/0x10
- xfrm_update_ae_params+0xe7/0x260
- xfrm_new_ae+0x298/0x4e0
- ? __pfx_xfrm_new_ae+0x10/0x10
- ? __pfx_xfrm_new_ae+0x10/0x10
- xfrm_user_rcv_msg+0x25a/0x410
- ? __pfx_xfrm_user_rcv_msg+0x10/0x10
- ? __alloc_skb+0xcf/0x210
- ? stack_trace_save+0x90/0xd0
- ? filter_irq_stacks+0x1c/0x70
- ? __stack_depot_save+0x39/0x4e0
- ? __kasan_slab_free+0x10a/0x190
- ? kmem_cache_free+0x9c/0x340
- ? netlink_recvmsg+0x23c/0x660
- ? sock_recvmsg+0xeb/0xf0
- ? __sys_recvfrom+0x13c/0x1f0
- ? __x64_sys_recvfrom+0x71/0x90
- ? do_syscall_64+0x3f/0x90
- ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
- ? copyout+0x3e/0x50
- netlink_rcv_skb+0xd6/0x210
- ? __pfx_xfrm_user_rcv_msg+0x10/0x10
- ? __pfx_netlink_rcv_skb+0x10/0x10
- ? __pfx_sock_has_perm+0x10/0x10
- ? mutex_lock+0x8d/0xe0
- ? __pfx_mutex_lock+0x10/0x10
- xfrm_netlink_rcv+0x44/0x50
- netlink_unicast+0x36f/0x4c0
- ? __pfx_netlink_unicast+0x10/0x10
- ? netlink_recvmsg+0x500/0x660
- netlink_sendmsg+0x3b7/0x700
-
-This Null-ptr-deref bug is assigned CVE-2023-3772. And this commit
-adds additional NULL check in xfrm_update_ae_params to fix the NPD.
-
-Fixes: d8647b79c3b7 ("xfrm: Add user interface for esn and big anti-replay windows")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 5def5c1c15bf ("mmc: sdhci-f-sdh30: Replace with sdhci_pltfm")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230727070051.17778-62-frank.li@vivo.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_f_sdh30.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 68ac55842dedd..06aeefce88718 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -522,7 +522,7 @@ static void xfrm_update_ae_params(struct xfrm_state *x, struct nlattr **attrs,
- 	struct nlattr *et = attrs[XFRMA_ETIMER_THRESH];
- 	struct nlattr *rt = attrs[XFRMA_REPLAY_THRESH];
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -212,12 +212,14 @@ static int sdhci_f_sdh30_remove(struct p
+ {
+ 	struct sdhci_host *host = platform_get_drvdata(pdev);
+ 	struct f_sdhost_priv *priv = sdhci_f_sdhost_priv(host);
+-
+-	clk_disable_unprepare(priv->clk_iface);
+-	clk_disable_unprepare(priv->clk);
++	struct clk *clk_iface = priv->clk_iface;
++	struct clk *clk = priv->clk;
  
--	if (re) {
-+	if (re && x->replay_esn && x->preplay_esn) {
- 		struct xfrm_replay_state_esn *replay_esn;
- 		replay_esn = nla_data(re);
- 		memcpy(x->replay_esn, replay_esn,
--- 
-2.40.1
-
+ 	sdhci_pltfm_unregister(pdev);
+ 
++	clk_disable_unprepare(clk_iface);
++	clk_disable_unprepare(clk);
++
+ 	return 0;
+ }
+ 
 
 
