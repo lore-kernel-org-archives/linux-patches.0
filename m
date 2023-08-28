@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5B46FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B431CC433CA;
-	Mon, 28 Aug 2023 10:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082566FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB20C433C7;
+	Mon, 28 Aug 2023 10:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217922;
-	bh=nnd/K7ljkyDZfPWW4nXrhA6eaG2um7C58QL9RFZzWZo=;
+	s=korg; t=1693217924;
+	bh=4/UHMmuxJT2zXUL86Hg08YB147mOv5PPQqhHTzsEKmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVwR4KZFs3FS1054QVnzC5cUa+cp3d7XIZ57XsW2WFs1Xu6zmO/NcES0OrCczYEM8
-	 PupQxBDKk7PExa+feRryf2ikLAFYSsfDENo/k/IgJmGIWieSXr5cf64SYKKk4b91jm
-	 2AMDJWq2y/Iyy/or0QKRqOfGM29hIW7LI6bXNz3A=
+	b=Wnd1xKc9yt9axePvMMNXWmWyvBfN/uutlLBEzIHeL0zeWvO6JeSmN4S1bnLfWcjJT
+	 ieHmqPa21LSyR7dni6tctTulmtp/c5P93r36t8Cq9IphPbE8+3DeTdI7jRnCcpGxAz
+	 BmTGkZoL77y7DNZ/ZZSENp8xaj1K6cD4HKyfP39w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 030/129] net: validate veth and vxcan peer ifindexes
-Date: Mon, 28 Aug 2023 12:11:49 +0200
-Message-ID: <20230828101158.383443740@linuxfoundation.org>
+Subject: [PATCH 6.4 031/129] ipv4: fix data-races around inet->inet_id
+Date: Mon, 28 Aug 2023 12:11:50 +0200
+Message-ID: <20230828101158.421007131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -42,135 +42,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f534f6581ec084fe94d6759f7672bd009794b07e ]
+[ Upstream commit f866fbc842de5976e41ba874b76ce31710b634b5 ]
 
-veth and vxcan need to make sure the ifindexes of the peer
-are not negative, core does not validate this.
+UDP sendmsg() is lockless, so ip_select_ident_segs()
+can very well be run from multiple cpus [1]
 
-Using iproute2 with user-space-level checking removed:
+Convert inet->inet_id to an atomic_t, but implement
+a dedicated path for TCP, avoiding cost of a locked
+instruction (atomic_add_return())
 
-Before:
+Note that this patch will cause a trivial merge conflict
+because we added inet->flags in net-next tree.
 
-  # ./ip link add index 10 type veth peer index -1
-  # ip link show
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-  2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
-    link/ether 52:54:00:74:b2:03 brd ff:ff:ff:ff:ff:ff
-  10: veth1@veth0: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 8a:90:ff:57:6d:5d brd ff:ff:ff:ff:ff:ff
-  -1: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether ae:ed:18:e6:fa:7f brd ff:ff:ff:ff:ff:ff
+v2: added missing change in
+drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
+(David Ahern)
 
-Now:
+[1]
 
-  $ ./ip link add index 10 type veth peer index -1
-  Error: ifindex can't be negative.
+BUG: KCSAN: data-race in __ip_make_skb / __ip_make_skb
 
-This problem surfaced in net-next because an explicit WARN()
-was added, the root cause is older.
+read-write to 0xffff888145af952a of 2 bytes by task 7803 on cpu 1:
+ip_select_ident_segs include/net/ip.h:542 [inline]
+ip_select_ident include/net/ip.h:556 [inline]
+__ip_make_skb+0x844/0xc70 net/ipv4/ip_output.c:1446
+ip_make_skb+0x233/0x2c0 net/ipv4/ip_output.c:1560
+udp_sendmsg+0x1199/0x1250 net/ipv4/udp.c:1260
+inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:830
+sock_sendmsg_nosec net/socket.c:725 [inline]
+sock_sendmsg net/socket.c:748 [inline]
+____sys_sendmsg+0x37c/0x4d0 net/socket.c:2494
+___sys_sendmsg net/socket.c:2548 [inline]
+__sys_sendmmsg+0x269/0x500 net/socket.c:2634
+__do_sys_sendmmsg net/socket.c:2663 [inline]
+__se_sys_sendmmsg net/socket.c:2660 [inline]
+__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2660
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: e6f8f1a739b6 ("veth: Allow to create peer link with given ifindex")
-Fixes: a8f820a380a2 ("can: add Virtual CAN Tunnel driver (vxcan)")
-Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+read to 0xffff888145af952a of 2 bytes by task 7804 on cpu 0:
+ip_select_ident_segs include/net/ip.h:541 [inline]
+ip_select_ident include/net/ip.h:556 [inline]
+__ip_make_skb+0x817/0xc70 net/ipv4/ip_output.c:1446
+ip_make_skb+0x233/0x2c0 net/ipv4/ip_output.c:1560
+udp_sendmsg+0x1199/0x1250 net/ipv4/udp.c:1260
+inet_sendmsg+0x63/0x80 net/ipv4/af_inet.c:830
+sock_sendmsg_nosec net/socket.c:725 [inline]
+sock_sendmsg net/socket.c:748 [inline]
+____sys_sendmsg+0x37c/0x4d0 net/socket.c:2494
+___sys_sendmsg net/socket.c:2548 [inline]
+__sys_sendmmsg+0x269/0x500 net/socket.c:2634
+__do_sys_sendmmsg net/socket.c:2663 [inline]
+__se_sys_sendmmsg net/socket.c:2660 [inline]
+__x64_sys_sendmmsg+0x57/0x60 net/socket.c:2660
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x184d -> 0x184e
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 7804 Comm: syz-executor.1 Not tainted 6.5.0-rc6-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+==================================================================
+
+Fixes: 23f57406b82d ("ipv4: avoid using shared IP generator for connected sockets")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/vxcan.c |  7 +------
- drivers/net/veth.c      |  5 +----
- include/net/rtnetlink.h |  4 ++--
- net/core/rtnetlink.c    | 22 ++++++++++++++++++----
- 4 files changed, 22 insertions(+), 16 deletions(-)
+ .../chelsio/inline_crypto/chtls/chtls_cm.c        |  2 +-
+ include/net/inet_sock.h                           |  2 +-
+ include/net/ip.h                                  | 15 +++++++++++++--
+ net/dccp/ipv4.c                                   |  4 ++--
+ net/ipv4/af_inet.c                                |  2 +-
+ net/ipv4/datagram.c                               |  2 +-
+ net/ipv4/tcp_ipv4.c                               |  4 ++--
+ net/sctp/socket.c                                 |  2 +-
+ 8 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/can/vxcan.c b/drivers/net/can/vxcan.c
-index 4068d962203d6..98c669ad51414 100644
---- a/drivers/net/can/vxcan.c
-+++ b/drivers/net/can/vxcan.c
-@@ -192,12 +192,7 @@ static int vxcan_newlink(struct net *net, struct net_device *dev,
+diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
+index c2e7037c7ba1c..7750702900fa6 100644
+--- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
++++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
+@@ -1466,7 +1466,7 @@ static void make_established(struct sock *sk, u32 snd_isn, unsigned int opt)
+ 	tp->write_seq = snd_isn;
+ 	tp->snd_nxt = snd_isn;
+ 	tp->snd_una = snd_isn;
+-	inet_sk(sk)->inet_id = get_random_u16();
++	atomic_set(&inet_sk(sk)->inet_id, get_random_u16());
+ 	assign_rxopt(sk, opt);
  
- 		nla_peer = data[VXCAN_INFO_PEER];
- 		ifmp = nla_data(nla_peer);
--		err = rtnl_nla_parse_ifla(peer_tb,
--					  nla_data(nla_peer) +
--					  sizeof(struct ifinfomsg),
--					  nla_len(nla_peer) -
--					  sizeof(struct ifinfomsg),
--					  NULL);
-+		err = rtnl_nla_parse_ifinfomsg(peer_tb, nla_peer, extack);
- 		if (err < 0)
- 			return err;
+ 	if (tp->rcv_wnd > (RCV_BUFSIZ_M << 10))
+diff --git a/include/net/inet_sock.h b/include/net/inet_sock.h
+index 0bb32bfc61832..491ceb7ebe5d1 100644
+--- a/include/net/inet_sock.h
++++ b/include/net/inet_sock.h
+@@ -222,8 +222,8 @@ struct inet_sock {
+ 	__s16			uc_ttl;
+ 	__u16			cmsg_flags;
+ 	struct ip_options_rcu __rcu	*inet_opt;
++	atomic_t		inet_id;
+ 	__be16			inet_sport;
+-	__u16			inet_id;
  
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 76019949e3fe9..c977b704f1342 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1851,10 +1851,7 @@ static int veth_newlink(struct net *src_net, struct net_device *dev,
- 
- 		nla_peer = data[VETH_INFO_PEER];
- 		ifmp = nla_data(nla_peer);
--		err = rtnl_nla_parse_ifla(peer_tb,
--					  nla_data(nla_peer) + sizeof(struct ifinfomsg),
--					  nla_len(nla_peer) - sizeof(struct ifinfomsg),
--					  NULL);
-+		err = rtnl_nla_parse_ifinfomsg(peer_tb, nla_peer, extack);
- 		if (err < 0)
- 			return err;
- 
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index d9076a7a430c2..6506221c5fe31 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -190,8 +190,8 @@ int rtnl_delete_link(struct net_device *dev, u32 portid, const struct nlmsghdr *
- int rtnl_configure_link(struct net_device *dev, const struct ifinfomsg *ifm,
- 			u32 portid, const struct nlmsghdr *nlh);
- 
--int rtnl_nla_parse_ifla(struct nlattr **tb, const struct nlattr *head, int len,
--			struct netlink_ext_ack *exterr);
-+int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
-+			     struct netlink_ext_ack *exterr);
- struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
- 
- #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index aa1743b2b770b..baa323ca37c42 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2268,13 +2268,27 @@ static int rtnl_dump_ifinfo(struct sk_buff *skb, struct netlink_callback *cb)
- 	return err;
- }
- 
--int rtnl_nla_parse_ifla(struct nlattr **tb, const struct nlattr *head, int len,
--			struct netlink_ext_ack *exterr)
-+int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
-+			     struct netlink_ext_ack *exterr)
- {
--	return nla_parse_deprecated(tb, IFLA_MAX, head, len, ifla_policy,
-+	const struct ifinfomsg *ifmp;
-+	const struct nlattr *attrs;
-+	size_t len;
+ 	__u8			tos;
+ 	__u8			min_ttl;
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 530e7257e4389..1872f570abeda 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -532,8 +532,19 @@ static inline void ip_select_ident_segs(struct net *net, struct sk_buff *skb,
+ 	 * generator as much as we can.
+ 	 */
+ 	if (sk && inet_sk(sk)->inet_daddr) {
+-		iph->id = htons(inet_sk(sk)->inet_id);
+-		inet_sk(sk)->inet_id += segs;
++		int val;
 +
-+	ifmp = nla_data(nla_peer);
-+	attrs = nla_data(nla_peer) + sizeof(struct ifinfomsg);
-+	len = nla_len(nla_peer) - sizeof(struct ifinfomsg);
-+
-+	if (ifmp->ifi_index < 0) {
-+		NL_SET_ERR_MSG_ATTR(exterr, nla_peer,
-+				    "ifindex can't be negative");
-+		return -EINVAL;
-+	}
-+
-+	return nla_parse_deprecated(tb, IFLA_MAX, attrs, len, ifla_policy,
- 				    exterr);
- }
--EXPORT_SYMBOL(rtnl_nla_parse_ifla);
-+EXPORT_SYMBOL(rtnl_nla_parse_ifinfomsg);
++		/* avoid atomic operations for TCP,
++		 * as we hold socket lock at this point.
++		 */
++		if (sk_is_tcp(sk)) {
++			sock_owned_by_me(sk);
++			val = atomic_read(&inet_sk(sk)->inet_id);
++			atomic_set(&inet_sk(sk)->inet_id, val + segs);
++		} else {
++			val = atomic_add_return(segs, &inet_sk(sk)->inet_id);
++		}
++		iph->id = htons(val);
+ 		return;
+ 	}
+ 	if ((iph->frag_off & htons(IP_DF)) && !skb->ignore_df) {
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 3ab68415d121c..e7b9703bd1a1a 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -130,7 +130,7 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 						    inet->inet_daddr,
+ 						    inet->inet_sport,
+ 						    inet->inet_dport);
+-	inet->inet_id = get_random_u16();
++	atomic_set(&inet->inet_id, get_random_u16());
  
- struct net *rtnl_link_get_net(struct net *src_net, struct nlattr *tb[])
- {
+ 	err = dccp_connect(sk);
+ 	rt = NULL;
+@@ -432,7 +432,7 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk,
+ 	RCU_INIT_POINTER(newinet->inet_opt, rcu_dereference(ireq->ireq_opt));
+ 	newinet->mc_index  = inet_iif(skb);
+ 	newinet->mc_ttl	   = ip_hdr(skb)->ttl;
+-	newinet->inet_id   = get_random_u16();
++	atomic_set(&newinet->inet_id, get_random_u16());
+ 
+ 	if (dst == NULL && (dst = inet_csk_route_child_sock(sk, newsk, req)) == NULL)
+ 		goto put_and_exit;
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 10ebe39dcc873..9dde8e842befe 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -340,7 +340,7 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
+ 	else
+ 		inet->pmtudisc = IP_PMTUDISC_WANT;
+ 
+-	inet->inet_id = 0;
++	atomic_set(&inet->inet_id, 0);
+ 
+ 	sock_init_data(sock, sk);
+ 
+diff --git a/net/ipv4/datagram.c b/net/ipv4/datagram.c
+index 4d1af0cd7d99e..cb5dbee9e018f 100644
+--- a/net/ipv4/datagram.c
++++ b/net/ipv4/datagram.c
+@@ -73,7 +73,7 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
+ 	reuseport_has_conns_set(sk);
+ 	sk->sk_state = TCP_ESTABLISHED;
+ 	sk_set_txhash(sk);
+-	inet->inet_id = get_random_u16();
++	atomic_set(&inet->inet_id, get_random_u16());
+ 
+ 	sk_dst_set(sk, &rt->dst);
+ 	err = 0;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 498dd4acdeec8..caecb4d1e424a 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -312,7 +312,7 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 					     inet->inet_daddr));
+ 	}
+ 
+-	inet->inet_id = get_random_u16();
++	atomic_set(&inet->inet_id, get_random_u16());
+ 
+ 	if (tcp_fastopen_defer_connect(sk, &err))
+ 		return err;
+@@ -1596,7 +1596,7 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 	inet_csk(newsk)->icsk_ext_hdr_len = 0;
+ 	if (inet_opt)
+ 		inet_csk(newsk)->icsk_ext_hdr_len = inet_opt->opt.optlen;
+-	newinet->inet_id = get_random_u16();
++	atomic_set(&newinet->inet_id, get_random_u16());
+ 
+ 	/* Set ToS of the new socket based upon the value of incoming SYN.
+ 	 * ECT bits are set later in tcp_init_transfer().
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index de52045774303..d77561d97a1ed 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9479,7 +9479,7 @@ void sctp_copy_sock(struct sock *newsk, struct sock *sk,
+ 	newinet->inet_rcv_saddr = inet->inet_rcv_saddr;
+ 	newinet->inet_dport = htons(asoc->peer.port);
+ 	newinet->pmtudisc = inet->pmtudisc;
+-	newinet->inet_id = get_random_u16();
++	atomic_set(&newinet->inet_id, get_random_u16());
+ 
+ 	newinet->uc_ttl = inet->uc_ttl;
+ 	newinet->mc_loop = 1;
 -- 
 2.40.1
 
