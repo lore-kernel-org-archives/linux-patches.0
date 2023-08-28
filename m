@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A32469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D49AC433C8;
-	Mon, 28 Aug 2023 10:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7852F469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E2C433C7;
+	Mon, 28 Aug 2023 10:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218822;
-	bh=K5xee8rZrpG7HffUO5LyQiUjupcTWF3qI89FOWc+ppU=;
+	s=korg; t=1693218825;
+	bh=y+CDd/YY29qy40OZayMR1t/sUHL8NaB7E5OX2VJcTvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbSa7xTbFAvkUcWbhJj3lMSmZReUKyFfANP4qqBbGadSvGpxPUdpxJhvkZAS928hB
-	 RVuSEWMc/QOafY5adOCizixHIzgMB5XeS3yRT0aUZTByAdHZG3rfMoR7oODznBOXUh
-	 hwBcVoG58mUW9YR/wqqKMI66QjrsW6qisjEQO+jY=
+	b=p1GSmI6ms7/FEML9Cy18pl7iRvD0Jm6oUbI73yS+3pTvMrbXqvaFXgEFJiM72EPqF
+	 k9c7CLEgg6ahQiV+/GtDzq727IxGdD75jeECmdGGG8zCMzk3KPuEtP4jnKD8K0NvM3
+	 oSkVm9iZkIcvNnIF1wQ5gW5B9wIXx/dOp9AH5jx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Savic <savicaleksa83@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 097/122] hwmon: (aquacomputer_d5next) Add selective 200ms delay after sending ctrl report
-Date: Mon, 28 Aug 2023 12:13:32 +0200
-Message-ID: <20230828101159.627544601@linuxfoundation.org>
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Hardik Garg <hargar@linux.microsoft.com>
+Subject: [PATCH 6.1 098/122] selftests/net: mv bpf/nat6to4.c to net folder
+Date: Mon, 28 Aug 2023 12:13:33 +0200
+Message-ID: <20230828101159.664608640@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -33,159 +35,733 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksa Savic <savicaleksa83@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 56b930dcd88c2adc261410501c402c790980bdb5 upstream.
+commit 3c107f36db061603bee7564fbd6388b1f1879fd3 upstream.
 
-Add a 200ms delay after sending a ctrl report to Quadro,
-Octo, D5 Next and Aquaero to give them enough time to
-process the request and save the data to memory. Otherwise,
-under heavier userspace loads where multiple sysfs entries
-are usually set in quick succession, a new ctrl report could
-be requested from the device while it's still processing the
-previous one and fail with -EPIPE. The delay is only applied
-if two ctrl report operations are near each other in time.
+There are some issues with the bpf/nat6to4.c building.
 
-Reported by a user on Github [1] and tested by both of us.
+1. It use TEST_CUSTOM_PROGS, which will add the nat6to4.o to
+   kselftest-list file and run by common run_tests.
+2. When building the test via `make -C tools/testing/selftests/
+   TARGETS="net"`, the nat6to4.o will be build in selftests/net/bpf/
+   folder. But in test udpgro_frglist.sh it refers to ../bpf/nat6to4.o.
+   The correct path should be ./bpf/nat6to4.o.
+3. If building the test via `make -C tools/testing/selftests/ TARGETS="net"
+   install`. The nat6to4.o will be installed to kselftest_install/net/
+   folder. Then the udpgro_frglist.sh should refer to ./nat6to4.o.
 
-[1] https://github.com/aleksamagicka/aquacomputer_d5next-hwmon/issues/82
+To fix the confusing test path, let's just move the nat6to4.c to net folder
+and build it as TEST_GEN_FILES.
 
-Fixes: 752b927951ea ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer Octo")
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
-Link: https://lore.kernel.org/r/20230807172004.456968-1-savicaleksa83@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ removed Aquaero support as it's not in 6.1 ]
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
+Fixes: edae34a3ed92 ("selftests net: add UDP GRO fraglist + bpf self-tests")
+Tested-by: Björn Töpel <bjorn@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20230118020927.3971864-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/Makefile          | 50 ++++++++++++++++++-
+ tools/testing/selftests/net/bpf/Makefile      | 14 ------
+ .../testing/selftests/net/{bpf => }/nat6to4.c |  0
+ tools/testing/selftests/net/Makefile          |   50 ++++
+ tools/testing/selftests/net/bpf/Makefile      |   14 -
+ tools/testing/selftests/net/bpf/nat6to4.c     |  285 --------------------------
+ tools/testing/selftests/net/nat6to4.c         |  285 ++++++++++++++++++++++++++
+ tools/testing/selftests/net/udpgro_frglist.sh |    8 
+ 5 files changed, 337 insertions(+), 305 deletions(-)
+ delete mode 100644 tools/testing/selftests/net/bpf/Makefile
+ rename tools/testing/selftests/net/{bpf => }/nat6to4.c (100%)
 
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -12,9 +12,11 @@
+--- a/tools/testing/selftests/net/Makefile
++++ b/tools/testing/selftests/net/Makefile
+@@ -71,14 +71,60 @@ TEST_GEN_FILES += bind_bhash
+ TEST_GEN_PROGS += sk_bind_sendto_listen
+ TEST_GEN_PROGS += sk_connect_zero_addr
+ TEST_PROGS += test_ingress_egress_chaining.sh
++TEST_GEN_FILES += nat6to4.o
  
- #include <linux/crc16.h>
- #include <linux/debugfs.h>
-+#include <linux/delay.h>
- #include <linux/hid.h>
- #include <linux/hwmon.h>
- #include <linux/jiffies.h>
-+#include <linux/ktime.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/seq_file.h>
-@@ -49,6 +51,8 @@ static const char *const aqc_device_name
+ TEST_FILES := settings
  
- #define CTRL_REPORT_ID			0x03
+ include ../lib.mk
  
-+#define CTRL_REPORT_DELAY		200	/* ms */
+-include bpf/Makefile
+-
+ $(OUTPUT)/reuseport_bpf_numa: LDLIBS += -lnuma
+ $(OUTPUT)/tcp_mmap: LDLIBS += -lpthread
+ $(OUTPUT)/tcp_inq: LDLIBS += -lpthread
+ $(OUTPUT)/bind_bhash: LDLIBS += -lpthread
 +
- /* The HID report that the official software always sends
-  * after writing values, currently same for all devices
-  */
-@@ -269,6 +273,9 @@ struct aqc_data {
- 	enum kinds kind;
- 	const char *name;
- 
-+	ktime_t last_ctrl_report_op;
-+	int ctrl_report_delay;	/* Delay between two ctrl report operations, in ms */
++# Rules to generate bpf obj nat6to4.o
++CLANG ?= clang
++SCRATCH_DIR := $(OUTPUT)/tools
++BUILD_DIR := $(SCRATCH_DIR)/build
++BPFDIR := $(abspath ../../../lib/bpf)
++APIDIR := $(abspath ../../../include/uapi)
 +
- 	int buffer_size;
- 	u8 *buffer;
- 	int checksum_start;
-@@ -325,17 +332,35 @@ static int aqc_pwm_to_percent(long val)
- 	return DIV_ROUND_CLOSEST(val * 100 * 100, 255);
- }
- 
-+static void aqc_delay_ctrl_report(struct aqc_data *priv)
++CCINCLUDE += -I../bpf
++CCINCLUDE += -I../../../../usr/include/
++CCINCLUDE += -I$(SCRATCH_DIR)/include
++
++BPFOBJ := $(BUILD_DIR)/libbpf/libbpf.a
++
++MAKE_DIRS := $(BUILD_DIR)/libbpf
++$(MAKE_DIRS):
++	mkdir -p $@
++
++# Get Clang's default includes on this system, as opposed to those seen by
++# '-target bpf'. This fixes "missing" files on some architectures/distros,
++# such as asm/byteorder.h, asm/socket.h, asm/sockios.h, sys/cdefs.h etc.
++#
++# Use '-idirafter': Don't interfere with include mechanics except where the
++# build would have failed anyways.
++define get_sys_includes
++$(shell $(1) $(2) -v -E - </dev/null 2>&1 \
++	| sed -n '/<...> search starts here:/,/End of search list./{ s| \(/.*\)|-idirafter \1|p }') \
++$(shell $(1) $(2) -dM -E - </dev/null | grep '__riscv_xlen ' | awk '{printf("-D__riscv_xlen=%d -D__BITS_PER_LONG=%d", $$3, $$3)}')
++endef
++
++ifneq ($(CROSS_COMPILE),)
++CLANG_TARGET_ARCH = --target=$(notdir $(CROSS_COMPILE:%-=%))
++endif
++
++CLANG_SYS_INCLUDES = $(call get_sys_includes,$(CLANG),$(CLANG_TARGET_ARCH))
++
++$(OUTPUT)/nat6to4.o: nat6to4.c $(BPFOBJ) | $(MAKE_DIRS)
++	$(CLANG) -O2 -target bpf -c $< $(CCINCLUDE) $(CLANG_SYS_INCLUDES) -o $@
++
++$(BPFOBJ): $(wildcard $(BPFDIR)/*.[ch] $(BPFDIR)/Makefile)		       \
++	   $(APIDIR)/linux/bpf.h					       \
++	   | $(BUILD_DIR)/libbpf
++	$(MAKE) $(submake_extras) -C $(BPFDIR) OUTPUT=$(BUILD_DIR)/libbpf/     \
++		    EXTRA_CFLAGS='-g -O0'				       \
++		    DESTDIR=$(SCRATCH_DIR) prefix= all install_headers
++
++EXTRA_CLEAN := $(SCRATCH_DIR)
+--- a/tools/testing/selftests/net/bpf/Makefile
++++ /dev/null
+@@ -1,14 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0
+-
+-CLANG ?= clang
+-CCINCLUDE += -I../../bpf
+-CCINCLUDE += -I../../../../lib
+-CCINCLUDE += -I../../../../../usr/include/
+-
+-TEST_CUSTOM_PROGS = $(OUTPUT)/bpf/nat6to4.o
+-all: $(TEST_CUSTOM_PROGS)
+-
+-$(OUTPUT)/%.o: %.c
+-	$(CLANG) -O2 -target bpf -c $< $(CCINCLUDE) -o $@
+-
+-EXTRA_CLEAN := $(TEST_CUSTOM_PROGS)
+--- a/tools/testing/selftests/net/bpf/nat6to4.c
++++ /dev/null
+@@ -1,285 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * This code is taken from the Android Open Source Project and the author
+- * (Maciej Żenczykowski) has gave permission to relicense it under the
+- * GPLv2. Therefore this program is free software;
+- * You can redistribute it and/or modify it under the terms of the GNU
+- * General Public License version 2 as published by the Free Software
+- * Foundation
+-
+- * The original headers, including the original license headers, are
+- * included below for completeness.
+- *
+- * Copyright (C) 2019 The Android Open Source Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-#include <linux/bpf.h>
+-#include <linux/if.h>
+-#include <linux/if_ether.h>
+-#include <linux/if_packet.h>
+-#include <linux/in.h>
+-#include <linux/in6.h>
+-#include <linux/ip.h>
+-#include <linux/ipv6.h>
+-#include <linux/pkt_cls.h>
+-#include <linux/swab.h>
+-#include <stdbool.h>
+-#include <stdint.h>
+-
+-
+-#include <linux/udp.h>
+-
+-#include <bpf/bpf_helpers.h>
+-#include <bpf/bpf_endian.h>
+-
+-#define IP_DF 0x4000  // Flag: "Don't Fragment"
+-
+-SEC("schedcls/ingress6/nat_6")
+-int sched_cls_ingress6_nat_6_prog(struct __sk_buff *skb)
+-{
+-	const int l2_header_size =  sizeof(struct ethhdr);
+-	void *data = (void *)(long)skb->data;
+-	const void *data_end = (void *)(long)skb->data_end;
+-	const struct ethhdr * const eth = data;  // used iff is_ethernet
+-	const struct ipv6hdr * const ip6 =  (void *)(eth + 1);
+-
+-	// Require ethernet dst mac address to be our unicast address.
+-	if  (skb->pkt_type != PACKET_HOST)
+-		return TC_ACT_OK;
+-
+-	// Must be meta-ethernet IPv6 frame
+-	if (skb->protocol != bpf_htons(ETH_P_IPV6))
+-		return TC_ACT_OK;
+-
+-	// Must have (ethernet and) ipv6 header
+-	if (data + l2_header_size + sizeof(*ip6) > data_end)
+-		return TC_ACT_OK;
+-
+-	// Ethertype - if present - must be IPv6
+-	if (eth->h_proto != bpf_htons(ETH_P_IPV6))
+-		return TC_ACT_OK;
+-
+-	// IP version must be 6
+-	if (ip6->version != 6)
+-		return TC_ACT_OK;
+-	// Maximum IPv6 payload length that can be translated to IPv4
+-	if (bpf_ntohs(ip6->payload_len) > 0xFFFF - sizeof(struct iphdr))
+-		return TC_ACT_OK;
+-	switch (ip6->nexthdr) {
+-	case IPPROTO_TCP:  // For TCP & UDP the checksum neutrality of the chosen IPv6
+-	case IPPROTO_UDP:  // address means there is no need to update their checksums.
+-	case IPPROTO_GRE:  // We do not need to bother looking at GRE/ESP headers,
+-	case IPPROTO_ESP:  // since there is never a checksum to update.
+-		break;
+-	default:  // do not know how to handle anything else
+-		return TC_ACT_OK;
+-	}
+-
+-	struct ethhdr eth2;  // used iff is_ethernet
+-
+-	eth2 = *eth;                     // Copy over the ethernet header (src/dst mac)
+-	eth2.h_proto = bpf_htons(ETH_P_IP);  // But replace the ethertype
+-
+-	struct iphdr ip = {
+-		.version = 4,                                                      // u4
+-		.ihl = sizeof(struct iphdr) / sizeof(__u32),                       // u4
+-		.tos = (ip6->priority << 4) + (ip6->flow_lbl[0] >> 4),             // u8
+-		.tot_len = bpf_htons(bpf_ntohs(ip6->payload_len) + sizeof(struct iphdr)),  // u16
+-		.id = 0,                                                           // u16
+-		.frag_off = bpf_htons(IP_DF),                                          // u16
+-		.ttl = ip6->hop_limit,                                             // u8
+-		.protocol = ip6->nexthdr,                                          // u8
+-		.check = 0,                                                        // u16
+-		.saddr = 0x0201a8c0,                            // u32
+-		.daddr = 0x0101a8c0,                                         // u32
+-	};
+-
+-	// Calculate the IPv4 one's complement checksum of the IPv4 header.
+-	__wsum sum4 = 0;
+-
+-	for (int i = 0; i < sizeof(ip) / sizeof(__u16); ++i)
+-		sum4 += ((__u16 *)&ip)[i];
+-
+-	// Note that sum4 is guaranteed to be non-zero by virtue of ip.version == 4
+-	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse u32 into range 1 .. 0x1FFFE
+-	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse any potential carry into u16
+-	ip.check = (__u16)~sum4;                // sum4 cannot be zero, so this is never 0xFFFF
+-
+-	// Calculate the *negative* IPv6 16-bit one's complement checksum of the IPv6 header.
+-	__wsum sum6 = 0;
+-	// We'll end up with a non-zero sum due to ip6->version == 6 (which has '0' bits)
+-	for (int i = 0; i < sizeof(*ip6) / sizeof(__u16); ++i)
+-		sum6 += ~((__u16 *)ip6)[i];  // note the bitwise negation
+-
+-	// Note that there is no L4 checksum update: we are relying on the checksum neutrality
+-	// of the ipv6 address chosen by netd's ClatdController.
+-
+-	// Packet mutations begin - point of no return, but if this first modification fails
+-	// the packet is probably still pristine, so let clatd handle it.
+-	if (bpf_skb_change_proto(skb, bpf_htons(ETH_P_IP), 0))
+-		return TC_ACT_OK;
+-	bpf_csum_update(skb, sum6);
+-
+-	data = (void *)(long)skb->data;
+-	data_end = (void *)(long)skb->data_end;
+-	if (data + l2_header_size + sizeof(struct iphdr) > data_end)
+-		return TC_ACT_SHOT;
+-
+-	struct ethhdr *new_eth = data;
+-
+-	// Copy over the updated ethernet header
+-	*new_eth = eth2;
+-
+-	// Copy over the new ipv4 header.
+-	*(struct iphdr *)(new_eth + 1) = ip;
+-	return bpf_redirect(skb->ifindex, BPF_F_INGRESS);
+-}
+-
+-SEC("schedcls/egress4/snat4")
+-int sched_cls_egress4_snat4_prog(struct __sk_buff *skb)
+-{
+-	const int l2_header_size =  sizeof(struct ethhdr);
+-	void *data = (void *)(long)skb->data;
+-	const void *data_end = (void *)(long)skb->data_end;
+-	const struct ethhdr *const eth = data;  // used iff is_ethernet
+-	const struct iphdr *const ip4 = (void *)(eth + 1);
+-
+-	// Must be meta-ethernet IPv4 frame
+-	if (skb->protocol != bpf_htons(ETH_P_IP))
+-		return TC_ACT_OK;
+-
+-	// Must have ipv4 header
+-	if (data + l2_header_size + sizeof(struct ipv6hdr) > data_end)
+-		return TC_ACT_OK;
+-
+-	// Ethertype - if present - must be IPv4
+-	if (eth->h_proto != bpf_htons(ETH_P_IP))
+-		return TC_ACT_OK;
+-
+-	// IP version must be 4
+-	if (ip4->version != 4)
+-		return TC_ACT_OK;
+-
+-	// We cannot handle IP options, just standard 20 byte == 5 dword minimal IPv4 header
+-	if (ip4->ihl != 5)
+-		return TC_ACT_OK;
+-
+-	// Maximum IPv6 payload length that can be translated to IPv4
+-	if (bpf_htons(ip4->tot_len) > 0xFFFF - sizeof(struct ipv6hdr))
+-		return TC_ACT_OK;
+-
+-	// Calculate the IPv4 one's complement checksum of the IPv4 header.
+-	__wsum sum4 = 0;
+-
+-	for (int i = 0; i < sizeof(*ip4) / sizeof(__u16); ++i)
+-		sum4 += ((__u16 *)ip4)[i];
+-
+-	// Note that sum4 is guaranteed to be non-zero by virtue of ip4->version == 4
+-	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse u32 into range 1 .. 0x1FFFE
+-	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse any potential carry into u16
+-	// for a correct checksum we should get *a* zero, but sum4 must be positive, ie 0xFFFF
+-	if (sum4 != 0xFFFF)
+-		return TC_ACT_OK;
+-
+-	// Minimum IPv4 total length is the size of the header
+-	if (bpf_ntohs(ip4->tot_len) < sizeof(*ip4))
+-		return TC_ACT_OK;
+-
+-	// We are incapable of dealing with IPv4 fragments
+-	if (ip4->frag_off & ~bpf_htons(IP_DF))
+-		return TC_ACT_OK;
+-
+-	switch (ip4->protocol) {
+-	case IPPROTO_TCP:  // For TCP & UDP the checksum neutrality of the chosen IPv6
+-	case IPPROTO_GRE:  // address means there is no need to update their checksums.
+-	case IPPROTO_ESP:  // We do not need to bother looking at GRE/ESP headers,
+-		break;         // since there is never a checksum to update.
+-
+-	case IPPROTO_UDP:  // See above comment, but must also have UDP header...
+-		if (data + sizeof(*ip4) + sizeof(struct udphdr) > data_end)
+-			return TC_ACT_OK;
+-		const struct udphdr *uh = (const struct udphdr *)(ip4 + 1);
+-		// If IPv4/UDP checksum is 0 then fallback to clatd so it can calculate the
+-		// checksum.  Otherwise the network or more likely the NAT64 gateway might
+-		// drop the packet because in most cases IPv6/UDP packets with a zero checksum
+-		// are invalid. See RFC 6935.  TODO: calculate checksum via bpf_csum_diff()
+-		if (!uh->check)
+-			return TC_ACT_OK;
+-		break;
+-
+-	default:  // do not know how to handle anything else
+-		return TC_ACT_OK;
+-	}
+-	struct ethhdr eth2;  // used iff is_ethernet
+-
+-	eth2 = *eth;                     // Copy over the ethernet header (src/dst mac)
+-	eth2.h_proto = bpf_htons(ETH_P_IPV6);  // But replace the ethertype
+-
+-	struct ipv6hdr ip6 = {
+-		.version = 6,                                    // __u8:4
+-		.priority = ip4->tos >> 4,                       // __u8:4
+-		.flow_lbl = {(ip4->tos & 0xF) << 4, 0, 0},       // __u8[3]
+-		.payload_len = bpf_htons(bpf_ntohs(ip4->tot_len) - 20),  // __be16
+-		.nexthdr = ip4->protocol,                        // __u8
+-		.hop_limit = ip4->ttl,                           // __u8
+-	};
+-	ip6.saddr.in6_u.u6_addr32[0] = bpf_htonl(0x20010db8);
+-	ip6.saddr.in6_u.u6_addr32[1] = 0;
+-	ip6.saddr.in6_u.u6_addr32[2] = 0;
+-	ip6.saddr.in6_u.u6_addr32[3] = bpf_htonl(1);
+-	ip6.daddr.in6_u.u6_addr32[0] = bpf_htonl(0x20010db8);
+-	ip6.daddr.in6_u.u6_addr32[1] = 0;
+-	ip6.daddr.in6_u.u6_addr32[2] = 0;
+-	ip6.daddr.in6_u.u6_addr32[3] = bpf_htonl(2);
+-
+-	// Calculate the IPv6 16-bit one's complement checksum of the IPv6 header.
+-	__wsum sum6 = 0;
+-	// We'll end up with a non-zero sum due to ip6.version == 6
+-	for (int i = 0; i < sizeof(ip6) / sizeof(__u16); ++i)
+-		sum6 += ((__u16 *)&ip6)[i];
+-
+-	// Packet mutations begin - point of no return, but if this first modification fails
+-	// the packet is probably still pristine, so let clatd handle it.
+-	if (bpf_skb_change_proto(skb, bpf_htons(ETH_P_IPV6), 0))
+-		return TC_ACT_OK;
+-
+-	// This takes care of updating the skb->csum field for a CHECKSUM_COMPLETE packet.
+-	// In such a case, skb->csum is a 16-bit one's complement sum of the entire payload,
+-	// thus we need to subtract out the ipv4 header's sum, and add in the ipv6 header's sum.
+-	// However, we've already verified the ipv4 checksum is correct and thus 0.
+-	// Thus we only need to add the ipv6 header's sum.
+-	//
+-	// bpf_csum_update() always succeeds if the skb is CHECKSUM_COMPLETE and returns an error
+-	// (-ENOTSUPP) if it isn't.  So we just ignore the return code (see above for more details).
+-	bpf_csum_update(skb, sum6);
+-
+-	// bpf_skb_change_proto() invalidates all pointers - reload them.
+-	data = (void *)(long)skb->data;
+-	data_end = (void *)(long)skb->data_end;
+-
+-	// I cannot think of any valid way for this error condition to trigger, however I do
+-	// believe the explicit check is required to keep the in kernel ebpf verifier happy.
+-	if (data + l2_header_size + sizeof(ip6) > data_end)
+-		return TC_ACT_SHOT;
+-
+-	struct ethhdr *new_eth = data;
+-
+-	// Copy over the updated ethernet header
+-	*new_eth = eth2;
+-	// Copy over the new ipv4 header.
+-	*(struct ipv6hdr *)(new_eth + 1) = ip6;
+-	return TC_ACT_OK;
+-}
+-
+-char _license[] SEC("license") = ("GPL");
+--- /dev/null
++++ b/tools/testing/selftests/net/nat6to4.c
+@@ -0,0 +1,285 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * This code is taken from the Android Open Source Project and the author
++ * (Maciej Żenczykowski) has gave permission to relicense it under the
++ * GPLv2. Therefore this program is free software;
++ * You can redistribute it and/or modify it under the terms of the GNU
++ * General Public License version 2 as published by the Free Software
++ * Foundation
++
++ * The original headers, including the original license headers, are
++ * included below for completeness.
++ *
++ * Copyright (C) 2019 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++#include <linux/bpf.h>
++#include <linux/if.h>
++#include <linux/if_ether.h>
++#include <linux/if_packet.h>
++#include <linux/in.h>
++#include <linux/in6.h>
++#include <linux/ip.h>
++#include <linux/ipv6.h>
++#include <linux/pkt_cls.h>
++#include <linux/swab.h>
++#include <stdbool.h>
++#include <stdint.h>
++
++
++#include <linux/udp.h>
++
++#include <bpf/bpf_helpers.h>
++#include <bpf/bpf_endian.h>
++
++#define IP_DF 0x4000  // Flag: "Don't Fragment"
++
++SEC("schedcls/ingress6/nat_6")
++int sched_cls_ingress6_nat_6_prog(struct __sk_buff *skb)
 +{
-+	/*
-+	 * If previous read or write is too close to this one, delay the current operation
-+	 * to give the device enough time to process the previous one.
-+	 */
-+	if (priv->ctrl_report_delay) {
-+		s64 delta = ktime_ms_delta(ktime_get(), priv->last_ctrl_report_op);
++	const int l2_header_size =  sizeof(struct ethhdr);
++	void *data = (void *)(long)skb->data;
++	const void *data_end = (void *)(long)skb->data_end;
++	const struct ethhdr * const eth = data;  // used iff is_ethernet
++	const struct ipv6hdr * const ip6 =  (void *)(eth + 1);
 +
-+		if (delta < priv->ctrl_report_delay)
-+			msleep(priv->ctrl_report_delay - delta);
++	// Require ethernet dst mac address to be our unicast address.
++	if  (skb->pkt_type != PACKET_HOST)
++		return TC_ACT_OK;
++
++	// Must be meta-ethernet IPv6 frame
++	if (skb->protocol != bpf_htons(ETH_P_IPV6))
++		return TC_ACT_OK;
++
++	// Must have (ethernet and) ipv6 header
++	if (data + l2_header_size + sizeof(*ip6) > data_end)
++		return TC_ACT_OK;
++
++	// Ethertype - if present - must be IPv6
++	if (eth->h_proto != bpf_htons(ETH_P_IPV6))
++		return TC_ACT_OK;
++
++	// IP version must be 6
++	if (ip6->version != 6)
++		return TC_ACT_OK;
++	// Maximum IPv6 payload length that can be translated to IPv4
++	if (bpf_ntohs(ip6->payload_len) > 0xFFFF - sizeof(struct iphdr))
++		return TC_ACT_OK;
++	switch (ip6->nexthdr) {
++	case IPPROTO_TCP:  // For TCP & UDP the checksum neutrality of the chosen IPv6
++	case IPPROTO_UDP:  // address means there is no need to update their checksums.
++	case IPPROTO_GRE:  // We do not need to bother looking at GRE/ESP headers,
++	case IPPROTO_ESP:  // since there is never a checksum to update.
++		break;
++	default:  // do not know how to handle anything else
++		return TC_ACT_OK;
 +	}
++
++	struct ethhdr eth2;  // used iff is_ethernet
++
++	eth2 = *eth;                     // Copy over the ethernet header (src/dst mac)
++	eth2.h_proto = bpf_htons(ETH_P_IP);  // But replace the ethertype
++
++	struct iphdr ip = {
++		.version = 4,                                                      // u4
++		.ihl = sizeof(struct iphdr) / sizeof(__u32),                       // u4
++		.tos = (ip6->priority << 4) + (ip6->flow_lbl[0] >> 4),             // u8
++		.tot_len = bpf_htons(bpf_ntohs(ip6->payload_len) + sizeof(struct iphdr)),  // u16
++		.id = 0,                                                           // u16
++		.frag_off = bpf_htons(IP_DF),                                          // u16
++		.ttl = ip6->hop_limit,                                             // u8
++		.protocol = ip6->nexthdr,                                          // u8
++		.check = 0,                                                        // u16
++		.saddr = 0x0201a8c0,                            // u32
++		.daddr = 0x0101a8c0,                                         // u32
++	};
++
++	// Calculate the IPv4 one's complement checksum of the IPv4 header.
++	__wsum sum4 = 0;
++
++	for (int i = 0; i < sizeof(ip) / sizeof(__u16); ++i)
++		sum4 += ((__u16 *)&ip)[i];
++
++	// Note that sum4 is guaranteed to be non-zero by virtue of ip.version == 4
++	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse u32 into range 1 .. 0x1FFFE
++	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse any potential carry into u16
++	ip.check = (__u16)~sum4;                // sum4 cannot be zero, so this is never 0xFFFF
++
++	// Calculate the *negative* IPv6 16-bit one's complement checksum of the IPv6 header.
++	__wsum sum6 = 0;
++	// We'll end up with a non-zero sum due to ip6->version == 6 (which has '0' bits)
++	for (int i = 0; i < sizeof(*ip6) / sizeof(__u16); ++i)
++		sum6 += ~((__u16 *)ip6)[i];  // note the bitwise negation
++
++	// Note that there is no L4 checksum update: we are relying on the checksum neutrality
++	// of the ipv6 address chosen by netd's ClatdController.
++
++	// Packet mutations begin - point of no return, but if this first modification fails
++	// the packet is probably still pristine, so let clatd handle it.
++	if (bpf_skb_change_proto(skb, bpf_htons(ETH_P_IP), 0))
++		return TC_ACT_OK;
++	bpf_csum_update(skb, sum6);
++
++	data = (void *)(long)skb->data;
++	data_end = (void *)(long)skb->data_end;
++	if (data + l2_header_size + sizeof(struct iphdr) > data_end)
++		return TC_ACT_SHOT;
++
++	struct ethhdr *new_eth = data;
++
++	// Copy over the updated ethernet header
++	*new_eth = eth2;
++
++	// Copy over the new ipv4 header.
++	*(struct iphdr *)(new_eth + 1) = ip;
++	return bpf_redirect(skb->ifindex, BPF_F_INGRESS);
 +}
 +
- /* Expects the mutex to be locked */
- static int aqc_get_ctrl_data(struct aqc_data *priv)
- {
- 	int ret;
- 
-+	aqc_delay_ctrl_report(priv);
++SEC("schedcls/egress4/snat4")
++int sched_cls_egress4_snat4_prog(struct __sk_buff *skb)
++{
++	const int l2_header_size =  sizeof(struct ethhdr);
++	void *data = (void *)(long)skb->data;
++	const void *data_end = (void *)(long)skb->data_end;
++	const struct ethhdr *const eth = data;  // used iff is_ethernet
++	const struct iphdr *const ip4 = (void *)(eth + 1);
 +
- 	memset(priv->buffer, 0x00, priv->buffer_size);
- 	ret = hid_hw_raw_request(priv->hdev, CTRL_REPORT_ID, priv->buffer, priv->buffer_size,
- 				 HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
- 	if (ret < 0)
- 		ret = -ENODATA;
- 
-+	priv->last_ctrl_report_op = ktime_get();
++	// Must be meta-ethernet IPv4 frame
++	if (skb->protocol != bpf_htons(ETH_P_IP))
++		return TC_ACT_OK;
 +
- 	return ret;
- }
- 
-@@ -345,6 +370,8 @@ static int aqc_send_ctrl_data(struct aqc
- 	int ret;
- 	u16 checksum;
- 
-+	aqc_delay_ctrl_report(priv);
++	// Must have ipv4 header
++	if (data + l2_header_size + sizeof(struct ipv6hdr) > data_end)
++		return TC_ACT_OK;
 +
- 	/* Init and xorout value for CRC-16/USB is 0xffff */
- 	checksum = crc16(0xffff, priv->buffer + priv->checksum_start, priv->checksum_length);
- 	checksum ^= 0xffff;
-@@ -356,12 +383,16 @@ static int aqc_send_ctrl_data(struct aqc
- 	ret = hid_hw_raw_request(priv->hdev, CTRL_REPORT_ID, priv->buffer, priv->buffer_size,
- 				 HID_FEATURE_REPORT, HID_REQ_SET_REPORT);
- 	if (ret < 0)
--		return ret;
-+		goto record_access_and_ret;
- 
- 	/* The official software sends this report after every change, so do it here as well */
- 	ret = hid_hw_raw_request(priv->hdev, SECONDARY_CTRL_REPORT_ID, secondary_ctrl_report,
- 				 SECONDARY_CTRL_REPORT_SIZE, HID_FEATURE_REPORT,
- 				 HID_REQ_SET_REPORT);
++	// Ethertype - if present - must be IPv4
++	if (eth->h_proto != bpf_htons(ETH_P_IP))
++		return TC_ACT_OK;
 +
-+record_access_and_ret:
-+	priv->last_ctrl_report_op = ktime_get();
++	// IP version must be 4
++	if (ip4->version != 4)
++		return TC_ACT_OK;
 +
- 	return ret;
- }
++	// We cannot handle IP options, just standard 20 byte == 5 dword minimal IPv4 header
++	if (ip4->ihl != 5)
++		return TC_ACT_OK;
++
++	// Maximum IPv6 payload length that can be translated to IPv4
++	if (bpf_htons(ip4->tot_len) > 0xFFFF - sizeof(struct ipv6hdr))
++		return TC_ACT_OK;
++
++	// Calculate the IPv4 one's complement checksum of the IPv4 header.
++	__wsum sum4 = 0;
++
++	for (int i = 0; i < sizeof(*ip4) / sizeof(__u16); ++i)
++		sum4 += ((__u16 *)ip4)[i];
++
++	// Note that sum4 is guaranteed to be non-zero by virtue of ip4->version == 4
++	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse u32 into range 1 .. 0x1FFFE
++	sum4 = (sum4 & 0xFFFF) + (sum4 >> 16);  // collapse any potential carry into u16
++	// for a correct checksum we should get *a* zero, but sum4 must be positive, ie 0xFFFF
++	if (sum4 != 0xFFFF)
++		return TC_ACT_OK;
++
++	// Minimum IPv4 total length is the size of the header
++	if (bpf_ntohs(ip4->tot_len) < sizeof(*ip4))
++		return TC_ACT_OK;
++
++	// We are incapable of dealing with IPv4 fragments
++	if (ip4->frag_off & ~bpf_htons(IP_DF))
++		return TC_ACT_OK;
++
++	switch (ip4->protocol) {
++	case IPPROTO_TCP:  // For TCP & UDP the checksum neutrality of the chosen IPv6
++	case IPPROTO_GRE:  // address means there is no need to update their checksums.
++	case IPPROTO_ESP:  // We do not need to bother looking at GRE/ESP headers,
++		break;         // since there is never a checksum to update.
++
++	case IPPROTO_UDP:  // See above comment, but must also have UDP header...
++		if (data + sizeof(*ip4) + sizeof(struct udphdr) > data_end)
++			return TC_ACT_OK;
++		const struct udphdr *uh = (const struct udphdr *)(ip4 + 1);
++		// If IPv4/UDP checksum is 0 then fallback to clatd so it can calculate the
++		// checksum.  Otherwise the network or more likely the NAT64 gateway might
++		// drop the packet because in most cases IPv6/UDP packets with a zero checksum
++		// are invalid. See RFC 6935.  TODO: calculate checksum via bpf_csum_diff()
++		if (!uh->check)
++			return TC_ACT_OK;
++		break;
++
++	default:  // do not know how to handle anything else
++		return TC_ACT_OK;
++	}
++	struct ethhdr eth2;  // used iff is_ethernet
++
++	eth2 = *eth;                     // Copy over the ethernet header (src/dst mac)
++	eth2.h_proto = bpf_htons(ETH_P_IPV6);  // But replace the ethertype
++
++	struct ipv6hdr ip6 = {
++		.version = 6,                                    // __u8:4
++		.priority = ip4->tos >> 4,                       // __u8:4
++		.flow_lbl = {(ip4->tos & 0xF) << 4, 0, 0},       // __u8[3]
++		.payload_len = bpf_htons(bpf_ntohs(ip4->tot_len) - 20),  // __be16
++		.nexthdr = ip4->protocol,                        // __u8
++		.hop_limit = ip4->ttl,                           // __u8
++	};
++	ip6.saddr.in6_u.u6_addr32[0] = bpf_htonl(0x20010db8);
++	ip6.saddr.in6_u.u6_addr32[1] = 0;
++	ip6.saddr.in6_u.u6_addr32[2] = 0;
++	ip6.saddr.in6_u.u6_addr32[3] = bpf_htonl(1);
++	ip6.daddr.in6_u.u6_addr32[0] = bpf_htonl(0x20010db8);
++	ip6.daddr.in6_u.u6_addr32[1] = 0;
++	ip6.daddr.in6_u.u6_addr32[2] = 0;
++	ip6.daddr.in6_u.u6_addr32[3] = bpf_htonl(2);
++
++	// Calculate the IPv6 16-bit one's complement checksum of the IPv6 header.
++	__wsum sum6 = 0;
++	// We'll end up with a non-zero sum due to ip6.version == 6
++	for (int i = 0; i < sizeof(ip6) / sizeof(__u16); ++i)
++		sum6 += ((__u16 *)&ip6)[i];
++
++	// Packet mutations begin - point of no return, but if this first modification fails
++	// the packet is probably still pristine, so let clatd handle it.
++	if (bpf_skb_change_proto(skb, bpf_htons(ETH_P_IPV6), 0))
++		return TC_ACT_OK;
++
++	// This takes care of updating the skb->csum field for a CHECKSUM_COMPLETE packet.
++	// In such a case, skb->csum is a 16-bit one's complement sum of the entire payload,
++	// thus we need to subtract out the ipv4 header's sum, and add in the ipv6 header's sum.
++	// However, we've already verified the ipv4 checksum is correct and thus 0.
++	// Thus we only need to add the ipv6 header's sum.
++	//
++	// bpf_csum_update() always succeeds if the skb is CHECKSUM_COMPLETE and returns an error
++	// (-ENOTSUPP) if it isn't.  So we just ignore the return code (see above for more details).
++	bpf_csum_update(skb, sum6);
++
++	// bpf_skb_change_proto() invalidates all pointers - reload them.
++	data = (void *)(long)skb->data;
++	data_end = (void *)(long)skb->data_end;
++
++	// I cannot think of any valid way for this error condition to trigger, however I do
++	// believe the explicit check is required to keep the in kernel ebpf verifier happy.
++	if (data + l2_header_size + sizeof(ip6) > data_end)
++		return TC_ACT_SHOT;
++
++	struct ethhdr *new_eth = data;
++
++	// Copy over the updated ethernet header
++	*new_eth = eth2;
++	// Copy over the new ipv4 header.
++	*(struct ipv6hdr *)(new_eth + 1) = ip6;
++	return TC_ACT_OK;
++}
++
++char _license[] SEC("license") = ("GPL");
+--- a/tools/testing/selftests/net/udpgro_frglist.sh
++++ b/tools/testing/selftests/net/udpgro_frglist.sh
+@@ -40,8 +40,8 @@ run_one() {
  
-@@ -853,6 +884,7 @@ static int aqc_probe(struct hid_device *
- 		priv->virtual_temp_sensor_start_offset = D5NEXT_VIRTUAL_SENSORS_START;
- 		priv->power_cycle_count_offset = D5NEXT_POWER_CYCLES;
- 		priv->buffer_size = D5NEXT_CTRL_REPORT_SIZE;
-+		priv->ctrl_report_delay = CTRL_REPORT_DELAY;
+ 	ip -n "${PEER_NS}" link set veth1 xdp object ${BPF_FILE} section xdp
+ 	tc -n "${PEER_NS}" qdisc add dev veth1 clsact
+-	tc -n "${PEER_NS}" filter add dev veth1 ingress prio 4 protocol ipv6 bpf object-file ../bpf/nat6to4.o section schedcls/ingress6/nat_6  direct-action
+-	tc -n "${PEER_NS}" filter add dev veth1 egress prio 4 protocol ip bpf object-file ../bpf/nat6to4.o section schedcls/egress4/snat4 direct-action
++	tc -n "${PEER_NS}" filter add dev veth1 ingress prio 4 protocol ipv6 bpf object-file nat6to4.o section schedcls/ingress6/nat_6  direct-action
++	tc -n "${PEER_NS}" filter add dev veth1 egress prio 4 protocol ip bpf object-file nat6to4.o section schedcls/egress4/snat4 direct-action
+         echo ${rx_args}
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx ${rx_args} -r &
  
- 		priv->temp_label = label_d5next_temp;
- 		priv->virtual_temp_label = label_virtual_temp_sensors;
-@@ -893,6 +925,7 @@ static int aqc_probe(struct hid_device *
- 		priv->virtual_temp_sensor_start_offset = OCTO_VIRTUAL_SENSORS_START;
- 		priv->power_cycle_count_offset = OCTO_POWER_CYCLES;
- 		priv->buffer_size = OCTO_CTRL_REPORT_SIZE;
-+		priv->ctrl_report_delay = CTRL_REPORT_DELAY;
+@@ -88,8 +88,8 @@ if [ ! -f ${BPF_FILE} ]; then
+ 	exit -1
+ fi
  
- 		priv->temp_label = label_temp_sensors;
- 		priv->virtual_temp_label = label_virtual_temp_sensors;
-@@ -913,6 +946,7 @@ static int aqc_probe(struct hid_device *
- 		priv->virtual_temp_sensor_start_offset = QUADRO_VIRTUAL_SENSORS_START;
- 		priv->power_cycle_count_offset = QUADRO_POWER_CYCLES;
- 		priv->buffer_size = QUADRO_CTRL_REPORT_SIZE;
-+		priv->ctrl_report_delay = CTRL_REPORT_DELAY;
- 		priv->flow_sensor_offset = QUADRO_FLOW_SENSOR_OFFSET;
+-if [ ! -f bpf/nat6to4.o ]; then
+-	echo "Missing nat6to4 helper. Build bpfnat6to4.o selftest first"
++if [ ! -f nat6to4.o ]; then
++	echo "Missing nat6to4 helper. Build bpf nat6to4.o selftest first"
+ 	exit -1
+ fi
  
- 		priv->temp_label = label_temp_sensors;
 
 
