@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAEA11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:38:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3D3C433C8;
-	Mon, 28 Aug 2023 10:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3617411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:38:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB7AC433CA;
+	Mon, 28 Aug 2023 10:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219096;
-	bh=MXB80s9WICmlk85v73omaViUgArJ/jaCA1XdKJunE8M=;
+	s=korg; t=1693219099;
+	bh=ZIucK3oRjNS1SD2iAoSgDvO2XJ3s1uvgf5dOpYYZzeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYFGvVmcu18R5OtGkt7PS7mIkTZZSuUJaMTvsV4qSZSWZYRfhEAbkCbOhY/dHVLKL
-	 PF8ozJcZOaw1mbv/ttbMsEYy0Bcl2/6KVLkXRPCng8jqMSwfp7xNEqa4fthLZiYkIL
-	 aOO/yvjCmSD6bPOyX+gvn3dMKY6xHrKXZPufT8Cc=
+	b=TKztHXTpa0U9NLbxzllkIxQ3S7fk3DZQDAp94Vxa5njkgcjOtD21aqZY8uxi96/9Q
+	 IzxhhtsjHvBAjCM3p39sQgUIaN2oGNzlQjTJE6uzHCO1nytUKWQNLeD+22kdjRUD37
+	 GbZdUehRdssZVylljjObyDimtjAJhrBwKtFOT2Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/158] ip6_vti: fix slab-use-after-free in decode_session6
-Date: Mon, 28 Aug 2023 12:12:41 +0200
-Message-ID: <20230828101159.439283360@linuxfoundation.org>
+Subject: [PATCH 5.4 073/158] sock: Fix misuse of sk_under_memory_pressure()
+Date: Mon, 28 Aug 2023 12:12:50 +0200
+Message-ID: <20230828101159.744863359@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,115 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Abel Wu <wuyun.abel@bytedance.com>
 
-[ Upstream commit 9fd41f1ba638938c9a1195d09bc6fa3be2712f25 ]
+[ Upstream commit 2d0c88e84e483982067a82073f6125490ddf3614 ]
 
-When ipv6_vti device is set to the qdisc of the sfb type, the cb field
-of the sent skb may be modified during enqueuing. Then,
-slab-use-after-free may occur when ipv6_vti device sends IPv6 packets.
+The status of global socket memory pressure is updated when:
 
-The stack information is as follows:
-BUG: KASAN: slab-use-after-free in decode_session6+0x103f/0x1890
-Read of size 1 at addr ffff88802e08edc2 by task swapper/0/0
-CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-next-20230707-00001-g84e2cad7f979 #410
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-Call Trace:
-<IRQ>
-dump_stack_lvl+0xd9/0x150
-print_address_description.constprop.0+0x2c/0x3c0
-kasan_report+0x11d/0x130
-decode_session6+0x103f/0x1890
-__xfrm_decode_session+0x54/0xb0
-vti6_tnl_xmit+0x3e6/0x1ee0
-dev_hard_start_xmit+0x187/0x700
-sch_direct_xmit+0x1a3/0xc30
-__qdisc_run+0x510/0x17a0
-__dev_queue_xmit+0x2215/0x3b10
-neigh_connected_output+0x3c2/0x550
-ip6_finish_output2+0x55a/0x1550
-ip6_finish_output+0x6b9/0x1270
-ip6_output+0x1f1/0x540
-ndisc_send_skb+0xa63/0x1890
-ndisc_send_rs+0x132/0x6f0
-addrconf_rs_timer+0x3f1/0x870
-call_timer_fn+0x1a0/0x580
-expire_timers+0x29b/0x4b0
-run_timer_softirq+0x326/0x910
-__do_softirq+0x1d4/0x905
-irq_exit_rcu+0xb7/0x120
-sysvec_apic_timer_interrupt+0x97/0xc0
-</IRQ>
-Allocated by task 9176:
-kasan_save_stack+0x22/0x40
-kasan_set_track+0x25/0x30
-__kasan_slab_alloc+0x7f/0x90
-kmem_cache_alloc_node+0x1cd/0x410
-kmalloc_reserve+0x165/0x270
-__alloc_skb+0x129/0x330
-netlink_sendmsg+0x9b1/0xe30
-sock_sendmsg+0xde/0x190
-____sys_sendmsg+0x739/0x920
-___sys_sendmsg+0x110/0x1b0
-__sys_sendmsg+0xf7/0x1c0
-do_syscall_64+0x39/0xb0
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-Freed by task 9176:
-kasan_save_stack+0x22/0x40
-kasan_set_track+0x25/0x30
-kasan_save_free_info+0x2b/0x40
-____kasan_slab_free+0x160/0x1c0
-slab_free_freelist_hook+0x11b/0x220
-kmem_cache_free+0xf0/0x490
-skb_free_head+0x17f/0x1b0
-skb_release_data+0x59c/0x850
-consume_skb+0xd2/0x170
-netlink_unicast+0x54f/0x7f0
-netlink_sendmsg+0x926/0xe30
-sock_sendmsg+0xde/0x190
-____sys_sendmsg+0x739/0x920
-___sys_sendmsg+0x110/0x1b0
-__sys_sendmsg+0xf7/0x1c0
-do_syscall_64+0x39/0xb0
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-The buggy address belongs to the object at ffff88802e08ed00
-which belongs to the cache skbuff_small_head of size 640
-The buggy address is located 194 bytes inside of
-freed 640-byte region [ffff88802e08ed00, ffff88802e08ef80)
+  a) __sk_mem_raise_allocated():
 
-As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
-_decode_session6.") showed, xfrm_decode_session was originally intended
-only for the receive path. IP6CB(skb)->nhoff is not set during
-transmission. Therefore, set the cb field in the skb to 0 before
-sending packets.
+	enter: sk_memory_allocated(sk) >  sysctl_mem[1]
+	leave: sk_memory_allocated(sk) <= sysctl_mem[0]
 
-Fixes: f855691975bb ("xfrm6: Fix the nexthdr offset in _decode_session6.")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+  b) __sk_mem_reduce_allocated():
+
+	leave: sk_under_memory_pressure(sk) &&
+		sk_memory_allocated(sk) < sysctl_mem[0]
+
+So the conditions of leaving global pressure are inconstant, which
+may lead to the situation that one pressured net-memcg prevents the
+global pressure from being cleared when there is indeed no global
+pressure, thus the global constrains are still in effect unexpectedly
+on the other sockets.
+
+This patch fixes this by ignoring the net-memcg's pressure when
+deciding whether should leave global memory pressure.
+
+Fixes: e1aab161e013 ("socket: initial cgroup code.")
+Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Link: https://lore.kernel.org/r/20230816091226.1542-1-wuyun.abel@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_vti.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/sock.h | 6 ++++++
+ net/core/sock.c    | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 8b44d3b53844e..e4cd6909e9bbc 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -558,12 +558,12 @@ vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
- 		    vti6_addr_conflict(t, ipv6_hdr(skb)))
- 			goto tx_err;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index ee8630d6abc16..61f5872aac24f 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1274,6 +1274,12 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
+ 	return sk->sk_prot->memory_pressure != NULL;
+ }
  
--		xfrm_decode_session(skb, &fl, AF_INET6);
- 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
-+		xfrm_decode_session(skb, &fl, AF_INET6);
- 		break;
- 	case htons(ETH_P_IP):
--		xfrm_decode_session(skb, &fl, AF_INET);
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+		xfrm_decode_session(skb, &fl, AF_INET);
- 		break;
- 	default:
- 		goto tx_err;
++static inline bool sk_under_global_memory_pressure(const struct sock *sk)
++{
++	return sk->sk_prot->memory_pressure &&
++		!!*sk->sk_prot->memory_pressure;
++}
++
+ static inline bool sk_under_memory_pressure(const struct sock *sk)
+ {
+ 	if (!sk->sk_prot->memory_pressure)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 636427d400d7f..69b4158a29f74 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2631,7 +2631,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
+ 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
+ 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
+ 
+-	if (sk_under_memory_pressure(sk) &&
++	if (sk_under_global_memory_pressure(sk) &&
+ 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
+ 		sk_leave_memory_pressure(sk);
+ }
 -- 
 2.40.1
 
