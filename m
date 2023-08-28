@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0524711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B5EC433CD;
-	Mon, 28 Aug 2023 10:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBFA11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05D0C433C7;
+	Mon, 28 Aug 2023 10:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218349;
-	bh=aiVp4oHkOt7KAovPGs8xKVLgMt1jWZbitZmZiGjQ6wE=;
+	s=korg; t=1693218352;
+	bh=Soocc7gblpZ6yiVgq0ftqSXH8V9t1CZpkJX+oCj8fxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zp8xJIezL5b5ue5xnM3xj3iVKFIe52ZrJ71a7V/4PCjbwzaCa8E7MohRQeucV1lE0
-	 7jawKTnw8b7BZXSXUYbdg4tucfcP+Q0V+DPDrNu4VxhYbJEhCEydq44EmMWo1IqR1I
-	 aXCmfkt2WdjymKRQjNUmDWInMOXK7WyRPLaplugU=
+	b=S17EwmmuKQ/m8B1Uq9sKxT8b9i+LDk+CZS7Ys7FH08KnN1W2RXzrvfPV/9jFFqeQU
+	 6O5hYA5SR7+v6GGw//klXJZhNNArarembvuxAdhM/AaBnu9XWB+1An07nn9wbcDVrO
+	 PYSfhCG3a1mWbq5COJ3BQiINsLqFFC0urUttETKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@c-s.fr>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 027/129] powerpc/mm: dump segment registers on book3s/32
-Date: Mon, 28 Aug 2023 12:12:01 +0200
-Message-ID: <20230828101154.067199031@linuxfoundation.org>
+Subject: [PATCH 4.19 028/129] powerpc/mm: dump block address translation on book3s/32
+Date: Mon, 28 Aug 2023 12:12:02 +0200
+Message-ID: <20230828101154.108070868@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -42,126 +42,252 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@c-s.fr>
 
-[ Upstream commit 0261a508c9fcb33e60f09cac42032f85c31e2039 ]
+[ Upstream commit 7c91efce1608325634494b25ff6491320208e457 ]
 
-This patch creates a debugfs file to see content of
-segment registers
+This patch adds a debugfs file to dump block address translation:
 
-  # cat /sys/kernel/debug/segment_registers
-  ---[ User Segments ]---
-  0x00000000-0x0fffffff Kern key 1 User key 1 VSID 0xade2b0
-  0x10000000-0x1fffffff Kern key 1 User key 1 VSID 0xade3c1
-  0x20000000-0x2fffffff Kern key 1 User key 1 VSID 0xade4d2
-  0x30000000-0x3fffffff Kern key 1 User key 1 VSID 0xade5e3
-  0x40000000-0x4fffffff Kern key 1 User key 1 VSID 0xade6f4
-  0x50000000-0x5fffffff Kern key 1 User key 1 VSID 0xade805
-  0x60000000-0x6fffffff Kern key 1 User key 1 VSID 0xade916
-  0x70000000-0x7fffffff Kern key 1 User key 1 VSID 0xadea27
-  0x80000000-0x8fffffff Kern key 1 User key 1 VSID 0xadeb38
-  0x90000000-0x9fffffff Kern key 1 User key 1 VSID 0xadec49
-  0xa0000000-0xafffffff Kern key 1 User key 1 VSID 0xaded5a
-  0xb0000000-0xbfffffff Kern key 1 User key 1 VSID 0xadee6b
+~# cat /sys/kernel/debug/powerpc/block_address_translation
+---[ Instruction Block Address Translations ]---
+0:         -
+1:         -
+2: 0xc0000000-0xcfffffff 0x00000000 Kernel EXEC coherent
+3: 0xd0000000-0xdfffffff 0x10000000 Kernel EXEC coherent
+4:         -
+5:         -
+6:         -
+7:         -
 
-  ---[ Kernel Segments ]---
-  0xc0000000-0xcfffffff Kern key 0 User key 1 VSID 0x000ccc
-  0xd0000000-0xdfffffff Kern key 0 User key 1 VSID 0x000ddd
-  0xe0000000-0xefffffff Kern key 0 User key 1 VSID 0x000eee
-  0xf0000000-0xffffffff Kern key 0 User key 1 VSID 0x000fff
+---[ Data Block Address Translations ]---
+0:         -
+1:         -
+2: 0xc0000000-0xcfffffff 0x00000000 Kernel RW coherent
+3: 0xd0000000-0xdfffffff 0x10000000 Kernel RW coherent
+4:         -
+5:         -
+6:         -
+7:         -
 
 Signed-off-by: Christophe Leroy <christophe.leroy@c-s.fr>
-[mpe: Move it under /sys/kernel/debug/powerpc, make sr_init() __init]
+
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Stable-dep-of: 66b2ca086210 ("powerpc/64s/radix: Fix soft dirty tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/Makefile  |  2 +-
- arch/powerpc/mm/dump_sr.c | 64 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+), 1 deletion(-)
- create mode 100644 arch/powerpc/mm/dump_sr.c
+ arch/powerpc/include/asm/book3s/32/mmu-hash.h |   4 +
+ arch/powerpc/mm/Makefile                      |   2 +-
+ arch/powerpc/mm/dump_bats.c                   | 173 ++++++++++++++++++
+ 3 files changed, 178 insertions(+), 1 deletion(-)
+ create mode 100644 arch/powerpc/mm/dump_bats.c
 
+diff --git a/arch/powerpc/include/asm/book3s/32/mmu-hash.h b/arch/powerpc/include/asm/book3s/32/mmu-hash.h
+index 5bd26c218b94f..958b18cecc96a 100644
+--- a/arch/powerpc/include/asm/book3s/32/mmu-hash.h
++++ b/arch/powerpc/include/asm/book3s/32/mmu-hash.h
+@@ -34,8 +34,12 @@
+ #define BAT_PHYS_ADDR(x) ((u32)((x & 0x00000000fffe0000ULL) | \
+ 				((x & 0x0000000e00000000ULL) >> 24) | \
+ 				((x & 0x0000000100000000ULL) >> 30)))
++#define PHYS_BAT_ADDR(x) (((u64)(x) & 0x00000000fffe0000ULL) | \
++			  (((u64)(x) << 24) & 0x0000000e00000000ULL) | \
++			  (((u64)(x) << 30) & 0x0000000100000000ULL))
+ #else
+ #define BAT_PHYS_ADDR(x) (x)
++#define PHYS_BAT_ADDR(x) ((x) & 0xfffe0000)
+ #endif
+ 
+ struct ppc_bat {
 diff --git a/arch/powerpc/mm/Makefile b/arch/powerpc/mm/Makefile
-index 3c844bdd16c4e..d2784730c0e5d 100644
+index d2784730c0e5d..8ace67f002752 100644
 --- a/arch/powerpc/mm/Makefile
 +++ b/arch/powerpc/mm/Makefile
 @@ -47,7 +47,7 @@ ifdef CONFIG_PPC_PTDUMP
  obj-$(CONFIG_4xx)		+= dump_linuxpagetables-generic.o
  obj-$(CONFIG_PPC_8xx)		+= dump_linuxpagetables-8xx.o
  obj-$(CONFIG_PPC_BOOK3E_MMU)	+= dump_linuxpagetables-generic.o
--obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o
-+obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o dump_sr.o
+-obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o dump_sr.o
++obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o dump_bats.o dump_sr.o
  obj-$(CONFIG_PPC_BOOK3S_64)	+= dump_linuxpagetables-book3s64.o
  endif
  obj-$(CONFIG_PPC_HTDUMP)	+= dump_hashpagetable.o
-diff --git a/arch/powerpc/mm/dump_sr.c b/arch/powerpc/mm/dump_sr.c
+diff --git a/arch/powerpc/mm/dump_bats.c b/arch/powerpc/mm/dump_bats.c
 new file mode 100644
-index 0000000000000..501843664bb91
+index 0000000000000..a0d23e96e841a
 --- /dev/null
-+++ b/arch/powerpc/mm/dump_sr.c
-@@ -0,0 +1,64 @@
++++ b/arch/powerpc/mm/dump_bats.c
+@@ -0,0 +1,173 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * Copyright 2018, Christophe Leroy CS S.I.
 + * <christophe.leroy@c-s.fr>
 + *
-+ * This dumps the content of Segment Registers
++ * This dumps the content of BATS
 + */
 +
 +#include <asm/debugfs.h>
++#include <asm/pgtable.h>
++#include <asm/cpu_has_feature.h>
 +
-+static void seg_show(struct seq_file *m, int i)
++static char *pp_601(int k, int pp)
 +{
-+	u32 val = mfsrin(i << 28);
++	if (pp == 0)
++		return k ? "NA" : "RWX";
++	if (pp == 1)
++		return k ? "ROX" : "RWX";
++	if (pp == 2)
++		return k ? "RWX" : "RWX";
++	return k ? "ROX" : "ROX";
++}
 +
-+	seq_printf(m, "0x%01x0000000-0x%01xfffffff ", i, i);
-+	seq_printf(m, "Kern key %d ", (val >> 30) & 1);
-+	seq_printf(m, "User key %d ", (val >> 29) & 1);
-+	if (val & 0x80000000) {
-+		seq_printf(m, "Device 0x%03x", (val >> 20) & 0x1ff);
-+		seq_printf(m, "-0x%05x", val & 0xfffff);
-+	} else {
-+		if (val & 0x10000000)
-+			seq_puts(m, "No Exec ");
-+		seq_printf(m, "VSID 0x%06x", val & 0xffffff);
++static void bat_show_601(struct seq_file *m, int idx, u32 lower, u32 upper)
++{
++	u32 blpi = upper & 0xfffe0000;
++	u32 k = (upper >> 2) & 3;
++	u32 pp = upper & 3;
++	phys_addr_t pbn = PHYS_BAT_ADDR(lower);
++	u32 bsm = lower & 0x3ff;
++	u32 size = (bsm + 1) << 17;
++
++	seq_printf(m, "%d: ", idx);
++	if (!(lower & 0x40)) {
++		seq_puts(m, "        -\n");
++		return;
 +	}
++
++	seq_printf(m, "0x%08x-0x%08x ", blpi, blpi + size - 1);
++#ifdef CONFIG_PHYS_64BIT
++	seq_printf(m, "0x%016llx ", pbn);
++#else
++	seq_printf(m, "0x%08x ", pbn);
++#endif
++
++	seq_printf(m, "Kernel %s User %s", pp_601(k & 2, pp), pp_601(k & 1, pp));
++
++	if (lower & _PAGE_WRITETHRU)
++		seq_puts(m, "write through ");
++	if (lower & _PAGE_NO_CACHE)
++		seq_puts(m, "no cache ");
++	if (lower & _PAGE_COHERENT)
++		seq_puts(m, "coherent ");
 +	seq_puts(m, "\n");
 +}
 +
-+static int sr_show(struct seq_file *m, void *v)
++#define BAT_SHOW_601(_m, _n, _l, _u) bat_show_601(_m, _n, mfspr(_l), mfspr(_u))
++
++static int bats_show_601(struct seq_file *m, void *v)
 +{
-+	int i;
++	seq_puts(m, "---[ Block Address Translation ]---\n");
 +
-+	seq_puts(m, "---[ User Segments ]---\n");
-+	for (i = 0; i < TASK_SIZE >> 28; i++)
-+		seg_show(m, i);
-+
-+	seq_puts(m, "\n---[ Kernel Segments ]---\n");
-+	for (; i < 16; i++)
-+		seg_show(m, i);
++	BAT_SHOW_601(m, 0, SPRN_IBAT0L, SPRN_IBAT0U);
++	BAT_SHOW_601(m, 1, SPRN_IBAT1L, SPRN_IBAT1U);
++	BAT_SHOW_601(m, 2, SPRN_IBAT2L, SPRN_IBAT2U);
++	BAT_SHOW_601(m, 3, SPRN_IBAT3L, SPRN_IBAT3U);
 +
 +	return 0;
 +}
 +
-+static int sr_open(struct inode *inode, struct file *file)
++static void bat_show_603(struct seq_file *m, int idx, u32 lower, u32 upper, bool is_d)
 +{
-+	return single_open(file, sr_show, NULL);
++	u32 bepi = upper & 0xfffe0000;
++	u32 bl = (upper >> 2) & 0x7ff;
++	u32 k = upper & 3;
++	phys_addr_t brpn = PHYS_BAT_ADDR(lower);
++	u32 size = (bl + 1) << 17;
++
++	seq_printf(m, "%d: ", idx);
++	if (k == 0) {
++		seq_puts(m, "        -\n");
++		return;
++	}
++
++	seq_printf(m, "0x%08x-0x%08x ", bepi, bepi + size - 1);
++#ifdef CONFIG_PHYS_64BIT
++	seq_printf(m, "0x%016llx ", brpn);
++#else
++	seq_printf(m, "0x%08x ", brpn);
++#endif
++
++	if (k == 1)
++		seq_puts(m, "User ");
++	else if (k == 2)
++		seq_puts(m, "Kernel ");
++	else
++		seq_puts(m, "Kernel/User ");
++
++	if (lower & BPP_RX)
++		seq_puts(m, is_d ? "RO " : "EXEC ");
++	else if (lower & BPP_RW)
++		seq_puts(m, is_d ? "RW " : "EXEC ");
++	else
++		seq_puts(m, is_d ? "NA " : "NX   ");
++
++	if (lower & _PAGE_WRITETHRU)
++		seq_puts(m, "write through ");
++	if (lower & _PAGE_NO_CACHE)
++		seq_puts(m, "no cache ");
++	if (lower & _PAGE_COHERENT)
++		seq_puts(m, "coherent ");
++	if (lower & _PAGE_GUARDED)
++		seq_puts(m, "guarded ");
++	seq_puts(m, "\n");
 +}
 +
-+static const struct file_operations sr_fops = {
-+	.open		= sr_open,
++#define BAT_SHOW_603(_m, _n, _l, _u, _d) bat_show_603(_m, _n, mfspr(_l), mfspr(_u), _d)
++
++static int bats_show_603(struct seq_file *m, void *v)
++{
++	seq_puts(m, "---[ Instruction Block Address Translation ]---\n");
++
++	BAT_SHOW_603(m, 0, SPRN_IBAT0L, SPRN_IBAT0U, false);
++	BAT_SHOW_603(m, 1, SPRN_IBAT1L, SPRN_IBAT1U, false);
++	BAT_SHOW_603(m, 2, SPRN_IBAT2L, SPRN_IBAT2U, false);
++	BAT_SHOW_603(m, 3, SPRN_IBAT3L, SPRN_IBAT3U, false);
++	if (mmu_has_feature(MMU_FTR_USE_HIGH_BATS)) {
++		BAT_SHOW_603(m, 4, SPRN_IBAT4L, SPRN_IBAT4U, false);
++		BAT_SHOW_603(m, 5, SPRN_IBAT5L, SPRN_IBAT5U, false);
++		BAT_SHOW_603(m, 6, SPRN_IBAT6L, SPRN_IBAT6U, false);
++		BAT_SHOW_603(m, 7, SPRN_IBAT7L, SPRN_IBAT7U, false);
++	}
++
++	seq_puts(m, "\n---[ Data Block Address Translation ]---\n");
++
++	BAT_SHOW_603(m, 0, SPRN_DBAT0L, SPRN_DBAT0U, true);
++	BAT_SHOW_603(m, 1, SPRN_DBAT1L, SPRN_DBAT1U, true);
++	BAT_SHOW_603(m, 2, SPRN_DBAT2L, SPRN_DBAT2U, true);
++	BAT_SHOW_603(m, 3, SPRN_DBAT3L, SPRN_DBAT3U, true);
++	if (mmu_has_feature(MMU_FTR_USE_HIGH_BATS)) {
++		BAT_SHOW_603(m, 4, SPRN_DBAT4L, SPRN_DBAT4U, true);
++		BAT_SHOW_603(m, 5, SPRN_DBAT5L, SPRN_DBAT5U, true);
++		BAT_SHOW_603(m, 6, SPRN_DBAT6L, SPRN_DBAT6U, true);
++		BAT_SHOW_603(m, 7, SPRN_DBAT7L, SPRN_DBAT7U, true);
++	}
++
++	return 0;
++}
++
++static int bats_open(struct inode *inode, struct file *file)
++{
++	if (cpu_has_feature(CPU_FTR_601))
++		return single_open(file, bats_show_601, NULL);
++
++	return single_open(file, bats_show_603, NULL);
++}
++
++static const struct file_operations bats_fops = {
++	.open		= bats_open,
 +	.read		= seq_read,
 +	.llseek		= seq_lseek,
 +	.release	= single_release,
 +};
 +
-+static int __init sr_init(void)
++static int __init bats_init(void)
 +{
 +	struct dentry *debugfs_file;
 +
-+	debugfs_file = debugfs_create_file("segment_registers", 0400,
-+					   powerpc_debugfs_root, NULL, &sr_fops);
++	debugfs_file = debugfs_create_file("block_address_translation", 0400,
++					   powerpc_debugfs_root, NULL, &bats_fops);
 +	return debugfs_file ? 0 : -ENOMEM;
 +}
-+device_initcall(sr_init);
++device_initcall(bats_init);
 -- 
 2.40.1
 
