@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B4D611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D91FC433C8;
-	Mon, 28 Aug 2023 10:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A729D611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E80C433C7;
+	Mon, 28 Aug 2023 10:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219356;
-	bh=FQyOyKcis6smUC855VVdYL+5VlDOcL9aHq/hE9tCY+U=;
+	s=korg; t=1693219359;
+	bh=duFgPvrWy6mNElaLtuxhdeFR6WdKaGlGZRs7FZUktXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiAsf9al3NZ9J4ISGDhNVHMEEIim2/xin04E3m+eg+BOnTl6WConLsgjlNFJc4s/N
-	 p5kJjXuNL+p43RMtuY1R1Lzm07zPZu93woxcyQUUNmXjgkkKEYk74kvsw/rkdtH1qK
-	 +vSJNDYphZCHLbg7v2k9K9bCD0R9/U5SlOAf2mV0=
+	b=K1CSZSrwQeyqq8hEZo3wKX1Ytm5dGceYFGxK9wc1HsoIgZPk10svedbpCKODmWgqs
+	 IxAx2zIsduOPAbfrQSXwQuphu/pspETm9+1DnaP84IzyFnKImn974+DqWpFGJidnp2
+	 3EcgoYPu2mi6B2eqtPw9V/HsLjiqsqEK2lBNfvT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 158/158] dma-buf/sw_sync: Avoid recursive lock during fence signal
-Date: Mon, 28 Aug 2023 12:14:15 +0200
-Message-ID: <20230828101203.132704804@linuxfoundation.org>
+Subject: [PATCH 5.4 156/158] clk: Fix undefined reference to `clk_rate_exclusive_{get,put}
+Date: Mon, 28 Aug 2023 12:14:13 +0200
+Message-ID: <20230828101203.029856913@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -35,83 +35,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
+[ Upstream commit 2746f13f6f1df7999001d6595b16f789ecc28ad1 ]
 
-If a signal callback releases the sw_sync fence, that will trigger a
-deadlock as the timeline_fence_release recurses onto the fence->lock
-(used both for signaling and the the timeline tree).
+The COMMON_CLK config is not enabled in some of the architectures.
+This causes below build issues:
 
-To avoid that, temporarily hold an extra reference to the signalled
-fences until after we drop the lock.
+pwm-rz-mtu3.c:(.text+0x114):
+undefined reference to `clk_rate_exclusive_put'
+pwm-rz-mtu3.c:(.text+0x32c):
+undefined reference to `clk_rate_exclusive_get'
 
-(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
-which avoids some potential UAF issues with the original patch.)
+Fix these issues by moving clk_rate_exclusive_{get,put} inside COMMON_CLK
+code block, as clk.c is enabled by COMMON_CLK.
 
-v2: Remove now obsolete comment, use list_move_tail() and
-    list_del_init()
-
-Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 55e9b8b7b806 ("clk: add clk_rate_exclusive api")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202307251752.vLfmmhYm-lkp@intel.com/
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20230725175140.361479-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sw_sync.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ include/linux/clk.h | 80 ++++++++++++++++++++++-----------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index 6713cfb1995c6..7e7356970d5fc 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -191,6 +191,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 87730337e28f8..562859ee24f43 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -172,6 +172,39 @@ int clk_get_scaled_duty_cycle(struct clk *clk, unsigned int scale);
   */
- static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- {
-+	LIST_HEAD(signalled);
- 	struct sync_pt *pt, *next;
+ bool clk_is_match(const struct clk *p, const struct clk *q);
  
- 	trace_sync_timeline(obj);
-@@ -203,21 +204,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- 		if (!timeline_fence_signaled(&pt->base))
- 			break;
- 
--		list_del_init(&pt->link);
-+		dma_fence_get(&pt->base);
++/**
++ * clk_rate_exclusive_get - get exclusivity over the rate control of a
++ *                          producer
++ * @clk: clock source
++ *
++ * This function allows drivers to get exclusive control over the rate of a
++ * provider. It prevents any other consumer to execute, even indirectly,
++ * opereation which could alter the rate of the provider or cause glitches
++ *
++ * If exlusivity is claimed more than once on clock, even by the same driver,
++ * the rate effectively gets locked as exclusivity can't be preempted.
++ *
++ * Must not be called from within atomic context.
++ *
++ * Returns success (0) or negative errno.
++ */
++int clk_rate_exclusive_get(struct clk *clk);
 +
-+		list_move_tail(&pt->link, &signalled);
- 		rb_erase(&pt->node, &obj->pt_tree);
- 
--		/*
--		 * A signal callback may release the last reference to this
--		 * fence, causing it to be freed. That operation has to be
--		 * last to avoid a use after free inside this loop, and must
--		 * be after we remove the fence from the timeline in order to
--		 * prevent deadlocking on timeline->lock inside
--		 * timeline_fence_release().
--		 */
- 		dma_fence_signal_locked(&pt->base);
- 	}
- 
- 	spin_unlock_irq(&obj->lock);
++/**
++ * clk_rate_exclusive_put - release exclusivity over the rate control of a
++ *                          producer
++ * @clk: clock source
++ *
++ * This function allows drivers to release the exclusivity it previously got
++ * from clk_rate_exclusive_get()
++ *
++ * The caller must balance the number of clk_rate_exclusive_get() and
++ * clk_rate_exclusive_put() calls.
++ *
++ * Must not be called from within atomic context.
++ */
++void clk_rate_exclusive_put(struct clk *clk);
 +
-+	list_for_each_entry_safe(pt, next, &signalled, link) {
-+		list_del_init(&pt->link);
-+		dma_fence_put(&pt->base);
-+	}
+ #else
+ 
+ static inline int clk_notifier_register(struct clk *clk,
+@@ -218,6 +251,13 @@ static inline bool clk_is_match(const struct clk *p, const struct clk *q)
+ 	return p == q;
  }
  
++static inline int clk_rate_exclusive_get(struct clk *clk)
++{
++	return 0;
++}
++
++static inline void clk_rate_exclusive_put(struct clk *clk) {}
++
+ #endif
+ 
  /**
+@@ -530,38 +570,6 @@ struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
+  */
+ struct clk *devm_get_clk_from_child(struct device *dev,
+ 				    struct device_node *np, const char *con_id);
+-/**
+- * clk_rate_exclusive_get - get exclusivity over the rate control of a
+- *                          producer
+- * @clk: clock source
+- *
+- * This function allows drivers to get exclusive control over the rate of a
+- * provider. It prevents any other consumer to execute, even indirectly,
+- * opereation which could alter the rate of the provider or cause glitches
+- *
+- * If exlusivity is claimed more than once on clock, even by the same driver,
+- * the rate effectively gets locked as exclusivity can't be preempted.
+- *
+- * Must not be called from within atomic context.
+- *
+- * Returns success (0) or negative errno.
+- */
+-int clk_rate_exclusive_get(struct clk *clk);
+-
+-/**
+- * clk_rate_exclusive_put - release exclusivity over the rate control of a
+- *                          producer
+- * @clk: clock source
+- *
+- * This function allows drivers to release the exclusivity it previously got
+- * from clk_rate_exclusive_get()
+- *
+- * The caller must balance the number of clk_rate_exclusive_get() and
+- * clk_rate_exclusive_put() calls.
+- *
+- * Must not be called from within atomic context.
+- */
+-void clk_rate_exclusive_put(struct clk *clk);
+ 
+ /**
+  * clk_enable - inform the system when the clock source should be running.
+@@ -918,14 +926,6 @@ static inline void clk_bulk_put_all(int num_clks, struct clk_bulk_data *clks) {}
+ 
+ static inline void devm_clk_put(struct device *dev, struct clk *clk) {}
+ 
+-
+-static inline int clk_rate_exclusive_get(struct clk *clk)
+-{
+-	return 0;
+-}
+-
+-static inline void clk_rate_exclusive_put(struct clk *clk) {}
+-
+ static inline int clk_enable(struct clk *clk)
+ {
+ 	return 0;
 -- 
 2.40.1
 
