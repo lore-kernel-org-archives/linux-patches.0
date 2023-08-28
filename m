@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9564BA94D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CA2C433C7;
-	Mon, 28 Aug 2023 10:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5034546A0
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C60C433C8;
+	Mon, 28 Aug 2023 10:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218294;
-	bh=7KBXY8PHmyPTRjK33b1o89lkKocSRR5pzVWjrukTyes=;
+	s=korg; t=1693218297;
+	bh=KCmrdtVQNo4JxBuoCnJeS2wJqaO4wmB2tRPSjGr0WGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nd+RDwj5re0KY1nNiEI58TD2cfiEocmcrldIkTQ3iHFfI2+yaWH4A6Ulpisjw/I6+
-	 FGU4iXN2aNHHp2qJNfyRu/MUFJwgBhlSMNXJpCgWhGW/Tu2uw7eixtjFIDJeyYPPBW
-	 UcMZO7XngstpHbsv1QMafwXRy/5cUqBVG17v7Ebg=
+	b=1XvyKACm+QLl+uRZEh4Spf0b0GM/+XEiHRTkqg64gSz5fCxU/QP3tkPRPS5FWjXsY
+	 uxZVxoxQX9rRbIJHkJOK6u4521ReQlBQC194AnHQGoVVbfszlRnJOb/JXJCokiqUCP
+	 vtKJacqpKvzh/F7W6ebMlICTLnKA+OGhlDW7JfOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 036/129] mmc: meson-gx: remove useless lock
-Date: Mon, 28 Aug 2023 12:12:10 +0200
-Message-ID: <20230828101154.454216895@linuxfoundation.org>
+Subject: [PATCH 4.19 037/129] mmc: meson-gx: remove redundant mmc_request_done() call from irq context
+Date: Mon, 28 Aug 2023 12:12:11 +0200
+Message-ID: <20230828101154.504874193@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -34,73 +34,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Martin Hundebøll <martin@geanix.com>
 
-[ Upstream commit 83076d2268c72d123f3d1eaf186a9f56ec1b943a ]
+[ Upstream commit 3c40eb8145325b0f5b93b8a169146078cb2c49d6 ]
 
-The spinlock is only used within the irq handler so it does not
-seem very useful.
+The call to mmc_request_done() can schedule, so it must not be called
+from irq context. Wake the irq thread if it needs to be called, and let
+its existing logic do its work.
 
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes the following kernel bug, which appears when running an RT patched
+kernel on the AmLogic Meson AXG A113X SoC:
+[   11.111407] BUG: scheduling while atomic: kworker/0:1H/75/0x00010001
+[   11.111438] Modules linked in:
+[   11.111451] CPU: 0 PID: 75 Comm: kworker/0:1H Not tainted 6.4.0-rc3-rt2-rtx-00081-gfd07f41ed6b4-dirty #1
+[   11.111461] Hardware name: RTX AXG A113X Linux Platform Board (DT)
+[   11.111469] Workqueue: kblockd blk_mq_run_work_fn
+[   11.111492] Call trace:
+[   11.111497]  dump_backtrace+0xac/0xe8
+[   11.111510]  show_stack+0x18/0x28
+[   11.111518]  dump_stack_lvl+0x48/0x60
+[   11.111530]  dump_stack+0x18/0x24
+[   11.111537]  __schedule_bug+0x4c/0x68
+[   11.111548]  __schedule+0x80/0x574
+[   11.111558]  schedule_loop+0x2c/0x50
+[   11.111567]  schedule_rtlock+0x14/0x20
+[   11.111576]  rtlock_slowlock_locked+0x468/0x730
+[   11.111587]  rt_spin_lock+0x40/0x64
+[   11.111596]  __wake_up_common_lock+0x5c/0xc4
+[   11.111610]  __wake_up+0x18/0x24
+[   11.111620]  mmc_blk_mq_req_done+0x68/0x138
+[   11.111633]  mmc_request_done+0x104/0x118
+[   11.111644]  meson_mmc_request_done+0x38/0x48
+[   11.111654]  meson_mmc_irq+0x128/0x1f0
+[   11.111663]  __handle_irq_event_percpu+0x70/0x114
+[   11.111674]  handle_irq_event_percpu+0x18/0x4c
+[   11.111683]  handle_irq_event+0x80/0xb8
+[   11.111691]  handle_fasteoi_irq+0xa4/0x120
+[   11.111704]  handle_irq_desc+0x20/0x38
+[   11.111712]  generic_handle_domain_irq+0x1c/0x28
+[   11.111721]  gic_handle_irq+0x8c/0xa8
+[   11.111735]  call_on_irq_stack+0x24/0x4c
+[   11.111746]  do_interrupt_handler+0x88/0x94
+[   11.111757]  el1_interrupt+0x34/0x64
+[   11.111769]  el1h_64_irq_handler+0x18/0x24
+[   11.111779]  el1h_64_irq+0x64/0x68
+[   11.111786]  __add_wait_queue+0x0/0x4c
+[   11.111795]  mmc_blk_rw_wait+0x84/0x118
+[   11.111804]  mmc_blk_mq_issue_rq+0x5c4/0x654
+[   11.111814]  mmc_mq_queue_rq+0x194/0x214
+[   11.111822]  blk_mq_dispatch_rq_list+0x3ac/0x528
+[   11.111834]  __blk_mq_sched_dispatch_requests+0x340/0x4d0
+[   11.111847]  blk_mq_sched_dispatch_requests+0x38/0x70
+[   11.111858]  blk_mq_run_work_fn+0x3c/0x70
+[   11.111865]  process_one_work+0x17c/0x1f0
+[   11.111876]  worker_thread+0x1d4/0x26c
+[   11.111885]  kthread+0xe4/0xf4
+[   11.111894]  ret_from_fork+0x10/0x20
+
+Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Link: https://lore.kernel.org/r/20230607082713.517157-1-martin@geanix.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: 3c40eb814532 ("mmc: meson-gx: remove redundant mmc_request_done() call from irq context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/mmc/host/meson-gx-mmc.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
-index dba98c2886f26..313aff92b97c9 100644
+index 313aff92b97c9..a3e5be81b4660 100644
 --- a/drivers/mmc/host/meson-gx-mmc.c
 +++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -26,7 +26,6 @@
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/ioport.h>
--#include <linux/spinlock.h>
- #include <linux/dma-mapping.h>
- #include <linux/mmc/host.h>
- #include <linux/mmc/mmc.h>
-@@ -159,7 +158,6 @@ struct meson_host {
- 	struct	mmc_host	*mmc;
- 	struct	mmc_command	*cmd;
+@@ -1067,11 +1067,8 @@ static irqreturn_t meson_mmc_irq(int irq, void *dev_id)
+ 	if (status & (IRQ_END_OF_CHAIN | IRQ_RESP_STATUS)) {
+ 		if (data && !cmd->error)
+ 			data->bytes_xfered = data->blksz * data->blocks;
+-		if (meson_mmc_bounce_buf_read(data) ||
+-		    meson_mmc_get_next_command(cmd))
+-			ret = IRQ_WAKE_THREAD;
+-		else
+-			ret = IRQ_HANDLED;
++
++		return IRQ_WAKE_THREAD;
+ 	}
  
--	spinlock_t lock;
- 	void __iomem *regs;
- 	struct clk *core_clk;
- 	struct clk *mmc_clk;
-@@ -1042,8 +1040,6 @@ static irqreturn_t meson_mmc_irq(int irq, void *dev_id)
- 	if (WARN_ON(!host) || WARN_ON(!host->cmd))
- 		return IRQ_NONE;
+ out:
+@@ -1086,9 +1083,6 @@ static irqreturn_t meson_mmc_irq(int irq, void *dev_id)
+ 		writel(start, host->regs + SD_EMMC_START);
+ 	}
  
--	spin_lock(&host->lock);
+-	if (ret == IRQ_HANDLED)
+-		meson_mmc_request_done(host->mmc, cmd->mrq);
 -
- 	cmd = host->cmd;
- 	data = cmd->data;
- 	cmd->error = 0;
-@@ -1093,7 +1089,6 @@ static irqreturn_t meson_mmc_irq(int irq, void *dev_id)
- 	if (ret == IRQ_HANDLED)
- 		meson_mmc_request_done(host->mmc, cmd->mrq);
- 
--	spin_unlock(&host->lock);
  	return ret;
  }
  
-@@ -1246,8 +1241,6 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	host->dev = &pdev->dev;
- 	dev_set_drvdata(&pdev->dev, host);
- 
--	spin_lock_init(&host->lock);
--
- 	/* Get regulators and the supported OCR mask */
- 	host->vqmmc_enabled = false;
- 	ret = mmc_regulator_get_supply(mmc);
 -- 
 2.40.1
 
