@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4EB46BC
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2886C433C9;
-	Mon, 28 Aug 2023 10:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87A4611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A473C433C7;
+	Mon, 28 Aug 2023 10:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218828;
-	bh=23RGUJ9dGLhaVTh+jWynb8uo7aU4w8gXBHWbv/wsrG8=;
+	s=korg; t=1693218830;
+	bh=J2era8vTEqx6OOkKf1EP/VdcSWCLuzWpK5zzF+T/gXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zm43TSpq0AAS+yT22anpBP3MKnPk1rsOQ2uB1fyCB9ZcdHybNktZFcXmeKrDri4CI
-	 HtAAEzYrK+WVznyHKXZWR9MUIu8Vh6au7pFXAoedFAAZu4mwnNJcTaYmkZT7FNXFxJ
-	 xtSTc3ePweSHQPzupp25Qsgk0RbNADfUblprOZKM=
+	b=oUrzBDN7FoMzbimB31KOK0+ULKrkjxa3LKVZe9WQP39FqQjMt7NaoLAUmdYyVGJ4G
+	 a7S4dVaXrwHKB5MARTi0lK272q9cbTiMWAXfbYwx3vAi23D34mLUdxLgvsyfexE1kl
+	 MFDaOb2msveGaXoaPRsLx+J2aoaPBlg+LZ5VvOwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.1 081/122] batman-adv: Fix batadv_v_ogm_aggr_send memory leak
-Date: Mon, 28 Aug 2023 12:13:16 +0200
-Message-ID: <20230828101159.111914853@linuxfoundation.org>
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.1 099/122] nfs: use vfs setgid helper
+Date: Mon, 28 Aug 2023 12:13:34 +0200
+Message-ID: <20230828101159.694722877@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -40,56 +40,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 421d467dc2d483175bad4fb76a31b9e5a3d744cf upstream.
+commit 4f704d9a8352f5c0a8fcdb6213b934630342bd44 upstream.
 
-When batadv_v_ogm_aggr_send is called for an inactive interface, the skb
-is silently dropped by batadv_v_ogm_send_to_if() but never freed causing
-the following memory leak:
+We've aligned setgid behavior over multiple kernel releases. The details
+can be found in the following two merge messages:
+cf619f891971 ("Merge tag 'fs.ovl.setgid.v6.2')
+426b4ca2d6a5 ("Merge tag 'fs.setgid.v6.0')
+Consistent setgid stripping behavior is now encapsulated in the
+setattr_should_drop_sgid() helper which is used by all filesystems that
+strip setgid bits outside of vfs proper. Switch nfs to rely on this
+helper as well. Without this patch the setgid stripping tests in
+xfstests will fail.
 
-  unreferenced object 0xffff00000c164800 (size 512):
-    comm "kworker/u8:1", pid 2648, jiffies 4295122303 (age 97.656s)
-    hex dump (first 32 bytes):
-      00 80 af 09 00 00 ff ff e1 09 00 00 75 01 60 83  ............u.`.
-      1f 00 00 00 b8 00 00 00 15 00 05 00 da e3 d3 64  ...............d
-    backtrace:
-      [<0000000007ad20f6>] __kmalloc_track_caller+0x1a8/0x310
-      [<00000000d1029e55>] kmalloc_reserve.constprop.0+0x70/0x13c
-      [<000000008b9d4183>] __alloc_skb+0xec/0x1fc
-      [<00000000c7af5051>] __netdev_alloc_skb+0x48/0x23c
-      [<00000000642ee5f5>] batadv_v_ogm_aggr_send+0x50/0x36c
-      [<0000000088660bd7>] batadv_v_ogm_aggr_work+0x24/0x40
-      [<0000000042fc2606>] process_one_work+0x3b0/0x610
-      [<000000002f2a0b1c>] worker_thread+0xa0/0x690
-      [<0000000059fae5d4>] kthread+0x1fc/0x210
-      [<000000000c587d3a>] ret_from_fork+0x10/0x20
-
-Free the skb in that case to fix this leak.
-
-Cc: stable@vger.kernel.org
-Fixes: 0da0035942d4 ("batman-adv: OGMv2 - add basic infrastructure")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Message-Id: <20230313-fs-nfs-setgid-v2-1-9a59f436cfc0@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ Harshit: backport to 6.1.y:
+  fs/internal.h -- minor conflict due to code change differences.
+  include/linux/fs.h -- Used struct user_namespace *mnt_userns
+                        instead of struct mnt_idmap *idmap
+  fs/nfs/inode.c -- Used init_user_ns instead of nop_mnt_idmap ]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_ogm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/attr.c          |    1 +
+ fs/internal.h      |    2 --
+ fs/nfs/inode.c     |    4 +---
+ include/linux/fs.h |    2 ++
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
---- a/net/batman-adv/bat_v_ogm.c
-+++ b/net/batman-adv/bat_v_ogm.c
-@@ -124,8 +124,10 @@ static void batadv_v_ogm_send_to_if(stru
- {
- 	struct batadv_priv *bat_priv = netdev_priv(hard_iface->soft_iface);
+--- a/fs/attr.c
++++ b/fs/attr.c
+@@ -47,6 +47,7 @@ int setattr_should_drop_sgid(struct user
+ 		return ATTR_KILL_SGID;
+ 	return 0;
+ }
++EXPORT_SYMBOL(setattr_should_drop_sgid);
  
--	if (hard_iface->if_status != BATADV_IF_ACTIVE)
-+	if (hard_iface->if_status != BATADV_IF_ACTIVE) {
-+		kfree_skb(skb);
- 		return;
-+	}
+ /**
+  * setattr_should_drop_suidgid - determine whether the set{g,u}id bit needs to
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -242,5 +242,3 @@ ssize_t __kernel_write_iter(struct file
+ /*
+  * fs/attr.c
+  */
+-int setattr_should_drop_sgid(struct user_namespace *mnt_userns,
+-			     const struct inode *inode);
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -717,9 +717,7 @@ void nfs_setattr_update_inode(struct ino
+ 		if ((attr->ia_valid & ATTR_KILL_SUID) != 0 &&
+ 		    inode->i_mode & S_ISUID)
+ 			inode->i_mode &= ~S_ISUID;
+-		if ((attr->ia_valid & ATTR_KILL_SGID) != 0 &&
+-		    (inode->i_mode & (S_ISGID | S_IXGRP)) ==
+-		     (S_ISGID | S_IXGRP))
++		if (setattr_should_drop_sgid(&init_user_ns, inode))
+ 			inode->i_mode &= ~S_ISGID;
+ 		if ((attr->ia_valid & ATTR_MODE) != 0) {
+ 			int mode = attr->ia_mode & S_IALLUGO;
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -3120,6 +3120,8 @@ extern struct inode *new_inode(struct su
+ extern void free_inode_nonrcu(struct inode *inode);
+ extern int setattr_should_drop_suidgid(struct user_namespace *, struct inode *);
+ extern int file_remove_privs(struct file *);
++int setattr_should_drop_sgid(struct user_namespace *mnt_userns,
++			     const struct inode *inode);
  
- 	batadv_inc_counter(bat_priv, BATADV_CNT_MGMT_TX);
- 	batadv_add_counter(bat_priv, BATADV_CNT_MGMT_TX_BYTES,
+ /*
+  * This must be used for allocating filesystems specific inodes to set
 
 
