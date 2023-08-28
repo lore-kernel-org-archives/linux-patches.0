@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D04611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB2BC433C7;
-	Mon, 28 Aug 2023 10:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C472E611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FABC433C7;
+	Mon, 28 Aug 2023 10:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219342;
-	bh=daLk/S6KbDcxxnTt46pDOzm9emkqDMgkd3KIZqpzuuo=;
+	s=korg; t=1693219345;
+	bh=WzSiK81poUyvAK6rzSYslyvk3+rzRTKx3ErO86BTx2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5skHQPxlURZvuP7VqAQW0W8vcYn4S8G2yuFZNkbg8pzxKuz6omUIrRV8Px3tqBck
-	 5Qb0BUNIVGGW8vEzygaFTpSD0yZ+d3M/5EaYrk/GYDn4LeoNd3hysZJWxcOrCCBvvq
-	 wz3/YqSGgpMHOxfjI0wNm5qFpdUFJgYAhLUkOlaI=
+	b=KUkk1KHRJFmBE834xaRQppI5o3VCWAbAjHYwORrfIb7aEJitqA9eWf+CP2e5mnVeJ
+	 ZPLf62JnmIOb1mzc7az8xys8c9Ts1ZKVf5+XyjxsBSSawUI2gWUH+4ynsC2kbpISn5
+	 PYwxF3I47nZsUbKlO7UyfHFCCiDbiL3DMwdQiENA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.4 132/158] clk: Fix slab-out-of-bounds error in devm_clk_release()
-Date: Mon, 28 Aug 2023 12:13:49 +0200
-Message-ID: <20230828101201.921938005@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.4 133/158] nfsd: Fix race to FREE_STATEID and cl_revoked
+Date: Mon, 28 Aug 2023 12:13:50 +0200
+Message-ID: <20230828101201.966321357@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -39,146 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit 66fbfb35da47f391bdadf9fa7ceb88af4faa9022 upstream.
+commit 3b816601e279756e781e6c4d9b3f3bd21a72ac67 upstream.
 
-Problem can be reproduced by unloading snd_soc_simple_card, because in
-devm_get_clk_from_child() devres data is allocated as `struct clk`, but
-devm_clk_release() expects devres data to be `struct devm_clk_state`.
+We have some reports of linux NFS clients that cannot satisfy a linux knfsd
+server that always sets SEQ4_STATUS_RECALLABLE_STATE_REVOKED even though
+those clients repeatedly walk all their known state using TEST_STATEID and
+receive NFS4_OK for all.
 
-KASAN report:
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in devm_clk_release+0x20/0x54
- Read of size 8 at addr ffffff800ee09688 by task (udev-worker)/287
+Its possible for revoke_delegation() to set NFS4_REVOKED_DELEG_STID, then
+nfsd4_free_stateid() finds the delegation and returns NFS4_OK to
+FREE_STATEID.  Afterward, revoke_delegation() moves the same delegation to
+cl_revoked.  This would produce the observed client/server effect.
 
- Call trace:
-  dump_backtrace+0xe8/0x11c
-  show_stack+0x1c/0x30
-  dump_stack_lvl+0x60/0x78
-  print_report+0x150/0x450
-  kasan_report+0xa8/0xf0
-  __asan_load8+0x78/0xa0
-  devm_clk_release+0x20/0x54
-  release_nodes+0x84/0x120
-  devres_release_all+0x144/0x210
-  device_unbind_cleanup+0x1c/0xac
-  really_probe+0x2f0/0x5b0
-  __driver_probe_device+0xc0/0x1f0
-  driver_probe_device+0x68/0x120
-  __driver_attach+0x140/0x294
-  bus_for_each_dev+0xec/0x160
-  driver_attach+0x38/0x44
-  bus_add_driver+0x24c/0x300
-  driver_register+0xf0/0x210
-  __platform_driver_register+0x48/0x54
-  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
-  do_one_initcall+0xac/0x340
-  do_init_module+0xd0/0x300
-  load_module+0x2ba4/0x3100
-  __do_sys_init_module+0x2c8/0x300
-  __arm64_sys_init_module+0x48/0x5c
-  invoke_syscall+0x64/0x190
-  el0_svc_common.constprop.0+0x124/0x154
-  do_el0_svc+0x44/0xdc
-  el0_svc+0x14/0x50
-  el0t_64_sync_handler+0xec/0x11c
-  el0t_64_sync+0x14c/0x150
+Fix this by ensuring that the setting of sc_type to NFS4_REVOKED_DELEG_STID
+and move to cl_revoked happens within the same cl_lock.  This will allow
+nfsd4_free_stateid() to properly remove the delegation from cl_revoked.
 
- Allocated by task 287:
-  kasan_save_stack+0x38/0x60
-  kasan_set_track+0x28/0x40
-  kasan_save_alloc_info+0x20/0x30
-  __kasan_kmalloc+0xac/0xb0
-  __kmalloc_node_track_caller+0x6c/0x1c4
-  __devres_alloc_node+0x44/0xb4
-  devm_get_clk_from_child+0x44/0xa0
-  asoc_simple_parse_clk+0x1b8/0x1dc [snd_soc_simple_card_utils]
-  simple_parse_node.isra.0+0x1ec/0x230 [snd_soc_simple_card]
-  simple_dai_link_of+0x1bc/0x334 [snd_soc_simple_card]
-  __simple_for_each_link+0x2ec/0x320 [snd_soc_simple_card]
-  asoc_simple_probe+0x468/0x4dc [snd_soc_simple_card]
-  platform_probe+0x90/0xf0
-  really_probe+0x118/0x5b0
-  __driver_probe_device+0xc0/0x1f0
-  driver_probe_device+0x68/0x120
-  __driver_attach+0x140/0x294
-  bus_for_each_dev+0xec/0x160
-  driver_attach+0x38/0x44
-  bus_add_driver+0x24c/0x300
-  driver_register+0xf0/0x210
-  __platform_driver_register+0x48/0x54
-  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
-  do_one_initcall+0xac/0x340
-  do_init_module+0xd0/0x300
-  load_module+0x2ba4/0x3100
-  __do_sys_init_module+0x2c8/0x300
-  __arm64_sys_init_module+0x48/0x5c
-  invoke_syscall+0x64/0x190
-  el0_svc_common.constprop.0+0x124/0x154
-  do_el0_svc+0x44/0xdc
-  el0_svc+0x14/0x50
-  el0t_64_sync_handler+0xec/0x11c
-  el0t_64_sync+0x14c/0x150
-
- The buggy address belongs to the object at ffffff800ee09600
-  which belongs to the cache kmalloc-256 of size 256
- The buggy address is located 136 bytes inside of
-  256-byte region [ffffff800ee09600, ffffff800ee09700)
-
- The buggy address belongs to the physical page:
- page:000000002d97303b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x4ee08
- head:000000002d97303b order:1 compound_mapcount:0 compound_pincount:0
- flags: 0x10200(slab|head|zone=0)
- raw: 0000000000010200 0000000000000000 dead000000000122 ffffff8002c02480
- raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffffff800ee09580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ffffff800ee09600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ffffff800ee09680: 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-                       ^
-  ffffff800ee09700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ffffff800ee09780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ==================================================================
-
-Fixes: abae8e57e49a ("clk: generalize devm_clk_get() a bit")
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Link: https://lore.kernel.org/r/20230805084847.3110586-1-andrej.skvortzov@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2217103
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2176575
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Cc: stable@vger.kernel.org # v4.17+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/clk-devres.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -205,18 +205,19 @@ EXPORT_SYMBOL(devm_clk_put);
- struct clk *devm_get_clk_from_child(struct device *dev,
- 				    struct device_node *np, const char *con_id)
- {
--	struct clk **ptr, *clk;
-+	struct devm_clk_state *state;
-+	struct clk *clk;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1096,9 +1096,9 @@ static void revoke_delegation(struct nfs
+ 	WARN_ON(!list_empty(&dp->dl_recall_lru));
  
--	ptr = devres_alloc(devm_clk_release, sizeof(*ptr), GFP_KERNEL);
--	if (!ptr)
-+	state = devres_alloc(devm_clk_release, sizeof(*state), GFP_KERNEL);
-+	if (!state)
- 		return ERR_PTR(-ENOMEM);
- 
- 	clk = of_clk_get_by_name(np, con_id);
- 	if (!IS_ERR(clk)) {
--		*ptr = clk;
--		devres_add(dev, ptr);
-+		state->clk = clk;
-+		devres_add(dev, state);
- 	} else {
--		devres_free(ptr);
-+		devres_free(state);
+ 	if (clp->cl_minorversion) {
++		spin_lock(&clp->cl_lock);
+ 		dp->dl_stid.sc_type = NFS4_REVOKED_DELEG_STID;
+ 		refcount_inc(&dp->dl_stid.sc_count);
+-		spin_lock(&clp->cl_lock);
+ 		list_add(&dp->dl_recall_lru, &clp->cl_revoked);
+ 		spin_unlock(&clp->cl_lock);
  	}
- 
- 	return clk;
 
 
