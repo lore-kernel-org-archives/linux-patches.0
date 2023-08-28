@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CE911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA80C433C8;
-	Mon, 28 Aug 2023 10:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE3E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:35:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5DCC433C8;
+	Mon, 28 Aug 2023 10:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218953;
-	bh=7hD1PHYwk7zIypdCGx1F62BF7bVFxCckMSlQtvyicbk=;
+	s=korg; t=1693218956;
+	bh=Rjn94WiY1Fx4rEdk7ar31mYzKGdcSwxAJS0vwIF8MAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTnWxI0drA7uXHy7Fsyw4cXSTDa+bL0qm/WWm6RMcvkaoIGGw55xurMJjwmvXnuVG
-	 Z192LEjs7pPMuLZCnIxX2rvFQAkPer5cDIWYjMKwMl8RMhBcQ4cko89KR2uSeRK44f
-	 TJoTdZzIBEgevwY7C5GGtLzIoZ6WUiFTOOK6A6I0=
+	b=jhQkvGEUfsblw12H1NNcnMKrlvHQUOKyw3o38MjimdKV+a/GA/3WV7Va6Mb9bwkSp
+	 B/JdmAXIDbSR9/nRCcKUdkbx+o8GSMESY9Ci9axYzPcD8qEzWaNKHQBPJb1LunyDaa
+	 I5lJ4DIqSmfUkRAioymboSyy0RE8/VQq+1qPikcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 003/158] selftests: forwarding: tc_flower: Relax success criterion
-Date: Mon, 28 Aug 2023 12:11:40 +0200
-Message-ID: <20230828101157.430388155@linuxfoundation.org>
+Subject: [PATCH 5.4 021/158] pcmcia: rsrc_nonstatic: Fix memory leak in nonstatic_release_resource_db()
+Date: Mon, 28 Aug 2023 12:11:58 +0200
+Message-ID: <20230828101158.057173613@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -44,59 +39,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 9ee37e53e7687654b487fc94e82569377272a7a8 ]
+[ Upstream commit c85fd9422fe0f5d667305efb27f56d09eab120b0 ]
 
-The test checks that filters that match on source or destination MAC
-were only hit once. A host can send more than one packet with a given
-source or destination MAC, resulting in failures.
+When nonstatic_release_resource_db() frees all resources associated
+with an PCMCIA socket, it forgets to free socket_data too, causing
+a memory leak observable with kmemleak:
 
-Fix by relaxing the success criterion and instead check that the filters
-were not hit zero times. Using tc_check_at_least_x_packets() is also an
-option, but it is not available in older kernels.
+unreferenced object 0xc28d1000 (size 64):
+  comm "systemd-udevd", pid 297, jiffies 4294898478 (age 194.484s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 f0 85 0e c3 00 00 00 00  ................
+    00 00 00 00 0c 10 8d c2 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffda4245>] __kmem_cache_alloc_node+0x2d7/0x4a0
+    [<7e51f0c8>] kmalloc_trace+0x31/0xa4
+    [<d52b4ca0>] nonstatic_init+0x24/0x1a4 [pcmcia_rsrc]
+    [<a2f13e08>] pcmcia_register_socket+0x200/0x35c [pcmcia_core]
+    [<a728be1b>] yenta_probe+0x4d8/0xa70 [yenta_socket]
+    [<c48fac39>] pci_device_probe+0x99/0x194
+    [<84b7c690>] really_probe+0x181/0x45c
+    [<8060fe6e>] __driver_probe_device+0x75/0x1f4
+    [<b9b76f43>] driver_probe_device+0x28/0xac
+    [<648b766f>] __driver_attach+0xeb/0x1e4
+    [<6e9659eb>] bus_for_each_dev+0x61/0xb4
+    [<25a669f3>] driver_attach+0x1e/0x28
+    [<d8671d6b>] bus_add_driver+0x102/0x20c
+    [<df0d323c>] driver_register+0x5b/0x120
+    [<942cd8a4>] __pci_register_driver+0x44/0x4c
+    [<e536027e>] __UNIQUE_ID___addressable_cleanup_module188+0x1c/0xfffff000 [iTCO_vendor_support]
 
-Fixes: 07e5c75184a1 ("selftests: forwarding: Introduce tc flower matching tests")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-13-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by freeing socket_data too.
+
+Tested on a Acer Travelmate 4002WLMi by manually binding/unbinding
+the yenta_cardbus driver (yenta_socket).
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Message-ID: <20230512184529.5094-1-W_Armin@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/tc_flower.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pcmcia/rsrc_nonstatic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/tc_flower.sh b/tools/testing/selftests/net/forwarding/tc_flower.sh
-index b11d8e6b5bc14..b7cdf75efb5f9 100755
---- a/tools/testing/selftests/net/forwarding/tc_flower.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_flower.sh
-@@ -49,8 +49,8 @@ match_dst_mac_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched on a wrong filter"
+diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
+index 3a512513cb32f..6b311d6f8bf02 100644
+--- a/drivers/pcmcia/rsrc_nonstatic.c
++++ b/drivers/pcmcia/rsrc_nonstatic.c
+@@ -1053,6 +1053,8 @@ static void nonstatic_release_resource_db(struct pcmcia_socket *s)
+ 		q = p->next;
+ 		kfree(p);
+ 	}
++
++	kfree(data);
+ }
  
--	tc_check_packets "dev $h2 ingress" 102 1
--	check_err $? "Did not match on correct filter"
-+	tc_check_packets "dev $h2 ingress" 102 0
-+	check_fail $? "Did not match on correct filter"
  
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
-@@ -75,8 +75,8 @@ match_src_mac_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched on a wrong filter"
- 
--	tc_check_packets "dev $h2 ingress" 102 1
--	check_err $? "Did not match on correct filter"
-+	tc_check_packets "dev $h2 ingress" 102 0
-+	check_fail $? "Did not match on correct filter"
- 
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
 -- 
 2.40.1
 
