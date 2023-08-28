@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2CC11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A946C433C7;
-	Mon, 28 Aug 2023 10:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7684911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4DAC433C9;
+	Mon, 28 Aug 2023 10:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219832;
-	bh=CRTNciDDyH7eo+UBPFpqmbhdCSH5m1QrUUQ5JHtShSA=;
+	s=korg; t=1693219835;
+	bh=Y9JNocup4Hqt4Bq5XtJN4xL9jEyLJu/LT2bOf2QLX0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyvwTDybijtuGokVJwZsdKlulBykqumXRQmzQ0FrIcFlfqpVQbj4EM7AyrWZ7xhGa
-	 tcodHFdHF3mYHJy5LaDI2KFyuZy+FcXa1W8canN2l9hhSszE5i8EDdNrAXXB3wl0Ct
-	 PrLZsk0vfmASxwhU0SaMCqdPRhsSlB5aXDr5q7d0=
+	b=UJys/IJCQgofdRjWQFzFDWovPKwj2A/RiiP0oCoWQa7ZcK0xWpW9aVDhmvCV/VoHN
+	 RM044R4pElBBKyaOctEWlAY8M2hgRFO9FlqZpxIPRA5B1/KlhI3uIEQkM3de1Quu/a
+	 YXXLsZKl0QPPCnXW1ljSCGTpQgeiiteRb6+BY+Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Subject: [PATCH 5.10 72/84] drm/i915: Fix premature release of requests reusable memory
-Date: Mon, 28 Aug 2023 12:14:29 +0200
-Message-ID: <20230828101151.726921078@linuxfoundation.org>
+	Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Philip=20M=C3=BCller?= <philm@manjaro.org>
+Subject: [PATCH 5.10 73/84] ASoC: rt711: add two jack detection modes
+Date: Mon, 28 Aug 2023 12:14:30 +0200
+Message-ID: <20230828101151.757309756@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -35,253 +34,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-commit a337b64f0d5717248a0c894e2618e658e6a9de9f upstream.
+commit 683b0df26c3333a5c020a2764b71a70d082c1c61 upstream.
 
-Infinite waits for completion of GPU activity have been observed in CI,
-mostly inside __i915_active_wait(), triggered by igt@gem_barrier_race or
-igt@perf@stress-open-close.  Root cause analysis, based of ftrace dumps
-generated with a lot of extra trace_printk() calls added to the code,
-revealed loops of request dependencies being accidentally built,
-preventing the requests from being processed, each waiting for completion
-of another one's activity.
+Some boards use different circuits for jack detection.
+This patch adds two modes as below
+1. JD2/2 ports/external resister 100k
+2. JD2/1 port/JD voltage 1.8V
 
-After we substitute a new request for a last active one tracked on a
-timeline, we set up a dependency of our new request to wait on completion
-of current activity of that previous one.  While doing that, we must take
-care of keeping the old request still in memory until we use its
-attributes for setting up that await dependency, or we can happen to set
-up the await dependency on an unrelated request that already reuses the
-memory previously allocated to the old one, already released.  Combined
-with perf adding consecutive kernel context remote requests to different
-user context timelines, unresolvable loops of await dependencies can be
-built, leading do infinite waits.
-
-We obtain a pointer to the previous request to wait upon when we
-substitute it with a pointer to our new request in an active tracker,
-e.g. in intel_timeline.last_request.  In some processing paths we protect
-that old request from being freed before we use it by getting a reference
-to it under RCU protection, but in others, e.g.  __i915_request_commit()
--> __i915_request_add_to_timeline() -> __i915_request_ensure_ordering(),
-we don't.  But anyway, since the requests' memory is SLAB_FAILSAFE_BY_RCU,
-that RCU protection is not sufficient against reuse of memory.
-
-We could protect i915_request's memory from being prematurely reused by
-calling its release function via call_rcu() and using rcu_read_lock()
-consequently, as proposed in v1.  However, that approach leads to
-significant (up to 10 times) increase of SLAB utilization by i915_request
-SLAB cache.  Another potential approach is to take a reference to the
-previous active fence.
-
-When updating an active fence tracker, we first lock the new fence,
-substitute a pointer of the current active fence with the new one, then we
-lock the substituted fence.  With this approach, there is a time window
-after the substitution and before the lock when the request can be
-concurrently released by an interrupt handler and its memory reused, then
-we may happen to lock and return a new, unrelated request.
-
-Always get a reference to the current active fence first, before
-replacing it with a new one.  Having it protected from premature release
-and reuse, lock it and then replace with the new one but only if not
-yet signalled via a potential concurrent interrupt nor replaced with
-another one by a potential concurrent thread, otherwise retry, starting
-from getting a reference to the new current one.  Adjust users to not
-get a reference to the previous active fence themselves and always put the
-reference got by __i915_active_fence_set() when no longer needed.
-
-v3: Fix lockdep splat reports and other issues caused by incorrect use of
-    try_cmpxchg() (use (cmpxchg() != prev) instead)
-v2: Protect request's memory by getting a reference to it in favor of
-    delegating its release to call_rcu() (Chris)
-
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8211
-Fixes: df9f85d8582e ("drm/i915: Serialise i915_active_fence_set() with itself")
-Suggested-by: Chris Wilson <chris@chris-wilson.co.uk>
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.6+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230720093543.832147-2-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit 946e047a3d88d46d15b5c5af0414098e12b243f7)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://lore.kernel.org/r/20210617090822.16960-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Philip Müller <philm@manjaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_active.c  |   99 +++++++++++++++++++++++++-----------
- drivers/gpu/drm/i915/i915_request.c |    2 
- 2 files changed, 72 insertions(+), 29 deletions(-)
+ sound/soc/codecs/rt711-sdw.h |    2 ++
+ sound/soc/codecs/rt711.c     |   30 ++++++++++++++++++++++++++++++
+ sound/soc/codecs/rt711.h     |   29 ++++++++++++++++++++++++++++-
+ 3 files changed, 60 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/i915_active.c
-+++ b/drivers/gpu/drm/i915/i915_active.c
-@@ -457,8 +457,11 @@ int i915_active_ref(struct i915_active *
- 		}
- 	} while (unlikely(is_barrier(active)));
+--- a/sound/soc/codecs/rt711-sdw.h
++++ b/sound/soc/codecs/rt711-sdw.h
+@@ -267,7 +267,9 @@ static const struct reg_default rt711_re
+ 	{ 0x8393, 0x00 },
+ 	{ 0x7319, 0x00 },
+ 	{ 0x8399, 0x00 },
++	{ 0x752008, 0xa807 },
+ 	{ 0x752009, 0x1029 },
++	{ 0x75200b, 0x7770 },
+ 	{ 0x752011, 0x007a },
+ 	{ 0x75201a, 0x8003 },
+ 	{ 0x752045, 0x5289 },
+--- a/sound/soc/codecs/rt711.c
++++ b/sound/soc/codecs/rt711.c
+@@ -389,6 +389,36 @@ static void rt711_jack_init(struct rt711
+ 				RT711_HP_JD_FINAL_RESULT_CTL_JD12,
+ 				RT711_HP_JD_FINAL_RESULT_CTL_JD12);
+ 			break;
++		case RT711_JD2_100K:
++			rt711_index_update_bits(rt711->regmap, RT711_VENDOR_REG,
++				RT711_JD_CTL2, RT711_JD2_2PORT_100K_DECODE | RT711_JD2_1PORT_TYPE_DECODE |
++				RT711_HP_JD_SEL_JD2 | RT711_JD1_2PORT_TYPE_100K_DECODE,
++				RT711_JD2_2PORT_100K_DECODE_HP | RT711_JD2_1PORT_JD_HP |
++				RT711_HP_JD_SEL_JD2 | RT711_JD1_2PORT_JD_RESERVED);
++			rt711_index_update_bits(rt711->regmap, RT711_VENDOR_REG,
++				RT711_CC_DET1,
++				RT711_HP_JD_FINAL_RESULT_CTL_JD12,
++				RT711_HP_JD_FINAL_RESULT_CTL_JD12);
++			break;
++		case RT711_JD2_1P8V_1PORT:
++			rt711_index_update_bits(rt711->regmap, RT711_VENDOR_REG,
++				RT711_JD_CTL1, RT711_JD2_DIGITAL_JD_MODE_SEL,
++				RT711_JD2_1_JD_MODE);
++			rt711_index_update_bits(rt711->regmap, RT711_VENDOR_REG,
++				RT711_JD_CTL2, RT711_JD2_1PORT_TYPE_DECODE |
++				RT711_HP_JD_SEL_JD2,
++				RT711_JD2_1PORT_JD_HP |
++				RT711_HP_JD_SEL_JD2);
++			rt711_index_update_bits(rt711->regmap, RT711_VENDOR_REG,
++				RT711_JD_CTL4, RT711_JD2_PAD_PULL_UP_MASK |
++				RT711_JD2_MODE_SEL_MASK,
++				RT711_JD2_PAD_PULL_UP |
++				RT711_JD2_MODE2_1P8V_1PORT);
++			rt711_index_update_bits(rt711->regmap, RT711_VENDOR_REG,
++				RT711_CC_DET1,
++				RT711_HP_JD_FINAL_RESULT_CTL_JD12,
++				RT711_HP_JD_FINAL_RESULT_CTL_JD12);
++			break;
+ 		default:
+ 			dev_warn(rt711->component->dev, "Wrong JD source\n");
+ 			break;
+--- a/sound/soc/codecs/rt711.h
++++ b/sound/soc/codecs/rt711.h
+@@ -52,7 +52,9 @@ struct sdw_stream_data {
  
--	if (!__i915_active_fence_set(active, fence))
-+	fence = __i915_active_fence_set(active, fence);
-+	if (!fence)
- 		__i915_active_acquire(ref);
-+	else
-+		dma_fence_put(fence);
+ /* Index (NID:20h) */
+ #define RT711_DAC_DC_CALI_CTL1				0x00
++#define RT711_JD_CTL1				0x08
+ #define RT711_JD_CTL2				0x09
++#define RT711_JD_CTL4				0x0b
+ #define RT711_CC_DET1				0x11
+ #define RT711_PARA_VERB_CTL				0x1a
+ #define RT711_COMBO_JACK_AUTO_CTL1				0x45
+@@ -171,10 +173,33 @@ struct sdw_stream_data {
+ /* DAC DC offset calibration control-1 (0x00)(NID:20h) */
+ #define RT711_DAC_DC_CALI_TRIGGER (0x1 << 15)
  
- out:
- 	i915_active_release(ref);
-@@ -477,13 +480,9 @@ __i915_active_set_fence(struct i915_acti
- 		return NULL;
- 	}
- 
--	rcu_read_lock();
- 	prev = __i915_active_fence_set(active, fence);
--	if (prev)
--		prev = dma_fence_get_rcu(prev);
--	else
-+	if (!prev)
- 		__i915_active_acquire(ref);
--	rcu_read_unlock();
- 
- 	return prev;
- }
-@@ -1050,10 +1049,11 @@ void i915_request_add_active_barriers(st
-  *
-  * Records the new @fence as the last active fence along its timeline in
-  * this active tracker, moving the tracking callbacks from the previous
-- * fence onto this one. Returns the previous fence (if not already completed),
-- * which the caller must ensure is executed before the new fence. To ensure
-- * that the order of fences within the timeline of the i915_active_fence is
-- * understood, it should be locked by the caller.
-+ * fence onto this one. Gets and returns a reference to the previous fence
-+ * (if not already completed), which the caller must put after making sure
-+ * that it is executed before the new fence. To ensure that the order of
-+ * fences within the timeline of the i915_active_fence is understood, it
-+ * should be locked by the caller.
-  */
- struct dma_fence *
- __i915_active_fence_set(struct i915_active_fence *active,
-@@ -1062,7 +1062,23 @@ __i915_active_fence_set(struct i915_acti
- 	struct dma_fence *prev;
- 	unsigned long flags;
- 
--	if (fence == rcu_access_pointer(active->fence))
-+	/*
-+	 * In case of fences embedded in i915_requests, their memory is
-+	 * SLAB_FAILSAFE_BY_RCU, then it can be reused right after release
-+	 * by new requests.  Then, there is a risk of passing back a pointer
-+	 * to a new, completely unrelated fence that reuses the same memory
-+	 * while tracked under a different active tracker.  Combined with i915
-+	 * perf open/close operations that build await dependencies between
-+	 * engine kernel context requests and user requests from different
-+	 * timelines, this can lead to dependency loops and infinite waits.
-+	 *
-+	 * As a countermeasure, we try to get a reference to the active->fence
-+	 * first, so if we succeed and pass it back to our user then it is not
-+	 * released and potentially reused by an unrelated request before the
-+	 * user has a chance to set up an await dependency on it.
-+	 */
-+	prev = i915_active_fence_get(active);
-+	if (fence == prev)
- 		return fence;
- 
- 	GEM_BUG_ON(test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags));
-@@ -1071,27 +1087,56 @@ __i915_active_fence_set(struct i915_acti
- 	 * Consider that we have two threads arriving (A and B), with
- 	 * C already resident as the active->fence.
- 	 *
--	 * A does the xchg first, and so it sees C or NULL depending
--	 * on the timing of the interrupt handler. If it is NULL, the
--	 * previous fence must have been signaled and we know that
--	 * we are first on the timeline. If it is still present,
--	 * we acquire the lock on that fence and serialise with the interrupt
--	 * handler, in the process removing it from any future interrupt
--	 * callback. A will then wait on C before executing (if present).
--	 *
--	 * As B is second, it sees A as the previous fence and so waits for
--	 * it to complete its transition and takes over the occupancy for
--	 * itself -- remembering that it needs to wait on A before executing.
-+	 * Both A and B have got a reference to C or NULL, depending on the
-+	 * timing of the interrupt handler.  Let's assume that if A has got C
-+	 * then it has locked C first (before B).
- 	 *
- 	 * Note the strong ordering of the timeline also provides consistent
- 	 * nesting rules for the fence->lock; the inner lock is always the
- 	 * older lock.
- 	 */
- 	spin_lock_irqsave(fence->lock, flags);
--	prev = xchg(__active_fence_slot(active), fence);
--	if (prev) {
--		GEM_BUG_ON(prev == fence);
-+	if (prev)
- 		spin_lock_nested(prev->lock, SINGLE_DEPTH_NESTING);
++/* jack detect control 1 (0x08)(NID:20h) */
++#define RT711_JD2_DIGITAL_JD_MODE_SEL (0x1 << 1)
++#define RT711_JD2_1_JD_MODE (0x0 << 1)
++#define RT711_JD2_2_JD_MODE (0x1 << 1)
 +
-+	/*
-+	 * A does the cmpxchg first, and so it sees C or NULL, as before, or
-+	 * something else, depending on the timing of other threads and/or
-+	 * interrupt handler.  If not the same as before then A unlocks C if
-+	 * applicable and retries, starting from an attempt to get a new
-+	 * active->fence.  Meanwhile, B follows the same path as A.
-+	 * Once A succeeds with cmpxch, B fails again, retires, gets A from
-+	 * active->fence, locks it as soon as A completes, and possibly
-+	 * succeeds with cmpxchg.
-+	 */
-+	while (cmpxchg(__active_fence_slot(active), prev, fence) != prev) {
-+		if (prev) {
-+			spin_unlock(prev->lock);
-+			dma_fence_put(prev);
-+		}
-+		spin_unlock_irqrestore(fence->lock, flags);
+ /* jack detect control 2 (0x09)(NID:20h) */
+ #define RT711_JD2_2PORT_200K_DECODE_HP (0x1 << 13)
++#define RT711_JD2_2PORT_100K_DECODE (0x1 << 12)
++#define RT711_JD2_2PORT_100K_DECODE_HP (0x0 << 12)
+ #define RT711_HP_JD_SEL_JD1 (0x0 << 1)
+ #define RT711_HP_JD_SEL_JD2 (0x1 << 1)
++#define RT711_JD2_1PORT_TYPE_DECODE (0x3 << 10)
++#define RT711_JD2_1PORT_JD_LINE2 (0x0 << 10)
++#define RT711_JD2_1PORT_JD_HP (0x1 << 10)
++#define RT711_JD2_1PORT_JD_LINE1 (0x2 << 10)
++#define RT711_JD1_2PORT_TYPE_100K_DECODE (0x1 << 0)
++#define RT711_JD1_2PORT_JD_RESERVED (0x0 << 0)
++#define RT711_JD1_2PORT_JD_LINE1 (0x1 << 0)
 +
-+		prev = i915_active_fence_get(active);
-+		GEM_BUG_ON(prev == fence);
-+
-+		spin_lock_irqsave(fence->lock, flags);
-+		if (prev)
-+			spin_lock_nested(prev->lock, SINGLE_DEPTH_NESTING);
-+	}
-+
-+	/*
-+	 * If prev is NULL then the previous fence must have been signaled
-+	 * and we know that we are first on the timeline.  If it is still
-+	 * present then, having the lock on that fence already acquired, we
-+	 * serialise with the interrupt handler, in the process of removing it
-+	 * from any future interrupt callback.  A will then wait on C before
-+	 * executing (if present).
-+	 *
-+	 * As B is second, it sees A as the previous fence and so waits for
-+	 * it to complete its transition and takes over the occupancy for
-+	 * itself -- remembering that it needs to wait on A before executing.
-+	 */
-+	if (prev) {
- 		__list_del_entry(&active->cb.node);
- 		spin_unlock(prev->lock); /* serialise with prev->cb_list */
- 	}
-@@ -1108,11 +1153,7 @@ int i915_active_fence_set(struct i915_ac
- 	int err = 0;
++/* jack detect control 4 (0x0b)(NID:20h) */
++#define RT711_JD2_PAD_PULL_UP_MASK (0x1 << 3)
++#define RT711_JD2_PAD_NOT_PULL_UP (0x0 << 3)
++#define RT711_JD2_PAD_PULL_UP (0x1 << 3)
++#define RT711_JD2_MODE_SEL_MASK (0x3 << 0)
++#define RT711_JD2_MODE0_2PORT (0x0 << 0)
++#define RT711_JD2_MODE1_3P3V_1PORT (0x1 << 0)
++#define RT711_JD2_MODE2_1P8V_1PORT (0x2 << 0)
  
- 	/* Must maintain timeline ordering wrt previous active requests */
--	rcu_read_lock();
- 	fence = __i915_active_fence_set(active, &rq->fence);
--	if (fence) /* but the previous fence may not belong to that timeline! */
--		fence = dma_fence_get_rcu(fence);
--	rcu_read_unlock();
- 	if (fence) {
- 		err = i915_request_await_dma_fence(rq, fence);
- 		dma_fence_put(fence);
---- a/drivers/gpu/drm/i915/i915_request.c
-+++ b/drivers/gpu/drm/i915/i915_request.c
-@@ -1525,6 +1525,8 @@ __i915_request_add_to_timeline(struct i9
- 							 &rq->dep,
- 							 0);
- 	}
-+	if (prev)
-+		i915_request_put(prev);
+ /* CC DET1 (0x11)(NID:20h) */
+ #define RT711_HP_JD_FINAL_RESULT_CTL_JD12 (0x1 << 10)
+@@ -215,7 +240,9 @@ enum {
+ enum rt711_jd_src {
+ 	RT711_JD_NULL,
+ 	RT711_JD1,
+-	RT711_JD2
++	RT711_JD2,
++	RT711_JD2_100K,
++	RT711_JD2_1P8V_1PORT
+ };
  
- 	/*
- 	 * Make sure that no request gazumped us - if it was allocated after
+ int rt711_io_init(struct device *dev, struct sdw_slave *slave);
 
 
