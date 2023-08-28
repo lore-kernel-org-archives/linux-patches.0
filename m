@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFD911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526FFC433C7;
-	Mon, 28 Aug 2023 10:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB7D11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14038C433C9;
+	Mon, 28 Aug 2023 10:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219154;
-	bh=RT38TN3jDEGSO/7/k+ed20dY+XhOdcYtpL10d6++uA0=;
+	s=korg; t=1693219157;
+	bh=wCIN06NMehadfHkTvQmcFOlJ3+wXCnBxpCDuqCeSIYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z56jss6Fz4pvfmT5kO7RbCykdu4f1Vq+LJs2DoD/IQ6fWKyduY8ZtAW/7YSJQfaY4
-	 kPq32fmOvbtHWwtYQa3Dk5Vo4HyoG5b30irRjhT/vdlXSw3dT0Ssa7XQZAoptb1t+F
-	 u/z5gkMxK3qBxqT1L3q/nD5DDOQ7fYnsc/h/RmdU=
+	b=YMK0Xf66N+Z+GGEgJTqRvvDRyRDoi7ednMXBQwjTqWabs7pGI44e6StGQ4KoSnHd7
+	 /TjcO5kqIxg8egrIMyTH/TGD7R5bN9hCzJtbbonfTGQrRWHZRjJiaLaOI6SdP6vMJA
+	 ELAhsQGyg3vNJGjxP/jpQDH4KiE3YlbciB283Xbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lin Ma <linma@zju.edu.cn>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.4 092/158] net: xfrm: Amend XFRMA_SEC_CTX nla_policy structure
-Date: Mon, 28 Aug 2023 12:13:09 +0200
-Message-ID: <20230828101200.408299533@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 066/158] xfrm: add NULL check in xfrm_update_ae_params
+Date: Mon, 28 Aug 2023 12:12:43 +0200
+Message-ID: <20230828101159.506527976@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -41,41 +43,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Lin Ma <linma@zju.edu.cn>
 
-commit d1e0e61d617ba17aa516db707aa871387566bbf7 upstream.
+[ Upstream commit 00374d9b6d9f932802b55181be9831aa948e5b7c ]
 
-According to all consumers code of attrs[XFRMA_SEC_CTX], like
+Normally, x->replay_esn and x->preplay_esn should be allocated at
+xfrm_alloc_replay_state_esn(...) in xfrm_state_construct(...), hence the
+xfrm_update_ae_params(...) is okay to update them. However, the current
+implementation of xfrm_new_ae(...) allows a malicious user to directly
+dereference a NULL pointer and crash the kernel like below.
 
-* verify_sec_ctx_len(), convert to xfrm_user_sec_ctx*
-* xfrm_state_construct(), call security_xfrm_state_alloc whose prototype
-is int security_xfrm_state_alloc(.., struct xfrm_user_sec_ctx *sec_ctx);
-* copy_from_user_sec_ctx(), convert to xfrm_user_sec_ctx *
-...
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+PGD 8253067 P4D 8253067 PUD 8e0e067 PMD 0
+Oops: 0002 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 PID: 98 Comm: poc.npd Not tainted 6.4.0-rc7-00072-gdad9774deaf1 #8
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.o4
+RIP: 0010:memcpy_orig+0xad/0x140
+Code: e8 4c 89 5f e0 48 8d 7f e0 73 d2 83 c2 20 48 29 d6 48 29 d7 83 fa 10 72 34 4c 8b 06 4c 8b 4e 08 c
+RSP: 0018:ffff888008f57658 EFLAGS: 00000202
+RAX: 0000000000000000 RBX: ffff888008bd0000 RCX: ffffffff8238e571
+RDX: 0000000000000018 RSI: ffff888007f64844 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: ffff888008f57818
+R13: ffff888007f64aa4 R14: 0000000000000000 R15: 0000000000000000
+FS:  00000000014013c0(0000) GS:ffff88806d600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000054d8000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ ? __die+0x1f/0x70
+ ? page_fault_oops+0x1e8/0x500
+ ? __pfx_is_prefetch.constprop.0+0x10/0x10
+ ? __pfx_page_fault_oops+0x10/0x10
+ ? _raw_spin_unlock_irqrestore+0x11/0x40
+ ? fixup_exception+0x36/0x460
+ ? _raw_spin_unlock_irqrestore+0x11/0x40
+ ? exc_page_fault+0x5e/0xc0
+ ? asm_exc_page_fault+0x26/0x30
+ ? xfrm_update_ae_params+0xd1/0x260
+ ? memcpy_orig+0xad/0x140
+ ? __pfx__raw_spin_lock_bh+0x10/0x10
+ xfrm_update_ae_params+0xe7/0x260
+ xfrm_new_ae+0x298/0x4e0
+ ? __pfx_xfrm_new_ae+0x10/0x10
+ ? __pfx_xfrm_new_ae+0x10/0x10
+ xfrm_user_rcv_msg+0x25a/0x410
+ ? __pfx_xfrm_user_rcv_msg+0x10/0x10
+ ? __alloc_skb+0xcf/0x210
+ ? stack_trace_save+0x90/0xd0
+ ? filter_irq_stacks+0x1c/0x70
+ ? __stack_depot_save+0x39/0x4e0
+ ? __kasan_slab_free+0x10a/0x190
+ ? kmem_cache_free+0x9c/0x340
+ ? netlink_recvmsg+0x23c/0x660
+ ? sock_recvmsg+0xeb/0xf0
+ ? __sys_recvfrom+0x13c/0x1f0
+ ? __x64_sys_recvfrom+0x71/0x90
+ ? do_syscall_64+0x3f/0x90
+ ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+ ? copyout+0x3e/0x50
+ netlink_rcv_skb+0xd6/0x210
+ ? __pfx_xfrm_user_rcv_msg+0x10/0x10
+ ? __pfx_netlink_rcv_skb+0x10/0x10
+ ? __pfx_sock_has_perm+0x10/0x10
+ ? mutex_lock+0x8d/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ xfrm_netlink_rcv+0x44/0x50
+ netlink_unicast+0x36f/0x4c0
+ ? __pfx_netlink_unicast+0x10/0x10
+ ? netlink_recvmsg+0x500/0x660
+ netlink_sendmsg+0x3b7/0x700
 
-It seems that the expected parsing result for XFRMA_SEC_CTX should be
-structure xfrm_user_sec_ctx, and the current xfrm_sec_ctx is confusing
-and misleading (Luckily, they happen to have same size 8 bytes).
+This Null-ptr-deref bug is assigned CVE-2023-3772. And this commit
+adds additional NULL check in xfrm_update_ae_params to fix the NPD.
 
-This commit amend the policy structure to xfrm_user_sec_ctx to avoid
-ambiguity.
-
-Fixes: cf5cb79f6946 ("[XFRM] netlink: Establish an attribute policy")
+Fixes: d8647b79c3b7 ("xfrm: Add user interface for esn and big anti-replay windows")
 Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c |    2 +-
+ net/xfrm/xfrm_user.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 68ac55842dedd..06aeefce88718 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -2583,7 +2583,7 @@ static const struct nla_policy xfrma_pol
- 	[XFRMA_ALG_COMP]	= { .len = sizeof(struct xfrm_algo) },
- 	[XFRMA_ENCAP]		= { .len = sizeof(struct xfrm_encap_tmpl) },
- 	[XFRMA_TMPL]		= { .len = sizeof(struct xfrm_user_tmpl) },
--	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_sec_ctx) },
-+	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_user_sec_ctx) },
- 	[XFRMA_LTIME_VAL]	= { .len = sizeof(struct xfrm_lifetime_cur) },
- 	[XFRMA_REPLAY_VAL]	= { .len = sizeof(struct xfrm_replay_state) },
- 	[XFRMA_REPLAY_THRESH]	= { .type = NLA_U32 },
+@@ -522,7 +522,7 @@ static void xfrm_update_ae_params(struct xfrm_state *x, struct nlattr **attrs,
+ 	struct nlattr *et = attrs[XFRMA_ETIMER_THRESH];
+ 	struct nlattr *rt = attrs[XFRMA_REPLAY_THRESH];
+ 
+-	if (re) {
++	if (re && x->replay_esn && x->preplay_esn) {
+ 		struct xfrm_replay_state_esn *replay_esn;
+ 		replay_esn = nla_data(re);
+ 		memcpy(x->replay_esn, replay_esn,
+-- 
+2.40.1
+
 
 
