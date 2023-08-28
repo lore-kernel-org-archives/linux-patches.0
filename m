@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D0411C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CE8C433C9;
-	Mon, 28 Aug 2023 10:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028C511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DEB0C433C7;
+	Mon, 28 Aug 2023 10:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219576;
-	bh=/A989Z5uKDExKyc1HaleGpxUQUaqHaulrh9UU5Xrc7U=;
+	s=korg; t=1693219578;
+	bh=b3/nbbuxf5Oj5518q7Gyg8/tkE95/8uO3TSPcmndKSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgtW8C45BoHBAW2E3oMOZji18Izvtn0XwAJp5opm7rF14X8zPX9bYkmN9G70OI6bZ
-	 ne75X7hY2kgJsG9xkzjnXnc+OfLdmyWgtTu7Nv0A7Kt3oAiO4GL0/UPPUfSoiWaPx+
-	 1kGATOSDKtUgpnTVg9XjrLBxoWmsXWPtOHq08/5c=
+	b=Ih6XTFJxNAuGjd3klTJ4Q7RCXtkdDnIds6IjrYzK8ij2gcF+vqZbPHQVjX55ppFNP
+	 zXEWMBO5rX6qaNPvkMpge5BPDVO7IQz2vkDz4OAJ/gbuYwV+GlyQkSWBkWLOBMUKTa
+	 1xI1/PUap9PfgcJijUfjKzA8Gsj/U4l8FSfnwbwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.15 57/89] batman-adv: Do not get eth header before batadv_check_management_packet
-Date: Mon, 28 Aug 2023 12:13:58 +0200
-Message-ID: <20230828101152.085366253@linuxfoundation.org>
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 5.15 48/89] NFSv4: Fix dropped lock for racing OPEN and delegation return
+Date: Mon, 28 Aug 2023 12:13:49 +0200
+Message-ID: <20230828101151.793725627@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -40,122 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit eac27a41ab641de074655d2932fc7f8cdb446881 upstream.
+commit 1cbc11aaa01f80577b67ae02c73ee781112125fd upstream.
 
-If received skb in batadv_v_elp_packet_recv or batadv_v_ogm_packet_recv
-is either cloned or non linearized then its data buffer will be
-reallocated by batadv_check_management_packet when skb_cow or
-skb_linearize get called. Thus geting ethernet header address inside
-skb data buffer before batadv_check_management_packet had any chance to
-reallocate it could lead to the following kernel panic:
+Commmit f5ea16137a3f ("NFSv4: Retry LOCK on OLD_STATEID during delegation
+return") attempted to solve this problem by using nfs4's generic async error
+handling, but introduced a regression where v4.0 lock recovery would hang.
+The additional complexity introduced by overloading that error handling is
+not necessary for this case.  This patch expects that commit to be
+reverted.
 
-  Unable to handle kernel paging request at virtual address ffffff8020ab069a
-  Mem abort info:
-    ESR = 0x96000007
-    EC = 0x25: DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-    FSC = 0x07: level 3 translation fault
-  Data abort info:
-    ISV = 0, ISS = 0x00000007
-    CM = 0, WnR = 0
-  swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000040f45000
-  [ffffff8020ab069a] pgd=180000007fffa003, p4d=180000007fffa003, pud=180000007fffa003, pmd=180000007fefe003, pte=0068000020ab0706
-  Internal error: Oops: 96000007 [#1] SMP
-  Modules linked in: ahci_mvebu libahci_platform libahci dvb_usb_af9035 dvb_usb_dib0700 dib0070 dib7000m dibx000_common ath11k_pci ath10k_pci ath10k_core mwl8k_new nf_nat_sip nf_conntrack_sip xhci_plat_hcd xhci_hcd nf_nat_pptp nf_conntrack_pptp at24 sbsa_gwdt
-  CPU: 1 PID: 16 Comm: ksoftirqd/1 Not tainted 5.15.42-00066-g3242268d425c-dirty #550
-  Hardware name: A8k (DT)
-  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : batadv_is_my_mac+0x60/0xc0
-  lr : batadv_v_ogm_packet_recv+0x98/0x5d0
-  sp : ffffff8000183820
-  x29: ffffff8000183820 x28: 0000000000000001 x27: ffffff8014f9af00
-  x26: 0000000000000000 x25: 0000000000000543 x24: 0000000000000003
-  x23: ffffff8020ab0580 x22: 0000000000000110 x21: ffffff80168ae880
-  x20: 0000000000000000 x19: ffffff800b561000 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 00dc098924ae0032
-  x14: 0f0405433e0054b0 x13: ffffffff00000080 x12: 0000004000000001
-  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-  x8 : 0000000000000000 x7 : ffffffc076dae000 x6 : ffffff8000183700
-  x5 : ffffffc00955e698 x4 : ffffff80168ae000 x3 : ffffff80059cf000
-  x2 : ffffff800b561000 x1 : ffffff8020ab0696 x0 : ffffff80168ae880
-  Call trace:
-   batadv_is_my_mac+0x60/0xc0
-   batadv_v_ogm_packet_recv+0x98/0x5d0
-   batadv_batman_skb_recv+0x1b8/0x244
-   __netif_receive_skb_core.isra.0+0x440/0xc74
-   __netif_receive_skb_one_core+0x14/0x20
-   netif_receive_skb+0x68/0x140
-   br_pass_frame_up+0x70/0x80
-   br_handle_frame_finish+0x108/0x284
-   br_handle_frame+0x190/0x250
-   __netif_receive_skb_core.isra.0+0x240/0xc74
-   __netif_receive_skb_list_core+0x6c/0x90
-   netif_receive_skb_list_internal+0x1f4/0x310
-   napi_complete_done+0x64/0x1d0
-   gro_cell_poll+0x7c/0xa0
-   __napi_poll+0x34/0x174
-   net_rx_action+0xf8/0x2a0
-   _stext+0x12c/0x2ac
-   run_ksoftirqd+0x4c/0x7c
-   smpboot_thread_fn+0x120/0x210
-   kthread+0x140/0x150
-   ret_from_fork+0x10/0x20
-  Code: f9403844 eb03009f 54fffee1 f94
+The problem as originally explained in the above commit is:
 
-Thus ethernet header address should only be fetched after
-batadv_check_management_packet has been called.
+    There's a small window where a LOCK sent during a delegation return can
+    race with another OPEN on client, but the open stateid has not yet been
+    updated.  In this case, the client doesn't handle the OLD_STATEID error
+    from the server and will lose this lock, emitting:
+    "NFS: nfs4_handle_delegation_recall_error: unhandled error -10024".
 
-Fixes: 0da0035942d4 ("batman-adv: OGMv2 - add basic infrastructure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Fix this by using the old_stateid refresh helpers if the server replies
+with OLD_STATEID.
+
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_elp.c |    3 ++-
- net/batman-adv/bat_v_ogm.c |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4proc.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/bat_v_elp.c
-+++ b/net/batman-adv/bat_v_elp.c
-@@ -507,7 +507,7 @@ int batadv_v_elp_packet_recv(struct sk_b
- 	struct batadv_priv *bat_priv = netdev_priv(if_incoming->soft_iface);
- 	struct batadv_elp_packet *elp_packet;
- 	struct batadv_hard_iface *primary_if;
--	struct ethhdr *ethhdr = (struct ethhdr *)skb_mac_header(skb);
-+	struct ethhdr *ethhdr;
- 	bool res;
- 	int ret = NET_RX_DROP;
- 
-@@ -515,6 +515,7 @@ int batadv_v_elp_packet_recv(struct sk_b
- 	if (!res)
- 		goto free_skb;
- 
-+	ethhdr = eth_hdr(skb);
- 	if (batadv_is_my_mac(bat_priv, ethhdr->h_source))
- 		goto free_skb;
- 
---- a/net/batman-adv/bat_v_ogm.c
-+++ b/net/batman-adv/bat_v_ogm.c
-@@ -986,7 +986,7 @@ int batadv_v_ogm_packet_recv(struct sk_b
- {
- 	struct batadv_priv *bat_priv = netdev_priv(if_incoming->soft_iface);
- 	struct batadv_ogm2_packet *ogm_packet;
--	struct ethhdr *ethhdr = eth_hdr(skb);
-+	struct ethhdr *ethhdr;
- 	int ogm_offset;
- 	u8 *packet_pos;
- 	int ret = NET_RX_DROP;
-@@ -1000,6 +1000,7 @@ int batadv_v_ogm_packet_recv(struct sk_b
- 	if (!batadv_check_management_packet(skb, if_incoming, BATADV_OGM2_HLEN))
- 		goto free_skb;
- 
-+	ethhdr = eth_hdr(skb);
- 	if (batadv_is_my_mac(bat_priv, ethhdr->h_source))
- 		goto free_skb;
- 
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7152,8 +7152,15 @@ static void nfs4_lock_done(struct rpc_ta
+ 		} else if (!nfs4_update_lock_stateid(lsp, &data->res.stateid))
+ 			goto out_restart;
+ 		break;
+-	case -NFS4ERR_BAD_STATEID:
+ 	case -NFS4ERR_OLD_STATEID:
++		if (data->arg.new_lock_owner != 0 &&
++			nfs4_refresh_open_old_stateid(&data->arg.open_stateid,
++					lsp->ls_state))
++			goto out_restart;
++		if (nfs4_refresh_lock_old_stateid(&data->arg.lock_stateid, lsp))
++			goto out_restart;
++		fallthrough;
++	case -NFS4ERR_BAD_STATEID:
+ 	case -NFS4ERR_STALE_STATEID:
+ 	case -NFS4ERR_EXPIRED:
+ 		if (data->arg.new_lock_owner != 0) {
 
 
