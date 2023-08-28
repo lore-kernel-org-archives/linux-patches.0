@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746A411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB6DC433C7;
-	Mon, 28 Aug 2023 10:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3264111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99BCC433C7;
+	Mon, 28 Aug 2023 10:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217784;
-	bh=O7h+DGPrq+uhfHsYo4CSMC3DIHOCojEwfwyKhyreZjA=;
+	s=korg; t=1693217787;
+	bh=hqnJWl7dfXys1qX+6aEPboe0JtgzPBP3Qflq8n5fcFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9Z2Ara/D++2DOyhgV5i/t5ouslvuzUVIRXmqTLelT05WCZh65Y6aHOYedOrJcb7O
-	 8EIyngpLnelCSjt1kDlmpYlMw4OQz7J0+xj4oupaZtkeTLOYeJXvOc90H0xs6KqK5h
-	 cGvYtZYGtx17TtQ/U1nEVJP3jCCvCWRgftab6C9s=
+	b=2XEm2tvVtLtYMjVj9rtlENFIa1hVaNwu/RW+tDeXDdBRF/klpyGMIJDa54j085QZN
+	 ZlrKJiSfzBOh0OSf274uRqGDOfitAKvd7hXKzix/4QBmV8pXH4ksPxp6s2Vu+tKyRq
+	 zGRxIRtfY44nlrPJ5jFGP5PjnciqHRZph9iGeIRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pina Chen <pina.chen@mediatek.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 11/57] media: v4l2-mem2mem: add lock to protect parameter num_rdy
-Date: Mon, 28 Aug 2023 12:12:31 +0200
-Message-ID: <20230828101144.614305266@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.14 38/57] net: fix the RTO timer retransmitting skb every 1ms if linear option is enabled
+Date: Mon, 28 Aug 2023 12:12:58 +0200
+Message-ID: <20230828101145.659812497@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -35,73 +34,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 56b5c3e67b0f9af3f45cf393be048ee8d8a92694 ]
+commit e4dd0d3a2f64b8bd8029ec70f52bdbebd0644408 upstream.
 
-Getting below error when using KCSAN to check the driver. Adding lock to
-protect parameter num_rdy when getting the value with function:
-v4l2_m2m_num_src_bufs_ready/v4l2_m2m_num_dst_bufs_ready.
+In the real workload, I encountered an issue which could cause the RTO
+timer to retransmit the skb per 1ms with linear option enabled. The amount
+of lost-retransmitted skbs can go up to 1000+ instantly.
 
-kworker/u16:3: [name:report&]BUG: KCSAN: data-race in v4l2_m2m_buf_queue
-kworker/u16:3: [name:report&]
+The root cause is that if the icsk_rto happens to be zero in the 6th round
+(which is the TCP_THIN_LINEAR_RETRIES value), then it will always be zero
+due to the changed calculation method in tcp_retransmit_timer() as follows:
 
-kworker/u16:3: [name:report&]read-write to 0xffffff8105f35b94 of 1 bytes by task 20865 on cpu 7:
-kworker/u16:3:  v4l2_m2m_buf_queue+0xd8/0x10c
+icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX);
 
-Signed-off-by: Pina Chen <pina.chen@mediatek.com>
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Above line could be converted to
+icsk->icsk_rto = min(0 << 1, TCP_RTO_MAX) = 0
+
+Therefore, the timer expires so quickly without any doubt.
+
+I read through the RFC 6298 and found that the RTO value can be rounded
+up to a certain value, in Linux, say TCP_RTO_MIN as default, which is
+regarded as the lower bound in this patch as suggested by Eric.
+
+Fixes: 36e31b0af587 ("net: TCP thin linear timeouts")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/media/v4l2-mem2mem.h | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_timer.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/media/v4l2-mem2mem.h b/include/media/v4l2-mem2mem.h
-index e157d5c9b224e..239bcc4b7e95a 100644
---- a/include/media/v4l2-mem2mem.h
-+++ b/include/media/v4l2-mem2mem.h
-@@ -392,7 +392,14 @@ void v4l2_m2m_buf_queue(struct v4l2_m2m_ctx *m2m_ctx,
- static inline
- unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- {
--	return m2m_ctx->out_q_ctx.num_rdy;
-+	unsigned int num_buf_rdy;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
-+	num_buf_rdy = m2m_ctx->out_q_ctx.num_rdy;
-+	spin_unlock_irqrestore(&m2m_ctx->out_q_ctx.rdy_spinlock, flags);
-+
-+	return num_buf_rdy;
- }
- 
- /**
-@@ -404,7 +411,14 @@ unsigned int v4l2_m2m_num_src_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- static inline
- unsigned int v4l2_m2m_num_dst_bufs_ready(struct v4l2_m2m_ctx *m2m_ctx)
- {
--	return m2m_ctx->cap_q_ctx.num_rdy;
-+	unsigned int num_buf_rdy;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
-+	num_buf_rdy = m2m_ctx->cap_q_ctx.num_rdy;
-+	spin_unlock_irqrestore(&m2m_ctx->cap_q_ctx.rdy_spinlock, flags);
-+
-+	return num_buf_rdy;
- }
- 
- /**
--- 
-2.40.1
-
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -540,7 +540,9 @@ out_reset_timer:
+ 	    tcp_stream_is_thin(tp) &&
+ 	    icsk->icsk_retransmits <= TCP_THIN_LINEAR_RETRIES) {
+ 		icsk->icsk_backoff = 0;
+-		icsk->icsk_rto = min(__tcp_set_rto(tp), TCP_RTO_MAX);
++		icsk->icsk_rto = clamp(__tcp_set_rto(tp),
++				       tcp_rto_min(sk),
++				       TCP_RTO_MAX);
+ 	} else {
+ 		/* Use normal (exponential) backoff */
+ 		icsk->icsk_rto = min(icsk->icsk_rto << 1, TCP_RTO_MAX);
 
 
