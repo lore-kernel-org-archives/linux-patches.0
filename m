@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0FA611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3891C433C8;
-	Mon, 28 Aug 2023 10:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBC0611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D01C433C8;
+	Mon, 28 Aug 2023 10:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219460;
-	bh=Q1/AJDQNUJGogxJz5jTSZqnJKfoGtpeFfGC6/VGuLFM=;
+	s=korg; t=1693219462;
+	bh=aAGzF/oGWN632POR1Rimjxpsnnbgen+mmDEr+XlOFtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLDLQSCGWcrqEoK8/JislVCFRQWgrDjFIyzXVCpYaWJJuk5n6taAa39u5VataYzmg
-	 KQ+fxeoS6aSUjpfvj5dyc6sTwOsaYWlfDptrCBgdHpVHRcOwujbjK+seMh8LR8rgXi
-	 PrLxkefKJ0ntnrJBPre3TbFEiwUT9RxBxZd9H1a0=
+	b=gHEkKrhnmSyLSW2k1uOdAWOemNZ6LX/1X244Nwnp6ut4uikoxG/SKDYYDxSF1fX4r
+	 v6ulVFtl3bOJD78YQDLEV9P/D/FM1Qf/w4A4WQeWA2NLmdYcUil2JOnO73Z/4TXTww
+	 hMvHeBXgI4LO6ZSRBQXQbW5faiJY6FVodZmhie9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	susan.zheng@veritas.com,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/89] bonding: fix macvlan over alb bond support
-Date: Mon, 28 Aug 2023 12:13:44 +0200
-Message-ID: <20230828101151.624182981@linuxfoundation.org>
+	Simon Horman <simon.horman@corigine.com>,
+	Ivan Mikhaylov <fr0st61te@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 44/89] net/ncsi: make one oem_gma function for all mfr id
+Date: Mon, 28 Aug 2023 12:13:45 +0200
+Message-ID: <20230828101151.654151435@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,90 +40,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Ivan Mikhaylov <fr0st61te@gmail.com>
 
-[ Upstream commit e74216b8def3803e98ae536de78733e9d7f3b109 ]
+commit 74b449b98dccdf24288d562f9d207fa066da793d upstream.
 
-The commit 14af9963ba1e ("bonding: Support macvlans on top of tlb/rlb mode
-bonds") aims to enable the use of macvlans on top of rlb bond mode. However,
-the current rlb bond mode only handles ARP packets to update remote neighbor
-entries. This causes an issue when a macvlan is on top of the bond, and
-remote devices send packets to the macvlan using the bond's MAC address
-as the destination. After delivering the packets to the macvlan, the macvlan
-will rejects them as the MAC address is incorrect. Consequently, this commit
-makes macvlan over bond non-functional.
+Make the one Get Mac Address function for all manufacturers and change
+this call in handlers accordingly.
 
-To address this problem, one potential solution is to check for the presence
-of a macvlan port on the bond device using netif_is_macvlan_port(bond->dev)
-and return NULL in the rlb_arp_xmit() function. However, this approach
-doesn't fully resolve the situation when a VLAN exists between the bond and
-macvlan.
-
-So let's just do a partial revert for commit 14af9963ba1e in rlb_arp_xmit().
-As the comment said, Don't modify or load balance ARPs that do not originate
-locally.
-
-Fixes: 14af9963ba1e ("bonding: Support macvlans on top of tlb/rlb mode bonds")
-Reported-by: susan.zheng@veritas.com
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2117816
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_alb.c |  6 +++---
- include/net/bonding.h          | 11 +----------
- 2 files changed, 4 insertions(+), 13 deletions(-)
+ net/ncsi/ncsi-rsp.c |   88 +++++++++++-----------------------------------------
+ 1 file changed, 19 insertions(+), 69 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index a6a70b872ac4a..b29393831a302 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -657,10 +657,10 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
- 		return NULL;
- 	arp = (struct arp_pkt *)skb_network_header(skb);
- 
--	/* Don't modify or load balance ARPs that do not originate locally
--	 * (e.g.,arrive via a bridge).
-+	/* Don't modify or load balance ARPs that do not originate
-+	 * from the bond itself or a VLAN directly above the bond.
- 	 */
--	if (!bond_slave_has_mac_rx(bond, arp->mac_src))
-+	if (!bond_slave_has_mac_rcu(bond, arp->mac_src))
- 		return NULL;
- 
- 	if (arp->op_code == htons(ARPOP_REPLY)) {
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index 6c90aca917edc..08d222752cc88 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -700,23 +700,14 @@ static inline struct slave *bond_slave_has_mac(struct bonding *bond,
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -611,14 +611,15 @@ static int ncsi_rsp_handler_snfc(struct
+ 	return 0;
  }
  
- /* Caller must hold rcu_read_lock() for read */
--static inline bool bond_slave_has_mac_rx(struct bonding *bond, const u8 *mac)
-+static inline bool bond_slave_has_mac_rcu(struct bonding *bond, const u8 *mac)
+-/* Response handler for Mellanox command Get Mac Address */
+-static int ncsi_rsp_handler_oem_mlx_gma(struct ncsi_request *nr)
++/* Response handler for Get Mac Address command */
++static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
  {
- 	struct list_head *iter;
- 	struct slave *tmp;
--	struct netdev_hw_addr *ha;
+ 	struct ncsi_dev_priv *ndp = nr->ndp;
+ 	struct net_device *ndev = ndp->ndev.dev;
+ 	const struct net_device_ops *ops = ndev->netdev_ops;
+ 	struct ncsi_rsp_oem_pkt *rsp;
+ 	struct sockaddr saddr;
++	u32 mac_addr_off = 0;
+ 	int ret = 0;
  
- 	bond_for_each_slave_rcu(bond, tmp, iter)
- 		if (ether_addr_equal_64bits(mac, tmp->dev->dev_addr))
- 			return true;
--
--	if (netdev_uc_empty(bond->dev))
--		return false;
--
--	netdev_for_each_uc_addr(ha, bond->dev)
--		if (ether_addr_equal_64bits(mac, ha->addr))
--			return true;
--
- 	return false;
+ 	/* Get the response header */
+@@ -626,7 +627,19 @@ static int ncsi_rsp_handler_oem_mlx_gma(
+ 
+ 	saddr.sa_family = ndev->type;
+ 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+-	memcpy(saddr.sa_data, &rsp->data[MLX_MAC_ADDR_OFFSET], ETH_ALEN);
++	if (mfr_id == NCSI_OEM_MFR_BCM_ID)
++		mac_addr_off = BCM_MAC_ADDR_OFFSET;
++	else if (mfr_id == NCSI_OEM_MFR_MLX_ID)
++		mac_addr_off = MLX_MAC_ADDR_OFFSET;
++	else if (mfr_id == NCSI_OEM_MFR_INTEL_ID)
++		mac_addr_off = INTEL_MAC_ADDR_OFFSET;
++
++	memcpy(saddr.sa_data, &rsp->data[mac_addr_off], ETH_ALEN);
++	if (mfr_id == NCSI_OEM_MFR_BCM_ID || mfr_id == NCSI_OEM_MFR_INTEL_ID)
++		eth_addr_inc((u8 *)saddr.sa_data);
++	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
++		return -ENXIO;
++
+ 	/* Set the flag for GMA command which should only be called once */
+ 	ndp->gma_flag = 1;
+ 
+@@ -649,41 +662,10 @@ static int ncsi_rsp_handler_oem_mlx(stru
+ 
+ 	if (mlx->cmd == NCSI_OEM_MLX_CMD_GMA &&
+ 	    mlx->param == NCSI_OEM_MLX_CMD_GMA_PARAM)
+-		return ncsi_rsp_handler_oem_mlx_gma(nr);
++		return ncsi_rsp_handler_oem_gma(nr, NCSI_OEM_MFR_MLX_ID);
+ 	return 0;
  }
  
--- 
-2.40.1
-
+-/* Response handler for Broadcom command Get Mac Address */
+-static int ncsi_rsp_handler_oem_bcm_gma(struct ncsi_request *nr)
+-{
+-	struct ncsi_dev_priv *ndp = nr->ndp;
+-	struct net_device *ndev = ndp->ndev.dev;
+-	const struct net_device_ops *ops = ndev->netdev_ops;
+-	struct ncsi_rsp_oem_pkt *rsp;
+-	struct sockaddr saddr;
+-	int ret = 0;
+-
+-	/* Get the response header */
+-	rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
+-
+-	saddr.sa_family = ndev->type;
+-	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+-	memcpy(saddr.sa_data, &rsp->data[BCM_MAC_ADDR_OFFSET], ETH_ALEN);
+-	/* Increase mac address by 1 for BMC's address */
+-	eth_addr_inc((u8 *)saddr.sa_data);
+-	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
+-		return -ENXIO;
+-
+-	/* Set the flag for GMA command which should only be called once */
+-	ndp->gma_flag = 1;
+-
+-	ret = ops->ndo_set_mac_address(ndev, &saddr);
+-	if (ret < 0)
+-		netdev_warn(ndev, "NCSI: 'Writing mac address to device failed\n");
+-
+-	return ret;
+-}
+-
+ /* Response handler for Broadcom card */
+ static int ncsi_rsp_handler_oem_bcm(struct ncsi_request *nr)
+ {
+@@ -695,42 +677,10 @@ static int ncsi_rsp_handler_oem_bcm(stru
+ 	bcm = (struct ncsi_rsp_oem_bcm_pkt *)(rsp->data);
+ 
+ 	if (bcm->type == NCSI_OEM_BCM_CMD_GMA)
+-		return ncsi_rsp_handler_oem_bcm_gma(nr);
++		return ncsi_rsp_handler_oem_gma(nr, NCSI_OEM_MFR_BCM_ID);
+ 	return 0;
+ }
+ 
+-/* Response handler for Intel command Get Mac Address */
+-static int ncsi_rsp_handler_oem_intel_gma(struct ncsi_request *nr)
+-{
+-	struct ncsi_dev_priv *ndp = nr->ndp;
+-	struct net_device *ndev = ndp->ndev.dev;
+-	const struct net_device_ops *ops = ndev->netdev_ops;
+-	struct ncsi_rsp_oem_pkt *rsp;
+-	struct sockaddr saddr;
+-	int ret = 0;
+-
+-	/* Get the response header */
+-	rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
+-
+-	saddr.sa_family = ndev->type;
+-	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+-	memcpy(saddr.sa_data, &rsp->data[INTEL_MAC_ADDR_OFFSET], ETH_ALEN);
+-	/* Increase mac address by 1 for BMC's address */
+-	eth_addr_inc((u8 *)saddr.sa_data);
+-	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
+-		return -ENXIO;
+-
+-	/* Set the flag for GMA command which should only be called once */
+-	ndp->gma_flag = 1;
+-
+-	ret = ops->ndo_set_mac_address(ndev, &saddr);
+-	if (ret < 0)
+-		netdev_warn(ndev,
+-			    "NCSI: 'Writing mac address to device failed\n");
+-
+-	return ret;
+-}
+-
+ /* Response handler for Intel card */
+ static int ncsi_rsp_handler_oem_intel(struct ncsi_request *nr)
+ {
+@@ -742,7 +692,7 @@ static int ncsi_rsp_handler_oem_intel(st
+ 	intel = (struct ncsi_rsp_oem_intel_pkt *)(rsp->data);
+ 
+ 	if (intel->cmd == NCSI_OEM_INTEL_CMD_GMA)
+-		return ncsi_rsp_handler_oem_intel_gma(nr);
++		return ncsi_rsp_handler_oem_gma(nr, NCSI_OEM_MFR_INTEL_ID);
+ 
+ 	return 0;
+ }
 
 
