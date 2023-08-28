@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0A811C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7C9C433C7;
-	Mon, 28 Aug 2023 10:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66C611C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B65AC433C7;
+	Mon, 28 Aug 2023 10:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218552;
-	bh=oZMW9dkZM8N9HKhBidEeqpSY628ShBqhKyus1Gp8kg8=;
+	s=korg; t=1693218554;
+	bh=5oI84KqITVDNqZ60LsU49+XJDzikVtvI6h2WGOARRbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxeuWfQVjd3IahkboYA1bzzm8Zr2MMxbSSiY9chWUJ57BMOxPh4OzXYuq1A3Y7Zq1
-	 NXx5/1SV8rH+M+9jqG1msb1ZFqgdyox5cWTNhBKrnsYU8knfijabaI0kX1KZjZPJVa
-	 M9+UYbjo0MTw0d7cdEgpqYioveAEsVNI7b0WxnBc=
+	b=by1ZBSImLbjMJST4QQq6Mx7qKmiq2YZPM/ocbUL3OxlMOHLbck/gClgUVmBIiTWks
+	 /RsxdVQsqOxlzlXKsF30xQW6kecYAY0tuHAY7i4ySXvfZHgBujHxxEcLG2Spv5M/uT
+	 76C1kMBxvaY3KPMCSdkYQLsjZ7c0HOeptgywwis0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 129/129] dma-buf/sw_sync: Avoid recursive lock during fence signal
-Date: Mon, 28 Aug 2023 12:13:43 +0200
-Message-ID: <20230828101157.899010507@linuxfoundation.org>
+	Woody Suwalski <terraluna977@gmail.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Igor Mammedov <imammedo@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 4.19 119/129] PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus
+Date: Mon, 28 Aug 2023 12:13:33 +0200
+Message-ID: <20230828101157.571483096@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -42,78 +44,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Igor Mammedov <imammedo@redhat.com>
 
-[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
+commit cc22522fd55e257c86d340ae9aedc122e705a435 upstream.
 
-If a signal callback releases the sw_sync fence, that will trigger a
-deadlock as the timeline_fence_release recurses onto the fence->lock
-(used both for signaling and the the timeline tree).
+40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
+changed acpiphp hotplug to use pci_assign_unassigned_bridge_resources()
+which depends on bridge being available, however enable_slot() can be
+called without bridge associated:
 
-To avoid that, temporarily hold an extra reference to the signalled
-fences until after we drop the lock.
+  1. Legitimate case of hotplug on root bus (widely used in virt world)
 
-(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
-which avoids some potential UAF issues with the original patch.)
+  2. A (misbehaving) firmware, that sends ACPI Bus Check notifications to
+     non existing root ports (Dell Inspiron 7352/0W6WV0), which end up at
+     enable_slot(..., bridge = 0) where bus has no bridge assigned to it.
+     acpihp doesn't know that it's a bridge, and bus specific 'PCI
+     subsystem' can't augment ACPI context with bridge information since
+     the PCI device to get this data from is/was not available.
 
-v2: Remove now obsolete comment, use list_move_tail() and
-    list_del_init()
+Issue is easy to reproduce with QEMU's 'pc' machine, which supports PCI
+hotplug on hostbridge slots. To reproduce, boot kernel at commit
+40613da52b13 in VM started with following CLI (assuming guest root fs is
+installed on sda1 partition):
 
-Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  # qemu-system-x86_64 -M pc -m 1G -enable-kvm -cpu host \
+        -monitor stdio -serial file:serial.log           \
+        -kernel arch/x86/boot/bzImage                    \
+        -append "root=/dev/sda1 console=ttyS0"           \
+        guest_disk.img
+
+Once guest OS is fully booted at qemu prompt:
+
+  (qemu) device_add e1000
+
+(check serial.log) it will cause NULL pointer dereference at:
+
+  void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge)
+  {
+    struct pci_bus *parent = bridge->subordinate;
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+
+   ? pci_assign_unassigned_bridge_resources+0x1f/0x260
+   enable_slot+0x21f/0x3e0
+   acpiphp_hotplug_notify+0x13d/0x260
+   acpi_device_hotplug+0xbc/0x540
+   acpi_hotplug_work_fn+0x15/0x20
+   process_one_work+0x1f7/0x370
+   worker_thread+0x45/0x3b0
+
+The issue was discovered on Dell Inspiron 7352/0W6WV0 laptop with following
+sequence:
+
+  1. Suspend to RAM
+  2. Wake up with the same backtrace being observed:
+  3. 2nd suspend to RAM attempt makes laptop freeze
+
+Fix it by using __pci_bus_assign_resources() instead of
+pci_assign_unassigned_bridge_resources() as we used to do, but only in case
+when bus doesn't have a bridge associated (to cover for the case of ACPI
+event on hostbridge or non existing root port).
+
+That lets us keep hotplug on root bus working like it used to and at the
+same time keeps resource reassignment usable on root ports (and other 1st
+level bridges) that was fixed by 40613da52b13.
+
+Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
+Link: https://lore.kernel.org/r/20230726123518.2361181-2-imammedo@redhat.com
+Reported-by: Woody Suwalski <terraluna977@gmail.com>
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
+Tested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/r/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/sw_sync.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/pci/hotplug/acpiphp_glue.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index 81ba4eb348909..09d369306ee36 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -200,6 +200,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
-  */
- static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- {
-+	LIST_HEAD(signalled);
- 	struct sync_pt *pt, *next;
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -496,6 +496,7 @@ static void enable_slot(struct acpiphp_s
+ 				acpiphp_native_scan_bridge(dev);
+ 		}
+ 	} else {
++		LIST_HEAD(add_list);
+ 		int max, pass;
  
- 	trace_sync_timeline(obj);
-@@ -212,21 +213,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- 		if (!timeline_fence_signaled(&pt->base))
- 			break;
- 
--		list_del_init(&pt->link);
-+		dma_fence_get(&pt->base);
-+
-+		list_move_tail(&pt->link, &signalled);
- 		rb_erase(&pt->node, &obj->pt_tree);
- 
--		/*
--		 * A signal callback may release the last reference to this
--		 * fence, causing it to be freed. That operation has to be
--		 * last to avoid a use after free inside this loop, and must
--		 * be after we remove the fence from the timeline in order to
--		 * prevent deadlocking on timeline->lock inside
--		 * timeline_fence_release().
--		 */
- 		dma_fence_signal_locked(&pt->base);
+ 		acpiphp_rescan_slot(slot);
+@@ -509,10 +510,15 @@ static void enable_slot(struct acpiphp_s
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
++					if (pci_is_root_bus(bus))
++						__pci_bus_size_bridges(dev->subordinate, &add_list);
+ 				}
+ 			}
+ 		}
+-		pci_assign_unassigned_bridge_resources(bus->self);
++		if (pci_is_root_bus(bus))
++			__pci_bus_assign_resources(bus, &add_list, NULL);
++		else
++			pci_assign_unassigned_bridge_resources(bus->self);
  	}
  
- 	spin_unlock_irq(&obj->lock);
-+
-+	list_for_each_entry_safe(pt, next, &signalled, link) {
-+		list_del_init(&pt->link);
-+		dma_fence_put(&pt->base);
-+	}
- }
- 
- /**
--- 
-2.40.1
-
+ 	acpiphp_sanitize_bus(bus);
 
 
