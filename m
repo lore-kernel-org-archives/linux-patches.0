@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33A7611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:43:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A7FC433C7;
-	Mon, 28 Aug 2023 10:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B555611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172FCC433C7;
+	Mon, 28 Aug 2023 10:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219437;
-	bh=sRbX9tJNisFPERxiGrvPDi1oL259TkZSYOOAGLbU3+E=;
+	s=korg; t=1693219440;
+	bh=PVw/fHqj3cOYtVN1s2MDn0N8qZdy89BKf4NCy+YLH3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPwLWLfk5UCMXP2ZA23L7e2Xsai+THMTRLwkIrB0m4IEyfzA81wZpZ1Tg2bQJxY4V
-	 ld20j2AfVr6dy1XTMaYj0ln1oGYHa1vSLCs28W2vfH1KwemC4Irh2z5FQABBpHcuH5
-	 Zu9O0zSZUvYNQkLO3kKTBWLJJue+rfFiRkke4nUE=
+	b=08TNFNjWmKmwMUg1kvpNt3wLjKiPGRynRg5rbKku6TuK0oZGnFG9hXL+fDBOS1Uz9
+	 r+2wC1KK4souqC5v14QBekTyrixjsd7cAdYvxPFxv9mJP7IvOwLLZMw9bt2m2xH8Fj
+	 PHnb7jlFXmSp/haZxtQopa8qbK2SST3z6LXvDh9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/89] jbd2: remove t_checkpoint_io_list
-Date: Mon, 28 Aug 2023 12:13:19 +0200
-Message-ID: <20230828101150.782849020@linuxfoundation.org>
+Subject: [PATCH 5.15 36/89] igc: Fix the typo in the PTM Control macro
+Date: Mon, 28 Aug 2023 12:13:37 +0200
+Message-ID: <20230828101151.403879819@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -41,144 +44,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Sasha Neftin <sasha.neftin@intel.com>
 
-[ Upstream commit be22255360f80d3af789daad00025171a65424a5 ]
+[ Upstream commit de43975721b97283d5f17eea4228faddf08f2681 ]
 
-Since t_checkpoint_io_list was stop using in jbd2_log_do_checkpoint()
-now, it's time to remove the whole t_checkpoint_io_list logic.
+The IGC_PTM_CTRL_SHRT_CYC defines the time between two consecutive PTM
+requests. The bit resolution of this field is six bits. That bit five was
+missing in the mask. This patch comes to correct the typo in the
+IGC_PTM_CTRL_SHRT_CYC macro.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230606135928.434610-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
+Fixes: a90ec8483732 ("igc: Add support for PTP getcrosststamp()")
+Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Link: https://lore.kernel.org/r/20230821171721.2203572-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c | 42 ++----------------------------------------
- fs/jbd2/commit.c     |  3 +--
- include/linux/jbd2.h |  6 ------
- 3 files changed, 3 insertions(+), 48 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_defines.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-index d2aba55833f92..c1f543e86170a 100644
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -27,7 +27,7 @@
-  *
-  * Called with j_list_lock held.
-  */
--static inline void __buffer_unlink_first(struct journal_head *jh)
-+static inline void __buffer_unlink(struct journal_head *jh)
- {
- 	transaction_t *transaction = jh->b_cp_transaction;
+diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
+index 60d0ca69ceca9..703b62c5f79b5 100644
+--- a/drivers/net/ethernet/intel/igc/igc_defines.h
++++ b/drivers/net/ethernet/intel/igc/igc_defines.h
+@@ -539,7 +539,7 @@
+ #define IGC_PTM_CTRL_START_NOW	BIT(29) /* Start PTM Now */
+ #define IGC_PTM_CTRL_EN		BIT(30) /* Enable PTM */
+ #define IGC_PTM_CTRL_TRIG	BIT(31) /* PTM Cycle trigger */
+-#define IGC_PTM_CTRL_SHRT_CYC(usec)	(((usec) & 0x2f) << 2)
++#define IGC_PTM_CTRL_SHRT_CYC(usec)	(((usec) & 0x3f) << 2)
+ #define IGC_PTM_CTRL_PTM_TO(usec)	(((usec) & 0xff) << 8)
  
-@@ -40,23 +40,6 @@ static inline void __buffer_unlink_first(struct journal_head *jh)
- 	}
- }
- 
--/*
-- * Unlink a buffer from a transaction checkpoint(io) list.
-- *
-- * Called with j_list_lock held.
-- */
--static inline void __buffer_unlink(struct journal_head *jh)
--{
--	transaction_t *transaction = jh->b_cp_transaction;
--
--	__buffer_unlink_first(jh);
--	if (transaction->t_checkpoint_io_list == jh) {
--		transaction->t_checkpoint_io_list = jh->b_cpnext;
--		if (transaction->t_checkpoint_io_list == jh)
--			transaction->t_checkpoint_io_list = NULL;
--	}
--}
--
- /*
-  * Check a checkpoint buffer could be release or not.
-  *
-@@ -505,15 +488,6 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
- 			break;
- 		if (need_resched() || spin_needbreak(&journal->j_list_lock))
- 			break;
--		if (released)
--			continue;
--
--		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_io_list,
--						       nr_to_scan, &released);
--		if (*nr_to_scan == 0)
--			break;
--		if (need_resched() || spin_needbreak(&journal->j_list_lock))
--			break;
- 	} while (transaction != last_transaction);
- 
- 	if (transaction != last_transaction) {
-@@ -568,17 +542,6 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
- 		 */
- 		if (need_resched())
- 			return;
--		if (ret)
--			continue;
--		/*
--		 * It is essential that we are as careful as in the case of
--		 * t_checkpoint_list with removing the buffer from the list as
--		 * we can possibly see not yet submitted buffers on io_list
--		 */
--		ret = journal_clean_one_cp_list(transaction->
--				t_checkpoint_io_list, destroy);
--		if (need_resched())
--			return;
- 		/*
- 		 * Stop scanning if we couldn't free the transaction. This
- 		 * avoids pointless scanning of transactions which still
-@@ -663,7 +626,7 @@ int __jbd2_journal_remove_checkpoint(struct journal_head *jh)
- 	jbd2_journal_put_journal_head(jh);
- 
- 	/* Is this transaction empty? */
--	if (transaction->t_checkpoint_list || transaction->t_checkpoint_io_list)
-+	if (transaction->t_checkpoint_list)
- 		return 0;
- 
- 	/*
-@@ -755,7 +718,6 @@ void __jbd2_journal_drop_transaction(journal_t *journal, transaction_t *transact
- 	J_ASSERT(transaction->t_forget == NULL);
- 	J_ASSERT(transaction->t_shadow_list == NULL);
- 	J_ASSERT(transaction->t_checkpoint_list == NULL);
--	J_ASSERT(transaction->t_checkpoint_io_list == NULL);
- 	J_ASSERT(atomic_read(&transaction->t_updates) == 0);
- 	J_ASSERT(journal->j_committing_transaction != transaction);
- 	J_ASSERT(journal->j_running_transaction != transaction);
-diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
-index ac328e3321242..20294c1bbeab7 100644
---- a/fs/jbd2/commit.c
-+++ b/fs/jbd2/commit.c
-@@ -1184,8 +1184,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
- 	spin_lock(&journal->j_list_lock);
- 	commit_transaction->t_state = T_FINISHED;
- 	/* Check if the transaction can be dropped now that we are finished */
--	if (commit_transaction->t_checkpoint_list == NULL &&
--	    commit_transaction->t_checkpoint_io_list == NULL) {
-+	if (commit_transaction->t_checkpoint_list == NULL) {
- 		__jbd2_journal_drop_transaction(journal, commit_transaction);
- 		jbd2_journal_free_transaction(commit_transaction);
- 	}
-diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index d63b8106796e2..e6cfbcde96f29 100644
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -626,12 +626,6 @@ struct transaction_s
- 	 */
- 	struct journal_head	*t_checkpoint_list;
- 
--	/*
--	 * Doubly-linked circular list of all buffers submitted for IO while
--	 * checkpointing. [j_list_lock]
--	 */
--	struct journal_head	*t_checkpoint_io_list;
--
- 	/*
- 	 * Doubly-linked circular list of metadata buffers being
- 	 * shadowed by log IO.  The IO buffers on the iobuf list and
+ #define IGC_PTM_SHORT_CYC_DEFAULT	10  /* Default Short/interrupted cycle interval */
 -- 
 2.40.1
 
