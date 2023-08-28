@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F287C11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DDDC433C7;
-	Mon, 28 Aug 2023 10:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7CF11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2ECC43395;
+	Mon, 28 Aug 2023 10:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219708;
-	bh=XsNuOVJ4+HahOUUBNXit4jE1KOntVCCnStfERnkgw6w=;
+	s=korg; t=1693219711;
+	bh=3ZBwEX1Nh8rDajtzKMWQF2o5spWVPV81YsNZYjDAy0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6QyA8QP1+9FVoYp3KI1TOEhipJNBrIxvNabirhQUH/JZJY/HGnZXs4nafGWxzF6b
-	 Oldyo7SxXaalD24zVc/gM/XQMSyuGC7Z6mauQMseE3jac2XAH4os+5l5T7PSi3tmAf
-	 38cVilg1lxnsKSVZI87MK5klLlQIx9yuJsEN0NBw=
+	b=fFKuXk3U5k7VHlkvTW4hlhkd/nS5ufMXF4k01/15V/C6ZlYE5rGhpMesWJ1ZWueBo
+	 iCLCTdX1+DlXhGwkD9t3m8tO4QC3Wzi/LT5T7vjZfgP/ZM7KrmPPrUYycEaWo+QGjB
+	 XMurCbu779ZhnPciEJ+pyI6K3UmpPB78brnSiQw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 04/84] PCI: acpiphp: Reassign resources on bridge if necessary
-Date: Mon, 28 Aug 2023 12:13:21 +0200
-Message-ID: <20230828101149.303076225@linuxfoundation.org>
+Subject: [PATCH 5.10 37/84] netfilter: nf_tables: fix out of memory error handling
+Date: Mon, 28 Aug 2023 12:13:54 +0200
+Message-ID: <20230828101150.525221574@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -42,81 +40,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 ]
+[ Upstream commit 5e1be4cdc98c989d5387ce94ff15b5ad06a5b681 ]
 
-When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
-if bridge windows programmed by firmware are not large enough.
+Several instances of pipapo_resize() don't propagate allocation failures,
+this causes a crash when fault injection is enabled for gfp_kernel slabs.
 
-Reproducer:
-  $ qemu-kvm -monitor stdio -M q35  -m 4G \
-      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
-      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
-      disk_image
-
- wait till linux guest boots, then hotplug device:
-   (qemu) device_add qxl,bus=rp1
-
- hotplug on guest side fails with:
-   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
-   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
-   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
-   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
-   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
-   qxl 0000:01:00.0: enabling device (0000 -> 0003)
-   Unable to create vram_mapping
-   qxl: probe of 0000:01:00.0 failed with error -12
-
-However when using native PCIe hotplug
-  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
-it works fine, since kernel attempts to reassign unused resources.
-
-Use the same machinery as native PCIe hotplug to (re)assign resources.
-
-Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: stable@vger.kernel.org
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/hotplug/acpiphp_glue.c b/drivers/pci/hotplug/acpiphp_glue.c
-index f031302ad4019..44c0b025f09e1 100644
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -489,7 +489,6 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
--		LIST_HEAD(add_list);
- 		int max, pass;
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 3be93175b3ffd..50f840e312b03 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -901,12 +901,14 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
+ static int pipapo_insert(struct nft_pipapo_field *f, const uint8_t *k,
+ 			 int mask_bits)
+ {
+-	int rule = f->rules++, group, ret, bit_offset = 0;
++	int rule = f->rules, group, ret, bit_offset = 0;
  
- 		acpiphp_rescan_slot(slot);
-@@ -503,12 +502,10 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
--					__pci_bus_size_bridges(dev->subordinate,
--							       &add_list);
+-	ret = pipapo_resize(f, f->rules - 1, f->rules);
++	ret = pipapo_resize(f, f->rules, f->rules + 1);
+ 	if (ret)
+ 		return ret;
+ 
++	f->rules++;
++
+ 	for (group = 0; group < f->groups; group++) {
+ 		int i, v;
+ 		u8 mask;
+@@ -1051,7 +1053,9 @@ static int pipapo_expand(struct nft_pipapo_field *f,
+ 			step++;
+ 			if (step >= len) {
+ 				if (!masks) {
+-					pipapo_insert(f, base, 0);
++					err = pipapo_insert(f, base, 0);
++					if (err < 0)
++						return err;
+ 					masks = 1;
  				}
- 			}
- 		}
--		__pci_bus_assign_resources(bus, &add_list, NULL);
-+		pci_assign_unassigned_bridge_resources(bus->self);
- 	}
+ 				goto out;
+@@ -1234,6 +1238,9 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 		else
+ 			ret = pipapo_expand(f, start, end, f->groups * f->bb);
  
- 	acpiphp_sanitize_bus(bus);
++		if (ret < 0)
++			return ret;
++
+ 		if (f->bsize > bsize_max)
+ 			bsize_max = f->bsize;
+ 
 -- 
 2.40.1
 
