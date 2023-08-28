@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6E746BC
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E11C433C7;
-	Mon, 28 Aug 2023 10:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AB6469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:34:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EA0C433C7;
+	Mon, 28 Aug 2023 10:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218883;
-	bh=9x5TuEhZzB/4C6wgwk6cx2sLZyFNwv6VA+o4YaEpYMY=;
+	s=korg; t=1693218886;
+	bh=moPEPKyO+ajIG7An3kPbD5Iw7TAyagSc5kLpMF/c37E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMqpnSs9M6WyiSRAs1dT+tKeKueQQhD2jD0IHGyEv04L3/gbieupsLXAoUtASUMVq
-	 3XHXFMp/ika+1FrQ+M324TM01Go2kD0ziocZicr0HVnQSLweeuKZYTHeyR6J7524py
-	 Trczn1+1LbuooqNtfuqQtSIsZvfVFa0U9GM+7xsc=
+	b=xDmftGqAQWX6OulDxlI5SOxHwEjwn43a14EeqemJoUrjUFKWkWbSKEHYSZUVJVVpy
+	 l6alK4rDgftFY01AJghNhgqYn7+1zxSWaiz2L4hnls99q5YLfz+W1pT5vMjr2Ic3fj
+	 i3Eg1FKf5aqOlc8x2ZGKQeYBu3mgsvyATOrt0oVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 111/122] scsi: snic: Fix double free in snic_tgt_create()
-Date: Mon, 28 Aug 2023 12:13:46 +0200
-Message-ID: <20230828101200.113615721@linuxfoundation.org>
+	prosenfeld@Yuhsbstudents.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 120/122] ASoC: amd: yc: Fix a non-functional mic on Lenovo 82SJ
+Date: Mon, 28 Aug 2023 12:13:55 +0200
+Message-ID: <20230828101200.423003882@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -39,41 +39,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 1bd3a76880b2bce017987cf53780b372cf59528e upstream.
+[ Upstream commit c008323fe361bd62a43d9fb29737dacd5c067fb7 ]
 
-Commit 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add()
-fails") fixed the memory leak caused by dev_set_name() when device_add()
-failed. However, it did not consider that 'tgt' has already been released
-when put_device(&tgt->dev) is called. Remove kfree(tgt) in the error path
-to avoid double free of 'tgt' and move put_device(&tgt->dev) after the
-removed kfree(tgt) to avoid a use-after-free.
+Lenovo 82SJ doesn't have DMIC connected like 82V2 does.  Narrow
+the match down to only cover 82V2.
 
-Fixes: 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add() fails")
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Link: https://lore.kernel.org/r/20230819083941.164365-1-wangzhu9@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: prosenfeld@Yuhsbstudents.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217063
+Fixes: 2232b2dd8cd4 ("ASoC: amd: yc: Add Lenovo Yoga Slim 7 Pro X to quirks table")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com
+Link: https://lore.kernel.org/r/20230824011149.1395-1-mario.limonciello@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/snic/snic_disc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/snic/snic_disc.c
-+++ b/drivers/scsi/snic/snic_disc.c
-@@ -303,12 +303,11 @@ snic_tgt_create(struct snic *snic, struc
- 			      "Snic Tgt: device_add, with err = %d\n",
- 			      ret);
- 
--		put_device(&tgt->dev);
- 		put_device(&snic->shost->shost_gendev);
- 		spin_lock_irqsave(snic->shost->host_lock, flags);
- 		list_del(&tgt->list);
- 		spin_unlock_irqrestore(snic->shost->host_lock, flags);
--		kfree(tgt);
-+		put_device(&tgt->dev);
- 		tgt = NULL;
- 
- 		return tgt;
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 26101299af4da..9a9571c3f08c0 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -217,7 +217,7 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "82"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82V2"),
+ 		}
+ 	},
+ 	{
+-- 
+2.40.1
+
 
 
