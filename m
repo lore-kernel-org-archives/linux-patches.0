@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC1511C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C25C43397;
-	Mon, 28 Aug 2023 10:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7063E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60C0C433C9;
+	Mon, 28 Aug 2023 10:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219776;
-	bh=2CTF3BOB1aYXxLCYQRQ3sjE0btyuK2MhyA6Nk9Wb/gI=;
+	s=korg; t=1693219779;
+	bh=SY7rNhCm8odSrFu+YtoZ3ds+j86YP780FwUGgUIKo34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNWKn8O3NO2hkirJAvLEyyYOnvJRg2k3KJTD2UX5IfaKKwTVHvgd+muvIgY/iiuNu
-	 b2Ulg8UZamHGeqJn6THFNxlXDci4Be0Ra52kBa3gI0Y+iywCUo3V94E4u3gyUwtzFX
-	 LIKOdl6ENb/5wC+AkYqVig7J8cX3YMPVAXMrX28Y=
+	b=KhmnjpxrFDSLY7xineNS9gfcDhDyRI95/JOSNT+GSUM2IycdpLI1LTmZgwMxaI1f6
+	 n78gYCNuO0D2HDmcFWijoWde8/EZ1OgOo2nc43Hjue80W+ldBj4/RO34/t6kteJJ5m
+	 wmFsWoX2Zsn0rcOMmbtOjSvrrtUpaBtslgZTuNlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.10 66/84] cgroup/cpuset: Rename functions dealing with DEADLINE accounting
-Date: Mon, 28 Aug 2023 12:14:23 +0200
-Message-ID: <20230828101151.497943039@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 40/84] net: remove bond_slave_has_mac_rcu()
+Date: Mon, 28 Aug 2023 12:13:57 +0200
+Message-ID: <20230828101150.633582203@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -41,64 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit ad3a557daf6915296a43ef97a3e9c48e076c9dd8 upstream.
+[ Upstream commit 8b0fdcdc3a7d44aff907f0103f5ffb86b12bfe71 ]
 
-rebuild_root_domains() and update_tasks_root_domain() have neutral
-names, but actually deal with DEADLINE bandwidth accounting.
+No caller since v3.16.
 
-Rename them to use 'dl_' prefix so that intent is more clear.
-
-No functional change.
-
-Suggested-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: e74216b8def3 ("bonding: fix macvlan over alb bond support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/bonding.h | 14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -912,7 +912,7 @@ done:
- 	return ndoms;
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index a248caff969f5..34b6f7241a41e 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -697,20 +697,6 @@ static inline struct slave *bond_slave_has_mac(struct bonding *bond,
+ 	return NULL;
  }
  
--static void update_tasks_root_domain(struct cpuset *cs)
-+static void dl_update_tasks_root_domain(struct cpuset *cs)
+-/* Caller must hold rcu_read_lock() for read */
+-static inline struct slave *bond_slave_has_mac_rcu(struct bonding *bond,
+-					       const u8 *mac)
+-{
+-	struct list_head *iter;
+-	struct slave *tmp;
+-
+-	bond_for_each_slave_rcu(bond, tmp, iter)
+-		if (ether_addr_equal_64bits(mac, tmp->dev->dev_addr))
+-			return tmp;
+-
+-	return NULL;
+-}
+-
+ /* Caller must hold rcu_read_lock() for read */
+ static inline bool bond_slave_has_mac_rx(struct bonding *bond, const u8 *mac)
  {
- 	struct css_task_iter it;
- 	struct task_struct *task;
-@@ -925,7 +925,7 @@ static void update_tasks_root_domain(str
- 	css_task_iter_end(&it);
- }
- 
--static void rebuild_root_domains(void)
-+static void dl_rebuild_rd_accounting(void)
- {
- 	struct cpuset *cs = NULL;
- 	struct cgroup_subsys_state *pos_css;
-@@ -953,7 +953,7 @@ static void rebuild_root_domains(void)
- 
- 		rcu_read_unlock();
- 
--		update_tasks_root_domain(cs);
-+		dl_update_tasks_root_domain(cs);
- 
- 		rcu_read_lock();
- 		css_put(&cs->css);
-@@ -967,7 +967,7 @@ partition_and_rebuild_sched_domains(int
- {
- 	mutex_lock(&sched_domains_mutex);
- 	partition_sched_domains_locked(ndoms_new, doms_new, dattr_new);
--	rebuild_root_domains();
-+	dl_rebuild_rd_accounting();
- 	mutex_unlock(&sched_domains_mutex);
- }
- 
+-- 
+2.40.1
+
 
 
