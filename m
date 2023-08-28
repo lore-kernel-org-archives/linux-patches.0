@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A02611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A011EC433C7;
-	Mon, 28 Aug 2023 10:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D318C11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553D1C433C8;
+	Mon, 28 Aug 2023 10:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217768;
-	bh=EwrkWVXLHlbsKyyqoPMNsvGCRnMSnUZfSjXi7514S2Q=;
+	s=korg; t=1693217770;
+	bh=EHj29GQnG02zd8np8eMvezUS8DcQD2GzUHhgSHD2hKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HF52IhAQ2NM8T4D5TpAuD0waatbQvTteoi/q+yrcyfNhRF2LM8aW0KxcMkcrXXSrH
-	 pHWVoq0noQtjXgZjjr0cLynJOepIVM4lDc9vUaQUUHY0ws2/wiME2ShFrEJ4L6wtnT
-	 5iZ2J9oJHuP8XyTNgpg8QE88perjwBRQiB3+gZgc=
+	b=HtCVrn8PxGk1qwIA8/Mq17YZodUms27Vi82V2k7ASJyy0jSUNQ+X0V92l+eYRh0as
+	 aXJystcJlHmH3Um6KdAR/rRuYSNvBnnJubFqfy2dFQLurXSUuYWQBtKJDI/liV8Kp4
+	 JXXJr+FxpcysJs4ke/4quBmyNRIZQdiDcIExebk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 4.14 32/57] serial: 8250: Fix oops for port->pm on uart_change_pm()
-Date: Mon, 28 Aug 2023 12:12:52 +0200
-Message-ID: <20230828101145.438210237@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.14 33/57] binder: fix memory leak in binder_init()
+Date: Mon, 28 Aug 2023 12:12:53 +0200
+Message-ID: <20230828101145.472053568@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -38,38 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit dfe2aeb226fd5e19b0ee795f4f6ed8bc494c1534 upstream.
+commit adb9743d6a08778b78d62d16b4230346d3508986 upstream.
 
-Unloading a hardware specific 8250 driver can produce error "Unable to
-handle kernel paging request at virtual address" about ten seconds after
-unloading the driver. This happens on uart_hangup() calling
-uart_change_pm().
+In binder_init(), the destruction of binder_alloc_shrinker_init() is not
+performed in the wrong path, which will cause memory leaks. So this commit
+introduces binder_alloc_shrinker_exit() and calls it in the wrong path to
+fix that.
 
-Turns out commit 04e82793f068 ("serial: 8250: Reinit port->pm on port
-specific driver unbind") was only a partial fix. If the hardware specific
-driver has initialized port->pm function, we need to clear port->pm too.
-Just reinitializing port->ops does not do this. Otherwise serial8250_pm()
-will call port->pm() instead of serial8250_do_pm().
-
-Fixes: 04e82793f068 ("serial: 8250: Reinit port->pm on port specific driver unbind")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20230804131553.52927-1-tony@atomide.com
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Fixes: f2517eb76f1f ("android: binder: Add global lru shrinker to binder")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230625154937.64316-1-qi.zheng@linux.dev
+[cmllamas: resolved trivial merge conflicts]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/android/binder.c       |    1 +
+ drivers/android/binder_alloc.c |    6 ++++++
+ drivers/android/binder_alloc.h |    1 +
+ 3 files changed, 8 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -3191,6 +3191,7 @@ void serial8250_init_port(struct uart_82
- 	struct uart_port *port = &up->port;
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -5658,6 +5658,7 @@ err_init_binder_device_failed:
  
- 	spin_lock_init(&port->lock);
-+	port->pm = NULL;
- 	port->ops = &serial8250_pops;
+ err_alloc_device_names_failed:
+ 	debugfs_remove_recursive(binder_debugfs_dir_entry_root);
++	binder_alloc_shrinker_exit();
  
- 	up->cur_iotype = 0xFF;
+ 	return ret;
+ }
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -1033,3 +1033,9 @@ void binder_alloc_shrinker_init(void)
+ 	list_lru_init(&binder_alloc_lru);
+ 	register_shrinker(&binder_shrinker);
+ }
++
++void binder_alloc_shrinker_exit(void)
++{
++	unregister_shrinker(&binder_shrinker);
++	list_lru_destroy(&binder_alloc_lru);
++}
+--- a/drivers/android/binder_alloc.h
++++ b/drivers/android/binder_alloc.h
+@@ -128,6 +128,7 @@ extern struct binder_buffer *binder_allo
+ 						  int is_async);
+ extern void binder_alloc_init(struct binder_alloc *alloc);
+ void binder_alloc_shrinker_init(void);
++extern void binder_alloc_shrinker_exit(void);
+ extern void binder_alloc_vma_close(struct binder_alloc *alloc);
+ extern struct binder_buffer *
+ binder_alloc_prepare_to_free(struct binder_alloc *alloc,
 
 
