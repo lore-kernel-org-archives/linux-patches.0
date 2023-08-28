@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075A111C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD6FC433C8;
-	Mon, 28 Aug 2023 10:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC41011C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6B0C433C7;
+	Mon, 28 Aug 2023 10:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217822;
-	bh=gaVgiKYTuKLg42BiVMNyLpWsMUzeS+19beJ0hwWz2R4=;
+	s=korg; t=1693217825;
+	bh=P8cTOKGPOUAv8jnyq6ld9vaVDOJJfnADuoNDjEyP+5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZ/JADjKD6Roh/0c/06MGdv6+PjHKSoqYVeSy6KfWPakAvQVvtw9tqZg5WQoSB0Tn
-	 AJ/LiMxEmtwxf5s3OgrBNCRRp51Ct0zf3/WZRYoMwzgsG9vQyZP3kmaZ8wKUNsXCJ4
-	 2h+xGToVFatbQlYf/+4V2u8qqQRkr7XRQkVoEyBw=
+	b=RuzmTBRc3ylGjMah6JJDcnrca07ikf7xYa/WZxhBBW0oH/cKru8AeRO5lDvLsGtWf
+	 /qaPWWmgDeSivPeNqF7gJ/DZ7t7G1sdfbm4Tb3kwLkVM2YTy/vcnx6rae2xuNlipTI
+	 cQGb2LMuAGedUFZOGh2mZMuR+s13dPlu/Ej1wjY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Feng Tang <feng.tang@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.14 53/57] x86/fpu: Set X86_FEATURE_OSXSAVE feature after enabling OSXSAVE in CR4
-Date: Mon, 28 Aug 2023 12:13:13 +0200
-Message-ID: <20230828101146.238994690@linuxfoundation.org>
+	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 54/57] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
+Date: Mon, 28 Aug 2023 12:13:14 +0200
+Message-ID: <20230828101146.280876605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -40,62 +43,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Tang <feng.tang@intel.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 2c66ca3949dc701da7f4c9407f2140ae425683a5 upstream.
+[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
 
-0-Day found a 34.6% regression in stress-ng's 'af-alg' test case, and
-bisected it to commit b81fac906a8f ("x86/fpu: Move FPU initialization into
-arch_cpu_finalize_init()"), which optimizes the FPU init order, and moves
-the CR4_OSXSAVE enabling into a later place:
+Negative ifindexes are illegal, but the kernel does not validate the
+ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
+the kernel generating a warning [1] when such an ifindex is specified.
 
-   arch_cpu_finalize_init
-       identify_boot_cpu
-	   identify_cpu
-	       generic_identify
-                   get_cpu_cap --> setup cpu capability
-       ...
-       fpu__init_cpu
-           fpu__init_cpu_xstate
-               cr4_set_bits(X86_CR4_OSXSAVE);
+Fix by rejecting negative ifindexes.
 
-As the FPU is not yet initialized the CPU capability setup fails to set
-X86_FEATURE_OSXSAVE. Many security module like 'camellia_aesni_avx_x86_64'
-depend on this feature and therefore fail to load, causing the regression.
+[1]
+WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
+[...]
+Call Trace:
+ <TASK>
+ register_netdevice+0x69a/0x1490 net/core/dev.c:10081
+ br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
+ rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
+ __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
+ rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
+ rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
+ netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
+ sock_sendmsg_nosec net/socket.c:728 [inline]
+ sock_sendmsg+0xd9/0x180 net/socket.c:751
+ ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
+ ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
+ __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Cure this by setting X86_FEATURE_OSXSAVE feature right after OSXSAVE
-enabling.
-
-[ tglx: Moved it into the actual BSP FPU initialization code and added a comment ]
-
-Fixes: b81fac906a8f ("x86/fpu: Move FPU initialization into arch_cpu_finalize_init()")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Feng Tang <feng.tang@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/202307192135.203ac24e-oliver.sang@intel.com
-Link: https://lore.kernel.org/lkml/20230823065747.92257-1-feng.tang@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
+Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/xstate.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/rtnetlink.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -811,6 +811,14 @@ void __init fpu__init_system_xstate(void
- 	fpu__init_prepare_fx_sw_frame();
- 	setup_init_fpu_buf();
- 	setup_xstate_comp();
-+
-+	/*
-+	 * CPU capabilities initialization runs before FPU init. So
-+	 * X86_FEATURE_OSXSAVE is not set. Now that XSAVE is completely
-+	 * functional, set the feature bit so depending code works.
-+	 */
-+	setup_force_cpu_cap(X86_FEATURE_OSXSAVE);
-+
- 	print_xstate_offset_size();
- 
- 	pr_info("x86/fpu: Enabled xstate features 0x%llx, context size is %d bytes, using '%s' format.\n",
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -2311,7 +2311,10 @@ static int rtnl_setlink(struct sk_buff *
+ 	ifm = nlmsg_data(nlh);
+ 	if (ifm->ifi_index > 0)
+ 		dev = __dev_get_by_index(net, ifm->ifi_index);
+-	else if (tb[IFLA_IFNAME])
++	else if (ifm->ifi_index < 0) {
++		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
++		return -EINVAL;
++	} else if (tb[IFLA_IFNAME])
+ 		dev = __dev_get_by_name(net, ifname);
+ 	else
+ 		goto errout;
 
 
