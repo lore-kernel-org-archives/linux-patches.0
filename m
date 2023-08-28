@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E934311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE987C433C7;
-	Mon, 28 Aug 2023 10:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5490A11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FC8C433C7;
+	Mon, 28 Aug 2023 10:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217969;
-	bh=Vr60zr2HJCKVQby5yDtEbjdteCCQfilAw8X5fGpI+P0=;
+	s=korg; t=1693217972;
+	bh=08WVwCRM6XMyfKMNFoRtbl/C21PkLKnr5mI1iI3kwmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MlebTc6KE+5BR6ZVfcTWOWseihiqgsp3P4JBKLXSW88QgP9kShXe1RJJZzlqYEdAX
-	 O/UIGP85yM8u00ZzSvpHUB+eoD+OVjtyby56BMCECVsiRDSVIyefqfoo3DGd769yXj
-	 7xw6skpUkioROMr0DkLcWBwlVzqPcGRRb+xB9Bco=
+	b=HioDEGNLkJrcBePE3/UGg8SeXT5VX51XItS9wHFnihfrq2yK5DrzCAL0pD1ArZ56T
+	 TXDBAkJwEonjjF3805V2eei0A4E2f7ciH4LGwgqxe9ofmK6XJArMH/1aiEifrPNT0n
+	 MhaqD+FVDwv2+f7f4ZubTSa6l9Lqt3DJY6VHhyN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 048/129] netfilter: nf_tables: defer gc run if previous batch is still pending
-Date: Mon, 28 Aug 2023 12:12:07 +0200
-Message-ID: <20230828101158.980789953@linuxfoundation.org>
+Subject: [PATCH 6.4 049/129] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
+Date: Mon, 28 Aug 2023 12:12:08 +0200
+Message-ID: <20230828101159.017113952@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -40,79 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 8e51830e29e12670b4c10df070a4ea4c9593e961 ]
+[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
 
-Don't queue more gc work, else we may queue the same elements multiple
-times.
+Negative ifindexes are illegal, but the kernel does not validate the
+ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
+the kernel generating a warning [1] when such an ifindex is specified.
 
-If an element is flagged as dead, this can mean that either the previous
-gc request was invalidated/discarded by a transaction or that the previous
-request is still pending in the system work queue.
+Fix by rejecting negative ifindexes.
 
-The latter will happen if the gc interval is set to a very low value,
-e.g. 1ms, and system work queue is backlogged.
+[1]
+WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
+[...]
+Call Trace:
+ <TASK>
+ register_netdevice+0x69a/0x1490 net/core/dev.c:10081
+ br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
+ rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
+ __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
+ rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
+ rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
+ netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
+ sock_sendmsg_nosec net/socket.c:728 [inline]
+ sock_sendmsg+0xd9/0x180 net/socket.c:751
+ ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
+ ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
+ __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-The sets refcount is 1 if no previous gc requeusts are queued, so add
-a helper for this and skip gc run if old requests are pending.
-
-Add a helper for this and skip the gc run in this case.
-
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
+Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 5 +++++
- net/netfilter/nft_set_hash.c      | 3 +++
- net/netfilter/nft_set_rbtree.c    | 3 +++
- 3 files changed, 11 insertions(+)
+ net/core/rtnetlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index a9a730fb9f963..394b22b44b0e8 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -586,6 +586,11 @@ static inline void *nft_set_priv(const struct nft_set *set)
- 	return (void *)set->data;
- }
- 
-+static inline bool nft_set_gc_is_pending(const struct nft_set *s)
-+{
-+	return refcount_read(&s->refs) != 1;
-+}
-+
- static inline struct nft_set *nft_set_container_of(const void *priv)
- {
- 	return (void *)priv - offsetof(struct nft_set, data);
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index cef5df8460009..524763659f251 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -326,6 +326,9 @@ static void nft_rhash_gc(struct work_struct *work)
- 	nft_net = nft_pernet(net);
- 	gc_seq = READ_ONCE(nft_net->gc_seq);
- 
-+	if (nft_set_gc_is_pending(set))
-+		goto done;
-+
- 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
- 	if (!gc)
- 		goto done;
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index f9d4c8fcbbf82..c6435e7092319 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -611,6 +611,9 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	nft_net = nft_pernet(net);
- 	gc_seq  = READ_ONCE(nft_net->gc_seq);
- 
-+	if (nft_set_gc_is_pending(set))
-+		goto done;
-+
- 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
- 	if (!gc)
- 		goto done;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index baa323ca37c42..fd6d2430d40ff 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3560,6 +3560,9 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (ifm->ifi_index > 0) {
+ 		link_specified = true;
+ 		dev = __dev_get_by_index(net, ifm->ifi_index);
++	} else if (ifm->ifi_index < 0) {
++		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
++		return -EINVAL;
+ 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
+ 		link_specified = true;
+ 		dev = rtnl_dev_get(net, tb);
 -- 
 2.40.1
 
