@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C417D469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AC3C433C7;
-	Mon, 28 Aug 2023 10:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD3B469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE3BC433C8;
+	Mon, 28 Aug 2023 10:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218747;
-	bh=xilxuoOirtyYakOLJoJ/JQswp6wCizkBrqsuh5Bd4tA=;
+	s=korg; t=1693218750;
+	bh=CLumFTdj3TyGnL3rdrA++8rJ6fkTJrctNWP5LEAFavY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyML9BAi4wCKsJzTCRUcpRR/1SgP1lD6L5mCjK112CYvnsjs6GAyH0B4sfxOR7pyp
-	 HsPKNDmbXxGqx0Fi27SNNil5iyAcyJfILxb0NHQDOqN97mfc8XIRP+OA1w5vN5GvuD
-	 vBMex+aRJUnD/4zev4jSzNxfwMQ6k+YZPACVonzY=
+	b=Qr9zc6afZjtBmX8ftmvjkV94E9ZUUFcgZ1XFLC7pj4OXUmEVdogu6mltVk0RMc1No
+	 xM/7rncq45WqdemCnBDpKVKArKuHLVyGeqYLCN+iMcIxxpMCtP7i0cQXpvwuw+eDXm
+	 Lk/rf5dvAPSydUIWMNbrRj5Fw2KxdaAUqqPZFx+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 069/122] shmem: fix smaps BUG sleeping while atomic
-Date: Mon, 28 Aug 2023 12:13:04 +0200
-Message-ID: <20230828101158.742995218@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Takashi Yano <takashi.yano@nifty.ne.jp>
+Subject: [PATCH 6.1 070/122] ALSA: ymfpci: Fix the missing snd_card_free() call at probe error
+Date: Mon, 28 Aug 2023 12:13:05 +0200
+Message-ID: <20230828101158.773379203@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -40,49 +39,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit e5548f85b4527c4c803b7eae7887c10bf8f90c97 upstream.
+commit 1d0eb6143c1e85d3f9a3f5a616ee7e5dc351d33b upstream.
 
-smaps_pte_hole_lookup() is calling shmem_partial_swap_usage() with page
-table lock held: but shmem_partial_swap_usage() does cond_resched_rcu() if
-need_resched(): "BUG: sleeping function called from invalid context".
+Like a few other drivers, YMFPCI driver needs to clean up with
+snd_card_free() call at an error path of the probe; otherwise the
+other devres resources are released before the card and it results in
+the UAF.
 
-Since shmem_partial_swap_usage() is designed to count across a range, but
-smaps_pte_hole_lookup() only calls it for a single page slot, just break
-out of the loop on the last or only page, before checking need_resched().
+This patch uses the helper for handling the probe error gracefully.
 
-Link: https://lkml.kernel.org/r/6fe3b3ec-abdf-332f-5c23-6a3b3a3b11a9@google.com
-Fixes: 230100321518 ("mm/smaps: simplify shmem handling of pte holes")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>	[5.16+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f33fc1576757 ("ALSA: ymfpci: Create card with device-managed snd_devm_card_new()")
+Cc: <stable@vger.kernel.org>
+Reported-and-tested-by: Takashi Yano <takashi.yano@nifty.ne.jp>
+Closes: https://lore.kernel.org/r/20230823135846.1812-1-takashi.yano@nifty.ne.jp
+Link: https://lore.kernel.org/r/20230823161625.5807-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/pci/ymfpci/ymfpci.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -800,14 +800,16 @@ unsigned long shmem_partial_swap_usage(s
- 	XA_STATE(xas, &mapping->i_pages, start);
- 	struct page *page;
- 	unsigned long swapped = 0;
-+	unsigned long max = end - 1;
+--- a/sound/pci/ymfpci/ymfpci.c
++++ b/sound/pci/ymfpci/ymfpci.c
+@@ -150,8 +150,8 @@ static inline int snd_ymfpci_create_game
+ void snd_ymfpci_free_gameport(struct snd_ymfpci *chip) { }
+ #endif /* SUPPORT_JOYSTICK */
  
- 	rcu_read_lock();
--	xas_for_each(&xas, page, end - 1) {
-+	xas_for_each(&xas, page, max) {
- 		if (xas_retry(&xas, page))
- 			continue;
- 		if (xa_is_value(page))
- 			swapped++;
--
-+		if (xas.xa_index == max)
-+			break;
- 		if (need_resched()) {
- 			xas_pause(&xas);
- 			cond_resched_rcu();
+-static int snd_card_ymfpci_probe(struct pci_dev *pci,
+-				 const struct pci_device_id *pci_id)
++static int __snd_card_ymfpci_probe(struct pci_dev *pci,
++				   const struct pci_device_id *pci_id)
+ {
+ 	static int dev;
+ 	struct snd_card *card;
+@@ -333,6 +333,12 @@ static int snd_card_ymfpci_probe(struct
+ 	return 0;
+ }
+ 
++static int snd_card_ymfpci_probe(struct pci_dev *pci,
++				 const struct pci_device_id *pci_id)
++{
++	return snd_card_free_on_error(&pci->dev, __snd_card_ymfpci_probe(pci, pci_id));
++}
++
+ static struct pci_driver ymfpci_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = snd_ymfpci_ids,
 
 
