@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F04711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10200C433C7;
-	Mon, 28 Aug 2023 10:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A16311C94
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF609C433C8;
+	Mon, 28 Aug 2023 10:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219714;
-	bh=O3d/LBvcDFNBs+19Do6xaEKf6rsyE7d36jqbvRA1dn4=;
+	s=korg; t=1693219717;
+	bh=6Sf5addnOh0vPZQCiIuF/K2SQEFZc9HUmYLt1HlLLak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NREC/HPwqsFol420c+vQb18rUD0VH1WgrsWDjO1oKUbuv4Tc5ZHJlrG2t1yWvx2R4
-	 lILDtHRm/zrDPh3vNYpsWi/9To7HgDP7shK9dXEmbCPP51kvAmkxLEjyDM82NII5jG
-	 fwFNPENBBi/lNmMc/Oom1GySn/h8cTed4YTBRLII=
+	b=P7/EXOnskTWFfpyEyEfIEdckE1ByV5q44ngj1zZ63WFILs2jFSRYnrK6wi1JeaKwe
+	 tJDgkc5P6Xt+qOeVUK2RRdeMqudyu33zgUHBN/nYHMgZ6NuDgy0E0b8nMMSD+n6uhB
+	 b+QlBHFcHYX4US3a7N2X2RL3YZSvrTdqnWP6Nxr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@fb.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.10 46/84] NFS: Fix a use after free in nfs_direct_join_group()
-Date: Mon, 28 Aug 2023 12:14:03 +0200
-Message-ID: <20230828101150.827026961@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 47/84] nfsd: Fix race to FREE_STATEID and cl_revoked
+Date: Mon, 28 Aug 2023 12:14:04 +0200
+Message-ID: <20230828101150.861184335@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -39,65 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit be2fd1560eb57b7298aa3c258ddcca0d53ecdea3 upstream.
+commit 3b816601e279756e781e6c4d9b3f3bd21a72ac67 upstream.
 
-Be more careful when tearing down the subrequests of an O_DIRECT write
-as part of a retransmission.
+We have some reports of linux NFS clients that cannot satisfy a linux knfsd
+server that always sets SEQ4_STATUS_RECALLABLE_STATE_REVOKED even though
+those clients repeatedly walk all their known state using TEST_STATEID and
+receive NFS4_OK for all.
 
-Reported-by: Chris Mason <clm@fb.com>
-Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Its possible for revoke_delegation() to set NFS4_REVOKED_DELEG_STID, then
+nfsd4_free_stateid() finds the delegation and returns NFS4_OK to
+FREE_STATEID.  Afterward, revoke_delegation() moves the same delegation to
+cl_revoked.  This would produce the observed client/server effect.
+
+Fix this by ensuring that the setting of sc_type to NFS4_REVOKED_DELEG_STID
+and move to cl_revoked happens within the same cl_lock.  This will allow
+nfsd4_free_stateid() to properly remove the delegation from cl_revoked.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2217103
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2176575
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Cc: stable@vger.kernel.org # v4.17+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/direct.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 9a18c5a69ace..aaffaaa336cc 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -472,20 +472,26 @@ ssize_t nfs_file_direct_read(struct kiocb *iocb, struct iov_iter *iter,
- 	return result;
- }
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1145,9 +1145,9 @@ static void revoke_delegation(struct nfs
+ 	WARN_ON(!list_empty(&dp->dl_recall_lru));
  
--static void
--nfs_direct_join_group(struct list_head *list, struct inode *inode)
-+static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
- {
--	struct nfs_page *req, *next;
-+	struct nfs_page *req, *subreq;
- 
- 	list_for_each_entry(req, list, wb_list) {
--		if (req->wb_head != req || req->wb_this_page == req)
-+		if (req->wb_head != req)
- 			continue;
--		for (next = req->wb_this_page;
--				next != req->wb_head;
--				next = next->wb_this_page) {
--			nfs_list_remove_request(next);
--			nfs_release_request(next);
--		}
-+		subreq = req->wb_this_page;
-+		if (subreq == req)
-+			continue;
-+		do {
-+			/*
-+			 * Remove subrequests from this list before freeing
-+			 * them in the call to nfs_join_page_group().
-+			 */
-+			if (!list_empty(&subreq->wb_list)) {
-+				nfs_list_remove_request(subreq);
-+				nfs_release_request(subreq);
-+			}
-+		} while ((subreq = subreq->wb_this_page) != req);
- 		nfs_join_page_group(req, inode);
+ 	if (clp->cl_minorversion) {
++		spin_lock(&clp->cl_lock);
+ 		dp->dl_stid.sc_type = NFS4_REVOKED_DELEG_STID;
+ 		refcount_inc(&dp->dl_stid.sc_count);
+-		spin_lock(&clp->cl_lock);
+ 		list_add(&dp->dl_recall_lru, &clp->cl_revoked);
+ 		spin_unlock(&clp->cl_lock);
  	}
- }
--- 
-2.42.0
-
 
 
