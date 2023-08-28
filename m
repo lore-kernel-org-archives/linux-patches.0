@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA4711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CD0C433C7;
-	Mon, 28 Aug 2023 10:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158E211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C111C433C8;
+	Mon, 28 Aug 2023 10:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218477;
-	bh=PedoTQh99aauFwrzosiM16bR9oerfjBpFjg1nw48xzI=;
+	s=korg; t=1693218479;
+	bh=FXOob6T5Fs1FL5rjxOfqIfLzADxdiyVhFB6lA6EQtqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqWszCO8YwpIVxPIbZKDjV1xYuckH5MvVnIOJSWMwSHh4vAjh6xXXfYS3UDDxug/8
-	 mVQsTaFDJAQb0OnVK+0pB/cW+c7pRp6gA6d8zIFUWrtkWDieEGPkiorwOWZftZsk29
-	 UdJ6TLehXHvPGfTn1ShLUnHRtnOXZXBR7to4m15g=
+	b=vpiusjRZSsaHQgckatbYTLISGrXtArbWTIgxMn+HtuPKIW0xkI/h0i+V6LZjUbMdF
+	 0OltK4vMll1tZH9U8dIOnjui42pR/dqFcxSFB3HHNCwmQvOI0bJ4q3gzB9NTJI2Hdq
+	 R1fc6wpbJ4pJmOoDPcrF9+7JgyRkwO/6M4OnKbNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 102/129] sock: annotate data-races around prot->memory_pressure
-Date: Mon, 28 Aug 2023 12:13:16 +0200
-Message-ID: <20230828101157.023948092@linuxfoundation.org>
+Subject: [PATCH 4.19 103/129] dccp: annotate data-races in dccp_poll()
+Date: Mon, 28 Aug 2023 12:13:17 +0200
+Message-ID: <20230828101157.054489635@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -44,78 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 76f33296d2e09f63118db78125c95ef56df438e9 ]
+[ Upstream commit cba3f1786916063261e3e5ccbb803abc325b24ef ]
 
-*prot->memory_pressure is read/writen locklessly, we need
-to add proper annotations.
+We changed tcp_poll() over time, bug never updated dccp.
 
-A recent commit added a new race, it is time to audit all accesses.
+Note that we also could remove dccp instead of maintaining it.
 
-Fixes: 2d0c88e84e48 ("sock: Fix misuse of sk_under_memory_pressure()")
-Fixes: 4d93df0abd50 ("[SCTP]: Rewrite of sctp buffer management code")
+Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Abel Wu <wuyun.abel@bytedance.com>
-Reviewed-by: Shakeel Butt <shakeelb@google.com>
-Link: https://lore.kernel.org/r/20230818015132.2699348-1-edumazet@google.com
+Link: https://lore.kernel.org/r/20230818015820.2701595-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 7 ++++---
- net/sctp/socket.c  | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ net/dccp/proto.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index bcb1901ac13a5..373e34b46a3c9 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1152,6 +1152,7 @@ struct proto {
- 	/*
- 	 * Pressure flag: try to collapse.
- 	 * Technical note: it is used by multiple contexts non atomically.
-+	 * Make sure to use READ_ONCE()/WRITE_ONCE() for all reads/writes.
- 	 * All the __sk_mem_schedule() is of this nature: accounting
- 	 * is strict, actions are advisory and have some latency.
+diff --git a/net/dccp/proto.c b/net/dccp/proto.c
+index 27de4dc1ff512..c4ea0159ce2e8 100644
+--- a/net/dccp/proto.c
++++ b/net/dccp/proto.c
+@@ -328,11 +328,15 @@ EXPORT_SYMBOL_GPL(dccp_disconnect);
+ __poll_t dccp_poll(struct file *file, struct socket *sock,
+ 		       poll_table *wait)
+ {
+-	__poll_t mask;
+ 	struct sock *sk = sock->sk;
++	__poll_t mask;
++	u8 shutdown;
++	int state;
+ 
+ 	sock_poll_wait(file, sock, wait);
+-	if (sk->sk_state == DCCP_LISTEN)
++
++	state = inet_sk_state_load(sk);
++	if (state == DCCP_LISTEN)
+ 		return inet_csk_listen_poll(sk);
+ 
+ 	/* Socket is not locked. We are protected from async events
+@@ -341,20 +345,21 @@ __poll_t dccp_poll(struct file *file, struct socket *sock,
  	 */
-@@ -1268,7 +1269,7 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
- static inline bool sk_under_global_memory_pressure(const struct sock *sk)
- {
- 	return sk->sk_prot->memory_pressure &&
--		!!*sk->sk_prot->memory_pressure;
-+		!!READ_ONCE(*sk->sk_prot->memory_pressure);
+ 
+ 	mask = 0;
+-	if (sk->sk_err)
++	if (READ_ONCE(sk->sk_err))
+ 		mask = EPOLLERR;
++	shutdown = READ_ONCE(sk->sk_shutdown);
+ 
+-	if (sk->sk_shutdown == SHUTDOWN_MASK || sk->sk_state == DCCP_CLOSED)
++	if (shutdown == SHUTDOWN_MASK || state == DCCP_CLOSED)
+ 		mask |= EPOLLHUP;
+-	if (sk->sk_shutdown & RCV_SHUTDOWN)
++	if (shutdown & RCV_SHUTDOWN)
+ 		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
+ 
+ 	/* Connected? */
+-	if ((1 << sk->sk_state) & ~(DCCPF_REQUESTING | DCCPF_RESPOND)) {
++	if ((1 << state) & ~(DCCPF_REQUESTING | DCCPF_RESPOND)) {
+ 		if (atomic_read(&sk->sk_rmem_alloc) > 0)
+ 			mask |= EPOLLIN | EPOLLRDNORM;
+ 
+-		if (!(sk->sk_shutdown & SEND_SHUTDOWN)) {
++		if (!(shutdown & SEND_SHUTDOWN)) {
+ 			if (sk_stream_is_writeable(sk)) {
+ 				mask |= EPOLLOUT | EPOLLWRNORM;
+ 			} else {  /* send SIGIO later */
+@@ -372,7 +377,6 @@ __poll_t dccp_poll(struct file *file, struct socket *sock,
+ 	}
+ 	return mask;
  }
+-
+ EXPORT_SYMBOL_GPL(dccp_poll);
  
- static inline bool sk_under_memory_pressure(const struct sock *sk)
-@@ -1280,7 +1281,7 @@ static inline bool sk_under_memory_pressure(const struct sock *sk)
- 	    mem_cgroup_under_socket_pressure(sk->sk_memcg))
- 		return true;
- 
--	return !!*sk->sk_prot->memory_pressure;
-+	return !!READ_ONCE(*sk->sk_prot->memory_pressure);
- }
- 
- static inline long
-@@ -1334,7 +1335,7 @@ proto_memory_pressure(struct proto *prot)
- {
- 	if (!prot->memory_pressure)
- 		return false;
--	return !!*prot->memory_pressure;
-+	return !!READ_ONCE(*prot->memory_pressure);
- }
- 
- 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index baa825751c393..432dccd375064 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -112,7 +112,7 @@ struct percpu_counter sctp_sockets_allocated;
- 
- static void sctp_enter_memory_pressure(struct sock *sk)
- {
--	sctp_memory_pressure = 1;
-+	WRITE_ONCE(sctp_memory_pressure, 1);
- }
- 
- 
+ int dccp_ioctl(struct sock *sk, int cmd, unsigned long arg)
 -- 
 2.40.1
 
