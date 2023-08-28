@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A74411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE26C433C7;
-	Mon, 28 Aug 2023 10:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8061F11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF7BC433C8;
+	Mon, 28 Aug 2023 10:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217751;
-	bh=C5epJ+Zz2pdWmjW6DWXxpwiUxdK4t4Rf12FTBo4fmi8=;
+	s=korg; t=1693217754;
+	bh=qgP0zrs1RgUyd3HTs/EQDkHrD9MILVAC2O0XKnvwi8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1XR/Mfay3yaw98dxCL6/k9YAwbXCuLYaLtqEsjSdm3wLRG03rySyYSaifoG0IxBI
-	 GhkDol3/UnSyiDOtOF+Mi7+irdJJ/aQbO7QBoKVUUQ/GnB+i3LhdNQnSeWvWZrDBEs
-	 g31y0aRaOO6N0jqqaYySH13sGdSKNb+tCJJ2V1SI=
+	b=MiyBVJFljPM4Leu/ca84yrN/sOXC19uEmCNqs8t9O46V1wxq3QXK2AtAqzry79mxa
+	 sVYlvaR6GUOdyyv6appApVUuapcLG5YgpaFvFCXUUZl7YpuNnRI6fWb80lexvP29J0
+	 AB8yiu3fcvYEAeBiqLpo1Qpos7mQdG6bwQpfHpVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Immad Mir <mirimmad17@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 27/57] sock: Fix misuse of sk_under_memory_pressure()
-Date: Mon, 28 Aug 2023 12:12:47 +0200
-Message-ID: <20230828101145.241275707@linuxfoundation.org>
+Subject: [PATCH 4.14 10/57] FS: JFS: Check for read-only mounted filesystem in txBegin
+Date: Mon, 28 Aug 2023 12:12:30 +0200
+Message-ID: <20230828101144.577715264@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -41,72 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Immad Mir <mirimmad17@gmail.com>
 
-[ Upstream commit 2d0c88e84e483982067a82073f6125490ddf3614 ]
+[ Upstream commit 95e2b352c03b0a86c5717ba1d24ea20969abcacc ]
 
-The status of global socket memory pressure is updated when:
+ This patch adds a check for read-only mounted filesystem
+ in txBegin before starting a transaction potentially saving
+ from NULL pointer deref.
 
-  a) __sk_mem_raise_allocated():
-
-	enter: sk_memory_allocated(sk) >  sysctl_mem[1]
-	leave: sk_memory_allocated(sk) <= sysctl_mem[0]
-
-  b) __sk_mem_reduce_allocated():
-
-	leave: sk_under_memory_pressure(sk) &&
-		sk_memory_allocated(sk) < sysctl_mem[0]
-
-So the conditions of leaving global pressure are inconstant, which
-may lead to the situation that one pressured net-memcg prevents the
-global pressure from being cleared when there is indeed no global
-pressure, thus the global constrains are still in effect unexpectedly
-on the other sockets.
-
-This patch fixes this by ignoring the net-memcg's pressure when
-deciding whether should leave global memory pressure.
-
-Fixes: e1aab161e013 ("socket: initial cgroup code.")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Link: https://lore.kernel.org/r/20230816091226.1542-1-wuyun.abel@bytedance.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Immad Mir <mirimmad17@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 6 ++++++
- net/core/sock.c    | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_txnmgr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index def9dc1ddda11..1937deba0849b 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1211,6 +1211,12 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
- 	return sk->sk_prot->memory_pressure != NULL;
- }
+diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
+index 224ef034004b7..2cb460912468e 100644
+--- a/fs/jfs/jfs_txnmgr.c
++++ b/fs/jfs/jfs_txnmgr.c
+@@ -367,6 +367,11 @@ tid_t txBegin(struct super_block *sb, int flag)
+ 	jfs_info("txBegin: flag = 0x%x", flag);
+ 	log = JFS_SBI(sb)->log;
  
-+static inline bool sk_under_global_memory_pressure(const struct sock *sk)
-+{
-+	return sk->sk_prot->memory_pressure &&
-+		!!*sk->sk_prot->memory_pressure;
-+}
++	if (!log) {
++		jfs_error(sb, "read-only filesystem\n");
++		return 0;
++	}
 +
- static inline bool sk_under_memory_pressure(const struct sock *sk)
- {
- 	if (!sk->sk_prot->memory_pressure)
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 0ff80718f194d..a7a0bc9c2a9f0 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2459,7 +2459,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
- 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
- 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
+ 	TXN_LOCK();
  
--	if (sk_under_memory_pressure(sk) &&
-+	if (sk_under_global_memory_pressure(sk) &&
- 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
- 		sk_leave_memory_pressure(sk);
- }
+ 	INCREMENT(TxStat.txBegin);
 -- 
 2.40.1
 
