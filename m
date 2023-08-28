@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44A8611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5364FC433C8;
-	Mon, 28 Aug 2023 10:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F446611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10226C433C7;
+	Mon, 28 Aug 2023 10:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219520;
-	bh=bLKQfBKv2YZ+HoL2vKTnxSA2MRHHb0BRExr3MzNq75s=;
+	s=korg; t=1693219523;
+	bh=qb1oMrNVJYRumpMC+SNIbmoy4M6/n4RCdua/Xfjaiig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVdVuygZx/I6QE2zJDM8EKdtwa93mH2xHz9+WpoEwWNryl4rWwg1Ffor4yiiE3BE/
-	 eMRXijF8bVIZWmfFYu8SteRh8v3yjCSh/AOiMSsxh2fv09+Ta4G0ThsZVDB6RWUkVu
-	 cjc/J137uqZcBdRTqZ/dS7vcXizQVQzj41pVqQSA=
+	b=U7oCjcBLgfRUVfF0muXf/di+WTZAq2mP6rJUYKJ5cCTthcMBD8EEMS/4pSHtxfS45
+	 nhIUA+vDpp9YX4GbTMinCYQ1U7NiX3S5QDgbrelQBHAL3smsZ+8hMaj/XKCDYO38Nh
+	 4Z7aZKhFbTYxk66Gj9zjvFuZcAmlZjV3oEs4qCdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Woody Suwalski <terraluna977@gmail.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.15 66/89] PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus
-Date: Mon, 28 Aug 2023 12:14:07 +0200
-Message-ID: <20230828101152.393283664@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	security@openanolis.org,
+	Ziming Zhang <ezrakiez@gmail.com>,
+	Maaz Mombasawala <mombasawalam@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>,
+	Niels De Graef <ndegraef@redhat.com>
+Subject: [PATCH 5.15 67/89] drm/vmwgfx: Fix shader stage validation
+Date: Mon, 28 Aug 2023 12:14:08 +0200
+Message-ID: <20230828101152.426428232@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -37,119 +37,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Zack Rusin <zackr@vmware.com>
 
-commit cc22522fd55e257c86d340ae9aedc122e705a435 upstream.
+commit 14abdfae508228a7307f7491b5c4215ae70c6542 upstream.
 
-40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-changed acpiphp hotplug to use pci_assign_unassigned_bridge_resources()
-which depends on bridge being available, however enable_slot() can be
-called without bridge associated:
+For multiple commands the driver was not correctly validating the shader
+stages resulting in possible kernel oopses. The validation code was only.
+if ever, checking the upper bound on the shader stages but never a lower
+bound (valid shader stages start at 1 not 0).
 
-  1. Legitimate case of hotplug on root bus (widely used in virt world)
+Fixes kernel oopses ending up in vmw_binding_add, e.g.:
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 1 PID: 2443 Comm: testcase Not tainted 6.3.0-rc4-vmwgfx #1
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+RIP: 0010:vmw_binding_add+0x4c/0x140 [vmwgfx]
+Code: 7e 30 49 83 ff 0e 0f 87 ea 00 00 00 4b 8d 04 7f 89 d2 89 cb 48 c1 e0 03 4c 8b b0 40 3d 93 c0 48 8b 80 48 3d 93 c0 49 0f af de <48> 03 1c d0 4c 01 e3 49 8>
+RSP: 0018:ffffb8014416b968 EFLAGS: 00010206
+RAX: ffffffffc0933ec0 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 00000000ffffffff RSI: ffffb8014416b9c0 RDI: ffffb8014316f000
+RBP: ffffb8014416b998 R08: 0000000000000003 R09: 746f6c735f726564
+R10: ffffffffaaf2bda0 R11: 732e676e69646e69 R12: ffffb8014316f000
+R13: ffffb8014416b9c0 R14: 0000000000000040 R15: 0000000000000006
+FS:  00007fba8c0af740(0000) GS:ffff8a1277c80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000007c0933eb8 CR3: 0000000118244001 CR4: 00000000003706e0
+Call Trace:
+ <TASK>
+ vmw_view_bindings_add+0xf5/0x1b0 [vmwgfx]
+ ? ___drm_dbg+0x8a/0xb0 [drm]
+ vmw_cmd_dx_set_shader_res+0x8f/0xc0 [vmwgfx]
+ vmw_execbuf_process+0x590/0x1360 [vmwgfx]
+ vmw_execbuf_ioctl+0x173/0x370 [vmwgfx]
+ ? __drm_dev_dbg+0xb4/0xe0 [drm]
+ ? __pfx_vmw_execbuf_ioctl+0x10/0x10 [vmwgfx]
+ drm_ioctl_kernel+0xbc/0x160 [drm]
+ drm_ioctl+0x2d2/0x580 [drm]
+ ? __pfx_vmw_execbuf_ioctl+0x10/0x10 [vmwgfx]
+ ? do_fault+0x1a6/0x420
+ vmw_generic_ioctl+0xbd/0x180 [vmwgfx]
+ vmw_unlocked_ioctl+0x19/0x20 [vmwgfx]
+ __x64_sys_ioctl+0x96/0xd0
+ do_syscall_64+0x5d/0x90
+ ? handle_mm_fault+0xe4/0x2f0
+ ? debug_smp_processor_id+0x1b/0x30
+ ? fpregs_assert_state_consistent+0x2e/0x50
+ ? exit_to_user_mode_prepare+0x40/0x180
+ ? irqentry_exit_to_user_mode+0xd/0x20
+ ? irqentry_exit+0x3f/0x50
+ ? exc_page_fault+0x8b/0x180
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-  2. A (misbehaving) firmware, that sends ACPI Bus Check notifications to
-     non existing root ports (Dell Inspiron 7352/0W6WV0), which end up at
-     enable_slot(..., bridge = 0) where bus has no bridge assigned to it.
-     acpihp doesn't know that it's a bridge, and bus specific 'PCI
-     subsystem' can't augment ACPI context with bridge information since
-     the PCI device to get this data from is/was not available.
-
-Issue is easy to reproduce with QEMU's 'pc' machine, which supports PCI
-hotplug on hostbridge slots. To reproduce, boot kernel at commit
-40613da52b13 in VM started with following CLI (assuming guest root fs is
-installed on sda1 partition):
-
-  # qemu-system-x86_64 -M pc -m 1G -enable-kvm -cpu host \
-        -monitor stdio -serial file:serial.log           \
-        -kernel arch/x86/boot/bzImage                    \
-        -append "root=/dev/sda1 console=ttyS0"           \
-        guest_disk.img
-
-Once guest OS is fully booted at qemu prompt:
-
-  (qemu) device_add e1000
-
-(check serial.log) it will cause NULL pointer dereference at:
-
-  void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge)
-  {
-    struct pci_bus *parent = bridge->subordinate;
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-
-   ? pci_assign_unassigned_bridge_resources+0x1f/0x260
-   enable_slot+0x21f/0x3e0
-   acpiphp_hotplug_notify+0x13d/0x260
-   acpi_device_hotplug+0xbc/0x540
-   acpi_hotplug_work_fn+0x15/0x20
-   process_one_work+0x1f7/0x370
-   worker_thread+0x45/0x3b0
-
-The issue was discovered on Dell Inspiron 7352/0W6WV0 laptop with following
-sequence:
-
-  1. Suspend to RAM
-  2. Wake up with the same backtrace being observed:
-  3. 2nd suspend to RAM attempt makes laptop freeze
-
-Fix it by using __pci_bus_assign_resources() instead of
-pci_assign_unassigned_bridge_resources() as we used to do, but only in case
-when bus doesn't have a bridge associated (to cover for the case of ACPI
-event on hostbridge or non existing root port).
-
-That lets us keep hotplug on root bus working like it used to and at the
-same time keeps resource reassignment usable on root ports (and other 1st
-level bridges) that was fixed by 40613da52b13.
-
-Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-Link: https://lore.kernel.org/r/20230726123518.2361181-2-imammedo@redhat.com
-Reported-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
-Tested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/r/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Cc: security@openanolis.org
+Reported-by: Ziming Zhang <ezrakiez@gmail.com>
+Testcase-found-by: Niels De Graef <ndegraef@redhat.com>
+Fixes: d80efd5cb3de ("drm/vmwgfx: Initial DX support")
+Cc: <stable@vger.kernel.org> # v4.3+
+Reviewed-by: Maaz Mombasawala<mombasawalam@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230616190934.54828-1-zack@kde.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.h     |   12 ++++++++++++
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |   29 +++++++++++------------------
+ 2 files changed, 23 insertions(+), 18 deletions(-)
 
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -489,6 +489,7 @@ static void enable_slot(struct acpiphp_s
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
-+		LIST_HEAD(add_list);
- 		int max, pass;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
+@@ -1685,4 +1685,16 @@ static inline bool vmw_has_fences(struct
+ 	return (vmw_fifo_caps(vmw) & SVGA_FIFO_CAP_FENCE) != 0;
+ }
  
- 		acpiphp_rescan_slot(slot);
-@@ -502,10 +503,15 @@ static void enable_slot(struct acpiphp_s
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
-+					if (pci_is_root_bus(bus))
-+						__pci_bus_size_bridges(dev->subordinate, &add_list);
- 				}
- 			}
- 		}
--		pci_assign_unassigned_bridge_resources(bus->self);
-+		if (pci_is_root_bus(bus))
-+			__pci_bus_assign_resources(bus, &add_list, NULL);
-+		else
-+			pci_assign_unassigned_bridge_resources(bus->self);
++static inline bool vmw_shadertype_is_valid(enum vmw_sm_type shader_model,
++					   u32 shader_type)
++{
++	SVGA3dShaderType max_allowed = SVGA3D_SHADERTYPE_PREDX_MAX;
++
++	if (shader_model >= VMW_SM_5)
++		max_allowed = SVGA3D_SHADERTYPE_MAX;
++	else if (shader_model >= VMW_SM_4)
++		max_allowed = SVGA3D_SHADERTYPE_DX10_MAX;
++	return shader_type >= SVGA3D_SHADERTYPE_MIN && shader_type < max_allowed;
++}
++
+ #endif
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -2003,7 +2003,7 @@ static int vmw_cmd_set_shader(struct vmw
+ 
+ 	cmd = container_of(header, typeof(*cmd), header);
+ 
+-	if (cmd->body.type >= SVGA3D_SHADERTYPE_PREDX_MAX) {
++	if (!vmw_shadertype_is_valid(VMW_SM_LEGACY, cmd->body.type)) {
+ 		VMW_DEBUG_USER("Illegal shader type %u.\n",
+ 			       (unsigned int) cmd->body.type);
+ 		return -EINVAL;
+@@ -2125,8 +2125,6 @@ vmw_cmd_dx_set_single_constant_buffer(st
+ 				      SVGA3dCmdHeader *header)
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetSingleConstantBuffer);
+-	SVGA3dShaderType max_shader_num = has_sm5_context(dev_priv) ?
+-		SVGA3D_NUM_SHADERTYPE : SVGA3D_NUM_SHADERTYPE_DX10;
+ 
+ 	struct vmw_resource *res = NULL;
+ 	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
+@@ -2143,6 +2141,14 @@ vmw_cmd_dx_set_single_constant_buffer(st
+ 	if (unlikely(ret != 0))
+ 		return ret;
+ 
++	if (!vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type) ||
++	    cmd->body.slot >= SVGA3D_DX_MAX_CONSTBUFFERS) {
++		VMW_DEBUG_USER("Illegal const buffer shader %u slot %u.\n",
++			       (unsigned int) cmd->body.type,
++			       (unsigned int) cmd->body.slot);
++		return -EINVAL;
++	}
++
+ 	binding.bi.ctx = ctx_node->ctx;
+ 	binding.bi.res = res;
+ 	binding.bi.bt = vmw_ctx_binding_cb;
+@@ -2151,14 +2157,6 @@ vmw_cmd_dx_set_single_constant_buffer(st
+ 	binding.size = cmd->body.sizeInBytes;
+ 	binding.slot = cmd->body.slot;
+ 
+-	if (binding.shader_slot >= max_shader_num ||
+-	    binding.slot >= SVGA3D_DX_MAX_CONSTBUFFERS) {
+-		VMW_DEBUG_USER("Illegal const buffer shader %u slot %u.\n",
+-			       (unsigned int) cmd->body.type,
+-			       (unsigned int) binding.slot);
+-		return -EINVAL;
+-	}
+-
+ 	vmw_binding_add(ctx_node->staged, &binding.bi, binding.shader_slot,
+ 			binding.slot);
+ 
+@@ -2179,15 +2177,13 @@ static int vmw_cmd_dx_set_shader_res(str
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetShaderResources) =
+ 		container_of(header, typeof(*cmd), header);
+-	SVGA3dShaderType max_allowed = has_sm5_context(dev_priv) ?
+-		SVGA3D_SHADERTYPE_MAX : SVGA3D_SHADERTYPE_DX10_MAX;
+ 
+ 	u32 num_sr_view = (cmd->header.size - sizeof(cmd->body)) /
+ 		sizeof(SVGA3dShaderResourceViewId);
+ 
+ 	if ((u64) cmd->body.startView + (u64) num_sr_view >
+ 	    (u64) SVGA3D_DX_MAX_SRVIEWS ||
+-	    cmd->body.type >= max_allowed) {
++	    !vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type)) {
+ 		VMW_DEBUG_USER("Invalid shader binding.\n");
+ 		return -EINVAL;
  	}
+@@ -2211,8 +2207,6 @@ static int vmw_cmd_dx_set_shader(struct
+ 				 SVGA3dCmdHeader *header)
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetShader);
+-	SVGA3dShaderType max_allowed = has_sm5_context(dev_priv) ?
+-		SVGA3D_SHADERTYPE_MAX : SVGA3D_SHADERTYPE_DX10_MAX;
+ 	struct vmw_resource *res = NULL;
+ 	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
+ 	struct vmw_ctx_bindinfo_shader binding;
+@@ -2223,8 +2217,7 @@ static int vmw_cmd_dx_set_shader(struct
  
- 	acpiphp_sanitize_bus(bus);
+ 	cmd = container_of(header, typeof(*cmd), header);
+ 
+-	if (cmd->body.type >= max_allowed ||
+-	    cmd->body.type < SVGA3D_SHADERTYPE_MIN) {
++	if (!vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type)) {
+ 		VMW_DEBUG_USER("Illegal shader type %u.\n",
+ 			       (unsigned int) cmd->body.type);
+ 		return -EINVAL;
 
 
