@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B446C8BE0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326DAC433C8;
-	Mon, 28 Aug 2023 10:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735FAA94D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5FDC433C7;
+	Mon, 28 Aug 2023 10:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219689;
-	bh=jvOqrMHXfYRVzzfCRkMrzYv3hVldM/bEKFH8Hb1yA38=;
+	s=korg; t=1693219692;
+	bh=kRCwoh2bBBc9W3hBt2QyWJKj8ciBzTDEjV0uRQX2I8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMTdjrHr81bUqJRE2l2pkteQKq4IY3nSerjhMxV4KZH8N5EO8PN+Wo/8muGAJB4j4
-	 pCAwKU5h3y0PqUhQro17/RhKSCYwBFx7YmEtnPN6vZu75bmmtoD0A9o5VrDtr8CXfO
-	 G+xUag8EC94/t2ImFic0Wt0SStn+5Dk34UbkGBxk=
+	b=15hmtQsagU0fiPqJV/4s/IfFtKx7B92IHVXTTziy/Qs7xInJOLstSvWpoKv+jkuOC
+	 pPvhxjCyLzMLkPByemI9OtW5YF575FiiabHYxnjv39dBgePxq5k9G9t58RMZn24mgS
+	 7GjfmX5ETPD9Q+CUojDSpMlQbzRop+0EERITBNn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Igor Bogani <alessio.bogani@elettra.eu>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 5.10 35/84] igb: Avoid starting unnecessary workqueues
-Date: Mon, 28 Aug 2023 12:13:52 +0200
-Message-ID: <20230828101150.449039238@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 08/84] fs: dlm: change plock interrupted message to debug again
+Date: Mon, 28 Aug 2023 12:13:25 +0200
+Message-ID: <20230828101149.455552358@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -43,89 +40,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit b888c510f7b3d64ca75fc0f43b4a4bd1a611312f ]
+[ Upstream commit ea06d4cabf529eefbe7e89e3a8325f1f89355ccd ]
 
-If ptp_clock_register() fails or CONFIG_PTP isn't enabled, avoid starting
-PTP related workqueues.
+This patch reverses the commit bcfad4265ced ("dlm: improve plock logging
+if interrupted") by moving it to debug level and notifying the user an op
+was removed.
 
-In this way we can fix this:
- BUG: unable to handle page fault for address: ffffc9000440b6f8
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 100000067 P4D 100000067 PUD 1001e0067 PMD 107dc5067 PTE 0
- Oops: 0000 [#1] PREEMPT SMP
- [...]
- Workqueue: events igb_ptp_overflow_check
- RIP: 0010:igb_rd32+0x1f/0x60
- [...]
- Call Trace:
-  igb_ptp_read_82580+0x20/0x50
-  timecounter_read+0x15/0x60
-  igb_ptp_overflow_check+0x1a/0x50
-  process_one_work+0x1cb/0x3c0
-  worker_thread+0x53/0x3f0
-  ? rescuer_thread+0x370/0x370
-  kthread+0x142/0x160
-  ? kthread_associate_blkcg+0xc0/0xc0
-  ret_from_fork+0x1f/0x30
-
-Fixes: 1f6e8178d685 ("igb: Prevent dropped Tx timestamps via work items and interrupts.")
-Fixes: d339b1331616 ("igb: add PTP Hardware Clock code")
-Signed-off-by: Alessio Igor Bogani <alessio.bogani@elettra.eu>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230821171927.2203644-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ptp.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ fs/dlm/plock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
-index 86a576201f5ff..0dbbb32905fa4 100644
---- a/drivers/net/ethernet/intel/igb/igb_ptp.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
-@@ -1262,18 +1262,6 @@ void igb_ptp_init(struct igb_adapter *adapter)
- 		return;
- 	}
- 
--	spin_lock_init(&adapter->tmreg_lock);
--	INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
--
--	if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
--		INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
--				  igb_ptp_overflow_check);
--
--	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
--	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
--
--	igb_ptp_reset(adapter);
--
- 	adapter->ptp_clock = ptp_clock_register(&adapter->ptp_caps,
- 						&adapter->pdev->dev);
- 	if (IS_ERR(adapter->ptp_clock)) {
-@@ -1283,6 +1271,18 @@ void igb_ptp_init(struct igb_adapter *adapter)
- 		dev_info(&adapter->pdev->dev, "added PHC on %s\n",
- 			 adapter->netdev->name);
- 		adapter->ptp_flags |= IGB_PTP_ENABLED;
-+
-+		spin_lock_init(&adapter->tmreg_lock);
-+		INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
-+
-+		if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
-+			INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
-+					  igb_ptp_overflow_check);
-+
-+		adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
-+		adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
-+
-+		igb_ptp_reset(adapter);
- 	}
+diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
+index f685d56a4f909..0d00ca2c44c71 100644
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -164,7 +164,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 		spin_lock(&ops_lock);
+ 		list_del(&op->list);
+ 		spin_unlock(&ops_lock);
+-		log_print("%s: wait interrupted %x %llx pid %d, op removed",
++		log_debug(ls, "%s: wait interrupted %x %llx pid %d",
+ 			  __func__, ls->ls_global_id,
+ 			  (unsigned long long)number, op->info.pid);
+ 		dlm_release_plock_op(op);
+@@ -470,7 +470,7 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 		else
+ 			wake_up(&recv_wq);
+ 	} else
+-		log_print("%s: no op %x %llx - may got interrupted?", __func__,
++		log_print("%s: no op %x %llx", __func__,
+ 			  info.fsid, (unsigned long long)info.number);
+ 	return count;
  }
- 
 -- 
 2.40.1
 
