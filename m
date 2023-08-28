@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1A811C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:37:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9A1C433C8;
-	Mon, 28 Aug 2023 10:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7FF11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:37:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D44FC433CA;
+	Mon, 28 Aug 2023 10:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219020;
-	bh=A+1YlKJ6W7UG1r+K/klz1uYuyVbNHhMAGmbTa8shDoI=;
+	s=korg; t=1693219023;
+	bh=uIiJxAG3S5qVLlCP8NrzAc2BOr8OC0Zrm1WdN5vD2rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv+Ge1eLR+t5P8Gs91VoXdGGAqVcQt+Ewj2InZcep4wHdQ7zMvBGsmyotWcuMoizB
-	 rCkk5urAfDgQIAcbi9x+ggEl4piOrNEipUYEnSEUs3dkiQeJhEBwzAW4g+nAnpJQMs
-	 mxhqhG2wcYrgRrN4foDAPiE/fesW51lHk8nlv2vg=
+	b=T7w0ZRwR6sVuFazSAmIz2+sjetXWdLH0GvoBuZAzDGA18JNIAuGXUnlGFyOLyKG88
+	 ufJUlPWN7x2QcsXCMWkXNHx0lgGu4WZmSgilXfY1ZpSDVn9NLqIYGCCictlcmQTkA1
+	 hnHZw4Sxi4ojKHkAF7ZM5hxz9S0VYiermamdBRgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 045/158] mmc: sunxi: fix deferred probing
-Date: Mon, 28 Aug 2023 12:12:22 +0200
-Message-ID: <20230828101158.847321164@linuxfoundation.org>
+Subject: [PATCH 5.4 046/158] leds: trigger: netdev: Recheck NETDEV_LED_MODE_LINKUP on dev rename
+Date: Mon, 28 Aug 2023 12:12:23 +0200
+Message-ID: <20230828101158.878953671@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -41,43 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 ]
+[ Upstream commit cee4bd16c3195a701be683f7da9e88c6e11acb73 ]
 
-The driver overrides the error codes and IRQ0 returned by platform_get_irq()
-to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the error
-codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
-in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
-so we now can safely ignore it...
+Dev can be renamed also while up for supported device. We currently
+wrongly clear the NETDEV_LED_MODE_LINKUP flag on NETDEV_CHANGENAME
+event.
 
-Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fix this by rechecking if the carrier is ok on NETDEV_CHANGENAME and
+correctly set the NETDEV_LED_MODE_LINKUP bit.
+
+Fixes: 5f820ed52371 ("leds: trigger: netdev: fix handling on interface rename")
+Cc: stable@vger.kernel.org # v5.5+
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230419210743.3594-2-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sunxi-mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/leds/trigger/ledtrig-netdev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mmc/host/sunxi-mmc.c b/drivers/mmc/host/sunxi-mmc.c
-index 519718bb246ce..0a67ad57e5c18 100644
---- a/drivers/mmc/host/sunxi-mmc.c
-+++ b/drivers/mmc/host/sunxi-mmc.c
-@@ -1314,8 +1314,8 @@ static int sunxi_mmc_resource_request(struct sunxi_mmc_host *host,
- 		return ret;
- 
- 	host->irq = platform_get_irq(pdev, 0);
--	if (host->irq <= 0) {
--		ret = -EINVAL;
-+	if (host->irq < 0) {
-+		ret = host->irq;
- 		goto error_disable_mmc;
- 	}
- 
+diff --git a/drivers/leds/trigger/ledtrig-netdev.c b/drivers/leds/trigger/ledtrig-netdev.c
+index d5e774d830215..f4d670ec30bcb 100644
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -318,6 +318,9 @@ static int netdev_trig_notify(struct notifier_block *nb,
+ 	clear_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
+ 	switch (evt) {
+ 	case NETDEV_CHANGENAME:
++		if (netif_carrier_ok(dev))
++			set_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
++		fallthrough;
+ 	case NETDEV_REGISTER:
+ 		if (trigger_data->net_dev)
+ 			dev_put(trigger_data->net_dev);
 -- 
 2.40.1
 
