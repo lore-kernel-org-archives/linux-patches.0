@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE3B11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23750C433C8;
-	Mon, 28 Aug 2023 10:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A72911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D9EC433C8;
+	Mon, 28 Aug 2023 10:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218568;
-	bh=DauXPbs4lKxejd3tyAjXGqEDutGgi8XeoYi8CGyt1iI=;
+	s=korg; t=1693218571;
+	bh=5NmSEfcnsJuKNVFQh3/Blo4SSYxSkP1oN2wy3wymNhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUOe7qPCEa7aalIB8B52gptieR2LGpOSJWJ1N/JvJFpRucmjvbJGQEe4ij3RKlH0u
-	 hbiy/Lib5oieiDYn0Cv2btTNAsuo6IyHVErtyw2j9t6ECOinew9aXmyj6WqLAqCcvZ
-	 aT80TJTIZh/Y+kEFhvm46m2MnRrvv9BznXh3O3pg=
+	b=hFps9upgUqHV0MhQ9s8baNUscnphz/UB/kCwk94uc7ZCHJg+3FbK2RAPCtfFz45VU
+	 nYPWz/QmZZ+1NdVwiICksOzS8B9nKxtFOB+O4gZVYMEQzBdDAipb2WwwpQNd94brXK
+	 TupzT8PC1tZox4rKmnLLYNW6J9GHZsM1Ah49Z7Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 124/129] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
-Date: Mon, 28 Aug 2023 12:13:38 +0200
-Message-ID: <20230828101157.738504735@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 4.19 125/129] irqchip/mips-gic: Dont touch vl_map if a local interrupt is not routable
+Date: Mon, 28 Aug 2023 12:13:39 +0200
+Message-ID: <20230828101157.768097361@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -43,65 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
+commit 2c6c9c049510163090b979ea5f92a68ae8d93c45 upstream.
 
-Negative ifindexes are illegal, but the kernel does not validate the
-ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
-the kernel generating a warning [1] when such an ifindex is specified.
+When a GIC local interrupt is not routable, it's vl_map will be used
+to control some internal states for core (providing IPTI, IPPCI, IPFDC
+input signal for core). Overriding it will interfere core's intetrupt
+controller.
 
-Fix by rejecting negative ifindexes.
+Do not touch vl_map if a local interrupt is not routable, we are not
+going to remap it.
 
-[1]
-WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
-[...]
-Call Trace:
- <TASK>
- register_netdevice+0x69a/0x1490 net/core/dev.c:10081
- br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
- rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
- __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
- rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
- rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
- netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
- netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:728 [inline]
- sock_sendmsg+0xd9/0x180 net/socket.c:751
- ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
- ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
- __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Before dd098a0e0319 (" irqchip/mips-gic: Get rid of the reliance on
+irq_cpu_online()"), if a local interrupt is not routable, then it won't
+be requested from GIC Local domain, and thus gic_all_vpes_irq_cpu_online
+won't be called for that particular interrupt.
 
-Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
-Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dd098a0e0319 (" irqchip/mips-gic: Get rid of the reliance on irq_cpu_online()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Tested-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230424103156.66753-2-jiaxun.yang@flygoat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-mips-gic.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -2702,7 +2702,10 @@ static int rtnl_setlink(struct sk_buff *
- 	ifm = nlmsg_data(nlh);
- 	if (ifm->ifi_index > 0)
- 		dev = __dev_get_by_index(net, ifm->ifi_index);
--	else if (tb[IFLA_IFNAME])
-+	else if (ifm->ifi_index < 0) {
-+		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
-+		return -EINVAL;
-+	} else if (tb[IFLA_IFNAME])
- 		dev = __dev_get_by_name(net, ifname);
- 	else
- 		goto errout;
+--- a/drivers/irqchip/irq-mips-gic.c
++++ b/drivers/irqchip/irq-mips-gic.c
+@@ -396,6 +396,8 @@ static void gic_all_vpes_irq_cpu_online(
+ 		unsigned int intr = local_intrs[i];
+ 		struct gic_all_vpes_chip_data *cd;
+ 
++		if (!gic_local_irq_is_routable(intr))
++			continue;
+ 		cd = &gic_all_vpes_chip_data[intr];
+ 		write_gic_vl_map(mips_gic_vx_map_reg(intr), cd->map);
+ 		if (cd->mask)
 
 
