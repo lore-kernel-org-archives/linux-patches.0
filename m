@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309F611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:37:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21D0C433C7;
-	Mon, 28 Aug 2023 10:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCD211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:37:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A71C433C7;
+	Mon, 28 Aug 2023 10:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219057;
-	bh=/5KcCZGeWRu/1Z8vHb2hwiN0mY7PcpAfrP5x97pC/OU=;
+	s=korg; t=1693219060;
+	bh=m+BUAl6LhaYkuAodSCfmpT10dKFia7ztCb6jxH32Yzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TxDa2tBG7WwDLuV4cUuZwe4snNmX4WL9wr5Gjzi1TVswog9EddNsey5lGaqzkR0l
-	 gl6F6l+fKonYtZl9ERaclYliSBWa5CxCyoQGYALCcF1D+/aRTsCXQ6i+tUm4Yk1oYe
-	 oX7eiQFCTIlg/990+AbyA3aclkMKQ3rKzRIxRxKg=
+	b=oLxH4qyTovvlbNhtEhlEGH/2kjZYpXk0se+lD6fMIYSgAGwWJNv7baws/X8LhwP0w
+	 l4ecSDTMhzjkowzEbQJ3R5JlYCAB+fuuoW/L5qct+bAdh1cgPD4B9sE3+5kOcgTyPB
+	 bwEO+488GSTi1HdJb1nCt6+n4pmMHHSRM4VRvb6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.4 057/158] powerpc/rtas_flash: allow user copy to flash block cache objects
-Date: Mon, 28 Aug 2023 12:12:34 +0200
-Message-ID: <20230828101159.235015468@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 5.4 058/158] tty: serial: fsl_lpuart: Clear the error flags by writing 1 for lpuart32 platforms
+Date: Mon, 28 Aug 2023 12:12:35 +0200
+Message-ID: <20230828101159.264700233@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,68 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit 4f3175979e62de3b929bfa54a0db4b87d36257a7 upstream.
+commit 282069845af388b08d622ad192b831dcd0549c62 upstream.
 
-With hardened usercopy enabled (CONFIG_HARDENED_USERCOPY=y), using the
-/proc/powerpc/rtas/firmware_update interface to prepare a system
-firmware update yields a BUG():
+Do not read the data register to clear the error flags for lpuart32
+platforms, the additional read may cause the receive FIFO underflow
+since the DMA has already read the data register.
+Actually all lpuart32 platforms support write 1 to clear those error
+bits, let's use this method to better clear the error flags.
 
-  kernel BUG at mm/usercopy.c:102!
-  Oops: Exception in kernel mode, sig: 5 [#1]
-  LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  CPU: 0 PID: 2232 Comm: dd Not tainted 6.5.0-rc3+ #2
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
-  NIP:  c0000000005991d0 LR: c0000000005991cc CTR: 0000000000000000
-  REGS: c0000000148c76a0 TRAP: 0700   Not tainted  (6.5.0-rc3+)
-  MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002242  XER: 0000000c
-  CFAR: c0000000001fbd34 IRQMASK: 0
-  [ ... GPRs omitted ... ]
-  NIP usercopy_abort+0xa0/0xb0
-  LR  usercopy_abort+0x9c/0xb0
-  Call Trace:
-    usercopy_abort+0x9c/0xb0 (unreliable)
-    __check_heap_object+0x1b4/0x1d0
-    __check_object_size+0x2d0/0x380
-    rtas_flash_write+0xe4/0x250
-    proc_reg_write+0xfc/0x160
-    vfs_write+0xfc/0x4e0
-    ksys_write+0x90/0x160
-    system_call_exception+0x178/0x320
-    system_call_common+0x160/0x2c4
-
-The blocks of the firmware image are copied directly from user memory
-to objects allocated from flash_block_cache, so flash_block_cache must
-be created using kmem_cache_create_usercopy() to mark it safe for user
-access.
-
-Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-[mpe: Trim and indent oops]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230810-rtas-flash-vs-hardened-usercopy-v2-1-dcf63793a938@linux.ibm.com
+Fixes: 42b68768e51b ("serial: fsl_lpuart: DMA support for 32-bit variant")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230801022304.24251-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/rtas_flash.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/rtas_flash.c
-+++ b/arch/powerpc/kernel/rtas_flash.c
-@@ -710,9 +710,9 @@ static int __init rtas_flash_init(void)
- 	if (!rtas_validate_flash_data.buf)
- 		return -ENOMEM;
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1023,8 +1023,8 @@ static void lpuart_copy_rx_to_tty(struct
+ 		unsigned long sr = lpuart32_read(&sport->port, UARTSTAT);
  
--	flash_block_cache = kmem_cache_create("rtas_flash_cache",
--					      RTAS_BLK_SIZE, RTAS_BLK_SIZE, 0,
--					      NULL);
-+	flash_block_cache = kmem_cache_create_usercopy("rtas_flash_cache",
-+						       RTAS_BLK_SIZE, RTAS_BLK_SIZE,
-+						       0, 0, RTAS_BLK_SIZE, NULL);
- 	if (!flash_block_cache) {
- 		printk(KERN_ERR "%s: failed to create block cache\n",
- 				__func__);
+ 		if (sr & (UARTSTAT_PE | UARTSTAT_FE)) {
+-			/* Read DR to clear the error flags */
+-			lpuart32_read(&sport->port, UARTDATA);
++			/* Clear the error flags */
++			lpuart32_write(&sport->port, sr, UARTSTAT);
+ 
+ 			if (sr & UARTSTAT_PE)
+ 				sport->port.icount.parity++;
 
 
