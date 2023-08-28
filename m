@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4412311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB508C433C8;
-	Mon, 28 Aug 2023 10:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E9511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DBFC433C7;
+	Mon, 28 Aug 2023 10:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218402;
-	bh=2DsqC0dytA1f5e/MyrvztZ2TpQfphH+EJ7Q60Zl/ilg=;
+	s=korg; t=1693218405;
+	bh=UzWPPFglri7Fszo/1RAkwjU7ydSsf18YWwVP9VZL4Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoQHYxzOAsEx8hwsK84akJ5xEAG1i7b2LRCZQ9e7ueInkAYLtgebRAh85UFG2KimD
-	 ARsVI52mkIPZe9LJ9EcU10Bg+5ka+T+9YunEw8QJVAmDfkgQlXzRTZXWuj5wsLHGhI
-	 8VhDQijloVT0RT0A8Ci9d6iY9RpSuJtgHYa+A0aQ=
+	b=CCYtpL6hluxQYZ7VTd2B15dFgU8KF2aSIAPHomajXc/34S1u7JeqN3crhb3Y1n9qk
+	 1TVKgqt51SH+1gohiPaTMn70OUCXivpu/XIuUnouxgx+FzGF4qQnsxSaH9ccU+3ZZx
+	 9T7vsk0YDVE1Ek6axG/VcIvwDkQYefcoFtuRpoHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 074/129] virtio-net: set queues after driver_ok
-Date: Mon, 28 Aug 2023 12:12:48 +0200
-Message-ID: <20230828101156.060226453@linuxfoundation.org>
+	"kernelci.org bot" <bot@kernelci.org>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 4.19 075/129] bus: ti-sysc: Flush posted write on enable before reset
+Date: Mon, 28 Aug 2023 12:12:49 +0200
+Message-ID: <20230828101156.100043904@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -41,47 +39,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Tony Lindgren <tony@atomide.com>
 
-commit 51b813176f098ff61bd2833f627f5319ead098a5 upstream.
+commit 34539b442b3bc7d5bf10164750302b60b91f18a7 upstream.
 
-Commit 25266128fe16 ("virtio-net: fix race between set queues and
-probe") tries to fix the race between set queues and probe by calling
-_virtnet_set_queues() before DRIVER_OK is set. This violates virtio
-spec. Fixing this by setting queues after virtio_device_ready().
+The am335x devices started producing boot errors for resetting musb module
+in because of subtle timing changes:
 
-Note that rtnl needs to be held for userspace requests to change the
-number of queues. So we are serialized in this way.
+Unhandled fault: external abort on non-linefetch (0x1008)
+...
+sysc_poll_reset_sysconfig from sysc_reset+0x109/0x12
+sysc_reset from sysc_probe+0xa99/0xeb0
+...
 
-Fixes: 25266128fe16 ("virtio-net: fix race between set queues and probe")
-Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The fix is to flush posted write after enable before reset during
+probe. Note that some devices also need to specify the delay after enable
+with ti,sysc-delay-us, but this is not needed for musb on am335x based on
+my tests.
+
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Closes: https://storage.kernelci.org/next/master/next-20230614/arm/multi_v7_defconfig+CONFIG_THUMB2_KERNEL=y/gcc-10/lab-cip/baseline-beaglebone-black.html
+Fixes: 596e7955692b ("bus: ti-sysc: Add support for software reset")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/ti-sysc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3120,8 +3120,6 @@ static int virtnet_probe(struct virtio_d
- 		}
- 	}
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -978,6 +978,8 @@ static int sysc_reset(struct sysc *ddata
+ 	val = sysc_read(ddata, offset);
+ 	val |= (0x1 << ddata->cap->regbits->srst_shift);
+ 	sysc_write(ddata, offset, val);
++	/* Flush posted write */
++	val = sysc_read_sysconfig(ddata);
  
--	_virtnet_set_queues(vi, vi->curr_queue_pairs);
--
- 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
- 	rtnl_lock();
- 
-@@ -3134,6 +3132,8 @@ static int virtnet_probe(struct virtio_d
- 
- 	virtio_device_ready(vdev);
- 
-+	_virtnet_set_queues(vi, vi->curr_queue_pairs);
-+
- 	rtnl_unlock();
- 
- 	err = virtnet_cpu_notif_add(vi);
+ 	/* Poll on reset status */
+ 	offset = ddata->offsets[SYSC_SYSSTATUS];
 
 
