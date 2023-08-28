@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B8211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:47:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC49C433C7;
-	Mon, 28 Aug 2023 10:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD30111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:47:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500C8C433C7;
+	Mon, 28 Aug 2023 10:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219672;
-	bh=8WsoE9mq+tZcd8wW1mHDe/zksd8rOoekJgTnSbIrtRE=;
+	s=korg; t=1693219675;
+	bh=4KiIUM5PPj/q4jYLxIoGta5tvLYskZm82enTk/tFfcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1GqSVr3tl92eB+7fjWKOvCZrCH2XE9Nd3+0x8pO+ZHaQBzJL4UR+AWgVHLBTObZ+
-	 1j+x/qZT/w7crQyjuv6iGsi6oZNCkeAgxfwZ+38VKBCwunNnClP//eXaJU7FHmT55V
-	 8yjTHD4a+tz4MyjlrjvXT3JYD5wJ52hUhkBGuyyA=
+	b=0T5o7ThSnwggngQscHo8k0s+O/DyOZfKedyKwTYQbfFCb66DBKh4EHvUEIkFKKK4W
+	 ngnbZOAizeBj+Pm3S3Wr1Qy2EFt2JurpufHfx2qisDaSLHRZBCGMWqPREXTdzpnKAr
+	 IwF98BEWGXg0LzYH4wVIKmE6f8xO1pNG71MclpjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Wei <luwei32@huawei.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/84] ipvlan: Fix a reference count leak warning in ipvlan_ns_exit()
-Date: Mon, 28 Aug 2023 12:13:47 +0200
-Message-ID: <20230828101150.278812222@linuxfoundation.org>
+Subject: [PATCH 5.10 31/84] net: bgmac: Fix return value check for fixed_phy_register()
+Date: Mon, 28 Aug 2023 12:13:48 +0200
+Message-ID: <20230828101150.314754580@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -41,88 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Wei <luwei32@huawei.com>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 043d5f68d0ccdda91029b4b6dce7eeffdcfad281 ]
+[ Upstream commit 23a14488ea5882dea5851b65c9fce2127ee8fcad ]
 
-There are two network devices(veth1 and veth3) in ns1, and ipvlan1 with
-L3S mode and ipvlan2 with L2 mode are created based on them as
-figure (1). In this case, ipvlan_register_nf_hook() will be called to
-register nf hook which is needed by ipvlans in L3S mode in ns1 and value
-of ipvl_nf_hook_refcnt is set to 1.
+The fixed_phy_register() function returns error pointers and never
+returns NULL. Update the checks accordingly.
 
-(1)
-           ns1                           ns2
-      ------------                  ------------
-
-   veth1--ipvlan1 (L3S)
-
-   veth3--ipvlan2 (L2)
-
-(2)
-           ns1                           ns2
-      ------------                  ------------
-
-   veth1--ipvlan1 (L3S)
-
-         ipvlan2 (L2)                  veth3
-     |                                  |
-     |------->-------->--------->--------
-                    migrate
-
-When veth3 migrates from ns1 to ns2 as figure (2), veth3 will register in
-ns2 and calls call_netdevice_notifiers with NETDEV_REGISTER event:
-
-dev_change_net_namespace
-    call_netdevice_notifiers
-        ipvlan_device_event
-            ipvlan_migrate_l3s_hook
-                ipvlan_register_nf_hook(newnet)      (I)
-                ipvlan_unregister_nf_hook(oldnet)    (II)
-
-In function ipvlan_migrate_l3s_hook(), ipvl_nf_hook_refcnt in ns1 is not 0
-since veth1 with ipvlan1 still in ns1, (I) and (II) will be called to
-register nf_hook in ns2 and unregister nf_hook in ns1. As a result,
-ipvl_nf_hook_refcnt in ns1 is decreased incorrectly and this in ns2
-is increased incorrectly. When the second net namespace is removed, a
-reference count leak warning in ipvlan_ns_exit() will be triggered.
-
-This patch add a check before ipvlan_migrate_l3s_hook() is called. The
-warning can be triggered as follows:
-
-$ ip netns add ns1
-$ ip netns add ns2
-$ ip netns exec ns1 ip link add veth1 type veth peer name veth2
-$ ip netns exec ns1 ip link add veth3 type veth peer name veth4
-$ ip netns exec ns1 ip link add ipv1 link veth1 type ipvlan mode l3s
-$ ip netns exec ns1 ip link add ipv2 link veth3 type ipvlan mode l2
-$ ip netns exec ns1 ip link set veth3 netns ns2
-$ ip net del ns2
-
-Fixes: 3133822f5ac1 ("ipvlan: use pernet operations and restrict l3s hooks to master netns")
-Signed-off-by: Lu Wei <luwei32@huawei.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20230817145449.141827-1-luwei32@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c25b23b8a387 ("bgmac: register fixed PHY for ARM BCM470X / BCM5301X chipsets")
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_main.c b/drivers/net/ipvlan/ipvlan_main.c
-index 60b7d93bb834e..93be7dd571fc5 100644
---- a/drivers/net/ipvlan/ipvlan_main.c
-+++ b/drivers/net/ipvlan/ipvlan_main.c
-@@ -745,7 +745,8 @@ static int ipvlan_device_event(struct notifier_block *unused,
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index ab8ee93316354..a4f6143e66fe9 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -1448,7 +1448,7 @@ int bgmac_phy_connect_direct(struct bgmac *bgmac)
+ 	int err;
  
- 		write_pnet(&port->pnet, newnet);
- 
--		ipvlan_migrate_l3s_hook(oldnet, newnet);
-+		if (port->mode == IPVLAN_MODE_L3S)
-+			ipvlan_migrate_l3s_hook(oldnet, newnet);
- 		break;
+ 	phy_dev = fixed_phy_register(PHY_POLL, &fphy_status, NULL);
+-	if (!phy_dev || IS_ERR(phy_dev)) {
++	if (IS_ERR(phy_dev)) {
+ 		dev_err(bgmac->dev, "Failed to register fixed PHY device\n");
+ 		return -ENODEV;
  	}
- 	case NETDEV_UNREGISTER:
 -- 
 2.40.1
 
