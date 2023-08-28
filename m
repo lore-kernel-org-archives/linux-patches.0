@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2763011C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE73C433CD;
-	Mon, 28 Aug 2023 10:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFAC11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B35C433C7;
+	Mon, 28 Aug 2023 10:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219784;
-	bh=6m20xTcB8iTU+41y8enngSpXNbrjXif+e5NB6knalEg=;
+	s=korg; t=1693219787;
+	bh=cOmNiqVv5dKYUSPPUlk/l2j+W2SFSVjCbrK8nsCR+Ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjHkww3D7Rr0mX2/Rcy+iNfygtGxG5n5BbKmip6/FzJJA+LkXK46EXjBAtdV0hVDk
-	 NxcojRzSEa5aXjrRbGBJY+sz+72+9CY6SPDwlNHWxQvt4PGOG7QLt9MSyS6Urf1IKT
-	 ZE/7kk6ZcPgA7gDZDySpO+j06NU5QfJy55QT+1+U=
+	b=kZcrwq0bG1t+8dWuC2lJGg1S+NRe+7/033xkTSKa5ISo+BZAUgBqPQBfwJ5xKtpnv
+	 M7idSzCFDeWrpTgQsVo5/h1VusftSdVCFuWRyvLnTUpiceXqm5crIhW9/xMR+S+ok/
+	 Vo4IuqZifEfDplPxThX+rxu/oFc9o8MADvV0iO+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 42/84] ibmveth: Use dcbf rather than dcbfl
-Date: Mon, 28 Aug 2023 12:13:59 +0200
-Message-ID: <20230828101150.693287373@linuxfoundation.org>
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 5.10 43/84] NFSv4: Fix dropped lock for racing OPEN and delegation return
+Date: Mon, 28 Aug 2023 12:14:00 +0200
+Message-ID: <20230828101150.723572183@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -39,34 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit bfedba3b2c7793ce127680bc8f70711e05ec7a17 upstream.
+commit 1cbc11aaa01f80577b67ae02c73ee781112125fd upstream.
 
-When building for power4, newer binutils don't recognise the "dcbfl"
-extended mnemonic.
+Commmit f5ea16137a3f ("NFSv4: Retry LOCK on OLD_STATEID during delegation
+return") attempted to solve this problem by using nfs4's generic async error
+handling, but introduced a regression where v4.0 lock recovery would hang.
+The additional complexity introduced by overloading that error handling is
+not necessary for this case.  This patch expects that commit to be
+reverted.
 
-dcbfl RA, RB is equivalent to dcbf RA, RB, 1.
+The problem as originally explained in the above commit is:
 
-Switch to "dcbf" to avoid the build error.
+    There's a small window where a LOCK sent during a delegation return can
+    race with another OPEN on client, but the open stateid has not yet been
+    updated.  In this case, the client doesn't handle the OLD_STATEID error
+    from the server and will lose this lock, emitting:
+    "NFS: nfs4_handle_delegation_recall_error: unhandled error -10024".
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this by using the old_stateid refresh helpers if the server replies
+with OLD_STATEID.
+
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -196,7 +196,7 @@ static inline void ibmveth_flush_buffer(
- 	unsigned long offset;
- 
- 	for (offset = 0; offset < length; offset += SMP_CACHE_BYTES)
--		asm("dcbfl %0,%1" :: "b" (addr), "r" (offset));
-+		asm("dcbf %0,%1,1" :: "b" (addr), "r" (offset));
- }
- 
- /* replenish the buffers for a pool.  note that we don't need to
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7046,8 +7046,15 @@ static void nfs4_lock_done(struct rpc_ta
+ 		} else if (!nfs4_update_lock_stateid(lsp, &data->res.stateid))
+ 			goto out_restart;
+ 		break;
+-	case -NFS4ERR_BAD_STATEID:
+ 	case -NFS4ERR_OLD_STATEID:
++		if (data->arg.new_lock_owner != 0 &&
++			nfs4_refresh_open_old_stateid(&data->arg.open_stateid,
++					lsp->ls_state))
++			goto out_restart;
++		if (nfs4_refresh_lock_old_stateid(&data->arg.lock_stateid, lsp))
++			goto out_restart;
++		fallthrough;
++	case -NFS4ERR_BAD_STATEID:
+ 	case -NFS4ERR_STALE_STATEID:
+ 	case -NFS4ERR_EXPIRED:
+ 		if (data->arg.new_lock_owner != 0) {
 
 
