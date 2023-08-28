@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D66A94D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9590AC433C7;
-	Mon, 28 Aug 2023 10:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB1440C
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF34C433C8;
+	Mon, 28 Aug 2023 10:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217726;
-	bh=eAJe6iGGmNQeOdYNMYG+euedr9YrHpuPX3coBWpmhoY=;
+	s=korg; t=1693217728;
+	bh=WG5PUKL55z2Kfmm4+PyuXxSIzCHxnJ7y94fnafm0DkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKBSILVGaBfqnRkg1nVPysHBI5c4GZWFkF4jW5UpHRu0uGGrZeDGjY4XlqZhv/ZiB
-	 bEwUszzfAw+p+jKwN/juKEheMc3qS6VejLhjfpAP0UjwMkqPS2sn3NXnHfwTBR+tQM
-	 I+QkBx31fpntSMEQQgxGpqRt5TkZ7P6AuMB5+9Ro=
+	b=XSfx1DPAk0VWSd2b3hGJdCPAj3shLX37LFHLqEdr2WDyqnU5cf3oCol8keZ0LiKWY
+	 +G84zBj/Poxs4ozAnUUhzreeYFyr/JlIxbwTusNGLLApk9HLyjKION2lK1QCYIsQFl
+	 h/njo0EWSuclZA01kTptRV2YDx+W/TkGxSwka/Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 4.14 18/57] powerpc/rtas_flash: allow user copy to flash block cache objects
-Date: Mon, 28 Aug 2023 12:12:38 +0200
-Message-ID: <20230828101144.900352217@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 19/57] net: xfrm: Fix xfrm_address_filter OOB read
+Date: Mon, 28 Aug 2023 12:12:39 +0200
+Message-ID: <20230828101144.940103042@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -40,68 +40,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 4f3175979e62de3b929bfa54a0db4b87d36257a7 upstream.
+[ Upstream commit dfa73c17d55b921e1d4e154976de35317e43a93a ]
 
-With hardened usercopy enabled (CONFIG_HARDENED_USERCOPY=y), using the
-/proc/powerpc/rtas/firmware_update interface to prepare a system
-firmware update yields a BUG():
+We found below OOB crash:
 
-  kernel BUG at mm/usercopy.c:102!
-  Oops: Exception in kernel mode, sig: 5 [#1]
-  LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  CPU: 0 PID: 2232 Comm: dd Not tainted 6.5.0-rc3+ #2
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
-  NIP:  c0000000005991d0 LR: c0000000005991cc CTR: 0000000000000000
-  REGS: c0000000148c76a0 TRAP: 0700   Not tainted  (6.5.0-rc3+)
-  MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002242  XER: 0000000c
-  CFAR: c0000000001fbd34 IRQMASK: 0
-  [ ... GPRs omitted ... ]
-  NIP usercopy_abort+0xa0/0xb0
-  LR  usercopy_abort+0x9c/0xb0
-  Call Trace:
-    usercopy_abort+0x9c/0xb0 (unreliable)
-    __check_heap_object+0x1b4/0x1d0
-    __check_object_size+0x2d0/0x380
-    rtas_flash_write+0xe4/0x250
-    proc_reg_write+0xfc/0x160
-    vfs_write+0xfc/0x4e0
-    ksys_write+0x90/0x160
-    system_call_exception+0x178/0x320
-    system_call_common+0x160/0x2c4
+[   44.211730] ==================================================================
+[   44.212045] BUG: KASAN: slab-out-of-bounds in memcmp+0x8b/0xb0
+[   44.212045] Read of size 8 at addr ffff88800870f320 by task poc.xfrm/97
+[   44.212045]
+[   44.212045] CPU: 0 PID: 97 Comm: poc.xfrm Not tainted 6.4.0-rc7-00072-gdad9774deaf1-dirty #4
+[   44.212045] Call Trace:
+[   44.212045]  <TASK>
+[   44.212045]  dump_stack_lvl+0x37/0x50
+[   44.212045]  print_report+0xcc/0x620
+[   44.212045]  ? __virt_addr_valid+0xf3/0x170
+[   44.212045]  ? memcmp+0x8b/0xb0
+[   44.212045]  kasan_report+0xb2/0xe0
+[   44.212045]  ? memcmp+0x8b/0xb0
+[   44.212045]  kasan_check_range+0x39/0x1c0
+[   44.212045]  memcmp+0x8b/0xb0
+[   44.212045]  xfrm_state_walk+0x21c/0x420
+[   44.212045]  ? __pfx_dump_one_state+0x10/0x10
+[   44.212045]  xfrm_dump_sa+0x1e2/0x290
+[   44.212045]  ? __pfx_xfrm_dump_sa+0x10/0x10
+[   44.212045]  ? __kernel_text_address+0xd/0x40
+[   44.212045]  ? kasan_unpoison+0x27/0x60
+[   44.212045]  ? mutex_lock+0x60/0xe0
+[   44.212045]  ? __pfx_mutex_lock+0x10/0x10
+[   44.212045]  ? kasan_save_stack+0x22/0x50
+[   44.212045]  netlink_dump+0x322/0x6c0
+[   44.212045]  ? __pfx_netlink_dump+0x10/0x10
+[   44.212045]  ? mutex_unlock+0x7f/0xd0
+[   44.212045]  ? __pfx_mutex_unlock+0x10/0x10
+[   44.212045]  __netlink_dump_start+0x353/0x430
+[   44.212045]  xfrm_user_rcv_msg+0x3a4/0x410
+[   44.212045]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[   44.212045]  ? __pfx_xfrm_user_rcv_msg+0x10/0x10
+[   44.212045]  ? __pfx_xfrm_dump_sa+0x10/0x10
+[   44.212045]  ? __pfx_xfrm_dump_sa_done+0x10/0x10
+[   44.212045]  ? __stack_depot_save+0x382/0x4e0
+[   44.212045]  ? filter_irq_stacks+0x1c/0x70
+[   44.212045]  ? kasan_save_stack+0x32/0x50
+[   44.212045]  ? kasan_save_stack+0x22/0x50
+[   44.212045]  ? kasan_set_track+0x25/0x30
+[   44.212045]  ? __kasan_slab_alloc+0x59/0x70
+[   44.212045]  ? kmem_cache_alloc_node+0xf7/0x260
+[   44.212045]  ? kmalloc_reserve+0xab/0x120
+[   44.212045]  ? __alloc_skb+0xcf/0x210
+[   44.212045]  ? netlink_sendmsg+0x509/0x700
+[   44.212045]  ? sock_sendmsg+0xde/0xe0
+[   44.212045]  ? __sys_sendto+0x18d/0x230
+[   44.212045]  ? __x64_sys_sendto+0x71/0x90
+[   44.212045]  ? do_syscall_64+0x3f/0x90
+[   44.212045]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   44.212045]  ? netlink_sendmsg+0x509/0x700
+[   44.212045]  ? sock_sendmsg+0xde/0xe0
+[   44.212045]  ? __sys_sendto+0x18d/0x230
+[   44.212045]  ? __x64_sys_sendto+0x71/0x90
+[   44.212045]  ? do_syscall_64+0x3f/0x90
+[   44.212045]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   44.212045]  ? kasan_save_stack+0x22/0x50
+[   44.212045]  ? kasan_set_track+0x25/0x30
+[   44.212045]  ? kasan_save_free_info+0x2e/0x50
+[   44.212045]  ? __kasan_slab_free+0x10a/0x190
+[   44.212045]  ? kmem_cache_free+0x9c/0x340
+[   44.212045]  ? netlink_recvmsg+0x23c/0x660
+[   44.212045]  ? sock_recvmsg+0xeb/0xf0
+[   44.212045]  ? __sys_recvfrom+0x13c/0x1f0
+[   44.212045]  ? __x64_sys_recvfrom+0x71/0x90
+[   44.212045]  ? do_syscall_64+0x3f/0x90
+[   44.212045]  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   44.212045]  ? copyout+0x3e/0x50
+[   44.212045]  netlink_rcv_skb+0xd6/0x210
+[   44.212045]  ? __pfx_xfrm_user_rcv_msg+0x10/0x10
+[   44.212045]  ? __pfx_netlink_rcv_skb+0x10/0x10
+[   44.212045]  ? __pfx_sock_has_perm+0x10/0x10
+[   44.212045]  ? mutex_lock+0x8d/0xe0
+[   44.212045]  ? __pfx_mutex_lock+0x10/0x10
+[   44.212045]  xfrm_netlink_rcv+0x44/0x50
+[   44.212045]  netlink_unicast+0x36f/0x4c0
+[   44.212045]  ? __pfx_netlink_unicast+0x10/0x10
+[   44.212045]  ? netlink_recvmsg+0x500/0x660
+[   44.212045]  netlink_sendmsg+0x3b7/0x700
+[   44.212045]  ? __pfx_netlink_sendmsg+0x10/0x10
+[   44.212045]  ? __pfx_netlink_sendmsg+0x10/0x10
+[   44.212045]  sock_sendmsg+0xde/0xe0
+[   44.212045]  __sys_sendto+0x18d/0x230
+[   44.212045]  ? __pfx___sys_sendto+0x10/0x10
+[   44.212045]  ? rcu_core+0x44a/0xe10
+[   44.212045]  ? __rseq_handle_notify_resume+0x45b/0x740
+[   44.212045]  ? _raw_spin_lock_irq+0x81/0xe0
+[   44.212045]  ? __pfx___rseq_handle_notify_resume+0x10/0x10
+[   44.212045]  ? __pfx_restore_fpregs_from_fpstate+0x10/0x10
+[   44.212045]  ? __pfx_blkcg_maybe_throttle_current+0x10/0x10
+[   44.212045]  ? __pfx_task_work_run+0x10/0x10
+[   44.212045]  __x64_sys_sendto+0x71/0x90
+[   44.212045]  do_syscall_64+0x3f/0x90
+[   44.212045]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   44.212045] RIP: 0033:0x44b7da
+[   44.212045] RSP: 002b:00007ffdc8838548 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+[   44.212045] RAX: ffffffffffffffda RBX: 00007ffdc8839978 RCX: 000000000044b7da
+[   44.212045] RDX: 0000000000000038 RSI: 00007ffdc8838770 RDI: 0000000000000003
+[   44.212045] RBP: 00007ffdc88385b0 R08: 00007ffdc883858c R09: 000000000000000c
+[   44.212045] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[   44.212045] R13: 00007ffdc8839968 R14: 00000000004c37d0 R15: 0000000000000001
+[   44.212045]  </TASK>
+[   44.212045]
+[   44.212045] Allocated by task 97:
+[   44.212045]  kasan_save_stack+0x22/0x50
+[   44.212045]  kasan_set_track+0x25/0x30
+[   44.212045]  __kasan_kmalloc+0x7f/0x90
+[   44.212045]  __kmalloc_node_track_caller+0x5b/0x140
+[   44.212045]  kmemdup+0x21/0x50
+[   44.212045]  xfrm_dump_sa+0x17d/0x290
+[   44.212045]  netlink_dump+0x322/0x6c0
+[   44.212045]  __netlink_dump_start+0x353/0x430
+[   44.212045]  xfrm_user_rcv_msg+0x3a4/0x410
+[   44.212045]  netlink_rcv_skb+0xd6/0x210
+[   44.212045]  xfrm_netlink_rcv+0x44/0x50
+[   44.212045]  netlink_unicast+0x36f/0x4c0
+[   44.212045]  netlink_sendmsg+0x3b7/0x700
+[   44.212045]  sock_sendmsg+0xde/0xe0
+[   44.212045]  __sys_sendto+0x18d/0x230
+[   44.212045]  __x64_sys_sendto+0x71/0x90
+[   44.212045]  do_syscall_64+0x3f/0x90
+[   44.212045]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+[   44.212045]
+[   44.212045] The buggy address belongs to the object at ffff88800870f300
+[   44.212045]  which belongs to the cache kmalloc-64 of size 64
+[   44.212045] The buggy address is located 32 bytes inside of
+[   44.212045]  allocated 36-byte region [ffff88800870f300, ffff88800870f324)
+[   44.212045]
+[   44.212045] The buggy address belongs to the physical page:
+[   44.212045] page:00000000e4de16ee refcount:1 mapcount:0 mapping:000000000 ...
+[   44.212045] flags: 0x100000000000200(slab|node=0|zone=1)
+[   44.212045] page_type: 0xffffffff()
+[   44.212045] raw: 0100000000000200 ffff888004c41640 dead000000000122 0000000000000000
+[   44.212045] raw: 0000000000000000 0000000080200020 00000001ffffffff 0000000000000000
+[   44.212045] page dumped because: kasan: bad access detected
+[   44.212045]
+[   44.212045] Memory state around the buggy address:
+[   44.212045]  ffff88800870f200: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+[   44.212045]  ffff88800870f280: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+[   44.212045] >ffff88800870f300: 00 00 00 00 04 fc fc fc fc fc fc fc fc fc fc fc
+[   44.212045]                                ^
+[   44.212045]  ffff88800870f380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   44.212045]  ffff88800870f400: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   44.212045] ==================================================================
 
-The blocks of the firmware image are copied directly from user memory
-to objects allocated from flash_block_cache, so flash_block_cache must
-be created using kmem_cache_create_usercopy() to mark it safe for user
-access.
+By investigating the code, we find the root cause of this OOB is the lack
+of checks in xfrm_dump_sa(). The buggy code allows a malicious user to pass
+arbitrary value of filter->splen/dplen. Hence, with crafted xfrm states,
+the attacker can achieve 8 bytes heap OOB read, which causes info leak.
 
-Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-[mpe: Trim and indent oops]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230810-rtas-flash-vs-hardened-usercopy-v2-1-dcf63793a938@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  if (attrs[XFRMA_ADDRESS_FILTER]) {
+    filter = kmemdup(nla_data(attrs[XFRMA_ADDRESS_FILTER]),
+        sizeof(*filter), GFP_KERNEL);
+    if (filter == NULL)
+      return -ENOMEM;
+    // NO MORE CHECKS HERE !!!
+  }
+
+This patch fixes the OOB by adding necessary boundary checks, just like
+the code in pfkey_dump() function.
+
+Fixes: d3623099d350 ("ipsec: add support of limited SA dump")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas_flash.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_user.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/powerpc/kernel/rtas_flash.c
-+++ b/arch/powerpc/kernel/rtas_flash.c
-@@ -714,9 +714,9 @@ static int __init rtas_flash_init(void)
- 	if (!rtas_validate_flash_data.buf)
- 		return -ENOMEM;
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index ad30e0d8b28e9..c932ec65cfa09 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -1000,6 +1000,15 @@ static int xfrm_dump_sa(struct sk_buff *skb, struct netlink_callback *cb)
+ 					 sizeof(*filter), GFP_KERNEL);
+ 			if (filter == NULL)
+ 				return -ENOMEM;
++
++			/* see addr_match(), (prefix length >> 5) << 2
++			 * will be used to compare xfrm_address_t
++			 */
++			if (filter->splen > (sizeof(xfrm_address_t) << 3) ||
++			    filter->dplen > (sizeof(xfrm_address_t) << 3)) {
++				kfree(filter);
++				return -EINVAL;
++			}
+ 		}
  
--	flash_block_cache = kmem_cache_create("rtas_flash_cache",
--					      RTAS_BLK_SIZE, RTAS_BLK_SIZE, 0,
--					      NULL);
-+	flash_block_cache = kmem_cache_create_usercopy("rtas_flash_cache",
-+						       RTAS_BLK_SIZE, RTAS_BLK_SIZE,
-+						       0, 0, RTAS_BLK_SIZE, NULL);
- 	if (!flash_block_cache) {
- 		printk(KERN_ERR "%s: failed to create block cache\n",
- 				__func__);
+ 		if (attrs[XFRMA_PROTO])
+-- 
+2.40.1
+
 
 
