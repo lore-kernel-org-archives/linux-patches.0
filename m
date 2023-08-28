@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB43B611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71503C433C9;
-	Mon, 28 Aug 2023 10:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44A8611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5364FC433C8;
+	Mon, 28 Aug 2023 10:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219517;
-	bh=DZAgK5VGrL3fkiJJfwCR7J/OY/Eoy8xIGfIIP+kNwF0=;
+	s=korg; t=1693219520;
+	bh=bLKQfBKv2YZ+HoL2vKTnxSA2MRHHb0BRExr3MzNq75s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzWNOnSEpFFpYH0oMaGkaO+Eg5gjyvwm+3DlovrKdsNk6rPjRq94ByWQROC5vJ4Qb
-	 u2s19GOMpcwnu8FISVYUyytNe+fujkr79CC92q8uhxTm90tzGZ3UA00Trs9GvOztnF
-	 DUOLnWjapk3pW98uf1vBXKKqxcfQTAKJj8B45E1s=
+	b=TVdVuygZx/I6QE2zJDM8EKdtwa93mH2xHz9+WpoEwWNryl4rWwg1Ffor4yiiE3BE/
+	 eMRXijF8bVIZWmfFYu8SteRh8v3yjCSh/AOiMSsxh2fv09+Ta4G0ThsZVDB6RWUkVu
+	 cjc/J137uqZcBdRTqZ/dS7vcXizQVQzj41pVqQSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 65/89] media: vcodec: Fix potential array out-of-bounds in encoder queue_setup
-Date: Mon, 28 Aug 2023 12:14:06 +0200
-Message-ID: <20230828101152.362980866@linuxfoundation.org>
+	Woody Suwalski <terraluna977@gmail.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Igor Mammedov <imammedo@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 5.15 66/89] PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus
+Date: Mon, 28 Aug 2023 12:14:07 +0200
+Message-ID: <20230828101152.393283664@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -34,43 +37,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-commit e7f2e65699e2290fd547ec12a17008764e5d9620 upstream.
+commit cc22522fd55e257c86d340ae9aedc122e705a435 upstream.
 
-variable *nplanes is provided by user via system call argument. The
-possible value of q_data->fmt->num_planes is 1-3, while the value
-of *nplanes can be 1-8. The array access by index i can cause array
-out-of-bounds.
+40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
+changed acpiphp hotplug to use pci_assign_unassigned_bridge_resources()
+which depends on bridge being available, however enable_slot() can be
+called without bridge associated:
 
-Fix this bug by checking *nplanes against the array size.
+  1. Legitimate case of hotplug on root bus (widely used in virt world)
 
-Fixes: 4e855a6efa54 ("[media] vcodec: mediatek: Add Mediatek V4L2 Video Encoder Driver")
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+  2. A (misbehaving) firmware, that sends ACPI Bus Check notifications to
+     non existing root ports (Dell Inspiron 7352/0W6WV0), which end up at
+     enable_slot(..., bridge = 0) where bus has no bridge assigned to it.
+     acpihp doesn't know that it's a bridge, and bus specific 'PCI
+     subsystem' can't augment ACPI context with bridge information since
+     the PCI device to get this data from is/was not available.
+
+Issue is easy to reproduce with QEMU's 'pc' machine, which supports PCI
+hotplug on hostbridge slots. To reproduce, boot kernel at commit
+40613da52b13 in VM started with following CLI (assuming guest root fs is
+installed on sda1 partition):
+
+  # qemu-system-x86_64 -M pc -m 1G -enable-kvm -cpu host \
+        -monitor stdio -serial file:serial.log           \
+        -kernel arch/x86/boot/bzImage                    \
+        -append "root=/dev/sda1 console=ttyS0"           \
+        guest_disk.img
+
+Once guest OS is fully booted at qemu prompt:
+
+  (qemu) device_add e1000
+
+(check serial.log) it will cause NULL pointer dereference at:
+
+  void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge)
+  {
+    struct pci_bus *parent = bridge->subordinate;
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+
+   ? pci_assign_unassigned_bridge_resources+0x1f/0x260
+   enable_slot+0x21f/0x3e0
+   acpiphp_hotplug_notify+0x13d/0x260
+   acpi_device_hotplug+0xbc/0x540
+   acpi_hotplug_work_fn+0x15/0x20
+   process_one_work+0x1f7/0x370
+   worker_thread+0x45/0x3b0
+
+The issue was discovered on Dell Inspiron 7352/0W6WV0 laptop with following
+sequence:
+
+  1. Suspend to RAM
+  2. Wake up with the same backtrace being observed:
+  3. 2nd suspend to RAM attempt makes laptop freeze
+
+Fix it by using __pci_bus_assign_resources() instead of
+pci_assign_unassigned_bridge_resources() as we used to do, but only in case
+when bus doesn't have a bridge associated (to cover for the case of ACPI
+event on hostbridge or non existing root port).
+
+That lets us keep hotplug on root bus working like it used to and at the
+same time keeps resource reassignment usable on root ports (and other 1st
+level bridges) that was fixed by 40613da52b13.
+
+Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
+Link: https://lore.kernel.org/r/20230726123518.2361181-2-imammedo@redhat.com
+Reported-by: Woody Suwalski <terraluna977@gmail.com>
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
+Tested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/r/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mtk-vcodec/mtk_vcodec_enc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/hotplug/acpiphp_glue.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/mtk-vcodec/mtk_vcodec_enc.c
-+++ b/drivers/media/platform/mtk-vcodec/mtk_vcodec_enc.c
-@@ -733,6 +733,8 @@ static int vb2ops_venc_queue_setup(struc
- 		return -EINVAL;
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -489,6 +489,7 @@ static void enable_slot(struct acpiphp_s
+ 				acpiphp_native_scan_bridge(dev);
+ 		}
+ 	} else {
++		LIST_HEAD(add_list);
+ 		int max, pass;
  
- 	if (*nplanes) {
-+		if (*nplanes != q_data->fmt->num_planes)
-+			return -EINVAL;
- 		for (i = 0; i < *nplanes; i++)
- 			if (sizes[i] < q_data->sizeimage[i])
- 				return -EINVAL;
+ 		acpiphp_rescan_slot(slot);
+@@ -502,10 +503,15 @@ static void enable_slot(struct acpiphp_s
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
++					if (pci_is_root_bus(bus))
++						__pci_bus_size_bridges(dev->subordinate, &add_list);
+ 				}
+ 			}
+ 		}
+-		pci_assign_unassigned_bridge_resources(bus->self);
++		if (pci_is_root_bus(bus))
++			__pci_bus_assign_resources(bus, &add_list, NULL);
++		else
++			pci_assign_unassigned_bridge_resources(bus->self);
+ 	}
+ 
+ 	acpiphp_sanitize_bus(bus);
 
 
