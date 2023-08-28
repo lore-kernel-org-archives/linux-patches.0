@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4DB8BE0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34609C433C8;
-	Mon, 28 Aug 2023 10:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F838BE0
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB69AC433C8;
+	Mon, 28 Aug 2023 10:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218250;
-	bh=SbB1ZVX+loGfxj7tk60wjp0VkbC/iz7Lp+vugOYXzF4=;
+	s=korg; t=1693218253;
+	bh=VWbxE5SO1/dDYWOV1YpGTqBgaGxBDnJJ+LyVL/Kq150=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2/u6JZG+j2Bdlzric6HroP/YiTRGcsISN/fZjRJNCz7HbesfKTDtW0IC5ZJRQRbz
-	 a5YDkq2Dk6b/IIwZ5VdZlQgX8rLWW8fUfMCK34ybjbSzp338hVkGhEhr9v2YG+uCAT
-	 VHRxPcjGmHWsU7IyNW25WuCGIRA3ezFySO5W6gnk=
+	b=CEDlEMSPaR0qwqtVfW9mt9A+JFODEBcG04TYyHOaMgCkMA+xTiVrGo+QngQZrQzVn
+	 rZsiFZVVqH2sdWNtwmsOHa5nCJo9PvkUwSfT1M823IQuU8I2EAHgDe9vo2Nw5jWEl9
+	 3xWFDpPAQXHroFhSZcZSW2tg/i/78wwTnroEPpYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cosmin Tanislav <cosmin.tanislav@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 002/129] selftests: forwarding: tc_flower: Relax success criterion
-Date: Mon, 28 Aug 2023 12:11:36 +0200
-Message-ID: <20230828101153.123633584@linuxfoundation.org>
+Subject: [PATCH 4.19 020/129] iio: add addac subdirectory
+Date: Mon, 28 Aug 2023 12:11:54 +0200
+Message-ID: <20230828101153.802057596@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -44,59 +40,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-[ Upstream commit 9ee37e53e7687654b487fc94e82569377272a7a8 ]
+[ Upstream commit b62e2e1763cda3a6c494ed754317f19be1249297 ]
 
-The test checks that filters that match on source or destination MAC
-were only hit once. A host can send more than one packet with a given
-source or destination MAC, resulting in failures.
+For IIO devices that expose both ADC and DAC functionality.
 
-Fix by relaxing the success criterion and instead check that the filters
-were not hit zero times. Using tc_check_at_least_x_packets() is also an
-option, but it is not available in older kernels.
-
-Fixes: 07e5c75184a1 ("selftests: forwarding: Introduce tc flower matching tests")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/adc5e40d-d040-a65e-eb26-edf47dac5b02@alu.unizg.hr/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230808141503.4060661-13-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
+Link: https://lore.kernel.org/r/20211205114045.173612-2-cosmin.tanislav@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 4f9b80aefb9e ("iio: addac: stx104: Fix race condition when converting analog-to-digital")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/tc_flower.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/Kconfig        | 1 +
+ drivers/iio/Makefile       | 1 +
+ drivers/iio/addac/Kconfig  | 8 ++++++++
+ drivers/iio/addac/Makefile | 6 ++++++
+ 4 files changed, 16 insertions(+)
+ create mode 100644 drivers/iio/addac/Kconfig
+ create mode 100644 drivers/iio/addac/Makefile
 
-diff --git a/tools/testing/selftests/net/forwarding/tc_flower.sh b/tools/testing/selftests/net/forwarding/tc_flower.sh
-index 20d1077e5a3de..85faef980887a 100755
---- a/tools/testing/selftests/net/forwarding/tc_flower.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_flower.sh
-@@ -48,8 +48,8 @@ match_dst_mac_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched on a wrong filter"
+diff --git a/drivers/iio/Kconfig b/drivers/iio/Kconfig
+index d08aeb41cd078..810e72e4e8b7d 100644
+--- a/drivers/iio/Kconfig
++++ b/drivers/iio/Kconfig
+@@ -70,6 +70,7 @@ config IIO_TRIGGERED_EVENT
  
--	tc_check_packets "dev $h2 ingress" 102 1
--	check_err $? "Did not match on correct filter"
-+	tc_check_packets "dev $h2 ingress" 102 0
-+	check_fail $? "Did not match on correct filter"
+ source "drivers/iio/accel/Kconfig"
+ source "drivers/iio/adc/Kconfig"
++source "drivers/iio/addac/Kconfig"
+ source "drivers/iio/afe/Kconfig"
+ source "drivers/iio/amplifiers/Kconfig"
+ source "drivers/iio/chemical/Kconfig"
+diff --git a/drivers/iio/Makefile b/drivers/iio/Makefile
+index cb5993251381e..a60d0cbfe4cd2 100644
+--- a/drivers/iio/Makefile
++++ b/drivers/iio/Makefile
+@@ -15,6 +15,7 @@ obj-$(CONFIG_IIO_TRIGGERED_EVENT) += industrialio-triggered-event.o
  
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
-@@ -74,8 +74,8 @@ match_src_mac_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched on a wrong filter"
- 
--	tc_check_packets "dev $h2 ingress" 102 1
--	check_err $? "Did not match on correct filter"
-+	tc_check_packets "dev $h2 ingress" 102 0
-+	check_fail $? "Did not match on correct filter"
- 
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 	tc filter del dev $h2 ingress protocol ip pref 2 handle 102 flower
+ obj-y += accel/
+ obj-y += adc/
++obj-y += addac/
+ obj-y += afe/
+ obj-y += amplifiers/
+ obj-y += buffer/
+diff --git a/drivers/iio/addac/Kconfig b/drivers/iio/addac/Kconfig
+new file mode 100644
+index 0000000000000..2e64d7755d5ea
+--- /dev/null
++++ b/drivers/iio/addac/Kconfig
+@@ -0,0 +1,8 @@
++#
++# ADC DAC drivers
++#
++# When adding new entries keep the list in alphabetical order
++
++menu "Analog to digital and digital to analog converters"
++
++endmenu
+diff --git a/drivers/iio/addac/Makefile b/drivers/iio/addac/Makefile
+new file mode 100644
+index 0000000000000..b888b9ee12da0
+--- /dev/null
++++ b/drivers/iio/addac/Makefile
+@@ -0,0 +1,6 @@
++# SPDX-License-Identifier: GPL-2.0
++#
++# Makefile for industrial I/O ADDAC drivers
++#
++
++# When adding new entries keep the list in alphabetical order
 -- 
 2.40.1
 
