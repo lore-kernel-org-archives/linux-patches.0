@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0147411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FD0C433C8;
-	Mon, 28 Aug 2023 10:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72A211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:22:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FEFC433C7;
+	Mon, 28 Aug 2023 10:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218134;
-	bh=ghCic2kYQAIafuwlvqGjC72H0u/YLzYvvYV+9Xc9UQI=;
+	s=korg; t=1693218137;
+	bh=heWolold2VpZa8aRLdKUziW0QqTIAqqraQA6ylfjH/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klPWVl8LA6ky1CVwBFDuKrrRaHHaRcTxqt/LGaYIARQTLsfQmFCw6wCA8gYruliiM
-	 GheSTJcJVFyzBjKbRvziy1cdhTeOpMORZ10tgRheFY42JA7MmclvRdZZ2XAtAZvled
-	 HpUJwEiI7PFKorwyfSGg14hs5N2SToNBrd/9hFUw=
+	b=OeGe6j9yxT5pHzY150KeUWYYnePxeyFy0mx6DCjrsRsXibzR/SQNYnsP48lLHvULN
+	 s8QraNKFygalhcBt+Ky3zUNyjj/7QmH9P6om9ZHl74YXnTs8hseDLEIDn6nn9SWO0C
+	 sMkgb6wtDq+iDjeeWXkI9aUdAd0oW5Iut+vb8qmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Luca Coelho <luciano.coelho@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.4 078/129] drm/i915: fix display probe for IVB Q and IVB D GT2 server
-Date: Mon, 28 Aug 2023 12:12:37 +0200
-Message-ID: <20230828101159.929916336@linuxfoundation.org>
+Subject: [PATCH 6.4 069/129] drm: Add an HPD poll helper to reschedule the poll work
+Date: Mon, 28 Aug 2023 12:12:28 +0200
+Message-ID: <20230828101159.643441083@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -36,162 +36,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 423ffe62c06ae241ad460f4629dddb9dcf55e060 upstream.
+commit a94e7ccfc400c024976f3c2f31689ed843498b7c upstream.
 
-The current display probe is unable to differentiate between IVB Q and
-IVB D GT2 server, as they both have the same device id, but different
-subvendor and subdevice. This leads to the latter being misidentified as
-the former, and should just end up not having a display. However, the no
-display case returns a NULL as the display device info, and promptly
-oopses.
+Add a helper to reschedule drm_mode_config::output_poll_work after
+polling has been enabled for a connector (and needing a reschedule,
+since previously polling was disabled for all connectors and hence
+output_poll_work was not running).
 
-As the IVB Q case is rare, and we're anyway moving towards GMD ID,
-handle the identification requiring subvendor and subdevice as a special
-case first, instead of unnecessarily growing the intel_display_ids[]
-array with subvendor and subdevice.
+This is needed by the next patch fixing HPD polling on i915.
 
-[    5.425298] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[    5.426059] #PF: supervisor read access in kernel mode
-[    5.426810] #PF: error_code(0x0000) - not-present page
-[    5.427570] PGD 0 P4D 0
-[    5.428285] Oops: 0000 [#1] PREEMPT SMP PTI
-[    5.429035] CPU: 0 PID: 137 Comm: (udev-worker) Not tainted 6.4.0-1-amd64 #1  Debian 6.4.4-1
-[    5.429759] Hardware name: HP HP Z220 SFF Workstation/HP Z220 SFF Workstation, BIOS 4.19-218-gb184e6e0a1 02/02/2023
-[    5.430485] RIP: 0010:intel_device_info_driver_create+0xf1/0x120 [i915]
-[    5.431338] Code: 48 8b 97 80 1b 00 00 89 8f c0 1b 00 00 48 89 b7 b0 1b 00 00 48 89 97 b8 1b 00 00 0f b7 fd e8 76 e8 14 00 48 89 83 50 1b 00 00 <48> 8b 08 48 89 8b c4 1b 00 00 48 8b 48 08 48 89 8b cc 1b 00 00 8b
-[    5.432920] RSP: 0018:ffffb8254044fb98 EFLAGS: 00010206
-[    5.433707] RAX: 0000000000000000 RBX: ffff923076e80000 RCX: 0000000000000000
-[    5.434494] RDX: 0000000000000260 RSI: 0000000100001000 RDI: 000000000000016a
-[    5.435277] RBP: 000000000000016a R08: ffffb8254044fb00 R09: 0000000000000000
-[    5.436055] R10: ffff922d02761de8 R11: 00657361656c6572 R12: ffffffffc0e5d140
-[    5.436867] R13: ffff922d00b720d0 R14: 0000000076e80000 R15: ffff923078c0cae8
-[    5.437646] FS:  00007febd19a18c0(0000) GS:ffff92307c000000(0000) knlGS:0000000000000000
-[    5.438434] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    5.439218] CR2: 0000000000000000 CR3: 000000010256e002 CR4: 00000000001706f0
-[    5.440009] Call Trace:
-[    5.440824]  <TASK>
-[    5.441611]  ? __die+0x23/0x70
-[    5.442394]  ? page_fault_oops+0x17d/0x4c0
-[    5.443173]  ? exc_page_fault+0x7f/0x180
-[    5.443949]  ? asm_exc_page_fault+0x26/0x30
-[    5.444756]  ? intel_device_info_driver_create+0xf1/0x120 [i915]
-[    5.445652]  ? intel_device_info_driver_create+0xea/0x120 [i915]
-[    5.446545]  i915_driver_probe+0x7f/0xb60 [i915]
-[    5.447431]  ? drm_privacy_screen_get+0x15c/0x1a0 [drm]
-[    5.448240]  local_pci_probe+0x45/0xa0
-[    5.449013]  pci_device_probe+0xc7/0x240
-[    5.449748]  really_probe+0x19e/0x3e0
-[    5.450464]  ? __pfx___driver_attach+0x10/0x10
-[    5.451172]  __driver_probe_device+0x78/0x160
-[    5.451870]  driver_probe_device+0x1f/0x90
-[    5.452601]  __driver_attach+0xd2/0x1c0
-[    5.453293]  bus_for_each_dev+0x88/0xd0
-[    5.453989]  bus_add_driver+0x116/0x220
-[    5.454672]  driver_register+0x59/0x100
-[    5.455336]  i915_init+0x25/0xc0 [i915]
-[    5.456104]  ? __pfx_i915_init+0x10/0x10 [i915]
-[    5.456882]  do_one_initcall+0x5d/0x240
-[    5.457511]  do_init_module+0x60/0x250
-[    5.458126]  __do_sys_finit_module+0xac/0x120
-[    5.458721]  do_syscall_64+0x60/0xc0
-[    5.459314]  ? syscall_exit_to_user_mode+0x1b/0x40
-[    5.459897]  ? do_syscall_64+0x6c/0xc0
-[    5.460510]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[    5.461082] RIP: 0033:0x7febd20b0eb9
-[    5.461648] Code: 08 89 e8 5b 5d c3 66 2e 0f 1f 84 00 00 00 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 2f 1f 0d 00 f7 d8 64 89 01 48
-[    5.462905] RSP: 002b:00007fffabb1ba78 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-[    5.463554] RAX: ffffffffffffffda RBX: 0000561e6304f410 RCX: 00007febd20b0eb9
-[    5.464201] RDX: 0000000000000000 RSI: 00007febd2244f0d RDI: 0000000000000015
-[    5.464869] RBP: 00007febd2244f0d R08: 0000000000000000 R09: 000000000000000a
-[    5.465512] R10: 0000000000000015 R11: 0000000000000246 R12: 0000000000020000
-[    5.466124] R13: 0000000000000000 R14: 0000561e63032b60 R15: 000000000000000a
-[    5.466700]  </TASK>
-[    5.467271] Modules linked in: i915(+) drm_buddy video crc32_pclmul sr_mod hid_generic wmi crc32c_intel i2c_algo_bit sd_mod cdrom drm_display_helper cec usbhid rc_core ghash_clmulni_intel hid sha512_ssse3 ttm sha512_generic xhci_pci ehci_pci xhci_hcd ehci_hcd nvme ahci drm_kms_helper nvme_core libahci t10_pi libata psmouse aesni_intel scsi_mod crypto_simd i2c_i801 scsi_common crc64_rocksoft_generic cryptd i2c_smbus drm lpc_ich crc64_rocksoft crc_t10dif e1000e usbcore crct10dif_generic usb_common crct10dif_pclmul crc64 crct10dif_common button
-[    5.469750] CR2: 0000000000000000
-[    5.470364] ---[ end trace 0000000000000000 ]---
-[    5.470971] RIP: 0010:intel_device_info_driver_create+0xf1/0x120 [i915]
-[    5.471699] Code: 48 8b 97 80 1b 00 00 89 8f c0 1b 00 00 48 89 b7 b0 1b 00 00 48 89 97 b8 1b 00 00 0f b7 fd e8 76 e8 14 00 48 89 83 50 1b 00 00 <48> 8b 08 48 89 8b c4 1b 00 00 48 8b 48 08 48 89 8b cc 1b 00 00 8b
-[    5.473034] RSP: 0018:ffffb8254044fb98 EFLAGS: 00010206
-[    5.473698] RAX: 0000000000000000 RBX: ffff923076e80000 RCX: 0000000000000000
-[    5.474371] RDX: 0000000000000260 RSI: 0000000100001000 RDI: 000000000000016a
-[    5.475045] RBP: 000000000000016a R08: ffffb8254044fb00 R09: 0000000000000000
-[    5.475725] R10: ffff922d02761de8 R11: 00657361656c6572 R12: ffffffffc0e5d140
-[    5.476405] R13: ffff922d00b720d0 R14: 0000000076e80000 R15: ffff923078c0cae8
-[    5.477124] FS:  00007febd19a18c0(0000) GS:ffff92307c000000(0000) knlGS:0000000000000000
-[    5.477811] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    5.478499] CR2: 0000000000000000 CR3: 000000010256e002 CR4: 00000000001706f0
-
-Fixes: 69d439818fe5 ("drm/i915/display: Make display responsible for probing its own IP")
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8991
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804084600.1005818-1-jani.nikula@intel.com
-(cherry picked from commit 1435188307d128671f677eb908e165666dd83652)
+CC: stable@vger.kernel.org # 6.4+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230822113015.41224-1-imre.deak@intel.com
+(cherry picked from commit fe2352fd64029918174de4b460dfe6df0c6911cd)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_device.c |   24 +++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_probe_helper.c | 68 ++++++++++++++++++++----------
+ include/drm/drm_probe_helper.h     |  1 +
+ 2 files changed, 47 insertions(+), 22 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_device.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_device.c
-@@ -660,10 +660,24 @@ static const struct intel_display_device
- 		BIT(TRANSCODER_C) | BIT(TRANSCODER_D),
- };
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 2fb9bf901a2c..3f479483d7d8 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -262,6 +262,26 @@ static bool drm_kms_helper_enable_hpd(struct drm_device *dev)
+ }
  
-+/*
-+ * Separate detection for no display cases to keep the display id array simple.
-+ *
-+ * IVB Q requires subvendor and subdevice matching to differentiate from IVB D
-+ * GT2 server.
-+ */
-+static bool has_no_display(struct pci_dev *pdev)
+ #define DRM_OUTPUT_POLL_PERIOD (10*HZ)
++static void reschedule_output_poll_work(struct drm_device *dev)
 +{
-+	static const struct pci_device_id ids[] = {
-+		INTEL_IVB_Q_IDS(0),
-+		{}
-+	};
++	unsigned long delay = DRM_OUTPUT_POLL_PERIOD;
 +
-+	return pci_match_id(ids, pdev);
++	if (dev->mode_config.delayed_event)
++		/*
++		 * FIXME:
++		 *
++		 * Use short (1s) delay to handle the initial delayed event.
++		 * This delay should not be needed, but Optimus/nouveau will
++		 * fail in a mysterious way if the delayed event is handled as
++		 * soon as possible like it is done in
++		 * drm_helper_probe_single_connector_modes() in case the poll
++		 * was enabled before.
++		 */
++		delay = HZ;
++
++	schedule_delayed_work(&dev->mode_config.output_poll_work, delay);
 +}
 +
- #undef INTEL_VGA_DEVICE
--#undef INTEL_QUANTA_VGA_DEVICE
- #define INTEL_VGA_DEVICE(id, info) { id, info }
--#define INTEL_QUANTA_VGA_DEVICE(info) { 0x16a, info }
+ /**
+  * drm_kms_helper_poll_enable - re-enable output polling.
+  * @dev: drm_device
+@@ -279,37 +299,41 @@ static bool drm_kms_helper_enable_hpd(struct drm_device *dev)
+  */
+ void drm_kms_helper_poll_enable(struct drm_device *dev)
+ {
+-	bool poll = false;
+-	unsigned long delay = DRM_OUTPUT_POLL_PERIOD;
+-
+ 	if (!dev->mode_config.poll_enabled || !drm_kms_helper_poll ||
+ 	    dev->mode_config.poll_running)
+ 		return;
  
- static const struct {
- 	u32 devid;
-@@ -688,7 +702,6 @@ static const struct {
- 	INTEL_IRONLAKE_M_IDS(&ilk_m_display),
- 	INTEL_SNB_D_IDS(&snb_display),
- 	INTEL_SNB_M_IDS(&snb_display),
--	INTEL_IVB_Q_IDS(NULL),		/* must be first IVB in list */
- 	INTEL_IVB_M_IDS(&ivb_display),
- 	INTEL_IVB_D_IDS(&ivb_display),
- 	INTEL_HSW_IDS(&hsw_display),
-@@ -773,6 +786,11 @@ intel_display_device_probe(struct drm_i9
- 	if (has_gmdid)
- 		return probe_gmdid_display(i915, gmdid_ver, gmdid_rel, gmdid_step);
+-	poll = drm_kms_helper_enable_hpd(dev);
+-
+-	if (dev->mode_config.delayed_event) {
+-		/*
+-		 * FIXME:
+-		 *
+-		 * Use short (1s) delay to handle the initial delayed event.
+-		 * This delay should not be needed, but Optimus/nouveau will
+-		 * fail in a mysterious way if the delayed event is handled as
+-		 * soon as possible like it is done in
+-		 * drm_helper_probe_single_connector_modes() in case the poll
+-		 * was enabled before.
+-		 */
+-		poll = true;
+-		delay = HZ;
+-	}
+-
+-	if (poll)
+-		schedule_delayed_work(&dev->mode_config.output_poll_work, delay);
++	if (drm_kms_helper_enable_hpd(dev) ||
++	    dev->mode_config.delayed_event)
++		reschedule_output_poll_work(dev);
  
-+	if (has_no_display(pdev)) {
-+		drm_dbg_kms(&i915->drm, "Device doesn't have display\n");
-+		return &no_display;
-+	}
+ 	dev->mode_config.poll_running = true;
+ }
+ EXPORT_SYMBOL(drm_kms_helper_poll_enable);
+ 
++/**
++ * drm_kms_helper_poll_reschedule - reschedule the output polling work
++ * @dev: drm_device
++ *
++ * This function reschedules the output polling work, after polling for a
++ * connector has been enabled.
++ *
++ * Drivers must call this helper after enabling polling for a connector by
++ * setting %DRM_CONNECTOR_POLL_CONNECT / %DRM_CONNECTOR_POLL_DISCONNECT flags
++ * in drm_connector::polled. Note that after disabling polling by clearing these
++ * flags for a connector will stop the output polling work automatically if
++ * the polling is disabled for all other connectors as well.
++ *
++ * The function can be called only after polling has been enabled by calling
++ * drm_kms_helper_poll_init() / drm_kms_helper_poll_enable().
++ */
++void drm_kms_helper_poll_reschedule(struct drm_device *dev)
++{
++	if (dev->mode_config.poll_running)
++		reschedule_output_poll_work(dev);
++}
++EXPORT_SYMBOL(drm_kms_helper_poll_reschedule);
 +
- 	for (i = 0; i < ARRAY_SIZE(intel_display_ids); i++) {
- 		if (intel_display_ids[i].devid == pdev->device)
- 			return intel_display_ids[i].info;
+ static enum drm_connector_status
+ drm_helper_probe_detect_ctx(struct drm_connector *connector, bool force)
+ {
+diff --git a/include/drm/drm_probe_helper.h b/include/drm/drm_probe_helper.h
+index 4977e0ab72db..fad3c4003b2b 100644
+--- a/include/drm/drm_probe_helper.h
++++ b/include/drm/drm_probe_helper.h
+@@ -25,6 +25,7 @@ void drm_kms_helper_connector_hotplug_event(struct drm_connector *connector);
+ 
+ void drm_kms_helper_poll_disable(struct drm_device *dev);
+ void drm_kms_helper_poll_enable(struct drm_device *dev);
++void drm_kms_helper_poll_reschedule(struct drm_device *dev);
+ bool drm_kms_helper_is_poll_worker(void);
+ 
+ enum drm_mode_status drm_crtc_helper_mode_valid_fixed(struct drm_crtc *crtc,
+-- 
+2.42.0
+
 
 
