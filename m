@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D140111C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF58C433C7;
-	Mon, 28 Aug 2023 10:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4F011C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1083DC433C8;
+	Mon, 28 Aug 2023 10:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217980;
-	bh=hH6Jb6id3LRvf9sPRJmuYE+PryWqDQw+Pf+ozK6wvaE=;
+	s=korg; t=1693217983;
+	bh=h/pXnaQoBae982MUchWK4WuHKla4CHCPMjb+Eowuy/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4YDwXPG7SU30r0TYrk5a5TGdjwjDTSai39UB8zvdOSNiXOiQm2mzKXGWr0RodyTn
-	 YpX8zh+i1FTuW4DRwv7kHOHlVqBP9dhRFcTjChdUbyx++uUKe9b7qbGwVHo9kG9h1p
-	 inP2KU227tZBQ77rAeXDI4b1+ulAwtQGsxnirzSU=
+	b=YBhUXBgJ2KFZFPSHwBahDzRPiAdx6o+w5K33LG0y3x2/t3ekNqDqKWXXY6oelVUcK
+	 eduwbKkgZmqBwogNL2/3R+l3yRMkAuJgPVkSQwVbKtEXe23jIDGjnx+8XaRL5DlQxU
+	 jFDFaOXcb1Gnu8aCyHl0/HMxgSBwLs/2WToYsuAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Srinivas Goud <srinivas.goud@amd.com>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 052/129] ASoC: cs35l41: Correct amp_gain_tlv values
-Date: Mon, 28 Aug 2023 12:12:11 +0200
-Message-ID: <20230828101159.106228825@linuxfoundation.org>
+Subject: [PATCH 6.4 053/129] spi: spi-cadence: Fix data corruption issues in slave mode
+Date: Mon, 28 Aug 2023 12:12:12 +0200
+Message-ID: <20230828101159.135174810@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -39,32 +40,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Srinivas Goud <srinivas.goud@amd.com>
 
-commit 1613781d7e8a93618ff3a6b37f81f06769b53717 upstream.
+commit 627d05a41ca1fbb9d390f9513af262f001f261f7 upstream.
 
-The current analog gain TLV seems to have completely incorrect values in
-it. The gain starts at 0.5dB, proceeds in 1dB steps, and has no mute
-value, correct the control to match.
+Remove 10us delay in cdns_spi_process_fifo() (called from cdns_spi_irq())
+to fix data corruption issue on Master side when this driver
+configured in Slave mode, as Slave is failed to prepare the date
+on time due to above delay.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230823085308.753572-1-ckeepax@opensource.cirrus.com
+Add 10us delay before processing the RX FIFO as TX empty doesn't
+guarantee valid data in RX FIFO.
+
+Signed-off-by: Srinivas Goud <srinivas.goud@amd.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Tested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/1692610216-217644-1-git-send-email-srinivas.goud@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs35l41.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-cadence.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/sound/soc/codecs/cs35l41.c
-+++ b/sound/soc/codecs/cs35l41.c
-@@ -168,7 +168,7 @@ static int cs35l41_get_fs_mon_config_ind
- static const DECLARE_TLV_DB_RANGE(dig_vol_tlv,
- 		0, 0, TLV_DB_SCALE_ITEM(TLV_DB_GAIN_MUTE, 0, 1),
- 		1, 913, TLV_DB_MINMAX_ITEM(-10200, 1200));
--static DECLARE_TLV_DB_SCALE(amp_gain_tlv, 0, 1, 1);
-+static DECLARE_TLV_DB_SCALE(amp_gain_tlv, 50, 100, 0);
+--- a/drivers/spi/spi-cadence.c
++++ b/drivers/spi/spi-cadence.c
+@@ -316,12 +316,6 @@ static void cdns_spi_process_fifo(struct
+ 	xspi->rx_bytes -= nrx;
  
- static const struct snd_kcontrol_new dre_ctrl =
- 	SOC_DAPM_SINGLE("Switch", CS35L41_PWR_CTRL3, 20, 1, 0);
+ 	while (ntx || nrx) {
+-		/* When xspi in busy condition, bytes may send failed,
+-		 * then spi control did't work thoroughly, add one byte delay
+-		 */
+-		if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
+-			udelay(10);
+-
+ 		if (ntx) {
+ 			if (xspi->txbuf)
+ 				cdns_spi_write(xspi, CDNS_SPI_TXD, *xspi->txbuf++);
+@@ -391,6 +385,11 @@ static irqreturn_t cdns_spi_irq(int irq,
+ 		if (xspi->tx_bytes) {
+ 			cdns_spi_process_fifo(xspi, trans_cnt, trans_cnt);
+ 		} else {
++			/* Fixed delay due to controller limitation with
++			 * RX_NEMPTY incorrect status
++			 * Xilinx AR:65885 contains more details
++			 */
++			udelay(10);
+ 			cdns_spi_process_fifo(xspi, 0, trans_cnt);
+ 			cdns_spi_write(xspi, CDNS_SPI_IDR,
+ 				       CDNS_SPI_IXR_DEFAULT);
+@@ -438,12 +437,18 @@ static int cdns_transfer_one(struct spi_
+ 		cdns_spi_setup_transfer(spi, transfer);
+ 	} else {
+ 		/* Set TX empty threshold to half of FIFO depth
+-		 * only if TX bytes are more than half FIFO depth.
++		 * only if TX bytes are more than FIFO depth.
+ 		 */
+ 		if (xspi->tx_bytes > xspi->tx_fifo_depth)
+ 			cdns_spi_write(xspi, CDNS_SPI_THLD, xspi->tx_fifo_depth >> 1);
+ 	}
+ 
++	/* When xspi in busy condition, bytes may send failed,
++	 * then spi control didn't work thoroughly, add one byte delay
++	 */
++	if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
++		udelay(10);
++
+ 	cdns_spi_process_fifo(xspi, xspi->tx_fifo_depth, 0);
+ 	spi_transfer_delay_exec(transfer);
+ 
 
 
