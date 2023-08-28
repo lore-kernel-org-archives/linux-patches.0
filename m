@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B8211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E520C433C7;
-	Mon, 28 Aug 2023 10:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE5111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB4CC433C8;
+	Mon, 28 Aug 2023 10:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218379;
-	bh=11WCEqMwZgKKVCNH6YsG2feGi7cQK2aW27NkdnQ3mnQ=;
+	s=korg; t=1693218382;
+	bh=/lTPQDvbpAAMUoPATOkJF40EWIk+K/GaDB0v3YrCYIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CjaQPxj0RStr0wHaDFHrOaxT+QOWA+hEN5h0crYZpdtB+n6lxQnIlBskv1sMWCAhW
-	 UWbGfWM3fFRsTlFpuVVwU3fpDTpq5AuEGTsXH2fB99sSqpiEW9YK1LmOAQamMYBrOj
-	 9/SAtBBk3/29FwkTt3FKtkioSmXCuCGYo+z3N19Y=
+	b=TPVsv9+fRBRkrGLj++5r21+nbKOO6WyQgbxdcLb1coae0Pvl6UA0xxm5rsRPuE8K+
+	 RiDVJ1umMie9rzzWBSFN7pkDeWdKofE0BYwajyzuiPMPXvRTyEZpaPbMQt7xC0VZt/
+	 qx0p1f2BCZoRanfd4BG/0CtGAAiwnrtkYiJCWroI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 067/129] serial: 8250: Fix oops for port->pm on uart_change_pm()
-Date: Mon, 28 Aug 2023 12:12:41 +0200
-Message-ID: <20230828101155.778736686@linuxfoundation.org>
+	dengxiang <dengxiang@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 068/129] ALSA: usb-audio: Add support for Mythware XA001AU capture and playback interfaces.
+Date: Mon, 28 Aug 2023 12:12:42 +0200
+Message-ID: <20230828101155.815161386@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -39,44 +39,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: dengxiang <dengxiang@nfschina.com>
 
-[ Upstream commit dfe2aeb226fd5e19b0ee795f4f6ed8bc494c1534 ]
+commit 788449ae57f4273111b779bbcaad552b67f517d5 upstream.
 
-Unloading a hardware specific 8250 driver can produce error "Unable to
-handle kernel paging request at virtual address" about ten seconds after
-unloading the driver. This happens on uart_hangup() calling
-uart_change_pm().
+This patch adds a USB quirk for Mythware XA001AU USB interface.
 
-Turns out commit 04e82793f068 ("serial: 8250: Reinit port->pm on port
-specific driver unbind") was only a partial fix. If the hardware specific
-driver has initialized port->pm function, we need to clear port->pm too.
-Just reinitializing port->ops does not do this. Otherwise serial8250_pm()
-will call port->pm() instead of serial8250_do_pm().
-
-Fixes: 04e82793f068 ("serial: 8250: Reinit port->pm on port specific driver unbind")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20230804131553.52927-1-tony@atomide.com
+Signed-off-by: dengxiang <dengxiang@nfschina.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230803024437.370069-1-dengxiang@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/quirks-table.h |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 66de3a59f5779..d3161be35b1b2 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -3224,6 +3224,7 @@ void serial8250_init_port(struct uart_8250_port *up)
- 	struct uart_port *port = &up->port;
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -3677,5 +3677,34 @@ ALC1220_VB_DESKTOP(0x26ce, 0x0a01), /* A
+ 		}
+ 	}
+ },
++{
++	/* Advanced modes of the Mythware XA001AU.
++	 * For the standard mode, Mythware XA001AU has ID ffad:a001
++	 */
++	USB_DEVICE_VENDOR_SPEC(0xffad, 0xa001),
++	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
++		.vendor_name = "Mythware",
++		.product_name = "XA001AU",
++		.ifnum = QUIRK_ANY_INTERFACE,
++		.type = QUIRK_COMPOSITE,
++		.data = (const struct snd_usb_audio_quirk[]) {
++			{
++				.ifnum = 0,
++				.type = QUIRK_IGNORE_INTERFACE,
++			},
++			{
++				.ifnum = 1,
++				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
++			},
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
++			},
++			{
++				.ifnum = -1
++			}
++		}
++	}
++},
  
- 	spin_lock_init(&port->lock);
-+	port->pm = NULL;
- 	port->ops = &serial8250_pops;
- 
- 	up->cur_iotype = 0xFF;
--- 
-2.40.1
-
+ #undef USB_DEVICE_VENDOR_SPEC
 
 
