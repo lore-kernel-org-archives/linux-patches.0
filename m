@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675B411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFACC433C7;
-	Mon, 28 Aug 2023 10:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FCD11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:24:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB18C433C8;
+	Mon, 28 Aug 2023 10:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218242;
-	bh=zXa9zoRQ3dvDeLOjpEOqg46YSKkNxRcjF2EqmY7rP5A=;
+	s=korg; t=1693218244;
+	bh=XRfCO2cOVzbJuZIK5OZ/2HtFn6G2Iu/C77BIJ8590xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rp4jQu38qpzyJKcrxv/4zlCAqGCaE4326Sh7GNqPKG6nujFbAwkckFLSLufj+M+F9
-	 G3drQbx8scB7+t0xCalK1YdOzcRqBhvRgJLnc7706nYvY8jdojV9eDSzcsOYZ54mOZ
-	 /U2Wk++rntfpGHU+UXBXgDrgkdmQuetdg430GyVM=
+	b=brKuaGtrXZ3ENZ+Jk26PmWC4z6n0qhzqUu/hLNZGLbOJjebX/4AqqotB30q8Q72x5
+	 fZ1o5nHLCv9OJNH+Rh3Z+WESg3RQRkgQIrbXHqLLuyn4gdUGQxzxctiHWC7UQZY814
+	 njHN4ZRr8qqpxmhh/hngCaw/pNl0+0u7o/98zs7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengping Jiang <jiangzp@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	shanzhulig <shanzhulig@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 017/129] Bluetooth: L2CAP: Fix use-after-free
-Date: Mon, 28 Aug 2023 12:11:51 +0200
-Message-ID: <20230828101153.694433600@linuxfoundation.org>
+Subject: [PATCH 4.19 018/129] drm/amdgpu: Fix potential fence use-after-free v2
+Date: Mon, 28 Aug 2023 12:11:52 +0200
+Message-ID: <20230828101153.737915641@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -35,45 +35,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhengping Jiang <jiangzp@google.com>
+From: shanzhulig <shanzhulig@gmail.com>
 
-[ Upstream commit f752a0b334bb95fe9b42ecb511e0864e2768046f ]
+[ Upstream commit 2e54154b9f27262efd0cb4f903cc7d5ad1fe9628 ]
 
-Fix potential use-after-free in l2cap_le_command_rej.
+fence Decrements the reference count before exiting.
+Avoid Race Vulnerabilities for fence use-after-free.
 
-Signed-off-by: Zhengping Jiang <jiangzp@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2 (chk): actually fix the use after free and not just move it.
+
+Signed-off-by: shanzhulig <shanzhulig@gmail.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index fcc471f921895..9346fae5d664b 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5705,9 +5705,14 @@ static inline int l2cap_le_command_rej(struct l2cap_conn *conn,
- 	if (!chan)
- 		goto done;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index e667bcf64bc7f..70e446c2acf82 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1502,15 +1502,15 @@ static int amdgpu_cs_wait_all_fences(struct amdgpu_device *adev,
+ 			continue;
  
-+	chan = l2cap_chan_hold_unless_zero(chan);
-+	if (!chan)
-+		goto done;
+ 		r = dma_fence_wait_timeout(fence, true, timeout);
++		if (r > 0 && fence->error)
++			r = fence->error;
 +
- 	l2cap_chan_lock(chan);
- 	l2cap_chan_del(chan, ECONNREFUSED);
- 	l2cap_chan_unlock(chan);
-+	l2cap_chan_put(chan);
+ 		dma_fence_put(fence);
+ 		if (r < 0)
+ 			return r;
  
- done:
- 	mutex_unlock(&conn->chan_lock);
+ 		if (r == 0)
+ 			break;
+-
+-		if (fence->error)
+-			return fence->error;
+ 	}
+ 
+ 	memset(wait, 0, sizeof(*wait));
 -- 
 2.40.1
 
