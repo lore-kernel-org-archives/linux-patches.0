@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1CB469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2FAC433C7;
-	Mon, 28 Aug 2023 10:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61747469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8012C433C7;
+	Mon, 28 Aug 2023 10:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218811;
-	bh=I0N5GY4DFedXWregs66XJVCAiZGkmjPM9vIGcO1GgI0=;
+	s=korg; t=1693218814;
+	bh=TaYaqzQIiw58bkoUUJv2n2tjC0RTOsupxQXcFeUSdb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0HUGPkSm3cy8zOSDGX7RVv/U6js9ZY7nwmNeNePCYPCkg4ud45qhh9aJPtwRzqeZ
-	 KO/3zupPGcfW1vj6cdzU5R9DjM7XKiDnXSfYyu9T5YSfJxPtzaAslM8cJua8QK2h0N
-	 qyMEyYGyISQp6q/9ZUQxe2gJf84CegEjp9mi7fu4=
+	b=pkAQa+ouOBvwfju/CDOjc+vz0XtLEg+1CERIXxlNzKnEivv4WcdTpuXtr1mN2d9Pl
+	 taIh+TV7nlxXVhrGVIzL28lH5Avp08KPZQkVyp6HqSg61KVDPghElcQuNQDqW6J/UT
+	 pm3j/0Hq+dw9vYf8Y7RVlC3cbWu3QTBYWb3UEmto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Jianshui Yu <Jianshui.yu@intel.com>
-Subject: [PATCH 6.1 093/122] drm/i915/dgfx: Enable d3cold at s2idle
-Date: Mon, 28 Aug 2023 12:13:28 +0200
-Message-ID: <20230828101159.492816543@linuxfoundation.org>
+	Anusha Srivatsa <anusha.srivatsa@intel.com>,
+	Manasi Navare <manasi.d.navare@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 094/122] drm/display/dp: Fix the DP DSC Receiver cap size
+Date: Mon, 28 Aug 2023 12:13:29 +0200
+Message-ID: <20230828101159.521977614@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -41,125 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Gupta <anshuman.gupta@intel.com>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-commit 2872144aec04baa7e43ecd2a60f7f0be3aa843fd upstream.
+commit 5ad1ab30ac0809d2963ddcf39ac34317a24a2f17 upstream.
 
-System wide suspend already has support for lmem save/restore during
-suspend therefore enabling d3cold for s2idle and keepng it disable for
-runtime PM.(Refer below commit for d3cold runtime PM disable justification)
-'commit 66eb93e71a7a ("drm/i915/dgfx: Keep PCI autosuspend control
-'on' by default on all dGPU")'
+DP DSC Receiver Capabilities are exposed via DPCD 60h-6Fh.
+Fix the DSC RECEIVER CAP SIZE accordingly.
 
-It will reduce the DG2 Card power consumption to ~0 Watt
-for s2idle power KPI.
+Fixes: ffddc4363c28 ("drm/dp: Add DP DSC DPCD receiver capability size define and missing SHIFT")
+Cc: Anusha Srivatsa <anusha.srivatsa@intel.com>
+Cc: Manasi Navare <manasi.d.navare@intel.com>
+Cc: <stable@vger.kernel.org> # v5.0+
 
-v2:
-- Added "Cc: stable@vger.kernel.org".
-
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8755
-Cc: stable@vger.kernel.org
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Tested-by: Aaron Ma <aaron.ma@canonical.com>
-Tested-by: Jianshui Yu <Jianshui.yu@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230816125216.1722002-1-anshuman.gupta@intel.com
-(cherry picked from commit 2643e6d1f2a5e51877be24042d53cf956589be10)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230818044436.177806-1-ankit.k.nautiyal@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_driver.c |   33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ include/drm/display/drm_dp.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -574,7 +574,6 @@ static int i915_pcode_init(struct drm_i9
- static int i915_driver_hw_probe(struct drm_i915_private *dev_priv)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
--	struct pci_dev *root_pdev;
- 	int ret;
+--- a/include/drm/display/drm_dp.h
++++ b/include/drm/display/drm_dp.h
+@@ -1525,7 +1525,7 @@ enum drm_dp_phy {
  
- 	if (i915_inject_probe_failure(dev_priv))
-@@ -686,15 +685,6 @@ static int i915_driver_hw_probe(struct d
- 
- 	intel_bw_init_hw(dev_priv);
- 
--	/*
--	 * FIXME: Temporary hammer to avoid freezing the machine on our DGFX
--	 * This should be totally removed when we handle the pci states properly
--	 * on runtime PM and on s2idle cases.
--	 */
--	root_pdev = pcie_find_root_port(pdev);
--	if (root_pdev)
--		pci_d3cold_disable(root_pdev);
--
- 	return 0;
- 
- err_msi:
-@@ -718,16 +708,11 @@ err_perf:
- static void i915_driver_hw_remove(struct drm_i915_private *dev_priv)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
--	struct pci_dev *root_pdev;
- 
- 	i915_perf_fini(dev_priv);
- 
- 	if (pdev->msi_enabled)
- 		pci_disable_msi(pdev);
--
--	root_pdev = pcie_find_root_port(pdev);
--	if (root_pdev)
--		pci_d3cold_enable(root_pdev);
- }
- 
- /**
-@@ -1625,6 +1610,8 @@ static int intel_runtime_suspend(struct
- {
- 	struct drm_i915_private *dev_priv = kdev_to_i915(kdev);
- 	struct intel_runtime_pm *rpm = &dev_priv->runtime_pm;
-+	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
-+	struct pci_dev *root_pdev;
- 	struct intel_gt *gt;
- 	int ret, i;
- 
-@@ -1674,6 +1661,15 @@ static int intel_runtime_suspend(struct
- 		drm_err(&dev_priv->drm,
- 			"Unclaimed access detected prior to suspending\n");
- 
-+	/*
-+	 * FIXME: Temporary hammer to avoid freezing the machine on our DGFX
-+	 * This should be totally removed when we handle the pci states properly
-+	 * on runtime PM.
-+	 */
-+	root_pdev = pcie_find_root_port(pdev);
-+	if (root_pdev)
-+		pci_d3cold_disable(root_pdev);
-+
- 	rpm->suspended = true;
- 
- 	/*
-@@ -1712,6 +1708,8 @@ static int intel_runtime_resume(struct d
- {
- 	struct drm_i915_private *dev_priv = kdev_to_i915(kdev);
- 	struct intel_runtime_pm *rpm = &dev_priv->runtime_pm;
-+	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
-+	struct pci_dev *root_pdev;
- 	struct intel_gt *gt;
- 	int ret, i;
- 
-@@ -1725,6 +1723,11 @@ static int intel_runtime_resume(struct d
- 
- 	intel_opregion_notify_adapter(dev_priv, PCI_D0);
- 	rpm->suspended = false;
-+
-+	root_pdev = pcie_find_root_port(pdev);
-+	if (root_pdev)
-+		pci_d3cold_enable(root_pdev);
-+
- 	if (intel_uncore_unclaimed_mmio(&dev_priv->uncore))
- 		drm_dbg(&dev_priv->drm,
- 			"Unclaimed access during suspend, bios?\n");
+ #define DP_BRANCH_OUI_HEADER_SIZE	0xc
+ #define DP_RECEIVER_CAP_SIZE		0xf
+-#define DP_DSC_RECEIVER_CAP_SIZE        0xf
++#define DP_DSC_RECEIVER_CAP_SIZE        0x10 /* DSC Capabilities 0x60 through 0x6F */
+ #define EDP_PSR_RECEIVER_CAP_SIZE	2
+ #define EDP_DISPLAY_CTL_CAP_SIZE	3
+ #define DP_LTTPR_COMMON_CAP_SIZE	8
 
 
