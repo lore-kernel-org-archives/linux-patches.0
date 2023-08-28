@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587AE6FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB80C433C8;
-	Mon, 28 Aug 2023 10:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C3611C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9025FC433C8;
+	Mon, 28 Aug 2023 10:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219695;
-	bh=HURGjjnnlqyyEqa6Nnfmj5cTOw14w0mgbqSGTp1+OZ8=;
+	s=korg; t=1693219697;
+	bh=Sy6trUWbpHb5UmnMVi/0tBo/lp7duWogeNliZEOHp2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+o+7Uji9PNibyrwZGubxA2FppMgKOSOmxi9oNXD9gMuw1eyp2SHNOGsZxX/k06pG
-	 14cpwlmUDd4Ip3B/papWTp1s9oNYDglZ5hlY07fUcMN1fuccXOpB5atajgbqoMQgho
-	 Pl+vD5yAYIVCVL6eLzKMeVKl06uv15h2kYC8gZAA=
+	b=jhIYoQv/uwYo++RL1iaQSVxNMg4ot8YTGO6yUftZXBg7X9ytjsMeRCLTffNRB+Rkr
+	 bvlCO3mrGHF8VVArxtkDMnDWsWr8V9+w4ca7I8O0OKI+sKCx76bOPqOslV6ZyfC5GM
+	 UtqOBbAXQd8zGZHo/sIOwrX7XtDV4vKKcLLZByUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/84] fs: dlm: use dlm_plock_info for do_unlock_close
-Date: Mon, 28 Aug 2023 12:13:26 +0200
-Message-ID: <20230828101149.486764904@linuxfoundation.org>
+Subject: [PATCH 5.10 10/84] fs: dlm: fix mismatch of plock results from userspace
+Date: Mon, 28 Aug 2023 12:13:27 +0200
+Message-ID: <20230828101149.527074251@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -42,61 +42,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 4d413ae9ced4180c0e2114553c3a7560b509b0f8 ]
+[ Upstream commit 57e2c2f2d94cfd551af91cedfa1af6d972487197 ]
 
-This patch refactors do_unlock_close() by using only struct dlm_plock_info
-as a parameter.
+When a waiting plock request (F_SETLKW) is sent to userspace
+for processing (dlm_controld), the result is returned at a
+later time. That result could be incorrectly matched to a
+different waiting request in cases where the owner field is
+the same (e.g. different threads in a process.) This is fixed
+by comparing all the properties in the request and reply.
 
+The results for non-waiting plock requests are now matched
+based on list order because the results are returned in the
+same order they were sent.
+
+Cc: stable@vger.kernel.org
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/plock.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ fs/dlm/plock.c | 58 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 45 insertions(+), 13 deletions(-)
 
 diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
-index 0d00ca2c44c71..fa8969c0a5f55 100644
+index fa8969c0a5f55..28735e8c5e206 100644
 --- a/fs/dlm/plock.c
 +++ b/fs/dlm/plock.c
-@@ -80,8 +80,7 @@ static void send_op(struct plock_op *op)
-    abandoned waiter.  So, we have to insert the unlock-close when the
-    lock call is interrupted. */
- 
--static void do_unlock_close(struct dlm_ls *ls, u64 number,
--			    struct file *file, struct file_lock *fl)
-+static void do_unlock_close(const struct dlm_plock_info *info)
- {
- 	struct plock_op *op;
- 
-@@ -90,15 +89,12 @@ static void do_unlock_close(struct dlm_ls *ls, u64 number,
- 		return;
- 
- 	op->info.optype		= DLM_PLOCK_OP_UNLOCK;
--	op->info.pid		= fl->fl_pid;
--	op->info.fsid		= ls->ls_global_id;
--	op->info.number		= number;
-+	op->info.pid		= info->pid;
-+	op->info.fsid		= info->fsid;
-+	op->info.number		= info->number;
- 	op->info.start		= 0;
- 	op->info.end		= OFFSET_MAX;
--	if (fl->fl_lmops && fl->fl_lmops->lm_grant)
--		op->info.owner	= (__u64) fl->fl_pid;
--	else
--		op->info.owner	= (__u64)(long) fl->fl_owner;
-+	op->info.owner		= info->owner;
- 
- 	op->info.flags |= DLM_PLOCK_FL_CLOSE;
- 	send_op(op);
-@@ -168,7 +164,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
- 			  __func__, ls->ls_global_id,
- 			  (unsigned long long)number, op->info.pid);
- 		dlm_release_plock_op(op);
--		do_unlock_close(ls, number, file, fl);
-+		do_unlock_close(&op->info);
- 		goto out;
+@@ -405,7 +405,7 @@ static ssize_t dev_read(struct file *file, char __user *u, size_t count,
+ 		if (op->info.flags & DLM_PLOCK_FL_CLOSE)
+ 			list_del(&op->list);
+ 		else
+-			list_move(&op->list, &recv_list);
++			list_move_tail(&op->list, &recv_list);
+ 		memcpy(&info, &op->info, sizeof(info));
  	}
+ 	spin_unlock(&ops_lock);
+@@ -443,20 +443,52 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 	if (check_version(&info))
+ 		return -EINVAL;
+ 
++	/*
++	 * The results for waiting ops (SETLKW) can be returned in any
++	 * order, so match all fields to find the op.  The results for
++	 * non-waiting ops are returned in the order that they were sent
++	 * to userspace, so match the result with the first non-waiting op.
++	 */
+ 	spin_lock(&ops_lock);
+-	list_for_each_entry(iter, &recv_list, list) {
+-		if (iter->info.fsid == info.fsid &&
+-		    iter->info.number == info.number &&
+-		    iter->info.owner == info.owner) {
+-			list_del_init(&iter->list);
+-			memcpy(&iter->info, &info, sizeof(info));
+-			if (iter->data)
+-				do_callback = 1;
+-			else
+-				iter->done = 1;
+-			op = iter;
+-			break;
++	if (info.wait) {
++		list_for_each_entry(iter, &recv_list, list) {
++			if (iter->info.fsid == info.fsid &&
++			    iter->info.number == info.number &&
++			    iter->info.owner == info.owner &&
++			    iter->info.pid == info.pid &&
++			    iter->info.start == info.start &&
++			    iter->info.end == info.end &&
++			    iter->info.ex == info.ex &&
++			    iter->info.wait) {
++				op = iter;
++				break;
++			}
+ 		}
++	} else {
++		list_for_each_entry(iter, &recv_list, list) {
++			if (!iter->info.wait) {
++				op = iter;
++				break;
++			}
++		}
++	}
++
++	if (op) {
++		/* Sanity check that op and info match. */
++		if (info.wait)
++			WARN_ON(op->info.optype != DLM_PLOCK_OP_LOCK);
++		else
++			WARN_ON(op->info.fsid != info.fsid ||
++				op->info.number != info.number ||
++				op->info.owner != info.owner ||
++				op->info.optype != info.optype);
++
++		list_del_init(&op->list);
++		memcpy(&op->info, &info, sizeof(info));
++		if (op->data)
++			do_callback = 1;
++		else
++			op->done = 1;
+ 	}
+ 	spin_unlock(&ops_lock);
  
 -- 
 2.40.1
