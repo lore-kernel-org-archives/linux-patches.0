@@ -1,123 +1,103 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D5411C9A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 12:45:43 +0000 (UTC)
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-44d5696fad1so727489137.1
-        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 05:45:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5293B125AD
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 13:15:21 +0000 (UTC)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-58fb8963617so37497697b3.3
+        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 06:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693226742; x=1693831542;
+        d=google.com; s=20221208; t=1693228520; x=1693833320;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VTdd850krtmWOtzkmq2Um5vO5DePaECfmrOyvFGNw0A=;
-        b=Cl4kvMCHEE66Ya0Go8DA39JpS4V1fIu0PIESwO0nFk8jbH8PGbH+CcJhRg/H4db+xu
-         90Ouxfl5VQ8e3ZNihXfNkROCddPI8nHa6ihNn0xIia50OBkLRoS+kkH9kQiJxXIgMJ5i
-         1HCtKLUHJfs110V+xnWhWaQMIduOBhQrpTWpCzH6yl9gmzyOiVgximeqfee2XAwHIL30
-         XYL1eqyfVRUdPgUYMkCDZlJFilTN+4nE4c492dX1GTQ+CvKRD0PdtkOWvGwQ4xjaZtXE
-         XoL45paXRbVv00CLxyGJ+h5C4F0aOtjMjGbmLpY6MSToKwTadNC9m8YVqodTMf4nHuHc
-         z9xA==
+        bh=CEMWlLjO4ma0k7EwHVIyg1u7C9yprMEwyDZO+iulDM8=;
+        b=V6+h4vwrMOMu03ltsnbkQ0zC/AkN7nV9NZ0AqhY1LFP5v6jGwCllqln6omhYPVWEue
+         o6xUFtSRW6KX+7UfEgOJfZERl/kZHyTgyfTZJ9TXwY8EJmJbDJB61ejNTCvuPTuX/UUk
+         y2cRJqAtmUpCuuy2s/I3QeLmyRNlZXuvroD1a8pu0nm87iUKbb+oQ5t5aEIMkQrTnXAt
+         GUhwHD7H9NiU+Q/dXzuRZOgGY1ZprBJtD1ent0Sz12en2jY+j3479biI1NAUjk6eOZVq
+         kOgd03dmIqJLwGXSxEpoB18TIngrd5D29G9XCqaukXHN9b4G9yW+PlKopx18SzdEAC4t
+         OINw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693226742; x=1693831542;
+        d=1e100.net; s=20221208; t=1693228520; x=1693833320;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VTdd850krtmWOtzkmq2Um5vO5DePaECfmrOyvFGNw0A=;
-        b=OsX60DG06G/FA9eA6vyu3+KjXpJ/H5/eWH2TsrCnKW91A6LmDWzlbFUezypKzlCrab
-         Kd/gFhrKWyR04BnXjLnQte8vfUrfGr0ti8K77CUb7pXfq723NYGSdsDVkFMbuChQ8RfL
-         +eemMgTPP73DosJnM+WFZMMa9sb+cM6kCo7/wTHaQQ4c0RuERoLI+mjFTD7sC/sowNiW
-         nRTosSAxZuLTgbeVQZFb5AJDBAnpQQs0Zuxs7zjCkzC5MixkD/P696mVnw3bcLDqyLnx
-         LZWY5hgFAEGqlCR6jBtM8VlrNnpfzKaN/VOx+EjcjW4tOWAVIEwS7QG/dR5coKYdYeDu
-         TFxA==
-X-Gm-Message-State: AOJu0YyInHpy+d7tGYRulET5bCzf7OXqswosi0ytpa1gZ5C3Efl6bRW4
-	nZhVDFUd0ZgGguCFW3EqbvlFuS8/l0WWZbNOedQQWw==
-X-Google-Smtp-Source: AGHT+IEdtTtOwloNSd4mKOu1fuHlpzN9wjd8g8mWnEVcCo/jqSV0UrXEouOfLDsQ4b3Si8PKFIfpCo1vgB6+TlUNSw8=
-X-Received: by 2002:a05:6102:533:b0:44d:42c4:f4c0 with SMTP id
- m19-20020a056102053300b0044d42c4f4c0mr14199635vsa.3.1693226742327; Mon, 28
- Aug 2023 05:45:42 -0700 (PDT)
+        bh=CEMWlLjO4ma0k7EwHVIyg1u7C9yprMEwyDZO+iulDM8=;
+        b=bkIiWmDp7UJbNgRsL1uvSA6Mj/TaAcOkr68N8DPs1DfHDWoSVWef+W6L7QlRCGUiHM
+         NsiWPnTNIeCyOyaTeeVAtGgv+1VtYPWno01L//iiBTPqEGULJEPd9OaZ0eGKESuKtlNi
+         Lr5G2k9vXq4FbdkmP+JzeQepe8e0d2+xw0O7b06upCn2QLUqDJRj52LqemkoFMvX2l9n
+         IzzooXdhy0uVl9w3+M75TayFxSfWVcVyGcgCKDEeqNUpyUKfF9KZGOZhvcr1ps+lPgDf
+         KF2MiHXZsbJJIOu72Q7GYgo8aDmRm7jDehmXuq63zjEgN92hf/DQl447CLSl6Q7v0A9g
+         Zw0A==
+X-Gm-Message-State: AOJu0Yy//MvnELGpNPSTkBtv5JSC8MS9khxA5ly93fY0QLRMfHS2swxR
+	uyXX+AX1Xt5ts9G6WugpVxsuoktGgD3N+oK7r8zP8Q==
+X-Google-Smtp-Source: AGHT+IGWFL9C23hjo7ugSaRQgcoYQlrrlRRD2Om8y9giiAsrv1ninAUIrU/JT1hEg6Os1gAbNBmQm8Ubw8m1A/3B17Y=
+X-Received: by 2002:a25:e7c9:0:b0:d1c:bb1d:238a with SMTP id
+ e192-20020a25e7c9000000b00d1cbb1d238amr24088739ybh.52.1693228519427; Mon, 28
+ Aug 2023 06:15:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230828101153.030066927@linuxfoundation.org>
-In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Mon, 28 Aug 2023 18:15:30 +0530
-Message-ID: <CA+G9fYuQXq7-jkL59MMKfRbqqB509T3nQdtcW+4wVW_QRovx5g@mail.gmail.com>
-Subject: Re: [PATCH 4.19 000/129] 4.19.293-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Tony Lindgren <tony@atomide.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	Arnd Bergmann <arnd@arndb.de>, Anders Roxell <anders.roxell@linaro.org>
+References: <20230823160244.188033-1-ojeda@kernel.org> <20230823160244.188033-2-ojeda@kernel.org>
+In-Reply-To: <20230823160244.188033-2-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Mon, 28 Aug 2023 15:15:08 +0200
+Message-ID: <CAH5fLggn1fPjZXMg4mmizvO-B-GgRSG6vwjF+eg-sohs=yYYhw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] rust: arc: add explicit `drop()` around `Box::from_raw()`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 28 Aug 2023 at 15:54, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Wed, Aug 23, 2023 at 6:03=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+> `Box::from_raw()` is `#[must_use]`, which means the result cannot
+> go unused.
 >
-> This is the start of the stable review cycle for the 4.19.293 release.
-> There are 129 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> In Rust 1.71.0, this was not detected because the block expression
+> swallows the diagnostic [1]:
 >
-> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
-> Anything received after that time might be too late.
+>     unsafe { Box::from_raw(self.ptr.as_ptr()) };
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.19.293-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.19.y
-> and the diffstat can be found below.
+> It would have been detected, however, if the line had been instead:
 >
-> thanks,
+>     unsafe { Box::from_raw(self.ptr.as_ptr()); }
 >
-> greg k-h
+> i.e. the semicolon being inside the `unsafe` block, rather than
+> outside.
+>
+> In Rust 1.72.0, the compiler started warning about this [2], so
+> without this patch we will get:
+>
+>         error: unused return value of `alloc::boxed::Box::<T>::from_raw` =
+that must be used
+>         --> rust/kernel/sync/arc.rs:302:22
+>         |
+>     302 |             unsafe { Box::from_raw(self.ptr.as_ptr()) };
+>         |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>         |
+>         =3D note: call `drop(Box::from_raw(ptr))` if you intend to drop t=
+he `Box`
+>         =3D note: `-D unused-must-use` implied by `-D warnings`
+>     help: use `let _ =3D ...` to ignore the resulting value
+>         |
+>     302 |             unsafe { let _ =3D Box::from_raw(self.ptr.as_ptr())=
+; };
+>         |                      +++++++                                 +
+>
+> Thus add an add an explicit `drop()` as the `#[must_use]`'s
+> annotation suggests (instead of the more general help line).
+>
+> Link: https://github.com/rust-lang/rust/issues/104253 [1]
+> Link: https://github.com/rust-lang/rust/pull/112529 [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Results from Linaro=E2=80=99s test farm.
-Regressions on arm.
-
-stable-rc linux-4.19.y arm gcc-12 builds fails with
-following warnings / errors.
-
-Build errors:
---------------
-drivers/bus/ti-sysc.c: In function 'sysc_reset':
-drivers/bus/ti-sysc.c:982:15: error: implicit declaration of function
-'sysc_read_sysconfig' [-Werror=3Dimplicit-function-declaration]
-  982 |         val =3D sysc_read_sysconfig(ddata);
-      |               ^~~~~~~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-
- > Tony Lindgren <tony@atomide.com>
- >   bus: ti-sysc: Flush posted write on enable before reset
-
-bus: ti-sysc: Flush posted write on enable before reset
-commit 34539b442b3bc7d5bf10164750302b60b91f18a7 upstream.
-
-The above commit is causing this build warnings / errors.
-
-Links,
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2UbpNRPtHJcx6nk8e60a=
-mSmKgZ3/
-
-
-steps to reproduce:
-tuxmake --runtime podman --target-arch arm --toolchain gcc-12
---kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2UbpNRPtHJ=
-cx6nk8e60amSmKgZ3/config
-
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
