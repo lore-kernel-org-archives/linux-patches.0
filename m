@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4ED11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26919C433C8;
-	Mon, 28 Aug 2023 10:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A74411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE26C433C7;
+	Mon, 28 Aug 2023 10:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217748;
-	bh=Kd9ugPU/M5Ue+8jM8IAAdWa679SUDQhbGyVZIzxCMP4=;
+	s=korg; t=1693217751;
+	bh=C5epJ+Zz2pdWmjW6DWXxpwiUxdK4t4Rf12FTBo4fmi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPdDTZsiddc9R9p/mpQtz380p8dNfrwbKfr2UWCroqfz52Qs3mdRpQUZdZxxtZr24
-	 fUNsZG6ouefZUIChNQ0UMuuM/SVSlrpapiizjJ+2kg4U9JEdVkPe6AxyS3GTn4VD2p
-	 YN0pcc6ORJatlIl4a8CK/V44uBeRZG4ya57/BX/U=
+	b=c1XR/Mfay3yaw98dxCL6/k9YAwbXCuLYaLtqEsjSdm3wLRG03rySyYSaifoG0IxBI
+	 GhkDol3/UnSyiDOtOF+Mi7+irdJJ/aQbO7QBoKVUUQ/GnB+i3LhdNQnSeWvWZrDBEs
+	 g31y0aRaOO6N0jqqaYySH13sGdSKNb+tCJJ2V1SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 26/57] i40e: fix misleading debug logs
-Date: Mon, 28 Aug 2023 12:12:46 +0200
-Message-ID: <20230828101145.202606295@linuxfoundation.org>
+Subject: [PATCH 4.14 27/57] sock: Fix misuse of sk_under_memory_pressure()
+Date: Mon, 28 Aug 2023 12:12:47 +0200
+Message-ID: <20230828101145.241275707@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -41,65 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Abel Wu <wuyun.abel@bytedance.com>
 
-[ Upstream commit 2f2beb8874cb0844e84ad26e990f05f4f13ff63f ]
+[ Upstream commit 2d0c88e84e483982067a82073f6125490ddf3614 ]
 
-Change "write" into the actual "read" word.
-Change parameters description.
+The status of global socket memory pressure is updated when:
 
-Fixes: 7073f46e443e ("i40e: Add AQ commands for NVM Update for X722")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  a) __sk_mem_raise_allocated():
+
+	enter: sk_memory_allocated(sk) >  sysctl_mem[1]
+	leave: sk_memory_allocated(sk) <= sysctl_mem[0]
+
+  b) __sk_mem_reduce_allocated():
+
+	leave: sk_under_memory_pressure(sk) &&
+		sk_memory_allocated(sk) < sysctl_mem[0]
+
+So the conditions of leaving global pressure are inconstant, which
+may lead to the situation that one pressured net-memcg prevents the
+global pressure from being cleared when there is indeed no global
+pressure, thus the global constrains are still in effect unexpectedly
+on the other sockets.
+
+This patch fixes this by ignoring the net-memcg's pressure when
+deciding whether should leave global memory pressure.
+
+Fixes: e1aab161e013 ("socket: initial cgroup code.")
+Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Link: https://lore.kernel.org/r/20230816091226.1542-1-wuyun.abel@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_nvm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ include/net/sock.h | 6 ++++++
+ net/core/sock.c    | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-index d591b3e6bd7c5..cba97e68be402 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
-@@ -233,11 +233,11 @@ static i40e_status i40e_read_nvm_word_srctl(struct i40e_hw *hw, u16 offset,
-  * @hw: pointer to the HW structure.
-  * @module_pointer: module pointer location in words from the NVM beginning
-  * @offset: offset in words from module start
-- * @words: number of words to write
-- * @data: buffer with words to write to the Shadow RAM
-+ * @words: number of words to read
-+ * @data: buffer with words to read to the Shadow RAM
-  * @last_command: tells the AdminQ that this is the last command
-  *
-- * Writes a 16 bit words buffer to the Shadow RAM using the admin command.
-+ * Reads a 16 bit words buffer to the Shadow RAM using the admin command.
-  **/
- static i40e_status i40e_read_nvm_aq(struct i40e_hw *hw, u8 module_pointer,
- 				    u32 offset, u16 words, void *data,
-@@ -256,18 +256,18 @@ static i40e_status i40e_read_nvm_aq(struct i40e_hw *hw, u8 module_pointer,
- 	 */
- 	if ((offset + words) > hw->nvm.sr_size)
- 		i40e_debug(hw, I40E_DEBUG_NVM,
--			   "NVM write error: offset %d beyond Shadow RAM limit %d\n",
-+			   "NVM read error: offset %d beyond Shadow RAM limit %d\n",
- 			   (offset + words), hw->nvm.sr_size);
- 	else if (words > I40E_SR_SECTOR_SIZE_IN_WORDS)
--		/* We can write only up to 4KB (one sector), in one AQ write */
-+		/* We can read only up to 4KB (one sector), in one AQ write */
- 		i40e_debug(hw, I40E_DEBUG_NVM,
--			   "NVM write fail error: tried to write %d words, limit is %d.\n",
-+			   "NVM read fail error: tried to read %d words, limit is %d.\n",
- 			   words, I40E_SR_SECTOR_SIZE_IN_WORDS);
- 	else if (((offset + (words - 1)) / I40E_SR_SECTOR_SIZE_IN_WORDS)
- 		 != (offset / I40E_SR_SECTOR_SIZE_IN_WORDS))
--		/* A single write cannot spread over two sectors */
-+		/* A single read cannot spread over two sectors */
- 		i40e_debug(hw, I40E_DEBUG_NVM,
--			   "NVM write error: cannot spread over two sectors in a single write offset=%d words=%d\n",
-+			   "NVM read error: cannot spread over two sectors in a single read offset=%d words=%d\n",
- 			   offset, words);
- 	else
- 		ret_code = i40e_aq_read_nvm(hw, module_pointer,
+diff --git a/include/net/sock.h b/include/net/sock.h
+index def9dc1ddda11..1937deba0849b 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1211,6 +1211,12 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
+ 	return sk->sk_prot->memory_pressure != NULL;
+ }
+ 
++static inline bool sk_under_global_memory_pressure(const struct sock *sk)
++{
++	return sk->sk_prot->memory_pressure &&
++		!!*sk->sk_prot->memory_pressure;
++}
++
+ static inline bool sk_under_memory_pressure(const struct sock *sk)
+ {
+ 	if (!sk->sk_prot->memory_pressure)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 0ff80718f194d..a7a0bc9c2a9f0 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2459,7 +2459,7 @@ void __sk_mem_reduce_allocated(struct sock *sk, int amount)
+ 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
+ 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amount);
+ 
+-	if (sk_under_memory_pressure(sk) &&
++	if (sk_under_global_memory_pressure(sk) &&
+ 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
+ 		sk_leave_memory_pressure(sk);
+ }
 -- 
 2.40.1
 
