@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C993E469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF882C433C7;
-	Mon, 28 Aug 2023 10:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BC0469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6EBC433C7;
+	Mon, 28 Aug 2023 10:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218728;
-	bh=iX8vUmXAXXknW6K4EncyGYw+kzYuPP8wU0ThiSU5bso=;
+	s=korg; t=1693218731;
+	bh=CD4/WRFmqH+7u7xva6H6Am6ZuVrXOJ4VDikgZba3HRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ylw/rvMIxp0k9IbHUehoJ8RvW6FrBbc5kif5Ic+6QFYTWsv0fRIBPjGhr/E3YF5s+
-	 8xq7YDEXl1Kc1piRc4ouFjXtwBUgMrwv9wvtzuJVY2EzqVLg13ELip1nlfJSdg7vzk
-	 HnrwVGAuMsJY/uEsc7aCmOZUCzNigvMz2DQxJX18=
+	b=I/DsN8k/00nU7t8jj2Jbl/IihqAT+jZmND1x8cW22XRAW6lpsp3JGbfrmccG4mpjc
+	 gDWr7YS5v5w9hYhFw4wtX2jCwmGMFe6NYn+vN1imYV2EjZhCBQqkcf/24tgQV0gD9/
+	 fSACiA1D2CuC19PQsYD05GKS+IkOlo0C1tg+Qfgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 063/122] ibmveth: Use dcbf rather than dcbfl
-Date: Mon, 28 Aug 2023 12:12:58 +0200
-Message-ID: <20230828101158.529746883@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 064/122] wifi: mac80211: limit reorder_buf_filtered to avoid UBSAN warning
+Date: Mon, 28 Aug 2023 12:12:59 +0200
+Message-ID: <20230828101158.559113182@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -39,34 +39,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit bfedba3b2c7793ce127680bc8f70711e05ec7a17 upstream.
+commit b98c16107cc1647242abbd11f234c05a3a5864f6 upstream.
 
-When building for power4, newer binutils don't recognise the "dcbfl"
-extended mnemonic.
+The commit 06470f7468c8 ("mac80211: add API to allow filtering frames in BA sessions")
+added reorder_buf_filtered to mark frames filtered by firmware, and it
+can only work correctly if hw.max_rx_aggregation_subframes <= 64 since
+it stores the bitmap in a u64 variable.
 
-dcbfl RA, RB is equivalent to dcbf RA, RB, 1.
+However, new HE or EHT devices can support BlockAck number up to 256 or
+1024, and then using a higher subframe index leads UBSAN warning:
 
-Switch to "dcbf" to avoid the build error.
+ UBSAN: shift-out-of-bounds in net/mac80211/rx.c:1129:39
+ shift exponent 215 is too large for 64-bit type 'long long unsigned int'
+ Call Trace:
+  <IRQ>
+  dump_stack_lvl+0x48/0x70
+  dump_stack+0x10/0x20
+  __ubsan_handle_shift_out_of_bounds+0x1ac/0x360
+  ieee80211_release_reorder_frame.constprop.0.cold+0x64/0x69 [mac80211]
+  ieee80211_sta_reorder_release+0x9c/0x400 [mac80211]
+  ieee80211_prepare_and_rx_handle+0x1234/0x1420 [mac80211]
+  ieee80211_rx_list+0xaef/0xf60 [mac80211]
+  ieee80211_rx_napi+0x53/0xd0 [mac80211]
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Since only old hardware that supports <=64 BlockAck uses
+ieee80211_mark_rx_ba_filtered_frames(), limit the use as it is, so add a
+WARN_ONCE() and comment to note to avoid using this function if hardware
+capability is not suitable.
+
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://lore.kernel.org/r/20230818014004.16177-1-pkshih@realtek.com
+[edit commit message]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/mac80211.h |    1 +
+ net/mac80211/rx.c      |   12 ++++++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -203,7 +203,7 @@ static inline void ibmveth_flush_buffer(
- 	unsigned long offset;
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -6444,6 +6444,7 @@ void ieee80211_stop_rx_ba_session(struct
+  * marks frames marked in the bitmap as having been filtered. Afterwards, it
+  * checks if any frames in the window starting from @ssn can now be released
+  * (in case they were only waiting for frames that were filtered.)
++ * (Only work correctly if @max_rx_aggregation_subframes <= 64 frames)
+  */
+ void ieee80211_mark_rx_ba_filtered_frames(struct ieee80211_sta *pubsta, u8 tid,
+ 					  u16 ssn, u64 filtered,
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -1102,7 +1102,8 @@ static inline bool ieee80211_rx_reorder_
+ 	struct sk_buff *tail = skb_peek_tail(frames);
+ 	struct ieee80211_rx_status *status;
  
- 	for (offset = 0; offset < length; offset += SMP_CACHE_BYTES)
--		asm("dcbfl %0,%1" :: "b" (addr), "r" (offset));
-+		asm("dcbf %0,%1,1" :: "b" (addr), "r" (offset));
+-	if (tid_agg_rx->reorder_buf_filtered & BIT_ULL(index))
++	if (tid_agg_rx->reorder_buf_filtered &&
++	    tid_agg_rx->reorder_buf_filtered & BIT_ULL(index))
+ 		return true;
+ 
+ 	if (!tail)
+@@ -1143,7 +1144,8 @@ static void ieee80211_release_reorder_fr
+ 	}
+ 
+ no_frame:
+-	tid_agg_rx->reorder_buf_filtered &= ~BIT_ULL(index);
++	if (tid_agg_rx->reorder_buf_filtered)
++		tid_agg_rx->reorder_buf_filtered &= ~BIT_ULL(index);
+ 	tid_agg_rx->head_seq_num = ieee80211_sn_inc(tid_agg_rx->head_seq_num);
  }
  
- /* replenish the buffers for a pool.  note that we don't need to
+@@ -4162,6 +4164,7 @@ void ieee80211_mark_rx_ba_filtered_frame
+ 					  u16 ssn, u64 filtered,
+ 					  u16 received_mpdus)
+ {
++	struct ieee80211_local *local;
+ 	struct sta_info *sta;
+ 	struct tid_ampdu_rx *tid_agg_rx;
+ 	struct sk_buff_head frames;
+@@ -4179,6 +4182,11 @@ void ieee80211_mark_rx_ba_filtered_frame
+ 
+ 	sta = container_of(pubsta, struct sta_info, sta);
+ 
++	local = sta->sdata->local;
++	WARN_ONCE(local->hw.max_rx_aggregation_subframes > 64,
++		  "RX BA marker can't support max_rx_aggregation_subframes %u > 64\n",
++		  local->hw.max_rx_aggregation_subframes);
++
+ 	if (!ieee80211_rx_data_set_sta(&rx, sta, -1))
+ 		return;
+ 
 
 
