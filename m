@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D263611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C96FC433C7;
-	Mon, 28 Aug 2023 10:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B54611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63904C433CA;
+	Mon, 28 Aug 2023 10:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219329;
-	bh=SjgJlWmomEEk+Y5k9uzooq4F1dY4k75q/ZTNiWEK5LQ=;
+	s=korg; t=1693219331;
+	bh=BsalhgAiAwh2q1Sgbl6fj9E+QI2+JSa++f7Wyu0Q2CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkARaXiUIljM+b9nhP1mfT1gDFTEgjEdjLMS3T4IciHGPr+prBbNGM4GE4ByQXVqb
-	 KH9uQK7dySpFzh5uuaxnNQa2MxlmCiDTNR52EFMKHW1SP4c9X2yCf9sq+6iFrurJsb
-	 QVBWFspqZkvJCwjurQZpxHZP+l2hPyBcpjaprmd8=
+	b=fo4RLRfAfaSl/jzSQkOPTx9O7DDyjPqFz3LdEIVOdpcxGscYBFNHzVWNE9iXcerk2
+	 rRCtnNyWhclRrr7ki6rZY1gpghQ6NxVjc7Sm5KLzmC0k8FECgC9RKQnMCNCzZNynhW
+	 EOc7tz+Lol5PfnMzRA33ukFWyWOV/BmKYfElOin0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/158] net: remove bond_slave_has_mac_rcu()
-Date: Mon, 28 Aug 2023 12:13:45 +0200
-Message-ID: <20230828101201.732341197@linuxfoundation.org>
+	Zhu Wang <wangzhu9@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 155/158] scsi: core: raid_class: Remove raid_component_add()
+Date: Mon, 28 Aug 2023 12:14:12 +0200
+Message-ID: <20230828101202.980703300@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,47 +40,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Zhu Wang <wangzhu9@huawei.com>
 
-[ Upstream commit 8b0fdcdc3a7d44aff907f0103f5ffb86b12bfe71 ]
+commit 60c5fd2e8f3c42a5abc565ba9876ead1da5ad2b7 upstream.
 
-No caller since v3.16.
+The raid_component_add() function was added to the kernel tree via patch
+"[SCSI] embryonic RAID class" (2005). Remove this function since it never
+has had any callers in the Linux kernel. And also raid_component_release()
+is only used in raid_component_add(), so it is also removed.
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e74216b8def3 ("bonding: fix macvlan over alb bond support")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
+Link: https://lore.kernel.org/r/20230822015254.184270-1-wangzhu9@huawei.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: 04b5b5cb0136 ("scsi: core: Fix possible memory leak if device_add() fails")
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bonding.h | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/scsi/raid_class.c  |   48 ---------------------------------------------
+ include/linux/raid_class.h |    4 ---
+ 2 files changed, 52 deletions(-)
 
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index a3698f0fb2a6d..4e1e589aae057 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -685,20 +685,6 @@ static inline struct slave *bond_slave_has_mac(struct bonding *bond,
- 	return NULL;
- }
+--- a/drivers/scsi/raid_class.c
++++ b/drivers/scsi/raid_class.c
+@@ -209,54 +209,6 @@ raid_attr_ro_state(level);
+ raid_attr_ro_fn(resync);
+ raid_attr_ro_state_fn(state);
  
--/* Caller must hold rcu_read_lock() for read */
--static inline struct slave *bond_slave_has_mac_rcu(struct bonding *bond,
--					       const u8 *mac)
+-static void raid_component_release(struct device *dev)
 -{
--	struct list_head *iter;
--	struct slave *tmp;
--
--	bond_for_each_slave_rcu(bond, tmp, iter)
--		if (ether_addr_equal_64bits(mac, tmp->dev->dev_addr))
--			return tmp;
--
--	return NULL;
+-	struct raid_component *rc =
+-		container_of(dev, struct raid_component, dev);
+-	dev_printk(KERN_ERR, rc->dev.parent, "COMPONENT RELEASE\n");
+-	put_device(rc->dev.parent);
+-	kfree(rc);
 -}
 -
- /* Caller must hold rcu_read_lock() for read */
- static inline bool bond_slave_has_mac_rx(struct bonding *bond, const u8 *mac)
+-int raid_component_add(struct raid_template *r,struct device *raid_dev,
+-		       struct device *component_dev)
+-{
+-	struct device *cdev =
+-		attribute_container_find_class_device(&r->raid_attrs.ac,
+-						      raid_dev);
+-	struct raid_component *rc;
+-	struct raid_data *rd = dev_get_drvdata(cdev);
+-	int err;
+-
+-	rc = kzalloc(sizeof(*rc), GFP_KERNEL);
+-	if (!rc)
+-		return -ENOMEM;
+-
+-	INIT_LIST_HEAD(&rc->node);
+-	device_initialize(&rc->dev);
+-	rc->dev.release = raid_component_release;
+-	rc->dev.parent = get_device(component_dev);
+-	rc->num = rd->component_count++;
+-
+-	dev_set_name(&rc->dev, "component-%d", rc->num);
+-	list_add_tail(&rc->node, &rd->component_list);
+-	rc->dev.class = &raid_class.class;
+-	err = device_add(&rc->dev);
+-	if (err)
+-		goto err_out;
+-
+-	return 0;
+-
+-err_out:
+-	put_device(&rc->dev);
+-	list_del(&rc->node);
+-	rd->component_count--;
+-	put_device(component_dev);
+-	kfree(rc);
+-	return err;
+-}
+-EXPORT_SYMBOL(raid_component_add);
+-
+ struct raid_template *
+ raid_class_attach(struct raid_function_template *ft)
  {
--- 
-2.40.1
-
+--- a/include/linux/raid_class.h
++++ b/include/linux/raid_class.h
+@@ -77,7 +77,3 @@ DEFINE_RAID_ATTRIBUTE(enum raid_state, s
+ 	
+ struct raid_template *raid_class_attach(struct raid_function_template *);
+ void raid_class_release(struct raid_template *);
+-
+-int __must_check raid_component_add(struct raid_template *, struct device *,
+-				    struct device *);
+-
 
 
