@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5A311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C688C433C7;
-	Mon, 28 Aug 2023 10:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7921911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC096C433C7;
+	Mon, 28 Aug 2023 10:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218485;
-	bh=UwkLUkaJo06O5zMx2Ojxx+t33TKJ7+bRGwmLWIM73ls=;
+	s=korg; t=1693218488;
+	bh=iEEL7hj6WNo8szj0sPV/oYuUi/+AGOUFkAs2Pz8kSYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rsyl624E4GxlmhSGjNVn32xFkDo5MrMX2UfzE+xd6pV06WTnEy+1YJ6j2Hep52W+t
-	 tOWsNuGu1klogNPRwIbziuY2LifHT19tQFfN/sbzDsTmw0hbD0BhCO0F5sm29zANLv
-	 4hJ10EOUMsruX+3kORGdnJuOlqrV6THS1MUUtgjg=
+	b=XkZcMmQdcjqxxokRUgLgvjaFYOXHLfYHXrw1GMX/D/ZiitlfFG0l6HZBAMUHWkX3Z
+	 Q/npZwuPN0XcFWPKJXWhcxAHNii4KTkFWjGI8ZZ1BGG2Bw/249BE56JfOK4lqsUkWk
+	 WhC4YdkkcZk9LBCaNmDMD+sYUTHpjaFSa/AMvrkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 087/129] MIPS: cpu-features: Use boot_cpu_type for CPU type based features
-Date: Mon, 28 Aug 2023 12:13:01 +0200
-Message-ID: <20230828101156.551105014@linuxfoundation.org>
+Subject: [PATCH 4.19 105/129] net/sched: fix a qdisc modification with ambiguous command request
+Date: Mon, 28 Aug 2023 12:13:19 +0200
+Message-ID: <20230828101157.114098041@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,49 +44,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 5487a7b60695a92cf998350e4beac17144c91fcd ]
+[ Upstream commit da71714e359b64bd7aab3bd56ec53f307f058133 ]
 
-Some CPU feature macros were using current_cpu_type to mark feature
-availability.
+When replacing an existing root qdisc, with one that is of the same kind, the
+request boils down to essentially a parameterization change  i.e not one that
+requires allocation and grafting of a new qdisc. syzbot was able to create a
+scenario which resulted in a taprio qdisc replacing an existing taprio qdisc
+with a combination of NLM_F_CREATE, NLM_F_REPLACE and NLM_F_EXCL leading to
+create and graft scenario.
+The fix ensures that only when the qdisc kinds are different that we should
+allow a create and graft, otherwise it goes into the "change" codepath.
 
-However current_cpu_type will use smp_processor_id, which is prohibited
-under preemptable context.
+While at it, fix the code and comments to improve readability.
 
-Since those features are all uniform on all CPUs in a SMP system, use
-boot_cpu_type instead of current_cpu_type to fix preemptable kernel.
+While syzbot was able to create the issue, it did not zone on the root cause.
+Analysis from Vladimir Oltean <vladimir.oltean@nxp.com> helped narrow it down.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+v1->V2 changes:
+- remove "inline" function definition (Vladmir)
+- remove extrenous braces in branches (Vladmir)
+- change inline function names (Pedro)
+- Run tdc tests (Victor)
+v2->v3 changes:
+- dont break else/if (Simon)
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/20230816225759.g25x76kmgzya2gei@skbuf/T/
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/cpu-features.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_api.c | 53 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 40 insertions(+), 13 deletions(-)
 
-diff --git a/arch/mips/include/asm/cpu-features.h b/arch/mips/include/asm/cpu-features.h
-index 73fa4c3337f89..51faee4207454 100644
---- a/arch/mips/include/asm/cpu-features.h
-+++ b/arch/mips/include/asm/cpu-features.h
-@@ -115,7 +115,7 @@
- ({									\
- 	int __res;							\
- 									\
--	switch (current_cpu_type()) {					\
-+	switch (boot_cpu_type()) {					\
- 	case CPU_CAVIUM_OCTEON:						\
- 	case CPU_CAVIUM_OCTEON_PLUS:					\
- 	case CPU_CAVIUM_OCTEON2:					\
-@@ -349,7 +349,7 @@
- ({									\
- 	int __res;							\
- 									\
--	switch (current_cpu_type()) {					\
-+	switch (boot_cpu_type()) {					\
- 	case CPU_M14KC:							\
- 	case CPU_74K:							\
- 	case CPU_1074K:							\
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 5a0e71873e24b..8105563593b6f 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1438,10 +1438,28 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 	return 0;
+ }
+ 
++static bool req_create_or_replace(struct nlmsghdr *n)
++{
++	return (n->nlmsg_flags & NLM_F_CREATE &&
++		n->nlmsg_flags & NLM_F_REPLACE);
++}
++
++static bool req_create_exclusive(struct nlmsghdr *n)
++{
++	return (n->nlmsg_flags & NLM_F_CREATE &&
++		n->nlmsg_flags & NLM_F_EXCL);
++}
++
++static bool req_change(struct nlmsghdr *n)
++{
++	return (!(n->nlmsg_flags & NLM_F_CREATE) &&
++		!(n->nlmsg_flags & NLM_F_REPLACE) &&
++		!(n->nlmsg_flags & NLM_F_EXCL));
++}
++
+ /*
+  * Create/change qdisc.
+  */
+-
+ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 			   struct netlink_ext_ack *extack)
+ {
+@@ -1538,27 +1556,35 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 				 *
+ 				 *   We know, that some child q is already
+ 				 *   attached to this parent and have choice:
+-				 *   either to change it or to create/graft new one.
++				 *   1) change it or 2) create/graft new one.
++				 *   If the requested qdisc kind is different
++				 *   than the existing one, then we choose graft.
++				 *   If they are the same then this is "change"
++				 *   operation - just let it fallthrough..
+ 				 *
+ 				 *   1. We are allowed to create/graft only
+-				 *   if CREATE and REPLACE flags are set.
++				 *   if the request is explicitly stating
++				 *   "please create if it doesn't exist".
+ 				 *
+-				 *   2. If EXCL is set, requestor wanted to say,
+-				 *   that qdisc tcm_handle is not expected
++				 *   2. If the request is to exclusive create
++				 *   then the qdisc tcm_handle is not expected
+ 				 *   to exist, so that we choose create/graft too.
+ 				 *
+ 				 *   3. The last case is when no flags are set.
++				 *   This will happen when for example tc
++				 *   utility issues a "change" command.
+ 				 *   Alas, it is sort of hole in API, we
+ 				 *   cannot decide what to do unambiguously.
+-				 *   For now we select create/graft, if
+-				 *   user gave KIND, which does not match existing.
++				 *   For now we select create/graft.
+ 				 */
+-				if ((n->nlmsg_flags & NLM_F_CREATE) &&
+-				    (n->nlmsg_flags & NLM_F_REPLACE) &&
+-				    ((n->nlmsg_flags & NLM_F_EXCL) ||
+-				     (tca[TCA_KIND] &&
+-				      nla_strcmp(tca[TCA_KIND], q->ops->id))))
+-					goto create_n_graft;
++				if (tca[TCA_KIND] &&
++				    nla_strcmp(tca[TCA_KIND], q->ops->id)) {
++					if (req_create_or_replace(n) ||
++					    req_create_exclusive(n))
++						goto create_n_graft;
++					else if (req_change(n))
++						goto create_n_graft2;
++				}
+ 			}
+ 		}
+ 	} else {
+@@ -1592,6 +1618,7 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 		NL_SET_ERR_MSG(extack, "Qdisc not found. To create specify NLM_F_CREATE flag");
+ 		return -ENOENT;
+ 	}
++create_n_graft2:
+ 	if (clid == TC_H_INGRESS) {
+ 		if (dev_ingress_queue(dev)) {
+ 			q = qdisc_create(dev, dev_ingress_queue(dev), p,
 -- 
 2.40.1
 
