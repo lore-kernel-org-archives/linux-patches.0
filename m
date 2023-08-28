@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B156FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2529BC433C9;
-	Mon, 28 Aug 2023 10:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF89563A2
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:50:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABAAC433C7;
+	Mon, 28 Aug 2023 10:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219807;
-	bh=9XMAmSwksTgUpeSTYZ0R0ntinrxg0G3QrkflwwgiIX0=;
+	s=korg; t=1693219810;
+	bh=DOcxuvoljP6PyT/x6MHkKSR/s7DVmaLwDLe/ziQSc+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBzporTktaUNlZINJTOJji+U6nO51gn/zgw0Dp/SbnrFBjS4Ui2AKLj5a9SPCbNdV
-	 QIxX++phhL1PESKIh9yTr+OWlIXy4DYst7zgWBmra1jSC7aLKsUehXkHxfVuP8C1+v
-	 TtHjzTG5slknD08cmQFC0U96qQPI4nRWi93aOcRA=
+	b=RNmJn17UNPRZI1kxLRFCE98lJxcG3h09U5KPq3ydNF7o6qw1h1eXymri00E7Sveq1
+	 JA6PTYPdGC9jueB157Z5YIYFMiA2GTcg2s8qABT0/aouZxIehTBjo3PQNmNUALmiKJ
+	 QnlnucapJFT88h1iypwPl12UYCfi4aDOfhNykJVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Williams <dan.j.williams@intel.com>,
+	David Hildenbrand <david@redhat.com>,
 	Oscar Salvador <osalvador@suse.de>,
 	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	Vlastimil Babka <Vbabka@suse.cz>,
-	Qian Cai <qcai@redhat.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Qian Cai <cai@lca.pw>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 79/84] mm,hwpoison: refactor get_any_page
-Date: Mon, 28 Aug 2023 12:14:36 +0200
-Message-ID: <20230828101151.965205685@linuxfoundation.org>
+Subject: [PATCH 5.10 80/84] mm: fix page reference leak in soft_offline_page()
+Date: Mon, 28 Aug 2023 12:14:37 +0200
+Message-ID: <20230828101151.996955753@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -44,187 +46,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Salvador <osalvador@suse.de>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 8295d535e2aa198bdf65a4045d622df38955ffe2 ]
+[ Upstream commit dad4e5b390866ca902653df0daa864ae4b8d4147 ]
 
-Patch series "HWPoison: Refactor get page interface", v2.
+The conversion to move pfn_to_online_page() internal to
+soft_offline_page() missed that the get_user_pages() reference taken by
+the madvise() path needs to be dropped when pfn_to_online_page() fails.
 
-This patch (of 3):
+Note the direct sysfs-path to soft_offline_page() does not perform a
+get_user_pages() lookup.
 
-When we want to grab a refcount via get_any_page, we call __get_any_page
-that calls get_hwpoison_page to get the actual refcount.
+When soft_offline_page() is handed a pfn_valid() && !pfn_to_online_page()
+pfn the kernel hangs at dax-device shutdown due to a leaked reference.
 
-get_any_page() is only there because we have a sort of retry mechanism in
-case the page we met is unknown to us or if we raced with an allocation.
-
-Also __get_any_page() prints some messages about the page type in case the
-page was a free page or the page type was unknown, but if anything, we
-only need to print a message in case the pagetype was unknown, as that is
-reporting an error down the chain.
-
-Let us merge get_any_page() and __get_any_page(), and let the message be
-printed in soft_offline_page.  While we are it, we can also remove the
-'pfn' parameter as it is no longer used.
-
-Link: https://lkml.kernel.org/r/20201204102558.31607-1-osalvador@suse.de
-Link: https://lkml.kernel.org/r/20201204102558.31607-2-osalvador@suse.de
-Signed-off-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Acked-by: Vlastimil Babka <Vbabka@suse.cz>
-Cc: Qian Cai <qcai@redhat.com>
+Link: https://lkml.kernel.org/r/161058501210.1840162.8108917599181157327.stgit@dwillia2-desk3.amr.corp.intel.com
+Fixes: feec24a6139d ("mm, soft-offline: convert parameter to pfn")
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Qian Cai <cai@lca.pw>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Stable-dep-of: e2c1ab070fdc ("mm: memory-failure: fix unexpected return value in soft_offline_page()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory-failure.c | 101 +++++++++++++++++++-------------------------
- 1 file changed, 43 insertions(+), 58 deletions(-)
+ mm/memory-failure.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index b21dd4a793926..71fd546dbdc37 100644
+index 71fd546dbdc37..e3c0fa2464ff8 100644
 --- a/mm/memory-failure.c
 +++ b/mm/memory-failure.c
-@@ -1690,70 +1690,51 @@ EXPORT_SYMBOL(unpoison_memory);
- 
- /*
-  * Safely get reference count of an arbitrary page.
-- * Returns 0 for a free page, -EIO for a zero refcount page
-- * that is not free, and 1 for any other page type.
-- * For 1 the page is returned with increased page count, otherwise not.
-+ * Returns 0 for a free page, 1 for an in-use page, -EIO for a page-type we
-+ * cannot handle and -EBUSY if we raced with an allocation.
-+ * We only incremented refcount in case the page was already in-use and it is
-+ * a known type we can handle.
-  */
--static int __get_any_page(struct page *p, unsigned long pfn, int flags)
-+static int get_any_page(struct page *p, int flags)
- {
--	int ret;
-+	int ret = 0, pass = 0;
-+	bool count_increased = false;
- 
- 	if (flags & MF_COUNT_INCREASED)
--		return 1;
--
--	/*
--	 * When the target page is a free hugepage, just remove it
--	 * from free hugepage list.
--	 */
--	if (!get_hwpoison_page(p)) {
--		if (PageHuge(p)) {
--			pr_info("%s: %#lx free huge page\n", __func__, pfn);
--			ret = 0;
--		} else if (is_free_buddy_page(p)) {
--			pr_info("%s: %#lx free buddy page\n", __func__, pfn);
--			ret = 0;
--		} else if (page_count(p)) {
--			/* raced with allocation */
-+		count_increased = true;
-+
-+try_again:
-+	if (!count_increased && !get_hwpoison_page(p)) {
-+		if (page_count(p)) {
-+			/* We raced with an allocation, retry. */
-+			if (pass++ < 3)
-+				goto try_again;
- 			ret = -EBUSY;
--		} else {
--			pr_info("%s: %#lx: unknown zero refcount page type %lx\n",
--				__func__, pfn, p->flags);
-+		} else if (!PageHuge(p) && !is_free_buddy_page(p)) {
-+			/* We raced with put_page, retry. */
-+			if (pass++ < 3)
-+				goto try_again;
- 			ret = -EIO;
- 		}
- 	} else {
--		/* Not a free page */
--		ret = 1;
--	}
--	return ret;
--}
--
--static int get_any_page(struct page *page, unsigned long pfn, int flags)
--{
--	int ret = __get_any_page(page, pfn, flags);
--
--	if (ret == -EBUSY)
--		ret = __get_any_page(page, pfn, flags);
--
--	if (ret == 1 && !PageHuge(page) &&
--	    !PageLRU(page) && !__PageMovable(page)) {
--		/*
--		 * Try to free it.
--		 */
--		put_page(page);
--		shake_page(page, 1);
--
--		/*
--		 * Did it turn free?
--		 */
--		ret = __get_any_page(page, pfn, 0);
--		if (ret == 1 && !PageLRU(page)) {
--			/* Drop page reference which is from __get_any_page() */
--			put_page(page);
--			pr_info("soft_offline: %#lx: unknown non LRU page type %lx (%pGp)\n",
--				pfn, page->flags, &page->flags);
--			return -EIO;
-+		if (PageHuge(p) || PageLRU(p) || __PageMovable(p)) {
-+			ret = 1;
-+		} else {
-+			/*
-+			 * A page we cannot handle. Check whether we can turn
-+			 * it into something we can handle.
-+			 */
-+			if (pass++ < 3) {
-+				put_page(p);
-+				shake_page(p, 1);
-+				count_increased = false;
-+				goto try_again;
-+			}
-+			put_page(p);
-+			ret = -EIO;
- 		}
- 	}
-+
- 	return ret;
+@@ -1867,6 +1867,12 @@ static int soft_offline_free_page(struct page *page)
+ 	return rc;
  }
  
-@@ -1922,7 +1903,7 @@ int soft_offline_page(unsigned long pfn, int flags)
++static void put_ref_page(struct page *page)
++{
++	if (page)
++		put_page(page);
++}
++
+ /**
+  * soft_offline_page - Soft offline a page.
+  * @pfn: pfn to soft-offline
+@@ -1892,20 +1898,26 @@ static int soft_offline_free_page(struct page *page)
+ int soft_offline_page(unsigned long pfn, int flags)
+ {
+ 	int ret;
+-	struct page *page;
+ 	bool try_again = true;
++	struct page *page, *ref_page = NULL;
++
++	WARN_ON_ONCE(!pfn_valid(pfn) && (flags & MF_COUNT_INCREASED));
+ 
+ 	if (!pfn_valid(pfn))
+ 		return -ENXIO;
++	if (flags & MF_COUNT_INCREASED)
++		ref_page = pfn_to_page(pfn);
++
+ 	/* Only online pages can be soft-offlined (esp., not ZONE_DEVICE). */
+ 	page = pfn_to_online_page(pfn);
+-	if (!page)
++	if (!page) {
++		put_ref_page(ref_page);
  		return -EIO;
- 
- 	if (PageHWPoison(page)) {
--		pr_info("soft offline: %#lx page already poisoned\n", pfn);
-+		pr_info("%s: %#lx page already poisoned\n", __func__, pfn);
- 		if (flags & MF_COUNT_INCREASED)
- 			put_page(page);
- 		return 0;
-@@ -1930,17 +1911,21 @@ int soft_offline_page(unsigned long pfn, int flags)
- 
- retry:
- 	get_online_mems();
--	ret = get_any_page(page, pfn, flags);
-+	ret = get_any_page(page, flags);
- 	put_online_mems();
- 
--	if (ret > 0)
-+	if (ret > 0) {
- 		ret = soft_offline_in_use_page(page);
--	else if (ret == 0)
-+	} else if (ret == 0) {
- 		if (soft_offline_free_page(page) && try_again) {
- 			try_again = false;
- 			flags &= ~MF_COUNT_INCREASED;
- 			goto retry;
- 		}
-+	} else if (ret == -EIO) {
-+		pr_info("%s: %#lx: unknown page type: %lx (%pGP)\n",
-+			 __func__, pfn, page->flags, &page->flags);
 +	}
  
- 	return ret;
- }
+ 	if (PageHWPoison(page)) {
+ 		pr_info("%s: %#lx page already poisoned\n", __func__, pfn);
+-		if (flags & MF_COUNT_INCREASED)
+-			put_page(page);
++		put_ref_page(ref_page);
+ 		return 0;
+ 	}
+ 
 -- 
 2.40.1
 
