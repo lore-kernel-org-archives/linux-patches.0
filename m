@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C55C433C7;
-	Mon, 28 Aug 2023 10:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140CC11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA54C433C8;
+	Mon, 28 Aug 2023 10:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218413;
-	bh=Nz4q5Iv5i/e8E1fJ7GTQfvU3fjBKzQwQ9WhZBq2UVYY=;
+	s=korg; t=1693218415;
+	bh=eLxH5kyjdUPXsZS4wV7n/BXNOG5ktZYkyy8K1kTBePY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhHydN6GvFi1h79op+kelUqC5QbAVN+qxPH8O8G4BY/M61Wp1b1OfpH843hNDygPy
-	 jgwMmmZAtB2J16H11Lhp+4ejhhFZRKTwOPwGC82WeNtS5yKNYHGVGDAB3HJ+p7mCi6
-	 SM2l+Q7ryU1Fttim1s3DMYpPyaccxTfYM8yJz0l4=
+	b=a6ziPXAcA+zLqcV9LXfUkLws07BkObXv8XFcODUieogAaZ42/qeGVfB/eVRcn+ph/
+	 j8x0qM8l4mjr4bG//12kLUJuY6TJjULYPPXrWZ7fS9Hr7DV4WiKuo1yt1+5N0j6un/
+	 tg+37ekSnjoQHkScZoELz9hlfhNiYZY9k8ctaWag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 078/129] net: phy: broadcom: stub c45 read/write for 54810
-Date: Mon, 28 Aug 2023 12:12:52 +0200
-Message-ID: <20230828101156.208596742@linuxfoundation.org>
+	Igor Mammedov <imammedo@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 079/129] PCI: acpiphp: Reassign resources on bridge if necessary
+Date: Mon, 28 Aug 2023 12:12:53 +0200
+Message-ID: <20230828101156.251632236@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,55 +42,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-commit 096516d092d54604d590827d05b1022c8f326639 upstream.
+[ Upstream commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 ]
 
-The 54810 does not support c45. The mmd_phy_indirect accesses return
-arbirtary values leading to odd behavior like saying it supports EEE
-when it doesn't. We also see that reading/writing these non-existent
-MMD registers leads to phy instability in some cases.
+When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
+if bridge windows programmed by firmware are not large enough.
 
-Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[florian: resolved conflicts in 4.19]
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reproducer:
+  $ qemu-kvm -monitor stdio -M q35  -m 4G \
+      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
+      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
+      disk_image
+
+ wait till linux guest boots, then hotplug device:
+   (qemu) device_add qxl,bus=rp1
+
+ hotplug on guest side fails with:
+   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
+   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
+   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
+   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
+   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
+   qxl 0000:01:00.0: enabling device (0000 -> 0003)
+   Unable to create vram_mapping
+   qxl: probe of 0000:01:00.0 failed with error -12
+
+However when using native PCIe hotplug
+  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
+it works fine, since kernel attempts to reassign unused resources.
+
+Use the same machinery as native PCIe hotplug to (re)assign resources.
+
+Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/broadcom.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/pci/hotplug/acpiphp_glue.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/net/phy/broadcom.c
-+++ b/drivers/net/phy/broadcom.c
-@@ -421,6 +421,17 @@ static int bcm5482_read_status(struct ph
- 	return err;
- }
+diff --git a/drivers/pci/hotplug/acpiphp_glue.c b/drivers/pci/hotplug/acpiphp_glue.c
+index 3d8844e7090a8..0c1ae63c6dbc4 100644
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -496,7 +496,6 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
+ 				acpiphp_native_scan_bridge(dev);
+ 		}
+ 	} else {
+-		LIST_HEAD(add_list);
+ 		int max, pass;
  
-+static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
-+			      u16 val)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int bcm5481_config_aneg(struct phy_device *phydev)
- {
- 	struct device_node *np = phydev->mdio.dev.of_node;
-@@ -684,6 +695,8 @@ static struct phy_driver broadcom_driver
- 	.name           = "Broadcom BCM54810",
- 	.features       = PHY_GBIT_FEATURES,
- 	.flags          = PHY_HAS_INTERRUPT,
-+	.read_mmd	= bcm54810_read_mmd,
-+	.write_mmd	= bcm54810_write_mmd,
- 	.config_init    = bcm54xx_config_init,
- 	.config_aneg    = bcm5481_config_aneg,
- 	.ack_interrupt  = bcm_phy_ack_intr,
+ 		acpiphp_rescan_slot(slot);
+@@ -510,12 +509,10 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
+-					__pci_bus_size_bridges(dev->subordinate,
+-							       &add_list);
+ 				}
+ 			}
+ 		}
+-		__pci_bus_assign_resources(bus, &add_list, NULL);
++		pci_assign_unassigned_bridge_resources(bus->self);
+ 	}
+ 
+ 	acpiphp_sanitize_bus(bus);
+-- 
+2.40.1
+
 
 
