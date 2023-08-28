@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3601311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E04C433CA;
-	Mon, 28 Aug 2023 10:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C1311C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:45:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A79CC433C7;
+	Mon, 28 Aug 2023 10:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219540;
-	bh=UaAaZ0Nr20NzHWW6c+AfZTNLoFJneyBaHOvrqCUQbFw=;
+	s=korg; t=1693219542;
+	bh=MWghyhnyl92tvQoALg4AsuxMi9fq1qcrzsxk0imtp+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9BKwqYhnc2m/coC+7YpAeZk4fMZX10wkGhJnXGLfhS4DG6z8X3BuMw1qJBIHaCLo
-	 jixKUlMDT6+aMpmSdr8CLWBPvmEQ7eODRZi1UzEgKTk4eqOU1pRDcSajMCgIleKf+W
-	 As1iSKRJVOkRdnqhJxA5rnaJIp+HMlhrjorWE25w=
+	b=iwj09xUGplHwL3lfo8SbjUi4bMq3gnqxPi2C+a3v0kWmKui9FJKgkZvkakohfQ5G7
+	 dv6d5DzKLuBbEvkYkizPFJIdOV179HLqRK9yVASqkVEpoBMWzdinx1IlKXxwIvnxUJ
+	 HC6vf4GGvrfEECubNWSnMXWoUwtuabWTBr+ZPfXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Yang <sherry.yang@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 72/89] nfsd: use vfs setgid helper
-Date: Mon, 28 Aug 2023 12:14:13 +0200
-Message-ID: <20230828101152.613705053@linuxfoundation.org>
+	Paul McKenney <paulmck@kernel.org>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH 5.15 73/89] torture: Fix hang during kthread shutdown phase
+Date: Mon, 28 Aug 2023 12:14:14 +0200
+Message-ID: <20230828101152.657057854@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -42,67 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit 2d8ae8c417db284f598dffb178cc01e7db0f1821 upstream.
+commit d52d3a2bf408ff86f3a79560b5cce80efb340239 upstream.
 
-We've aligned setgid behavior over multiple kernel releases. The details
-can be found in commit cf619f891971 ("Merge tag 'fs.ovl.setgid.v6.2' of
-git://git.kernel.org/pub/scm/linux/kernel/git/vfs/idmapping") and
-commit 426b4ca2d6a5 ("Merge tag 'fs.setgid.v6.0' of
-git://git.kernel.org/pub/scm/linux/kernel/git/brauner/linux").
-Consistent setgid stripping behavior is now encapsulated in the
-setattr_should_drop_sgid() helper which is used by all filesystems that
-strip setgid bits outside of vfs proper. Usually ATTR_KILL_SGID is
-raised in e.g., chown_common() and is subject to the
-setattr_should_drop_sgid() check to determine whether the setgid bit can
-be retained. Since nfsd is raising ATTR_KILL_SGID unconditionally it
-will cause notify_change() to strip it even if the caller had the
-necessary privileges to retain it. Ensure that nfsd only raises
-ATR_KILL_SGID if the caller lacks the necessary privileges to retain the
-setgid bit.
+During rcutorture shutdown, the rcu_torture_cleanup() function calls
+torture_cleanup_begin(), which sets the fullstop global variable to
+FULLSTOP_RMMOD. This causes the rcutorture threads for readers and
+fakewriters to exit all of their "while" loops and start shutting down.
 
-Without this patch the setgid stripping tests in LTP will fail:
+They then call torture_kthread_stopping(), which in turn waits for
+kthread_stop() to be called.  However, rcu_torture_cleanup() has
+not yet called kthread_stop() on those threads, and before it gets a
+chance to do so, multiple instances of torture_kthread_stopping() invoke
+schedule_timeout_interruptible(1) in a tight loop.  Tracing confirms that
+TIMER_SOFTIRQ can then continuously execute timer callbacks.  If that
+TIMER_SOFTIRQ preempts the task executing rcu_torture_cleanup(), that
+task might never invoke kthread_stop().
 
-> As you can see, the problem is S_ISGID (0002000) was dropped on a
-> non-group-executable file while chown was invoked by super-user, while
+This commit improves this situation by increasing the timeout passed to
+schedule_timeout_interruptible() from one jiffy to 1/20th of a second.
+This change prevents TIMER_SOFTIRQ from monopolizing its CPU, thus
+allowing rcu_torture_cleanup() to carry out the needed kthread_stop()
+invocations.  Testing has shown 100 runs of TREE07 passing reliably,
+as oppose to the tens-of-percent failure rates seen beforehand.
 
-[...]
-
-> fchown02.c:66: TFAIL: testfile2: wrong mode permissions 0100700, expected 0102700
-
-[...]
-
-> chown02.c:57: TFAIL: testfile2: wrong mode permissions 0100700, expected 0102700
-
-With this patch all tests pass.
-
-Reported-by: Sherry Yang <sherry.yang@oracle.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ Harshit: backport to 5.15.y:
-  Use init_user_ns instead of nop_mnt_idmap as we don't have
-  commit abf08576afe3 ("fs: port vfs_*() helpers to struct mnt_idmap") ]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: Paul McKenney <paulmck@kernel.org>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Cc: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.0.x
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Tested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/torture.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -322,7 +322,9 @@ nfsd_sanitize_attrs(struct inode *inode,
- 				iap->ia_mode &= ~S_ISGID;
- 		} else {
- 			/* set ATTR_KILL_* bits and let VFS handle it */
--			iap->ia_valid |= (ATTR_KILL_SUID | ATTR_KILL_SGID);
-+			iap->ia_valid |= ATTR_KILL_SUID;
-+			iap->ia_valid |=
-+				setattr_should_drop_sgid(&init_user_ns, inode);
- 		}
+--- a/kernel/torture.c
++++ b/kernel/torture.c
+@@ -915,7 +915,7 @@ void torture_kthread_stopping(char *titl
+ 	VERBOSE_TOROUT_STRING(buf);
+ 	while (!kthread_should_stop()) {
+ 		torture_shutdown_absorb(title);
+-		schedule_timeout_uninterruptible(1);
++		schedule_timeout_uninterruptible(HZ / 20);
  	}
  }
+ EXPORT_SYMBOL_GPL(torture_kthread_stopping);
 
 
