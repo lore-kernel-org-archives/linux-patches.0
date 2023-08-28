@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EAA11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DA0C433C7;
-	Mon, 28 Aug 2023 10:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4362311C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7688C433C8;
+	Mon, 28 Aug 2023 10:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218217;
-	bh=gJcRspsrhLSUSqvVwgcKz71s+msz+hUh5iULPtgRaCs=;
+	s=korg; t=1693218220;
+	bh=71ZVpooonrPGkAjKKkRFkhV7a9GRN3ijMBBlNc5z9iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOnZOsZ5IYFtMHcTeyl54ejW/1XnpeTdXA95oHpNRG2NyekPLUcuVybTih+a4H5IU
-	 Im/2SGvI90FORKmq63RrNhggsPoPOSd3xsku1qDavj2LLrPJtc51RuRESWb/9J1mLl
-	 NDteWfqpyI6Qg6sVA2Ct7rKkx74iw0nyftVAiHRw=
+	b=1lP/7HNKKu9F6bVto6YoEF2MdA7Ff+IoZ3qsDz4AAIS2WAxt6i2pU1tTNl9o5mHe/
+	 FVidoIpSBxkdaO6MI7wqk/14YIz2+kbeYqo6pOwhnBSB5A+eW94V60FMDj/qclCdL5
+	 5gJuR/mnimg93bROwM+0jkTjHvZjdiOrDnzkST0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Mingzheng Xing <xingmingzheng@iscas.ac.cn>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.4 101/129] riscv: Fix build errors using binutils2.37 toolchains
-Date: Mon, 28 Aug 2023 12:13:00 +0200
-Message-ID: <20230828101200.703930591@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 4.19 001/129] lib/mpi: Eliminate unused umul_ppmm definitions for MIPS
+Date: Mon, 28 Aug 2023 12:11:35 +0200
+Message-ID: <20230828101153.084347573@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
-References: <20230828101157.383363777@linuxfoundation.org>
+In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
+References: <20230828101153.030066927@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,65 +36,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.4-stable review patch.  If anyone has any objections, please let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingzheng Xing <xingmingzheng@iscas.ac.cn>
+From: Nathan Chancellor <natechancellor@gmail.com>
 
-commit ef21fa7c198e04f3d3053b1c5b5f2b4b225c3350 upstream.
+commit b0c091ae04f6746f541b9be91809e1f4f43e9a65 upstream.
 
-When building the kernel with binutils 2.37 and GCC-11.1.0/GCC-11.2.0,
-the following error occurs:
+Clang errors out when building this macro:
 
-  Assembler messages:
-  Error: cannot find default versions of the ISA extension `zicsr'
-  Error: cannot find default versions of the ISA extension `zifencei'
+lib/mpi/generic_mpih-mul1.c:37:24: error: invalid use of a cast in a
+inline asm context requiring an l-value: remove the cast or build with
+-fheinous-gnu-extensions
+                umul_ppmm(prod_high, prod_low, s1_ptr[j], s2_limb);
+                ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+lib/mpi/longlong.h:652:20: note: expanded from macro 'umul_ppmm'
+        : "=l" ((USItype)(w0)), \
+                ~~~~~~~~~~^~~
+lib/mpi/generic_mpih-mul1.c:37:3: error: invalid output constraint '=h'
+in asm
+                umul_ppmm(prod_high, prod_low, s1_ptr[j], s2_limb);
+                ^
+lib/mpi/longlong.h:653:7: note: expanded from macro 'umul_ppmm'
+             "=h" ((USItype)(w1)) \
+             ^
+2 errors generated.
 
-The above error originated from this commit of binutils[0], which has been
-resolved and backported by GCC-12.1.0[1] and GCC-11.3.0[2].
+The C version that is used for GCC 4.4 and up works well with clang;
+however, it is not currently being used because Clang masks itself
+as GCC 4.2.1 for compatibility reasons. As Nick points out, we require
+GCC 4.6 and newer in the kernel so we can eliminate all of the
+versioning checks and just use the C version of umul_ppmm for all
+supported compilers.
 
-So fix this by change the GCC version in
-CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC to GCC-11.3.0.
-
-Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=f0bae2552db1dd4f1995608fbf6648fcee4e9e0c [0]
-Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=ca2bbb88f999f4d3cc40e89bc1aba712505dd598 [1]
-Link: https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=d29f5d6ab513c52fd872f532c492e35ae9fd6671 [2]
-Fixes: ca09f772ccca ("riscv: Handle zicsr/zifencei issue between gcc and binutils")
-Reported-by: Conor Dooley <conor.dooley@microchip.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Mingzheng Xing <xingmingzheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230824190852.45470-1-xingmingzheng@iscas.ac.cn
-Closes: https://lore.kernel.org/all/20230823-captive-abdomen-befd942a4a73@wendy/
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/605
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ lib/mpi/longlong.h |   36 +-----------------------------------
+ 1 file changed, 1 insertion(+), 35 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -535,15 +535,15 @@ config TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZI
- 	  and Zifencei are supported in binutils from version 2.36 onwards.
- 	  To make life easier, and avoid forcing toolchains that default to a
- 	  newer ISA spec to version 2.2, relax the check to binutils >= 2.36.
--	  For clang < 17 or GCC < 11.1.0, for which this is not possible, this is
--	  dealt with in CONFIG_TOOLCHAIN_NEEDS_OLD_ISA_SPEC.
-+	  For clang < 17 or GCC < 11.3.0, for which this is not possible or need
-+	  special treatment, this is dealt with in TOOLCHAIN_NEEDS_OLD_ISA_SPEC.
- 
- config TOOLCHAIN_NEEDS_OLD_ISA_SPEC
- 	def_bool y
- 	depends on TOOLCHAIN_NEEDS_EXPLICIT_ZICSR_ZIFENCEI
- 	# https://github.com/llvm/llvm-project/commit/22e199e6afb1263c943c0c0d4498694e15bf8a16
--	# https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=b03be74bad08c382da47e048007a78fa3fb4ef49
--	depends on (CC_IS_CLANG && CLANG_VERSION < 170000) || (CC_IS_GCC && GCC_VERSION < 110100)
-+	# https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=d29f5d6ab513c52fd872f532c492e35ae9fd6671
-+	depends on (CC_IS_CLANG && CLANG_VERSION < 170000) || (CC_IS_GCC && GCC_VERSION < 110300)
- 	help
- 	  Certain versions of clang and GCC do not support zicsr and zifencei via
- 	  -march. This option causes an older ISA spec compatible with these older
+--- a/lib/mpi/longlong.h
++++ b/lib/mpi/longlong.h
+@@ -639,30 +639,12 @@ do { \
+ 	**************  MIPS  *****************
+ 	***************************************/
+ #if defined(__mips__) && W_TYPE_SIZE == 32
+-#if (__GNUC__ >= 5) || (__GNUC__ >= 4 && __GNUC_MINOR__ >= 4)
+ #define umul_ppmm(w1, w0, u, v)			\
+ do {						\
+ 	UDItype __ll = (UDItype)(u) * (v);	\
+ 	w1 = __ll >> 32;			\
+ 	w0 = __ll;				\
+ } while (0)
+-#elif __GNUC__ > 2 || __GNUC_MINOR__ >= 7
+-#define umul_ppmm(w1, w0, u, v) \
+-	__asm__ ("multu %2,%3" \
+-	: "=l" ((USItype)(w0)), \
+-	     "=h" ((USItype)(w1)) \
+-	: "d" ((USItype)(u)), \
+-	     "d" ((USItype)(v)))
+-#else
+-#define umul_ppmm(w1, w0, u, v) \
+-	__asm__ ("multu %2,%3\n" \
+-	   "mflo %0\n" \
+-	   "mfhi %1" \
+-	: "=d" ((USItype)(w0)), \
+-	     "=d" ((USItype)(w1)) \
+-	: "d" ((USItype)(u)), \
+-	     "d" ((USItype)(v)))
+-#endif
+ #define UMUL_TIME 10
+ #define UDIV_TIME 100
+ #endif /* __mips__ */
+@@ -687,7 +669,7 @@ do {									\
+ 		 : "d" ((UDItype)(u)),					\
+ 		   "d" ((UDItype)(v)));					\
+ } while (0)
+-#elif (__GNUC__ >= 5) || (__GNUC__ >= 4 && __GNUC_MINOR__ >= 4)
++#else
+ #define umul_ppmm(w1, w0, u, v) \
+ do {									\
+ 	typedef unsigned int __ll_UTItype __attribute__((mode(TI)));	\
+@@ -695,22 +677,6 @@ do {									\
+ 	w1 = __ll >> 64;						\
+ 	w0 = __ll;							\
+ } while (0)
+-#elif __GNUC__ > 2 || __GNUC_MINOR__ >= 7
+-#define umul_ppmm(w1, w0, u, v) \
+-	__asm__ ("dmultu %2,%3" \
+-	: "=l" ((UDItype)(w0)), \
+-	     "=h" ((UDItype)(w1)) \
+-	: "d" ((UDItype)(u)), \
+-	     "d" ((UDItype)(v)))
+-#else
+-#define umul_ppmm(w1, w0, u, v) \
+-	__asm__ ("dmultu %2,%3\n" \
+-	   "mflo %0\n" \
+-	   "mfhi %1" \
+-	: "=d" ((UDItype)(w0)), \
+-	     "=d" ((UDItype)(w1)) \
+-	: "d" ((UDItype)(u)), \
+-	     "d" ((UDItype)(v)))
+ #endif
+ #define UMUL_TIME 20
+ #define UDIV_TIME 140
 
 
