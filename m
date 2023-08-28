@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD2711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADF8C433C7;
-	Mon, 28 Aug 2023 10:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F6311C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECE7C433C7;
+	Mon, 28 Aug 2023 10:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218195;
-	bh=5iuDqNTnHT5DY3eJJuK3QSmTGimvOpnvfqezHYKQAyY=;
+	s=korg; t=1693218198;
+	bh=KEzcA3zzAPkg1zCndN9bX2hk+KFD8m8pyxOuZxd8quY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDUPFCA/pDzU4vHKuF+FvswSYiKSIk14ESjVM4Ixhy0hGZ1InBnuGkYul5XgmKODM
-	 X4RRZE9CrKTVHvnGOTfcPU7YUD5OZdHAIfaGuL7469Bfkcpu1aC4ADK1yF9fAnUFiw
-	 gLqkFwqAssK+pZHf75doJ/SJkOJrwZScozGNKwTw=
+	b=nj3Hk/GW+Y4I9WGnUP7M3Dx+6qT7kU3QZ6Bej1b3lyIQb6NvdwHEhds30IAR2cChF
+	 gRIc4g/ata0bpcFzIUwiLiFmRqYuoAF1ULGaombzFR8VUaqf4Dn1ghDZ6VvrERFGUp
+	 Dof5fqDaOukqgDNAhgYUMVpwRpJiphwrA7ee/lYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.4 129/129] netfilter: nf_tables: fix kdoc warnings after gc rework
-Date: Mon, 28 Aug 2023 12:13:28 +0200
-Message-ID: <20230828101201.789209041@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.4 104/129] of: dynamic: Refactor action prints to not use "%pOF" inside devtree_lock
+Date: Mon, 28 Aug 2023 12:13:03 +0200
+Message-ID: <20230828101200.825910842@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -39,47 +39,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Rob Herring <robh@kernel.org>
 
-commit 08713cb006b6f07434f276c5ee214fb20c7fd965 upstream.
+commit 914d9d831e6126a6e7a92e27fcfaa250671be42c upstream.
 
-Jakub Kicinski says:
-  We've got some new kdoc warnings here:
-  net/netfilter/nft_set_pipapo.c:1557: warning: Function parameter or member '_set' not described in 'pipapo_gc'
-  net/netfilter/nft_set_pipapo.c:1557: warning: Excess function parameter 'set' description in 'pipapo_gc'
-  include/net/netfilter/nf_tables.h:577: warning: Function parameter or member 'dead' not described in 'nft_set'
+While originally it was fine to format strings using "%pOF" while
+holding devtree_lock, this now causes a deadlock.  Lockdep reports:
 
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20230810104638.746e46f1@kernel.org/
-Signed-off-by: Florian Westphal <fw@strlen.de>
+    of_get_parent from of_fwnode_get_parent+0x18/0x24
+    ^^^^^^^^^^^^^
+    of_fwnode_get_parent from fwnode_count_parents+0xc/0x28
+    fwnode_count_parents from fwnode_full_name_string+0x18/0xac
+    fwnode_full_name_string from device_node_string+0x1a0/0x404
+    device_node_string from pointer+0x3c0/0x534
+    pointer from vsnprintf+0x248/0x36c
+    vsnprintf from vprintk_store+0x130/0x3b4
+
+Fix this by moving the printing in __of_changeset_entry_apply() outside
+the lock. As the only difference in the multiple prints is the action
+name, use the existing "action_names" to refactor the prints into a
+single print.
+
+Fixes: a92eb7621b9fb2c2 ("lib/vsprintf: Make use of fwnode API to obtain node names and separators")
+Cc: stable@vger.kernel.org
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230801-dt-changeset-fixes-v3-2-5f0410e007dd@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    1 +
- net/netfilter/nft_set_pipapo.c    |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/of/dynamic.c |   31 +++++++++----------------------
+ 1 file changed, 9 insertions(+), 22 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -534,6 +534,7 @@ struct nft_set_elem_expr {
-  *	@expr: stateful expression
-  * 	@ops: set ops
-  * 	@flags: set flags
-+ *	@dead: set will be freed, never cleared
-  *	@genmask: generation mask
-  * 	@klen: key length
-  * 	@dlen: data length
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1550,7 +1550,7 @@ static void nft_pipapo_gc_deactivate(str
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -63,15 +63,14 @@ int of_reconfig_notifier_unregister(stru
+ }
+ EXPORT_SYMBOL_GPL(of_reconfig_notifier_unregister);
  
- /**
-  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
-- * @set:	nftables API set representation
-+ * @_set:	nftables API set representation
-  * @m:		Matching data
-  */
- static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+-#ifdef DEBUG
+-const char *action_names[] = {
++static const char *action_names[] = {
++	[0] = "INVALID",
+ 	[OF_RECONFIG_ATTACH_NODE] = "ATTACH_NODE",
+ 	[OF_RECONFIG_DETACH_NODE] = "DETACH_NODE",
+ 	[OF_RECONFIG_ADD_PROPERTY] = "ADD_PROPERTY",
+ 	[OF_RECONFIG_REMOVE_PROPERTY] = "REMOVE_PROPERTY",
+ 	[OF_RECONFIG_UPDATE_PROPERTY] = "UPDATE_PROPERTY",
+ };
+-#endif
+ 
+ int of_reconfig_notify(unsigned long action, struct of_reconfig_data *p)
+ {
+@@ -620,21 +619,9 @@ static int __of_changeset_entry_apply(st
+ 		}
+ 
+ 		ret = __of_add_property(ce->np, ce->prop);
+-		if (ret) {
+-			pr_err("changeset: add_property failed @%pOF/%s\n",
+-				ce->np,
+-				ce->prop->name);
+-			break;
+-		}
+ 		break;
+ 	case OF_RECONFIG_REMOVE_PROPERTY:
+ 		ret = __of_remove_property(ce->np, ce->prop);
+-		if (ret) {
+-			pr_err("changeset: remove_property failed @%pOF/%s\n",
+-				ce->np,
+-				ce->prop->name);
+-			break;
+-		}
+ 		break;
+ 
+ 	case OF_RECONFIG_UPDATE_PROPERTY:
+@@ -648,20 +635,17 @@ static int __of_changeset_entry_apply(st
+ 		}
+ 
+ 		ret = __of_update_property(ce->np, ce->prop, &old_prop);
+-		if (ret) {
+-			pr_err("changeset: update_property failed @%pOF/%s\n",
+-				ce->np,
+-				ce->prop->name);
+-			break;
+-		}
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
+ 	}
+ 	raw_spin_unlock_irqrestore(&devtree_lock, flags);
+ 
+-	if (ret)
++	if (ret) {
++		pr_err("changeset: apply failed: %-15s %pOF:%s\n",
++		       action_names[ce->action], ce->np, ce->prop->name);
+ 		return ret;
++	}
+ 
+ 	switch (ce->action) {
+ 	case OF_RECONFIG_ATTACH_NODE:
+@@ -947,6 +931,9 @@ int of_changeset_action(struct of_change
+ 	if (!ce)
+ 		return -ENOMEM;
+ 
++	if (WARN_ON(action >= ARRAY_SIZE(action_names)))
++		return -EINVAL;
++
+ 	/* get a reference to the node */
+ 	ce->action = action;
+ 	ce->np = of_node_get(np);
 
 
