@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BC3469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746A1C433C7;
-	Mon, 28 Aug 2023 10:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E97469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F596C433C7;
+	Mon, 28 Aug 2023 10:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218766;
-	bh=HaaA5huovCLfhI1wX41F6G2Yp66cWUXeUZVXFVJyhs0=;
+	s=korg; t=1693218769;
+	bh=ZE1k5kyy/7iHxMxcCJvJNiv9QrbbUlmsm7gLVQyTrlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwvQwm07Fr01nTZnXPLUaeJG15HnsSIgsJA8fKVHRlmTvQcMqY0vqQwyMa3AzE6X8
-	 Na1PNuFWR3V8pSTK1BMxI3BjA79JKNt4ThVg+a+kPlKEkQ5tsaakyy1erK+LQh9WFl
-	 ly8trkRzAcbXg9hzqFKnlu0P+U6uh8WvD7wa5lXI=
+	b=HcFx7lU7371OU7t7AxIfUAS/z3PdF2oGQCSVuKabFshgjCpLJQY1Ey69t080Qsl9i
+	 1bbqjZmdu4Q28z2eXqGVjKFTVi4cXp0ykXjc6xPF4neIuBCzSazrNAQ2gi8xtp+BNs
+	 /0/2ntU0/bdY1PHR3WxAdmvqV9CAEjyHRWpRJty4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 076/122] selinux: set next pointer before attaching to list
-Date: Mon, 28 Aug 2023 12:13:11 +0200
-Message-ID: <20230828101158.950373119@linuxfoundation.org>
+	Andrii Staikov <andrii.staikov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 050/122] i40e: fix potential NULL pointer dereferencing of pf->vf i40e_sync_vsi_filters()
+Date: Mon, 28 Aug 2023 12:12:45 +0200
+Message-ID: <20230828101158.079985006@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -33,47 +37,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-commit 70d91dc9b2ac91327d0eefd86163abc3548effa6 upstream.
+[ Upstream commit 9525a3c38accd2e186f52443e35e633e296cc7f5 ]
 
-Set the next pointer in filename_trans_read_helper() before attaching
-the new node under construction to the list, otherwise garbage would be
-dereferenced on subsequent failure during cleanup in the out goto label.
+Add check for pf->vf not being NULL before dereferencing
+pf->vf[vsi->vf_id] in updating VSI filter sync.
+Add a similar check before dereferencing !pf->vf[vsi->vf_id].trusted
+in the condition for clearing promisc mode bit.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 430059024389 ("selinux: implement new format of filename transitions")
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c87c938f62d8 ("i40e: Add VF VLAN pruning")
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/policydb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -2005,6 +2005,7 @@ static int filename_trans_read_helper(st
- 		if (!datum)
- 			goto out;
- 
-+		datum->next = NULL;
- 		*dst = datum;
- 
- 		/* ebitmap_read() will at least init the bitmap */
-@@ -2017,7 +2018,6 @@ static int filename_trans_read_helper(st
- 			goto out;
- 
- 		datum->otype = le32_to_cpu(buf[0]);
--		datum->next = NULL;
- 
- 		dst = &datum->next;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 0e01b1927c1c6..08ccf0024ce1a 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -2615,7 +2615,7 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
+ 			retval = i40e_correct_mac_vlan_filters
+ 				(vsi, &tmp_add_list, &tmp_del_list,
+ 				 vlan_filters);
+-		else
++		else if (pf->vf)
+ 			retval = i40e_correct_vf_mac_vlan_filters
+ 				(vsi, &tmp_add_list, &tmp_del_list,
+ 				 vlan_filters, pf->vf[vsi->vf_id].trusted);
+@@ -2788,7 +2788,8 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
  	}
+ 
+ 	/* if the VF is not trusted do not do promisc */
+-	if ((vsi->type == I40E_VSI_SRIOV) && !pf->vf[vsi->vf_id].trusted) {
++	if (vsi->type == I40E_VSI_SRIOV && pf->vf &&
++	    !pf->vf[vsi->vf_id].trusted) {
+ 		clear_bit(__I40E_VSI_OVERFLOW_PROMISC, vsi->state);
+ 		goto out;
+ 	}
+-- 
+2.40.1
+
 
 
