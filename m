@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F5363A2
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CF8C433CA;
-	Mon, 28 Aug 2023 10:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852C43FC2
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012CFC433C9;
+	Mon, 28 Aug 2023 10:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218703;
-	bh=gPeJxNgd0/YTULkv9k5Jgt6DXzYrD8AmLZMtum27MTU=;
+	s=korg; t=1693218706;
+	bh=brNCZzUPzw30BOGgpZXeQ2yW/TrGPcI1/vCREIR8x4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qi27OLTYOsrs5zxUU4BZ99aA2xiU1HQ/A5nf42U1w81B0BaWh++ZLUzcbts1/EzIv
-	 fNlO3DscJaIXhzhSx7IgZIsH5CyxTenrcwLI74qBjG3MMGrqhvckm6vaKpMXiXh+u+
-	 gqU7arl380vZp0FQH3Ej1an0kqYcG14agXX9mDZA=
+	b=ZBED2+/kzg0duC08fEvv4HBox/CXERrlbUYi+CWTlpA9sh9i2Phxv5h+7ww+31GJo
+	 XbY8/OiAywXgGelgi074LeYwXNfr1LzDFn9IO0eWg3spQc+c60Nevs/xBkISjj/R9b
+	 sMNl0ktYJmFecwxvG5RJf3IZprzaKAxI/ZW4EOYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/122] tracing: Fix memleak due to race between current_tracer and trace
-Date: Mon, 28 Aug 2023 12:12:20 +0200
-Message-ID: <20230828101157.273369411@linuxfoundation.org>
+Subject: [PATCH 6.1 016/122] can: raw: fix receiver memory leak
+Date: Mon, 28 Aug 2023 12:12:11 +0200
+Message-ID: <20230828101156.992105058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -40,120 +41,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit eecb91b9f98d6427d4af5fdb8f108f52572a39e7 ]
+[ Upstream commit ee8b94c8510ce64afe0b87ef548d23e00915fb10 ]
 
-Kmemleak report a leak in graph_trace_open():
+Got kmemleak errors with the following ltp can_filter testcase:
 
-  unreferenced object 0xffff0040b95f4a00 (size 128):
-    comm "cat", pid 204981, jiffies 4301155872 (age 99771.964s)
-    hex dump (first 32 bytes):
-      e0 05 e7 b4 ab 7d 00 00 0b 00 01 00 00 00 00 00 .....}..........
-      f4 00 01 10 00 a0 ff ff 00 00 00 00 65 00 10 00 ............e...
-    backtrace:
-      [<000000005db27c8b>] kmem_cache_alloc_trace+0x348/0x5f0
-      [<000000007df90faa>] graph_trace_open+0xb0/0x344
-      [<00000000737524cd>] __tracing_open+0x450/0xb10
-      [<0000000098043327>] tracing_open+0x1a0/0x2a0
-      [<00000000291c3876>] do_dentry_open+0x3c0/0xdc0
-      [<000000004015bcd6>] vfs_open+0x98/0xd0
-      [<000000002b5f60c9>] do_open+0x520/0x8d0
-      [<00000000376c7820>] path_openat+0x1c0/0x3e0
-      [<00000000336a54b5>] do_filp_open+0x14c/0x324
-      [<000000002802df13>] do_sys_openat2+0x2c4/0x530
-      [<0000000094eea458>] __arm64_sys_openat+0x130/0x1c4
-      [<00000000a71d7881>] el0_svc_common.constprop.0+0xfc/0x394
-      [<00000000313647bf>] do_el0_svc+0xac/0xec
-      [<000000002ef1c651>] el0_svc+0x20/0x30
-      [<000000002fd4692a>] el0_sync_handler+0xb0/0xb4
-      [<000000000c309c35>] el0_sync+0x160/0x180
+for ((i=1; i<=100; i++))
+do
+        ./can_filter &
+        sleep 0.1
+done
 
-The root cause is descripted as follows:
+==============================================================
+[<00000000db4a4943>] can_rx_register+0x147/0x360 [can]
+[<00000000a289549d>] raw_setsockopt+0x5ef/0x853 [can_raw]
+[<000000006d3d9ebd>] __sys_setsockopt+0x173/0x2c0
+[<00000000407dbfec>] __x64_sys_setsockopt+0x61/0x70
+[<00000000fd468496>] do_syscall_64+0x33/0x40
+[<00000000b7e47d51>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-  __tracing_open() {  // 1. File 'trace' is being opened;
-    ...
-    *iter->trace = *tr->current_trace;  // 2. Tracer 'function_graph' is
-                                        //    currently set;
-    ...
-    iter->trace->open(iter);  // 3. Call graph_trace_open() here,
-                              //    and memory are allocated in it;
-    ...
-  }
+It's a bug in the concurrent scenario of unregister_netdevice_many()
+and raw_release() as following:
 
-  s_start() {  // 4. The opened file is being read;
-    ...
-    *iter->trace = *tr->current_trace;  // 5. If tracer is switched to
-                                        //    'nop' or others, then memory
-                                        //    in step 3 are leaked!!!
-    ...
-  }
+             cpu0                                        cpu1
+unregister_netdevice_many(can_dev)
+  unlist_netdevice(can_dev) // dev_get_by_index() return NULL after this
+  net_set_todo(can_dev)
+						raw_release(can_socket)
+						  dev = dev_get_by_index(, ro->ifindex); // dev == NULL
+						  if (dev) { // receivers in dev_rcv_lists not free because dev is NULL
+						    raw_disable_allfilters(, dev, );
+						    dev_put(dev);
+						  }
+						  ...
+						  ro->bound = 0;
+						  ...
 
-To fix it, in s_start(), close tracer before switching then reopen the
-new tracer after switching. And some tracers like 'wakeup' may not update
-'iter->private' in some cases when reopen, then it should be cleared
-to avoid being mistakenly closed again.
+call_netdevice_notifiers(NETDEV_UNREGISTER, )
+  raw_notify(, NETDEV_UNREGISTER, )
+    if (ro->bound) // invalid because ro->bound has been set 0
+      raw_disable_allfilters(, dev, ); // receivers in dev_rcv_lists will never be freed
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230817125539.1646321-1-zhengyejian1@huawei.com
+Add a net_device pointer member in struct raw_sock to record bound
+can_dev, and use rtnl_lock to serialize raw_socket members between
+raw_bind(), raw_release(), raw_setsockopt() and raw_notify(). Use
+ro->dev to decide whether to free receivers in dev_rcv_lists.
 
-Fixes: d7350c3f4569 ("tracing/core: make the read callbacks reentrants")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 8d0caedb7596 ("can: bcm/raw/isotp: use per module netdevice notifier")
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Link: https://lore.kernel.org/all/20230711011737.1969582-1-william.xuanziyang@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c              | 9 ++++++++-
- kernel/trace/trace_irqsoff.c      | 3 ++-
- kernel/trace/trace_sched_wakeup.c | 2 ++
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ net/can/raw.c | 57 ++++++++++++++++++++++-----------------------------
+ 1 file changed, 24 insertions(+), 33 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index d56dcd78452c3..1a87cb70f1eb5 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -4128,8 +4128,15 @@ static void *s_start(struct seq_file *m, loff_t *pos)
- 	 * will point to the same string as current_trace->name.
- 	 */
- 	mutex_lock(&trace_types_lock);
--	if (unlikely(tr->current_trace && iter->trace->name != tr->current_trace->name))
-+	if (unlikely(tr->current_trace && iter->trace->name != tr->current_trace->name)) {
-+		/* Close iter->trace before switching to the new current tracer */
-+		if (iter->trace->close)
-+			iter->trace->close(iter);
- 		*iter->trace = *tr->current_trace;
-+		/* Reopen the new current tracer */
-+		if (iter->trace->open)
-+			iter->trace->open(iter);
-+	}
- 	mutex_unlock(&trace_types_lock);
+diff --git a/net/can/raw.c b/net/can/raw.c
+index 4abab2c3011a3..1cd2c8748c26a 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -84,6 +84,7 @@ struct raw_sock {
+ 	struct sock sk;
+ 	int bound;
+ 	int ifindex;
++	struct net_device *dev;
+ 	struct list_head notifier;
+ 	int loopback;
+ 	int recv_own_msgs;
+@@ -277,7 +278,7 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 	if (!net_eq(dev_net(dev), sock_net(sk)))
+ 		return;
  
- #ifdef CONFIG_TRACER_MAX_TRACE
-diff --git a/kernel/trace/trace_irqsoff.c b/kernel/trace/trace_irqsoff.c
-index 590b3d51afae9..ba37f768e2f27 100644
---- a/kernel/trace/trace_irqsoff.c
-+++ b/kernel/trace/trace_irqsoff.c
-@@ -231,7 +231,8 @@ static void irqsoff_trace_open(struct trace_iterator *iter)
- {
- 	if (is_graph(iter->tr))
- 		graph_trace_open(iter);
+-	if (ro->ifindex != dev->ifindex)
++	if (ro->dev != dev)
+ 		return;
+ 
+ 	switch (msg) {
+@@ -292,6 +293,7 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
+ 
+ 		ro->ifindex = 0;
+ 		ro->bound = 0;
++		ro->dev = NULL;
+ 		ro->count = 0;
+ 		release_sock(sk);
+ 
+@@ -337,6 +339,7 @@ static int raw_init(struct sock *sk)
+ 
+ 	ro->bound            = 0;
+ 	ro->ifindex          = 0;
++	ro->dev              = NULL;
+ 
+ 	/* set default filter to single entry dfilter */
+ 	ro->dfilter.can_id   = 0;
+@@ -385,19 +388,13 @@ static int raw_release(struct socket *sock)
+ 
+ 	lock_sock(sk);
+ 
++	rtnl_lock();
+ 	/* remove current filters & unregister */
+ 	if (ro->bound) {
+-		if (ro->ifindex) {
+-			struct net_device *dev;
 -
-+	else
-+		iter->private = NULL;
- }
+-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
+-			if (dev) {
+-				raw_disable_allfilters(dev_net(dev), dev, sk);
+-				dev_put(dev);
+-			}
+-		} else {
++		if (ro->dev)
++			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
++		else
+ 			raw_disable_allfilters(sock_net(sk), NULL, sk);
+-		}
+ 	}
  
- static void irqsoff_trace_close(struct trace_iterator *iter)
-diff --git a/kernel/trace/trace_sched_wakeup.c b/kernel/trace/trace_sched_wakeup.c
-index 330aee1c1a49e..0469a04a355f2 100644
---- a/kernel/trace/trace_sched_wakeup.c
-+++ b/kernel/trace/trace_sched_wakeup.c
-@@ -168,6 +168,8 @@ static void wakeup_trace_open(struct trace_iterator *iter)
- {
- 	if (is_graph(iter->tr))
- 		graph_trace_open(iter);
-+	else
-+		iter->private = NULL;
- }
+ 	if (ro->count > 1)
+@@ -405,8 +402,10 @@ static int raw_release(struct socket *sock)
  
- static void wakeup_trace_close(struct trace_iterator *iter)
+ 	ro->ifindex = 0;
+ 	ro->bound = 0;
++	ro->dev = NULL;
+ 	ro->count = 0;
+ 	free_percpu(ro->uniq);
++	rtnl_unlock();
+ 
+ 	sock_orphan(sk);
+ 	sock->sk = NULL;
+@@ -422,6 +421,7 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	struct sockaddr_can *addr = (struct sockaddr_can *)uaddr;
+ 	struct sock *sk = sock->sk;
+ 	struct raw_sock *ro = raw_sk(sk);
++	struct net_device *dev = NULL;
+ 	int ifindex;
+ 	int err = 0;
+ 	int notify_enetdown = 0;
+@@ -431,14 +431,13 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (addr->can_family != AF_CAN)
+ 		return -EINVAL;
+ 
++	rtnl_lock();
+ 	lock_sock(sk);
+ 
+ 	if (ro->bound && addr->can_ifindex == ro->ifindex)
+ 		goto out;
+ 
+ 	if (addr->can_ifindex) {
+-		struct net_device *dev;
+-
+ 		dev = dev_get_by_index(sock_net(sk), addr->can_ifindex);
+ 		if (!dev) {
+ 			err = -ENODEV;
+@@ -467,26 +466,20 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	if (!err) {
+ 		if (ro->bound) {
+ 			/* unregister old filters */
+-			if (ro->ifindex) {
+-				struct net_device *dev;
+-
+-				dev = dev_get_by_index(sock_net(sk),
+-						       ro->ifindex);
+-				if (dev) {
+-					raw_disable_allfilters(dev_net(dev),
+-							       dev, sk);
+-					dev_put(dev);
+-				}
+-			} else {
++			if (ro->dev)
++				raw_disable_allfilters(dev_net(ro->dev),
++						       ro->dev, sk);
++			else
+ 				raw_disable_allfilters(sock_net(sk), NULL, sk);
+-			}
+ 		}
+ 		ro->ifindex = ifindex;
+ 		ro->bound = 1;
++		ro->dev = dev;
+ 	}
+ 
+  out:
+ 	release_sock(sk);
++	rtnl_unlock();
+ 
+ 	if (notify_enetdown) {
+ 		sk->sk_err = ENETDOWN;
+@@ -552,9 +545,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		rtnl_lock();
+ 		lock_sock(sk);
+ 
+-		if (ro->bound && ro->ifindex) {
+-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
+-			if (!dev) {
++		dev = ro->dev;
++		if (ro->bound && dev) {
++			if (dev->reg_state != NETREG_REGISTERED) {
+ 				if (count > 1)
+ 					kfree(filter);
+ 				err = -ENODEV;
+@@ -595,7 +588,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		ro->count  = count;
+ 
+  out_fil:
+-		dev_put(dev);
+ 		release_sock(sk);
+ 		rtnl_unlock();
+ 
+@@ -613,9 +605,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		rtnl_lock();
+ 		lock_sock(sk);
+ 
+-		if (ro->bound && ro->ifindex) {
+-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
+-			if (!dev) {
++		dev = ro->dev;
++		if (ro->bound && dev) {
++			if (dev->reg_state != NETREG_REGISTERED) {
+ 				err = -ENODEV;
+ 				goto out_err;
+ 			}
+@@ -639,7 +631,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		ro->err_mask = err_mask;
+ 
+  out_err:
+-		dev_put(dev);
+ 		release_sock(sk);
+ 		rtnl_unlock();
+ 
 -- 
 2.40.1
 
