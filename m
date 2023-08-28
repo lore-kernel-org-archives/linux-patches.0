@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1436FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B2FC433C9;
-	Mon, 28 Aug 2023 10:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198A96FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E89FC433C7;
+	Mon, 28 Aug 2023 10:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217908;
-	bh=gvDNtOyALCStYtDt8WgR2Vx22NBEIhHHMB14Xx5gSG4=;
+	s=korg; t=1693217910;
+	bh=gAQCrrcxjMteKDhNELuTXCqDp/XzZlODc6QxWDd9mLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jreeUjiWqIWJvlZ+/P5XfhzQdOw1SZZgIEfJ+jwkHONpKBP73JOkha/yTeWYw8KJX
-	 8jYs2cIOZ5zIN9dIUp1tFwS45y31i2KTka0mGI9pUWjNXMXIM3pMXoW3lzMfnOx7I5
-	 8Vdy4eQ9GI70UUfTK9e+NBCPz8dMATU5L0cKdrVQ=
+	b=dj3P+d6QYGpZN14l4ciGgSjU8mDNkG7tAhe4oyaCel8fsjCeKKhJ9wOZ6R0uce1yE
+	 uHIrO2wBh8VRtsTxtuPNqzfdAwU8vskIuwmg8d/at3zpI/zd5T3wy2TnUaGHJWwiiD
+	 EgP08TgVYu+6f9FpoU8Efl7zrnzdiOWgJmVtHRWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 008/129] can: raw: fix receiver memory leak
-Date: Mon, 28 Aug 2023 12:11:27 +0200
-Message-ID: <20230828101157.659245949@linuxfoundation.org>
+Subject: [PATCH 6.4 026/129] net: dsa: mt7530: fix handling of 802.1X PAE frames
+Date: Mon, 28 Aug 2023 12:11:45 +0200
+Message-ID: <20230828101158.261891830@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -35,242 +35,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit ee8b94c8510ce64afe0b87ef548d23e00915fb10 ]
+[ Upstream commit e94b590abfff2cdbf0bdaa7d9904364c8d480af5 ]
 
-Got kmemleak errors with the following ltp can_filter testcase:
+802.1X PAE frames are link-local frames, therefore they must be trapped to
+the CPU port. Currently, the MT753X switches treat 802.1X PAE frames as
+regular multicast frames, therefore flooding them to user ports. To fix
+this, set 802.1X PAE frames to be trapped to the CPU port(s).
 
-for ((i=1; i<=100; i++))
-do
-        ./can_filter &
-        sleep 0.1
-done
-
-==============================================================
-[<00000000db4a4943>] can_rx_register+0x147/0x360 [can]
-[<00000000a289549d>] raw_setsockopt+0x5ef/0x853 [can_raw]
-[<000000006d3d9ebd>] __sys_setsockopt+0x173/0x2c0
-[<00000000407dbfec>] __x64_sys_setsockopt+0x61/0x70
-[<00000000fd468496>] do_syscall_64+0x33/0x40
-[<00000000b7e47d51>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
-
-It's a bug in the concurrent scenario of unregister_netdevice_many()
-and raw_release() as following:
-
-             cpu0                                        cpu1
-unregister_netdevice_many(can_dev)
-  unlist_netdevice(can_dev) // dev_get_by_index() return NULL after this
-  net_set_todo(can_dev)
-						raw_release(can_socket)
-						  dev = dev_get_by_index(, ro->ifindex); // dev == NULL
-						  if (dev) { // receivers in dev_rcv_lists not free because dev is NULL
-						    raw_disable_allfilters(, dev, );
-						    dev_put(dev);
-						  }
-						  ...
-						  ro->bound = 0;
-						  ...
-
-call_netdevice_notifiers(NETDEV_UNREGISTER, )
-  raw_notify(, NETDEV_UNREGISTER, )
-    if (ro->bound) // invalid because ro->bound has been set 0
-      raw_disable_allfilters(, dev, ); // receivers in dev_rcv_lists will never be freed
-
-Add a net_device pointer member in struct raw_sock to record bound
-can_dev, and use rtnl_lock to serialize raw_socket members between
-raw_bind(), raw_release(), raw_setsockopt() and raw_notify(). Use
-ro->dev to decide whether to free receivers in dev_rcv_lists.
-
-Fixes: 8d0caedb7596 ("can: bcm/raw/isotp: use per module netdevice notifier")
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Link: https://lore.kernel.org/all/20230711011737.1969582-1-william.xuanziyang@huawei.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/raw.c | 57 ++++++++++++++++++++++-----------------------------
- 1 file changed, 24 insertions(+), 33 deletions(-)
+ drivers/net/dsa/mt7530.c | 4 ++++
+ drivers/net/dsa/mt7530.h | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index f8e3866157a33..9fdad12d16325 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -84,6 +84,7 @@ struct raw_sock {
- 	struct sock sk;
- 	int bound;
- 	int ifindex;
-+	struct net_device *dev;
- 	struct list_head notifier;
- 	int loopback;
- 	int recv_own_msgs;
-@@ -277,7 +278,7 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
- 	if (!net_eq(dev_net(dev), sock_net(sk)))
- 		return;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 7e773c4ba0463..32dc4f19c82c6 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1006,6 +1006,10 @@ mt753x_trap_frames(struct mt7530_priv *priv)
+ 	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
+ 		   MT753X_BPDU_CPU_ONLY);
  
--	if (ro->ifindex != dev->ifindex)
-+	if (ro->dev != dev)
- 		return;
++	/* Trap 802.1X PAE frames to the CPU port(s) */
++	mt7530_rmw(priv, MT753X_BPC, MT753X_PAE_PORT_FW_MASK,
++		   MT753X_PAE_PORT_FW(MT753X_BPDU_CPU_ONLY));
++
+ 	/* Trap LLDP frames with :0E MAC DA to the CPU port(s) */
+ 	mt7530_rmw(priv, MT753X_RGAC2, MT753X_R0E_PORT_FW_MASK,
+ 		   MT753X_R0E_PORT_FW(MT753X_BPDU_CPU_ONLY));
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index 08045b035e6ab..17e42d30fff4b 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -66,6 +66,8 @@ enum mt753x_id {
+ /* Registers for BPDU and PAE frame control*/
+ #define MT753X_BPC			0x24
+ #define  MT753X_BPDU_PORT_FW_MASK	GENMASK(2, 0)
++#define  MT753X_PAE_PORT_FW_MASK	GENMASK(18, 16)
++#define  MT753X_PAE_PORT_FW(x)		FIELD_PREP(MT753X_PAE_PORT_FW_MASK, x)
  
- 	switch (msg) {
-@@ -292,6 +293,7 @@ static void raw_notify(struct raw_sock *ro, unsigned long msg,
- 
- 		ro->ifindex = 0;
- 		ro->bound = 0;
-+		ro->dev = NULL;
- 		ro->count = 0;
- 		release_sock(sk);
- 
-@@ -337,6 +339,7 @@ static int raw_init(struct sock *sk)
- 
- 	ro->bound            = 0;
- 	ro->ifindex          = 0;
-+	ro->dev              = NULL;
- 
- 	/* set default filter to single entry dfilter */
- 	ro->dfilter.can_id   = 0;
-@@ -385,19 +388,13 @@ static int raw_release(struct socket *sock)
- 
- 	lock_sock(sk);
- 
-+	rtnl_lock();
- 	/* remove current filters & unregister */
- 	if (ro->bound) {
--		if (ro->ifindex) {
--			struct net_device *dev;
--
--			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
--			if (dev) {
--				raw_disable_allfilters(dev_net(dev), dev, sk);
--				dev_put(dev);
--			}
--		} else {
-+		if (ro->dev)
-+			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
-+		else
- 			raw_disable_allfilters(sock_net(sk), NULL, sk);
--		}
- 	}
- 
- 	if (ro->count > 1)
-@@ -405,8 +402,10 @@ static int raw_release(struct socket *sock)
- 
- 	ro->ifindex = 0;
- 	ro->bound = 0;
-+	ro->dev = NULL;
- 	ro->count = 0;
- 	free_percpu(ro->uniq);
-+	rtnl_unlock();
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
-@@ -422,6 +421,7 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	struct sockaddr_can *addr = (struct sockaddr_can *)uaddr;
- 	struct sock *sk = sock->sk;
- 	struct raw_sock *ro = raw_sk(sk);
-+	struct net_device *dev = NULL;
- 	int ifindex;
- 	int err = 0;
- 	int notify_enetdown = 0;
-@@ -431,14 +431,13 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	if (addr->can_family != AF_CAN)
- 		return -EINVAL;
- 
-+	rtnl_lock();
- 	lock_sock(sk);
- 
- 	if (ro->bound && addr->can_ifindex == ro->ifindex)
- 		goto out;
- 
- 	if (addr->can_ifindex) {
--		struct net_device *dev;
--
- 		dev = dev_get_by_index(sock_net(sk), addr->can_ifindex);
- 		if (!dev) {
- 			err = -ENODEV;
-@@ -467,26 +466,20 @@ static int raw_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	if (!err) {
- 		if (ro->bound) {
- 			/* unregister old filters */
--			if (ro->ifindex) {
--				struct net_device *dev;
--
--				dev = dev_get_by_index(sock_net(sk),
--						       ro->ifindex);
--				if (dev) {
--					raw_disable_allfilters(dev_net(dev),
--							       dev, sk);
--					dev_put(dev);
--				}
--			} else {
-+			if (ro->dev)
-+				raw_disable_allfilters(dev_net(ro->dev),
-+						       ro->dev, sk);
-+			else
- 				raw_disable_allfilters(sock_net(sk), NULL, sk);
--			}
- 		}
- 		ro->ifindex = ifindex;
- 		ro->bound = 1;
-+		ro->dev = dev;
- 	}
- 
-  out:
- 	release_sock(sk);
-+	rtnl_unlock();
- 
- 	if (notify_enetdown) {
- 		sk->sk_err = ENETDOWN;
-@@ -553,9 +546,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
- 		rtnl_lock();
- 		lock_sock(sk);
- 
--		if (ro->bound && ro->ifindex) {
--			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
--			if (!dev) {
-+		dev = ro->dev;
-+		if (ro->bound && dev) {
-+			if (dev->reg_state != NETREG_REGISTERED) {
- 				if (count > 1)
- 					kfree(filter);
- 				err = -ENODEV;
-@@ -596,7 +589,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
- 		ro->count  = count;
- 
-  out_fil:
--		dev_put(dev);
- 		release_sock(sk);
- 		rtnl_unlock();
- 
-@@ -614,9 +606,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
- 		rtnl_lock();
- 		lock_sock(sk);
- 
--		if (ro->bound && ro->ifindex) {
--			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
--			if (!dev) {
-+		dev = ro->dev;
-+		if (ro->bound && dev) {
-+			if (dev->reg_state != NETREG_REGISTERED) {
- 				err = -ENODEV;
- 				goto out_err;
- 			}
-@@ -640,7 +632,6 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
- 		ro->err_mask = err_mask;
- 
-  out_err:
--		dev_put(dev);
- 		release_sock(sk);
- 		rtnl_unlock();
- 
+ /* Register for :03 and :0E MAC DA frame control */
+ #define MT753X_RGAC2			0x2c
 -- 
 2.40.1
 
