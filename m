@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A181F611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C623FC433C8;
-	Mon, 28 Aug 2023 10:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205CE611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:41:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970E5C433C8;
+	Mon, 28 Aug 2023 10:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219268;
-	bh=ZBZxFsXqnHmibq83M1gDZm1k+egw1VrHS/p2XDLXUvo=;
+	s=korg; t=1693219271;
+	bh=yAbQnjxPZhxGefE/STspDKV4KoqywJ5b53dwU9jZYZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dyffso3Kyr526EQf4ozHfHDJuljUVaFUuY0NW1lEf/R6REhu7q5f1t0bQHYHXuk3i
-	 NEGgPKQTGHoMbjKVLrgufZuYthrsDKd5G877GmJyLwytUmpktJU3VT0r1Z8rLEcB4W
-	 zE4aYhfparvkihNPL2gN27tHHPyjaD/9SveFRgWs=
+	b=IBGLY+EL+ISnZjQJqZDDycVCxDQghTnw8GX7sdQ1KM3Y4g2yjKGcYXmIz4+mVJHoN
+	 W9VvvJ5+X26L/rO/GSa628l0+ysutrR/rJMBhXgEoC48aZTR2xQM9C6l6P8jjpemla
+	 9mzD55kNdCbfZVB7a0f2lOhN3VSM+QUa2TSlWn/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Igor Bogani <alessio.bogani@elettra.eu>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 5.4 126/158] igb: Avoid starting unnecessary workqueues
-Date: Mon, 28 Aug 2023 12:13:43 +0200
-Message-ID: <20230828101201.646448121@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.4 135/158] batman-adv: Dont increase MTU when set by user
+Date: Mon, 28 Aug 2023 12:13:52 +0200
+Message-ID: <20230828101202.064516976@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -43,91 +39,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit b888c510f7b3d64ca75fc0f43b4a4bd1a611312f ]
+commit d8e42a2b0addf238be8b3b37dcd9795a5c1be459 upstream.
 
-If ptp_clock_register() fails or CONFIG_PTP isn't enabled, avoid starting
-PTP related workqueues.
+If the user set an MTU value, it usually means that there are special
+requirements for the MTU. But if an interface gots activated, the MTU was
+always recalculated and then the user set value was overwritten.
 
-In this way we can fix this:
- BUG: unable to handle page fault for address: ffffc9000440b6f8
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 100000067 P4D 100000067 PUD 1001e0067 PMD 107dc5067 PTE 0
- Oops: 0000 [#1] PREEMPT SMP
- [...]
- Workqueue: events igb_ptp_overflow_check
- RIP: 0010:igb_rd32+0x1f/0x60
- [...]
- Call Trace:
-  igb_ptp_read_82580+0x20/0x50
-  timecounter_read+0x15/0x60
-  igb_ptp_overflow_check+0x1a/0x50
-  process_one_work+0x1cb/0x3c0
-  worker_thread+0x53/0x3f0
-  ? rescuer_thread+0x370/0x370
-  kthread+0x142/0x160
-  ? kthread_associate_blkcg+0xc0/0xc0
-  ret_from_fork+0x1f/0x30
+The only reason why this user set value has to be overwritten, is when the
+MTU has to be decreased because batman-adv is not able to transfer packets
+with the user specified size.
 
-Fixes: 1f6e8178d685 ("igb: Prevent dropped Tx timestamps via work items and interrupts.")
-Fixes: d339b1331616 ("igb: add PTP Hardware Clock code")
-Signed-off-by: Alessio Igor Bogani <alessio.bogani@elettra.eu>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230821171927.2203644-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ptp.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ net/batman-adv/hard-interface.c |   14 +++++++++++++-
+ net/batman-adv/soft-interface.c |    3 +++
+ net/batman-adv/types.h          |    6 ++++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
-index c39e921757ba9..3c501c67bdbb6 100644
---- a/drivers/net/ethernet/intel/igb/igb_ptp.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
-@@ -1245,18 +1245,6 @@ void igb_ptp_init(struct igb_adapter *adapter)
- 		return;
- 	}
+--- a/net/batman-adv/hard-interface.c
++++ b/net/batman-adv/hard-interface.c
+@@ -632,7 +632,19 @@ out:
+  */
+ void batadv_update_min_mtu(struct net_device *soft_iface)
+ {
+-	dev_set_mtu(soft_iface, batadv_hardif_min_mtu(soft_iface));
++	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
++	int limit_mtu;
++	int mtu;
++
++	mtu = batadv_hardif_min_mtu(soft_iface);
++
++	if (bat_priv->mtu_set_by_user)
++		limit_mtu = bat_priv->mtu_set_by_user;
++	else
++		limit_mtu = ETH_DATA_LEN;
++
++	mtu = min(mtu, limit_mtu);
++	dev_set_mtu(soft_iface, mtu);
  
--	spin_lock_init(&adapter->tmreg_lock);
--	INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
--
--	if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
--		INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
--				  igb_ptp_overflow_check);
--
--	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
--	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
--
--	igb_ptp_reset(adapter);
--
- 	adapter->ptp_clock = ptp_clock_register(&adapter->ptp_caps,
- 						&adapter->pdev->dev);
- 	if (IS_ERR(adapter->ptp_clock)) {
-@@ -1266,6 +1254,18 @@ void igb_ptp_init(struct igb_adapter *adapter)
- 		dev_info(&adapter->pdev->dev, "added PHC on %s\n",
- 			 adapter->netdev->name);
- 		adapter->ptp_flags |= IGB_PTP_ENABLED;
+ 	/* Check if the local translate table should be cleaned up to match a
+ 	 * new (and smaller) MTU.
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -156,11 +156,14 @@ static int batadv_interface_set_mac_addr
+ 
+ static int batadv_interface_change_mtu(struct net_device *dev, int new_mtu)
+ {
++	struct batadv_priv *bat_priv = netdev_priv(dev);
 +
-+		spin_lock_init(&adapter->tmreg_lock);
-+		INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
-+
-+		if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
-+			INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
-+					  igb_ptp_overflow_check);
-+
-+		adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
-+		adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
-+
-+		igb_ptp_reset(adapter);
- 	}
+ 	/* check ranges */
+ 	if (new_mtu < 68 || new_mtu > batadv_hardif_min_mtu(dev))
+ 		return -EINVAL;
+ 
+ 	dev->mtu = new_mtu;
++	bat_priv->mtu_set_by_user = new_mtu;
+ 
+ 	return 0;
  }
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -1564,6 +1564,12 @@ struct batadv_priv {
+ 	struct net_device *soft_iface;
  
--- 
-2.40.1
-
+ 	/**
++	 * @mtu_set_by_user: MTU was set once by user
++	 * protected by rtnl_lock
++	 */
++	int mtu_set_by_user;
++
++	/**
+ 	 * @bat_counters: mesh internal traffic statistic counters (see
+ 	 *  batadv_counters)
+ 	 */
 
 
