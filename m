@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8244611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F4CC433C7;
-	Mon, 28 Aug 2023 10:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDFB611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F0EC433C8;
+	Mon, 28 Aug 2023 10:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219492;
-	bh=L0WJYFQQtHbmge/VBymJmHhUicKvnOSqBAHGFo5JTcg=;
+	s=korg; t=1693219495;
+	bh=NBebVoq+shgty5AJ9kgCgdv9pEJXFhaxkV2Zz+74cy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcqEOWrholWp5pOe1vnbocoBZZcn8atN1+7wQjrSKLNZkmRgM5dn95N35ihVBjI6V
-	 UwOGrc36W0XYibmi4TtW3iPyp5SIXrZtFcvIR3goqMz2c56f72cff0JrjAdjbY7UkY
-	 /ETHciFyMT11Z2+GSp9jiztXtkATmlMSCNRGhDx0=
+	b=MJVzm8hrL11qXu3QLiRogxBMU4Eb1/lCJveF0zN5e3UJRpvGtd0SWBFCaoL8JRBob
+	 rpAuQjibzYVdGIvd8IZktvKcfd1xJ3fX0hatTpcGhZFg7ED0QXbtGfJlHnz1rNT4Ye
+	 AyY//wwhtBk94kfiS19wf81xu6dwEso5Vm4XaxKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/89] fbdev: fix potential OOB read in fast_imageblit()
-Date: Mon, 28 Aug 2023 12:13:17 +0200
-Message-ID: <20230828101150.713918880@linuxfoundation.org>
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 5.15 49/89] clk: Fix slab-out-of-bounds error in devm_clk_release()
+Date: Mon, 28 Aug 2023 12:13:50 +0200
+Message-ID: <20230828101151.823242036@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -40,45 +39,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Andrey Skvortsov <andrej.skvortzov@gmail.com>
 
-[ Upstream commit c2d22806aecb24e2de55c30a06e5d6eb297d161d ]
+commit 66fbfb35da47f391bdadf9fa7ceb88af4faa9022 upstream.
 
-There is a potential OOB read at fast_imageblit, for
-"colortab[(*src >> 4)]" can become a negative value due to
-"const char *s = image->data, *src".
-This change makes sure the index for colortab always positive
-or zero.
+Problem can be reproduced by unloading snd_soc_simple_card, because in
+devm_get_clk_from_child() devres data is allocated as `struct clk`, but
+devm_clk_release() expects devres data to be `struct devm_clk_state`.
 
-Similar commit:
-https://patchwork.kernel.org/patch/11746067
+KASAN report:
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in devm_clk_release+0x20/0x54
+ Read of size 8 at addr ffffff800ee09688 by task (udev-worker)/287
 
-Potential bug report:
-https://groups.google.com/g/syzkaller-bugs/c/9ubBXKeKXf4/m/k-QXy4UgAAAJ
+ Call trace:
+  dump_backtrace+0xe8/0x11c
+  show_stack+0x1c/0x30
+  dump_stack_lvl+0x60/0x78
+  print_report+0x150/0x450
+  kasan_report+0xa8/0xf0
+  __asan_load8+0x78/0xa0
+  devm_clk_release+0x20/0x54
+  release_nodes+0x84/0x120
+  devres_release_all+0x144/0x210
+  device_unbind_cleanup+0x1c/0xac
+  really_probe+0x2f0/0x5b0
+  __driver_probe_device+0xc0/0x1f0
+  driver_probe_device+0x68/0x120
+  __driver_attach+0x140/0x294
+  bus_for_each_dev+0xec/0x160
+  driver_attach+0x38/0x44
+  bus_add_driver+0x24c/0x300
+  driver_register+0xf0/0x210
+  __platform_driver_register+0x48/0x54
+  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
+  do_one_initcall+0xac/0x340
+  do_init_module+0xd0/0x300
+  load_module+0x2ba4/0x3100
+  __do_sys_init_module+0x2c8/0x300
+  __arm64_sys_init_module+0x48/0x5c
+  invoke_syscall+0x64/0x190
+  el0_svc_common.constprop.0+0x124/0x154
+  do_el0_svc+0x44/0xdc
+  el0_svc+0x14/0x50
+  el0t_64_sync_handler+0xec/0x11c
+  el0t_64_sync+0x14c/0x150
 
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ Allocated by task 287:
+  kasan_save_stack+0x38/0x60
+  kasan_set_track+0x28/0x40
+  kasan_save_alloc_info+0x20/0x30
+  __kasan_kmalloc+0xac/0xb0
+  __kmalloc_node_track_caller+0x6c/0x1c4
+  __devres_alloc_node+0x44/0xb4
+  devm_get_clk_from_child+0x44/0xa0
+  asoc_simple_parse_clk+0x1b8/0x1dc [snd_soc_simple_card_utils]
+  simple_parse_node.isra.0+0x1ec/0x230 [snd_soc_simple_card]
+  simple_dai_link_of+0x1bc/0x334 [snd_soc_simple_card]
+  __simple_for_each_link+0x2ec/0x320 [snd_soc_simple_card]
+  asoc_simple_probe+0x468/0x4dc [snd_soc_simple_card]
+  platform_probe+0x90/0xf0
+  really_probe+0x118/0x5b0
+  __driver_probe_device+0xc0/0x1f0
+  driver_probe_device+0x68/0x120
+  __driver_attach+0x140/0x294
+  bus_for_each_dev+0xec/0x160
+  driver_attach+0x38/0x44
+  bus_add_driver+0x24c/0x300
+  driver_register+0xf0/0x210
+  __platform_driver_register+0x48/0x54
+  asoc_simple_card_init+0x24/0x1000 [snd_soc_simple_card]
+  do_one_initcall+0xac/0x340
+  do_init_module+0xd0/0x300
+  load_module+0x2ba4/0x3100
+  __do_sys_init_module+0x2c8/0x300
+  __arm64_sys_init_module+0x48/0x5c
+  invoke_syscall+0x64/0x190
+  el0_svc_common.constprop.0+0x124/0x154
+  do_el0_svc+0x44/0xdc
+  el0_svc+0x14/0x50
+  el0t_64_sync_handler+0xec/0x11c
+  el0t_64_sync+0x14c/0x150
+
+ The buggy address belongs to the object at ffffff800ee09600
+  which belongs to the cache kmalloc-256 of size 256
+ The buggy address is located 136 bytes inside of
+  256-byte region [ffffff800ee09600, ffffff800ee09700)
+
+ The buggy address belongs to the physical page:
+ page:000000002d97303b refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x4ee08
+ head:000000002d97303b order:1 compound_mapcount:0 compound_pincount:0
+ flags: 0x10200(slab|head|zone=0)
+ raw: 0000000000010200 0000000000000000 dead000000000122 ffffff8002c02480
+ raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ffffff800ee09580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  ffffff800ee09600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ >ffffff800ee09680: 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                       ^
+  ffffff800ee09700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  ffffff800ee09780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ==================================================================
+
+Fixes: abae8e57e49a ("clk: generalize devm_clk_get() a bit")
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Link: https://lore.kernel.org/r/20230805084847.3110586-1-andrej.skvortzov@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/sysimgblt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-devres.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/sysimgblt.c b/drivers/video/fbdev/core/sysimgblt.c
-index 335e92b813fc4..665ef7a0a2495 100644
---- a/drivers/video/fbdev/core/sysimgblt.c
-+++ b/drivers/video/fbdev/core/sysimgblt.c
-@@ -189,7 +189,7 @@ static void fast_imageblit(const struct fb_image *image, struct fb_info *p,
- 	u32 fgx = fgcolor, bgx = bgcolor, bpp = p->var.bits_per_pixel;
- 	u32 ppw = 32/bpp, spitch = (image->width + 7)/8;
- 	u32 bit_mask, eorx, shift;
--	const char *s = image->data, *src;
-+	const u8 *s = image->data, *src;
- 	u32 *dst;
- 	const u32 *tab;
- 	size_t tablen;
--- 
-2.40.1
-
+--- a/drivers/clk/clk-devres.c
++++ b/drivers/clk/clk-devres.c
+@@ -205,18 +205,19 @@ EXPORT_SYMBOL(devm_clk_put);
+ struct clk *devm_get_clk_from_child(struct device *dev,
+ 				    struct device_node *np, const char *con_id)
+ {
+-	struct clk **ptr, *clk;
++	struct devm_clk_state *state;
++	struct clk *clk;
+ 
+-	ptr = devres_alloc(devm_clk_release, sizeof(*ptr), GFP_KERNEL);
+-	if (!ptr)
++	state = devres_alloc(devm_clk_release, sizeof(*state), GFP_KERNEL);
++	if (!state)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	clk = of_clk_get_by_name(np, con_id);
+ 	if (!IS_ERR(clk)) {
+-		*ptr = clk;
+-		devres_add(dev, ptr);
++		state->clk = clk;
++		devres_add(dev, state);
+ 	} else {
+-		devres_free(ptr);
++		devres_free(state);
+ 	}
+ 
+ 	return clk;
 
 
