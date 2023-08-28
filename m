@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCB46FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967C8C433C8;
-	Mon, 28 Aug 2023 10:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A816FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:19:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E21C433C7;
+	Mon, 28 Aug 2023 10:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217939;
-	bh=/RYUeT9ASGvPdMRf23R2pPbiloayyd7Tfie5L5S6uSw=;
+	s=korg; t=1693217941;
+	bh=oMri1BRhwMl9d0g1ZR9AvkaCs8FXr6zEuXiNFNgCcKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xiY6YLIYCShUUeFAeyt/pUXIlLH7h8uBH+DkKumrrZxqwk+R7h2UzJhyNkNacRwZW
-	 n2F5ez/bXabVLm6DWnyKhVMaiXk3JBzpECyibs5Tzh3xjHrEwPkJasL7ChLDhDyjDv
-	 ygDV5nu/OWgPK9lQjM+NVawVwGstAw+X/F6mOo28=
+	b=UoDDJSljNoxjESGMyyNez+UTNqh2y2USQSlJx8hPgxsnDlhG3q6y+D+LM4krzg2Ox
+	 L6HReOSSc1qXYCdeZvJJRVOQEmFR4zjoRYQuTxeYEqjwfESOA6ZOJJqJPrsYxPF3wq
+	 vvJ5ajeJ4Ep9EooXeMa1yynME441W18Xkq4s9rX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Fiona Ebner <f.ebner@proxmox.com>,
+	Siva Reddy Kallam <siva.kallam@broadcom.com>,
+	Prashant Sreedharan <prashant@broadcom.com>,
+	Michael Chan <mchan@broadcom.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 009/129] can: raw: fix lockdep issue in raw_release()
-Date: Mon, 28 Aug 2023 12:11:28 +0200
-Message-ID: <20230828101157.688688497@linuxfoundation.org>
+Subject: [PATCH 6.4 036/129] tg3: Use slab_build_skb() when needed
+Date: Mon, 28 Aug 2023 12:11:55 +0200
+Message-ID: <20230828101158.583818028@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -43,157 +46,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 11c9027c983e9e4b408ee5613b6504d24ebd85be ]
+[ Upstream commit 99b415fe8986803ba0eaf6b8897b16edc8fe7ec2 ]
 
-syzbot complained about a lockdep issue [1]
+The tg3 driver will use kmalloc() under some conditions. Check the
+frag_size and use slab_build_skb() when frag_size is 0. Silences
+the warning introduced by commit ce098da1497c ("skbuff: Introduce
+slab_build_skb()"):
 
-Since raw_bind() and raw_setsockopt() first get RTNL
-before locking the socket, we must adopt the same order in raw_release()
+	Use slab_build_skb() instead
+	...
+	tg3_poll_work+0x638/0xf90 [tg3]
 
-[1]
-WARNING: possible circular locking dependency detected
-6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0 Not tainted
-------------------------------------------------------
-syz-executor.0/14110 is trying to acquire lock:
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1708 [inline]
-ffff88804e4b6130 (sk_lock-AF_CAN){+.+.}-{0:0}, at: raw_bind+0xb1/0xab0 net/can/raw.c:435
-
-but task is already holding lock:
-ffffffff8e3df368 (rtnl_mutex){+.+.}-{3:3}, at: raw_bind+0xa7/0xab0 net/can/raw.c:434
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (rtnl_mutex){+.+.}-{3:3}:
-__mutex_lock_common kernel/locking/mutex.c:603 [inline]
-__mutex_lock+0x181/0x1340 kernel/locking/mutex.c:747
-raw_release+0x1c6/0x9b0 net/can/raw.c:391
-__sock_release+0xcd/0x290 net/socket.c:654
-sock_close+0x1c/0x20 net/socket.c:1386
-__fput+0x3fd/0xac0 fs/file_table.c:384
-task_work_run+0x14d/0x240 kernel/task_work.c:179
-resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
-exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
-exit_to_user_mode_prepare+0x210/0x240 kernel/entry/common.c:204
-__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
-syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:297
-do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
--> #0 (sk_lock-AF_CAN){+.+.}-{0:0}:
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-other info that might help us debug this:
-
-Possible unsafe locking scenario:
-
-CPU0 CPU1
----- ----
-lock(rtnl_mutex);
-        lock(sk_lock-AF_CAN);
-        lock(rtnl_mutex);
-lock(sk_lock-AF_CAN);
-
-*** DEADLOCK ***
-
-1 lock held by syz-executor.0/14110:
-
-stack backtrace:
-CPU: 0 PID: 14110 Comm: syz-executor.0 Not tainted 6.5.0-rc1-syzkaller-00192-g78adb4bcf99e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
-check_noncircular+0x311/0x3f0 kernel/locking/lockdep.c:2195
-check_prev_add kernel/locking/lockdep.c:3142 [inline]
-check_prevs_add kernel/locking/lockdep.c:3261 [inline]
-validate_chain kernel/locking/lockdep.c:3876 [inline]
-__lock_acquire+0x2e3d/0x5de0 kernel/locking/lockdep.c:5144
-lock_acquire kernel/locking/lockdep.c:5761 [inline]
-lock_acquire+0x1ae/0x510 kernel/locking/lockdep.c:5726
-lock_sock_nested+0x3a/0xf0 net/core/sock.c:3492
-lock_sock include/net/sock.h:1708 [inline]
-raw_bind+0xb1/0xab0 net/can/raw.c:435
-__sys_bind+0x1ec/0x220 net/socket.c:1792
-__do_sys_bind net/socket.c:1803 [inline]
-__se_sys_bind net/socket.c:1801 [inline]
-__x64_sys_bind+0x72/0xb0 net/socket.c:1801
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd89007cb29
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd890d2a0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000031
-RAX: ffffffffffffffda RBX: 00007fd89019bf80 RCX: 00007fd89007cb29
-RDX: 0000000000000010 RSI: 0000000020000040 RDI: 0000000000000003
-RBP: 00007fd8900c847a R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd89019bf80 R15: 00007ffebf8124f8
-</TASK>
-
-Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>
-Cc: stable@vger.kernel.org
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/all/20230720114438.172434-1-edumazet@google.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: ce098da1497c ("skbuff: Introduce slab_build_skb()")
+Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Closes: https://lore.kernel.org/all/1bd4cb9c-4eb8-3bdb-3e05-8689817242d1@proxmox.com
+Cc: Siva Reddy Kallam <siva.kallam@broadcom.com>
+Cc: Prashant Sreedharan <prashant@broadcom.com>
+Cc: Michael Chan <mchan@broadcom.com>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230818175417.never.273-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/raw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index 9fdad12d16325..9fbbf6e00287f 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -386,9 +386,9 @@ static int raw_release(struct socket *sock)
- 	list_del(&ro->notifier);
- 	spin_unlock(&raw_notifier_lock);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 5ef073a79ce94..cb2810f175ccd 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -6881,7 +6881,10 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
  
-+	rtnl_lock();
- 	lock_sock(sk);
+ 			ri->data = NULL;
  
--	rtnl_lock();
- 	/* remove current filters & unregister */
- 	if (ro->bound) {
- 		if (ro->dev)
-@@ -405,12 +405,13 @@ static int raw_release(struct socket *sock)
- 	ro->dev = NULL;
- 	ro->count = 0;
- 	free_percpu(ro->uniq);
--	rtnl_unlock();
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
- 
- 	release_sock(sk);
-+	rtnl_unlock();
-+
- 	sock_put(sk);
- 
- 	return 0;
+-			skb = build_skb(data, frag_size);
++			if (frag_size)
++				skb = build_skb(data, frag_size);
++			else
++				skb = slab_build_skb(data);
+ 			if (!skb) {
+ 				tg3_frag_free(frag_size != 0, data);
+ 				goto drop_it_no_recycle;
 -- 
 2.40.1
 
