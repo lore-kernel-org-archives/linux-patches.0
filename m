@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85AD11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:21:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AF5C433C7;
-	Mon, 28 Aug 2023 10:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC2B11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:21:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33785C433C8;
+	Mon, 28 Aug 2023 10:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218062;
-	bh=+GSGEvjgsPL1S9q9U/zBn6utlVHKo14X9NGvJyfD1NM=;
+	s=korg; t=1693218065;
+	bh=Ll9ksOqLxMjAXxhaa4iogSa9a0HP/bzfM3R418gGJoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HBjLLo31GIi7pdSBo8/3ZKkLWMULwOzzpLPL/31Ys3nZowcFiy7BAw+0R3jlpftMp
-	 AnvcHTbdkBcJfMGpY9RstTYWoCIebp+LUvgPAVkDLYdBKvil2OCFa0xxBrIijmRqjO
-	 gjJEbfwskRJsmuD3tfsJa3vUEwWEl5P6bt7sfsDk=
+	b=Jcx1GCmC/qMeDZRkBmdO9UzWSrlHMUzDk5xmm5qX6kPxYRs6f/zgJDNkRbJfmlubN
+	 O0ydmEFYxay1fe6pI4ApUWg1JVXEVvB7MB86gQYY/KiCL4GZVDp11ZTdnXdF7PwwcL
+	 X3Z8s+OushFr1X5NC0XJHD81G2SpnoaM9coRyq6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Juri Lelli <juri.lelli@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.4 082/129] cgroup/cpuset: Iterate only if DEADLINE tasks are present
-Date: Mon, 28 Aug 2023 12:12:41 +0200
-Message-ID: <20230828101200.067831348@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	"Qais Yousef (Google)" <qyousef@layalina.io>
+Subject: [PATCH 6.4 083/129] sched/deadline: Create DL BW alloc, free & check overflow interface
+Date: Mon, 28 Aug 2023 12:12:42 +0200
+Message-ID: <20230828101200.103744383@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -41,39 +41,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
 
-commit c0f78fd5edcf29b2822ac165f9248a6c165e8554 upstream.
+commit 85989106feb734437e2d598b639991b9185a43a6 upstream.
 
-update_tasks_root_domain currently iterates over all tasks even if no
-DEADLINE task is present on the cpuset/root domain for which bandwidth
-accounting is being rebuilt. This has been reported to introduce 10+ ms
-delays on suspend-resume operations.
+While moving a set of tasks between exclusive cpusets,
+cpuset_can_attach() -> task_can_attach() calls dl_cpu_busy(..., p) for
+DL BW overflow checking and per-task DL BW allocation on the destination
+root_domain for the DL tasks in this set.
 
-Skip the costly iteration for cpusets that don't contain DEADLINE tasks.
+This approach has the issue of not freeing already allocated DL BW in
+the following error cases:
 
-Reported-by: Qais Yousef (Google) <qyousef@layalina.io>
-Link: https://lore.kernel.org/lkml/20230206221428.2125324-1-qyousef@layalina.io/
+(1) The set of tasks includes multiple DL tasks and DL BW overflow
+    checking fails for one of the subsequent DL tasks.
+
+(2) Another controller next to the cpuset controller which is attached
+    to the same cgroup fails in its can_attach().
+
+To address this problem rework dl_cpu_busy():
+
+(1) Split it into dl_bw_check_overflow() & dl_bw_alloc() and add a
+    dedicated dl_bw_free().
+
+(2) dl_bw_alloc() & dl_bw_free() take a `u64 dl_bw` parameter instead of
+    a `struct task_struct *p` used in dl_cpu_busy(). This allows to
+    allocate DL BW for a set of tasks too rather than only for a single
+    task.
+
+Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
 Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/sched.h   |    2 +
+ kernel/sched/core.c     |    4 +--
+ kernel/sched/deadline.c |   53 ++++++++++++++++++++++++++++++++++++------------
+ kernel/sched/sched.h    |    2 -
+ 4 files changed, 45 insertions(+), 16 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1092,6 +1092,9 @@ static void dl_update_tasks_root_domain(
- 	struct css_task_iter it;
- 	struct task_struct *task;
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1853,6 +1853,8 @@ current_restore_flags(unsigned long orig
  
-+	if (cs->nr_deadline_tasks == 0)
-+		return;
+ extern int cpuset_cpumask_can_shrink(const struct cpumask *cur, const struct cpumask *trial);
+ extern int task_can_attach(struct task_struct *p, const struct cpumask *cs_effective_cpus);
++extern int dl_bw_alloc(int cpu, u64 dl_bw);
++extern void dl_bw_free(int cpu, u64 dl_bw);
+ #ifdef CONFIG_SMP
+ extern void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask);
+ extern int set_cpus_allowed_ptr(struct task_struct *p, const struct cpumask *new_mask);
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9319,7 +9319,7 @@ int task_can_attach(struct task_struct *
+ 
+ 		if (unlikely(cpu >= nr_cpu_ids))
+ 			return -EINVAL;
+-		ret = dl_cpu_busy(cpu, p);
++		ret = dl_bw_alloc(cpu, p->dl.dl_bw);
+ 	}
+ 
+ out:
+@@ -9604,7 +9604,7 @@ static void cpuset_cpu_active(void)
+ static int cpuset_cpu_inactive(unsigned int cpu)
+ {
+ 	if (!cpuhp_tasks_frozen) {
+-		int ret = dl_cpu_busy(cpu, NULL);
++		int ret = dl_bw_check_overflow(cpu);
+ 
+ 		if (ret)
+ 			return ret;
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -3058,26 +3058,38 @@ int dl_cpuset_cpumask_can_shrink(const s
+ 	return ret;
+ }
+ 
+-int dl_cpu_busy(int cpu, struct task_struct *p)
++enum dl_bw_request {
++	dl_bw_req_check_overflow = 0,
++	dl_bw_req_alloc,
++	dl_bw_req_free
++};
 +
- 	css_task_iter_start(&cs->css, 0, &it);
++static int dl_bw_manage(enum dl_bw_request req, int cpu, u64 dl_bw)
+ {
+-	unsigned long flags, cap;
++	unsigned long flags;
+ 	struct dl_bw *dl_b;
+-	bool overflow;
++	bool overflow = 0;
  
- 	while ((task = css_task_iter_next(&it)))
+ 	rcu_read_lock_sched();
+ 	dl_b = dl_bw_of(cpu);
+ 	raw_spin_lock_irqsave(&dl_b->lock, flags);
+-	cap = dl_bw_capacity(cpu);
+-	overflow = __dl_overflow(dl_b, cap, 0, p ? p->dl.dl_bw : 0);
+ 
+-	if (!overflow && p) {
+-		/*
+-		 * We reserve space for this task in the destination
+-		 * root_domain, as we can't fail after this point.
+-		 * We will free resources in the source root_domain
+-		 * later on (see set_cpus_allowed_dl()).
+-		 */
+-		__dl_add(dl_b, p->dl.dl_bw, dl_bw_cpus(cpu));
++	if (req == dl_bw_req_free) {
++		__dl_sub(dl_b, dl_bw, dl_bw_cpus(cpu));
++	} else {
++		unsigned long cap = dl_bw_capacity(cpu);
++
++		overflow = __dl_overflow(dl_b, cap, 0, dl_bw);
++
++		if (req == dl_bw_req_alloc && !overflow) {
++			/*
++			 * We reserve space in the destination
++			 * root_domain, as we can't fail after this point.
++			 * We will free resources in the source root_domain
++			 * later on (see set_cpus_allowed_dl()).
++			 */
++			__dl_add(dl_b, dl_bw, dl_bw_cpus(cpu));
++		}
+ 	}
+ 
+ 	raw_spin_unlock_irqrestore(&dl_b->lock, flags);
+@@ -3085,6 +3097,21 @@ int dl_cpu_busy(int cpu, struct task_str
+ 
+ 	return overflow ? -EBUSY : 0;
+ }
++
++int dl_bw_check_overflow(int cpu)
++{
++	return dl_bw_manage(dl_bw_req_check_overflow, cpu, 0);
++}
++
++int dl_bw_alloc(int cpu, u64 dl_bw)
++{
++	return dl_bw_manage(dl_bw_req_alloc, cpu, dl_bw);
++}
++
++void dl_bw_free(int cpu, u64 dl_bw)
++{
++	dl_bw_manage(dl_bw_req_free, cpu, dl_bw);
++}
+ #endif
+ 
+ #ifdef CONFIG_SCHED_DEBUG
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -330,7 +330,7 @@ extern void __getparam_dl(struct task_st
+ extern bool __checkparam_dl(const struct sched_attr *attr);
+ extern bool dl_param_changed(struct task_struct *p, const struct sched_attr *attr);
+ extern int  dl_cpuset_cpumask_can_shrink(const struct cpumask *cur, const struct cpumask *trial);
+-extern int  dl_cpu_busy(int cpu, struct task_struct *p);
++extern int  dl_bw_check_overflow(int cpu);
+ 
+ #ifdef CONFIG_CGROUP_SCHED
+ 
 
 
