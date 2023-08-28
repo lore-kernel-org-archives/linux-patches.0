@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C097F11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D58AC433C8;
-	Mon, 28 Aug 2023 10:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADDA11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D66C433C8;
+	Mon, 28 Aug 2023 10:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217858;
-	bh=KDoaFPaehos2gUDRLbOSQnDqJL1BrHZ1++thCPkYlQg=;
+	s=korg; t=1693217861;
+	bh=HgWyuBtbh0wZqjC4Bp9BsFdyE2kryrz6E70ioROZqv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0zU+yhnngBIyHyQ4935P0J19ACZX9mAdbDYpSuTJqF8nGXKGsz23mQ526Q8Xz/TYY
-	 ZEgbFPbxYVUfAYqbHCyqTE+pXMNNc7wPUl0OsxlZUTxyw1NT1QqVPWWzjfolrVUVHg
-	 bmIg/GtzE7+1+n3sJQvRhIPOdwiSq24zgzNywpp0=
+	b=U0u8zyXMh2XOTXIU/uKgH699QU3DAdquBGbI/bItAQg1o2SNVKNhp+/2u5SG1W0f5
+	 FwfOa1G+fBKFEAWuqtgnnY8/K3oj5PF2nGUbE0alWv4osw7rHA4dF24zbjKDb4Dnyw
+	 GefvVCMflXRUGwVtIpX5oMC7FPOJV7zWf7Chxlz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 40/57] net: phy: broadcom: stub c45 read/write for 54810
-Date: Mon, 28 Aug 2023 12:13:00 +0200
-Message-ID: <20230828101145.730594925@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 001/129] NFSv4.2: fix error handling in nfs42_proc_getxattr
+Date: Mon, 28 Aug 2023 12:11:20 +0200
+Message-ID: <20230828101157.435582071@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
-References: <20230828101144.231099710@linuxfoundation.org>
+In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
+References: <20230828101157.383363777@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,59 +37,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 096516d092d54604d590827d05b1022c8f326639 upstream.
+[ Upstream commit 4e3733fd2b0f677faae21cf838a43faf317986d3 ]
 
-The 54810 does not support c45. The mmd_phy_indirect accesses return
-arbirtary values leading to odd behavior like saying it supports EEE
-when it doesn't. We also see that reading/writing these non-existent
-MMD registers leads to phy instability in some cases.
+There is a slight issue with error handling code inside
+nfs42_proc_getxattr(). If page allocating loop fails then we free the
+failing page array element which is NULL but __free_page() can't deal with
+NULL args.
 
-Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[florian: resolved conflicts in 4.14]
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: a1f26739ccdc ("NFSv4.2: improve page handling for GETXATTR")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/broadcom.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/nfs/nfs42proc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/net/phy/broadcom.c
-+++ b/drivers/net/phy/broadcom.c
-@@ -403,6 +403,17 @@ static int bcm5482_read_status(struct ph
- 	return err;
- }
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index 93e306bf4430f..5d7e0511f3513 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -1360,7 +1360,6 @@ ssize_t nfs42_proc_getxattr(struct inode *inode, const char *name,
+ 	for (i = 0; i < np; i++) {
+ 		pages[i] = alloc_page(GFP_KERNEL);
+ 		if (!pages[i]) {
+-			np = i + 1;
+ 			err = -ENOMEM;
+ 			goto out;
+ 		}
+@@ -1384,8 +1383,8 @@ ssize_t nfs42_proc_getxattr(struct inode *inode, const char *name,
+ 	} while (exception.retry);
  
-+static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
-+			      u16 val)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int bcm5481_config_aneg(struct phy_device *phydev)
- {
- 	struct device_node *np = phydev->mdio.dev.of_node;
-@@ -650,6 +661,8 @@ static struct phy_driver broadcom_driver
- 	.name           = "Broadcom BCM54810",
- 	.features       = PHY_GBIT_FEATURES,
- 	.flags          = PHY_HAS_INTERRUPT,
-+	.read_mmd	= bcm54810_read_mmd,
-+	.write_mmd	= bcm54810_write_mmd,
- 	.config_init    = bcm54xx_config_init,
- 	.config_aneg    = bcm5481_config_aneg,
- 	.read_status    = genphy_read_status,
+ out:
+-	while (--np >= 0)
+-		__free_page(pages[np]);
++	while (--i >= 0)
++		__free_page(pages[i]);
+ 	kfree(pages);
+ 
+ 	return err;
+-- 
+2.40.1
+
 
 
