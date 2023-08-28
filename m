@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13221611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CCCC433C8;
-	Mon, 28 Aug 2023 10:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3985611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:40:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF9BC433C9;
+	Mon, 28 Aug 2023 10:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219198;
-	bh=c0O7kvri/r7ooOd+xT3ljOqORVHCkXGZJq9EYtIj528=;
+	s=korg; t=1693219201;
+	bh=2kvhohtT82iYXQo62LMH+I9RwLXOcivncsuwXj5rjfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOdWEMQrlTWefsAb6B9fiHl2WxqoEGBeLjpNsnGtx3m525BKOxS2sCJtI7ifdPuB4
-	 eyCekkgMMw446nY8qhxYhLDJ4QNljpJcIjh5OQq4o4cn9ErdsjipPceL7tnmk8fP8D
-	 qM/AGc1b503n0VcUivZpdJKwEZGQ4CyTaM/01bHw=
+	b=myPUX6UUTlU+sxLC/Pti0DS8u5TR4sbBmzD81BGQiYFLygAgPjGPp998d4JwopbRN
+	 XlyIhhcLnfMLqpXMN1KyIM9SCd4oQJEa9m0s1atyKL1NwmyRaDKytnoln1HsTIUR0J
+	 85oPsYrt0Fvu+wi4MAy7hQY8jZVIYIbbMjMbcCJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 109/158] ALSA: pcm: Set per-card upper limit of PCM buffer allocations
-Date: Mon, 28 Aug 2023 12:13:26 +0200
-Message-ID: <20230828101200.977406987@linuxfoundation.org>
+Subject: [PATCH 5.4 110/158] ALSA: pcm: Use SG-buffer only when direct DMA is available
+Date: Mon, 28 Aug 2023 12:13:27 +0200
+Message-ID: <20230828101201.006794656@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -41,214 +41,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d4cfb30fce03093ad944e0b44bd8f40bdad5330e ]
+[ Upstream commit 3ad796cbc36a7bc8bfd4de191d791b9490bc112b ]
 
-Currently, the available buffer allocation size for a PCM stream
-depends on the preallocated size; when a buffer has been preallocated,
-the max buffer size is set to that size, so that application won't
-re-allocate too much memory.  OTOH, when no preallocation is done,
-each substream may allocate arbitrary size of buffers as long as
-snd_pcm_hardware.buffer_bytes_max allows -- which can be quite high,
-HD-audio sets 1GB there.
+The DMA-coherent SG-buffer is tricky to use, as it does need the
+mapping.  It used to work stably on x86 over years (and that's why we
+had enabled SG-buffer on solely x86) with the default mmap handler and
+vmap(), but our luck seems no forever success.  The chance of breakage
+is high when the special DMA handling is introduced in the arch side.
 
-It means that the system may consume a high amount of pages for PCM
-buffers, and they are pinned and never swapped out.  This can lead to
-OOM easily.
+In this patch, we change the buffer allocation to use the SG-buffer
+only when the device in question is with the direct DMA.  It's a bit
+hackish, but it's currently the only condition that may work (more or
+less) reliably with the default mmap and vmap() for mapping the pages
+that are deduced via virt_to_page().
 
-For avoiding such a situation, this patch adds the upper limit per
-card.  Each snd_pcm_lib_malloc_pages() and _free_pages() calls are
-tracked and it will return an error if the total amount of buffers
-goes over the defined upper limit.  The default value is set to 32MB,
-which should be really large enough for usual operations.
+In theory, we can apply the similar hack in the sound/core memory
+allocation helper, too; but it's used by SOF for allocating SG pages
+without re-mapping via vmap() or mmap, and it's fine to use it in that
+way, so let's keep it and adds the workaround in PCM side.
 
-If larger buffers are needed for any specific usage, it can be
-adjusted (also dynamically) via snd_pcm.max_alloc_per_card option.
-Setting zero there means no chceck is performed, and again, unlimited
-amount of buffers are allowed.
-
-Link: https://lore.kernel.org/r/20200120124423.11862-1-tiwai@suse.de
+Link: https://lore.kernel.org/r/20200615160045.2703-5-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Stable-dep-of: bd55842ed998 ("ALSA: pcm: Fix potential data race at PCM memory allocation helpers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h    |  3 ++
- sound/core/init.c       |  1 +
- sound/core/pcm_memory.c | 69 ++++++++++++++++++++++++++++++-----------
- 3 files changed, 55 insertions(+), 18 deletions(-)
+ sound/core/pcm_memory.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index 8a80121811d94..e4b24dcb4b190 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -119,6 +119,9 @@ struct snd_card {
- 	bool registered;		/* card_dev is registered? */
- 	wait_queue_head_t remove_sleep;
- 
-+	size_t total_pcm_alloc_bytes;	/* total amount of allocated buffers */
-+	struct mutex memory_mutex;	/* protection for the above */
-+
- #ifdef CONFIG_PM
- 	unsigned int power_state;	/* power state */
- 	wait_queue_head_t power_sleep;
-diff --git a/sound/core/init.c b/sound/core/init.c
-index 45bbc4884ef0f..a127763ae5fbd 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -211,6 +211,7 @@ int snd_card_new(struct device *parent, int idx, const char *xid,
- 	INIT_LIST_HEAD(&card->ctl_files);
- 	spin_lock_init(&card->files_lock);
- 	INIT_LIST_HEAD(&card->files_list);
-+	mutex_init(&card->memory_mutex);
- #ifdef CONFIG_PM
- 	init_waitqueue_head(&card->power_sleep);
- #endif
 diff --git a/sound/core/pcm_memory.c b/sound/core/pcm_memory.c
-index 9aea1d6fb0547..94bd5de01a4d0 100644
+index 94bd5de01a4d0..97b471d7b32e5 100644
 --- a/sound/core/pcm_memory.c
 +++ b/sound/core/pcm_memory.c
-@@ -26,6 +26,38 @@ MODULE_PARM_DESC(maximum_substreams, "Maximum substreams with preallocated DMA m
- 
- static const size_t snd_minimum_buffer = 16384;
- 
-+static unsigned long max_alloc_per_card = 32UL * 1024UL * 1024UL;
-+module_param(max_alloc_per_card, ulong, 0644);
-+MODULE_PARM_DESC(max_alloc_per_card, "Max total allocation bytes per card.");
+@@ -11,6 +11,7 @@
+ #include <linux/moduleparam.h>
+ #include <linux/vmalloc.h>
+ #include <linux/export.h>
++#include <linux/dma-mapping.h>
+ #include <sound/core.h>
+ #include <sound/pcm.h>
+ #include <sound/info.h>
+@@ -38,6 +39,18 @@ static int do_alloc_pages(struct snd_card *card, int type, struct device *dev,
+ 	if (max_alloc_per_card &&
+ 	    card->total_pcm_alloc_bytes + size > max_alloc_per_card)
+ 		return -ENOMEM;
 +
-+static int do_alloc_pages(struct snd_card *card, int type, struct device *dev,
-+			  size_t size, struct snd_dma_buffer *dmab)
-+{
-+	int err;
-+
-+	if (max_alloc_per_card &&
-+	    card->total_pcm_alloc_bytes + size > max_alloc_per_card)
-+		return -ENOMEM;
-+	err = snd_dma_alloc_pages(type, dev, size, dmab);
-+	if (!err) {
-+		mutex_lock(&card->memory_mutex);
-+		card->total_pcm_alloc_bytes += dmab->bytes;
-+		mutex_unlock(&card->memory_mutex);
++	if (IS_ENABLED(CONFIG_SND_DMA_SGBUF) &&
++	    (type == SNDRV_DMA_TYPE_DEV_SG || type == SNDRV_DMA_TYPE_DEV_UC_SG) &&
++	    !dma_is_direct(get_dma_ops(dev))) {
++		/* mutate to continuous page allocation */
++		dev_dbg(dev, "Use continuous page allocator\n");
++		if (type == SNDRV_DMA_TYPE_DEV_SG)
++			type = SNDRV_DMA_TYPE_DEV;
++		else
++			type = SNDRV_DMA_TYPE_DEV_UC;
 +	}
-+	return err;
-+}
 +
-+static void do_free_pages(struct snd_card *card, struct snd_dma_buffer *dmab)
-+{
-+	if (!dmab->area)
-+		return;
-+	mutex_lock(&card->memory_mutex);
-+	WARN_ON(card->total_pcm_alloc_bytes < dmab->bytes);
-+	card->total_pcm_alloc_bytes -= dmab->bytes;
-+	mutex_unlock(&card->memory_mutex);
-+	snd_dma_free_pages(dmab);
-+	dmab->area = NULL;
-+}
- 
- /*
-  * try to allocate as the large pages as possible.
-@@ -36,16 +68,15 @@ static const size_t snd_minimum_buffer = 16384;
- static int preallocate_pcm_pages(struct snd_pcm_substream *substream, size_t size)
- {
- 	struct snd_dma_buffer *dmab = &substream->dma_buffer;
-+	struct snd_card *card = substream->pcm->card;
- 	size_t orig_size = size;
- 	int err;
- 
- 	do {
--		if ((err = snd_dma_alloc_pages(dmab->dev.type, dmab->dev.dev,
--					       size, dmab)) < 0) {
--			if (err != -ENOMEM)
--				return err; /* fatal error */
--		} else
--			return 0;
-+		err = do_alloc_pages(card, dmab->dev.type, dmab->dev.dev,
-+				     size, dmab);
-+		if (err != -ENOMEM)
-+			return err;
- 		size >>= 1;
- 	} while (size >= snd_minimum_buffer);
- 	dmab->bytes = 0; /* tell error */
-@@ -61,10 +92,7 @@ static int preallocate_pcm_pages(struct snd_pcm_substream *substream, size_t siz
-  */
- static void snd_pcm_lib_preallocate_dma_free(struct snd_pcm_substream *substream)
- {
--	if (substream->dma_buffer.area == NULL)
--		return;
--	snd_dma_free_pages(&substream->dma_buffer);
--	substream->dma_buffer.area = NULL;
-+	do_free_pages(substream->pcm->card, &substream->dma_buffer);
- }
- 
- /**
-@@ -129,6 +157,7 @@ static void snd_pcm_lib_preallocate_proc_write(struct snd_info_entry *entry,
- 					       struct snd_info_buffer *buffer)
- {
- 	struct snd_pcm_substream *substream = entry->private_data;
-+	struct snd_card *card = substream->pcm->card;
- 	char line[64], str[64];
- 	size_t size;
- 	struct snd_dma_buffer new_dmab;
-@@ -150,9 +179,10 @@ static void snd_pcm_lib_preallocate_proc_write(struct snd_info_entry *entry,
- 		memset(&new_dmab, 0, sizeof(new_dmab));
- 		new_dmab.dev = substream->dma_buffer.dev;
- 		if (size > 0) {
--			if (snd_dma_alloc_pages(substream->dma_buffer.dev.type,
--						substream->dma_buffer.dev.dev,
--						size, &new_dmab) < 0) {
-+			if (do_alloc_pages(card,
-+					   substream->dma_buffer.dev.type,
-+					   substream->dma_buffer.dev.dev,
-+					   size, &new_dmab) < 0) {
- 				buffer->error = -ENOMEM;
- 				goto unlock;
- 			}
-@@ -161,7 +191,7 @@ static void snd_pcm_lib_preallocate_proc_write(struct snd_info_entry *entry,
- 			substream->buffer_bytes_max = UINT_MAX;
- 		}
- 		if (substream->dma_buffer.area)
--			snd_dma_free_pages(&substream->dma_buffer);
-+			do_free_pages(card, &substream->dma_buffer);
- 		substream->dma_buffer = new_dmab;
- 	} else {
- 		buffer->error = -EINVAL;
-@@ -289,6 +319,7 @@ EXPORT_SYMBOL(snd_pcm_sgbuf_ops_page);
-  */
- int snd_pcm_lib_malloc_pages(struct snd_pcm_substream *substream, size_t size)
- {
-+	struct snd_card *card = substream->pcm->card;
- 	struct snd_pcm_runtime *runtime;
- 	struct snd_dma_buffer *dmab = NULL;
- 
-@@ -317,9 +348,10 @@ int snd_pcm_lib_malloc_pages(struct snd_pcm_substream *substream, size_t size)
- 		if (! dmab)
- 			return -ENOMEM;
- 		dmab->dev = substream->dma_buffer.dev;
--		if (snd_dma_alloc_pages(substream->dma_buffer.dev.type,
--					substream->dma_buffer.dev.dev,
--					size, dmab) < 0) {
-+		if (do_alloc_pages(card,
-+				   substream->dma_buffer.dev.type,
-+				   substream->dma_buffer.dev.dev,
-+				   size, dmab) < 0) {
- 			kfree(dmab);
- 			return -ENOMEM;
- 		}
-@@ -340,6 +372,7 @@ EXPORT_SYMBOL(snd_pcm_lib_malloc_pages);
-  */
- int snd_pcm_lib_free_pages(struct snd_pcm_substream *substream)
- {
-+	struct snd_card *card = substream->pcm->card;
- 	struct snd_pcm_runtime *runtime;
- 
- 	if (PCM_RUNTIME_CHECK(substream))
-@@ -349,7 +382,7 @@ int snd_pcm_lib_free_pages(struct snd_pcm_substream *substream)
- 		return 0;
- 	if (runtime->dma_buffer_p != &substream->dma_buffer) {
- 		/* it's a newly allocated buffer.  release it now. */
--		snd_dma_free_pages(runtime->dma_buffer_p);
-+		do_free_pages(card, runtime->dma_buffer_p);
- 		kfree(runtime->dma_buffer_p);
- 	}
- 	snd_pcm_set_runtime_buffer(substream, NULL);
+ 	err = snd_dma_alloc_pages(type, dev, size, dmab);
+ 	if (!err) {
+ 		mutex_lock(&card->memory_mutex);
 -- 
 2.40.1
 
