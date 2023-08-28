@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADA611C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3B7C433C7;
-	Mon, 28 Aug 2023 10:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E2E11C94
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA55C433C8;
+	Mon, 28 Aug 2023 10:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218687;
-	bh=Q7ev6SjUMvH8r93yzRCZ1Q3kSy1doWQKeMrbok7SB2c=;
+	s=korg; t=1693218690;
+	bh=QNe/QEY/Mk/Dkn9Im5z862V6xl+U0WjpVTg7QF+JV44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5YGqb7tNi8GQT+Ujhi1fwTDSpz/SsqevrPtleThf+Ct4+YJq4Y8Sgn4jcAsmWKg7
-	 fEkYTc7psxrIEwN5DwLKDI/i4ewmI7YRcVk2Agj98JjQzvLdTYeXdyw7nZoRuZxdmx
-	 3r7qcGAs/8h3H4ckT8qFrKgGkRvo5tt96tPI5Wgo=
+	b=lT+1ZohtlNA/s+svAAic4dTp3HTZ850gjqvL9MpAHIjjTP1h5IuNTgI0dlwXKvC8N
+	 1tPRXV/OM4uBTlyhoa7t9x/Jz3dNuNo2H6Dqd285vk4wfU8yz6Y4KPGTFnOfzl9Yra
+	 2UIMaJZjVujdOfhlGltD0n9Uqwre8rN1f5y6WF2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/122] can: isotp: fix support for transmission of SF without flow control
-Date: Mon, 28 Aug 2023 12:12:41 +0200
-Message-ID: <20230828101157.949950089@linuxfoundation.org>
+Subject: [PATCH 6.1 020/122] drm/i915: Add the gen12_needs_ccs_aux_inv helper
+Date: Mon, 28 Aug 2023 12:12:15 +0200
+Message-ID: <20230828101157.111103084@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -40,85 +44,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Andi Shyti <andi.shyti@linux.intel.com>
 
-[ Upstream commit 0bfe71159230bab79ee230225ae12ffecbb69f3e ]
+[ Upstream commit b2f59e9026038a5bbcbc0019fa58f963138211ee ]
 
-The original implementation had a very simple handling for single frame
-transmissions as it just sent the single frame without a timeout handling.
+We always assumed that a device might either have AUX or FLAT
+CCS, but this is an approximation that is not always true, e.g.
+PVC represents an exception.
 
-With the new echo frame handling the echo frame was also introduced for
-single frames but the former exception ('simple without timers') has been
-maintained by accident. This leads to a 1 second timeout when closing the
-socket and to an -ECOMM error when CAN_ISOTP_WAIT_TX_DONE is selected.
+Set the basis for future finer selection by implementing a
+boolean gen12_needs_ccs_aux_inv() function that tells whether aux
+invalidation is needed or not.
 
-As the echo handling is always active (also for single frames) remove the
-wrong extra condition for single frames.
+Currently PVC is the only exception to the above mentioned rule.
 
-Fixes: 9f39d36530e5 ("can: isotp: add support for transmission without flow control")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/r/20230821144547.6658-2-socketcan@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Requires: 059ae7ae2a1c ("drm/i915/gt: Cleanup aux invalidation registers")
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230725001950.1014671-3-andi.shyti@linux.intel.com
+(cherry picked from commit c827655b87ad201ebe36f2e28d16b5491c8f7801)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/gt/gen8_engine_cs.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index b3c2a49b189cc..8c97f4061ffd7 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -175,12 +175,6 @@ static bool isotp_register_rxid(struct isotp_sock *so)
- 	return (isotp_bc_flags(so) == 0);
+diff --git a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
+index b2838732ac936..8e286733a4367 100644
+--- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
+@@ -165,6 +165,18 @@ static u32 preparser_disable(bool state)
+ 	return MI_ARB_CHECK | 1 << 8 | state;
  }
  
--static bool isotp_register_txecho(struct isotp_sock *so)
--{
--	/* all modes but SF_BROADCAST register for tx echo skbs */
--	return (isotp_bc_flags(so) != CAN_ISOTP_SF_BROADCAST);
--}
--
- static enum hrtimer_restart isotp_rx_timer_handler(struct hrtimer *hrtimer)
++static bool gen12_needs_ccs_aux_inv(struct intel_engine_cs *engine)
++{
++	if (IS_PONTEVECCHIO(engine->i915))
++		return false;
++
++	/*
++	 * so far platforms supported by i915 having
++	 * flat ccs do not require AUX invalidation
++	 */
++	return !HAS_FLAT_CCS(engine->i915);
++}
++
+ u32 *gen12_emit_aux_table_inv(struct intel_gt *gt, u32 *cs, const i915_reg_t inv_reg)
  {
- 	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
-@@ -1176,7 +1170,7 @@ static int isotp_release(struct socket *sock)
- 	lock_sock(sk);
+ 	u32 gsi_offset = gt->uncore->gsi_offset;
+@@ -236,7 +248,7 @@ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
+ 		else if (engine->class == COMPUTE_CLASS)
+ 			flags &= ~PIPE_CONTROL_3D_ENGINE_FLAGS;
  
- 	/* remove current filters & unregister */
--	if (so->bound && isotp_register_txecho(so)) {
-+	if (so->bound) {
- 		if (so->ifindex) {
- 			struct net_device *dev;
+-		if (!HAS_FLAT_CCS(rq->engine->i915))
++		if (gen12_needs_ccs_aux_inv(rq->engine))
+ 			count = 8 + 4;
+ 		else
+ 			count = 8;
+@@ -254,7 +266,7 @@ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
  
-@@ -1293,14 +1287,12 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
- 				isotp_rcv, sk, "isotp", sk);
+ 		cs = gen8_emit_pipe_control(cs, flags, LRC_PPHWSP_SCRATCH_ADDR);
  
--	if (isotp_register_txecho(so)) {
--		/* no consecutive frame echo skb in flight */
--		so->cfecho = 0;
-+	/* no consecutive frame echo skb in flight */
-+	so->cfecho = 0;
+-		if (!HAS_FLAT_CCS(rq->engine->i915)) {
++		if (gen12_needs_ccs_aux_inv(rq->engine)) {
+ 			/* hsdes: 1809175790 */
+ 			cs = gen12_emit_aux_table_inv(rq->engine->gt, cs,
+ 						      GEN12_CCS_AUX_INV);
+@@ -276,7 +288,7 @@ int gen12_emit_flush_xcs(struct i915_request *rq, u32 mode)
+ 	if (mode & EMIT_INVALIDATE) {
+ 		cmd += 2;
  
--		/* register for echo skb's */
--		can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
--				isotp_rcv_echo, sk, "isotpe", sk);
--	}
-+	/* register for echo skb's */
-+	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
-+			isotp_rcv_echo, sk, "isotpe", sk);
- 
- 	dev_put(dev);
- 
-@@ -1521,7 +1513,7 @@ static void isotp_notify(struct isotp_sock *so, unsigned long msg,
- 	case NETDEV_UNREGISTER:
- 		lock_sock(sk);
- 		/* remove current filters & unregister */
--		if (so->bound && isotp_register_txecho(so)) {
-+		if (so->bound) {
- 			if (isotp_register_rxid(so))
- 				can_rx_unregister(dev_net(dev), dev, so->rxid,
- 						  SINGLE_MASK(so->rxid),
+-		if (!HAS_FLAT_CCS(rq->engine->i915) &&
++		if (gen12_needs_ccs_aux_inv(rq->engine) &&
+ 		    (rq->engine->class == VIDEO_DECODE_CLASS ||
+ 		     rq->engine->class == VIDEO_ENHANCEMENT_CLASS)) {
+ 			aux_inv = rq->engine->mask &
 -- 
 2.40.1
 
