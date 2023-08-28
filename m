@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6883411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC36C433C7;
-	Mon, 28 Aug 2023 10:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200B011C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:36:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922D4C433C8;
+	Mon, 28 Aug 2023 10:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218970;
-	bh=LRx/Nwgloe1+2kXQTeJKxGIfLyrTgrxSLW7f4twgYtw=;
+	s=korg; t=1693218972;
+	bh=nhIU92xHKR1+NDGJ+YdsKJc1EKhBF9bbSg1vtZY1FoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+S/0mrtPWZ0RSa7Cvu6jP3n2aApgXHD0ehrhLDtTv0qtggb3zjxNse2q/c20SX+c
-	 4f81U0dBAtyzGnpGfVbTLGYdr871pt4AaCjYx1JM3Q31omsmFNbHxtLRqC6SQwJV3y
-	 MamzwUrJtmqReorSmy0oW7I1ltchF+qxxawPAXjk=
+	b=auRVAIeJ2kjrjmZgJlVHrpPT4G4BEbJVfZWBx1oIDPWHOpVHqDi+a8R/KpfAnUSbf
+	 9xLrEZxmr0Hi62+PXaB6bOmqTXB8fm15l2LxPfJUr/mCSPVxuyFVA09Sx/t6bvJmyP
+	 DGdEK/dHCvR6gdwwQEtQJiHf+x+KsaRuOePK6L70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/158] powerpc/kasan: Disable KCOV in KASAN code
-Date: Mon, 28 Aug 2023 12:12:03 +0200
-Message-ID: <20230828101158.227667261@linuxfoundation.org>
+Subject: [PATCH 5.4 027/158] IMA: allow/fix UML builds
+Date: Mon, 28 Aug 2023 12:12:04 +0200
+Message-ID: <20230828101158.256821564@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -41,37 +45,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ccb381e1af1ace292153c88eb1fffa5683d16a20 ]
+[ Upstream commit 644f17412f5acf01a19af9d04a921937a2bc86c6 ]
 
-As per the generic KASAN code in mm/kasan, disable KCOV with
-KCOV_INSTRUMENT := n in the makefile.
+UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
+NO_IOMEM).
 
-This fixes a ppc64 boot hang when KCOV and KASAN are enabled.
-kasan_early_init() gets called before a PACA is initialised, but the
-KCOV hook expects a valid PACA.
+Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
 
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230710044143.146840-1-bgray@linux.ibm.com
+ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
+ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
+ld: security/integrity/ima/ima_init.o: in function `ima_init':
+ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
+ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
+ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
+ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
+
+Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
+is set, regardless of the UML Kconfig setting.
+This updates TCG_TPM from =m to =y and fixes the linker errors.
+
+Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
+Cc: Stable <stable@vger.kernel.org> # v5.14+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-um@lists.infradead.org
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/kasan/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ security/integrity/ima/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/kasan/Makefile b/arch/powerpc/mm/kasan/Makefile
-index 6577897673dda..22f1a7c3f4362 100644
---- a/arch/powerpc/mm/kasan/Makefile
-+++ b/arch/powerpc/mm/kasan/Makefile
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- 
- KASAN_SANITIZE := n
-+KCOV_INSTRUMENT := n
- 
- obj-$(CONFIG_PPC32)           += kasan_init_32.o
+diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
+index 44b3315f32352..d90ead61f0def 100644
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -8,7 +8,7 @@ config IMA
+ 	select CRYPTO_HMAC
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_HASH_INFO
+-	select TCG_TPM if HAS_IOMEM && !UML
++	select TCG_TPM if HAS_IOMEM
+ 	select TCG_TIS if TCG_TPM && X86
+ 	select TCG_CRB if TCG_TPM && ACPI
+ 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
 -- 
 2.40.1
 
