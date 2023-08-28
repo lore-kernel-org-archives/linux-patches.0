@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17659469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C439C433C7;
-	Mon, 28 Aug 2023 10:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AAA469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:32:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACB6C433C8;
+	Mon, 28 Aug 2023 10:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218755;
-	bh=aUJu0L9teb3pZYHovjM8EVJ61YIDAKCsFVHBkCvoqdc=;
+	s=korg; t=1693218758;
+	bh=TkanBLYiH8q04qnWQ2qiaHigyy5NIwusriMrKlCXvas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ioIFDGi9sxBal1PSJwi4+51pOyhWJkx61WhNUHgY1ny7M5KAa6uwtXbCgewC36HnO
-	 QQIvrd5H+dOhcwyU0DP1kFfdnVIv16BN+0SZQSsPaG6iJ8qJnsEIuA7e5eRWCq9Aza
-	 Xp1NKcm+kYT4ihg9BuJajZ6lPQejvw1hEIXIrGdQ=
+	b=XPcP5DY8mJnk9CjoOYnseZq9sLh8xmdcSBDXU9Dt7v2u94EvCd7ZRFL0pwNTaLPek
+	 z7O3p7lutmsbsbR3dfW6G59R9LRewOg29wOmXqWh+86RkvMbL+uH5SywYySWJcpgJ6
+	 s5qesDAgCIuuihnbL8PUaJzzA1+Lu5oS2kg7wz2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Jhong <dylan@andestech.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 072/122] mm: add a call to flush_cache_vmap() in vmap_pfn()
-Date: Mon, 28 Aug 2023 12:13:07 +0200
-Message-ID: <20230828101158.832343759@linuxfoundation.org>
+Subject: [PATCH 6.1 073/122] mm: memory-failure: fix unexpected return value in soft_offline_page()
+Date: Mon, 28 Aug 2023 12:13:08 +0200
+Message-ID: <20230828101158.861805727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -42,55 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Miaohe Lin <linmiaohe@huawei.com>
 
-commit a50420c79731fc5cf27ad43719c1091e842a2606 upstream.
+commit e2c1ab070fdc81010ec44634838d24fce9ff9e53 upstream.
 
-flush_cache_vmap() must be called after new vmalloc mappings are installed
-in the page table in order to allow architectures to make sure the new
-mapping is visible.
+When page_handle_poison() fails to handle the hugepage or free page in
+retry path, soft_offline_page() will return 0 while -EBUSY is expected in
+this case.
 
-It could lead to a panic since on some architectures (like powerpc),
-the page table walker could see the wrong pte value and trigger a
-spurious page fault that can not be resolved (see commit f1cb8f9beba8
-("powerpc/64s/radix: avoid ptesync after set_pte and
-ptep_set_access_flags")).
+Consequently the user will think soft_offline_page succeeds while it in
+fact failed.  So the user will not try again later in this case.
 
-But actually the patch is aiming at riscv: the riscv specification
-allows the caching of invalid entries in the TLB, and since we recently
-removed the vmalloc page fault handling, we now need to emit a tlb
-shootdown whenever a new vmalloc mapping is emitted
-(https://lore.kernel.org/linux-riscv/20230725132246.817726-1-alexghiti@rivosinc.com/).
-That's a temporary solution, there are ways to avoid that :)
-
-Link: https://lkml.kernel.org/r/20230809164633.1556126-1-alexghiti@rivosinc.com
-Fixes: 3e9a9e256b1e ("mm: add a vmap_pfn function")
-Reported-by: Dylan Jhong <dylan@andestech.com>
-Closes: https://lore.kernel.org/linux-riscv/ZMytNY2J8iyjbPPy@atctrx.andestech.com/
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Reviewed-by: Dylan Jhong <dylan@andestech.com>
+Link: https://lkml.kernel.org/r/20230627112808.1275241-1-linmiaohe@huawei.com
+Fixes: b94e02822deb ("mm,hwpoison: try to narrow window race for free pages")
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ mm/memory-failure.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -2909,6 +2909,10 @@ void *vmap_pfn(unsigned long *pfns, unsi
- 		free_vm_area(area);
- 		return NULL;
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -2591,10 +2591,13 @@ retry:
+ 	if (ret > 0) {
+ 		ret = soft_offline_in_use_page(page);
+ 	} else if (ret == 0) {
+-		if (!page_handle_poison(page, true, false) && try_again) {
+-			try_again = false;
+-			flags &= ~MF_COUNT_INCREASED;
+-			goto retry;
++		if (!page_handle_poison(page, true, false)) {
++			if (try_again) {
++				try_again = false;
++				flags &= ~MF_COUNT_INCREASED;
++				goto retry;
++			}
++			ret = -EBUSY;
+ 		}
  	}
-+
-+	flush_cache_vmap((unsigned long)area->addr,
-+			 (unsigned long)area->addr + count * PAGE_SIZE);
-+
- 	return area->addr;
- }
- EXPORT_SYMBOL_GPL(vmap_pfn);
+ 
 
 
