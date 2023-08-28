@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2464411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:21:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9749EC433C7;
-	Mon, 28 Aug 2023 10:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED2C11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608C7C433C7;
+	Mon, 28 Aug 2023 10:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218074;
-	bh=OMK2SjKe3+A8SxKbEQEZ3X28oM8uN6NqKtjSQY5ARcY=;
+	s=korg; t=1693218076;
+	bh=pCjDyhlRneiS9hVvkHU1yVaCtoLIiqP3d7ui/vJMs8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLOwpLcBhiPXQ2GRIpl3vYTwXMJEWywMljjpQvamcZ4EKs9QwX6NO3odjzY/Iw5SU
-	 tfKSLsYjU9X9CKJ3PwWuhcUHjZiurxP0Mr03r32n6hw3ESpfnqs6P1LJBCW1dJ7wIv
-	 k9SvNl0JTUecUBJptqFRWWOMPlB0edsgQVK5ci8o=
+	b=d7DORtKXxwQPJVo3xqEVvw8MsODoR7IwV/G0rz3978yPe0ZYfXBpeL3x55+vMsP6c
+	 TififKr7eeRlnOZK1FOi5DifNmoDz+6EwcUGOYikklr3ze5Y21XIfrYsRvrVJDLDIb
+	 Fb8K0sm4zy7rG06WtlYPgSSsnQ5+frp/HtVnHSUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 086/129] mm: memory-failure: fix unexpected return value in soft_offline_page()
-Date: Mon, 28 Aug 2023 12:12:45 +0200
-Message-ID: <20230828101200.199630197@linuxfoundation.org>
+Subject: [PATCH 6.4 087/129] mm: multi-gen LRU: dont spin during memcg release
+Date: Mon, 28 Aug 2023 12:12:46 +0200
+Message-ID: <20230828101200.240802547@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -40,47 +40,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: T.J. Mercier <tjmercier@google.com>
 
-commit e2c1ab070fdc81010ec44634838d24fce9ff9e53 upstream.
+commit 6867c7a3320669cbe44b905a3eb35db725c6d470 upstream.
 
-When page_handle_poison() fails to handle the hugepage or free page in
-retry path, soft_offline_page() will return 0 while -EBUSY is expected in
-this case.
+When a memcg is in the process of being released mem_cgroup_tryget will
+fail because its reference count has already reached 0.  This can happen
+during reclaim if the memcg has already been offlined, and we reclaim all
+remaining pages attributed to the offlined memcg.  shrink_many attempts to
+skip the empty memcg in this case, and continue reclaiming from the
+remaining memcgs in the old generation.  If there is only one memcg
+remaining, or if all remaining memcgs are in the process of being released
+then shrink_many will spin until all memcgs have finished being released.
+The release occurs through a workqueue, so it can take a while before
+kswapd is able to make any further progress.
 
-Consequently the user will think soft_offline_page succeeds while it in
-fact failed.  So the user will not try again later in this case.
+This fix results in reductions in kswapd activity and direct reclaim in
+a test where 28 apps (working set size > total memory) are repeatedly
+launched in a random sequence:
 
-Link: https://lkml.kernel.org/r/20230627112808.1275241-1-linmiaohe@huawei.com
-Fixes: b94e02822deb ("mm,hwpoison: try to narrow window race for free pages")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+                                       A          B      delta   ratio(%)
+           allocstall_movable       5962       3539      -2423     -40.64
+            allocstall_normal       2661       2417       -244      -9.17
+kswapd_high_wmark_hit_quickly      53152       7594     -45558     -85.71
+                   pageoutrun      57365      11750     -45615     -79.52
+
+Link: https://lkml.kernel.org/r/20230814151636.1639123-1-tjmercier@google.com
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Acked-by: Yu Zhao <yuzhao@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ mm/vmscan.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -2744,10 +2744,13 @@ retry:
- 	if (ret > 0) {
- 		ret = soft_offline_in_use_page(page);
- 	} else if (ret == 0) {
--		if (!page_handle_poison(page, true, false) && try_again) {
--			try_again = false;
--			flags &= ~MF_COUNT_INCREASED;
--			goto retry;
-+		if (!page_handle_poison(page, true, false)) {
-+			if (try_again) {
-+				try_again = false;
-+				flags &= ~MF_COUNT_INCREASED;
-+				goto retry;
-+			}
-+			ret = -EBUSY;
- 		}
- 	}
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4818,16 +4818,17 @@ void lru_gen_release_memcg(struct mem_cg
  
+ 		spin_lock_irq(&pgdat->memcg_lru.lock);
+ 
+-		VM_WARN_ON_ONCE(hlist_nulls_unhashed(&lruvec->lrugen.list));
++		if (hlist_nulls_unhashed(&lruvec->lrugen.list))
++			goto unlock;
+ 
+ 		gen = lruvec->lrugen.gen;
+ 
+-		hlist_nulls_del_rcu(&lruvec->lrugen.list);
++		hlist_nulls_del_init_rcu(&lruvec->lrugen.list);
+ 		pgdat->memcg_lru.nr_memcgs[gen]--;
+ 
+ 		if (!pgdat->memcg_lru.nr_memcgs[gen] && gen == get_memcg_gen(pgdat->memcg_lru.seq))
+ 			WRITE_ONCE(pgdat->memcg_lru.seq, pgdat->memcg_lru.seq + 1);
+-
++unlock:
+ 		spin_unlock_irq(&pgdat->memcg_lru.lock);
+ 	}
+ }
+@@ -5398,8 +5399,10 @@ restart:
+ 	rcu_read_lock();
+ 
+ 	hlist_nulls_for_each_entry_rcu(lrugen, pos, &pgdat->memcg_lru.fifo[gen][bin], list) {
+-		if (op)
++		if (op) {
+ 			lru_gen_rotate_memcg(lruvec, op);
++			op = 0;
++		}
+ 
+ 		mem_cgroup_put(memcg);
+ 
+@@ -5407,7 +5410,7 @@ restart:
+ 		memcg = lruvec_memcg(lruvec);
+ 
+ 		if (!mem_cgroup_tryget(memcg)) {
+-			op = 0;
++			lru_gen_release_memcg(memcg);
+ 			memcg = NULL;
+ 			continue;
+ 		}
 
 
