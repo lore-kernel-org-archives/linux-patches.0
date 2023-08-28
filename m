@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468CA11C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6C3C433CA;
-	Mon, 28 Aug 2023 10:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F287C11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DDDC433C7;
+	Mon, 28 Aug 2023 10:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219706;
-	bh=QmZsIphA1VDB//Km7Uox2V3ErTml4Pmbg0Obd1vLq3s=;
+	s=korg; t=1693219708;
+	bh=XsNuOVJ4+HahOUUBNXit4jE1KOntVCCnStfERnkgw6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+EcuSMSqe7xXnYpQxqXAOdbtrcbAZP7xkFqRQoXPt0TPy0aeIFuSNDJFxxdzyPSU
-	 dKQAcg+GEsU03R9C6LlOrNqhISI2wWnX2LBFuRuXfPvJ3UH+ruVRDEhQu+7UDB46gT
-	 70A0GzkZqB19zAl58oGterOv+zqotmSjPJOASSks=
+	b=e6QyA8QP1+9FVoYp3KI1TOEhipJNBrIxvNabirhQUH/JZJY/HGnZXs4nafGWxzF6b
+	 Oldyo7SxXaalD24zVc/gM/XQMSyuGC7Z6mauQMseE3jac2XAH4os+5l5T7PSi3tmAf
+	 38cVilg1lxnsKSVZI87MK5klLlQIx9yuJsEN0NBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Igor Mammedov <imammedo@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 13/84] fbdev: Improve performance of sys_imageblit()
-Date: Mon, 28 Aug 2023 12:13:30 +0200
-Message-ID: <20230828101149.653056870@linuxfoundation.org>
+Subject: [PATCH 5.10 04/84] PCI: acpiphp: Reassign resources on bridge if necessary
+Date: Mon, 28 Aug 2023 12:13:21 +0200
+Message-ID: <20230828101149.303076225@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -41,128 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Igor Mammedov <imammedo@redhat.com>
 
-[ Upstream commit 6f29e04938bf509fccfad490a74284cf158891ce ]
+[ Upstream commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 ]
 
-Improve the performance of sys_imageblit() by manually unrolling
-the inner blitting loop and moving some invariants out. The compiler
-failed to do this automatically. The resulting binary code was even
-slower than the cfb_imageblit() helper, which uses the same algorithm,
-but operates on I/O memory.
+When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
+if bridge windows programmed by firmware are not large enough.
 
-A microbenchmark measures the average number of CPU cycles
-for sys_imageblit() after a stabilizing period of a few minutes
-(i7-4790, FullHD, simpledrm, kernel with debugging). The value
-for CFB is given as a reference.
+Reproducer:
+  $ qemu-kvm -monitor stdio -M q35  -m 4G \
+      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
+      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
+      disk_image
 
-  sys_imageblit(), new: 25934 cycles
-  sys_imageblit(), old: 35944 cycles
-  cfb_imageblit():      30566 cycles
+ wait till linux guest boots, then hotplug device:
+   (qemu) device_add qxl,bus=rp1
 
-In the optimized case, sys_imageblit() is now ~30% faster than before
-and ~20% faster than cfb_imageblit().
+ hotplug on guest side fails with:
+   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
+   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
+   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
+   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
+   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
+   qxl 0000:01:00.0: enabling device (0000 -> 0003)
+   Unable to create vram_mapping
+   qxl: probe of 0000:01:00.0 failed with error -12
 
-v2:
-	* move switch out of inner loop (Gerd)
-	* remove test for alignment of dst1 (Sam)
+However when using native PCIe hotplug
+  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
+it works fine, since kernel attempts to reassign unused resources.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220223193804.18636-3-tzimmermann@suse.de
-Stable-dep-of: c2d22806aecb ("fbdev: fix potential OOB read in fast_imageblit()")
+Use the same machinery as native PCIe hotplug to (re)assign resources.
+
+Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/sysimgblt.c | 49 +++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 11 deletions(-)
+ drivers/pci/hotplug/acpiphp_glue.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/sysimgblt.c b/drivers/video/fbdev/core/sysimgblt.c
-index a4d05b1b17d7d..722c327a381bd 100644
---- a/drivers/video/fbdev/core/sysimgblt.c
-+++ b/drivers/video/fbdev/core/sysimgblt.c
-@@ -188,23 +188,29 @@ static void fast_imageblit(const struct fb_image *image, struct fb_info *p,
- {
- 	u32 fgx = fgcolor, bgx = bgcolor, bpp = p->var.bits_per_pixel;
- 	u32 ppw = 32/bpp, spitch = (image->width + 7)/8;
--	u32 bit_mask, end_mask, eorx, shift;
-+	u32 bit_mask, eorx;
- 	const char *s = image->data, *src;
- 	u32 *dst;
--	const u32 *tab = NULL;
-+	const u32 *tab;
-+	size_t tablen;
-+	u32 colortab[16];
- 	int i, j, k;
+diff --git a/drivers/pci/hotplug/acpiphp_glue.c b/drivers/pci/hotplug/acpiphp_glue.c
+index f031302ad4019..44c0b025f09e1 100644
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -489,7 +489,6 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
+ 				acpiphp_native_scan_bridge(dev);
+ 		}
+ 	} else {
+-		LIST_HEAD(add_list);
+ 		int max, pass;
  
- 	switch (bpp) {
- 	case 8:
- 		tab = fb_be_math(p) ? cfb_tab8_be : cfb_tab8_le;
-+		tablen = 16;
- 		break;
- 	case 16:
- 		tab = fb_be_math(p) ? cfb_tab16_be : cfb_tab16_le;
-+		tablen = 4;
- 		break;
- 	case 32:
--	default:
- 		tab = cfb_tab32;
-+		tablen = 2;
- 		break;
-+	default:
-+		return;
+ 		acpiphp_rescan_slot(slot);
+@@ -503,12 +502,10 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
+-					__pci_bus_size_bridges(dev->subordinate,
+-							       &add_list);
+ 				}
+ 			}
+ 		}
+-		__pci_bus_assign_resources(bus, &add_list, NULL);
++		pci_assign_unassigned_bridge_resources(bus->self);
  	}
  
- 	for (i = ppw-1; i--; ) {
-@@ -218,19 +224,40 @@ static void fast_imageblit(const struct fb_image *image, struct fb_info *p,
- 	eorx = fgx ^ bgx;
- 	k = image->width/ppw;
- 
-+	for (i = 0; i < tablen; ++i)
-+		colortab[i] = (tab[i] & eorx) ^ bgx;
-+
- 	for (i = image->height; i--; ) {
- 		dst = dst1;
--		shift = 8;
- 		src = s;
- 
--		for (j = k; j--; ) {
--			shift -= ppw;
--			end_mask = tab[(*src >> shift) & bit_mask];
--			*dst++ = (end_mask & eorx) ^ bgx;
--			if (!shift) {
--				shift = 8;
--				src++;
-+		switch (ppw) {
-+		case 4: /* 8 bpp */
-+			for (j = k; j; j -= 2, ++src) {
-+				*dst++ = colortab[(*src >> 4) & bit_mask];
-+				*dst++ = colortab[(*src >> 0) & bit_mask];
-+			}
-+			break;
-+		case 2: /* 16 bpp */
-+			for (j = k; j; j -= 4, ++src) {
-+				*dst++ = colortab[(*src >> 6) & bit_mask];
-+				*dst++ = colortab[(*src >> 4) & bit_mask];
-+				*dst++ = colortab[(*src >> 2) & bit_mask];
-+				*dst++ = colortab[(*src >> 0) & bit_mask];
-+			}
-+			break;
-+		case 1: /* 32 bpp */
-+			for (j = k; j; j -= 8, ++src) {
-+				*dst++ = colortab[(*src >> 7) & bit_mask];
-+				*dst++ = colortab[(*src >> 6) & bit_mask];
-+				*dst++ = colortab[(*src >> 5) & bit_mask];
-+				*dst++ = colortab[(*src >> 4) & bit_mask];
-+				*dst++ = colortab[(*src >> 3) & bit_mask];
-+				*dst++ = colortab[(*src >> 2) & bit_mask];
-+				*dst++ = colortab[(*src >> 1) & bit_mask];
-+				*dst++ = colortab[(*src >> 0) & bit_mask];
- 			}
-+			break;
- 		}
- 		dst1 += p->fix.line_length;
- 		s += spitch;
+ 	acpiphp_sanitize_bus(bus);
 -- 
 2.40.1
 
