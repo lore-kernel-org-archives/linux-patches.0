@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB2111C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D86C433C7;
-	Mon, 28 Aug 2023 10:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64E511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2633DC433C7;
+	Mon, 28 Aug 2023 10:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217756;
-	bh=C7P1n2xsXgTEPC9DuUPEacvKUprDJ9TSTYqx4EFkznM=;
+	s=korg; t=1693217759;
+	bh=ZAk7TFXJUPxLPQKJ6hWGsI8AIBkRR7dVeAhXLWzMeCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MraHunDtfwzAnr+soY5h7siT5N8WrhZRO35Bho9ceRIrA3Os3V1sNcniCczWcuS6Q
-	 zgwqvGBraT438naKKGSeNL9/t2s4i/dMdjWj+PZdQOkG8Ol6CA9VHVd9sfpgpHSsDG
-	 60vfRvmMswkUUU/JXNzc9s+KD1pbH1cSzk0yIo8Y=
+	b=kLCrnLezW9+NQidzW9C3we76gPe198KYb5iMrEMqH1416eW/+XcCt3fPHYA15794E
+	 x+z9KnR8GznUnsV7DJfndI1kDUVOkfv5169y7EXnTTLLRubcQPcozwJMt1Zlk5gHw1
+	 hxYp5yQh0TTbpLfK2GiiBWWwkuiGAI258EmkpfGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 28/57] net: do not allow gso_size to be set to GSO_BY_FRAGS
-Date: Mon, 28 Aug 2023 12:12:48 +0200
-Message-ID: <20230828101145.273765497@linuxfoundation.org>
+	dengxiang <dengxiang@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.14 29/57] ALSA: usb-audio: Add support for Mythware XA001AU capture and playback interfaces.
+Date: Mon, 28 Aug 2023 12:12:49 +0200
+Message-ID: <20230828101145.324471349@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -47,90 +39,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: dengxiang <dengxiang@nfschina.com>
 
-[ Upstream commit b616be6b97688f2f2bd7c4a47ab32f27f94fb2a9 ]
+commit 788449ae57f4273111b779bbcaad552b67f517d5 upstream.
 
-One missing check in virtio_net_hdr_to_skb() allowed
-syzbot to crash kernels again [1]
+This patch adds a USB quirk for Mythware XA001AU USB interface.
 
-Do not allow gso_size to be set to GSO_BY_FRAGS (0xffff),
-because this magic value is used by the kernel.
-
-[1]
-general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 0 PID: 5039 Comm: syz-executor401 Not tainted 6.5.0-rc5-next-20230809-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-RIP: 0010:skb_segment+0x1a52/0x3ef0 net/core/skbuff.c:4500
-Code: 00 00 00 e9 ab eb ff ff e8 6b 96 5d f9 48 8b 84 24 00 01 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e ea 21 00 00 48 8b 84 24 00 01
-RSP: 0018:ffffc90003d3f1c8 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 000000000001fffe RCX: 0000000000000000
-RDX: 000000000000000e RSI: ffffffff882a3115 RDI: 0000000000000070
-RBP: ffffc90003d3f378 R08: 0000000000000005 R09: 000000000000ffff
-R10: 000000000000ffff R11: 5ee4a93e456187d6 R12: 000000000001ffc6
-R13: dffffc0000000000 R14: 0000000000000008 R15: 000000000000ffff
-FS: 00005555563f2380(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020020000 CR3: 000000001626d000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-udp6_ufo_fragment+0x9d2/0xd50 net/ipv6/udp_offload.c:109
-ipv6_gso_segment+0x5c4/0x17b0 net/ipv6/ip6_offload.c:120
-skb_mac_gso_segment+0x292/0x610 net/core/gso.c:53
-__skb_gso_segment+0x339/0x710 net/core/gso.c:124
-skb_gso_segment include/net/gso.h:83 [inline]
-validate_xmit_skb+0x3a5/0xf10 net/core/dev.c:3625
-__dev_queue_xmit+0x8f0/0x3d60 net/core/dev.c:4329
-dev_queue_xmit include/linux/netdevice.h:3082 [inline]
-packet_xmit+0x257/0x380 net/packet/af_packet.c:276
-packet_snd net/packet/af_packet.c:3087 [inline]
-packet_sendmsg+0x24c7/0x5570 net/packet/af_packet.c:3119
-sock_sendmsg_nosec net/socket.c:727 [inline]
-sock_sendmsg+0xd9/0x180 net/socket.c:750
-____sys_sendmsg+0x6ac/0x940 net/socket.c:2496
-___sys_sendmsg+0x135/0x1d0 net/socket.c:2550
-__sys_sendmsg+0x117/0x1e0 net/socket.c:2579
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7ff27cdb34d9
-
-Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230816142158.1779798-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: dengxiang <dengxiang@nfschina.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230803024437.370069-1-dengxiang@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/virtio_net.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/quirks-table.h |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index db8ab0fac81a2..7517dd15f87b4 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -146,6 +146,10 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 		if (gso_type & SKB_GSO_UDP)
- 			nh_off -= thlen;
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -3540,5 +3540,34 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge
+ 		}
+ 	}
+ },
++{
++	/* Advanced modes of the Mythware XA001AU.
++	 * For the standard mode, Mythware XA001AU has ID ffad:a001
++	 */
++	USB_DEVICE_VENDOR_SPEC(0xffad, 0xa001),
++	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
++		.vendor_name = "Mythware",
++		.product_name = "XA001AU",
++		.ifnum = QUIRK_ANY_INTERFACE,
++		.type = QUIRK_COMPOSITE,
++		.data = (const struct snd_usb_audio_quirk[]) {
++			{
++				.ifnum = 0,
++				.type = QUIRK_IGNORE_INTERFACE,
++			},
++			{
++				.ifnum = 1,
++				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
++			},
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_STANDARD_INTERFACE,
++			},
++			{
++				.ifnum = -1
++			}
++		}
++	}
++},
  
-+		/* Kernel has a special handling for GSO_BY_FRAGS. */
-+		if (gso_size == GSO_BY_FRAGS)
-+			return -EINVAL;
-+
- 		/* Too small packets are not really GSO ones. */
- 		if (skb->len - nh_off > gso_size) {
- 			shinfo->gso_size = gso_size;
--- 
-2.40.1
-
+ #undef USB_DEVICE_VENDOR_SPEC
 
 
