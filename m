@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB4E11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB99C433C8;
-	Mon, 28 Aug 2023 10:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B8C11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB701C433C7;
+	Mon, 28 Aug 2023 10:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217836;
-	bh=EU4Yxsczc7dHLGQKDTirQebEqfH1RQugIv+GJctzvu0=;
+	s=korg; t=1693217839;
+	bh=NuMQ+TkWEWgrHK20jK5PCY4HSTGFAdc1tAWlKZjcYkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVM7Mb6xR3MYPBZG36vWi0uElvS8rOG+9ViNao/qh+VMaOg8gjAslJjlTjGmrajPw
-	 vIY9keYSO5fhj/IYYdfjUzpAZSiC/0FSNKTYp5YNvjsNPCQtKY4rUIq1936CzSktDS
-	 tLYaydP+814QJmIlqcp1rkJLhWGFrmFzV//dP9IQ=
+	b=ZJwIz0b7u7Kws1fCORY2VbF5EmXmbaIbIvEtlaeNRThUGSx72UACdUaCbPmo3V8oU
+	 ZkzurLUlu8EDR50AX0BVc8b03KGh/gkA7e1krcgFsz4ZBl2p4h1GULTfcmewczIcR9
+	 sbx4KmI8Yh4im40+pp29lbgq++CmNYuWNy91mtAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
+	Alessio Igor Bogani <alessio.bogani@elettra.eu>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 42/57] sock: annotate data-races around prot->memory_pressure
-Date: Mon, 28 Aug 2023 12:13:02 +0200
-Message-ID: <20230828101145.815775798@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 4.14 43/57] igb: Avoid starting unnecessary workqueues
+Date: Mon, 28 Aug 2023 12:13:03 +0200
+Message-ID: <20230828101145.846710080@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -42,79 +43,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
 
-[ Upstream commit 76f33296d2e09f63118db78125c95ef56df438e9 ]
+[ Upstream commit b888c510f7b3d64ca75fc0f43b4a4bd1a611312f ]
 
-*prot->memory_pressure is read/writen locklessly, we need
-to add proper annotations.
+If ptp_clock_register() fails or CONFIG_PTP isn't enabled, avoid starting
+PTP related workqueues.
 
-A recent commit added a new race, it is time to audit all accesses.
+In this way we can fix this:
+ BUG: unable to handle page fault for address: ffffc9000440b6f8
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 100000067 P4D 100000067 PUD 1001e0067 PMD 107dc5067 PTE 0
+ Oops: 0000 [#1] PREEMPT SMP
+ [...]
+ Workqueue: events igb_ptp_overflow_check
+ RIP: 0010:igb_rd32+0x1f/0x60
+ [...]
+ Call Trace:
+  igb_ptp_read_82580+0x20/0x50
+  timecounter_read+0x15/0x60
+  igb_ptp_overflow_check+0x1a/0x50
+  process_one_work+0x1cb/0x3c0
+  worker_thread+0x53/0x3f0
+  ? rescuer_thread+0x370/0x370
+  kthread+0x142/0x160
+  ? kthread_associate_blkcg+0xc0/0xc0
+  ret_from_fork+0x1f/0x30
 
-Fixes: 2d0c88e84e48 ("sock: Fix misuse of sk_under_memory_pressure()")
-Fixes: 4d93df0abd50 ("[SCTP]: Rewrite of sctp buffer management code")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Abel Wu <wuyun.abel@bytedance.com>
-Reviewed-by: Shakeel Butt <shakeelb@google.com>
-Link: https://lore.kernel.org/r/20230818015132.2699348-1-edumazet@google.com
+Fixes: 1f6e8178d685 ("igb: Prevent dropped Tx timestamps via work items and interrupts.")
+Fixes: d339b1331616 ("igb: add PTP Hardware Clock code")
+Signed-off-by: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230821171927.2203644-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 7 ++++---
- net/sctp/socket.c  | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_ptp.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 1937deba0849b..7b42ddca4decb 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1115,6 +1115,7 @@ struct proto {
- 	/*
- 	 * Pressure flag: try to collapse.
- 	 * Technical note: it is used by multiple contexts non atomically.
-+	 * Make sure to use READ_ONCE()/WRITE_ONCE() for all reads/writes.
- 	 * All the __sk_mem_schedule() is of this nature: accounting
- 	 * is strict, actions are advisory and have some latency.
- 	 */
-@@ -1214,7 +1215,7 @@ static inline bool sk_has_memory_pressure(const struct sock *sk)
- static inline bool sk_under_global_memory_pressure(const struct sock *sk)
- {
- 	return sk->sk_prot->memory_pressure &&
--		!!*sk->sk_prot->memory_pressure;
-+		!!READ_ONCE(*sk->sk_prot->memory_pressure);
+diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
+index 295d27f331042..179e1d74661d4 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ptp.c
++++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
+@@ -1195,18 +1195,6 @@ void igb_ptp_init(struct igb_adapter *adapter)
+ 		return;
+ 	}
+ 
+-	spin_lock_init(&adapter->tmreg_lock);
+-	INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
+-
+-	if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
+-		INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
+-				  igb_ptp_overflow_check);
+-
+-	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
+-	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
+-
+-	igb_ptp_reset(adapter);
+-
+ 	adapter->ptp_clock = ptp_clock_register(&adapter->ptp_caps,
+ 						&adapter->pdev->dev);
+ 	if (IS_ERR(adapter->ptp_clock)) {
+@@ -1216,6 +1204,18 @@ void igb_ptp_init(struct igb_adapter *adapter)
+ 		dev_info(&adapter->pdev->dev, "added PHC on %s\n",
+ 			 adapter->netdev->name);
+ 		adapter->ptp_flags |= IGB_PTP_ENABLED;
++
++		spin_lock_init(&adapter->tmreg_lock);
++		INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
++
++		if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
++			INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
++					  igb_ptp_overflow_check);
++
++		adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
++		adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
++
++		igb_ptp_reset(adapter);
+ 	}
  }
- 
- static inline bool sk_under_memory_pressure(const struct sock *sk)
-@@ -1226,7 +1227,7 @@ static inline bool sk_under_memory_pressure(const struct sock *sk)
- 	    mem_cgroup_under_socket_pressure(sk->sk_memcg))
- 		return true;
- 
--	return !!*sk->sk_prot->memory_pressure;
-+	return !!READ_ONCE(*sk->sk_prot->memory_pressure);
- }
- 
- static inline long
-@@ -1280,7 +1281,7 @@ proto_memory_pressure(struct proto *prot)
- {
- 	if (!prot->memory_pressure)
- 		return false;
--	return !!*prot->memory_pressure;
-+	return !!READ_ONCE(*prot->memory_pressure);
- }
- 
- 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 9414dcb376d26..e5c3c37108e4e 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -110,7 +110,7 @@ struct percpu_counter sctp_sockets_allocated;
- 
- static void sctp_enter_memory_pressure(struct sock *sk)
- {
--	sctp_memory_pressure = 1;
-+	WRITE_ONCE(sctp_memory_pressure, 1);
- }
- 
  
 -- 
 2.40.1
