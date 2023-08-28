@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596CD611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBCCC433C7;
-	Mon, 28 Aug 2023 10:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15791611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:44:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACBCC433C7;
+	Mon, 28 Aug 2023 10:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219443;
-	bh=NVYzJ4oFhDvl7Kz3aQaImGjYP0XQpwb6dxGl64IetUA=;
+	s=korg; t=1693219445;
+	bh=LZ5FrdMHH5R7d8N0M5rK9dkUb3z8OSoeCfmCBDYWgrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSyO6ujJb+eZ1FNniRHA78lHARikZ/lhz1DygbfS2Bt09aLCaZ885HfAb8NTzVqt6
-	 mbFyTlBfNTcHtXRU+eBPyqwcwfegNDZ6r3ydG1OAWlfZOIjDtSuXnJjuTFTzoZYte5
-	 imVlnmCqj3HrsbUDRKy2A8JtBuZTXUUQaIoViH5o=
+	b=ym3ZaCQs6FM3UTpcWsSkBDEl0GdeADZPFjtifn3aOCylH/RyROzgtz8E8zKnnTelT
+	 Ys/LXEPcmi6aNbAajrRmFiIxKoIe4FoX18aJIUaMXquobbNx8XTv8oVqxhV9C/ZppC
+	 GVbawqHfujpaRny0vx8WdHsQQEiqut7G3ruh0R2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 37/89] net/sched: fix a qdisc modification with ambiguous command request
-Date: Mon, 28 Aug 2023 12:13:38 +0200
-Message-ID: <20230828101151.442562738@linuxfoundation.org>
+Subject: [PATCH 5.15 38/89] netfilter: nf_tables: flush pending destroy work before netlink notifier
+Date: Mon, 28 Aug 2023 12:13:39 +0200
+Message-ID: <20230828101151.473216301@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -44,136 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit da71714e359b64bd7aab3bd56ec53f307f058133 ]
+[ Upstream commit 2c9f0293280e258606e54ed2b96fa71498432eae ]
 
-When replacing an existing root qdisc, with one that is of the same kind, the
-request boils down to essentially a parameterization change  i.e not one that
-requires allocation and grafting of a new qdisc. syzbot was able to create a
-scenario which resulted in a taprio qdisc replacing an existing taprio qdisc
-with a combination of NLM_F_CREATE, NLM_F_REPLACE and NLM_F_EXCL leading to
-create and graft scenario.
-The fix ensures that only when the qdisc kinds are different that we should
-allow a create and graft, otherwise it goes into the "change" codepath.
+Destroy work waits for the RCU grace period then it releases the objects
+with no mutex held. All releases objects follow this path for
+transactions, therefore, order is guaranteed and references to top-level
+objects in the hierarchy remain valid.
 
-While at it, fix the code and comments to improve readability.
+However, netlink notifier might interfer with pending destroy work.
+rcu_barrier() is not correct because objects are not release via RCU
+callback. Flush destroy work before releasing objects from netlink
+notifier path.
 
-While syzbot was able to create the issue, it did not zone on the root cause.
-Analysis from Vladimir Oltean <vladimir.oltean@nxp.com> helped narrow it down.
-
-v1->V2 changes:
-- remove "inline" function definition (Vladmir)
-- remove extrenous braces in branches (Vladmir)
-- change inline function names (Pedro)
-- Run tdc tests (Victor)
-v2->v3 changes:
-- dont break else/if (Simon)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/20230816225759.g25x76kmgzya2gei@skbuf/T/
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d4bc8271db21 ("netfilter: nf_tables: netlink notifier might race to release objects")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 53 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ net/netfilter/nf_tables_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 328db5e1b0eaf..fa79dbd3601fa 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1513,10 +1513,28 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 	return 0;
- }
- 
-+static bool req_create_or_replace(struct nlmsghdr *n)
-+{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_REPLACE);
-+}
-+
-+static bool req_create_exclusive(struct nlmsghdr *n)
-+{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_EXCL);
-+}
-+
-+static bool req_change(struct nlmsghdr *n)
-+{
-+	return (!(n->nlmsg_flags & NLM_F_CREATE) &&
-+		!(n->nlmsg_flags & NLM_F_REPLACE) &&
-+		!(n->nlmsg_flags & NLM_F_EXCL));
-+}
-+
- /*
-  * Create/change qdisc.
-  */
--
- static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 			   struct netlink_ext_ack *extack)
- {
-@@ -1613,27 +1631,35 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				 *
- 				 *   We know, that some child q is already
- 				 *   attached to this parent and have choice:
--				 *   either to change it or to create/graft new one.
-+				 *   1) change it or 2) create/graft new one.
-+				 *   If the requested qdisc kind is different
-+				 *   than the existing one, then we choose graft.
-+				 *   If they are the same then this is "change"
-+				 *   operation - just let it fallthrough..
- 				 *
- 				 *   1. We are allowed to create/graft only
--				 *   if CREATE and REPLACE flags are set.
-+				 *   if the request is explicitly stating
-+				 *   "please create if it doesn't exist".
- 				 *
--				 *   2. If EXCL is set, requestor wanted to say,
--				 *   that qdisc tcm_handle is not expected
-+				 *   2. If the request is to exclusive create
-+				 *   then the qdisc tcm_handle is not expected
- 				 *   to exist, so that we choose create/graft too.
- 				 *
- 				 *   3. The last case is when no flags are set.
-+				 *   This will happen when for example tc
-+				 *   utility issues a "change" command.
- 				 *   Alas, it is sort of hole in API, we
- 				 *   cannot decide what to do unambiguously.
--				 *   For now we select create/graft, if
--				 *   user gave KIND, which does not match existing.
-+				 *   For now we select create/graft.
- 				 */
--				if ((n->nlmsg_flags & NLM_F_CREATE) &&
--				    (n->nlmsg_flags & NLM_F_REPLACE) &&
--				    ((n->nlmsg_flags & NLM_F_EXCL) ||
--				     (tca[TCA_KIND] &&
--				      nla_strcmp(tca[TCA_KIND], q->ops->id))))
--					goto create_n_graft;
-+				if (tca[TCA_KIND] &&
-+				    nla_strcmp(tca[TCA_KIND], q->ops->id)) {
-+					if (req_create_or_replace(n) ||
-+					    req_create_exclusive(n))
-+						goto create_n_graft;
-+					else if (req_change(n))
-+						goto create_n_graft2;
-+				}
- 			}
- 		}
- 	} else {
-@@ -1667,6 +1693,7 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 		NL_SET_ERR_MSG(extack, "Qdisc not found. To create specify NLM_F_CREATE flag");
- 		return -ENOENT;
- 	}
-+create_n_graft2:
- 	if (clid == TC_H_INGRESS) {
- 		if (dev_ingress_queue(dev)) {
- 			q = qdisc_create(dev, dev_ingress_queue(dev), p,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 1e2d1e4bdb74d..d84da11aaee5c 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10303,7 +10303,7 @@ static int nft_rcv_nl_event(struct notifier_block *this, unsigned long event,
+ 	deleted = 0;
+ 	mutex_lock(&nft_net->commit_mutex);
+ 	if (!list_empty(&nf_tables_destroy_list))
+-		rcu_barrier();
++		nf_tables_trans_destroy_flush_work();
+ again:
+ 	list_for_each_entry(table, &nft_net->tables, list) {
+ 		if (nft_table_has_owner(table) &&
 -- 
 2.40.1
 
