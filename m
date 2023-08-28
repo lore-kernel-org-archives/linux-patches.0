@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D2011C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3A8C433C8;
-	Mon, 28 Aug 2023 10:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27BB11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224C9C433C7;
+	Mon, 28 Aug 2023 10:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218393;
-	bh=RaaPr6l6onW+DZq80kaXM50XV28jBcFBcuTLTehOLKI=;
+	s=korg; t=1693218396;
+	bh=g9tqOXOGsH0ECL5S5sv2lZTOO0X/d218U0pTH3qmCQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWzYEU1OnVVUlK32yZPa1stJaRhWu4cQ9rewNTNNjeEQ+Ur4X+1xDiM4+fLI/wIV7
-	 2ev7PNAkmrK8cjZLM45WiJvVNLjLNB9vVRrAKYAR2e/8hOLJefowPXzx6x3r3CdPSA
-	 uCLC8/REA8yJ1WEU13DufDvJX7Gmkp31lnXNMcos=
+	b=S/t3tadXERyiQpRegUN+qIA6cT9UJQ/2QezNCRkfri181NHQnBP43emsj4TNI+9it
+	 nqxJDYZXx0qtHJbT770ALaQ7XSJr0tBomr7vhW341d/TYw4xGSxIH55xdx7H1lUu0S
+	 Hi5Uytlp4jgmdQIb47RMil43BUVU9C5o27E0O2TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Valerio <pvalerio@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 4.19 072/129] netfilter: set default timeout to 3 secs for sctp shutdown send and recv state
-Date: Mon, 28 Aug 2023 12:12:46 +0200
-Message-ID: <20230828101155.984463897@linuxfoundation.org>
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 055/129] xfrm: fix slab-use-after-free in decode_session6
+Date: Mon, 28 Aug 2023 12:12:29 +0200
+Message-ID: <20230828101155.304172448@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -41,68 +40,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 9bfab6d23a2865966a4f89a96536fbf23f83bc8c upstream.
+[ Upstream commit 53223f2ed1ef5c90dad814daaaefea4e68a933c8 ]
 
-In SCTP protocol, it is using the same timer (T2 timer) for SHUTDOWN and
-SHUTDOWN_ACK retransmission. However in sctp conntrack the default timeout
-value for SCTP_CONNTRACK_SHUTDOWN_ACK_SENT state is 3 secs while it's 300
-msecs for SCTP_CONNTRACK_SHUTDOWN_SEND/RECV state.
+When the xfrm device is set to the qdisc of the sfb type, the cb field
+of the sent skb may be modified during enqueuing. Then,
+slab-use-after-free may occur when the xfrm device sends IPv6 packets.
 
-As Paolo Valerio noticed, this might cause unwanted expiration of the ct
-entry. In my test, with 1s tc netem delay set on the NAT path, after the
-SHUTDOWN is sent, the sctp ct entry enters SCTP_CONNTRACK_SHUTDOWN_SEND
-state. However, due to 300ms (too short) delay, when the SHUTDOWN_ACK is
-sent back from the peer, the sctp ct entry has expired and been deleted,
-and then the SHUTDOWN_ACK has to be dropped.
+The stack information is as follows:
+BUG: KASAN: slab-use-after-free in decode_session6+0x103f/0x1890
+Read of size 1 at addr ffff8881111458ef by task swapper/3/0
+CPU: 3 PID: 0 Comm: swapper/3 Not tainted 6.4.0-next-20230707 #409
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+Call Trace:
+<IRQ>
+dump_stack_lvl+0xd9/0x150
+print_address_description.constprop.0+0x2c/0x3c0
+kasan_report+0x11d/0x130
+decode_session6+0x103f/0x1890
+__xfrm_decode_session+0x54/0xb0
+xfrmi_xmit+0x173/0x1ca0
+dev_hard_start_xmit+0x187/0x700
+sch_direct_xmit+0x1a3/0xc30
+__qdisc_run+0x510/0x17a0
+__dev_queue_xmit+0x2215/0x3b10
+neigh_connected_output+0x3c2/0x550
+ip6_finish_output2+0x55a/0x1550
+ip6_finish_output+0x6b9/0x1270
+ip6_output+0x1f1/0x540
+ndisc_send_skb+0xa63/0x1890
+ndisc_send_rs+0x132/0x6f0
+addrconf_rs_timer+0x3f1/0x870
+call_timer_fn+0x1a0/0x580
+expire_timers+0x29b/0x4b0
+run_timer_softirq+0x326/0x910
+__do_softirq+0x1d4/0x905
+irq_exit_rcu+0xb7/0x120
+sysvec_apic_timer_interrupt+0x97/0xc0
+</IRQ>
+<TASK>
+asm_sysvec_apic_timer_interrupt+0x1a/0x20
+RIP: 0010:intel_idle_hlt+0x23/0x30
+Code: 1f 84 00 00 00 00 00 f3 0f 1e fa 41 54 41 89 d4 0f 1f 44 00 00 66 90 0f 1f 44 00 00 0f 00 2d c4 9f ab 00 0f 1f 44 00 00 fb f4 <fa> 44 89 e0 41 5c c3 66 0f 1f 44 00 00 f3 0f 1e fa 41 54 41 89 d4
+RSP: 0018:ffffc90000197d78 EFLAGS: 00000246
+RAX: 00000000000a83c3 RBX: ffffe8ffffd09c50 RCX: ffffffff8a22d8e5
+RDX: 0000000000000001 RSI: ffffffff8d3f8080 RDI: ffffe8ffffd09c50
+RBP: ffffffff8d3f8080 R08: 0000000000000001 R09: ffffed1026ba6d9d
+R10: ffff888135d36ceb R11: 0000000000000001 R12: 0000000000000001
+R13: ffffffff8d3f8100 R14: 0000000000000001 R15: 0000000000000000
+cpuidle_enter_state+0xd3/0x6f0
+cpuidle_enter+0x4e/0xa0
+do_idle+0x2fe/0x3c0
+cpu_startup_entry+0x18/0x20
+start_secondary+0x200/0x290
+secondary_startup_64_no_verify+0x167/0x16b
+</TASK>
+Allocated by task 939:
+kasan_save_stack+0x22/0x40
+kasan_set_track+0x25/0x30
+__kasan_slab_alloc+0x7f/0x90
+kmem_cache_alloc_node+0x1cd/0x410
+kmalloc_reserve+0x165/0x270
+__alloc_skb+0x129/0x330
+inet6_ifa_notify+0x118/0x230
+__ipv6_ifa_notify+0x177/0xbe0
+addrconf_dad_completed+0x133/0xe00
+addrconf_dad_work+0x764/0x1390
+process_one_work+0xa32/0x16f0
+worker_thread+0x67d/0x10c0
+kthread+0x344/0x440
+ret_from_fork+0x1f/0x30
+The buggy address belongs to the object at ffff888111145800
+which belongs to the cache skbuff_small_head of size 640
+The buggy address is located 239 bytes inside of
+freed 640-byte region [ffff888111145800, ffff888111145a80)
 
-Also, it is confusing these two sysctl options always show 0 due to all
-timeout values using sec as unit:
+As commit f855691975bb ("xfrm6: Fix the nexthdr offset in
+_decode_session6.") showed, xfrm_decode_session was originally intended
+only for the receive path. IP6CB(skb)->nhoff is not set during
+transmission. Therefore, set the cb field in the skb to 0 before
+sending packets.
 
-  net.netfilter.nf_conntrack_sctp_timeout_shutdown_recd = 0
-  net.netfilter.nf_conntrack_sctp_timeout_shutdown_sent = 0
-
-This patch fixes it by also using 3 secs for sctp shutdown send and recv
-state in sctp conntrack, which is also RTO.initial value in SCTP protocol.
-
-Note that the very short time value for SCTP_CONNTRACK_SHUTDOWN_SEND/RECV
-was probably used for a rare scenario where SHUTDOWN is sent on 1st path
-but SHUTDOWN_ACK is replied on 2nd path, then a new connection started
-immediately on 1st path. So this patch also moves from SHUTDOWN_SEND/RECV
-to CLOSE when receiving INIT in the ORIGINAL direction.
-
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Reported-by: Paolo Valerio <pvalerio@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f855691975bb ("xfrm6: Fix the nexthdr offset in _decode_session6.")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_sctp.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_interface_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -58,8 +58,8 @@ static const unsigned int sctp_timeouts[
- 	[SCTP_CONNTRACK_COOKIE_WAIT]		= 3 SECS,
- 	[SCTP_CONNTRACK_COOKIE_ECHOED]		= 3 SECS,
- 	[SCTP_CONNTRACK_ESTABLISHED]		= 5 DAYS,
--	[SCTP_CONNTRACK_SHUTDOWN_SENT]		= 300 SECS / 1000,
--	[SCTP_CONNTRACK_SHUTDOWN_RECD]		= 300 SECS / 1000,
-+	[SCTP_CONNTRACK_SHUTDOWN_SENT]		= 3 SECS,
-+	[SCTP_CONNTRACK_SHUTDOWN_RECD]		= 3 SECS,
- 	[SCTP_CONNTRACK_SHUTDOWN_ACK_SENT]	= 3 SECS,
- 	[SCTP_CONNTRACK_HEARTBEAT_SENT]		= 30 SECS,
- 	[SCTP_CONNTRACK_HEARTBEAT_ACKED]	= 210 SECS,
-@@ -119,7 +119,7 @@ static const u8 sctp_conntracks[2][11][S
- 	{
- /*	ORIGINAL	*/
- /*                  sNO, sCL, sCW, sCE, sES, sSS, sSR, sSA, sHS, sHA */
--/* init         */ {sCW, sCW, sCW, sCE, sES, sSS, sSR, sSA, sCW, sHA},
-+/* init         */ {sCW, sCW, sCW, sCE, sES, sCL, sCL, sSA, sCW, sHA},
- /* init_ack     */ {sCL, sCL, sCW, sCE, sES, sSS, sSR, sSA, sCL, sHA},
- /* abort        */ {sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL, sCL},
- /* shutdown     */ {sCL, sCL, sCW, sCE, sSS, sSS, sSR, sSA, sCL, sSS},
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 3c642328a117c..40081af62b68f 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -354,8 +354,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IPV6):
+-		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET6);
+ 		if (!dst) {
+ 			fl.u.ip6.flowi6_oif = dev->ifindex;
+ 			fl.u.ip6.flowi6_flags |= FLOWI_FLAG_ANYSRC;
+@@ -369,8 +369,8 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		}
+ 		break;
+ 	case htons(ETH_P_IP):
+-		xfrm_decode_session(skb, &fl, AF_INET);
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		xfrm_decode_session(skb, &fl, AF_INET);
+ 		if (!dst) {
+ 			struct rtable *rt;
+ 
+-- 
+2.40.1
+
 
 
