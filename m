@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E3F469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A31C433C7;
-	Mon, 28 Aug 2023 10:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1CB469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2FAC433C7;
+	Mon, 28 Aug 2023 10:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218808;
-	bh=4eZ9r9vQiDYsM00lixLP7vBLdBgAWRVVeZXHOADXLa0=;
+	s=korg; t=1693218811;
+	bh=I0N5GY4DFedXWregs66XJVCAiZGkmjPM9vIGcO1GgI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZIppO5wx6cDPsZoLWrCklKnomJo2vqRBzHwOOtAjW1p6vbrFf1FutlmdaP4m0Y3F
-	 ZpyETN3GAfp6Yx/7YPZ+kOBFguJXd5o5Pr0gxx2nrJf6ZucVCH4pGJp5F/rzXnTGpj
-	 HtdQ0CmqXN62aew2Okw0/Yz1F9sCKmnH8bYSbsHs=
+	b=f0HUGPkSm3cy8zOSDGX7RVv/U6js9ZY7nwmNeNePCYPCkg4ud45qhh9aJPtwRzqeZ
+	 KO/3zupPGcfW1vj6cdzU5R9DjM7XKiDnXSfYyu9T5YSfJxPtzaAslM8cJua8QK2h0N
+	 qyMEyYGyISQp6q/9ZUQxe2gJf84CegEjp9mi7fu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	security@openanolis.org,
-	Ziming Zhang <ezrakiez@gmail.com>,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>,
-	Niels De Graef <ndegraef@redhat.com>
-Subject: [PATCH 6.1 092/122] drm/vmwgfx: Fix shader stage validation
-Date: Mon, 28 Aug 2023 12:13:27 +0200
-Message-ID: <20230828101159.462648875@linuxfoundation.org>
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Anshuman Gupta <anshuman.gupta@intel.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Jianshui Yu <Jianshui.yu@intel.com>
+Subject: [PATCH 6.1 093/122] drm/i915/dgfx: Enable d3cold at s2idle
+Date: Mon, 28 Aug 2023 12:13:28 +0200
+Message-ID: <20230828101159.492816543@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -43,175 +41,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zackr@vmware.com>
+From: Anshuman Gupta <anshuman.gupta@intel.com>
 
-commit 14abdfae508228a7307f7491b5c4215ae70c6542 upstream.
+commit 2872144aec04baa7e43ecd2a60f7f0be3aa843fd upstream.
 
-For multiple commands the driver was not correctly validating the shader
-stages resulting in possible kernel oopses. The validation code was only.
-if ever, checking the upper bound on the shader stages but never a lower
-bound (valid shader stages start at 1 not 0).
+System wide suspend already has support for lmem save/restore during
+suspend therefore enabling d3cold for s2idle and keepng it disable for
+runtime PM.(Refer below commit for d3cold runtime PM disable justification)
+'commit 66eb93e71a7a ("drm/i915/dgfx: Keep PCI autosuspend control
+'on' by default on all dGPU")'
 
-Fixes kernel oopses ending up in vmw_binding_add, e.g.:
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 1 PID: 2443 Comm: testcase Not tainted 6.3.0-rc4-vmwgfx #1
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-RIP: 0010:vmw_binding_add+0x4c/0x140 [vmwgfx]
-Code: 7e 30 49 83 ff 0e 0f 87 ea 00 00 00 4b 8d 04 7f 89 d2 89 cb 48 c1 e0 03 4c 8b b0 40 3d 93 c0 48 8b 80 48 3d 93 c0 49 0f af de <48> 03 1c d0 4c 01 e3 49 8>
-RSP: 0018:ffffb8014416b968 EFLAGS: 00010206
-RAX: ffffffffc0933ec0 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 00000000ffffffff RSI: ffffb8014416b9c0 RDI: ffffb8014316f000
-RBP: ffffb8014416b998 R08: 0000000000000003 R09: 746f6c735f726564
-R10: ffffffffaaf2bda0 R11: 732e676e69646e69 R12: ffffb8014316f000
-R13: ffffb8014416b9c0 R14: 0000000000000040 R15: 0000000000000006
-FS:  00007fba8c0af740(0000) GS:ffff8a1277c80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000007c0933eb8 CR3: 0000000118244001 CR4: 00000000003706e0
-Call Trace:
- <TASK>
- vmw_view_bindings_add+0xf5/0x1b0 [vmwgfx]
- ? ___drm_dbg+0x8a/0xb0 [drm]
- vmw_cmd_dx_set_shader_res+0x8f/0xc0 [vmwgfx]
- vmw_execbuf_process+0x590/0x1360 [vmwgfx]
- vmw_execbuf_ioctl+0x173/0x370 [vmwgfx]
- ? __drm_dev_dbg+0xb4/0xe0 [drm]
- ? __pfx_vmw_execbuf_ioctl+0x10/0x10 [vmwgfx]
- drm_ioctl_kernel+0xbc/0x160 [drm]
- drm_ioctl+0x2d2/0x580 [drm]
- ? __pfx_vmw_execbuf_ioctl+0x10/0x10 [vmwgfx]
- ? do_fault+0x1a6/0x420
- vmw_generic_ioctl+0xbd/0x180 [vmwgfx]
- vmw_unlocked_ioctl+0x19/0x20 [vmwgfx]
- __x64_sys_ioctl+0x96/0xd0
- do_syscall_64+0x5d/0x90
- ? handle_mm_fault+0xe4/0x2f0
- ? debug_smp_processor_id+0x1b/0x30
- ? fpregs_assert_state_consistent+0x2e/0x50
- ? exit_to_user_mode_prepare+0x40/0x180
- ? irqentry_exit_to_user_mode+0xd/0x20
- ? irqentry_exit+0x3f/0x50
- ? exc_page_fault+0x8b/0x180
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+It will reduce the DG2 Card power consumption to ~0 Watt
+for s2idle power KPI.
 
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Cc: security@openanolis.org
-Reported-by: Ziming Zhang <ezrakiez@gmail.com>
-Testcase-found-by: Niels De Graef <ndegraef@redhat.com>
-Fixes: d80efd5cb3de ("drm/vmwgfx: Initial DX support")
-Cc: <stable@vger.kernel.org> # v4.3+
-Reviewed-by: Maaz Mombasawala<mombasawalam@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230616190934.54828-1-zack@kde.org
+v2:
+- Added "Cc: stable@vger.kernel.org".
+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8755
+Cc: stable@vger.kernel.org
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Tested-by: Aaron Ma <aaron.ma@canonical.com>
+Tested-by: Jianshui Yu <Jianshui.yu@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230816125216.1722002-1-anshuman.gupta@intel.com
+(cherry picked from commit 2643e6d1f2a5e51877be24042d53cf956589be10)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h     |   12 ++++++++++++
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |   29 +++++++++++------------------
- 2 files changed, 23 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/i915/i915_driver.c |   33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -1683,4 +1683,16 @@ static inline bool vmw_has_fences(struct
- 	return (vmw_fifo_caps(vmw) & SVGA_FIFO_CAP_FENCE) != 0;
+--- a/drivers/gpu/drm/i915/i915_driver.c
++++ b/drivers/gpu/drm/i915/i915_driver.c
+@@ -574,7 +574,6 @@ static int i915_pcode_init(struct drm_i9
+ static int i915_driver_hw_probe(struct drm_i915_private *dev_priv)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
+-	struct pci_dev *root_pdev;
+ 	int ret;
+ 
+ 	if (i915_inject_probe_failure(dev_priv))
+@@ -686,15 +685,6 @@ static int i915_driver_hw_probe(struct d
+ 
+ 	intel_bw_init_hw(dev_priv);
+ 
+-	/*
+-	 * FIXME: Temporary hammer to avoid freezing the machine on our DGFX
+-	 * This should be totally removed when we handle the pci states properly
+-	 * on runtime PM and on s2idle cases.
+-	 */
+-	root_pdev = pcie_find_root_port(pdev);
+-	if (root_pdev)
+-		pci_d3cold_disable(root_pdev);
+-
+ 	return 0;
+ 
+ err_msi:
+@@ -718,16 +708,11 @@ err_perf:
+ static void i915_driver_hw_remove(struct drm_i915_private *dev_priv)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
+-	struct pci_dev *root_pdev;
+ 
+ 	i915_perf_fini(dev_priv);
+ 
+ 	if (pdev->msi_enabled)
+ 		pci_disable_msi(pdev);
+-
+-	root_pdev = pcie_find_root_port(pdev);
+-	if (root_pdev)
+-		pci_d3cold_enable(root_pdev);
  }
  
-+static inline bool vmw_shadertype_is_valid(enum vmw_sm_type shader_model,
-+					   u32 shader_type)
-+{
-+	SVGA3dShaderType max_allowed = SVGA3D_SHADERTYPE_PREDX_MAX;
-+
-+	if (shader_model >= VMW_SM_5)
-+		max_allowed = SVGA3D_SHADERTYPE_MAX;
-+	else if (shader_model >= VMW_SM_4)
-+		max_allowed = SVGA3D_SHADERTYPE_DX10_MAX;
-+	return shader_type >= SVGA3D_SHADERTYPE_MIN && shader_type < max_allowed;
-+}
-+
- #endif
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1985,7 +1985,7 @@ static int vmw_cmd_set_shader(struct vmw
- 
- 	cmd = container_of(header, typeof(*cmd), header);
- 
--	if (cmd->body.type >= SVGA3D_SHADERTYPE_PREDX_MAX) {
-+	if (!vmw_shadertype_is_valid(VMW_SM_LEGACY, cmd->body.type)) {
- 		VMW_DEBUG_USER("Illegal shader type %u.\n",
- 			       (unsigned int) cmd->body.type);
- 		return -EINVAL;
-@@ -2108,8 +2108,6 @@ vmw_cmd_dx_set_single_constant_buffer(st
- 				      SVGA3dCmdHeader *header)
+ /**
+@@ -1625,6 +1610,8 @@ static int intel_runtime_suspend(struct
  {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetSingleConstantBuffer);
--	SVGA3dShaderType max_shader_num = has_sm5_context(dev_priv) ?
--		SVGA3D_NUM_SHADERTYPE : SVGA3D_NUM_SHADERTYPE_DX10;
+ 	struct drm_i915_private *dev_priv = kdev_to_i915(kdev);
+ 	struct intel_runtime_pm *rpm = &dev_priv->runtime_pm;
++	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
++	struct pci_dev *root_pdev;
+ 	struct intel_gt *gt;
+ 	int ret, i;
  
- 	struct vmw_resource *res = NULL;
- 	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
-@@ -2126,6 +2124,14 @@ vmw_cmd_dx_set_single_constant_buffer(st
- 	if (unlikely(ret != 0))
- 		return ret;
+@@ -1674,6 +1661,15 @@ static int intel_runtime_suspend(struct
+ 		drm_err(&dev_priv->drm,
+ 			"Unclaimed access detected prior to suspending\n");
  
-+	if (!vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type) ||
-+	    cmd->body.slot >= SVGA3D_DX_MAX_CONSTBUFFERS) {
-+		VMW_DEBUG_USER("Illegal const buffer shader %u slot %u.\n",
-+			       (unsigned int) cmd->body.type,
-+			       (unsigned int) cmd->body.slot);
-+		return -EINVAL;
-+	}
++	/*
++	 * FIXME: Temporary hammer to avoid freezing the machine on our DGFX
++	 * This should be totally removed when we handle the pci states properly
++	 * on runtime PM.
++	 */
++	root_pdev = pcie_find_root_port(pdev);
++	if (root_pdev)
++		pci_d3cold_disable(root_pdev);
 +
- 	binding.bi.ctx = ctx_node->ctx;
- 	binding.bi.res = res;
- 	binding.bi.bt = vmw_ctx_binding_cb;
-@@ -2134,14 +2140,6 @@ vmw_cmd_dx_set_single_constant_buffer(st
- 	binding.size = cmd->body.sizeInBytes;
- 	binding.slot = cmd->body.slot;
+ 	rpm->suspended = true;
  
--	if (binding.shader_slot >= max_shader_num ||
--	    binding.slot >= SVGA3D_DX_MAX_CONSTBUFFERS) {
--		VMW_DEBUG_USER("Illegal const buffer shader %u slot %u.\n",
--			       (unsigned int) cmd->body.type,
--			       (unsigned int) binding.slot);
--		return -EINVAL;
--	}
--
- 	vmw_binding_add(ctx_node->staged, &binding.bi, binding.shader_slot,
- 			binding.slot);
- 
-@@ -2200,15 +2198,13 @@ static int vmw_cmd_dx_set_shader_res(str
+ 	/*
+@@ -1712,6 +1708,8 @@ static int intel_runtime_resume(struct d
  {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetShaderResources) =
- 		container_of(header, typeof(*cmd), header);
--	SVGA3dShaderType max_allowed = has_sm5_context(dev_priv) ?
--		SVGA3D_SHADERTYPE_MAX : SVGA3D_SHADERTYPE_DX10_MAX;
+ 	struct drm_i915_private *dev_priv = kdev_to_i915(kdev);
+ 	struct intel_runtime_pm *rpm = &dev_priv->runtime_pm;
++	struct pci_dev *pdev = to_pci_dev(dev_priv->drm.dev);
++	struct pci_dev *root_pdev;
+ 	struct intel_gt *gt;
+ 	int ret, i;
  
- 	u32 num_sr_view = (cmd->header.size - sizeof(cmd->body)) /
- 		sizeof(SVGA3dShaderResourceViewId);
+@@ -1725,6 +1723,11 @@ static int intel_runtime_resume(struct d
  
- 	if ((u64) cmd->body.startView + (u64) num_sr_view >
- 	    (u64) SVGA3D_DX_MAX_SRVIEWS ||
--	    cmd->body.type >= max_allowed) {
-+	    !vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type)) {
- 		VMW_DEBUG_USER("Invalid shader binding.\n");
- 		return -EINVAL;
- 	}
-@@ -2232,8 +2228,6 @@ static int vmw_cmd_dx_set_shader(struct
- 				 SVGA3dCmdHeader *header)
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXSetShader);
--	SVGA3dShaderType max_allowed = has_sm5_context(dev_priv) ?
--		SVGA3D_SHADERTYPE_MAX : SVGA3D_SHADERTYPE_DX10_MAX;
- 	struct vmw_resource *res = NULL;
- 	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
- 	struct vmw_ctx_bindinfo_shader binding;
-@@ -2244,8 +2238,7 @@ static int vmw_cmd_dx_set_shader(struct
- 
- 	cmd = container_of(header, typeof(*cmd), header);
- 
--	if (cmd->body.type >= max_allowed ||
--	    cmd->body.type < SVGA3D_SHADERTYPE_MIN) {
-+	if (!vmw_shadertype_is_valid(dev_priv->sm_type, cmd->body.type)) {
- 		VMW_DEBUG_USER("Illegal shader type %u.\n",
- 			       (unsigned int) cmd->body.type);
- 		return -EINVAL;
+ 	intel_opregion_notify_adapter(dev_priv, PCI_D0);
+ 	rpm->suspended = false;
++
++	root_pdev = pcie_find_root_port(pdev);
++	if (root_pdev)
++		pci_d3cold_enable(root_pdev);
++
+ 	if (intel_uncore_unclaimed_mmio(&dev_priv->uncore))
+ 		drm_dbg(&dev_priv->drm,
+ 			"Unclaimed access during suspend, bios?\n");
 
 
