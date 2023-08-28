@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FA4A94D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19B9C433C8;
-	Mon, 28 Aug 2023 10:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AEE6FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6279BC433C8;
+	Mon, 28 Aug 2023 10:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219609;
-	bh=KByocBs1Ic8UB9p1yiTvXp477zOYX76wArESZB7cJ8Y=;
+	s=korg; t=1693219611;
+	bh=t778fVTDCSeRkrcXNuSLlqe0/p8461ssdcqaSuoSmjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyzCdfp5CrdaYlBHxT96fYIYieKbjZYxE84Z1JTgVgreNcrXbEmmtLewHwhoR4lD8
-	 PgcddhCRBbTbnd8ADFe2pGe0pgITEvI+xjQVfhgWryepDiMXT122O85JU9KK4Be7Wz
-	 kVfLJh09Q3bMVSfJEWmySRV98NnH83OlpZ+gGvuU=
+	b=06AovCAXe4ntbxmUYNs3hmX0uloyJa3odL4eBFCxFNBc7n3hlHgVGhSD42FHZgTO9
+	 kzLymNG8y0GfKpaVolq1ecpLy3zZItdGZGANw8/KWWrTze34B464Oq/MM2XyyYolbb
+	 6n2PsOeP40PAVHPkAAzY0NaHLmAGL/2hC8pT6kts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>
-Subject: [PATCH 5.15 79/89] cgroup/cpuset: Free DL BW in case can_attach() fails
-Date: Mon, 28 Aug 2023 12:14:20 +0200
-Message-ID: <20230828101152.886061991@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 5.10 01/84] objtool/x86: Fix SRSO mess
+Date: Mon, 28 Aug 2023 12:13:18 +0200
+Message-ID: <20230828101149.197279560@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
-References: <20230828101150.163430842@linuxfoundation.org>
+In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
+References: <20230828101149.146126827@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,192 +36,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 2ef269ef1ac006acf974793d975539244d77b28f upstream.
+commit 4ae68b26c3ab5a82aa271e6e9fc9b1a06e1d6b40 upstream.
 
-cpuset_can_attach() can fail. Postpone DL BW allocation until all tasks
-have been checked. DL BW is not allocated per-task but as a sum over
-all DL tasks migrating.
+Objtool --rethunk does two things:
 
-If multiple controllers are attached to the cgroup next to the cpuset
-controller a non-cpuset can_attach() can fail. In this case free DL BW
-in cpuset_cancel_attach().
+ - it collects all (tail) call's of __x86_return_thunk and places them
+   into .return_sites. These are typically compiler generated, but
+   RET also emits this same.
 
-Finally, update cpuset DL task count (nr_deadline_tasks) only in
-cpuset_attach().
+ - it fudges the validation of the __x86_return_thunk symbol; because
+   this symbol is inside another instruction, it can't actually find
+   the instruction pointed to by the symbol offset and gets upset.
 
-Suggested-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ Conflict in kernel/cgroup/cpuset.c due to pulling extra neighboring
-  functions that are not applicable on this branch. ]
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Because these two things pertained to the same symbol, there was no
+pressing need to separate these two separate things.
+
+However, alas, along comes SRSO and more crazy things to deal with
+appeared.
+
+The SRSO patch itself added the following symbol names to identify as
+rethunk:
+
+  'srso_untrain_ret', 'srso_safe_ret' and '__ret'
+
+Where '__ret' is the old retbleed return thunk, 'srso_safe_ret' is a
+new similarly embedded return thunk, and 'srso_untrain_ret' is
+completely unrelated to anything the above does (and was only included
+because of that INT3 vs UD2 issue fixed previous).
+
+Clear things up by adding a second category for the embedded instruction
+thing.
+
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230814121148.704502245@infradead.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched.h  |    2 -
- kernel/cgroup/cpuset.c |   51 +++++++++++++++++++++++++++++++++++++++++++++----
- kernel/sched/core.c    |   17 +---------------
- 3 files changed, 50 insertions(+), 20 deletions(-)
+ tools/objtool/arch.h            |    1 +
+ tools/objtool/arch/x86/decode.c |   11 +++++++----
+ tools/objtool/check.c           |   22 +++++++++++++++++++++-
+ tools/objtool/elf.h             |    1 +
+ 4 files changed, 30 insertions(+), 5 deletions(-)
 
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1797,7 +1797,7 @@ current_restore_flags(unsigned long orig
- }
+--- a/tools/objtool/arch.h
++++ b/tools/objtool/arch.h
+@@ -90,6 +90,7 @@ int arch_decode_hint_reg(u8 sp_reg, int
  
- extern int cpuset_cpumask_can_shrink(const struct cpumask *cur, const struct cpumask *trial);
--extern int task_can_attach(struct task_struct *p, const struct cpumask *cs_effective_cpus);
-+extern int task_can_attach(struct task_struct *p);
- extern int dl_bw_alloc(int cpu, u64 dl_bw);
- extern void dl_bw_free(int cpu, u64 dl_bw);
- #ifdef CONFIG_SMP
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -167,6 +167,8 @@ struct cpuset {
- 	 * know when to rebuild associated root domain bandwidth information.
- 	 */
- 	int nr_deadline_tasks;
-+	int nr_migrate_dl_tasks;
-+	u64 sum_migrate_dl_bw;
+ bool arch_is_retpoline(struct symbol *sym);
+ bool arch_is_rethunk(struct symbol *sym);
++bool arch_is_embedded_insn(struct symbol *sym);
  
- 	/* Handle for cpuset.cpus.partition */
- 	struct cgroup_file partition_file;
-@@ -2206,16 +2208,23 @@ static int fmeter_getrate(struct fmeter
+ int arch_rewrite_retpolines(struct objtool_file *file);
  
- static struct cpuset *cpuset_attach_old_cs;
+--- a/tools/objtool/arch/x86/decode.c
++++ b/tools/objtool/arch/x86/decode.c
+@@ -652,8 +652,11 @@ bool arch_is_retpoline(struct symbol *sy
  
-+static void reset_migrate_dl_data(struct cpuset *cs)
-+{
-+	cs->nr_migrate_dl_tasks = 0;
-+	cs->sum_migrate_dl_bw = 0;
+ bool arch_is_rethunk(struct symbol *sym)
+ {
+-	return !strcmp(sym->name, "__x86_return_thunk") ||
+-	       !strcmp(sym->name, "srso_untrain_ret") ||
+-	       !strcmp(sym->name, "srso_safe_ret") ||
+-	       !strcmp(sym->name, "retbleed_return_thunk");
++	return !strcmp(sym->name, "__x86_return_thunk");
 +}
 +
- /* Called by cgroups to determine if a cpuset is usable; cpuset_mutex held */
- static int cpuset_can_attach(struct cgroup_taskset *tset)
++bool arch_is_embedded_insn(struct symbol *sym)
++{
++	return !strcmp(sym->name, "retbleed_return_thunk") ||
++	       !strcmp(sym->name, "srso_safe_ret");
+ }
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -946,16 +946,33 @@ static int add_ignore_alternatives(struc
+ 	return 0;
+ }
+ 
++/*
++ * Symbols that replace INSN_CALL_DYNAMIC, every (tail) call to such a symbol
++ * will be added to the .retpoline_sites section.
++ */
+ __weak bool arch_is_retpoline(struct symbol *sym)
  {
- 	struct cgroup_subsys_state *css;
--	struct cpuset *cs;
-+	struct cpuset *cs, *oldcs;
- 	struct task_struct *task;
- 	int ret;
- 
- 	/* used later by cpuset_attach() */
- 	cpuset_attach_old_cs = task_cs(cgroup_taskset_first(tset, &css));
-+	oldcs = cpuset_attach_old_cs;
- 	cs = css_cs(css);
- 
- 	mutex_lock(&cpuset_mutex);
-@@ -2227,7 +2236,7 @@ static int cpuset_can_attach(struct cgro
- 		goto out_unlock;
- 
- 	cgroup_taskset_for_each(task, css, tset) {
--		ret = task_can_attach(task, cs->effective_cpus);
-+		ret = task_can_attach(task);
- 		if (ret)
- 			goto out_unlock;
- 		ret = security_task_setscheduler(task);
-@@ -2235,11 +2244,31 @@ static int cpuset_can_attach(struct cgro
- 			goto out_unlock;
- 
- 		if (dl_task(task)) {
--			cs->nr_deadline_tasks++;
--			cpuset_attach_old_cs->nr_deadline_tasks--;
-+			cs->nr_migrate_dl_tasks++;
-+			cs->sum_migrate_dl_bw += task->dl.dl_bw;
- 		}
- 	}
- 
-+	if (!cs->nr_migrate_dl_tasks)
-+		goto out_success;
-+
-+	if (!cpumask_intersects(oldcs->effective_cpus, cs->effective_cpus)) {
-+		int cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
-+
-+		if (unlikely(cpu >= nr_cpu_ids)) {
-+			reset_migrate_dl_data(cs);
-+			ret = -EINVAL;
-+			goto out_unlock;
-+		}
-+
-+		ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
-+		if (ret) {
-+			reset_migrate_dl_data(cs);
-+			goto out_unlock;
-+		}
-+	}
-+
-+out_success:
- 	/*
- 	 * Mark attach is in progress.  This makes validate_change() fail
- 	 * changes which zero cpus/mems_allowed.
-@@ -2263,6 +2292,14 @@ static void cpuset_cancel_attach(struct
- 	cs->attach_in_progress--;
- 	if (!cs->attach_in_progress)
- 		wake_up(&cpuset_attach_wq);
-+
-+	if (cs->nr_migrate_dl_tasks) {
-+		int cpu = cpumask_any(cs->effective_cpus);
-+
-+		dl_bw_free(cpu, cs->sum_migrate_dl_bw);
-+		reset_migrate_dl_data(cs);
-+	}
-+
- 	mutex_unlock(&cpuset_mutex);
+ 	return false;
  }
  
-@@ -2335,6 +2372,12 @@ static void cpuset_attach(struct cgroup_
- 
- 	cs->old_mems_allowed = cpuset_attach_nodemask_to;
- 
-+	if (cs->nr_migrate_dl_tasks) {
-+		cs->nr_deadline_tasks += cs->nr_migrate_dl_tasks;
-+		oldcs->nr_deadline_tasks -= cs->nr_migrate_dl_tasks;
-+		reset_migrate_dl_data(cs);
-+	}
-+
- 	cs->attach_in_progress--;
- 	if (!cs->attach_in_progress)
- 		wake_up(&cpuset_attach_wq);
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8789,8 +8789,7 @@ int cpuset_cpumask_can_shrink(const stru
- 	return ret;
- }
- 
--int task_can_attach(struct task_struct *p,
--		    const struct cpumask *cs_effective_cpus)
-+int task_can_attach(struct task_struct *p)
++/*
++ * Symbols that replace INSN_RETURN, every (tail) call to such a symbol
++ * will be added to the .return_sites section.
++ */
+ __weak bool arch_is_rethunk(struct symbol *sym)
  {
- 	int ret = 0;
- 
-@@ -8803,21 +8802,9 @@ int task_can_attach(struct task_struct *
- 	 * success of set_cpus_allowed_ptr() on all attached tasks
- 	 * before cpus_mask may be changed.
- 	 */
--	if (p->flags & PF_NO_SETAFFINITY) {
-+	if (p->flags & PF_NO_SETAFFINITY)
- 		ret = -EINVAL;
--		goto out;
--	}
- 
--	if (dl_task(p) && !cpumask_intersects(task_rq(p)->rd->span,
--					      cs_effective_cpus)) {
--		int cpu = cpumask_any_and(cpu_active_mask, cs_effective_cpus);
--
--		if (unlikely(cpu >= nr_cpu_ids))
--			return -EINVAL;
--		ret = dl_bw_alloc(cpu, p->dl.dl_bw);
--	}
--
--out:
- 	return ret;
+ 	return false;
  }
  
++/*
++ * Symbols that are embedded inside other instructions, because sometimes crazy
++ * code exists. These are mostly ignored for validation purposes.
++ */
++__weak bool arch_is_embedded_insn(struct symbol *sym)
++{
++	return false;
++}
++
+ #define NEGATIVE_RELOC	((void *)-1L)
+ 
+ static struct reloc *insn_reloc(struct objtool_file *file, struct instruction *insn)
+@@ -1172,7 +1189,7 @@ static int add_jump_destinations(struct
+ 			 * middle of another instruction.  Objtool only
+ 			 * knows about the outer instruction.
+ 			 */
+-			if (sym && sym->return_thunk) {
++			if (sym && sym->embedded_insn) {
+ 				add_return_call(file, insn, false);
+ 				continue;
+ 			}
+@@ -1971,6 +1988,9 @@ static int classify_symbols(struct objto
+ 			if (arch_is_rethunk(func))
+ 				func->return_thunk = true;
+ 
++			if (arch_is_embedded_insn(func))
++				func->embedded_insn = true;
++
+ 			if (!strcmp(func->name, "__fentry__"))
+ 				func->fentry = true;
+ 
+--- a/tools/objtool/elf.h
++++ b/tools/objtool/elf.h
+@@ -61,6 +61,7 @@ struct symbol {
+ 	u8 return_thunk      : 1;
+ 	u8 fentry            : 1;
+ 	u8 kcov              : 1;
++	u8 embedded_insn     : 1;
+ };
+ 
+ struct reloc {
 
 
