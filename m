@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4496FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676BDC433C8;
-	Mon, 28 Aug 2023 10:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC30D6FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41573C433C7;
+	Mon, 28 Aug 2023 10:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219600;
-	bh=76Itv3yAqXq1WN75ngND4us01gK78CM9osakVbeNgWc=;
+	s=korg; t=1693219603;
+	bh=Ow4Bqa27v16KlON6UnQqYn5gLJMa80lNX3jB6ka1TfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZjvYPtxisMutgzhY0VtxdepzQ+m2eyzFc3eRbvGvS6DuYdzSbGg4txiXL34yJUUG
-	 J3dvYHrPHayrXp0KHf3Q3TWZPenQK7ACqez3AdFUaVcuN1bMQ9csF/xLfcxJ5ZQaBN
-	 QhTB1yPd9go4b3VvanhBE6vg393XPEX8eAwure1s=
+	b=rDQkTc+20WY2KgBqexXeLh9xFgOeAFp3RlK4n6Qair/QZOALpLSSIUEq0YovQrBga
+	 uw523rVSqi4ZgHZGhvDf+/nljQNjg5uPdhnFtJxIJ4Kv1D8pU1Rn5zbC7wGS4J9UZG
+	 9/qRCxnVTd8XDg9to9VY7JrAeX7LBL+KJTWBVayY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Rob Clark <robdclark@chromium.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 86/89] dma-buf/sw_sync: Avoid recursive lock during fence signal
-Date: Mon, 28 Aug 2023 12:14:27 +0200
-Message-ID: <20230828101153.145316894@linuxfoundation.org>
+Subject: [PATCH 5.15 87/89] mm: memory-failure: kill soft_offline_free_page()
+Date: Mon, 28 Aug 2023 12:14:28 +0200
+Message-ID: <20230828101153.180319605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -35,83 +36,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-[ Upstream commit e531fdb5cd5ee2564b7fe10c8a9219e2b2fac61e ]
+[ Upstream commit 7adb45887c8af88985c335b53d253654e9d2dd16 ]
 
-If a signal callback releases the sw_sync fence, that will trigger a
-deadlock as the timeline_fence_release recurses onto the fence->lock
-(used both for signaling and the the timeline tree).
+Open-code the page_handle_poison() into soft_offline_page() and kill
+unneeded soft_offline_free_page().
 
-To avoid that, temporarily hold an extra reference to the signalled
-fences until after we drop the lock.
-
-(This is an alternative implementation of https://patchwork.kernel.org/patch/11664717/
-which avoids some potential UAF issues with the original patch.)
-
-v2: Remove now obsolete comment, use list_move_tail() and
-    list_del_init()
-
-Reported-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Fixes: d3c6dd1fb30d ("dma-buf/sw_sync: Synchronize signal vs syncpt free")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230818145939.39697-1-robdclark@gmail.com
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lkml.kernel.org/r/20220819033402.156519-1-wangkefeng.wang@huawei.com
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: e2c1ab070fdc ("mm: memory-failure: fix unexpected return value in soft_offline_page()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sw_sync.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ mm/memory-failure.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/drivers/dma-buf/sw_sync.c b/drivers/dma-buf/sw_sync.c
-index 348b3a9170fa4..7f5ed1aa7a9f8 100644
---- a/drivers/dma-buf/sw_sync.c
-+++ b/drivers/dma-buf/sw_sync.c
-@@ -191,6 +191,7 @@ static const struct dma_fence_ops timeline_fence_ops = {
-  */
- static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- {
-+	LIST_HEAD(signalled);
- 	struct sync_pt *pt, *next;
- 
- 	trace_sync_timeline(obj);
-@@ -203,21 +204,20 @@ static void sync_timeline_signal(struct sync_timeline *obj, unsigned int inc)
- 		if (!timeline_fence_signaled(&pt->base))
- 			break;
- 
--		list_del_init(&pt->link);
-+		dma_fence_get(&pt->base);
-+
-+		list_move_tail(&pt->link, &signalled);
- 		rb_erase(&pt->node, &obj->pt_tree);
- 
--		/*
--		 * A signal callback may release the last reference to this
--		 * fence, causing it to be freed. That operation has to be
--		 * last to avoid a use after free inside this loop, and must
--		 * be after we remove the fence from the timeline in order to
--		 * prevent deadlocking on timeline->lock inside
--		 * timeline_fence_release().
--		 */
- 		dma_fence_signal_locked(&pt->base);
- 	}
- 
- 	spin_unlock_irq(&obj->lock);
-+
-+	list_for_each_entry_safe(pt, next, &signalled, link) {
-+		list_del_init(&pt->link);
-+		dma_fence_put(&pt->base);
-+	}
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 9f9dd968fbe3c..69d22af10adfc 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -2219,16 +2219,6 @@ static int soft_offline_in_use_page(struct page *page)
+ 	return __soft_offline_page(page);
  }
  
- /**
+-static int soft_offline_free_page(struct page *page)
+-{
+-	int rc = 0;
+-
+-	if (!page_handle_poison(page, true, false))
+-		rc = -EBUSY;
+-
+-	return rc;
+-}
+-
+ static void put_ref_page(struct page *page)
+ {
+ 	if (page)
+@@ -2294,7 +2284,7 @@ int soft_offline_page(unsigned long pfn, int flags)
+ 	if (ret > 0) {
+ 		ret = soft_offline_in_use_page(page);
+ 	} else if (ret == 0) {
+-		if (soft_offline_free_page(page) && try_again) {
++		if (!page_handle_poison(page, true, false) && try_again) {
+ 			try_again = false;
+ 			flags &= ~MF_COUNT_INCREASED;
+ 			goto retry;
 -- 
 2.40.1
 
