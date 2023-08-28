@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123E211C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A445C433C8;
-	Mon, 28 Aug 2023 10:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C727311C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:23:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48575C433C8;
+	Mon, 28 Aug 2023 10:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218222;
-	bh=hEt2XbgUZ+RM3CawnW93VmeQxVcZmpZdbyFDuS0X5Ak=;
+	s=korg; t=1693218225;
+	bh=sAzzv/uoxVshFsje4Z0TBlSBlnH6FGBsoW5aulTbXmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/4GFs4KERwXEXCqm+ImJjCAsjH6sMJkzmM9MYrvJkiSzGwSEWOf1r8HIlSYGmKtB
-	 FQYINz1oPVJfU541f5V7IOQTrXlJlpY1A08FOW1iJpAGrbq8e/irz+Khd7MZRTEBOs
-	 grhqKvGs8NEFBzxiTue4tGt0qknBKbklH6rjOyyc=
+	b=J7G46X5ui9cN68ftvy76cpLRVgftj+gihmwquymSPMMiBvzzgLAPLq4TPZP/7Z8O/
+	 A/ekBAMschwK4rLSDexwsEZq5kONe+mEUVojy6/y8VmNqSxCOuzqYEvZSEl7PMWycc
+	 7EzLD7RlsWwn805JlD5/rqeOHn7sgl82VRTaa28A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com,
+	Immad Mir <mirimmad17@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 010/129] MIPS: dec: prom: Address -Warray-bounds warning
-Date: Mon, 28 Aug 2023 12:11:44 +0200
-Message-ID: <20230828101153.434506889@linuxfoundation.org>
+Subject: [PATCH 4.19 011/129] FS: JFS: Fix null-ptr-deref Read in txBegin
+Date: Mon, 28 Aug 2023 12:11:45 +0200
+Message-ID: <20230828101153.463894410@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,52 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Immad Mir <mirimmad17@gmail.com>
 
-[ Upstream commit 7b191b9b55df2a844bd32d1d380f47a7df1c2896 ]
+[ Upstream commit 47cfdc338d674d38f4b2f22b7612cc6a2763ba27 ]
 
-Zero-length arrays are deprecated, and we are replacing them with flexible
-array members instead. So, replace zero-length array with flexible-array
-member in struct memmap.
+ Syzkaller reported an issue where txBegin may be called
+ on a superblock in a read-only mounted filesystem which leads
+ to NULL pointer deref. This could be solved by checking if
+ the filesystem is read-only before calling txBegin, and returning
+ with appropiate error code.
 
-Address the following warning found after building (with GCC-13) mips64
-with decstation_64_defconfig:
-In function 'rex_setup_memory_region',
-    inlined from 'prom_meminit' at arch/mips/dec/prom/memory.c:91:3:
-arch/mips/dec/prom/memory.c:72:31: error: array subscript i is outside array bounds of 'unsigned char[0]' [-Werror=array-bounds=]
-   72 |                 if (bm->bitmap[i] == 0xff)
-      |                     ~~~~~~~~~~^~~
-In file included from arch/mips/dec/prom/memory.c:16:
-./arch/mips/include/asm/dec/prom.h: In function 'prom_meminit':
-./arch/mips/include/asm/dec/prom.h:73:23: note: while referencing 'bitmap'
-   73 |         unsigned char bitmap[0];
+Reported-By: syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=be7e52c50c5182cc09a09ea6fc456446b2039de3
 
-This helps with the ongoing efforts to globally enable -Warray-bounds.
-
-This results in no differences in binary output.
-
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/323
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Immad Mir <mirimmad17@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/dec/prom.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/namei.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/mips/include/asm/dec/prom.h b/arch/mips/include/asm/dec/prom.h
-index 09538ff5e9245..6f0405ba27d6d 100644
---- a/arch/mips/include/asm/dec/prom.h
-+++ b/arch/mips/include/asm/dec/prom.h
-@@ -74,7 +74,7 @@ static inline bool prom_is_rex(u32 magic)
-  */
- typedef struct {
- 	int pagesize;
--	unsigned char bitmap[0];
-+	unsigned char bitmap[];
- } memmap;
+diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
+index 14528c0ffe635..c2c439acbb780 100644
+--- a/fs/jfs/namei.c
++++ b/fs/jfs/namei.c
+@@ -811,6 +811,11 @@ static int jfs_link(struct dentry *old_dentry,
+ 	if (rc)
+ 		goto out;
  
++	if (isReadOnly(ip)) {
++		jfs_error(ip->i_sb, "read-only filesystem\n");
++		return -EROFS;
++	}
++
+ 	tid = txBegin(ip->i_sb, 0);
  
+ 	mutex_lock_nested(&JFS_IP(dir)->commit_mutex, COMMIT_MUTEX_PARENT);
 -- 
 2.40.1
 
