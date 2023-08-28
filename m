@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE90311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:37:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C206C433C7;
-	Mon, 28 Aug 2023 10:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637C111C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74EAC433C8;
+	Mon, 28 Aug 2023 10:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219037;
-	bh=3rLIZopWh4fv27sb690BoF2I8Y0tznQEKW/5w73VOY8=;
+	s=korg; t=1693219040;
+	bh=5d5namxpWQ1zBtmSiEg/2AO/UbIjOAsZyfe2zmyHbmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2LM6t+OLm9DnTBwV86VAPAc/KLlStnjHBpmqgumXcF+4zlJYRgSMM1VTk0QXb5F/
-	 7NbfbkOtCOxYYAJZVwuKkLozNXI3ITOso/k9F9/MhnystZSocleBL2KkT8isbt/+sU
-	 lE29xj3xblRM4RCmypcI4V3PXfcFkvUdLlN+sEQ4=
+	b=2GLmBJE8ipvtfT5SzahhwpZl+pRAW+Kzn4WhODDXAVU/DK+zrgAgwRrsGPF1RthBb
+	 zavSNAxV+9A+sUVQOJDzGmJKII1BVVYni2q0T+yZND+DOqCSfWafXE/QRDELSyPg6q
+	 Em3muWXsOBTnm+d3FCb836NaokEz+xspKnvxdeFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Frank Ch. Eigler" <fche@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/158] nfsd: Remove incorrect check in nfsd4_validate_stateid
-Date: Mon, 28 Aug 2023 12:12:28 +0200
-Message-ID: <20230828101159.060268673@linuxfoundation.org>
+Subject: [PATCH 5.4 034/158] iommu/amd: Fix "Guest Virtual APIC Table Root Pointer" configuration in IRTE
+Date: Mon, 28 Aug 2023 12:12:11 +0200
+Message-ID: <20230828101158.494137054@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -42,41 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Kishon Vijay Abraham I <kvijayab@amd.com>
 
-[ Upstream commit f75546f58a70da5cfdcec5a45ffc377885ccbee8 ]
+[ Upstream commit ccc62b827775915a9b82db42a29813d04f92df7a ]
 
-If the client is calling TEST_STATEID, then it is because some event
-occurred that requires it to check all the stateids for validity and
-call FREE_STATEID on the ones that have been revoked. In this case,
-either the stateid exists in the list of stateids associated with that
-nfs4_client, in which case it should be tested, or it does not. There
-are no additional conditions to be considered.
+commit b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC
+(de-)activation code") while refactoring guest virtual APIC
+activation/de-activation code, stored information for activate/de-activate
+in "struct amd_ir_data". It used 32-bit integer data type for storing the
+"Guest Virtual APIC Table Root Pointer" (ga_root_ptr), though the
+"ga_root_ptr" is actually a 40-bit field in IRTE (Interrupt Remapping
+Table Entry).
 
-Reported-by: "Frank Ch. Eigler" <fche@redhat.com>
-Fixes: 7df302f75ee2 ("NFSD: TEST_STATEID should not return NFS4ERR_STALE_STATEID")
-Cc: stable@vger.kernel.org # v5.7+
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+This causes interrupts from PCIe devices to not reach the guest in the case
+of PCIe passthrough with SME (Secure Memory Encryption) enabled as _SME_
+bit in the "ga_root_ptr" is lost before writing it to the IRTE.
+
+Fix it by using 64-bit data type for storing the "ga_root_ptr". While at
+that also change the data type of "ga_tag" to u32 in order to match
+the IOMMU spec.
+
+Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
+Cc: stable@vger.kernel.org # v5.4+
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Link: https://lore.kernel.org/r/20230405130317.9351-1-kvijayab@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/iommu/amd_iommu_types.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index ecdf83c723f42..e62b6e45dcff2 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5513,8 +5513,6 @@ static __be32 nfsd4_validate_stateid(struct nfs4_client *cl, stateid_t *stateid)
- 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
- 		CLOSE_STATEID(stateid))
- 		return status;
--	if (!same_clid(&stateid->si_opaque.so_clid, &cl->cl_clientid))
--		return status;
- 	spin_lock(&cl->cl_lock);
- 	s = find_stateid_locked(cl, stateid);
- 	if (!s)
+diff --git a/drivers/iommu/amd_iommu_types.h b/drivers/iommu/amd_iommu_types.h
+index 76e9d3e2f9f20..15eef44efd030 100644
+--- a/drivers/iommu/amd_iommu_types.h
++++ b/drivers/iommu/amd_iommu_types.h
+@@ -886,8 +886,8 @@ struct amd_ir_data {
+ 	 */
+ 	struct irq_cfg *cfg;
+ 	int ga_vector;
+-	int ga_root_ptr;
+-	int ga_tag;
++	u64 ga_root_ptr;
++	u32 ga_tag;
+ };
+ 
+ struct amd_irte_ops {
 -- 
 2.40.1
 
