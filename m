@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C516811C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B99DC433C7;
-	Mon, 28 Aug 2023 10:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D4411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DC2C433C7;
+	Mon, 28 Aug 2023 10:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219165;
-	bh=RvX0ITxgx+NkPO+gPF+Cvl7FHQJUR+LgrpcOfHR+H10=;
+	s=korg; t=1693219168;
+	bh=fbiuS2b4r+3cRjLJB8+nsdzS/CAzk9EwuNvTJCg7E5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpK3ZLxIPD0JHcDzNH7ccxXH94wZDD8w5Wx2GbxWHK6dPZdcjEvHjFwLkxEvwEA7F
-	 jZWV4MxwvJZKgtFuyPLL0JzGr749t8c+rkxK+O9yAzvp0GThGrP8sBn9qZILMuQRet
-	 DONi/UA2hv/6v0rUBddpyln+3TKQT3yz4JllDqeE=
+	b=Tq/lPvgwg6UWSweguRoXSOlVCZ/aXYH+7VZBDWZR7pIzPzCVdXnNdHu2oItcAiAHv
+	 GmU7Qj36dEBfrnVakYxHatD0g1EVZ9DCqIoR7DctTj0kOWV+yf5TfQnFPArs3rkU/F
+	 zH5vtXTyEGh6IN+9WzOilvHgldWzU3f0HfYnEaTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Sishuai Gong <sishuai.system@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/158] selftests: mirror_gre_changes: Tighten up the TTL test match
-Date: Mon, 28 Aug 2023 12:12:44 +0200
-Message-ID: <20230828101159.535639039@linuxfoundation.org>
+Subject: [PATCH 5.4 068/158] ipvs: fix racy memcpy in proc_do_sync_threshold
+Date: Mon, 28 Aug 2023 12:12:45 +0200
+Message-ID: <20230828101159.565519420@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -43,46 +42,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Sishuai Gong <sishuai.system@gmail.com>
 
-[ Upstream commit 855067defa36b1f9effad8c219d9a85b655cf500 ]
+[ Upstream commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 ]
 
-This test verifies whether the encapsulated packets have the correct
-configured TTL. It does so by sending ICMP packets through the test
-topology and mirroring them to a gretap netdevice. On a busy host
-however, more than just the test ICMP packets may end up flowing
-through the topology, get mirrored, and counted. This leads to
-potential spurious failures as the test observes much more mirrored
-packets than the sent test packets, and assumes a bug.
+When two threads run proc_do_sync_threshold() in parallel,
+data races could happen between the two memcpy():
 
-Fix this by tightening up the mirror action match. Change it from
-matchall to a flower classifier matching on ICMP packets specifically.
+Thread-1			Thread-2
+memcpy(val, valp, sizeof(val));
+				memcpy(valp, val, sizeof(val));
 
-Fixes: 45315673e0c5 ("selftests: forwarding: Test changes in mirror-to-gretap")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This race might mess up the (struct ctl_table *) table->data,
+so we add a mutex lock to serialize them.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
+Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
+Acked-by: Simon Horman <horms@kernel.org>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/mirror_gre_changes.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_ctl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh b/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh
-index 472bd023e2a5f..b501b366367f7 100755
---- a/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh
-+++ b/tools/testing/selftests/net/forwarding/mirror_gre_changes.sh
-@@ -72,7 +72,8 @@ test_span_gre_ttl()
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 07242503d74d3..2bc82dabfe3b8 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1759,6 +1759,7 @@ static int
+ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		       void __user *buffer, size_t *lenp, loff_t *ppos)
+ {
++	struct netns_ipvs *ipvs = table->extra2;
+ 	int *valp = table->data;
+ 	int val[2];
+ 	int rc;
+@@ -1768,6 +1769,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		.mode = table->mode,
+ 	};
  
- 	RET=0
++	mutex_lock(&ipvs->sync_mutex);
+ 	memcpy(val, valp, sizeof(val));
+ 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
+ 	if (write) {
+@@ -1777,6 +1779,7 @@ proc_do_sync_threshold(struct ctl_table *table, int write,
+ 		else
+ 			memcpy(valp, val, sizeof(val));
+ 	}
++	mutex_unlock(&ipvs->sync_mutex);
+ 	return rc;
+ }
  
--	mirror_install $swp1 ingress $tundev "matchall $tcflags"
-+	mirror_install $swp1 ingress $tundev \
-+		"prot ip flower $tcflags ip_prot icmp"
- 	tc filter add dev $h3 ingress pref 77 prot $prot \
- 		flower ip_ttl 50 action pass
- 
+@@ -4034,6 +4037,7 @@ static int __net_init ip_vs_control_net_init_sysctl(struct netns_ipvs *ipvs)
+ 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
+ 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
+ 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
++	tbl[idx].extra2 = ipvs;
+ 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
+ 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
+ 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
 -- 
 2.40.1
 
