@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB1F11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2039C433C8;
-	Mon, 28 Aug 2023 10:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7B211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC4DC433C7;
+	Mon, 28 Aug 2023 10:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219587;
-	bh=Xus3TVobtE0TwlMg8Uz2cvyhSzUPIRcyk65KcELof90=;
+	s=korg; t=1693219589;
+	bh=/zNziRHOpbPVdJYAablbpTm2KHw068WEG58UPNdS1zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+y0jiHhzlb2cJfrwFwEVrCexBKNOHRNprcVDYytFdvY89fUR3+SiTw18JdqGHO4Y
-	 zdma/+i9yM0Ho6AiIoJ3tTLafbyudSRQbEbfA9Or4RNRwQFR/YC2MnvayKfvwoH4eU
-	 8VFUuQPkdpIgt4YOXWvrTpedvbHJEwpR9lI9x0wI=
+	b=VZP3v3X1kkT43w3Ov9wdESgecmUajT4KGkHLxndtZryeY1q+vEobEvqT/HdJ7OTd8
+	 KzxU1u7Bvz81QSfgXILt0hmxMhm5Lz2E8HCpKAmOK+boDY2HWpkVooZqeVP3KNeXHp
+	 v6N1KYpsEpt4Lhi8cgGHjDjCBudfHSg06MXkH49A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 81/89] can: raw: add missing refcount for memory leak fix
-Date: Mon, 28 Aug 2023 12:14:22 +0200
-Message-ID: <20230828101152.950133638@linuxfoundation.org>
+	Zhu Wang <wangzhu9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 82/89] scsi: snic: Fix double free in snic_tgt_create()
+Date: Mon, 28 Aug 2023 12:14:23 +0200
+Message-ID: <20230828101152.995254204@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: <20230828101150.163430842@linuxfoundation.org>
@@ -41,112 +39,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Zhu Wang <wangzhu9@huawei.com>
 
-commit c275a176e4b69868576e543409927ae75e3a3288 upstream.
+commit 1bd3a76880b2bce017987cf53780b372cf59528e upstream.
 
-Commit ee8b94c8510c ("can: raw: fix receiver memory leak") introduced
-a new reference to the CAN netdevice that has assigned CAN filters.
-But this new ro->dev reference did not maintain its own refcount which
-lead to another KASAN use-after-free splat found by Eric Dumazet.
+Commit 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add()
+fails") fixed the memory leak caused by dev_set_name() when device_add()
+failed. However, it did not consider that 'tgt' has already been released
+when put_device(&tgt->dev) is called. Remove kfree(tgt) in the error path
+to avoid double free of 'tgt' and move put_device(&tgt->dev) after the
+removed kfree(tgt) to avoid a use-after-free.
 
-This patch ensures a proper refcount for the CAN nedevice.
-
-Fixes: ee8b94c8510c ("can: raw: fix receiver memory leak")
-Reported-by: Eric Dumazet <edumazet@google.com>
-Cc: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/r/20230821144547.6658-3-socketcan@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add() fails")
+Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
+Link: https://lore.kernel.org/r/20230819083941.164365-1-wangzhu9@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/raw.c |   34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ drivers/scsi/snic/snic_disc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -283,8 +283,10 @@ static void raw_notify(struct raw_sock *
- 	case NETDEV_UNREGISTER:
- 		lock_sock(sk);
- 		/* remove current filters & unregister */
--		if (ro->bound)
-+		if (ro->bound) {
- 			raw_disable_allfilters(dev_net(dev), dev, sk);
-+			dev_put(dev);
-+		}
+--- a/drivers/scsi/snic/snic_disc.c
++++ b/drivers/scsi/snic/snic_disc.c
+@@ -317,12 +317,11 @@ snic_tgt_create(struct snic *snic, struc
+ 			      "Snic Tgt: device_add, with err = %d\n",
+ 			      ret);
  
- 		if (ro->count > 1)
- 			kfree(ro->filter);
-@@ -388,10 +390,12 @@ static int raw_release(struct socket *so
+-		put_device(&tgt->dev);
+ 		put_device(&snic->shost->shost_gendev);
+ 		spin_lock_irqsave(snic->shost->host_lock, flags);
+ 		list_del(&tgt->list);
+ 		spin_unlock_irqrestore(snic->shost->host_lock, flags);
+-		kfree(tgt);
++		put_device(&tgt->dev);
+ 		tgt = NULL;
  
- 	/* remove current filters & unregister */
- 	if (ro->bound) {
--		if (ro->dev)
-+		if (ro->dev) {
- 			raw_disable_allfilters(dev_net(ro->dev), ro->dev, sk);
--		else
-+			dev_put(ro->dev);
-+		} else {
- 			raw_disable_allfilters(sock_net(sk), NULL, sk);
-+		}
- 	}
- 
- 	if (ro->count > 1)
-@@ -442,10 +446,10 @@ static int raw_bind(struct socket *sock,
- 			goto out;
- 		}
- 		if (dev->type != ARPHRD_CAN) {
--			dev_put(dev);
- 			err = -ENODEV;
--			goto out;
-+			goto out_put_dev;
- 		}
-+
- 		if (!(dev->flags & IFF_UP))
- 			notify_enetdown = 1;
- 
-@@ -453,7 +457,9 @@ static int raw_bind(struct socket *sock,
- 
- 		/* filters set by default/setsockopt */
- 		err = raw_enable_allfilters(sock_net(sk), dev, sk);
--		dev_put(dev);
-+		if (err)
-+			goto out_put_dev;
-+
- 	} else {
- 		ifindex = 0;
- 
-@@ -464,18 +470,28 @@ static int raw_bind(struct socket *sock,
- 	if (!err) {
- 		if (ro->bound) {
- 			/* unregister old filters */
--			if (ro->dev)
-+			if (ro->dev) {
- 				raw_disable_allfilters(dev_net(ro->dev),
- 						       ro->dev, sk);
--			else
-+				/* drop reference to old ro->dev */
-+				dev_put(ro->dev);
-+			} else {
- 				raw_disable_allfilters(sock_net(sk), NULL, sk);
-+			}
- 		}
- 		ro->ifindex = ifindex;
- 		ro->bound = 1;
-+		/* bind() ok -> hold a reference for new ro->dev */
- 		ro->dev = dev;
-+		if (ro->dev)
-+			dev_hold(ro->dev);
- 	}
- 
-- out:
-+out_put_dev:
-+	/* remove potential reference from dev_get_by_index() */
-+	if (dev)
-+		dev_put(dev);
-+out:
- 	release_sock(sk);
- 	rtnl_unlock();
- 
+ 		return tgt;
 
 
