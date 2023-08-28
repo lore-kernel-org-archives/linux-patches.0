@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75136FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D840C433C7;
-	Mon, 28 Aug 2023 10:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7604D6FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8239C433C7;
+	Mon, 28 Aug 2023 10:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217894;
-	bh=5y0CPhvSthjtFJD5zy2gGcu92zYbOESKyGSCmpdW7RM=;
+	s=korg; t=1693217897;
+	bh=l2FAUOiI9eGEP88/PBtKaLNCte0FY5anCthhXs1lccI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6Q/tqPzv9Hb+RhQlI/WZdovDfK4suFc0Uly9WSMxkb+SRKw68QjJEETokp5taX9Y
-	 z2yHHNnCSe57YfMhRkQixltikbp0oey1o2JY109VoJX9dfHGXX4H87MnS2qssEt6uF
-	 s/ZiANeUbPaCZBI1V6NwWxnbBd1Ev7EsB1LOojAk=
+	b=2l3fEUQTo3XcvWn7eas/bTXRCeBWSgoyYBCENWoBtaWwP+nU5CphTQhsCf+bvGd7g
+	 fOeB9cxSy3cGorWUYH1Q0Wfo0opa1oOwOICcGx0meXUUL8DgUwLHj6hcVUTkRsjcaw
+	 nsSg14GrsmPiSH4RoCe/r1Qcx2BUQ/cAOYCZ1NrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Wei <luwei32@huawei.com>,
-	Florian Westphal <fw@strlen.de>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 021/129] ipvlan: Fix a reference count leak warning in ipvlan_ns_exit()
-Date: Mon, 28 Aug 2023 12:11:40 +0200
-Message-ID: <20230828101158.086581552@linuxfoundation.org>
+Subject: [PATCH 6.4 022/129] mlxsw: pci: Set time stamp fields also when its type is MIRROR_UTC
+Date: Mon, 28 Aug 2023 12:11:41 +0200
+Message-ID: <20230828101158.115869142@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -41,88 +43,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Wei <luwei32@huawei.com>
+From: Danielle Ratson <danieller@nvidia.com>
 
-[ Upstream commit 043d5f68d0ccdda91029b4b6dce7eeffdcfad281 ]
+[ Upstream commit bc2de151ab6ad0762a04563527ec42e54dde572a ]
 
-There are two network devices(veth1 and veth3) in ns1, and ipvlan1 with
-L3S mode and ipvlan2 with L2 mode are created based on them as
-figure (1). In this case, ipvlan_register_nf_hook() will be called to
-register nf hook which is needed by ipvlans in L3S mode in ns1 and value
-of ipvl_nf_hook_refcnt is set to 1.
+Currently, in Spectrum-2 and above, time stamps are extracted from the CQE
+into the time stamp fields in 'struct mlxsw_skb_cb', only when the CQE
+time stamp type is UTC. The time stamps are read directly from the CQE and
+software can get the time stamp in UTC format using CQEv2.
 
-(1)
-           ns1                           ns2
-      ------------                  ------------
+>From Spectrum-4, the time stamps that are read from the CQE are allowed
+to be also from MIRROR_UTC type.
 
-   veth1--ipvlan1 (L3S)
+Therefore, we get a warning [1] from the driver that the time stamp fields
+were not set, when LLDP control packet is sent.
 
-   veth3--ipvlan2 (L2)
+Allow the time stamp type to be MIRROR_UTC and set the time stamp in this
+case as well.
 
-(2)
-           ns1                           ns2
-      ------------                  ------------
+[1]
+ WARNING: CPU: 11 PID: 0 at drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c:1409 mlxsw_sp2_ptp_hwtstamp_fill+0x1f/0x70 [mlxsw_spectrum]
+[...]
+ Call Trace:
+  <IRQ>
+  mlxsw_sp2_ptp_receive+0x3c/0x80 [mlxsw_spectrum]
+  mlxsw_core_skb_receive+0x119/0x190 [mlxsw_core]
+  mlxsw_pci_cq_tasklet+0x3c9/0x780 [mlxsw_pci]
+  tasklet_action_common.constprop.0+0x9f/0x110
+  __do_softirq+0xbb/0x296
+  irq_exit_rcu+0x79/0xa0
+  common_interrupt+0x86/0xa0
+  </IRQ>
+  <TASK>
 
-   veth1--ipvlan1 (L3S)
-
-         ipvlan2 (L2)                  veth3
-     |                                  |
-     |------->-------->--------->--------
-                    migrate
-
-When veth3 migrates from ns1 to ns2 as figure (2), veth3 will register in
-ns2 and calls call_netdevice_notifiers with NETDEV_REGISTER event:
-
-dev_change_net_namespace
-    call_netdevice_notifiers
-        ipvlan_device_event
-            ipvlan_migrate_l3s_hook
-                ipvlan_register_nf_hook(newnet)      (I)
-                ipvlan_unregister_nf_hook(oldnet)    (II)
-
-In function ipvlan_migrate_l3s_hook(), ipvl_nf_hook_refcnt in ns1 is not 0
-since veth1 with ipvlan1 still in ns1, (I) and (II) will be called to
-register nf_hook in ns2 and unregister nf_hook in ns1. As a result,
-ipvl_nf_hook_refcnt in ns1 is decreased incorrectly and this in ns2
-is increased incorrectly. When the second net namespace is removed, a
-reference count leak warning in ipvlan_ns_exit() will be triggered.
-
-This patch add a check before ipvlan_migrate_l3s_hook() is called. The
-warning can be triggered as follows:
-
-$ ip netns add ns1
-$ ip netns add ns2
-$ ip netns exec ns1 ip link add veth1 type veth peer name veth2
-$ ip netns exec ns1 ip link add veth3 type veth peer name veth4
-$ ip netns exec ns1 ip link add ipv1 link veth1 type ipvlan mode l3s
-$ ip netns exec ns1 ip link add ipv2 link veth3 type ipvlan mode l2
-$ ip netns exec ns1 ip link set veth3 netns ns2
-$ ip net del ns2
-
-Fixes: 3133822f5ac1 ("ipvlan: use pernet operations and restrict l3s hooks to master netns")
-Signed-off-by: Lu Wei <luwei32@huawei.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20230817145449.141827-1-luwei32@huawei.com
+Fixes: 4735402173e6 ("mlxsw: spectrum: Extend to support Spectrum-4 ASIC")
+Signed-off-by: Danielle Ratson <danieller@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/bcef4d044ef608a4e258d33a7ec0ecd91f480db5.1692268427.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/pci.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_main.c b/drivers/net/ipvlan/ipvlan_main.c
-index b15dd9a3ad540..1b55928e89b8a 100644
---- a/drivers/net/ipvlan/ipvlan_main.c
-+++ b/drivers/net/ipvlan/ipvlan_main.c
-@@ -748,7 +748,8 @@ static int ipvlan_device_event(struct notifier_block *unused,
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/pci.c b/drivers/net/ethernet/mellanox/mlxsw/pci.c
+index c968309657dd1..51eea1f0529c8 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/pci.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/pci.c
+@@ -517,11 +517,15 @@ static void mlxsw_pci_skb_cb_ts_set(struct mlxsw_pci *mlxsw_pci,
+ 				    struct sk_buff *skb,
+ 				    enum mlxsw_pci_cqe_v cqe_v, char *cqe)
+ {
++	u8 ts_type;
++
+ 	if (cqe_v != MLXSW_PCI_CQE_V2)
+ 		return;
  
- 		write_pnet(&port->pnet, newnet);
+-	if (mlxsw_pci_cqe2_time_stamp_type_get(cqe) !=
+-	    MLXSW_PCI_CQE_TIME_STAMP_TYPE_UTC)
++	ts_type = mlxsw_pci_cqe2_time_stamp_type_get(cqe);
++
++	if (ts_type != MLXSW_PCI_CQE_TIME_STAMP_TYPE_UTC &&
++	    ts_type != MLXSW_PCI_CQE_TIME_STAMP_TYPE_MIRROR_UTC)
+ 		return;
  
--		ipvlan_migrate_l3s_hook(oldnet, newnet);
-+		if (port->mode == IPVLAN_MODE_L3S)
-+			ipvlan_migrate_l3s_hook(oldnet, newnet);
- 		break;
- 	}
- 	case NETDEV_UNREGISTER:
+ 	mlxsw_skb_cb(skb)->cqe_ts.sec = mlxsw_pci_cqe2_time_stamp_sec_get(cqe);
 -- 
 2.40.1
 
