@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9857469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDCDC433C7;
-	Mon, 28 Aug 2023 10:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F42C469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1072FC433C8;
+	Mon, 28 Aug 2023 10:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218797;
-	bh=GlA2ULJrVEN0HryriWEqeYPbrwst+dVZ1EoPhUFiOfQ=;
+	s=korg; t=1693218800;
+	bh=Z6DOELGwPWkzlt7+uFiVt3SuprFBSy8Fb0LMQqj4ITw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMX0DPqHkT5fYmq3bE1LcuHp2CTYNFxxwpZ/+dZyw974il0X20n6RsC95KTCMWnfd
-	 zZN/8dXj+FqHqtlFrf0kxHHrg1GkCGiniCFt5Dpad9JxoyzoV4j2UU2O9byEsLM9S2
-	 rTDRHVqXEWfDvw3fEmP4H0QCWJk+BZw8fKcY1zGY=
+	b=aVWgmlfbTzdSWq8+L89ZBC2HHHLBwVOZcudESLrHQRUPfANYkVAQyszOyOrT8Efbb
+	 BQkA/UE/pfWgVU0fpN8zdbMKHXUgDxdloTbCDtDb+yaqpcV05xACTvBz5DaLon96sy
+	 kduERK5S4VIG0w4ifvwXkmPPkHqcayYumx5GA6rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.1 080/122] batman-adv: Fix TT global entry leak when client roamed back
-Date: Mon, 28 Aug 2023 12:13:15 +0200
-Message-ID: <20230828101159.082129840@linuxfoundation.org>
+	Sachi King <nakato@nakato.io>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Shubhra Prakash Nandi <email2shubhra@gmail.com>,
+	Carsten Hatger <xmb8dsv4@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 089/122] pinctrl: amd: Mask wake bits on probe again
+Date: Mon, 28 Aug 2023 12:13:24 +0200
+Message-ID: <20230828101159.355687669@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -39,85 +43,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit d25ddb7e788d34cf27ff1738d11a87cb4b67d446 upstream.
+commit 6bc3462a0f5ecaa376a0b3d76dafc55796799e17 upstream.
 
-When a client roamed back to a node before it got time to destroy the
-pending local entry (i.e. within the same originator interval) the old
-global one is directly removed from hash table and left as such.
+Shubhra reports that their laptop is heating up over s2idle. Even though
+it's getting into the deepest state, it appears to be having spurious
+wakeup events.
 
-But because this entry had an extra reference taken at lookup (i.e using
-batadv_tt_global_hash_find) there is no way its memory will be reclaimed
-at any time causing the following memory leak:
+While debugging a tangential issue with the RTC Carsten reports that recent
+6.1.y based kernel face a similar problem.
 
-  unreferenced object 0xffff0000073c8000 (size 18560):
-    comm "softirq", pid 0, jiffies 4294907738 (age 228.644s)
-    hex dump (first 32 bytes):
-      06 31 ac 12 c7 7a 05 00 01 00 00 00 00 00 00 00  .1...z..........
-      2c ad be 08 00 80 ff ff 6c b6 be 08 00 80 ff ff  ,.......l.......
-    backtrace:
-      [<00000000ee6e0ffa>] kmem_cache_alloc+0x1b4/0x300
-      [<000000000ff2fdbc>] batadv_tt_global_add+0x700/0xe20
-      [<00000000443897c7>] _batadv_tt_update_changes+0x21c/0x790
-      [<000000005dd90463>] batadv_tt_update_changes+0x3c/0x110
-      [<00000000a2d7fc57>] batadv_tt_tvlv_unicast_handler_v1+0xafc/0xe10
-      [<0000000011793f2a>] batadv_tvlv_containers_process+0x168/0x2b0
-      [<00000000b7cbe2ef>] batadv_recv_unicast_tvlv+0xec/0x1f4
-      [<0000000042aef1d8>] batadv_batman_skb_recv+0x25c/0x3a0
-      [<00000000bbd8b0a2>] __netif_receive_skb_core.isra.0+0x7a8/0xe90
-      [<000000004033d428>] __netif_receive_skb_one_core+0x64/0x74
-      [<000000000f39a009>] __netif_receive_skb+0x48/0xe0
-      [<00000000f2cd8888>] process_backlog+0x174/0x344
-      [<00000000507d6564>] __napi_poll+0x58/0x1f4
-      [<00000000b64ef9eb>] net_rx_action+0x504/0x590
-      [<00000000056fa5e4>] _stext+0x1b8/0x418
-      [<00000000878879d6>] run_ksoftirqd+0x74/0xa4
-  unreferenced object 0xffff00000bae1a80 (size 56):
-    comm "softirq", pid 0, jiffies 4294910888 (age 216.092s)
-    hex dump (first 32 bytes):
-      00 78 b1 0b 00 00 ff ff 0d 50 00 00 00 00 00 00  .x.......P......
-      00 00 00 00 00 00 00 00 50 c8 3c 07 00 00 ff ff  ........P.<.....
-    backtrace:
-      [<00000000ee6e0ffa>] kmem_cache_alloc+0x1b4/0x300
-      [<00000000d9aaa49e>] batadv_tt_global_add+0x53c/0xe20
-      [<00000000443897c7>] _batadv_tt_update_changes+0x21c/0x790
-      [<000000005dd90463>] batadv_tt_update_changes+0x3c/0x110
-      [<00000000a2d7fc57>] batadv_tt_tvlv_unicast_handler_v1+0xafc/0xe10
-      [<0000000011793f2a>] batadv_tvlv_containers_process+0x168/0x2b0
-      [<00000000b7cbe2ef>] batadv_recv_unicast_tvlv+0xec/0x1f4
-      [<0000000042aef1d8>] batadv_batman_skb_recv+0x25c/0x3a0
-      [<00000000bbd8b0a2>] __netif_receive_skb_core.isra.0+0x7a8/0xe90
-      [<000000004033d428>] __netif_receive_skb_one_core+0x64/0x74
-      [<000000000f39a009>] __netif_receive_skb+0x48/0xe0
-      [<00000000f2cd8888>] process_backlog+0x174/0x344
-      [<00000000507d6564>] __napi_poll+0x58/0x1f4
-      [<00000000b64ef9eb>] net_rx_action+0x504/0x590
-      [<00000000056fa5e4>] _stext+0x1b8/0x418
-      [<00000000878879d6>] run_ksoftirqd+0x74/0xa4
+Looking at acpidump and GPIO register comparisons these spurious wakeup
+events are from the GPIO associated with the I2C touchpad on both laptops
+and occur even when the touchpad is not marked as a wake source by the
+kernel.
 
-Releasing the extra reference from batadv_tt_global_hash_find even at
-roam back when batadv_tt_global_free is called fixes this memory leak.
+This means that the boot firmware has programmed these bits and because
+Linux didn't touch them lead to spurious wakeup events from that GPIO.
 
+To fix this issue, restore most of the code that previously would clear all
+the bits associated with wakeup sources. This will allow the kernel to only
+program the wake up sources that are necessary.
+
+This is similar to what was done previously; but only the wake bits are
+cleared by default instead of interrupts and wake bits.  If any other
+problems are reported then it may make sense to clear interrupts again too.
+
+Cc: Sachi King <nakato@nakato.io>
 Cc: stable@vger.kernel.org
-Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by; Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Fixes: 65f6c7c91cb2 ("pinctrl: amd: Revert "pinctrl: amd: disable and mask interrupts on probe"")
+Reported-by: Shubhra Prakash Nandi <email2shubhra@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217754
+Reported-by: Carsten Hatger <xmb8dsv4@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217626#c28
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230818144850.1439-1-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pinctrl/pinctrl-amd.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -774,7 +774,6 @@ check_roaming:
- 		if (roamed_back) {
- 			batadv_tt_global_free(bat_priv, tt_global,
- 					      "Roaming canceled");
--			tt_global = NULL;
- 		} else {
- 			/* The global entry has to be marked as ROAMING and
- 			 * has to be kept for consistency purpose
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -862,6 +862,33 @@ static const struct pinconf_ops amd_pinc
+ 	.pin_config_group_set = amd_pinconf_group_set,
+ };
+ 
++static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
++{
++	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
++	unsigned long flags;
++	u32 pin_reg, mask;
++	int i;
++
++	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
++		BIT(WAKE_CNTRL_OFF_S4);
++
++	for (i = 0; i < desc->npins; i++) {
++		int pin = desc->pins[i].number;
++		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
++
++		if (!pd)
++			continue;
++
++		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
++
++		pin_reg = readl(gpio_dev->base + pin * 4);
++		pin_reg &= ~mask;
++		writel(pin_reg, gpio_dev->base + pin * 4);
++
++		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
++	}
++}
++
+ #ifdef CONFIG_PM_SLEEP
+ static bool amd_gpio_should_save(struct amd_gpio *gpio_dev, unsigned int pin)
+ {
+@@ -1099,6 +1126,9 @@ static int amd_gpio_probe(struct platfor
+ 		return PTR_ERR(gpio_dev->pctrl);
+ 	}
+ 
++	/* Disable and mask interrupts */
++	amd_gpio_irq_init(gpio_dev);
++
+ 	girq = &gpio_dev->gc.irq;
+ 	gpio_irq_chip_set_chip(girq, &amd_gpio_irqchip);
+ 	/* This will let us handle the parent IRQ in the driver */
 
 
