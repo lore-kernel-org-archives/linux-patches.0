@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965C811C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16748C433C7;
-	Mon, 28 Aug 2023 10:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA2811C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:16:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EADC433C7;
+	Mon, 28 Aug 2023 10:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217806;
-	bh=HrBX1rclMjc37669V9luVBcGpA0yCLucmSpXIu4Wyyc=;
+	s=korg; t=1693217809;
+	bh=hp+iTdfkh5buGU+vtJaVPz93KuGEPEe6G4jkDPR2Cuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeC4/zes3Odjz69fPXR8gaL6cvnzSd2z1eezY1W6tPfBKhcIEWzWdgISusluFYtr7
-	 hwPR2xXeMZnuoLXoqiiHvAhBhrjSSMKk398TE+dELkAPWm5Sc32jFac6UdS1HcVJb0
-	 djT7s8tyh3/uhMReSH1BZbe0q0c5ksKsUgcrqITE=
+	b=DmWa2o3Q9jeeW8oVMYqE2L2/NaxIW5fVMntWQbnq4TduFJgh5sRVvKsmR93J2p0Us
+	 WBdqfhrFYp987XMghCUF4ajrCZ5jOe/6/0X6DD5pRRPFS/nKg0Cjiirxs/YPEhLac5
+	 w8KXY0tFdHuvmFuqAf1MhvulV/sNBW1PZ3DUdmMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 17/57] fbdev: mmp: fix value check in mmphw_probe()
-Date: Mon, 28 Aug 2023 12:12:37 +0200
-Message-ID: <20230828101144.858438330@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 08/57] MIPS: dec: prom: Address -Warray-bounds warning
+Date: Mon, 28 Aug 2023 12:12:28 +0200
+Message-ID: <20230828101144.492867694@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -39,34 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 0872b2c0abc0e84ac82472959c8e14e35277549c upstream.
+[ Upstream commit 7b191b9b55df2a844bd32d1d380f47a7df1c2896 ]
 
-in mmphw_probe(), check the return value of clk_prepare_enable()
-and return the error code if clk_prepare_enable() returns an
-unexpected value.
+Zero-length arrays are deprecated, and we are replacing them with flexible
+array members instead. So, replace zero-length array with flexible-array
+member in struct memmap.
 
-Fixes: d63028c38905 ("video: mmp display controller support")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Address the following warning found after building (with GCC-13) mips64
+with decstation_64_defconfig:
+In function 'rex_setup_memory_region',
+    inlined from 'prom_meminit' at arch/mips/dec/prom/memory.c:91:3:
+arch/mips/dec/prom/memory.c:72:31: error: array subscript i is outside array bounds of 'unsigned char[0]' [-Werror=array-bounds=]
+   72 |                 if (bm->bitmap[i] == 0xff)
+      |                     ~~~~~~~~~~^~~
+In file included from arch/mips/dec/prom/memory.c:16:
+./arch/mips/include/asm/dec/prom.h: In function 'prom_meminit':
+./arch/mips/include/asm/dec/prom.h:73:23: note: while referencing 'bitmap'
+   73 |         unsigned char bitmap[0];
+
+This helps with the ongoing efforts to globally enable -Warray-bounds.
+
+This results in no differences in binary output.
+
+Link: https://github.com/KSPP/linux/issues/79
+Link: https://github.com/KSPP/linux/issues/323
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/mmp/hw/mmp_ctrl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/mips/include/asm/dec/prom.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/mmp/hw/mmp_ctrl.c
-+++ b/drivers/video/fbdev/mmp/hw/mmp_ctrl.c
-@@ -525,7 +525,9 @@ static int mmphw_probe(struct platform_d
- 		ret = -ENOENT;
- 		goto failed;
- 	}
--	clk_prepare_enable(ctrl->clk);
-+	ret = clk_prepare_enable(ctrl->clk);
-+	if (ret)
-+		goto failed;
+diff --git a/arch/mips/include/asm/dec/prom.h b/arch/mips/include/asm/dec/prom.h
+index 09538ff5e9245..6f0405ba27d6d 100644
+--- a/arch/mips/include/asm/dec/prom.h
++++ b/arch/mips/include/asm/dec/prom.h
+@@ -74,7 +74,7 @@ static inline bool prom_is_rex(u32 magic)
+  */
+ typedef struct {
+ 	int pagesize;
+-	unsigned char bitmap[0];
++	unsigned char bitmap[];
+ } memmap;
  
- 	/* init global regs */
- 	ctrl_set_default(ctrl);
+ 
+-- 
+2.40.1
+
 
 
