@@ -1,126 +1,316 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09606FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546C7C433C7;
-	Mon, 28 Aug 2023 10:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC216FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:15:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73EBC433C8;
+	Mon, 28 Aug 2023 10:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217717;
-	bh=OraIY93WInB+Ts3O3iciWnHfucrmjeOYEEI6kZ2DP4U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ya8eLQQcTZHXEPfqMklSpdPD31MNY1ncr2j3hk5DZEbJUWlCFgS581lffMyIaqaGM
-	 iRCgxkvTxFwgtrb+LmoKBsmrrtfzuqhufVrsu5ieT4EFOPN/9rfZXWr6KXDF1KsOqj
-	 H5wtyzLJt7zZrPlaCOa6caNio50kAWeroURYsP40=
+	s=korg; t=1693217720;
+	bh=mrCslVnCuzWQ/BrD/ATgtN4osat06hxrkzjbt7XNgcE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Czf7kZp1ZcTWrbf9LATaovv9dtm8DCfiOA3dztLB+EjDoDaOW8V13lLcokSB7nzvr
+	 h72QAmcsHg4yT2TV1PAFYhor1mMlVDtCl3jzsIik6y2sftW1tgFQa2QCUpsXnneUvf
+	 x13KIIYtM2DcqjKt5D8hSmJVbUT9AuhqLRKg/ad4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+853a6f4dfa3cf37d3aea@syzkaller.appspotmail.com,
-	Yogesh <yogi.kernel@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 07/57] fs: jfs: Fix UBSAN: array-index-out-of-bounds in dbAllocDmapLev
-Date: Mon, 28 Aug 2023 12:12:27 +0200
-Message-ID: <20230828101144.458707607@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 4.14 00/57] 4.14.324-rc1 review
+Date: Mon, 28 Aug 2023 12:12:20 +0200
+Message-ID: <20230828101144.231099710@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
-References: <20230828101144.231099710@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.324-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.324-rc1
+X-KernelTest-Deadline: 2023-08-30T10:11+00:00
 Content-Transfer-Encoding: 8bit
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 4.14.324 release.
+There are 57 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+Anything received after that time might be too late.
 
-From: Yogesh <yogi.kernel@gmail.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.324-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-[ Upstream commit 4e302336d5ca1767a06beee7596a72d3bdc8d983 ]
+thanks,
 
-Syzkaller reported the following issue:
+greg k-h
 
-UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:1965:6
-index -84 is out of range for type 's8[341]' (aka 'signed char[341]')
-CPU: 1 PID: 4995 Comm: syz-executor146 Not tainted 6.4.0-rc6-syzkaller-00037-gb6dad5178cea #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
- ubsan_epilogue lib/ubsan.c:217 [inline]
- __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
- dbAllocDmapLev+0x3e5/0x430 fs/jfs/jfs_dmap.c:1965
- dbAllocCtl+0x113/0x920 fs/jfs/jfs_dmap.c:1809
- dbAllocAG+0x28f/0x10b0 fs/jfs/jfs_dmap.c:1350
- dbAlloc+0x658/0xca0 fs/jfs/jfs_dmap.c:874
- dtSplitUp fs/jfs/jfs_dtree.c:974 [inline]
- dtInsert+0xda7/0x6b00 fs/jfs/jfs_dtree.c:863
- jfs_create+0x7b6/0xbb0 fs/jfs/namei.c:137
- lookup_open fs/namei.c:3492 [inline]
- open_last_lookups fs/namei.c:3560 [inline]
- path_openat+0x13df/0x3170 fs/namei.c:3788
- do_filp_open+0x234/0x490 fs/namei.c:3818
- do_sys_openat2+0x13f/0x500 fs/open.c:1356
- do_sys_open fs/open.c:1372 [inline]
- __do_sys_openat fs/open.c:1388 [inline]
- __se_sys_openat fs/open.c:1383 [inline]
- __x64_sys_openat+0x247/0x290 fs/open.c:1383
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f1f4e33f7e9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 14 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffc21129578 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f1f4e33f7e9
-RDX: 000000000000275a RSI: 0000000020000040 RDI: 00000000ffffff9c
-RBP: 00007f1f4e2ff080 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007f1f4e2ff110
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
+-------------
+Pseudo-Shortlog of commits:
 
-The bug occurs when the dbAllocDmapLev()function attempts to access
-dp->tree.stree[leafidx + LEAFIND] while the leafidx value is negative.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.324-rc1
 
-To rectify this, the patch introduces a safeguard within the
-dbAllocDmapLev() function. A check has been added to verify if leafidx is
-negative. If it is, the function immediately returns an I/O error, preventing
-any further execution that could potentially cause harm.
+Rob Clark <robdclark@chromium.org>
+    dma-buf/sw_sync: Avoid recursive lock during fence signal
 
-Tested via syzbot.
+Zhu Wang <wangzhu9@huawei.com>
+    scsi: core: raid_class: Remove raid_component_add()
 
-Reported-by: syzbot+853a6f4dfa3cf37d3aea@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=ae2f5a27a07ae44b0f17
-Signed-off-by: Yogesh <yogi.kernel@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/jfs/jfs_dmap.c | 3 +++
- 1 file changed, 3 insertions(+)
+Zhu Wang <wangzhu9@huawei.com>
+    scsi: snic: Fix double free in snic_tgt_create()
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index cc2ac1f324b08..464ddaf8ebd10 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -2040,6 +2040,9 @@ dbAllocDmapLev(struct bmap * bmp,
- 	if (dbFindLeaf((dmtree_t *) & dp->tree, l2nb, &leafidx))
- 		return -ENOSPC;
- 
-+	if (leafidx < 0)
-+		return -EIO;
-+
- 	/* determine the block number within the file system corresponding
- 	 * to the leaf at which free space was found.
- 	 */
--- 
-2.40.1
+Ido Schimmel <idosch@nvidia.com>
+    rtnetlink: Reject negative ifindexes in RTM_NEWLINK
 
+Feng Tang <feng.tang@intel.com>
+    x86/fpu: Set X86_FEATURE_OSXSAVE feature after enabling OSXSAVE in CR4
+
+Wei Chen <harperchen1110@gmail.com>
+    media: vcodec: Fix potential array out-of-bounds in encoder queue_setup
+
+Helge Deller <deller@gmx.de>
+    lib/clz_ctz.c: Fix __clzdi2() and __ctzdi2() for 32-bit kernels
+
+Remi Pommarel <repk@triplefau.lt>
+    batman-adv: Fix batadv_v_ogm_aggr_send memory leak
+
+Remi Pommarel <repk@triplefau.lt>
+    batman-adv: Fix TT global entry leak when client roamed back
+
+Remi Pommarel <repk@triplefau.lt>
+    batman-adv: Do not get eth header before batadv_check_management_packet
+
+Sven Eckelmann <sven@narfation.org>
+    batman-adv: Trigger events for auto adjusted MTU
+
+Michael Ellerman <mpe@ellerman.id.au>
+    ibmveth: Use dcbf rather than dcbfl
+
+Sishuai Gong <sishuai.system@gmail.com>
+    ipvs: fix racy memcpy in proc_do_sync_threshold
+
+Junwei Hu <hujunwei4@huawei.com>
+    ipvs: Improve robustness to the ipvs sysctl
+
+Alessio Igor Bogani <alessio.bogani@elettra.eu>
+    igb: Avoid starting unnecessary workqueues
+
+Eric Dumazet <edumazet@google.com>
+    sock: annotate data-races around prot->memory_pressure
+
+Zheng Yejian <zhengyejian1@huawei.com>
+    tracing: Fix memleak due to race between current_tracer and trace
+
+Justin Chen <justin.chen@broadcom.com>
+    net: phy: broadcom: stub c45 read/write for 54810
+
+Lin Ma <linma@zju.edu.cn>
+    net: xfrm: Amend XFRMA_SEC_CTX nla_policy structure
+
+Jason Xing <kernelxing@tencent.com>
+    net: fix the RTO timer retransmitting skb every 1ms if linear option is enabled
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    af_unix: Fix null-ptr-deref in unix_stream_sendpage().
+
+Zhang Shurong <zhang_shurong@foxmail.com>
+    ASoC: rt5665: add missed regulator_bulk_disable
+
+Xin Long <lucien.xin@gmail.com>
+    netfilter: set default timeout to 3 secs for sctp shutdown send and recv state
+
+Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+    test_firmware: prevent race conditions by a correct implementation of locking
+
+Qi Zheng <zhengqi.arch@bytedance.com>
+    binder: fix memory leak in binder_init()
+
+Tony Lindgren <tony@atomide.com>
+    serial: 8250: Fix oops for port->pm on uart_change_pm()
+
+Yang Yingliang <yangyingliang@huawei.com>
+    mmc: wbsd: fix double mmc_free_host() in wbsd_init()
+
+Russell Harmon via samba-technical <samba-technical@lists.samba.org>
+    cifs: Release folio lock on fscache read hit.
+
+dengxiang <dengxiang@nfschina.com>
+    ALSA: usb-audio: Add support for Mythware XA001AU capture and playback interfaces.
+
+Eric Dumazet <edumazet@google.com>
+    net: do not allow gso_size to be set to GSO_BY_FRAGS
+
+Abel Wu <wuyun.abel@bytedance.com>
+    sock: Fix misuse of sk_under_memory_pressure()
+
+Andrii Staikov <andrii.staikov@intel.com>
+    i40e: fix misleading debug logs
+
+Ziyang Xuan <william.xuanziyang@huawei.com>
+    team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nft_dynset: disallow object maps
+
+Lin Ma <linma@zju.edu.cn>
+    xfrm: add NULL check in xfrm_update_ae_params
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    ip_vti: fix potential slab-use-after-free in decode_session6
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    ip6_vti: fix slab-use-after-free in decode_session6
+
+Lin Ma <linma@zju.edu.cn>
+    net: af_key: fix sadb_x_filter validation
+
+Lin Ma <linma@zju.edu.cn>
+    net: xfrm: Fix xfrm_address_filter OOB read
+
+Nathan Lynch <nathanl@linux.ibm.com>
+    powerpc/rtas_flash: allow user copy to flash block cache objects
+
+Yuanjun Gong <ruc_gongyuanjun@163.com>
+    fbdev: mmp: fix value check in mmphw_probe()
+
+shanzhulig <shanzhulig@gmail.com>
+    drm/amdgpu: Fix potential fence use-after-free v2
+
+Zhengping Jiang <jiangzp@google.com>
+    Bluetooth: L2CAP: Fix use-after-free
+
+Armin Wolf <W_Armin@gmx.de>
+    pcmcia: rsrc_nonstatic: Fix memory leak in nonstatic_release_resource_db()
+
+Tuo Li <islituo@gmail.com>
+    gfs2: Fix possible data races in gfs2_show_options()
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: platform: mediatek: vpu: fix NULL ptr dereference
+
+Yunfei Dong <yunfei.dong@mediatek.com>
+    media: v4l2-mem2mem: add lock to protect parameter num_rdy
+
+Immad Mir <mirimmad17@gmail.com>
+    FS: JFS: Check for read-only mounted filesystem in txBegin
+
+Immad Mir <mirimmad17@gmail.com>
+    FS: JFS: Fix null-ptr-deref Read in txBegin
+
+Gustavo A. R. Silva <gustavoars@kernel.org>
+    MIPS: dec: prom: Address -Warray-bounds warning
+
+Yogesh <yogi.kernel@gmail.com>
+    fs: jfs: Fix UBSAN: array-index-out-of-bounds in dbAllocDmapLev
+
+Jan Kara <jack@suse.cz>
+    udf: Fix uninitialized array access for some pathnames
+
+Ye Bin <yebin10@huawei.com>
+    quota: fix warning in dqgrab()
+
+Jan Kara <jack@suse.cz>
+    quota: Properly disable quotas when add_dquot_ref() fails
+
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+    ALSA: emu10k1: roll up loops in DSP setup code for Audigy
+
+hackyzh002 <hackyzh002@gmail.com>
+    drm/radeon: Fix integer overflow in radeon_cs_parser_init
+
+Nathan Chancellor <natechancellor@gmail.com>
+    lib/mpi: Eliminate unused umul_ppmm definitions for MIPS
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/mips/include/asm/dec/prom.h                   |   2 +-
+ arch/powerpc/kernel/rtas_flash.c                   |   6 +-
+ arch/x86/kernel/fpu/xstate.c                       |   8 ++
+ drivers/android/binder.c                           |   1 +
+ drivers/android/binder_alloc.c                     |   6 ++
+ drivers/android/binder_alloc.h                     |   1 +
+ drivers/dma-buf/sw_sync.c                          |  18 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c             |   3 +
+ drivers/gpu/drm/radeon/radeon_cs.c                 |   3 +-
+ drivers/media/platform/mtk-vcodec/mtk_vcodec_enc.c |   2 +
+ drivers/media/platform/mtk-vpu/mtk_vpu.c           |   6 +-
+ drivers/mmc/host/wbsd.c                            |   2 -
+ drivers/net/ethernet/ibm/ibmveth.c                 |   2 +-
+ drivers/net/ethernet/intel/i40e/i40e_nvm.c         |  16 +--
+ drivers/net/ethernet/intel/igb/igb_ptp.c           |  24 ++---
+ drivers/net/phy/broadcom.c                         |  13 +++
+ drivers/net/team/team.c                            |   4 +-
+ drivers/pcmcia/rsrc_nonstatic.c                    |   2 +
+ drivers/scsi/raid_class.c                          |  48 ---------
+ drivers/scsi/snic/snic_disc.c                      |   3 +-
+ drivers/tty/serial/8250/8250_port.c                |   1 +
+ drivers/video/fbdev/mmp/hw/mmp_ctrl.c              |   4 +-
+ fs/cifs/file.c                                     |   2 +-
+ fs/gfs2/super.c                                    |  26 +++--
+ fs/jfs/jfs_dmap.c                                  |   3 +
+ fs/jfs/jfs_txnmgr.c                                |   5 +
+ fs/jfs/namei.c                                     |   5 +
+ fs/quota/dquot.c                                   |   5 +-
+ fs/udf/unicode.c                                   |   2 +-
+ include/linux/raid_class.h                         |   4 -
+ include/linux/virtio_net.h                         |   4 +
+ include/media/v4l2-mem2mem.h                       |  18 +++-
+ include/net/sock.h                                 |  11 +-
+ kernel/trace/trace.c                               |   9 +-
+ kernel/trace/trace_irqsoff.c                       |   3 +-
+ kernel/trace/trace_sched_wakeup.c                  |   2 +
+ lib/clz_ctz.c                                      |  32 ++----
+ lib/mpi/longlong.h                                 |  36 +------
+ lib/test_firmware.c                                |  39 +++++--
+ net/batman-adv/bat_v_elp.c                         |   3 +-
+ net/batman-adv/bat_v_ogm.c                         |   7 +-
+ net/batman-adv/hard-interface.c                    |   2 +-
+ net/batman-adv/translation-table.c                 |   1 -
+ net/bluetooth/l2cap_core.c                         |   5 +
+ net/core/rtnetlink.c                               |   5 +-
+ net/core/sock.c                                    |   2 +-
+ net/ipv4/ip_vti.c                                  |   4 +-
+ net/ipv4/tcp_timer.c                               |   4 +-
+ net/ipv6/ip6_vti.c                                 |   4 +-
+ net/key/af_key.c                                   |   4 +-
+ net/netfilter/ipvs/ip_vs_ctl.c                     |  74 +++++++-------
+ net/netfilter/nf_conntrack_proto_sctp.c            |   6 +-
+ net/netfilter/nft_dynset.c                         |   3 +
+ net/sctp/socket.c                                  |   2 +-
+ net/unix/af_unix.c                                 |   9 +-
+ net/xfrm/xfrm_user.c                               |  13 ++-
+ sound/pci/emu10k1/emufx.c                          | 112 ++-------------------
+ sound/soc/codecs/rt5665.c                          |   2 +
+ sound/usb/quirks-table.h                           |  29 ++++++
+ 60 files changed, 325 insertions(+), 351 deletions(-)
 
 
