@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C1911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB18CC433CA;
-	Mon, 28 Aug 2023 10:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CF46ADE
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F6AC433C8;
+	Mon, 28 Aug 2023 10:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218038;
-	bh=0F/bwZVOFm/FePtuZtFRAEtPAp7ZQ4aFDqsubV11vF0=;
+	s=korg; t=1693218040;
+	bh=ZAeSoL2+8FxpwEfSvgEBD9l+LgVRk1wyRVyfVgUjXrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imqnGIww5QItrRZUJ+IS4WWsinNmpF39o3C38BKAB+UG2E/3LTUYtC4X1qoTxNOzW
-	 qoxkDX3TSMAQ1hzWz2J6L0sesH+UiM7Ax3ziLVcJaIacWwwGV6NJHB+ms7ND0GKlbj
-	 shPh1Sw3U6uioeBsFL7zhohdvdhM7MShOwCrWPwI=
+	b=V/N4SMURkLIYt1Vsv89q/r3OYbEhHQHgoqAoHQFPZhHSSg1b5qoNOwWcxri49hPWN
+	 CC2FZZDOr0jFI1rK8t1y3xKZniHITcyZmsVaqRB4fIICuEDnqZc2LYL/JvZJlYgkGq
+	 64ofH4VHcPJ0iUWgp6CUD77MCW+rT7YpLlORdX8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 043/129] netfilter: nf_tables: validate all pending tables
-Date: Mon, 28 Aug 2023 12:12:02 +0200
-Message-ID: <20230828101158.800486385@linuxfoundation.org>
+Subject: [PATCH 6.4 044/129] netfilter: nf_tables: flush pending destroy work before netlink notifier
+Date: Mon, 28 Aug 2023 12:12:03 +0200
+Message-ID: <20230828101158.829298252@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -40,98 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 4b80ced971b0d118f9a11dd503a5833a5016de92 ]
+[ Upstream commit 2c9f0293280e258606e54ed2b96fa71498432eae ]
 
-We have to validate all tables in the transaction that are in
-VALIDATE_DO state, the blamed commit below did not move the break
-statement to its right location so we only validate one table.
+Destroy work waits for the RCU grace period then it releases the objects
+with no mutex held. All releases objects follow this path for
+transactions, therefore, order is guaranteed and references to top-level
+objects in the hierarchy remain valid.
 
-Moreover, we can't init table->validate to _SKIP when a table object
-is allocated.
+However, netlink notifier might interfer with pending destroy work.
+rcu_barrier() is not correct because objects are not release via RCU
+callback. Flush destroy work before releasing objects from netlink
+notifier path.
 
-If we do, then if a transcaction creates a new table and then
-fails the transaction, nfnetlink will loop and nft will hang until
-user cancels the command.
-
-Add back the pernet state as a place to stash the last state encountered.
-This is either _DO (we hit an error during commit validation) or _SKIP
-(transaction passed all checks).
-
-Fixes: 00c320f9b755 ("netfilter: nf_tables: make validation state per table")
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d4bc8271db21 ("netfilter: nf_tables: netlink notifier might race to release objects")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  1 +
- net/netfilter/nf_tables_api.c     | 11 +++++++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index ad97049e28881..a9a730fb9f963 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1817,6 +1817,7 @@ struct nftables_pernet {
- 	u64			table_handle;
- 	unsigned int		base_seq;
- 	unsigned int		gc_seq;
-+	u8			validate_state;
- };
- 
- extern unsigned int nf_tables_net_id;
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b280b151a9e98..5275c4112b57d 100644
+index 5275c4112b57d..539bc5d5c12fd 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -1372,7 +1372,7 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (table == NULL)
- 		goto err_kzalloc;
+@@ -11084,7 +11084,7 @@ static int nft_rcv_nl_event(struct notifier_block *this, unsigned long event,
+ 	gc_seq = nft_gc_seq_begin(nft_net);
  
--	table->validate_state = NFT_VALIDATE_SKIP;
-+	table->validate_state = nft_net->validate_state;
- 	table->name = nla_strdup(attr, GFP_KERNEL_ACCOUNT);
- 	if (table->name == NULL)
- 		goto err_strdup;
-@@ -9065,9 +9065,8 @@ static int nf_tables_validate(struct net *net)
- 				return -EAGAIN;
- 
- 			nft_validate_state_update(table, NFT_VALIDATE_SKIP);
-+			break;
- 		}
--
--		break;
- 	}
- 
- 	return 0;
-@@ -9813,8 +9812,10 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 	}
- 
- 	/* 0. Validate ruleset, otherwise roll back for error reporting. */
--	if (nf_tables_validate(net) < 0)
-+	if (nf_tables_validate(net) < 0) {
-+		nft_net->validate_state = NFT_VALIDATE_DO;
- 		return -EAGAIN;
-+	}
- 
- 	err = nft_flow_rule_offload_commit(net);
- 	if (err < 0)
-@@ -10070,6 +10071,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 	nf_tables_commit_audit_log(&adl, nft_net->base_seq);
- 
- 	nft_gc_seq_end(nft_net, gc_seq);
-+	nft_net->validate_state = NFT_VALIDATE_SKIP;
- 	nf_tables_commit_release(net);
- 
- 	return 0;
-@@ -11126,6 +11128,7 @@ static int __net_init nf_tables_init_net(struct net *net)
- 	mutex_init(&nft_net->commit_mutex);
- 	nft_net->base_seq = 1;
- 	nft_net->gc_seq = 0;
-+	nft_net->validate_state = NFT_VALIDATE_SKIP;
- 
- 	return 0;
- }
+ 	if (!list_empty(&nf_tables_destroy_list))
+-		rcu_barrier();
++		nf_tables_trans_destroy_flush_work();
+ again:
+ 	list_for_each_entry(table, &nft_net->tables, list) {
+ 		if (nft_table_has_owner(table) &&
 -- 
 2.40.1
 
