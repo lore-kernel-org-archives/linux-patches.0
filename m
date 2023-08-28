@@ -1,54 +1,55 @@
 Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0D4134DF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 17:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEB8134DF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 17:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693242340; x=1724778340;
+  t=1693242373; x=1724778373;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=FaflZWWp07gCDiWm/sbwVriit4kfQtwFcJQ+eYOXzNE=;
-  b=C0Q2xzKf8OUx47VWfWfZGkNTi5T6PnKYsuViDsHJaF0L2c8ndAtU4L/W
-   C30nKvjoG8SKpbWIF2qA5+LN9eD9l2VwFX8r6gpoo+zsC33lwfkYswljW
-   /AQtPgVYD8yQzESfGQTQXTC6oIZWxo7sDY1tsBXiwwIumLW/nqmDnsLh9
-   ieknejroHhY2KF/SpBYh1gwzves2RacgeZzwJLE6GHDUgfdq/+Be2+ziW
-   TaCTQFyDrX8WLF6dKozXNDPl4jDeA7RX9U7tVQXeI/ixZQEg2ekDJue1q
-   LhZdLQEC+hq4xFeXZjwzBee3HU2j3ifpZ7kCgdBJixH3wVI/P4ATS/Q7z
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="441501933"
+  bh=msaPXQB2s2iVe3YMB5Igy3AndNwYaMylQy45adAeVi4=;
+  b=AHDjjPw/t7EtpSrYq7JOYKnLpXNjTPylF/gvOu1U5i2kuWdgyOweJS2w
+   a/zVjWSchNfKO7/GDyFCYScdUL7KoTcl08wDUN+E9z1d/W+aTx9vVsotu
+   Do9BIeFzBdTUli40QKH5zZJB7OVkzATc9dsUsHMqRXb+T4sDo1E5AUQFr
+   3Nx6VKqQj2G1be91X7HwYDIXN98jtf5ymWbHlP2IGAv9J9zxNFtsbGw2J
+   +XuYsj5t6INa/Nn9e64pJZHbEb5JVa3VFmlR+C0bqtR7k1WOTsHhIMD9z
+   R96NZZHKiwkc/gwyr2tsS35h3XnUl//os3Pf8EJGh2JdJUJBXRz6AJNN/
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="441502058"
 X-IronPort-AV: E=Sophos;i="6.02,208,1688454000"; 
-   d="scan'208";a="441501933"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2023 10:05:39 -0700
+   d="scan'208";a="441502058"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2023 10:06:12 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.01,202,1684825200"; 
-   d="scan'208";a="881993350"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga001.fm.intel.com with ESMTP; 28 Aug 2023 10:05:44 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="741475926"
+X-IronPort-AV: E=Sophos;i="6.02,208,1688454000"; 
+   d="scan'208";a="741475926"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by fmsmga007.fm.intel.com with ESMTP; 28 Aug 2023 10:06:08 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Mon, 28 Aug 2023 10:05:38 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.1.2507.27; Mon, 28 Aug 2023 10:05:55 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Mon, 28 Aug 2023 10:05:37 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.1.2507.27; Mon, 28 Aug 2023 10:05:55 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27 via Frontend Transport; Mon, 28 Aug 2023 10:05:37 -0700
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.45) by
- edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ 15.1.2507.27 via Frontend Transport; Mon, 28 Aug 2023 10:05:55 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.172)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.27; Mon, 28 Aug 2023 10:05:37 -0700
+ 15.1.2507.27; Mon, 28 Aug 2023 10:05:55 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NZvr+Rng7WIcRy1FkccXZa0pUfn4zmN9a1nSKnEEh0G0+apJXtFoePVqMZxUbflNNMDfNxtOH1tCBNowCaSecw+D+InUogQe6yf8wqgSNYbevv2sUeYnrnnymZLKb/pwqhGnxoHjmmAHzAg5eD0LVulnR6XUW2W0kQ2SwXja3JG1R6MY8jiSkc71nz23A5k2COls2NulsZZXxbhvUs+OcOAOTOjDv7OKxbCnykDchkqU3wL/l0Iru94EMgfhZu3t86wYi1z2yT80F0ULD1a36rBuOtC9YsNdrVOY8ggmikgwCa5/rkgLrr59m1hrVIbUUmdPhJ0L3QgsKmAaYtwr7A==
+ b=evwav9ulTn3hHQjAoxkvEHecGDXJW1vu09o4haNiRwgzud9WCGqrJHyVay4/B2Ae9xyWUBV5QaWMmg7i1DituitpCaR9tqsWHZYFmxP1bDf1NYnhLl0xWU7Dxebszatu33nVv/YqFdwvZTga1zXhN7bzOgFLOLwWF4DkIJdy7S9LCgXdfuVXwbHxYVDMm3fRq80666PLZLTB/KMlzXkGkRrnVHDz5pu8PbQwmtvoRk5OY8z2ZiUxhJmhouRa6v/KWRZQEdpsugCsLPe6MAl2LZnZUiz+y/h4XH3SVvc6NdSMT+ar3/RUP9RQjlPhwLkejD6aoTf/AShOXKwNMaYk0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OY9+8PdYsZw8GOx8tOphWu1gsU2IdulXAEtTE8JTvNI=;
- b=J2XNgNra7KGy4GEzUkiu85kd5fMK3Cr4MLm7nG8OTQBpM6wqO8ZlliUX3isuPeOwyfXRrVX5hkxOnhVwfhXpdYPwW+c79gv7yQKy0461CtTyqbCaFgpGUuGvDebeElDHDaOwYvTGMsK9JghekQfUGDq1rNNgTj3SA19tp2Ghy2x6a99ULY3e25tuqi5FIoBfmcEG2vIDwAUxac7bIeadEeh06pyOzhxIrzApzSlQfKq5XPAZJ9+/eHFJ0qRcI/esKuF8ZAsqTPT6hku1cm7Gk8CKYJDlryHSC8rdyzj0KtyxIwG0o2LsPqoz2uT6OHX3QOVvVeXwgNaQKkf+zy7RrA==
+ bh=JZEt2oy0wV5SlT2cmNKQL6wnAo5Is8Mt+6B1s+iIihQ=;
+ b=ShEnxqHCsdLO01JlpGvY11jIXyes1aOTcz5Gn7kM9rif09fnzq7ahxU9+BbKMjK8zO8RpjxmXYP2ja0FGrC6S29Uns+SSUodXd2CI65qUYFifMnGUpIdSTsXAnrm2h3AS9G4h7oJSh1+lbuUX3RNJUFXLdng6Dk2MstYAKp+qw5DLPnZG6D1IoHvkt4gTZDughZeSJ+Njy1f5K/Scm5DFIe9O1zZo1cCdo2ffuMCuIzIhOPstrg/VkOQgYhg6ZI4fQLvkgy8cuG/h9daDbCL01cCDLteAU4+gy/Hn5wM7HzdHf2ehpPshap7CFcXT9KQA/iDnLk6DI0mqFFLYHCx+w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -58,17 +59,17 @@ Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
  by SA0PR11MB4750.namprd11.prod.outlook.com (2603:10b6:806:9d::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.35; Mon, 28 Aug
- 2023 17:05:35 +0000
+ 2023 17:05:53 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::47e:3e1f:bef4:20e0]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::47e:3e1f:bef4:20e0%3]) with mapi id 15.20.6699.034; Mon, 28 Aug 2023
- 17:05:35 +0000
-Message-ID: <da2c0e45-56d0-e04d-774d-4292d156e1d0@intel.com>
-Date: Mon, 28 Aug 2023 10:05:31 -0700
+ 17:05:53 +0000
+Message-ID: <15b289cd-3e9c-3757-c1b0-7f5f79244564@intel.com>
+Date: Mon, 28 Aug 2023 10:05:50 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Firefox/102.0 Thunderbird/102.14.0
-Subject: Re: [PATCH v4 1/7] x86/resctrl: Create separate domains for control
- and monitoring
+Subject: Re: [PATCH v4 5/7] x86/resctrl: Determine if Sub-NUMA Cluster is
+ enabled and initialize.
 Content-Language: en-US
 To: Tony Luck <tony.luck@intel.com>
 CC: Fenghua Yu <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>,
@@ -80,15 +81,15 @@ CC: Fenghua Yu <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>,
 	<patches@lists.linux.dev>
 References: <20230713163207.219710-1-tony.luck@intel.com>
  <20230722190740.326190-1-tony.luck@intel.com>
- <20230722190740.326190-2-tony.luck@intel.com>
- <cc1a144f-6667-18fb-7fe7-cd15ebfedd08@intel.com>
- <ZOjfPx8iwTULTqdg@agluck-desk3>
+ <20230722190740.326190-6-tony.luck@intel.com>
+ <7c8650d5-eb69-dd28-81fc-7a97d45f9bfb@intel.com>
+ <ZOjpugXNDVx/cGRl@agluck-desk3>
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <ZOjfPx8iwTULTqdg@agluck-desk3>
+In-Reply-To: <ZOjpugXNDVx/cGRl@agluck-desk3>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0300.namprd04.prod.outlook.com
- (2603:10b6:303:89::35) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR04CA0284.namprd04.prod.outlook.com
+ (2603:10b6:303:89::19) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -98,207 +99,132 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SA0PR11MB4750:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0f744774-40a7-4cb1-5f7d-08dba7e8fe8b
+X-MS-Office365-Filtering-Correlation-Id: 41918d47-9161-43ad-2b51-08dba7e909a7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: +h8fd0C4/1xzC380MLD36cJnFc1yXyBxwF5zVXIHg+znFXHNeDv8+/fbBQh1quU7xNuYOvfyc6uOI6wX1uvYRW1tQ8/bgBCHdJBVPn14czf/617/kujOqiLUMrt1BsbSTeQUUUH57c4j+LuPCUHhfXnMpcQ1kh88T4UN0u2BmOoOdOGLYgmn+4FnuQZavpwtjvu7Pt9vOH+FLWoE198NQTIZu0nhqiCoYqoroOhpbt9tUzX+81gQweXCuh0+GjDMu/vxAhQBsWxwJz9i+Ykgl9QFOSRk80IxLexbo06YiFWrC2T0wKUMRUjFJmzeXB+CzAGkXCF3Cs3g+dpmAWx4wCcOoBbhfHmhqZv0eWxcXXrtF6DvwJBw5c2aes5LBC2Mu0CDliJ+0VxAZ3UaUyqe6ymOyJ/JyNn2O67ZwGcQ/ShtU/XVUPupYq4DsohHJ7OJYIKBgEioDqn3H4rbcr20AiyoiQa5SX1/gjpYUrl7/ltbg/l6iyOd40YVZDplX7X09DeqoZlqwHmrOAvyJisiuJeZL7toGVzuwAPIOe4EbJWhxrkWTTCrwsg633LKFDYaLjA/03AO7xzsH3EXEuq+Y6hIjnSMiPGZopgm43/QcGL70lu9CDfR5QQihrSWo9NM4E3mz5Q9998guvNbUFd6DQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(396003)(376002)(366004)(346002)(39860400002)(1800799009)(186009)(451199024)(31686004)(6506007)(6486002)(6512007)(6666004)(36756003)(86362001)(82960400001)(38100700002)(31696002)(83380400001)(2906002)(26005)(53546011)(478600001)(66476007)(66556008)(66946007)(41300700001)(8936002)(8676002)(4326008)(6862004)(44832011)(5660300002)(2616005)(7416002)(6636002)(54906003)(316002)(37006003)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: a6kno0wJ+aRQMGLGzJ6PWTtHuvn3irlMzgXZgn1myfvDORiDDfhjiPqTz2Me+4adi+DaYjvNQsYCfdEGoSjclNIMNEBnguAb6dZ7WX8dVkkioyruXHtuLvA/mawU++m1rYTxC8aVp8MeuG8MEftMEzpeA5p5zErnghJWG13vMDGfIl0YbWyQA2b5Pqc5uNJOHbzNLdCiNEz3M6zKZ+Y9ES6bHnCJnpsyd4yA/cVQFcKAwhhzrEhVi7XMLmQ/G5hnlfhE9WzcSKUY/9THgNoK132MN7tQNn/8aXaN1//rlL7rzIw08tjFFrwklpNdbenirA/fTaMsgfQC6gveoqGjkPOMXuRmAZiljxqjd4ZuRrKhJ3fWcd0mJrn6bzCnHPfIVCEl5dFJqsgFZP84ogLNcPnrxccHKEiXw8Eeu1mTCPpscCt7Q2kfxTjwbIVnYBmDVO3lpe0qOm8fOTtz5kLQAoZe2/p2+f4eJ68CwQy9BWX03XZC25gTBKjAl6zWUH3yCUZxgkOqEat0Jq0aRrSIelqH4f9GcVygcyFNGpClaf7lU3bZWGezjg8AFkxA5i/SdheNx3hDLihg78kpzZJLcLwL9zY+5dgT5IHGZPtXekPDMaLIeMxRtI0NoMhuWlo3BXIi/FfpiVQ92WIcHxHysQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(396003)(376002)(366004)(346002)(39860400002)(1800799009)(186009)(451199024)(31686004)(6506007)(6486002)(6512007)(36756003)(86362001)(82960400001)(38100700002)(31696002)(83380400001)(2906002)(26005)(53546011)(478600001)(66476007)(66556008)(66946007)(41300700001)(8936002)(8676002)(4326008)(6862004)(44832011)(5660300002)(2616005)(7416002)(6636002)(54906003)(316002)(37006003)(43740500002)(45980500001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bDdHRi9MNnpJSjZCRzBOdlhyZHZ4eWVKc2lLME9XejBFMVBDbzVFWTIzemJr?=
- =?utf-8?B?bEtKZWVlY201TmFVVDRhY1FreFlQSnI3US8rUmJaR1VXQmJzWE1wSytZS2o2?=
- =?utf-8?B?eG9ZenhhSlMzU1JCeWRIbDQ4UDhTdkdEcWpmdFNQWDlsL0lFTTNxWFJtZHN6?=
- =?utf-8?B?TlhxTjR2UktpbnNvRTlWRUhESDl6SUVUWVM4cVVZR1RvL1JyeDdDdVQ0OWlj?=
- =?utf-8?B?RlEzMjVVbzl3NWNYcXg5Sy91L25RUUZWVWVjeUQxTWQxYXdwRHRwQ0hmWUp5?=
- =?utf-8?B?cXpuTDVMYlU1VTZMeXcyL2U3VVlNRElyZDV0NXQrTW1kS092OVpETWxWVVFL?=
- =?utf-8?B?KzZRN2FtejMvaHI4QTg1WmFHU0lpbFowRjlpU2NtNU5vVThqTzZEZEw3azRD?=
- =?utf-8?B?UHJGNmRPWWw2UmxneUhIaUV3OGgzakRYcXNKN0tHbS9RYVZIajUycGdsWHFO?=
- =?utf-8?B?SnRNUXJlS0tERkxDNUhPT2FQN1NvcjVsNUpZdkxuM3NvMVBMREZzbWJQTUtC?=
- =?utf-8?B?WTlZWmJIZU5DdVJiUXZDRGY5NVFlK0grMm1lSmhFOVdrMElBYXMvQ3RSQVZS?=
- =?utf-8?B?L2VjN2owRjY3a29ma2QwTXQvcWJZbmQ4aGlpa0M5UjFmeVp4Z1l4Wm80VXpW?=
- =?utf-8?B?SW04bzVXcVN6ZTQxY2RiM2xEZ3JGWENoWlFlZDJPWHZYNEpsY2xEcnRpRjI2?=
- =?utf-8?B?N3I3NmtNQTFIUkpXZ210YU9RVDBSdTAzekZRTEkyOGFxSUhId2cwOHJ3ak9X?=
- =?utf-8?B?ZmhObWJJb3FaYTVsbHZHNEZjaGw1Sk8zL1pncFJxWm1Oc0xRSkdxTWtxQTZY?=
- =?utf-8?B?a0RQdnJZdFBHMjdPVUxabWhJL25VR0VDTTRNdW9ERnlycUlyUVVQV3FGYnk3?=
- =?utf-8?B?Rk9GN0IyTjU0ZGxBdnhvczhZMjk3ck1Wb3VGcUJNOE43Y0twS01wUDVnV2NQ?=
- =?utf-8?B?MEpoUkN5cTM2YkFPZlZmazlvWHRxMGRxMGZEYU1RTWNQUU9qaXRLNm9HNndV?=
- =?utf-8?B?RkVSdTNYZHlaeGhqVnNsekp3Y042VXB5Vm1LZENWTERiYTNqem5vRm8zT3hU?=
- =?utf-8?B?cHdsRi9GYkhxOE5NY1RGQkg4QUxyNEtHTnpNbk50U3ZRY0hTYUJEa3JGMUFm?=
- =?utf-8?B?S3VGMjgwS0twMkV6bXF0U0VKSllrRXJPbDA5RzhGaHhNTnZCZ2Z2RWtYVFhW?=
- =?utf-8?B?V1pGTGs3THJoayswaDlMbnE3NmppYTJZalhIc3JobGVoUnYva1NFeDFVcG1m?=
- =?utf-8?B?b2FSWXVNL0dTQXRmMGZMV3RlR0FBTG9seGtRakJrU2FRZ0tEMG5MTFdEMy9H?=
- =?utf-8?B?RllLNlljYlYyVEJvL0hUeTlxcWszNkhobnE2UG1ibnU5dFN3My92TGh0SUdK?=
- =?utf-8?B?ak5SR29kTHJjcy9SMzlwd1QzL2pLdlJjcGROV282akNGa3RxNEMra09WM0tn?=
- =?utf-8?B?SktsLzFDVytOWUV0NXN4QWNWelRCV3lTaEJVZXRaYXRtdkZvMTJ3Wk9KdWcw?=
- =?utf-8?B?M3dqMU9uOTNkZENSblo3UE9LY2RWNU1YdTBUZ0h1amkxQzJ4bWZnZndmdTl3?=
- =?utf-8?B?N2EzY1MzaE5Fb2pOK2VPRGpFMkxhRkxFK3JyYTNuME4zaFM0enJHOWo0R091?=
- =?utf-8?B?MXk2S1ZjRjQ2Qis5QVlDZWc4WlMyWmEzWTRVTlFDeWhzbnoyNDFPVGNQVjVk?=
- =?utf-8?B?MGlzb3BMRzZqQTNEYlRzdUUwYWlhQTJ0bVFpVzVtQjZpNmVReVlmeUlYQW9y?=
- =?utf-8?B?czF4UjIvYTZkaHF0TXZuM2JzV0d5LzNkUWxVM0dNMWRWcFVjY1FuUG9kL3FH?=
- =?utf-8?B?bUlhN1ltT1FGVS9FSzdxY25HdE5ROG5uUFkyeEcrTU05TUt4ekFMMHV5N0NH?=
- =?utf-8?B?bkgrR24yMHMzQlVKc09wdzF2MHozZnpnRmw5NHRBOWZBSG1EbnNCOFpNRTVU?=
- =?utf-8?B?UjFSVUpBcWxWR2V4dkVBU3lyWit3b0kxeGN4MEYxUk5WMWRvSXdpR2JBcnFE?=
- =?utf-8?B?SjE4N3VLbE5POTllU1dBeE9DNDQ1L0hXS0ZGckV2aCtsTFVPV09OcGNoK2pr?=
- =?utf-8?B?eW9tNElPbGt1TkV2K0I5WTMyU1FuYjNwdEczam4rdzFKTkk3ZGFCcHpjZklp?=
- =?utf-8?B?THFBLzRvK25OSFZzeEhZV01pVU9Va0MxaDFSR3NuaHlYZGhrK2NGdkk5WEpj?=
- =?utf-8?B?aEE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0f744774-40a7-4cb1-5f7d-08dba7e8fe8b
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZWNtRDd0ZTJSaENwUDdOSG9SbGVaUTNNcUh6SXhPRVQwSWZGYzZVVmExdHI1?=
+ =?utf-8?B?eFExUUtPUFVOaTMwWEdQTm5jRWhSVUNhRWRKZ1ZMQnROVExRV1N2clArNnp2?=
+ =?utf-8?B?dHhnclVxdkhWemtSK1gxYVdpdkE5NGtCK2xTeUNaVlJOV25wRXZqdGxBN3Rh?=
+ =?utf-8?B?TG10YkRTbk9ZZVNGQ2ZPMW9jcDhZczZjTkRGVTU2ZEQxZHkyTXNaN2puNElx?=
+ =?utf-8?B?MWQ1SERQbjBVNktkZWdVS3FORmlka1VvL01HZU1BOVVOY3lVMDhkLzZGRXJX?=
+ =?utf-8?B?OHBEWWFOQlYyVVJLZ0JWNUR1S282SlBYNlZ6V0pZZU91bXprcDNXUm5kaysv?=
+ =?utf-8?B?RVc5R2pVZWpOL00xRHBraG94L1pOaU5HK2srbzUwZjVMZ0hsOGE3QVZZOXBO?=
+ =?utf-8?B?NlVDdUhMZnV2Z3RoYlJ6bHpxY1FMZ0RidG5sd0tkOHJQeVhWdFM1YjBHRHI2?=
+ =?utf-8?B?dkFaV0NCRUtaeDFqalNoeDgyMC96NVNZZUpvSyt3eStBMmh3Qll0U0p2R05k?=
+ =?utf-8?B?bUJLcE9pOHFHUC9TUXplNkJGN1RicGZJb3l2UjZYVWE2MTRGWVRRN0plZS9z?=
+ =?utf-8?B?R1lMMUhBeGhrRGVtclMvVGNmVWZPZW1LdkVoSTBOTEJBTUxiajBUdlBsNExE?=
+ =?utf-8?B?dTdyUUhDbG5LMVJmMzFrVmxjTTRvd1BBRSs0SkF4TEdzbHpOZFpPSEdHRzR3?=
+ =?utf-8?B?QkpiYjlTMmtEY3NZNEc3S0hTU2dsbHJJYXdGTGg1dEVzcnVLTXQ2LzY5dFUy?=
+ =?utf-8?B?dytJUUdSazl3bjlneXlrakVvY3Vra1lrRExhL0FZQ0dFTURxZTZRTXFhRzFC?=
+ =?utf-8?B?T1Bxb3pyZ3kwZVpCNjhjem9pcHcxMlBzaUpxM0dtQkVIYzhqODNPUFFRS0w4?=
+ =?utf-8?B?SGdJb1A3NmJYaDdUNGdGaVlJZjlPd3dvQU53QmUxSm5QSWZKM2ljR0taTmNa?=
+ =?utf-8?B?UitNVGFwdURHZjBMOVdnL0VVamMwTGxDeWNGNTlGZ1ZIRDJZZzhsKzNUWll5?=
+ =?utf-8?B?ckh5RFVwMURxTG1TK3dWb2NUY2pYeDB4cnkrUmdJOS9ST0pHTHkwaEVEcWFX?=
+ =?utf-8?B?dzFhSHFwUmtJcGhsVW1HdHoycnVYVDY0ejRBcnFEa1VBR3luQUhWdk96cWNJ?=
+ =?utf-8?B?VlRxcEp1ME41aU4rMG5sQjVIRXFzS2VqQXZLcW5zR09SWVNWais3VlJ3VkNC?=
+ =?utf-8?B?VVlrMzhBMExGZVdKL0Rha3pOV2ZhRndpS3ZTTklXZkRxZndNdkxGcWZlMTVK?=
+ =?utf-8?B?K2M0eE4yM1MrazA2VVVNZ28vOFlvcnpkN1hPdVdMc0JvenBQWHF6VUdHSDIr?=
+ =?utf-8?B?OVBCSFZxazN0b1ViWjRqaTZwWkZwZkR6d0xXOFY0UVF2YkNvcWdQZWZISEtD?=
+ =?utf-8?B?QzA5eHNmeXBHdmxRYWM5SW9id1prRmxrWjdheE53bjNRSEJQaEN2MUM1Q2xJ?=
+ =?utf-8?B?d1ZFSTNBTEkvZkFINXd5T09MUGdHREdwdkdheEZZWnpVVnBhSGpKU2VSUjVW?=
+ =?utf-8?B?NkZDNktlYzVRUUFhMGJhMWNUSFVzYkFhcWZDRDNmOEhPK0FiNTY5TnMwNWNl?=
+ =?utf-8?B?QWxjZTFrQldoYVJWQ0R3L0kwUFBCNjRVUUJ0RGdKeTUzWVhRQkR5REdMbGZm?=
+ =?utf-8?B?Z1RIbFFDSFJBdnAxNjV5aTUyM1pENktzTDB6OUpJSVBEQm92VTlyWkFTaDBv?=
+ =?utf-8?B?YWNHemdTZDlYMzM2SmxPTjQvcWQyZ1VpZWJGdU9XYVZjbjhMTDFjQitPNWJT?=
+ =?utf-8?B?WXhBNGZCRGZBZzg0Y2lWU3lESnUrdGNVZGdSN0NaSE9uKzFtR2tkdzRMWUxU?=
+ =?utf-8?B?WlhEYlF2ajRVVGpBYkkzUTlSSUZLOGUzSVlQeTZ4d0IxTDhjTnlWTkFINGlz?=
+ =?utf-8?B?TnZwSkgvTTR0YVZacmc4UlJjTkhwUVFBek5KTjJKT2xtRGQxcEhTSFdJQlpx?=
+ =?utf-8?B?NnZkQzRkVzcvMFFPeTlhNGVQbVhjc3ZUY20rSWpORmZqbGl2MWY3emVlVHZ5?=
+ =?utf-8?B?WmowSGh3eTkwcklvWUM5RzZRdkswVUk3ZU5SL2xMaGEyellpdkFCWDdQR2dC?=
+ =?utf-8?B?YXZKM1l0YmViTVROY1lVVXR1QVZmSk5acGQ4bDhaczZqU2hVcGVFNkNrVHla?=
+ =?utf-8?B?eTBRN0c4bkkyWFNldFRzNThHQ0gwMUQwVGlhWmtISUlZaXEwcjFabHN3ZGpr?=
+ =?utf-8?B?UWc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41918d47-9161-43ad-2b51-08dba7e909a7
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2023 17:05:34.9872
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2023 17:05:53.5739
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vu+71i1L1bBahtz+qwWjH8Rv5BkHFO/Jxdxi00TABZypkKUdJ7f1W6BpId+P+z7QS6vGh19lxdF7z4hNeWIuHxCJDiA0btQxnB5NHCKRKq0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: dit0RIDiPMbpJeae5jEjtnZ4I9Jja4VjIZeszS1a/Jqga/85rccdoGPoHdRgPwEF6VgRCLyEJ5KRc5G+F1B7drLCU0KdjdC/CaVIKMVMDnc=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4750
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
-On 8/25/2023 10:05 AM, Tony Luck wrote:
-> On Fri, Aug 11, 2023 at 10:29:25AM -0700, Reinette Chatre wrote:
+On 8/25/2023 10:49 AM, Tony Luck wrote:
+> On Fri, Aug 11, 2023 at 10:32:29AM -0700, Reinette Chatre wrote:
 >> On 7/22/2023 12:07 PM, Tony Luck wrote:
 
->>> Change all places where monitoring functions walk the list of
->>> domains to use the new "mondomains" list instead of the old
->>> "domains" list.
->>
->> I would not refer to it as "the old domains list" as it creates
->> impression that this is being replaced. The changelog makes
->> no mention that domains list will remain and be dedicated to
->> control domains. I think this is important to include in description
->> of this change.
-> 
-> I've rewritten the entire commit message incorporating your suggestions.
-> V6 will be posted soon (after I get some time on an SNC SPR to check
-> that it all works!)
-
-I seem to have missed v5.
-
-> 
->>
->>>
->>> Signed-off-by: Tony Luck <tony.luck@intel.com>
->>> ---
->>>  include/linux/resctrl.h                   |  10 +-
->>>  arch/x86/kernel/cpu/resctrl/internal.h    |   2 +-
->>>  arch/x86/kernel/cpu/resctrl/core.c        | 195 +++++++++++++++-------
->>>  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   2 +-
->>>  arch/x86/kernel/cpu/resctrl/monitor.c     |   2 +-
->>>  arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  30 ++--
->>>  6 files changed, 167 insertions(+), 74 deletions(-)
->>>
->>> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
->>> index 8334eeacfec5..1267d56f9e76 100644
->>> --- a/include/linux/resctrl.h
->>> +++ b/include/linux/resctrl.h
->>> @@ -151,9 +151,11 @@ struct resctrl_schema;
->>>   * @mon_capable:	Is monitor feature available on this machine
->>>   * @num_rmid:		Number of RMIDs available
->>>   * @cache_level:	Which cache level defines scope of this resource
->>> + * @mon_scope:		Scope of this resource if different from cache_level
->>
->> I think this addition should be deferred. As it is here it the "if different
->> from cache_level" also creates many questions (when will it be different?
->> how will it be determined that the scope is different in order to know that
->> mon_scope should be used?)
-> 
-> I've gone in a different direction. V6 renames "cache_level" to
-> "ctrl_scope". I think this makes intent clear from step #1.
->
-
-This change is not clear to me. Previously you changed this name
-but kept using it in code specific to cache levels. It is not clear
-to me how this time's rename would be different.
- 
 ...
 
->>> @@ -502,61 +593,19 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
->>>   */
->>>  static void domain_add_cpu(int cpu, struct rdt_resource *r)
->>>  {
->>> -	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
->>> -	struct list_head *add_pos = NULL;
->>> -	struct rdt_hw_domain *hw_dom;
->>> -	struct rdt_domain *d;
->>> -	int err;
->>> -
->>> -	d = rdt_find_domain(r, id, &add_pos);
->>> -	if (IS_ERR(d)) {
->>> -		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
->>> -		return;
->>> -	}
->>> -
->>> -	if (d) {
->>> -		cpumask_set_cpu(cpu, &d->cpu_mask);
->>> -		if (r->cache.arch_has_per_cpu_cfg)
->>> -			rdt_domain_reconfigure_cdp(r);
->>> -		return;
->>> -	}
->>> -
->>> -	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
->>> -	if (!hw_dom)
->>> -		return;
->>> -
->>> -	d = &hw_dom->d_resctrl;
->>> -	d->id = id;
->>> -	cpumask_set_cpu(cpu, &d->cpu_mask);
->>> -
->>> -	rdt_domain_reconfigure_cdp(r);
->>> -
->>> -	if (r->alloc_capable && domain_setup_ctrlval(r, d)) {
->>> -		domain_free(hw_dom);
->>> -		return;
->>> -	}
->>> -
->>> -	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
->>> -		domain_free(hw_dom);
->>> -		return;
->>> -	}
->>> -
->>> -	list_add_tail(&d->list, add_pos);
->>> -
->>> -	err = resctrl_online_domain(r, d);
->>> -	if (err) {
->>> -		list_del(&d->list);
->>> -		domain_free(hw_dom);
->>> -	}
->>> +	if (r->alloc_capable)
->>> +		domain_add_cpu_ctrl(cpu, r);
->>> +	if (r->mon_capable)
->>> +		domain_add_cpu_mon(cpu, r);
->>>  }
+>>> +static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
+>>> +	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, 0),
+>>> +	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, 0),
+>>> +	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, 0),
+>>> +	{}
+>>> +};
+>>> +
+>>> +/*
+>>> + * There isn't a simple enumeration bit to show whether SNC mode
+>>> + * is enabled. Look at the ratio of number of NUMA nodes to the
+>>> + * number of distinct L3 caches. Take care to skip memory-only nodes.
+>>> + */
+>>> +static __init int get_snc_config(void)
+>>> +{
+>>> +	unsigned long *node_caches;
+>>> +	int mem_only_nodes = 0;
+>>> +	int cpu, node, ret;
+>>> +
+>>> +	if (!x86_match_cpu(snc_cpu_ids))
+>>> +		return 1;
+>>> +
+>>> +	node_caches = kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_caches), GFP_KERNEL);
+>>> +	if (!node_caches)
+>>> +		return 1;
+>>> +
+>>> +	cpus_read_lock();
+>>> +	for_each_node(node) {
+>>> +		cpu = cpumask_first(cpumask_of_node(node));
+>>> +		if (cpu < nr_cpu_ids)
+>>> +			set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
+>>> +		else
+>>> +			mem_only_nodes++;
+>>> +	}
+>>> +	cpus_read_unlock();
 >>
->> A resource could be both alloc and mon capable ... both
->> domain_add_cpu_ctrl() and domain_add_cpu_mon() can fail.
->> Should domain_add_cpu_mon() still be run for a CPU if
->> domain_add_cpu_ctrl() failed? 
->>
->> Looking ahead the CPU should probably also not be added
->> to the default groups mask if a failure occurred.
+>> I am not familiar with the numa code at all so please correct me
+>> where I am wrong. I do see that nr_node_ids is initialized with __init code
+>> so it should be accurate at this point. It looks to me like this initialization
+>> assumes that at least one CPU per node will be online at the time it is run.
+>> It is not clear to me that this assumption would always be true. 
 > 
-> Existing code doesn't do anything for the case where a CPU
-> can't be added to a domain (probably the only real error case
-> is failure to allocate memory for the domain structure).
+> Resctrl initialization is kicked off as a late_initcall(). So all CPUs
+> and devices are fully initialized before this code runs.
+> 
+> Resctrl can't be moved to an "init" state before CPUs are brought online
+> because it makes a call to cpuhp_setup_state() to get callbacks for
+> online/offline CPU events ... that call can't be done early.
 
-Is my statement about CPU being added to default group mask
-incorrect? Seems like a potential issue related to domain's
-CPU mask also.
+Apologies but this is not so obvious to me. From what I understand a
+system need not be booted with all CPUs online. CPUs can be brought
+online at any time.
 
-Please see my earlier question. Existing code does not proceed
-with monitor initialization if control initialization fails and
-undoes control initialization if monitor initialization fails. 
+>>> +
+>>> +	ret = (nr_node_ids - mem_only_nodes) / bitmap_weight(node_caches, nr_node_ids);
+>>> +	kfree(node_caches);
+>>> +
+>>> +	if (ret > 1)
+>>> +		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = MON_SCOPE_NODE;
+>>> +
+>>> +	return ret;
+>>> +}
+>>> +
 
-> May be something to tackle in a future series if anyone
-> thinks this is a serious problem and has suggestions on
-> what to do. It seems like a catastrophic problem to not
-> have some CPUs in some/all domains of some resources.
-> Maybe this should disable mounting resctrl filesystem
-> completely?
-
-It is not clear to me how this is catastrophic but I
-do not think resctrl should claim support for a resource
-on a CPU if it was not able to complete initialization
 
 Reinette
