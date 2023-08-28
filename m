@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F27311C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A638DC433C9;
-	Mon, 28 Aug 2023 10:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E0511C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BFCC4339A;
+	Mon, 28 Aug 2023 10:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219796;
-	bh=Cq+X2qay9wGQ5SRKKsILsFARPbQ4i1TterhQrHSJVNw=;
+	s=korg; t=1693219799;
+	bh=o4TVdssY9qjPSnT006bczvB+rB/ByO2XFs0f+WrP8EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRRE5t73euorTCchNE8hNBYZH3aAyFPxQM+EH3rwoWMr74LvLpr5zZoV5Xq4oe5wP
-	 cc6yx9GAEK+15DRMfbyigi3joKKY5P+0ih43n9n6kUwDn9gTC5ash64eW/eSW0he4W
-	 Sx3UZkAwJ4HbA9vwg+PKRQOkM9woKJEFSEYUoGWg=
+	b=i4znvE1fgLy0+fOLCrALT20lLtDp2huDA+QEwaL1niSL4SPO4JIt8qA5em+jx4KVI
+	 7NU3A29+Wx6k/fh1VY1F0y35+qhLpw8FzMa0nQ/drO+KjMweOWopPEIsqpJmGm27gP
+	 QigISztETjy5Uts9P8Wvwl1/rOF9qLaDDe0CbfvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 36/84] net/sched: fix a qdisc modification with ambiguous command request
-Date: Mon, 28 Aug 2023 12:13:53 +0200
-Message-ID: <20230828101150.483620606@linuxfoundation.org>
+	"Qais Yousef (Google)" <qyousef@layalina.io>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.10 68/84] sched/cpuset: Keep track of SCHED_DEADLINE task in cpusets
+Date: Mon, 28 Aug 2023 12:14:25 +0200
+Message-ID: <20230828101151.580768469@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -44,138 +41,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit da71714e359b64bd7aab3bd56ec53f307f058133 ]
+commit 6c24849f5515e4966d94fa5279bdff4acf2e9489 upstream.
 
-When replacing an existing root qdisc, with one that is of the same kind, the
-request boils down to essentially a parameterization change  i.e not one that
-requires allocation and grafting of a new qdisc. syzbot was able to create a
-scenario which resulted in a taprio qdisc replacing an existing taprio qdisc
-with a combination of NLM_F_CREATE, NLM_F_REPLACE and NLM_F_EXCL leading to
-create and graft scenario.
-The fix ensures that only when the qdisc kinds are different that we should
-allow a create and graft, otherwise it goes into the "change" codepath.
+Qais reported that iterating over all tasks when rebuilding root domains
+for finding out which ones are DEADLINE and need their bandwidth
+correctly restored on such root domains can be a costly operation (10+
+ms delays on suspend-resume).
 
-While at it, fix the code and comments to improve readability.
+To fix the problem keep track of the number of DEADLINE tasks belonging
+to each cpuset and then use this information (followup patch) to only
+perform the above iteration if DEADLINE tasks are actually present in
+the cpuset for which a corresponding root domain is being rebuilt.
 
-While syzbot was able to create the issue, it did not zone on the root cause.
-Analysis from Vladimir Oltean <vladimir.oltean@nxp.com> helped narrow it down.
-
-v1->V2 changes:
-- remove "inline" function definition (Vladmir)
-- remove extrenous braces in branches (Vladmir)
-- change inline function names (Pedro)
-- Run tdc tests (Victor)
-v2->v3 changes:
-- dont break else/if (Simon)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a3618a167af2021433cd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/20230816225759.g25x76kmgzya2gei@skbuf/T/
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Qais Yousef (Google) <qyousef@layalina.io>
+Link: https://lore.kernel.org/lkml/20230206221428.2125324-1-qyousef@layalina.io/
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ Fix conflicts in kernel/cgroup/cpuset.c and kernel/sched/deadline.c
+  due to pulling new fields and functions. Remove new code and match the
+  patch diff. ]
+Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c | 53 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ include/linux/cpuset.h  |    4 ++++
+ kernel/cgroup/cgroup.c  |    4 ++++
+ kernel/cgroup/cpuset.c  |   25 +++++++++++++++++++++++++
+ kernel/sched/deadline.c |   13 +++++++++++++
+ 4 files changed, 46 insertions(+)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index fb50e3f3283f9..5c2d230790db9 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1513,10 +1513,28 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 	return 0;
+--- a/include/linux/cpuset.h
++++ b/include/linux/cpuset.h
+@@ -55,6 +55,8 @@ extern void cpuset_init_smp(void);
+ extern void cpuset_force_rebuild(void);
+ extern void cpuset_update_active_cpus(void);
+ extern void cpuset_wait_for_hotplug(void);
++extern void inc_dl_tasks_cs(struct task_struct *task);
++extern void dec_dl_tasks_cs(struct task_struct *task);
+ extern void cpuset_lock(void);
+ extern void cpuset_unlock(void);
+ extern void cpuset_cpus_allowed(struct task_struct *p, struct cpumask *mask);
+@@ -178,6 +180,8 @@ static inline void cpuset_update_active_
+ 
+ static inline void cpuset_wait_for_hotplug(void) { }
+ 
++static inline void inc_dl_tasks_cs(struct task_struct *task) { }
++static inline void dec_dl_tasks_cs(struct task_struct *task) { }
+ static inline void cpuset_lock(void) { }
+ static inline void cpuset_unlock(void) { }
+ 
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -56,6 +56,7 @@
+ #include <linux/file.h>
+ #include <linux/fs_parser.h>
+ #include <linux/sched/cputime.h>
++#include <linux/sched/deadline.h>
+ #include <linux/psi.h>
+ #include <net/sock.h>
+ 
+@@ -6326,6 +6327,9 @@ void cgroup_exit(struct task_struct *tsk
+ 	list_add_tail(&tsk->cg_list, &cset->dying_tasks);
+ 	cset->nr_tasks--;
+ 
++	if (dl_task(tsk))
++		dec_dl_tasks_cs(tsk);
++
+ 	WARN_ON_ONCE(cgroup_task_frozen(tsk));
+ 	if (unlikely(cgroup_task_freeze(tsk)))
+ 		cgroup_update_frozen(task_dfl_cgroup(tsk));
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -161,6 +161,12 @@ struct cpuset {
+ 	 */
+ 	int use_parent_ecpus;
+ 	int child_ecpus_count;
++
++	/*
++	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
++	 * know when to rebuild associated root domain bandwidth information.
++	 */
++	int nr_deadline_tasks;
+ };
+ 
+ /*
+@@ -206,6 +212,20 @@ static inline struct cpuset *parent_cs(s
+ 	return css_cs(cs->css.parent);
  }
  
-+static bool req_create_or_replace(struct nlmsghdr *n)
++void inc_dl_tasks_cs(struct task_struct *p)
 +{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_REPLACE);
++	struct cpuset *cs = task_cs(p);
++
++	cs->nr_deadline_tasks++;
 +}
 +
-+static bool req_create_exclusive(struct nlmsghdr *n)
++void dec_dl_tasks_cs(struct task_struct *p)
 +{
-+	return (n->nlmsg_flags & NLM_F_CREATE &&
-+		n->nlmsg_flags & NLM_F_EXCL);
++	struct cpuset *cs = task_cs(p);
++
++	cs->nr_deadline_tasks--;
 +}
 +
-+static bool req_change(struct nlmsghdr *n)
-+{
-+	return (!(n->nlmsg_flags & NLM_F_CREATE) &&
-+		!(n->nlmsg_flags & NLM_F_REPLACE) &&
-+		!(n->nlmsg_flags & NLM_F_EXCL));
-+}
+ /* bits in struct cpuset flags field */
+ typedef enum {
+ 	CS_ONLINE,
+@@ -2172,6 +2192,11 @@ static int cpuset_can_attach(struct cgro
+ 		ret = security_task_setscheduler(task);
+ 		if (ret)
+ 			goto out_unlock;
 +
- /*
-  * Create/change qdisc.
-  */
--
- static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 			   struct netlink_ext_ack *extack)
- {
-@@ -1613,27 +1631,35 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				 *
- 				 *   We know, that some child q is already
- 				 *   attached to this parent and have choice:
--				 *   either to change it or to create/graft new one.
-+				 *   1) change it or 2) create/graft new one.
-+				 *   If the requested qdisc kind is different
-+				 *   than the existing one, then we choose graft.
-+				 *   If they are the same then this is "change"
-+				 *   operation - just let it fallthrough..
- 				 *
- 				 *   1. We are allowed to create/graft only
--				 *   if CREATE and REPLACE flags are set.
-+				 *   if the request is explicitly stating
-+				 *   "please create if it doesn't exist".
- 				 *
--				 *   2. If EXCL is set, requestor wanted to say,
--				 *   that qdisc tcm_handle is not expected
-+				 *   2. If the request is to exclusive create
-+				 *   then the qdisc tcm_handle is not expected
- 				 *   to exist, so that we choose create/graft too.
- 				 *
- 				 *   3. The last case is when no flags are set.
-+				 *   This will happen when for example tc
-+				 *   utility issues a "change" command.
- 				 *   Alas, it is sort of hole in API, we
- 				 *   cannot decide what to do unambiguously.
--				 *   For now we select create/graft, if
--				 *   user gave KIND, which does not match existing.
-+				 *   For now we select create/graft.
- 				 */
--				if ((n->nlmsg_flags & NLM_F_CREATE) &&
--				    (n->nlmsg_flags & NLM_F_REPLACE) &&
--				    ((n->nlmsg_flags & NLM_F_EXCL) ||
--				     (tca[TCA_KIND] &&
--				      nla_strcmp(tca[TCA_KIND], q->ops->id))))
--					goto create_n_graft;
-+				if (tca[TCA_KIND] &&
-+				    nla_strcmp(tca[TCA_KIND], q->ops->id)) {
-+					if (req_create_or_replace(n) ||
-+					    req_create_exclusive(n))
-+						goto create_n_graft;
-+					else if (req_change(n))
-+						goto create_n_graft2;
-+				}
- 			}
- 		}
- 	} else {
-@@ -1667,6 +1693,7 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 		NL_SET_ERR_MSG(extack, "Qdisc not found. To create specify NLM_F_CREATE flag");
- 		return -ENOENT;
++		if (dl_task(task)) {
++			cs->nr_deadline_tasks++;
++			cpuset_attach_old_cs->nr_deadline_tasks--;
++		}
  	}
-+create_n_graft2:
- 	if (clid == TC_H_INGRESS) {
- 		if (dev_ingress_queue(dev)) {
- 			q = qdisc_create(dev, dev_ingress_queue(dev), p,
--- 
-2.40.1
-
+ 
+ 	/*
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -17,6 +17,7 @@
+  */
+ #include "sched.h"
+ #include "pelt.h"
++#include <linux/cpuset.h>
+ 
+ struct dl_bandwidth def_dl_bandwidth;
+ 
+@@ -2417,6 +2418,12 @@ static void switched_from_dl(struct rq *
+ 	if (task_on_rq_queued(p) && p->dl.dl_runtime)
+ 		task_non_contending(p);
+ 
++	/*
++	 * In case a task is setscheduled out from SCHED_DEADLINE we need to
++	 * keep track of that on its cpuset (for correct bandwidth tracking).
++	 */
++	dec_dl_tasks_cs(p);
++
+ 	if (!task_on_rq_queued(p)) {
+ 		/*
+ 		 * Inactive timer is armed. However, p is leaving DEADLINE and
+@@ -2457,6 +2464,12 @@ static void switched_to_dl(struct rq *rq
+ 	if (hrtimer_try_to_cancel(&p->dl.inactive_timer) == 1)
+ 		put_task_struct(p);
+ 
++	/*
++	 * In case a task is setscheduled to SCHED_DEADLINE we need to keep
++	 * track of that on its cpuset (for correct bandwidth tracking).
++	 */
++	inc_dl_tasks_cs(p);
++
+ 	/* If p is not queued we will update its parameters at next wakeup. */
+ 	if (!task_on_rq_queued(p)) {
+ 		add_rq_bw(&p->dl, &rq->dl);
 
 
