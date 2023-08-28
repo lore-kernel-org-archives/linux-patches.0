@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD6A11C93
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8E7C433C7;
-	Mon, 28 Aug 2023 10:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABF611C94
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D194BC433C8;
+	Mon, 28 Aug 2023 10:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218604;
-	bh=hiKwYpczDxwqi8bNwU8u9fgLtGHIjMwArskL5ZT09OI=;
+	s=korg; t=1693218607;
+	bh=mwknJkyoH5UO24OF0N2LW4xoJd3pjAzpMHHxPzl5kic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNZfBJFWBFzcTou1nbDGIeqaE8hLKZyM1RUI0otV5+TsN0J7sqRLMq7Z+nTMnYvx7
-	 apeKuZLBNDxEIg6hK1n11V0ndjb+OJv0HnIJw6VyEgmmQPNRAUeZK9aGb5jF0SS07e
-	 Vn8E/L5BLphGPXsTnmL0iVuP9Jq5wgcMp8TWibRA=
+	b=oDW63G9cEQFKSJBYoPg4Vvq5MnD61ONk8MRWLjRvQIeVrrv5/mK2ozW3sUDfD7iuT
+	 oK72yryC5nzDohDGbd5/vVBnh2v1vs+4f4M19HAVPBT0TNjzATc1IR3oDiLdxKTQsn
+	 fiyPOFhCPylMA50MTKppUKYop2aMy591Hz66vb2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Dave Airlie <airlied@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Helge Deller <deller@gmx.de>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
 	linux-fbdev@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/122] drm/ast: Use drm_aperture_remove_conflicting_pci_framebuffers
-Date: Mon, 28 Aug 2023 12:11:59 +0200
-Message-ID: <20230828101156.626841490@linuxfoundation.org>
+Subject: [PATCH 6.1 005/122] fbdev/radeon: use pci aperture helpers
+Date: Mon, 28 Aug 2023 12:12:00 +0200
+Message-ID: <20230828101156.656023754@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -46,61 +44,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-[ Upstream commit c1ebead36099deb85384f6fb262fe619a04cee73 ]
+[ Upstream commit 9b539c4d1b921bc9c8c578d4d50f0a7e7874d384 ]
 
-It's just open coded and matches.
-
-Note that Thomas said that his version apparently failed for some
-reason, but hey maybe we should try again.
+It's not exactly the same since the open coded version doesn't set
+primary correctly. But that's a bugfix, so shouldn't hurt really.
 
 Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Helge Deller <deller@gmx.de>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Cc: linux-fbdev@vger.kernel.org
-Tested-by: Thomas Zimmmermann <tzimmermann@suse.de>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230111154112.90575-1-daniel.vetter@ffwll.ch
+Link: https://patchwork.freedesktop.org/patch/msgid/20230111154112.90575-7-daniel.vetter@ffwll.ch
 Stable-dep-of: 5ae3716cfdcd ("video/aperture: Only remove sysfb on the default vga pci device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_drv.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/video/fbdev/aty/radeon_base.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/ast/ast_drv.c b/drivers/gpu/drm/ast/ast_drv.c
-index b9392f31e6291..800471f2a2037 100644
---- a/drivers/gpu/drm/ast/ast_drv.c
-+++ b/drivers/gpu/drm/ast/ast_drv.c
-@@ -89,27 +89,13 @@ static const struct pci_device_id ast_pciidlist[] = {
+diff --git a/drivers/video/fbdev/aty/radeon_base.c b/drivers/video/fbdev/aty/radeon_base.c
+index 8b28c9bddd974..50c384ce28837 100644
+--- a/drivers/video/fbdev/aty/radeon_base.c
++++ b/drivers/video/fbdev/aty/radeon_base.c
+@@ -2238,14 +2238,6 @@ static const struct bin_attribute edid2_attr = {
+ 	.read	= radeon_show_edid2,
+ };
  
- MODULE_DEVICE_TABLE(pci, ast_pciidlist);
- 
--static int ast_remove_conflicting_framebuffers(struct pci_dev *pdev)
+-static int radeon_kick_out_firmware_fb(struct pci_dev *pdev)
 -{
--	bool primary = false;
--	resource_size_t base, size;
+-	resource_size_t base = pci_resource_start(pdev, 0);
+-	resource_size_t size = pci_resource_len(pdev, 0);
 -
--	base = pci_resource_start(pdev, 0);
--	size = pci_resource_len(pdev, 0);
--#ifdef CONFIG_X86
--	primary = pdev->resource[PCI_ROM_RESOURCE].flags & IORESOURCE_ROM_SHADOW;
--#endif
--
--	return drm_aperture_remove_conflicting_framebuffers(base, size, primary, &ast_driver);
+-	return aperture_remove_conflicting_devices(base, size, false, KBUILD_MODNAME);
 -}
 -
- static int ast_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ static int radeonfb_pci_register(struct pci_dev *pdev,
+ 				 const struct pci_device_id *ent)
  {
- 	struct ast_private *ast;
- 	struct drm_device *dev;
- 	int ret;
+@@ -2296,7 +2288,7 @@ static int radeonfb_pci_register(struct pci_dev *pdev,
+ 	rinfo->fb_base_phys = pci_resource_start (pdev, 0);
+ 	rinfo->mmio_base_phys = pci_resource_start (pdev, 2);
  
--	ret = ast_remove_conflicting_framebuffers(pdev);
-+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &ast_driver);
+-	ret = radeon_kick_out_firmware_fb(pdev);
++	ret = aperture_remove_conflicting_pci_devices(pdev, KBUILD_MODNAME);
  	if (ret)
- 		return ret;
+ 		goto err_release_fb;
  
 -- 
 2.40.1
