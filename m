@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A72911C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D9EC433C8;
-	Mon, 28 Aug 2023 10:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0493911C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:29:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F320C433C7;
+	Mon, 28 Aug 2023 10:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218571;
-	bh=5NmSEfcnsJuKNVFQh3/Blo4SSYxSkP1oN2wy3wymNhQ=;
+	s=korg; t=1693218573;
+	bh=A29GnC8xIdFBeCRK5wIgTgis5vu7L/xYcOQMkucASbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFps9upgUqHV0MhQ9s8baNUscnphz/UB/kCwk94uc7ZCHJg+3FbK2RAPCtfFz45VU
-	 nYPWz/QmZZ+1NdVwiICksOzS8B9nKxtFOB+O4gZVYMEQzBdDAipb2WwwpQNd94brXK
-	 TupzT8PC1tZox4rKmnLLYNW6J9GHZsM1Ah49Z7Vc=
+	b=0mz4G+meaC7VYmglMdtamRqpV8YNykzDrSeBnRSnCvJ+zayv3t3ZFtxeNBYC72ZVF
+	 R8XtOL5Hmt1tqTEb5tsk8gubYUbZw21QieAH7FGJ4pkhuDxsnacDmILraBeU6l3P9c
+	 bfubUZSqSgdle2H0HnIJk6HHj5jPuZYMkFlHASp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 4.19 125/129] irqchip/mips-gic: Dont touch vl_map if a local interrupt is not routable
-Date: Mon, 28 Aug 2023 12:13:39 +0200
-Message-ID: <20230828101157.768097361@linuxfoundation.org>
+	Zhu Wang <wangzhu9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.19 126/129] scsi: snic: Fix double free in snic_tgt_create()
+Date: Mon, 28 Aug 2023 12:13:40 +0200
+Message-ID: <20230828101157.803032901@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -40,45 +39,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Zhu Wang <wangzhu9@huawei.com>
 
-commit 2c6c9c049510163090b979ea5f92a68ae8d93c45 upstream.
+commit 1bd3a76880b2bce017987cf53780b372cf59528e upstream.
 
-When a GIC local interrupt is not routable, it's vl_map will be used
-to control some internal states for core (providing IPTI, IPPCI, IPFDC
-input signal for core). Overriding it will interfere core's intetrupt
-controller.
+Commit 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add()
+fails") fixed the memory leak caused by dev_set_name() when device_add()
+failed. However, it did not consider that 'tgt' has already been released
+when put_device(&tgt->dev) is called. Remove kfree(tgt) in the error path
+to avoid double free of 'tgt' and move put_device(&tgt->dev) after the
+removed kfree(tgt) to avoid a use-after-free.
 
-Do not touch vl_map if a local interrupt is not routable, we are not
-going to remap it.
-
-Before dd098a0e0319 (" irqchip/mips-gic: Get rid of the reliance on
-irq_cpu_online()"), if a local interrupt is not routable, then it won't
-be requested from GIC Local domain, and thus gic_all_vpes_irq_cpu_online
-won't be called for that particular interrupt.
-
-Fixes: dd098a0e0319 (" irqchip/mips-gic: Get rid of the reliance on irq_cpu_online()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Tested-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230424103156.66753-2-jiaxun.yang@flygoat.com
+Fixes: 41320b18a0e0 ("scsi: snic: Fix possible memory leak if device_add() fails")
+Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
+Link: https://lore.kernel.org/r/20230819083941.164365-1-wangzhu9@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-mips-gic.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/snic/snic_disc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-mips-gic.c
-+++ b/drivers/irqchip/irq-mips-gic.c
-@@ -396,6 +396,8 @@ static void gic_all_vpes_irq_cpu_online(
- 		unsigned int intr = local_intrs[i];
- 		struct gic_all_vpes_chip_data *cd;
+--- a/drivers/scsi/snic/snic_disc.c
++++ b/drivers/scsi/snic/snic_disc.c
+@@ -316,12 +316,11 @@ snic_tgt_create(struct snic *snic, struc
+ 			      "Snic Tgt: device_add, with err = %d\n",
+ 			      ret);
  
-+		if (!gic_local_irq_is_routable(intr))
-+			continue;
- 		cd = &gic_all_vpes_chip_data[intr];
- 		write_gic_vl_map(mips_gic_vx_map_reg(intr), cd->map);
- 		if (cd->mask)
+-		put_device(&tgt->dev);
+ 		put_device(&snic->shost->shost_gendev);
+ 		spin_lock_irqsave(snic->shost->host_lock, flags);
+ 		list_del(&tgt->list);
+ 		spin_unlock_irqrestore(snic->shost->host_lock, flags);
+-		kfree(tgt);
++		put_device(&tgt->dev);
+ 		tgt = NULL;
+ 
+ 		return tgt;
 
 
