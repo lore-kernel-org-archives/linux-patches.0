@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E7811C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4027AC433C8;
-	Mon, 28 Aug 2023 10:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802D711C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A55C433C8;
+	Mon, 28 Aug 2023 10:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217869;
-	bh=TpdxdmXcIvhonvqQ3BM0DIONKoZIZKk8tL23DGpbCUw=;
+	s=korg; t=1693217872;
+	bh=6sfMHb5aTmmggjHwtgYui2EoJ59bgSMTammDl0RjV78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrhKPO26s8By2HpMd3Wbqu8VhteySvumMqS4foW5NYh5nfoUucudA7cQVexBvTXrk
-	 Rtn7xYJKy26+lIYysaAgexh4H97fGA+/io4oNVy5vAAqv/hipVVV7+S1YiEULP1SmO
-	 StWfR7E93iYSdaSY6YEnZGKuidOpuhkSUX4wLry8=
+	b=RIdqq4EtWhONXCiM9vYv19MmnNsjdSoN1ivN5KxyURTV1rEswevbn3Q8f7lZ/8B85
+	 Dv4PRBWKj2O7ZhdX7Q/qlFMfQgHnz4YrtZlXmThkJnR90JHNWs/H0FF0skUcN34hge
+	 sB/EBRK+t33eCLpIU79ZTt5cDBvKM3cSBRtvJzUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 004/129] PCI: acpiphp: Reassign resources on bridge if necessary
-Date: Mon, 28 Aug 2023 12:11:23 +0200
-Message-ID: <20230828101157.532543133@linuxfoundation.org>
+Subject: [PATCH 6.4 005/129] jbd2: remove t_checkpoint_io_list
+Date: Mon, 28 Aug 2023 12:11:24 +0200
+Message-ID: <20230828101157.570666417@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -42,81 +41,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 ]
+[ Upstream commit be22255360f80d3af789daad00025171a65424a5 ]
 
-When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
-if bridge windows programmed by firmware are not large enough.
+Since t_checkpoint_io_list was stop using in jbd2_log_do_checkpoint()
+now, it's time to remove the whole t_checkpoint_io_list logic.
 
-Reproducer:
-  $ qemu-kvm -monitor stdio -M q35  -m 4G \
-      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
-      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
-      disk_image
-
- wait till linux guest boots, then hotplug device:
-   (qemu) device_add qxl,bus=rp1
-
- hotplug on guest side fails with:
-   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
-   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
-   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
-   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
-   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
-   qxl 0000:01:00.0: enabling device (0000 -> 0003)
-   Unable to create vram_mapping
-   qxl: probe of 0000:01:00.0 failed with error -12
-
-However when using native PCIe hotplug
-  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
-it works fine, since kernel attempts to reassign unused resources.
-
-Use the same machinery as native PCIe hotplug to (re)assign resources.
-
-Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: stable@vger.kernel.org
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/jbd2/checkpoint.c | 42 ++----------------------------------------
+ fs/jbd2/commit.c     |  3 +--
+ include/linux/jbd2.h |  6 ------
+ 3 files changed, 3 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/pci/hotplug/acpiphp_glue.c b/drivers/pci/hotplug/acpiphp_glue.c
-index 5b1f271c6034b..328d1e4160147 100644
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -498,7 +498,6 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
--		LIST_HEAD(add_list);
- 		int max, pass;
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index c4e0da6db7195..723b4eb112828 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -27,7 +27,7 @@
+  *
+  * Called with j_list_lock held.
+  */
+-static inline void __buffer_unlink_first(struct journal_head *jh)
++static inline void __buffer_unlink(struct journal_head *jh)
+ {
+ 	transaction_t *transaction = jh->b_cp_transaction;
  
- 		acpiphp_rescan_slot(slot);
-@@ -512,12 +511,10 @@ static void enable_slot(struct acpiphp_slot *slot, bool bridge)
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
--					__pci_bus_size_bridges(dev->subordinate,
--							       &add_list);
- 				}
- 			}
- 		}
--		__pci_bus_assign_resources(bus, &add_list, NULL);
-+		pci_assign_unassigned_bridge_resources(bus->self);
+@@ -40,23 +40,6 @@ static inline void __buffer_unlink_first(struct journal_head *jh)
  	}
+ }
  
- 	acpiphp_sanitize_bus(bus);
+-/*
+- * Unlink a buffer from a transaction checkpoint(io) list.
+- *
+- * Called with j_list_lock held.
+- */
+-static inline void __buffer_unlink(struct journal_head *jh)
+-{
+-	transaction_t *transaction = jh->b_cp_transaction;
+-
+-	__buffer_unlink_first(jh);
+-	if (transaction->t_checkpoint_io_list == jh) {
+-		transaction->t_checkpoint_io_list = jh->b_cpnext;
+-		if (transaction->t_checkpoint_io_list == jh)
+-			transaction->t_checkpoint_io_list = NULL;
+-	}
+-}
+-
+ /*
+  * Check a checkpoint buffer could be release or not.
+  *
+@@ -505,15 +488,6 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ 			break;
+ 		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+ 			break;
+-		if (released)
+-			continue;
+-
+-		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_io_list,
+-						       nr_to_scan, &released);
+-		if (*nr_to_scan == 0)
+-			break;
+-		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+-			break;
+ 	} while (transaction != last_transaction);
+ 
+ 	if (transaction != last_transaction) {
+@@ -568,17 +542,6 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ 		 */
+ 		if (need_resched())
+ 			return;
+-		if (ret)
+-			continue;
+-		/*
+-		 * It is essential that we are as careful as in the case of
+-		 * t_checkpoint_list with removing the buffer from the list as
+-		 * we can possibly see not yet submitted buffers on io_list
+-		 */
+-		ret = journal_clean_one_cp_list(transaction->
+-				t_checkpoint_io_list, destroy);
+-		if (need_resched())
+-			return;
+ 		/*
+ 		 * Stop scanning if we couldn't free the transaction. This
+ 		 * avoids pointless scanning of transactions which still
+@@ -663,7 +626,7 @@ int __jbd2_journal_remove_checkpoint(struct journal_head *jh)
+ 	jbd2_journal_put_journal_head(jh);
+ 
+ 	/* Is this transaction empty? */
+-	if (transaction->t_checkpoint_list || transaction->t_checkpoint_io_list)
++	if (transaction->t_checkpoint_list)
+ 		return 0;
+ 
+ 	/*
+@@ -755,7 +718,6 @@ void __jbd2_journal_drop_transaction(journal_t *journal, transaction_t *transact
+ 	J_ASSERT(transaction->t_forget == NULL);
+ 	J_ASSERT(transaction->t_shadow_list == NULL);
+ 	J_ASSERT(transaction->t_checkpoint_list == NULL);
+-	J_ASSERT(transaction->t_checkpoint_io_list == NULL);
+ 	J_ASSERT(atomic_read(&transaction->t_updates) == 0);
+ 	J_ASSERT(journal->j_committing_transaction != transaction);
+ 	J_ASSERT(journal->j_running_transaction != transaction);
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index b33155dd70017..1073259902a60 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -1141,8 +1141,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
+ 	spin_lock(&journal->j_list_lock);
+ 	commit_transaction->t_state = T_FINISHED;
+ 	/* Check if the transaction can be dropped now that we are finished */
+-	if (commit_transaction->t_checkpoint_list == NULL &&
+-	    commit_transaction->t_checkpoint_io_list == NULL) {
++	if (commit_transaction->t_checkpoint_list == NULL) {
+ 		__jbd2_journal_drop_transaction(journal, commit_transaction);
+ 		jbd2_journal_free_transaction(commit_transaction);
+ 	}
+diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
+index f619bae1dcc5d..91a2cf4bc5756 100644
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -622,12 +622,6 @@ struct transaction_s
+ 	 */
+ 	struct journal_head	*t_checkpoint_list;
+ 
+-	/*
+-	 * Doubly-linked circular list of all buffers submitted for IO while
+-	 * checkpointing. [j_list_lock]
+-	 */
+-	struct journal_head	*t_checkpoint_io_list;
+-
+ 	/*
+ 	 * Doubly-linked circular list of metadata buffers being
+ 	 * shadowed by log IO.  The IO buffers on the iobuf list and
 -- 
 2.40.1
 
