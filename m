@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD16711C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE7C433C7;
-	Mon, 28 Aug 2023 10:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02B011C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F206BC433C7;
+	Mon, 28 Aug 2023 10:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219764;
-	bh=Z092d5NLjo7Ug59mMqxLITYylBl62zxmI8w5Fy2htLY=;
+	s=korg; t=1693219767;
+	bh=XBS6DWJnpe7J8XXDU9SRFcx1+gsyDI9gEh3HaeX2chQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHqNCATkOxTK/sSwX6OLKiFFLhKKbwYxNMrVPOeBJpCYunVL2idJqwjgntcXIhfH0
-	 1LwU/z4Wrr9ZCdz8nxOLCUW2G5ie9UmQa4LHS0Vut7PgRTm3UeS1F29JYAw57EJ6I7
-	 qCdGYw2zP/0X+rXYqP+M5YnV4dxXbxrkxYSyxPEc=
+	b=YOXtHYSqmNg0S2D1eOrtMO13mGq1+py/NC1f9nY3EbkhTMhyIPGudVpq73TaFP9Ey
+	 zpgSbxlt1IkCxaxrbfpRR+UHz87UIAB7t0HKEivCrj/HYk6/WGAA6204s4BkcPL7/x
+	 iCvvCHb4syQiDxGgvdC1l7Pab9VzLCjnfWmrNZl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul McKenney <paulmck@kernel.org>,
-	Frederic Weisbecker <fweisbec@gmail.com>,
-	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Davidlohr Bueso <dave@stgolabs.net>
-Subject: [PATCH 5.10 63/84] torture: Fix hang during kthread shutdown phase
-Date: Mon, 28 Aug 2023 12:14:20 +0200
-Message-ID: <20230828101151.397401371@linuxfoundation.org>
+	"Paul E . McKenney" <paulmck@kernel.org>
+Subject: [PATCH 5.10 64/84] tick: Detect and fix jiffies update stall
+Date: Mon, 28 Aug 2023 12:14:21 +0200
+Message-ID: <20230828101151.428408589@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -42,54 +41,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes (Google) <joel@joelfernandes.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit d52d3a2bf408ff86f3a79560b5cce80efb340239 upstream.
+commit a1ff03cd6fb9c501fff63a4a2bface9adcfa81cd upstream.
 
-During rcutorture shutdown, the rcu_torture_cleanup() function calls
-torture_cleanup_begin(), which sets the fullstop global variable to
-FULLSTOP_RMMOD. This causes the rcutorture threads for readers and
-fakewriters to exit all of their "while" loops and start shutting down.
+On some rare cases, the timekeeper CPU may be delaying its jiffies
+update duty for a while. Known causes include:
 
-They then call torture_kthread_stopping(), which in turn waits for
-kthread_stop() to be called.  However, rcu_torture_cleanup() has
-not yet called kthread_stop() on those threads, and before it gets a
-chance to do so, multiple instances of torture_kthread_stopping() invoke
-schedule_timeout_interruptible(1) in a tight loop.  Tracing confirms that
-TIMER_SOFTIRQ can then continuously execute timer callbacks.  If that
-TIMER_SOFTIRQ preempts the task executing rcu_torture_cleanup(), that
-task might never invoke kthread_stop().
+* The timekeeper is waiting on stop_machine in a MULTI_STOP_DISABLE_IRQ
+  or MULTI_STOP_RUN state. Disabled interrupts prevent from timekeeping
+  updates while waiting for the target CPU to complete its
+  stop_machine() callback.
 
-This commit improves this situation by increasing the timeout passed to
-schedule_timeout_interruptible() from one jiffy to 1/20th of a second.
-This change prevents TIMER_SOFTIRQ from monopolizing its CPU, thus
-allowing rcu_torture_cleanup() to carry out the needed kthread_stop()
-invocations.  Testing has shown 100 runs of TREE07 passing reliably,
-as oppose to the tens-of-percent failure rates seen beforehand.
+* The timekeeper vcpu has VMEXIT'ed for a long while due to some overload
+  on the host.
 
-Cc: Paul McKenney <paulmck@kernel.org>
-Cc: Frederic Weisbecker <fweisbec@gmail.com>
-Cc: Zhouyi Zhou <zhouzhouyi@gmail.com>
-Cc: <stable@vger.kernel.org> # 6.0.x
+Detect and fix these situations with emergency timekeeping catchups.
+
+Original-patch-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Tested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/torture.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/tick-sched.c |   17 +++++++++++++++++
+ kernel/time/tick-sched.h |    4 ++++
+ 2 files changed, 21 insertions(+)
 
---- a/kernel/torture.c
-+++ b/kernel/torture.c
-@@ -788,7 +788,7 @@ void torture_kthread_stopping(char *titl
- 	VERBOSE_TOROUT_STRING(buf);
- 	while (!kthread_should_stop()) {
- 		torture_shutdown_absorb(title);
--		schedule_timeout_uninterruptible(1);
-+		schedule_timeout_uninterruptible(HZ / 20);
- 	}
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -148,6 +148,8 @@ static ktime_t tick_init_jiffy_update(vo
+ 	return period;
  }
- EXPORT_SYMBOL_GPL(torture_kthread_stopping);
+ 
++#define MAX_STALLED_JIFFIES 5
++
+ static void tick_sched_do_timer(struct tick_sched *ts, ktime_t now)
+ {
+ 	int cpu = smp_processor_id();
+@@ -175,6 +177,21 @@ static void tick_sched_do_timer(struct t
+ 	if (tick_do_timer_cpu == cpu)
+ 		tick_do_update_jiffies64(now);
+ 
++	/*
++	 * If jiffies update stalled for too long (timekeeper in stop_machine()
++	 * or VMEXIT'ed for several msecs), force an update.
++	 */
++	if (ts->last_tick_jiffies != jiffies) {
++		ts->stalled_jiffies = 0;
++		ts->last_tick_jiffies = READ_ONCE(jiffies);
++	} else {
++		if (++ts->stalled_jiffies == MAX_STALLED_JIFFIES) {
++			tick_do_update_jiffies64(now);
++			ts->stalled_jiffies = 0;
++			ts->last_tick_jiffies = READ_ONCE(jiffies);
++		}
++	}
++
+ 	if (ts->inidle)
+ 		ts->got_idle_tick = 1;
+ }
+--- a/kernel/time/tick-sched.h
++++ b/kernel/time/tick-sched.h
+@@ -49,6 +49,8 @@ enum tick_nohz_mode {
+  * @timer_expires_base:	Base time clock monotonic for @timer_expires
+  * @next_timer:		Expiry time of next expiring timer for debugging purpose only
+  * @tick_dep_mask:	Tick dependency mask - is set, if someone needs the tick
++ * @last_tick_jiffies:	Value of jiffies seen on last tick
++ * @stalled_jiffies:	Number of stalled jiffies detected across ticks
+  */
+ struct tick_sched {
+ 	struct hrtimer			sched_timer;
+@@ -77,6 +79,8 @@ struct tick_sched {
+ 	u64				next_timer;
+ 	ktime_t				idle_expires;
+ 	atomic_t			tick_dep_mask;
++	unsigned long			last_tick_jiffies;
++	unsigned int			stalled_jiffies;
+ };
+ 
+ extern struct tick_sched *tick_get_tick_sched(int cpu);
 
 
