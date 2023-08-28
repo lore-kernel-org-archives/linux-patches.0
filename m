@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF5011C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC7AC433C8;
-	Mon, 28 Aug 2023 10:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472211C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:26:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C55C433C7;
+	Mon, 28 Aug 2023 10:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218410;
-	bh=pSociHBazhWxV4kc7GWjSC87dJDCOnxiyT9mH9d4gwQ=;
+	s=korg; t=1693218413;
+	bh=Nz4q5Iv5i/e8E1fJ7GTQfvU3fjBKzQwQ9WhZBq2UVYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kctfXpcpdaTt9vEclKIITeXgAzLEupO7tkBaYeiApV9/xIoelHY47zMU6oezZVKRE
-	 R+W3VuSe3vBQyyHppGOeexeBOG7GOZ41jJZNmOjlHOmTwWVmZ2gY6tIpSt74qfb2tq
-	 qAOPMWAON8GxJGMfe1MurXKjZrNRTXHsnmIcqLx4=
+	b=LhHydN6GvFi1h79op+kelUqC5QbAVN+qxPH8O8G4BY/M61Wp1b1OfpH843hNDygPy
+	 jgwMmmZAtB2J16H11Lhp+4ejhhFZRKTwOPwGC82WeNtS5yKNYHGVGDAB3HJ+p7mCi6
+	 SM2l+Q7ryU1Fttim1s3DMYpPyaccxTfYM8yJz0l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 4.19 077/129] net: xfrm: Amend XFRMA_SEC_CTX nla_policy structure
-Date: Mon, 28 Aug 2023 12:12:51 +0200
-Message-ID: <20230828101156.178780909@linuxfoundation.org>
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 078/129] net: phy: broadcom: stub c45 read/write for 54810
+Date: Mon, 28 Aug 2023 12:12:52 +0200
+Message-ID: <20230828101156.208596742@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -39,43 +40,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit d1e0e61d617ba17aa516db707aa871387566bbf7 upstream.
+commit 096516d092d54604d590827d05b1022c8f326639 upstream.
 
-According to all consumers code of attrs[XFRMA_SEC_CTX], like
+The 54810 does not support c45. The mmd_phy_indirect accesses return
+arbirtary values leading to odd behavior like saying it supports EEE
+when it doesn't. We also see that reading/writing these non-existent
+MMD registers leads to phy instability in some cases.
 
-* verify_sec_ctx_len(), convert to xfrm_user_sec_ctx*
-* xfrm_state_construct(), call security_xfrm_state_alloc whose prototype
-is int security_xfrm_state_alloc(.., struct xfrm_user_sec_ctx *sec_ctx);
-* copy_from_user_sec_ctx(), convert to xfrm_user_sec_ctx *
-...
-
-It seems that the expected parsing result for XFRMA_SEC_CTX should be
-structure xfrm_user_sec_ctx, and the current xfrm_sec_ctx is confusing
-and misleading (Luckily, they happen to have same size 8 bytes).
-
-This commit amend the policy structure to xfrm_user_sec_ctx to avoid
-ambiguity.
-
-Fixes: cf5cb79f6946 ("[XFRM] netlink: Establish an attribute policy")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: b14995ac2527 ("net: phy: broadcom: Add BCM54810 PHY entry")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/1691901708-28650-1-git-send-email-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[florian: resolved conflicts in 4.19]
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/broadcom.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2582,7 +2582,7 @@ static const struct nla_policy xfrma_pol
- 	[XFRMA_ALG_COMP]	= { .len = sizeof(struct xfrm_algo) },
- 	[XFRMA_ENCAP]		= { .len = sizeof(struct xfrm_encap_tmpl) },
- 	[XFRMA_TMPL]		= { .len = sizeof(struct xfrm_user_tmpl) },
--	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_sec_ctx) },
-+	[XFRMA_SEC_CTX]		= { .len = sizeof(struct xfrm_user_sec_ctx) },
- 	[XFRMA_LTIME_VAL]	= { .len = sizeof(struct xfrm_lifetime_cur) },
- 	[XFRMA_REPLAY_VAL]	= { .len = sizeof(struct xfrm_replay_state) },
- 	[XFRMA_REPLAY_THRESH]	= { .type = NLA_U32 },
+--- a/drivers/net/phy/broadcom.c
++++ b/drivers/net/phy/broadcom.c
+@@ -421,6 +421,17 @@ static int bcm5482_read_status(struct ph
+ 	return err;
+ }
+ 
++static int bcm54810_read_mmd(struct phy_device *phydev, int devnum, u16 regnum)
++{
++	return -EOPNOTSUPP;
++}
++
++static int bcm54810_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
++			      u16 val)
++{
++	return -EOPNOTSUPP;
++}
++
+ static int bcm5481_config_aneg(struct phy_device *phydev)
+ {
+ 	struct device_node *np = phydev->mdio.dev.of_node;
+@@ -684,6 +695,8 @@ static struct phy_driver broadcom_driver
+ 	.name           = "Broadcom BCM54810",
+ 	.features       = PHY_GBIT_FEATURES,
+ 	.flags          = PHY_HAS_INTERRUPT,
++	.read_mmd	= bcm54810_read_mmd,
++	.write_mmd	= bcm54810_write_mmd,
+ 	.config_init    = bcm54xx_config_init,
+ 	.config_aneg    = bcm5481_config_aneg,
+ 	.ack_interrupt  = bcm_phy_ack_intr,
 
 
