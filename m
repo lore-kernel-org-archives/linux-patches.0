@@ -1,148 +1,78 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A3411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:17 +0000 (UTC)
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-d74711fd72eso3651427276.3
-        for <patches@lists.linux.dev>; Mon, 28 Aug 2023 03:49:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1693219757; x=1693824557;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v7MHrwaqRQcEpiQUM63plXyMym72xBHnTiBqMbx7wZw=;
-        b=AMPWN1b/UHqT75qKL7kIoe84TxjmLd12ffSET1Hw3zrmkOFwbRpVrKJO0Cmu7vKTqw
-         jfM29FhtKEndG/pyh+fyXScGgQ140AUwIHMKysjW4X30MuZL6l1pHcgbC8sMj6pGTcQg
-         2Ri1T9Ff9aeccFLlJ7RFWqFTXHKVbYFBdd+Z/df0DE/2fxuDdKIYf27868XQW/VMM1TO
-         zbX6u8EEd7oD6xVBxHDRTMcxMHou4uyuSZBG7YFDP7dVo5k0nGnqDwM3WA9RLTHJp56j
-         4lJ4E+8lhveVrs7QXiPHz6Sord4FCuGSmK8HAEvJRIQb9QAYu1p22PwiEw3zNHdwAPIp
-         DUJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693219757; x=1693824557;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v7MHrwaqRQcEpiQUM63plXyMym72xBHnTiBqMbx7wZw=;
-        b=H0Lw1iRc8iSYPkn4/YGS1lrBlkmASjmVG8Ks8Ys1PRUE6NxT6mRMDp7Z3YxRjEBcuf
-         5F/OMXndj8HaLIpCy3O06yULNqvOGTP5BjHAYrGI15nWW+6gB8uJrAFU7bOZxVruySXw
-         u6+v8OxlFNwkoRK1Odmqi79TyisHzL94XKEvk3tl0hUe5RKNknLS1Ivm1i9fkIRmxRDi
-         +sWLGBqvfhdokJ2n5KOcIPf4hLFHvcYad5rggEfK6Vkg95zmWBEUhLeqGKFGJYsd37P0
-         UF9XfkGS+EMFx9zayFN7vJI7N+YpgKfZbJ48dULTBJC0A08AJtNUirPOP5HfV+qe1rnM
-         v2Lw==
-X-Gm-Message-State: AOJu0Yxkt0Sz/V+rU+P1uznNghEyat8o4krca/261aSzKdjCqsVQePXk
-	ei8h3jPhbey7fghGMxNG8hjEKeM4IOqUPmI=
-X-Google-Smtp-Source: AGHT+IG68V4CQ3Yh0kd1RgiLluj29FsB8LO+ZlUEBBe9LgdPfKf4r19liQXmPNdRsJc4iZq4rzAmSeqTtzQT/Do=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a25:d6c7:0:b0:d4b:df05:3500 with SMTP id
- n190-20020a25d6c7000000b00d4bdf053500mr875605ybg.11.1693219756887; Mon, 28
- Aug 2023 03:49:16 -0700 (PDT)
-Date: Mon, 28 Aug 2023 10:48:06 +0000
-In-Reply-To: <20230828104807.1581592-1-aliceryhl@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3500311C8E
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACC1C433C7;
+	Mon, 28 Aug 2023 10:49:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1693219759;
+	bh=Qc6QcdYYI5N//YXgaYPGF4H0UW0gmGWoNUPKJerJEWk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=xDepYPzXZNoBra0glxFwwAbIG5QrOmMDsB8uB25lD0ACO/VQlpa+3gwEbjyhGB5iR
+	 TdAFMTL0t0PSazN1SIzElkeiSgvtVk+jJKuKxHSYqhwLUnAeiq6alBSnTIBAIQ3HhE
+	 EZG5cksrDffZ4MNMOogTMa5djo7BlNkxRzfJNNSM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Anusha Srivatsa <anusha.srivatsa@intel.com>,
+	Manasi Navare <manasi.d.navare@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.10 61/84] drm/display/dp: Fix the DP DSC Receiver cap size
+Date: Mon, 28 Aug 2023 12:14:18 +0200
+Message-ID: <20230828101151.327138151@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
+References: <20230828101149.146126827@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230828104807.1581592-1-aliceryhl@google.com>
-X-Mailer: git-send-email 2.42.0.rc1.204.g551eb34607-goog
-Message-ID: <20230828104807.1581592-7-aliceryhl@google.com>
-Subject: [PATCH v4 6/7] rust: workqueue: add `try_spawn` helper method
-From: Alice Ryhl <aliceryhl@google.com>
-To: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>, 
-	Miguel Ojeda <ojeda@kernel.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, 
-	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Martin Rodriguez Reboredo <yakoyoku@gmail.com>, 
-	Andreas Hindborg <nmi@metaspace.dk>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-This adds a convenience method that lets you spawn a closure for
-execution on a workqueue. This will be the most convenient way to use
-workqueues, but it is fallible because it needs to allocate memory.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Co-developed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Andreas Hindborg (Samsung) <nmi@metaspace.dk>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+------------------
+
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+
+commit 5ad1ab30ac0809d2963ddcf39ac34317a24a2f17 upstream.
+
+DP DSC Receiver Capabilities are exposed via DPCD 60h-6Fh.
+Fix the DSC RECEIVER CAP SIZE accordingly.
+
+Fixes: ffddc4363c28 ("drm/dp: Add DP DSC DPCD receiver capability size define and missing SHIFT")
+Cc: Anusha Srivatsa <anusha.srivatsa@intel.com>
+Cc: Manasi Navare <manasi.d.navare@intel.com>
+Cc: <stable@vger.kernel.org> # v5.0+
+
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230818044436.177806-1-ankit.k.nautiyal@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-v3 -> v4:
- * Use new `new_work!` macro.
+ include/drm/drm_dp_helper.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- rust/kernel/workqueue.rs | 43 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+--- a/include/drm/drm_dp_helper.h
++++ b/include/drm/drm_dp_helper.h
+@@ -1182,7 +1182,7 @@ u8 drm_dp_get_adjust_request_post_cursor
+ 
+ #define DP_BRANCH_OUI_HEADER_SIZE	0xc
+ #define DP_RECEIVER_CAP_SIZE		0xf
+-#define DP_DSC_RECEIVER_CAP_SIZE        0xf
++#define DP_DSC_RECEIVER_CAP_SIZE        0x10 /* DSC Capabilities 0x60 through 0x6F */
+ #define EDP_PSR_RECEIVER_CAP_SIZE	2
+ #define EDP_DISPLAY_CTL_CAP_SIZE	3
+ 
 
-diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-index c1334c48b96b..40ccc53f6e93 100644
---- a/rust/kernel/workqueue.rs
-+++ b/rust/kernel/workqueue.rs
-@@ -29,6 +29,7 @@
- //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
- 
- use crate::{bindings, prelude::*, sync::Arc, sync::LockClassKey, types::Opaque};
-+use alloc::alloc::AllocError;
- use alloc::boxed::Box;
- use core::marker::PhantomData;
- use core::pin::Pin;
-@@ -96,6 +97,44 @@ pub fn enqueue<W, const ID: u64>(&self, w: W) -> W::EnqueueOutput
-             })
-         }
-     }
-+
-+    /// Tries to spawn the given function or closure as a work item.
-+    ///
-+    /// This method can fail because it allocates memory to store the work item.
-+    pub fn try_spawn<T: 'static + Send + FnOnce()>(&self, func: T) -> Result<(), AllocError> {
-+        let init = pin_init!(ClosureWork {
-+            work <- new_work!("Queue::try_spawn"),
-+            func: Some(func),
-+        });
-+
-+        self.enqueue(Box::pin_init(init).map_err(|_| AllocError)?);
-+        Ok(())
-+    }
-+}
-+
-+/// A helper type used in `try_spawn`.
-+#[pin_data]
-+struct ClosureWork<T> {
-+    #[pin]
-+    work: Work<ClosureWork<T>>,
-+    func: Option<T>,
-+}
-+
-+impl<T> ClosureWork<T> {
-+    fn project(self: Pin<&mut Self>) -> &mut Option<T> {
-+        // SAFETY: The `func` field is not structurally pinned.
-+        unsafe { &mut self.get_unchecked_mut().func }
-+    }
-+}
-+
-+impl<T: FnOnce()> WorkItem for ClosureWork<T> {
-+    type Pointer = Pin<Box<Self>>;
-+
-+    fn run(mut this: Pin<Box<Self>>) {
-+        if let Some(func) = this.as_mut().project().take() {
-+            (func)()
-+        }
-+    }
- }
- 
- /// A raw work item.
-@@ -365,6 +404,10 @@ unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workqueue::Work<$work_typ
-     )*};
- }
- 
-+impl_has_work! {
-+    impl<T> HasWork<Self> for ClosureWork<T> { self.work }
-+}
-+
- unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Arc<T>
- where
-     T: WorkItem<ID, Pointer = Self>,
--- 
-2.42.0.rc1.204.g551eb34607-goog
 
