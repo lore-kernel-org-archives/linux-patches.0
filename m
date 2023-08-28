@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBFA11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05D0C433C7;
-	Mon, 28 Aug 2023 10:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D6D11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:25:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B42CC433C8;
+	Mon, 28 Aug 2023 10:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218352;
-	bh=Soocc7gblpZ6yiVgq0ftqSXH8V9t1CZpkJX+oCj8fxQ=;
+	s=korg; t=1693218355;
+	bh=OuP7usjN01nD5FMZQ+FArYInrfWUtyaMB40L6N9aKds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S17EwmmuKQ/m8B1Uq9sKxT8b9i+LDk+CZS7Ys7FH08KnN1W2RXzrvfPV/9jFFqeQU
-	 6O5hYA5SR7+v6GGw//klXJZhNNArarembvuxAdhM/AaBnu9XWB+1An07nn9wbcDVrO
-	 PYSfhCG3a1mWbq5COJ3BQiINsLqFFC0urUttETKQ=
+	b=wjV0hxhkUDlbEwaHiihkuW8Zvo0gsnt/NHt7u9/5c00hkd4GXhG5cwAywHDzhirnf
+	 oCAlUtN/99OKNW/hJxSgBuWbr1JATxVybHDhL1x8UQ7geCeqv3HEqRzLad4L8tBuv3
+	 KSZrVkohQLawgtTy0rvDq4jtXuUtFmSipuDKG6Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@c-s.fr>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 028/129] powerpc/mm: dump block address translation on book3s/32
-Date: Mon, 28 Aug 2023 12:12:02 +0200
-Message-ID: <20230828101154.108070868@linuxfoundation.org>
+Subject: [PATCH 4.19 029/129] powerpc: Move page table dump files in a dedicated subdirectory
+Date: Mon, 28 Aug 2023 12:12:03 +0200
+Message-ID: <20230828101154.158524758@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -42,252 +42,171 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@c-s.fr>
 
-[ Upstream commit 7c91efce1608325634494b25ff6491320208e457 ]
+[ Upstream commit e66c3209c7fd17209ccc4cbbee8b1b1bd5c438dd ]
 
-This patch adds a debugfs file to dump block address translation:
+This patch moves the files related to page table dump in a
+dedicated subdirectory.
 
-~# cat /sys/kernel/debug/powerpc/block_address_translation
----[ Instruction Block Address Translations ]---
-0:         -
-1:         -
-2: 0xc0000000-0xcfffffff 0x00000000 Kernel EXEC coherent
-3: 0xd0000000-0xdfffffff 0x10000000 Kernel EXEC coherent
-4:         -
-5:         -
-6:         -
-7:         -
-
----[ Data Block Address Translations ]---
-0:         -
-1:         -
-2: 0xc0000000-0xcfffffff 0x00000000 Kernel RW coherent
-3: 0xd0000000-0xdfffffff 0x10000000 Kernel RW coherent
-4:         -
-5:         -
-6:         -
-7:         -
+The purpose is to clean a bit arch/powerpc/mm by regrouping
+multiple files handling a dedicated function.
 
 Signed-off-by: Christophe Leroy <christophe.leroy@c-s.fr>
-
+[mpe: Shorten the file names while we're at it]
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Stable-dep-of: 66b2ca086210 ("powerpc/64s/radix: Fix soft dirty tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/32/mmu-hash.h |   4 +
- arch/powerpc/mm/Makefile                      |   2 +-
- arch/powerpc/mm/dump_bats.c                   | 173 ++++++++++++++++++
- 3 files changed, 178 insertions(+), 1 deletion(-)
- create mode 100644 arch/powerpc/mm/dump_bats.c
+ arch/powerpc/Kconfig.debug                             |  4 ----
+ arch/powerpc/mm/Makefile                               | 10 +---------
+ .../mm/{dump_linuxpagetables-8xx.c => ptdump/8xx.c}    |  2 +-
+ arch/powerpc/mm/ptdump/Makefile                        |  9 +++++++++
+ arch/powerpc/mm/{dump_bats.c => ptdump/bats.c}         |  0
+ .../book3s64.c}                                        |  2 +-
+ .../{dump_hashpagetable.c => ptdump/hashpagetable.c}   |  0
+ .../mm/{dump_linuxpagetables.c => ptdump/ptdump.c}     |  2 +-
+ .../mm/{dump_linuxpagetables.h => ptdump/ptdump.h}     |  0
+ arch/powerpc/mm/{dump_sr.c => ptdump/segment_regs.c}   |  0
+ .../shared.c}                                          |  2 +-
+ 11 files changed, 14 insertions(+), 17 deletions(-)
+ rename arch/powerpc/mm/{dump_linuxpagetables-8xx.c => ptdump/8xx.c} (97%)
+ create mode 100644 arch/powerpc/mm/ptdump/Makefile
+ rename arch/powerpc/mm/{dump_bats.c => ptdump/bats.c} (100%)
+ rename arch/powerpc/mm/{dump_linuxpagetables-book3s64.c => ptdump/book3s64.c} (98%)
+ rename arch/powerpc/mm/{dump_hashpagetable.c => ptdump/hashpagetable.c} (100%)
+ rename arch/powerpc/mm/{dump_linuxpagetables.c => ptdump/ptdump.c} (99%)
+ rename arch/powerpc/mm/{dump_linuxpagetables.h => ptdump/ptdump.h} (100%)
+ rename arch/powerpc/mm/{dump_sr.c => ptdump/segment_regs.c} (100%)
+ rename arch/powerpc/mm/{dump_linuxpagetables-generic.c => ptdump/shared.c} (97%)
 
-diff --git a/arch/powerpc/include/asm/book3s/32/mmu-hash.h b/arch/powerpc/include/asm/book3s/32/mmu-hash.h
-index 5bd26c218b94f..958b18cecc96a 100644
---- a/arch/powerpc/include/asm/book3s/32/mmu-hash.h
-+++ b/arch/powerpc/include/asm/book3s/32/mmu-hash.h
-@@ -34,8 +34,12 @@
- #define BAT_PHYS_ADDR(x) ((u32)((x & 0x00000000fffe0000ULL) | \
- 				((x & 0x0000000e00000000ULL) >> 24) | \
- 				((x & 0x0000000100000000ULL) >> 30)))
-+#define PHYS_BAT_ADDR(x) (((u64)(x) & 0x00000000fffe0000ULL) | \
-+			  (((u64)(x) << 24) & 0x0000000e00000000ULL) | \
-+			  (((u64)(x) << 30) & 0x0000000100000000ULL))
- #else
- #define BAT_PHYS_ADDR(x) (x)
-+#define PHYS_BAT_ADDR(x) ((x) & 0xfffe0000)
- #endif
+diff --git a/arch/powerpc/Kconfig.debug b/arch/powerpc/Kconfig.debug
+index 923b3b794d13f..1f54bb93b5cc7 100644
+--- a/arch/powerpc/Kconfig.debug
++++ b/arch/powerpc/Kconfig.debug
+@@ -368,10 +368,6 @@ config PPC_PTDUMP
  
- struct ppc_bat {
+ 	  If you are unsure, say N.
+ 
+-config PPC_HTDUMP
+-	def_bool y
+-	depends on PPC_PTDUMP && PPC_BOOK3S_64
+-
+ config PPC_FAST_ENDIAN_SWITCH
+ 	bool "Deprecated fast endian-switch syscall"
+         depends on DEBUG_KERNEL && PPC_BOOK3S_64
 diff --git a/arch/powerpc/mm/Makefile b/arch/powerpc/mm/Makefile
-index d2784730c0e5d..8ace67f002752 100644
+index 8ace67f002752..d4648a1e6e6c1 100644
 --- a/arch/powerpc/mm/Makefile
 +++ b/arch/powerpc/mm/Makefile
-@@ -47,7 +47,7 @@ ifdef CONFIG_PPC_PTDUMP
- obj-$(CONFIG_4xx)		+= dump_linuxpagetables-generic.o
- obj-$(CONFIG_PPC_8xx)		+= dump_linuxpagetables-8xx.o
- obj-$(CONFIG_PPC_BOOK3E_MMU)	+= dump_linuxpagetables-generic.o
--obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o dump_sr.o
-+obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o dump_bats.o dump_sr.o
- obj-$(CONFIG_PPC_BOOK3S_64)	+= dump_linuxpagetables-book3s64.o
- endif
- obj-$(CONFIG_PPC_HTDUMP)	+= dump_hashpagetable.o
-diff --git a/arch/powerpc/mm/dump_bats.c b/arch/powerpc/mm/dump_bats.c
+@@ -42,13 +42,5 @@ obj-$(CONFIG_NOT_COHERENT_CACHE) += dma-noncoherent.o
+ obj-$(CONFIG_HIGHMEM)		+= highmem.o
+ obj-$(CONFIG_PPC_COPRO_BASE)	+= copro_fault.o
+ obj-$(CONFIG_SPAPR_TCE_IOMMU)	+= mmu_context_iommu.o
+-obj-$(CONFIG_PPC_PTDUMP)	+= dump_linuxpagetables.o
+-ifdef CONFIG_PPC_PTDUMP
+-obj-$(CONFIG_4xx)		+= dump_linuxpagetables-generic.o
+-obj-$(CONFIG_PPC_8xx)		+= dump_linuxpagetables-8xx.o
+-obj-$(CONFIG_PPC_BOOK3E_MMU)	+= dump_linuxpagetables-generic.o
+-obj-$(CONFIG_PPC_BOOK3S_32)	+= dump_linuxpagetables-generic.o dump_bats.o dump_sr.o
+-obj-$(CONFIG_PPC_BOOK3S_64)	+= dump_linuxpagetables-book3s64.o
+-endif
+-obj-$(CONFIG_PPC_HTDUMP)	+= dump_hashpagetable.o
++obj-$(CONFIG_PPC_PTDUMP)	+= ptdump/
+ obj-$(CONFIG_PPC_MEM_KEYS)	+= pkeys.o
+diff --git a/arch/powerpc/mm/dump_linuxpagetables-8xx.c b/arch/powerpc/mm/ptdump/8xx.c
+similarity index 97%
+rename from arch/powerpc/mm/dump_linuxpagetables-8xx.c
+rename to arch/powerpc/mm/ptdump/8xx.c
+index 33f52a97975b4..80b4f73f7fdc2 100644
+--- a/arch/powerpc/mm/dump_linuxpagetables-8xx.c
++++ b/arch/powerpc/mm/ptdump/8xx.c
+@@ -7,7 +7,7 @@
+ #include <linux/kernel.h>
+ #include <asm/pgtable.h>
+ 
+-#include "dump_linuxpagetables.h"
++#include "ptdump.h"
+ 
+ static const struct flag_info flag_array[] = {
+ 	{
+diff --git a/arch/powerpc/mm/ptdump/Makefile b/arch/powerpc/mm/ptdump/Makefile
 new file mode 100644
-index 0000000000000..a0d23e96e841a
+index 0000000000000..712762be3cb11
 --- /dev/null
-+++ b/arch/powerpc/mm/dump_bats.c
-@@ -0,0 +1,173 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * Copyright 2018, Christophe Leroy CS S.I.
-+ * <christophe.leroy@c-s.fr>
-+ *
-+ * This dumps the content of BATS
-+ */
++++ b/arch/powerpc/mm/ptdump/Makefile
+@@ -0,0 +1,9 @@
++# SPDX-License-Identifier: GPL-2.0
 +
-+#include <asm/debugfs.h>
-+#include <asm/pgtable.h>
-+#include <asm/cpu_has_feature.h>
++obj-y	+= ptdump.o
 +
-+static char *pp_601(int k, int pp)
-+{
-+	if (pp == 0)
-+		return k ? "NA" : "RWX";
-+	if (pp == 1)
-+		return k ? "ROX" : "RWX";
-+	if (pp == 2)
-+		return k ? "RWX" : "RWX";
-+	return k ? "ROX" : "ROX";
-+}
-+
-+static void bat_show_601(struct seq_file *m, int idx, u32 lower, u32 upper)
-+{
-+	u32 blpi = upper & 0xfffe0000;
-+	u32 k = (upper >> 2) & 3;
-+	u32 pp = upper & 3;
-+	phys_addr_t pbn = PHYS_BAT_ADDR(lower);
-+	u32 bsm = lower & 0x3ff;
-+	u32 size = (bsm + 1) << 17;
-+
-+	seq_printf(m, "%d: ", idx);
-+	if (!(lower & 0x40)) {
-+		seq_puts(m, "        -\n");
-+		return;
-+	}
-+
-+	seq_printf(m, "0x%08x-0x%08x ", blpi, blpi + size - 1);
-+#ifdef CONFIG_PHYS_64BIT
-+	seq_printf(m, "0x%016llx ", pbn);
-+#else
-+	seq_printf(m, "0x%08x ", pbn);
-+#endif
-+
-+	seq_printf(m, "Kernel %s User %s", pp_601(k & 2, pp), pp_601(k & 1, pp));
-+
-+	if (lower & _PAGE_WRITETHRU)
-+		seq_puts(m, "write through ");
-+	if (lower & _PAGE_NO_CACHE)
-+		seq_puts(m, "no cache ");
-+	if (lower & _PAGE_COHERENT)
-+		seq_puts(m, "coherent ");
-+	seq_puts(m, "\n");
-+}
-+
-+#define BAT_SHOW_601(_m, _n, _l, _u) bat_show_601(_m, _n, mfspr(_l), mfspr(_u))
-+
-+static int bats_show_601(struct seq_file *m, void *v)
-+{
-+	seq_puts(m, "---[ Block Address Translation ]---\n");
-+
-+	BAT_SHOW_601(m, 0, SPRN_IBAT0L, SPRN_IBAT0U);
-+	BAT_SHOW_601(m, 1, SPRN_IBAT1L, SPRN_IBAT1U);
-+	BAT_SHOW_601(m, 2, SPRN_IBAT2L, SPRN_IBAT2U);
-+	BAT_SHOW_601(m, 3, SPRN_IBAT3L, SPRN_IBAT3U);
-+
-+	return 0;
-+}
-+
-+static void bat_show_603(struct seq_file *m, int idx, u32 lower, u32 upper, bool is_d)
-+{
-+	u32 bepi = upper & 0xfffe0000;
-+	u32 bl = (upper >> 2) & 0x7ff;
-+	u32 k = upper & 3;
-+	phys_addr_t brpn = PHYS_BAT_ADDR(lower);
-+	u32 size = (bl + 1) << 17;
-+
-+	seq_printf(m, "%d: ", idx);
-+	if (k == 0) {
-+		seq_puts(m, "        -\n");
-+		return;
-+	}
-+
-+	seq_printf(m, "0x%08x-0x%08x ", bepi, bepi + size - 1);
-+#ifdef CONFIG_PHYS_64BIT
-+	seq_printf(m, "0x%016llx ", brpn);
-+#else
-+	seq_printf(m, "0x%08x ", brpn);
-+#endif
-+
-+	if (k == 1)
-+		seq_puts(m, "User ");
-+	else if (k == 2)
-+		seq_puts(m, "Kernel ");
-+	else
-+		seq_puts(m, "Kernel/User ");
-+
-+	if (lower & BPP_RX)
-+		seq_puts(m, is_d ? "RO " : "EXEC ");
-+	else if (lower & BPP_RW)
-+		seq_puts(m, is_d ? "RW " : "EXEC ");
-+	else
-+		seq_puts(m, is_d ? "NA " : "NX   ");
-+
-+	if (lower & _PAGE_WRITETHRU)
-+		seq_puts(m, "write through ");
-+	if (lower & _PAGE_NO_CACHE)
-+		seq_puts(m, "no cache ");
-+	if (lower & _PAGE_COHERENT)
-+		seq_puts(m, "coherent ");
-+	if (lower & _PAGE_GUARDED)
-+		seq_puts(m, "guarded ");
-+	seq_puts(m, "\n");
-+}
-+
-+#define BAT_SHOW_603(_m, _n, _l, _u, _d) bat_show_603(_m, _n, mfspr(_l), mfspr(_u), _d)
-+
-+static int bats_show_603(struct seq_file *m, void *v)
-+{
-+	seq_puts(m, "---[ Instruction Block Address Translation ]---\n");
-+
-+	BAT_SHOW_603(m, 0, SPRN_IBAT0L, SPRN_IBAT0U, false);
-+	BAT_SHOW_603(m, 1, SPRN_IBAT1L, SPRN_IBAT1U, false);
-+	BAT_SHOW_603(m, 2, SPRN_IBAT2L, SPRN_IBAT2U, false);
-+	BAT_SHOW_603(m, 3, SPRN_IBAT3L, SPRN_IBAT3U, false);
-+	if (mmu_has_feature(MMU_FTR_USE_HIGH_BATS)) {
-+		BAT_SHOW_603(m, 4, SPRN_IBAT4L, SPRN_IBAT4U, false);
-+		BAT_SHOW_603(m, 5, SPRN_IBAT5L, SPRN_IBAT5U, false);
-+		BAT_SHOW_603(m, 6, SPRN_IBAT6L, SPRN_IBAT6U, false);
-+		BAT_SHOW_603(m, 7, SPRN_IBAT7L, SPRN_IBAT7U, false);
-+	}
-+
-+	seq_puts(m, "\n---[ Data Block Address Translation ]---\n");
-+
-+	BAT_SHOW_603(m, 0, SPRN_DBAT0L, SPRN_DBAT0U, true);
-+	BAT_SHOW_603(m, 1, SPRN_DBAT1L, SPRN_DBAT1U, true);
-+	BAT_SHOW_603(m, 2, SPRN_DBAT2L, SPRN_DBAT2U, true);
-+	BAT_SHOW_603(m, 3, SPRN_DBAT3L, SPRN_DBAT3U, true);
-+	if (mmu_has_feature(MMU_FTR_USE_HIGH_BATS)) {
-+		BAT_SHOW_603(m, 4, SPRN_DBAT4L, SPRN_DBAT4U, true);
-+		BAT_SHOW_603(m, 5, SPRN_DBAT5L, SPRN_DBAT5U, true);
-+		BAT_SHOW_603(m, 6, SPRN_DBAT6L, SPRN_DBAT6U, true);
-+		BAT_SHOW_603(m, 7, SPRN_DBAT7L, SPRN_DBAT7U, true);
-+	}
-+
-+	return 0;
-+}
-+
-+static int bats_open(struct inode *inode, struct file *file)
-+{
-+	if (cpu_has_feature(CPU_FTR_601))
-+		return single_open(file, bats_show_601, NULL);
-+
-+	return single_open(file, bats_show_603, NULL);
-+}
-+
-+static const struct file_operations bats_fops = {
-+	.open		= bats_open,
-+	.read		= seq_read,
-+	.llseek		= seq_lseek,
-+	.release	= single_release,
-+};
-+
-+static int __init bats_init(void)
-+{
-+	struct dentry *debugfs_file;
-+
-+	debugfs_file = debugfs_create_file("block_address_translation", 0400,
-+					   powerpc_debugfs_root, NULL, &bats_fops);
-+	return debugfs_file ? 0 : -ENOMEM;
-+}
-+device_initcall(bats_init);
++obj-$(CONFIG_4xx)		+= shared.o
++obj-$(CONFIG_PPC_8xx)		+= 8xx.o
++obj-$(CONFIG_PPC_BOOK3E_MMU)	+= shared.o
++obj-$(CONFIG_PPC_BOOK3S_32)	+= shared.o bats.o segment_regs.o
++obj-$(CONFIG_PPC_BOOK3S_64)	+= book3s64.o hashpagetable.o
+diff --git a/arch/powerpc/mm/dump_bats.c b/arch/powerpc/mm/ptdump/bats.c
+similarity index 100%
+rename from arch/powerpc/mm/dump_bats.c
+rename to arch/powerpc/mm/ptdump/bats.c
+diff --git a/arch/powerpc/mm/dump_linuxpagetables-book3s64.c b/arch/powerpc/mm/ptdump/book3s64.c
+similarity index 98%
+rename from arch/powerpc/mm/dump_linuxpagetables-book3s64.c
+rename to arch/powerpc/mm/ptdump/book3s64.c
+index a637e612b2055..0bce5b85d0112 100644
+--- a/arch/powerpc/mm/dump_linuxpagetables-book3s64.c
++++ b/arch/powerpc/mm/ptdump/book3s64.c
+@@ -7,7 +7,7 @@
+ #include <linux/kernel.h>
+ #include <asm/pgtable.h>
+ 
+-#include "dump_linuxpagetables.h"
++#include "ptdump.h"
+ 
+ static const struct flag_info flag_array[] = {
+ 	{
+diff --git a/arch/powerpc/mm/dump_hashpagetable.c b/arch/powerpc/mm/ptdump/hashpagetable.c
+similarity index 100%
+rename from arch/powerpc/mm/dump_hashpagetable.c
+rename to arch/powerpc/mm/ptdump/hashpagetable.c
+diff --git a/arch/powerpc/mm/dump_linuxpagetables.c b/arch/powerpc/mm/ptdump/ptdump.c
+similarity index 99%
+rename from arch/powerpc/mm/dump_linuxpagetables.c
+rename to arch/powerpc/mm/ptdump/ptdump.c
+index 6aa41669ac1ae..76be98988578d 100644
+--- a/arch/powerpc/mm/dump_linuxpagetables.c
++++ b/arch/powerpc/mm/ptdump/ptdump.c
+@@ -28,7 +28,7 @@
+ #include <asm/page.h>
+ #include <asm/pgalloc.h>
+ 
+-#include "dump_linuxpagetables.h"
++#include "ptdump.h"
+ 
+ #ifdef CONFIG_PPC32
+ #define KERN_VIRT_START	0
+diff --git a/arch/powerpc/mm/dump_linuxpagetables.h b/arch/powerpc/mm/ptdump/ptdump.h
+similarity index 100%
+rename from arch/powerpc/mm/dump_linuxpagetables.h
+rename to arch/powerpc/mm/ptdump/ptdump.h
+diff --git a/arch/powerpc/mm/dump_sr.c b/arch/powerpc/mm/ptdump/segment_regs.c
+similarity index 100%
+rename from arch/powerpc/mm/dump_sr.c
+rename to arch/powerpc/mm/ptdump/segment_regs.c
+diff --git a/arch/powerpc/mm/dump_linuxpagetables-generic.c b/arch/powerpc/mm/ptdump/shared.c
+similarity index 97%
+rename from arch/powerpc/mm/dump_linuxpagetables-generic.c
+rename to arch/powerpc/mm/ptdump/shared.c
+index fed6923bcb46e..1cda3d91c6c26 100644
+--- a/arch/powerpc/mm/dump_linuxpagetables-generic.c
++++ b/arch/powerpc/mm/ptdump/shared.c
+@@ -7,7 +7,7 @@
+ #include <linux/kernel.h>
+ #include <asm/pgtable.h>
+ 
+-#include "dump_linuxpagetables.h"
++#include "ptdump.h"
+ 
+ static const struct flag_info flag_array[] = {
+ 	{
 -- 
 2.40.1
 
