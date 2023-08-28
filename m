@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB968BE0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3012EC433C8;
-	Mon, 28 Aug 2023 10:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D75A94D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC39C433C7;
+	Mon, 28 Aug 2023 10:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218010;
-	bh=mUC4K+aiiXUm+VCZxoHOrunNzQgFyjiS94ygmkdRsnc=;
+	s=korg; t=1693218013;
+	bh=dGE/1pNTSjdA7j0z9Om04BXIz863Pk1bqJn8Z7YIECI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKdBFakYhWIXmrniT4+DtDuisA/SXAzzZy1KY29HUTRJOVu7atWGSxOiedwMxCS9c
-	 XBpsjFXTFi8yIScSVxNZ2l3AaV5nikUnGBIyl09Rydc4Vz+Uw2rSWLnIzUzQRuRxf8
-	 2vSvmR0Ko6qhwkv4zyHaxbRMPWRlItMVSXeNcfpA=
+	b=PrKmonk9aPAWLZvYuHRDrqFCDbAwAgA+guwmP11PmvbGgzunJEgrKJcqNOhCZIuRc
+	 XQLK0VjxZLpZtfC5QHFDt+wC+AtLIov67bUHdVPcQsmVc8zVFEW4xdz+dF9avihtKL
+	 klzEXhboUrqMEZZ/h313myX85fY2t0V/sbmU0IkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Takashi Yano <takashi.yano@nifty.ne.jp>
-Subject: [PATCH 6.4 062/129] ALSA: ymfpci: Fix the missing snd_card_free() call at probe error
-Date: Mon, 28 Aug 2023 12:12:21 +0200
-Message-ID: <20230828101159.425903342@linuxfoundation.org>
+	Ayush Jain <ayush.jain3@amd.com>,
+	Raghavendra K T <raghavendra.kt@amd.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 063/129] selftests/mm: FOLL_LONGTERM need to be updated to 0x100
+Date: Mon, 28 Aug 2023 12:12:22 +0200
+Message-ID: <20230828101159.454479442@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -39,53 +43,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ayush Jain <ayush.jain3@amd.com>
 
-commit 1d0eb6143c1e85d3f9a3f5a616ee7e5dc351d33b upstream.
+commit 1738b949625c7e17a454b25de33f1f415da3db69 upstream.
 
-Like a few other drivers, YMFPCI driver needs to clean up with
-snd_card_free() call at an error path of the probe; otherwise the
-other devres resources are released before the card and it results in
-the UAF.
+After commit 2c2241081f7d ("mm/gup: move private gup FOLL_ flags to
+internal.h") FOLL_LONGTERM flag value got updated from 0x10000 to 0x100 at
+include/linux/mm_types.h.
 
-This patch uses the helper for handling the probe error gracefully.
+As hmm.hmm_device_private.hmm_gup_test uses FOLL_LONGTERM Updating same
+here as well.
 
-Fixes: f33fc1576757 ("ALSA: ymfpci: Create card with device-managed snd_devm_card_new()")
+Before this change test goes in an infinite assert loop in
+hmm.hmm_device_private.hmm_gup_test
+==========================================================
+ RUN           hmm.hmm_device_private.hmm_gup_test ...
+hmm-tests.c:1962:hmm_gup_test:Expected HMM_DMIRROR_PROT_WRITE..
+..(2) == m[2] (34)
+hmm-tests.c:157:hmm_gup_test:Expected ret (-1) == 0 (0)
+hmm-tests.c:157:hmm_gup_test:Expected ret (-1) == 0 (0)
+...
+==========================================================
+
+ Call Trace:
+ <TASK>
+ ? sched_clock+0xd/0x20
+ ? __lock_acquire.constprop.0+0x120/0x6c0
+ ? ktime_get+0x2c/0xd0
+ ? sched_clock+0xd/0x20
+ ? local_clock+0x12/0xd0
+ ? lock_release+0x26e/0x3b0
+ pin_user_pages_fast+0x4c/0x70
+ gup_test_ioctl+0x4ff/0xbb0
+ ? gup_test_ioctl+0x68c/0xbb0
+ __x64_sys_ioctl+0x99/0xd0
+ do_syscall_64+0x60/0x90
+ ? syscall_exit_to_user_mode+0x2a/0x50
+ ? do_syscall_64+0x6d/0x90
+ ? syscall_exit_to_user_mode+0x2a/0x50
+ ? do_syscall_64+0x6d/0x90
+ ? irqentry_exit_to_user_mode+0xd/0x20
+ ? irqentry_exit+0x3f/0x50
+ ? exc_page_fault+0x96/0x200
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+ RIP: 0033:0x7f6aaa31aaff
+
+After this change test is able to pass successfully.
+
+Link: https://lkml.kernel.org/r/20230808124347.79163-1-ayush.jain3@amd.com
+Fixes: 2c2241081f7d ("mm/gup: move private gup FOLL_ flags to internal.h")
+Signed-off-by: Ayush Jain <ayush.jain3@amd.com>
+Reviewed-by: Raghavendra K T <raghavendra.kt@amd.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
 Cc: <stable@vger.kernel.org>
-Reported-and-tested-by: Takashi Yano <takashi.yano@nifty.ne.jp>
-Closes: https://lore.kernel.org/r/20230823135846.1812-1-takashi.yano@nifty.ne.jp
-Link: https://lore.kernel.org/r/20230823161625.5807-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ymfpci/ymfpci.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/hmm-tests.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/sound/pci/ymfpci/ymfpci.c
-+++ b/sound/pci/ymfpci/ymfpci.c
-@@ -152,8 +152,8 @@ static inline int snd_ymfpci_create_game
- void snd_ymfpci_free_gameport(struct snd_ymfpci *chip) { }
- #endif /* SUPPORT_JOYSTICK */
+diff --git a/tools/testing/selftests/mm/hmm-tests.c b/tools/testing/selftests/mm/hmm-tests.c
+index 4adaad1b822f..20294553a5dd 100644
+--- a/tools/testing/selftests/mm/hmm-tests.c
++++ b/tools/testing/selftests/mm/hmm-tests.c
+@@ -57,9 +57,14 @@ enum {
  
--static int snd_card_ymfpci_probe(struct pci_dev *pci,
--				 const struct pci_device_id *pci_id)
-+static int __snd_card_ymfpci_probe(struct pci_dev *pci,
-+				   const struct pci_device_id *pci_id)
- {
- 	static int dev;
- 	struct snd_card *card;
-@@ -348,6 +348,12 @@ static int snd_card_ymfpci_probe(struct
- 	return 0;
- }
+ #define ALIGN(x, a) (((x) + (a - 1)) & (~((a) - 1)))
+ /* Just the flags we need, copied from mm.h: */
+-#define FOLL_WRITE	0x01	/* check pte is writable */
+-#define FOLL_LONGTERM   0x10000 /* mapping lifetime is indefinite */
  
-+static int snd_card_ymfpci_probe(struct pci_dev *pci,
-+				 const struct pci_device_id *pci_id)
-+{
-+	return snd_card_free_on_error(&pci->dev, __snd_card_ymfpci_probe(pci, pci_id));
-+}
++#ifndef FOLL_WRITE
++#define FOLL_WRITE	0x01	/* check pte is writable */
++#endif
 +
- static struct pci_driver ymfpci_driver = {
- 	.name = KBUILD_MODNAME,
- 	.id_table = snd_ymfpci_ids,
++#ifndef FOLL_LONGTERM
++#define FOLL_LONGTERM   0x100 /* mapping lifetime is indefinite */
++#endif
+ FIXTURE(hmm)
+ {
+ 	int		fd;
+-- 
+2.42.0
+
 
 
