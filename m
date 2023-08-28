@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A729D611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E80C433C7;
-	Mon, 28 Aug 2023 10:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC8E611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:42:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA522C433CD;
+	Mon, 28 Aug 2023 10:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219359;
-	bh=duFgPvrWy6mNElaLtuxhdeFR6WdKaGlGZRs7FZUktXs=;
+	s=korg; t=1693219362;
+	bh=LUzbqKUxFJbuNmVYmsXhtteldakT7Hrk1GrOAE36nOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1CSZSrwQeyqq8hEZo3wKX1Ytm5dGceYFGxK9wc1HsoIgZPk10svedbpCKODmWgqs
-	 IxAx2zIsduOPAbfrQSXwQuphu/pspETm9+1DnaP84IzyFnKImn974+DqWpFGJidnp2
-	 3EcgoYPu2mi6B2eqtPw9V/HsLjiqsqEK2lBNfvT4=
+	b=P4uW8Jf8xEqFCbSp0su3SVU71BJGh2kkCUv+rvIA37spxwK7Bbw+Kfv2z+0XDO4su
+	 MeJLgXnnOVIdBDbPGc7Quw400//3JPoySRxcviE8GAZdppAesDJDq5XoXJGbIHKDqE
+	 1BXBvYXDk62qthfs28KKfJXG9Rv8DyVxMTJEZ1qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 156/158] clk: Fix undefined reference to `clk_rate_exclusive_{get,put}
-Date: Mon, 28 Aug 2023 12:14:13 +0200
-Message-ID: <20230828101203.029856913@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 5.15 01/89] objtool/x86: Fix SRSO mess
+Date: Mon, 28 Aug 2023 12:13:02 +0200
+Message-ID: <20230828101150.227032778@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
-References: <20230828101157.322319621@linuxfoundation.org>
+In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
+References: <20230828101150.163430842@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,150 +36,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 2746f13f6f1df7999001d6595b16f789ecc28ad1 ]
+commit 4ae68b26c3ab5a82aa271e6e9fc9b1a06e1d6b40 upstream.
 
-The COMMON_CLK config is not enabled in some of the architectures.
-This causes below build issues:
+Objtool --rethunk does two things:
 
-pwm-rz-mtu3.c:(.text+0x114):
-undefined reference to `clk_rate_exclusive_put'
-pwm-rz-mtu3.c:(.text+0x32c):
-undefined reference to `clk_rate_exclusive_get'
+ - it collects all (tail) call's of __x86_return_thunk and places them
+   into .return_sites. These are typically compiler generated, but
+   RET also emits this same.
 
-Fix these issues by moving clk_rate_exclusive_{get,put} inside COMMON_CLK
-code block, as clk.c is enabled by COMMON_CLK.
+ - it fudges the validation of the __x86_return_thunk symbol; because
+   this symbol is inside another instruction, it can't actually find
+   the instruction pointed to by the symbol offset and gets upset.
 
-Fixes: 55e9b8b7b806 ("clk: add clk_rate_exclusive api")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202307251752.vLfmmhYm-lkp@intel.com/
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230725175140.361479-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Because these two things pertained to the same symbol, there was no
+pressing need to separate these two separate things.
+
+However, alas, along comes SRSO and more crazy things to deal with
+appeared.
+
+The SRSO patch itself added the following symbol names to identify as
+rethunk:
+
+  'srso_untrain_ret', 'srso_safe_ret' and '__ret'
+
+Where '__ret' is the old retbleed return thunk, 'srso_safe_ret' is a
+new similarly embedded return thunk, and 'srso_untrain_ret' is
+completely unrelated to anything the above does (and was only included
+because of that INT3 vs UD2 issue fixed previous).
+
+Clear things up by adding a second category for the embedded instruction
+thing.
+
+Fixes: fb3bd914b3ec ("x86/srso: Add a Speculative RAS Overflow mitigation")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230814121148.704502245@infradead.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/clk.h | 80 ++++++++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 40 deletions(-)
+ tools/objtool/arch/x86/decode.c      |   11 +++++++----
+ tools/objtool/check.c                |   22 +++++++++++++++++++++-
+ tools/objtool/include/objtool/arch.h |    1 +
+ tools/objtool/include/objtool/elf.h  |    1 +
+ 4 files changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/clk.h b/include/linux/clk.h
-index 87730337e28f8..562859ee24f43 100644
---- a/include/linux/clk.h
-+++ b/include/linux/clk.h
-@@ -172,6 +172,39 @@ int clk_get_scaled_duty_cycle(struct clk *clk, unsigned int scale);
-  */
- bool clk_is_match(const struct clk *p, const struct clk *q);
+--- a/tools/objtool/arch/x86/decode.c
++++ b/tools/objtool/arch/x86/decode.c
+@@ -725,8 +725,11 @@ bool arch_is_retpoline(struct symbol *sy
  
-+/**
-+ * clk_rate_exclusive_get - get exclusivity over the rate control of a
-+ *                          producer
-+ * @clk: clock source
-+ *
-+ * This function allows drivers to get exclusive control over the rate of a
-+ * provider. It prevents any other consumer to execute, even indirectly,
-+ * opereation which could alter the rate of the provider or cause glitches
-+ *
-+ * If exlusivity is claimed more than once on clock, even by the same driver,
-+ * the rate effectively gets locked as exclusivity can't be preempted.
-+ *
-+ * Must not be called from within atomic context.
-+ *
-+ * Returns success (0) or negative errno.
-+ */
-+int clk_rate_exclusive_get(struct clk *clk);
-+
-+/**
-+ * clk_rate_exclusive_put - release exclusivity over the rate control of a
-+ *                          producer
-+ * @clk: clock source
-+ *
-+ * This function allows drivers to release the exclusivity it previously got
-+ * from clk_rate_exclusive_get()
-+ *
-+ * The caller must balance the number of clk_rate_exclusive_get() and
-+ * clk_rate_exclusive_put() calls.
-+ *
-+ * Must not be called from within atomic context.
-+ */
-+void clk_rate_exclusive_put(struct clk *clk);
-+
- #else
- 
- static inline int clk_notifier_register(struct clk *clk,
-@@ -218,6 +251,13 @@ static inline bool clk_is_match(const struct clk *p, const struct clk *q)
- 	return p == q;
- }
- 
-+static inline int clk_rate_exclusive_get(struct clk *clk)
-+{
-+	return 0;
+ bool arch_is_rethunk(struct symbol *sym)
+ {
+-	return !strcmp(sym->name, "__x86_return_thunk") ||
+-	       !strcmp(sym->name, "srso_untrain_ret") ||
+-	       !strcmp(sym->name, "srso_safe_ret") ||
+-	       !strcmp(sym->name, "retbleed_return_thunk");
++	return !strcmp(sym->name, "__x86_return_thunk");
 +}
 +
-+static inline void clk_rate_exclusive_put(struct clk *clk) {}
-+
- #endif
- 
- /**
-@@ -530,38 +570,6 @@ struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
-  */
- struct clk *devm_get_clk_from_child(struct device *dev,
- 				    struct device_node *np, const char *con_id);
--/**
-- * clk_rate_exclusive_get - get exclusivity over the rate control of a
-- *                          producer
-- * @clk: clock source
-- *
-- * This function allows drivers to get exclusive control over the rate of a
-- * provider. It prevents any other consumer to execute, even indirectly,
-- * opereation which could alter the rate of the provider or cause glitches
-- *
-- * If exlusivity is claimed more than once on clock, even by the same driver,
-- * the rate effectively gets locked as exclusivity can't be preempted.
-- *
-- * Must not be called from within atomic context.
-- *
-- * Returns success (0) or negative errno.
-- */
--int clk_rate_exclusive_get(struct clk *clk);
--
--/**
-- * clk_rate_exclusive_put - release exclusivity over the rate control of a
-- *                          producer
-- * @clk: clock source
-- *
-- * This function allows drivers to release the exclusivity it previously got
-- * from clk_rate_exclusive_get()
-- *
-- * The caller must balance the number of clk_rate_exclusive_get() and
-- * clk_rate_exclusive_put() calls.
-- *
-- * Must not be called from within atomic context.
-- */
--void clk_rate_exclusive_put(struct clk *clk);
- 
- /**
-  * clk_enable - inform the system when the clock source should be running.
-@@ -918,14 +926,6 @@ static inline void clk_bulk_put_all(int num_clks, struct clk_bulk_data *clks) {}
- 
- static inline void devm_clk_put(struct device *dev, struct clk *clk) {}
- 
--
--static inline int clk_rate_exclusive_get(struct clk *clk)
--{
--	return 0;
--}
--
--static inline void clk_rate_exclusive_put(struct clk *clk) {}
--
- static inline int clk_enable(struct clk *clk)
- {
++bool arch_is_embedded_insn(struct symbol *sym)
++{
++	return !strcmp(sym->name, "retbleed_return_thunk") ||
++	       !strcmp(sym->name, "srso_safe_ret");
+ }
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -990,16 +990,33 @@ static int add_ignore_alternatives(struc
  	return 0;
--- 
-2.40.1
-
+ }
+ 
++/*
++ * Symbols that replace INSN_CALL_DYNAMIC, every (tail) call to such a symbol
++ * will be added to the .retpoline_sites section.
++ */
+ __weak bool arch_is_retpoline(struct symbol *sym)
+ {
+ 	return false;
+ }
+ 
++/*
++ * Symbols that replace INSN_RETURN, every (tail) call to such a symbol
++ * will be added to the .return_sites section.
++ */
+ __weak bool arch_is_rethunk(struct symbol *sym)
+ {
+ 	return false;
+ }
+ 
++/*
++ * Symbols that are embedded inside other instructions, because sometimes crazy
++ * code exists. These are mostly ignored for validation purposes.
++ */
++__weak bool arch_is_embedded_insn(struct symbol *sym)
++{
++	return false;
++}
++
+ #define NEGATIVE_RELOC	((void *)-1L)
+ 
+ static struct reloc *insn_reloc(struct objtool_file *file, struct instruction *insn)
+@@ -1235,7 +1252,7 @@ static int add_jump_destinations(struct
+ 			 * middle of another instruction.  Objtool only
+ 			 * knows about the outer instruction.
+ 			 */
+-			if (sym && sym->return_thunk) {
++			if (sym && sym->embedded_insn) {
+ 				add_return_call(file, insn, false);
+ 				continue;
+ 			}
+@@ -2066,6 +2083,9 @@ static int classify_symbols(struct objto
+ 			if (arch_is_rethunk(func))
+ 				func->return_thunk = true;
+ 
++			if (arch_is_embedded_insn(func))
++				func->embedded_insn = true;
++
+ 			if (!strcmp(func->name, "__fentry__"))
+ 				func->fentry = true;
+ 
+--- a/tools/objtool/include/objtool/arch.h
++++ b/tools/objtool/include/objtool/arch.h
+@@ -89,6 +89,7 @@ int arch_decode_hint_reg(u8 sp_reg, int
+ 
+ bool arch_is_retpoline(struct symbol *sym);
+ bool arch_is_rethunk(struct symbol *sym);
++bool arch_is_embedded_insn(struct symbol *sym);
+ 
+ int arch_rewrite_retpolines(struct objtool_file *file);
+ 
+--- a/tools/objtool/include/objtool/elf.h
++++ b/tools/objtool/include/objtool/elf.h
+@@ -60,6 +60,7 @@ struct symbol {
+ 	u8 return_thunk      : 1;
+ 	u8 fentry            : 1;
+ 	u8 kcov              : 1;
++	u8 embedded_insn     : 1;
+ };
+ 
+ struct reloc {
 
 
