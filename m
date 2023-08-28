@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2830611A
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:40:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E78C433C7;
-	Mon, 28 Aug 2023 10:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B104611A
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED79FC433C8;
+	Mon, 28 Aug 2023 10:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219248;
-	bh=tvCa4UbfnOkHB2tcFK5zzZI/+go4VVPS8jP4GaY4INI=;
+	s=korg; t=1693219251;
+	bh=kZCqamOnE4ZHwPtQ/gHM18npCJoSWiWTPW0RHl3lmLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HT01A1HR3wTal3Ma49KyIWl4zCGkGY8uZ8Qk4yxbNQqDYtLtccXu0QOdoHCUqx6GU
-	 D+LDH5Bm/O8+ItjMfDb8rvdMxZdHBK2IaVLxIjx8e8tq9me1Wpoz8BE9XvHhgghBaQ
-	 Wj49HXL4rFBJupulqfWmccP336k5sasKss5VV4vY=
+	b=MmzvMU/0shVTtUGXwmt0BuXnMYMKbeiOr9x3EGO4yDC1TR95IwI9lCZqN1kArdCHj
+	 dxGMYZ25uIz+2YuTt8IMz9JVax2oFqRWW1nwu3coH1DfQfZFdwAvp3UzjDv3T3Rb8Y
+	 WkbVeckYgCeHWaF4UxNC+mdB9wr5Fn7mdxexRk40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 099/158] fs: dlm: change plock interrupted message to debug again
-Date: Mon, 28 Aug 2023 12:13:16 +0200
-Message-ID: <20230828101200.653681073@linuxfoundation.org>
+Subject: [PATCH 5.4 100/158] fs: dlm: use dlm_plock_info for do_unlock_close
+Date: Mon, 28 Aug 2023 12:13:17 +0200
+Message-ID: <20230828101200.683064751@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -42,42 +42,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit ea06d4cabf529eefbe7e89e3a8325f1f89355ccd ]
+[ Upstream commit 4d413ae9ced4180c0e2114553c3a7560b509b0f8 ]
 
-This patch reverses the commit bcfad4265ced ("dlm: improve plock logging
-if interrupted") by moving it to debug level and notifying the user an op
-was removed.
+This patch refactors do_unlock_close() by using only struct dlm_plock_info
+as a parameter.
 
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
 Stable-dep-of: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/plock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/dlm/plock.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
-index f685d56a4f909..0d00ca2c44c71 100644
+index 0d00ca2c44c71..fa8969c0a5f55 100644
 --- a/fs/dlm/plock.c
 +++ b/fs/dlm/plock.c
-@@ -164,7 +164,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
- 		spin_lock(&ops_lock);
- 		list_del(&op->list);
- 		spin_unlock(&ops_lock);
--		log_print("%s: wait interrupted %x %llx pid %d, op removed",
-+		log_debug(ls, "%s: wait interrupted %x %llx pid %d",
+@@ -80,8 +80,7 @@ static void send_op(struct plock_op *op)
+    abandoned waiter.  So, we have to insert the unlock-close when the
+    lock call is interrupted. */
+ 
+-static void do_unlock_close(struct dlm_ls *ls, u64 number,
+-			    struct file *file, struct file_lock *fl)
++static void do_unlock_close(const struct dlm_plock_info *info)
+ {
+ 	struct plock_op *op;
+ 
+@@ -90,15 +89,12 @@ static void do_unlock_close(struct dlm_ls *ls, u64 number,
+ 		return;
+ 
+ 	op->info.optype		= DLM_PLOCK_OP_UNLOCK;
+-	op->info.pid		= fl->fl_pid;
+-	op->info.fsid		= ls->ls_global_id;
+-	op->info.number		= number;
++	op->info.pid		= info->pid;
++	op->info.fsid		= info->fsid;
++	op->info.number		= info->number;
+ 	op->info.start		= 0;
+ 	op->info.end		= OFFSET_MAX;
+-	if (fl->fl_lmops && fl->fl_lmops->lm_grant)
+-		op->info.owner	= (__u64) fl->fl_pid;
+-	else
+-		op->info.owner	= (__u64)(long) fl->fl_owner;
++	op->info.owner		= info->owner;
+ 
+ 	op->info.flags |= DLM_PLOCK_FL_CLOSE;
+ 	send_op(op);
+@@ -168,7 +164,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
  			  __func__, ls->ls_global_id,
  			  (unsigned long long)number, op->info.pid);
  		dlm_release_plock_op(op);
-@@ -470,7 +470,7 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
- 		else
- 			wake_up(&recv_wq);
- 	} else
--		log_print("%s: no op %x %llx - may got interrupted?", __func__,
-+		log_print("%s: no op %x %llx", __func__,
- 			  info.fsid, (unsigned long long)info.number);
- 	return count;
- }
+-		do_unlock_close(ls, number, file, fl);
++		do_unlock_close(&op->info);
+ 		goto out;
+ 	}
+ 
 -- 
 2.40.1
 
