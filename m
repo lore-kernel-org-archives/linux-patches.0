@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C9A11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08178C433C8;
-	Mon, 28 Aug 2023 10:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7920B11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:27:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7355C433C8;
+	Mon, 28 Aug 2023 10:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218446;
-	bh=bc5LQWs9fX4B5DqmUi93YENGAWzuwPZzpgGoyebMWGY=;
+	s=korg; t=1693218449;
+	bh=Q7OMnK9z6sFu2Mj0mLj+VY4FxBwZd2blBMXbUIvi/lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIXFk4qsZENI9K3CEkBrsuPmsx6eD77BAPVxusY9AYKdWq1pQGcZLjpEMRpCyVokO
-	 Sk9E/kz0yXVWvv70r2Z3PwxdIGeoAQVTQ/gk0xSdADSi0haLz4+ExctX5TbGtHZh6s
-	 c7kQBu40M9dAmf6jsxm7FAhEHw49podYI2bBps2c=
+	b=2t0dlE1JPBm2S6E4meyAeNXv9gHhLkFglwACIfdmV3JGAVLhYLOIxzUGzd6zSF6RJ
+	 NJbpi6+YjzolxCUbEjStYcBDybDUM36fKfwhNPtasArSRQl9h51AqNNFx3fwf7E0x5
+	 D1qCPm9yp8v1sZdBUwTKPpMl6I59B3NcN1plpAWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Andrii Staikov <andrii.staikov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 061/129] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
-Date: Mon, 28 Aug 2023 12:12:35 +0200
-Message-ID: <20230828101155.539765692@linuxfoundation.org>
+Subject: [PATCH 4.19 062/129] i40e: fix misleading debug logs
+Date: Mon, 28 Aug 2023 12:12:36 +0200
+Message-ID: <20230828101155.586595402@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101153.030066927@linuxfoundation.org>
 References: <20230828101153.030066927@linuxfoundation.org>
@@ -42,52 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Andrii Staikov <andrii.staikov@intel.com>
 
-[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
+[ Upstream commit 2f2beb8874cb0844e84ad26e990f05f4f13ff63f ]
 
-Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
-ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
-in unregister_vlan_dev() with the following testcase:
+Change "write" into the actual "read" word.
+Change parameters description.
 
-  # ip netns add ns1
-  # ip netns exec ns1 ip link add team1 type team
-  # ip netns exec ns1 ip link add team_slave type veth peer veth2
-  # ip netns exec ns1 ip link set team_slave master team1
-  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
-  # ip netns exec ns1 ip link set team_slave nomaster
-  # ip netns del ns1
-
-Add S-VLAN tag related features support to team driver. So the team driver
-will always propagate the VLAN info to its slaves.
-
-Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7073f46e443e ("i40e: Add AQ commands for NVM Update for X722")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_nvm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index d80bc5f59b3fc..8b5e1ec6aabfb 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2168,7 +2168,9 @@ static void team_setup(struct net_device *dev)
- 
- 	dev->hw_features = TEAM_VLAN_FEATURES |
- 			   NETIF_F_HW_VLAN_CTAG_RX |
--			   NETIF_F_HW_VLAN_CTAG_FILTER;
-+			   NETIF_F_HW_VLAN_CTAG_FILTER |
-+			   NETIF_F_HW_VLAN_STAG_RX |
-+			   NETIF_F_HW_VLAN_STAG_FILTER;
- 
- 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
- 	dev->features |= dev->hw_features;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_nvm.c b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+index 0299e5bbb9022..10e9e60f6cf77 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_nvm.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_nvm.c
+@@ -210,11 +210,11 @@ static i40e_status i40e_read_nvm_word_srctl(struct i40e_hw *hw, u16 offset,
+  * @hw: pointer to the HW structure.
+  * @module_pointer: module pointer location in words from the NVM beginning
+  * @offset: offset in words from module start
+- * @words: number of words to write
+- * @data: buffer with words to write to the Shadow RAM
++ * @words: number of words to read
++ * @data: buffer with words to read to the Shadow RAM
+  * @last_command: tells the AdminQ that this is the last command
+  *
+- * Writes a 16 bit words buffer to the Shadow RAM using the admin command.
++ * Reads a 16 bit words buffer to the Shadow RAM using the admin command.
+  **/
+ static i40e_status i40e_read_nvm_aq(struct i40e_hw *hw,
+ 				    u8 module_pointer, u32 offset,
+@@ -234,18 +234,18 @@ static i40e_status i40e_read_nvm_aq(struct i40e_hw *hw,
+ 	 */
+ 	if ((offset + words) > hw->nvm.sr_size)
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: offset %d beyond Shadow RAM limit %d\n",
++			   "NVM read error: offset %d beyond Shadow RAM limit %d\n",
+ 			   (offset + words), hw->nvm.sr_size);
+ 	else if (words > I40E_SR_SECTOR_SIZE_IN_WORDS)
+-		/* We can write only up to 4KB (one sector), in one AQ write */
++		/* We can read only up to 4KB (one sector), in one AQ write */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write fail error: tried to write %d words, limit is %d.\n",
++			   "NVM read fail error: tried to read %d words, limit is %d.\n",
+ 			   words, I40E_SR_SECTOR_SIZE_IN_WORDS);
+ 	else if (((offset + (words - 1)) / I40E_SR_SECTOR_SIZE_IN_WORDS)
+ 		 != (offset / I40E_SR_SECTOR_SIZE_IN_WORDS))
+-		/* A single write cannot spread over two sectors */
++		/* A single read cannot spread over two sectors */
+ 		i40e_debug(hw, I40E_DEBUG_NVM,
+-			   "NVM write error: cannot spread over two sectors in a single write offset=%d words=%d\n",
++			   "NVM read error: cannot spread over two sectors in a single read offset=%d words=%d\n",
+ 			   offset, words);
+ 	else
+ 		ret_code = i40e_aq_read_nvm(hw, module_pointer,
 -- 
 2.40.1
 
