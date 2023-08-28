@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBBB11C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6512CC433CD;
-	Mon, 28 Aug 2023 10:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64E911C8D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2715AC433C7;
+	Mon, 28 Aug 2023 10:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217844;
-	bh=Zkq6h8sbXIb0xBoXy99exjMW6bvySiuMbrvGyWsTlXA=;
+	s=korg; t=1693217847;
+	bh=4waX+xwhTxjkOtv58dTlhNyn/Ds5ffIGHW0jmj14w44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCFNJktWYgKvXssUWLhzKptK0gqaRxG7qxYyY0gjHsG9L6xTXUMGcoU/zB4AAWgLg
-	 aziARVwM95zkH5tGVo8IDictxhZEHb41hLpxTiFLqSdKqG5q+yhj7oRrd0xMdDxuCB
-	 6+KTz+5ZqTKuKp3W3xwPGnaPLpPfm3rkMJAjrjm8=
+	b=gY0/fKCq5HajyIx9bS3ie0U9FfvlMHejKJ/8q+tiLCo+unBdOFwNpOo4/hQRyCiAc
+	 WHtWJEX+l1DyzFNuxU9WBo/jZmS0IQxEciR3X1DE4AULIEZIq+8LWdkaFa8bvXYD2l
+	 eUAeAtd/z6BVQzBR5v3gWRtXaM1oov5JhbaSaGjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sishuai Gong <sishuai.system@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 4.14 45/57] ipvs: fix racy memcpy in proc_do_sync_threshold
-Date: Mon, 28 Aug 2023 12:13:05 +0200
-Message-ID: <20230828101145.923612650@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.14 46/57] ibmveth: Use dcbf rather than dcbfl
+Date: Mon, 28 Aug 2023 12:13:06 +0200
+Message-ID: <20230828101145.963010792@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -41,64 +39,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sishuai Gong <sishuai.system@gmail.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 5310760af1d4fbea1452bfc77db5f9a680f7ae47 upstream.
+commit bfedba3b2c7793ce127680bc8f70711e05ec7a17 upstream.
 
-When two threads run proc_do_sync_threshold() in parallel,
-data races could happen between the two memcpy():
+When building for power4, newer binutils don't recognise the "dcbfl"
+extended mnemonic.
 
-Thread-1			Thread-2
-memcpy(val, valp, sizeof(val));
-				memcpy(valp, val, sizeof(val));
+dcbfl RA, RB is equivalent to dcbf RA, RB, 1.
 
-This race might mess up the (struct ctl_table *) table->data,
-so we add a mutex lock to serialize them.
+Switch to "dcbf" to avoid the build error.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/B6988E90-0A1E-4B85-BF26-2DAF6D482433@gmail.com/
-Signed-off-by: Sishuai Gong <sishuai.system@gmail.com>
-Acked-by: Simon Horman <horms@kernel.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/ibm/ibmveth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1682,6 +1682,7 @@ static int
- proc_do_sync_threshold(struct ctl_table *table, int write,
- 		       void __user *buffer, size_t *lenp, loff_t *ppos)
- {
-+	struct netns_ipvs *ipvs = table->extra2;
- 	int *valp = table->data;
- 	int val[2];
- 	int rc;
-@@ -1691,6 +1692,7 @@ proc_do_sync_threshold(struct ctl_table
- 		.mode = table->mode,
- 	};
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -209,7 +209,7 @@ static inline void ibmveth_flush_buffer(
+ 	unsigned long offset;
  
-+	mutex_lock(&ipvs->sync_mutex);
- 	memcpy(val, valp, sizeof(val));
- 	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
- 	if (write) {
-@@ -1700,6 +1702,7 @@ proc_do_sync_threshold(struct ctl_table
- 		else
- 			memcpy(valp, val, sizeof(val));
- 	}
-+	mutex_unlock(&ipvs->sync_mutex);
- 	return rc;
+ 	for (offset = 0; offset < length; offset += SMP_CACHE_BYTES)
+-		asm("dcbfl %0,%1" :: "b" (addr), "r" (offset));
++		asm("dcbf %0,%1,1" :: "b" (addr), "r" (offset));
  }
  
-@@ -3976,6 +3979,7 @@ static int __net_init ip_vs_control_net_
- 	ipvs->sysctl_sync_threshold[0] = DEFAULT_SYNC_THRESHOLD;
- 	ipvs->sysctl_sync_threshold[1] = DEFAULT_SYNC_PERIOD;
- 	tbl[idx].data = &ipvs->sysctl_sync_threshold;
-+	tbl[idx].extra2 = ipvs;
- 	tbl[idx++].maxlen = sizeof(ipvs->sysctl_sync_threshold);
- 	ipvs->sysctl_sync_refresh_period = DEFAULT_SYNC_REFRESH_PERIOD;
- 	tbl[idx++].data = &ipvs->sysctl_sync_refresh_period;
+ /* replenish the buffers for a pool.  note that we don't need to
 
 
