@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAD4469F
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90514C433C8;
-	Mon, 28 Aug 2023 10:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AE0469F
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:33:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FD6C433C7;
+	Mon, 28 Aug 2023 10:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218781;
-	bh=jDiVtACYXBNhHyxp2PVbSYUCakQE4ETViIQUHo0ld6g=;
+	s=korg; t=1693218783;
+	bh=FCCMFWLGoh473qNiTofxxeDDCOOqzOr0NS/i6lgZyJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V6geURieA0oSiVioZ/o/KzZPqbro2uh78VLfm7gt+4jIKP77//UC8NIYapD4Jt4DC
-	 TWE132moRgYIghwuA8azLY6Dk1f2Y1knZeYVjIXDNETUL6apf+ZzzL0+PdbWZp5FYp
-	 IIXnRiIam/qrqNqo6XO3yYWCS2/Gwhteiz7kNXTg=
+	b=P5Y6+MaGeFNm9Sl1kdAC3UtEjiZqpiFIjp+gOszBIvAVCOvF2Lm0N7fPBovHF0QLN
+	 /ADsMAtzdTiV94yy10+OJMHwJbmH5BWn1SsHKt/DeVQfQzBfD7Zow1+Ge9CXyDq98q
+	 8fYG7PBQh4AlOlbGVOCgGqL9zTazT1fbAAyWV/rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
+	syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/122] netfilter: nf_tables: fix out of memory error handling
-Date: Mon, 28 Aug 2023 12:12:47 +0200
-Message-ID: <20230828101158.139893818@linuxfoundation.org>
+Subject: [PATCH 6.1 053/122] rtnetlink: Reject negative ifindexes in RTM_NEWLINK
+Date: Mon, 28 Aug 2023 12:12:48 +0200
+Message-ID: <20230828101158.169570933@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -40,63 +43,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 5e1be4cdc98c989d5387ce94ff15b5ad06a5b681 ]
+[ Upstream commit 30188bd7838c16a98a520db1fe9df01ffc6ed368 ]
 
-Several instances of pipapo_resize() don't propagate allocation failures,
-this causes a crash when fault injection is enabled for gfp_kernel slabs.
+Negative ifindexes are illegal, but the kernel does not validate the
+ifindex in the ancillary header of RTM_NEWLINK messages, resulting in
+the kernel generating a warning [1] when such an ifindex is specified.
 
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Fix by rejecting negative ifindexes.
+
+[1]
+WARNING: CPU: 0 PID: 5031 at net/core/dev.c:9593 dev_index_reserve+0x1a2/0x1c0 net/core/dev.c:9593
+[...]
+Call Trace:
+ <TASK>
+ register_netdevice+0x69a/0x1490 net/core/dev.c:10081
+ br_dev_newlink+0x27/0x110 net/bridge/br_netlink.c:1552
+ rtnl_newlink_create net/core/rtnetlink.c:3471 [inline]
+ __rtnl_newlink+0x115e/0x18c0 net/core/rtnetlink.c:3688
+ rtnl_newlink+0x67/0xa0 net/core/rtnetlink.c:3701
+ rtnetlink_rcv_msg+0x439/0xd30 net/core/rtnetlink.c:6427
+ netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2545
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0x536/0x810 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x93c/0xe40 net/netlink/af_netlink.c:1910
+ sock_sendmsg_nosec net/socket.c:728 [inline]
+ sock_sendmsg+0xd9/0x180 net/socket.c:751
+ ____sys_sendmsg+0x6ac/0x940 net/socket.c:2538
+ ___sys_sendmsg+0x135/0x1d0 net/socket.c:2592
+ __sys_sendmsg+0x117/0x1e0 net/socket.c:2621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: 38f7b870d4a6 ("[RTNETLINK]: Link creation API")
+Reported-by: syzbot+5ba06978f34abb058571@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230823064348.2252280-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/core/rtnetlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 32cfd0a84b0e2..8c16681884b7e 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -901,12 +901,14 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
- static int pipapo_insert(struct nft_pipapo_field *f, const uint8_t *k,
- 			 int mask_bits)
- {
--	int rule = f->rules++, group, ret, bit_offset = 0;
-+	int rule = f->rules, group, ret, bit_offset = 0;
- 
--	ret = pipapo_resize(f, f->rules - 1, f->rules);
-+	ret = pipapo_resize(f, f->rules, f->rules + 1);
- 	if (ret)
- 		return ret;
- 
-+	f->rules++;
-+
- 	for (group = 0; group < f->groups; group++) {
- 		int i, v;
- 		u8 mask;
-@@ -1051,7 +1053,9 @@ static int pipapo_expand(struct nft_pipapo_field *f,
- 			step++;
- 			if (step >= len) {
- 				if (!masks) {
--					pipapo_insert(f, base, 0);
-+					err = pipapo_insert(f, base, 0);
-+					if (err < 0)
-+						return err;
- 					masks = 1;
- 				}
- 				goto out;
-@@ -1234,6 +1238,9 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
- 		else
- 			ret = pipapo_expand(f, start, end, f->groups * f->bb);
- 
-+		if (ret < 0)
-+			return ret;
-+
- 		if (f->bsize > bsize_max)
- 			bsize_max = f->bsize;
- 
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 48e300a144ad6..9d4507aa736b7 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3465,6 +3465,9 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (ifm->ifi_index > 0) {
+ 		link_specified = true;
+ 		dev = __dev_get_by_index(net, ifm->ifi_index);
++	} else if (ifm->ifi_index < 0) {
++		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
++		return -EINVAL;
+ 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
+ 		link_specified = true;
+ 		dev = rtnl_dev_get(net, tb);
 -- 
 2.40.1
 
