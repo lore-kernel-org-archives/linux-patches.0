@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B8C11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB701C433C7;
-	Mon, 28 Aug 2023 10:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3459E11C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A961FC433CA;
+	Mon, 28 Aug 2023 10:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217839;
-	bh=NuMQ+TkWEWgrHK20jK5PCY4HSTGFAdc1tAWlKZjcYkc=;
+	s=korg; t=1693217842;
+	bh=7+CHnaC1gBCiwP+hzmlqvP7yA2tKwUMGbpc/EKT/DEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJwIz0b7u7Kws1fCORY2VbF5EmXmbaIbIvEtlaeNRThUGSx72UACdUaCbPmo3V8oU
-	 ZkzurLUlu8EDR50AX0BVc8b03KGh/gkA7e1krcgFsz4ZBl2p4h1GULTfcmewczIcR9
-	 sbx4KmI8Yh4im40+pp29lbgq++CmNYuWNy91mtAo=
+	b=RdGnpfjhETX2WePMiNx9YVOjxU3ccDm42fljjAFqfVR3nQ0Jk7y4IAd0LbOLCdwny
+	 7uUgeFrU73x8MtEBTdxEXh0S3JSsXgIb/UwOlWKy8ptezWolYchJ36yfaODntcHox4
+	 VSdvfRHDOCdtQavpNzz02iZmvAkS/gvMdS9I2AgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Igor Bogani <alessio.bogani@elettra.eu>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 4.14 43/57] igb: Avoid starting unnecessary workqueues
-Date: Mon, 28 Aug 2023 12:13:03 +0200
-Message-ID: <20230828101145.846710080@linuxfoundation.org>
+	Junwei Hu <hujunwei4@huawei.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.14 44/57] ipvs: Improve robustness to the ipvs sysctl
+Date: Mon, 28 Aug 2023 12:13:04 +0200
+Message-ID: <20230828101145.883319622@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101144.231099710@linuxfoundation.org>
 References: <20230828101144.231099710@linuxfoundation.org>
@@ -43,91 +40,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+From: Junwei Hu <hujunwei4@huawei.com>
 
-[ Upstream commit b888c510f7b3d64ca75fc0f43b4a4bd1a611312f ]
+commit 1b90af292e71b20d03b837d39406acfbdc5d4b2a upstream.
 
-If ptp_clock_register() fails or CONFIG_PTP isn't enabled, avoid starting
-PTP related workqueues.
+The ipvs module parse the user buffer and save it to sysctl,
+then check if the value is valid. invalid value occurs
+over a period of time.
+Here, I add a variable, struct ctl_table tmp, used to read
+the value from the user buffer, and save only when it is valid.
+I delete proc_do_sync_mode and use extra1/2 in table for the
+proc_dointvec_minmax call.
 
-In this way we can fix this:
- BUG: unable to handle page fault for address: ffffc9000440b6f8
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 100000067 P4D 100000067 PUD 1001e0067 PMD 107dc5067 PTE 0
- Oops: 0000 [#1] PREEMPT SMP
- [...]
- Workqueue: events igb_ptp_overflow_check
- RIP: 0010:igb_rd32+0x1f/0x60
- [...]
- Call Trace:
-  igb_ptp_read_82580+0x20/0x50
-  timecounter_read+0x15/0x60
-  igb_ptp_overflow_check+0x1a/0x50
-  process_one_work+0x1cb/0x3c0
-  worker_thread+0x53/0x3f0
-  ? rescuer_thread+0x370/0x370
-  kthread+0x142/0x160
-  ? kthread_associate_blkcg+0xc0/0xc0
-  ret_from_fork+0x1f/0x30
-
-Fixes: 1f6e8178d685 ("igb: Prevent dropped Tx timestamps via work items and interrupts.")
-Fixes: d339b1331616 ("igb: add PTP Hardware Clock code")
-Signed-off-by: Alessio Igor Bogani <alessio.bogani@elettra.eu>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230821171927.2203644-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f73181c8288f ("ipvs: add support for sync threads")
+Signed-off-by: Junwei Hu <hujunwei4@huawei.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[Julian: Backport by changing SYSCTL_ZERO/SYSCTL_ONE to zero/one]
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ptp.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ net/netfilter/ipvs/ip_vs_ctl.c |   70 +++++++++++++++++++++--------------------
+ 1 file changed, 36 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
-index 295d27f331042..179e1d74661d4 100644
---- a/drivers/net/ethernet/intel/igb/igb_ptp.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
-@@ -1195,18 +1195,6 @@ void igb_ptp_init(struct igb_adapter *adapter)
- 		return;
- 	}
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1648,6 +1648,7 @@ static int ip_vs_zero_all(struct netns_i
+ #ifdef CONFIG_SYSCTL
  
--	spin_lock_init(&adapter->tmreg_lock);
--	INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
--
--	if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
--		INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
--				  igb_ptp_overflow_check);
--
--	adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
--	adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
--
--	igb_ptp_reset(adapter);
--
- 	adapter->ptp_clock = ptp_clock_register(&adapter->ptp_caps,
- 						&adapter->pdev->dev);
- 	if (IS_ERR(adapter->ptp_clock)) {
-@@ -1216,6 +1204,18 @@ void igb_ptp_init(struct igb_adapter *adapter)
- 		dev_info(&adapter->pdev->dev, "added PHC on %s\n",
- 			 adapter->netdev->name);
- 		adapter->ptp_flags |= IGB_PTP_ENABLED;
+ static int zero;
++static int one = 1;
+ static int three = 3;
+ 
+ static int
+@@ -1659,12 +1660,18 @@ proc_do_defense_mode(struct ctl_table *t
+ 	int val = *valp;
+ 	int rc;
+ 
+-	rc = proc_dointvec(table, write, buffer, lenp, ppos);
++	struct ctl_table tmp = {
++		.data = &val,
++		.maxlen = sizeof(int),
++		.mode = table->mode,
++	};
 +
-+		spin_lock_init(&adapter->tmreg_lock);
-+		INIT_WORK(&adapter->ptp_tx_work, igb_ptp_tx_work);
-+
-+		if (adapter->ptp_flags & IGB_PTP_OVERFLOW_CHECK)
-+			INIT_DELAYED_WORK(&adapter->ptp_overflow_work,
-+					  igb_ptp_overflow_check);
-+
-+		adapter->tstamp_config.rx_filter = HWTSTAMP_FILTER_NONE;
-+		adapter->tstamp_config.tx_type = HWTSTAMP_TX_OFF;
-+
-+		igb_ptp_reset(adapter);
++	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
+ 	if (write && (*valp != val)) {
+-		if ((*valp < 0) || (*valp > 3)) {
+-			/* Restore the correct value */
+-			*valp = val;
++		if (val < 0 || val > 3) {
++			rc = -EINVAL;
+ 		} else {
++			*valp = val;
+ 			update_defense_level(ipvs);
+ 		}
  	}
+@@ -1678,33 +1685,20 @@ proc_do_sync_threshold(struct ctl_table
+ 	int *valp = table->data;
+ 	int val[2];
+ 	int rc;
++	struct ctl_table tmp = {
++		.data = &val,
++		.maxlen = table->maxlen,
++		.mode = table->mode,
++	};
+ 
+-	/* backup the value first */
+ 	memcpy(val, valp, sizeof(val));
+-
+-	rc = proc_dointvec(table, write, buffer, lenp, ppos);
+-	if (write && (valp[0] < 0 || valp[1] < 0 ||
+-	    (valp[0] >= valp[1] && valp[1]))) {
+-		/* Restore the correct value */
+-		memcpy(valp, val, sizeof(val));
+-	}
+-	return rc;
+-}
+-
+-static int
+-proc_do_sync_mode(struct ctl_table *table, int write,
+-		     void __user *buffer, size_t *lenp, loff_t *ppos)
+-{
+-	int *valp = table->data;
+-	int val = *valp;
+-	int rc;
+-
+-	rc = proc_dointvec(table, write, buffer, lenp, ppos);
+-	if (write && (*valp != val)) {
+-		if ((*valp < 0) || (*valp > 1)) {
+-			/* Restore the correct value */
+-			*valp = val;
+-		}
++	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
++	if (write) {
++		if (val[0] < 0 || val[1] < 0 ||
++		    (val[0] >= val[1] && val[1]))
++			rc = -EINVAL;
++		else
++			memcpy(valp, val, sizeof(val));
+ 	}
+ 	return rc;
  }
+@@ -1717,12 +1711,18 @@ proc_do_sync_ports(struct ctl_table *tab
+ 	int val = *valp;
+ 	int rc;
  
--- 
-2.40.1
-
+-	rc = proc_dointvec(table, write, buffer, lenp, ppos);
++	struct ctl_table tmp = {
++		.data = &val,
++		.maxlen = sizeof(int),
++		.mode = table->mode,
++	};
++
++	rc = proc_dointvec(&tmp, write, buffer, lenp, ppos);
+ 	if (write && (*valp != val)) {
+-		if (*valp < 1 || !is_power_of_2(*valp)) {
+-			/* Restore the correct value */
++		if (val < 1 || !is_power_of_2(val))
++			rc = -EINVAL;
++		else
+ 			*valp = val;
+-		}
+ 	}
+ 	return rc;
+ }
+@@ -1782,7 +1782,9 @@ static struct ctl_table vs_vars[] = {
+ 		.procname	= "sync_version",
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_do_sync_mode,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= &zero,
++		.extra2		= &one,
+ 	},
+ 	{
+ 		.procname	= "sync_ports",
 
 
