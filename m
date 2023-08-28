@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A848111C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26785C433C7;
-	Mon, 28 Aug 2023 10:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADA611C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:31:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3B7C433C7;
+	Mon, 28 Aug 2023 10:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218684;
-	bh=BaMMbEUDgztlG+X22YwN4s87hAmE63YSRAP2NjbIEcg=;
+	s=korg; t=1693218687;
+	bh=Q7ev6SjUMvH8r93yzRCZ1Q3kSy1doWQKeMrbok7SB2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oa3KPFVvYjijDtFEYS6ENkW30LrzMEFtRHFOkY1Hm/OBAgNks1Bte6kreIM0Y/p8u
-	 +GQ2Mi9NQ5V4CZgvwqlHH1iQLFVgnwRFfMdQYlZ1eTYzQ3fMDkR8tnkaPfMF0Iqb7s
-	 bShp3Svk0Ac3N0APb5Ceux6PvrVXntqeD9egUHjk=
+	b=H5YGqb7tNi8GQT+Ujhi1fwTDSpz/SsqevrPtleThf+Ct4+YJq4Y8Sgn4jcAsmWKg7
+	 fEkYTc7psxrIEwN5DwLKDI/i4ewmI7YRcVk2Agj98JjQzvLdTYeXdyw7nZoRuZxdmx
+	 3r7qcGAs/8h3H4ckT8qFrKgGkRvo5tt96tPI5Wgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/122] s390/zcrypt: fix reply buffer calculations for CCA replies
-Date: Mon, 28 Aug 2023 12:12:14 +0200
-Message-ID: <20230828101157.081213172@linuxfoundation.org>
+Subject: [PATCH 6.1 046/122] can: isotp: fix support for transmission of SF without flow control
+Date: Mon, 28 Aug 2023 12:12:41 +0200
+Message-ID: <20230828101157.949950089@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -41,97 +40,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 4cfca532ddc3474b3fc42592d0e4237544344b1a ]
+[ Upstream commit 0bfe71159230bab79ee230225ae12ffecbb69f3e ]
 
-The length information for available buffer space for CCA
-replies is covered with two fields in the T6 header prepended
-on each CCA reply: fromcardlen1 and fromcardlen2. The sum of
-these both values must not exceed the AP bus limit for this
-card (24KB for CEX8, 12KB CEX7 and older) minus the always
-present headers.
+The original implementation had a very simple handling for single frame
+transmissions as it just sent the single frame without a timeout handling.
 
-The current code adjusted the fromcardlen2 value in case
-of exceeding the AP bus limit when there was a non-zero
-value given from userspace. Some tests now showed that this
-was the wrong assumption. Instead the userspace value given for
-this field should always be trusted and if the sum of the
-two fields exceeds the AP bus limit for this card the first
-field fromcardlen1 should be adjusted instead.
+With the new echo frame handling the echo frame was also introduced for
+single frames but the former exception ('simple without timers') has been
+maintained by accident. This leads to a 1 second timeout when closing the
+socket and to an -ECOMM error when CAN_ISOTP_WAIT_TX_DONE is selected.
 
-So now the calculation is done with this new insight in mind.
-Also some additional checks for overflow have been introduced
-and some comments to provide some documentation for future
-maintainers of this complicated calculation code.
+As the echo handling is always active (also for single frames) remove the
+wrong extra condition for single frames.
 
-Furthermore the 128 bytes of fix overhead which is used
-in the current code is not correct. Investigations showed
-that for a reply always the same two header structs are
-prepended before a possible payload. So this is also fixed
-with this patch.
-
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 9f39d36530e5 ("can: isotp: add support for transmission without flow control")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/r/20230821144547.6658-2-socketcan@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c | 35 ++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ net/can/isotp.c | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
-index 37c01aaa21a2b..84e3ad290f6ba 100644
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -1154,23 +1154,36 @@ static long zcrypt_msgtype6_send_cprb(bool userspace, struct zcrypt_queue *zq,
- 				      struct ica_xcRB *xcrb,
- 				      struct ap_message *ap_msg)
- {
--	int rc;
- 	struct response_type *rtype = ap_msg->private;
- 	struct {
- 		struct type6_hdr hdr;
- 		struct CPRBX cprbx;
- 		/* ... more data blocks ... */
- 	} __packed * msg = ap_msg->msg;
--
--	/*
--	 * Set the queue's reply buffer length minus 128 byte padding
--	 * as reply limit for the card firmware.
--	 */
--	msg->hdr.fromcardlen1 = min_t(unsigned int, msg->hdr.fromcardlen1,
--				      zq->reply.bufsize - 128);
--	if (msg->hdr.fromcardlen2)
--		msg->hdr.fromcardlen2 =
--			zq->reply.bufsize - msg->hdr.fromcardlen1 - 128;
-+	unsigned int max_payload_size;
-+	int rc, delta;
-+
-+	/* calculate maximum payload for this card and msg type */
-+	max_payload_size = zq->reply.bufsize - sizeof(struct type86_fmt2_msg);
-+
-+	/* limit each of the two from fields to the maximum payload size */
-+	msg->hdr.fromcardlen1 = min(msg->hdr.fromcardlen1, max_payload_size);
-+	msg->hdr.fromcardlen2 = min(msg->hdr.fromcardlen2, max_payload_size);
-+
-+	/* calculate delta if the sum of both exceeds max payload size */
-+	delta = msg->hdr.fromcardlen1 + msg->hdr.fromcardlen2
-+		- max_payload_size;
-+	if (delta > 0) {
-+		/*
-+		 * Sum exceeds maximum payload size, prune fromcardlen1
-+		 * (always trust fromcardlen2)
-+		 */
-+		if (delta > msg->hdr.fromcardlen1) {
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+		msg->hdr.fromcardlen1 -= delta;
-+	}
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index b3c2a49b189cc..8c97f4061ffd7 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -175,12 +175,6 @@ static bool isotp_register_rxid(struct isotp_sock *so)
+ 	return (isotp_bc_flags(so) == 0);
+ }
  
- 	init_completion(&rtype->work);
- 	rc = ap_queue_message(zq->queue, ap_msg);
+-static bool isotp_register_txecho(struct isotp_sock *so)
+-{
+-	/* all modes but SF_BROADCAST register for tx echo skbs */
+-	return (isotp_bc_flags(so) != CAN_ISOTP_SF_BROADCAST);
+-}
+-
+ static enum hrtimer_restart isotp_rx_timer_handler(struct hrtimer *hrtimer)
+ {
+ 	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
+@@ -1176,7 +1170,7 @@ static int isotp_release(struct socket *sock)
+ 	lock_sock(sk);
+ 
+ 	/* remove current filters & unregister */
+-	if (so->bound && isotp_register_txecho(so)) {
++	if (so->bound) {
+ 		if (so->ifindex) {
+ 			struct net_device *dev;
+ 
+@@ -1293,14 +1287,12 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
+ 				isotp_rcv, sk, "isotp", sk);
+ 
+-	if (isotp_register_txecho(so)) {
+-		/* no consecutive frame echo skb in flight */
+-		so->cfecho = 0;
++	/* no consecutive frame echo skb in flight */
++	so->cfecho = 0;
+ 
+-		/* register for echo skb's */
+-		can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
+-				isotp_rcv_echo, sk, "isotpe", sk);
+-	}
++	/* register for echo skb's */
++	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
++			isotp_rcv_echo, sk, "isotpe", sk);
+ 
+ 	dev_put(dev);
+ 
+@@ -1521,7 +1513,7 @@ static void isotp_notify(struct isotp_sock *so, unsigned long msg,
+ 	case NETDEV_UNREGISTER:
+ 		lock_sock(sk);
+ 		/* remove current filters & unregister */
+-		if (so->bound && isotp_register_txecho(so)) {
++		if (so->bound) {
+ 			if (isotp_register_rxid(so))
+ 				can_rx_unregister(dev_net(dev), dev, so->rxid,
+ 						  SINGLE_MASK(so->rxid),
 -- 
 2.40.1
 
