@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5078A11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6595C433C7;
-	Mon, 28 Aug 2023 10:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4136611C8D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:39:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8735FC433C8;
+	Mon, 28 Aug 2023 10:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219171;
-	bh=b1HJmHLCLyLmEcDuD1lisB81DaKhNhXjNuE4AIIZ9RQ=;
+	s=korg; t=1693219174;
+	bh=VEHrfRmxjbRWUZE0XGRApN3t0+2GwXOmA2gZhW0rZI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3xPnA2buG4+eUKuhtbJJeUJeL8GyUWKwnvdAwM2Q2kBJ0vF2YKfqv16x1gMr54c+
-	 t0iwLG2weW1NMGlbt4hNHFjOOZcCSCG4P9XChT3Yt/0w2Qd2U0io2ZLvdBCRPLjmrZ
-	 C6UOMKVNl5hFXkuaKpNq1x14kk7z1aN4gO/+Gkeo=
+	b=LnxvtdftoiAs0vet0CdiyTE6Hz9YaQLoZxq1zSBoZco88e2Tt4YmagdSb5/TDKFiL
+	 YjgcII1n1vfsS4pIq1HN+G8a9DeNWIEvyUukSicxTGnb/rU48ocss0LET7Yl+NsoDD
+	 qwlGyTiEnUrBrnFqoeO03LcPj55GPxEnGhTw4XGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Ido Schimmel <idosch@idosch.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 069/158] netfilter: nft_dynset: disallow object maps
-Date: Mon, 28 Aug 2023 12:12:46 +0200
-Message-ID: <20230828101159.613744769@linuxfoundation.org>
+Subject: [PATCH 5.4 070/158] team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
+Date: Mon, 28 Aug 2023 12:12:47 +0200
+Message-ID: <20230828101159.642501047@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.322319621@linuxfoundation.org>
 References: <20230828101157.322319621@linuxfoundation.org>
@@ -40,34 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 23185c6aed1ffb8fc44087880ba2767aba493779 ]
+[ Upstream commit dafcbce07136d799edc4c67f04f9fd69ff1eac1f ]
 
-Do not allow to insert elements from datapath to objects maps.
+Similar to commit 01f4fd270870 ("bonding: Fix incorrect deletion of
+ETH_P_8021AD protocol vid from slaves"), we can trigger BUG_ON(!vlan_info)
+in unregister_vlan_dev() with the following testcase:
 
-Fixes: 8aeff920dcc9 ("netfilter: nf_tables: add stateful object reference to set elements")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+  # ip netns add ns1
+  # ip netns exec ns1 ip link add team1 type team
+  # ip netns exec ns1 ip link add team_slave type veth peer veth2
+  # ip netns exec ns1 ip link set team_slave master team1
+  # ip netns exec ns1 ip link add link team_slave name team_slave.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link add link team1 name team1.10 type vlan id 10 protocol 802.1ad
+  # ip netns exec ns1 ip link set team_slave nomaster
+  # ip netns del ns1
+
+Add S-VLAN tag related features support to team driver. So the team driver
+will always propagate the VLAN info to its slaves.
+
+Fixes: 8ad227ff89a7 ("net: vlan: add 802.1ad support")
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230814032301.2804971-1-william.xuanziyang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_dynset.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/team/team.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
-index 8aca2fdc0664c..e0c17217817d6 100644
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -161,6 +161,9 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 5c72e9ac4804d..4dc98832bbba6 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -2194,7 +2194,9 @@ static void team_setup(struct net_device *dev)
  
-+	if (set->flags & NFT_SET_OBJECT)
-+		return -EOPNOTSUPP;
-+
- 	if (set->ops->update == NULL)
- 		return -EOPNOTSUPP;
+ 	dev->hw_features = TEAM_VLAN_FEATURES |
+ 			   NETIF_F_HW_VLAN_CTAG_RX |
+-			   NETIF_F_HW_VLAN_CTAG_FILTER;
++			   NETIF_F_HW_VLAN_CTAG_FILTER |
++			   NETIF_F_HW_VLAN_STAG_RX |
++			   NETIF_F_HW_VLAN_STAG_FILTER;
  
+ 	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
+ 	dev->features |= dev->hw_features;
 -- 
 2.40.1
 
