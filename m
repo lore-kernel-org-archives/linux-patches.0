@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2AF8BE0
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E35C433CA;
-	Mon, 28 Aug 2023 10:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12A546A0
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F681C433C7;
+	Mon, 28 Aug 2023 10:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218005;
-	bh=FfBfLAxzjvG9s4PdRYLxrQVqGjDoIrWoS0QMkZPVOKs=;
+	s=korg; t=1693218007;
+	bh=yvkPtYFrEFYXmptwTqZSLO5gRn92NtmOoH5s9ygObXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZoNJkjlROpbJ4ziBj8IYOhDfKUN23dwSiI0oZokbdJE3y4mr9GDdrGfFkpEdCajr
-	 CmR0RxovSfN9hAIxA4XWgmmv4XezNQ3uQ1s2tAu76EdUWD9Iwqvd4lDNuQnFujhqnb
-	 kVYehr805qH8eJdGV9Cpt4r/CcgQRTiF6b/5GLhk=
+	b=pYX+cRQmUId/VU/qs6j48g7z1/BgFdM80YbX7/hp3B6Nl/H6dJPu1ZLxY3p+TXTKP
+	 aXbj9aHMJoMNW1w5K9GVAC0cYU0+7SoknB+w1ba45S1J+D1gM3ztrL3O+YCjM6oA5/
+	 xUBGGekvNketmJv73uOmfbM8HiAkQ8DD0t1mhXZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Rik van Riel <riel@surriel.com>,
-	Mike Rappoport <rppt@kernel.org>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 6.4 060/129] mm,ima,kexec,of: use memblock_free_late from ima_free_kexec_buffer
-Date: Mon, 28 Aug 2023 12:12:19 +0200
-Message-ID: <20230828101159.367199743@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 061/129] shmem: fix smaps BUG sleeping while atomic
+Date: Mon, 28 Aug 2023 12:12:20 +0200
+Message-ID: <20230828101159.396056030@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -41,42 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit f0362a253606e2031f8d61c74195d4d6556e12a4 upstream.
+commit e5548f85b4527c4c803b7eae7887c10bf8f90c97 upstream.
 
-The code calling ima_free_kexec_buffer runs long after the memblock
-allocator has already been torn down, potentially resulting in a use
-after free in memblock_isolate_range.
+smaps_pte_hole_lookup() is calling shmem_partial_swap_usage() with page
+table lock held: but shmem_partial_swap_usage() does cond_resched_rcu() if
+need_resched(): "BUG: sleeping function called from invalid context".
 
-With KASAN or KFENCE, this use after free will result in a BUG
-from the idle task, and a subsequent kernel panic.
+Since shmem_partial_swap_usage() is designed to count across a range, but
+smaps_pte_hole_lookup() only calls it for a single page slot, just break
+out of the loop on the last or only page, before checking need_resched().
 
-Switch ima_free_kexec_buffer over to memblock_free_late to avoid
-that issue.
-
-Fixes: fee3ff99bc67 ("powerpc: Move arch independent ima kexec functions to drivers/of/kexec.c")
-Cc: stable@kernel.org
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Suggested-by: Mike Rappoport <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20230817135759.0888e5ef@imladris.surriel.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lkml.kernel.org/r/6fe3b3ec-abdf-332f-5c23-6a3b3a3b11a9@google.com
+Fixes: 230100321518 ("mm/smaps: simplify shmem handling of pte holes")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>	[5.16+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/kexec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/shmem.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/of/kexec.c
-+++ b/drivers/of/kexec.c
-@@ -184,7 +184,8 @@ int __init ima_free_kexec_buffer(void)
- 	if (ret)
- 		return ret;
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -806,14 +806,16 @@ unsigned long shmem_partial_swap_usage(s
+ 	XA_STATE(xas, &mapping->i_pages, start);
+ 	struct page *page;
+ 	unsigned long swapped = 0;
++	unsigned long max = end - 1;
  
--	return memblock_phys_free(addr, size);
-+	memblock_free_late(addr, size);
-+	return 0;
- }
- #endif
- 
+ 	rcu_read_lock();
+-	xas_for_each(&xas, page, end - 1) {
++	xas_for_each(&xas, page, max) {
+ 		if (xas_retry(&xas, page))
+ 			continue;
+ 		if (xa_is_value(page))
+ 			swapped++;
+-
++		if (xas.xa_index == max)
++			break;
+ 		if (need_resched()) {
+ 			xas_pause(&xas);
+ 			cond_resched_rcu();
 
 
