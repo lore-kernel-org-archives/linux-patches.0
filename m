@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F9411C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89022C433C8;
-	Mon, 28 Aug 2023 10:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C02411C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:47:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94030C433C7;
+	Mon, 28 Aug 2023 10:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219656;
-	bh=86rLZKebt7vrAARwgIJjlAcXKoVpTF8WP9wP57Fzddg=;
+	s=korg; t=1693219659;
+	bh=Bv2hszujlvACstvGyS9hPb7cNufeaRL6twWtZY5SltU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICW8uPRzdQIX8oZgr807IXlntqMPVqf0o55rsuz5gq/TY0V6qDd6lKxM1Hls4fELt
-	 jIxa16DUIHaFdz5gFspBWaeKmDkXy7G2bsp1j6l2fPa/hXdKkERORZI0M6ygTCAA1a
-	 EMbd505ODZiQb3ld4evKwtAqGsedS4vKDr9FUgC8=
+	b=2pyj8sbLHZplR0B1M/DVJZBpge5GctYmwKps+ZVv33fQ+sbT801OIR+5eGhwNSDfX
+	 VNh7wRtKlHWuOi/K77edXpm9fPJFP2LVD+/wGQm2IxbpaU2as9g2vQr+5esSv03Oqc
+	 xYeW+0eH8JTkdhgX3mu4OilcXAtPEXcNwDfacB3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>,
+	mhiramat@kernel.org,
+	vnagarnaik@google.com,
+	shuah@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/84] rbd: prevent busy loop when requesting exclusive lock
-Date: Mon, 28 Aug 2023 12:13:41 +0200
-Message-ID: <20230828101150.052493251@linuxfoundation.org>
+Subject: [PATCH 5.10 25/84] tracing: Fix cpu buffers unavailable due to record_disabled missed
+Date: Mon, 28 Aug 2023 12:13:42 +0200
+Message-ID: <20230828101150.085539451@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -40,112 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 9d01e07fd1bfb4daae156ab528aa196f5ac2b2bc ]
+[ Upstream commit b71645d6af10196c46cbe3732de2ea7d36b3ff6d ]
 
-Due to rbd_try_acquire_lock() effectively swallowing all but
-EBLOCKLISTED error from rbd_try_lock() ("request lock anyway") and
-rbd_request_lock() returning ETIMEDOUT error not only for an actual
-notify timeout but also when the lock owner doesn't respond, a busy
-loop inside of rbd_acquire_lock() between rbd_try_acquire_lock() and
-rbd_request_lock() is possible.
+Trace ring buffer can no longer record anything after executing
+following commands at the shell prompt:
 
-Requesting the lock on EBUSY error (returned by get_lock_owner_info()
-if an incompatible lock or invalid lock owner is detected) makes very
-little sense.  The same goes for ETIMEDOUT error (might pop up pretty
-much anywhere if osd_request_timeout option is set) and many others.
+  # cd /sys/kernel/tracing
+  # cat tracing_cpumask
+  fff
+  # echo 0 > tracing_cpumask
+  # echo 1 > snapshot
+  # echo fff > tracing_cpumask
+  # echo 1 > tracing_on
+  # echo "hello world" > trace_marker
+  -bash: echo: write error: Bad file descriptor
 
-Just fail I/O requests on rbd_dev->acquiring_list immediately on any
-error from rbd_try_lock().
+The root cause is that:
+  1. After `echo 0 > tracing_cpumask`, 'record_disabled' of cpu buffers
+     in 'tr->array_buffer.buffer' became 1 (see tracing_set_cpumask());
+  2. After `echo 1 > snapshot`, 'tr->array_buffer.buffer' is swapped
+     with 'tr->max_buffer.buffer', then the 'record_disabled' became 0
+     (see update_max_tr());
+  3. After `echo fff > tracing_cpumask`, the 'record_disabled' become -1;
+Then array_buffer and max_buffer are both unavailable due to value of
+'record_disabled' is not 0.
 
-Cc: stable@vger.kernel.org # 588159009d5b: rbd: retrieve and check lock owner twice before blocklisting
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+To fix it, enable or disable both array_buffer and max_buffer at the same
+time in tracing_set_cpumask().
+
+Link: https://lkml.kernel.org/r/20230805033816.3284594-2-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <vnagarnaik@google.com>
+Cc: <shuah@kernel.org>
+Fixes: 71babb2705e2 ("tracing: change CPU ring buffer state from tracing_cpumask")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rbd.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ kernel/trace/trace.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/block/rbd.c b/drivers/block/rbd.c
-index 60d3a143ff450..95cbd5790ed60 100644
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3740,7 +3740,7 @@ static int rbd_lock(struct rbd_device *rbd_dev)
- 	ret = ceph_cls_lock(osdc, &rbd_dev->header_oid, &rbd_dev->header_oloc,
- 			    RBD_LOCK_NAME, CEPH_CLS_LOCK_EXCLUSIVE, cookie,
- 			    RBD_LOCK_TAG, "", 0);
--	if (ret)
-+	if (ret && ret != -EEXIST)
- 		return ret;
- 
- 	__rbd_lock(rbd_dev, cookie);
-@@ -3944,7 +3944,7 @@ static struct ceph_locker *get_lock_owner_info(struct rbd_device *rbd_dev)
- 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
- 				 &lock_type, &lock_tag, &lockers, &num_lockers);
- 	if (ret) {
--		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
-+		rbd_warn(rbd_dev, "failed to get header lockers: %d", ret);
- 		return ERR_PTR(ret);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 167f2a19fd8a2..d0c9769938ad2 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4843,11 +4843,17 @@ int tracing_set_cpumask(struct trace_array *tr,
+ 				!cpumask_test_cpu(cpu, tracing_cpumask_new)) {
+ 			atomic_inc(&per_cpu_ptr(tr->array_buffer.data, cpu)->disabled);
+ 			ring_buffer_record_disable_cpu(tr->array_buffer.buffer, cpu);
++#ifdef CONFIG_TRACER_MAX_TRACE
++			ring_buffer_record_disable_cpu(tr->max_buffer.buffer, cpu);
++#endif
+ 		}
+ 		if (!cpumask_test_cpu(cpu, tr->tracing_cpumask) &&
+ 				cpumask_test_cpu(cpu, tracing_cpumask_new)) {
+ 			atomic_dec(&per_cpu_ptr(tr->array_buffer.data, cpu)->disabled);
+ 			ring_buffer_record_enable_cpu(tr->array_buffer.buffer, cpu);
++#ifdef CONFIG_TRACER_MAX_TRACE
++			ring_buffer_record_enable_cpu(tr->max_buffer.buffer, cpu);
++#endif
+ 		}
  	}
- 
-@@ -3996,8 +3996,10 @@ static int find_watcher(struct rbd_device *rbd_dev,
- 	ret = ceph_osdc_list_watchers(osdc, &rbd_dev->header_oid,
- 				      &rbd_dev->header_oloc, &watchers,
- 				      &num_watchers);
--	if (ret)
-+	if (ret) {
-+		rbd_warn(rbd_dev, "failed to get watchers: %d", ret);
- 		return ret;
-+	}
- 
- 	sscanf(locker->id.cookie, RBD_LOCK_COOKIE_PREFIX " %llu", &cookie);
- 	for (i = 0; i < num_watchers; i++) {
-@@ -4041,8 +4043,12 @@ static int rbd_try_lock(struct rbd_device *rbd_dev)
- 		locker = refreshed_locker = NULL;
- 
- 		ret = rbd_lock(rbd_dev);
--		if (ret != -EBUSY)
-+		if (!ret)
-+			goto out;
-+		if (ret != -EBUSY) {
-+			rbd_warn(rbd_dev, "failed to lock header: %d", ret);
- 			goto out;
-+		}
- 
- 		/* determine if the current lock holder is still alive */
- 		locker = get_lock_owner_info(rbd_dev);
-@@ -4145,11 +4151,8 @@ static int rbd_try_acquire_lock(struct rbd_device *rbd_dev)
- 
- 	ret = rbd_try_lock(rbd_dev);
- 	if (ret < 0) {
--		rbd_warn(rbd_dev, "failed to lock header: %d", ret);
--		if (ret == -EBLOCKLISTED)
--			goto out;
--
--		ret = 1; /* request lock anyway */
-+		rbd_warn(rbd_dev, "failed to acquire lock: %d", ret);
-+		goto out;
- 	}
- 	if (ret > 0) {
- 		up_write(&rbd_dev->lock_rwsem);
-@@ -6699,12 +6702,11 @@ static int rbd_add_acquire_lock(struct rbd_device *rbd_dev)
- 		cancel_delayed_work_sync(&rbd_dev->lock_dwork);
- 		if (!ret)
- 			ret = -ETIMEDOUT;
--	}
- 
--	if (ret) {
--		rbd_warn(rbd_dev, "failed to acquire exclusive lock: %ld", ret);
--		return ret;
-+		rbd_warn(rbd_dev, "failed to acquire lock: %ld", ret);
- 	}
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 * The lock may have been released by now, unless automatic lock
+ 	arch_spin_unlock(&tr->max_lock);
 -- 
 2.40.1
 
