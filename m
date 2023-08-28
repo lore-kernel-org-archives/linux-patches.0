@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002BC6FAF
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CFAC433C7;
-	Mon, 28 Aug 2023 10:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAC36FAF
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:18:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2FCC433CA;
+	Mon, 28 Aug 2023 10:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693217902;
-	bh=5J2qmwFo1sRfEzQiyEHBDNIngNu8S+3+i7bRxe3AOWE=;
+	s=korg; t=1693217905;
+	bh=nr/CPPwyKFq0/GRtKHySGtFiS+hF4Q1EnJ2rB8lGq+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TK2lt7Z0dz5f0k1MsQPjcq3eaqqmNNzsRoq9s+2ObHKfVt8bzMYqLjOaxw5HLHlte
-	 NQC31LMzPlavPjipSF3NLzqRg72LLjUBW+3XRz25A0S4aCQ8QhFX3CqgDaiQFv8q03
-	 XYj61PwzUEYFuwQ5bGgPBmUaAysrVvFeDz8Y/W9M=
+	b=FBTzxp17y5vYxpAvfOm5crK2/sFZN2S9Mnxc96obhrbJTMtad7GbQVUPZwiAzCZnf
+	 gGjIyf1TJ2nqC620u6vTJVghYjkVgbNSvJ5y7DIpkvKb0xi5w3qibGGwpK+6j905C0
+	 2TZg0WfgboOdYcJEPRRwbN2tBYjr8JcE0SbVX/NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Petr Machata <petrm@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 024/129] mlxsw: Fix the size of VIRT_ROUTER_MSB
-Date: Mon, 28 Aug 2023 12:11:43 +0200
-Message-ID: <20230828101158.186869465@linuxfoundation.org>
+Subject: [PATCH 6.4 025/129] selftests: mlxsw: Fix test failure on Spectrum-4
+Date: Mon, 28 Aug 2023 12:11:44 +0200
+Message-ID: <20230828101158.228530789@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
 References: <20230828101157.383363777@linuxfoundation.org>
@@ -43,86 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 348c976be0a599918b88729def198a843701c9fe ]
+[ Upstream commit f520489e99a35b0a5257667274fbe9afd2d8c50b ]
 
-The field 'virtual router' was extended to 12 bits in Spectrum-4.
-Therefore, the element 'MLXSW_AFK_ELEMENT_VIRT_ROUTER_MSB' needs 3 bits for
-Spectrum < 4 and 4 bits for Spectrum >= 4.
+Remove assumptions about shared buffer cell size and instead query the
+cell size from devlink. Adjust the test to send small packets that fit
+inside a single cell.
 
-The elements are stored in an internal storage scratchpad. Currently, the
-MSB is defined there as 3 bits. It means that for Spectrum-4, only 2K VRFs
-can be used for multicast routing, as the highest bit is not really used by
-the driver. Fix the definition of 'VIRT_ROUTER_MSB' to use 4 bits. Adjust
-the definitions of 'virtual router' field in the blocks accordingly - use
-'_avoid_size_check' for Spectrum-2 instead of for Spectrum-4. Fix the mask
-in parse function to use 4 bits.
+Tested on Spectrum-{1,2,3,4}.
 
-Fixes: 6d5d8ebb881c ("mlxsw: Rename virtual router flex key element")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: 4735402173e6 ("mlxsw: spectrum: Extend to support Spectrum-4 ASIC")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/79bed2b70f6b9ed58d4df02e9798a23da648015b.1692268427.git.petrm@nvidia.com
+Link: https://lore.kernel.org/r/f7dfbf3c4d1cb23838d9eb99bab09afaa320c4ca.1692268427.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c     | 4 ++--
- drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c      | 2 +-
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ .../selftests/drivers/net/mlxsw/sharedbuffer.sh  | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
-index bd1a51a0a5408..f208a237d0b52 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
-@@ -32,8 +32,8 @@ static const struct mlxsw_afk_element_info mlxsw_afk_element_infos[] = {
- 	MLXSW_AFK_ELEMENT_INFO_U32(IP_TTL_, 0x18, 0, 8),
- 	MLXSW_AFK_ELEMENT_INFO_U32(IP_ECN, 0x18, 9, 2),
- 	MLXSW_AFK_ELEMENT_INFO_U32(IP_DSCP, 0x18, 11, 6),
--	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER_MSB, 0x18, 17, 3),
--	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER_LSB, 0x18, 20, 8),
-+	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER_MSB, 0x18, 17, 4),
-+	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER_LSB, 0x18, 21, 8),
- 	MLXSW_AFK_ELEMENT_INFO_BUF(SRC_IP_96_127, 0x20, 4),
- 	MLXSW_AFK_ELEMENT_INFO_BUF(SRC_IP_64_95, 0x24, 4),
- 	MLXSW_AFK_ELEMENT_INFO_BUF(SRC_IP_32_63, 0x28, 4),
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c
-index e4f4cded2b6f9..b1178b7a7f51a 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c
-@@ -193,7 +193,7 @@ mlxsw_sp2_mr_tcam_rule_parse(struct mlxsw_sp_acl_rule *rule,
- 				       key->vrid, GENMASK(7, 0));
- 	mlxsw_sp_acl_rulei_keymask_u32(rulei,
- 				       MLXSW_AFK_ELEMENT_VIRT_ROUTER_MSB,
--				       key->vrid >> 8, GENMASK(2, 0));
-+				       key->vrid >> 8, GENMASK(3, 0));
- 	switch (key->proto) {
- 	case MLXSW_SP_L3_PROTO_IPV4:
- 		return mlxsw_sp2_mr_tcam_rule_parse4(rulei, key);
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
-index 00c32320f8915..173808c096bab 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
-@@ -169,7 +169,7 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_2[] = {
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+index 7d9e73a43a49b..0c47faff9274b 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+@@ -98,12 +98,12 @@ sb_occ_etc_check()
  
- static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_4[] = {
- 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_LSB, 0x04, 24, 8),
--	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_MSB, 0x00, 0, 3),
-+	MLXSW_AFK_ELEMENT_INST_EXT_U32(VIRT_ROUTER_MSB, 0x00, 0, 3, 0, true),
- };
+ port_pool_test()
+ {
+-	local exp_max_occ=288
++	local exp_max_occ=$(devlink_cell_size_get)
+ 	local max_occ
  
- static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_0[] = {
-@@ -319,7 +319,7 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5b[] = {
+ 	devlink sb occupancy clearmax $DEVLINK_DEV
  
- static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_4b[] = {
- 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_LSB, 0x04, 13, 8),
--	MLXSW_AFK_ELEMENT_INST_EXT_U32(VIRT_ROUTER_MSB, 0x04, 21, 4, 0, true),
-+	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_MSB, 0x04, 21, 4),
- };
+-	$MZ $h1 -c 1 -p 160 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
++	$MZ $h1 -c 1 -p 10 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
+ 		-t ip -q
  
- static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_2b[] = {
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+@@ -126,12 +126,12 @@ port_pool_test()
+ 
+ port_tc_ip_test()
+ {
+-	local exp_max_occ=288
++	local exp_max_occ=$(devlink_cell_size_get)
+ 	local max_occ
+ 
+ 	devlink sb occupancy clearmax $DEVLINK_DEV
+ 
+-	$MZ $h1 -c 1 -p 160 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
++	$MZ $h1 -c 1 -p 10 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
+ 		-t ip -q
+ 
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+@@ -154,16 +154,12 @@ port_tc_ip_test()
+ 
+ port_tc_arp_test()
+ {
+-	local exp_max_occ=96
++	local exp_max_occ=$(devlink_cell_size_get)
+ 	local max_occ
+ 
+-	if [[ $MLXSW_CHIP != "mlxsw_spectrum" ]]; then
+-		exp_max_occ=144
+-	fi
+-
+ 	devlink sb occupancy clearmax $DEVLINK_DEV
+ 
+-	$MZ $h1 -c 1 -p 160 -a $h1mac -A 192.0.1.1 -t arp -q
++	$MZ $h1 -c 1 -p 10 -a $h1mac -A 192.0.1.1 -t arp -q
+ 
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+ 
 -- 
 2.40.1
 
