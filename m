@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B17911C8D
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97AEC433C7;
-	Mon, 28 Aug 2023 10:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1112D11C8D
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:30:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87979C433C7;
+	Mon, 28 Aug 2023 10:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693218640;
-	bh=6EyJVRNdCDFuzF8R52sgVmkF0U7GQqdzvJ8JdBmPq8U=;
+	s=korg; t=1693218642;
+	bh=Av0p98fLpfEx6ssO/snMS2410v/tbBspOF9HgmxpUo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPfAuG/7ojx3xwrFIzcoEfi/LoMTXvjmAdxEdJiIEhVBGo5kjA9wierfP9EObtrPh
-	 W9l9j1mwW0W6TDn1m5oS1ky3yNyuw+ItIznncuFNuZCDK5w6dIG3X7pkzp/8etQpGw
-	 7U3WBeEVLR7bnw0zpSygxBNiqoJ+qjRK95k7oxs0=
+	b=q3/LU0iM0OTrZPI4xG+eY0nx1tYAnI1Dh9d07QBuUYjrC4HcoTks2tvappEuLvYFh
+	 YWKlTBn9XO+Gz4f3Nl0DlqbEIKRE4gLNhhRuZa7ilSNPOOhoHzbc5rMzxPswl0V+l5
+	 th+hNzXJ76HLIee5sAbxnRExS7G5qQ/8eNWZVUx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Lu Wei <luwei32@huawei.com>,
+	Florian Westphal <fw@strlen.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/122] dccp: annotate data-races in dccp_poll()
-Date: Mon, 28 Aug 2023 12:12:26 +0200
-Message-ID: <20230828101157.457007473@linuxfoundation.org>
+Subject: [PATCH 6.1 032/122] ipvlan: Fix a reference count leak warning in ipvlan_ns_exit()
+Date: Mon, 28 Aug 2023 12:12:27 +0200
+Message-ID: <20230828101157.490617212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 References: <20230828101156.480754469@linuxfoundation.org>
@@ -40,80 +41,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lu Wei <luwei32@huawei.com>
 
-[ Upstream commit cba3f1786916063261e3e5ccbb803abc325b24ef ]
+[ Upstream commit 043d5f68d0ccdda91029b4b6dce7eeffdcfad281 ]
 
-We changed tcp_poll() over time, bug never updated dccp.
+There are two network devices(veth1 and veth3) in ns1, and ipvlan1 with
+L3S mode and ipvlan2 with L2 mode are created based on them as
+figure (1). In this case, ipvlan_register_nf_hook() will be called to
+register nf hook which is needed by ipvlans in L3S mode in ns1 and value
+of ipvl_nf_hook_refcnt is set to 1.
 
-Note that we also could remove dccp instead of maintaining it.
+(1)
+           ns1                           ns2
+      ------------                  ------------
 
-Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230818015820.2701595-1-edumazet@google.com
+   veth1--ipvlan1 (L3S)
+
+   veth3--ipvlan2 (L2)
+
+(2)
+           ns1                           ns2
+      ------------                  ------------
+
+   veth1--ipvlan1 (L3S)
+
+         ipvlan2 (L2)                  veth3
+     |                                  |
+     |------->-------->--------->--------
+                    migrate
+
+When veth3 migrates from ns1 to ns2 as figure (2), veth3 will register in
+ns2 and calls call_netdevice_notifiers with NETDEV_REGISTER event:
+
+dev_change_net_namespace
+    call_netdevice_notifiers
+        ipvlan_device_event
+            ipvlan_migrate_l3s_hook
+                ipvlan_register_nf_hook(newnet)      (I)
+                ipvlan_unregister_nf_hook(oldnet)    (II)
+
+In function ipvlan_migrate_l3s_hook(), ipvl_nf_hook_refcnt in ns1 is not 0
+since veth1 with ipvlan1 still in ns1, (I) and (II) will be called to
+register nf_hook in ns2 and unregister nf_hook in ns1. As a result,
+ipvl_nf_hook_refcnt in ns1 is decreased incorrectly and this in ns2
+is increased incorrectly. When the second net namespace is removed, a
+reference count leak warning in ipvlan_ns_exit() will be triggered.
+
+This patch add a check before ipvlan_migrate_l3s_hook() is called. The
+warning can be triggered as follows:
+
+$ ip netns add ns1
+$ ip netns add ns2
+$ ip netns exec ns1 ip link add veth1 type veth peer name veth2
+$ ip netns exec ns1 ip link add veth3 type veth peer name veth4
+$ ip netns exec ns1 ip link add ipv1 link veth1 type ipvlan mode l3s
+$ ip netns exec ns1 ip link add ipv2 link veth3 type ipvlan mode l2
+$ ip netns exec ns1 ip link set veth3 netns ns2
+$ ip net del ns2
+
+Fixes: 3133822f5ac1 ("ipvlan: use pernet operations and restrict l3s hooks to master netns")
+Signed-off-by: Lu Wei <luwei32@huawei.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/r/20230817145449.141827-1-luwei32@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/proto.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/net/ipvlan/ipvlan_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/dccp/proto.c b/net/dccp/proto.c
-index abc02d25edc14..c522c76a9f89f 100644
---- a/net/dccp/proto.c
-+++ b/net/dccp/proto.c
-@@ -312,11 +312,15 @@ EXPORT_SYMBOL_GPL(dccp_disconnect);
- __poll_t dccp_poll(struct file *file, struct socket *sock,
- 		       poll_table *wait)
- {
--	__poll_t mask;
- 	struct sock *sk = sock->sk;
-+	__poll_t mask;
-+	u8 shutdown;
-+	int state;
+diff --git a/drivers/net/ipvlan/ipvlan_main.c b/drivers/net/ipvlan/ipvlan_main.c
+index 796a38f9d7b24..cd16bc8bf154c 100644
+--- a/drivers/net/ipvlan/ipvlan_main.c
++++ b/drivers/net/ipvlan/ipvlan_main.c
+@@ -748,7 +748,8 @@ static int ipvlan_device_event(struct notifier_block *unused,
  
- 	sock_poll_wait(file, sock, wait);
--	if (sk->sk_state == DCCP_LISTEN)
-+
-+	state = inet_sk_state_load(sk);
-+	if (state == DCCP_LISTEN)
- 		return inet_csk_listen_poll(sk);
+ 		write_pnet(&port->pnet, newnet);
  
- 	/* Socket is not locked. We are protected from async events
-@@ -325,20 +329,21 @@ __poll_t dccp_poll(struct file *file, struct socket *sock,
- 	 */
- 
- 	mask = 0;
--	if (sk->sk_err)
-+	if (READ_ONCE(sk->sk_err))
- 		mask = EPOLLERR;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
- 
--	if (sk->sk_shutdown == SHUTDOWN_MASK || sk->sk_state == DCCP_CLOSED)
-+	if (shutdown == SHUTDOWN_MASK || state == DCCP_CLOSED)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
- 
- 	/* Connected? */
--	if ((1 << sk->sk_state) & ~(DCCPF_REQUESTING | DCCPF_RESPOND)) {
-+	if ((1 << state) & ~(DCCPF_REQUESTING | DCCPF_RESPOND)) {
- 		if (atomic_read(&sk->sk_rmem_alloc) > 0)
- 			mask |= EPOLLIN | EPOLLRDNORM;
- 
--		if (!(sk->sk_shutdown & SEND_SHUTDOWN)) {
-+		if (!(shutdown & SEND_SHUTDOWN)) {
- 			if (sk_stream_is_writeable(sk)) {
- 				mask |= EPOLLOUT | EPOLLWRNORM;
- 			} else {  /* send SIGIO later */
-@@ -356,7 +361,6 @@ __poll_t dccp_poll(struct file *file, struct socket *sock,
+-		ipvlan_migrate_l3s_hook(oldnet, newnet);
++		if (port->mode == IPVLAN_MODE_L3S)
++			ipvlan_migrate_l3s_hook(oldnet, newnet);
+ 		break;
  	}
- 	return mask;
- }
--
- EXPORT_SYMBOL_GPL(dccp_poll);
- 
- int dccp_ioctl(struct sock *sk, int cmd, unsigned long arg)
+ 	case NETDEV_UNREGISTER:
 -- 
 2.40.1
 
