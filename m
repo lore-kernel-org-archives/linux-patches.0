@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7CF11C83
-	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2ECC43395;
-	Mon, 28 Aug 2023 10:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F04711C83
+	for <patches@lists.linux.dev>; Mon, 28 Aug 2023 10:48:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10200C433C7;
+	Mon, 28 Aug 2023 10:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693219711;
-	bh=3ZBwEX1Nh8rDajtzKMWQF2o5spWVPV81YsNZYjDAy0g=;
+	s=korg; t=1693219714;
+	bh=O3d/LBvcDFNBs+19Do6xaEKf6rsyE7d36jqbvRA1dn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFKuXk3U5k7VHlkvTW4hlhkd/nS5ufMXF4k01/15V/C6ZlYE5rGhpMesWJ1ZWueBo
-	 iCLCTdX1+DlXhGwkD9t3m8tO4QC3Wzi/LT5T7vjZfgP/ZM7KrmPPrUYycEaWo+QGjB
-	 XMurCbu779ZhnPciEJ+pyI6K3UmpPB78brnSiQw4=
+	b=NREC/HPwqsFol420c+vQb18rUD0VH1WgrsWDjO1oKUbuv4Tc5ZHJlrG2t1yWvx2R4
+	 lILDtHRm/zrDPh3vNYpsWi/9To7HgDP7shK9dXEmbCPP51kvAmkxLEjyDM82NII5jG
+	 fwFNPENBBi/lNmMc/Oom1GySn/h8cTed4YTBRLII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 37/84] netfilter: nf_tables: fix out of memory error handling
-Date: Mon, 28 Aug 2023 12:13:54 +0200
-Message-ID: <20230828101150.525221574@linuxfoundation.org>
+	Chris Mason <clm@fb.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 5.10 46/84] NFS: Fix a use after free in nfs_direct_join_group()
+Date: Mon, 28 Aug 2023 12:14:03 +0200
+Message-ID: <20230828101150.827026961@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
 References: <20230828101149.146126827@linuxfoundation.org>
@@ -40,65 +39,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5e1be4cdc98c989d5387ce94ff15b5ad06a5b681 ]
+commit be2fd1560eb57b7298aa3c258ddcca0d53ecdea3 upstream.
 
-Several instances of pipapo_resize() don't propagate allocation failures,
-this causes a crash when fault injection is enabled for gfp_kernel slabs.
+Be more careful when tearing down the subrequests of an O_DIRECT write
+as part of a retransmission.
 
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Chris Mason <clm@fb.com>
+Fixes: ed5d588fe47f ("NFS: Try to join page groups before an O_DIRECT retransmission")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/nfs/direct.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 3be93175b3ffd..50f840e312b03 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -901,12 +901,14 @@ static void pipapo_lt_bits_adjust(struct nft_pipapo_field *f)
- static int pipapo_insert(struct nft_pipapo_field *f, const uint8_t *k,
- 			 int mask_bits)
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index 9a18c5a69ace..aaffaaa336cc 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -472,20 +472,26 @@ ssize_t nfs_file_direct_read(struct kiocb *iocb, struct iov_iter *iter,
+ 	return result;
+ }
+ 
+-static void
+-nfs_direct_join_group(struct list_head *list, struct inode *inode)
++static void nfs_direct_join_group(struct list_head *list, struct inode *inode)
  {
--	int rule = f->rules++, group, ret, bit_offset = 0;
-+	int rule = f->rules, group, ret, bit_offset = 0;
+-	struct nfs_page *req, *next;
++	struct nfs_page *req, *subreq;
  
--	ret = pipapo_resize(f, f->rules - 1, f->rules);
-+	ret = pipapo_resize(f, f->rules, f->rules + 1);
- 	if (ret)
- 		return ret;
- 
-+	f->rules++;
-+
- 	for (group = 0; group < f->groups; group++) {
- 		int i, v;
- 		u8 mask;
-@@ -1051,7 +1053,9 @@ static int pipapo_expand(struct nft_pipapo_field *f,
- 			step++;
- 			if (step >= len) {
- 				if (!masks) {
--					pipapo_insert(f, base, 0);
-+					err = pipapo_insert(f, base, 0);
-+					if (err < 0)
-+						return err;
- 					masks = 1;
- 				}
- 				goto out;
-@@ -1234,6 +1238,9 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
- 		else
- 			ret = pipapo_expand(f, start, end, f->groups * f->bb);
- 
-+		if (ret < 0)
-+			return ret;
-+
- 		if (f->bsize > bsize_max)
- 			bsize_max = f->bsize;
- 
+ 	list_for_each_entry(req, list, wb_list) {
+-		if (req->wb_head != req || req->wb_this_page == req)
++		if (req->wb_head != req)
+ 			continue;
+-		for (next = req->wb_this_page;
+-				next != req->wb_head;
+-				next = next->wb_this_page) {
+-			nfs_list_remove_request(next);
+-			nfs_release_request(next);
+-		}
++		subreq = req->wb_this_page;
++		if (subreq == req)
++			continue;
++		do {
++			/*
++			 * Remove subrequests from this list before freeing
++			 * them in the call to nfs_join_page_group().
++			 */
++			if (!list_empty(&subreq->wb_list)) {
++				nfs_list_remove_request(subreq);
++				nfs_release_request(subreq);
++			}
++		} while ((subreq = subreq->wb_this_page) != req);
+ 		nfs_join_page_group(req, inode);
+ 	}
+ }
 -- 
-2.40.1
+2.42.0
 
 
 
