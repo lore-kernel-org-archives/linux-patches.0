@@ -1,32 +1,32 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C7C6FCD
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75F211198
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693352686; x=1724888686;
+  t=1693352688; x=1724888688;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=E2VN7C6YvAgSWRKL0T6DnmwaxuervSEnb92Npb1t5PA=;
-  b=CW+mko7aivt3I2N+trML2Nl0d5U71MCtkprHMf7vhOYKw+nVwW7pehif
-   rm0w9Wc/tcBE8R/G/+eaUQc8on63l/uiWl8593qXCCYieFhyeRfVaWzPi
-   udlVWLbNPgbjAwstGgGhp/zEQ6p5lMlqV9nfOOw/3aqxvcF9S5fBnoewh
-   CVcG2RXGrGgxM8WV8q+UiSuID+VsVYF1EJ1bLbiohfk36SJdt0ysH482A
-   tLoIO9DlO7CaR/hgXjv0hpoOpPqCop4wDsFB9zrdoV8aDr5txfQCCZUP0
-   sy5jmWy/8fGKWL+2lN4d8WtNcWMjYpHR6+cmjQomezDe7r0jT2IVHMPzL
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015473"
+  bh=+1T9Do0MpE3rexZYVFZx+fj/FcnYDzdw9uIqJHZ+mV4=;
+  b=iyvpfG2M9PaGSjU5vZ/bALjNbypqYP459Rc6jIishX/pr2bl173BI6ZZ
+   B1LZ7F/yrwEEDS3/rqCvN8NQhMMLOabmRkgz25hzmivYZ0uArTElne/OK
+   P4ydQvnWDULBYTVd7xd3DaSR2v1LtguOCrJX3cfjEjJKddJStogC4NDvQ
+   L8e2VM0IozPwapNtjlimNscOG71ewurNEGnhG3oaBYB4djEfhU1OQbfXJ
+   1P+89kwq63kSs7S69aMQzAC68Mq224CqQJx7hEA3m9mbWBSRJc7EyBnxo
+   ciWysT9MekpQGRA3tEWGHKIKdo2MrDnN7oYJ0eN6JlS5lQlEHzouev4Pl
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015495"
 X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
-   d="scan'208";a="355015473"
+   d="scan'208";a="355015495"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:41 -0700
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:43 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691036"
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691042"
 X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
-   d="scan'208";a="688691036"
+   d="scan'208";a="688691042"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:41 -0700
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:42 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -43,9 +43,9 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 6/8] x86/resctrl: Sub NUMA Cluster detection and enable
-Date: Tue, 29 Aug 2023 16:44:24 -0700
-Message-ID: <20230829234426.64421-7-tony.luck@intel.com>
+Subject: [PATCH v5 8/8] selftests/resctrl: Adjust effective L3 cache size when SNC enabled
+Date: Tue, 29 Aug 2023 16:44:26 -0700
+Message-ID: <20230829234426.64421-9-tony.luck@intel.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230829234426.64421-1-tony.luck@intel.com>
 References: <20230722190740.326190-1-tony.luck@intel.com>
@@ -58,138 +58,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There isn't a simple h/w bit that indicates whether a CPU is
-running in Sub NUMA Cluster mode. Infer the state by comparing
-the ratio of NUMA nodes to L3 cache instances.
+Sub-NUMA Cluster divides CPUs sharing an L3 cache into separate NUMA
+nodes. Systems may support splitting into either two or four nodes.
 
-When SNC mode is detected, reconfigure the RMID counters by updating
-the MSR_RMID_SNC_CONFIG MSR on each socket as CPUs are seen.
+When SNC mode is enabled the effective amount of L3 cache available
+for allocation is divided by the number of nodes per L3.
 
+Detect which SNC mode is active by comparing the number of CPUs
+that share a cache with CPU0, with the number of CPUs on node0.
+
+This gives some hope of tests passing. But additional test
+infrastructure changes are needed to bind tests to nodes and
+guarantee memory allocation from the local node.
+
+Reported-by: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/include/asm/msr-index.h   |  1 +
- arch/x86/kernel/cpu/resctrl/core.c | 68 ++++++++++++++++++++++++++++++
- 2 files changed, 69 insertions(+)
+ tools/testing/selftests/resctrl/resctrl.h   |  1 +
+ tools/testing/selftests/resctrl/resctrlfs.c | 57 +++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index 1d111350197f..393d1b047617 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -1100,6 +1100,7 @@
- #define MSR_IA32_QM_CTR			0xc8e
- #define MSR_IA32_PQR_ASSOC		0xc8f
- #define MSR_IA32_L3_CBM_BASE		0xc90
-+#define MSR_RMID_SNC_CONFIG		0xca0
- #define MSR_IA32_L2_CBM_BASE		0xd10
- #define MSR_IA32_MBA_THRTL_BASE		0xd50
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index ed4f55b3e5e4..9f0ac9721fab 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -16,11 +16,14 @@
- 
- #define pr_fmt(fmt)	"resctrl: " fmt
- 
-+#include <linux/cpu.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/cacheinfo.h>
- #include <linux/cpuhotplug.h>
-+#include <linux/mod_devicetable.h>
- 
-+#include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
- #include <asm/resctrl.h>
- #include "internal.h"
-@@ -724,11 +727,34 @@ static void clear_closid_rmid(int cpu)
- 	wrmsr(MSR_IA32_PQR_ASSOC, 0, 0);
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index 87e39456dee0..a8b43210b573 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -13,6 +13,7 @@
+ #include <signal.h>
+ #include <dirent.h>
+ #include <stdbool.h>
++#include <ctype.h>
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <sys/mount.h>
+diff --git a/tools/testing/selftests/resctrl/resctrlfs.c b/tools/testing/selftests/resctrl/resctrlfs.c
+index fb00245dee92..79eecbf9f863 100644
+--- a/tools/testing/selftests/resctrl/resctrlfs.c
++++ b/tools/testing/selftests/resctrl/resctrlfs.c
+@@ -130,6 +130,61 @@ int get_resource_id(int cpu_no, int *resource_id)
+ 	return 0;
  }
  
 +/*
-+ * The power-on reset value of MSR_RMID_SNC_CONFIG is 0x1
-+ * which indicates that RMIDs are configured in legacy mode.
-+ * Clearing bit 0 reconfigures the RMID counters for use
-+ * in Sub NUMA Cluster mode.
++ * Count number of CPUs in a /sys bit map
 + */
-+static void snc_remap_rmids(int cpu)
++static int count_sys_bitmap_bits(char *name)
 +{
-+	u64 val;
++	FILE *fp = fopen(name, "r");
++	int count = 0, c;
 +
-+	/* Only need to enable once per package */
-+	if (cpumask_first(topology_core_cpumask(cpu)) != cpu)
-+		return;
++	if (!fp)
++		return 0;
 +
-+	rdmsrl(MSR_RMID_SNC_CONFIG, val);
-+	val &= ~BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, val);
-+}
-+
- static int resctrl_online_cpu(unsigned int cpu)
- {
- 	struct rdt_resource *r;
- 
- 	mutex_lock(&rdtgroup_mutex);
-+
-+	if (snc_nodes_per_l3_cache > 1)
-+		snc_remap_rmids(cpu);
-+
- 	for_each_capable_rdt_resource(r)
- 		domain_add_cpu(cpu, r);
- 	/* The cpu is set in default rdtgroup after online. */
-@@ -983,11 +1009,53 @@ static __init bool get_rdt_resources(void)
- 	return (rdt_mon_capable || rdt_alloc_capable);
- }
- 
-+/* CPU models that support MSR_RMID_SNC_CONFIG */
-+static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
-+	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, 0),
-+	{}
-+};
-+
-+static __init int get_snc_config(void)
-+{
-+	unsigned long *node_caches;
-+	int mem_only_nodes = 0;
-+	int cpu, node, ret;
-+
-+	if (!x86_match_cpu(snc_cpu_ids))
-+		return 1;
-+
-+	node_caches = kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_caches), GFP_KERNEL);
-+	if (!node_caches)
-+		return 1;
-+
-+	cpus_read_lock();
-+	for_each_node(node) {
-+		cpu = cpumask_first(cpumask_of_node(node));
-+		if (cpu < nr_cpu_ids)
-+			set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
-+		else
-+			mem_only_nodes++;
++	while ((c = fgetc(fp)) != EOF) {
++		if (!isxdigit(c))
++			continue;
++		switch (c) {
++		case 'f':
++			count++;
++		case '7': case 'b': case 'd': case 'e':
++			count++;
++		case '3': case '5': case '6': case '9': case 'a': case 'c':
++			count++;
++		case '1': case '2': case '4': case '8':
++			count++;
++		}
 +	}
-+	cpus_read_unlock();
++	fclose(fp);
 +
-+	ret = (nr_node_ids - mem_only_nodes) / bitmap_weight(node_caches, nr_node_ids);
-+	kfree(node_caches);
-+
-+	if (ret > 1)
-+		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = RESCTRL_NODE;
-+
-+	return ret;
++	return count;
 +}
 +
- static __init void rdt_init_res_defs_intel(void)
- {
- 	struct rdt_hw_resource *hw_res;
- 	struct rdt_resource *r;
- 
-+	snc_nodes_per_l3_cache = get_snc_config();
++/*
++ * Detect SNC by compating #CPUs in node0 with #CPUs sharing LLC with CPU0
++ * Try to get this right, even if a few CPUs are offline so that the number
++ * of CPUs in node0 is not exactly half or a quarter of the CPUs sharing the
++ * LLC of CPU0.
++ */
++static int snc_ways(void)
++{
++	int node_cpus, cache_cpus;
 +
- 	for_each_rdt_resource(r) {
- 		hw_res = resctrl_to_arch_res(r);
++	node_cpus = count_sys_bitmap_bits("/sys/devices/system/node/node0/cpumap");
++	cache_cpus = count_sys_bitmap_bits("/sys/devices/system/cpu/cpu0/cache/index3/shared_cpu_map");
++
++	if (!node_cpus || !cache_cpus) {
++		fprintf(stderr, "Warning could not determine Sub-NUMA Cluster mode\n");
++		return 1;
++	}
++
++	if (4 * node_cpus >= cache_cpus)
++		return 4;
++	else if (2 * node_cpus >= cache_cpus)
++		return 2;
++	return 1;
++}
++
+ /*
+  * get_cache_size - Get cache size for a specified CPU
+  * @cpu_no:	CPU number
+@@ -190,6 +245,8 @@ int get_cache_size(int cpu_no, char *cache_type, unsigned long *cache_size)
+ 			break;
+ 	}
+ 
++	if (cache_num == 3)
++		*cache_size /= snc_ways();
+ 	return 0;
+ }
  
 -- 
 2.41.0
