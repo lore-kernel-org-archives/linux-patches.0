@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ED47FF;
-	Tue, 29 Aug 2023 01:55:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231D8C433C8;
-	Tue, 29 Aug 2023 01:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639A4A2A;
+	Tue, 29 Aug 2023 01:57:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83263C433C8;
+	Tue, 29 Aug 2023 01:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693274156;
-	bh=7b3Wbo+mFN7eZwp4mvhSNj0rUGXD9rMEvgQHllKkrRY=;
+	s=k20201202; t=1693274226;
+	bh=E669YVGPm0vgklLyyks/lIuzvxJ4HuktAdSZEfm/plU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgOunpoqPRaJXYZcBsVEiHtcb3b6unJ2XoxxGZJkoQ5bpN71QzZKdDQU8ED+DdVuc
-	 Vtswr8oZizOAVNofm9lMCbT3ww3qEddO2UvT//82uD6zvKPUEDNfUAHoDTyCBVsjCb
-	 fZbme5hd/9TAxgHIKLQYZPSytSaYxoDQIC0UGWDO56Cz29ruVgDpHzvJit6ddznFdH
-	 tiJWjCkrHBD7HBYAPal5x1icAkOMbZlnxnYrDIE0P3qKOMTv8IFxGSk/sNnEVAPm4B
-	 ZD4cGrEchLmtzFu0/edoGOvDo98681g7gDGlW6U7xoYAnAm6ShJrKwoN9jQtdXcajA
-	 pkr8HhGjBP0rA==
+	b=Y7PP7fcSsRnFimMBE8CHK7UjUPbjthNGI1Xu8Bu6B59q70IM5irnVIQ+UegYswTAM
+	 LgHmCFp2NfXtc/mEhnJTc/6P2ybNjPLxIDoQlKrtDGDu7XBRZIV1bkWemgQvmn0nAX
+	 ljuSCHTKzGaG/yqDaK9t6FwD2XBeriQllV1onBP6kJV4dQBH/dOAHbtuyAEAG9eFuZ
+	 p3UpNm6DZiNUwi5ywNLtqvmr+MBoadUMqubzkrpLZ5raAkkPAiDifp+kzgy76F8OzG
+	 cx0d/JNXI/p+keOuQa6LquwXv6iQ51BvNIG3tpWpUyOGTvgrDVApWGhsMBNKIF4jTr
+	 GYOj5N03d6sxg==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -35,11 +35,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.1 000/122] 6.1.50-rc1 review
-Date: Tue, 29 Aug 2023 01:55:53 +0000
-Message-Id: <20230829015553.50267-1-sj@kernel.org>
+Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
+Date: Tue, 29 Aug 2023 01:57:04 +0000
+Message-Id: <20230829015704.50328-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
+In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -51,10 +51,10 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Mon, 28 Aug 2023 12:11:55 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, 28 Aug 2023 12:13:01 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.1.50 release.
-> There are 122 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.129 release.
+> There are 89 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -62,9 +62,9 @@ On Mon, 28 Aug 2023 12:11:55 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.50-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
@@ -74,7 +74,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 1aa86af84d82 ("Linux 6.1.50-rc1")
+[2] 9e5846c251f4 ("Linux 5.15.129-rc1")
 
 Thanks,
 SJ
@@ -83,18 +83,18 @@ SJ
 
 ---
 
-# .config:1408:warning: override: reassigning to symbol CGROUPS
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+# selftests: damon-tests: build_i386_highpte.sh
+# .config:1341:warning: override: reassigning to symbol DAMON
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+# selftests: damon-tests: build_nomemcg.sh
+# .config:1342:warning: override: reassigning to symbol DAMON
+# .config:1352:warning: override: reassigning to symbol CGROUPS
 ok 15 selftests: damon-tests: build_nomemcg.sh
 # kselftest dir '/home/sjpark/damon-tests-cont/linux/tools/testing/selftests/damon-tests' is in dirty state.
 # the log is at '/home/sjpark/log'.
  [32m
 ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: sysfs.sh
 ok 1 selftests: damon-tests: kunit.sh
 ok 2 selftests: damon-tests: huge_count_read_write.sh
 ok 3 selftests: damon-tests: buffer_overflow.sh
@@ -113,3 +113,4 @@ ok 15 selftests: damon-tests: build_nomemcg.sh
  [33m
  [92mPASS [39m
 _remote_run_corr.sh SUCCESS
+
