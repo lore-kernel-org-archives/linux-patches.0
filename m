@@ -1,53 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61AA17751
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 20:18:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D4BDC433C8;
-	Tue, 29 Aug 2023 20:18:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693340333;
-	bh=/GGZMXYAli7WBIKadqeGvtCE9PvkU/UbngH+hR/lhzQ=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=PeRCMHFhcjS+oXm96e+3SfVEOWCvMfVGMQ2rCM9WyNAaHFKOIdENfFxHwgh3O5aSc
-	 Qrv128XiQSm5grtKOlESMgq4zg2bNbe6TaphudSV+BVcwa1VVsJp58aK65/csuOWba
-	 9Odw/YamT3bSBQK3WK04M8PE5TnyK6BFRrnJTSSPS76uQh3Vjpu6o+gEHJckM+0Xue
-	 cA6TCvfzp2a41fCKGKDNR9E3Vak4u3Hkxf7tYapIG2Vn9UaEHMr7M4/ciFRAQyX12U
-	 HOmLPGP8HTFUJ9UDZpV18Uhu9s7iNSe3Zmm3cDF3sIdqwithAARNClnQS6Q8CWKmV6
-	 HfwAtXETTBR/w==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 17AD4C595D2;
-	Tue, 29 Aug 2023 20:18:53 +0000 (UTC)
-Subject: Re: [GIT PULL] slab updates for 6.6
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <eea66c95-8b95-49b1-18f5-5bd92f73f60e@suse.cz>
-References: <eea66c95-8b95-49b1-18f5-5bd92f73f60e@suse.cz>
-X-PR-Tracked-List-Id: <linux-mm.kvack.org>
-X-PR-Tracked-Message-Id: <eea66c95-8b95-49b1-18f5-5bd92f73f60e@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.6
-X-PR-Tracked-Commit-Id: 3d053e8060430b86bad0854b7c7f03f15be3a7e5
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 651a00bc56403161351090a9d7ddbd7095975324
-Message-Id: <169334033308.16899.15010161954904891513.pr-tracker-bot@kernel.org>
-Date: Tue, 29 Aug 2023 20:18:53 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2674E17751
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 20:23:23 +0000 (UTC)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1bdf4752c3cso29735735ad.2
+        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 13:23:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693340603; x=1693945403; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9JouhxBa4CgjE8m+MiUTn5+R6KTenHsJATYLj7J/g98=;
+        b=m2LG+Ra/1QqUGbv5endFlHrw/1Pd3quulZQItGy5akD0M5BZQ3pVjGwn9gMVnCk++x
+         l4XFbgrl69zUcfUM+h+S5iCqkb2YkxneMWo4HbfZ+wT6X8YZEVaOuhgU6mmjavwszYy4
+         WTWkizcPAwLsxHb/qpUwDvzWta0LNcZWAUwfZkYIDni0kDtHCxR9sHsgvw//dBYKI8Zf
+         pH1k+OE97FDZq0yuAI5CChKvAr4/cH6ktSzOQOvCsyX3qT1UUwXeWuJV5K6IdRPXwPPE
+         A3MW9O5l7tAfvNdsna42HxwWlAQ6fsndYvUrESnI/g8vBlHJ7CtDOmUeODOPN5H6Gt6p
+         YePA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693340603; x=1693945403;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9JouhxBa4CgjE8m+MiUTn5+R6KTenHsJATYLj7J/g98=;
+        b=A6MvWH9IB/osg3/7KBY8BwlMZzd0tFNcxpnZ6jT46SJviCIucA3drzQNMju9mnjEUI
+         eQRH0jVXk0PTK+wxoYY9oc2Ry1xCiOvRtVEi/kBOy+DfkGPNPNEwMXB8QMH0WclGvMsv
+         ke5ewjRs6lRYi0nYl+xtp66GUMysFhQHe4Zggszvpv76WMqCNxQdZNm0k/yw44SEpMY3
+         3K1vP9EJGjg01wRrI9BddgRFMyhoSI9ktxiGRtf5OVZYkvF6ofqni7T5gUGm8Ak3LUlr
+         9u1kjX8giVhQbaCC06VTVyFIuDCa3eeiUQKOwbKmsRqPngkmlgEmZDeUlngQ5efaK5jg
+         M74g==
+X-Gm-Message-State: AOJu0YxDvbCdw2bBRakAoqBc+zdmt6cXDVqthrglUe501FXI9g91epbo
+	OH814S1iTWFTXtGvJVspTnU=
+X-Google-Smtp-Source: AGHT+IH/ZV7YXX4NiEwT0xnxwNSN6YFUbRam+I4C1qDFpuGDwrSQrE7rRyGcyXBU50rSToFzJRlY8Q==
+X-Received: by 2002:a17:902:6507:b0:1b8:c1f:fd2c with SMTP id b7-20020a170902650700b001b80c1ffd2cmr195154plk.33.1693340603373;
+        Tue, 29 Aug 2023 13:23:23 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id v11-20020a170902d68b00b001bdc2d10753sm9707929ply.215.2023.08.29.13.23.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 13:23:22 -0700 (PDT)
+Message-ID: <3d3f693c-c6b2-9bfe-6293-2ef623d7e7dd@gmail.com>
+Date: Tue, 29 Aug 2023 13:23:03 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+From: Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 6.4 000/129] 6.4.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230828101157.383363777@linuxfoundation.org>
+Content-Language: en-US
+In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The pull request you sent on Tue, 29 Aug 2023 15:22:37 +0200:
+On 8/28/23 03:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.13 release.
+> There are 129 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.13-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.6
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/651a00bc56403161351090a9d7ddbd7095975324
-
-Thank you!
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Florian
+
