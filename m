@@ -1,54 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC0F18018
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 22:29:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10910C433C7;
-	Tue, 29 Aug 2023 22:29:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693348185;
-	bh=bu5nPZH/twQudeqjd6owfMX/QCBaqEXXy9/d+LqSoP4=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=Kq+GSPLzKR5nrtq2o1GZba6IYlQxolbfkwBJZNQPaZkww87rC7eQZx4KJQF7rVlWq
-	 qs0LH6+UOsWk4xLX0O6/PkHfDnUdliCCx8O3UP+PE/6lQruS24xqeZPcYJQ+IFwGia
-	 CFirLpO3HsH6qFsB57cYIWwxTgEve/3dIZpEhI55XR8qja3YDecaQ90aT6qiMe9cW9
-	 DZGWzpRwE/Fat5p8QdlH4zklplHLYgfwzBcbTntB6JtRGpMXrJzEcJQQ8KP+IowK+X
-	 zTLxEyAPQqtn/n+PyuXGzN49pd4l6xcvS0A2Z9dgradWTNBuSttd1dvi5EVGdI6dBx
-	 3OFxw/DviaAmw==
-Message-ID: <32d3fe2091017c168c082f2b02970768.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067A56AAC
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:28:24 +0000 (UTC)
+Received: from eig-obgw-5002a.ext.cloudfilter.net ([10.0.29.215])
+	by cmsmtp with ESMTP
+	id b7MEqhzQWDKaKb86iq2SOc; Tue, 29 Aug 2023 23:26:48 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id b86hqzMZK9srIb86hq0F1A; Tue, 29 Aug 2023 23:26:48 +0000
+X-Authority-Analysis: v=2.4 cv=ZuL+lv3G c=1 sm=1 tr=0 ts=64ee7eb8
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=UBOAt4it5aQqk4EXWMeXuCOaSWxoxO7ene9cFrzDPeo=; b=VTh020OaueNwEopQppbuLLspmb
+	+Vl9n1Qc3+zKdF680+HWcNnsLSRC89kQa+HRuJUx8QMZXbu/2OZSC346EEsF2nR8CTkUBpgQry4mF
+	kQSPeGHI5UKo+F8UN8Mu6ONmFrdr1/+kmKYGTnPFWAnPcU2KzKriQxxhVCwkW8Kdpbn3o737dOrxR
+	Tp9sC9IpD8DixEacx8JNgmqo6yy2oAiUqmyxHbrHR8ToNaneBkqg6FkjeNNQgwDP981N37AywRV1x
+	/+sOtPbMU3vPx6FlEEM+bGWD4KF4DAhy7upG2PMC5seNs/FOlnQYyqotPN6lcWYyESuPUUkDXwYvG
+	excmujsg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53546 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qb86f-000XiH-0X;
+	Tue, 29 Aug 2023 17:26:45 -0600
+Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230828101150.163430842@linuxfoundation.org>
+In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <8f063190-6338-8cc2-a905-ffbee4f5ffb4@w6rz.net>
+Date: Tue, 29 Aug 2023 16:26:42 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230829-fix-sm_gpucc_8550-deps-v1-1-d751f6cd35b2@kernel.org>
-References: <20230829-fix-sm_gpucc_8550-deps-v1-1-d751f6cd35b2@kernel.org>
-Subject: Re: [PATCH] clk: qcom: Fix SM_GPUCC_8450 dependencies
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: mturquette@baylibre.com, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>, agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org
-Date: Tue, 29 Aug 2023 15:29:42 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qb86f-000XiH-0X
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53546
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKYaCrShxylTVQr42eaep/mr3EPi5hk4MkUAvuLBFtt6FscVZQQZ1uFHKD1LZzf7/Hekaf8LRJlnb0sP1JO+iQsgOBpfwb1vsGAmWUWPDxEI/ZGNx9BB
+ dTcXJ5xRiVaYYr1hU425IkySXDiFU6UzEEwNrMHZha5mjzcxYQgiqeK07FdPXBjKBgrIMwqSzJo6MA==
 
-Quoting Nathan Chancellor (2023-08-29 07:08:47)
-> CONFIG_SM_GCC_8450 depends on ARM64 but it is selected by
-> CONFIG_SM_GPUCC_8450, which can be selected on ARM, resulting in a
-> Kconfig warning.
->=20
-> WARNING: unmet direct dependencies detected for SM_GCC_8450
->   Depends on [n]: COMMON_CLK [=3Dy] && COMMON_CLK_QCOM [=3Dy] && (ARM64 |=
-| COMPILE_TEST [=3Dn])
->   Selected by [y]:
->   - SM_GPUCC_8450 [=3Dy] && COMMON_CLK [=3Dy] && COMMON_CLK_QCOM [=3Dy]
->=20
-> Add the same dependencies to CONFIG_SM_GPUCC_8450 to resolve the
-> warning.
->=20
-> Fixes: 728692d49edc ("clk: qcom: Add support for SM8450 GPUCC")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
+On 8/28/23 3:13 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.129 release.
+> There are 89 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Applied to clk-next
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
