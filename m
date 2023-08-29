@@ -1,436 +1,210 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA00D14ABD
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 09:36:36 +0000 (UTC)
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-44d48168e2cso1398636137.2
-        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 02:36:36 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481EB63C0
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 10:01:27 +0000 (UTC)
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37T6igxk010790;
+	Tue, 29 Aug 2023 10:00:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-03-30;
+ bh=lwduSFW+2L/wK0+ox/Cql2AEuQYUUvu+PDnRKBCp7vo=;
+ b=T7mpX+51pq5IpHhbxP7+uZQJh5l80y/mZJPJ+QGwAlk5r2gi636eb9EYB8ETtcsS8njA
+ 7c09JZJOEyApz3TaPpDTRvgX6DfgMTROj+AWuvCEy9khhbeDmFvlRUMgDSQITBSBpF9B
+ wqbTmdQKPygv77PWiCo3Y8wwPtxrmoumd/FhVJIr4t3gHg3l8+6COVD3fd/6jq3USeK5
+ sRAmOHjwt5m6BLyVAVNFOjlkXwdFfDNqgW3VoHTEVbqvRFTN+gsr+8Ttdd6hRUR/6xPx
+ jrKDSy3DBT0WXTC3LvhCHASPGeSQJF6Kge9ADmFJkV7qguoF2w4RU79LL0YWVtXjeABo Jg== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3sq9xt4nbe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 29 Aug 2023 10:00:56 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 37T94KKm036847;
+	Tue, 29 Aug 2023 10:00:55 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2109.outbound.protection.outlook.com [104.47.55.109])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3sr6mmvcgr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 29 Aug 2023 10:00:55 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CZjVWD+ADkO6Djynpf5/t3GOWuf9fhclD85GKwHwuo71I0UMlHNCOX8SvPHdnBwFgFbq/okO86O6b2KjwQp95Yu0i5wkuE3om8PGpFcMoKWOfMU/X1df4eRInSjDxAdkSVfGyzEmxWGME+UyMQr90vXNYAcBBgNN1I1QwyG22m44wQhXGdJh6OvFT6Wb6YE6j/ROLGYni2CUJTVMcVMSJl4rXSq0zRkdgbOKja0aJ+Njar4ky6DkkdqlNmMrV/h9kNqtE6Hska/STzEqekg/dAafADy32FSGldfLxZANNOB4M98twR9b5N1lCgASFLNfeR+cToDLVjr78a/pWfDnGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lwduSFW+2L/wK0+ox/Cql2AEuQYUUvu+PDnRKBCp7vo=;
+ b=KKcfhAbUubFzXIjwe/IZKhruc7We8TSJRE6qfPOhBa3BFofBA2tL/spcLqrcT7fFHg6gbaB7ih50w6kdZLnHdWeZCph/7D/Bts0L2GNPNalk3ChpS+h8+yZVR2U4YOo+yASWx7sKweBU43OYz+bZipJhbjFDm3euhwJllE5huMXqpnGqiHH84E3d5xrxLIOL7z+S1inur39NWnBUhIQHVPZ1rFUs7L2fPbvBuY/63TaFA+sIBHKUL9q/Q4/y6/MiblCP2jIDV2hOD8ylMLRcUdKjgQ1tB/dhi7oes4p9Q2HAddkAfrbI+I3eLHheA7nY28owDd5HjrQaPo84D3Nyyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693301795; x=1693906595;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=w5xvrieLOK3LATrvtHI2uL1hu6MTeFqDcK1n5JFJjnA=;
-        b=H0hYXg9yeLZdQu02NDa/D6uThJK0frIhcBNPDgg1QFSE3FRAbO4yY+KtIWyZcGXfKs
-         yBj66ZNz1HcDNN28OZDYerOgN8Ip+ZSDiJQCVOaZoq0kFGMV8zyrz02RuFtITJOQk8ES
-         dTVX48VZ3xVFVhFi6PFtD1PNmcr2l+4FEH1zmO1OQ5mPw8pKWYESYjPM8VtapKrkZ9s2
-         5bT1lrT4ocUFJtUUGpdca/f0MKCLtHOSPK6FBe0m8CEuXhT1AxtxcuSYgi+L8iegR9C1
-         dM/ECKLXlDQfl8sGIj1oadojIUu70wgFZ2pE9PQbn4gRPjR19Nya3/QlVekDPf/EDnu5
-         UUhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693301795; x=1693906595;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w5xvrieLOK3LATrvtHI2uL1hu6MTeFqDcK1n5JFJjnA=;
-        b=Oodw8PJhGyxY4Ts8wb9V+ozYNmqN3Nry/c6RX12hrKhHa2UwqxS9XmYxPx8vo0RRik
-         c+XwWbnrTYnvtOO7W6ZAbhQpe2vtH1abtDxu75WP0S7M9DbRmLsi61eonylol3XW7D1X
-         wyM81MdvM0dunr/S/IvmFo27OPKqUKEMMCFnSwSHUGXxCV4RRyKKMD4u0Eyj1JpIM9+L
-         MR3SRg+ep5XBXE1JESDSqr4UieFyktoAuNsHm4U0XdBIYsvDSgSYSDX/4ZlyVvkLtPwl
-         3N1QzKDEcQC+IcJPQbEN2c124+PfpysaIq0eWEImMNbJTcCtXzVBHHf5UFukVZiqGX9w
-         gF6A==
-X-Gm-Message-State: AOJu0Yy28SzXUrVySVnQm31aywqVSQGjd9ef6HY40Hkh4xdIeA/mWUNm
-	OHaWn7gOqdJ4aA/tl86cQYP9svHpibQSQ7JYepxSlA==
-X-Google-Smtp-Source: AGHT+IGCJJA+yJ49ZrBnmfmNj8YUx6qRjUI1QkTkROvhaeha/uhg8BAetbfyDlLXt5OH6wUeVxeL6BL61x34FNRqmA0=
-X-Received: by 2002:a67:ec57:0:b0:443:6deb:2b4 with SMTP id
- z23-20020a67ec57000000b004436deb02b4mr24391706vso.2.1693301795239; Tue, 29
- Aug 2023 02:36:35 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lwduSFW+2L/wK0+ox/Cql2AEuQYUUvu+PDnRKBCp7vo=;
+ b=vacRDNIz4fU1bVI1r4G9TprL5OkYnblkUnCsBr75P0GeT9Z11+kaTX8409UoDsD1fXDBG8tmyNl4l3an1hkmLmOtVSa9GTDBcIJI2LGd909xki8hMfW01HCp/FOP4D3NUlNSIH9Z5mBy469xafPJxRlajPISNacFzULHqFluA7s=
+Received: from SN7PR10MB6287.namprd10.prod.outlook.com (2603:10b6:806:26d::14)
+ by MW5PR10MB5714.namprd10.prod.outlook.com (2603:10b6:303:19b::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.35; Tue, 29 Aug
+ 2023 10:00:52 +0000
+Received: from SN7PR10MB6287.namprd10.prod.outlook.com
+ ([fe80::d7f3:3706:c034:bcbe]) by SN7PR10MB6287.namprd10.prod.outlook.com
+ ([fe80::d7f3:3706:c034:bcbe%4]) with mapi id 15.20.6699.034; Tue, 29 Aug 2023
+ 10:00:52 +0000
+Message-ID: <e985d937-fa61-ea1f-b8bc-e476a199a82b@oracle.com>
+Date: Tue, 29 Aug 2023 15:30:38 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.12.0
+Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+        rwarsow@gmx.de, conor@kernel.org,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Darren Kenny <darren.kenny@oracle.com>
+References: <20230828101150.163430842@linuxfoundation.org>
+Content-Language: en-US
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TYAPR01CA0200.jpnprd01.prod.outlook.com
+ (2603:1096:404:29::20) To SN7PR10MB6287.namprd10.prod.outlook.com
+ (2603:10b6:806:26d::14)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230828101150.163430842@linuxfoundation.org>
-In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 29 Aug 2023 15:06:24 +0530
-Message-ID: <CA+G9fYv9xTu4bKJGy=e=KZSG5pZ+tJAmfZr=0dbuKNs=9OOKhA@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	rcu <rcu@vger.kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Anders Roxell <anders.roxell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR10MB6287:EE_|MW5PR10MB5714:EE_
+X-MS-Office365-Filtering-Correlation-Id: ace0ea99-faec-4647-8125-08dba876d428
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	uRh7ARcT1880JSfEh8ockDtCW96LtdXdts+0knt3ekv8Ye4XMJfu4KXa117vgLFjlAHyrgqvLsYnhQhoB0WUCZvEY6YyfMZXmxdSClp0kIvoImU5NN+F48RmfspO0ON8j4alaClXsI5R+OuNxZd9J6bZMpOvUyVxGknTUt8Kyacpm1WkriUNK28hsp2k5ACC23hGikBWiyybPiNg0/ovdKhu0o3zEaQTQCYpkvtjrN6MWrKDztKEVrvXvFiFJLAuiFIlzdBxmG8EWsVFa6fDIpqShlmT0BfUf0JvcXGa2MFMu/kUnaU+pgVGXHynMkMjlfZVaGUyp9JpH5ZAiQdWnzWTUqNhg+2dk14x/JLUNzywIGPOWzcG2t3YKP/ZRe7vwuUZtcaOwKQUbro9Ai/0+aKH0q9pmB4Jy586CybYn0XNaMXn6ses662Y/O54rQIBBqS3fAf5OmTBpIG9sf9S6pfayat3rJMPlBxlh4eRXfjvKzuCqnYnpIhhuvis6Ff6nSALvJwzD+ollSAazhnKKAyeD46K3wH17++GhkzumRt6tZMtwItgc40A2U00+Rmx7OINgZRItbWqN7l5jIcFMjcvIFF1nJ8V/lkJ7SSkVgn+WxBG/eYnEJ0z7DQxH4TPIRUhAzEF/d+x3uLcByOzWQ==
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR10MB6287.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(366004)(346002)(396003)(376002)(136003)(1800799009)(451199024)(186009)(6512007)(38100700002)(316002)(41300700001)(4326008)(7416002)(2906002)(31696002)(86362001)(4744005)(2616005)(107886003)(36756003)(26005)(5660300002)(8676002)(8936002)(6666004)(6506007)(966005)(6486002)(66556008)(66476007)(54906003)(53546011)(66946007)(478600001)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?QWMvei85c2FnN0FoUDlWQ3Babm92NDRYZXVjc1BaNmhzWlpMWXNhSWswYVRj?=
+ =?utf-8?B?WDdZWWY2YWwwc0srOFE2b2hLb1ZhUllNMW1uZXl4eFZRbHdrdjdZTSt0Y3Vr?=
+ =?utf-8?B?MlovNWo1cG80MHdSUHpGaEQ1WXVwTWpIZGZqS1FjNTlLUlBaNE15NFEwWTk5?=
+ =?utf-8?B?cmFFSmM4cURWN0V2M0NScWh0VTBWWFdtNldRVU1uYmlMd1RMWjVUUExqVWhp?=
+ =?utf-8?B?SzlyYWp1NUdlUXpzSm1IZlNwRlhsUHU0dlkydXMza0QyRUFHRVBUOXJLeS9K?=
+ =?utf-8?B?VmhqdisyRWREMStBbDZZR3RJZytyMkx0UlF1Q2FMdFZ4K1hMcjVaZVVhVVhz?=
+ =?utf-8?B?TENTRGNZWHpndW94SUpYMEcwYThQdEt0djVCWVVPNFFLV0N3aXdQN3QzenNK?=
+ =?utf-8?B?UVY5Mm5HTlhESHhjVjlKRUxYa2l6ODdVMjFxTENQTC9HU1JvQTk1aVp0cEV2?=
+ =?utf-8?B?OEEyQUdYbmJYZmppK0RRSW9MMFJDWHBaRnhLSmZpTDV5ejUyTENPajJWbWlr?=
+ =?utf-8?B?TlRmYkRCNlY3ZkJseldKd1hCKzhLbFlBZGVNRno0M1VTa083ODl4dmxrUEJv?=
+ =?utf-8?B?R1FaMGVDcDlHSkxUMU9vK1RvUzhOZDl4YlVHNXFSTFRUSmlGRzRSS3VtUDZY?=
+ =?utf-8?B?amZIOUxGdHZWbFNkbTRuYUFqdWh3U3dSSTVJYjcwaElZUUhkQk5BblVaWkFL?=
+ =?utf-8?B?Y0FhMmhpTkYxeUpaNFZzRFVpL3o2czBOZkVtYUx0MnJKcUQrZ1UyLzEvUVJu?=
+ =?utf-8?B?U0dqNmNsckt0cUNkeDNvTVpMZlE3UzRTTkNXcUlyY1FldUZrbVVuUGFyYUh3?=
+ =?utf-8?B?ZXlVeE05VDd6UjNOZkZBZnFKYTZ6N0JiaXV0Yy9LMm9IVml3R0FzK2d0ZHBE?=
+ =?utf-8?B?ZEhwNjJTY0VaeHp6b0tvQ283cloxSEtIWExDd2lodjYxUCtMS1FhZzVvb0Qz?=
+ =?utf-8?B?b0N2bUhwZFExUTdReUd1eE1pdURNeDZSRnZLV21xbDcrQVBqZEpFbUZUcmpa?=
+ =?utf-8?B?bFJNamlZUEN1aEFLTi8zcXNaQmtBUU1HVjBTM0FKVTRPY0FQY0NCb0VSSHMy?=
+ =?utf-8?B?cm05U2RjRk9mTnRmdHBzSDNIL1Uwd0RhRmppRmxJL3NLWUpmdklSUHVabC83?=
+ =?utf-8?B?amExTWtMVkIzdFhvTjdRRkZJS1NTNFJYMWFUTWxTandKZ0s1c3FJS04zSmFk?=
+ =?utf-8?B?cWFFVnBISHpxcExXMm9MY203SW9VTG9ZcTNQdTdpRkVRSzJGNWpERmJRdU15?=
+ =?utf-8?B?ZC9SdTlCNWVHYWJQaTJPV2NVdGJJYTE3L3hHVHAxMzQ0Tk1VQVpySjNtMXFy?=
+ =?utf-8?B?ZDA5cTFFbVBXVDRHVExCYUd1MlZKYmx0ZEtVR0gxMWxqc2hBS2lQaVpXWjFo?=
+ =?utf-8?B?VDIzM2crYWhvaSsyK2h6TmMvTjErMFN0dUppZXYxQ2JZNGN0cnZJUVh2MU5D?=
+ =?utf-8?B?RDRJa3IwZXU2bjZxbTA1UFpHQ3NkWVN0S3JmK0h2Wm04SncrRE1HTllkenB6?=
+ =?utf-8?B?aTNrN1dEbGN5V2pJcHJxOVBQRFJiVWU1aSt6b09WYXVnaUVBNHV4SEZzUGJq?=
+ =?utf-8?B?SDZtMlNpTDFGa29UYjh3UTVBMktqMEdIZXhUa0NPaitqc3VZb05sY2IyQ1Nz?=
+ =?utf-8?B?eUZXYXZ4bHNjMGVrTllXTElGUEo1SU5PL1VTL0JjSDZZZUtRclhScmRJZDBy?=
+ =?utf-8?B?bjlEMXFFdE9hTnJCTGdjbHFCdnNkdUd5YmtadVljYTBUSXh3NWluZkhTeWFE?=
+ =?utf-8?B?b2k0MmszTkxxdzN5NXh2UVpSZ2dlNkpBOS9NTlR3eGRlbk5xQVc4NXAwRk1Q?=
+ =?utf-8?B?WVE5djRLV2FqUDNHM3N5REgvT2ZETmVkSGk5dTZtRWM3bXRxVXZKQWRVazl3?=
+ =?utf-8?B?aXlsdTNvakVkWG9SeWRTWmNQeHRlV3VGZ1Z4Y2ZOQnljM2RIOVdlNFhoYmgw?=
+ =?utf-8?B?R3lISGJtS2ZFMmJRMDcxOXJsOWZ2eE1WbjQzd2dYTC8wMml0SGRSS3pBL2Fw?=
+ =?utf-8?B?ZnorSVYrd0VwTzhPVXM4WGpRYit0MUw0ekUzMUpCYUYxMWNLWlRnQkY2cmpG?=
+ =?utf-8?B?WkkyeTJMOGpDWEdRYXZ6OURFUDhmNGRKRklMaEN5SmlKb1pRZXRIZDFiNGVD?=
+ =?utf-8?B?SDk4Mk14R3RRODRTMWgvNm81MDJkRWFTTEpJd2UrNjJaMEpycjAwM3F1Wmhv?=
+ =?utf-8?Q?UICKZn8chsWwaLHwrzl4RRU=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	=?utf-8?B?a0lrTEdNb2lWdU9GOU9sWHJCbk1aTFVKbkZpRFVuVHIrM280WHNLTHMwZFpy?=
+ =?utf-8?B?cmowb1RWbHRJZEdWWUJIZHJ2MXJ2MW5OYmRpOGpERDRZREpHMjh6eGZKc2dS?=
+ =?utf-8?B?UWtBTGVhN3pqa1drZ294c2dIMGRQelRGVzV0cFhDRTVOQmRpam8wWlJPK3Ba?=
+ =?utf-8?B?cklwR0ZUWGFVdHJnUU04MUkzQndBbHQ2U1BwYlg5Sk1YM0hFZ3R3WjVoMHhk?=
+ =?utf-8?B?UVo3aW5UTjdsRkJOZUdGZHhhVURCc0tRTTZQTFFNNGUrSy9nM1BnS3k3RlF0?=
+ =?utf-8?B?VnhtZnVwdXFZRGZacGtaNDR1ZnNSNTdFbnVqWFV2NjFCR1RxejQ5T2kxQXUv?=
+ =?utf-8?B?R2g3VVBWTXFSeWFUYlRsa1BzbHNVaVh4SGtqWjhvanY2YXNVb2Rndzh3dHhH?=
+ =?utf-8?B?cEZPczMxYm84QkRvWTZTdmVMbUcyOHE5ZmExNENxSnR0OFhVTi8zaUlIYkox?=
+ =?utf-8?B?QlNHRGNMM1V0MkUrL1YyVWh0QTJVcEhUc3diNVFiNDdpOTJJQ2Z3dlkwU2xN?=
+ =?utf-8?B?Ty9oK3VsRUpMVW5UYVZ6UEhpN1oyK0NrdlkvcEdoZlZPdjEvR1hTLytuN3Rt?=
+ =?utf-8?B?Y0FMQTYxTUdTOWMvMVgwanFuck9pWjJLRDhGZjhVOWpJRDJ6SWVjS090R1Nj?=
+ =?utf-8?B?bTNwOWREaGJsdGhGeEdqR0xPd0s3ZVJnY2VQRWNCYUNGeVpXcUExd1dDMmRo?=
+ =?utf-8?B?V0tGdmczYXp5UTRpUVRFRm11YnhOZFJ6ZVJDc0FEa1BlbWcwMTVyTDdLWUVl?=
+ =?utf-8?B?MGxRaEJ1SXluZXE1WTRZeGtZWkhoUmZWWkUydFI5bEd0UGJMYmJPdGNKVTB6?=
+ =?utf-8?B?U3hueE1KcHVzRytGQ0Uxdm1YeFNXZ1J0aWJjdWx2VW1DcVM2Q0ZCRVo0N1lp?=
+ =?utf-8?B?L0xnOTlFTHRUMlkrUjdlM0FxS2lIUmxMZC8ySEJlNWVZTlJPNlV1QnJxNXB1?=
+ =?utf-8?B?NC93YTBEbWVJUEI5ek5KNDdseExUVzhicGFDUUxjUHlEeEJCT04xVW9ZVGpF?=
+ =?utf-8?B?RngxOUVwcFdsZXpJbjdaUDhmc1pWZEpjL0daRWxXZko0bXlncW8ycWJnYW5B?=
+ =?utf-8?B?MjhFWjczcGNoZzlCbzFJRzZKUFBjOHYrLytwU215VEQ4aTZsNng1aVZhY2NT?=
+ =?utf-8?B?RTBhMTZTWUF0NTlSWXRLa1pZMWN3dzAvUHN3d0ZzUWpLM0h6cmh3dW1Hc1M5?=
+ =?utf-8?B?a3IweWNXenFEbkkxMUJLczdKdmNZYW1PS3lucXdwZjFzcWt2YXEzMWhtZklt?=
+ =?utf-8?B?TGd3eFF2WVFOOElKRDFPQXJnVDRZV0djUEhNc0NGN01HY0ovM1RKWUhZVHkv?=
+ =?utf-8?B?SnVYSnF3MWFsOEhESnJxM01WcmtUTG10d2twQ2t0YXRiSlVZWmIyNnVvZlNR?=
+ =?utf-8?B?ejV5LzlGR3VBNFVCSXVXQ1pQRzA5b2NiVWdqNDZUeHZVbklBeXkzQU16WHhO?=
+ =?utf-8?B?LzRnMTZOV0E4V2lYZU56SlJLQkpUcnN3S3VIV1FsSFhKbnRrdUcwUkJtRHhD?=
+ =?utf-8?B?UVp2QkRwMDBYQndOeTBtbWI5aTdxQmlBK01rTnRFMVA1K2gxUXlET1JrVTND?=
+ =?utf-8?Q?vx8ZsOfUn5GUmUCjubREiWSnvpWXBCPN/W6PT5VJHXgYYl?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ace0ea99-faec-4647-8125-08dba876d428
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR10MB6287.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2023 10:00:52.4797
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: utX6wD4GE7yUHTzzk9hHj7ce6NIs5oQRbX7ZRIEyeY0qUEqM9/xTGhFgFuix4wwoYOOCLHFgqGBRAYHLgj74uI372PfyxZXNB7j4MBpm6G7ka2a/8GBeW7RxRgZ2YNrN
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR10MB5714
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-29_06,2023-08-28_04,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=974 phishscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308290086
+X-Proofpoint-ORIG-GUID: DPPrGbjfAGdfOQtt3RSn4oNFdptsHIKP
+X-Proofpoint-GUID: DPPrGbjfAGdfOQtt3RSn4oNFdptsHIKP
 
-On Mon, 28 Aug 2023 at 16:13, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
+Hi Greg,
+
+On 28/08/23 3:43 pm, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 5.15.129 release.
 > There are 89 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
 > Anything received after that time might be too late.
->
+> 
+
+No problems seen on x86_64 and aarch64.
+
+Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+
+Thanks,
+Harshit
+
+
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
-
-
-NOTE:
-Following kernel deadlock / rcu warnings noticed while booting
-on arm64 Rpi4 and db401 booting with kselftests merge configs builds.
-
-Kernel is built with selftests/*/configs merge.
-
-FYI,
-After this kernel warning the system is stable and ran selftests and got passed.
-Build and config details provided at the bottom of this email.
-
-Boot log:
-------
-[    0.000000] Linux version 5.15.129-rc1 (tuxmake@tuxmake)
-(aarch64-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils
-for Debian) 2.40) #1 SMP PREEMPT @1693218307
-[    0.000000] Machine model: Raspberry Pi 4 Model B
-...
-[   32.487474] platform regulatory.0: Direct firmware load for
-regulatory.db failed with error -2
-[   32.496495] platform regulatory.0: Falling back to sysfs fallback
-for: regulatory.db
-[   32.509253] [drm] Initialized vc4 0.0.0 20140616 for gpu on minor 0
-[   32.513018]
-[   32.513049]
-[   32.513053] ======================================================
-[   32.513056] WARNING: possible circular locking dependency detected
-[   32.513060] 5.15.129-rc1 #1 Not tainted
-[   32.513068] ------------------------------------------------------
-[   32.513071] (udev-worker)/241 is trying to acquire lock:
-[   32.513078] ffff80000aac6be0 ((console_sem).lock){..-.}-{2:2}, at:
-down_trylock+0x20/0x50
-[   32.513120]
-[   32.513120] but task is already holding lock:
-[   32.513122] ffff0000f77d41d8 (&rq->__lock){-.-.}-{2:2}, at:
-task_rq_lock+0x94/0x1c4
-[   32.513151]
-[   32.513151] which lock already depends on the new lock.
-[   32.513151]
-[   32.513153]
-[   32.513153] the existing dependency chain (in reverse order) is:
-[   32.513156]
-[   32.513156] -> #2 (&rq->__lock){-.-.}-{2:2}:
-[   32.513170]        _raw_spin_lock_nested+0x74/0xb0
-[   32.513188]        raw_spin_rq_lock_nested+0x48/0x160
-[   32.513200]        task_fork_fair+0x44/0x180
-[   32.513209]        sched_cgroup_fork+0xdc/0x140
-[   32.513218]        copy_process+0xdb8/0x2054
-[   32.513227]        kernel_clone+0xa4/0x47c
-[   32.513234]        kernel_thread+0x74/0xa4
-[   32.513241]        rest_init+0x3c/0x2e0
-[   32.513254]        arch_call_rest_init+0x18/0x24
-[   32.513266]        start_kernel+0x734/0x774
-[   32.513275]        __primary_switched+0xbc/0xc4
-[   32.513284]
-[   32.513284] -> #1 (&p->pi_lock){-.-.}-{2:2}:
-[   32.513299]        _raw_spin_lock_irqsave+0x84/0xec
-[   32.513310]        try_to_wake_up+0x5c/0x640
-[   32.513317]        wake_up_process+0x20/0x30
-[   32.513324]        __up.isra.0+0x58/0x70
-[   32.513333]        up+0x64/0x80
-[   32.513342]        __up_console_sem+0x48/0x7c
-[   32.513355]        console_unlock+0x21c/0x630
-[   32.513367]        vprintk_emit+0x114/0x2e0
-[   32.513379]        vprintk_default+0x40/0x50
-[   32.513391]        vprintk+0xdc/0x100
-[   32.513398]        _printk+0x64/0x8c
-[   32.513410]        drm_master_internal_acquire+0x8/0x64 [drm]
-[   32.513662]        devm_aperture_acquire_from_firmware+0x3c/0x1f0 [drm]
-[   32.513891]        do_one_initcall+0x90/0x340
-[   32.513902]        do_init_module+0x50/0x28c
-[   32.513913]        load_module+0x2148/0x26f0
-[   32.513922]        __do_sys_finit_module+0xa8/0x11c
-[   32.513932]        __arm64_sys_finit_module+0x28/0x34
-[   32.513941]        invoke_syscall+0x78/0x100
-[   32.513954]        el0_svc_common.constprop.0+0x68/0x124
-[   32.513967]        do_el0_svc+0x2c/0xa0
-[   32.513978]        el0_svc+0x54/0x110
-[   32.513990]        el0t_64_sync_handler+0xe8/0x114
-[   32.514001]        el0t_64_sync+0x1a0/0x1a4
-[   32.514009]
-[   32.514009] -> #0 ((console_sem).lock){..-.}-{2:2}:
-[   32.514022]        __lock_acquire+0x12f0/0x2090
-[   32.514036]        lock_acquire+0x208/0x320
-[   32.514048]        _raw_spin_lock_irqsave+0x84/0xec
-[   32.514059]        down_trylock+0x20/0x50
-[   32.514069]        __down_trylock_console_sem+0x44/0xc0
-[   32.514082]        console_trylock+0x44/0x100
-[   32.514094]        vprintk_emit+0x10c/0x2e0
-[   32.514105]        vprintk_default+0x40/0x50
-[   32.514117]        vprintk+0xdc/0x100
-[   32.514124]        _printk+0x64/0x8c
-[   32.514135]        lockdep_rcu_suspicious+0x34/0x10c
-[   32.514146]        inc_dl_tasks_cs+0xc0/0xd0
-[   32.514154]        switched_to_dl+0x38/0x2dc
-[   32.514165]        __sched_setscheduler+0x228/0xaf0
-[   32.514174]        sched_setattr_nocheck+0x20/0x30
-[   32.514182]        sugov_init+0x140/0x370
-[   32.514191]        cpufreq_init_governor+0x78/0x120
-[   32.514203]        cpufreq_set_policy+0x290/0x430
-[   32.514212]        cpufreq_online+0x3a0/0xa70
-[   32.514221]        cpufreq_add_dev+0xd0/0xf0
-[   32.514231]        subsys_interface_register+0x13c/0x164
-[   32.514242]        cpufreq_register_driver+0x17c/0x2e0
-[   32.514251]        dt_cpufreq_probe+0x350/0x4b4
-[   32.514265]        platform_probe+0x70/0xe0
-[   32.514277]        really_probe+0xcc/0x470
-[   32.514286]        __driver_probe_device+0x114/0x170
-[   32.514296]        driver_probe_device+0x48/0x140
-[   32.514305]        __device_attach_driver+0xd8/0x180
-[   32.514314]        bus_for_each_drv+0x84/0xe0
-[   32.514322]        __device_attach+0xa4/0x1d0
-[   32.514331]        device_initial_probe+0x1c/0x30
-[   32.514341]        bus_probe_device+0xa4/0xb0
-[   32.514350]        device_add+0x3e8/0x920
-[   32.514357]        platform_device_add+0x108/0x290
-[   32.514368]        platform_device_register_full+0xe4/0x17c
-[   32.514381]        raspberrypi_cpufreq_probe+0x13c/0x1e0
-[raspberrypi_cpufreq]
-[   32.514397]        platform_probe+0x70/0xe0
-[   32.514408]        really_probe+0xcc/0x470
-[   32.514417]        __driver_probe_device+0x114/0x170
-[   32.514427]        driver_probe_device+0x48/0x140
-[   32.514436]        __driver_attach+0x12c/0x220
-[   32.514445]        bus_for_each_dev+0x7c/0xdc
-[   32.514453]        driver_attach+0x2c/0x40
-[   32.514461]        bus_add_driver+0x168/0x274
-[   32.514470]        driver_register+0x80/0x13c
-[   32.514479]        __platform_driver_register+0x30/0x40
-[   32.514490]        raspberrypi_cpufreq_driver_init+0x28/0x1000
-[raspberrypi_cpufreq]
-[   32.514506]        do_one_initcall+0x90/0x340
-[   32.514514]        do_init_module+0x50/0x28c
-[   32.514524]        load_module+0x2148/0x26f0
-[   32.514533]        __do_sys_finit_module+0xa8/0x11c
-[   32.514542]        __arm64_sys_finit_module+0x28/0x34
-[   32.514551]        invoke_syscall+0x78/0x100
-[   32.514563]        el0_svc_common.constprop.0+0x104/0x124
-[   32.514575]        do_el0_svc+0x2c/0xa0
-[   32.514586]        el0_svc+0x54/0x110
-[   32.514596]        el0t_64_sync_handler+0xe8/0x114
-[   32.514607]        el0t_64_sync+0x1a0/0x1a4
-[   32.514615]
-[   32.514615] other info that might help us debug this:
-[   32.514615]
-[   32.514618] Chain exists of:
-[   32.514618]   (console_sem).lock --> &p->pi_lock --> &rq->__lock
-[   32.514618]
-[   32.514634]  Possible unsafe locking scenario:
-[   32.514634]
-[   32.514636]        CPU0                    CPU1
-[   32.514638]        ----                    ----
-[   32.514640]   lock(&rq->__lock);
-[   32.514646]                                lock(&p->pi_lock);
-[   32.514653]                                lock(&rq->__lock);
-[   32.514659]   lock((console_sem).lock);
-[   32.514665]
-[   32.514665]  *** DEADLOCK ***
-[   32.514665]
-[   32.514667] 8 locks held by (udev-worker)/241:
-[   32.514673]  #0: ffff0000438af188 (&dev->mutex){....}-{3:3}, at:
-__driver_attach+0x120/0x220
-[   32.514699]  #1: ffff0000438ab188 (&dev->mutex){....}-{3:3}, at:
-__device_attach+0x40/0x1d0
-[   32.514722]  #2: ffff80000aab0d68 (cpu_hotplug_lock){++++}-{0:0},
-at: cpus_read_lock+0x18/0x24
-[   32.514748]  #3: ffff0000409e4918 (subsys mutex#9){+.+.}-{3:3}, at:
-subsys_interface_register+0x68/0x164
-[   32.514773]  #4: ffff000048999bc8 (&policy->rwsem){+.+.}-{3:3}, at:
-cpufreq_online+0x5e4/0xa70
-[   32.514797]  #5: ffff80000ab501d0 (cpuset_mutex){+.+.}-{3:3}, at:
-cpuset_lock+0x28/0x34
-[   32.514818]  #6: ffff00004a7ad608 (&p->pi_lock){-.-.}-{2:2}, at:
-task_rq_lock+0x50/0x1c4
-[   32.514844]  #7: ffff0000f77d41d8 (&rq->__lock){-.-.}-{2:2}, at:
-task_rq_lock+0x94/0x1c4
-[   32.514867]
-[   32.514867] stack backtrace:
-[   32.514872] CPU: 2 PID: 241 Comm: (udev-worker) Not tainted 5.15.129-rc1 #1
-[   32.514882] Hardware name: Raspberry Pi 4 Model B (DT)
-[   32.514887] Call trace:
-[   32.514890]  dump_backtrace+0x0/0x200
-[   32.514898]  show_stack+0x20/0x30
-[   32.514905]  dump_stack_lvl+0x88/0xb4
-[   32.514913]  dump_stack+0x18/0x34
-[   32.514920]  print_circular_bug+0x1f8/0x200
-[   32.514933]  check_noncircular+0x140/0x154
-[   32.514945]  __lock_acquire+0x12f0/0x2090
-[   32.514957]  lock_acquire+0x208/0x320
-[   32.514968]  _raw_spin_lock_irqsave+0x84/0xec
-[   32.514980]  down_trylock+0x20/0x50
-[   32.514990]  __down_trylock_console_sem+0x44/0xc0
-[   32.515003]  console_trylock+0x44/0x100
-[   32.515015]  vprintk_emit+0x10c/0x2e0
-[   32.515027]  vprintk_default+0x40/0x50
-[   32.515039]  vprintk+0xdc/0x100
-[   32.515046]  _printk+0x64/0x8c
-[   32.515057]  lockdep_rcu_suspicious+0x34/0x10c
-[   32.515068]  inc_dl_tasks_cs+0xc0/0xd0
-[   32.515076]  switched_to_dl+0x38/0x2dc
-[   32.515086]  __sched_setscheduler+0x228/0xaf0
-[   32.515096]  sched_setattr_nocheck+0x20/0x30
-[   32.515104]  sugov_init+0x140/0x370
-[   32.515113]  cpufreq_init_governor+0x78/0x120
-[   32.515123]  cpufreq_set_policy+0x290/0x430
-[   32.515132]  cpufreq_online+0x3a0/0xa70
-[   32.515142]  cpufreq_add_dev+0xd0/0xf0
-[   32.515152]  subsys_interface_register+0x13c/0x164
-[   32.515161]  cpufreq_register_driver+0x17c/0x2e0
-[   32.515170]  dt_cpufreq_probe+0x350/0x4b4
-[   32.515182]  platform_probe+0x70/0xe0
-[   32.515194]  really_probe+0xcc/0x470
-[   32.515203]  __driver_probe_device+0x114/0x170
-[   32.515213]  driver_probe_device+0x48/0x140
-[   32.515222]  __device_attach_driver+0xd8/0x180
-[   32.515232]  bus_for_each_drv+0x84/0xe0
-[   32.515240]  __device_attach+0xa4/0x1d0
-[   32.515249]  device_initial_probe+0x1c/0x30
-[   32.515259]  bus_probe_device+0xa4/0xb0
-[   32.515268]  device_add+0x3e8/0x920
-[   32.515275]  platform_device_add+0x108/0x290
-[   32.515286]  platform_device_register_full+0xe4/0x17c
-[   32.515298]  raspberrypi_cpufreq_probe+0x13c/0x1e0 [raspberrypi_cpufreq]
-[   32.515312]  platform_probe+0x70/0xe0
-[   32.515324]  really_probe+0xcc/0x470
-[   32.515333]  __driver_probe_device+0x114/0x170
-[   32.515343]  driver_probe_device+0x48/0x140
-[   32.515352]  __driver_attach+0x12c/0x220
-[   32.515361]  bus_for_each_dev+0x7c/0xdc
-[   32.515369]  driver_attach+0x2c/0x40
-[   32.515378]  bus_add_driver+0x168/0x274
-[   32.515386]  driver_register+0x80/0x13c
-[   32.515396]  __platform_driver_register+0x30/0x40
-[   32.515408]  raspberrypi_cpufreq_driver_init+0x28/0x1000
-[raspberrypi_cpufreq]
-[   32.515421]  do_one_initcall+0x90/0x340
-[   32.515430]  do_init_module+0x50/0x28c
-[   32.515440]  load_module+0x2148/0x26f0
-[   32.515449]  __do_sys_finit_module+0xa8/0x11c
-[   32.515458]  __arm64_sys_finit_module+0x28/0x34
-[   32.515468]  invoke_syscall+0x78/0x100
-[   32.515480]  el0_svc_common.constprop.0+0x104/0x124
-[   32.515492]  do_el0_svc+0x2c/0xa0
-[   32.515503]  el0_svc+0x54/0x110
-[   32.515514]  el0t_64_sync_handler+0xe8/0x114
-[   32.515525]  el0t_64_sync+0x1a0/0x1a4
-[   32.519795] vc4-drm gpu: [drm] Cannot find any crtc or sizes
-[   32.524928] =============================
-[   32.524933] WARNING: suspicious RCU usage
-[   32.524937] 5.15.129-rc1 #1 Not tainted
-[   32.524944] -----------------------------
-[   32.524948] include/linux/cgroup.h:495 suspicious
-rcu_dereference_check() usage!
-[   32.524955]
-[   32.524955] other info that might help us debug this:
-[   32.524955]
-[   32.524960]
-[   32.524960] rcu_scheduler_active = 2, debug_locks = 1
-[   32.524967] 8 locks held by (udev-worker)/241:
-[   32.524974]  #0: ffff0000438af188 (&dev->mutex){....}-{3:3}, at:
-__driver_attach+0x120/0x220
-[   33.499420]  #1: ffff0000438ab188 (&dev->mutex){....}-{3:3}, at:
-__device_attach+0x40/0x1d0
-[   33.499454]  #2: ffff80000aab0d68 (cpu_hotplug_lock){++++}-{0:0},
-at: cpus_read_lock+0x18/0x24
-[   33.507960]  #3: ffff0000409e4918 (subsys mutex#9){+.+.}-{3:3}, at:
-subsys_interface_register+0x68/0x164
-[   33.516727]  #4: ffff000048999bc8 (&policy->rwsem){+.+.}-{3:3}, at:
-cpufreq_online+0x5e4/0xa70
-[   33.535105]  #5: ffff80000ab501d0 (cpuset_mutex){+.+.}-{3:3}, at:
-cpuset_lock+0x28/0x34
-[   33.535137]  #6: ffff00004a7ad608 (&p->pi_lock){-.-.}-{2:2}, at:
-task_rq_lock+0x50/0x1c4
-[   33.535171]  #7: ffff0000f77d41d8 (&rq->__lock){-.-.}-{2:2}, at:
-task_rq_lock+0x94/0x1c4
-[   33.559715]
-[   33.559715] stack backtrace:
-[   33.559720] CPU: 2 PID: 241 Comm: (udev-worker) Not tainted 5.15.129-rc1 #1
-[   33.559731] Hardware name: Raspberry Pi 4 Model B (DT)
-[   33.559738] Call trace:
-[   33.559742]  dump_backtrace+0x0/0x200
-[   33.582598]  show_stack+0x20/0x30
-[   33.582608]  dump_stack_lvl+0x88/0xb4
-[   33.582618]  dump_stack+0x18/0x34
-[   33.582626]  lockdep_rcu_suspicious+0xf8/0x10c
-[   33.597545]  inc_dl_tasks_cs+0xc0/0xd0
-[   33.597555]  switched_to_dl+0x38/0x2dc
-[   33.597569]  __sched_setscheduler+0x228/0xaf0
-[   33.609577]  sched_setattr_nocheck+0x20/0x30
-[   33.609588]  sugov_init+0x140/0x370
-[   33.609600]  cpufreq_init_governor+0x78/0x120
-[   33.621874]  cpufreq_set_policy+0x290/0x430
-[   33.621886]  cpufreq_online+0x3a0/0xa70
-[   33.621897]  cpufreq_add_dev+0xd0/0xf0
-[   33.633818]  subsys_interface_register+0x13c/0x164
-[   33.633830]  cpufreq_register_driver+0x17c/0x2e0
-[   33.633841]  dt_cpufreq_probe+0x350/0x4b4
-[   33.647440]  platform_probe+0x70/0xe0
-[   33.647454]  really_probe+0xcc/0x470
-[   33.647465]  __driver_probe_device+0x114/0x170
-[   33.659295]  driver_probe_device+0x48/0x140
-[   33.659307]  __device_attach_driver+0xd8/0x180
-[   33.659319]  bus_for_each_drv+0x84/0xe0
-[   33.671945]  __device_attach+0xa4/0x1d0
-[   33.671956]  device_initial_probe+0x1c/0x30
-[   33.671968]  bus_probe_device+0xa4/0xb0
-[   33.671978]  device_add+0x3e8/0x920
-[   33.671987]  platform_device_add+0x108/0x290
-[   33.672000]  platform_device_register_full+0xe4/0x17c
-[   33.696975]  raspberrypi_cpufreq_probe+0x13c/0x1e0 [raspberrypi_cpufreq]
-[   33.696992]  platform_probe+0x70/0xe0
-[   33.707506]  really_probe+0xcc/0x470
-[   33.707518]  __driver_probe_device+0x114/0x170
-[   33.707529]  driver_probe_device+0x48/0x140
-[   33.719888]  __driver_attach+0x12c/0x220
-[   33.719899]  bus_for_each_dev+0x7c/0xdc
-[   33.719909]  driver_attach+0x2c/0x40
-[   33.731394]  bus_add_driver+0x168/0x274
-[   33.731405]  driver_register+0x80/0x13c
-[   33.731416]  __platform_driver_register+0x30/0x40
-[   33.743954]  raspberrypi_cpufreq_driver_init+0x28/0x1000
-[raspberrypi_cpufreq]
-[   33.743969]  do_one_initcall+0x90/0x340
-[   33.743980]  do_init_module+0x50/0x28c
-[   33.758981]  load_module+0x2148/0x26f0
-[   33.758993]  __do_sys_finit_module+0xa8/0x11c
-[   33.759005]  __arm64_sys_finit_module+0x28/0x34
-[   33.759016]  invoke_syscall+0x78/0x100
-[   33.775606]  el0_svc_common.constprop.0+0x104/0x124
-[   33.775621]  do_el0_svc+0x2c/0xa0
-[   33.783932]  el0_svc+0x54/0x110
-[   33.783946]  el0t_64_sync_handler+0xe8/0x114
-[   33.791460]  el0t_64_sync+0x1a0/0x1a4
-
-
-Links:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.128-90-g948d61e1588b/testrun/19421242/suite/log-parser-boot/tests/
-
-metadata:
-  git_ref: linux-5.15.y
-  git_repo: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-  git_sha: 948d61e1588b9442fe7390e694431478159553bc
-  git_describe: v5.15.128-90-g948d61e1588b
-  kernel_version: 5.15.129-rc1
-  kernel-config:
-    https://storage.tuxsuite.com/public/linaro/lkft/builds/2Ubp9wnZ2x6rGWiSymzDbRIVGxr/config
-  artifact-location:
-    https://storage.tuxsuite.com/public/linaro/lkft/builds/2Ubp9wnZ2x6rGWiSymzDbRIVGxr/
-  toolchain: gcc-12
-  build_name: gcc-12-lkftconfig-kselftest-kernel
-
-
---
-Linaro LKFT
-https://lkft.linaro.org
+> 
