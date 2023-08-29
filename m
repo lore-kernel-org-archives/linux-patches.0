@@ -1,91 +1,88 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499B51643E
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 18:07:47 +0000 (UTC)
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-68a6f6a66e1so3430992b3a.2
-        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 11:07:47 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDDE1643E
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 18:47:39 +0000 (UTC)
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1c1e128135aso16287655ad.3
+        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 11:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693332466; x=1693937266; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HHqHaW4KwaaV6z2LCLOETVk7sy6B6NzFH3inU6ye2zw=;
-        b=V54xuYD8wTXFugvSkLWFwcel5046Xjd2ITJamjyoj8MZP/f/sNuhlo23nfEPKTnbth
-         kpW8BRWFaEWmMNcFgz6VNI5ERfekD1ATrzdfR+zX71ipuFB3h/2Gsz2+/FVjH6rnW+pS
-         JcVppimSD5hO0TUn9p4RaKTRuHIMlJKKEAr75kRgx7H2gi3e0jSHn/k3h8A4e255VKlA
-         F7con8JWb4IEZmpxyLa23QUZwC5mzd9EhiP4q+J6WgDNOB6fdCahhTk+XxlqBAZCAvyi
-         xjJaAdT/JPLjQ5JQ5QwqHuUK6VMMOk7jwpsUh/ikqGFvudpWHOUFj/AuIyxof3s1JZ10
-         +2sA==
+        d=chromium.org; s=google; t=1693334859; x=1693939659;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dx+edCyWT7zKxIInG8qNdrcdM7Jww6Q6gVOtGT7ALUw=;
+        b=NXBOd2mkw+gBkwUStDBV8PaGrgZhqCKwaBrY9Usk61+UBBtfDS7Uj7teurMoc22HQb
+         3V5SHImgrwViJcGhvlCFMtXqOLx3dqfDPhULkiewQIPMxijOSEnXsKzFpiSIxv02jyRE
+         +Jf3CDHT970kefX0aposB1huf8Yi6tErzFupQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693332466; x=1693937266;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HHqHaW4KwaaV6z2LCLOETVk7sy6B6NzFH3inU6ye2zw=;
-        b=KkUTAVdMqlSJ83Hr8GrNj0DxPd+GtkeindOqYpdrA1FdqQx4m3Imr6qeAkyXH143Sw
-         ngEc/RRyPnTdGRpXSKjQDCZV2vPJ+UBy61b5QZAXYcUW/jEzRzleBriATsUtPiXYTHL1
-         P5NwwalmCWNHtHzIBpKT5meGFxXd3nFGQqH5rO5arNncN9ohHSEJJPt/NSfdsj1VnHoc
-         zZ4sPVkbJ+KqbCisEpU4X5lYVrtQ1/1CFCm5rFS+DBT03RlG3Yogfc0B3D3O5ET/H8K6
-         B6cmvcDcdEo5x55ilW0ZWeITarpQPRqMyK2R3NpYcMR6YmY3T07S6OWFXbJpgracBqKk
-         J7Pg==
-X-Gm-Message-State: AOJu0YzeGCVCuCN5ipyKG1MSH7pLq9ja9mPATJ94Qgwb8ZLhZE0Q0tQX
-	C6fXjDdB+qC6snUTdxIffbk=
-X-Google-Smtp-Source: AGHT+IH6MH7k4ug7I5ZRMawMDH0VR/q8VbMH6uQ19gZnP7/JRPEznb631iIMkAIcHs3g+SO57yK0lA==
-X-Received: by 2002:a05:6a21:6d95:b0:13b:b4bb:8b18 with SMTP id wl21-20020a056a216d9500b0013bb4bb8b18mr86334pzb.1.1693332466360;
-        Tue, 29 Aug 2023 11:07:46 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id z37-20020a056a001da500b00686bef8e55csm1384388pfw.39.2023.08.29.11.07.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Aug 2023 11:07:45 -0700 (PDT)
-Message-ID: <ecb75e57-438c-fb29-41dd-5921899ee743@gmail.com>
-Date: Tue, 29 Aug 2023 11:07:25 -0700
+        d=1e100.net; s=20221208; t=1693334859; x=1693939659;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dx+edCyWT7zKxIInG8qNdrcdM7Jww6Q6gVOtGT7ALUw=;
+        b=ic8bYfyLXdopHx6YSb3MwG/acu2CiakTVW5SRfIQ6hYnonIJc0Ghp6OET/NEp/uMWJ
+         o/XA0mV/4Vkj2i4Sw8Kj8WnKRGs3m810qaia7NQ2veGiaX+5k70AdPYZaNab0QCTeIeF
+         JM1Oxu1UATK2GTzcsWe1hpAxAaf5GFQxoM4caVeWJF7YDOlwrxlnjrdlMcav+w3lBlfj
+         ifcsjxRVXdzpGIialmE0qapcaoz4l7tlc46PCML8cPEAdIPq9NJGZiEz/P0G4+J8pQBT
+         305B7d5y+7aTs3FZv6e4Yh/7OkIXhKQo6qcf9Q0TlZb1HOkuzXb1Qh5AjV1YZOcUBaAa
+         fkLA==
+X-Gm-Message-State: AOJu0YwBVk7DJPTCTnqjgzShL5oGqeFU9KVUjc5BcIAkUWMuTPsln41v
+	iiak2Scu+DVAEJfqFgX56xmtRw==
+X-Google-Smtp-Source: AGHT+IES+SJEkk4EUF9mvR0kkp/iKD9S9fLPoptNHth9XsbuVQ5O48L+bHDHC/h6NFzIK11AbzCyfA==
+X-Received: by 2002:a17:903:1205:b0:1c2:54c:8beb with SMTP id l5-20020a170903120500b001c2054c8bebmr1955615plh.31.1693334858992;
+        Tue, 29 Aug 2023 11:47:38 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:d603:22a7:5e5e:d239])
+        by smtp.gmail.com with ESMTPSA id o15-20020a170902d4cf00b001b9e86e05b7sm9697953plg.0.2023.08.29.11.47.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 11:47:38 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Sean Paul <sean@poorly.run>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Vinod Polimera <quic_vpolimer@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: [PATCH 0/7] drm/msm/dp: Simplify DPCD related code with helpers
+Date: Tue, 29 Aug 2023 11:47:25 -0700
+Message-ID: <20230829184735.2841739-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.42.0.rc2.253.gd59a3bf2b4-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 5.10 00/84] 5.10.193-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230828101149.146126827@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20230828101149.146126827@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/28/23 03:13, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.193 release.
-> There are 84 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.193-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+This driver open-codes a few of the DPCD register reads when it can be
+simplified by using the helpers instead. This series reworks the MSM DP
+driver to use the DPCD helpers and removes some dead code along the way.
+There's the potential for even more code reduction around the test
+registers, but I haven't tried to do that yet.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Stephen Boyd (7):
+  drm/msm/dp: Replace open-coded drm_dp_read_dpcd_caps()
+  drm/msm/dp: Use drm_dp_read_sink_count() helper
+  drm/msm/dp: Remove dead code related to downstream cap info
+  drm/msm/dp: Remove aux_cfg_update_done and related code
+  drm/msm/dp: Simplify with drm_dp_{max_link_rate,max_lane_count}()
+  drm/msm/dp: Inline dp_link_parse_sink_count()
+  drm/msm/dp: Remove dp_display_is_ds_bridge()
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
+Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+
+ drivers/gpu/drm/msm/dp/dp_display.c |   9 +--
+ drivers/gpu/drm/msm/dp/dp_link.c    |  38 +---------
+ drivers/gpu/drm/msm/dp/dp_panel.c   | 105 +++++-----------------------
+ drivers/gpu/drm/msm/dp/dp_panel.h   |  10 +--
+ 4 files changed, 22 insertions(+), 140 deletions(-)
+
+
+base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
 -- 
-Florian
+https://chromeos.dev
 
