@@ -1,99 +1,98 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC744156C7
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 12:19:23 +0000 (UTC)
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-401187f8071so27155245e9.0
-        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 05:19:23 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4407F156C7
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 12:24:04 +0000 (UTC)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-977e0fbd742so556015166b.2
+        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 05:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693311562; x=1693916362;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mNfFsSrHfmhhWlX6jJezyPUMpq+AyznfbXEcUEhwfFo=;
-        b=phP6IbXgWo1ccHlUUiaW/MqXctIjJ1N5TK8jUf45zhLzqG4vyQP9X5ZUJJFIDdiGN4
-         0GlC64iSzWupjz9UgllrJAcAZ0QoaEC6geGOYjFCkGkAQCV6F2Hi8TKvt8FEhEf+lgQK
-         bWmdIc2rbRqcNs2ikHfRXGI8uuLRted7xQ4jTb5ce4ssIh3dYrA9qF9nVvW6Ewbq+O+0
-         Fy6v6W+6yeVDsL6tn/xfmi1XdPCT9zB3lxJI/njmPWa5RTI5HbCu8yANAO/wf37SLoSi
-         mtmkIuq+STxI+6NlXad4drJ1coKDgidu4fj0kh/xuaknhe6A13ENZyN8dKGLIBG0v9zk
-         WO5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693311562; x=1693916362;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1693311842; x=1693916642;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mNfFsSrHfmhhWlX6jJezyPUMpq+AyznfbXEcUEhwfFo=;
-        b=kb4pLKruUNXHyB4G8m+v1EeY75+r65URNl5LvvTpLHbq2XjWINPw9KgT+8FvTXj7HS
-         TH1d/h+uOp/A7yzTxGegmogkbbjpUn9Hfh8OZZh5RiEiT6Elkw5d3XWRloT7/pTemD4Z
-         gKCPoiEJcqRN/Y8SHTvG7E1A1vkT8BSfc5PrhIVrVtNrXONzzByIxcteQIuPnoWDw+op
-         gI3vnhR5syiLbs6adqDd7VqK/WR5CIcoHSvyQGmBGeDAvcKeHChIGeOBw0+nCVurpIA6
-         OUCPcIntbzMFETzyXGy3g5Q/qUpUfNaHHX2OrRfB+4y8EIVvB8+W9SZ4TfXoViiT4MdW
-         Bodg==
-X-Gm-Message-State: AOJu0Yx9arZ9xlnzT/pRKLwtx5fwljU2jntFjkpxXvb+wvDOoIVM1Z19
-	rvriImu2exQ+mg2jGXsVahs=
-X-Google-Smtp-Source: AGHT+IEeh+znma1g4setjUEYhruswbgcqMaM9C2GUbUmqFMZvQcW5GFOn0WKfSU8IkmrhKjzs8tTxg==
-X-Received: by 2002:a1c:4b17:0:b0:401:b0f2:88d3 with SMTP id y23-20020a1c4b17000000b00401b0f288d3mr2024106wma.19.1693311561822;
-        Tue, 29 Aug 2023 05:19:21 -0700 (PDT)
-Received: from debian ([167.98.27.226])
-        by smtp.gmail.com with ESMTPSA id n23-20020a7bcbd7000000b003fef6881350sm13981741wmi.25.2023.08.29.05.19.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Aug 2023 05:19:21 -0700 (PDT)
-Date: Tue, 29 Aug 2023 13:19:19 +0100
-From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
-	rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 000/122] 6.1.50-rc1 review
-Message-ID: <ZO3iR/frz8QhqTGB@debian>
-References: <20230828101156.480754469@linuxfoundation.org>
+        bh=p1DpgeQF0qAJYwjOQwq1anUEnLtdLD/PWJWKK0I1HOc=;
+        b=cA9XmJfcRbpUztCevZFe3yo0E656X8yAIzfKzOCkNBQey6M7j6DitExsyN6z0SyX1+
+         M9GeV/m5aK3eGekA2kHNxNqglSbkD5ENHHKUi3wlKg+5nojr1km1OUPSikCmrXGytj0F
+         4jyEBFC7wtpyBFC20qwSvZaLuHC6lAFSYC4RPXQFjJ2Xvz+Z0ECLIM4OS2rQpRGX6zKw
+         9IAoPjKc49a5Cc53J8pjx3aIH1aw0PqyZwPj67K4XSaPP2aVGvITagZT9uryXSEG/fjr
+         DB3kyxxgjD/I3fi+P6b6vSm2kQFbx8Lyo61NitQCnbmZNtyWLvlt3pUba3F2B8DvxXX4
+         MV0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693311842; x=1693916642;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p1DpgeQF0qAJYwjOQwq1anUEnLtdLD/PWJWKK0I1HOc=;
+        b=MlzaYEfTBvObO6klIxvW9cLFQqDYauZ9N/UJdBF0Bpu4YtGGTU1neQ8GXs8AXpbZGB
+         AeOBbEDjdRHOTchY4Sqiokyy5UswlD4fxwI+QowteQ1mHJRBu77FOlxPH9EKEH4hokpJ
+         4k8M6Bog6AV1ItBY1wh7t13K/epBLzr4KztAkisGA9ty77XqBUjj+MpZ6/DWImFKCjjU
+         SlAR0vU51MbhRVcuTq+nwtvI36qW76R/z+/N2Kjbik5FGnYeI/SIG98NT6yUDAHViRX1
+         0Sn5AkUG2k+QkVQZZPk+9kyawSjx9FiALmeYsW5+SUg86JazPdLRrzayPxFUjpLyVXwN
+         pmxQ==
+X-Gm-Message-State: AOJu0Ywyv2OoZXkv/DfKZZGRz40esNGu1KYDcm9OEoTMi/moIMfPAfS4
+	nmvbwXFXEHIsboRGlKqDdnVQ99Ao+/Fv/Pf14X0DRQ==
+X-Google-Smtp-Source: AGHT+IHR/4fdDkjCkO44/dq2ZeuQnhrhwd/+5QWGpoWoiT0wRctbDgQt3EbA24iEBZ7SyGgQyWIKrh9PYnmaIRZlQ4c=
+X-Received: by 2002:a17:906:cc2:b0:99e:f3b:2f78 with SMTP id
+ l2-20020a1709060cc200b0099e0f3b2f78mr22432508ejh.67.1693311842156; Tue, 29
+ Aug 2023 05:24:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230828101156.480754469@linuxfoundation.org>
 In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 29 Aug 2023 21:23:51 +0900
+Message-ID: <CAKL4bV4_k=G5FbiFxZnw70Vsy6CmCOpH3oUSq5_wRzVqdnz4OA@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/122] 6.1.50-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Greg,
+Hi Greg
 
-On Mon, Aug 28, 2023 at 12:11:55PM +0200, Greg Kroah-Hartman wrote:
+On Mon, Aug 28, 2023 at 7:31=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.1.50 release.
 > There are 122 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
 > Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.50-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Build test (gcc version 12.3.1 20230829):
-mips: 52 configs -> no failure
-arm: 100 configs -> no failure
-arm64: 3 configs -> no failure
-x86_64: 4 configs -> no failure
-alpha allmodconfig -> no failure
-csky allmodconfig -> no failure
-powerpc allmodconfig -> no failure
-riscv allmodconfig -> no failure
-s390 allmodconfig -> no failure
-xtensa allmodconfig -> no failure
+6.1.50-rc1 tested.
 
-Boot test:
-x86_64: Booted on my test laptop. No regression.
-x86_64: Booted on qemu. No regression. [1]
-arm64: Booted on rpi4b (4GB model). No regression. [2]
-mips: Booted on ci20 board. No regression. [3]
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-[1]. https://openqa.qa.codethink.co.uk/tests/4840
-[2]. https://openqa.qa.codethink.co.uk/tests/4862
-[3]. https://openqa.qa.codethink.co.uk/tests/4861
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+Thanks
 
--- 
-Regards
-Sudip
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
