@@ -1,91 +1,181 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BD6174E6
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 19:44:22 +0000 (UTC)
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-26b41112708so3110075a91.3
-        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 12:44:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693338262; x=1693943062; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mToAGNYEJndzIg6op7Xj1XSTquaaHAfcvA8BaN3iBy0=;
-        b=Gialc4JKcTW3su0sKwgGTOIsrrXpdjf8Ak2u/vZZpN5LocDYqVLDr5xQaFaoI6f7zO
-         pWjh22rFUBlWU3ogAP25sN5I6s+FBpc2CxG0eJoBlztnJQeG6ITI/O9rlVVujiRcc+Jl
-         Et3KjySL+F7vXRInAw151VCRnFIEr87AHPKiMElm2izVvdozkuvEaBdntiIpP2YtB1LD
-         zvE4jVOjWrDmfGQUDmhRfaomjMAAYONdwC6D+gQvarAl19DCMPF5DglrVQB1UvTQggIe
-         CqV9yW62+5W32GxmSq/zD65z3Luy30bgYmSrd//QN+Scg87SVeINinkasshy7PxBvmRU
-         d+Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693338262; x=1693943062;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mToAGNYEJndzIg6op7Xj1XSTquaaHAfcvA8BaN3iBy0=;
-        b=dni38pvNBlYkHHKie7kv5AhaJ8Jpr3zZw8fLf9iz95s2AmKXqKBk5k23RZGWnl556W
-         5TdgBy0mPApxJhEyqLysqWAy37K/2XjTK3ciECFRiEfit9o6Z/Qy4c/JLUgKZaaA2DRT
-         yuSfu9QEtKwNfnARcwN4gjnVbkZM69idMUV/DNPJf8+tvIS05PkzSRUQoOcSiJ6Ld0Dg
-         TuzasxUyxALysRXqn7cr7vgLpQLE3++Ij4AY/l3rnZ6R7uiQ/wNfb38aFGL2TMqyXnxi
-         wuwP9EAltr54Ic8SC/o4D2U0nZUb1RFfU1jS2pzzzYf3DXya33eNLfNi0r/FdSale/So
-         K9gQ==
-X-Gm-Message-State: AOJu0YyMBO7Ka3zbwkvahesPPMqSrr211bmiHgOo+7jsgCoWrX6489Yc
-	mvzNOT+m51V4MVeAJ5Holxo=
-X-Google-Smtp-Source: AGHT+IEuYiWzg0ugLovZhtJNHSU/a5jwe8SZ5NHNAbiCIDtyarZHLuEQB46PS7VQ/FctISB/7BBvVQ==
-X-Received: by 2002:a17:902:e883:b0:1bc:422a:b9fd with SMTP id w3-20020a170902e88300b001bc422ab9fdmr159983plg.13.1693338262206;
-        Tue, 29 Aug 2023 12:44:22 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id ji18-20020a170903325200b001b9d8688956sm9769305plb.144.2023.08.29.12.44.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Aug 2023 12:44:21 -0700 (PDT)
-Message-ID: <d58bf5ac-7b38-a5ec-ec54-0148e3bc80ca@gmail.com>
-Date: Tue, 29 Aug 2023 12:44:04 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA00917751
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 19:54:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=Va/RSFhbdKl23N01Y3bjzYNfsXfnbqRnHN67I1kNSDw=; b=q/+n7Xi+eRdEMRNDoI3mCYXYAf
+	FeDJF/NmB2WoDQHGWWRumW6W8c74QxZH14hxg+AG3HkNiAIkayMU6PhZvW1VNGExP1W37bhYOtClG
+	vhCTU1k6qjwVB4MHhVjG8/HGIiWYL9uNgz6FHpCGYCvBLznSiO7D2cfbeU2x9t6rOCOT/rFTB8YrT
+	s8YLSJ26KhFR+7X2KAma6wvTqGl+3xL2QWktM4yhM93laZl7IeOT/9W0B9P5EtmZEORfhMiOjqX1W
+	XLxl6F98+Bzkzlr6DUo1xUS0w565f//46t73LiJYry/H2KJ/xEoUWB6QlFp5ANONVTN7KkwHkL+ss
+	nbFsMiCA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1qb4mx-00CBqm-0o;
+	Tue, 29 Aug 2023 19:54:11 +0000
+Date: Tue, 29 Aug 2023 12:54:11 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-modules@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org, hch@lst.de,
+	gregkh@linuxfoundation.org, manuel.lauss@gmail.com, kuba@kernel.org,
+	kumba@gentoo.org, palmer@rivosinc.com, masahiroy@kernel.org,
+	rdunlap@infradead.org, zeming@nfschina.com, rongtao@cestc.cn,
+	arnd@arndb.de, pmladek@suse.com, chenjiahao16@huawei.com,
+	christian@bricart.de, peterz@infradead.org, song@kernel.org,
+	keescook@chromium.org, thunder.leizhen@huawei.com,
+	mcgrof@kernel.org
+Subject: [GIT PULL] Modules changes for v6.6-rc1
+Message-ID: <ZO5M45JsJYzNF59H@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.1 000/122] 6.1.50-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230828101156.480754469@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On 8/28/23 03:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.50 release.
-> There are 122 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.50-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+The following changes since commit 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+  Linux 6.5-rc1 (2023-07-09 13:53:13 -0700)
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+are available in the Git repository at:
 
+  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.6-rc1
+
+for you to fetch changes up to a419beac4a070aff63c520f36ebf7cb8a76a8ae5:
+
+  module/decompress: use vmalloc() for zstd decompression workspace (2023-08-29 09:39:08 -0700)
+
+I forgot to mention below that most of this except the last couple of minor
+patches have been in linux-next for about a month.
+
+----------------------------------------------------------------
+Modules changes for v6.6-rc1
+
+Summary of the changes worth highlighting from most interesting to boring below:
+
+  * Christoph Hellwig's symbol_get() fix to Nvidia's efforts to circumvent the
+    protection he put in place in year 2020 to prevent proprietary modules from
+    using GPL only symbols, and also ensuring proprietary modules which export
+    symbols grandfather their taint. That was done through year 2020 commit
+    262e6ae7081d ("modules: inherit TAINT_PROPRIETARY_MODULE"). Christoph's new
+    fix is done by clarifing __symbol_get() was only ever intended to prevent
+    module reference loops by Linux kernel modules and so making it only find
+    symbols exported via EXPORT_SYMBOL_GPL(). The circumvention tactic used
+    by Nvidia was to use symbol_get() to purposely swift through proprietary
+    module symbols and completley bypass our traditional EXPORT_SYMBOL*()
+    annotations and community agreed upon restrictions.
+
+    A small set of preamble patches fix up a few symbols which just needed
+    adjusting for this on two modules, the rtc ds1685 and the networking enetc
+    module. Two other modules just needed some build fixing and removal of use
+    of __symbol_get() as they can't ever be modular, as was done by Arnd on
+    the ARM pxa module and Christoph did on the mmc au1xmmc driver.
+
+    This is a good reminder to us that symbol_get() is just a hack to address
+    things which should be fixed through Kconfig at build time as was done in
+    the later patches, and so ultimately it should just go.
+
+  * Extremely late minor fix for old module layout 055f23b74b20 ("module: check
+    for exit sections in layout_sections() instead of module_init_section()") by
+    James Morse for arm64. Note that this layout thing is old, it is *not*
+    Song Liu's commit ac3b43283923 ("module: replace module_layout with
+    module_memory"). The issue however is very odd to run into and so there was
+    no hurry to get this in fast.
+
+  * Although the fix did not go through the modules tree I'd like to highlight
+    the fix by Peter Zijlstra in commit 54097309620e ("x86/static_call: Fix
+    __static_call_fixup()") now merged in your tree which came out of what
+    was originally suspected to be a fallout of the the newer module layout
+    changes by Song Liu commit ac3b43283923 ("module: replace module_layout
+    with module_memory") instead of module_init_section()"). Thanks to the report
+    by Christian Bricart and the debugging by Song Liu & Peter that turned to
+    be noted as a kernel regression in place since v5.19 through commit
+    ee88d363d156 ("x86,static_call: Use alternative RET encoding").
+
+    I highlight this to reflect and clarify that we haven't seen more fallout
+    from ac3b43283923 ("module: replace module_layout with module_memory").
+
+  * RISC-V toolchain got mapping symbol support which prefix symbols with "$"
+    to help with alignment considerations for disassembly. This is used to
+    differentiate between incompatible instruction encodings when disassembling.
+    RISC-V just matches what ARM/AARCH64 did for alignment considerations and
+    Palmer Dabbelt extended is_mapping_symbol() to accept these symbols for
+    RISC-V. We already had support for this for all architectures but it also
+    checked for the second character, the RISC-V check Dabbelt added was just
+    for the "$". After a bit of testing and fallout on linux-next and based on
+    feedback from Masahiro Yamada it was decided to simplify the check and treat
+    the first char "$" as unique for all architectures, and so we no make
+    is_mapping_symbol() for all archs if the symbol starts with "$".
+
+    The most relevant commit for this for RISC-V on binutils was:
+
+    https://sourceware.org/pipermail/binutils/2021-July/117350.html
+
+  * A late fix by Andrea Righi (today) to make module zstd decompression use
+    vmalloc() instead of kmalloc() to account for large compressed modules. I
+    suspect we'll see similar things for other decompression algorithms soon.
+
+  * samples/hw_breakpoint minor fixes by Rong Tao, Arnd Bergmann and Chen Jiahao
+
+----------------------------------------------------------------
+Andrea Righi (1):
+      module/decompress: use vmalloc() for zstd decompression workspace
+
+Arnd Bergmann (2):
+      samples/hw_breakpoint: fix building without module unloading
+      ARM: pxa: remove use of symbol_get()
+
+Chen Jiahao (1):
+      samples/hw_breakpoint: mark sample_hbp as static
+
+Christoph Hellwig (4):
+      mmc: au1xmmc: force non-modular build and remove symbol_get usage
+      net: enetc: use EXPORT_SYMBOL_GPL for enetc_phc_index
+      rtc: ds1685: use EXPORT_SYMBOL_GPL for ds1685_rtc_poweroff
+      modules: only allow symbol_get of EXPORT_SYMBOL_GPL modules
+
+James Morse (3):
+      module: Expose module_init_layout_section()
+      arm64: module: Use module_init_layout_section() to spot init sections
+      ARM: module: Use module_init_layout_section() to spot init sections
+
+Kees Cook (1):
+      kallsyms: Add more debug output for selftest
+
+Li zeming (1):
+      kernel: params: Remove unnecessary ‘0’ values from err
+
+Palmer Dabbelt (2):
+      module: Ignore RISC-V mapping symbols too
+      modpost, kallsyms: Treat add '$'-prefixed symbols as mapping symbols
+
+Rong Tao (1):
+      samples/hw_breakpoint: Fix kernel BUG 'invalid opcode: 0000'
+
+ arch/arm/kernel/module-plts.c                    |  2 +-
+ arch/arm/mach-pxa/sharpsl_pm.c                   |  2 --
+ arch/arm/mach-pxa/spitz.c                        | 14 +-------------
+ arch/arm64/kernel/module-plts.c                  |  2 +-
+ arch/mips/alchemy/devboards/db1000.c             |  8 +-------
+ arch/mips/alchemy/devboards/db1200.c             | 19 ++-----------------
+ arch/mips/alchemy/devboards/db1300.c             | 10 +---------
+ drivers/mmc/host/Kconfig                         |  5 +++--
+ drivers/net/ethernet/freescale/enetc/enetc_ptp.c |  2 +-
+ drivers/rtc/rtc-ds1685.c                         |  2 +-
+ include/linux/module_symbol.h                    |  4 +---
+ include/linux/moduleloader.h                     |  5 +++++
+ kernel/kallsyms_selftest.c                       | 22 ++++++++++++++++++----
+ kernel/module/decompress.c                       |  4 ++--
+ kernel/module/main.c                             | 16 ++++++++++++----
+ kernel/params.c                                  |  2 +-
+ samples/hw_breakpoint/data_breakpoint.c          |  6 ++++--
+ 17 files changed, 55 insertions(+), 70 deletions(-)
