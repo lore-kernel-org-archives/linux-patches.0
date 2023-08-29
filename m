@@ -1,111 +1,116 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FF8366
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 00:31:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693269076; x=1724805076;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+O0znDO+Pz3D60RFYXIkyVZSD4gqgtT9ZrBhiyflP+Q=;
-  b=JgRjYWvtSOrCO4igVo2KKt3kFc4WPEfWT7/9L9pxtnrENIcGKJ+WVp30
-   6Hk6o2izFJT8eNutQAdOLJh9SEvIWCSdrIUp9U1GuhdDmPYGvL3s6+1bw
-   e83pg1jxXMSPqw43+fNlYNF76cvAl7qOs91MhCA2SaAaV61NC2Ja6alon
-   By49cXOsme8i6dIiTN8Q4DBF05neReH+FLN1JYNR63IdwqMmV/dz77/LA
-   /ADt3ojcazcLHkddm/0KfIgLSG8w3+o7qzpWEzC/rRpXPdndGmCvLWbjO
-   C1YEE6dtski+sCP6hboOBa/3dPbHUVIu0iIxQBgaej+DHNuWG2eq+N5/b
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="379015212"
-X-IronPort-AV: E=Sophos;i="6.02,208,1688454000"; 
-   d="scan'208";a="379015212"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2023 17:31:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.01,202,1684825200"; 
-   d="scan'208";a="882117833"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2023 17:31:20 -0700
-Date: Mon, 28 Aug 2023 17:31:13 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v4 1/7] x86/resctrl: Create separate domains for control
- and monitoring
-Message-ID: <ZO08UYWgxAATl/oq@agluck-desk3>
-References: <20230722190740.326190-1-tony.luck@intel.com>
- <20230722190740.326190-2-tony.luck@intel.com>
- <cc1a144f-6667-18fb-7fe7-cd15ebfedd08@intel.com>
- <ZOjfPx8iwTULTqdg@agluck-desk3>
- <da2c0e45-56d0-e04d-774d-4292d156e1d0@intel.com>
- <ZOzroJqc22HFZOXq@agluck-desk3>
- <5b5962d3-6a7b-cc60-4221-8267bfbc3bfd@intel.com>
- <ZO0KtAefCStikXEm@agluck-desk3>
- <e3cbefc5-e686-5561-a71e-06417ab51d07@intel.com>
- <ZO0b2j5lOpxPu3iw@agluck-desk3>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC647FF;
+	Tue, 29 Aug 2023 01:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4469FC433C8;
+	Tue, 29 Aug 2023 01:54:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1693274067;
+	bh=pPmTDiK4MLHcRRW0Gn3reBk9e6g2ANdvYrkajhi3BUM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DvH1RRnIEYEoWOgAgYnjxk42+4AeHPBoIszQqlDaiyyQ9Z9nUIjFqURvwHveQ0GQF
+	 Vjs8iM4Z2Ou/GlGB1a+ynXQyqqQ4oN3CXpwu37TloaLiRp4o+GQ9LWaCzXLjCgeyce
+	 DZ8TdXJJgpk02WKltUJpOtPF/vxE9e2kJwpK0tiGA4P/8SjeBKVz3eFnOa9o1OwheG
+	 yqCZLDWFa56fD1yBDxgbKtyTmCpfHQkgb0uARQM3mNG5AVJETRdVCUVRsOLoJ+uVGE
+	 si0m9Gk/PdMhxhJvNWxBtiilvxS4uo/SwPBPnlB/vDCCa1xTUJGtlWnAIqjBgflPDC
+	 E+yL9B8KPs62Q==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.4 000/129] 6.4.13-rc1 review
+Date: Tue, 29 Aug 2023 01:54:24 +0000
+Message-Id: <20230829015424.50202-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZO0b2j5lOpxPu3iw@agluck-desk3>
+Content-Transfer-Encoding: 8bit
 
-Trimming to the core of the discussion.
 
-> > >> 	if (r->alloc_capable && domain_setup_ctrlval(r, d)) {
-> > >> 		domain_free(hw_dom);
-> > >> 		return;
-> > >> 	}
-> > >>
-> > >> 	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
-> > >> 		domain_free(hw_dom);
-> > >> 		return;
-> > >> 	}
+Hello Greg,
 
-In the current code the control and monitor functions share a domain
-structure. So enabling one without the other would lead to a whole
-slew of complications. Various other bits of code would need to change
-to make run-time checks that the control/monitor pieces of the shared
-domain structure had been completely set up. So the existing code takes
-the easy path out and says "if I can't have both, I'll take have
-neither".
+On Mon, 28 Aug 2023 12:11:19 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> > >> The above is the other item that I've been trying to discuss
-> > >> with you. Note that existing resctrl will not initialize monitoring if
-> > >> control could not be initialized.
-> > >> Compare with this submission:
-> > >>
-> > >> 	if (r->alloc_capable)
-> > >> 		domain_add_cpu_ctrl(cpu, r);
-> > >> 	if (r->mon_capable)
-> > >> 		domain_add_cpu_mon(cpu, r);
+> This is the start of the stable review cycle for the 6.4.13 release.
+> There are 129 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.13-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
 
-With the updates I'm making, there are separate domain structures for
-control and monitor.  They don't have to be tied together. It's possible
-for initialization to fail on one, but the other remain completely
-functional (without adding "is this completely setup" checks to
-other code).
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-The question is what should the code do? Should it allow a partial
-success (now that is possible)? Or should it maintain legacy behavior
-and block use of both control and monitor for domain if either fails
-to allocate necessary memory to operate?
+Tested-by: SeongJae Park <sj@kernel.org>
 
-I'm generally in favor of legacy semantics. But it seems weird to make
-the code deliberately worse to preserve this particular behavior.
-Especially as it adds complexity to the code for a case that in practice
-is never going to happen.
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 8c2717f278c5 ("Linux 6.4.13-rc1")
 
--Tony
+Thanks,
+SJ
+
+[...]
+
+---
+
+ [32m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
+_remote_run_corr.sh SUCCESS
