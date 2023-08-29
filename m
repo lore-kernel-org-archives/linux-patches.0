@@ -1,103 +1,261 @@
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067A56AAC
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:28:24 +0000 (UTC)
-Received: from eig-obgw-5002a.ext.cloudfilter.net ([10.0.29.215])
-	by cmsmtp with ESMTP
-	id b7MEqhzQWDKaKb86iq2SOc; Tue, 29 Aug 2023 23:26:48 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id b86hqzMZK9srIb86hq0F1A; Tue, 29 Aug 2023 23:26:48 +0000
-X-Authority-Analysis: v=2.4 cv=ZuL+lv3G c=1 sm=1 tr=0 ts=64ee7eb8
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=UttIx32zK-AA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=UBOAt4it5aQqk4EXWMeXuCOaSWxoxO7ene9cFrzDPeo=; b=VTh020OaueNwEopQppbuLLspmb
-	+Vl9n1Qc3+zKdF680+HWcNnsLSRC89kQa+HRuJUx8QMZXbu/2OZSC346EEsF2nR8CTkUBpgQry4mF
-	kQSPeGHI5UKo+F8UN8Mu6ONmFrdr1/+kmKYGTnPFWAnPcU2KzKriQxxhVCwkW8Kdpbn3o737dOrxR
-	Tp9sC9IpD8DixEacx8JNgmqo6yy2oAiUqmyxHbrHR8ToNaneBkqg6FkjeNNQgwDP981N37AywRV1x
-	/+sOtPbMU3vPx6FlEEM+bGWD4KF4DAhy7upG2PMC5seNs/FOlnQYyqotPN6lcWYyESuPUUkDXwYvG
-	excmujsg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53546 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qb86f-000XiH-0X;
-	Tue, 29 Aug 2023 17:26:45 -0600
-Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230828101150.163430842@linuxfoundation.org>
-In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <8f063190-6338-8cc2-a905-ffbee4f5ffb4@w6rz.net>
-Date: Tue, 29 Aug 2023 16:26:42 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3797462
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693352681; x=1724888681;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=WgHlgC60ihdg3OH9uRN9oBta8S6ahuDhNdnK2yhBSmQ=;
+  b=Mr72NLygg2lTOgLrurIrmrx0NrwWhos2vQSM7mvpPZkjLgaHU9o1p1Lc
+   l7wTo64W41OfNE7o0XdCYIBrmofWtU7QzJTqlD8aMUwIbmkWfYA9xrIos
+   MWu7tWJ8GP+B+uyuk8VrRY0SaNEu6yPQdXE3zraFCMUY473ODN/1rX84z
+   2YlabodYMKghB5FrCL0aCIgCEonhaef6LRIOcAM36KBxFNDVcHHobKVMf
+   ge8ty/C2e/7NOl4D/QDdNOzim19QodzJs/r2nrRb/L+rMfcY1sUcwCRZc
+   eSSdySzC5Lx/peNrPgnVE+IFB1zXfVS2SDNvke1TvUYN+1O5aaVVyb83y
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015413"
+X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
+   d="scan'208";a="355015413"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:37 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691020"
+X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
+   d="scan'208";a="688691020"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:36 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v5 1/8] x86/resctrl: Prepare for new domain scope
+Date: Tue, 29 Aug 2023 16:44:19 -0700
+Message-ID: <20230829234426.64421-2-tony.luck@intel.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230829234426.64421-1-tony.luck@intel.com>
+References: <20230722190740.326190-1-tony.luck@intel.com>
+ <20230829234426.64421-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qb86f-000XiH-0X
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53546
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfKYaCrShxylTVQr42eaep/mr3EPi5hk4MkUAvuLBFtt6FscVZQQZ1uFHKD1LZzf7/Hekaf8LRJlnb0sP1JO+iQsgOBpfwb1vsGAmWUWPDxEI/ZGNx9BB
- dTcXJ5xRiVaYYr1hU425IkySXDiFU6UzEEwNrMHZha5mjzcxYQgiqeK07FdPXBjKBgrIMwqSzJo6MA==
+Content-Transfer-Encoding: 8bit
 
-On 8/28/23 3:13 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.129 release.
-> There are 89 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Legacy resctrl features operated on subsets of CPUs in the system with
+the defining attribute of each subset being an instance of a particular
+level of cache. E.g. all CPUs sharing an L3 cache would be part of the
+same domain.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+In preparation for features that are scoped at the NUMA node level
+change the code from explicit references to "cache_level" to a more
+generic scope. At this point the only options for this scope are groups
+of CPUs that share an L2 cache or L3 cache.
 
-Tested-by: Ron Economos <re@w6rz.net>
+No functional change.
+
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ include/linux/resctrl.h                   |  9 ++++++--
+ arch/x86/kernel/cpu/resctrl/core.c        | 27 ++++++++++++++++++-----
+ arch/x86/kernel/cpu/resctrl/pseudo_lock.c | 15 ++++++++++++-
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 15 ++++++++++++-
+ 4 files changed, 56 insertions(+), 10 deletions(-)
+
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 8334eeacfec5..2db1244ae642 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -144,13 +144,18 @@ struct resctrl_membw {
+ struct rdt_parse_data;
+ struct resctrl_schema;
+ 
++enum resctrl_scope {
++	RESCTRL_L3_CACHE,
++	RESCTRL_L2_CACHE,
++};
++
+ /**
+  * struct rdt_resource - attributes of a resctrl resource
+  * @rid:		The index of the resource
+  * @alloc_capable:	Is allocation available on this machine
+  * @mon_capable:	Is monitor feature available on this machine
+  * @num_rmid:		Number of RMIDs available
+- * @cache_level:	Which cache level defines scope of this resource
++ * @scope:		Scope of this resource
+  * @cache:		Cache allocation related data
+  * @membw:		If the component has bandwidth controls, their properties.
+  * @domains:		All domains for this resource
+@@ -168,7 +173,7 @@ struct rdt_resource {
+ 	bool			alloc_capable;
+ 	bool			mon_capable;
+ 	int			num_rmid;
+-	int			cache_level;
++	enum resctrl_scope	scope;
+ 	struct resctrl_cache	cache;
+ 	struct resctrl_membw	membw;
+ 	struct list_head	domains;
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 030d3b409768..0d3bae523ecb 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -65,7 +65,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+ 		.r_resctrl = {
+ 			.rid			= RDT_RESOURCE_L3,
+ 			.name			= "L3",
+-			.cache_level		= 3,
++			.scope			= RESCTRL_L3_CACHE,
+ 			.domains		= domain_init(RDT_RESOURCE_L3),
+ 			.parse_ctrlval		= parse_cbm,
+ 			.format_str		= "%d=%0*x",
+@@ -79,7 +79,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+ 		.r_resctrl = {
+ 			.rid			= RDT_RESOURCE_L2,
+ 			.name			= "L2",
+-			.cache_level		= 2,
++			.scope			= RESCTRL_L2_CACHE,
+ 			.domains		= domain_init(RDT_RESOURCE_L2),
+ 			.parse_ctrlval		= parse_cbm,
+ 			.format_str		= "%d=%0*x",
+@@ -93,7 +93,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+ 		.r_resctrl = {
+ 			.rid			= RDT_RESOURCE_MBA,
+ 			.name			= "MB",
+-			.cache_level		= 3,
++			.scope			= RESCTRL_L3_CACHE,
+ 			.domains		= domain_init(RDT_RESOURCE_MBA),
+ 			.parse_ctrlval		= parse_bw,
+ 			.format_str		= "%d=%*u",
+@@ -105,7 +105,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
+ 		.r_resctrl = {
+ 			.rid			= RDT_RESOURCE_SMBA,
+ 			.name			= "SMBA",
+-			.cache_level		= 3,
++			.scope			= RESCTRL_L3_CACHE,
+ 			.domains		= domain_init(RDT_RESOURCE_SMBA),
+ 			.parse_ctrlval		= parse_bw,
+ 			.format_str		= "%d=%*u",
+@@ -487,6 +487,21 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
+ 	return 0;
+ }
+ 
++static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
++{
++	switch (scope) {
++	case RESCTRL_L3_CACHE:
++		return get_cpu_cacheinfo_id(cpu, 3);
++	case RESCTRL_L2_CACHE:
++		return get_cpu_cacheinfo_id(cpu, 2);
++	default:
++		WARN_ON_ONCE(1);
++		break;
++	}
++
++	return -1;
++}
++
+ /*
+  * domain_add_cpu - Add a cpu to a resource's domain list.
+  *
+@@ -502,7 +517,7 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
+  */
+ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+ {
+-	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
++	int id = get_domain_id_from_scope(cpu, r->scope);
+ 	struct list_head *add_pos = NULL;
+ 	struct rdt_hw_domain *hw_dom;
+ 	struct rdt_domain *d;
+@@ -552,7 +567,7 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+ 
+ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
+ {
+-	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
++	int id = get_domain_id_from_scope(cpu, r->scope);
+ 	struct rdt_hw_domain *hw_dom;
+ 	struct rdt_domain *d;
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+index 458cb7419502..e79324676f57 100644
+--- a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
++++ b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
+@@ -279,6 +279,7 @@ static void pseudo_lock_region_clear(struct pseudo_lock_region *plr)
+ static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
+ {
+ 	struct cpu_cacheinfo *ci;
++	int cache_level;
+ 	int ret;
+ 	int i;
+ 
+@@ -296,8 +297,20 @@ static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
+ 
+ 	plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
+ 
++	switch (plr->s->res->scope) {
++	case RESCTRL_L3_CACHE:
++		cache_level = 3;
++		break;
++	case RESCTRL_L2_CACHE:
++		cache_level = 2;
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		return -ENODEV;
++	}
++
+ 	for (i = 0; i < ci->num_leaves; i++) {
+-		if (ci->info_list[i].level == plr->s->res->cache_level) {
++		if (ci->info_list[i].level == cache_level) {
+ 			plr->line_size = ci->info_list[i].coherency_line_size;
+ 			return 0;
+ 		}
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 725344048f85..f510414bf6ce 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -1343,12 +1343,25 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
+ {
+ 	struct cpu_cacheinfo *ci;
+ 	unsigned int size = 0;
++	int cache_level;
+ 	int num_b, i;
+ 
++	switch (r->scope) {
++	case RESCTRL_L3_CACHE:
++		cache_level = 3;
++		break;
++	case RESCTRL_L2_CACHE:
++		cache_level = 2;
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		return size;
++	}
++
+ 	num_b = bitmap_weight(&cbm, r->cache.cbm_len);
+ 	ci = get_cpu_cacheinfo(cpumask_any(&d->cpu_mask));
+ 	for (i = 0; i < ci->num_leaves; i++) {
+-		if (ci->info_list[i].level == r->cache_level) {
++		if (ci->info_list[i].level == cache_level) {
+ 			size = ci->info_list[i].size / r->cache.cbm_len * num_b;
+ 			break;
+ 		}
+-- 
+2.41.0
 
