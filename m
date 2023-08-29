@@ -1,32 +1,32 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0436D11198
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81648111BB
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1693352686; x=1724888686;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=pyMs9Xff6XyhCPf/fJEHPprla4QB5nGuCyGEiqgsovY=;
-  b=kIsJWvVj9LGhvVjmjLkNaAzJWuwaNy4XKCml0DCyNeQmXU4xdJ2UQt/K
-   mZHJ02u8NLCaDx4z8DBT2UmeQ/Q+qptpgMlP02RN8sEvTDPWy1/0D4Rv/
-   UdE3NuCc97OjVb3otOd3iYMGWj7wP1uAG95hUOm8L4vXmyY0O05QYbBhh
-   AnWczwATarC9VY6JY5BW3QRWGtZlbLi4VXnwZWOgotEY9IDoLbhgZZDdP
-   CqQiNSegxuMyotK/U4uMk12o8A5uZc/LecCc9r7APX6SRBMhOKIaa3RnE
-   9Ia9iwGwIvT8n/6btjsHGeU1Ut8gETG9jx9mvHAyyugyGcnTyjFlM0wZp
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015462"
+  bh=+XDRINXx73/bMenFlRGiWAYMrGt/x5/6+qfN9SAWjoE=;
+  b=N4PqN25vN938Lm4wY9leeNR/gZ0hwDwuoLtKzv5ltQZ6WoLv/QRIxl80
+   lgy+N9+ouu/XyA8jFjx1kFzsWqPCUgHZnccHrIBoqzMpRRNpfihnDRFA0
+   ogpL0J0wN/+BVgws60dBTsMm8XneI2fMs24qMPSoycDVlvNGENNSe+3Js
+   9QV+qxbjxhBbpFtH0YCtWwRtQ/xOhSHbqVwblUSVu67INeDlVCctC0AD8
+   ob82zRHbFSNqSUYQDy+DgScHQrLQCgX7STmHZTmiyAowv0JWAM6BCzEJI
+   l/AMYj1nmmJC8zNyGNNJCzzAnK1GCb92rSD9gcVzgp0eCmB/brncL90Yw
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015484"
 X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
-   d="scan'208";a="355015462"
+   d="scan'208";a="355015484"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:41 -0700
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:42 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691033"
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691039"
 X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
-   d="scan'208";a="688691033"
+   d="scan'208";a="688691039"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:40 -0700
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:41 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -43,9 +43,9 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 5/8] x86/resctrl: Introduce snc_nodes_per_l3_cache
-Date: Tue, 29 Aug 2023 16:44:23 -0700
-Message-ID: <20230829234426.64421-6-tony.luck@intel.com>
+Subject: [PATCH v5 7/8] x86/resctrl: Update documentation with Sub-NUMA cluster changes
+Date: Tue, 29 Aug 2023 16:44:25 -0700
+Message-ID: <20230829234426.64421-8-tony.luck@intel.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230829234426.64421-1-tony.luck@intel.com>
 References: <20230722190740.326190-1-tony.luck@intel.com>
@@ -58,135 +58,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Intel Sub-NUMA Cluster mode requires several changes in resctrl
-behavior for correct operation.
+With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
+per-NODE instead of per-L3 cache. Suffixes of directories with "L3" in
+their name refer to Sub-NUMA nodes instead of L3 cache ids.
 
-Add a global integer "snc_nodes_per_l3_cache" that will show how many
-SNC nodes share each L3 cache. When this is "1", SNC mode is either
-not implemented, or not enabled.
-
-A later patch will detect SNC mode and set snc_nodes_per_l3_cache to
-the appropriate value. For now it remains at the default "1" to
-indicate SNC mode is not active.
-
-Code that needs to take action when SNC is enabled is:
-1) The number of logical RMIDs available for use is the number of
-   physical RMIDs divided by the number of SNC nodes.
-2) Likewise the "mon_scale" value must be adjusted for the number
-   of SNC nodes.
-3) When reading an RMID counter code must adjust from the logical
-   RMID used to the physical RMID value that must be loaded into
-   the IA32_QM_EVTSEL MSR.
-4) The L3 cache is divided between the SNC nodes. So the value
-   reported in the resctrl "size" file is adjusted.
-5) The "-o mba_MBps" mount option must be disabled in SNC mode
-   because the monitoring is being done per SNC node, while the
-   bandwidth allocation is still done at the L3 cache scope.
+Users should be aware that SNC mode also affects the amount of L3 cache
+available for allocation within each SNC node.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c     |  7 +++++++
- arch/x86/kernel/cpu/resctrl/monitor.c  | 16 +++++++++++++---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |  4 ++--
- 4 files changed, 24 insertions(+), 5 deletions(-)
+ Documentation/arch/x86/resctrl.rst | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index c61fd6709730..326ca6b3688a 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -446,6 +446,8 @@ DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
+diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+index cb05d90111b4..407764f43f25 100644
+--- a/Documentation/arch/x86/resctrl.rst
++++ b/Documentation/arch/x86/resctrl.rst
+@@ -345,9 +345,15 @@ When control is enabled all CTRL_MON groups will also contain:
+ When monitoring is enabled all MON groups will also contain:
  
- extern struct dentry *debugfs_resctrl;
+ "mon_data":
+-	This contains a set of files organized by L3 domain and by
+-	RDT event. E.g. on a system with two L3 domains there will
+-	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
++	This contains a set of files organized by L3 domain or by NUMA
++	node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
++	or enabled respectively) and by RDT event. E.g. on a system with
++	SNC mode disabled with two L3 domains there will be subdirectories
++	"mon_L3_00" and "mon_L3_01". The numerical suffix refers to the
++	L3 cache id.  With SNC enabled the directory names are the same,
++	but the numerical suffix refers to the node id.
++        Mappings from node ids to CPUs are available in the
++        /sys/devices/system/node/node*/cpulist files. Each of these
+ 	directories have one file per event (e.g. "llc_occupancy",
+ 	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+ 	files provide a read out of the current value of the event for
+@@ -452,6 +458,19 @@ and 0xA are not.  On a system with a 20-bit mask each bit represents 5%
+ of the capacity of the cache. You could partition the cache into four
+ equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
  
-+extern int snc_nodes_per_l3_cache;
++Notes on Sub-NUMA Cluster mode
++==============================
++When SNC mode is enabled the "llc_occupancy", "mbm_total_bytes", and
++"mbm_local_bytes" will only give accurate results for well behaved NUMA
++applications. I.e. those that perform the majority of memory accesses
++to memory on the local NUMA node to the CPU where the task is executing.
 +
- enum resctrl_res_level {
- 	RDT_RESOURCE_L3,
- 	RDT_RESOURCE_L2,
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 9fcc264fac6c..ed4f55b3e5e4 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -48,6 +48,13 @@ int max_name_width, max_data_width;
-  */
- bool rdt_alloc_capable;
- 
-+/*
-+ * Number of SNC nodes that share each L3 cache.
-+ * Default is 1 for systems that do not support
-+ * SNC, or have SNC disabled.
-+ */
-+int snc_nodes_per_l3_cache = 1;
++The cache allocation feature still provides the same number of
++bits in a mask to control allocation into the L3 cache. But each
++of those ways has its capacity reduced because the cache is divided
++between the SNC nodes. The values reported in the resctrl
++"size" files are adjusted accordingly.
 +
- static void
- mba_wrmsr_intel(struct rdt_domain *d, struct msr_param *m,
- 		struct rdt_resource *r);
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 42262d59ef9b..b6b3fb0f9abe 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -148,8 +148,18 @@ static inline struct rmid_entry *__rmid_entry(u32 rmid)
+ Memory bandwidth Allocation and monitoring
+ ==========================================
  
- static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
- {
-+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
-+	int cpu = smp_processor_id();
-+	int rmid_offset = 0;
- 	u64 msr_val;
- 
-+	/*
-+	 * When SNC mode is on, need to compute the offset to read the
-+	 * physical RMID counter for the node to which this CPU belongs
-+	 */
-+	if (snc_nodes_per_l3_cache > 1)
-+		rmid_offset = (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
-+
- 	/*
- 	 * As per the SDM, when IA32_QM_EVTSEL.EvtID (bits 7:0) is configured
- 	 * with a valid event code for supported resource type and the bits
-@@ -158,7 +168,7 @@ static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
- 	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
- 	 * are error bits.
- 	 */
--	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
-+	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + rmid_offset);
- 	rdmsrl(MSR_IA32_QM_CTR, msr_val);
- 
- 	if (msr_val & RMID_VAL_ERROR)
-@@ -783,8 +793,8 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
- 	int ret;
- 
- 	resctrl_rmid_realloc_limit = boot_cpu_data.x86_cache_size * 1024;
--	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale;
--	r->num_rmid = boot_cpu_data.x86_cache_max_rmid + 1;
-+	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale / snc_nodes_per_l3_cache;
-+	r->num_rmid = (boot_cpu_data.x86_cache_max_rmid + 1) / snc_nodes_per_l3_cache;
- 	hw_res->mbm_width = MBM_CNTR_WIDTH_BASE;
- 
- 	if (mbm_offset > 0 && mbm_offset <= MBM_CNTR_WIDTH_OFFSET_MAX)
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 5feec2c33544..a8cf6251e506 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -1367,7 +1367,7 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
- 		}
- 	}
- 
--	return size;
-+	return size / snc_nodes_per_l3_cache;
- }
- 
- /**
-@@ -2600,7 +2600,7 @@ static int rdt_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->enable_cdpl2 = true;
- 		return 0;
- 	case Opt_mba_mbps:
--		if (!supports_mba_mbps())
-+		if (!supports_mba_mbps() || snc_nodes_per_l3_cache > 1)
- 			return -EINVAL;
- 		ctx->enable_mba_mbps = true;
- 		return 0;
 -- 
 2.41.0
 
