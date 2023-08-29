@@ -1,32 +1,32 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E186FCD
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19437111BB
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 23:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693352679; x=1724888679;
+  t=1693352685; x=1724888685;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=W50SnzGPp61eZeJgGcuceM/gz96TAeNxN0R4JpIxMcg=;
-  b=StxLAPeduIskLhJGdms+cLocJykKR7sTV3rYNEaKVgjsLHLS2bhyF7aS
-   1nj4lJ1vQZhGNluOb/XhV61p6Y3fbDmLNdcXrj+yxtVxk+0pNCDBDlyyc
-   UskPdem0miUL2/rsjaqL1+clqVNMv2IPlgrSMsTdJIN+wGcqahTAWbKLU
-   0uj6I0+75pzFleFrEigkPIiYZZGBScR2wYWFcFov+AZV2evaHhTE05F+s
-   5Zs3rrOvyvtUiSTzyBXVAFwq6/i0A4oJYSBTllXVyCmmkn7cr9XHqYOht
-   lgA+1mQ/XbqjztSan0d6r4M0KCoekYdYwI42HESdfPS2UZQKOR4vBPiQT
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015403"
+  bh=S/EXhJCpyz3uBL/oEdqmrNfXk9bhwq1mYy59t3f/24c=;
+  b=k61pWCz//Ioq4fRIpwxiYxob8ykJak7oa2Va7l6Kmn1J2tuO+dix9omc
+   AgslA4v/5+NRhjtg8MwT4Ywypd1tpG49lMrCezS2zC/RTgC12QmusNOHP
+   a2Yzt0qK91UniJck1J7hwetJnG1cuQv1qoysfjYrL0vP3UuNfZXMqaWP1
+   1FWXZq67E4ddkhh6w2G0g6nE3ZkRn47vMnVPP6illH4MSqcURSTAXVPeQ
+   hoPH5RRtkQmAoOyq46cEeV399DiMdcS9nWqtYisFxGsbVPCIxyJbOpPN7
+   Ufwngfq5M4wYf8mQOmxvMOMa8ibyI7cVA9r2aPMShruQNiy+PQdA4+DDx
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="355015449"
 X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
-   d="scan'208";a="355015403"
+   d="scan'208";a="355015449"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:37 -0700
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:40 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691016"
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="688691030"
 X-IronPort-AV: E=Sophos;i="6.02,211,1688454000"; 
-   d="scan'208";a="688691016"
+   d="scan'208";a="688691030"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:36 -0700
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 16:44:39 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -43,12 +43,13 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 0/8] Add support for Sub-NUMA cluster (SNC) systems
-Date: Tue, 29 Aug 2023 16:44:18 -0700
-Message-ID: <20230829234426.64421-1-tony.luck@intel.com>
+Subject: [PATCH v5 4/8] x86/resctrl: Add node-scope to the options for feature scope
+Date: Tue, 29 Aug 2023 16:44:22 -0700
+Message-ID: <20230829234426.64421-5-tony.luck@intel.com>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230722190740.326190-1-tony.luck@intel.com>
+In-Reply-To: <20230829234426.64421-1-tony.luck@intel.com>
 References: <20230722190740.326190-1-tony.luck@intel.com>
+ <20230829234426.64421-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,79 +58,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Sub-NUMA cluster feature on some Intel processors partitions
-the CPUs that share an L3 cache into two or more sets. This plays
-havoc with the Resource Director Technology (RDT) monitoring features.
-Prior to this patch Intel has advised that SNC and RDT are incompatible.
+Currently supported resctrl features are all domain scoped the same as the
+scope of the L2 or L3 caches.
 
-Some of these CPU support an MSR that can partition the RMID
-counters in the same way. This allows for monitoring features
-to be used (with the caveat that memory accesses between different
-SNC NUMA nodes may still not be counted accuratlely.
-
-Note that this patch series improves resctrl reporting considerably
-on systems with SNC enabled, but there will still be some anomalies
-for processes accessing memory from other sub-NUMA nodes.
+Add "node" as a new option for domain scope.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ include/linux/resctrl.h            | 1 +
+ arch/x86/kernel/cpu/resctrl/core.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-Changes since v4:
-
-Rebased to upstream v6.5
-
-Addressed problems reported by Reinette in follow-up messages to
-v4 posting:
-   https://lore.kernel.org/r/20230722190740.326190-1-tony.luck@intel.com
-
-Broke the patch series into a (hopefully) more logical progression.
-
-First two patches are infrastructure changes to allow resctrl
-domains to have scopes that are not defined by which CPUs share
-a particular cache instance, and to allow resources to have different
-scope for control an monitor features.
-
-Patch 3 cleans up some loose ends from the first two patches by
-adding a new variant of the rdt_domain structure with just monitoring
-fields, and removing the monitor fields from the original rdt_domain
-structure since it is now only used for control features.
-
-Patch 4 adds "node" as a scope option.
-
-Patch 5 adjusts all code paths that need to be aware of SNC mode.
-
-Patch 6 detects SNC mode, modifies the MSR that adjusts interpretation
-of physical RMID counters.
-
-Patch 7 updates documentation.
-
-Patch 8 does a partial update for the resctrl selftests.
-
-Tony Luck (8):
-  x86/resctrl: Prepare for new domain scope
-  x86/resctrl: Prepare for different scope for control/monitor
-    operations
-  x86/resctrl: Split the rdt_domain structure
-  x86/resctrl: Add node-scope to the options for feature scope
-  x86/resctrl: Introduce snc_nodes_per_l3_cache
-  x86/resctrl: Sub NUMA Cluster detection and enable
-  x86/resctrl: Update documentation with Sub-NUMA cluster changes
-  selftests/resctrl: Adjust effective L3 cache size when SNC enabled
-
- Documentation/arch/x86/resctrl.rst          |  25 +-
- include/linux/resctrl.h                     |  64 ++--
- arch/x86/include/asm/msr-index.h            |   1 +
- arch/x86/kernel/cpu/resctrl/internal.h      |  42 ++-
- tools/testing/selftests/resctrl/resctrl.h   |   1 +
- arch/x86/kernel/cpu/resctrl/core.c          | 321 ++++++++++++++++----
- arch/x86/kernel/cpu/resctrl/ctrlmondata.c   |   6 +-
- arch/x86/kernel/cpu/resctrl/monitor.c       |  58 ++--
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c   |  15 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c      |  69 +++--
- tools/testing/selftests/resctrl/resctrlfs.c |  57 ++++
- 11 files changed, 508 insertions(+), 151 deletions(-)
-
-
-base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 08382548571e..f55cf7afd4eb 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -163,6 +163,7 @@ struct resctrl_schema;
+ enum resctrl_scope {
+ 	RESCTRL_L3_CACHE,
+ 	RESCTRL_L2_CACHE,
++	RESCTRL_NODE,
+ };
+ 
+ /**
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 3e08aa04a7ff..9fcc264fac6c 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -514,6 +514,8 @@ static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+ 		return get_cpu_cacheinfo_id(cpu, 3);
+ 	case RESCTRL_L2_CACHE:
+ 		return get_cpu_cacheinfo_id(cpu, 2);
++	case RESCTRL_NODE:
++		return cpu_to_node(cpu);
+ 	default:
+ 		WARN_ON_ONCE(1);
+ 		break;
 -- 
 2.41.0
 
