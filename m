@@ -1,113 +1,99 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE6D154B6
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 11:57:18 +0000 (UTC)
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37TBu5iB027092;
-	Tue, 29 Aug 2023 11:57:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : in-reply-to : references : date : message-id : mime-version :
- content-type : content-transfer-encoding; s=pp1;
- bh=XKNzpjIMizmE1yoCpdDi1AcUjsxJu19awOuBKIPruYc=;
- b=DPFf14kI5HZyyAxgkVibrdK40zXqZPa5r0bucfwQCtkgspNWeRP05mV2YLR2m5NDwN+J
- 8vR7KNysubtJHJ+1djjfjBM4NqYXbHA/4OIb4Op2/ECw95Y8obqbXknUdE/RGIA97GWU
- HPOw8wPKgqzO06UHlInriAsgAF5g7h2gBpmSMVRTNT9XOOSfiuU43wE0H92KMa1ucI3E
- ij+cFFO+QtDC2dfhE0TIxaAH0YKffdcjhyiQ7pctgcrncYbDf0FbAmFbbNwVkzR2owZx
- u2OSv6OvQq9siIuiyrYDzkVQua02LmxpdPh1ALDZU3+BuDC5vJ2JqPfSkMiUnJSCn7yh rw== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ssg84g0qg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Aug 2023 11:57:05 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 37TBuZpx029169;
-	Tue, 29 Aug 2023 11:57:05 GMT
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ssg84g0q8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Aug 2023 11:57:05 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 37TB1NSh014168;
-	Tue, 29 Aug 2023 11:57:04 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3sqwxjtp3w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Aug 2023 11:57:04 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 37TBv3HN066282
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 29 Aug 2023 11:57:03 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 576FA58068;
-	Tue, 29 Aug 2023 11:57:03 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 416785805A;
-	Tue, 29 Aug 2023 11:57:03 +0000 (GMT)
-Received: from localhost (unknown [9.61.165.118])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 29 Aug 2023 11:57:03 +0000 (GMT)
-From: Nathan Lynch <nathanl@linux.ibm.com>
-To: Daniel =?utf-8?Q?D=C3=ADaz?= <daniel.diaz@linaro.org>,
-        Greg
- Kroah-Hartman
- <gregkh@linuxfoundation.org>,
-        stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        torvalds@linux-foundation.org, akpm@linux-foundation.org,
-        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
-        rwarsow@gmx.de, conor@kernel.org, mpe@ellerman.id.au
-Subject: Re: [PATCH 4.14 00/57] 4.14.324-rc1 review
-In-Reply-To: <868cd8e3-2e7e-7b98-0a6e-e5586cb6ab0d@linaro.org>
-References: <20230828101144.231099710@linuxfoundation.org>
- <868cd8e3-2e7e-7b98-0a6e-e5586cb6ab0d@linaro.org>
-Date: Tue, 29 Aug 2023 06:57:03 -0500
-Message-ID: <87bkeqysc0.fsf@li-e15d104c-2135-11b2-a85c-d7ef17e56be6.ibm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC744156C7
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 12:19:23 +0000 (UTC)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-401187f8071so27155245e9.0
+        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 05:19:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693311562; x=1693916362;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mNfFsSrHfmhhWlX6jJezyPUMpq+AyznfbXEcUEhwfFo=;
+        b=phP6IbXgWo1ccHlUUiaW/MqXctIjJ1N5TK8jUf45zhLzqG4vyQP9X5ZUJJFIDdiGN4
+         0GlC64iSzWupjz9UgllrJAcAZ0QoaEC6geGOYjFCkGkAQCV6F2Hi8TKvt8FEhEf+lgQK
+         bWmdIc2rbRqcNs2ikHfRXGI8uuLRted7xQ4jTb5ce4ssIh3dYrA9qF9nVvW6Ewbq+O+0
+         Fy6v6W+6yeVDsL6tn/xfmi1XdPCT9zB3lxJI/njmPWa5RTI5HbCu8yANAO/wf37SLoSi
+         mtmkIuq+STxI+6NlXad4drJ1coKDgidu4fj0kh/xuaknhe6A13ENZyN8dKGLIBG0v9zk
+         WO5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693311562; x=1693916362;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mNfFsSrHfmhhWlX6jJezyPUMpq+AyznfbXEcUEhwfFo=;
+        b=kb4pLKruUNXHyB4G8m+v1EeY75+r65URNl5LvvTpLHbq2XjWINPw9KgT+8FvTXj7HS
+         TH1d/h+uOp/A7yzTxGegmogkbbjpUn9Hfh8OZZh5RiEiT6Elkw5d3XWRloT7/pTemD4Z
+         gKCPoiEJcqRN/Y8SHTvG7E1A1vkT8BSfc5PrhIVrVtNrXONzzByIxcteQIuPnoWDw+op
+         gI3vnhR5syiLbs6adqDd7VqK/WR5CIcoHSvyQGmBGeDAvcKeHChIGeOBw0+nCVurpIA6
+         OUCPcIntbzMFETzyXGy3g5Q/qUpUfNaHHX2OrRfB+4y8EIVvB8+W9SZ4TfXoViiT4MdW
+         Bodg==
+X-Gm-Message-State: AOJu0Yx9arZ9xlnzT/pRKLwtx5fwljU2jntFjkpxXvb+wvDOoIVM1Z19
+	rvriImu2exQ+mg2jGXsVahs=
+X-Google-Smtp-Source: AGHT+IEeh+znma1g4setjUEYhruswbgcqMaM9C2GUbUmqFMZvQcW5GFOn0WKfSU8IkmrhKjzs8tTxg==
+X-Received: by 2002:a1c:4b17:0:b0:401:b0f2:88d3 with SMTP id y23-20020a1c4b17000000b00401b0f288d3mr2024106wma.19.1693311561822;
+        Tue, 29 Aug 2023 05:19:21 -0700 (PDT)
+Received: from debian ([167.98.27.226])
+        by smtp.gmail.com with ESMTPSA id n23-20020a7bcbd7000000b003fef6881350sm13981741wmi.25.2023.08.29.05.19.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 05:19:21 -0700 (PDT)
+Date: Tue, 29 Aug 2023 13:19:19 +0100
+From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/122] 6.1.50-rc1 review
+Message-ID: <ZO3iR/frz8QhqTGB@debian>
+References: <20230828101156.480754469@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: tNG9XWO3BqGFluEAbrfS9r4YfGSsVbxi
-X-Proofpoint-GUID: PIGYm00qPEIDUO_bj_Cg9gsarDUM-aIs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-29_08,2023-08-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=719
- malwarescore=0 adultscore=0 clxscore=1011 priorityscore=1501 phishscore=0
- mlxscore=0 spamscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2308290100
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230828101156.480754469@linuxfoundation.org>
 
-Daniel D=C3=ADaz <daniel.diaz@linaro.org> writes:
->
-> We see this build regression on PowerPC with GCC-8 and GCC-12:
-> -----8<-----
->    /builds/linux/arch/powerpc/kernel/rtas_flash.c: In function 'rtas_flas=
-h_init':
->    /builds/linux/arch/powerpc/kernel/rtas_flash.c:717:22: error: implicit=
- declaration of function 'kmem_cache_create_usercopy'; did you mean 'kmem_c=
-ache_create'? [-Werror=3Dimplicit-function-declaration]
->      flash_block_cache =3D kmem_cache_create_usercopy("rtas_flash_cache",
->                          ^~~~~~~~~~~~~~~~~~~~~~~~~~
->                          kmem_cache_create
->    /builds/linux/arch/powerpc/kernel/rtas_flash.c:717:20: error: assignme=
-nt to 'struct kmem_cache *' from 'int' makes pointer from integer without a=
- cast [-Werror=3Dint-conversion]
->      flash_block_cache =3D kmem_cache_create_usercopy("rtas_flash_cache",
->                        ^
-> ----->8-----
->
-> That's on defconfig and cell_defconfig.
->
-> Bisection points to "powerpc/rtas_flash: allow user copy to flash
-> block cache objects" (5190538c66e5). Reverting that patch makes the
-> build pass again.
+Hi Greg,
 
-That change should not be applied to 4.14.x. The problem it fixes is not
-present in that version.
+On Mon, Aug 28, 2023 at 12:11:55PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.50 release.
+> There are 122 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+
+Build test (gcc version 12.3.1 20230829):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
+
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
+
+[1]. https://openqa.qa.codethink.co.uk/tests/4840
+[2]. https://openqa.qa.codethink.co.uk/tests/4862
+[3]. https://openqa.qa.codethink.co.uk/tests/4861
+
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
