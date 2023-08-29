@@ -1,42 +1,42 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25DB156FC
-	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 13:22:45 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1D4C9210E3;
-	Tue, 29 Aug 2023 13:22:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1693315358; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=HZIcur+xewkLKW/qjIrg/ibBM/IsMy1nG6uPmP1nz7Y=;
-	b=XXdzd63fUG9ulCUnDiwOdFm2QsuFqxjGaWyjUBWkZG/uy45XtmW18lYGdRrKzWVYeiynmC
-	HiR0jX9eDcfGAlTqTpy33O0WgIqZRS9VyBc9l+M4Vn+bGtxRwLsruE9KhelUB2YTs0zUr9
-	i9gkTssof0jUI3uVC2lbHvDVRxuXEVo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1693315358;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=HZIcur+xewkLKW/qjIrg/ibBM/IsMy1nG6uPmP1nz7Y=;
-	b=FLTmrMsv7lKVprFZLRi/6BUCfVmSBcH9oFlWXQosyKmrX6z7G33Yk7qN4VOvuWXtr30EPk
-	s3/EhqPgbchfXtDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E379A13301;
-	Tue, 29 Aug 2023 13:22:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id SmjUNh3x7WT0WQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 29 Aug 2023 13:22:37 +0000
-Message-ID: <eea66c95-8b95-49b1-18f5-5bd92f73f60e@suse.cz>
-Date: Tue, 29 Aug 2023 15:22:37 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF938171B2
+	for <patches@lists.linux.dev>; Tue, 29 Aug 2023 14:08:01 +0000 (UTC)
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-7950d0c85bbso7069139f.1
+        for <patches@lists.linux.dev>; Tue, 29 Aug 2023 07:08:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1693318080; x=1693922880;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E5A52SOhqx+LK1llSr0QkkwCAZdwMynClS+NesllUSg=;
+        b=ESAbl/DQTDF14M08nuV6OqabJeJ/XfgWJ9UcBOnIAbjdxF927sZj9zXzUd2VeGPrF9
+         dHucC5SBp3C6y2Q5SqOqfTzPN3EIjRxZgIsKy34+s6IZJAj7pUPOizUe+hwuD+wNdvwW
+         G09UXS2jkZ7IuVthlSs9pClLCG2GRQIAZyYtI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693318080; x=1693922880;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E5A52SOhqx+LK1llSr0QkkwCAZdwMynClS+NesllUSg=;
+        b=EwWGUkut5wl/MIWF8tE6o298nhktqdiEFDrAqhVRqwVjofEj5v4ErHLBi2wNEMtJDF
+         NtMaRxQVoYiDyWkYffLii/xxTJXwZsRNyhD6lxluXyIIGjAy7Eyu2Q4EP6JdATc53a+Y
+         jJbFfYUs/d/58JQ0xnyiPEzTv/5CZk98BsaKi3zMgKVor/lQAWQoexrZf09JLTX+9o/3
+         5wMjIBAE47W9rJKHVB9ZvAP4V80YR/0nqSGO23PXG2+hoH61mTgHQsPRTX3iUUgN0cI1
+         UazUMgsmLYWq802K3xGILw+Ts4fz5XVV3cLb6PJZQEqv0BGbJyrun9+7/afeKXPSLuHz
+         lB6g==
+X-Gm-Message-State: AOJu0YzWfQq+pJOl7bkew0rLL93eoqfTLWPj3B4X0rrl0wmCmkyrRE0D
+	SGdaqJoKKTGeTbKXEZ6eHkxx9g==
+X-Google-Smtp-Source: AGHT+IF77SqYKsSv7x93DBydszfo6Yvo8h02fntFgI9+7/+WPTA62RjvgnoCXrBuXLffbcN+zbuYmQ==
+X-Received: by 2002:a5e:8911:0:b0:792:7c78:55be with SMTP id k17-20020a5e8911000000b007927c7855bemr12984783ioj.0.1693318080641;
+        Tue, 29 Aug 2023 07:08:00 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id gc24-20020a056638671800b00430996b3604sm3211365jab.125.2023.08.29.07.07.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 07:08:00 -0700 (PDT)
+Message-ID: <2fe6f656-23f5-1fcc-5387-c9c2ed4dc701@linuxfoundation.org>
+Date: Tue, 29 Aug 2023 08:07:57 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,70 +44,45 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab updates for 6.6
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 6.4 000/129] 6.4.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230828101157.383363777@linuxfoundation.org>
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230828101157.383363777@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Linus,
+On 8/28/23 04:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.13 release.
+> There are 129 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.13-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-please pull the latest slab updates from:
+Compiled and booted on my test system. No dmesg regressions.
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.6
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-This happens to be a small one (due to summer I guess), and all hardening
-related.
-
-Thanks,
-Vlastimil
-
-======================================
-
-* Randomized kmalloc caches, by GONG, Ruiqi.
-
-  A new opt-in hardening feature to make heap spraying harder. It
-  creates multiple (16) copies of kmalloc caches, reducing the
-  chance of an attacker-controllable allocation site to land in
-  the same slab as e.g. an allocation site with use-after-free
-  vulnerability. The selection of the copy is derived from the
-  allocation site address, including a per-boot random seed.
-
-* Stronger typing for hardened freelists in SLUB, by Jann Horn
-
-  Introduces a custom type for hardened freelist entries instead
-  of "void *" as those are not directly dereferencable.
-  While reviewing this, I've noticed opportunities for further
-  cleanups in that code and added those on top.
-
-----------------------------------------------------------------
-GONG, Ruiqi (1):
-      Randomized slab caches for kmalloc()
-
-Jann Horn (1):
-      mm/slub: refactor freelist to use custom type
-
-Vlastimil Babka (3):
-      mm/slub: remove redundant kasan_reset_tag() from freelist_ptr calculations
-      mm/slub: remove freelist_dereference()
-      Merge branch 'slab/for-6.6/random_kmalloc' into slab/for-next
-
- include/linux/percpu.h  | 12 +++++++---
- include/linux/slab.h    | 23 +++++++++++++++++---
- mm/Kconfig              | 17 +++++++++++++++
- mm/kfence/kfence_test.c |  7 ++++--
- mm/slab.c               |  2 +-
- mm/slab.h               |  2 +-
- mm/slab_common.c        | 49 ++++++++++++++++++++++++++++++++++++-----
- mm/slub.c               | 58 ++++++++++++++++++++++++++++---------------------
- 8 files changed, 130 insertions(+), 40 deletions(-)
-~                                                                 
+thanks,
+-- Shuah
