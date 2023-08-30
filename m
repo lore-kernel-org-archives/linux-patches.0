@@ -1,90 +1,78 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD625383
-	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:44:36 +0000 (UTC)
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-792726d3aeeso194615139f.0
-        for <patches@lists.linux.dev>; Wed, 30 Aug 2023 09:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693413876; x=1694018676; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VB9BcG9DBx3YBgNtAp765xJQP9YYe+QOzLCI45b7TjA=;
-        b=EUg/NxT1YFKLOKkRzeYE5gwhL26sqbrBk6K0Gm/w29FpUUbtmc5GO8gvc8a+RLCr6w
-         Rs9ycH6FNtlV7kp7SQ/uDnDYY/VdpitefVsLzHdMXBCDyZqw5ubWD2GCB3cyQVSkoKqJ
-         j/cWTnOEpgA9mKvjEEXxwl/9qMlrWzM6L7zowvfrHMe7/OotH4msO7zdpnN3Y6qjET27
-         nRHtEELFtuVKyESfi2ovWXzUhIekgf3+pvklrT0ecKevahB5S9YqnVIFCzc7INSeC7F+
-         BQRJIvbsQeF29oUje6ytfePsXErSjY6b8znFSh9x2rJYvEHaKiHM5qzgIr4xlzY4ybVy
-         rZgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693413876; x=1694018676;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VB9BcG9DBx3YBgNtAp765xJQP9YYe+QOzLCI45b7TjA=;
-        b=Fn23WkvdYWnEiTi2SIiLpkwhEH6g6bA4Axd12OUVARk/01O31lLZ2ikazUdjrawKek
-         RSaelpUBSY6iv8w43q4csys9Ix/xN4auZk6UT95h+3e5zAEPSGhnvd3Gx1Iim2GH0nHe
-         64j1WOu9j37iX0ACKE57GM0hQFAnxemKjT5UNcIobTHoaqq9Q6qGyFsAQ0SFME/O/WLz
-         24BS2vCQLJ1hZnBBnK6M9nkaKx/N1cHyGUW/dCWAaEDw/iepF3Fnww7QCuIgo/4mS9Bf
-         61TUpWXCrWG3yEHga6VeHMGl6uyEUcPd/kN1NjRXxK8eK8BmCcR525YscGG9M8fyuqJC
-         JeGg==
-X-Gm-Message-State: AOJu0Yz4pONI6WY2resLcRuDG3V/DwnZLWh7hDCnNaZ1b6s+EwMo2IAM
-	4/NUmIlqtkTRhBIWw0iZrg4=
-X-Google-Smtp-Source: AGHT+IGUv20sbwduwPaQIjZ7MnGXmaLgkBIZ4HLZXUWF8gBJHgLANXduERX1A/QiIRbKuOhDZRDqkg==
-X-Received: by 2002:a6b:7006:0:b0:795:c6f:59ff with SMTP id l6-20020a6b7006000000b007950c6f59ffmr3192682ioc.17.1693413875851;
-        Wed, 30 Aug 2023 09:44:35 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id g7-20020a6b6b07000000b00786f5990435sm4001523ioc.7.2023.08.30.09.44.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 09:44:35 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 30 Aug 2023 09:44:33 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
-Message-ID: <27d08b24-3581-4451-b8db-5df144784d6a@roeck-us.net>
-References: <20230824170617.074557800@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057A23FFB;
+	Wed, 30 Aug 2023 17:00:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8F3C433C7;
+	Wed, 30 Aug 2023 17:00:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1693414833;
+	bh=kX3mbHSLmaQyCEL60tmf9cx9ZOhGXkKv6MDHN2D63vs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jF6UcKfH/Ijm8BSR75OyktOFykk2hCPJ+WW84zdAuI8LFdEyqrl7Ohkei3L30Y2Zf
+	 otGqyih898gvIjejvVAGC+2UKXeyYWmcj4nuzrttxOPrf501BtbrB52+eHOSe4FLlN
+	 E6ZWRiupNKoNyYHHoG1E7LuOKn+ttvWkzJc9yNHXyNqO4YEW1F8XVCbxkysmVJUGmw
+	 6RQ+ZBT+fjuN4hpd2o6TfbTudgzRL4P1EWVCayRjSKcchD7A4Bg85EejZqw7bpLxtM
+	 581+8pz6W3QmP+knhYUvvdmVvIV3LAhGRlWFXmjh4BkrCyDYQmTjy7r9Yo9iISD/Hd
+	 r+A9OD4DZg+aQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 1/2] MAINTAINERS: update Rust webpage
+Date: Wed, 30 Aug 2023 18:59:48 +0200
+Message-ID: <20230830165949.127475-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-Hi,
+A few months ago we started a webpage for the Rust subsystem and
+the overall Rust for Linux project [1].
 
-On Thu, Aug 24, 2023 at 07:07:52PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.192 release.
-> There are 135 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 26 Aug 2023 17:05:50 +0000.
-> Anything received after that time might be too late.
-> 
-[ ... ]
+The current `W:` field of the Rust entry points to the GitHub
+repository, since originally we kept information in a `README.md`
+file that got rendered by GitHub when visiting that URL.
 
-> Lang Yu <Lang.Yu@amd.com>
->     drm/amdgpu: install stub fence into potential unused fence pointers
-> 
+That information was moved into the webpage and got expanded.
+The webpage is also nowadays the entry point to the project,
+and we pointed the "Website" GitHub metadata field to it.
 
-This patch is causing continuous log spam in chromeos-5.10, so we are
-going to revert it.
+Thus update the `W:` field to point to the actual webpage.
 
-WARNING: CPU: 1 PID: 13383 at include/linux/dma-fence.h:478 amdgpu_sync_keep_later+0x95/0xbd
+Link: https://rust-for-linux.com [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is just a note to let others know that this may be the cause
-if they see the same problem.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 12601a47c839..7c8088e9a11b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -18558,7 +18558,7 @@ R:	Andreas Hindborg <a.hindborg@samsung.com>
+ R:	Alice Ryhl <aliceryhl@google.com>
+ L:	rust-for-linux@vger.kernel.org
+ S:	Supported
+-W:	https://github.com/Rust-for-Linux/linux
++W:	https://rust-for-linux.com
+ B:	https://github.com/Rust-for-Linux/linux/issues
+ C:	zulip://rust-for-linux.zulipchat.com
+ T:	git https://github.com/Rust-for-Linux/linux.git rust-next
 
-Thanks,
-Guenter
+base-commit: 4af84c6a85c63bec24611e46bb3de2c0a6602a51
+-- 
+2.42.0
+
