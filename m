@@ -1,103 +1,132 @@
-Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FC8525E
-	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:01:58 +0000 (UTC)
-Received: from [192.168.1.103] (178.176.75.182) by msexch01.omp.ru
- (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Wed, 30 Aug
- 2023 19:01:56 +0300
-Subject: Re: [PATCH 4.19 042/129] mmc: sunxi: fix deferred probing
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, Jernej Skrabec <jernej.skrabec@gmail.com>, Ulf
- Hansson <ulf.hansson@linaro.org>, Sasha Levin <sashal@kernel.org>
-References: <20230828101153.030066927@linuxfoundation.org>
- <20230828101154.735161155@linuxfoundation.org>
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
-Organization: Open Mobile Platform
-Message-ID: <406bdada-fbd1-c23b-2c86-384e21b46e37@omp.ru>
-Date: Wed, 30 Aug 2023 19:01:55 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CD320E3
+	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=mAQxkF5a0yjShIqw/cpgy8IMetyqgXXhHwgJ+4Sy81U=; b=LMgWMX3mlFxxWgvWbCMtp1+CAP
+	Yu/Ex35EU5XMfyyXxutQlpsBdUrPJdKrA1x3bLcuBhAOFAN0LaHjHiy9vteSeyr6z/QhusmGBrLbW
+	tPwfX3yrfoA0576ToAQ6ZBmKpr8b51cDbXFuFL2t8h7wXxcKe8q7QPCIxOp+30drQL1/JlnlGTRVq
+	CUXqk1knt0TM4yo4dx8T/N4Cy6bEo1tOPeTAd/vrWoPoNPbvF0pgkHLl8Xp/IdxIAIVg8yS7rqFXA
+	U2cW0aDmIjnY9BW76wQVDsD7DAa/1BbFg9slcFSog04eNJVGxwkeawNmkidAJY8BEtz0vUPQTPg0v
+	5v72nOrQ==;
+Received: from [2601:1c2:980:9ec0::2764] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1qbO75-00DrCE-2Q;
+	Wed, 30 Aug 2023 16:32:15 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH] userns: eliminate many kernel-doc warnings
+Date: Wed, 30 Aug 2023 09:32:15 -0700
+Message-ID: <20230830163215.13193-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230828101154.735161155@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [178.176.75.182]
-X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
- (10.188.4.12)
-X-KSE-ServerInfo: msexch01.omp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 5.9.59, Database issued on: 08/30/2023 15:30:03
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 59
-X-KSE-AntiSpam-Info: Lua profiles 179545 [Aug 30 2023]
-X-KSE-AntiSpam-Info: Version: 5.9.59.0
-X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
-X-KSE-AntiSpam-Info: LuaCore: 529 529 a773548e495283fecef97c3e587259fde2135fef
-X-KSE-AntiSpam-Info: {rep_avail}
-X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: {relay has no DNS name}
-X-KSE-AntiSpam-Info: {SMTP from is not routable}
-X-KSE-AntiSpam-Info: {Found in DNSBL: 178.176.75.182 in (user)
- dbl.spamhaus.org}
-X-KSE-AntiSpam-Info:
-	lore.kernel.org:7.1.1;178.176.75.182:7.1.2,7.7.3;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;omp.ru:7.1.1;127.0.0.199:7.1.2
-X-KSE-AntiSpam-Info: FromAlignment: s
-X-KSE-AntiSpam-Info: {rdns complete}
-X-KSE-AntiSpam-Info: {fromrtbl complete}
-X-KSE-AntiSpam-Info: ApMailHostAddress: 178.176.75.182
-X-KSE-AntiSpam-Info: Rate: 59
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dmarc=none header.from=omp.ru;spf=none
- smtp.mailfrom=omp.ru;dkim=none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Heuristic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 08/30/2023 15:35:00
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 8/30/2023 2:00:00 PM
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+Content-Transfer-Encoding: 8bit
 
-On 8/28/23 1:12 PM, Greg Kroah-Hartman wrote:
+Drop the kernel-doc "/**" notation from 8 structs or functions to
+prevent 22 kernel-doc warnings  (samples below).
 
-> 4.19-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Sergey Shtylyov <s.shtylyov@omp.ru>
-> 
-> [ Upstream commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 ]
-> 
-> The driver overrides the error codes and IRQ0 returned by platform_get_irq()
-> to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-> permanently instead of the deferred probing. Switch to propagating the error
-> codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
-> in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
-> so we now can safely ignore it...
-> 
-> Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
-> Cc: stable@vger.kernel.org # v5.19+
+user_namespace.c:239: warning: Function parameter or member 'map_up' not described in 'idmap_key'
+user_namespace.c:246: warning: Function parameter or member 'k' not described in 'cmp_map_id'
+user_namespace.c:277: warning: Function parameter or member 'extents' not described in 'map_id_range_down_max'
+user_namespace.c:295: warning: Function parameter or member 'extents' not described in 'map_id_range_down_base'
+user_namespace.c:344: warning: Function parameter or member 'extents' not described in 'map_id_up_base'
+user_namespace.c:364: warning: Function parameter or member 'extents' not described in 'map_id_up_max'
+user_namespace.c:776: warning: Function parameter or member 'map' not described in 'insert_extent'
+user_namespace.c:844: warning: Function parameter or member 'map' not described in 'sort_idmaps'
 
-   After a glance at the driver, the patch too seems safe to be applied to 4.19.y,
-despite I tried to limit it to 5.19.y and newer...
+Fixes: 6397fac4915a ("userns: bump idmap limits to 340")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Christian Brauner <brauner@kernel.org>
+---
+ kernel/user_namespace.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-> Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-> Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-[...]
-
-MBR, Sergey
+diff -- a/kernel/user_namespace.c b/kernel/user_namespace.c
+--- a/kernel/user_namespace.c
++++ b/kernel/user_namespace.c
+@@ -228,7 +228,7 @@ void __put_user_ns(struct user_namespace
+ }
+ EXPORT_SYMBOL(__put_user_ns);
+ 
+-/**
++/*
+  * struct idmap_key - holds the information necessary to find an idmapping in a
+  * sorted idmap array. It is passed to cmp_map_id() as first argument.
+  */
+@@ -238,7 +238,7 @@ struct idmap_key {
+ 	u32 count; /* == 0 unless used with map_id_range_down() */
+ };
+ 
+-/**
++/*
+  * cmp_map_id - Function to be passed to bsearch() to find the requested
+  * idmapping. Expects struct idmap_key to be passed via @k.
+  */
+@@ -268,7 +268,7 @@ static int cmp_map_id(const void *k, con
+ 	return 1;
+ }
+ 
+-/**
++/*
+  * map_id_range_down_max - Find idmap via binary search in ordered idmap array.
+  * Can only be called if number of mappings exceeds UID_GID_MAP_MAX_BASE_EXTENTS.
+  */
+@@ -285,7 +285,7 @@ map_id_range_down_max(unsigned extents,
+ 		       sizeof(struct uid_gid_extent), cmp_map_id);
+ }
+ 
+-/**
++/*
+  * map_id_range_down_base - Find idmap via binary search in static extent array.
+  * Can only be called if number of mappings is equal or less than
+  * UID_GID_MAP_MAX_BASE_EXTENTS.
+@@ -334,7 +334,7 @@ static u32 map_id_down(struct uid_gid_ma
+ 	return map_id_range_down(map, id, 1);
+ }
+ 
+-/**
++/*
+  * map_id_up_base - Find idmap via binary search in static extent array.
+  * Can only be called if number of mappings is equal or less than
+  * UID_GID_MAP_MAX_BASE_EXTENTS.
+@@ -355,7 +355,7 @@ map_id_up_base(unsigned extents, struct
+ 	return NULL;
+ }
+ 
+-/**
++/*
+  * map_id_up_max - Find idmap via binary search in ordered idmap array.
+  * Can only be called if number of mappings exceeds UID_GID_MAP_MAX_BASE_EXTENTS.
+  */
+@@ -767,7 +767,7 @@ static bool mappings_overlap(struct uid_
+ 	return false;
+ }
+ 
+-/**
++/*
+  * insert_extent - Safely insert a new idmap extent into struct uid_gid_map.
+  * Takes care to allocate a 4K block of memory if the number of mappings exceeds
+  * UID_GID_MAP_MAX_BASE_EXTENTS.
+@@ -836,7 +836,7 @@ static int cmp_extents_reverse(const voi
+ 	return 0;
+ }
+ 
+-/**
++/*
+  * sort_idmaps - Sorts an array of idmap entries.
+  * Can only be called if number of mappings exceeds UID_GID_MAP_MAX_BASE_EXTENTS.
+  */
