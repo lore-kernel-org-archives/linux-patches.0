@@ -1,82 +1,90 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6637B20E3
-	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:33:09 +0000 (UTC)
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-51b4ef5378bso2899a12.1
-        for <patches@lists.linux.dev>; Wed, 30 Aug 2023 09:33:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD625383
+	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:44:36 +0000 (UTC)
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-792726d3aeeso194615139f.0
+        for <patches@lists.linux.dev>; Wed, 30 Aug 2023 09:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693413188; x=1694017988; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qLb04PjPHAKkElFOM4zEg1DvSUxLNtirH0qTRIs/MZ8=;
-        b=nDPgD6fjAF5rnNc1LOj0K0RdasdvXr8OfsB7e7ljOpcYhrSm/dDnEwJf1Rx5srdVVm
-         EJM4hxyq0K5IQqhu3V7WvawW9na809yrfpnR8L+mBvpGWtR3dlX5wCwt/wq0W/EuenQI
-         x9pRQyKhHJXuZs2z609CxApsQoCAo98SKFzu+MjohdCzBBn35z+CS2Tie12s93kalGWQ
-         +Ynm86RVtC+KGEWm3W+zxgGWWRWEvBRHSGSK7zdFbJWDu9uf09En0MATnE2ALgS3mXMS
-         3D6qSKIE+tX9JSZQhjaqpNeVaLE8CjS/YWKYVQWgFwmP1DrLpGhXSCwrvhdG78yfjehs
-         5wNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693413188; x=1694017988;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20221208; t=1693413876; x=1694018676; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qLb04PjPHAKkElFOM4zEg1DvSUxLNtirH0qTRIs/MZ8=;
-        b=HWF2CPOWOp/SESi5LuHua9DEeZp8Yx6BNWq7V5dtSkjBLx2Cx4hA90bnuHnNcxZmMN
-         wgKuCvRwg3v+PzKkWgDuL8mG6g5k7qo6EQyl0FxcR8nnMQtfnU1fMT+X8cJkDxqJhQN8
-         IWeBOEqENcGNDW+YUXHyUYry1U2vWgPcMkroeCZGBSggDKQarZLlEn6DRUPNBDZcx2BD
-         8ZONEhLNeAgGtJsdooU2TJvOr+8muqjwvqNdRt98sBm+yD03bNssG7FtqWWkCt0ydHav
-         APAskWoU2Ii5nsOOuBKHuP+W+AwP1ubRC/ioiDBV+1AMjYHQhswfYzUotHhKXzkN2KMO
-         frZQ==
-X-Gm-Message-State: AOJu0YxobiU/+/omgN/qp7m+oWP8t1N8dp0rTk7w0wQVrb4SONgTh027
-	94UjyIcdQRn+FEa+nmcfsqGfSSf6bhiPjSqLYVQ=
-X-Google-Smtp-Source: AGHT+IFrcOygUcEGQM+NJxGZgi51vhGwiajCsPw73JLpC2sttxHYlJq0rcRWAOi9eGduPrbHAkt2UIWJ9O/VKr6MKaI=
-X-Received: by 2002:a17:90a:928a:b0:26d:2162:f596 with SMTP id
- n10-20020a17090a928a00b0026d2162f596mr2603868pjo.6.1693413188478; Wed, 30 Aug
- 2023 09:33:08 -0700 (PDT)
+        bh=VB9BcG9DBx3YBgNtAp765xJQP9YYe+QOzLCI45b7TjA=;
+        b=EUg/NxT1YFKLOKkRzeYE5gwhL26sqbrBk6K0Gm/w29FpUUbtmc5GO8gvc8a+RLCr6w
+         Rs9ycH6FNtlV7kp7SQ/uDnDYY/VdpitefVsLzHdMXBCDyZqw5ubWD2GCB3cyQVSkoKqJ
+         j/cWTnOEpgA9mKvjEEXxwl/9qMlrWzM6L7zowvfrHMe7/OotH4msO7zdpnN3Y6qjET27
+         nRHtEELFtuVKyESfi2ovWXzUhIekgf3+pvklrT0ecKevahB5S9YqnVIFCzc7INSeC7F+
+         BQRJIvbsQeF29oUje6ytfePsXErSjY6b8znFSh9x2rJYvEHaKiHM5qzgIr4xlzY4ybVy
+         rZgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693413876; x=1694018676;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VB9BcG9DBx3YBgNtAp765xJQP9YYe+QOzLCI45b7TjA=;
+        b=Fn23WkvdYWnEiTi2SIiLpkwhEH6g6bA4Axd12OUVARk/01O31lLZ2ikazUdjrawKek
+         RSaelpUBSY6iv8w43q4csys9Ix/xN4auZk6UT95h+3e5zAEPSGhnvd3Gx1Iim2GH0nHe
+         64j1WOu9j37iX0ACKE57GM0hQFAnxemKjT5UNcIobTHoaqq9Q6qGyFsAQ0SFME/O/WLz
+         24BS2vCQLJ1hZnBBnK6M9nkaKx/N1cHyGUW/dCWAaEDw/iepF3Fnww7QCuIgo/4mS9Bf
+         61TUpWXCrWG3yEHga6VeHMGl6uyEUcPd/kN1NjRXxK8eK8BmCcR525YscGG9M8fyuqJC
+         JeGg==
+X-Gm-Message-State: AOJu0Yz4pONI6WY2resLcRuDG3V/DwnZLWh7hDCnNaZ1b6s+EwMo2IAM
+	4/NUmIlqtkTRhBIWw0iZrg4=
+X-Google-Smtp-Source: AGHT+IGUv20sbwduwPaQIjZ7MnGXmaLgkBIZ4HLZXUWF8gBJHgLANXduERX1A/QiIRbKuOhDZRDqkg==
+X-Received: by 2002:a6b:7006:0:b0:795:c6f:59ff with SMTP id l6-20020a6b7006000000b007950c6f59ffmr3192682ioc.17.1693413875851;
+        Wed, 30 Aug 2023 09:44:35 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id g7-20020a6b6b07000000b00786f5990435sm4001523ioc.7.2023.08.30.09.44.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Aug 2023 09:44:35 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 30 Aug 2023 09:44:33 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.10 000/135] 5.10.192-rc1 review
+Message-ID: <27d08b24-3581-4451-b8db-5df144784d6a@roeck-us.net>
+References: <20230824170617.074557800@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230828101150.163430842@linuxfoundation.org>
-In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Wed, 30 Aug 2023 09:32:57 -0700
-Message-ID: <CAJq+SaCZ7moOv2TBD01h6LEg1B1RVmOzR5=eF0nD7Uc6hUaj-g@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230824170617.074557800@linuxfoundation.org>
 
-> This is the start of the stable review cycle for the 5.15.129 release.
-> There are 89 patches in this series, all will be posted as a response
+Hi,
+
+On Thu, Aug 24, 2023 at 07:07:52PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.192 release.
+> There are 135 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> 
+> Responses should be made by Sat, 26 Aug 2023 17:05:50 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+> 
+[ ... ]
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+> Lang Yu <Lang.Yu@amd.com>
+>     drm/amdgpu: install stub fence into potential unused fence pointers
+> 
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+This patch is causing continuous log spam in chromeos-5.10, so we are
+going to revert it.
 
-Thanks.
+WARNING: CPU: 1 PID: 13383 at include/linux/dma-fence.h:478 amdgpu_sync_keep_later+0x95/0xbd
+
+This is just a note to let others know that this may be the cause
+if they see the same problem.
+
+Thanks,
+Guenter
