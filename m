@@ -1,132 +1,82 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CD320E3
-	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:32:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=mAQxkF5a0yjShIqw/cpgy8IMetyqgXXhHwgJ+4Sy81U=; b=LMgWMX3mlFxxWgvWbCMtp1+CAP
-	Yu/Ex35EU5XMfyyXxutQlpsBdUrPJdKrA1x3bLcuBhAOFAN0LaHjHiy9vteSeyr6z/QhusmGBrLbW
-	tPwfX3yrfoA0576ToAQ6ZBmKpr8b51cDbXFuFL2t8h7wXxcKe8q7QPCIxOp+30drQL1/JlnlGTRVq
-	CUXqk1knt0TM4yo4dx8T/N4Cy6bEo1tOPeTAd/vrWoPoNPbvF0pgkHLl8Xp/IdxIAIVg8yS7rqFXA
-	U2cW0aDmIjnY9BW76wQVDsD7DAa/1BbFg9slcFSog04eNJVGxwkeawNmkidAJY8BEtz0vUPQTPg0v
-	5v72nOrQ==;
-Received: from [2601:1c2:980:9ec0::2764] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1qbO75-00DrCE-2Q;
-	Wed, 30 Aug 2023 16:32:15 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-kernel@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH] userns: eliminate many kernel-doc warnings
-Date: Wed, 30 Aug 2023 09:32:15 -0700
-Message-ID: <20230830163215.13193-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.41.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6637B20E3
+	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 16:33:09 +0000 (UTC)
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-51b4ef5378bso2899a12.1
+        for <patches@lists.linux.dev>; Wed, 30 Aug 2023 09:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693413188; x=1694017988; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qLb04PjPHAKkElFOM4zEg1DvSUxLNtirH0qTRIs/MZ8=;
+        b=nDPgD6fjAF5rnNc1LOj0K0RdasdvXr8OfsB7e7ljOpcYhrSm/dDnEwJf1Rx5srdVVm
+         EJM4hxyq0K5IQqhu3V7WvawW9na809yrfpnR8L+mBvpGWtR3dlX5wCwt/wq0W/EuenQI
+         x9pRQyKhHJXuZs2z609CxApsQoCAo98SKFzu+MjohdCzBBn35z+CS2Tie12s93kalGWQ
+         +Ynm86RVtC+KGEWm3W+zxgGWWRWEvBRHSGSK7zdFbJWDu9uf09En0MATnE2ALgS3mXMS
+         3D6qSKIE+tX9JSZQhjaqpNeVaLE8CjS/YWKYVQWgFwmP1DrLpGhXSCwrvhdG78yfjehs
+         5wNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693413188; x=1694017988;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qLb04PjPHAKkElFOM4zEg1DvSUxLNtirH0qTRIs/MZ8=;
+        b=HWF2CPOWOp/SESi5LuHua9DEeZp8Yx6BNWq7V5dtSkjBLx2Cx4hA90bnuHnNcxZmMN
+         wgKuCvRwg3v+PzKkWgDuL8mG6g5k7qo6EQyl0FxcR8nnMQtfnU1fMT+X8cJkDxqJhQN8
+         IWeBOEqENcGNDW+YUXHyUYry1U2vWgPcMkroeCZGBSggDKQarZLlEn6DRUPNBDZcx2BD
+         8ZONEhLNeAgGtJsdooU2TJvOr+8muqjwvqNdRt98sBm+yD03bNssG7FtqWWkCt0ydHav
+         APAskWoU2Ii5nsOOuBKHuP+W+AwP1ubRC/ioiDBV+1AMjYHQhswfYzUotHhKXzkN2KMO
+         frZQ==
+X-Gm-Message-State: AOJu0YxobiU/+/omgN/qp7m+oWP8t1N8dp0rTk7w0wQVrb4SONgTh027
+	94UjyIcdQRn+FEa+nmcfsqGfSSf6bhiPjSqLYVQ=
+X-Google-Smtp-Source: AGHT+IFrcOygUcEGQM+NJxGZgi51vhGwiajCsPw73JLpC2sttxHYlJq0rcRWAOi9eGduPrbHAkt2UIWJ9O/VKr6MKaI=
+X-Received: by 2002:a17:90a:928a:b0:26d:2162:f596 with SMTP id
+ n10-20020a17090a928a00b0026d2162f596mr2603868pjo.6.1693413188478; Wed, 30 Aug
+ 2023 09:33:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230828101150.163430842@linuxfoundation.org>
+In-Reply-To: <20230828101150.163430842@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Wed, 30 Aug 2023 09:32:57 -0700
+Message-ID: <CAJq+SaCZ7moOv2TBD01h6LEg1B1RVmOzR5=eF0nD7Uc6hUaj-g@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/89] 5.15.129-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Drop the kernel-doc "/**" notation from 8 structs or functions to
-prevent 22 kernel-doc warnings  (samples below).
+> This is the start of the stable review cycle for the 5.15.129 release.
+> There are 89 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.129-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-user_namespace.c:239: warning: Function parameter or member 'map_up' not described in 'idmap_key'
-user_namespace.c:246: warning: Function parameter or member 'k' not described in 'cmp_map_id'
-user_namespace.c:277: warning: Function parameter or member 'extents' not described in 'map_id_range_down_max'
-user_namespace.c:295: warning: Function parameter or member 'extents' not described in 'map_id_range_down_base'
-user_namespace.c:344: warning: Function parameter or member 'extents' not described in 'map_id_up_base'
-user_namespace.c:364: warning: Function parameter or member 'extents' not described in 'map_id_up_max'
-user_namespace.c:776: warning: Function parameter or member 'map' not described in 'insert_extent'
-user_namespace.c:844: warning: Function parameter or member 'map' not described in 'sort_idmaps'
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Fixes: 6397fac4915a ("userns: bump idmap limits to 340")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Christian Brauner <brauner@kernel.org>
----
- kernel/user_namespace.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-diff -- a/kernel/user_namespace.c b/kernel/user_namespace.c
---- a/kernel/user_namespace.c
-+++ b/kernel/user_namespace.c
-@@ -228,7 +228,7 @@ void __put_user_ns(struct user_namespace
- }
- EXPORT_SYMBOL(__put_user_ns);
- 
--/**
-+/*
-  * struct idmap_key - holds the information necessary to find an idmapping in a
-  * sorted idmap array. It is passed to cmp_map_id() as first argument.
-  */
-@@ -238,7 +238,7 @@ struct idmap_key {
- 	u32 count; /* == 0 unless used with map_id_range_down() */
- };
- 
--/**
-+/*
-  * cmp_map_id - Function to be passed to bsearch() to find the requested
-  * idmapping. Expects struct idmap_key to be passed via @k.
-  */
-@@ -268,7 +268,7 @@ static int cmp_map_id(const void *k, con
- 	return 1;
- }
- 
--/**
-+/*
-  * map_id_range_down_max - Find idmap via binary search in ordered idmap array.
-  * Can only be called if number of mappings exceeds UID_GID_MAP_MAX_BASE_EXTENTS.
-  */
-@@ -285,7 +285,7 @@ map_id_range_down_max(unsigned extents,
- 		       sizeof(struct uid_gid_extent), cmp_map_id);
- }
- 
--/**
-+/*
-  * map_id_range_down_base - Find idmap via binary search in static extent array.
-  * Can only be called if number of mappings is equal or less than
-  * UID_GID_MAP_MAX_BASE_EXTENTS.
-@@ -334,7 +334,7 @@ static u32 map_id_down(struct uid_gid_ma
- 	return map_id_range_down(map, id, 1);
- }
- 
--/**
-+/*
-  * map_id_up_base - Find idmap via binary search in static extent array.
-  * Can only be called if number of mappings is equal or less than
-  * UID_GID_MAP_MAX_BASE_EXTENTS.
-@@ -355,7 +355,7 @@ map_id_up_base(unsigned extents, struct
- 	return NULL;
- }
- 
--/**
-+/*
-  * map_id_up_max - Find idmap via binary search in ordered idmap array.
-  * Can only be called if number of mappings exceeds UID_GID_MAP_MAX_BASE_EXTENTS.
-  */
-@@ -767,7 +767,7 @@ static bool mappings_overlap(struct uid_
- 	return false;
- }
- 
--/**
-+/*
-  * insert_extent - Safely insert a new idmap extent into struct uid_gid_map.
-  * Takes care to allocate a 4K block of memory if the number of mappings exceeds
-  * UID_GID_MAP_MAX_BASE_EXTENTS.
-@@ -836,7 +836,7 @@ static int cmp_extents_reverse(const voi
- 	return 0;
- }
- 
--/**
-+/*
-  * sort_idmaps - Sorts an array of idmap entries.
-  * Can only be called if number of mappings exceeds UID_GID_MAP_MAX_BASE_EXTENTS.
-  */
+Thanks.
