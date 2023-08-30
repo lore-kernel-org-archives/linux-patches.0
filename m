@@ -1,22 +1,22 @@
 Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AE57469
-	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 15:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5F3525E
+	for <patches@lists.linux.dev>; Wed, 30 Aug 2023 15:54:08 +0000 (UTC)
 Received: from [192.168.1.103] (178.176.75.182) by msexch01.omp.ru
  (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Wed, 30 Aug
- 2023 18:52:10 +0300
-Subject: Re: [PATCH 5.4 044/158] mmc: bcm2835: fix deferred probing
+ 2023 18:54:06 +0300
+Subject: Re: [PATCH 5.4 045/158] mmc: sunxi: fix deferred probing
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, Ulf Hansson <ulf.hansson@linaro.org>, Sasha
- Levin <sashal@kernel.org>
+CC: <patches@lists.linux.dev>, Jernej Skrabec <jernej.skrabec@gmail.com>, Ulf
+ Hansson <ulf.hansson@linaro.org>, Sasha Levin <sashal@kernel.org>
 References: <20230828101157.322319621@linuxfoundation.org>
- <20230828101158.817680940@linuxfoundation.org>
+ <20230828101158.847321164@linuxfoundation.org>
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 Organization: Open Mobile Platform
-Message-ID: <4c269565-e798-7c7e-b4f1-4057b44faeaf@omp.ru>
-Date: Wed, 30 Aug 2023 18:52:09 +0300
+Message-ID: <1778890d-1434-835a-0aca-c3ebe67b8392@omp.ru>
+Date: Wed, 30 Aug 2023 18:54:05 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.1
 Precedence: bulk
@@ -25,7 +25,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230828101158.817680940@linuxfoundation.org>
+In-Reply-To: <20230828101158.847321164@linuxfoundation.org>
 Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -78,7 +78,7 @@ On 8/28/23 1:12 PM, Greg Kroah-Hartman wrote:
 > 
 > From: Sergey Shtylyov <s.shtylyov@omp.ru>
 > 
-> [ Upstream commit 71150ac12558bcd9d75e6e24cf7c872c2efd80f3 ]
+> [ Upstream commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 ]
 > 
 > The driver overrides the error codes and IRQ0 returned by platform_get_irq()
 > to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
@@ -87,14 +87,15 @@ On 8/28/23 1:12 PM, Greg Kroah-Hartman wrote:
 > in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
 > so we now can safely ignore it...
 > 
-> Fixes: 660fc733bd74 ("mmc: bcm2835: Add new driver for the sdhost controller.")
+> Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
 > Cc: stable@vger.kernel.org # v5.19+
 
-   After a glance at the driver, the patch seems safe to be applied to 5.4.y,
+   After a glance at the driver, the patch too seems safe to be applied to 5.4.y,
 despite I tried to limit it to 5.19.y and newer...
 
 > Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-> Link: https://lore.kernel.org/r/20230617203622.6812-2-s.shtylyov@omp.ru
+> Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+> Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
 > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 [...]
