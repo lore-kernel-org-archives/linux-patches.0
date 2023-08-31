@@ -1,109 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12D98F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71663C433C7;
-	Thu, 31 Aug 2023 11:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0C78F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F22CC433C7;
+	Thu, 31 Aug 2023 11:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480276;
-	bh=RiB5c7MpuFSEFlc5oXriBMV+fvuoY6M/dY+UTamHxKU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiw0iIOA13qW17SYzf/0/xWg0aJgnjDjHMHx6I2u/ldxik+gdZDsVdpczsTkHJjwV
-	 HPzUYezRKZov4S8z6xi4aemQCV4aDWoSejIF7+oenBnrWl/Lc59vatRiMPMsWBz1Ow
-	 AugQyzdo/52qHKuSLhdEvKcuWIMNZW2wXGwlChHw=
+	s=korg; t=1693480279;
+	bh=FERMvax9TbLfvFclhnBYRSGWpvFgfEWgj/sYRijBi0k=;
+	h=From:To:Cc:Subject:Date:From;
+	b=xTAT8UgxzSyvsVsA3taxnEF94DM0NERzXa2ixn8JuaZPvY88VEUXTceN1VHNnDo/G
+	 ikwoX1DaG5oV2+eV3iSOzyjXLi3nCtCoCLGMgVrAhm6ahWlaVPp8t/DUqPBeZxjGyt
+	 JKif57EwHKTkO8GxXJhGCoazR7WD0jLhFOZDRO7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>
-Subject: [PATCH 5.15 9/9] rcu-tasks: Add trc_inspect_reader() checks for exiting critical section
-Date: Thu, 31 Aug 2023 13:10:17 +0200
-Message-ID: <20230831110830.446394288@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 5.15 0/9] 5.15.130-rc1 review
+Date: Thu, 31 Aug 2023 13:10:08 +0200
+Message-ID: <20230831110830.039135096@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110830.039135096@linuxfoundation.org>
-References: <20230831110830.039135096@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.130-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.130-rc1
+X-KernelTest-Deadline: 2023-09-02T11:08+00:00
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.15.130 release.
+There are 9 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
+Anything received after that time might be too late.
 
-From: Paul E. McKenney <paulmck@kernel.org>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.130-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-commit 18f08e758f34e6dfe0668bee51bd2af7adacf381 upstream.
+thanks,
 
-Currently, trc_inspect_reader() treats a task exiting its RCU Tasks
-Trace read-side critical section the same as being within that critical
-section.  However, this can fail because that task might have already
-checked its .need_qs field, which means that it might never decrement
-the all-important trc_n_readers_need_end counter.  Of course, for that
-to happen, the task would need to never again execute an RCU Tasks Trace
-read-side critical section, but this really could happen if the system's
-last trampoline was removed.  Note that exit from such a critical section
-cannot be treated as a quiescent state due to the possibility of nested
-critical sections.  This means that if trc_inspect_reader() sees a
-negative nesting value, it must set up to try again later.
+greg k-h
 
-This commit therefore ignores tasks that are exiting their RCU Tasks
-Trace read-side critical sections so that they will be rechecked later.
+-------------
+Pseudo-Shortlog of commits:
 
-[ paulmck: Apply feedback from Neeraj Upadhyay and Boqun Feng. ]
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.130-rc1
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- kernel/rcu/tasks.h |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Paul E. McKenney <paulmck@kernel.org>
+    rcu-tasks: Add trc_inspect_reader() checks for exiting critical section
 
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -951,7 +951,7 @@ reset_ipi:
- static bool trc_inspect_reader(struct task_struct *t, void *arg)
- {
- 	int cpu = task_cpu(t);
--	bool in_qs = false;
-+	int nesting;
- 	bool ofl = cpu_is_offline(cpu);
- 
- 	if (task_curr(t)) {
-@@ -971,18 +971,18 @@ static bool trc_inspect_reader(struct ta
- 		n_heavy_reader_updates++;
- 		if (ofl)
- 			n_heavy_reader_ofl_updates++;
--		in_qs = true;
-+		nesting = 0;
- 	} else {
- 		// The task is not running, so C-language access is safe.
--		in_qs = likely(!t->trc_reader_nesting);
-+		nesting = t->trc_reader_nesting;
- 	}
- 
--	// Mark as checked so that the grace-period kthread will
--	// remove it from the holdout list.
--	t->trc_reader_checked = true;
--
--	if (in_qs)
--		return true;  // Already in quiescent state, done!!!
-+	// If not exiting a read-side critical section, mark as checked
-+	// so that the grace-period kthread will remove it from the
-+	// holdout list.
-+	t->trc_reader_checked = nesting >= 0;
-+	if (nesting <= 0)
-+		return !nesting;  // If in QS, done, otherwise try again later.
- 
- 	// The task is in a read-side critical section, so set up its
- 	// state so that it will awaken the grace-period kthread upon exit
+Paul E. McKenney <paulmck@kernel.org>
+    rcu-tasks: Wait for trc_read_check_handler() IPIs
+
+Neeraj Upadhyay <neeraju@codeaurora.org>
+    rcu-tasks: Fix IPI failure handling in trc_wait_for_one_reader
+
+Paul E. McKenney <paulmck@kernel.org>
+    rcu: Prevent expedited GP from enabling tick on offline CPU
+
+James Morse <james.morse@arm.com>
+    ARM: module: Use module_init_layout_section() to spot init sections
+
+James Morse <james.morse@arm.com>
+    arm64: module: Use module_init_layout_section() to spot init sections
+
+Arnd Bergmann <arnd@arndb.de>
+    arm64: module-plts: inline linux/moduleloader.h
+
+James Morse <james.morse@arm.com>
+    module: Expose module_init_layout_section()
+
+Mario Limonciello <mario.limonciello@amd.com>
+    ACPI: thermal: Drop nocrt parameter
+
+
+-------------
+
+Diffstat:
+
+ Documentation/admin-guide/kernel-parameters.txt |  4 ---
+ Makefile                                        |  4 +--
+ arch/arm/kernel/module-plts.c                   |  2 +-
+ arch/arm64/kernel/module-plts.c                 |  3 ++-
+ drivers/acpi/thermal.c                          |  6 +----
+ include/linux/moduleloader.h                    |  5 ++++
+ kernel/module.c                                 |  2 +-
+ kernel/rcu/tasks.h                              | 36 ++++++++++++++++++-------
+ kernel/rcu/tree_exp.h                           |  5 +++-
+ 9 files changed, 42 insertions(+), 25 deletions(-)
 
 
