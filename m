@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8488F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EA3C433C8;
-	Thu, 31 Aug 2023 11:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A808F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E00C433C9;
+	Thu, 31 Aug 2023 11:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480254;
-	bh=Q4JPkV1o6QXU4vKJj9rNdJzIrcJxHYwKOzV+9eSF1x0=;
+	s=korg; t=1693480257;
+	bh=RppG6LiSkQmoR26DhaacKW7B2TgfHEJeU0amms+YNDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUiINeSZwHj8E0VkpnN7+FRe/eR9tuExX+zg/JR4zfXvt0FP2OEW2y95WXTdVL4Lr
-	 W4vvkhbbVSGyxBsHWAima7ooApZexYV20oFlMupZf+pqiE6pTHGDNbpTHv7UUOiHJI
-	 Qz2jjmtbwVpBPq+xg+iQ6IeXp+40UUkDp+EhFMuo=
+	b=tACMW+k4tooz15zBWsxxbQmYfPCYKx8KIM+mG0TMVaNyKNWxdH2noei/iDlLkvR98
+	 +GLtMX7fYUDRuztw2jHAfZJ7laxXcCSNwVlBknNRSEgCjq6jdg1h37gwLJWgTyttpo
+	 HJUOicg1EfTS2M2whFUMDGSR3QKvFNhlwIuK/CsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 1/9] ACPI: thermal: Drop nocrt parameter
-Date: Thu, 31 Aug 2023 13:10:09 +0200
-Message-ID: <20230831110830.118361724@linuxfoundation.org>
+	Adam Johnston <adam.johnston@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 2/9] module: Expose module_init_layout_section()
+Date: Thu, 31 Aug 2023 13:10:10 +0200
+Message-ID: <20230831110830.160595628@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230831110830.039135096@linuxfoundation.org>
 References: <20230831110830.039135096@linuxfoundation.org>
@@ -39,61 +40,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: James Morse <james.morse@arm.com>
 
-commit 5f641174a12b8a876a4101201a21ef4675ecc014 upstream.
+commit 2abcc4b5a64a65a2d2287ba0be5c2871c1552416 upstream.
 
-The `nocrt` module parameter has no code associated with it and does
-nothing.  As `crt=-1` has same functionality as what nocrt should be
-doing drop `nocrt` and associated documentation.
+module_init_layout_section() choses whether the core module loader
+considers a section as init or not. This affects the placement of the
+exit section when module unloading is disabled. This code will never run,
+so it can be free()d once the module has been initialised.
 
-This should fix a quirk for Gigabyte GA-7ZX that used `nocrt` and
-thus didn't function properly.
+arm and arm64 need to count the number of PLTs they need before applying
+relocations based on the section name. The init PLTs are stored separately
+so they can be free()d. arm and arm64 both use within_module_init() to
+decide which list of PLTs to use when applying the relocation.
 
-Fixes: 8c99fdce3078 ("ACPI: thermal: set "thermal.nocrt" via DMI on Gigabyte GA-7ZX")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Because within_module_init()'s behaviour changes when module unloading
+is disabled, both architecture would need to take this into account when
+counting the PLTs.
+
+Today neither architecture does this, meaning when module unloading is
+disabled there are insufficient PLTs in the init section to load some
+modules, resulting in warnings:
+| WARNING: CPU: 2 PID: 51 at arch/arm64/kernel/module-plts.c:99 module_emit_plt_entry+0x184/0x1cc
+| Modules linked in: crct10dif_common
+| CPU: 2 PID: 51 Comm: modprobe Not tainted 6.5.0-rc4-yocto-standard-dirty #15208
+| Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+| pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : module_emit_plt_entry+0x184/0x1cc
+| lr : module_emit_plt_entry+0x94/0x1cc
+| sp : ffffffc0803bba60
+[...]
+| Call trace:
+|  module_emit_plt_entry+0x184/0x1cc
+|  apply_relocate_add+0x2bc/0x8e4
+|  load_module+0xe34/0x1bd4
+|  init_module_from_file+0x84/0xc0
+|  __arm64_sys_finit_module+0x1b8/0x27c
+|  invoke_syscall.constprop.0+0x5c/0x104
+|  do_el0_svc+0x58/0x160
+|  el0_svc+0x38/0x110
+|  el0t_64_sync_handler+0xc0/0xc4
+|  el0t_64_sync+0x190/0x194
+
+Instead of duplicating module_init_layout_section()s logic, expose it.
+
+Reported-by: Adam Johnston <adam.johnston@arm.com>
+Fixes: 055f23b74b20 ("module: check for exit sections in layout_sections() instead of module_init_section()")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Morse <james.morse@arm.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    4 ----
- drivers/acpi/thermal.c                          |    6 +-----
- 2 files changed, 1 insertion(+), 9 deletions(-)
+ include/linux/moduleloader.h |    5 +++++
+ kernel/module.c              |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5770,10 +5770,6 @@
- 			-1: disable all critical trip points in all thermal zones
- 			<degrees C>: override all critical trip points
+--- a/include/linux/moduleloader.h
++++ b/include/linux/moduleloader.h
+@@ -39,6 +39,11 @@ bool module_init_section(const char *nam
+  */
+ bool module_exit_section(const char *name);
  
--	thermal.nocrt=	[HW,ACPI]
--			Set to disable actions on ACPI thermal zone
--			critical and hot trip points.
--
- 	thermal.off=	[HW,ACPI]
- 			1: disable ACPI thermal control
- 
---- a/drivers/acpi/thermal.c
-+++ b/drivers/acpi/thermal.c
-@@ -59,10 +59,6 @@ static int tzp;
- module_param(tzp, int, 0444);
- MODULE_PARM_DESC(tzp, "Thermal zone polling frequency, in 1/10 seconds.");
- 
--static int nocrt;
--module_param(nocrt, int, 0);
--MODULE_PARM_DESC(nocrt, "Set to take no action upon ACPI thermal zone critical trips points.");
--
- static int off;
- module_param(off, int, 0);
- MODULE_PARM_DESC(off, "Set to disable ACPI thermal support.");
-@@ -1132,7 +1128,7 @@ static int thermal_nocrt(const struct dm
- 
- 	pr_notice("%s detected: disabling all critical thermal trip point actions.\n",
- 		  d->ident);
--	nocrt = 1;
-+	crt = -1;
- 	return 0;
++/* Describes whether within_module_init() will consider this an init section
++ * or not. This behaviour changes with CONFIG_MODULE_UNLOAD.
++ */
++bool module_init_layout_section(const char *sname);
++
+ /*
+  * Apply the given relocation to the (simplified) ELF.  Return -error
+  * or 0.
+--- a/kernel/module.c
++++ b/kernel/module.c
+@@ -2407,7 +2407,7 @@ static long get_offset(struct module *mo
+ 	return ret;
  }
- static int thermal_tzp(const struct dmi_system_id *d) {
+ 
+-static bool module_init_layout_section(const char *sname)
++bool module_init_layout_section(const char *sname)
+ {
+ #ifndef CONFIG_MODULE_UNLOAD
+ 	if (module_exit_section(sname))
 
 
