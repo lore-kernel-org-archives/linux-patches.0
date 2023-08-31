@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839929440
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C68C433C8;
-	Thu, 31 Aug 2023 11:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6B79441
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE203C433CA;
+	Thu, 31 Aug 2023 11:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480333;
-	bh=96ULxTedOjx8ApPsbCOdjfBbZhyPtgAZZ9cRfV7CPLE=;
+	s=korg; t=1693480336;
+	bh=6h42ptFvMZrJP6YYf0LTt3gJg5oECgDLG/Ps+2pG0Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XS1uOASrsbGg7mSDifiRHgd7zIGKszor9BVrFT8GC7OXarOxWiaTMHUAe9SIXp2nt
-	 FLQaj9FMKR/GVTIxO43V2wVyjPIVH6WNeIPwkHd3gbogjNLKFzXYUdXgP+NYkuf5bZ
-	 pYuJEdZaSzzwyZno5azP3Ex3IxfWOM+8Bu+9h+hw=
+	b=n52ZzhYiVSFznJnYtaTQNVzQj/aGnZXHZnYozoInP4601J0W2ch0UzUA+l+WidPDc
+	 GCZFdxOw18Dyd8nfpVtQoD11z/nnllAop+IntE6tkc3Tr1mZLeqqAwTvn5nfsV0nfg
+	 bw1Blfhy7X3wbAB+2aY58gupkU2u2sCzYd1y84Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Vidra.Jonas@seznam.cz,
-	Sam James <sam@gentoo.org>,
-	John David Anglin <dave.anglin@bell.net>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 09/10] io_uring/parisc: Adjust pgoff in io_uring mmap() for parisc
-Date: Thu, 31 Aug 2023 13:10:49 +0200
-Message-ID: <20230831110831.423681984@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 10/10] kallsyms: Fix kallsyms_selftest failure
+Date: Thu, 31 Aug 2023 13:10:50 +0200
+Message-ID: <20230831110831.463971540@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230831110831.079963475@linuxfoundation.org>
 References: <20230831110831.079963475@linuxfoundation.org>
@@ -42,104 +42,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-Vidra Jonas reported issues on parisc with libuv which then triggers
-build errors with cmake. Debugging shows that those issues stem from
-io_uring().
+commit 33f0467fe06934d5e4ea6e24ce2b9c65ce618e26 upstream.
 
-I was not able to easily pull in upstream commits directly, so here
-is IMHO the least invasive manual backport of the following upstream
-commits to fix the cache aliasing issues on parisc on kernel 6.1
-with io_uring:
+Kernel test robot reported a kallsyms_test failure when clang lto is
+enabled (thin or full) and CONFIG_KALLSYMS_SELFTEST is also enabled.
+I can reproduce in my local environment with the following error message
+with thin lto:
+  [    1.877897] kallsyms_selftest: Test for 1750th symbol failed: (tsc_cs_mark_unstable) addr=ffffffff81038090
+  [    1.877901] kallsyms_selftest: abort
 
-56675f8b9f9b ("io_uring/parisc: Adjust pgoff in io_uring mmap() for parisc")
-32832a407a71 ("io_uring: Fix io_uring mmap() by using architecture-provided get_unmapped_area()")
-d808459b2e31 ("io_uring: Adjust mapping wrt architecture aliasing requirements")
+It appears that commit 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes
+from promoted global functions") caused the failure. Commit 8cc32a9bbf29
+changed cleanup_symbol_name() based on ".llvm." instead of '.' where
+".llvm." is appended to a before-lto-optimization local symbol name.
+We need to propagate such knowledge in kallsyms_selftest.c as well.
 
-With this patch kernel 6.1 has all relevant mmap changes and is
-identical to kernel 6.5 with regard to mmap() in io_uring.
+Further more, compare_symbol_name() in kallsyms.c needs change as well.
+In scripts/kallsyms.c, kallsyms_names and kallsyms_seqs_of_names are used
+to record symbol names themselves and index to symbol names respectively.
+For example:
+  kallsyms_names:
+    ...
+    __amd_smn_rw._entry       <== seq 1000
+    __amd_smn_rw._entry.5     <== seq 1001
+    __amd_smn_rw.llvm.<hash>  <== seq 1002
+    ...
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: Vidra.Jonas@seznam.cz
-Link: https://lore.kernel.org/linux-parisc/520.NvTX.6mXZpmfh4Ju.1awpAS@seznam.cz/
-Cc: Sam James <sam@gentoo.org>
-Cc: John David Anglin <dave.anglin@bell.net>
-Cc: Jens Axboe <axboe@kernel.dk>
+kallsyms_seqs_of_names are sorted based on cleanup_symbol_name() through, so
+the order in kallsyms_seqs_of_names actually has
+
+  index 1000:   seq 1002   <== __amd_smn_rw.llvm.<hash> (actual symbol comparison using '__amd_smn_rw')
+  index 1001:   seq 1000   <== __amd_smn_rw._entry
+  index 1002:   seq 1001   <== __amd_smn_rw._entry.5
+
+Let us say at a particular point, at index 1000, symbol '__amd_smn_rw.llvm.<hash>'
+is comparing to '__amd_smn_rw._entry' where '__amd_smn_rw._entry' is the one to
+search e.g., with function kallsyms_on_each_match_symbol(). The current implementation
+will find out '__amd_smn_rw._entry' is less than '__amd_smn_rw.llvm.<hash>' and
+then continue to search e.g., index 999 and never found a match although the actual
+index 1001 is a match.
+
+To fix this issue, let us do cleanup_symbol_name() first and then do comparison.
+In the above case, comparing '__amd_smn_rw' vs '__amd_smn_rw._entry' and
+'__amd_smn_rw._entry' being greater than '__amd_smn_rw', the next comparison will
+be > index 1000 and eventually index 1001 will be hit an a match is found.
+
+For any symbols not having '.llvm.' substr, there is no functionality change
+for compare_symbol_name().
+
+Fixes: 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes from promoted global functions")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202308232200.1c932a90-oliver.sang@intel.com
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Reviewed-by: Song Liu <song@kernel.org>
+Reviewed-by: Zhen Lei <thunder.leizhen@huawei.com>
+Link: https://lore.kernel.org/r/20230825034659.1037627-1-yonghong.song@linux.dev
+Cc: stable@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
 ---
- io_uring/io_uring.c |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ kernel/kallsyms.c |   17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -72,6 +72,7 @@
- #include <linux/io_uring.h>
- #include <linux/audit.h>
- #include <linux/security.h>
-+#include <asm/shmparam.h>
+--- a/kernel/kallsyms.c
++++ b/kernel/kallsyms.c
+@@ -188,16 +188,13 @@ static bool cleanup_symbol_name(char *s)
  
- #define CREATE_TRACE_POINTS
- #include <trace/events/io_uring.h>
-@@ -3110,6 +3111,49 @@ static __cold int io_uring_mmap(struct f
- 	return remap_pfn_range(vma, vma->vm_start, pfn, sz, vma->vm_page_prot);
+ static int compare_symbol_name(const char *name, char *namebuf)
+ {
+-	int ret;
+-
+-	ret = strcmp(name, namebuf);
+-	if (!ret)
+-		return ret;
+-
+-	if (cleanup_symbol_name(namebuf) && !strcmp(name, namebuf))
+-		return 0;
+-
+-	return ret;
++	/* The kallsyms_seqs_of_names is sorted based on names after
++	 * cleanup_symbol_name() (see scripts/kallsyms.c) if clang lto is enabled.
++	 * To ensure correct bisection in kallsyms_lookup_names(), do
++	 * cleanup_symbol_name(namebuf) before comparing name and namebuf.
++	 */
++	cleanup_symbol_name(namebuf);
++	return strcmp(name, namebuf);
  }
  
-+static unsigned long io_uring_mmu_get_unmapped_area(struct file *filp,
-+			unsigned long addr, unsigned long len,
-+			unsigned long pgoff, unsigned long flags)
-+{
-+	void *ptr;
-+
-+	/*
-+	 * Do not allow to map to user-provided address to avoid breaking the
-+	 * aliasing rules. Userspace is not able to guess the offset address of
-+	 * kernel kmalloc()ed memory area.
-+	 */
-+	if (addr)
-+		return -EINVAL;
-+
-+	ptr = io_uring_validate_mmap_request(filp, pgoff, len);
-+	if (IS_ERR(ptr))
-+		return -ENOMEM;
-+
-+	/*
-+	 * Some architectures have strong cache aliasing requirements.
-+	 * For such architectures we need a coherent mapping which aliases
-+	 * kernel memory *and* userspace memory. To achieve that:
-+	 * - use a NULL file pointer to reference physical memory, and
-+	 * - use the kernel virtual address of the shared io_uring context
-+	 *   (instead of the userspace-provided address, which has to be 0UL
-+	 *   anyway).
-+	 * - use the same pgoff which the get_unmapped_area() uses to
-+	 *   calculate the page colouring.
-+	 * For architectures without such aliasing requirements, the
-+	 * architecture will return any suitable mapping because addr is 0.
-+	 */
-+	filp = NULL;
-+	flags |= MAP_SHARED;
-+	pgoff = 0;	/* has been translated to ptr above */
-+#ifdef SHM_COLOUR
-+	addr = (uintptr_t) ptr;
-+	pgoff = addr >> PAGE_SHIFT;
-+#else
-+	addr = 0UL;
-+#endif
-+	return current->mm->get_unmapped_area(filp, addr, len, pgoff, flags);
-+}
-+
- #else /* !CONFIG_MMU */
- 
- static int io_uring_mmap(struct file *file, struct vm_area_struct *vma)
-@@ -3324,6 +3368,8 @@ static const struct file_operations io_u
- #ifndef CONFIG_MMU
- 	.get_unmapped_area = io_uring_nommu_get_unmapped_area,
- 	.mmap_capabilities = io_uring_nommu_mmap_capabilities,
-+#else
-+	.get_unmapped_area = io_uring_mmu_get_unmapped_area,
- #endif
- 	.poll		= io_uring_poll,
- #ifdef CONFIG_PROC_FS
+ static int kallsyms_lookup_names(const char *name,
 
 
