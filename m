@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30F78F4B
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3436FC433C7;
-	Thu, 31 Aug 2023 11:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111BD8F4B
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80625C433C7;
+	Thu, 31 Aug 2023 11:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480214;
-	bh=zPpv2aLu7jJw0RdUThs9LWQkmbVKExbqEehY2Tzcio8=;
+	s=korg; t=1693480218;
+	bh=k/665bObea8zz87Af+kyQSGm2sJ22nnSd7McNkvqtIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Viw1c0QT7HgbkACzgCo53hyyBs5hByhEYqCkC9Rvr7EO5yMU5wDOrJbR5IEowtt3K
-	 e/WA9pGAxgXr6waf4w7tda/1bpTl/2/snI5TDhV9ZXFJqARKF6hlIK1zQcH10s3Ikv
-	 ybCOV3vS+x4Dm+9FWLw0bBGEsMNi8CUSohRAiKLA=
+	b=sEaji+GiYAohRsYooeS9az3wpsE4Q7ww5Dn0CvVv2kGNr6BxjndDlTXM5wq2RXpi2
+	 aBiRujFa7V9euCUEvtXm1NqVNHzKG15Juzu7j6o1Xdr2Vv8dZLNrWlyR4gqw5aO/Sm
+	 I+KKWJqiV41TlVzrYHBDlSJ1cThMI6ej5Ha+bK0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.4 2/3] powerpc/pmac/smp: Drop unnecessary volatile qualifier
-Date: Thu, 31 Aug 2023 13:09:56 +0200
-Message-ID: <20230831110828.977406916@linuxfoundation.org>
+	Adam Johnston <adam.johnston@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.10 01/11] module: Expose module_init_layout_section()
+Date: Thu, 31 Aug 2023 13:09:53 +0200
+Message-ID: <20230831110830.510315541@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110828.874071888@linuxfoundation.org>
-References: <20230831110828.874071888@linuxfoundation.org>
+In-Reply-To: <20230831110830.455765526@linuxfoundation.org>
+References: <20230831110830.455765526@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,37 +36,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: James Morse <james.morse@arm.com>
 
-commit a4037d1f1fc4e92b69d7196d4568c33078d465ea upstream.
+commit 2abcc4b5a64a65a2d2287ba0be5c2871c1552416 upstream.
 
-core99_l2_cache/core99_l3_cache do not need to be marked as volatile,
-remove it.
+module_init_layout_section() choses whether the core module loader
+considers a section as init or not. This affects the placement of the
+exit section when module unloading is disabled. This code will never run,
+so it can be free()d once the module has been initialised.
 
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20200303085604.24952-1-yuehaibing@huawei.com
+arm and arm64 need to count the number of PLTs they need before applying
+relocations based on the section name. The init PLTs are stored separately
+so they can be free()d. arm and arm64 both use within_module_init() to
+decide which list of PLTs to use when applying the relocation.
+
+Because within_module_init()'s behaviour changes when module unloading
+is disabled, both architecture would need to take this into account when
+counting the PLTs.
+
+Today neither architecture does this, meaning when module unloading is
+disabled there are insufficient PLTs in the init section to load some
+modules, resulting in warnings:
+| WARNING: CPU: 2 PID: 51 at arch/arm64/kernel/module-plts.c:99 module_emit_plt_entry+0x184/0x1cc
+| Modules linked in: crct10dif_common
+| CPU: 2 PID: 51 Comm: modprobe Not tainted 6.5.0-rc4-yocto-standard-dirty #15208
+| Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+| pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : module_emit_plt_entry+0x184/0x1cc
+| lr : module_emit_plt_entry+0x94/0x1cc
+| sp : ffffffc0803bba60
+[...]
+| Call trace:
+|  module_emit_plt_entry+0x184/0x1cc
+|  apply_relocate_add+0x2bc/0x8e4
+|  load_module+0xe34/0x1bd4
+|  init_module_from_file+0x84/0xc0
+|  __arm64_sys_finit_module+0x1b8/0x27c
+|  invoke_syscall.constprop.0+0x5c/0x104
+|  do_el0_svc+0x58/0x160
+|  el0_svc+0x38/0x110
+|  el0t_64_sync_handler+0xc0/0xc4
+|  el0t_64_sync+0x190/0x194
+
+Instead of duplicating module_init_layout_section()s logic, expose it.
+
+Reported-by: Adam Johnston <adam.johnston@arm.com>
+Fixes: 055f23b74b20 ("module: check for exit sections in layout_sections() instead of module_init_section()")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Morse <james.morse@arm.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/powermac/smp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/moduleloader.h |    5 +++++
+ kernel/module.c              |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/powermac/smp.c
-+++ b/arch/powerpc/platforms/powermac/smp.c
-@@ -664,8 +664,8 @@ static void core99_init_caches(int cpu)
- {
- #ifndef CONFIG_PPC64
- 	/* L2 and L3 cache settings to pass from CPU0 to CPU1 on G4 cpus */
--	volatile static long int core99_l2_cache;
--	volatile static long int core99_l3_cache;
-+	static long int core99_l2_cache;
-+	static long int core99_l3_cache;
+--- a/include/linux/moduleloader.h
++++ b/include/linux/moduleloader.h
+@@ -39,6 +39,11 @@ bool module_init_section(const char *nam
+  */
+ bool module_exit_section(const char *name);
  
- 	if (!cpu_has_feature(CPU_FTR_L2CR))
- 		return;
++/* Describes whether within_module_init() will consider this an init section
++ * or not. This behaviour changes with CONFIG_MODULE_UNLOAD.
++ */
++bool module_init_layout_section(const char *sname);
++
+ /*
+  * Apply the given relocation to the (simplified) ELF.  Return -error
+  * or 0.
+--- a/kernel/module.c
++++ b/kernel/module.c
+@@ -2280,7 +2280,7 @@ void *__symbol_get(const char *symbol)
+ }
+ EXPORT_SYMBOL_GPL(__symbol_get);
+ 
+-static bool module_init_layout_section(const char *sname)
++bool module_init_layout_section(const char *sname)
+ {
+ #ifndef CONFIG_MODULE_UNLOAD
+ 	if (module_exit_section(sname))
 
 
