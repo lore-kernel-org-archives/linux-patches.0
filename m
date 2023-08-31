@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE5A8F61
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDAEC433C7;
-	Thu, 31 Aug 2023 11:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE818F61
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594D0C433C7;
+	Thu, 31 Aug 2023 11:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480364;
-	bh=oJlyZP0SJWQfWku99i1OnB0sj2HNt2DA1TYftkKI14M=;
+	s=korg; t=1693480367;
+	bh=ikLy3LMC87NCzYFMV2089d3qbZS68zfwvclYIyQThec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sL0N+OcYc3+DeJLnXJGJm/nqU/dKKgqhY9TRMa97yWipx+fxqqUhNlfIoZ606fiAf
-	 ko3oyp3HmdQoXDoHs/phdJg63GdlrkYvw84y2/0pIKAYXfQK2F1RsfupwWHW7V6dAc
-	 zNtjLqkIxfQYo3dWD21bQ0xmYTkxrsnh2DHzPCTU=
+	b=2GsK7Du0rLdIZnvGoAjeTDzjzBV4M2c7mzoqx6vK1umeOVpNH4MMRHXFOCV6dBT8B
+	 Bqaxkr98lWYEw9p5NmVJwe1n4Q54R6IbQ9sAYiUorWW6/gl6ZXQ4vF7Lf+Kjhxo8eF
+	 21JiUICg1EyjvGxo+G8mJFMxpi6b5+hO+j+NxZvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.4 9/9] kallsyms: Fix kallsyms_selftest failure
-Date: Thu, 31 Aug 2023 13:11:36 +0200
-Message-ID: <20230831111128.114994773@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.4 1/9] ACPI: thermal: Drop nocrt parameter
+Date: Thu, 31 Aug 2023 13:11:28 +0200
+Message-ID: <20230831111127.736363489@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230831111127.667900990@linuxfoundation.org>
 References: <20230831111127.667900990@linuxfoundation.org>
@@ -42,135 +39,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 33f0467fe06934d5e4ea6e24ce2b9c65ce618e26 upstream.
+commit 5f641174a12b8a876a4101201a21ef4675ecc014 upstream.
 
-Kernel test robot reported a kallsyms_test failure when clang lto is
-enabled (thin or full) and CONFIG_KALLSYMS_SELFTEST is also enabled.
-I can reproduce in my local environment with the following error message
-with thin lto:
-  [    1.877897] kallsyms_selftest: Test for 1750th symbol failed: (tsc_cs_mark_unstable) addr=ffffffff81038090
-  [    1.877901] kallsyms_selftest: abort
+The `nocrt` module parameter has no code associated with it and does
+nothing.  As `crt=-1` has same functionality as what nocrt should be
+doing drop `nocrt` and associated documentation.
 
-It appears that commit 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes
-from promoted global functions") caused the failure. Commit 8cc32a9bbf29
-changed cleanup_symbol_name() based on ".llvm." instead of '.' where
-".llvm." is appended to a before-lto-optimization local symbol name.
-We need to propagate such knowledge in kallsyms_selftest.c as well.
+This should fix a quirk for Gigabyte GA-7ZX that used `nocrt` and
+thus didn't function properly.
 
-Further more, compare_symbol_name() in kallsyms.c needs change as well.
-In scripts/kallsyms.c, kallsyms_names and kallsyms_seqs_of_names are used
-to record symbol names themselves and index to symbol names respectively.
-For example:
-  kallsyms_names:
-    ...
-    __amd_smn_rw._entry       <== seq 1000
-    __amd_smn_rw._entry.5     <== seq 1001
-    __amd_smn_rw.llvm.<hash>  <== seq 1002
-    ...
-
-kallsyms_seqs_of_names are sorted based on cleanup_symbol_name() through, so
-the order in kallsyms_seqs_of_names actually has
-
-  index 1000:   seq 1002   <== __amd_smn_rw.llvm.<hash> (actual symbol comparison using '__amd_smn_rw')
-  index 1001:   seq 1000   <== __amd_smn_rw._entry
-  index 1002:   seq 1001   <== __amd_smn_rw._entry.5
-
-Let us say at a particular point, at index 1000, symbol '__amd_smn_rw.llvm.<hash>'
-is comparing to '__amd_smn_rw._entry' where '__amd_smn_rw._entry' is the one to
-search e.g., with function kallsyms_on_each_match_symbol(). The current implementation
-will find out '__amd_smn_rw._entry' is less than '__amd_smn_rw.llvm.<hash>' and
-then continue to search e.g., index 999 and never found a match although the actual
-index 1001 is a match.
-
-To fix this issue, let us do cleanup_symbol_name() first and then do comparison.
-In the above case, comparing '__amd_smn_rw' vs '__amd_smn_rw._entry' and
-'__amd_smn_rw._entry' being greater than '__amd_smn_rw', the next comparison will
-be > index 1000 and eventually index 1001 will be hit an a match is found.
-
-For any symbols not having '.llvm.' substr, there is no functionality change
-for compare_symbol_name().
-
-Fixes: 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes from promoted global functions")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202308232200.1c932a90-oliver.sang@intel.com
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Reviewed-by: Song Liu <song@kernel.org>
-Reviewed-by: Zhen Lei <thunder.leizhen@huawei.com>
-Link: https://lore.kernel.org/r/20230825034659.1037627-1-yonghong.song@linux.dev
-Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: 8c99fdce3078 ("ACPI: thermal: set "thermal.nocrt" via DMI on Gigabyte GA-7ZX")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kallsyms.c          |   17 +++++++----------
- kernel/kallsyms_selftest.c |   23 +----------------------
- 2 files changed, 8 insertions(+), 32 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |    4 ----
+ drivers/acpi/thermal.c                          |    6 +-----
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -188,16 +188,13 @@ static bool cleanup_symbol_name(char *s)
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6240,10 +6240,6 @@
+ 			-1: disable all critical trip points in all thermal zones
+ 			<degrees C>: override all critical trip points
  
- static int compare_symbol_name(const char *name, char *namebuf)
- {
--	int ret;
+-	thermal.nocrt=	[HW,ACPI]
+-			Set to disable actions on ACPI thermal zone
+-			critical and hot trip points.
 -
--	ret = strcmp(name, namebuf);
--	if (!ret)
--		return ret;
+ 	thermal.off=	[HW,ACPI]
+ 			1: disable ACPI thermal control
+ 
+--- a/drivers/acpi/thermal.c
++++ b/drivers/acpi/thermal.c
+@@ -59,10 +59,6 @@ static int tzp;
+ module_param(tzp, int, 0444);
+ MODULE_PARM_DESC(tzp, "Thermal zone polling frequency, in 1/10 seconds.");
+ 
+-static int nocrt;
+-module_param(nocrt, int, 0);
+-MODULE_PARM_DESC(nocrt, "Set to take no action upon ACPI thermal zone critical trips points.");
 -
--	if (cleanup_symbol_name(namebuf) && !strcmp(name, namebuf))
--		return 0;
--
--	return ret;
-+	/* The kallsyms_seqs_of_names is sorted based on names after
-+	 * cleanup_symbol_name() (see scripts/kallsyms.c) if clang lto is enabled.
-+	 * To ensure correct bisection in kallsyms_lookup_names(), do
-+	 * cleanup_symbol_name(namebuf) before comparing name and namebuf.
-+	 */
-+	cleanup_symbol_name(namebuf);
-+	return strcmp(name, namebuf);
+ static int off;
+ module_param(off, int, 0);
+ MODULE_PARM_DESC(off, "Set to disable ACPI thermal support.");
+@@ -1143,7 +1139,7 @@ static int thermal_act(const struct dmi_
+ static int thermal_nocrt(const struct dmi_system_id *d) {
+ 	pr_notice("%s detected: disabling all critical thermal trip point actions.\n",
+ 		  d->ident);
+-	nocrt = 1;
++	crt = -1;
+ 	return 0;
  }
- 
- static unsigned int get_symbol_seq(int index)
---- a/kernel/kallsyms_selftest.c
-+++ b/kernel/kallsyms_selftest.c
-@@ -196,7 +196,7 @@ static bool match_cleanup_name(const cha
- 	if (!IS_ENABLED(CONFIG_LTO_CLANG))
- 		return false;
- 
--	p = strchr(s, '.');
-+	p = strstr(s, ".llvm.");
- 	if (!p)
- 		return false;
- 
-@@ -344,27 +344,6 @@ static int test_kallsyms_basic_function(
- 			goto failed;
- 		}
- 
--		/*
--		 * The first '.' may be the initial letter, in which case the
--		 * entire symbol name will be truncated to an empty string in
--		 * cleanup_symbol_name(). Do not test these symbols.
--		 *
--		 * For example:
--		 * cat /proc/kallsyms | awk '{print $3}' | grep -E "^\." | head
--		 * .E_read_words
--		 * .E_leading_bytes
--		 * .E_trailing_bytes
--		 * .E_write_words
--		 * .E_copy
--		 * .str.292.llvm.12122243386960820698
--		 * .str.24.llvm.12122243386960820698
--		 * .str.29.llvm.12122243386960820698
--		 * .str.75.llvm.12122243386960820698
--		 * .str.99.llvm.12122243386960820698
--		 */
--		if (IS_ENABLED(CONFIG_LTO_CLANG) && !namebuf[0])
--			continue;
--
- 		lookup_addr = kallsyms_lookup_name(namebuf);
- 
- 		memset(stat, 0, sizeof(*stat));
+ static int thermal_tzp(const struct dmi_system_id *d) {
 
 
