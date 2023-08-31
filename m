@@ -1,79 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479DA8F4B
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0A0C433C7;
-	Thu, 31 Aug 2023 11:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142898F4B
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4ACC433C8;
+	Thu, 31 Aug 2023 11:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480230;
-	bh=cRuq4F/BwwutsMpRy7D3viz1/yWkQWjlRKwGHoICyNA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z415ZdLXxs1sdTgPSidS7m2yfckgAsBLyAoFnFoyPOlc/qbMrUZqGVvO0eArLX0l2
-	 dg+m+28ipRfJyWNv7MSu22GoN+iNDsenF5azBdo44vtHZtkutRfO1QK1IJc0JPOHGF
-	 MgCaY5wHtsHJ2/NB37b0hprz7Vz7hPAkODE1qL8g=
+	s=korg; t=1693480232;
+	bh=oXyEJLs9W3Ifoo6l0wZk+xvE7umA5W2FKw/u1uOzoNU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=PRQvwGsQEU5Zwvmz86ITJP8Ngdz6co1N+9PxXM+T10L3Ko8UbYBwotymJ8b+Yij9I
+	 fbcCpGie/ze4dnVLmLgfm46Ko/2dFoVf4lEC+7VLuPOzVLvaskIIfew4qpf9TXZFgU
+	 d/hfSmpSvhfn3Y2Po4qriKCnzmDlr+JT4l0UzjF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <natechancellor@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 05/11] mhi: pci_generic: Fix implicit conversion warning
-Date: Thu, 31 Aug 2023 13:09:57 +0200
-Message-ID: <20230831110830.674039666@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 5.10 00/11] 5.10.194-rc1 review
+Date: Thu, 31 Aug 2023 13:09:52 +0200
+Message-ID: <20230831110830.455765526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110830.455765526@linuxfoundation.org>
-References: <20230831110830.455765526@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.194-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.194-rc1
+X-KernelTest-Deadline: 2023-09-02T11:08+00:00
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.10.194 release.
+There are 11 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
+Anything received after that time might be too late.
 
-From: Loic Poulain <loic.poulain@linaro.org>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.194-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-commit 4ea6fa2cb921cb17812501a27c3761037d64a217 upstream.
+thanks,
 
-Fix the following warning with explicit cast:
+greg k-h
 
-warning: implicit conversion from 'unsigned long long' to
-'dma_addr_t' (aka 'unsigned int')
-mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: 855a70c12021 ("bus: mhi: Add MHI PCI support for WWAN modems")
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/bus/mhi/host/pci_generic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.194-rc1
 
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -273,7 +273,7 @@ static int mhi_pci_probe(struct pci_dev
- 	mhi_cntrl_config = info->config;
- 	mhi_cntrl->cntrl_dev = &pdev->dev;
- 	mhi_cntrl->iova_start = 0;
--	mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
-+	mhi_cntrl->iova_stop = (dma_addr_t)DMA_BIT_MASK(info->dma_data_width);
- 	mhi_cntrl->fw_image = info->fw;
- 	mhi_cntrl->edl_image = info->edl;
- 
+Paul E. McKenney <paulmck@kernel.org>
+    rcu-tasks: Add trc_inspect_reader() checks for exiting critical section
+
+Paul E. McKenney <paulmck@kernel.org>
+    rcu-tasks: Wait for trc_read_check_handler() IPIs
+
+Neeraj Upadhyay <neeraju@codeaurora.org>
+    rcu-tasks: Fix IPI failure handling in trc_wait_for_one_reader
+
+Paul E. McKenney <paulmck@kernel.org>
+    rcu: Prevent expedited GP from enabling tick on offline CPU
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "MIPS: Alchemy: fix dbdma2"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "drm/amdgpu: install stub fence into potential unused fence pointers"
+
+Loic Poulain <loic.poulain@linaro.org>
+    mhi: pci_generic: Fix implicit conversion warning
+
+James Morse <james.morse@arm.com>
+    ARM: module: Use module_init_layout_section() to spot init sections
+
+James Morse <james.morse@arm.com>
+    arm64: module: Use module_init_layout_section() to spot init sections
+
+Arnd Bergmann <arnd@arndb.de>
+    arm64: module-plts: inline linux/moduleloader.h
+
+James Morse <james.morse@arm.com>
+    module: Expose module_init_layout_section()
+
+
+-------------
+
+Diffstat:
+
+ Makefile                               |  4 ++--
+ arch/arm/kernel/module-plts.c          |  2 +-
+ arch/arm64/kernel/module-plts.c        |  3 ++-
+ arch/mips/alchemy/common/dbdma.c       | 27 ++++++++++++-------------
+ drivers/bus/mhi/host/pci_generic.c     |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |  6 ++----
+ include/linux/moduleloader.h           |  5 +++++
+ kernel/module.c                        |  2 +-
+ kernel/rcu/tasks.h                     | 36 ++++++++++++++++++++++++----------
+ kernel/rcu/tree_exp.h                  |  5 ++++-
+ 10 files changed, 56 insertions(+), 36 deletions(-)
 
 
