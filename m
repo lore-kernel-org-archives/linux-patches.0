@@ -1,40 +1,40 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609A410EB
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 01:14:09 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1bf3a2f4528so1988565ad.2
-        for <patches@lists.linux.dev>; Wed, 30 Aug 2023 18:14:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709AF10E1
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 01:14:10 +0000 (UTC)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1bf3a2f4528so1988625ad.2
+        for <patches@lists.linux.dev>; Wed, 30 Aug 2023 18:14:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1693444448; x=1694049248; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1693444450; x=1694049250; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Yi6iDn2wgjxe+kNysUVpTjdo2oBFvbwTmlzECQzPgK4=;
-        b=gvnJkSo/Sz+oty6pqxHPyQNeTIWFYkH+JyWrrr+xYXXKkNh0TuFyVjkY71hCMSjFwZ
-         +BriA94tXE2VxOrja2FM42pE0mnCxTwQPWV5e7WoQJELql/PCJbkfeNvMxKThvgudjej
-         GAkFMyLY3EOBBV14MumiLI6D6C752iB+jSpto=
+        bh=Evb7/BN7ItVli8O1MCLcSe5YscQaq6FblNFUqza6B98=;
+        b=hWwghBnmpYdWM44Rt3ko7iI2NzZekO9PMsjK2QEGuA4USdLP2wP+SpK+qDu2IVOgqU
+         sIqZWAl3duIvDeQ6zO2zFE3MyOi/mkcWccufPBWiCvBtNhkgBwhzOrkfb0jls9tIUsDH
+         ZV/RVBod9PDd4JS4MDz4+aMqnausBGeYzxdMs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693444448; x=1694049248;
+        d=1e100.net; s=20221208; t=1693444450; x=1694049250;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Yi6iDn2wgjxe+kNysUVpTjdo2oBFvbwTmlzECQzPgK4=;
-        b=NIyKym+UKpCqZ1d/8pStlQvZ/mT/9lVK3kNnRyEvri1bh8qJSg4+scveJ/o0DSS90L
-         YLrd7AJvdKi6L3xmh34fj/PI8Fl5q00m8iFsYO4nXCfF31PqGBVxkoc5qjj+b02hmrEA
-         QQbd6y0Yjp1TdFmj/ZoC9PkRy6/CQAAj0SpEtRz5y7FBZ6bqGg7/ddyyBt6magiwg8NW
-         aI2IhR/a+W+le+wcW3FBKH+9l03MZHO/AfXPeP+SCYK+TbyrYge4BreIymwfOFxnk0dO
-         9mRUPrAyuUliYmJg3qjqE4nhfcZYPv4ZbN3VghRVYUEsbfruM1NqZI/5gU7zMj6VYWwy
-         KmyA==
-X-Gm-Message-State: AOJu0YwxlZdrIGndtQWCZ3Ji50gbf6yTDOZDI9KFguLJv0Q0QVSOfQBb
-	YdbwXYtU53RR3N20bca9m+lsXQ==
-X-Google-Smtp-Source: AGHT+IHew80vJT+8xJZut5mz37IpFi9RdN3+DaIDAboblAp+7f8qYSDoSaiqwxvec94o5LPnr5OQKA==
-X-Received: by 2002:a17:902:8e89:b0:1c0:b7f4:5b86 with SMTP id bg9-20020a1709028e8900b001c0b7f45b86mr3639342plb.65.1693444448598;
-        Wed, 30 Aug 2023 18:14:08 -0700 (PDT)
+        bh=Evb7/BN7ItVli8O1MCLcSe5YscQaq6FblNFUqza6B98=;
+        b=AhjQy+fYT237Two9IcXMdpOXsoPC7ljJxgnGtC7SlPJqGH6n3Ai7kHGUh4vtaYRkHP
+         t8cAcideBUAsiu73FRfeKT82jGge1bjnj/I90ecg50+BMEReHMcgZJnMX3VLFM13kRhr
+         h51zt+xQzzNKxCQbPksGaBgaTapzlj4rY7PUfC27qUPPeOkm3JOmvj7/tOtLZM95DNbK
+         75v9XsYPMjgYM3cqdqiQQqTuEdXCfivtqj5Dm+3XISbHXBuoq+awFCJjIM4TI5kgT5wB
+         VvtMbKENrMG43O1taWX4rPrwecn+8mNVqwFIoRBYZ2O3DazMGwBtKI32ZSfAX98wi249
+         rrgg==
+X-Gm-Message-State: AOJu0Yzc+11BYYFV848+7pvnqkyamvXI3KvThptro8MSOwTg+WCM2m1/
+	ZuAdCcYX8snQygzMtd5Uf6j2zg==
+X-Google-Smtp-Source: AGHT+IFYusCNVLK7C29ZkzYj1eGJCKZt8+lyPCyvbxdXZnw6xYC4O8RV0ZX9Jg5wTDXLG27eEM/K/Q==
+X-Received: by 2002:a17:902:db0c:b0:1b9:e81f:fb08 with SMTP id m12-20020a170902db0c00b001b9e81ffb08mr4163642plx.55.1693444449861;
+        Wed, 30 Aug 2023 18:14:09 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:11a:201:248f:d364:b451:2bc0])
-        by smtp.gmail.com with ESMTPSA id im23-20020a170902bb1700b001bbb7af4963sm132604plb.68.2023.08.30.18.14.07
+        by smtp.gmail.com with ESMTPSA id im23-20020a170902bb1700b001bbb7af4963sm132604plb.68.2023.08.30.18.14.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 18:14:08 -0700 (PDT)
+        Wed, 30 Aug 2023 18:14:09 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
@@ -45,9 +45,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Prashant Malani <pmalani@chromium.org>
-Subject: [PATCH 1/3] platform/x86: intel_scu_ipc: Check status after timeouts in busy_loop()
-Date: Wed, 30 Aug 2023 18:14:01 -0700
-Message-ID: <20230831011405.3246849-2-swboyd@chromium.org>
+Subject: [PATCH 2/3] platform/x86: intel_scu_ipc: Check status upon timeout in ipc_wait_for_interrupt()
+Date: Wed, 30 Aug 2023 18:14:02 -0700
+Message-ID: <20230831011405.3246849-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.42.0.rc2.253.gd59a3bf2b4-goog
 In-Reply-To: <20230831011405.3246849-1-swboyd@chromium.org>
 References: <20230831011405.3246849-1-swboyd@chromium.org>
@@ -59,68 +59,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It's possible for the polling loop in busy_loop() to get scheduled away
-for a long time.
+It's possible for the completion in ipc_wait_for_interrupt() to timeout,
+simply because the interrupt was delayed in being processed. A timeout
+in itself is not an error. This driver should check the status register
+upon a timeout to ensure that scheduling or interrupt processing delays
+don't affect the outcome of the IPC return value.
 
-  status = ipc_read_status(scu);
-  <long time scheduled away>
-  if (!(status & IPC_STATUS_BUSY))
+ CPU0                                                   SCU
+ ----                                                   ---
+ ipc_wait_for_interrupt()
+  wait_for_completion_timeout(&scu->cmd_complete)
+  [TIMEOUT]                                             status[IPC_BUSY]=0
 
-If this happens, then the status bit could change and this function
-would never test it again after checking the jiffies against the timeout
-limit. Polling code should check the condition one more time after the
-timeout in case this happens.
-
-The read_poll_timeout() helper implements this logic, and is shorter, so
-simply use that helper here.
+Fix this problem by reading the status bit in all cases, regardless of
+the timeout. If the completion times out, we'll assume the problem was
+that the IPC_BUSY bit was still set, but if the status bit is cleared in
+the meantime we know that we hit some scheduling delay and we should
+just check the error bit.
 
 Cc: Prashant Malani <pmalani@chromium.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
+Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/platform/x86/intel_scu_ipc.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/platform/x86/intel_scu_ipc.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-index 6851d10d6582..5a37becc65aa 100644
+index 5a37becc65aa..2a21153e3bf3 100644
 --- a/drivers/platform/x86/intel_scu_ipc.c
 +++ b/drivers/platform/x86/intel_scu_ipc.c
-@@ -19,6 +19,7 @@
- #include <linux/init.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/module.h>
- #include <linux/slab.h>
- 
-@@ -231,19 +232,15 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
- /* Wait till scu status is busy */
- static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+@@ -246,16 +246,19 @@ static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+ /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
+ static inline int ipc_wait_for_interrupt(struct intel_scu_ipc_dev *scu)
  {
--	unsigned long end = jiffies + IPC_TIMEOUT;
--
--	do {
--		u32 status;
--
--		status = ipc_read_status(scu);
--		if (!(status & IPC_STATUS_BUSY))
--			return (status & IPC_STATUS_ERR) ? -EIO : 0;
+-	int status;
++	unsigned long time_left;
 +	u8 status;
-+	int err;
++	int err = 0;
  
--		usleep_range(50, 100);
--	} while (time_before(jiffies, end));
-+	err = read_poll_timeout(ipc_read_status, status, !(status & IPC_STATUS_BUSY),
-+				100, jiffies_to_usecs(IPC_TIMEOUT), false, scu);
-+	if (err)
-+		return err;
+-	if (!wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT))
+-		return -ETIMEDOUT;
++	time_left = wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT);
++	if (!time_left)
++		err = -ETIMEDOUT;
  
--	return -ETIMEDOUT;
-+	return (status & IPC_STATUS_ERR) ? -EIO : 0;
+ 	status = ipc_read_status(scu);
+-	if (status & IPC_STATUS_ERR)
+-		return -EIO;
++	if (!(status & IPC_STATUS_BUSY))
++		err = (status & IPC_STATUS_ERR) ? -EIO : 0;
+ 
+-	return 0;
++	return err;
  }
  
- /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
+ static int intel_scu_ipc_check_status(struct intel_scu_ipc_dev *scu)
 -- 
 https://chromeos.dev
 
