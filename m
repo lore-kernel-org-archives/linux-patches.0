@@ -1,34 +1,34 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8555819BD1
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 20:29:49 +0000 (UTC)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37VKFGOY008657;
-	Thu, 31 Aug 2023 20:29:46 GMT
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66B719BB4
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 20:29:55 +0000 (UTC)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37VJT413013994;
+	Thu, 31 Aug 2023 20:29:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4Qei91qpDVD4YxnsbX+ONhJtjFfbKJznpV27P9vRhvQ=;
- b=n9/oq/Lc0ovlx3KoW3OK55DXPbxKUtGoVpZ/H2S9WSaDlsMLOE49tPqVhN8oe4uE3M8b
- JjG+1WTLUvFE5YTvKbMJReRxKFwWyxqjIlJybaG0NrSpqmZtR8b1VCqsf1xKy8/t6rU8
- Rv51PmGAJhRi9Al6U/nCtL+WMPjI4Jl6hj7q7G34Wp38+nM96JoKbVGOY4CDKGa+15fL
- N23sYWOH3cYxlyId8HPVDTqItV3O87uEOwYzj8UCxk9XFYCzRW1ipaTEOneWUp3gceel
- Qzznx4StZZPvzaJH0JL86l1dxVmKjowyeCTa+2PJ4kBgLGESe3BhF5dbaMd8cSdsIEM7 rw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stku2a6cg-1
+ bh=uTnhtGCELPID39Z/8PfWJjmXbVOnw/KJk9B9d9TfnJc=;
+ b=J8JGyjo5sxz+Ss60l5GY2o639wA1XDzr7X8nlpgp1zPD4d08olCORBeenMJl+jirvKpX
+ DXWVMeR9YtmTlogAhslFQqHfSQC7NiknaeSAWN3YEZisKBvi/45L74uDKuLO1uDwET84
+ BLdmMDL4WG2AL8HgsnH5aB2r5pUy54G+bhql7hZ1ri7X5nLpsX55ZxSLYyzwT0JcIREW
+ d6hF9ZZRRzKLNiNsV0rX/GRVaFD04+0TIzEnvLm3MT4yRNygOqna+gwE9hvLY0x034CB
+ /QXa5/OVypbq4KJZsesQuxii7DBb9iotccPnox/3XXJwpUbeNz8LOwjXvmUh5jjG5Vrl HA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3stv5n98k0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Aug 2023 20:29:46 +0000
+	Thu, 31 Aug 2023 20:29:45 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37VKSm6l006335
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37VKTiGL024040
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 31 Aug 2023 20:28:48 GMT
+	Thu, 31 Aug 2023 20:29:44 GMT
 Received: from [10.71.108.94] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 31 Aug
- 2023 13:28:47 -0700
-Message-ID: <c581ba5d-fa61-dfca-317f-3e2da95eac2a@quicinc.com>
-Date: Thu, 31 Aug 2023 13:28:47 -0700
+ 2023 13:29:43 -0700
+Message-ID: <c498fd06-f99d-6dc8-2c22-c332a5b6084d@quicinc.com>
+Date: Thu, 31 Aug 2023 13:29:42 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,8 +37,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 4/7] drm/msm/dp: Remove aux_cfg_update_done and related
- code
+Subject: Re: [PATCH 7/7] drm/msm/dp: Remove dp_display_is_ds_bridge()
 Content-Language: en-US
 To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -50,31 +49,31 @@ CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
         <freedreno@lists.freedesktop.org>,
         Vinod Polimera <quic_vpolimer@quicinc.com>
 References: <20230829184735.2841739-1-swboyd@chromium.org>
- <20230829184735.2841739-5-swboyd@chromium.org>
+ <20230829184735.2841739-8-swboyd@chromium.org>
 From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <20230829184735.2841739-5-swboyd@chromium.org>
+In-Reply-To: <20230829184735.2841739-8-swboyd@chromium.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c-HlcV31aSr81Bqv7kzHEL1bsqa1J2-F
-X-Proofpoint-ORIG-GUID: c-HlcV31aSr81Bqv7kzHEL1bsqa1J2-F
+X-Proofpoint-GUID: jcD84F1EUtcYRy-9SovYLyw_l0ApqnRV
+X-Proofpoint-ORIG-GUID: jcD84F1EUtcYRy-9SovYLyw_l0ApqnRV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-08-31_18,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 spamscore=0 phishscore=0
- bulkscore=0 priorityscore=1501 adultscore=0 suspectscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2308310183
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=999 spamscore=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0
+ mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308310183
 
 
 On 8/29/2023 11:47 AM, Stephen Boyd wrote:
-> The member 'aux_cfg_update_done' is always false. This is dead code that
-> never runs. Remove it.
+> This function is simply drm_dp_is_branch() so use that instead of
+> open-coding it.
 >
 > Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
 > Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
@@ -82,46 +81,31 @@ On 8/29/2023 11:47 AM, Stephen Boyd wrote:
 Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_panel.c | 15 ---------------
->   1 file changed, 15 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_display.c | 9 +--------
+>   1 file changed, 1 insertion(+), 8 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 9fb4e963fefb..0893522ae158 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -17,7 +17,6 @@ struct dp_panel_private {
->   	struct dp_link *link;
->   	struct dp_catalog *catalog;
->   	bool panel_on;
-> -	bool aux_cfg_update_done;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 76f13954015b..96bbf6fec2f1 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -341,19 +341,12 @@ static const struct component_ops dp_display_comp_ops = {
+>   	.unbind = dp_display_unbind,
 >   };
 >   
->   static void dp_panel_read_psr_cap(struct dp_panel_private *panel)
-> @@ -177,19 +176,6 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
->   		}
->   	}
->   
-> -	if (panel->aux_cfg_update_done) {
-> -		drm_dbg_dp(panel->drm_dev,
-> -				"read DPCD with updated AUX config\n");
-> -		rc = dp_panel_read_dpcd(dp_panel);
-> -		bw_code = drm_dp_link_rate_to_bw_code(dp_panel->link_info.rate);
-> -		if (rc || !is_link_rate_valid(bw_code) ||
-> -			!is_lane_count_valid(dp_panel->link_info.num_lanes)
-> -			|| (bw_code > dp_panel->max_bw_code)) {
-> -			DRM_ERROR("read dpcd failed %d\n", rc);
-> -			return rc;
-> -		}
-> -		panel->aux_cfg_update_done = false;
-> -	}
->   end:
->   	return rc;
+> -static bool dp_display_is_ds_bridge(struct dp_panel *panel)
+> -{
+> -	return (panel->dpcd[DP_DOWNSTREAMPORT_PRESENT] &
+> -		DP_DWN_STRM_PORT_PRESENT);
+> -}
+> -
+>   static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
+>   {
+>   	drm_dbg_dp(dp->drm_dev, "present=%#x sink_count=%d\n",
+>   			dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
+>   		dp->link->sink_count);
+> -	return dp_display_is_ds_bridge(dp->panel) &&
+> -		(dp->link->sink_count == 0);
+> +	return drm_dp_is_branch(dp->panel->dpcd) && dp->link->sink_count == 0;
 >   }
-> @@ -434,7 +420,6 @@ struct dp_panel *dp_panel_get(struct dp_panel_in *in)
 >   
->   	dp_panel = &panel->dp_panel;
->   	dp_panel->max_bw_code = DP_LINK_BW_8_1;
-> -	panel->aux_cfg_update_done = false;
->   
->   	return dp_panel;
->   }
+>   static void dp_display_send_hpd_event(struct msm_dp *dp_display)
