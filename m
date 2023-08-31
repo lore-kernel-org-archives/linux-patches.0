@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A95E8F61
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04DAC433C7;
-	Thu, 31 Aug 2023 11:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532DD8F61
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F52C433C7;
+	Thu, 31 Aug 2023 11:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480356;
-	bh=GbriYdLZtPRnRrYsk7Q7IxdU5asHwxeHDgI86GswgsA=;
+	s=korg; t=1693480359;
+	bh=JhL51LmjgiFjf9YE06qIslWLSTjg1NXQtEw8XzTu60w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDpwOoC2J+Pb/KMHD9JkUJ3I7OewLPoswnav6/wB+b+dszMVp8DbXx2iUrhpoFsY0
-	 6Z5JA6hNVpI+qlBaGS8qFBhlZtHZlZSOVDuykVddgXR71i6PfqeGRjFQozTtNeDWur
-	 sVCs8rddECyj/NR1Cso9QoBpA3kI7pvIzZMDTp2Y=
+	b=q2eZAsVYY4U+yBko68R0lKBzUCPHsSm7SG9WGyoUzsaEe263hSn/RZXwrWh9+CJl4
+	 j/CWUmkx8KO5V4VPa3C9xwV7Kk6vtCsIRfzrY3sU6Wk73kcD2dwyVK+vRrk8O69Nzw
+	 UrVONN3tpS5BRSKYHha+164WNwk7a/7cmyjMiqPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.4 6/9] ARM: module: Use module_init_layout_section() to spot init sections
-Date: Thu, 31 Aug 2023 13:11:33 +0200
-Message-ID: <20230831111127.969785171@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Borislav Petkov <bp@suse.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 7/9] lockdep: fix static memory detection even more
+Date: Thu, 31 Aug 2023 13:11:34 +0200
+Message-ID: <20230831111128.017245084@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230831111127.667900990@linuxfoundation.org>
 References: <20230831111127.667900990@linuxfoundation.org>
@@ -39,46 +43,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Helge Deller <deller@gmx.de>
 
-commit a6846234f45801441f0e31a8b37f901ef0abd2df upstream.
+commit 0a6b58c5cd0dfd7961e725212f0fc8dfc5d96195 upstream.
 
-Today module_frob_arch_sections() spots init sections from their
-'init' prefix, and uses this to keep the init PLTs separate from the rest.
+On the parisc architecture, lockdep reports for all static objects which
+are in the __initdata section (e.g. "setup_done" in devtmpfs,
+"kthreadd_done" in init/main.c) this warning:
 
-get_module_plt() uses within_module_init() to determine if a
-location is in the init text or not, but this depends on whether
-core code thought this was an init section.
+	INFO: trying to register non-static key.
 
-Naturally the logic is different.
+The warning itself is wrong, because those objects are in the __initdata
+section, but the section itself is on parisc outside of range from
+_stext to _end, which is why the static_obj() functions returns a wrong
+answer.
 
-module_init_layout_section() groups the init and exit text together if
-module unloading is disabled, as the exit code will never run. The result
-is kernels with this configuration can't load all their modules because
-there are not enough PLTs for the combined init+exit section.
+While fixing this issue, I noticed that the whole existing check can
+be simplified a lot.
+Instead of checking against the _stext and _end symbols (which include
+code areas too) just check for the .data and .bss segments (since we check a
+data object). This can be done with the existing is_kernel_core_data()
+macro.
 
-A previous patch exposed module_init_layout_section(), use that so the
-logic is the same.
+In addition objects in the __initdata section can be checked with
+init_section_contains(), and is_kernel_rodata() allows keys to be in the
+_ro_after_init section.
 
-Fixes: 055f23b74b20 ("module: check for exit sections in layout_sections() instead of module_init_section()")
-Cc: stable@vger.kernel.org
-Signed-off-by: James Morse <james.morse@arm.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+This partly reverts and simplifies commit bac59d18c701 ("x86/setup: Fix static
+memory detection").
+
+Link: https://lkml.kernel.org/r/ZNqrLRaOi/3wPAdp@p100
+Fixes: bac59d18c701 ("x86/setup: Fix static memory detection")
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/kernel/module-plts.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/sections.h |   18 ------------------
+ kernel/locking/lockdep.c        |   36 ++++++++++++++----------------------
+ 2 files changed, 14 insertions(+), 40 deletions(-)
 
---- a/arch/arm/kernel/module-plts.c
-+++ b/arch/arm/kernel/module-plts.c
-@@ -251,7 +251,7 @@ int module_frob_arch_sections(Elf_Ehdr *
- 		/* sort by type and symbol index */
- 		sort(rels, numrels, sizeof(Elf32_Rel), cmp_rel, NULL);
+--- a/arch/x86/include/asm/sections.h
++++ b/arch/x86/include/asm/sections.h
+@@ -2,8 +2,6 @@
+ #ifndef _ASM_X86_SECTIONS_H
+ #define _ASM_X86_SECTIONS_H
  
--		if (strncmp(secstrings + dstsec->sh_name, ".init", 5) != 0)
-+		if (!module_init_layout_section(secstrings + dstsec->sh_name))
- 			core_plts += count_plts(syms, dstsec->sh_addr, rels,
- 						numrels, s->sh_info);
- 		else
+-#define arch_is_kernel_initmem_freed arch_is_kernel_initmem_freed
+-
+ #include <asm-generic/sections.h>
+ #include <asm/extable.h>
+ 
+@@ -18,20 +16,4 @@ extern char __end_of_kernel_reserve[];
+ 
+ extern unsigned long _brk_start, _brk_end;
+ 
+-static inline bool arch_is_kernel_initmem_freed(unsigned long addr)
+-{
+-	/*
+-	 * If _brk_start has not been cleared, brk allocation is incomplete,
+-	 * and we can not make assumptions about its use.
+-	 */
+-	if (_brk_start)
+-		return 0;
+-
+-	/*
+-	 * After brk allocation is complete, space between _brk_end and _end
+-	 * is available for allocation.
+-	 */
+-	return addr >= _brk_end && addr < (unsigned long)&_end;
+-}
+-
+ #endif	/* _ASM_X86_SECTIONS_H */
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -817,34 +817,26 @@ static int very_verbose(struct lock_clas
+  * Is this the address of a static object:
+  */
+ #ifdef __KERNEL__
+-/*
+- * Check if an address is part of freed initmem. After initmem is freed,
+- * memory can be allocated from it, and such allocations would then have
+- * addresses within the range [_stext, _end].
+- */
+-#ifndef arch_is_kernel_initmem_freed
+-static int arch_is_kernel_initmem_freed(unsigned long addr)
+-{
+-	if (system_state < SYSTEM_FREEING_INITMEM)
+-		return 0;
+-
+-	return init_section_contains((void *)addr, 1);
+-}
+-#endif
+-
+ static int static_obj(const void *obj)
+ {
+-	unsigned long start = (unsigned long) &_stext,
+-		      end   = (unsigned long) &_end,
+-		      addr  = (unsigned long) obj;
++	unsigned long addr = (unsigned long) obj;
+ 
+-	if (arch_is_kernel_initmem_freed(addr))
+-		return 0;
++	if (is_kernel_core_data(addr))
++		return 1;
++
++	/*
++	 * keys are allowed in the __ro_after_init section.
++	 */
++	if (is_kernel_rodata(addr))
++		return 1;
+ 
+ 	/*
+-	 * static variable?
++	 * in initdata section and used during bootup only?
++	 * NOTE: On some platforms the initdata section is
++	 * outside of the _stext ... _end range.
+ 	 */
+-	if ((addr >= start) && (addr < end))
++	if (system_state < SYSTEM_FREEING_INITMEM &&
++		init_section_contains((void *)addr, 1))
+ 		return 1;
+ 
+ 	/*
 
 
