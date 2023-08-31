@@ -1,275 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9074A8F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10664C433C8;
-	Thu, 31 Aug 2023 11:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BE28F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04ADC433C8;
+	Thu, 31 Aug 2023 11:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480296;
-	bh=El4NpBEyEnXo9GGcji6CmGyaHdQH1LRS+Lp1B3oI86I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lv6mN+CZXOkhLwJy753LvA4f5iBbLaHtHo8HHlgj8DyCaPPTlzXIm19l0dEGGO9H6
-	 tyy4EiLSc1GQUdEqqlfDuyyaIlG1vxXFKA8+02bd6JVgteBBpPZj4xDWvEdnJVBMkA
-	 LCScefc5lB3NLMkTPyq5xn5IFEb1wR6P39siVolo=
+	s=korg; t=1693480299;
+	bh=Nb7ZxB99xT+gFAqqhdJ9croBOXAq4axqdZodrVzX+ao=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Asl83XKEV8ZFX/u3y2hDnvhluHBJkqtNGbRJQEBF/wgICLpMDLuNjWVDE6YS19PHw
+	 zhbjQXlsbYD8LdsD4V5ijbgaTb8Z4FiKqDYSWxOlQK8gUyI75hkvBORe+ZkmoBi7C4
+	 DG50m+Vlz9O4FzUM6CSQUxGb92xqDxiqAa7jMfIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Chao Wu <wwchao@google.com>,
-	Wei Wang <weiwan@google.com>,
-	Coco Li <lixiaoyan@google.com>,
-	YiFei Zhu <zhuyifei@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.5 6/8] ipv6: remove hard coded limitation on ipv6_pinfo
-Date: Thu, 31 Aug 2023 13:10:33 +0200
-Message-ID: <20230831110831.051111512@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 6.5 0/8] 6.5.1-rc1 review
+Date: Thu, 31 Aug 2023 13:10:27 +0200
+Message-ID: <20230831110830.817738361@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110830.817738361@linuxfoundation.org>
-References: <20230831110830.817738361@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.1-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.5.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.5.1-rc1
+X-KernelTest-Deadline: 2023-09-02T11:08+00:00
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.5.1 release.
+There are 8 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
+Anything received after that time might be too late.
 
-From: Eric Dumazet <edumazet@google.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.1-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+and the diffstat can be found below.
 
-commit f5f80e32de12fad2813d37270e8364a03e6d3ef0 upstream.
+thanks,
 
-IPv6 inet sockets are supposed to have a "struct ipv6_pinfo"
-field at the end of their definition, so that inet6_sk_generic()
-can derive from socket size the offset of the "struct ipv6_pinfo".
+greg k-h
 
-This is very fragile, and prevents adding bigger alignment
-in sockets, because inet6_sk_generic() does not work
-if the compiler adds padding after the ipv6_pinfo component.
+-------------
+Pseudo-Shortlog of commits:
 
-We are currently working on a patch series to reorganize
-TCP structures for better data locality and found issues
-similar to the one fixed in commit f5d547676ca0
-("tcp: fix tcp_inet6_sk() for 32bit kernels")
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.5.1-rc1
 
-Alternative would be to force an alignment on "struct ipv6_pinfo",
-greater or equal to __alignof__(any ipv6 sock) to ensure there is
-no padding. This does not look great.
+Yonghong Song <yonghong.song@linux.dev>
+    kallsyms: Fix kallsyms_selftest failure
 
-v2: fix typo in mptcp_proto_v6_init() (Paolo)
+Helge Deller <deller@gmx.de>
+    lockdep: fix static memory detection even more
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Chao Wu <wwchao@google.com>
-Cc: Wei Wang <weiwan@google.com>
-Cc: Coco Li <lixiaoyan@google.com>
-Cc: YiFei Zhu <zhuyifei@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/ipv6.h |   15 ++++-----------
- include/net/sock.h   |    1 +
- net/dccp/ipv6.c      |    1 +
- net/dccp/ipv6.h      |    4 ----
- net/ipv6/af_inet6.c  |    4 ++--
- net/ipv6/ping.c      |    1 +
- net/ipv6/raw.c       |    1 +
- net/ipv6/tcp_ipv6.c  |    1 +
- net/ipv6/udp.c       |    1 +
- net/ipv6/udplite.c   |    1 +
- net/l2tp/l2tp_ip6.c  |    4 +---
- net/mptcp/protocol.c |    1 +
- net/sctp/socket.c    |    1 +
- 13 files changed, 16 insertions(+), 20 deletions(-)
+Eric Dumazet <edumazet@google.com>
+    ipv6: remove hard coded limitation on ipv6_pinfo
 
---- a/include/linux/ipv6.h
-+++ b/include/linux/ipv6.h
-@@ -199,14 +199,7 @@ struct inet6_cork {
- 	u8 tclass;
- };
- 
--/**
-- * struct ipv6_pinfo - ipv6 private area
-- *
-- * In the struct sock hierarchy (tcp6_sock, upd6_sock, etc)
-- * this _must_ be the last member, so that inet6_sk_generic
-- * is able to calculate its offset from the base struct sock
-- * by using the struct proto->slab_obj_size member. -acme
-- */
-+/* struct ipv6_pinfo - ipv6 private area */
- struct ipv6_pinfo {
- 	struct in6_addr 	saddr;
- 	struct in6_pktinfo	sticky_pktinfo;
-@@ -306,19 +299,19 @@ struct raw6_sock {
- 	__u32			offset;		/* checksum offset  */
- 	struct icmp6_filter	filter;
- 	__u32			ip6mr_table;
--	/* ipv6_pinfo has to be the last member of raw6_sock, see inet6_sk_generic */
-+
- 	struct ipv6_pinfo	inet6;
- };
- 
- struct udp6_sock {
- 	struct udp_sock	  udp;
--	/* ipv6_pinfo has to be the last member of udp6_sock, see inet6_sk_generic */
-+
- 	struct ipv6_pinfo inet6;
- };
- 
- struct tcp6_sock {
- 	struct tcp_sock	  tcp;
--	/* ipv6_pinfo has to be the last member of tcp6_sock, see inet6_sk_generic */
-+
- 	struct ipv6_pinfo inet6;
- };
- 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1340,6 +1340,7 @@ struct proto {
- 
- 	struct kmem_cache	*slab;
- 	unsigned int		obj_size;
-+	unsigned int		ipv6_pinfo_offset;
- 	slab_flags_t		slab_flags;
- 	unsigned int		useroffset;	/* Usercopy region offset */
- 	unsigned int		usersize;	/* Usercopy region size */
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -1056,6 +1056,7 @@ static struct proto dccp_v6_prot = {
- 	.orphan_count	   = &dccp_orphan_count,
- 	.max_header	   = MAX_DCCP_HEADER,
- 	.obj_size	   = sizeof(struct dccp6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct dccp6_sock, inet6),
- 	.slab_flags	   = SLAB_TYPESAFE_BY_RCU,
- 	.rsk_prot	   = &dccp6_request_sock_ops,
- 	.twsk_prot	   = &dccp6_timewait_sock_ops,
---- a/net/dccp/ipv6.h
-+++ b/net/dccp/ipv6.h
-@@ -13,10 +13,6 @@
- 
- struct dccp6_sock {
- 	struct dccp_sock  dccp;
--	/*
--	 * ipv6_pinfo has to be the last member of dccp6_sock,
--	 * see inet6_sk_generic.
--	 */
- 	struct ipv6_pinfo inet6;
- };
- 
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -102,9 +102,9 @@ bool ipv6_mod_enabled(void)
- }
- EXPORT_SYMBOL_GPL(ipv6_mod_enabled);
- 
--static __inline__ struct ipv6_pinfo *inet6_sk_generic(struct sock *sk)
-+static struct ipv6_pinfo *inet6_sk_generic(struct sock *sk)
- {
--	const int offset = sk->sk_prot->obj_size - sizeof(struct ipv6_pinfo);
-+	const int offset = sk->sk_prot->ipv6_pinfo_offset;
- 
- 	return (struct ipv6_pinfo *)(((u8 *)sk) + offset);
- }
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -215,6 +215,7 @@ struct proto pingv6_prot = {
- 	.get_port =	ping_get_port,
- 	.put_port =	ping_unhash,
- 	.obj_size =	sizeof(struct raw6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct raw6_sock, inet6),
- };
- EXPORT_SYMBOL_GPL(pingv6_prot);
- 
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -1216,6 +1216,7 @@ struct proto rawv6_prot = {
- 	.hash		   = raw_hash_sk,
- 	.unhash		   = raw_unhash_sk,
- 	.obj_size	   = sizeof(struct raw6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct raw6_sock, inet6),
- 	.useroffset	   = offsetof(struct raw6_sock, filter),
- 	.usersize	   = sizeof_field(struct raw6_sock, filter),
- 	.h.raw_hash	   = &raw_v6_hashinfo,
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -2176,6 +2176,7 @@ struct proto tcpv6_prot = {
- 	.sysctl_rmem_offset	= offsetof(struct net, ipv4.sysctl_tcp_rmem),
- 	.max_header		= MAX_TCP_HEADER,
- 	.obj_size		= sizeof(struct tcp6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct tcp6_sock, inet6),
- 	.slab_flags		= SLAB_TYPESAFE_BY_RCU,
- 	.twsk_prot		= &tcp6_timewait_sock_ops,
- 	.rsk_prot		= &tcp6_request_sock_ops,
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1802,6 +1802,7 @@ struct proto udpv6_prot = {
- 	.sysctl_wmem_offset     = offsetof(struct net, ipv4.sysctl_udp_wmem_min),
- 	.sysctl_rmem_offset     = offsetof(struct net, ipv4.sysctl_udp_rmem_min),
- 	.obj_size		= sizeof(struct udp6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct udp6_sock, inet6),
- 	.h.udp_table		= NULL,
- 	.diag_destroy		= udp_abort,
- };
---- a/net/ipv6/udplite.c
-+++ b/net/ipv6/udplite.c
-@@ -67,6 +67,7 @@ struct proto udplitev6_prot = {
- 	.sysctl_wmem_offset = offsetof(struct net, ipv4.sysctl_udp_wmem_min),
- 	.sysctl_rmem_offset = offsetof(struct net, ipv4.sysctl_udp_rmem_min),
- 	.obj_size	   = sizeof(struct udp6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct udp6_sock, inet6),
- 	.h.udp_table	   = &udplite_table,
- };
- 
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -36,9 +36,6 @@ struct l2tp_ip6_sock {
- 	u32			conn_id;
- 	u32			peer_conn_id;
- 
--	/* ipv6_pinfo has to be the last member of l2tp_ip6_sock, see
--	 * inet6_sk_generic
--	 */
- 	struct ipv6_pinfo	inet6;
- };
- 
-@@ -730,6 +727,7 @@ static struct proto l2tp_ip6_prot = {
- 	.hash		   = l2tp_ip6_hash,
- 	.unhash		   = l2tp_ip6_unhash,
- 	.obj_size	   = sizeof(struct l2tp_ip6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct l2tp_ip6_sock, inet6),
- };
- 
- static const struct proto_ops l2tp_ip6_ops = {
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3987,6 +3987,7 @@ int __init mptcp_proto_v6_init(void)
- 	strcpy(mptcp_v6_prot.name, "MPTCPv6");
- 	mptcp_v6_prot.slab = NULL;
- 	mptcp_v6_prot.obj_size = sizeof(struct mptcp6_sock);
-+	mptcp_v6_prot.ipv6_pinfo_offset = offsetof(struct mptcp6_sock, np);
- 
- 	err = proto_register(&mptcp_v6_prot, 1);
- 	if (err)
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9732,6 +9732,7 @@ struct proto sctpv6_prot = {
- 	.unhash		= sctp_unhash,
- 	.no_autobind	= true,
- 	.obj_size	= sizeof(struct sctp6_sock),
-+	.ipv6_pinfo_offset = offsetof(struct sctp6_sock, inet6),
- 	.useroffset	= offsetof(struct sctp6_sock, sctp.subscribe),
- 	.usersize	= offsetof(struct sctp6_sock, sctp.initmsg) -
- 				offsetof(struct sctp6_sock, sctp.subscribe) +
+Andrea Righi <andrea.righi@canonical.com>
+    module/decompress: use vmalloc() for zstd decompression workspace
+
+James Morse <james.morse@arm.com>
+    ARM: module: Use module_init_layout_section() to spot init sections
+
+James Morse <james.morse@arm.com>
+    arm64: module: Use module_init_layout_section() to spot init sections
+
+James Morse <james.morse@arm.com>
+    module: Expose module_init_layout_section()
+
+Mario Limonciello <mario.limonciello@amd.com>
+    ACPI: thermal: Drop nocrt parameter
+
+
+-------------
+
+Diffstat:
+
+ Documentation/admin-guide/kernel-parameters.txt |  4 ---
+ Makefile                                        |  4 +--
+ arch/arm/kernel/module-plts.c                   |  2 +-
+ arch/arm64/kernel/module-plts.c                 |  2 +-
+ arch/x86/include/asm/sections.h                 | 18 -------------
+ drivers/acpi/thermal.c                          |  6 +----
+ include/linux/ipv6.h                            | 15 +++--------
+ include/linux/moduleloader.h                    |  5 ++++
+ include/net/sock.h                              |  1 +
+ kernel/kallsyms.c                               | 17 +++++-------
+ kernel/kallsyms_selftest.c                      | 23 +---------------
+ kernel/locking/lockdep.c                        | 36 ++++++++++---------------
+ kernel/module/decompress.c                      |  4 +--
+ kernel/module/main.c                            |  2 +-
+ net/dccp/ipv6.c                                 |  1 +
+ net/dccp/ipv6.h                                 |  4 ---
+ net/ipv6/af_inet6.c                             |  4 +--
+ net/ipv6/ping.c                                 |  1 +
+ net/ipv6/raw.c                                  |  1 +
+ net/ipv6/tcp_ipv6.c                             |  1 +
+ net/ipv6/udp.c                                  |  1 +
+ net/ipv6/udplite.c                              |  1 +
+ net/l2tp/l2tp_ip6.c                             |  4 +--
+ net/mptcp/protocol.c                            |  1 +
+ net/sctp/socket.c                               |  1 +
+ 25 files changed, 51 insertions(+), 108 deletions(-)
 
 
