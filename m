@@ -1,127 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C044A8F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D6AC433C8;
-	Thu, 31 Aug 2023 11:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578D88F76
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA876C433C7;
+	Thu, 31 Aug 2023 11:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480310;
-	bh=USPpfi9WpB8GlobYIAv70LUuOeyehFah7tYIJ7gJnMo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jVlx0OPxiWTTRTqhXOyFmePSQTmeLtUhMcqSe0vQLwG6e8sgZkfh5qZfMQY0Kd1yb
-	 +4/ejew0YGbLX3lYWo3DV1XQb3qe/TOx7QTeT5ZLvvvr8X5keYDa8rFD97Mz+nQlOl
-	 Jt7VhDyLeu9DP3jgzyveldWoECcuDR8MQjpXbIKE=
+	s=korg; t=1693480316;
+	bh=j9XrFukAp2D852mbojUYYSmsaf4gpZoGtBlPSaQBFlE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XehSh6AC3eXTL7LFi5NX+IUC7z8jf5iA9CsspLlGWySOufhtXyemqkO5x32ShvArn
+	 HZGxZu4ZHOa21S3Aa0/nTziN0oDivwkp9iuWQWdi/ppy1J6r6smsWQ+/6ylQfz7fYs
+	 00XyKzDM0WorSh0XkNq8eShQ8iSPg97ladRu1nvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 6.1 00/10] 6.1.51-rc1 review
-Date: Thu, 31 Aug 2023 13:10:40 +0200
-Message-ID: <20230831110831.079963475@linuxfoundation.org>
+	Adam Johnston <adam.johnston@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.1 02/10] module: Expose module_init_layout_section()
+Date: Thu, 31 Aug 2023 13:10:42 +0200
+Message-ID: <20230831110831.168071019@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230831110831.079963475@linuxfoundation.org>
+References: <20230831110831.079963475@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.51-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.51-rc1
-X-KernelTest-Deadline: 2023-09-02T11:08+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.51 release.
-There are 10 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.51-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
+From: James Morse <james.morse@arm.com>
 
-thanks,
+commit 2abcc4b5a64a65a2d2287ba0be5c2871c1552416 upstream.
 
-greg k-h
+module_init_layout_section() choses whether the core module loader
+considers a section as init or not. This affects the placement of the
+exit section when module unloading is disabled. This code will never run,
+so it can be free()d once the module has been initialised.
 
--------------
-Pseudo-Shortlog of commits:
+arm and arm64 need to count the number of PLTs they need before applying
+relocations based on the section name. The init PLTs are stored separately
+so they can be free()d. arm and arm64 both use within_module_init() to
+decide which list of PLTs to use when applying the relocation.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.51-rc1
+Because within_module_init()'s behaviour changes when module unloading
+is disabled, both architecture would need to take this into account when
+counting the PLTs.
 
-Yonghong Song <yonghong.song@linux.dev>
-    kallsyms: Fix kallsyms_selftest failure
+Today neither architecture does this, meaning when module unloading is
+disabled there are insufficient PLTs in the init section to load some
+modules, resulting in warnings:
+| WARNING: CPU: 2 PID: 51 at arch/arm64/kernel/module-plts.c:99 module_emit_plt_entry+0x184/0x1cc
+| Modules linked in: crct10dif_common
+| CPU: 2 PID: 51 Comm: modprobe Not tainted 6.5.0-rc4-yocto-standard-dirty #15208
+| Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+| pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : module_emit_plt_entry+0x184/0x1cc
+| lr : module_emit_plt_entry+0x94/0x1cc
+| sp : ffffffc0803bba60
+[...]
+| Call trace:
+|  module_emit_plt_entry+0x184/0x1cc
+|  apply_relocate_add+0x2bc/0x8e4
+|  load_module+0xe34/0x1bd4
+|  init_module_from_file+0x84/0xc0
+|  __arm64_sys_finit_module+0x1b8/0x27c
+|  invoke_syscall.constprop.0+0x5c/0x104
+|  do_el0_svc+0x58/0x160
+|  el0_svc+0x38/0x110
+|  el0t_64_sync_handler+0xc0/0xc4
+|  el0t_64_sync+0x190/0x194
 
-Helge Deller <deller@gmx.de>
-    io_uring/parisc: Adjust pgoff in io_uring mmap() for parisc
+Instead of duplicating module_init_layout_section()s logic, expose it.
 
-Helge Deller <deller@gmx.de>
-    parisc: sys_parisc: parisc_personality() is called from asm code
+Reported-by: Adam Johnston <adam.johnston@arm.com>
+Fixes: 055f23b74b20 ("module: check for exit sections in layout_sections() instead of module_init_section()")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Morse <james.morse@arm.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ include/linux/moduleloader.h |    5 +++++
+ kernel/module/main.c         |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-John David Anglin <dave@parisc-linux.org>
-    parisc: Cleanup mmap implementation regarding color alignment
-
-Helge Deller <deller@gmx.de>
-    lockdep: fix static memory detection even more
-
-James Morse <james.morse@arm.com>
-    ARM: module: Use module_init_layout_section() to spot init sections
-
-James Morse <james.morse@arm.com>
-    arm64: module: Use module_init_layout_section() to spot init sections
-
-Arnd Bergmann <arnd@arndb.de>
-    arm64: module-plts: inline linux/moduleloader.h
-
-James Morse <james.morse@arm.com>
-    module: Expose module_init_layout_section()
-
-Mario Limonciello <mario.limonciello@amd.com>
-    ACPI: thermal: Drop nocrt parameter
-
-
--------------
-
-Diffstat:
-
- Documentation/admin-guide/kernel-parameters.txt |   4 -
- Makefile                                        |   4 +-
- arch/arm/kernel/module-plts.c                   |   2 +-
- arch/arm64/kernel/module-plts.c                 |   3 +-
- arch/parisc/kernel/sys_parisc.c                 | 173 +++++++++---------------
- arch/x86/include/asm/sections.h                 |  18 ---
- drivers/acpi/thermal.c                          |   6 +-
- include/linux/moduleloader.h                    |   5 +
- io_uring/io_uring.c                             |  46 +++++++
- kernel/kallsyms.c                               |  17 +--
- kernel/locking/lockdep.c                        |  36 ++---
- kernel/module/main.c                            |   2 +-
- 12 files changed, 146 insertions(+), 170 deletions(-)
+--- a/include/linux/moduleloader.h
++++ b/include/linux/moduleloader.h
+@@ -39,6 +39,11 @@ bool module_init_section(const char *nam
+  */
+ bool module_exit_section(const char *name);
+ 
++/* Describes whether within_module_init() will consider this an init section
++ * or not. This behaviour changes with CONFIG_MODULE_UNLOAD.
++ */
++bool module_init_layout_section(const char *sname);
++
+ /*
+  * Apply the given relocation to the (simplified) ELF.  Return -error
+  * or 0.
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1401,7 +1401,7 @@ long module_get_offset(struct module *mo
+ 	return ret;
+ }
+ 
+-static bool module_init_layout_section(const char *sname)
++bool module_init_layout_section(const char *sname)
+ {
+ #ifndef CONFIG_MODULE_UNLOAD
+ 	if (module_exit_section(sname))
 
 
