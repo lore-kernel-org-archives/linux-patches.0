@@ -1,39 +1,56 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8B3125BC
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 15:13:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8880BC433C7;
-	Thu, 31 Aug 2023 15:13:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693494814;
-	bh=8EjyOxDLw+FwPwX3qIdoCkLu6PFqd/mYkxhM3oZ1aI8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Wd+m8j+vDaMSHQl5oLmg8V0KI97uS3ANStDxTK57HJ+sptRUThFx3FybvoZ9l3HeH
-	 bRLNrmEjYnBmSLEGBhp0mMOwcf1HKVHjBn3heTTqfSqzn54r+qHAYIy/zMh0Hvz+L7
-	 w8xtwETqtNcZR5+R9YeaXc0pXe9PbGFK04WXgczk=
-Date: Thu, 31 Aug 2023 17:13:31 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Manuel Lauss <manuel.lauss@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>, stable <stable@vger.kernel.org>,
-	patches@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	Pavel Machek <pavel@denx.de>, jonathanh@nvidia.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: Re: [PATCH 5.10 00/84] 5.10.193-rc1 review
-Message-ID: <2023083107-calcium-slab-89a5@gregkh>
-References: <20230828101149.146126827@linuxfoundation.org>
- <5b30ff73-46cb-1d1e-3823-f175dbfbd91b@roeck-us.net>
- <2023083014-barley-upscale-518e@gregkh>
- <64374066-4086-3e92-8650-ab1563350f0c@roeck-us.net>
- <95baa835-9940-a257-cf96-93c543aa389f@gmail.com>
- <CAOLZvyEuj=93tpObwDgyAK01Jyz8NfXQzJfAX5=vVwG1wxo-cA@mail.gmail.com>
- <2023083138-frustrate-race-9264@gregkh>
- <4a69c0c0-5e8a-9a3a-6527-3eb7e51a955e@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56D113FEA
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 16:10:06 +0000 (UTC)
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-7926de0478eso52921239f.0
+        for <patches@lists.linux.dev>; Thu, 31 Aug 2023 09:10:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693498205; x=1694103005; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=41c/fNK1qQC2XK9KwuU0p8MqEE5Km30gP6fWHcjfMQo=;
+        b=iMwa89qY7KnibEkl30nOdQjRyyRm6lf3Rc0rvEjtJjDqLX0DbkB0Jm/LbZX7cFYXDn
+         3Q2nuEK2XJpYVphGhK1qip2uBtRqe+w66989lqRveMDRGrAaCftkpTsSkK+ApUTgO6Xw
+         xUONXcOW5tvl5p/3rY2NCTI8Ttji2J92ZNkROZ7gnDfU1ptv5OUPTR+XBGTVxCQh5uiR
+         iVMpWDUnXCVnO4tecN1VtF2FZpt+uf4r4Y8O9NZHGZ7C4O2GtWdnUpIih7Hq81KopjdH
+         RfdrgxKc4fbQOwTQ5pufiq83JV0FwsBooQYe5srVA4drGAbv1cXAXHdgP+5/8TPM1gzj
+         uw7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693498205; x=1694103005;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=41c/fNK1qQC2XK9KwuU0p8MqEE5Km30gP6fWHcjfMQo=;
+        b=CbyJlTePMO/7v0EinfJpVNZh2RT64AMqtMsLzEsMaDbVc21yBKNVEg5zEmRdIt+nkP
+         JHVNP+VcyxMZemXvZymPa0uhNrsaDNLka1oebgUgkJUMenMmSNAkdFiQvGyR2MpobZIn
+         DK/qDmVQ0mUFBTo+SWjc6U9qki37J+77FHnhyaTqOSlzW6RQafasZNCDR2wIA1SKecdP
+         WDpb1jRZxxYJh4C6jmBY4f3gfC+DVhBFM/1BMpRb1/6yusp24su1gWMIx0CZcb2FVTXF
+         8qFqcBX/krTXfqf6+e25E2KT7Saz75pfZTlNt3Lcq5NNuogRuoaB2754ypGV/Gk09XII
+         1Cwg==
+X-Gm-Message-State: AOJu0Ywur0BGg7e1iRJ+b5IYTqz2uvEYqm/V0/4I3f96QyGiNeMnKI6m
+	d17TYPiiQjEr96tNWUEM+/w=
+X-Google-Smtp-Source: AGHT+IGIk5fg7IzlO0S8uOjOP4VIcjkOGCNo8gyiNl5yp19xKSOvib6enwnc/oDThB57xVEIL0ilLA==
+X-Received: by 2002:a05:6e02:f41:b0:348:b07e:fdac with SMTP id y1-20020a056e020f4100b00348b07efdacmr251422ilj.3.1693498205551;
+        Thu, 31 Aug 2023 09:10:05 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id f5-20020a056e0204c500b003489ccea184sm514510ils.10.2023.08.31.09.10.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Aug 2023 09:10:04 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 31 Aug 2023 09:10:02 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 4.19 0/1] 4.19.294-rc1 review
+Message-ID: <fbefb0cd-e056-4504-b0b2-ebd778d4996f@roeck-us.net>
+References: <20230831110828.433348914@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,69 +59,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4a69c0c0-5e8a-9a3a-6527-3eb7e51a955e@gmail.com>
+In-Reply-To: <20230831110828.433348914@linuxfoundation.org>
 
-On Thu, Aug 31, 2023 at 07:54:06AM -0700, Florian Fainelli wrote:
+On Thu, Aug 31, 2023 at 01:09:48PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.294 release.
+> There are 1 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
+> Anything received after that time might be too late.
 > 
-> On 8/31/2023 3:31 AM, Greg Kroah-Hartman wrote:
-> > On Wed, Aug 30, 2023 at 07:38:09PM +0200, Manuel Lauss wrote:
-> > > Hello all,
-> > > 
-> > > Florian Fainelli <f.fainelli@gmail.com> schrieb am Mi., 30. Aug. 2023, 19:07:
-> > > > 
-> > > > + Manuel,
-> > > > 
-> > > > On 8/30/23 09:01, Guenter Roeck wrote:
-> > > > > On 8/30/23 03:52, Greg Kroah-Hartman wrote:
-> > > > > > On Mon, Aug 28, 2023 at 09:42:11AM -0700, Guenter Roeck wrote:
-> > > > > > > On 8/28/23 03:13, Greg Kroah-Hartman wrote:
-> > > > > > > > This is the start of the stable review cycle for the 5.10.193 release.
-> > > > > > > > There are 84 patches in this series, all will be posted as a response
-> > > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > > let me know.
-> > > > > > > > 
-> > > > > > > > Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
-> > > > > > > > Anything received after that time might be too late.
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > FWIW, commit 619672bf2d04 ("MIPS: Alchemy: fix dbdma2") should be
-> > > > > > > reverted
-> > > > > > > v5.10.y since it doesn't fix anything but breaks the build for
-> > > > > > > affected boards
-> > > > > > > completely.
-> > > > > > > 
-> > > > > > > arch/mips/alchemy/common/dbdma.c: In function 'au1xxx_dbdma_put_source':
-> > > > > > > arch/mips/alchemy/common/dbdma.c:632:14: error:
-> > > > > > > 'dma_default_coherent' undeclared
-> > > > > > > 
-> > > > > > > There is no 'dma_default_coherent' in v5.10.y.
-> > > > > > 
-> > > > > > But that was added in 5.10.185, from back in June.  What changed to
-> > > > > > suddenly cause this to fail now?
-> > > > > > 
-> > > > > 
-> > > > > Nothing. I started to build this configuration and tracked down the
-> > > > > problem after the build failure was reported by others. Sorry, I didn't
-> > > > > initially realize that this is an old problem.
-> > > > 
-> > > > We could back port 6d4e9a8efe3d59f31367d79e970c2f328da139a4 ("driver
-> > > > core: lift dma_default_coherent into common code") but that won't work
-> > > > too well on 4.14 or 4.19. I believe it would be simpler to adjust the
-> > > > branches with this patch, Manuel does that work?
-> > > 
-> > > Please drop this patch from all stable releases. I didn't CC stable
-> > > when I submitted it,
-> > > and have no idea why it ended up there anyway.
-> > > It was intended to fix a problem initially found in 5.18 (I think).
-> > 
-> > I'm going to revert it now, thanks!
-> 
-> I prepared reverts yesterday that I can send out if you want?
 
-I think this is all taken care of in the latest -rc releases, right?  If
-I missed anything, then yes, reverts would be great to have.
+arch/arm/mach-ep93xx/timer-ep93xx.c:12:10: fatal error: platform.h: No such file or directory
+   12 | #include "platform.h"
 
-thanks,
+"ARM: ep93xx: fix missing-prototype warnings" needs to be reverted in
+v4.19.y as well.
 
-greg k-h
+Thanks,
+Guenter
