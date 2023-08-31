@@ -1,91 +1,169 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB80018C26
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 20:23:16 +0000 (UTC)
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-26934bc3059so1684745a91.1
-        for <patches@lists.linux.dev>; Thu, 31 Aug 2023 13:23:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693513396; x=1694118196; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vUNHbyKTSQS93UHBi8ExMlTCLzp4hfcMKt31LVSlu18=;
-        b=BLtDOvBfxFXUdFIJdv0mKgHYeKmZbYztPUZRPdk44A4pOpSBUpBYXnwVftj0q9v9MA
-         Tyu2YEFBUEmEBQQ5MaTUDmZqVTSHoLVcr0Kqlys2EU4iFU9L6lyb9AaMMi9kPHe9BqHa
-         vD4UfbCLG5iOj0RCqX0nrFW9uiNkeIptx8YUK6u0PproOHM6B7IvJZskL/jWKVgUSxE2
-         dgzqOMBQNQbxFAwJaLioB0XkhP9ZqPVX2Po9yc3Z6Kx1AZ3nMl3rg5qtWefGCiNCT3Mb
-         9JrKVJH3o0W47on+HEEScNJ7pClyBo09q9WK5HuhmFoQqx66SEnBSMi4vuoN/xrH+tK5
-         uARQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693513396; x=1694118196;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vUNHbyKTSQS93UHBi8ExMlTCLzp4hfcMKt31LVSlu18=;
-        b=RzB+mdsjlxpRzq/RX6/HR3jGqVsZam32/AmzQIZshWwgSYjsGgT2t3nKj7A4JY6zws
-         EYkqbffw6hq/woRDY44FHyzP50DtfgTifEc6UVpOvXi/gbcX/o94UBRsh23ur1rU3oHR
-         JQkqPDluIMVXNnUslfTesfhVnJ6FBTUJW9+LFWMnG4T18eoVOk3M5/3e3TwnUi1FKGBy
-         Li3CQNXtJq/gxlm6zfPbMB4AuVNUqpBiirOfjqrTQIMjkBsU1LnYpvDOHGZh9VHpnh3X
-         w0aeeMyE9o5uQPEPdPKgeSN40usVupyR4pMGzwdbk17B6Vj1lrJa+E10y4yC8aklJ4kU
-         mQQg==
-X-Gm-Message-State: AOJu0YyITUqLhHE/nl+/E9x1mgoOz3vUCKNMtHLqgQvYRfu3wEHSvt2t
-	0y3ucQDic92cMIPOU8yij4U=
-X-Google-Smtp-Source: AGHT+IGeiB0OTdQeE7+Q39Fwoi5mY5qweQfsfdYkffkwDWT73haMIPvpC5Bf5B2/h8gkW+Q2kLrqLg==
-X-Received: by 2002:a17:90b:154:b0:26b:2d0f:56c6 with SMTP id em20-20020a17090b015400b0026b2d0f56c6mr701332pjb.18.1693513395704;
-        Thu, 31 Aug 2023 13:23:15 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id t2-20020a17090a024200b002717a368efasm3579134pje.12.2023.08.31.13.23.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Aug 2023 13:23:14 -0700 (PDT)
-Message-ID: <447f5a2f-c4ec-8749-5136-0abd14920237@gmail.com>
-Date: Thu, 31 Aug 2023 13:22:55 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A5F19BB4
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 20:27:34 +0000 (UTC)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37VKG0gX023003;
+	Thu, 31 Aug 2023 20:27:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=yw8e1V8u2464ibmRn7uh1/kPRu9TFVtGLSd6q46WCKk=;
+ b=lQCe33NWjNDhm5OBkZ9XiwDKfB/85nC+i2FU/EiIJBQ8o4Q/3BAfFrvKS8fTvMgNn7Gv
+ zOiNmIbbocPlJLr+6ICD8nKrCmcwmgsvT5tc+5+RTqia1aXt/tVC/ZqTet6//fGDSD47
+ PVUNdCiBXDtjPjomOlzNcB1FKD6Lb/dNRESmt0JSKgY5BVscYD4Y7AXv3qhoKrtYHxyo
+ UXubUOnvRGc2hLonVzhaWR+ux/sm2N8/ajm6gyP3d6I9fIKGvQ4w/JcQUKhQ4PxFiUOT
+ dta9lgT7Sv3570mw8GbXgK6CY7dQedFAW+KVrVr/WTUVcKUmTa+pkvWv5/obvH9zvJyH ng== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3st4p3ky1g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 31 Aug 2023 20:27:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 37VKRNwX005403
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 31 Aug 2023 20:27:23 GMT
+Received: from [10.71.108.94] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 31 Aug
+ 2023 13:27:22 -0700
+Message-ID: <de6855ec-0122-034b-1b9a-7478681b4209@quicinc.com>
+Date: Thu, 31 Aug 2023 13:27:15 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH 5.10 00/11] 5.10.194-rc1 review
+Subject: Re: [PATCH 1/7] drm/msm/dp: Replace open-coded
+ drm_dp_read_dpcd_caps()
+To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
+        Sean Paul
+	<sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>
+References: <20230829184735.2841739-1-swboyd@chromium.org>
+ <20230829184735.2841739-2-swboyd@chromium.org>
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230831110830.455765526@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230831110830.455765526@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <20230829184735.2841739-2-swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UYkR2o3wmCOFfhGoLL0sfbyYjXkWrqd2
+X-Proofpoint-GUID: UYkR2o3wmCOFfhGoLL0sfbyYjXkWrqd2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-08-31_17,2023-08-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ impostorscore=0 mlxscore=0 clxscore=1011 suspectscore=0 mlxlogscore=902
+ lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2308310181
 
-On 8/31/23 04:09, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.194 release.
-> There are 11 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.194-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
-
+On 8/29/2023 11:47 AM, Stephen Boyd wrote:
+> This function duplicates the common function drm_dp_read_dpcd_caps().
+> The array of DPCD registers filled in is one size larger than the
+> function takes, but from what I can tell that extra byte was never used.
+> Resize the array and use the common function to reduce the code here.
+>
+> Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
+> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_panel.c | 42 ++++---------------------------
+>   drivers/gpu/drm/msm/dp/dp_panel.h |  4 +--
+>   2 files changed, 6 insertions(+), 40 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 42d52510ffd4..09d4f6c38ef8 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -48,47 +48,15 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+>   	ssize_t rlen;
+>   	struct dp_panel_private *panel;
+>   	struct dp_link_info *link_info;
+> -	u8 *dpcd, major = 0, minor = 0, temp;
+> -	u32 offset = DP_DPCD_REV;
+> +	u8 *dpcd, major, minor;
+>   
+> +	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+>   	dpcd = dp_panel->dpcd;
+> +	rc = drm_dp_read_dpcd_caps(panel->aux, dpcd);
+> +	if (rc)
+> +		return rc;
+>   
+> -	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+>   	link_info = &dp_panel->link_info;
+> -
+> -	rlen = drm_dp_dpcd_read(panel->aux, offset,
+> -			dpcd, (DP_RECEIVER_CAP_SIZE + 1));
+> -	if (rlen < (DP_RECEIVER_CAP_SIZE + 1)) {
+> -		DRM_ERROR("dpcd read failed, rlen=%zd\n", rlen);
+> -		if (rlen == -ETIMEDOUT)
+> -			rc = rlen;
+> -		else
+> -			rc = -EINVAL;
+> -
+> -		goto end;
+> -	}
+> -
+> -	temp = dpcd[DP_TRAINING_AUX_RD_INTERVAL];
+> -
+> -	/* check for EXTENDED_RECEIVER_CAPABILITY_FIELD_PRESENT */
+> -	if (temp & BIT(7)) {
+> -		drm_dbg_dp(panel->drm_dev,
+> -				"using EXTENDED_RECEIVER_CAPABILITY_FIELD\n");
+> -		offset = DPRX_EXTENDED_DPCD_FIELD;
+> -	}
+> -
+> -	rlen = drm_dp_dpcd_read(panel->aux, offset,
+> -		dpcd, (DP_RECEIVER_CAP_SIZE + 1));
+> -	if (rlen < (DP_RECEIVER_CAP_SIZE + 1)) {
+> -		DRM_ERROR("dpcd read failed, rlen=%zd\n", rlen);
+> -		if (rlen == -ETIMEDOUT)
+> -			rc = rlen;
+> -		else
+> -			rc = -EINVAL;
+> -
+> -		goto end;
+> -	}
+> -
+>   	link_info->revision = dpcd[DP_DPCD_REV];
+>   	major = (link_info->revision >> 4) & 0x0f;
+>   	minor = link_info->revision & 0x0f;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index ed1030e17e1b..6d733480a62d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -13,8 +13,6 @@
+>   
+>   struct edid;
+>   
+> -#define DPRX_EXTENDED_DPCD_FIELD	0x2200
+> -
+>   #define DP_DOWNSTREAM_PORTS		4
+>   #define DP_DOWNSTREAM_CAP_SIZE		4
+>   
+> @@ -40,7 +38,7 @@ struct dp_panel_psr {
+>   
+>   struct dp_panel {
+>   	/* dpcd raw data */
+> -	u8 dpcd[DP_RECEIVER_CAP_SIZE + 1];
+> +	u8 dpcd[DP_RECEIVER_CAP_SIZE];
+>   	u8 ds_cap_info[DP_DOWNSTREAM_PORTS * DP_DOWNSTREAM_CAP_SIZE];
+>   	u32 ds_port_cnt;
+>   	u32 dfp_present;
