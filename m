@@ -1,121 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0C78F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F22CC433C7;
-	Thu, 31 Aug 2023 11:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F698F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:11:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5BDC433C8;
+	Thu, 31 Aug 2023 11:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480279;
-	bh=FERMvax9TbLfvFclhnBYRSGWpvFgfEWgj/sYRijBi0k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=xTAT8UgxzSyvsVsA3taxnEF94DM0NERzXa2ixn8JuaZPvY88VEUXTceN1VHNnDo/G
-	 ikwoX1DaG5oV2+eV3iSOzyjXLi3nCtCoCLGMgVrAhm6ahWlaVPp8t/DUqPBeZxjGyt
-	 JKif57EwHKTkO8GxXJhGCoazR7WD0jLhFOZDRO7I=
+	s=korg; t=1693480282;
+	bh=l3VrL4p/O6Ly4FRXWgtAD+GXA/MCwwpbI1TG8JcNPhk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=oeH8jbEj1+lKgOHgrfuEPU4MaxQBxrVHg6VLfG+cl+0HgRNdhKD1TyMlJz2cEYDs8
+	 evYNmHjuY3jov5OAnvqg4RRjiXJ9ZFWHrXh1Tmb2GdYfUw072nrYBzpaAWfBN8pI5r
+	 DmqLO0pBO0lFaVeMbU0K0Jav1YaV2ABFgbnWd/ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 5.15 0/9] 5.15.130-rc1 review
-Date: Thu, 31 Aug 2023 13:10:08 +0200
-Message-ID: <20230831110830.039135096@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.5 1/8] ACPI: thermal: Drop nocrt parameter
+Date: Thu, 31 Aug 2023 13:10:28 +0200
+Message-ID: <20230831110830.865231811@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230831110830.817738361@linuxfoundation.org>
+References: <20230831110830.817738361@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.130-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.130-rc1
-X-KernelTest-Deadline: 2023-09-02T11:08+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.15.130 release.
-There are 9 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.130-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-thanks,
+commit 5f641174a12b8a876a4101201a21ef4675ecc014 upstream.
 
-greg k-h
+The `nocrt` module parameter has no code associated with it and does
+nothing.  As `crt=-1` has same functionality as what nocrt should be
+doing drop `nocrt` and associated documentation.
 
--------------
-Pseudo-Shortlog of commits:
+This should fix a quirk for Gigabyte GA-7ZX that used `nocrt` and
+thus didn't function properly.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.130-rc1
+Fixes: 8c99fdce3078 ("ACPI: thermal: set "thermal.nocrt" via DMI on Gigabyte GA-7ZX")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Documentation/admin-guide/kernel-parameters.txt |    4 ----
+ drivers/acpi/thermal.c                          |    6 +-----
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
-Paul E. McKenney <paulmck@kernel.org>
-    rcu-tasks: Add trc_inspect_reader() checks for exiting critical section
-
-Paul E. McKenney <paulmck@kernel.org>
-    rcu-tasks: Wait for trc_read_check_handler() IPIs
-
-Neeraj Upadhyay <neeraju@codeaurora.org>
-    rcu-tasks: Fix IPI failure handling in trc_wait_for_one_reader
-
-Paul E. McKenney <paulmck@kernel.org>
-    rcu: Prevent expedited GP from enabling tick on offline CPU
-
-James Morse <james.morse@arm.com>
-    ARM: module: Use module_init_layout_section() to spot init sections
-
-James Morse <james.morse@arm.com>
-    arm64: module: Use module_init_layout_section() to spot init sections
-
-Arnd Bergmann <arnd@arndb.de>
-    arm64: module-plts: inline linux/moduleloader.h
-
-James Morse <james.morse@arm.com>
-    module: Expose module_init_layout_section()
-
-Mario Limonciello <mario.limonciello@amd.com>
-    ACPI: thermal: Drop nocrt parameter
-
-
--------------
-
-Diffstat:
-
- Documentation/admin-guide/kernel-parameters.txt |  4 ---
- Makefile                                        |  4 +--
- arch/arm/kernel/module-plts.c                   |  2 +-
- arch/arm64/kernel/module-plts.c                 |  3 ++-
- drivers/acpi/thermal.c                          |  6 +----
- include/linux/moduleloader.h                    |  5 ++++
- kernel/module.c                                 |  2 +-
- kernel/rcu/tasks.h                              | 36 ++++++++++++++++++-------
- kernel/rcu/tree_exp.h                           |  5 +++-
- 9 files changed, 42 insertions(+), 25 deletions(-)
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6275,10 +6275,6 @@
+ 			-1: disable all critical trip points in all thermal zones
+ 			<degrees C>: override all critical trip points
+ 
+-	thermal.nocrt=	[HW,ACPI]
+-			Set to disable actions on ACPI thermal zone
+-			critical and hot trip points.
+-
+ 	thermal.off=	[HW,ACPI]
+ 			1: disable ACPI thermal control
+ 
+--- a/drivers/acpi/thermal.c
++++ b/drivers/acpi/thermal.c
+@@ -82,10 +82,6 @@ static int tzp;
+ module_param(tzp, int, 0444);
+ MODULE_PARM_DESC(tzp, "Thermal zone polling frequency, in 1/10 seconds.");
+ 
+-static int nocrt;
+-module_param(nocrt, int, 0);
+-MODULE_PARM_DESC(nocrt, "Set to take no action upon ACPI thermal zone critical trips points.");
+-
+ static int off;
+ module_param(off, int, 0);
+ MODULE_PARM_DESC(off, "Set to disable ACPI thermal support.");
+@@ -1094,7 +1090,7 @@ static int thermal_act(const struct dmi_
+ static int thermal_nocrt(const struct dmi_system_id *d) {
+ 	pr_notice("%s detected: disabling all critical thermal trip point actions.\n",
+ 		  d->ident);
+-	nocrt = 1;
++	crt = -1;
+ 	return 0;
+ }
+ static int thermal_tzp(const struct dmi_system_id *d) {
 
 
