@@ -1,139 +1,132 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7BB11C8F
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 14:29:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693492159; x=1725028159;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=14SEUhfhuXCd3crFTb7Q/Qo1nASIqzlXwb6vFU9XxOM=;
-  b=jXXuqVyon+9QDo7oKnDdBsHEhlrddNBgaPGC21nTcjR4IFo1VMI1Tz6k
-   FXc9jUbJ5l02jBQgUBIi1ZynpN+LCq5bs4tCE+LMQeRj9cLHCTGbkdqwd
-   FBhibF2OcS87rti2TlYJgN3HSvmGwIWRxi0s26uyW8/Zy2LmM4Lvtiqcr
-   e0ejudaSHu3qyRxLxEQ4qBhYmGPBIqqNh2kg0pLPF7mfDJPtvBSSFM6n/
-   h21Ft66M4gsVYky9JE0YkdywpdfsOxU3Is8LqKIJpuHrDpLAuU9i5g3JQ
-   +sDGfDTYIPBlqXJgtjZ0Hkum4QRDtrr8aRSb3bXbZTQi39W/ByR5Tvx84
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="360980373"
-X-IronPort-AV: E=Sophos;i="6.02,217,1688454000"; 
-   d="scan'208";a="360980373"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 07:27:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="689371496"
-X-IronPort-AV: E=Sophos;i="6.02,217,1688454000"; 
-   d="scan'208";a="689371496"
-Received: from bcnelson-mobl2.amr.corp.intel.com (HELO [10.209.16.42]) ([10.209.16.42])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 07:27:34 -0700
-Message-ID: <321578a9-91fb-4733-b4c7-82dcc0ec8f8f@linux.intel.com>
-Date: Thu, 31 Aug 2023 07:27:35 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C0F11C88
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 14:54:09 +0000 (UTC)
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1c06f6f98c0so7085645ad.3
+        for <patches@lists.linux.dev>; Thu, 31 Aug 2023 07:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693493649; x=1694098449; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tEC87zX549E+U9vV1oszlAIcg0x95pSsoYr9+gGAPGg=;
+        b=Pk1BX/1OnMJqQz5ir9wtiIC5kY2Iv9U9+DCtR/k2QrMIHK8tXnQcVdqBic056cxVJY
+         oDFutb6XIoqwWm8C0oqOhTROSSNKYa92DtycEHuIEGpBYLJ2dgoZNbAc9v/E4LYT8Tqn
+         ze9sk/w5geR1VBYSo48bCETew0+Gx+3sscooFGMEH6WEQDKJpixoy1AKc0UZx96Mfrfc
+         yQ/ky0fVcpS3Xd0kOJ3so4l9rNv0jqJdScVVwUAYTd/VKMKhgVUoX2cXr4Z0DfFioWpk
+         bo5IamFdgOSYDqXin6m0qhv7ppsw2FN1/FBPU5nK/Cko/XsUPbt0AMhn3u6R0P3FHJtp
+         UDEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693493649; x=1694098449;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tEC87zX549E+U9vV1oszlAIcg0x95pSsoYr9+gGAPGg=;
+        b=bIw6ZhbKhn2LgErueLeZgGjXAKVoRFdBIoCVcycnkFAkDoVgBhJw4z5n1DfRLoHFgk
+         ePCmp193Q12V1eyFo5kA2jCVzGjntoTxlBaNwha1WWOPv9capqRAs1yYPHEi4Xatw3wy
+         gLMdh7baIPpbk7vorZoIUcugFNui0CpWTSyWgTIocb2WC5ysk94gME02HCWp0VfB36X0
+         TS3x08+/o16872fq7FPNLKbudsS6uXEeKLJFrl2UPrihFbja/xwy/wl8y31QyM3PdAaB
+         /UPcLt48S73e10EQV41iuQXwZK8D7xWhSVCNHfenZW6ZcZVRDANP8ljkyMwhD0X3qFFA
+         2mdA==
+X-Gm-Message-State: AOJu0YwKL9vsZuEuk0zPdbUkzPbHB2Rb+fDVzb6W2qv8iP/AUvcJgU5S
+	vAtlBx58E3OcDVK7GPmTU14=
+X-Google-Smtp-Source: AGHT+IFif2uVPz+tA6oL7Hzvt2UjKSQ9canwj2E14FUfSGqTe6utdnK5JoLTrBnjrZkAGA3TVO+A1g==
+X-Received: by 2002:a17:903:11c5:b0:1bb:c06e:647a with SMTP id q5-20020a17090311c500b001bbc06e647amr5915734plh.53.1693493649066;
+        Thu, 31 Aug 2023 07:54:09 -0700 (PDT)
+Received: from ?IPV6:2600:8802:b00:4a48:f5ca:eebd:7e8f:7734? ([2600:8802:b00:4a48:f5ca:eebd:7e8f:7734])
+        by smtp.gmail.com with ESMTPSA id 13-20020a170902c24d00b001bb1f0605b2sm1357534plg.214.2023.08.31.07.54.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Aug 2023 07:54:08 -0700 (PDT)
+Message-ID: <4a69c0c0-5e8a-9a3a-6527-3eb7e51a955e@gmail.com>
+Date: Thu, 31 Aug 2023 07:54:06 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] platform/x86: intel_scu_ipc: Check status upon
- timeout in ipc_wait_for_interrupt()
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH 5.10 00/84] 5.10.193-rc1 review
 Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>,
- Mika Westerberg <mika.westerberg@linux.intel.com>,
- Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- platform-driver-x86@vger.kernel.org,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Prashant Malani <pmalani@chromium.org>
-References: <20230831011405.3246849-1-swboyd@chromium.org>
- <20230831011405.3246849-3-swboyd@chromium.org>
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-In-Reply-To: <20230831011405.3246849-3-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Manuel Lauss <manuel.lauss@gmail.com>
+Cc: Guenter Roeck <linux@roeck-us.net>, stable <stable@vger.kernel.org>,
+ patches@lists.linux.dev, LKML <linux-kernel@vger.kernel.org>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Andrew Morton <akpm@linux-foundation.org>, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org,
+ Pavel Machek <pavel@denx.de>, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+References: <20230828101149.146126827@linuxfoundation.org>
+ <5b30ff73-46cb-1d1e-3823-f175dbfbd91b@roeck-us.net>
+ <2023083014-barley-upscale-518e@gregkh>
+ <64374066-4086-3e92-8650-ab1563350f0c@roeck-us.net>
+ <95baa835-9940-a257-cf96-93c543aa389f@gmail.com>
+ <CAOLZvyEuj=93tpObwDgyAK01Jyz8NfXQzJfAX5=vVwG1wxo-cA@mail.gmail.com>
+ <2023083138-frustrate-race-9264@gregkh>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <2023083138-frustrate-race-9264@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 8/30/2023 6:14 PM, Stephen Boyd wrote:
-> It's possible for the completion in ipc_wait_for_interrupt() to timeout,
-> simply because the interrupt was delayed in being processed. A timeout
-> in itself is not an error. This driver should check the status register
-> upon a timeout to ensure that scheduling or interrupt processing delays
-> don't affect the outcome of the IPC return value.
+On 8/31/2023 3:31 AM, Greg Kroah-Hartman wrote:
+> On Wed, Aug 30, 2023 at 07:38:09PM +0200, Manuel Lauss wrote:
+>> Hello all,
+>>
+>> Florian Fainelli <f.fainelli@gmail.com> schrieb am Mi., 30. Aug. 2023, 19:07:
+>>>
+>>> + Manuel,
+>>>
+>>> On 8/30/23 09:01, Guenter Roeck wrote:
+>>>> On 8/30/23 03:52, Greg Kroah-Hartman wrote:
+>>>>> On Mon, Aug 28, 2023 at 09:42:11AM -0700, Guenter Roeck wrote:
+>>>>>> On 8/28/23 03:13, Greg Kroah-Hartman wrote:
+>>>>>>> This is the start of the stable review cycle for the 5.10.193 release.
+>>>>>>> There are 84 patches in this series, all will be posted as a response
+>>>>>>> to this one.  If anyone has any issues with these being applied, please
+>>>>>>> let me know.
+>>>>>>>
+>>>>>>> Responses should be made by Wed, 30 Aug 2023 10:11:30 +0000.
+>>>>>>> Anything received after that time might be too late.
+>>>>>>>
+>>>>>>
+>>>>>> FWIW, commit 619672bf2d04 ("MIPS: Alchemy: fix dbdma2") should be
+>>>>>> reverted
+>>>>>> v5.10.y since it doesn't fix anything but breaks the build for
+>>>>>> affected boards
+>>>>>> completely.
+>>>>>>
+>>>>>> arch/mips/alchemy/common/dbdma.c: In function 'au1xxx_dbdma_put_source':
+>>>>>> arch/mips/alchemy/common/dbdma.c:632:14: error:
+>>>>>> 'dma_default_coherent' undeclared
+>>>>>>
+>>>>>> There is no 'dma_default_coherent' in v5.10.y.
+>>>>>
+>>>>> But that was added in 5.10.185, from back in June.  What changed to
+>>>>> suddenly cause this to fail now?
+>>>>>
+>>>>
+>>>> Nothing. I started to build this configuration and tracked down the
+>>>> problem after the build failure was reported by others. Sorry, I didn't
+>>>> initially realize that this is an old problem.
+>>>
+>>> We could back port 6d4e9a8efe3d59f31367d79e970c2f328da139a4 ("driver
+>>> core: lift dma_default_coherent into common code") but that won't work
+>>> too well on 4.14 or 4.19. I believe it would be simpler to adjust the
+>>> branches with this patch, Manuel does that work?
+>>
+>> Please drop this patch from all stable releases. I didn't CC stable
+>> when I submitted it,
+>> and have no idea why it ended up there anyway.
+>> It was intended to fix a problem initially found in 5.18 (I think).
 > 
->  CPU0                                                   SCU
->  ----                                                   ---
->  ipc_wait_for_interrupt()
->   wait_for_completion_timeout(&scu->cmd_complete)
->   [TIMEOUT]                                             status[IPC_BUSY]=0
-> 
-> Fix this problem by reading the status bit in all cases, regardless of
-> the timeout. If the completion times out, we'll assume the problem was
-> that the IPC_BUSY bit was still set, but if the status bit is cleared in
-> the meantime we know that we hit some scheduling delay and we should
-> just check the error bit.
-> 
-> Cc: Prashant Malani <pmalani@chromium.org>
-> Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-> Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/platform/x86/intel_scu_ipc.c | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-> index 5a37becc65aa..2a21153e3bf3 100644
-> --- a/drivers/platform/x86/intel_scu_ipc.c
-> +++ b/drivers/platform/x86/intel_scu_ipc.c
-> @@ -246,16 +246,19 @@ static inline int busy_loop(struct intel_scu_ipc_dev *scu)
->  /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
->  static inline int ipc_wait_for_interrupt(struct intel_scu_ipc_dev *scu)
->  {
-> -	int status;
-> +	unsigned long time_left;
-> +	u8 status;
-> +	int err = 0;
->  
-> -	if (!wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT))
-> -		return -ETIMEDOUT;
-> +	time_left = wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT);
-> +	if (!time_left)
-> +		err = -ETIMEDOUT;
+> I'm going to revert it now, thanks!
 
-Since you are not using the return value, I would not use time_left. I think the
-following version is easy to read. But it is up to you.
-
-wait_for_completion_timeout(&scu->cmd_complete, IPC_TIMEOUT)
-
-status = ipc_read_status(scu);
-
-if (status & IPC_STATUS_BUSY)
-   return -ETIMEDOUT;
-
-if (status & IPC_STATUS_ERR)
-   return -EIO;
-
-return 0;
-
-With above fixed, you can add
-
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-
-
->  
->  	status = ipc_read_status(scu);
-> -	if (status & IPC_STATUS_ERR)
-> -		return -EIO;
-> +	if (!(status & IPC_STATUS_BUSY))
-> +		err = (status & IPC_STATUS_ERR) ? -EIO : 0;
->  
-> -	return 0;
-> +	return err;
->  }
->  
->  static int intel_scu_ipc_check_status(struct intel_scu_ipc_dev *scu)
-
+I prepared reverts yesterday that I can send out if you want?
 -- 
-Sathyanarayanan Kuppuswamy
-Linux Kernel Developer
+Florian
