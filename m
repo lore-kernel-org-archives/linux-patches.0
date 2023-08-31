@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E1F8F6B
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4BDC433C9;
-	Thu, 31 Aug 2023 11:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8488F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EA3C433C8;
+	Thu, 31 Aug 2023 11:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480250;
-	bh=L/2edS5FFQtxPrnMyGnR7hKwJt5TpGdGCZjsmcQG8dk=;
+	s=korg; t=1693480254;
+	bh=Q4JPkV1o6QXU4vKJj9rNdJzIrcJxHYwKOzV+9eSF1x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TeYueEyaWEkPNRKwJIXMnjIkcBuSeOfiBjzDu9gY9Gt6koEnek+kEKbVg1blKU2X9
-	 AqAC5TG+drWpAXICySAhd4pwE5cN/Cu1Ye4vTgn6UFBeGCatfTT96JFjUlSwq113k2
-	 yKwGqYcKT8ZoFQd9lfz+tufpGyjWfdA+ScNWFUqI=
+	b=yUiINeSZwHj8E0VkpnN7+FRe/eR9tuExX+zg/JR4zfXvt0FP2OEW2y95WXTdVL4Lr
+	 W4vvkhbbVSGyxBsHWAima7ooApZexYV20oFlMupZf+pqiE6pTHGDNbpTHv7UUOiHJI
+	 Qz2jjmtbwVpBPq+xg+iQ6IeXp+40UUkDp+EhFMuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"From: Chia-I Wu" <olvaffe@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lang Yu <Lang.Yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/11] Revert "drm/amdgpu: install stub fence into potential unused fence pointers"
-Date: Thu, 31 Aug 2023 13:09:58 +0200
-Message-ID: <20230831110830.709974865@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 1/9] ACPI: thermal: Drop nocrt parameter
+Date: Thu, 31 Aug 2023 13:10:09 +0200
+Message-ID: <20230831110830.118361724@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110830.455765526@linuxfoundation.org>
-References: <20230831110830.455765526@linuxfoundation.org>
+In-Reply-To: <20230831110830.039135096@linuxfoundation.org>
+References: <20230831110830.039135096@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,62 +33,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-This reverts commit 04bd3a362d2f1788272776bd8b10e5a012e69b77 which is
-commit 187916e6ed9d0c3b3abc27429f7a5f8c936bd1f0 upstream.
+commit 5f641174a12b8a876a4101201a21ef4675ecc014 upstream.
 
-It is reported to cause lots of log spam, so it should be dropped for
-now.
+The `nocrt` module parameter has no code associated with it and does
+nothing.  As `crt=-1` has same functionality as what nocrt should be
+doing drop `nocrt` and associated documentation.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/27d08b24-3581-4451-b8db-5df144784d6a@roeck-us.net
-Reported-by: From: Chia-I Wu <olvaffe@gmail.com>
-Link: https://lore.kernel.org/r/CAPaKu7RTgAMBLHbwtp4zgiBSDrTFtAj07k5qMzkuLQy2Zr+sZA@mail.gmail.com
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Lang Yu <Lang.Yu@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Sasha Levin <sashal@kernel.org>
+This should fix a quirk for Gigabyte GA-7ZX that used `nocrt` and
+thus didn't function properly.
+
+Fixes: 8c99fdce3078 ("ACPI: thermal: set "thermal.nocrt" via DMI on Gigabyte GA-7ZX")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |    4 ----
+ drivers/acpi/thermal.c                          |    6 +-----
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2155,7 +2155,6 @@ struct amdgpu_bo_va *amdgpu_vm_bo_add(st
- 	amdgpu_vm_bo_base_init(&bo_va->base, vm, bo);
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -5770,10 +5770,6 @@
+ 			-1: disable all critical trip points in all thermal zones
+ 			<degrees C>: override all critical trip points
  
- 	bo_va->ref_count = 1;
--	bo_va->last_pt_update = dma_fence_get_stub();
- 	INIT_LIST_HEAD(&bo_va->valids);
- 	INIT_LIST_HEAD(&bo_va->invalids);
- 
-@@ -2868,8 +2867,7 @@ int amdgpu_vm_init(struct amdgpu_device
- 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
- 	else
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
+-	thermal.nocrt=	[HW,ACPI]
+-			Set to disable actions on ACPI thermal zone
+-			critical and hot trip points.
 -
--	vm->last_update = dma_fence_get_stub();
-+	vm->last_update = NULL;
- 	vm->last_unlocked = dma_fence_get_stub();
+ 	thermal.off=	[HW,ACPI]
+ 			1: disable ACPI thermal control
  
- 	mutex_init(&vm->eviction_lock);
-@@ -3044,7 +3042,7 @@ int amdgpu_vm_make_compute(struct amdgpu
- 		vm->update_funcs = &amdgpu_vm_sdma_funcs;
- 	}
- 	dma_fence_put(vm->last_update);
--	vm->last_update = dma_fence_get_stub();
-+	vm->last_update = NULL;
- 	vm->is_compute_context = true;
+--- a/drivers/acpi/thermal.c
++++ b/drivers/acpi/thermal.c
+@@ -59,10 +59,6 @@ static int tzp;
+ module_param(tzp, int, 0444);
+ MODULE_PARM_DESC(tzp, "Thermal zone polling frequency, in 1/10 seconds.");
  
- 	if (vm->pasid) {
+-static int nocrt;
+-module_param(nocrt, int, 0);
+-MODULE_PARM_DESC(nocrt, "Set to take no action upon ACPI thermal zone critical trips points.");
+-
+ static int off;
+ module_param(off, int, 0);
+ MODULE_PARM_DESC(off, "Set to disable ACPI thermal support.");
+@@ -1132,7 +1128,7 @@ static int thermal_nocrt(const struct dm
+ 
+ 	pr_notice("%s detected: disabling all critical thermal trip point actions.\n",
+ 		  d->ident);
+-	nocrt = 1;
++	crt = -1;
+ 	return 0;
+ }
+ static int thermal_tzp(const struct dmi_system_id *d) {
 
 
