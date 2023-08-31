@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6B79441
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE203C433CA;
-	Thu, 31 Aug 2023 11:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C1D9440
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:12:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80699C433C8;
+	Thu, 31 Aug 2023 11:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480336;
-	bh=6h42ptFvMZrJP6YYf0LTt3gJg5oECgDLG/Ps+2pG0Sk=;
+	s=korg; t=1693480338;
+	bh=nruzkdta5MKo8z52C9LWDHz1ZUsMJ5ez0IfMxbm19n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n52ZzhYiVSFznJnYtaTQNVzQj/aGnZXHZnYozoInP4601J0W2ch0UzUA+l+WidPDc
-	 GCZFdxOw18Dyd8nfpVtQoD11z/nnllAop+IntE6tkc3Tr1mZLeqqAwTvn5nfsV0nfg
-	 bw1Blfhy7X3wbAB+2aY58gupkU2u2sCzYd1y84Ck=
+	b=MzQlD5wbDhgd4rNUIjpScnUD9O5ggWStgI5sSUXk+jLEDbGucrhm73BivLLJ7fT1u
+	 aMbjgXbuFWjkXQ5aVKKauIISKhYWMRoQkpIvKyNWEO+yq9MgRAk3GLm84g/jHPSkfU
+	 +ukkBKLhlwwG1JBZHHzFfFccvrxPPqADWkvEU2R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 10/10] kallsyms: Fix kallsyms_selftest failure
-Date: Thu, 31 Aug 2023 13:10:50 +0200
-Message-ID: <20230831110831.463971540@linuxfoundation.org>
+	Adam Johnston <adam.johnston@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.1 04/10] arm64: module: Use module_init_layout_section() to spot init sections
+Date: Thu, 31 Aug 2023 13:10:44 +0200
+Message-ID: <20230831110831.228526105@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230831110831.079963475@linuxfoundation.org>
 References: <20230831110831.079963475@linuxfoundation.org>
@@ -42,95 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: James Morse <james.morse@arm.com>
 
-commit 33f0467fe06934d5e4ea6e24ce2b9c65ce618e26 upstream.
+commit f928f8b1a2496e7af95b860f9acf553f20f68f16 upstream.
 
-Kernel test robot reported a kallsyms_test failure when clang lto is
-enabled (thin or full) and CONFIG_KALLSYMS_SELFTEST is also enabled.
-I can reproduce in my local environment with the following error message
-with thin lto:
-  [    1.877897] kallsyms_selftest: Test for 1750th symbol failed: (tsc_cs_mark_unstable) addr=ffffffff81038090
-  [    1.877901] kallsyms_selftest: abort
+Today module_frob_arch_sections() spots init sections from their
+'init' prefix, and uses this to keep the init PLTs separate from the rest.
 
-It appears that commit 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes
-from promoted global functions") caused the failure. Commit 8cc32a9bbf29
-changed cleanup_symbol_name() based on ".llvm." instead of '.' where
-".llvm." is appended to a before-lto-optimization local symbol name.
-We need to propagate such knowledge in kallsyms_selftest.c as well.
+module_emit_plt_entry() uses within_module_init() to determine if a
+location is in the init text or not, but this depends on whether
+core code thought this was an init section.
 
-Further more, compare_symbol_name() in kallsyms.c needs change as well.
-In scripts/kallsyms.c, kallsyms_names and kallsyms_seqs_of_names are used
-to record symbol names themselves and index to symbol names respectively.
-For example:
-  kallsyms_names:
-    ...
-    __amd_smn_rw._entry       <== seq 1000
-    __amd_smn_rw._entry.5     <== seq 1001
-    __amd_smn_rw.llvm.<hash>  <== seq 1002
-    ...
+Naturally the logic is different.
 
-kallsyms_seqs_of_names are sorted based on cleanup_symbol_name() through, so
-the order in kallsyms_seqs_of_names actually has
+module_init_layout_section() groups the init and exit text together if
+module unloading is disabled, as the exit code will never run. The result
+is kernels with this configuration can't load all their modules because
+there are not enough PLTs for the combined init+exit section.
 
-  index 1000:   seq 1002   <== __amd_smn_rw.llvm.<hash> (actual symbol comparison using '__amd_smn_rw')
-  index 1001:   seq 1000   <== __amd_smn_rw._entry
-  index 1002:   seq 1001   <== __amd_smn_rw._entry.5
+This results in the following:
+| WARNING: CPU: 2 PID: 51 at arch/arm64/kernel/module-plts.c:99 module_emit_plt_entry+0x184/0x1cc
+| Modules linked in: crct10dif_common
+| CPU: 2 PID: 51 Comm: modprobe Not tainted 6.5.0-rc4-yocto-standard-dirty #15208
+| Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+| pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : module_emit_plt_entry+0x184/0x1cc
+| lr : module_emit_plt_entry+0x94/0x1cc
+| sp : ffffffc0803bba60
+[...]
+| Call trace:
+|  module_emit_plt_entry+0x184/0x1cc
+|  apply_relocate_add+0x2bc/0x8e4
+|  load_module+0xe34/0x1bd4
+|  init_module_from_file+0x84/0xc0
+|  __arm64_sys_finit_module+0x1b8/0x27c
+|  invoke_syscall.constprop.0+0x5c/0x104
+|  do_el0_svc+0x58/0x160
+|  el0_svc+0x38/0x110
+|  el0t_64_sync_handler+0xc0/0xc4
+|  el0t_64_sync+0x190/0x194
 
-Let us say at a particular point, at index 1000, symbol '__amd_smn_rw.llvm.<hash>'
-is comparing to '__amd_smn_rw._entry' where '__amd_smn_rw._entry' is the one to
-search e.g., with function kallsyms_on_each_match_symbol(). The current implementation
-will find out '__amd_smn_rw._entry' is less than '__amd_smn_rw.llvm.<hash>' and
-then continue to search e.g., index 999 and never found a match although the actual
-index 1001 is a match.
+A previous patch exposed module_init_layout_section(), use that so the
+logic is the same.
 
-To fix this issue, let us do cleanup_symbol_name() first and then do comparison.
-In the above case, comparing '__amd_smn_rw' vs '__amd_smn_rw._entry' and
-'__amd_smn_rw._entry' being greater than '__amd_smn_rw', the next comparison will
-be > index 1000 and eventually index 1001 will be hit an a match is found.
-
-For any symbols not having '.llvm.' substr, there is no functionality change
-for compare_symbol_name().
-
-Fixes: 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes from promoted global functions")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202308232200.1c932a90-oliver.sang@intel.com
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Reviewed-by: Song Liu <song@kernel.org>
-Reviewed-by: Zhen Lei <thunder.leizhen@huawei.com>
-Link: https://lore.kernel.org/r/20230825034659.1037627-1-yonghong.song@linux.dev
-Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Reported-by: Adam Johnston <adam.johnston@arm.com>
+Tested-by: Adam Johnston <adam.johnston@arm.com>
+Fixes: 055f23b74b20 ("module: check for exit sections in layout_sections() instead of module_init_section()")
+Cc: <stable@vger.kernel.org> # 5.15.x: 60a0aab7463ee69 arm64: module-plts: inline linux/moduleloader.h
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: James Morse <james.morse@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kallsyms.c |   17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ arch/arm64/kernel/module-plts.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -188,16 +188,13 @@ static bool cleanup_symbol_name(char *s)
+--- a/arch/arm64/kernel/module-plts.c
++++ b/arch/arm64/kernel/module-plts.c
+@@ -344,7 +344,7 @@ int module_frob_arch_sections(Elf_Ehdr *
+ 		if (nents)
+ 			sort(rels, nents, sizeof(Elf64_Rela), cmp_rela, NULL);
  
- static int compare_symbol_name(const char *name, char *namebuf)
- {
--	int ret;
--
--	ret = strcmp(name, namebuf);
--	if (!ret)
--		return ret;
--
--	if (cleanup_symbol_name(namebuf) && !strcmp(name, namebuf))
--		return 0;
--
--	return ret;
-+	/* The kallsyms_seqs_of_names is sorted based on names after
-+	 * cleanup_symbol_name() (see scripts/kallsyms.c) if clang lto is enabled.
-+	 * To ensure correct bisection in kallsyms_lookup_names(), do
-+	 * cleanup_symbol_name(namebuf) before comparing name and namebuf.
-+	 */
-+	cleanup_symbol_name(namebuf);
-+	return strcmp(name, namebuf);
- }
- 
- static int kallsyms_lookup_names(const char *name,
+-		if (!str_has_prefix(secstrings + dstsec->sh_name, ".init"))
++		if (!module_init_layout_section(secstrings + dstsec->sh_name))
+ 			core_plts += count_plts(syms, rels, numrels,
+ 						sechdrs[i].sh_info, dstsec);
+ 		else
 
 
