@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE42D8F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECE5C433C8;
-	Thu, 31 Aug 2023 11:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1DE8F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B7BC433C7;
+	Thu, 31 Aug 2023 11:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480202;
-	bh=MphZRr+4iSbPPhpjlkQGKkZHkfR8J1+l/WrwZOxW8S8=;
+	s=korg; t=1693480205;
+	bh=ihWBJ+6qKTKZDhEYuVhj3tNIT2HIl7RdlEZbKbXrx6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPxhuFeTxSogWXF+K/6WCShxbVi4O+KIUI4SOspXtss/0tO0u6FTkoqQqiBm2ICMy
-	 IWeDL4BujkvC4/SoXZD8ZgrwW1qEJ7SOKKXwMXa3dRg7uBNiQse6mb6RVuq/GCGJ7r
-	 A9DBC+5Mww2mQTXmXU9BwcZeft1j/RIVDvP1oVPM=
+	b=kXqz6IKoIzl1KPdrqI3CcwI2HWzmMbPkX4BCgyLmdwly+1WX4TP6McMLzfrKrWPlv
+	 W3LAtrsNWnYeDzCedRR/qtmM8mqmpIuLbcwaqZADq1fMNEcJiwXYOab6z5/AqffgTn
+	 id1oE9hGMEUgDevc+KlO8XnW9qvAczg5KSqABAc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 1/1] Revert "MIPS: Alchemy: fix dbdma2"
-Date: Thu, 31 Aug 2023 13:09:49 +0200
-Message-ID: <20230831110828.501577284@linuxfoundation.org>
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Ilie Halip <ilie.halip@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.4 1/3] powerpc/pmac/smp: Avoid unused-variable warnings
+Date: Thu, 31 Aug 2023 13:09:55 +0200
+Message-ID: <20230831110828.935770467@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110828.433348914@linuxfoundation.org>
-References: <20230831110828.433348914@linuxfoundation.org>
+In-Reply-To: <20230831110828.874071888@linuxfoundation.org>
+References: <20230831110828.874071888@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -36,85 +37,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ilie Halip <ilie.halip@gmail.com>
 
-This reverts commit a16419bae292d768546bcd6e0bfbf8a722756fee which is
-commit 2d645604f69f3a772d58ead702f9a8e84ab2b342 upstream.
+commit 9451c79bc39e610882bdd12370f01af5004a3c4f upstream.
 
-It breaks the build, so should be dropped.
+When building with ppc64_defconfig, the compiler reports
+that these 2 variables are not used:
+    warning: unused variable 'core99_l2_cache' [-Wunused-variable]
+    warning: unused variable 'core99_l3_cache' [-Wunused-variable]
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/5b30ff73-46cb-1d1e-3823-f175dbfbd91b@roeck-us.net
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Sasha Levin <sashal@kernel.org>
+They are only used when CONFIG_PPC64 is not defined. Move
+them into a section which does the same macro check.
+
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Ilie Halip <ilie.halip@gmail.com>
+[mpe: Move them into core99_init_caches() which is their only user]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20190920153951.25762-1-ilie.halip@gmail.com
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/alchemy/common/dbdma.c |   27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ arch/powerpc/platforms/powermac/smp.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/mips/alchemy/common/dbdma.c
-+++ b/arch/mips/alchemy/common/dbdma.c
-@@ -30,7 +30,6 @@
-  *
-  */
+--- a/arch/powerpc/platforms/powermac/smp.c
++++ b/arch/powerpc/platforms/powermac/smp.c
+@@ -660,13 +660,13 @@ static void smp_core99_gpio_tb_freeze(in
  
--#include <linux/dma-map-ops.h> /* for dma_default_coherent */
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/slab.h>
-@@ -624,18 +623,17 @@ u32 au1xxx_dbdma_put_source(u32 chanid,
- 		dp->dscr_cmd0 &= ~DSCR_CMD0_IE;
+ #endif /* !CONFIG_PPC64 */
  
- 	/*
--	 * There is an erratum on certain Au1200/Au1550 revisions that could
--	 * result in "stale" data being DMA'ed. It has to do with the snoop
--	 * logic on the cache eviction buffer.  dma_default_coherent is set
--	 * to false on these parts.
-+	 * There is an errata on the Au1200/Au1550 parts that could result
-+	 * in "stale" data being DMA'ed. It has to do with the snoop logic on
-+	 * the cache eviction buffer.  DMA_NONCOHERENT is on by default for
-+	 * these parts. If it is fixed in the future, these dma_cache_inv will
-+	 * just be nothing more than empty macros. See io.h.
- 	 */
--	if (!dma_default_coherent)
--		dma_cache_wback_inv(KSEG0ADDR(buf), nbytes);
-+	dma_cache_wback_inv((unsigned long)buf, nbytes);
- 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
- 	wmb(); /* drain writebuffer */
- 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
- 	ctp->chan_ptr->ddma_dbell = 0;
--	wmb(); /* force doorbell write out to dma engine */
+-/* L2 and L3 cache settings to pass from CPU0 to CPU1 on G4 cpus */
+-volatile static long int core99_l2_cache;
+-volatile static long int core99_l3_cache;
+-
+ static void core99_init_caches(int cpu)
+ {
+ #ifndef CONFIG_PPC64
++	/* L2 and L3 cache settings to pass from CPU0 to CPU1 on G4 cpus */
++	volatile static long int core99_l2_cache;
++	volatile static long int core99_l3_cache;
++
+ 	if (!cpu_has_feature(CPU_FTR_L2CR))
+ 		return;
  
- 	/* Get next descriptor pointer. */
- 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
-@@ -687,18 +685,17 @@ u32 au1xxx_dbdma_put_dest(u32 chanid, dm
- 			  dp->dscr_source1, dp->dscr_dest0, dp->dscr_dest1);
- #endif
- 	/*
--	 * There is an erratum on certain Au1200/Au1550 revisions that could
--	 * result in "stale" data being DMA'ed. It has to do with the snoop
--	 * logic on the cache eviction buffer.  dma_default_coherent is set
--	 * to false on these parts.
-+	 * There is an errata on the Au1200/Au1550 parts that could result in
-+	 * "stale" data being DMA'ed. It has to do with the snoop logic on the
-+	 * cache eviction buffer.  DMA_NONCOHERENT is on by default for these
-+	 * parts. If it is fixed in the future, these dma_cache_inv will just
-+	 * be nothing more than empty macros. See io.h.
- 	 */
--	if (!dma_default_coherent)
--		dma_cache_inv(KSEG0ADDR(buf), nbytes);
-+	dma_cache_inv((unsigned long)buf, nbytes);
- 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
- 	wmb(); /* drain writebuffer */
- 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
- 	ctp->chan_ptr->ddma_dbell = 0;
--	wmb(); /* force doorbell write out to dma engine */
- 
- 	/* Get next descriptor pointer. */
- 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
 
 
