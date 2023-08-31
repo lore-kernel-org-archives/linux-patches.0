@@ -1,88 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1DE8F5D
-	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B7BC433C7;
-	Thu, 31 Aug 2023 11:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7E18F5D
+	for <patches@lists.linux.dev>; Thu, 31 Aug 2023 11:10:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4F6C433C7;
+	Thu, 31 Aug 2023 11:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693480205;
-	bh=ihWBJ+6qKTKZDhEYuVhj3tNIT2HIl7RdlEZbKbXrx6o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXqz6IKoIzl1KPdrqI3CcwI2HWzmMbPkX4BCgyLmdwly+1WX4TP6McMLzfrKrWPlv
-	 W3LAtrsNWnYeDzCedRR/qtmM8mqmpIuLbcwaqZADq1fMNEcJiwXYOab6z5/AqffgTn
-	 id1oE9hGMEUgDevc+KlO8XnW9qvAczg5KSqABAc4=
+	s=korg; t=1693480208;
+	bh=C8mJdh9rCO6kTZ6zW5t3/ttkSd6LuHAND1Dut0RKW08=;
+	h=From:To:Cc:Subject:Date:From;
+	b=EuxEhOCP8R7OXu1dsFwMV/dKUyDiULuHHbrznnlwWV6UEl+KpmGGb1NIkQot0ib+i
+	 CItgF914JS2opRQWDpDJbr9+2LdD6Ge9x2vlEjC+TaTBceTyDcMV0jaN35ddzkplvn
+	 Y4SsN0gn82x/TOGEzalG744UrNpRteuPHad2Uu4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <natechancellor@gmail.com>,
-	Ilie Halip <ilie.halip@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.4 1/3] powerpc/pmac/smp: Avoid unused-variable warnings
-Date: Thu, 31 Aug 2023 13:09:55 +0200
-Message-ID: <20230831110828.935770467@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 5.4 0/3] 5.4.256-rc1 review
+Date: Thu, 31 Aug 2023 13:09:54 +0200
+Message-ID: <20230831110828.874071888@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230831110828.874071888@linuxfoundation.org>
-References: <20230831110828.874071888@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.256-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.4.256-rc1
+X-KernelTest-Deadline: 2023-09-02T11:08+00:00
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.4.256 release.
+There are 3 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
+Anything received after that time might be too late.
 
-From: Ilie Halip <ilie.halip@gmail.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.256-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+and the diffstat can be found below.
 
-commit 9451c79bc39e610882bdd12370f01af5004a3c4f upstream.
+thanks,
 
-When building with ppc64_defconfig, the compiler reports
-that these 2 variables are not used:
-    warning: unused variable 'core99_l2_cache' [-Wunused-variable]
-    warning: unused variable 'core99_l3_cache' [-Wunused-variable]
+greg k-h
 
-They are only used when CONFIG_PPC64 is not defined. Move
-them into a section which does the same macro check.
+-------------
+Pseudo-Shortlog of commits:
 
-Reported-by: Nathan Chancellor <natechancellor@gmail.com>
-Signed-off-by: Ilie Halip <ilie.halip@gmail.com>
-[mpe: Move them into core99_init_caches() which is their only user]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20190920153951.25762-1-ilie.halip@gmail.com
-Cc: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/powerpc/platforms/powermac/smp.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.4.256-rc1
 
---- a/arch/powerpc/platforms/powermac/smp.c
-+++ b/arch/powerpc/platforms/powermac/smp.c
-@@ -660,13 +660,13 @@ static void smp_core99_gpio_tb_freeze(in
- 
- #endif /* !CONFIG_PPC64 */
- 
--/* L2 and L3 cache settings to pass from CPU0 to CPU1 on G4 cpus */
--volatile static long int core99_l2_cache;
--volatile static long int core99_l3_cache;
--
- static void core99_init_caches(int cpu)
- {
- #ifndef CONFIG_PPC64
-+	/* L2 and L3 cache settings to pass from CPU0 to CPU1 on G4 cpus */
-+	volatile static long int core99_l2_cache;
-+	volatile static long int core99_l3_cache;
-+
- 	if (!cpu_has_feature(CPU_FTR_L2CR))
- 		return;
- 
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "MIPS: Alchemy: fix dbdma2"
+
+YueHaibing <yuehaibing@huawei.com>
+    powerpc/pmac/smp: Drop unnecessary volatile qualifier
+
+Ilie Halip <ilie.halip@gmail.com>
+    powerpc/pmac/smp: Avoid unused-variable warnings
+
+
+-------------
+
+Diffstat:
+
+ Makefile                              |  4 ++--
+ arch/mips/alchemy/common/dbdma.c      | 27 ++++++++++++---------------
+ arch/powerpc/platforms/powermac/smp.c |  8 ++++----
+ 3 files changed, 18 insertions(+), 21 deletions(-)
 
 
