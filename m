@@ -1,115 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF8D1FA5;
-	Fri,  1 Sep 2023 01:04:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64525C433C7;
-	Fri,  1 Sep 2023 01:04:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693530290;
-	bh=fvTxfLUhfAuU7bfbtfdaYACrGVKGUe+QNGoHK+K2ylo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDe/hH1m7pkRXSZQRAm0VU7IQn0tgHn5KB2wON37b5hOrw62LK/u54jC7dF92TwX0
-	 qQ5CcOverLysYLfRVpIHiK0SkyjxLjIDUVyCkaD+2JMgz0qfTiOWlquOFiyzw7MaCg
-	 +gWkbNFQSfsjVgJUiLbk54HD0WkAgIg5lWnYwBugTfgs+MkfcsyB3S10IugnL69WYJ
-	 kSrWdVjKHubWlFYmRvR+86zMWHersGdyydz+g1wgbCZ1js3n9A9G46UTOU5fK2R+J7
-	 xqY8L5X3/StoUUfZ7f9REe2XV8Enq0KTvoyu++FsWilM5XRbIvwAjzogSWLRllUN6f
-	 wx65epoHrmLBg==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.4 0/9] 6.4.14-rc1 review
-Date: Fri,  1 Sep 2023 01:04:47 +0000
-Message-Id: <20230901010447.49402-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230831111127.667900990@linuxfoundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72FA1FA5
+	for <patches@lists.linux.dev>; Fri,  1 Sep 2023 05:50:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693547415; x=1725083415;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=VCwDKR0+XuajmyREC4vrMp5tg6MbHHMUwY4gC4BjQC8=;
+  b=hrvarstXzYZh4VUqGqfjfRFxpQYSmSkt5R3ozJ1EnsktPyENgudj4lID
+   XdPCYIpqx+1qzqTCRO6u77x/WdetswcNWS7EegYcKTMx9WhJn4BRoSU/8
+   uzOyh1/QZ2EYQYWBnawb7gUzgR3/wrRpnzG3UleSf2p5xtuhKQlBCOhSC
+   LFzvWn8TQtz0Z1TO40y7in3eFMguFsrUvvwTQt8O7D2i5eFMUEaljrh4Y
+   1EeLDItDJXJaRN7wPFhIPPY+FU7zyGIrAzssc3GX8X1j/sPKQe2TAdpth
+   VWoyQrgzTuK8je9/H8pVlf1MAs/9AWeSj7RK6pnvOupa50Pk9VUfdiIgR
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="440123002"
+X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
+   d="scan'208";a="440123002"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 22:50:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="1070608229"
+X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
+   d="scan'208";a="1070608229"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga005.fm.intel.com with ESMTP; 31 Aug 2023 22:50:12 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1001)
+	id 1DA06DE; Fri,  1 Sep 2023 08:50:11 +0300 (EEST)
+Date: Fri, 1 Sep 2023 08:50:11 +0300
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	platform-driver-x86@vger.kernel.org,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>
+Subject: Re: [PATCH 1/3] platform/x86: intel_scu_ipc: Check status after
+ timeouts in busy_loop()
+Message-ID: <20230901055011.GT3465@black.fi.intel.com>
+References: <20230831011405.3246849-1-swboyd@chromium.org>
+ <20230831011405.3246849-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230831011405.3246849-2-swboyd@chromium.org>
 
-Hello,
-
-On Thu, 31 Aug 2023 13:11:27 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.4.14 release.
-> There are 9 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Aug 30, 2023 at 06:14:01PM -0700, Stephen Boyd wrote:
+> It's possible for the polling loop in busy_loop() to get scheduled away
+> for a long time.
 > 
-> Responses should be made by Sat, 02 Sep 2023 11:11:18 +0000.
-> Anything received after that time might be too late.
+>   status = ipc_read_status(scu);
+>   <long time scheduled away>
+>   if (!(status & IPC_STATUS_BUSY))
+
+How can the status bit change here as we are the only user and the SCU
+access is serialized by ipclock?
+
+> If this happens, then the status bit could change and this function
+> would never test it again after checking the jiffies against the timeout
+> limit. Polling code should check the condition one more time after the
+> timeout in case this happens.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.14-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
+> The read_poll_timeout() helper implements this logic, and is shorter, so
+> simply use that helper here.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Yes, I agree it makes the code simpler.
 
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 499afdc4a899 ("Linux 6.4.14-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
- [32m
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
-_remote_run_corr.sh SUCCESS
+> Cc: Prashant Malani <pmalani@chromium.org>
+> Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/platform/x86/intel_scu_ipc.c | 19 ++++++++-----------
+>  1 file changed, 8 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
+> index 6851d10d6582..5a37becc65aa 100644
+> --- a/drivers/platform/x86/intel_scu_ipc.c
+> +++ b/drivers/platform/x86/intel_scu_ipc.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/init.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+> +#include <linux/iopoll.h>
+>  #include <linux/module.h>
+>  #include <linux/slab.h>
+>  
+> @@ -231,19 +232,15 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
+>  /* Wait till scu status is busy */
+>  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+>  {
+> -	unsigned long end = jiffies + IPC_TIMEOUT;
+> -
+> -	do {
+> -		u32 status;
+> -
+> -		status = ipc_read_status(scu);
+> -		if (!(status & IPC_STATUS_BUSY))
+> -			return (status & IPC_STATUS_ERR) ? -EIO : 0;
+> +	u8 status;
+> +	int err;
+>  
+> -		usleep_range(50, 100);
+> -	} while (time_before(jiffies, end));
+> +	err = read_poll_timeout(ipc_read_status, status, !(status & IPC_STATUS_BUSY),
+> +				100, jiffies_to_usecs(IPC_TIMEOUT), false, scu);
+> +	if (err)
+> +		return err;
+>  
+> -	return -ETIMEDOUT;
+> +	return (status & IPC_STATUS_ERR) ? -EIO : 0;
+>  }
+>  
+>  /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
+> -- 
+> https://chromeos.dev
