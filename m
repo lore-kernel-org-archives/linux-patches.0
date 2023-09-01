@@ -1,91 +1,103 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03383FF4
-	for <patches@lists.linux.dev>; Fri,  1 Sep 2023 06:06:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693548399; x=1725084399;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5zXm/ilGbvaTMhT7HjwnoHc9furUVXGdEvbQQYm3oTY=;
-  b=eZostM0UyaKDQ4+ly9YjXwfLajjAL7Wzl2Mv/hd6iuUhdPX41U1NsgHy
-   PuJU2E2DFTISnqjwBrN+e1Be+urRICfmDn9povSYbV9ImGhJqHeeBKM8T
-   BipvJNG4FQD6V0OJymHx+rsgxp/Csou48/YuLYbpQpTWYH2cSQ40UPOHE
-   ix9ngZQLc1SLMie71PNk5xarD9EWe6wY1dWDeNhs/Mcc1IdkRSBS0wqDw
-   Iq9Hq1ufG2BQwQzXSnzHSYgwcc9LQK9Vo3t+eWjfIc7N8NGIsctCH+ouJ
-   IUyjKDBi4tgJMW1VmCVJGjytZy1gCGMfzQao5Tt0/EDC0GEvu8JJ9i2IB
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="361168133"
-X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
-   d="scan'208";a="361168133"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 23:06:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="1070612442"
-X-IronPort-AV: E=Sophos;i="6.02,218,1688454000"; 
-   d="scan'208";a="1070612442"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga005.fm.intel.com with ESMTP; 31 Aug 2023 23:06:35 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1001)
-	id BDE26DE; Fri,  1 Sep 2023 09:06:33 +0300 (EEST)
-Date: Fri, 1 Sep 2023 09:06:33 +0300
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Stephen Boyd <swboyd@chromium.org>, Hans de Goede <hdegoede@redhat.com>,
-	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH 3/3] platform/x86: intel_scu_ipc: Fail IPC send if still
- busy
-Message-ID: <20230901060633.GV3465@black.fi.intel.com>
-References: <20230831011405.3246849-1-swboyd@chromium.org>
- <20230831011405.3246849-4-swboyd@chromium.org>
- <ZPCenoPp/SDesUek@smile.fi.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E385235
+	for <patches@lists.linux.dev>; Fri,  1 Sep 2023 06:12:38 +0000 (UTC)
+Received: from eig-obgw-6003a.ext.cloudfilter.net ([10.0.30.151])
+	by cmsmtp with ESMTP
+	id bsjfqcq83bK1VbxMzqqDah; Fri, 01 Sep 2023 06:11:01 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id bxMyqjpgm7NfbbxMyqent2; Fri, 01 Sep 2023 06:11:01 +0000
+X-Authority-Analysis: v=2.4 cv=EOMVbnVC c=1 sm=1 tr=0 ts=64f18075
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=ZdJvYIG7m5v28Xnbdu4A:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=PESOuoR1J1C3RTuUKmwRTDNd53jx2PAn9GndryMFWf8=; b=xWqPE90k7EnaAFZIe+7iRN5mel
+	f2yOuxeR3KcrvQVBhDKW71MnBEVhS31ydL+6VXPkdBvu86xdkgpD3mrmrdhBhp/TwAi4jVcSWU1Sv
+	NsQk36iQZNhOVovlisLxo0zZhVqX/cQqT+yPLs64BuBv9ojnDbYOmseKoCEU91GiSItith66h0grE
+	IHfE5uZvsNxDfyCdo87BUJ3bS4Yv5fJJjBdKXjT/+PnuJOv+wZnbWmA2gOEVYza0lvshYLcvgAhdA
+	zxFxCThiqKedwVziW7MJ+XFAey93wiat7688Lo3DQTASxIB4vWXuqOLq0X4bIlPO+XmcCnjFFumV2
+	ajR3/q4Q==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53804 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qbxMw-003FOn-1l;
+	Fri, 01 Sep 2023 00:10:58 -0600
+Subject: Re: [PATCH 6.5 0/8] 6.5.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230831110830.817738361@linuxfoundation.org>
+In-Reply-To: <20230831110830.817738361@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <8a81cab7-6079-434f-4500-4fc0453fe0d1@w6rz.net>
+Date: Thu, 31 Aug 2023 23:10:56 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZPCenoPp/SDesUek@smile.fi.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qbxMw-003FOn-1l
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53804
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKdHQDOcm49MTOccWwnT793WLpvxXrN6W1g7A+3NsLCOitef4ZtoeNhRKGTK6YFhJpDnAf5s+tcQp82CausoUnTVIql+L8QVWa3hUAtMHdAkBoe5xdTf
+ VJE6Aas5Oa5v3KpaUuTyax4+X70qO2w/+wZt/0+2ch7JzVtpQ2ZFfepSBr8ILvQbOkwpN5wSkQ9sjQ==
 
-On Thu, Aug 31, 2023 at 05:07:26PM +0300, Andy Shevchenko wrote:
-> On Wed, Aug 30, 2023 at 06:14:03PM -0700, Stephen Boyd wrote:
-> > It's possible for interrupts to get significantly delayed to the point
-> > that callers of intel_scu_ipc_dev_command() and friends can call the
-> > function once, hit a timeout, and call it again while the interrupt
-> > still hasn't been processed. This driver will get seriously confused if
-> > the interrupt is finally processed after the second IPC has been sent
-> > with ipc_command(). It won't know which IPC has been completed. This
-> > could be quite disastrous if calling code assumes something has happened
-> > upon return from intel_scu_ipc_dev_simple_command() when it actually
-> > hasn't.
-> > 
-> > Let's avoid this scenario by simply returning -EBUSY in this case.
-> > Hopefully higher layers will know to back off or fail gracefully when
-> > this happens. It's all highly unlikely anyway, but it's better to be
-> > correct here as we have no way to know which IPC the status register is
-> > telling us about if we send a second IPC while the previous IPC is still
-> > processing.
-> 
-> > +static bool intel_scu_ipc_busy(struct intel_scu_ipc_dev *scu)
-> 
-> static int ?
-> 
-> > +{
-> > +	u8 status;
-> > +
-> > +	status = ipc_read_status(scu);
-> > +	if (status & IPC_STATUS_BUSY) {
-> 
-> > +		dev_err(&scu->dev, "device is busy\n");
-> 
-> 1. Wouldn't it exaggerate the logs? Shouldn't be rate limited?
-> 2. OTOH if we return -EBUSY directly from here, do we need this at all?
+On 8/31/23 4:10 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.5.1 release.
+> There are 8 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 02 Sep 2023 11:08:22 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.1-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Agree w/ returning -EBUSY here and dropping the dev_err() (or using
-dev_dbg()).
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
