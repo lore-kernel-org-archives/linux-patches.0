@@ -1,45 +1,45 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AABBA37
-	for <patches@lists.linux.dev>; Sun,  3 Sep 2023 22:39:59 +0000 (UTC)
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2bd3f629c76so13873041fa.0
-        for <patches@lists.linux.dev>; Sun, 03 Sep 2023 15:39:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5776FBA37
+	for <patches@lists.linux.dev>; Sun,  3 Sep 2023 22:40:52 +0000 (UTC)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5008faf4456so1324343e87.3
+        for <patches@lists.linux.dev>; Sun, 03 Sep 2023 15:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693780798; x=1694385598; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1693780850; x=1694385650; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3njyN7L52ply28cLSWvghKHcDvpsiniGrJ+Mxrq7efI=;
-        b=Q7Qdz247vT+n/h/vMUmk9keVNnF139bz9SmCOnRr/5SREtkeIJjyA0V4H5ECEhvA4c
-         1vt5usJ8JH45qAeH2oH8YQDGI8oAKVG7OO/eJYM7ZOJDGuART/j9YpPhkXMBEVBty0L0
-         QnIuiFSSIice7bfNl358KpnqgYCvXMrZ8gtCT2fGXvcHa2Ifksq/QxXYY+CiK6pvyoqM
-         fmNW9vetNqqq9PeBdMwPbsy0ILA+IoTjcSOHxj3f5CsJuDKhAWfJT+GO/UVfOgvOA2S5
-         Wg2zbpJPLIyiog6KuhqBnK3iWzq5JnuTjsTcwPxr3qB3urhrPfTb07WiGQewYALTcuc8
-         H7JQ==
+        bh=4uZeHrs3brpLA9BIYNN/FvNUjPGrJaqU0dAdN56uTls=;
+        b=Lsub6f3ckBaToH76U2bcOWU7AM/OvVEO+oY+5znojSgxiv496rMyQPOx+UhFI3lgAp
+         2S4V1xZrmx8xIHj4jHD7DuVTwSrt78of3WOvevEqrUlOU+kwQyy63rbhE53G3kPo3bV/
+         VHqAGQg697O8o0PlLXhZUqqEUM/0H3WgR3NmaSOea71yQOZMu18Qlh0Beun+RVW2atzM
+         es5Z8SisPSmVZUmufJL965KNo5fTgO1AQQlcOMBpvWYPas6ADD143z2U7PFD9JY4cVHY
+         Bvqlfy0Tylw1OFczsjluXzneUqYSMeSNIxppFD204snnDBO4r0cSOodIZfHC5+cbWbIu
+         5U5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693780798; x=1694385598;
+        d=1e100.net; s=20221208; t=1693780850; x=1694385650;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3njyN7L52ply28cLSWvghKHcDvpsiniGrJ+Mxrq7efI=;
-        b=EERU3wnlgrJ8AIvnKVun6HULNuZ35rvPswEGSzNIc9dA3XQkS89g4hnFC/9bXcYxIh
-         5yHinwJHfthtCGeZ96qzh7CUgF+hZ62Bc5xHKkaaRm/mdswF2MPkjal5AXtkfyeuc2/J
-         qOIfXSDB4CpVqlCs6lc99QvVJfH+heSo2tRK/kfzZOoaYxUWVjR4Ft1eLQ0lN56e3meR
-         u2iU/rXNxivl3MTC07EJfAwxxEVoPQ5ldhz3Sdn9oxiTK2qygohy/6MOdFd8DWH60UQD
-         IfpBOGmO13WFpgp8C+RBLc+3iKWXaQzGtz0zmPXSqmxqWFf0aBqmyNRfZOBSJSKjodRZ
-         jNeg==
-X-Gm-Message-State: AOJu0YzbN/mFBJA3pjldYJlFYd/5rqTV5cql0Or6ac9c61Ko3GqtvOff
-	NAv/7/4eJsZEufcH2ejg0smPVw==
-X-Google-Smtp-Source: AGHT+IHqA5bKFtbDh+6zSj7AEktpbIX5QdrDfqbVTVJTxtGdex58MNMVKlZ2+5ZRABDSdhyKeGSD5A==
-X-Received: by 2002:a05:6512:3701:b0:500:7e64:cff1 with SMTP id z1-20020a056512370100b005007e64cff1mr4786349lfr.14.1693780797803;
-        Sun, 03 Sep 2023 15:39:57 -0700 (PDT)
+        bh=4uZeHrs3brpLA9BIYNN/FvNUjPGrJaqU0dAdN56uTls=;
+        b=mIPOqFBJA0KJONDQNqMFtn+9/IA7MmMF2zIHhtvE7PCvpsaZA2gDJUXs6lQle/WdCY
+         Y/sOzJVd0H+0Kutbn0UeStWnSdjq98BjCsBg24PR8CDImeLZkyzKUKFZk3EGX4tCj9CV
+         dVfWxwfckfYi+CEYTLJ6vpjE7M15j2IM39ey9yyVRxYYR45wMKfE48/s3NsRRA6y/sLg
+         JXUNSlgod2OaxWdJxW0luHd6oCnp4sNyx8rCK2lWR4Wp3VKxQtUj78xK9Sh8xTLwdyE2
+         uFVMmzIIdhIq3CvISviy2U68F+5uS1zKa9d59P3FaA1YdutLgQnAGkI4gluATNPvem5V
+         mRag==
+X-Gm-Message-State: AOJu0YyKpxA9Fk7g+MkjledzYAeSNhtpLpUc3nvEa33mGtgBcSyAa+al
+	pZA+1vJym/jJH62jG9htb7i9r5fkZk9rKJBs+Mo=
+X-Google-Smtp-Source: AGHT+IFmWZRk24SDi37FSiWwzAUFzDGcudEUHjvx8xHvUKUKpT4Ml6Ym6mavr1lOx4JWTmr2YnXbNA==
+X-Received: by 2002:a05:6512:3083:b0:500:9524:f733 with SMTP id z3-20020a056512308300b005009524f733mr6407395lfd.20.1693780850292;
+        Sun, 03 Sep 2023 15:40:50 -0700 (PDT)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id bo9-20020a0564020b2900b0052889d090bfsm4972604edb.79.2023.09.03.15.39.56
+        by smtp.gmail.com with ESMTPSA id bo9-20020a0564020b2900b0052889d090bfsm4972604edb.79.2023.09.03.15.40.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Sep 2023 15:39:57 -0700 (PDT)
-Message-ID: <79297172-7be5-4eb1-9288-83334f8302b6@linaro.org>
-Date: Mon, 4 Sep 2023 01:39:56 +0300
+        Sun, 03 Sep 2023 15:40:49 -0700 (PDT)
+Message-ID: <726d4be5-d207-4176-bc0d-43492eb2c4e5@linaro.org>
+Date: Mon, 4 Sep 2023 01:40:49 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,7 +47,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] drm/msm/dp: Inline dp_link_parse_sink_count()
+Subject: Re: [PATCH 7/7] drm/msm/dp: Remove dp_display_is_ds_bridge()
 Content-Language: en-GB
 To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
  Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -56,28 +56,54 @@ Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
  freedreno@lists.freedesktop.org, Vinod Polimera <quic_vpolimer@quicinc.com>,
  Kuogee Hsieh <quic_khsieh@quicinc.com>
 References: <20230829184735.2841739-1-swboyd@chromium.org>
- <20230829184735.2841739-7-swboyd@chromium.org>
+ <20230829184735.2841739-8-swboyd@chromium.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230829184735.2841739-7-swboyd@chromium.org>
+In-Reply-To: <20230829184735.2841739-8-swboyd@chromium.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 29/08/2023 21:47, Stephen Boyd wrote:
-> The function dp_link_parse_sink_count() is really just
-> drm_dp_read_sink_count(). It debug prints out the bit for content
-> protection (DP_SINK_CP_READY), but that is not useful beyond debug
-> because 'link->dp_link.sink_count' is overwritten to only contain the
-> sink_count in this same function. Just use drm_dp_read_sink_count() in
-> the one place this function is called to simplify.
+> This function is simply drm_dp_is_branch() so use that instead of
+> open-coding it.
 > 
 > Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
 > Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->   drivers/gpu/drm/msm/dp/dp_link.c | 38 +++-----------------------------
->   1 file changed, 3 insertions(+), 35 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_display.c | 9 +--------
+>   1 file changed, 1 insertion(+), 8 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 76f13954015b..96bbf6fec2f1 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -341,19 +341,12 @@ static const struct component_ops dp_display_comp_ops = {
+>   	.unbind = dp_display_unbind,
+>   };
+>   
+> -static bool dp_display_is_ds_bridge(struct dp_panel *panel)
+> -{
+> -	return (panel->dpcd[DP_DOWNSTREAMPORT_PRESENT] &
+> -		DP_DWN_STRM_PORT_PRESENT);
+> -}
+> -
+>   static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
+
+Nit: you might as well inline this function
+
+>   {
+>   	drm_dbg_dp(dp->drm_dev, "present=%#x sink_count=%d\n",
+>   			dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
+>   		dp->link->sink_count);
+> -	return dp_display_is_ds_bridge(dp->panel) &&
+> -		(dp->link->sink_count == 0);
+> +	return drm_dp_is_branch(dp->panel->dpcd) && dp->link->sink_count == 0;
+>   }
+>   
+>   static void dp_display_send_hpd_event(struct msm_dp *dp_display)
 
 -- 
 With best wishes
