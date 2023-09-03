@@ -1,134 +1,85 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ECF3C1E
-	for <patches@lists.linux.dev>; Sat,  2 Sep 2023 18:58:30 +0000 (UTC)
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-99c3c8adb27so27959566b.1
-        for <patches@lists.linux.dev>; Sat, 02 Sep 2023 11:58:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FD39445
+	for <patches@lists.linux.dev>; Sun,  3 Sep 2023 22:37:18 +0000 (UTC)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-52a0856b4fdso1070793a12.1
+        for <patches@lists.linux.dev>; Sun, 03 Sep 2023 15:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693681109; x=1694285909; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gl4SU+iR0aYjorFAnHIvqmzFYuhuur+i3elwAKbseyI=;
-        b=Hk0rVJFtx3+7NDis9hFvDkmGtjwfMl32MjeEO0nfHyFqbQcdmGL+E8Cxn5BCcvgqKH
-         MrVzveIImqZc/RzbSaZKRXIHTYPS8sSFUMf2m4XdbDn7kQglz9Gt4sPhirGdS4z3wrC6
-         S8yOwgJwUENsgkANhvYdJdw1MfhBsEqCG+fN/NRJTUUXrbT+j5ms7aQ1kv70AA8DaowG
-         w7R7BNCFexUaqU49xyM1xW+OW6+cdAD/EsbPMAvcv9sl4VgPE2FHAi8XMapm3x66xDin
-         uP/jS/D0lT5QDKegN1RHzjzbmLufGkFJ7Nq7SZUT7FVhQdyLP+9tpvHd+eYAkTEzFwBz
-         Z5kg==
+        d=linaro.org; s=google; t=1693780636; x=1694385436; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JTU8KrO8RUU8FiWRZw+rl4K+4j0rOVVykAlc2x+Gur8=;
+        b=HJT8sq+ykBvt2ODK8Pz6tdP0Cd9GawLC129iBsJ74LkYodDeh0hf3TNwJFdGv3RKhk
+         kwkqquEyQTwPPiP84GKGUFxaeHhVwP5bC+hzr5JtOAeag3KA64ZTtkCYJtfLlz5zhcY7
+         eLL1l0DvRLfnhX23V5eumBWuyOjrAbB6P4KNUVi2GMWnVOgPhGsGggn6e3Lmo4lA9GG3
+         Y5ztAVedcdRa5OAJDcZmNvBHpKNPl4hPG0Em2I2a1uE4Pt6h0EUPAeGO57lnhCou/KnU
+         nMrLvQWpQn3PZ0jKdVvNVbXlkmEcC11uHLUddg2HLfd62WkUjAus+XxK+0ffLEDPNp7u
+         WAyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693681109; x=1694285909;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gl4SU+iR0aYjorFAnHIvqmzFYuhuur+i3elwAKbseyI=;
-        b=OzSumI4qoEuc+dxhkRpRFwf/8KLFCN+KNCUWP140Fya7lvYLerwSF77xfx+VTN+faO
-         O5UctFIa7BFucV43CsPjXmIA5qSYbToiDRs0RA5M0Iuhh3Ygn55ECm+GOpjePXaO9xUw
-         xm+VPk2tSw50guWCkLrEFd9tyuxLXW3GFAc9taCQjkaxmD9BpWUMi2fbwD4PnlnmJGhQ
-         0QZR8qGaiWO1Cnr7Zf1HfovHA9F1cDm0OTKkTKJn1x5B+9SVvlr1IHeIpR4m3Dshqp0S
-         jrmBKmND2Hv9jzMulX92A79vl8rrHEnNtiows7QJlUgFUDQDfATykIdBzMMWk5kphdzi
-         D9Ag==
-X-Gm-Message-State: AOJu0YzK6WdrqDcUv+rjZla7O1bQ+hHQml2076ONXcoy6P/kIIouysLv
-	b5IFqCBaCTdjp7pTSsn0EBc=
-X-Google-Smtp-Source: AGHT+IFODLtoLsf48req917bK98NAE1I+S0Yvh0IcbImIFKunEHUw0bS/eMKsPkoBwjtjAKUsC9jbQ==
-X-Received: by 2002:a17:906:3291:b0:9a1:bd1d:61b2 with SMTP id 17-20020a170906329100b009a1bd1d61b2mr3846170ejw.56.1693681108930;
-        Sat, 02 Sep 2023 11:58:28 -0700 (PDT)
-Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
-        by smtp.gmail.com with ESMTPSA id dt22-20020a170906b79600b0099d959f9536sm3809066ejb.12.2023.09.02.11.58.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Sep 2023 11:58:28 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailauth.nyi.internal (Postfix) with ESMTP id 3262227C0054;
-	Sat,  2 Sep 2023 14:58:26 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Sat, 02 Sep 2023 14:58:26 -0400
-X-ME-Sender: <xms:0YXzZKjOM7vXfm3HVkUDU0HZFNGkQUgqEExdD0KbIS6uXmG_kIdn7g>
-    <xme:0YXzZLAJkLst6hOrR-rTk-s7jVxV8KIIk2Qv2yn-PfjE46KhZt7LSuu5JRyrDauJ6
-    2X7bQ6K7CoGvb4V_A>
-X-ME-Received: <xmr:0YXzZCGYqMoJhEAtHxHkRKYJgir7PO31NRvXt0peBiDgs-ksSY9lKZNpLwAFDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeggedgudeffecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhq
-    uhhnucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrf
-    grthhtvghrnhepueeutdetheelkedvieekjeefveekjedufeefkeduueduffejueegfffh
-    hfffkefhnecuffhomhgrihhnpehruhhsthdqfhhorhdqlhhinhhugidrtghomhdpghhith
-    hhuhgsrdgtohhmpdiiuhhlihhptghhrghtrdgtohhmnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhph
-    gvrhhsohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdr
-    fhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgv
-X-ME-Proxy: <xmx:0YXzZDTYxeOmU8jO2ij9xWNjbmq99qNm1HytDpYGvMerrqxShTtQQA>
-    <xmx:0YXzZHyKr18TrP9pLU2296aXWyW1QYWcgnRGV2Gt3dYYR9Ovd5o5GQ>
-    <xmx:0YXzZB77Xyc7WAlj5_6vZAvBakPp3QpGhEAOUVBgKk4ehLBaI6j7Zg>
-    <xmx:0oXzZMqzPXuIdezaISsZkoUXCNcxUR0KUr4fJg13HQz5t57kHdgcmA>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 2 Sep 2023 14:58:25 -0400 (EDT)
-Date: Sat, 2 Sep 2023 11:57:22 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 1/2] MAINTAINERS: update Rust webpage
-Message-ID: <ZPOFkpue7MX28bE7@boqun-archlinux>
-References: <20230830165949.127475-1-ojeda@kernel.org>
+        d=1e100.net; s=20221208; t=1693780637; x=1694385437;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JTU8KrO8RUU8FiWRZw+rl4K+4j0rOVVykAlc2x+Gur8=;
+        b=WXryu6uW+lqND13aSeMQzMvGFs4ymPh1/z9xHLQftNOdYkLjoEkjLInk8j2ovmr2an
+         BcGBnrN//olrl8RZGWmcTgeoxrbhIsfP/uAT5niAnMwk+EFAZ30r3ZGfd8R6Q9xVqTEQ
+         +c4Ql9FA8sZWFOZQ4Xipj3CnNCJ6RaeX0mLr9bnCg/KZCT3+9SUwGbJJmt3YcaZ6m0eP
+         ROllrD1THvkgIJz7mE4wGxa7ZoqP1j9JHcs6pkoSuPunVQlRXfhxnPCWQ3TWRyZJmh4D
+         heVZM6iQWiU4anG6PcqgyRl0/U2+h/w+D4jE5jpfJ0RhGNq4M/i5YCD/QqsuV71Xy/65
+         cmSw==
+X-Gm-Message-State: AOJu0YyWP5AfdBVxNRYX2GcFljTtec1+GA7anFKprv20k6KmaXmFDCu2
+	SVomnABGCZIP5PPPEo9R+FCRrw==
+X-Google-Smtp-Source: AGHT+IH887EsApjxxqgeKDwZfphqZJP+92AGGLQhQH1W/cbewlBiwmTzV6SErfuj2s5lfRAgmYmXeg==
+X-Received: by 2002:a50:ec90:0:b0:523:3e90:68b0 with SMTP id e16-20020a50ec90000000b005233e9068b0mr5378864edr.21.1693780636732;
+        Sun, 03 Sep 2023 15:37:16 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id bo9-20020a0564020b2900b0052889d090bfsm4972604edb.79.2023.09.03.15.37.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 03 Sep 2023 15:37:16 -0700 (PDT)
+Message-ID: <1c7b1397-de05-49f7-8e26-3244fbd1573f@linaro.org>
+Date: Mon, 4 Sep 2023 01:37:15 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230830165949.127475-1-ojeda@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] drm/msm/dp: Replace open-coded
+ drm_dp_read_dpcd_caps()
+Content-Language: en-GB
+To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, Vinod Polimera <quic_vpolimer@quicinc.com>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>
+References: <20230829184735.2841739-1-swboyd@chromium.org>
+ <20230829184735.2841739-2-swboyd@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230829184735.2841739-2-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 30, 2023 at 06:59:48PM +0200, Miguel Ojeda wrote:
-> A few months ago we started a webpage for the Rust subsystem and
-> the overall Rust for Linux project [1].
+On 29/08/2023 21:47, Stephen Boyd wrote:
+> This function duplicates the common function drm_dp_read_dpcd_caps().
+> The array of DPCD registers filled in is one size larger than the
+> function takes, but from what I can tell that extra byte was never used.
+> Resize the array and use the common function to reduce the code here.
 > 
-> The current `W:` field of the Rust entry points to the GitHub
-> repository, since originally we kept information in a `README.md`
-> file that got rendered by GitHub when visiting that URL.
-> 
-> That information was moved into the webpage and got expanded.
-> The webpage is also nowadays the entry point to the project,
-> and we pointed the "Website" GitHub metadata field to it.
-> 
-> Thus update the `W:` field to point to the actual webpage.
-> 
-> Link: https://rust-for-linux.com [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-
-Regards,
-Boqun
-
+> Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
+> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  MAINTAINERS | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 12601a47c839..7c8088e9a11b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -18558,7 +18558,7 @@ R:	Andreas Hindborg <a.hindborg@samsung.com>
->  R:	Alice Ryhl <aliceryhl@google.com>
->  L:	rust-for-linux@vger.kernel.org
->  S:	Supported
-> -W:	https://github.com/Rust-for-Linux/linux
-> +W:	https://rust-for-linux.com
->  B:	https://github.com/Rust-for-Linux/linux/issues
->  C:	zulip://rust-for-linux.zulipchat.com
->  T:	git https://github.com/Rust-for-Linux/linux.git rust-next
-> 
-> base-commit: 4af84c6a85c63bec24611e46bb3de2c0a6602a51
-> -- 
-> 2.42.0
-> 
+>   drivers/gpu/drm/msm/dp/dp_panel.c | 42 ++++---------------------------
+>   drivers/gpu/drm/msm/dp/dp_panel.h |  4 +--
+>   2 files changed, 6 insertions(+), 40 deletions(-)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
+
