@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806ABC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DFDC433C7;
-	Mon,  4 Sep 2023 18:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C63C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD749C433C8;
+	Mon,  4 Sep 2023 18:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852464;
-	bh=64e37i4ndX5t9oEQgDe6Np7d4UglnE3NMgn3bNf+saY=;
+	s=korg; t=1693852467;
+	bh=y6xhNeW6dI1i/S/QI7sNj1LkiwaPWOK10viCMe/ve00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgghW3HdbPby2+xztr1+bGcTJv5SANBbdCu7Q+O0DWDPN5gSJWE+7aN0J/p+DvF6k
-	 XjR6vQkUxl6b+ZQMXNFEG45cJ67UNzRGUaj2E9xtOm3Ukv7VNo3dMuex+guUPIVn/K
-	 F4d079f2nydvEASAkZSK45zFOk7J7po3jlAXQY74=
+	b=TgDoHcZ35oxbqnUI/dkSfSrNWcULt7NlgZGJ/j8yMwGU5E8HNEf+674XFfQ3+z4lz
+	 zjzkoj/jVmeFiEQvruTj422e6nrs8omJs+U2EAikbn8fJxlA5U01bxmiXSMC/KlW5G
+	 g2b+EBAmwmHmHfdoWBUcMd2hL+mHwXO6CtNlVEH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	keltargw <keltar.gw@gmail.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.1 01/31] erofs: ensure that the post-EOF tails are all zeroed
-Date: Mon,  4 Sep 2023 19:30:09 +0100
-Message-ID: <20230904182947.070801380@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.1 10/31] modules: only allow symbol_get of EXPORT_SYMBOL_GPL modules
+Date: Mon,  4 Sep 2023 19:30:18 +0100
+Message-ID: <20230904182947.512999100@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
 References: <20230904182946.999390199@linuxfoundation.org>
@@ -39,47 +39,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit e4c1cf523d820730a86cae2c6d55924833b6f7ac upstream.
+commit 9011e49d54dcc7653ebb8a1e05b5badb5ecfa9f9 upstream.
 
-This was accidentally fixed up in commit e4c1cf523d82 but we can't
-take the full change due to other dependancy issues, so here is just
-the actual bugfix that is needed.
+It has recently come to my attention that nvidia is circumventing the
+protection added in 262e6ae7081d ("modules: inherit
+TAINT_PROPRIETARY_MODULE") by importing exports from their proprietary
+modules into an allegedly GPL licensed module and then rexporting them.
 
-[Background]
+Given that symbol_get was only ever intended for tightly cooperating
+modules using very internal symbols it is logical to restrict it to
+being used on EXPORT_SYMBOL_GPL and prevent nvidia from costly DMCA
+Circumvention of Access Controls law suites.
 
-keltargw reported an issue [1] that with mmaped I/Os, sometimes the
-tail of the last page (after file ends) is not filled with zeroes.
+All symbols except for four used through symbol_get were already exported
+as EXPORT_SYMBOL_GPL, and the remaining four ones were switched over in
+the preparation patches.
 
-The root cause is that such tail page could be wrongly selected for
-inplace I/Os so the zeroed part will then be filled with compressed
-data instead of zeroes.
-
-A simple fix is to avoid doing inplace I/Os for such tail parts,
-actually that was already fixed upstream in commit e4c1cf523d82
-("erofs: tidy up z_erofs_do_read_page()") by accident.
-
-[1] https://lore.kernel.org/r/3ad8b469-25db-a297-21f9-75db2d6ad224@linux.alibaba.com
-
-Reported-by: keltargw <keltar.gw@gmail.com>
-Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 262e6ae7081d ("modules: inherit TAINT_PROPRIETARY_MODULE")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zdata.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/module/main.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -869,6 +869,8 @@ hitted:
- 	cur = end - min_t(erofs_off_t, offset + end - map->m_la, end);
- 	if (!(map->m_flags & EROFS_MAP_MAPPED)) {
- 		zero_user_segment(page, cur, end);
-+		++spiltted;
-+		tight = false;
- 		goto next_part;
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1214,12 +1214,20 @@ void *__symbol_get(const char *symbol)
+ 	};
+ 
+ 	preempt_disable();
+-	if (!find_symbol(&fsa) || strong_try_module_get(fsa.owner)) {
+-		preempt_enable();
+-		return NULL;
++	if (!find_symbol(&fsa))
++		goto fail;
++	if (fsa.license != GPL_ONLY) {
++		pr_warn("failing symbol_get of non-GPLONLY symbol %s.\n",
++			symbol);
++		goto fail;
  	}
- 	if (map->m_flags & EROFS_MAP_FRAGMENT) {
++	if (strong_try_module_get(fsa.owner))
++		goto fail;
+ 	preempt_enable();
+ 	return (void *)kernel_symbol_value(fsa.sym);
++fail:
++	preempt_enable();
++	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(__symbol_get);
+ 
 
 
