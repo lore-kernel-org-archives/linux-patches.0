@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C06C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A847C433C8;
-	Mon,  4 Sep 2023 18:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AC8C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED480C433C8;
+	Mon,  4 Sep 2023 18:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852566;
-	bh=LshZ4vWiOpypdIcF0TZc1apHldQrTHKDmzgAyOUIxhs=;
+	s=korg; t=1693852569;
+	bh=oli0uXoHFrM/N33Rad4pQHK7MpItZSzXgULCwp2COcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JA+KymiIsIDMiV9QQgjJxNS7XtkenNs++Z0AiBQ0ft2t+e23KJLkqd1J/v0K5VTQs
-	 yCebbnJaz/4/8uS+bSzFvzlXpslf3EGrZh3OSouf8vMrvrdagaenEpfkUV51WyhZl2
-	 eKGHyXFurL45KRVaoZwrFwWsUh4btK4YUZiTZ4e4=
+	b=fFeSPZt/+ysLs6Xyq0zBfEV/6QGy0+qLQQDuZP5bYYzjmMfbG9HVEb1z60/2H6wA+
+	 03CsC8n6IRxQP9GANOihsP9aLkVfk69HX8jevDAs40YVlqPdYYmvLgDIzaKwAJAb0s
+	 euPaaiRR83jXXBP5dYatj18jJLtj82Q+AUzSgLEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 5.15 06/28] net: enetc: use EXPORT_SYMBOL_GPL for enetc_phc_index
-Date: Mon,  4 Sep 2023 19:30:37 +0100
-Message-ID: <20230904182945.483354410@linuxfoundation.org>
+	syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nam Cao <namcaov@gmail.com>
+Subject: [PATCH 5.15 15/28] staging: rtl8712: fix race condition
+Date: Mon,  4 Sep 2023 19:30:46 +0100
+Message-ID: <20230904182945.897258612@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -40,34 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Nam Cao <namcaov@gmail.com>
 
-commit 569820befb16ffc755ab7af71f4f08cc5f68f0fe upstream.
+commit 1422b526fba994cf05fd288a152106563b875fce upstream.
 
-enetc_phc_index is only used via symbol_get, which was only ever
-intended for very internal symbols like this one.  Use EXPORT_SYMBOL_GPL
-for it so that symbol_get can enforce only being used on
-EXPORT_SYMBOL_GPL symbols.
+In probe function, request_firmware_nowait() is called to load firmware
+asynchronously. At completion of firmware loading, register_netdev() is
+called. However, a mutex needed by netdev is initialized after the call
+to request_firmware_nowait(). Consequently, it can happen that
+register_netdev() is called before the driver is ready.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Move the mutex initialization into r8712_init_drv_sw(), which is called
+before request_firmware_nowait().
+
+Reported-by: syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-staging/000000000000d9d4560601b8e0d7@google.com/T/#u
+Fixes: 8c213fa59199 ("staging: r8712u: Use asynchronous firmware loading")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nam Cao <namcaov@gmail.com>
+Link: https://lore.kernel.org/r/20230731110620.116562-1-namcaov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_ptp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8712/os_intfs.c |    1 +
+ drivers/staging/rtl8712/usb_intf.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/freescale/enetc/enetc_ptp.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_ptp.c
-@@ -8,7 +8,7 @@
- #include "enetc.h"
+--- a/drivers/staging/rtl8712/os_intfs.c
++++ b/drivers/staging/rtl8712/os_intfs.c
+@@ -323,6 +323,7 @@ int r8712_init_drv_sw(struct _adapter *p
+ 	mp871xinit(padapter);
+ 	init_default_value(padapter);
+ 	r8712_InitSwLeds(padapter);
++	mutex_init(&padapter->mutex_start);
+ 	return ret;
+ }
  
- int enetc_phc_index = -1;
--EXPORT_SYMBOL(enetc_phc_index);
-+EXPORT_SYMBOL_GPL(enetc_phc_index);
+--- a/drivers/staging/rtl8712/usb_intf.c
++++ b/drivers/staging/rtl8712/usb_intf.c
+@@ -567,7 +567,6 @@ static int r871xu_drv_init(struct usb_in
+ 	if (rtl871x_load_fw(padapter))
+ 		goto deinit_drv_sw;
+ 	spin_lock_init(&padapter->lock_rx_ff0_filter);
+-	mutex_init(&padapter->mutex_start);
+ 	return 0;
  
- static struct ptp_clock_info enetc_ptp_caps = {
- 	.owner		= THIS_MODULE,
+ deinit_drv_sw:
 
 
