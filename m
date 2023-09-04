@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C63C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68614C433C8;
-	Mon,  4 Sep 2023 18:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A040DC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28937C433C7;
+	Mon,  4 Sep 2023 18:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852494;
-	bh=hE4lDAafTrw+NTvZJAYfnYATW/2VaRSOOvhXDDwSxNA=;
+	s=korg; t=1693852497;
+	bh=sxowEe5D1ChBDCHst9QxgqrBNSnVMZW9fZa9lP6NkSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGO27SerouQHFxBZMNlwUyFsOZnFjTrN/x2254Zsi0DJHMtuWHo+QhwLRaKKGh6Rc
-	 35vSP/3Yak7Tm6JOvJKNBVzh5me4q2y4zsd7tWVyoxbsbkDEeuS+bCavIMJAZ39kab
-	 lf79kTyJ8t4w4+q+BqKV0ZpjABTZcoK9oi4wOEfg=
+	b=JHl72AFMT+DFKhLA3ZyG5umSGe1x8xnCKoXqkx1ucoEw0az/Fmm8gnu8gMd/Bi+VO
+	 WHgQrYVNRUlbSzsBM3UdVaseikXOscwOV/TEftHxDIuS3xUBkxyAbq8z4Y0NshamX/
+	 HOfcy1xNkDqT1D0JCyIrs5VE/1Sb509YI2K4cb1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 02/31] ksmbd: fix wrong DataOffset validation of create context
-Date: Mon,  4 Sep 2023 19:30:10 +0100
-Message-ID: <20230904182947.115465529@linuxfoundation.org>
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.1 20/31] wifi: mt76: mt7921: fix skb leak by txs missing in AMSDU
+Date: Mon,  4 Sep 2023 19:30:28 +0100
+Message-ID: <20230904182948.009006938@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
 References: <20230904182946.999390199@linuxfoundation.org>
@@ -40,33 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Deren Wu <deren.wu@mediatek.com>
 
-commit 17d5b135bb720832364e8f55f6a887a3c7ec8fdb upstream.
+commit b642f4c5f3de0a8f47808d32b1ebd9c427a42a66 upstream.
 
-If ->DataOffset of create context is 0, DataBuffer size is not correctly
-validated. This patch change wrong validation code and consider tag
-length in request.
+txs may be dropped if the frame is aggregated in AMSDU. When the problem
+shows up, some SKBs would be hold in driver to cause network stopped
+temporarily. Even if the problem can be recovered by txs timeout handling,
+mt7921 still need to disable txs in AMSDU to avoid this issue.
 
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21824
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 163f4d22c118 ("mt76: mt7921: add MAC support")
+Reviewed-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1492,7 +1492,7 @@ struct create_context *smb2_find_context
- 		    name_len < 4 ||
- 		    name_off + name_len > cc_len ||
- 		    (value_off & 0x7) != 0 ||
--		    (value_off && (value_off < name_off + name_len)) ||
-+		    (value_len && value_off < name_off + (name_len < 8 ? 8 : name_len)) ||
- 		    ((u64)value_off + value_len > cc_len))
- 			return ERR_PTR(-EINVAL);
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
+@@ -465,6 +465,7 @@ void mt76_connac2_mac_write_txwi(struct
+ 				    BSS_CHANGED_BEACON_ENABLED));
+ 	bool inband_disc = !!(changed & (BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
+ 					 BSS_CHANGED_FILS_DISCOVERY));
++	bool amsdu_en = wcid->amsdu;
  
+ 	if (vif) {
+ 		struct mt76_vif *mvif = (struct mt76_vif *)vif->drv_priv;
+@@ -524,12 +525,14 @@ void mt76_connac2_mac_write_txwi(struct
+ 	txwi[4] = 0;
+ 
+ 	val = FIELD_PREP(MT_TXD5_PID, pid);
+-	if (pid >= MT_PACKET_ID_FIRST)
++	if (pid >= MT_PACKET_ID_FIRST) {
+ 		val |= MT_TXD5_TX_STATUS_HOST;
++		amsdu_en = amsdu_en && !is_mt7921(dev);
++	}
+ 
+ 	txwi[5] = cpu_to_le32(val);
+ 	txwi[6] = 0;
+-	txwi[7] = wcid->amsdu ? cpu_to_le32(MT_TXD7_HW_AMSDU) : 0;
++	txwi[7] = amsdu_en ? cpu_to_le32(MT_TXD7_HW_AMSDU) : 0;
+ 
+ 	if (is_8023)
+ 		mt76_connac2_mac_write_txwi_8023(txwi, skb, wcid);
 
 
