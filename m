@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242DEC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500BBC433C7;
-	Mon,  4 Sep 2023 18:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C618C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129CDC433C8;
+	Mon,  4 Sep 2023 18:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852555;
-	bh=D1M75R9RoVXwLz+mwAUonWEFESUioxM2yYwcib54U68=;
+	s=korg; t=1693852558;
+	bh=mfqutrtLQsLyzTb1/B6Dl7jx6N0Q4ILXvVNJOB83Zgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXmB+G1cHHHOMr5iVCWESewdxJIcuFqoTVJLbb/tAJQGuoKqPNGz2h9Y9T/kJrWuf
-	 uq4TkYUTLZncqHjoAEI/E9qZKMx5nhDjPiF6pcWWeLKI4XXaywdWioxJg2WB6BkpCL
-	 LkauczL3FJAX3KxdJn5fK/dFJbKvsggiJLwJPDYs=
+	b=jksDvh+IdOlH71ScVHsHi/lrKtSt/Vg0B3jkU/aRoEq920/RC3OeZlOq2Wjheyrye
+	 poMaZKqQIFzDrSuVAzwQRaA64zKbFgmglGRl8nJJ7VxY6/D1pPMclUTd+ZspjwqJI2
+	 HjT8qhF1VqkD0RCxrcLhPrzXAT5O5Aldq0xKnlAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 02/28] ksmbd: fix wrong DataOffset validation of create context
-Date: Mon,  4 Sep 2023 19:30:33 +0100
-Message-ID: <20230904182945.298741789@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 03/28] ksmbd: replace one-element array with flex-array member in struct smb2_ea_info
+Date: Mon,  4 Sep 2023 19:30:34 +0100
+Message-ID: <20230904182945.344449804@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -42,31 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 17d5b135bb720832364e8f55f6a887a3c7ec8fdb upstream.
+commit 0ba5439d9afa2722e7728df56f272c89987540a4 upstream.
 
-If ->DataOffset of create context is 0, DataBuffer size is not correctly
-validated. This patch change wrong validation code and consider tag
-length in request.
+UBSAN complains about out-of-bounds array indexes on 1-element arrays in
+struct smb2_ea_info.
+
+UBSAN: array-index-out-of-bounds in fs/smb/server/smb2pdu.c:4335:15
+index 1 is out of range for type 'char [1]'
+CPU: 1 PID: 354 Comm: kworker/1:4 Not tainted 6.5.0-rc4 #1
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop
+Reference Platform, BIOS 6.00 07/22/2020
+Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+Call Trace:
+ <TASK>
+ __dump_stack linux/lib/dump_stack.c:88
+ dump_stack_lvl+0x48/0x70 linux/lib/dump_stack.c:106
+ dump_stack+0x10/0x20 linux/lib/dump_stack.c:113
+ ubsan_epilogue linux/lib/ubsan.c:217
+ __ubsan_handle_out_of_bounds+0xc6/0x110 linux/lib/ubsan.c:348
+ smb2_get_ea linux/fs/smb/server/smb2pdu.c:4335
+ smb2_get_info_file linux/fs/smb/server/smb2pdu.c:4900
+ smb2_query_info+0x63ae/0x6b20 linux/fs/smb/server/smb2pdu.c:5275
+ __process_request linux/fs/smb/server/server.c:145
+ __handle_ksmbd_work linux/fs/smb/server/server.c:213
+ handle_ksmbd_work+0x348/0x10b0 linux/fs/smb/server/server.c:266
+ process_one_work+0x85a/0x1500 linux/kernel/workqueue.c:2597
+ worker_thread+0xf3/0x13a0 linux/kernel/workqueue.c:2748
+ kthread+0x2b7/0x390 linux/kernel/kthread.c:389
+ ret_from_fork+0x44/0x90 linux/arch/x86/kernel/process.c:145
+ ret_from_fork_asm+0x1b/0x30 linux/arch/x86/entry/entry_64.S:304
+ </TASK>
 
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21824
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/oplock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c |    2 +-
+ fs/ksmbd/smb2pdu.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -1485,7 +1485,7 @@ struct create_context *smb2_find_context
- 		    name_len < 4 ||
- 		    name_off + name_len > cc_len ||
- 		    (value_off & 0x7) != 0 ||
--		    (value_off && (value_off < name_off + name_len)) ||
-+		    (value_len && value_off < name_off + (name_len < 8 ? 8 : name_len)) ||
- 		    ((u64)value_off + value_len > cc_len))
- 			return ERR_PTR(-EINVAL);
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -4289,7 +4289,7 @@ static int smb2_get_ea(struct ksmbd_work
+ 		if (!strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
+ 			name_len -= XATTR_USER_PREFIX_LEN;
+ 
+-		ptr = (char *)(&eainfo->name + name_len + 1);
++		ptr = eainfo->name + name_len + 1;
+ 		buf_free_len -= (offsetof(struct smb2_ea_info, name) +
+ 				name_len + 1);
+ 		/* bailout if xattr can't fit in buf_free_len */
+--- a/fs/ksmbd/smb2pdu.h
++++ b/fs/ksmbd/smb2pdu.h
+@@ -1567,7 +1567,7 @@ struct smb2_ea_info {
+ 	__u8   Flags;
+ 	__u8   EaNameLength;
+ 	__le16 EaValueLength;
+-	char name[1];
++	char name[];
+ 	/* optionally followed by value */
+ } __packed; /* level 15 Query */
  
 
 
