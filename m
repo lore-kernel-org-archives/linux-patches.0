@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69DAC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5B0C433C7;
-	Mon,  4 Sep 2023 18:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF28AC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44412C433C7;
+	Mon,  4 Sep 2023 18:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852516;
-	bh=Yj5D4FRIPI1AFPnqux9n0Csz0bZRJBmRjyRYdG71KmE=;
+	s=korg; t=1693852519;
+	bh=83ttvb7BtUsiQm09bOhdRre95FvMvryqG7MfgJ5W6uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bY/DAg8Nphcz39r60daQYO/GcMfRxCk/gJ9RESWvcv+K6P8GABRD/JZVJQTxmcpyS
-	 3KuLxtXHkP7Mzv5qHSv+wlUjr783VLVlo+9pd7xPf6mQ3Mx3o1CFIdr2aL1r8V+a9X
-	 1n2ZLoTTM8EQ7thJqhfShsQ8RWvJgkzZ5f+Ip7NI=
+	b=hZvMdxmQymmSUFPz7USzkho+zlAug9AQXgXVTJb96qLeVFWXj7C+W6qYYDsEs9wiM
+	 ww1adR5ITRrXnUUa4l/THNHhL8uogyLLTmpQTzhYKo7oC9x3FFjPfTQGdV2SApEagJ
+	 8ti36mTFWggO0ICrk4sQVbU2cNUWpGvLwKQOigiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 03/31] ksmbd: fix slub overflow in ksmbd_decode_ntlmssp_auth_blob()
-Date: Mon,  4 Sep 2023 19:30:11 +0100
-Message-ID: <20230904182947.157770722@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 04/31] ksmbd: replace one-element array with flex-array member in struct smb2_ea_info
+Date: Mon,  4 Sep 2023 19:30:12 +0100
+Message-ID: <20230904182947.200207860@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
 References: <20230904182946.999390199@linuxfoundation.org>
@@ -42,32 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 4b081ce0d830b684fdf967abc3696d1261387254 upstream.
+commit 0ba5439d9afa2722e7728df56f272c89987540a4 upstream.
 
-If authblob->SessionKey.Length is bigger than session key
-size(CIFS_KEY_SIZE), slub overflow can happen in key exchange codes.
-cifs_arc4_crypt copy to session key array from SessionKey from client.
+UBSAN complains about out-of-bounds array indexes on 1-element arrays in
+struct smb2_ea_info.
+
+UBSAN: array-index-out-of-bounds in fs/smb/server/smb2pdu.c:4335:15
+index 1 is out of range for type 'char [1]'
+CPU: 1 PID: 354 Comm: kworker/1:4 Not tainted 6.5.0-rc4 #1
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop
+Reference Platform, BIOS 6.00 07/22/2020
+Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+Call Trace:
+ <TASK>
+ __dump_stack linux/lib/dump_stack.c:88
+ dump_stack_lvl+0x48/0x70 linux/lib/dump_stack.c:106
+ dump_stack+0x10/0x20 linux/lib/dump_stack.c:113
+ ubsan_epilogue linux/lib/ubsan.c:217
+ __ubsan_handle_out_of_bounds+0xc6/0x110 linux/lib/ubsan.c:348
+ smb2_get_ea linux/fs/smb/server/smb2pdu.c:4335
+ smb2_get_info_file linux/fs/smb/server/smb2pdu.c:4900
+ smb2_query_info+0x63ae/0x6b20 linux/fs/smb/server/smb2pdu.c:5275
+ __process_request linux/fs/smb/server/server.c:145
+ __handle_ksmbd_work linux/fs/smb/server/server.c:213
+ handle_ksmbd_work+0x348/0x10b0 linux/fs/smb/server/server.c:266
+ process_one_work+0x85a/0x1500 linux/kernel/workqueue.c:2597
+ worker_thread+0xf3/0x13a0 linux/kernel/workqueue.c:2748
+ kthread+0x2b7/0x390 linux/kernel/kthread.c:389
+ ret_from_fork+0x44/0x90 linux/arch/x86/kernel/process.c:145
+ ret_from_fork_asm+0x1b/0x30 linux/arch/x86/entry/entry_64.S:304
+ </TASK>
 
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21940
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/auth.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/smb2pdu.c |    2 +-
+ fs/smb/server/smb2pdu.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -355,6 +355,9 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
- 		if (blob_len < (u64)sess_key_off + sess_key_len)
- 			return -EINVAL;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4322,7 +4322,7 @@ static int smb2_get_ea(struct ksmbd_work
+ 		if (!strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
+ 			name_len -= XATTR_USER_PREFIX_LEN;
  
-+		if (sess_key_len > CIFS_KEY_SIZE)
-+			return -EINVAL;
-+
- 		ctx_arc4 = kmalloc(sizeof(*ctx_arc4), GFP_KERNEL);
- 		if (!ctx_arc4)
- 			return -ENOMEM;
+-		ptr = (char *)(&eainfo->name + name_len + 1);
++		ptr = eainfo->name + name_len + 1;
+ 		buf_free_len -= (offsetof(struct smb2_ea_info, name) +
+ 				name_len + 1);
+ 		/* bailout if xattr can't fit in buf_free_len */
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -410,7 +410,7 @@ struct smb2_ea_info {
+ 	__u8   Flags;
+ 	__u8   EaNameLength;
+ 	__le16 EaValueLength;
+-	char name[1];
++	char name[];
+ 	/* optionally followed by value */
+ } __packed; /* level 15 Query */
+ 
 
 
