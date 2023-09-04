@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65091C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87CD8C433C7;
-	Mon,  4 Sep 2023 18:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88CFC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D64BC433C9;
+	Mon,  4 Sep 2023 18:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852458;
-	bh=bDc5onCl9IePtLHNnQ1WvrkrBQa9RH+iP/b/7EuMacQ=;
+	s=korg; t=1693852461;
+	bh=Oar6EGpn+1vy520vivIstBo/BiGHT9OAIkhOyCZpmBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUcfmje5Wv8qqW506j7ClIQm1VwFgryc3j/s4sXdXMr12La5i6T/GBMWoGsOV0IEr
-	 V+8mB2SuECXw+uA0/JUz+0KcPTjhLdAfPVrWUBgT+HUb/ZUfHp0h4rl1oO2Eqw3t6y
-	 Bc6MRvyloeJzsnX30FZE+t1ryI3eguRkwNGTa57c=
+	b=ZvxH7me8c4IBHFZDACcU8dPTji11mzlV0qZvvhVV/cibKFmSSRt/XoxHctQ2LZtRg
+	 YefLIW2Msq4QZdSQLtG5dlktJlrCJeWmV6vMOVc+g8X2kXHZaXi4nBUT8FQywwAGvZ
+	 243BBpFh8AUWG6r0mVhc3RNVx/cGgiTAZH3ntZDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.4 32/32] pinctrl: amd: Dont show `Invalid config param` errors
-Date: Mon,  4 Sep 2023 19:30:30 +0100
-Message-ID: <20230904182949.372339204@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Lech Perczak <lech.perczak@camlingroup.com>
+Subject: [PATCH 6.4 25/32] serial: sc16is7xx: fix bug when first setting GPIO direction
+Date: Mon,  4 Sep 2023 19:30:23 +0100
+Message-ID: <20230904182949.047459450@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182947.899158313@linuxfoundation.org>
 References: <20230904182947.899158313@linuxfoundation.org>
@@ -39,46 +39,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 87b549efcb0f7934b0916d2a00607a878b6f1e0f upstream.
+commit 9baeea723c0fb9c3ba9a336369f758ed9bc6831d upstream.
 
-On some systems amd_pinconf_set() is called with parameters
-0x8 (PIN_CONFIG_DRIVE_PUSH_PULL) or 0x14 (PIN_CONFIG_PERSIST_STATE)
-which are not supported by pinctrl-amd.
+When configuring a pin as an output pin with a value of logic 0, we
+end up as having a value of logic 1 on the output pin. Setting a
+logic 0 a second time (or more) after that will correctly output a
+logic 0 on the output pin.
 
-Don't show an err message when called with an invalid parameter,
-downgrade this to debug instead.
+By default, all GPIO pins are configured as inputs. When we enter
+sc16is7xx_gpio_direction_output() for the first time, we first set the
+desired value in IOSTATE, and then we configure the pin as an output.
+The datasheet states that writing to IOSTATE register will trigger a
+transfer of the value to the I/O pin configured as output, so if the
+pin is configured as an input, nothing will be transferred.
 
-Cc: stable@vger.kernel.org # 6.1
-Fixes: 635a750d958e1 ("pinctrl: amd: Use amd_pinconf_set() for all config options")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230717201652.17168-1-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Therefore, set the direction first in IODIR, and then set the desired
+value in IOSTATE.
+
+This is what is done in NXP application note AN10587.
+
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
+Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
+Link: https://lore.kernel.org/r/20230807214556.540627-6-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -748,7 +748,7 @@ static int amd_pinconf_get(struct pinctr
- 		break;
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1342,9 +1342,18 @@ static int sc16is7xx_gpio_direction_outp
+ 		state |= BIT(offset);
+ 	else
+ 		state &= ~BIT(offset);
+-	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
++
++	/*
++	 * If we write IOSTATE first, and then IODIR, the output value is not
++	 * transferred to the corresponding I/O pin.
++	 * The datasheet states that each register bit will be transferred to
++	 * the corresponding I/O pin programmed as output when writing to
++	 * IOSTATE. Therefore, configure direction first with IODIR, and then
++	 * set value after with IOSTATE.
++	 */
+ 	sc16is7xx_port_update(port, SC16IS7XX_IODIR_REG, BIT(offset),
+ 			      BIT(offset));
++	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
  
- 	default:
--		dev_err(&gpio_dev->pdev->dev, "Invalid config param %04x\n",
-+		dev_dbg(&gpio_dev->pdev->dev, "Invalid config param %04x\n",
- 			param);
- 		return -ENOTSUPP;
- 	}
-@@ -798,7 +798,7 @@ static int amd_pinconf_set(struct pinctr
- 			break;
- 
- 		default:
--			dev_err(&gpio_dev->pdev->dev,
-+			dev_dbg(&gpio_dev->pdev->dev,
- 				"Invalid config param %04x\n", param);
- 			ret = -ENOTSUPP;
- 		}
+ 	return 0;
+ }
 
 
