@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29196C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:32:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E2C433C7;
-	Mon,  4 Sep 2023 18:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDCFC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:32:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C501C433C8;
+	Mon,  4 Sep 2023 18:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852332;
-	bh=6QjL+/B+1whQ3hlTC0wFN6MCSWB+tyi50rIdx7Yn1aQ=;
+	s=korg; t=1693852334;
+	bh=2+qURPBgHJnqYVBXZ0u3jugQWKPi6ZrwEo2q7HAYwNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEjOzDq8TNsMPOG4dFznihRzSrEMv0jec0xlnbvleY33FLfBOAKDWE3e0DSmB1iae
-	 6o6LaKWyyR+uOlWPv4YREy6uTn30uQeQHZVNCQbL2znyBZ3kMNypxiVDoMcJVteD3F
-	 WtlQWqeMUYr/TS/NGMH+9jc0PastVoFZauFkWtxw=
+	b=h1RlEwKl2bUxvY2B9tJTCdFmaC1cpNK+zuc6d+Lpa1u0AGfdaryF1ODVfIuDeWQqR
+	 V7fL0C5fNRBthRX/8HIYgw6YmnKWNmYBg5xx6E+Syrm1Res7ofCdluGQVbBfR4KUeE
+	 21vEFx5No+RY531Tjjg60TpAkef+vinH2tkUgwzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.5 29/34] tcpm: Avoid soft reset when partner does not support get_status
-Date: Mon,  4 Sep 2023 19:30:16 +0100
-Message-ID: <20230904182949.966875432@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Lech Perczak <lech.perczak@camlingroup.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.5 30/34] dt-bindings: sc16is7xx: Add property to change GPIO function
+Date: Mon,  4 Sep 2023 19:30:17 +0100
+Message-ID: <20230904182950.012208411@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182948.594404081@linuxfoundation.org>
 References: <20230904182948.594404081@linuxfoundation.org>
@@ -39,62 +41,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 78e0ea4277546debf7e96797ac3b768539cc44f6 upstream.
+commit 4cf478dc5d707e56aefa258c049872eff054a353 upstream.
 
-When partner does not support get_status message, tcpm right now
-responds with soft reset message. This causes PD renegotiation to
-happen and resets PPS link. Avoid soft resetting the link when
-partner does not support get_status message to mitigate PPS resets.
+Some variants in this series of UART controllers have GPIO pins that
+are shared between GPIO and modem control lines.
 
-[  208.926752] Setting voltage/current limit 9500 mV 2450 mA
-[  208.930407] set_auto_vbus_discharge_threshold mode:3 pps_active:y vbus:9500 ret:0
-[  208.930418] state change SNK_TRANSITION_SINK -> SNK_READY [rev3 POWER_NEGOTIATION]
-[  208.930455] AMS POWER_NEGOTIATION finished
+The pin mux mode (GPIO or modem control lines) can be set for each
+ports (channels) supported by the variant.
 
-// ALERT message from the Source
-[  213.948442] PD RX, header: 0x19a6 [1]
-[  213.948451] state change SNK_READY -> GET_STATUS_SEND [rev3 GETTING_SOURCE_SINK_STATUS]
-[  213.948457] PD TX, header: 0x492
-[  213.950402] PD TX complete, status: 0
-[  213.950427] pending state change GET_STATUS_SEND -> GET_STATUS_SEND_TIMEOUT @ 60 ms [rev3 GETTING_SOURCE_SINK_STATUS]
+This adds a property to the device tree to set the GPIO pin mux to
+modem control lines on selected ports if needed.
 
-// NOT_SUPPORTED from the Source
-[  213.959954] PD RX, header: 0xbb0 [1]
-
-// sink sends SOFT_RESET
-[  213.959958] state change GET_STATUS_SEND -> SNK_SOFT_RESET [rev3 GETTING_SOURCE_SINK_STATUS]
-[  213.959962] AMS GETTING_SOURCE_SINK_STATUS finished
-[  213.959964] AMS SOFT_RESET_AMS start
-[  213.959966] state change SNK_SOFT_RESET -> AMS_START [rev3 SOFT_RESET_AMS]
-[  213.959969] state change AMS_START -> SOFT_RESET_SEND [rev3 SOFT_RESET_AMS]
-
-Cc: stable@vger.kernel.org
-Fixes: 8dea75e11380 ("usb: typec: tcpm: Protocol Error handling")
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230820044449.1005889-1-badhri@google.com
+Cc: stable@vger.kernel.org # 6.1.x
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230807214556.540627-4-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/devicetree/bindings/serial/nxp,sc16is7xx.txt |   46 +++++++++++++
+ 1 file changed, 46 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2753,6 +2753,13 @@ static void tcpm_pd_ctrl_request(struct
- 			port->sink_cap_done = true;
- 			tcpm_set_state(port, ready_state(port), 0);
- 			break;
-+		/*
-+		 * Some port partners do not support GET_STATUS, avoid soft reset the link to
-+		 * prevent redundant power re-negotiation
-+		 */
-+		case GET_STATUS_SEND:
-+			tcpm_set_state(port, ready_state(port), 0);
-+			break;
- 		case SRC_READY:
- 		case SNK_READY:
- 			if (port->vdm_state > VDM_STATE_READY) {
+--- a/Documentation/devicetree/bindings/serial/nxp,sc16is7xx.txt
++++ b/Documentation/devicetree/bindings/serial/nxp,sc16is7xx.txt
+@@ -23,6 +23,9 @@ Optional properties:
+     1 = active low.
+ - irda-mode-ports: An array that lists the indices of the port that
+ 		   should operate in IrDA mode.
++- nxp,modem-control-line-ports: An array that lists the indices of the port that
++				should have shared GPIO lines configured as
++				modem control lines.
+ 
+ Example:
+         sc16is750: sc16is750@51 {
+@@ -35,6 +38,26 @@ Example:
+                 #gpio-cells = <2>;
+         };
+ 
++	sc16is752: sc16is752@53 {
++		compatible = "nxp,sc16is752";
++		reg = <0x53>;
++		clocks = <&clk20m>;
++		interrupt-parent = <&gpio3>;
++		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
++		nxp,modem-control-line-ports = <1>; /* Port 1 as modem control lines */
++		gpio-controller; /* Port 0 as GPIOs */
++		#gpio-cells = <2>;
++	};
++
++	sc16is752: sc16is752@54 {
++		compatible = "nxp,sc16is752";
++		reg = <0x54>;
++		clocks = <&clk20m>;
++		interrupt-parent = <&gpio3>;
++		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
++		nxp,modem-control-line-ports = <0 1>; /* Ports 0 and 1 as modem control lines */
++	};
++
+ * spi as bus
+ 
+ Required properties:
+@@ -59,6 +82,9 @@ Optional properties:
+     1 = active low.
+ - irda-mode-ports: An array that lists the indices of the port that
+ 		   should operate in IrDA mode.
++- nxp,modem-control-line-ports: An array that lists the indices of the port that
++				should have shared GPIO lines configured as
++				modem control lines.
+ 
+ Example:
+ 	sc16is750: sc16is750@0 {
+@@ -70,3 +96,23 @@ Example:
+ 		gpio-controller;
+ 		#gpio-cells = <2>;
+ 	};
++
++	sc16is752: sc16is752@1 {
++		compatible = "nxp,sc16is752";
++		reg = <1>;
++		clocks = <&clk20m>;
++		interrupt-parent = <&gpio3>;
++		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
++		nxp,modem-control-line-ports = <1>; /* Port 1 as modem control lines */
++		gpio-controller; /* Port 0 as GPIOs */
++		#gpio-cells = <2>;
++	};
++
++	sc16is752: sc16is752@2 {
++		compatible = "nxp,sc16is752";
++		reg = <2>;
++		clocks = <&clk20m>;
++		interrupt-parent = <&gpio3>;
++		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
++		nxp,modem-control-line-ports = <0 1>; /* Ports 0 and 1 as modem control lines */
++	};
 
 
