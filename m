@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3922C23A0
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:31:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3570FC433CA;
-	Mon,  4 Sep 2023 18:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD9B23A0
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:31:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD3BC433C9;
+	Mon,  4 Sep 2023 18:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852278;
-	bh=fYPMrGGZhW6UK/qAMnqpY2Za9OJy+JxpK4Q0JLbLRR8=;
+	s=korg; t=1693852281;
+	bh=hy3SIzgNojkFRRbn2HVtmhyjIMqhEakruqTcFgL+1Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5wb1jZyLJra28y3irYAouaiHtHt5tS91XSlzdSEXXXH1pTSaWXmQeb4m47rMh99u
-	 KZYcyQx/C2vJtfJqPT1gmKxZW5jp3ISk9ZVrmT/ICdCkaPJ5b5uPbCwctwMYQSB9At
-	 hij/N33XA0BXMhrMka/5PE8IOxwJG/fw5uhJLMnY=
+	b=ERxqdN/dF7/2iwv23Kn9xcFQO6bc981iaGMO05khDenCk13dwMvquiegnlhjg2vX1
+	 p8Y6uAcLyflLICKduTsOBhUAOkZnJc0A+Vx+18BQd/9RMGVEY3cYtMEjh03J/JIoIe
+	 KgxfDXRJh3XCvNI4uDh0AK1EQoLe6QM1otZ3m/Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Joshua Kinard <kumba@gentoo.org>,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.5 10/34] rtc: ds1685: use EXPORT_SYMBOL_GPL for ds1685_rtc_poweroff
-Date: Mon,  4 Sep 2023 19:29:57 +0100
-Message-ID: <20230904182949.062298527@linuxfoundation.org>
+Subject: [PATCH 6.5 11/34] modules: only allow symbol_get of EXPORT_SYMBOL_GPL modules
+Date: Mon,  4 Sep 2023 19:29:58 +0100
+Message-ID: <20230904182949.104100132@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182948.594404081@linuxfoundation.org>
 References: <20230904182948.594404081@linuxfoundation.org>
@@ -42,32 +41,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit 95e7ebc6823170256a8ce19fad87912805bfa001 upstream.
+commit 9011e49d54dcc7653ebb8a1e05b5badb5ecfa9f9 upstream.
 
-ds1685_rtc_poweroff is only used externally via symbol_get, which was
-only ever intended for very internal symbols like this one.  Use
-EXPORT_SYMBOL_GPL for it so that symbol_get can enforce only being used
-on EXPORT_SYMBOL_GPL symbols.
+It has recently come to my attention that nvidia is circumventing the
+protection added in 262e6ae7081d ("modules: inherit
+TAINT_PROPRIETARY_MODULE") by importing exports from their proprietary
+modules into an allegedly GPL licensed module and then rexporting them.
 
+Given that symbol_get was only ever intended for tightly cooperating
+modules using very internal symbols it is logical to restrict it to
+being used on EXPORT_SYMBOL_GPL and prevent nvidia from costly DMCA
+Circumvention of Access Controls law suites.
+
+All symbols except for four used through symbol_get were already exported
+as EXPORT_SYMBOL_GPL, and the remaining four ones were switched over in
+the preparation patches.
+
+Fixes: 262e6ae7081d ("modules: inherit TAINT_PROPRIETARY_MODULE")
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Joshua Kinard <kumba@gentoo.org>
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ds1685.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/module/main.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/rtc/rtc-ds1685.c
-+++ b/drivers/rtc/rtc-ds1685.c
-@@ -1432,7 +1432,7 @@ ds1685_rtc_poweroff(struct platform_devi
- 		unreachable();
- 	}
- }
--EXPORT_SYMBOL(ds1685_rtc_poweroff);
-+EXPORT_SYMBOL_GPL(ds1685_rtc_poweroff);
- /* ----------------------------------------------------------------------- */
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1295,12 +1295,20 @@ void *__symbol_get(const char *symbol)
+ 	};
  
+ 	preempt_disable();
+-	if (!find_symbol(&fsa) || strong_try_module_get(fsa.owner)) {
+-		preempt_enable();
+-		return NULL;
++	if (!find_symbol(&fsa))
++		goto fail;
++	if (fsa.license != GPL_ONLY) {
++		pr_warn("failing symbol_get of non-GPLONLY symbol %s.\n",
++			symbol);
++		goto fail;
+ 	}
++	if (strong_try_module_get(fsa.owner))
++		goto fail;
+ 	preempt_enable();
+ 	return (void *)kernel_symbol_value(fsa.sym);
++fail:
++	preempt_enable();
++	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(__symbol_get);
  
 
 
