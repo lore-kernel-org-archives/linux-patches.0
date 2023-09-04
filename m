@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44A0C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:32:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0DDC433C9;
-	Mon,  4 Sep 2023 18:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8648CC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:32:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5EBC433CA;
+	Mon,  4 Sep 2023 18:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852359;
-	bh=BSTnDk34sV4jwTX5gvvAlX7ieRnjlashWPnClAVIFP0=;
+	s=korg; t=1693852362;
+	bh=rrIBxXaxNvo3qSXM5KBngAgYmvv/cTmgL5MQVWxFqmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJ53HN4txUe/g+llGqhKDcPs12WheVgPZ8qv6ROPNVxkkzQ0yI5RsTCiygmFLZfcx
-	 8eQ2x01gpn67WVxUFkYEViZytFAWy3DhPFTfFddzKMeaK7gSCmkohQn7phhggLORQ3
-	 nxs7hpYco3Sraz9gWbjzxIWX1t5rc8lMUFMj8qY0=
+	b=j+G9983oG1+6/rpQiaBoPvECD6F7KiWW3ivjgTR3ml3Z/aEVUIh9pTNK4tsDGeIKB
+	 XKIesMzcH8XbeqZATV+o+VXdAMBLBnq53pfW3TCAOPy5+kZD9yfAcuN6dZoUzig4P0
+	 zZdaXwBN9sbNmY5qyT9QtAVM/dizaEoVZ6ubApYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.5 23/34] wifi: ath11k: Cleanup mac80211 references on failure during tx_complete
-Date: Mon,  4 Sep 2023 19:30:10 +0100
-Message-ID: <20230904182949.678191131@linuxfoundation.org>
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 6.5 24/34] serial: qcom-geni: fix opp vote on shutdown
+Date: Mon,  4 Sep 2023 19:30:11 +0100
+Message-ID: <20230904182949.720548919@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182948.594404081@linuxfoundation.org>
 References: <20230904182948.594404081@linuxfoundation.org>
@@ -39,55 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 29d15589f084d71a4ea8c544039c5839db0236e2 upstream.
+commit 8ece7b754bc34ffd7fcc8269ccb9128e72ca76d8 upstream.
 
-When a function is using functions from mac80211 to free an skb then it
-should do it consistently and not switch to the generic dev_kfree_skb_any
-(or similar functions). Otherwise (like in the error handlers), mac80211
-will will not be aware of the freed skb and thus not clean up related
-information in its internal data structures.
+The operating-performance-point vote needs to be dropped when shutting
+down the port to avoid wasting power by keeping resources like power
+domains in an unnecessarily high performance state (e.g. when a UART
+connected Bluetooth controller is not in use).
 
-Not doing so lead in the past to filled up structure which then prevented
-new clients to connect.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Fixes: 6257c702264c ("wifi: ath11k: fix tx status reporting in encap offload mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230802-ath11k-ack_status_leak-v2-2-c0af729d6229@narfation.org
+Fixes: a5819b548af0 ("tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state")
+Cc: stable@vger.kernel.org      # 5.9
+Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230714130214.14552-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_tx.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/wireless/ath/ath11k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_tx.c
-@@ -344,7 +344,7 @@ ath11k_dp_tx_htt_tx_complete_buf(struct
- 	dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -126,6 +126,7 @@ struct qcom_geni_serial_port {
+ 	dma_addr_t rx_dma_addr;
+ 	bool setup;
+ 	unsigned int baud;
++	unsigned long clk_rate;
+ 	void *rx_buf;
+ 	u32 loopback;
+ 	bool brk;
+@@ -1249,6 +1250,7 @@ static void qcom_geni_serial_set_termios
+ 			baud * sampling_rate, clk_rate, clk_div);
  
- 	if (!skb_cb->vif) {
--		dev_kfree_skb_any(msdu);
-+		ieee80211_free_txskb(ar->hw, msdu);
- 		return;
+ 	uport->uartclk = clk_rate;
++	port->clk_rate = clk_rate;
+ 	dev_pm_opp_set_rate(uport->dev, clk_rate);
+ 	ser_clk_cfg = SER_CLK_EN;
+ 	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
+@@ -1513,10 +1515,13 @@ static void qcom_geni_serial_pm(struct u
+ 
+ 	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
+ 		geni_icc_enable(&port->se);
++		if (port->clk_rate)
++			dev_pm_opp_set_rate(uport->dev, port->clk_rate);
+ 		geni_se_resources_on(&port->se);
+ 	} else if (new_state == UART_PM_STATE_OFF &&
+ 			old_state == UART_PM_STATE_ON) {
+ 		geni_se_resources_off(&port->se);
++		dev_pm_opp_set_rate(uport->dev, 0);
+ 		geni_icc_disable(&port->se);
  	}
- 
-@@ -566,12 +566,12 @@ static void ath11k_dp_tx_complete_msdu(s
- 	dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
- 
- 	if (unlikely(!rcu_access_pointer(ab->pdevs_active[ar->pdev_idx]))) {
--		dev_kfree_skb_any(msdu);
-+		ieee80211_free_txskb(ar->hw, msdu);
- 		return;
- 	}
- 
- 	if (unlikely(!skb_cb->vif)) {
--		dev_kfree_skb_any(msdu);
-+		ieee80211_free_txskb(ar->hw, msdu);
- 		return;
- 	}
- 
+ }
 
 
