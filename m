@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9162C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B1EC433C8;
-	Mon,  4 Sep 2023 18:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C3DC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E11C433C8;
+	Mon,  4 Sep 2023 18:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852607;
-	bh=wae8oRWCUfyLmG08ax0nOWDdbodyrHL9sfmdv/SRmYU=;
+	s=korg; t=1693852610;
+	bh=8ptofNUWLkErs0orxWI2bRH4Cndt2V+p2Sg5QVUh+Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHPClUmD9z9BdJukiP7z4d8BWiOWFDAPFZ8M8X0kBh7/mugJZNqlPSUjqsI8JJ38z
-	 zeiJYErl5lhFc/qaiGFwtYSB4FF/rDY/DOdHKgkS+Cpb5HFTKMbw3Vno+DW9pwC2H/
-	 FQv/+zP7lNlnTnnCuQ6e8O2UnP0N2v9rzQpkcOX0=
+	b=rkCvTmRwenblOttXM/A+l9qnAxP0liRuhOb5iFACmb1EWFYNtziSKfP63z3BCHE6v
+	 h6C16bb03eOHkTP9tzBe36Ri4hBQM98lFzFts3D3+myM0E+eFnx7pz02ywuTwSC4kE
+	 5UhVIHFOYQouGtbDL0PwVaQnARim9BfXLSpz/XlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Angus Ainslie (Purism)" <angus@akkea.ca>,
-	Christian Bach <christian.bach@scs.ch>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Fabio Estevam <festevam@denx.de>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 28/28] usb: typec: tcpci: clear the fault status bit
-Date: Mon,  4 Sep 2023 19:30:59 +0100
-Message-ID: <20230904182946.552737588@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 08/28] modules: only allow symbol_get of EXPORT_SYMBOL_GPL modules
+Date: Mon,  4 Sep 2023 19:30:39 +0100
+Message-ID: <20230904182945.570534362@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -42,58 +39,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 23e60c8daf5ec2ab1b731310761b668745fcf6ed upstream.
+commit 9011e49d54dcc7653ebb8a1e05b5badb5ecfa9f9 upstream.
 
-According the "USB Type-C Port Controller Interface Specification v2.0"
-the TCPC sets the fault status register bit-7
-(AllRegistersResetToDefault) once the registers have been reset to
-their default values.
+It has recently come to my attention that nvidia is circumventing the
+protection added in 262e6ae7081d ("modules: inherit
+TAINT_PROPRIETARY_MODULE") by importing exports from their proprietary
+modules into an allegedly GPL licensed module and then rexporting them.
 
-This triggers an alert(-irq) on PTN5110 devices albeit we do mask the
-fault-irq, which may cause a kernel hang. Fix this generically by writing
-a one to the corresponding bit-7.
+Given that symbol_get was only ever intended for tightly cooperating
+modules using very internal symbols it is logical to restrict it to
+being used on EXPORT_SYMBOL_GPL and prevent nvidia from costly DMCA
+Circumvention of Access Controls law suites.
 
-Cc: stable@vger.kernel.org
-Fixes: 74e656d6b055 ("staging: typec: Type-C Port Controller Interface driver (tcpci)")
-Reported-by: "Angus Ainslie (Purism)" <angus@akkea.ca>
-Closes: https://lore.kernel.org/all/20190508002749.14816-2-angus@akkea.ca/
-Reported-by: Christian Bach <christian.bach@scs.ch>
-Closes: https://lore.kernel.org/regressions/ZR0P278MB07737E5F1D48632897D51AC3EB329@ZR0P278MB0773.CHEP278.PROD.OUTLOOK.COM/t/
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230816172502.1155079-1-festevam@gmail.com
-Signed-off-by: Fabio Estevam <festevam@denx.de>
+All symbols except for four used through symbol_get were already exported
+as EXPORT_SYMBOL_GPL, and the remaining four ones were switched over in
+the preparation patches.
+
+Fixes: 262e6ae7081d ("modules: inherit TAINT_PROPRIETARY_MODULE")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci.c |    4 ++++
- include/linux/usb/tcpci.h      |    1 +
- 2 files changed, 5 insertions(+)
+ kernel/module.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpci.c
-+++ b/drivers/usb/typec/tcpm/tcpci.c
-@@ -615,6 +615,10 @@ static int tcpci_init(struct tcpc_dev *t
- 	if (time_after(jiffies, timeout))
- 		return -ETIMEDOUT;
+--- a/kernel/module.c
++++ b/kernel/module.c
+@@ -2220,12 +2220,20 @@ void *__symbol_get(const char *symbol)
+ 	};
  
-+	ret = tcpci_write16(tcpci, TCPC_FAULT_STATUS, TCPC_FAULT_STATUS_ALL_REG_RST_TO_DEFAULT);
-+	if (ret < 0)
-+		return ret;
-+
- 	/* Handle vendor init */
- 	if (tcpci->data->init) {
- 		ret = tcpci->data->init(tcpci, tcpci->data);
---- a/include/linux/usb/tcpci.h
-+++ b/include/linux/usb/tcpci.h
-@@ -103,6 +103,7 @@
- #define TCPC_POWER_STATUS_SINKING_VBUS	BIT(0)
- 
- #define TCPC_FAULT_STATUS		0x1f
-+#define TCPC_FAULT_STATUS_ALL_REG_RST_TO_DEFAULT BIT(7)
- 
- #define TCPC_ALERT_EXTENDED		0x21
+ 	preempt_disable();
+-	if (!find_symbol(&fsa) || strong_try_module_get(fsa.owner)) {
+-		preempt_enable();
+-		return NULL;
++	if (!find_symbol(&fsa))
++		goto fail;
++	if (fsa.license != GPL_ONLY) {
++		pr_warn("failing symbol_get of non-GPLONLY symbol %s.\n",
++			symbol);
++		goto fail;
+ 	}
++	if (strong_try_module_get(fsa.owner))
++		goto fail;
+ 	preempt_enable();
+ 	return (void *)kernel_symbol_value(fsa.sym);
++fail:
++	preempt_enable();
++	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(__symbol_get);
  
 
 
