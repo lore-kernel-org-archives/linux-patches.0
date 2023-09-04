@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82BFC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:37:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E675C433C7;
-	Mon,  4 Sep 2023 18:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975A1C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:37:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D427C433C8;
+	Mon,  4 Sep 2023 18:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852626;
-	bh=a6MsZNOM5uqzNoDcMAfAyZU6iNk9ntEth7BZ3krpBZE=;
+	s=korg; t=1693852629;
+	bh=cjE8BKqW98OYJva888/in6VaCuXfu0n2Bbzqmr6qLro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJni71CpAo/EgIoU4YuHQmk52TPQyT86wCIDJHUTi17gocqetajkEZCVzobxFE6Sl
-	 BbwwYPgmGF5IwLK56VCypIKJTaCBeJ+zvaQz3vySdUtN7yI/wL1cgMH2zvOjFYSiwr
-	 IfcNO00mnhGC4WO8I64OO1tYZXwqDtj+jeIgnp24=
+	b=UfqjuOXwmG/7W4Y5A0oKO5Y1IaaUtGf1GVI3bfUSy21UrKtSVsRTQVvVGJpieD3vW
+	 z9VpbzGfc40SMl6UmFLFXgM7XCIIuHFlPPJokspzViT0Qi6L8gmFrXM9iEleWuBalN
+	 kLjLAX8pDnH8XIr7BcunkgU+FdVZdKBSrv9SHKm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Skomra <skomra@gmail.com>,
-	Aaron Armstrong Skomra <aaron.skomra@wacom.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.15 14/28] HID: wacom: remove the battery when the EKR is off
-Date: Mon,  4 Sep 2023 19:30:45 +0100
-Message-ID: <20230904182945.849870284@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Manuel Lauss <manuel.lauss@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 05/28] mmc: au1xmmc: force non-modular build and remove symbol_get usage
+Date: Mon,  4 Sep 2023 19:30:36 +0100
+Message-ID: <20230904182945.436340403@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -41,130 +41,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 9ac6678b95b0dd9458a7a6869f46e51cd55a1d84 upstream.
+commit d4a5c59a955bba96b273ec1a5885bada24c56979 upstream.
 
-Currently the EKR battery remains even after we stop getting information
-from the device. This can lead to a stale battery persisting indefinitely
-in userspace.
+au1xmmc is split somewhat awkwardly into the main mmc subsystem driver,
+and callbacks in platform_data that sit under arch/mips/ and are
+always built in.  The latter than call mmc_detect_change through
+symbol_get.  Remove the use of symbol_get by requiring the driver
+to be built in.  In the future the interrupt handlers for card
+insert/eject detection should probably be moved into the main driver,
+and which point it can be built modular again.
 
-The remote sends a heartbeat every 10 seconds. Delete the battery if we
-miss two heartbeats (after 21 seconds). Restore the battery once we see
-a heartbeat again.
-
-Signed-off-by: Aaron Skomra <skomra@gmail.com>
-Signed-off-by: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Fixes: 9f1015d45f62 ("HID: wacom: EKR: attach the power_supply on first connection")
-CC: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Manuel Lauss <manuel.lauss@gmail.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+[mcgrof: squashed in depends on MMC=y suggested by Arnd]
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom.h     |    1 +
- drivers/hid/wacom_sys.c |   25 +++++++++++++++++++++----
- drivers/hid/wacom_wac.c |    1 +
- drivers/hid/wacom_wac.h |    1 +
- 4 files changed, 24 insertions(+), 4 deletions(-)
+ arch/mips/alchemy/devboards/db1000.c |    8 +-------
+ arch/mips/alchemy/devboards/db1200.c |   19 ++-----------------
+ arch/mips/alchemy/devboards/db1300.c |   10 +---------
+ drivers/mmc/host/Kconfig             |    5 +++--
+ 4 files changed, 7 insertions(+), 35 deletions(-)
 
---- a/drivers/hid/wacom.h
-+++ b/drivers/hid/wacom.h
-@@ -153,6 +153,7 @@ struct wacom_remote {
- 		struct input_dev *input;
- 		bool registered;
- 		struct wacom_battery battery;
-+		ktime_t active_time;
- 	} remotes[WACOM_MAX_REMOTES];
- };
+--- a/arch/mips/alchemy/devboards/db1000.c
++++ b/arch/mips/alchemy/devboards/db1000.c
+@@ -14,7 +14,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/leds.h>
+ #include <linux/mmc/host.h>
+-#include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+ #include <linux/spi/spi.h>
+@@ -167,12 +166,7 @@ static struct platform_device db1x00_aud
  
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2535,6 +2535,18 @@ fail:
- 	return;
+ static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
+ {
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-	/* link against CONFIG_MMC=m */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	mmc_cd(ptr, msecs_to_jiffies(500));
+-	symbol_put(mmc_detect_change);
+-
++	mmc_detect_change(ptr, msecs_to_jiffies(500));
+ 	return IRQ_HANDLED;
  }
  
-+static void wacom_remote_destroy_battery(struct wacom *wacom, int index)
-+{
-+	struct wacom_remote *remote = wacom->remote;
-+
-+	if (remote->remotes[index].battery.battery) {
-+		devres_release_group(&wacom->hdev->dev,
-+				     &remote->remotes[index].battery.bat_desc);
-+		remote->remotes[index].battery.battery = NULL;
-+		remote->remotes[index].active_time = 0;
-+	}
-+}
-+
- static void wacom_remote_destroy_one(struct wacom *wacom, unsigned int index)
+--- a/arch/mips/alchemy/devboards/db1200.c
++++ b/arch/mips/alchemy/devboards/db1200.c
+@@ -10,7 +10,6 @@
+ #include <linux/gpio.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
+-#include <linux/module.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/leds.h>
+@@ -340,14 +339,7 @@ static irqreturn_t db1200_mmc_cd(int irq
+ 
+ static irqreturn_t db1200_mmc_cdfn(int irq, void *ptr)
  {
- 	struct wacom_remote *remote = wacom->remote;
-@@ -2549,9 +2561,7 @@ static void wacom_remote_destroy_one(str
- 			remote->remotes[i].registered = false;
- 			spin_unlock_irqrestore(&remote->remote_lock, flags);
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-
+-	/* link against CONFIG_MMC=m */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	if (mmc_cd) {
+-		mmc_cd(ptr, msecs_to_jiffies(200));
+-		symbol_put(mmc_detect_change);
+-	}
++	mmc_detect_change(ptr, msecs_to_jiffies(200));
  
--			if (remote->remotes[i].battery.battery)
--				devres_release_group(&wacom->hdev->dev,
--						     &remote->remotes[i].battery.bat_desc);
-+			wacom_remote_destroy_battery(wacom, i);
+ 	msleep(100);	/* debounce */
+ 	if (irq == DB1200_SD0_INSERT_INT)
+@@ -431,14 +423,7 @@ static irqreturn_t pb1200_mmc1_cd(int ir
  
- 			if (remote->remotes[i].group.name)
- 				devres_release_group(&wacom->hdev->dev,
-@@ -2559,7 +2569,6 @@ static void wacom_remote_destroy_one(str
- 
- 			remote->remotes[i].serial = 0;
- 			remote->remotes[i].group.name = NULL;
--			remote->remotes[i].battery.battery = NULL;
- 			wacom->led.groups[i].select = WACOM_STATUS_UNKNOWN;
- 		}
- 	}
-@@ -2644,6 +2653,9 @@ static int wacom_remote_attach_battery(s
- 	if (remote->remotes[index].battery.battery)
- 		return 0;
- 
-+	if (!remote->remotes[index].active_time)
-+		return 0;
-+
- 	if (wacom->led.groups[index].select == WACOM_STATUS_UNKNOWN)
- 		return 0;
- 
-@@ -2659,6 +2671,7 @@ static void wacom_remote_work(struct wor
+ static irqreturn_t pb1200_mmc1_cdfn(int irq, void *ptr)
  {
- 	struct wacom *wacom = container_of(work, struct wacom, remote_work);
- 	struct wacom_remote *remote = wacom->remote;
-+	ktime_t kt = ktime_get();
- 	struct wacom_remote_data data;
- 	unsigned long flags;
- 	unsigned int count;
-@@ -2685,6 +2698,10 @@ static void wacom_remote_work(struct wor
- 		serial = data.remote[i].serial;
- 		if (data.remote[i].connected) {
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-
+-	/* link against CONFIG_MMC=m */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	if (mmc_cd) {
+-		mmc_cd(ptr, msecs_to_jiffies(200));
+-		symbol_put(mmc_detect_change);
+-	}
++	mmc_detect_change(ptr, msecs_to_jiffies(200));
  
-+			if (kt - remote->remotes[i].active_time > WACOM_REMOTE_BATTERY_TIMEOUT
-+			    && remote->remotes[i].active_time != 0)
-+				wacom_remote_destroy_battery(wacom, i);
-+
- 			if (remote->remotes[i].serial == serial) {
- 				wacom_remote_attach_battery(wacom, i);
- 				continue;
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1134,6 +1134,7 @@ static int wacom_remote_irq(struct wacom
- 	if (index < 0 || !remote->remotes[index].registered)
- 		goto out;
+ 	msleep(100);	/* debounce */
+ 	if (irq == PB1200_SD1_INSERT_INT)
+--- a/arch/mips/alchemy/devboards/db1300.c
++++ b/arch/mips/alchemy/devboards/db1300.c
+@@ -17,7 +17,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/ata_platform.h>
+ #include <linux/mmc/host.h>
+-#include <linux/module.h>
+ #include <linux/mtd/mtd.h>
+ #include <linux/mtd/platnand.h>
+ #include <linux/platform_device.h>
+@@ -459,14 +458,7 @@ static irqreturn_t db1300_mmc_cd(int irq
  
-+	remote->remotes[i].active_time = ktime_get();
- 	input = remote->remotes[index].input;
+ static irqreturn_t db1300_mmc_cdfn(int irq, void *ptr)
+ {
+-	void (*mmc_cd)(struct mmc_host *, unsigned long);
+-
+-	/* link against CONFIG_MMC=m.  We can only be called once MMC core has
+-	 * initialized the controller, so symbol_get() should always succeed.
+-	 */
+-	mmc_cd = symbol_get(mmc_detect_change);
+-	mmc_cd(ptr, msecs_to_jiffies(200));
+-	symbol_put(mmc_detect_change);
++	mmc_detect_change(ptr, msecs_to_jiffies(200));
  
- 	input_report_key(input, BTN_0, (data[9] & 0x01));
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -15,6 +15,7 @@
- #define WACOM_NAME_MAX		64
- #define WACOM_MAX_REMOTES	5
- #define WACOM_STATUS_UNKNOWN	255
-+#define WACOM_REMOTE_BATTERY_TIMEOUT	21000000000ll
+ 	msleep(100);	/* debounce */
+ 	if (irq == DB1300_SD1_INSERT_INT)
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -523,11 +523,12 @@ config MMC_ALCOR
+ 	  of Alcor Micro PCI-E card reader
  
- /* packet length for individual models */
- #define WACOM_PKGLEN_BBFUN	 9
+ config MMC_AU1X
+-	tristate "Alchemy AU1XX0 MMC Card Interface support"
++	bool "Alchemy AU1XX0 MMC Card Interface support"
+ 	depends on MIPS_ALCHEMY
++	depends on MMC=y
+ 	help
+ 	  This selects the AMD Alchemy(R) Multimedia card interface.
+-	  If you have a Alchemy platform with a MMC slot, say Y or M here.
++	  If you have a Alchemy platform with a MMC slot, say Y here.
+ 
+ 	  If unsure, say N.
+ 
 
 
