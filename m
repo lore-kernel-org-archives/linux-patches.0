@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C3DC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E11C433C8;
-	Mon,  4 Sep 2023 18:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204B9C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A840C433C8;
+	Mon,  4 Sep 2023 18:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852610;
-	bh=8ptofNUWLkErs0orxWI2bRH4Cndt2V+p2Sg5QVUh+Tw=;
+	s=korg; t=1693852613;
+	bh=EaWRYopRZS7d+vUS6aqgDaj2C2cDbbXl/ANHY+F4c18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkCvTmRwenblOttXM/A+l9qnAxP0liRuhOb5iFACmb1EWFYNtziSKfP63z3BCHE6v
-	 h6C16bb03eOHkTP9tzBe36Ri4hBQM98lFzFts3D3+myM0E+eFnx7pz02ywuTwSC4kE
-	 5UhVIHFOYQouGtbDL0PwVaQnARim9BfXLSpz/XlY=
+	b=oF/kdz7Y/f0RRSqz1mwzjG5e9VcDbKp/1SwukdEIjTSBQc5cFxzAlB/DZi3EjReCv
+	 e+vxy4UYlH6cludOebTlZ6gN4TVxIR7i/q++wUIHluxMk5uOM+EvAYoodtXGjSq1D8
+	 aKDs2hsMFyAkTb/2uoP/Z8NYSqSzj37Zlk8gdnl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 5.15 08/28] modules: only allow symbol_get of EXPORT_SYMBOL_GPL modules
-Date: Mon,  4 Sep 2023 19:30:39 +0100
-Message-ID: <20230904182945.570534362@linuxfoundation.org>
+	Martin Kohn <m.kohn@welotec.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 09/28] USB: serial: option: add Quectel EM05G variant (0x030e)
+Date: Mon,  4 Sep 2023 19:30:40 +0100
+Message-ID: <20230904182945.614961748@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -39,58 +39,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Martin Kohn <m.kohn@welotec.com>
 
-commit 9011e49d54dcc7653ebb8a1e05b5badb5ecfa9f9 upstream.
+commit 873854c02364ebb991fc06f7148c14dfb5419e1b upstream.
 
-It has recently come to my attention that nvidia is circumventing the
-protection added in 262e6ae7081d ("modules: inherit
-TAINT_PROPRIETARY_MODULE") by importing exports from their proprietary
-modules into an allegedly GPL licensed module and then rexporting them.
+Add Quectel EM05G with product ID 0x030e.
+Interface 4 is used for qmi.
 
-Given that symbol_get was only ever intended for tightly cooperating
-modules using very internal symbols it is logical to restrict it to
-being used on EXPORT_SYMBOL_GPL and prevent nvidia from costly DMCA
-Circumvention of Access Controls law suites.
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030e Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-All symbols except for four used through symbol_get were already exported
-as EXPORT_SYMBOL_GPL, and the remaining four ones were switched over in
-the preparation patches.
-
-Fixes: 262e6ae7081d ("modules: inherit TAINT_PROPRIETARY_MODULE")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Martin Kohn <m.kohn@welotec.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/module.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -2220,12 +2220,20 @@ void *__symbol_get(const char *symbol)
- 	};
- 
- 	preempt_disable();
--	if (!find_symbol(&fsa) || strong_try_module_get(fsa.owner)) {
--		preempt_enable();
--		return NULL;
-+	if (!find_symbol(&fsa))
-+		goto fail;
-+	if (fsa.license != GPL_ONLY) {
-+		pr_warn("failing symbol_get of non-GPLONLY symbol %s.\n",
-+			symbol);
-+		goto fail;
- 	}
-+	if (strong_try_module_get(fsa.owner))
-+		goto fail;
- 	preempt_enable();
- 	return (void *)kernel_symbol_value(fsa.sym);
-+fail:
-+	preempt_enable();
-+	return NULL;
- }
- EXPORT_SYMBOL_GPL(__symbol_get);
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -259,6 +259,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM05G			0x030a
+ #define QUECTEL_PRODUCT_EM060K			0x030b
+ #define QUECTEL_PRODUCT_EM05G_CS		0x030c
++#define QUECTEL_PRODUCT_EM05GV2			0x030e
+ #define QUECTEL_PRODUCT_EM05CN_SG		0x0310
+ #define QUECTEL_PRODUCT_EM05G_SG		0x0311
+ #define QUECTEL_PRODUCT_EM05CN			0x0312
+@@ -1190,6 +1191,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_GR, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
++	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05GV2, 0xff),
++	  .driver_info = RSVD(4) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_CS, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_RS, 0xff),
 
 
