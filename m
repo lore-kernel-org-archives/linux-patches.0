@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA6CC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9913AC433C7;
-	Mon,  4 Sep 2023 18:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69DAC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5B0C433C7;
+	Mon,  4 Sep 2023 18:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852514;
-	bh=nmENlKBYg/DefFnU74uPsUqtHHL5MEvsMQx2mkPsmpc=;
+	s=korg; t=1693852516;
+	bh=Yj5D4FRIPI1AFPnqux9n0Csz0bZRJBmRjyRYdG71KmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1zKE6RwC2MRHSTo5HQYLGu817Bf0ZV8ibmn5h0NGEx7joNE296BODfb6r0NLisU5
-	 lb457hHcs37QCsOnESJ43tGJlQJWn4FZCXMZsliOYW+KPBXetRY9z/lyJ9lwIlEPxj
-	 ClDzPkKpylHcfvdwFhreFpGReLRAXhXvxQUhmQCI=
+	b=bY/DAg8Nphcz39r60daQYO/GcMfRxCk/gJ9RESWvcv+K6P8GABRD/JZVJQTxmcpyS
+	 3KuLxtXHkP7Mzv5qHSv+wlUjr783VLVlo+9pd7xPf6mQ3Mx3o1CFIdr2aL1r8V+a9X
+	 1n2ZLoTTM8EQ7thJqhfShsQ8RWvJgkzZ5f+Ip7NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 26/31] tcpm: Avoid soft reset when partner does not support get_status
-Date: Mon,  4 Sep 2023 19:30:34 +0100
-Message-ID: <20230904182948.260874246@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 03/31] ksmbd: fix slub overflow in ksmbd_decode_ntlmssp_auth_blob()
+Date: Mon,  4 Sep 2023 19:30:11 +0100
+Message-ID: <20230904182947.157770722@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
 References: <20230904182946.999390199@linuxfoundation.org>
@@ -39,62 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 78e0ea4277546debf7e96797ac3b768539cc44f6 upstream.
+commit 4b081ce0d830b684fdf967abc3696d1261387254 upstream.
 
-When partner does not support get_status message, tcpm right now
-responds with soft reset message. This causes PD renegotiation to
-happen and resets PPS link. Avoid soft resetting the link when
-partner does not support get_status message to mitigate PPS resets.
-
-[  208.926752] Setting voltage/current limit 9500 mV 2450 mA
-[  208.930407] set_auto_vbus_discharge_threshold mode:3 pps_active:y vbus:9500 ret:0
-[  208.930418] state change SNK_TRANSITION_SINK -> SNK_READY [rev3 POWER_NEGOTIATION]
-[  208.930455] AMS POWER_NEGOTIATION finished
-
-// ALERT message from the Source
-[  213.948442] PD RX, header: 0x19a6 [1]
-[  213.948451] state change SNK_READY -> GET_STATUS_SEND [rev3 GETTING_SOURCE_SINK_STATUS]
-[  213.948457] PD TX, header: 0x492
-[  213.950402] PD TX complete, status: 0
-[  213.950427] pending state change GET_STATUS_SEND -> GET_STATUS_SEND_TIMEOUT @ 60 ms [rev3 GETTING_SOURCE_SINK_STATUS]
-
-// NOT_SUPPORTED from the Source
-[  213.959954] PD RX, header: 0xbb0 [1]
-
-// sink sends SOFT_RESET
-[  213.959958] state change GET_STATUS_SEND -> SNK_SOFT_RESET [rev3 GETTING_SOURCE_SINK_STATUS]
-[  213.959962] AMS GETTING_SOURCE_SINK_STATUS finished
-[  213.959964] AMS SOFT_RESET_AMS start
-[  213.959966] state change SNK_SOFT_RESET -> AMS_START [rev3 SOFT_RESET_AMS]
-[  213.959969] state change AMS_START -> SOFT_RESET_SEND [rev3 SOFT_RESET_AMS]
+If authblob->SessionKey.Length is bigger than session key
+size(CIFS_KEY_SIZE), slub overflow can happen in key exchange codes.
+cifs_arc4_crypt copy to session key array from SessionKey from client.
 
 Cc: stable@vger.kernel.org
-Fixes: 8dea75e11380 ("usb: typec: tcpm: Protocol Error handling")
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230820044449.1005889-1-badhri@google.com
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21940
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/server/auth.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2747,6 +2747,13 @@ static void tcpm_pd_ctrl_request(struct
- 			port->sink_cap_done = true;
- 			tcpm_set_state(port, ready_state(port), 0);
- 			break;
-+		/*
-+		 * Some port partners do not support GET_STATUS, avoid soft reset the link to
-+		 * prevent redundant power re-negotiation
-+		 */
-+		case GET_STATUS_SEND:
-+			tcpm_set_state(port, ready_state(port), 0);
-+			break;
- 		case SRC_READY:
- 		case SNK_READY:
- 			if (port->vdm_state > VDM_STATE_READY) {
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -355,6 +355,9 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
+ 		if (blob_len < (u64)sess_key_off + sess_key_len)
+ 			return -EINVAL;
+ 
++		if (sess_key_len > CIFS_KEY_SIZE)
++			return -EINVAL;
++
+ 		ctx_arc4 = kmalloc(sizeof(*ctx_arc4), GFP_KERNEL);
+ 		if (!ctx_arc4)
+ 			return -ENOMEM;
 
 
