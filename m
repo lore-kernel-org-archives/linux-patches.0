@@ -1,45 +1,45 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC2E9445
-	for <patches@lists.linux.dev>; Sun,  3 Sep 2023 22:45:40 +0000 (UTC)
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-99c136ee106so132351066b.1
-        for <patches@lists.linux.dev>; Sun, 03 Sep 2023 15:45:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D5F7E
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 00:29:28 +0000 (UTC)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-1ccb6a69b13so865760fac.2
+        for <patches@lists.linux.dev>; Sun, 03 Sep 2023 17:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693781138; x=1694385938; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20221208; t=1693787367; x=1694392167; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=icCZ5tdF61yj1pSKhn/ffpI/X+SJfCRYhcOnGB1o1ts=;
-        b=xirPy3ugOGYP90koszXEkS/oc7AYlA9SHOcpJAOWXaWDVsN745otNrIwr6jll0mCnh
-         egDl1SGQZKyAAQRDx1iA6srD+fO4MxQITyYnzN+nUEZSyIFD+TlXd4YLbQutYa7h1lwh
-         /TDcE4hVm9tCmN4vhI5uOpvei/f92NceETa86NAK0dmp281SCzIMeqzmlqLW/WsFALx0
-         LZ+dR9LqkrLbxz1qBFqYJc/M/UJkbmJv1m3a9d6NoZPTYimuVfCDJ9BBjyJVMpdhPbaL
-         8no5myTndAZOh6w8CZp4E9r269ah4DdlvAONDMYV+7CHEZxWW6Hfr4ogwREZtVjD7ypi
-         GOXQ==
+        bh=gy5Sjqdfk2V0r51PCTu3C9haVoBFcraAmneb4UVU19U=;
+        b=Eux0VvYYCzImm6x0Lo0FJmCilf0deDjPfnxExJLSKADcNL1fagNjW0to+DuWR6FLog
+         qh/prNIHEdmgiu5/7jsXxpbbpGmZ9CeWz78I0NrkyKNf4v7ehKZpLIbyUwwuqAFBGQ8U
+         d5CNqQPRZ1bgJpp/2Mk5RQTcwwQIpbFCC3iV/G13VGbp+1q+WCQB4QtoyhZEt7Zo5vuj
+         7P8XDHUPmzkrUkv/OG3p+p7ov7+bMwiL+OKKr7HUxkAtHxoNqDEj2WU/OWmcfbz3a8Y0
+         ju6F5wUQQZbgmR+fEP9xqd18URmE8aohxIj2whNMLjBeTXbkke1kTjdSjNA80RvMO/jL
+         n7fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693781138; x=1694385938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693787367; x=1694392167;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=icCZ5tdF61yj1pSKhn/ffpI/X+SJfCRYhcOnGB1o1ts=;
-        b=iCwRrJGp29vWIox+iAbUpZaS10XTev9ZI0tlWrR6N9ppjLrOxxzkwsTUS9/Z/ifOBy
-         UcIeSK+pPGqVumNdGqBELuQN6zrnb9cPTZqMGRg/Lgznal+VfSkyLIpS3UC4Zloc+950
-         yGRvpNezidPxJG6QjowpRcHWpz2UxzlPPbl0+2QI2O6m0+4en7MEjW5YQofRv2NHW4GJ
-         9JylGdoXpqnFJZdDq+CpdPpddBTFGvYKM76BLl3teWZVAyyD8Nd7dbtmayJdxTT57ye0
-         2GwqNaaX2oeZn4BotNWk3OB4oYaLPBQZAMX/jxAXl1CU+T5MB/X2yULF+aZr/M7Z/5DF
-         /XDg==
-X-Gm-Message-State: AOJu0YxwVKSTGiS0aQ601Ky9dUTnYvvDeQHtnNEnJg6b7ctiJaDEC2Ov
-	LorqTO09gV57C5bMxJs8CoIYTQ==
-X-Google-Smtp-Source: AGHT+IH4gRHcH2C56k65qmxY/tgOsFae4qzfQvdNHKXi+ydhfItRS40/B9o9IDmJDqAt517CDjrUBw==
-X-Received: by 2002:a17:907:7798:b0:9a1:c669:6e66 with SMTP id ky24-20020a170907779800b009a1c6696e66mr6491833ejc.70.1693781138694;
-        Sun, 03 Sep 2023 15:45:38 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id lz20-20020a170906fb1400b009929d998abcsm5223365ejb.209.2023.09.03.15.45.37
+        bh=gy5Sjqdfk2V0r51PCTu3C9haVoBFcraAmneb4UVU19U=;
+        b=fploTscLWhOfIGWMQnzOfMPmnwRZWIxwcYQVHduSVS0OQ7mlQeANwgZfCmmpnPihYf
+         tvAj/dfE5l+91PBqU0fuGZqgiw0uBvSEoBAGJ4+SVYD7Phqe84ZEky3ls/wEN5ISUre7
+         QAWZZX3Lf8CHP5jlY8lvjc2PWFAcJEU5ej29lsQe94qzbANuwlrHAoPGxXr3e91BApPG
+         yVsSIwircBObXGx2LxGc+xHAHF3TQ5jJRRHxADkMW/nrqzoGKZsB2FjzcQ+mlRNseTGO
+         5IbnWBWZhOjdBe3nnM6OmVG88esyIVNZDb2J8MMoe/+/r2JBho52sQHZi32JsXipJnfn
+         TGUQ==
+X-Gm-Message-State: AOJu0YyAm4AZbAjVI4bMPgQOEoQSYHmujkr4iVYrQcjxy2IGacpv8HAh
+	0WXZ3xTdD2SkisES79EPc3A=
+X-Google-Smtp-Source: AGHT+IGCDuOU6ZKDHAMJN3qwCQh0SSLDaW3mcfd+gdvDCLJaKZCieOBaxDqBhoVMKwSfvXgOteXNeQ==
+X-Received: by 2002:a05:6871:720:b0:1b3:9e41:de07 with SMTP id f32-20020a056871072000b001b39e41de07mr11773582oap.36.1693787367366;
+        Sun, 03 Sep 2023 17:29:27 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id eb49-20020a056870a8b100b001c4d922b4fasm4860255oab.8.2023.09.03.17.29.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Sep 2023 15:45:38 -0700 (PDT)
-Message-ID: <cefd4c7a-3b98-4a4c-be03-a8b02d35de3c@linaro.org>
-Date: Mon, 4 Sep 2023 01:45:37 +0300
+        Sun, 03 Sep 2023 17:29:26 -0700 (PDT)
+Message-ID: <8de45c09-cb53-4a18-a6f3-56a16553ae32@gmail.com>
+Date: Sun, 3 Sep 2023 21:29:21 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,58 +47,77 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] drm/msm/dp: Simplify DPCD related code with helpers
-Content-Language: en-GB
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Vinod Polimera <quic_vpolimer@quicinc.com>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>
-References: <20230829184735.2841739-1-swboyd@chromium.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230829184735.2841739-1-swboyd@chromium.org>
+Subject: Re: [PATCH v4 4/7] rust: workqueue: add helper for defining
+ work_struct fields
+To: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+ Tejun Heo <tj@kernel.org>, Miguel Ojeda <ojeda@kernel.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230828104807.1581592-1-aliceryhl@google.com>
+ <20230828104807.1581592-5-aliceryhl@google.com>
+Content-Language: en-US
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230828104807.1581592-5-aliceryhl@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 29/08/2023 21:47, Stephen Boyd wrote:
-> This driver open-codes a few of the DPCD register reads when it can be
-> simplified by using the helpers instead. This series reworks the MSM DP
-> driver to use the DPCD helpers and removes some dead code along the way.
-> There's the potential for even more code reduction around the test
-> registers, but I haven't tried to do that yet.
-
-For the whole series:
-
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Using drm_dp_get_phy_test_pattern() / drm_dp_set_phy_test_pattern() 
-would be definitely a benefit, especially since the latter one has 
-support for DP >= 1.2, while msm DP code doesn't.
-
+On 8/28/23 07:48, Alice Ryhl wrote:
+> The main challenge with defining `work_struct` fields is making sure
+> that the function pointer stored in the `work_struct` is appropriate for
+> the work item type it is embedded in. It needs to know the offset of the
+> `work_struct` field being used (even if there are several!) so that it
+> can do a `container_of`, and it needs to know the type of the work item
+> so that it can call into the right user-provided code. All of this needs
+> to happen in a way that provides a safe API to the user, so that users
+> of the workqueue cannot mix up the function pointers.
 > 
-> Stephen Boyd (7):
->    drm/msm/dp: Replace open-coded drm_dp_read_dpcd_caps()
->    drm/msm/dp: Use drm_dp_read_sink_count() helper
->    drm/msm/dp: Remove dead code related to downstream cap info
->    drm/msm/dp: Remove aux_cfg_update_done and related code
->    drm/msm/dp: Simplify with drm_dp_{max_link_rate,max_lane_count}()
->    drm/msm/dp: Inline dp_link_parse_sink_count()
->    drm/msm/dp: Remove dp_display_is_ds_bridge()
+> There are three important pieces that are relevant when doing this:
 > 
-> Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>   * The pointer type.
+>   * The work item struct. This is what the pointer points at.
+>   * The `work_struct` field. This is a field of the work item struct.
 > 
->   drivers/gpu/drm/msm/dp/dp_display.c |   9 +--
->   drivers/gpu/drm/msm/dp/dp_link.c    |  38 +---------
->   drivers/gpu/drm/msm/dp/dp_panel.c   | 105 +++++-----------------------
->   drivers/gpu/drm/msm/dp/dp_panel.h   |  10 +--
->   4 files changed, 22 insertions(+), 140 deletions(-)
+> This patch introduces a separate trait for each piece. The pointer type
+> is given a `WorkItemPointer` trait, which pointer types need to
+> implement to be usable with the workqueue. This trait will be
+> implemented for `Arc` and `Box` in a later patch in this patchset.
+> Implementing this trait is unsafe because this is where the
+> `container_of` operation happens, but user-code will not need to
+> implement it themselves.
 > 
+> The work item struct should then implement the `WorkItem` trait. This
+> trait is where user-code specifies what they want to happen when a work
+> item is executed. It also specifies what the correct pointer type is.
 > 
-> base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
-
--- 
-With best wishes
-Dmitry
-
+> Finally, to make the work item struct know the offset of its
+> `work_struct` field, we use a trait called `HasWork<T, ID>`. If a type
+> implements this trait, then the type declares that, at the given offset,
+> there is a field of type `Work<T, ID>`. The trait is marked unsafe
+> because the OFFSET constant must be correct, but we provide an
+> `impl_has_work!` macro that can safely implement `HasWork<T>` on a type.
+> The macro expands to something that only compiles if the specified field
+> really has the type `Work<T>`. It is used like this:
+> 
+> ```
+> struct MyWorkItem {
+>      work_field: Work<MyWorkItem, 1>,
+> }
+> 
+> impl_has_work! {
+>      impl HasWork<MyWorkItem, 1> for MyWorkItem { self.work_field }
+> }
+> ```
+> 
+> Note that since the `Work` type is annotated with an id, you can have
+> several `work_struct` fields by using a different id for each one.
+> 
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+> [...]
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
