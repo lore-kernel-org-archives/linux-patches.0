@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909E1C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1741BC433CA;
-	Mon,  4 Sep 2023 18:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F1EC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:37:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB45C433C7;
+	Mon,  4 Sep 2023 18:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852618;
-	bh=WY6y7tpseuHpMPCSnY+LnHC+NuVXuYNLtVhb6dgIinY=;
+	s=korg; t=1693852621;
+	bh=wUZwVMacqXqHcfkOoznSwPEVqjzf7v0cy7R9/qlre+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDvrSMfkG1/eDs/Chvh/LRkM+QzUDG2QBd8HWlXO8kvQJovcsr1HAYvTa2dw6id3J
-	 HfpghPuc17rZlATrYb5XdX1dC3bASn3EgC41xBLFRTQJJ4XN63ZooXLsd50ae8f7pR
-	 UR9y1kufD/AWAeqN7Y5TQt/Yt4RRm+4AYmw7bVoQ=
+	b=pa9QABfYSFR21t1qZ3HBE80KBcJasjEJjE8qXd2ynklryPFvC8vCNSf7K+ywFS3Rd
+	 +M06N+MH1bnT3ZL1zdClw2uhsDSxrQtsF1zxNrUS5b5LdZMYg59IOmVxglZJSWhWvw
+	 jcxgn+O9EL52uw20HnoMxSnInR3RFD50m4ytiHR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Joakim Tjernlund <joakim.tjernlund@infinera.com>
-Subject: [PATCH 5.15 11/28] ALSA: usb-audio: Fix init call orders for UAC1
-Date: Mon,  4 Sep 2023 19:30:42 +0100
-Message-ID: <20230904182945.710728535@linuxfoundation.org>
+	Luke Lu <luke.lu@libre.computer>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 12/28] usb: dwc3: meson-g12a: do post init to fix broken usb after resumption
+Date: Mon,  4 Sep 2023 19:30:43 +0100
+Message-ID: <20230904182945.753587103@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -39,68 +39,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Luke Lu <luke.lu@libre.computer>
 
-commit 5fadc941d07530d681f3b7ec91e56d8445bc3825 upstream.
+commit 1fa206bb764f37d2ab4bf671e483153ef0659b34 upstream.
 
-There have been reports of USB-audio driver spewing errors at the
-probe time on a few devices like Jabra and Logitech.  The suggested
-fix there couldn't be applied as is, unfortunately, because it'll
-likely break other devices.
+Device connected to usb otg port of GXL-based boards can not be
+recognised after resumption, doesn't recover even if disconnect and
+reconnect the device. dmesg shows it disconnects during resumption.
 
-But, the patch suggested an interesting point: looking at the current
-init code in stream.c, one may notice that it does initialize
-differently from the device setup in endpoint.c.  Namely, for UAC1, we
-should call snd_usb_init_pitch() and snd_usb_init_sample_rate() after
-setting the interface, while the init sequence at parsing calls them
-before setting the interface blindly.
+[   41.492911] usb 1-2: USB disconnect, device number 3
+[   41.499346] usb 1-2: unregistering device
+[   41.511939] usb 1-2: unregistering interface 1-2:1.0
 
-This patch changes the init sequence at parsing for UAC1 (and other
-devices that need a similar behavior) to be aligned with the rest of
-the code, setting the interface at first.  And, this fixes the
-long-standing problems on a few UAC1 devices like Jabra / Logitech,
-as reported, too.
+Calling usb_post_init() will fix this issue, and it's tested and
+verified on libretech's aml-s905x-cc board.
 
-Reported-and-tested-by: Joakim Tjernlund <joakim.tjernlund@infinera.com>
-Closes: https://lore.kernel.org/r/202bbbc0f51522e8545783c4c5577d12a8e2d56d.camel@infinera.com
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230821111857.28926-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org # v5.8+
+Fixes: c99993376f72 ("usb: dwc3: Add Amlogic G12A DWC3 glue")
+Signed-off-by: Luke Lu <luke.lu@libre.computer>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230809212911.18903-1-luke.lu@libre.computer
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/stream.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-meson-g12a.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -1093,6 +1093,7 @@ static int __snd_usb_parse_audio_interfa
- 	int i, altno, err, stream;
- 	struct audioformat *fp = NULL;
- 	struct snd_usb_power_domain *pd = NULL;
-+	bool set_iface_first;
- 	int num, protocol;
- 
- 	dev = chip->dev;
-@@ -1223,11 +1224,19 @@ static int __snd_usb_parse_audio_interfa
- 				return err;
- 		}
- 
-+		set_iface_first = false;
-+		if (protocol == UAC_VERSION_1 ||
-+		    (chip->quirk_flags & QUIRK_FLAG_SET_IFACE_FIRST))
-+			set_iface_first = true;
-+
- 		/* try to set the interface... */
- 		usb_set_interface(chip->dev, iface_no, 0);
-+		if (set_iface_first)
-+			usb_set_interface(chip->dev, iface_no, altno);
- 		snd_usb_init_pitch(chip, fp);
- 		snd_usb_init_sample_rate(chip, fp, fp->rate_max);
--		usb_set_interface(chip->dev, iface_no, altno);
-+		if (!set_iface_first)
-+			usb_set_interface(chip->dev, iface_no, altno);
+--- a/drivers/usb/dwc3/dwc3-meson-g12a.c
++++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
+@@ -938,6 +938,12 @@ static int __maybe_unused dwc3_meson_g12
+ 			return ret;
  	}
+ 
++	if (priv->drvdata->usb_post_init) {
++		ret = priv->drvdata->usb_post_init(priv);
++		if (ret)
++			return ret;
++	}
++
  	return 0;
  }
+ 
 
 
