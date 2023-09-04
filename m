@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24754C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A818C433C7;
-	Mon,  4 Sep 2023 18:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82BFC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:37:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E675C433C7;
+	Mon,  4 Sep 2023 18:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852624;
-	bh=yQT8ZUm5n1X/LlWOllkjd6wSHZCLcYVISyR+tbUXxWA=;
+	s=korg; t=1693852626;
+	bh=a6MsZNOM5uqzNoDcMAfAyZU6iNk9ntEth7BZ3krpBZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/1YnG6DAb0AvjoC2tmn4Vss+FYWwJs0wSOrpbtFuovX+vOStidNDKhirlA+lSJNR
-	 bxgRdkOdKKh4HWuU5LqjZU4SI/obrzjbUtg7/ABbjOJq2aCr3ECursOJ+xL7kmogvb
-	 kZROcSWioWaiWEB75QKQoluuVnXlIgK5uyzuMJf4=
+	b=UJni71CpAo/EgIoU4YuHQmk52TPQyT86wCIDJHUTi17gocqetajkEZCVzobxFE6Sl
+	 BbwwYPgmGF5IwLK56VCypIKJTaCBeJ+zvaQz3vySdUtN7yI/wL1cgMH2zvOjFYSiwr
+	 IfcNO00mnhGC4WO8I64OO1tYZXwqDtj+jeIgnp24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 13/28] usb: chipidea: imx: improve logic if samsung,picophy-* parameter is 0
-Date: Mon,  4 Sep 2023 19:30:44 +0100
-Message-ID: <20230904182945.806238821@linuxfoundation.org>
+	Aaron Skomra <skomra@gmail.com>,
+	Aaron Armstrong Skomra <aaron.skomra@wacom.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.15 14/28] HID: wacom: remove the battery when the EKR is off
+Date: Mon,  4 Sep 2023 19:30:45 +0100
+Message-ID: <20230904182945.849870284@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -39,64 +41,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
 
-commit 36668515d56bf73f06765c71e08c8f7465f1e5c4 upstream.
+commit 9ac6678b95b0dd9458a7a6869f46e51cd55a1d84 upstream.
 
-In current driver, the value of tuning parameter will not take effect
-if samsung,picophy-* is assigned as 0. Because 0 is also a valid value
-acccording to the description of USB_PHY_CFG1 register, this will improve
-the logic to let it work.
+Currently the EKR battery remains even after we stop getting information
+from the device. This can lead to a stale battery persisting indefinitely
+in userspace.
 
-Fixes: 58a3cefb3840 ("usb: chipidea: imx: add two samsung picophy parameters tuning implementation")
-cc: <stable@vger.kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20230627112126.1882666-1-xu.yang_2@nxp.com
+The remote sends a heartbeat every 10 seconds. Delete the battery if we
+miss two heartbeats (after 21 seconds). Restore the battery once we see
+a heartbeat again.
+
+Signed-off-by: Aaron Skomra <skomra@gmail.com>
+Signed-off-by: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 9f1015d45f62 ("HID: wacom: EKR: attach the power_supply on first connection")
+CC: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c |   10 ++++++----
- drivers/usb/chipidea/usbmisc_imx.c |    6 ++++--
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ drivers/hid/wacom.h     |    1 +
+ drivers/hid/wacom_sys.c |   25 +++++++++++++++++++++----
+ drivers/hid/wacom_wac.c |    1 +
+ drivers/hid/wacom_wac.h |    1 +
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -175,10 +175,12 @@ static struct imx_usbmisc_data *usbmisc_
- 	if (of_usb_get_phy_mode(np) == USBPHY_INTERFACE_MODE_ULPI)
- 		data->ulpi = 1;
+--- a/drivers/hid/wacom.h
++++ b/drivers/hid/wacom.h
+@@ -153,6 +153,7 @@ struct wacom_remote {
+ 		struct input_dev *input;
+ 		bool registered;
+ 		struct wacom_battery battery;
++		ktime_t active_time;
+ 	} remotes[WACOM_MAX_REMOTES];
+ };
  
--	of_property_read_u32(np, "samsung,picophy-pre-emp-curr-control",
--			&data->emp_curr_control);
--	of_property_read_u32(np, "samsung,picophy-dc-vol-level-adjust",
--			&data->dc_vol_level_adjust);
-+	if (of_property_read_u32(np, "samsung,picophy-pre-emp-curr-control",
-+			&data->emp_curr_control))
-+		data->emp_curr_control = -1;
-+	if (of_property_read_u32(np, "samsung,picophy-dc-vol-level-adjust",
-+			&data->dc_vol_level_adjust))
-+		data->dc_vol_level_adjust = -1;
- 
- 	return data;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2535,6 +2535,18 @@ fail:
+ 	return;
  }
---- a/drivers/usb/chipidea/usbmisc_imx.c
-+++ b/drivers/usb/chipidea/usbmisc_imx.c
-@@ -657,13 +657,15 @@ static int usbmisc_imx7d_init(struct imx
- 			usbmisc->base + MX7D_USBNC_USB_CTRL2);
- 		/* PHY tuning for signal quality */
- 		reg = readl(usbmisc->base + MX7D_USB_OTG_PHY_CFG1);
--		if (data->emp_curr_control && data->emp_curr_control <=
-+		if (data->emp_curr_control >= 0 &&
-+			data->emp_curr_control <=
- 			(TXPREEMPAMPTUNE0_MASK >> TXPREEMPAMPTUNE0_BIT)) {
- 			reg &= ~TXPREEMPAMPTUNE0_MASK;
- 			reg |= (data->emp_curr_control << TXPREEMPAMPTUNE0_BIT);
- 		}
  
--		if (data->dc_vol_level_adjust && data->dc_vol_level_adjust <=
-+		if (data->dc_vol_level_adjust >= 0 &&
-+			data->dc_vol_level_adjust <=
- 			(TXVREFTUNE0_MASK >> TXVREFTUNE0_BIT)) {
- 			reg &= ~TXVREFTUNE0_MASK;
- 			reg |= (data->dc_vol_level_adjust << TXVREFTUNE0_BIT);
++static void wacom_remote_destroy_battery(struct wacom *wacom, int index)
++{
++	struct wacom_remote *remote = wacom->remote;
++
++	if (remote->remotes[index].battery.battery) {
++		devres_release_group(&wacom->hdev->dev,
++				     &remote->remotes[index].battery.bat_desc);
++		remote->remotes[index].battery.battery = NULL;
++		remote->remotes[index].active_time = 0;
++	}
++}
++
+ static void wacom_remote_destroy_one(struct wacom *wacom, unsigned int index)
+ {
+ 	struct wacom_remote *remote = wacom->remote;
+@@ -2549,9 +2561,7 @@ static void wacom_remote_destroy_one(str
+ 			remote->remotes[i].registered = false;
+ 			spin_unlock_irqrestore(&remote->remote_lock, flags);
+ 
+-			if (remote->remotes[i].battery.battery)
+-				devres_release_group(&wacom->hdev->dev,
+-						     &remote->remotes[i].battery.bat_desc);
++			wacom_remote_destroy_battery(wacom, i);
+ 
+ 			if (remote->remotes[i].group.name)
+ 				devres_release_group(&wacom->hdev->dev,
+@@ -2559,7 +2569,6 @@ static void wacom_remote_destroy_one(str
+ 
+ 			remote->remotes[i].serial = 0;
+ 			remote->remotes[i].group.name = NULL;
+-			remote->remotes[i].battery.battery = NULL;
+ 			wacom->led.groups[i].select = WACOM_STATUS_UNKNOWN;
+ 		}
+ 	}
+@@ -2644,6 +2653,9 @@ static int wacom_remote_attach_battery(s
+ 	if (remote->remotes[index].battery.battery)
+ 		return 0;
+ 
++	if (!remote->remotes[index].active_time)
++		return 0;
++
+ 	if (wacom->led.groups[index].select == WACOM_STATUS_UNKNOWN)
+ 		return 0;
+ 
+@@ -2659,6 +2671,7 @@ static void wacom_remote_work(struct wor
+ {
+ 	struct wacom *wacom = container_of(work, struct wacom, remote_work);
+ 	struct wacom_remote *remote = wacom->remote;
++	ktime_t kt = ktime_get();
+ 	struct wacom_remote_data data;
+ 	unsigned long flags;
+ 	unsigned int count;
+@@ -2685,6 +2698,10 @@ static void wacom_remote_work(struct wor
+ 		serial = data.remote[i].serial;
+ 		if (data.remote[i].connected) {
+ 
++			if (kt - remote->remotes[i].active_time > WACOM_REMOTE_BATTERY_TIMEOUT
++			    && remote->remotes[i].active_time != 0)
++				wacom_remote_destroy_battery(wacom, i);
++
+ 			if (remote->remotes[i].serial == serial) {
+ 				wacom_remote_attach_battery(wacom, i);
+ 				continue;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1134,6 +1134,7 @@ static int wacom_remote_irq(struct wacom
+ 	if (index < 0 || !remote->remotes[index].registered)
+ 		goto out;
+ 
++	remote->remotes[i].active_time = ktime_get();
+ 	input = remote->remotes[index].input;
+ 
+ 	input_report_key(input, BTN_0, (data[9] & 0x01));
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -15,6 +15,7 @@
+ #define WACOM_NAME_MAX		64
+ #define WACOM_MAX_REMOTES	5
+ #define WACOM_STATUS_UNKNOWN	255
++#define WACOM_REMOTE_BATTERY_TIMEOUT	21000000000ll
+ 
+ /* packet length for individual models */
+ #define WACOM_PKGLEN_BBFUN	 9
 
 
