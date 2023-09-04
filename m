@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12383C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C991C433C7;
-	Mon,  4 Sep 2023 18:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77BAC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9FFC433C8;
+	Mon,  4 Sep 2023 18:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852593;
-	bh=AQkwkmdndnbM7gO1zbjje40B+lrolHYwIaiDpigLD7A=;
+	s=korg; t=1693852596;
+	bh=eRnKhddAfcuElZ5RQs2x0N3OEHz2nXw50goaE5ZKTKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0JfOQwwPwTSGBMqReqNahRSucKl22BA8QA/egLZH8qJny4eX7XQ6Ymf2C9CURZc9
-	 ciBSOM+DX4o5iZXSobqHHHQylqp6dvYuv+1Lio4nR3EbGF337FDfekEwTXtT5c+4ms
-	 NTV1+y1d9kpqmsqUJd0FQh3Y9GrKFp0rFgKZSdcc=
+	b=K25ifClGmq0UiBIH0LZGLzqX3W7EARaDg1A0GVzSz8pY1cHeLc/hHj7halNOaQt1Y
+	 5sPXgcsepydqBWjn44Erfy/lrMIenKN2xZHIT2erwAEbJ9bEYJTY4zAorMzX9bnoLL
+	 f4XfrUttEPgFstnEdD/0rw5OiOFGq4nAhPpzK8Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 24/28] nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
-Date: Mon,  4 Sep 2023 19:30:55 +0100
-Message-ID: <20230904182946.344370086@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Joshua Kinard <kumba@gentoo.org>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 07/28] rtc: ds1685: use EXPORT_SYMBOL_GPL for ds1685_rtc_poweroff
+Date: Mon,  4 Sep 2023 19:30:38 +0100
+Message-ID: <20230904182945.528481821@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -40,48 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit f83913f8c5b882a312e72b7669762f8a5c9385e4 upstream.
+commit 95e7ebc6823170256a8ce19fad87912805bfa001 upstream.
 
-A syzbot stress test reported that create_empty_buffers() called from
-nilfs_lookup_dirty_data_buffers() can cause a general protection fault.
+ds1685_rtc_poweroff is only used externally via symbol_get, which was
+only ever intended for very internal symbols like this one.  Use
+EXPORT_SYMBOL_GPL for it so that symbol_get can enforce only being used
+on EXPORT_SYMBOL_GPL symbols.
 
-Analysis using its reproducer revealed that the back reference "mapping"
-from a page/folio has been changed to NULL after dirty page/folio gang
-lookup in nilfs_lookup_dirty_data_buffers().
-
-Fix this issue by excluding pages/folios from being collected if, after
-acquiring a lock on each page/folio, its back reference "mapping" differs
-from the pointer to the address space struct that held the page/folio.
-
-Link: https://lkml.kernel.org/r/20230805132038.6435-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+0ad741797f4565e7e2d2@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/0000000000002930a705fc32b231@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Joshua Kinard <kumba@gentoo.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-fs/nilfs2/segment.c | 5 +++++
- fs/nilfs2/segment.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/rtc/rtc-ds1685.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -725,6 +725,11 @@ static size_t nilfs_lookup_dirty_data_bu
- 		struct page *page = pvec.pages[i];
+--- a/drivers/rtc/rtc-ds1685.c
++++ b/drivers/rtc/rtc-ds1685.c
+@@ -1438,7 +1438,7 @@ ds1685_rtc_poweroff(struct platform_devi
+ 		unreachable();
+ 	}
+ }
+-EXPORT_SYMBOL(ds1685_rtc_poweroff);
++EXPORT_SYMBOL_GPL(ds1685_rtc_poweroff);
+ /* ----------------------------------------------------------------------- */
  
- 		lock_page(page);
-+		if (unlikely(page->mapping != mapping)) {
-+			/* Exclude pages removed from the address space */
-+			unlock_page(page);
-+			continue;
-+		}
- 		if (!page_has_buffers(page))
- 			create_empty_buffers(page, i_blocksize(inode), 0);
- 		unlock_page(page);
+ 
 
 
