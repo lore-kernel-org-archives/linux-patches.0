@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A877C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BEEC433C8;
-	Mon,  4 Sep 2023 18:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9162C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B1EC433C8;
+	Mon,  4 Sep 2023 18:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852604;
-	bh=tWuAYi8hh8TXXFCw5VkaS5xLPp//M6UH8FJQ0Rza8xA=;
+	s=korg; t=1693852607;
+	bh=wae8oRWCUfyLmG08ax0nOWDdbodyrHL9sfmdv/SRmYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19gXO5v8KCJNaPRtG3D2Q5yeCppcsF0bgslJ8vainnkMDFyqCUZ6qP25sUZOvxYkA
-	 mYuK+0zKysQBm0wmD0EIGXacf2qnzb9xBDs7LSQkV1Zzkyc218hxaFUVpp2Z+R1Nv0
-	 iQYinik4TQZDNZrkRiWGn0sPuXxo8ax5Fkomjlpo=
+	b=XHPClUmD9z9BdJukiP7z4d8BWiOWFDAPFZ8M8X0kBh7/mugJZNqlPSUjqsI8JJ38z
+	 zeiJYErl5lhFc/qaiGFwtYSB4FF/rDY/DOdHKgkS+Cpb5HFTKMbw3Vno+DW9pwC2H/
+	 FQv/+zP7lNlnTnnCuQ6e8O2UnP0N2v9rzQpkcOX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Xin Ji <xji@analogixsemi.com>,
-	Fabio Estevam <festevam@denx.de>
-Subject: [PATCH 5.15 27/28] usb: typec: tcpci: move tcpci.h to include/linux/usb/
-Date: Mon,  4 Sep 2023 19:30:58 +0100
-Message-ID: <20230904182946.498347404@linuxfoundation.org>
+	"Angus Ainslie (Purism)" <angus@akkea.ca>,
+	Christian Bach <christian.bach@scs.ch>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 28/28] usb: typec: tcpci: clear the fault status bit
+Date: Mon,  4 Sep 2023 19:30:59 +0100
+Message-ID: <20230904182946.552737588@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -40,513 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Ji <xji@analogixsemi.com>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-commit 7963d4d710112bc457f99bdb56608211e561190e upstream.
+commit 23e60c8daf5ec2ab1b731310761b668745fcf6ed upstream.
 
-USB PD controllers which consisting of a microcontroller (acting as the TCPM)
-and a port controller (TCPC) - may require that the driver for the PD
-controller accesses directly also the on-chip port controller in some cases.
+According the "USB Type-C Port Controller Interface Specification v2.0"
+the TCPC sets the fault status register bit-7
+(AllRegistersResetToDefault) once the registers have been reset to
+their default values.
 
-Move tcpci.h to include/linux/usb/ is convenience access TCPC registers.
+This triggers an alert(-irq) on PTN5110 devices albeit we do mask the
+fault-irq, which may cause a kernel hang. Fix this generically by writing
+a one to the corresponding bit-7.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Xin Ji <xji@analogixsemi.com>
-Link: https://lore.kernel.org/r/20220706083433.2415524-1-xji@analogixsemi.com
-Stable-dep-of: 23e60c8daf5e ("usb: typec: tcpci: clear the fault status bit")
+Cc: stable@vger.kernel.org
+Fixes: 74e656d6b055 ("staging: typec: Type-C Port Controller Interface driver (tcpci)")
+Reported-by: "Angus Ainslie (Purism)" <angus@akkea.ca>
+Closes: https://lore.kernel.org/all/20190508002749.14816-2-angus@akkea.ca/
+Reported-by: Christian Bach <christian.bach@scs.ch>
+Closes: https://lore.kernel.org/regressions/ZR0P278MB07737E5F1D48632897D51AC3EB329@ZR0P278MB0773.CHEP278.PROD.OUTLOOK.COM/t/
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230816172502.1155079-1-festevam@gmail.com
 Signed-off-by: Fabio Estevam <festevam@denx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci.c         |    3 
- drivers/usb/typec/tcpm/tcpci.h         |  209 --------------------------------
- drivers/usb/typec/tcpm/tcpci_maxim.c   |    3 
- drivers/usb/typec/tcpm/tcpci_mt6360.c  |    3 
- drivers/usb/typec/tcpm/tcpci_rt1711h.c |    2 
- include/linux/usb/tcpci.h              |  210 +++++++++++++++++++++++++++++++++
- 6 files changed, 214 insertions(+), 216 deletions(-)
- rename {drivers/usb/typec/tcpm => include/linux/usb}/tcpci.h (99%)
+ drivers/usb/typec/tcpm/tcpci.c |    4 ++++
+ include/linux/usb/tcpci.h      |    1 +
+ 2 files changed, 5 insertions(+)
 
 --- a/drivers/usb/typec/tcpm/tcpci.c
 +++ b/drivers/usb/typec/tcpm/tcpci.c
-@@ -13,11 +13,10 @@
- #include <linux/property.h>
- #include <linux/regmap.h>
- #include <linux/usb/pd.h>
-+#include <linux/usb/tcpci.h>
- #include <linux/usb/tcpm.h>
- #include <linux/usb/typec.h>
+@@ -615,6 +615,10 @@ static int tcpci_init(struct tcpc_dev *t
+ 	if (time_after(jiffies, timeout))
+ 		return -ETIMEDOUT;
  
--#include "tcpci.h"
--
- #define	PD_RETRY_COUNT_DEFAULT			3
- #define	PD_RETRY_COUNT_3_0_OR_HIGHER		2
- #define	AUTO_DISCHARGE_DEFAULT_THRESHOLD_MV	3500
---- a/drivers/usb/typec/tcpm/tcpci.h
-+++ /dev/null
-@@ -1,209 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
--/*
-- * Copyright 2015-2017 Google, Inc
-- *
-- * USB Type-C Port Controller Interface.
-- */
--
--#ifndef __LINUX_USB_TCPCI_H
--#define __LINUX_USB_TCPCI_H
--
--#include <linux/usb/typec.h>
--
--#define TCPC_VENDOR_ID			0x0
--#define TCPC_PRODUCT_ID			0x2
--#define TCPC_BCD_DEV			0x4
--#define TCPC_TC_REV			0x6
--#define TCPC_PD_REV			0x8
--#define TCPC_PD_INT_REV			0xa
--
--#define TCPC_ALERT			0x10
--#define TCPC_ALERT_EXTND		BIT(14)
--#define TCPC_ALERT_EXTENDED_STATUS	BIT(13)
--#define TCPC_ALERT_VBUS_DISCNCT		BIT(11)
--#define TCPC_ALERT_RX_BUF_OVF		BIT(10)
--#define TCPC_ALERT_FAULT		BIT(9)
--#define TCPC_ALERT_V_ALARM_LO		BIT(8)
--#define TCPC_ALERT_V_ALARM_HI		BIT(7)
--#define TCPC_ALERT_TX_SUCCESS		BIT(6)
--#define TCPC_ALERT_TX_DISCARDED		BIT(5)
--#define TCPC_ALERT_TX_FAILED		BIT(4)
--#define TCPC_ALERT_RX_HARD_RST		BIT(3)
--#define TCPC_ALERT_RX_STATUS		BIT(2)
--#define TCPC_ALERT_POWER_STATUS		BIT(1)
--#define TCPC_ALERT_CC_STATUS		BIT(0)
--
--#define TCPC_ALERT_MASK			0x12
--#define TCPC_POWER_STATUS_MASK		0x14
--#define TCPC_FAULT_STATUS_MASK		0x15
--
--#define TCPC_EXTENDED_STATUS_MASK		0x16
--#define TCPC_EXTENDED_STATUS_MASK_VSAFE0V	BIT(0)
--
--#define TCPC_ALERT_EXTENDED_MASK	0x17
--#define TCPC_SINK_FAST_ROLE_SWAP	BIT(0)
--
--#define TCPC_CONFIG_STD_OUTPUT		0x18
--
--#define TCPC_TCPC_CTRL			0x19
--#define TCPC_TCPC_CTRL_ORIENTATION	BIT(0)
--#define PLUG_ORNT_CC1			0
--#define PLUG_ORNT_CC2			1
--#define TCPC_TCPC_CTRL_BIST_TM		BIT(1)
--#define TCPC_TCPC_CTRL_EN_LK4CONN_ALRT	BIT(6)
--
--#define TCPC_EXTENDED_STATUS		0x20
--#define TCPC_EXTENDED_STATUS_VSAFE0V	BIT(0)
--
--#define TCPC_ROLE_CTRL			0x1a
--#define TCPC_ROLE_CTRL_DRP		BIT(6)
--#define TCPC_ROLE_CTRL_RP_VAL_SHIFT	4
--#define TCPC_ROLE_CTRL_RP_VAL_MASK	0x3
--#define TCPC_ROLE_CTRL_RP_VAL_DEF	0x0
--#define TCPC_ROLE_CTRL_RP_VAL_1_5	0x1
--#define TCPC_ROLE_CTRL_RP_VAL_3_0	0x2
--#define TCPC_ROLE_CTRL_CC2_SHIFT	2
--#define TCPC_ROLE_CTRL_CC2_MASK		0x3
--#define TCPC_ROLE_CTRL_CC1_SHIFT	0
--#define TCPC_ROLE_CTRL_CC1_MASK		0x3
--#define TCPC_ROLE_CTRL_CC_RA		0x0
--#define TCPC_ROLE_CTRL_CC_RP		0x1
--#define TCPC_ROLE_CTRL_CC_RD		0x2
--#define TCPC_ROLE_CTRL_CC_OPEN		0x3
--
--#define TCPC_FAULT_CTRL			0x1b
--
--#define TCPC_POWER_CTRL			0x1c
--#define TCPC_POWER_CTRL_VCONN_ENABLE	BIT(0)
--#define TCPC_POWER_CTRL_BLEED_DISCHARGE	BIT(3)
--#define TCPC_POWER_CTRL_AUTO_DISCHARGE	BIT(4)
--#define TCPC_DIS_VOLT_ALRM		BIT(5)
--#define TCPC_POWER_CTRL_VBUS_VOLT_MON	BIT(6)
--#define TCPC_FAST_ROLE_SWAP_EN		BIT(7)
--
--#define TCPC_CC_STATUS			0x1d
--#define TCPC_CC_STATUS_TOGGLING		BIT(5)
--#define TCPC_CC_STATUS_TERM		BIT(4)
--#define TCPC_CC_STATUS_TERM_RP		0
--#define TCPC_CC_STATUS_TERM_RD		1
--#define TCPC_CC_STATE_SRC_OPEN		0
--#define TCPC_CC_STATUS_CC2_SHIFT	2
--#define TCPC_CC_STATUS_CC2_MASK		0x3
--#define TCPC_CC_STATUS_CC1_SHIFT	0
--#define TCPC_CC_STATUS_CC1_MASK		0x3
--
--#define TCPC_POWER_STATUS		0x1e
--#define TCPC_POWER_STATUS_DBG_ACC_CON	BIT(7)
--#define TCPC_POWER_STATUS_UNINIT	BIT(6)
--#define TCPC_POWER_STATUS_SOURCING_VBUS	BIT(4)
--#define TCPC_POWER_STATUS_VBUS_DET	BIT(3)
--#define TCPC_POWER_STATUS_VBUS_PRES	BIT(2)
--#define TCPC_POWER_STATUS_VCONN_PRES	BIT(1)
--#define TCPC_POWER_STATUS_SINKING_VBUS	BIT(0)
--
--#define TCPC_FAULT_STATUS		0x1f
--
--#define TCPC_ALERT_EXTENDED		0x21
--
--#define TCPC_COMMAND			0x23
--#define TCPC_CMD_WAKE_I2C		0x11
--#define TCPC_CMD_DISABLE_VBUS_DETECT	0x22
--#define TCPC_CMD_ENABLE_VBUS_DETECT	0x33
--#define TCPC_CMD_DISABLE_SINK_VBUS	0x44
--#define TCPC_CMD_SINK_VBUS		0x55
--#define TCPC_CMD_DISABLE_SRC_VBUS	0x66
--#define TCPC_CMD_SRC_VBUS_DEFAULT	0x77
--#define TCPC_CMD_SRC_VBUS_HIGH		0x88
--#define TCPC_CMD_LOOK4CONNECTION	0x99
--#define TCPC_CMD_RXONEMORE		0xAA
--#define TCPC_CMD_I2C_IDLE		0xFF
--
--#define TCPC_DEV_CAP_1			0x24
--#define TCPC_DEV_CAP_2			0x26
--#define TCPC_STD_INPUT_CAP		0x28
--#define TCPC_STD_OUTPUT_CAP		0x29
--
--#define TCPC_MSG_HDR_INFO		0x2e
--#define TCPC_MSG_HDR_INFO_DATA_ROLE	BIT(3)
--#define TCPC_MSG_HDR_INFO_PWR_ROLE	BIT(0)
--#define TCPC_MSG_HDR_INFO_REV_SHIFT	1
--#define TCPC_MSG_HDR_INFO_REV_MASK	0x3
--
--#define TCPC_RX_DETECT			0x2f
--#define TCPC_RX_DETECT_HARD_RESET	BIT(5)
--#define TCPC_RX_DETECT_SOP		BIT(0)
--#define TCPC_RX_DETECT_SOP1		BIT(1)
--#define TCPC_RX_DETECT_SOP2		BIT(2)
--#define TCPC_RX_DETECT_DBG1		BIT(3)
--#define TCPC_RX_DETECT_DBG2		BIT(4)
--
--#define TCPC_RX_BYTE_CNT		0x30
--#define TCPC_RX_BUF_FRAME_TYPE		0x31
--#define TCPC_RX_BUF_FRAME_TYPE_SOP	0
--#define TCPC_RX_HDR			0x32
--#define TCPC_RX_DATA			0x34 /* through 0x4f */
--
--#define TCPC_TRANSMIT			0x50
--#define TCPC_TRANSMIT_RETRY_SHIFT	4
--#define TCPC_TRANSMIT_RETRY_MASK	0x3
--#define TCPC_TRANSMIT_TYPE_SHIFT	0
--#define TCPC_TRANSMIT_TYPE_MASK		0x7
--
--#define TCPC_TX_BYTE_CNT		0x51
--#define TCPC_TX_HDR			0x52
--#define TCPC_TX_DATA			0x54 /* through 0x6f */
--
--#define TCPC_VBUS_VOLTAGE			0x70
--#define TCPC_VBUS_VOLTAGE_MASK			0x3ff
--#define TCPC_VBUS_VOLTAGE_LSB_MV		25
--#define TCPC_VBUS_SINK_DISCONNECT_THRESH	0x72
--#define TCPC_VBUS_SINK_DISCONNECT_THRESH_LSB_MV	25
--#define TCPC_VBUS_SINK_DISCONNECT_THRESH_MAX	0x3ff
--#define TCPC_VBUS_STOP_DISCHARGE_THRESH		0x74
--#define TCPC_VBUS_VOLTAGE_ALARM_HI_CFG		0x76
--#define TCPC_VBUS_VOLTAGE_ALARM_LO_CFG		0x78
--
--/* I2C_WRITE_BYTE_COUNT + 1 when TX_BUF_BYTE_x is only accessible I2C_WRITE_BYTE_COUNT */
--#define TCPC_TRANSMIT_BUFFER_MAX_LEN		31
--
--struct tcpci;
--
--/*
-- * @TX_BUF_BYTE_x_hidden:
-- *		optional; Set when TX_BUF_BYTE_x can only be accessed through I2C_WRITE_BYTE_COUNT.
-- * @frs_sourcing_vbus:
-- *		Optional; Callback to perform chip specific operations when FRS
-- *		is sourcing vbus.
-- * @auto_discharge_disconnect:
-- *		Optional; Enables TCPC to autonously discharge vbus on disconnect.
-- * @vbus_vsafe0v:
-- *		optional; Set when TCPC can detect whether vbus is at VSAFE0V.
-- * @set_partner_usb_comm_capable:
-- *		Optional; The USB Communications Capable bit indicates if port
-- *		partner is capable of communication over the USB data lines
-- *		(e.g. D+/- or SS Tx/Rx). Called to notify the status of the bit.
-- */
--struct tcpci_data {
--	struct regmap *regmap;
--	unsigned char TX_BUF_BYTE_x_hidden:1;
--	unsigned char auto_discharge_disconnect:1;
--	unsigned char vbus_vsafe0v:1;
--
--	int (*init)(struct tcpci *tcpci, struct tcpci_data *data);
--	int (*set_vconn)(struct tcpci *tcpci, struct tcpci_data *data,
--			 bool enable);
--	int (*start_drp_toggling)(struct tcpci *tcpci, struct tcpci_data *data,
--				  enum typec_cc_status cc);
--	int (*set_vbus)(struct tcpci *tcpci, struct tcpci_data *data, bool source, bool sink);
--	void (*frs_sourcing_vbus)(struct tcpci *tcpci, struct tcpci_data *data);
--	void (*set_partner_usb_comm_capable)(struct tcpci *tcpci, struct tcpci_data *data,
--					     bool capable);
--};
--
--struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data);
--void tcpci_unregister_port(struct tcpci *tcpci);
--irqreturn_t tcpci_irq(struct tcpci *tcpci);
--
--struct tcpm_port;
--struct tcpm_port *tcpci_get_tcpm_port(struct tcpci *tcpci);
--#endif /* __LINUX_USB_TCPCI_H */
---- a/drivers/usb/typec/tcpm/tcpci_maxim.c
-+++ b/drivers/usb/typec/tcpm/tcpci_maxim.c
-@@ -11,11 +11,10 @@
- #include <linux/module.h>
- #include <linux/regmap.h>
- #include <linux/usb/pd.h>
-+#include <linux/usb/tcpci.h>
- #include <linux/usb/tcpm.h>
- #include <linux/usb/typec.h>
- 
--#include "tcpci.h"
--
- #define PD_ACTIVITY_TIMEOUT_MS				10000
- 
- #define TCPC_VENDOR_ALERT				0x80
---- a/drivers/usb/typec/tcpm/tcpci_mt6360.c
-+++ b/drivers/usb/typec/tcpm/tcpci_mt6360.c
-@@ -11,10 +11,9 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
-+#include <linux/usb/tcpci.h>
- #include <linux/usb/tcpm.h>
- 
--#include "tcpci.h"
--
- #define MT6360_REG_PHYCTRL1	0x80
- #define MT6360_REG_PHYCTRL3	0x82
- #define MT6360_REG_PHYCTRL7	0x86
---- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-+++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-@@ -10,9 +10,9 @@
- #include <linux/i2c.h>
- #include <linux/interrupt.h>
- #include <linux/gpio/consumer.h>
-+#include <linux/usb/tcpci.h>
- #include <linux/usb/tcpm.h>
- #include <linux/regmap.h>
--#include "tcpci.h"
- 
- #define RT1711H_VID		0x29CF
- #define RT1711H_PID		0x1711
---- /dev/null
++	ret = tcpci_write16(tcpci, TCPC_FAULT_STATUS, TCPC_FAULT_STATUS_ALL_REG_RST_TO_DEFAULT);
++	if (ret < 0)
++		return ret;
++
+ 	/* Handle vendor init */
+ 	if (tcpci->data->init) {
+ 		ret = tcpci->data->init(tcpci, tcpci->data);
+--- a/include/linux/usb/tcpci.h
 +++ b/include/linux/usb/tcpci.h
-@@ -0,0 +1,210 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
-+/*
-+ * Copyright 2015-2017 Google, Inc
-+ *
-+ * USB Type-C Port Controller Interface.
-+ */
-+
-+#ifndef __LINUX_USB_TCPCI_H
-+#define __LINUX_USB_TCPCI_H
-+
-+#include <linux/usb/typec.h>
-+#include <linux/usb/tcpm.h>
-+
-+#define TCPC_VENDOR_ID			0x0
-+#define TCPC_PRODUCT_ID			0x2
-+#define TCPC_BCD_DEV			0x4
-+#define TCPC_TC_REV			0x6
-+#define TCPC_PD_REV			0x8
-+#define TCPC_PD_INT_REV			0xa
-+
-+#define TCPC_ALERT			0x10
-+#define TCPC_ALERT_EXTND		BIT(14)
-+#define TCPC_ALERT_EXTENDED_STATUS	BIT(13)
-+#define TCPC_ALERT_VBUS_DISCNCT		BIT(11)
-+#define TCPC_ALERT_RX_BUF_OVF		BIT(10)
-+#define TCPC_ALERT_FAULT		BIT(9)
-+#define TCPC_ALERT_V_ALARM_LO		BIT(8)
-+#define TCPC_ALERT_V_ALARM_HI		BIT(7)
-+#define TCPC_ALERT_TX_SUCCESS		BIT(6)
-+#define TCPC_ALERT_TX_DISCARDED		BIT(5)
-+#define TCPC_ALERT_TX_FAILED		BIT(4)
-+#define TCPC_ALERT_RX_HARD_RST		BIT(3)
-+#define TCPC_ALERT_RX_STATUS		BIT(2)
-+#define TCPC_ALERT_POWER_STATUS		BIT(1)
-+#define TCPC_ALERT_CC_STATUS		BIT(0)
-+
-+#define TCPC_ALERT_MASK			0x12
-+#define TCPC_POWER_STATUS_MASK		0x14
-+#define TCPC_FAULT_STATUS_MASK		0x15
-+
-+#define TCPC_EXTENDED_STATUS_MASK		0x16
-+#define TCPC_EXTENDED_STATUS_MASK_VSAFE0V	BIT(0)
-+
-+#define TCPC_ALERT_EXTENDED_MASK	0x17
-+#define TCPC_SINK_FAST_ROLE_SWAP	BIT(0)
-+
-+#define TCPC_CONFIG_STD_OUTPUT		0x18
-+
-+#define TCPC_TCPC_CTRL			0x19
-+#define TCPC_TCPC_CTRL_ORIENTATION	BIT(0)
-+#define PLUG_ORNT_CC1			0
-+#define PLUG_ORNT_CC2			1
-+#define TCPC_TCPC_CTRL_BIST_TM		BIT(1)
-+#define TCPC_TCPC_CTRL_EN_LK4CONN_ALRT	BIT(6)
-+
-+#define TCPC_EXTENDED_STATUS		0x20
-+#define TCPC_EXTENDED_STATUS_VSAFE0V	BIT(0)
-+
-+#define TCPC_ROLE_CTRL			0x1a
-+#define TCPC_ROLE_CTRL_DRP		BIT(6)
-+#define TCPC_ROLE_CTRL_RP_VAL_SHIFT	4
-+#define TCPC_ROLE_CTRL_RP_VAL_MASK	0x3
-+#define TCPC_ROLE_CTRL_RP_VAL_DEF	0x0
-+#define TCPC_ROLE_CTRL_RP_VAL_1_5	0x1
-+#define TCPC_ROLE_CTRL_RP_VAL_3_0	0x2
-+#define TCPC_ROLE_CTRL_CC2_SHIFT	2
-+#define TCPC_ROLE_CTRL_CC2_MASK		0x3
-+#define TCPC_ROLE_CTRL_CC1_SHIFT	0
-+#define TCPC_ROLE_CTRL_CC1_MASK		0x3
-+#define TCPC_ROLE_CTRL_CC_RA		0x0
-+#define TCPC_ROLE_CTRL_CC_RP		0x1
-+#define TCPC_ROLE_CTRL_CC_RD		0x2
-+#define TCPC_ROLE_CTRL_CC_OPEN		0x3
-+
-+#define TCPC_FAULT_CTRL			0x1b
-+
-+#define TCPC_POWER_CTRL			0x1c
-+#define TCPC_POWER_CTRL_VCONN_ENABLE	BIT(0)
-+#define TCPC_POWER_CTRL_BLEED_DISCHARGE	BIT(3)
-+#define TCPC_POWER_CTRL_AUTO_DISCHARGE	BIT(4)
-+#define TCPC_DIS_VOLT_ALRM		BIT(5)
-+#define TCPC_POWER_CTRL_VBUS_VOLT_MON	BIT(6)
-+#define TCPC_FAST_ROLE_SWAP_EN		BIT(7)
-+
-+#define TCPC_CC_STATUS			0x1d
-+#define TCPC_CC_STATUS_TOGGLING		BIT(5)
-+#define TCPC_CC_STATUS_TERM		BIT(4)
-+#define TCPC_CC_STATUS_TERM_RP		0
-+#define TCPC_CC_STATUS_TERM_RD		1
-+#define TCPC_CC_STATE_SRC_OPEN		0
-+#define TCPC_CC_STATUS_CC2_SHIFT	2
-+#define TCPC_CC_STATUS_CC2_MASK		0x3
-+#define TCPC_CC_STATUS_CC1_SHIFT	0
-+#define TCPC_CC_STATUS_CC1_MASK		0x3
-+
-+#define TCPC_POWER_STATUS		0x1e
-+#define TCPC_POWER_STATUS_DBG_ACC_CON	BIT(7)
-+#define TCPC_POWER_STATUS_UNINIT	BIT(6)
-+#define TCPC_POWER_STATUS_SOURCING_VBUS	BIT(4)
-+#define TCPC_POWER_STATUS_VBUS_DET	BIT(3)
-+#define TCPC_POWER_STATUS_VBUS_PRES	BIT(2)
-+#define TCPC_POWER_STATUS_VCONN_PRES	BIT(1)
-+#define TCPC_POWER_STATUS_SINKING_VBUS	BIT(0)
-+
-+#define TCPC_FAULT_STATUS		0x1f
-+
-+#define TCPC_ALERT_EXTENDED		0x21
-+
-+#define TCPC_COMMAND			0x23
-+#define TCPC_CMD_WAKE_I2C		0x11
-+#define TCPC_CMD_DISABLE_VBUS_DETECT	0x22
-+#define TCPC_CMD_ENABLE_VBUS_DETECT	0x33
-+#define TCPC_CMD_DISABLE_SINK_VBUS	0x44
-+#define TCPC_CMD_SINK_VBUS		0x55
-+#define TCPC_CMD_DISABLE_SRC_VBUS	0x66
-+#define TCPC_CMD_SRC_VBUS_DEFAULT	0x77
-+#define TCPC_CMD_SRC_VBUS_HIGH		0x88
-+#define TCPC_CMD_LOOK4CONNECTION	0x99
-+#define TCPC_CMD_RXONEMORE		0xAA
-+#define TCPC_CMD_I2C_IDLE		0xFF
-+
-+#define TCPC_DEV_CAP_1			0x24
-+#define TCPC_DEV_CAP_2			0x26
-+#define TCPC_STD_INPUT_CAP		0x28
-+#define TCPC_STD_OUTPUT_CAP		0x29
-+
-+#define TCPC_MSG_HDR_INFO		0x2e
-+#define TCPC_MSG_HDR_INFO_DATA_ROLE	BIT(3)
-+#define TCPC_MSG_HDR_INFO_PWR_ROLE	BIT(0)
-+#define TCPC_MSG_HDR_INFO_REV_SHIFT	1
-+#define TCPC_MSG_HDR_INFO_REV_MASK	0x3
-+
-+#define TCPC_RX_DETECT			0x2f
-+#define TCPC_RX_DETECT_HARD_RESET	BIT(5)
-+#define TCPC_RX_DETECT_SOP		BIT(0)
-+#define TCPC_RX_DETECT_SOP1		BIT(1)
-+#define TCPC_RX_DETECT_SOP2		BIT(2)
-+#define TCPC_RX_DETECT_DBG1		BIT(3)
-+#define TCPC_RX_DETECT_DBG2		BIT(4)
-+
-+#define TCPC_RX_BYTE_CNT		0x30
-+#define TCPC_RX_BUF_FRAME_TYPE		0x31
-+#define TCPC_RX_BUF_FRAME_TYPE_SOP	0
-+#define TCPC_RX_HDR			0x32
-+#define TCPC_RX_DATA			0x34 /* through 0x4f */
-+
-+#define TCPC_TRANSMIT			0x50
-+#define TCPC_TRANSMIT_RETRY_SHIFT	4
-+#define TCPC_TRANSMIT_RETRY_MASK	0x3
-+#define TCPC_TRANSMIT_TYPE_SHIFT	0
-+#define TCPC_TRANSMIT_TYPE_MASK		0x7
-+
-+#define TCPC_TX_BYTE_CNT		0x51
-+#define TCPC_TX_HDR			0x52
-+#define TCPC_TX_DATA			0x54 /* through 0x6f */
-+
-+#define TCPC_VBUS_VOLTAGE			0x70
-+#define TCPC_VBUS_VOLTAGE_MASK			0x3ff
-+#define TCPC_VBUS_VOLTAGE_LSB_MV		25
-+#define TCPC_VBUS_SINK_DISCONNECT_THRESH	0x72
-+#define TCPC_VBUS_SINK_DISCONNECT_THRESH_LSB_MV	25
-+#define TCPC_VBUS_SINK_DISCONNECT_THRESH_MAX	0x3ff
-+#define TCPC_VBUS_STOP_DISCHARGE_THRESH		0x74
-+#define TCPC_VBUS_VOLTAGE_ALARM_HI_CFG		0x76
-+#define TCPC_VBUS_VOLTAGE_ALARM_LO_CFG		0x78
-+
-+/* I2C_WRITE_BYTE_COUNT + 1 when TX_BUF_BYTE_x is only accessible I2C_WRITE_BYTE_COUNT */
-+#define TCPC_TRANSMIT_BUFFER_MAX_LEN		31
-+
-+struct tcpci;
-+
-+/*
-+ * @TX_BUF_BYTE_x_hidden:
-+ *		optional; Set when TX_BUF_BYTE_x can only be accessed through I2C_WRITE_BYTE_COUNT.
-+ * @frs_sourcing_vbus:
-+ *		Optional; Callback to perform chip specific operations when FRS
-+ *		is sourcing vbus.
-+ * @auto_discharge_disconnect:
-+ *		Optional; Enables TCPC to autonously discharge vbus on disconnect.
-+ * @vbus_vsafe0v:
-+ *		optional; Set when TCPC can detect whether vbus is at VSAFE0V.
-+ * @set_partner_usb_comm_capable:
-+ *		Optional; The USB Communications Capable bit indicates if port
-+ *		partner is capable of communication over the USB data lines
-+ *		(e.g. D+/- or SS Tx/Rx). Called to notify the status of the bit.
-+ */
-+struct tcpci_data {
-+	struct regmap *regmap;
-+	unsigned char TX_BUF_BYTE_x_hidden:1;
-+	unsigned char auto_discharge_disconnect:1;
-+	unsigned char vbus_vsafe0v:1;
-+
-+	int (*init)(struct tcpci *tcpci, struct tcpci_data *data);
-+	int (*set_vconn)(struct tcpci *tcpci, struct tcpci_data *data,
-+			 bool enable);
-+	int (*start_drp_toggling)(struct tcpci *tcpci, struct tcpci_data *data,
-+				  enum typec_cc_status cc);
-+	int (*set_vbus)(struct tcpci *tcpci, struct tcpci_data *data, bool source, bool sink);
-+	void (*frs_sourcing_vbus)(struct tcpci *tcpci, struct tcpci_data *data);
-+	void (*set_partner_usb_comm_capable)(struct tcpci *tcpci, struct tcpci_data *data,
-+					     bool capable);
-+};
-+
-+struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data);
-+void tcpci_unregister_port(struct tcpci *tcpci);
-+irqreturn_t tcpci_irq(struct tcpci *tcpci);
-+
-+struct tcpm_port;
-+struct tcpm_port *tcpci_get_tcpm_port(struct tcpci *tcpci);
-+#endif /* __LINUX_USB_TCPCI_H */
+@@ -103,6 +103,7 @@
+ #define TCPC_POWER_STATUS_SINKING_VBUS	BIT(0)
+ 
+ #define TCPC_FAULT_STATUS		0x1f
++#define TCPC_FAULT_STATUS_ALL_REG_RST_TO_DEFAULT BIT(7)
+ 
+ #define TCPC_ALERT_EXTENDED		0x21
+ 
 
 
