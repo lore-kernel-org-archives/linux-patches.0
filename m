@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39BCC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79712C433C8;
-	Mon,  4 Sep 2023 18:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF357C145
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:32:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330A3C433C9;
+	Mon,  4 Sep 2023 18:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852367;
-	bh=No/Q1j5aATnfFGusfko6aL7gjhwkOwt74HQZbFDyQFA=;
+	s=korg; t=1693852370;
+	bh=/TBthkgy0UogWNb4IfOMDFb4TpXXazwygIov2QjPpmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHpts1JgsIwt4Cd8krjXUTLY/EdfvnijwX0J/pTkiPHZireeq/+giOqxcCox/2yFx
-	 Cg5HJtjFidJwg1q8be7I6YXz+lEaWdT8BHoWQ5pr4x8WCSGvylGDTlRQlGZCNq40ad
-	 AkmS6MeL6fdUGKlB9ugD7buMG/KV1y7Tk8jecveI=
+	b=rDdN0oOvEqgDeyiaVtympDwlfaG5XE2mDH4f6Nq/l/CGTq3gevASVj9yFJDObusgA
+	 pd82HNjS7sk8sZ2NXbkR0MhierHH1ok+aOJCPIZQrB+5yFypi3vTvzhSBdOMHAqg8e
+	 4vR7/jfWwrJFykkUOgyR1ZbU+9YIgYX/w5GTSjHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Lech Perczak <lech.perczak@camlingroup.com>
-Subject: [PATCH 6.5 26/34] serial: sc16is7xx: fix bug when first setting GPIO direction
-Date: Mon,  4 Sep 2023 19:30:13 +0100
-Message-ID: <20230904182949.807617742@linuxfoundation.org>
+	Aaron Skomra <skomra@gmail.com>,
+	Aaron Armstrong Skomra <aaron.skomra@wacom.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 6.5 17/34] HID: wacom: remove the battery when the EKR is off
+Date: Mon,  4 Sep 2023 19:30:04 +0100
+Message-ID: <20230904182949.383267145@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182948.594404081@linuxfoundation.org>
 References: <20230904182948.594404081@linuxfoundation.org>
@@ -39,59 +41,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
 
-commit 9baeea723c0fb9c3ba9a336369f758ed9bc6831d upstream.
+commit 9ac6678b95b0dd9458a7a6869f46e51cd55a1d84 upstream.
 
-When configuring a pin as an output pin with a value of logic 0, we
-end up as having a value of logic 1 on the output pin. Setting a
-logic 0 a second time (or more) after that will correctly output a
-logic 0 on the output pin.
+Currently the EKR battery remains even after we stop getting information
+from the device. This can lead to a stale battery persisting indefinitely
+in userspace.
 
-By default, all GPIO pins are configured as inputs. When we enter
-sc16is7xx_gpio_direction_output() for the first time, we first set the
-desired value in IOSTATE, and then we configure the pin as an output.
-The datasheet states that writing to IOSTATE register will trigger a
-transfer of the value to the I/O pin configured as output, so if the
-pin is configured as an input, nothing will be transferred.
+The remote sends a heartbeat every 10 seconds. Delete the battery if we
+miss two heartbeats (after 21 seconds). Restore the battery once we see
+a heartbeat again.
 
-Therefore, set the direction first in IODIR, and then set the desired
-value in IOSTATE.
-
-This is what is done in NXP application note AN10587.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
-Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
-Link: https://lore.kernel.org/r/20230807214556.540627-6-hugo@hugovil.com
+Signed-off-by: Aaron Skomra <skomra@gmail.com>
+Signed-off-by: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Fixes: 9f1015d45f62 ("HID: wacom: EKR: attach the power_supply on first connection")
+CC: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/hid/wacom.h     |    1 +
+ drivers/hid/wacom_sys.c |   25 +++++++++++++++++++++----
+ drivers/hid/wacom_wac.c |    1 +
+ drivers/hid/wacom_wac.h |    1 +
+ 4 files changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1342,9 +1342,18 @@ static int sc16is7xx_gpio_direction_outp
- 		state |= BIT(offset);
- 	else
- 		state &= ~BIT(offset);
--	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
-+
-+	/*
-+	 * If we write IOSTATE first, and then IODIR, the output value is not
-+	 * transferred to the corresponding I/O pin.
-+	 * The datasheet states that each register bit will be transferred to
-+	 * the corresponding I/O pin programmed as output when writing to
-+	 * IOSTATE. Therefore, configure direction first with IODIR, and then
-+	 * set value after with IOSTATE.
-+	 */
- 	sc16is7xx_port_update(port, SC16IS7XX_IODIR_REG, BIT(offset),
- 			      BIT(offset));
-+	sc16is7xx_port_write(port, SC16IS7XX_IOSTATE_REG, state);
+--- a/drivers/hid/wacom.h
++++ b/drivers/hid/wacom.h
+@@ -150,6 +150,7 @@ struct wacom_remote {
+ 		struct input_dev *input;
+ 		bool registered;
+ 		struct wacom_battery battery;
++		ktime_t active_time;
+ 	} remotes[WACOM_MAX_REMOTES];
+ };
  
- 	return 0;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2523,6 +2523,18 @@ fail:
+ 	return;
  }
+ 
++static void wacom_remote_destroy_battery(struct wacom *wacom, int index)
++{
++	struct wacom_remote *remote = wacom->remote;
++
++	if (remote->remotes[index].battery.battery) {
++		devres_release_group(&wacom->hdev->dev,
++				     &remote->remotes[index].battery.bat_desc);
++		remote->remotes[index].battery.battery = NULL;
++		remote->remotes[index].active_time = 0;
++	}
++}
++
+ static void wacom_remote_destroy_one(struct wacom *wacom, unsigned int index)
+ {
+ 	struct wacom_remote *remote = wacom->remote;
+@@ -2537,9 +2549,7 @@ static void wacom_remote_destroy_one(str
+ 			remote->remotes[i].registered = false;
+ 			spin_unlock_irqrestore(&remote->remote_lock, flags);
+ 
+-			if (remote->remotes[i].battery.battery)
+-				devres_release_group(&wacom->hdev->dev,
+-						     &remote->remotes[i].battery.bat_desc);
++			wacom_remote_destroy_battery(wacom, i);
+ 
+ 			if (remote->remotes[i].group.name)
+ 				devres_release_group(&wacom->hdev->dev,
+@@ -2547,7 +2557,6 @@ static void wacom_remote_destroy_one(str
+ 
+ 			remote->remotes[i].serial = 0;
+ 			remote->remotes[i].group.name = NULL;
+-			remote->remotes[i].battery.battery = NULL;
+ 			wacom->led.groups[i].select = WACOM_STATUS_UNKNOWN;
+ 		}
+ 	}
+@@ -2632,6 +2641,9 @@ static int wacom_remote_attach_battery(s
+ 	if (remote->remotes[index].battery.battery)
+ 		return 0;
+ 
++	if (!remote->remotes[index].active_time)
++		return 0;
++
+ 	if (wacom->led.groups[index].select == WACOM_STATUS_UNKNOWN)
+ 		return 0;
+ 
+@@ -2647,6 +2659,7 @@ static void wacom_remote_work(struct wor
+ {
+ 	struct wacom *wacom = container_of(work, struct wacom, remote_work);
+ 	struct wacom_remote *remote = wacom->remote;
++	ktime_t kt = ktime_get();
+ 	struct wacom_remote_data data;
+ 	unsigned long flags;
+ 	unsigned int count;
+@@ -2673,6 +2686,10 @@ static void wacom_remote_work(struct wor
+ 		serial = data.remote[i].serial;
+ 		if (data.remote[i].connected) {
+ 
++			if (kt - remote->remotes[i].active_time > WACOM_REMOTE_BATTERY_TIMEOUT
++			    && remote->remotes[i].active_time != 0)
++				wacom_remote_destroy_battery(wacom, i);
++
+ 			if (remote->remotes[i].serial == serial) {
+ 				wacom_remote_attach_battery(wacom, i);
+ 				continue;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1134,6 +1134,7 @@ static int wacom_remote_irq(struct wacom
+ 	if (index < 0 || !remote->remotes[index].registered)
+ 		goto out;
+ 
++	remote->remotes[i].active_time = ktime_get();
+ 	input = remote->remotes[index].input;
+ 
+ 	input_report_key(input, BTN_0, (data[9] & 0x01));
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -13,6 +13,7 @@
+ #define WACOM_NAME_MAX		64
+ #define WACOM_MAX_REMOTES	5
+ #define WACOM_STATUS_UNKNOWN	255
++#define WACOM_REMOTE_BATTERY_TIMEOUT	21000000000ll
+ 
+ /* packet length for individual models */
+ #define WACOM_PKGLEN_BBFUN	 9
 
 
