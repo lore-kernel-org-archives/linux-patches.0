@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C618C142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:35:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129CDC433C8;
-	Mon,  4 Sep 2023 18:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46734C142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:36:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C253CC433C7;
+	Mon,  4 Sep 2023 18:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852558;
-	bh=mfqutrtLQsLyzTb1/B6Dl7jx6N0Q4ILXvVNJOB83Zgs=;
+	s=korg; t=1693852561;
+	bh=J/LzT0AylPcE2vdiiG+qjnZr4wYzssk+DE4QvZrkHMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jksDvh+IdOlH71ScVHsHi/lrKtSt/Vg0B3jkU/aRoEq920/RC3OeZlOq2Wjheyrye
-	 poMaZKqQIFzDrSuVAzwQRaA64zKbFgmglGRl8nJJ7VxY6/D1pPMclUTd+ZspjwqJI2
-	 HjT8qhF1VqkD0RCxrcLhPrzXAT5O5Aldq0xKnlAI=
+	b=VCuwqOilhoJgad8tKNE26a16rSDLBHgJSjMohs9vFvbE3ed2Yl2+5a60dsoi4XGtx
+	 xgmYJE/q82ccJC52Uap4YWb9UClrzfUpegt8CDfGal+W9VOm/Scm7zLLE+Gl2TvnHM
+	 beKxaLkshwGtUyq4x5ezd3ot79yRsaos923UUmRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 03/28] ksmbd: replace one-element array with flex-array member in struct smb2_ea_info
-Date: Mon,  4 Sep 2023 19:30:34 +0100
-Message-ID: <20230904182945.344449804@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 04/28] ARM: pxa: remove use of symbol_get()
+Date: Mon,  4 Sep 2023 19:30:35 +0100
+Message-ID: <20230904182945.393334969@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 References: <20230904182945.178705038@linuxfoundation.org>
@@ -39,69 +40,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 0ba5439d9afa2722e7728df56f272c89987540a4 upstream.
+commit 0faa29c4207e6e29cfc81b427df60e326c37083a upstream.
 
-UBSAN complains about out-of-bounds array indexes on 1-element arrays in
-struct smb2_ea_info.
+The spitz board file uses the obscure symbol_get() function
+to optionally call a function from sharpsl_pm.c if that is
+built. However, the two files are always built together
+these days, and have been for a long time, so this can
+be changed to a normal function call.
 
-UBSAN: array-index-out-of-bounds in fs/smb/server/smb2pdu.c:4335:15
-index 1 is out of range for type 'char [1]'
-CPU: 1 PID: 354 Comm: kworker/1:4 Not tainted 6.5.0-rc4 #1
-Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop
-Reference Platform, BIOS 6.00 07/22/2020
-Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
-Call Trace:
- <TASK>
- __dump_stack linux/lib/dump_stack.c:88
- dump_stack_lvl+0x48/0x70 linux/lib/dump_stack.c:106
- dump_stack+0x10/0x20 linux/lib/dump_stack.c:113
- ubsan_epilogue linux/lib/ubsan.c:217
- __ubsan_handle_out_of_bounds+0xc6/0x110 linux/lib/ubsan.c:348
- smb2_get_ea linux/fs/smb/server/smb2pdu.c:4335
- smb2_get_info_file linux/fs/smb/server/smb2pdu.c:4900
- smb2_query_info+0x63ae/0x6b20 linux/fs/smb/server/smb2pdu.c:5275
- __process_request linux/fs/smb/server/server.c:145
- __handle_ksmbd_work linux/fs/smb/server/server.c:213
- handle_ksmbd_work+0x348/0x10b0 linux/fs/smb/server/server.c:266
- process_one_work+0x85a/0x1500 linux/kernel/workqueue.c:2597
- worker_thread+0xf3/0x13a0 linux/kernel/workqueue.c:2748
- kthread+0x2b7/0x390 linux/kernel/kthread.c:389
- ret_from_fork+0x44/0x90 linux/arch/x86/kernel/process.c:145
- ret_from_fork_asm+0x1b/0x30 linux/arch/x86/entry/entry_64.S:304
- </TASK>
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/lkml/20230731162639.GA9441@lst.de/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    2 +-
- fs/ksmbd/smb2pdu.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-pxa/sharpsl_pm.c |    2 --
+ arch/arm/mach-pxa/spitz.c      |   14 +-------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -4289,7 +4289,7 @@ static int smb2_get_ea(struct ksmbd_work
- 		if (!strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
- 			name_len -= XATTR_USER_PREFIX_LEN;
+--- a/arch/arm/mach-pxa/sharpsl_pm.c
++++ b/arch/arm/mach-pxa/sharpsl_pm.c
+@@ -220,8 +220,6 @@ void sharpsl_battery_kick(void)
+ {
+ 	schedule_delayed_work(&sharpsl_bat, msecs_to_jiffies(125));
+ }
+-EXPORT_SYMBOL(sharpsl_battery_kick);
+-
  
--		ptr = (char *)(&eainfo->name + name_len + 1);
-+		ptr = eainfo->name + name_len + 1;
- 		buf_free_len -= (offsetof(struct smb2_ea_info, name) +
- 				name_len + 1);
- 		/* bailout if xattr can't fit in buf_free_len */
---- a/fs/ksmbd/smb2pdu.h
-+++ b/fs/ksmbd/smb2pdu.h
-@@ -1567,7 +1567,7 @@ struct smb2_ea_info {
- 	__u8   Flags;
- 	__u8   EaNameLength;
- 	__le16 EaValueLength;
--	char name[1];
-+	char name[];
- 	/* optionally followed by value */
- } __packed; /* level 15 Query */
+ static void sharpsl_battery_thread(struct work_struct *private_)
+ {
+--- a/arch/arm/mach-pxa/spitz.c
++++ b/arch/arm/mach-pxa/spitz.c
+@@ -9,7 +9,6 @@
+  */
  
+ #include <linux/kernel.h>
+-#include <linux/module.h>	/* symbol_get ; symbol_put */
+ #include <linux/platform_device.h>
+ #include <linux/delay.h>
+ #include <linux/gpio_keys.h>
+@@ -514,17 +513,6 @@ static struct pxa2xx_spi_chip spitz_ads7
+ 	.gpio_cs		= SPITZ_GPIO_ADS7846_CS,
+ };
+ 
+-static void spitz_bl_kick_battery(void)
+-{
+-	void (*kick_batt)(void);
+-
+-	kick_batt = symbol_get(sharpsl_battery_kick);
+-	if (kick_batt) {
+-		kick_batt();
+-		symbol_put(sharpsl_battery_kick);
+-	}
+-}
+-
+ static struct gpiod_lookup_table spitz_lcdcon_gpio_table = {
+ 	.dev_id = "spi2.1",
+ 	.table = {
+@@ -552,7 +540,7 @@ static struct corgi_lcd_platform_data sp
+ 	.max_intensity		= 0x2f,
+ 	.default_intensity	= 0x1f,
+ 	.limit_mask		= 0x0b,
+-	.kick_battery		= spitz_bl_kick_battery,
++	.kick_battery		= sharpsl_battery_kick,
+ };
+ 
+ static struct pxa2xx_spi_chip spitz_lcdcon_chip = {
 
 
