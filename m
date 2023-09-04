@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA62DC142
-	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714E9C433C7;
-	Mon,  4 Sep 2023 18:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A572FC142
+	for <patches@lists.linux.dev>; Mon,  4 Sep 2023 18:34:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B3EC433C7;
+	Mon,  4 Sep 2023 18:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1693852483;
-	bh=XdR/FP0qjuJg1cybskgmT7/9eVm7UVuuazIj49zSXTU=;
+	s=korg; t=1693852486;
+	bh=xaSaUi+Bu0W+xl8kbJSmP7o5c8UcO7w6LiC7CO/DRvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYlUaraj4maqAQyFBXVP0TBSOQsDgEA+qYVABJF2+T8Ps39z/rDPGzsbbAfcVCrNw
-	 ZYTQBZkVSJ0zg0oGw0NbGKCloqTznOTpyw3MsNDLa9ZvKgA1fC79cHQoZZuNTzsoew
-	 IzZkH7zJaL/naUfE3YYcc4g5q+B9cp8lfPoAlND4=
+	b=LTVMJXdEwjxancMiGA11xwYBQYsGCVez2cO9S8AnipOfrF+2PIeHPHpquaXcaqL50
+	 ilb/IepzD+kFWG3OcXfeDQ0/5kUOg2bECwd6ZkfG/jUMctn/pepN6R5SNrhqUN/z60
+	 5uKdb4FA7HCfllIRRETCUXuuQmYntDR8svD1+Pxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Skomra <skomra@gmail.com>,
-	Aaron Armstrong Skomra <aaron.skomra@wacom.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 6.1 16/31] HID: wacom: remove the battery when the EKR is off
-Date: Mon,  4 Sep 2023 19:30:24 +0100
-Message-ID: <20230904182947.831741883@linuxfoundation.org>
+	syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nam Cao <namcaov@gmail.com>
+Subject: [PATCH 6.1 17/31] staging: rtl8712: fix race condition
+Date: Mon,  4 Sep 2023 19:30:25 +0100
+Message-ID: <20230904182947.874605981@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
 References: <20230904182946.999390199@linuxfoundation.org>
@@ -41,130 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
+From: Nam Cao <namcaov@gmail.com>
 
-commit 9ac6678b95b0dd9458a7a6869f46e51cd55a1d84 upstream.
+commit 1422b526fba994cf05fd288a152106563b875fce upstream.
 
-Currently the EKR battery remains even after we stop getting information
-from the device. This can lead to a stale battery persisting indefinitely
-in userspace.
+In probe function, request_firmware_nowait() is called to load firmware
+asynchronously. At completion of firmware loading, register_netdev() is
+called. However, a mutex needed by netdev is initialized after the call
+to request_firmware_nowait(). Consequently, it can happen that
+register_netdev() is called before the driver is ready.
 
-The remote sends a heartbeat every 10 seconds. Delete the battery if we
-miss two heartbeats (after 21 seconds). Restore the battery once we see
-a heartbeat again.
+Move the mutex initialization into r8712_init_drv_sw(), which is called
+before request_firmware_nowait().
 
-Signed-off-by: Aaron Skomra <skomra@gmail.com>
-Signed-off-by: Aaron Armstrong Skomra <aaron.skomra@wacom.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Fixes: 9f1015d45f62 ("HID: wacom: EKR: attach the power_supply on first connection")
-CC: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Reported-by: syzbot+b08315e8cf5a78eed03c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-staging/000000000000d9d4560601b8e0d7@google.com/T/#u
+Fixes: 8c213fa59199 ("staging: r8712u: Use asynchronous firmware loading")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nam Cao <namcaov@gmail.com>
+Link: https://lore.kernel.org/r/20230731110620.116562-1-namcaov@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom.h     |    1 +
- drivers/hid/wacom_sys.c |   25 +++++++++++++++++++++----
- drivers/hid/wacom_wac.c |    1 +
- drivers/hid/wacom_wac.h |    1 +
- 4 files changed, 24 insertions(+), 4 deletions(-)
+ drivers/staging/rtl8712/os_intfs.c |    1 +
+ drivers/staging/rtl8712/usb_intf.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/wacom.h
-+++ b/drivers/hid/wacom.h
-@@ -150,6 +150,7 @@ struct wacom_remote {
- 		struct input_dev *input;
- 		bool registered;
- 		struct wacom_battery battery;
-+		ktime_t active_time;
- 	} remotes[WACOM_MAX_REMOTES];
- };
- 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2527,6 +2527,18 @@ fail:
- 	return;
+--- a/drivers/staging/rtl8712/os_intfs.c
++++ b/drivers/staging/rtl8712/os_intfs.c
+@@ -323,6 +323,7 @@ int r8712_init_drv_sw(struct _adapter *p
+ 	mp871xinit(padapter);
+ 	init_default_value(padapter);
+ 	r8712_InitSwLeds(padapter);
++	mutex_init(&padapter->mutex_start);
+ 	return ret;
  }
  
-+static void wacom_remote_destroy_battery(struct wacom *wacom, int index)
-+{
-+	struct wacom_remote *remote = wacom->remote;
-+
-+	if (remote->remotes[index].battery.battery) {
-+		devres_release_group(&wacom->hdev->dev,
-+				     &remote->remotes[index].battery.bat_desc);
-+		remote->remotes[index].battery.battery = NULL;
-+		remote->remotes[index].active_time = 0;
-+	}
-+}
-+
- static void wacom_remote_destroy_one(struct wacom *wacom, unsigned int index)
- {
- 	struct wacom_remote *remote = wacom->remote;
-@@ -2541,9 +2553,7 @@ static void wacom_remote_destroy_one(str
- 			remote->remotes[i].registered = false;
- 			spin_unlock_irqrestore(&remote->remote_lock, flags);
+--- a/drivers/staging/rtl8712/usb_intf.c
++++ b/drivers/staging/rtl8712/usb_intf.c
+@@ -567,7 +567,6 @@ static int r871xu_drv_init(struct usb_in
+ 	if (rtl871x_load_fw(padapter))
+ 		goto deinit_drv_sw;
+ 	init_completion(&padapter->rx_filter_ready);
+-	mutex_init(&padapter->mutex_start);
+ 	return 0;
  
--			if (remote->remotes[i].battery.battery)
--				devres_release_group(&wacom->hdev->dev,
--						     &remote->remotes[i].battery.bat_desc);
-+			wacom_remote_destroy_battery(wacom, i);
- 
- 			if (remote->remotes[i].group.name)
- 				devres_release_group(&wacom->hdev->dev,
-@@ -2551,7 +2561,6 @@ static void wacom_remote_destroy_one(str
- 
- 			remote->remotes[i].serial = 0;
- 			remote->remotes[i].group.name = NULL;
--			remote->remotes[i].battery.battery = NULL;
- 			wacom->led.groups[i].select = WACOM_STATUS_UNKNOWN;
- 		}
- 	}
-@@ -2636,6 +2645,9 @@ static int wacom_remote_attach_battery(s
- 	if (remote->remotes[index].battery.battery)
- 		return 0;
- 
-+	if (!remote->remotes[index].active_time)
-+		return 0;
-+
- 	if (wacom->led.groups[index].select == WACOM_STATUS_UNKNOWN)
- 		return 0;
- 
-@@ -2651,6 +2663,7 @@ static void wacom_remote_work(struct wor
- {
- 	struct wacom *wacom = container_of(work, struct wacom, remote_work);
- 	struct wacom_remote *remote = wacom->remote;
-+	ktime_t kt = ktime_get();
- 	struct wacom_remote_data data;
- 	unsigned long flags;
- 	unsigned int count;
-@@ -2677,6 +2690,10 @@ static void wacom_remote_work(struct wor
- 		serial = data.remote[i].serial;
- 		if (data.remote[i].connected) {
- 
-+			if (kt - remote->remotes[i].active_time > WACOM_REMOTE_BATTERY_TIMEOUT
-+			    && remote->remotes[i].active_time != 0)
-+				wacom_remote_destroy_battery(wacom, i);
-+
- 			if (remote->remotes[i].serial == serial) {
- 				wacom_remote_attach_battery(wacom, i);
- 				continue;
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1129,6 +1129,7 @@ static int wacom_remote_irq(struct wacom
- 	if (index < 0 || !remote->remotes[index].registered)
- 		goto out;
- 
-+	remote->remotes[i].active_time = ktime_get();
- 	input = remote->remotes[index].input;
- 
- 	input_report_key(input, BTN_0, (data[9] & 0x01));
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -13,6 +13,7 @@
- #define WACOM_NAME_MAX		64
- #define WACOM_MAX_REMOTES	5
- #define WACOM_STATUS_UNKNOWN	255
-+#define WACOM_REMOTE_BATTERY_TIMEOUT	21000000000ll
- 
- /* packet length for individual models */
- #define WACOM_PKGLEN_BBFUN	 9
+ deinit_drv_sw:
 
 
