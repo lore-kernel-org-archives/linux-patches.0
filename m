@@ -1,40 +1,40 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C6B190
-	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 00:09:18 +0000 (UTC)
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-794e0e8b588so90812739f.1
-        for <patches@lists.linux.dev>; Mon, 04 Sep 2023 17:09:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB91190
+	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 00:09:38 +0000 (UTC)
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-77acb04309dso77891639f.2
+        for <patches@lists.linux.dev>; Mon, 04 Sep 2023 17:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google; t=1693872557; x=1694477357; darn=lists.linux.dev;
+        d=joelfernandes.org; s=google; t=1693872577; x=1694477377; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hmNwuhUjd0buiuTyS5n0pAwdKJtMm9VI1Ify1HAs5hM=;
-        b=QIUvkJ4QUlt1zdBYPYHtRlV5RwxyBRup//KbIMCI17ZitlwHQqt8a9S9rEHJ0heYff
-         GM+zuqpOOpacOYcFnk6cy6klG4aT3LgOvernALs1UAXAAWARnuUD4apcNCpyiwFLyzFO
-         lEhBCrTrY/bEqc0vYh458041VQ1qhsUox9m/M=
+        bh=otKgkzyWUDGh27y2Rs72bFcGYMbP5/W8N5JOO8p4hSw=;
+        b=QJL6PXu4nDX+eBW+01DHu23Z0XLZikxiAdymZ8Irj+63VQtwNaTRHtN0sIvuOjv70q
+         xeO8POFvSKg2ssbNBOgQ1gCjklIdo0Gmx0oAl+1NvoED7tE/VhJk1kyjiVMfpQky0/nE
+         oN+U8HczF6T2dj6WHOPt+bQWvvE2qhnkskM9c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693872557; x=1694477357;
+        d=1e100.net; s=20221208; t=1693872577; x=1694477377;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hmNwuhUjd0buiuTyS5n0pAwdKJtMm9VI1Ify1HAs5hM=;
-        b=Ks65Rr2KC/LQXdLmreI1uSyoWxHnQ2WihkFV76Aphz9h3pIzVcwoRUozLnc4rnrB+L
-         qsWuvScUKPVyX//WmH6tFnosddH/WOYR0TRKpg6HWoMEa8KTIEL4wz/Tott2lEYgKuHD
-         Tu61zDAcWlZ3JYQ8wmZz8MQJO9H2fzVDF+KvxzH2fAHg7z3v2s7lVTG5ZaTGYrMkFkp9
-         B2PE166X4PFWV5jNkjRZ0WbDiKImfqf1bwAtKlukRfPE/1cYhkI6Ea+/ZoYB4aJmCeKA
-         WVBmUAKNYEO7Eofzn0gKromj0dNlx7VN2GWkehYH2PVwMKh/YDi0GWb+dux2v1wzk611
-         fV+w==
-X-Gm-Message-State: AOJu0YyuKZ5eim4w4lUV3zoGKI9cV5vBFIYpReuInUOSG5C5f2rROn9B
-	hj2jeP6+yAeL5zNc64Mh2vmMGQ==
-X-Google-Smtp-Source: AGHT+IGKCZuIndNgxFzx7SJEXaj+cGm17bxMdKn5HC4RwSHQN90fsbzBIo4h6t8MhvrbtU6MfRq32A==
-X-Received: by 2002:a6b:d607:0:b0:791:385d:69cf with SMTP id w7-20020a6bd607000000b00791385d69cfmr12005104ioa.18.1693872557562;
-        Mon, 04 Sep 2023 17:09:17 -0700 (PDT)
+        bh=otKgkzyWUDGh27y2Rs72bFcGYMbP5/W8N5JOO8p4hSw=;
+        b=MrLRZDMEyYlXe7s5FwwO17FfQXwOy57p1haiwvGxHWZZ28r7oABP5PbKPXb6F/I8jf
+         5K+Z0aE3hSd9rtkXr8ps1cVwKwx8jm8dUavlQLm6LQCRyjaTQkoYdjtiOPEr4KCgAZ8k
+         TICaU+Cnu1Z/A1wGMvdiqoDGc7Eg661vUliDKlFQFqzhkuYEIvqCqUiyP9cud3Z396tM
+         l5osU/nJSKKMoglo9yD6QCUhrkcPgl21Ll6b/kRWvuobr8czrAbvxQExXN1yTbGXV3em
+         crnfHkb0uQC3e95tlXvXEN8B1vxaKFdNz4p3Ubp3/xDtTHXUInuif6h9wapUSzC1cbTx
+         uDbA==
+X-Gm-Message-State: AOJu0Yxpx/SHkGS6XbE1hxq+eLL0BICKNJlcEPRAwgUa9yv9Chk38Ine
+	KTM0x+LyO1QeeMHqY2eTyo+zIA==
+X-Google-Smtp-Source: AGHT+IFEOG4zzjOlyN77CxR7BrlgzRJt1K/MuK1tUHEe4Im0K8EPI6b67QDCAR8Ou3Q68vESTV668A==
+X-Received: by 2002:a05:6602:1b02:b0:785:ff35:f340 with SMTP id dk2-20020a0566021b0200b00785ff35f340mr14336669iob.14.1693872577492;
+        Mon, 04 Sep 2023 17:09:37 -0700 (PDT)
 Received: from localhost (156.190.123.34.bc.googleusercontent.com. [34.123.190.156])
-        by smtp.gmail.com with ESMTPSA id i37-20020a056638382500b0042bb09e9345sm3722913jav.90.2023.09.04.17.09.16
+        by smtp.gmail.com with ESMTPSA id b19-20020a5ea713000000b00783737db8ebsm3949910iod.38.2023.09.04.17.09.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Sep 2023 17:09:17 -0700 (PDT)
-Date: Tue, 5 Sep 2023 00:09:16 +0000
+        Mon, 04 Sep 2023 17:09:37 -0700 (PDT)
+Date: Tue, 5 Sep 2023 00:09:36 +0000
 From: Joel Fernandes <joel@joelfernandes.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -44,9 +44,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org
-Subject: Re: [PATCH 6.1 00/31] 6.1.52-rc1 review
-Message-ID: <20230905000916.GC1104186@google.com>
-References: <20230904182946.999390199@linuxfoundation.org>
+Subject: Re: [PATCH 6.4 00/32] 6.4.15-rc1 review
+Message-ID: <20230905000936.GD1104186@google.com>
+References: <20230904182947.899158313@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,11 +55,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
+In-Reply-To: <20230904182947.899158313@linuxfoundation.org>
 
-On Mon, Sep 04, 2023 at 07:30:08PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.52 release.
-> There are 31 patches in this series, all will be posted as a response
+On Mon, Sep 04, 2023 at 07:29:58PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.15 release.
+> There are 32 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -67,9 +67,9 @@ On Mon, Sep 04, 2023 at 07:30:08PM +0100, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.52-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.15-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
 > and the diffstat can be found below.
 
 For RCU,
@@ -88,7 +88,7 @@ thanks,
 > Pseudo-Shortlog of commits:
 > 
 > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 6.1.52-rc1
+>     Linux 6.4.15-rc1
 > 
 > Mario Limonciello <mario.limonciello@amd.com>
 >     pinctrl: amd: Don't show `Invalid config param` errors
@@ -98,9 +98,6 @@ thanks,
 > 
 > Ryusuke Konishi <konishi.ryusuke@gmail.com>
 >     nilfs2: fix WARNING in mark_buffer_dirty due to discarded buffer reuse
-> 
-> Ryusuke Konishi <konishi.ryusuke@gmail.com>
->     nilfs2: fix general protection fault in nilfs_lookup_dirty_data_buffers()
 > 
 > Hugo Villeneuve <hvilleneuve@dimonoff.com>
 >     dt-bindings: sc16is7xx: Add property to change GPIO function
@@ -123,14 +120,20 @@ thanks,
 > Johan Hovold <johan+linaro@kernel.org>
 >     serial: qcom-geni: fix opp vote on shutdown
 > 
+> Sven Eckelmann <sven@narfation.org>
+>     wifi: ath11k: Cleanup mac80211 references on failure during tx_complete
+> 
+> Sven Eckelmann <sven@narfation.org>
+>     wifi: ath11k: Don't drop tx_status when peer cannot be found
+> 
+> Sascha Hauer <s.hauer@pengutronix.de>
+>     wifi: rtw88: usb: kill and free rx urbs on probe failure
+> 
 > Deren Wu <deren.wu@mediatek.com>
 >     wifi: mt76: mt7921: fix skb leak by txs missing in AMSDU
 > 
 > Deren Wu <deren.wu@mediatek.com>
 >     wifi: mt76: mt7921: do not support one stream on secondary antenna only
-> 
-> Zheng Wang <zyytlz.wz@163.com>
->     Bluetooth: btsdio: fix use after free bug in btsdio_remove due to race condition
 > 
 > Nam Cao <namcaov@gmail.com>
 >     staging: rtl8712: fix race condition
@@ -195,7 +198,6 @@ thanks,
 >  arch/mips/alchemy/devboards/db1000.c               |  8 +---
 >  arch/mips/alchemy/devboards/db1200.c               | 19 +--------
 >  arch/mips/alchemy/devboards/db1300.c               | 10 +----
->  drivers/bluetooth/btsdio.c                         |  1 +
 >  drivers/firmware/stratix10-svc.c                   |  2 +-
 >  drivers/fsi/fsi-master-ast-cf.c                    |  1 +
 >  drivers/hid/wacom.h                                |  1 +
@@ -204,8 +206,10 @@ thanks,
 >  drivers/hid/wacom_wac.h                            |  1 +
 >  drivers/mmc/host/Kconfig                           |  5 ++-
 >  drivers/net/ethernet/freescale/enetc/enetc_ptp.c   |  2 +-
+>  drivers/net/wireless/ath/ath11k/dp_tx.c            | 10 ++---
 >  .../net/wireless/mediatek/mt76/mt76_connac_mac.c   |  7 +++-
 >  drivers/net/wireless/mediatek/mt76/mt7921/main.c   |  2 +-
+>  drivers/net/wireless/realtek/rtw88/usb.c           |  5 ++-
 >  drivers/pinctrl/pinctrl-amd.c                      |  4 +-
 >  drivers/rtc/rtc-ds1685.c                           |  2 +-
 >  drivers/staging/rtl8712/os_intfs.c                 |  1 +
@@ -221,7 +225,6 @@ thanks,
 >  fs/erofs/zdata.c                                   |  2 +
 >  fs/nilfs2/alloc.c                                  |  3 +-
 >  fs/nilfs2/inode.c                                  |  7 +++-
->  fs/nilfs2/segment.c                                |  5 +++
 >  fs/smb/server/auth.c                               |  3 ++
 >  fs/smb/server/oplock.c                             |  2 +-
 >  fs/smb/server/smb2pdu.c                            |  2 +-
@@ -230,6 +233,6 @@ thanks,
 >  include/linux/usb/tcpci.h                          |  1 +
 >  kernel/module/main.c                               | 14 +++++--
 >  sound/usb/stream.c                                 | 11 +++++-
->  42 files changed, 209 insertions(+), 89 deletions(-)
+>  42 files changed, 212 insertions(+), 95 deletions(-)
 > 
 > 
