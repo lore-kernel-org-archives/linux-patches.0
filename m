@@ -1,100 +1,87 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB57FC1C
-	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 21:52:40 +0000 (UTC)
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-500c7796d8eso4804832e87.1
-        for <patches@lists.linux.dev>; Tue, 05 Sep 2023 14:52:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABCFFC0F
+	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 22:24:31 +0000 (UTC)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-500c7796d8eso4841877e87.1
+        for <patches@lists.linux.dev>; Tue, 05 Sep 2023 15:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1693950758; x=1694555558; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1693952669; x=1694557469; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=poTEsy/DpCYMp8kn/k9olR9s+199uTi+MS4Yqzd7g30=;
-        b=Iwv2FWD2DrEjvqg9nNFRcifJrZ/JOeub3CIH5T7eUkYKv3ixg7dVc+WUVUNUzjbQTi
-         9/yNe7irrZX8TRbloCGdjGK60Z3Lvzpy2BSuCL9bS3tDl0SrluF7EyAL6JEGfcLyS3Y0
-         QRdc4usEPvW+edNe9KdfX2KkZO9nEBVEhwzY8=
+        bh=qYhc2Ab3VZYZ8IlYXlqDSrtZZTVSJAYsW6CaMnCEvOs=;
+        b=AUOKdLXDw/84MQgpFFqARGchs0t9dwAVUY+fHtj7GXYSPxVBOeA9uzDIROFGsduwgO
+         Rr4E78wqTolf6N6at6aPi9aypn52rh9H8QXr5WAp29yvpEECrK3xPaRtSizxhgiVATdS
+         dD+KOsVRZKcjE94H1Pk5sWiwKNLtHamodYA18=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693950758; x=1694555558;
+        d=1e100.net; s=20221208; t=1693952669; x=1694557469;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=poTEsy/DpCYMp8kn/k9olR9s+199uTi+MS4Yqzd7g30=;
-        b=UQ/DgNoq43hTXUUAGXZzqmssDF8SI26lHzJcOb2ubnbQ9eE2xN+/QVuRLRuXz3GxJi
-         t9EGaoh9fiDFodJcV2t6t5JnnTpKd6+V07iClKSZNloSQeq0zYOt1UfMuefJCf1g4V1+
-         xhsO6MhEG18rnDqBo+9g8Mj3N/8KWQWi7t5LNfLEfKhQa0OOi0x/LbZJZ+mKqpE7P38/
-         HB4/Jbjcg0Nof8vOmB22NhmEJsdR+XgNg/LcLVMsxMCsdokxSP+xMeJxTlUydLF49B9S
-         4CvXtnYuBi5oJIdmpXWVwqI3TV1qx+s+SMmeAbz956gv9OzNm7FLVffW/6aMWnJrgPUV
-         fOag==
-X-Gm-Message-State: AOJu0YxEAWnqO+pTtNW7yWeKwBAXeeWCnPc64U/aY6YH4L+aAPOpGC07
-	weiXlBpQGM+rOkOaxgQDfCRi4ENtyq9EXPcGvbTEyw==
-X-Google-Smtp-Source: AGHT+IE3JWihciGf0rRrSsH9PjyDJ4bYAVgfmGDiVcDY3TEzyqBgkL1t/dLNdH5Gs/1zTaB+TQSko2czegvMLQZy5cI=
-X-Received: by 2002:a19:671a:0:b0:4fe:1681:9378 with SMTP id
- b26-20020a19671a000000b004fe16819378mr706226lfc.66.1693950758130; Tue, 05 Sep
- 2023 14:52:38 -0700 (PDT)
+        bh=qYhc2Ab3VZYZ8IlYXlqDSrtZZTVSJAYsW6CaMnCEvOs=;
+        b=dCcmVwDMw1JlTUS3Jkqn19UwNBe5jaY08vOk6cYEF5777noCeQDEawGUmXHXm68bCu
+         91xOfQsbWNrPz+2PfcT28LX4acf9WKKKIPuljMBLkcElL4edKoabkxzRbFlOM1iLVYq8
+         /jrVYmzeiAHYTiTINz4Qde9byQiS2MQrl16IAgRMNwJgdgyWKHe6uu21AQ7TdkNYwKHD
+         NYXlIFDz80Sv8rZeyZCzomYnTw+nUVNzggDStrEJ6iJMIEGieq6FSWsTApAyPQ/1JLPg
+         i+ST4lh2t2iKxO4IYdeCTAuUVdXwcUh9XtIccq9QUkPvAXcMm6uOT2rVQKh3Ayn81k2d
+         H/tw==
+X-Gm-Message-State: AOJu0YxfhCBLSVZR4XVmOG89JeFyv4zkfu26sar3Ip2Lktm9HapfSHZ2
+	WM+xgl5wLs7057zpa4vG5HD9zg4/48hiBFYK4HHdSw==
+X-Google-Smtp-Source: AGHT+IEaJFDN/Ujwzx4KejG+aid9NsVzxVXssaZhS2Q/zd9KxlbT13Wu7F94SUSUesxv5jh0Q1PZ3bqmbbOc3qbXw0A=
+X-Received: by 2002:a19:7913:0:b0:501:b960:e1af with SMTP id
+ u19-20020a197913000000b00501b960e1afmr732260lfc.23.1693952669541; Tue, 05 Sep
+ 2023 15:24:29 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 Sep 2023 16:52:37 -0500
+ HTTPREST; Tue, 5 Sep 2023 17:24:29 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <726d4be5-d207-4176-bc0d-43492eb2c4e5@linaro.org>
-References: <20230829184735.2841739-1-swboyd@chromium.org> <20230829184735.2841739-8-swboyd@chromium.org>
- <726d4be5-d207-4176-bc0d-43492eb2c4e5@linaro.org>
+In-Reply-To: <ZPCbSse3J6ksZwJa@smile.fi.intel.com>
+References: <20230831011405.3246849-1-swboyd@chromium.org> <20230831011405.3246849-2-swboyd@chromium.org>
+ <ZPCbSse3J6ksZwJa@smile.fi.intel.com>
 From: Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date: Tue, 5 Sep 2023 16:52:37 -0500
-Message-ID: <CAE-0n50Ka++WMKey_Nqm1drkQZLj6gnPSf=P2NX9=diQ_qCgtg@mail.gmail.com>
-Subject: Re: [PATCH 7/7] drm/msm/dp: Remove dp_display_is_ds_bridge()
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Rob Clark <robdclark@gmail.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, Vinod Polimera <quic_vpolimer@quicinc.com>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Date: Tue, 5 Sep 2023 17:24:29 -0500
+Message-ID: <CAE-0n52wAqsmm4cs6JX2W2G10VxjLzocXVmF9c_GC+52Fi4djQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] platform/x86: intel_scu_ipc: Check status after
+ timeouts in busy_loop()
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>, Hans de Goede <hdegoede@redhat.com>, 
+	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	Prashant Malani <pmalani@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Quoting Dmitry Baryshkov (2023-09-03 15:40:49)
-> On 29/08/2023 21:47, Stephen Boyd wrote:
-> > This function is simply drm_dp_is_branch() so use that instead of
-> > open-coding it.
+Quoting Andy Shevchenko (2023-08-31 06:53:14)
+> On Wed, Aug 30, 2023 at 06:14:01PM -0700, Stephen Boyd wrote:
+> > It's possible for the polling loop in busy_loop() to get scheduled away
+> > for a long time.
 > >
-> > Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
-> > Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >   drivers/gpu/drm/msm/dp/dp_display.c | 9 +--------
-> >   1 file changed, 1 insertion(+), 8 deletions(-)
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Thanks.
-
->
+> >   status = ipc_read_status(scu);
+> >   <long time scheduled away>
+> >   if (!(status & IPC_STATUS_BUSY))
 > >
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> > index 76f13954015b..96bbf6fec2f1 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> > @@ -341,19 +341,12 @@ static const struct component_ops dp_display_comp_ops = {
-> >       .unbind = dp_display_unbind,
-> >   };
+> > If this happens, then the status bit could change and this function
+> > would never test it again after checking the jiffies against the timeout
+> > limit. Polling code should check the condition one more time after the
+> > timeout in case this happens.
 > >
-> > -static bool dp_display_is_ds_bridge(struct dp_panel *panel)
-> > -{
-> > -     return (panel->dpcd[DP_DOWNSTREAMPORT_PRESENT] &
-> > -             DP_DWN_STRM_PORT_PRESENT);
-> > -}
-> > -
-> >   static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
+> > The read_poll_timeout() helper implements this logic, and is shorter, so
+> > simply use that helper here.
 >
-> Nit: you might as well inline this function
+> I don't remember by heart, but on some older Intel hardware this might have
+> been called during early stages where ktime() is not functional yet.
+>
+> Is this still a case here?
 
-Ok. I'll send a followup to this series with a patch for that. I found
-that with an Apple dongle it always prints out a message to the kernel
-log when I have HDMI disconnected that there isn't a sink connected,
-which is annoying.
+I have no idea if that happens in early stages. What about
+suspend/resume though? I suppose timekeeping could be suspended in that
+case, so we can't really check anything with ktime.
 
-So at least two more patches are incoming.
+I can rework this patch to simply recheck the busy bit so that we don't
+have to figure out if the code is called early or from suspend paths.
