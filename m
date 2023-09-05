@@ -1,122 +1,124 @@
-Received: from mail-pg1-f208.google.com (mail-pg1-f208.google.com [209.85.215.208])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9CDD524
-	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 17:36:04 +0000 (UTC)
-Received: by mail-pg1-f208.google.com with SMTP id 41be03b00d2f7-57013c62b3dso2400748a12.2
-        for <patches@lists.linux.dev>; Tue, 05 Sep 2023 10:36:04 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3F0DDB5
+	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 18:22:48 +0000 (UTC)
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-76de9c23e5cso168883385a.3
+        for <patches@lists.linux.dev>; Tue, 05 Sep 2023 11:22:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693938168; x=1694542968; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DXwyeYXdRfYZvJbbFR7Covv6HPd1SVxlTSYepV/tmjs=;
+        b=GzwZe4enlw7uUOko2ATw2oyLh5/Wo/1sZoALXkf+4r+Rh/YowmWBEtyNAok0wGdUcg
+         PDusWekLqhRSSJySD3vgruK8F5nLPkV+3bpMzlWts81Hg8ks0gomwoGTDSjG/Udf2S1E
+         MW1/dtgY/UjuiyXUc6n2jNtkPOxRNt7HdL3Vm+qhe1QGueBatgfNWydE9w0y2eKSkgr5
+         2bWlZiDDg3z4JDeDvYILqzTcNMC1PZ6nRda32RtB0jcrGaIT7DhjhqnOvHJkUuF2PjFr
+         gcsz1UOSwNICPCSByUyky588MgpbMebbB8n1mHnDeL0FweYsvElBaDUbxUm7PE6qajbi
+         vtkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693935364; x=1694540164;
-        h=to:from:subject:message-id:in-reply-to:date:mime-version
+        d=1e100.net; s=20221208; t=1693938168; x=1694542968;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JC4emxi/+91e6/de8rNAFQ4RT3D4NiRRQ3Rn+uvpGxs=;
-        b=YwYCO0MsWCer2kffg+hvvSg98KFMxi7DtkgOGiljFsQ3yPSCIxg/5YYY6Q/o71MDPe
-         8eQOk520tGciY3IZ4j1xuQQZNIdF3KQNnb0FleB0jz76xKZObaIGfpWSsQIcG8hgu/1p
-         y73bsiBLH04nd93Tn/z2AIz/rNpfMDDtKopZxVncc0RLXy40TaZGK0D1Uaiqa4fOBsiO
-         OemxN0U1qcybv90BsSwlfOopgg0IpCb9J6UOoBNdrYb4hHmbzEwbTKhvjG5ehN4drkXY
-         nxz7LdEHe9JNxdvg1nzbtKyJA7weYfUkpt4FRLiA00Li0pP5bHfxZV6N37Oe2GnwJlnS
-         g+mg==
-X-Gm-Message-State: AOJu0YzUcrgS9gA56Sx2fc6s6KB/M45JcsREeAmXagbgKiFcZnZluEDD
-	pdWH8uY6crGPy6I9As3G58+pyRoujfhJ4M9+0YjNXp6my/CF
-X-Google-Smtp-Source: AGHT+IHVoTWcD6YUsfA9tfQOyJ0G1pEtnNjMqA02rEokMU4PiBHYiHZgMjHt0KwxaTfuqqvt1Y/Tilb/0X/B7+9cJlCiEdn4ZbNA
+        bh=DXwyeYXdRfYZvJbbFR7Covv6HPd1SVxlTSYepV/tmjs=;
+        b=bjT23zCX9q709/W6WDy85X8uko9lf9DljiCvfGm0J2cuDAR9oDZKutA2tO6sqkKWcY
+         hxSpvrtwRD0MbFQsIE5szvaNIVNY8N2SuZ5ZzE1irPmEcOzxUjPWZoz7/D+J04SlqL6b
+         SkLhzgOLOX00LwLaR0BFsiFigT8AA7Hk47h4BCdu9NiNsoNoVryGEgfHCbBAIdxcCP3O
+         Cr6u7TydEHyYeJa3+qc8epyLODYT50K9LvC4HQJi5B3jTdHgDAId2RK09MGcGWcn4nqj
+         862Pc9WHpjW98MRMqURb9uMr+jtSAw7OTEeDZKiQm0hmBiEJ2o4GYCH71LQo+YzvFobB
+         nTWg==
+X-Gm-Message-State: AOJu0Yw0MnDe+bEL0yiWBoh916i1HLtnDcSVVzRSEMeNW/eEbeozkkmv
+	rxlqYtXKI/QFICkz4zWdfG4=
+X-Google-Smtp-Source: AGHT+IFW9Z6b7lLJ7ZH3OAu/H5jbs1/ChicKVm8Mq264VDiXgiAV7q+i5W4z0XnwH6R5/y7akufhXA==
+X-Received: by 2002:a05:620a:2407:b0:76f:1aaa:1bee with SMTP id d7-20020a05620a240700b0076f1aaa1beemr14714939qkn.62.1693938167738;
+        Tue, 05 Sep 2023 11:22:47 -0700 (PDT)
+Received: from [10.69.73.253] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id b10-20020a05620a126a00b007671678e325sm4271375qkl.88.2023.09.05.11.22.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Sep 2023 11:22:46 -0700 (PDT)
+Message-ID: <4abb799a-1b9d-42f3-aaf7-b8248ccaa467@gmail.com>
+Date: Tue, 5 Sep 2023 11:22:44 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a17:90b:8c:b0:26b:b78:c94f with SMTP id
- bb12-20020a17090b008c00b0026b0b78c94fmr3267961pjb.7.1693935364108; Tue, 05
- Sep 2023 10:36:04 -0700 (PDT)
-Date: Tue, 05 Sep 2023 10:36:03 -0700
-In-Reply-To: <000000000000273d0105ff97bf56@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000a677fc0604a00fef@google.com>
-Subject: Re: [syzbot] [mm?] WARNING in try_grab_page
-From: syzbot <syzbot+9b82859567f2e50c123e@syzkaller.appspotmail.com>
-To: akpm@linux-foundation.org, axboe@kernel.dk, davem@davemloft.net, 
-	david@redhat.com, dhowells@redhat.com, edumazet@google.com, 
-	gregkh@linuxfoundation.org, herbert@gondor.apana.org.au, jlayton@kernel.org, 
-	kuba@kernel.org, linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mm@kvack.org, nspmangalore@gmail.com, pabeni@redhat.com, 
-	patches@lists.linux.dev, rohiths.msft@gmail.com, sashal@kernel.org, 
-	stable@vger.kernel.org, stfrench@microsoft.com, svens@linux.ibm.com, 
-	syzkaller-bugs@googlegroups.com, willy@infradead.org
-Content-Type: text/plain; charset="UTF-8"
-
-syzbot has found a reproducer for the following issue on:
-
-HEAD commit:    3f86ed6ec0b3 Merge tag 'arc-6.6-rc1' of git://git.kernel.o..
-git tree:       upstream
-console+strace: https://syzkaller.appspot.com/x/log.txt?x=139ce690680000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=ff0db7a15ba54ead
-dashboard link: https://syzkaller.appspot.com/bug?extid=9b82859567f2e50c123e
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10b0c620680000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=152da4e7a80000
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/6f4f710c5033/disk-3f86ed6e.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/555548fedbdc/vmlinux-3f86ed6e.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/c06d7c39bbc0/bzImage-3f86ed6e.xz
-mounted in repro: https://storage.googleapis.com/syzbot-assets/120cc7b707b8/mount_0.gz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+9b82859567f2e50c123e@syzkaller.appspotmail.com
-
-XFS (loop0): Quotacheck needed: Please wait.
-XFS (loop0): Quotacheck: Done.
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 5030 at mm/gup.c:229 try_grab_page+0x287/0x460
-Modules linked in:
-CPU: 1 PID: 5030 Comm: syz-executor118 Not tainted 6.5.0-syzkaller-11704-g3f86ed6ec0b3 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-RIP: 0010:try_grab_page+0x287/0x460 mm/gup.c:229
-Code: 01 49 8d 7e 60 be 04 00 00 00 e8 54 41 18 00 f0 41 83 46 60 01 42 80 3c 2b 00 0f 85 6a ff ff ff e9 6d ff ff ff e8 b9 55 be ff <0f> 0b bb f4 ff ff ff eb b6 e8 ab 55 be ff 49 ff ce e9 ca fd ff ff
-RSP: 0018:ffffc90003a6ee88 EFLAGS: 00010293
-RAX: ffffffff81cf4377 RBX: 0000000000000000 RCX: ffff888025da0000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000001
-RBP: 000000000000000e R08: ffffffff81cf418c R09: 1ffffd400039097e
-R10: dffffc0000000000 R11: fffff9400039097f R12: ffffea0001c84bf4
-R13: dffffc0000000000 R14: ffffea0001c84bc0 R15: ffffea0001c84bc0
-FS:  0000555555acb380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020008000 CR3: 00000000736e9000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- follow_page_pte+0x560/0x18f0 mm/gup.c:651
- follow_pud_mask mm/gup.c:765 [inline]
- follow_p4d_mask mm/gup.c:782 [inline]
- follow_page_mask+0x7dc/0xe20 mm/gup.c:832
- __get_user_pages+0x643/0x15e0 mm/gup.c:1237
- __get_user_pages_locked mm/gup.c:1504 [inline]
- get_dump_page+0x146/0x2b0 mm/gup.c:2018
- dump_user_range+0x126/0x910 fs/coredump.c:913
- elf_core_dump+0x3b75/0x4490 fs/binfmt_elf.c:2142
- do_coredump+0x1b73/0x2ab0 fs/coredump.c:764
- get_signal+0x145e/0x1840 kernel/signal.c:2878
- arch_do_signal_or_restart+0x96/0x860 arch/x86/kernel/signal.c:309
- exit_to_user_mode_loop+0x6a/0x100 kernel/entry/common.c:168
- exit_to_user_mode_prepare+0xb1/0x140 kernel/entry/common.c:204
- __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
- syscall_exit_to_user_mode+0x64/0x280 kernel/entry/common.c:296
- do_syscall_64+0x4d/0xc0 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fb68edcf0f9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 21 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffc8b18d558 EFLAGS: 00000246 ORIG_RAX: 000000000000004d
-RAX: ffffffffffffffe5 RBX: 0000000000000003 RCX: 00007fb68edcf0f9
-RDX: 0000000000000000 RSI: 0000000100000001 RDI: 0000000000000006
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000555500000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00000000000f4240
-R13: 00007ffc8b18d7c8 R14: 0000000000000001 R15: 00007ffc8b18d590
- </TASK>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 00/31] 6.1.52-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230904182946.999390199@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ HGuUuzv+GKZ6nsysJw==
+In-Reply-To: <20230904182946.999390199@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
----
-If you want syzbot to run the reproducer, reply with:
-#syz test: git://repo/address.git branch-or-commit-hash
-If you attach or paste a git patch, syzbot will apply it before testing.
+
+On 9/4/2023 11:30 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.52 release.
+> There are 31 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 06 Sep 2023 18:29:29 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.52-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
