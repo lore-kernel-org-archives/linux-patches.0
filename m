@@ -1,136 +1,197 @@
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2081.outbound.protection.outlook.com [40.107.102.81])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB2BCA49
-	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 11:09:16 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aGA0HWu22rXfcXqI06WM6I0fJwrbhvgtPYlEfxUX1FClhAhn6GralvZkQ1bjE7AYXZiauS1B7kaBQ/U4WsdMajyGXmljDBxxrE106q/vp56yxafkN7d/AFsRDJrZJY/1n/GN589HAYt3PsBsk/UEbM5cNoicT1PMYIWsdktGKWb7qV96sNprnb/1GeXvRwE6Z9zF86cRSv0eUuf69V8CwMdtCMFI8sTdlOvLDt9FThj39zn2kSaz2hnHT1qzK94MhJW0ygvR6WMHObauP1J8xZvqozcUURZKLjeLleQcuxHHIrpl8v5kH0sIAsxn6Ef37w4PUIUADJ2xxcHR2S1Sbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cJM1tcRTKaBEkCCJX2zkRTTsvOBL40nz1wSiazdBVSA=;
- b=E03hKMf+b76DL6/XojjDDPLyGLRwbxsJn+K/doSu3nFy2KuUKyIB7hVIfJSNN0sTUSKqYUqqMRJYvVTtuQpVENW6KY3fxs0TS7WnzrjYUYMA4segdVG73sHcRXtAj+flf51zd6JwElQH2OSb89SDpbsCBrTa3CBkqVdoe92KU6zLyhiszCB/1Xn2nFoZTYWBMdgMiwSp8M75uiAdt8DiCQ9ioa1W++7UsUHMVTQWpHGkw3bCTToC8iVan2LyMrWUaJA+Z4xm+YEncsxh0WeljV3FSUkldpb/qtR2ziq118XcH6aDL/bzqk/zVjpe3UO4UUE94vA0GTD7MwE4JVLsWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cJM1tcRTKaBEkCCJX2zkRTTsvOBL40nz1wSiazdBVSA=;
- b=Aibu6vd9HQNGwK9yRaet19B4SoKKEgKJ9hwUK94aeibhJ65E3xmMAv48IK8VibeeFnejjxe9+phSyRvJwsEHIOHBzuN6BQpfEQz575UYyZY23jNuSvGP5k9uN4RtgKio2U8dcc1PTrnxH3KKA7d/pZGybq8LuP5YUDaVLmAvu+Jn0WAouXuCXeuPbuUi8aEeEDEcntQquIwEplAGVqeZWzWOSimRlxUVYV4aYngJ8fdLVNGscHW2nGV23TwzpXptEZc4XMDO/s8IFcL4aK8u520oxiUuJnceqiXWZFhjZ3fFFGt8rqTECgX2lMW4FYQpAbz/X2EfjhShYIhBFT2kmQ==
-Received: from CH0P221CA0042.NAMP221.PROD.OUTLOOK.COM (2603:10b6:610:11d::26)
- by SA1PR12MB7318.namprd12.prod.outlook.com (2603:10b6:806:2b3::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.33; Tue, 5 Sep
- 2023 11:09:12 +0000
-Received: from DS2PEPF0000343C.namprd02.prod.outlook.com
- (2603:10b6:610:11d:cafe::9e) by CH0P221CA0042.outlook.office365.com
- (2603:10b6:610:11d::26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.33 via Frontend
- Transport; Tue, 5 Sep 2023 11:09:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DS2PEPF0000343C.mail.protection.outlook.com (10.167.18.39) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6768.25 via Frontend Transport; Tue, 5 Sep 2023 11:09:11 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 5 Sep 2023
- 04:08:58 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Tue, 5 Sep 2023
- 04:08:57 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Tue, 5 Sep 2023 04:08:57 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
-	<stable@vger.kernel.org>
-Subject: Re: [PATCH 6.5 00/34] 6.5.2-rc1 review
-In-Reply-To: <20230904182948.594404081@linuxfoundation.org>
-References: <20230904182948.594404081@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A72DDA8
+	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 16:31:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE39C433C8
+	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 16:31:22 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="lC+6OB+C"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 5 Sep 2023 17:31:19 +0100
+Resent-Message-ID: <ZPdX18JfW7EFzsGr@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Tue, 05 Sep 2023 15:07:49 +0100
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=DI8x=EV=baylibre.com=jneanne@kernel.org>)
+	id 1qdWiZ-00AF95-1o
+	for broonie@sirena.co.uk; Tue, 05 Sep 2023 15:07:49 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 4089760919
+	for <broonie@sirena.co.uk>; Tue,  5 Sep 2023 14:07:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id BC9C0C433CA; Tue,  5 Sep 2023 14:07:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B3008C433C7
+	for <broonie@kernel.org>; Tue,  5 Sep 2023 14:07:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B3008C433C7
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2bcb89b4767so38795361fa.3
+        for <broonie@kernel.org>; Tue, 05 Sep 2023 07:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1693922858; x=1694527658; darn=kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iAbMWGT5YKvgyZeI9ML3fVvXmxnZ59xnof4HH5lFrT0=;
+        b=lC+6OB+CWMpIebqnk0W7g9qonhURKZZ4R6naYVRixz1nmnjZHqVWIHnwHuxPKaOn0p
+         KlsMvROHi8QWgeQipzLGFy3cZqjVgfJnTA4QwkcwrvKxKEBC3gsooh0z5e/4bsdn8L6w
+         ubkVUWG8td2OxzFqjapOXV6i9zxryKLzv7tWKeFB4RdFHcFCKNlN7vjmuBxiRGIblP1F
+         9oTK3RX4cgiBB6zXnC90selgXtVmcyVlSaekRs34OVB5zU1Mp/IIDLTAryu1A/JwBlcf
+         Fs2KtvroSbd5f8d2jZPZVbdFp2WAxckalg1J6C85BvnhnIwVA8mpe3v4MStVgVv/phpV
+         IEaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693922858; x=1694527658;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iAbMWGT5YKvgyZeI9ML3fVvXmxnZ59xnof4HH5lFrT0=;
+        b=UbVRAZdAuffZeOUiW+NmgeGehkO6o83mCPULMfeodBnd7py0FDOnu+WSjCLcIP0o1H
+         wix4GmfHGm05Q5h1ROM+/qpdaPytPfUl+VJvLqVHTTCZCYsqdfUek9PiDo9Fln1/tf1b
+         Qb/RQ2BHO2G/5GPQs65+pkVcECVsznkQwo1RJhTu+o8LV+M5ckMhERcZpSJKyG44dUp1
+         cbINuyo+XUl2zOtyN7Yf+CZ56r04zQlDB22+dpvcfYW0gjpbNld9zRzLei73C4Ij1gZV
+         n30tFTuJTG+/M9Y8HaeNgLwmoGE0gPLzXeH6rtbsQelIjS4W9u4NLzItW5GMqyF3CsL1
+         /Ohw==
+X-Gm-Message-State: AOJu0YwqPu9zTwND2F9kzSgdfKvxbW4+lQN4GiPx+rin45sHIaf4ml00
+	HImmpmk497PSYc8OA8zhNicvsg==
+X-Google-Smtp-Source: AGHT+IFSVjTm7ZrO3NeGlfqLpx3B9hLTXvmgWHioUcoPOtejX8IkvEA1LRIWSqy+3uvaYrrwEwWJEw==
+X-Received: by 2002:a05:6512:4005:b0:500:bffa:5b86 with SMTP id br5-20020a056512400500b00500bffa5b86mr10652186lfb.6.1693922857788;
+        Tue, 05 Sep 2023 07:07:37 -0700 (PDT)
+Received: from [127.0.1.1] ([85.68.201.192])
+        by smtp.gmail.com with ESMTPSA id a2-20020adff7c2000000b003177074f830sm17617239wrq.59.2023.09.05.07.07.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Sep 2023 07:07:37 -0700 (PDT)
+From: Jerome Neanne <jneanne@baylibre.com>
+Date: Tue, 05 Sep 2023 16:07:34 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <9f9043cd-149f-407f-9861-7885018b3aa5@rnnvmail204.nvidia.com>
-Date: Tue, 5 Sep 2023 04:08:57 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF0000343C:EE_|SA1PR12MB7318:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5f082927-c441-47e4-10b1-08dbae0088ba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	8saBYf7VBdu46dF3bTNtAyDYZB45S6OSLC7QtNYbk3U5GSxliv1kgF1zoJXh2fcaxBq5sNH8YcGhuCeZLf0hhVqaKRdpedjeUWpNNy2JPxzGY2P/PwhbjKGiGNFJG2glmpBUWJFCQP08DeqrjE1hY7WY6utiDM6gQ7DOLxm4XFdQV/hEtRP/9VrQHGuib9G/qlMP7aLzONznae3QMZErXPfPm/To2KYY3uBxwbylvFdRPpMTqsTdLeAupaWIqOyWICLz5H7bWH3hhFdpYMxg1x1+kookjIKaj6iuoX2YvLu22EbbYn7OXMWiwVYDH/EyDG/OHAnyywOYPsNLuXKLn2J3H0h3z//XC2JOZVuWINqSouqeShi+P55N/G3Tp5mndD4lZPyGwMtROCXH5PiU81n7KmM8SBXmTLbl3jzUQtadpzrJArpYGpGqj6PsOFt968vei4TgrhS5ec/M53qjVU8kvINaRPzH/AuRXDhztmhoNENLzn3HEfcz+egZ597Q7gw3J+sczx60CfTM5EYrv5YggCcMlsz8GM4qUTOG7rqpNe8PQZazrG2HxbD4AH+YQNnyEjjyou5amG1tPGGrs5m0nMZ3F3PQ8QtXojnMhwukwly1cCFsuiNIQrnDZbOErvd7Es6Un/zNDnMg50WxLIV5wqCslLyrDOAf6TTqNjWL9e0rB34T4oyahXGCGde4hVCmZMq1eYtD3L/ADG5g3LoOIZTXFRc4fV/yolZYLmrrB1WwMycBtUhWneEoMg7E0FfXb8JVW2uSpdzywmcNePrnjrXEtLquYvV8I/NvkHQ=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(346002)(39860400002)(376002)(136003)(396003)(82310400011)(186009)(1800799009)(451199024)(40470700004)(46966006)(36840700001)(40480700001)(26005)(40460700003)(86362001)(4326008)(7416002)(5660300002)(8676002)(31696002)(2906002)(8936002)(70586007)(41300700001)(316002)(6916009)(70206006)(54906003)(356005)(7636003)(478600001)(966005)(426003)(47076005)(336012)(82740400003)(36860700001)(31686004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2023 11:09:11.8623
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5f082927-c441-47e4-10b1-08dbae0088ba
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS2PEPF0000343C.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7318
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230828-tps6594_random_boot_crash_fix-v1-1-f29cbf9ddb37@baylibre.com>
+X-B4-Tracking: v=1; b=H4sIACY292QC/x2OUQrCMBAFr1LybTCm1dReRSRsmo1dsEnZLSKU3
+ t3Uz4F5w9uUIBOKGppNMX5IqOQKl1OjxgnyCzXFysoa25re9npd5Ha9d54hxzL7UMrqRwaZfKK
+ vTq4DkyK61hlVGwEEdajuOB2VGSi/KeN5BlmRD2NhrMP/g8dz33/u9MltkQAAAA==
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Esteban Blanc <eblanc@baylibre.com>
+Cc: linux-kernel@vger.kernel.org, u-kumar1@ti.com, jpanis@baylibre.com, 
+ khilman@baylibre.com, s.sharma@ti.com, aseketeli@baylibre.com, 
+ Jerome Neanne <jneanne@baylibre.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693922857; l=3254;
+ i=jneanne@baylibre.com; s=20230511; h=from:subject:message-id;
+ bh=CHIa+Z8rM52FfhpakBheBiw1hnuHCRMmo3h835NJgHg=;
+ b=LsSWC8HcosT0dzJLPdifSuV6XggNoku+YfhsWvQXzGQJ6A2M4yrChwgvrts99byziKIr0cD2h
+ DaAAhN9tZfTB5nYWRukslpr8yF5pjHAIIq6h99LboNwgT5JYPKcIs2G
+X-Developer-Key: i=jneanne@baylibre.com; a=ed25519;
+ pk=5rvbqNoG+28jQjC9/50ToY7TgKWf9rJukuCI8b6jkUo=
+X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
+X-SA-Exim-Mail-From: SRS0=DI8x=EV=baylibre.com=jneanne@kernel.org
+Subject: [PATCH] regulator: tps6594-regulator: Fix random kernel crash
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: ZrncKxmSJOCK
 
-On Mon, 04 Sep 2023 19:29:47 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.2 release.
-> There are 34 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 06 Sep 2023 18:29:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Random kernel crash detected in TI CICD when regulator driver is added.
+This is root caused to irq index increment being done twice causing
+irq_data being allocated outside of the range.
 
-All tests passing for Tegra ...
+- Rework tps6594_request_reg_irqs with correct index increment
+- Adjust irq_data kmalloc size to the exact size needed for the device
 
-Test results for stable-v6.5:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+This has been reported on TI mainline. No public bug report associated.
 
-Linux version:	6.5.2-rc1-g3b1345379dfa
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+Reported-by: Udit Kumar <u-kumar1@ti.com>
+Fixes: f17ccc5deb4d ("regulator: tps6594-regulator: Add driver for TI TPS6594 regulators")
+Signed-off-by: Jerome Neanne <jneanne@baylibre.com>
+---
+Random kernel crash detected in TI CICD when regulator driver is added.
+This is root caused to irq index increment being done twice causing
+irq_data being allocated outside of the range.
+---
+ drivers/regulator/tps6594-regulator.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+diff --git a/drivers/regulator/tps6594-regulator.c b/drivers/regulator/tps6594-regulator.c
+index d5a574ec6d12..47c3b7efe145 100644
+--- a/drivers/regulator/tps6594-regulator.c
++++ b/drivers/regulator/tps6594-regulator.c
+@@ -384,21 +384,19 @@ static int tps6594_request_reg_irqs(struct platform_device *pdev,
+ 		if (irq < 0)
+ 			return -EINVAL;
+ 
+-		irq_data[*irq_idx + j].dev = tps->dev;
+-		irq_data[*irq_idx + j].type = irq_type;
+-		irq_data[*irq_idx + j].rdev = rdev;
++		irq_data[*irq_idx].dev = tps->dev;
++		irq_data[*irq_idx].type = irq_type;
++		irq_data[*irq_idx].rdev = rdev;
+ 
+ 		error = devm_request_threaded_irq(tps->dev, irq, NULL,
+-						  tps6594_regulator_irq_handler,
+-						  IRQF_ONESHOT,
+-						  irq_type->irq_name,
+-						  &irq_data[*irq_idx]);
+-		(*irq_idx)++;
++						  tps6594_regulator_irq_handler, IRQF_ONESHOT,
++						  irq_type->irq_name, &irq_data[*irq_idx]);
+ 		if (error) {
+ 			dev_err(tps->dev, "tps6594 failed to request %s IRQ %d: %d\n",
+ 				irq_type->irq_name, irq, error);
+ 			return error;
+ 		}
++		(*irq_idx)++;
+ 	}
+ 	return 0;
+ }
+@@ -420,8 +418,8 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
+ 	int error, i, irq, multi, delta;
+ 	int irq_idx = 0;
+ 	int buck_idx = 0;
+-	int ext_reg_irq_nb = 2;
+-
++	size_t ext_reg_irq_nb = 2;
++	size_t reg_irq_nb;
+ 	enum {
+ 		MULTI_BUCK12,
+ 		MULTI_BUCK123,
+@@ -484,15 +482,16 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	if (tps->chip_id == LP8764)
++	if (tps->chip_id == LP8764) {
+ 		/* There is only 4 buck on LP8764 */
+ 		buck_configured[4] = 1;
++		reg_irq_nb = size_mul(REGS_INT_NB, (BUCK_NB - 1));
++	} else {
++		reg_irq_nb = size_mul(REGS_INT_NB, (size_add(BUCK_NB, LDO_NB)));
++	}
+ 
+-	irq_data = devm_kmalloc_array(tps->dev,
+-				REGS_INT_NB * sizeof(struct tps6594_regulator_irq_data),
+-				ARRAY_SIZE(tps6594_bucks_irq_types) +
+-				ARRAY_SIZE(tps6594_ldos_irq_types),
+-				GFP_KERNEL);
++	irq_data = devm_kmalloc_array(tps->dev, reg_irq_nb,
++				      sizeof(struct tps6594_regulator_irq_data), GFP_KERNEL);
+ 	if (!irq_data)
+ 		return -ENOMEM;
+ 
 
-Jon
+---
+base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
+change-id: 20230828-tps6594_random_boot_crash_fix-f74a0fde7370
+
+Best regards,
+-- 
+Jerome Neanne <jneanne@baylibre.com>
+
