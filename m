@@ -1,252 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA00A53;
-	Tue,  5 Sep 2023 23:06:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837C9C433CA;
-	Tue,  5 Sep 2023 23:06:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693955204;
-	bh=QQ+Y7wEtz+kXYSbt5wclwVZagbHgBVjGTkbxadwLDG0=;
-	h=From:Date:Subject:To:Cc:From;
-	b=FQzH5/VFiTVnvr6iYubVj9yTYZFPmX0ybuOzE//f4oGSKkk2XOOepZWVHH+ajJVkB
-	 +dM4j5mxx/U/oPAqWnOVEIIJVuq3wNOM5DHdYw5tEnrDhf1cdeLNvjMunb4scJT8mr
-	 mzKJzZ1gJy8DNl+Ogc6k4mqMtbQQ0mgR3zbgXOQufXc4/NwTU+0hXrSDRZ4/jr4OUX
-	 p/cCxGkTIVWycwODghk0/rsKbpm+EW/aY4vn5BdLJCqHr42quDc+4ADN+WsqRAB6MZ
-	 7v42QmdOumES3w0fzC8K7tcLiofVuylbVF0DdeFhS3DkjxBdiDAsff+7KtIlwiGLi4
-	 IvSoIztU7z2hQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 05 Sep 2023 16:06:33 -0700
-Subject: [PATCH] LoongArch: Drop unused parse_r and parse_v macros
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5343CA53
+	for <patches@lists.linux.dev>; Tue,  5 Sep 2023 23:08:41 +0000 (UTC)
+Received: from eig-obgw-5001a.ext.cloudfilter.net ([10.0.29.139])
+	by cmsmtp with ESMTP
+	id dayZqmLb9ez0Cdf88qpxuH; Tue, 05 Sep 2023 23:06:44 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id df8Rqhgt78qtodf8Rqyyxs; Tue, 05 Sep 2023 23:07:04 +0000
+X-Authority-Analysis: v=2.4 cv=RL2goqu+ c=1 sm=1 tr=0 ts=64f7b498
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=BdUrMQZ4DDSfPx4pXyF5/RoPwswM5R4DD95hxZH4J4w=; b=dvkzLqNFhKquMUAAFw5fccaz4j
+	1dVVH2GxbeWBcK792bj+3AkSitdoeghuO0EIZsedBQTq+bMt1D04w+TOs6AOBJSPWaJzojz10KI+J
+	nzDj+nUrAEXRk+Uv+ZwTxY0zOFGADxBLV0r9NtGm7Tui94SLdoO5DZt8ZWfifo6WEq8RncFSVmnOO
+	IIt5qWhWqTYyNFEdetsxJ+NwbxgPjpOoMijWB5dt2lmCQ15UkLaWTBAj9bKjxx6fI+Iz6r0vcyJo5
+	jtOga+G4dVpSo1IcEFyfeKB3nslzxusI59w9fcoN3cVBW/U3UMeTQbqKNN8xZzu+6aPp2NbVXzFzq
+	hzc4+tbw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:54294 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qdf8P-002jd7-0x;
+	Tue, 05 Sep 2023 17:07:01 -0600
+Subject: Re: [PATCH 6.4 00/32] 6.4.15-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230904182947.899158313@linuxfoundation.org>
+In-Reply-To: <20230904182947.899158313@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <bd2a7cb2-0ad4-6989-ae1b-936ef64c2257@w6rz.net>
+Date: Tue, 5 Sep 2023 16:06:59 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230905-loongarch-fix-clang-lto-parse_r-v1-1-d991ee630222@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAHi092QC/x2NUQqDMBAFryL73YVoFW2vUqTE9KkLIZGNSEG8e
- 5d+DgwzJxWooNCzOklxSJGcDOpbRWH1aQHLx5ga19zdw3Ucc06L17DyLF8O0RyOe+bNa8FbeZj
- aYe5rAD6QVTaFif/Da7yuH/SVVPpxAAAA
-To: chenhuacai@kernel.org, kernel@xen0n.name
-Cc: loongarch@lists.linux.dev, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5128; i=nathan@kernel.org;
- h=from:subject:message-id; bh=QQ+Y7wEtz+kXYSbt5wclwVZagbHgBVjGTkbxadwLDG0=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCnft7Q0qL68Ln+9ovX/j3esT68dNljR51097+mBN9cfy
- 9eUbBQ81lHKwiDGwSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmYp7CyHD2rKqyh+bkzwzP
- Hbsu+GsfXLXFQ9t5e43pZb+TTAY8nK8Y/hlP+MHmuuiRwcrXEtrnOeKc/a1V+xznM2xPWtnNp3t
- UjxUA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qdf8P-002jd7-0x
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:54294
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfC+RtHPEHsC5ItK6rtMFTac2teVd0oQ28qBErsrEJNSKks15XQQDmCz1gvFyxCM6IYfExsmyeIywAEDasx8Pb/vC+KrXxMRcUTQqDCBRawci3xc2CmHU
+ MXvYdbY7kN8+zGJAKyoQOwfXUxtEtEqE6ymI+zm2eKRlI62JZt9M+W6QCN3hdP5IPjLHlah2Z9zLhg==
 
-When building with CONFIG_LTO_CLANG_FULL, there are several errors due
-to the way that parse_r is defined with an __asm__ statement in a
-header:
+On 9/4/23 11:29 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.15 release.
+> There are 32 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 06 Sep 2023 18:29:29 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.15-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-  ld.lld: error: ld-temp.o <inline asm>:105:1: macro 'parse_r' is already defined
-  .macro  parse_r var r
-  ^
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-This was an issue for arch/mips as well, which was resolved by
-commit 67512a8cf5a7 ("MIPS: Avoid macro redefinitions").
-
-However, parse_r is unused in arch/loongarch after
-commit 83d8b38967d2 ("LoongArch: Simplify the invtlb wrappers"), so
-doing the same change does not make much sense now. Just remove parse_r
-(and parse_v, which is also unused) to resolve the redefinition error.
-If it needs to be brought back due to an actual use, it should be
-brought back with the same changes as the aforementioned arch/mips
-commit.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1924
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/loongarch/include/asm/asmmacro.h  | 107 ---------------------------------
- arch/loongarch/include/asm/loongarch.h |  43 -------------
- 2 files changed, 150 deletions(-)
-
-diff --git a/arch/loongarch/include/asm/asmmacro.h b/arch/loongarch/include/asm/asmmacro.h
-index 8aaecd85aa81..c9544f358c33 100644
---- a/arch/loongarch/include/asm/asmmacro.h
-+++ b/arch/loongarch/include/asm/asmmacro.h
-@@ -10,113 +10,6 @@
- #include <asm/fpregdef.h>
- #include <asm/loongarch.h>
- 
--	.macro	parse_v var val
--	\var	= \val
--	.endm
--
--	.macro	parse_r var r
--	\var	= -1
--	.ifc	\r, $r0
--	\var	= 0
--	.endif
--	.ifc	\r, $r1
--	\var	= 1
--	.endif
--	.ifc	\r, $r2
--	\var	= 2
--	.endif
--	.ifc	\r, $r3
--	\var	= 3
--	.endif
--	.ifc	\r, $r4
--	\var	= 4
--	.endif
--	.ifc	\r, $r5
--	\var	= 5
--	.endif
--	.ifc	\r, $r6
--	\var	= 6
--	.endif
--	.ifc	\r, $r7
--	\var	= 7
--	.endif
--	.ifc	\r, $r8
--	\var	= 8
--	.endif
--	.ifc	\r, $r9
--	\var	= 9
--	.endif
--	.ifc	\r, $r10
--	\var	= 10
--	.endif
--	.ifc	\r, $r11
--	\var	= 11
--	.endif
--	.ifc	\r, $r12
--	\var	= 12
--	.endif
--	.ifc	\r, $r13
--	\var	= 13
--	.endif
--	.ifc	\r, $r14
--	\var	= 14
--	.endif
--	.ifc	\r, $r15
--	\var	= 15
--	.endif
--	.ifc	\r, $r16
--	\var	= 16
--	.endif
--	.ifc	\r, $r17
--	\var	= 17
--	.endif
--	.ifc	\r, $r18
--	\var	= 18
--	.endif
--	.ifc	\r, $r19
--	\var	= 19
--	.endif
--	.ifc	\r, $r20
--	\var	= 20
--	.endif
--	.ifc	\r, $r21
--	\var	= 21
--	.endif
--	.ifc	\r, $r22
--	\var	= 22
--	.endif
--	.ifc	\r, $r23
--	\var	= 23
--	.endif
--	.ifc	\r, $r24
--	\var	= 24
--	.endif
--	.ifc	\r, $r25
--	\var	= 25
--	.endif
--	.ifc	\r, $r26
--	\var	= 26
--	.endif
--	.ifc	\r, $r27
--	\var	= 27
--	.endif
--	.ifc	\r, $r28
--	\var	= 28
--	.endif
--	.ifc	\r, $r29
--	\var	= 29
--	.endif
--	.ifc	\r, $r30
--	\var	= 30
--	.endif
--	.ifc	\r, $r31
--	\var	= 31
--	.endif
--	.iflt	\var
--	.error	"Unable to parse register name \r"
--	.endif
--	.endm
--
- 	.macro	cpu_save_nonscratch thread
- 	stptr.d	s0, \thread, THREAD_REG23
- 	stptr.d	s1, \thread, THREAD_REG24
-diff --git a/arch/loongarch/include/asm/loongarch.h b/arch/loongarch/include/asm/loongarch.h
-index d1324e8accfe..33531d432b49 100644
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -12,49 +12,6 @@
- #ifndef __ASSEMBLY__
- #include <larchintrin.h>
- 
--/*
-- * parse_r var, r - Helper assembler macro for parsing register names.
-- *
-- * This converts the register name in $n form provided in \r to the
-- * corresponding register number, which is assigned to the variable \var. It is
-- * needed to allow explicit encoding of instructions in inline assembly where
-- * registers are chosen by the compiler in $n form, allowing us to avoid using
-- * fixed register numbers.
-- *
-- * It also allows newer instructions (not implemented by the assembler) to be
-- * transparently implemented using assembler macros, instead of needing separate
-- * cases depending on toolchain support.
-- *
-- * Simple usage example:
-- * __asm__ __volatile__("parse_r addr, %0\n\t"
-- *			"#invtlb op, 0, %0\n\t"
-- *			".word ((0x6498000) | (addr << 10) | (0 << 5) | op)"
-- *			: "=r" (status);
-- */
--
--/* Match an individual register number and assign to \var */
--#define _IFC_REG(n)				\
--	".ifc	\\r, $r" #n "\n\t"		\
--	"\\var	= " #n "\n\t"			\
--	".endif\n\t"
--
--__asm__(".macro	parse_r var r\n\t"
--	"\\var	= -1\n\t"
--	_IFC_REG(0)  _IFC_REG(1)  _IFC_REG(2)  _IFC_REG(3)
--	_IFC_REG(4)  _IFC_REG(5)  _IFC_REG(6)  _IFC_REG(7)
--	_IFC_REG(8)  _IFC_REG(9)  _IFC_REG(10) _IFC_REG(11)
--	_IFC_REG(12) _IFC_REG(13) _IFC_REG(14) _IFC_REG(15)
--	_IFC_REG(16) _IFC_REG(17) _IFC_REG(18) _IFC_REG(19)
--	_IFC_REG(20) _IFC_REG(21) _IFC_REG(22) _IFC_REG(23)
--	_IFC_REG(24) _IFC_REG(25) _IFC_REG(26) _IFC_REG(27)
--	_IFC_REG(28) _IFC_REG(29) _IFC_REG(30) _IFC_REG(31)
--	".iflt	\\var\n\t"
--	".error	\"Unable to parse register name \\r\"\n\t"
--	".endif\n\t"
--	".endm");
--
--#undef _IFC_REG
--
- /* CPUCFG */
- #define read_cpucfg(reg) __cpucfg(reg)
- 
-
----
-base-commit: 68800bf8cd1a5e392089f10c58730a4e6a82e41d
-change-id: 20230905-loongarch-fix-clang-lto-parse_r-8b48f71eeeac
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+Tested-by: Ron Economos <re@w6rz.net>
 
