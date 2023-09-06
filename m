@@ -1,105 +1,115 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFA66AB3
-	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 20:13:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694031213; x=1725567213;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=zX9IKg4GJKWsi/mIULaeZN5e6VR5b1qoI9Vm93n2kY8=;
-  b=el8bO5u6MVWIRQ9bF4SUJAdMhE8YDsa2zX6LoRmpONj3wjCpPD/nBa/T
-   5EWUip82vjC6N8EedVarNso7Ck3xk6x6C5+ek7mIkv8jRawbcMbjiel0B
-   P818WbMUa56Uqwz5MpvpyGj2j1yIHOtyi5MJOmL5rv5Tw8bAaeQ1/B/FA
-   j3l/86E3k1JivRPWHXm9BS9B71adFfn+wEMXHsgd6NXPBIORhBnhaAKXD
-   FEgWit5XKsvZZtjcfE/G2LNgohu/+QydsyW8/e4PM2sGF36GrFmiIDEpX
-   qkKxp54H1jI1EKuQ3pNk8mKY01A/xuqtnte5fS1UlDhiFQFhCzGm0KSL7
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="357484739"
-X-IronPort-AV: E=Sophos;i="6.02,233,1688454000"; 
-   d="scan'208";a="357484739"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:13:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="691431871"
-X-IronPort-AV: E=Sophos;i="6.02,233,1688454000"; 
-   d="scan'208";a="691431871"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:13:30 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1qdytz-0079B0-0r;
-	Wed, 06 Sep 2023 23:13:27 +0300
-Date: Wed, 6 Sep 2023 23:13:27 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v2 3/3] platform/x86: intel_scu_ipc: Fail IPC send if
- still busy
-Message-ID: <ZPjdZ3xNmBEBvNiS@smile.fi.intel.com>
-References: <20230906180944.2197111-1-swboyd@chromium.org>
- <20230906180944.2197111-4-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22AA6AB3
+	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 20:14:57 +0000 (UTC)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-500b66f8b27so286632e87.3
+        for <patches@lists.linux.dev>; Wed, 06 Sep 2023 13:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1694031295; x=1694636095; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/WPzah6a0gawYTHXatiWeFjlWd86MLCYavR2ag2EMlk=;
+        b=SWMfZneR6SMEzPxAAtFHOyOMFDfjPHA7/lK7SNyEoEDTC9EsQIvKzl0aAdK6/yQJNu
+         rlHfS3P/LJzb43frDCESqnxBcJS8JcA/SvtL9hbxZlmzRaynSD8GpaqUeAPIv4W2c9+9
+         OisKM0QnXqOwvHthxl9JkBiO3kzKbZlkqjW9I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694031295; x=1694636095;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/WPzah6a0gawYTHXatiWeFjlWd86MLCYavR2ag2EMlk=;
+        b=LahQ49ITVB+XQivw5Zov/eFipZ47bifMMATmCJ9hVpMJW4AErrZj3aCtPHRloUENcT
+         YZJTEHsEXYDz/5eTRM1uWIAexvV/P7pfxhz5lbPuKQOndQ3JI0/REiRxObTx1sL9h/v6
+         cNkz8W4/mh9fia1n01DI4LcVWrJi5Dc5KJ/S6vO+eSJ3vckohniAiMCostkAaE8dKTv5
+         IZKTpCJGyx675pQNIBLFQgdaRWDNKiloGxYyewNvOEuatkvnxa6lAfSxhjIzB0nueQ5f
+         3W9sKJUVzWSHluYtmatBl9L/WrCvIuctkYEyiCwKr97WK9ir8YOT6kWsyUUUbjXg8fUC
+         lAdw==
+X-Gm-Message-State: AOJu0Yzh6hFvFOM2ARg8U11hakSqq+aDXfOfCYGtWMcTMSVxzKCXYdgK
+	xgANorOYnkrcCnAxy7wIGTrPlYgFPl7owzzcCyNN8Q==
+X-Google-Smtp-Source: AGHT+IHGpN/V+yPJHO3CFg5dhUD5tJnDqFY2Ihzc4V7ehcz+vvLZt/aeSmJ7tWFPH7XJJfq/zPjlLQcBvgUGt2PviR4=
+X-Received: by 2002:a05:6512:547:b0:500:c292:e44e with SMTP id
+ h7-20020a056512054700b00500c292e44emr2999496lfl.54.1694031295358; Wed, 06 Sep
+ 2023 13:14:55 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 6 Sep 2023 15:14:54 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230906180944.2197111-4-swboyd@chromium.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <ZPjbZqIQBlIGpoCK@smile.fi.intel.com>
+References: <20230906180944.2197111-1-swboyd@chromium.org> <20230906180944.2197111-2-swboyd@chromium.org>
+ <ZPjbZqIQBlIGpoCK@smile.fi.intel.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 6 Sep 2023 15:14:54 -0500
+Message-ID: <CAE-0n52REGuVrqG8LUdWzjgqAun7uvDFPJeSkjX02OxD=fUhqg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] platform/x86: intel_scu_ipc: Check status after
+ timeout in busy_loop()
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>, Hans de Goede <hdegoede@redhat.com>, 
+	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	Prashant Malani <pmalani@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Sep 06, 2023 at 11:09:43AM -0700, Stephen Boyd wrote:
-> It's possible for interrupts to get significantly delayed to the point
-> that callers of intel_scu_ipc_dev_command() and friends can call the
-> function once, hit a timeout, and call it again while the interrupt
-> still hasn't been processed. This driver will get seriously confused if
-> the interrupt is finally processed after the second IPC has been sent
-> with ipc_command(). It won't know which IPC has been completed. This
-> could be quite disastrous if calling code assumes something has happened
-> upon return from intel_scu_ipc_dev_simple_command() when it actually
-> hasn't.
-> 
-> Let's avoid this scenario by simply returning -EBUSY in this case.
-> Hopefully higher layers will know to back off or fail gracefully when
-> this happens. It's all highly unlikely anyway, but it's better to be
-> correct here as we have no way to know which IPC the status register is
-> telling us about if we send a second IPC while the previous IPC is still
-> processing.
+Quoting Andy Shevchenko (2023-09-06 13:04:54)
+> On Wed, Sep 06, 2023 at 11:09:41AM -0700, Stephen Boyd wrote:
+> > It's possible for the polling loop in busy_loop() to get scheduled away
+> > for a long time.
+> >
+> >   status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
+> >   <long time scheduled away>
+> >   if (!(status & IPC_STATUS_BUSY))
+> >
+> > If this happens, then the status bit could change while the task is
+> > scheduled away and this function would never read the status again after
+> > timing out. Instead, the function will return -ETIMEDOUT when it's
+> > possible that scheduling didn't work out and the status bit was cleared.
+> > Bit polling code should always check the bit being polled one more time
+> > after the timeout in case this happens.
+> >
+> > Fix this by reading the status once more after the while loop breaks.
+>
+> ...
+>
+> >  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+> >  {
+> >       unsigned long end = jiffies + IPC_TIMEOUT;
+> > +     u32 status;
+> >
+> >       do {
+> > -             u32 status;
+> > -
+> >               status = ipc_read_status(scu);
+> >               if (!(status & IPC_STATUS_BUSY))
+>
+> > -                     return (status & IPC_STATUS_ERR) ? -EIO : 0;
+> > +                     goto not_busy;
+>
+> Wouldn't simple 'break' suffice here?
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Yes, at the cost of reading the status again when it isn't busy, or
+checking the busy bit after the loop breaks out and reading it once
+again when it is busy. I suppose the compiler would figure that out and
+optimize so that break would simply goto the return statement.
 
-Also see below.
+The code could look like this without a goto.
 
-...
+	do {
+		status = ipc_read_status(scu);
+		if (!(status & IPC_STATUS_BUSY))
+			break;
+	} while (time_before(jiffies, end));
 
-> @@ -450,6 +468,12 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
->  		return -ENODEV;
->  	}
+	if (status & IPC_STATUS_BUSY)
+		status = ipc_read_status(scu);
 
->  	scu = ipcdev;
-
-Side observation: Isn't this a bug? We should not override the supplied parameter.
-
-> +	err = intel_scu_ipc_busy(scu);
-> +	if (err) {
-> +		mutex_unlock(&ipclock);
-> +		return err;
-> +	}
-> +
->  	cmdval = sub << 12 | cmd;
->  	ipc_command(scu, cmdval);
->  	err = intel_scu_ipc_check_status(scu);
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+	if (status & IPC_STATUS_BUSY)
+		return -ETIMEDOUT;
+	
+	return (status & IPC_STATUS_ERR) ? -EIO : 0;
