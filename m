@@ -1,92 +1,112 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BF911192
-	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 18:12:32 +0000 (UTC)
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-565334377d0so132331a12.2
-        for <patches@lists.linux.dev>; Wed, 06 Sep 2023 11:12:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694023952; x=1694628752; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3gX80LwLt7yqAMwtFkIm6jGbzuAJp27nwGBhP1SlyP8=;
-        b=Vb8HbzOngZ197kXz7WXC0fAM9WErxPHXLVEzrD19wROsvv7ifg9xQnBGQfQgN8IH2s
-         4wtUAEDeDg0B7gklN00ApewvbdeLoPzieqWa71rr7pAUmX/+l098aHYqtr6EIcfbpEJ/
-         EmB+hbMlRbyNlQyN00M14BWCeminCbj1+AGvk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694023952; x=1694628752;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3gX80LwLt7yqAMwtFkIm6jGbzuAJp27nwGBhP1SlyP8=;
-        b=mBRuhtYhSPsAQjeQnLxVmBjzaeC4531xDcYhVguxq5TChuZVutE37xrnQYespdxIHe
-         QOor+bFygDBcmDGZJQXgQsOpWGN+Q18cfBiLp2saVcalsFuu3cgVOJ/gpuHJAJslvHFf
-         Yu49fAu+SqJdJBVDSjwvEhtMAKk/REAxccKCVqA9Ftb2c3fTrIneVN/qLI4SMa3WeLgT
-         AxMUYWjfNc6n4XPe0FpcBIqJekfNAsRxg/143n1tBXbG57ospsYQqXX8XMmb/UwGo3vc
-         N9Ce+MwUuhry1aekBaVR2gcMpd90274s3rPpItuyL5c55ihn6ZDeUUt5vvLaXuVflmP/
-         Nxeg==
-X-Gm-Message-State: AOJu0YyaLRLyh8btdxYKkFapUvpXOgU5qJWgEAEKEm/UmARBWgi2e6DA
-	KoUJ7Dswc99p/rAIXK34VHQxHA==
-X-Google-Smtp-Source: AGHT+IHYryhBVKMRFl+PLP7r/f1UH6A77UNtFPyGP0NNScxozW3TWUyTHquM31nYS+ZjqN4OBSdKsw==
-X-Received: by 2002:a05:6a20:6a04:b0:14d:f087:c0cc with SMTP id p4-20020a056a206a0400b0014df087c0ccmr21393765pzk.48.1694023951909;
-        Wed, 06 Sep 2023 11:12:31 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:11a:201:a404:ed4a:5a1e:3b4a])
-        by smtp.gmail.com with ESMTPSA id c10-20020a62e80a000000b0064fde7ae1ffsm11080552pfi.38.2023.09.06.11.12.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Sep 2023 11:12:31 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Sean Paul <sean@poorly.run>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Vinod Polimera <quic_vpolimer@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>
-Subject: [PATCH 2/2] drm/msm/dp: Remove error message when downstream port not connected
-Date: Wed,  6 Sep 2023 11:12:26 -0700
-Message-ID: <20230906181226.2198441-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
-In-Reply-To: <20230906181226.2198441-1-swboyd@chromium.org>
-References: <20230906181226.2198441-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD7F10954
+	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 20:05:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694030700; x=1725566700;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gJlCMxh78bP4gJBjCZmZsU6b6qkBCCueDO40mugKio4=;
+  b=etNZ+IbGp/4Uuj8ytmLXFLzBA7bmXOr4ZcWj+5GHk1w/MuEnhEOCMvDB
+   Bcv1rWCjdoOLhy4gtKb88wBjWaDZesVH1CCsbO4w7u6gLMbiqZEpjjR/z
+   KmjMVR2oGxZyNlxpaee7C9FQwz5hN1agxDFq2p9JXWYGs/N4kxrEKseo0
+   eHCWJMNrYDI0l3pTBdSytejOIpPuZVpxyCdQxULadCMhh6Ua1NYqTkbEC
+   0ura4XBvvGmYwmcAx2sVtBEfxSwpIBW/3lZmjH6756E+IeuTaJhmrBaf8
+   jDhniuJwvLsioOMthQHovB8Lgb0rjKy1hC8mEQAnmFiNioubRWPXmo/Ms
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="443559259"
+X-IronPort-AV: E=Sophos;i="6.02,233,1688454000"; 
+   d="scan'208";a="443559259"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:05:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="811807641"
+X-IronPort-AV: E=Sophos;i="6.02,233,1688454000"; 
+   d="scan'208";a="811807641"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:04:57 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1qdyli-00795D-1t;
+	Wed, 06 Sep 2023 23:04:54 +0300
+Date: Wed, 6 Sep 2023 23:04:54 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>
+Subject: Re: [PATCH v2 1/3] platform/x86: intel_scu_ipc: Check status after
+ timeout in busy_loop()
+Message-ID: <ZPjbZqIQBlIGpoCK@smile.fi.intel.com>
+References: <20230906180944.2197111-1-swboyd@chromium.org>
+ <20230906180944.2197111-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230906180944.2197111-2-swboyd@chromium.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-Plugging in an Apple dongle without the HDMI cable attached prints out
-an error message in the kernel logs when nothing is actually wrong.
+On Wed, Sep 06, 2023 at 11:09:41AM -0700, Stephen Boyd wrote:
+> It's possible for the polling loop in busy_loop() to get scheduled away
+> for a long time.
+> 
+>   status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
+>   <long time scheduled away>
+>   if (!(status & IPC_STATUS_BUSY))
+> 
+> If this happens, then the status bit could change while the task is
+> scheduled away and this function would never read the status again after
+> timing out. Instead, the function will return -ETIMEDOUT when it's
+> possible that scheduling didn't work out and the status bit was cleared.
+> Bit polling code should always check the bit being polled one more time
+> after the timeout in case this happens.
+> 
+> Fix this by reading the status once more after the while loop breaks.
 
-   no downstream ports connected
+...
 
-This is because the downstream port for the HDMI connector is not
-connected, so the Apple dongle reports that as a zero sink count device.
+>  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+>  {
+>  	unsigned long end = jiffies + IPC_TIMEOUT;
+> +	u32 status;
+>  
+>  	do {
+> -		u32 status;
+> -
+>  		status = ipc_read_status(scu);
+>  		if (!(status & IPC_STATUS_BUSY))
 
-Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_panel.c | 1 -
- 1 file changed, 1 deletion(-)
+> -			return (status & IPC_STATUS_ERR) ? -EIO : 0;
+> +			goto not_busy;
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 97ba41593820..ae778e1a6fd0 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -156,7 +156,6 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 	if (drm_dp_is_branch(dp_panel->dpcd)) {
- 		count = drm_dp_read_sink_count(panel->aux);
- 		if (!count) {
--			DRM_ERROR("no downstream ports connected\n");
- 			panel->link->sink_count = 0;
- 			return -ENOTCONN;
- 		}
+Wouldn't simple 'break' suffice here?
+
+>  		usleep_range(50, 100);
+>  	} while (time_before(jiffies, end));
+>  
+> -	return -ETIMEDOUT;
+> +	status = ipc_read_status(scu);
+> +	if (status & IPC_STATUS_BUSY)
+> +		return -ETIMEDOUT;
+> +not_busy:
+> +	return (status & IPC_STATUS_ERR) ? -EIO : 0;
+
+
+
+>  }
+
 -- 
-https://chromeos.dev
+With Best Regards,
+Andy Shevchenko
+
 
