@@ -1,113 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailbox.box.xen0n.name (mail.xen0n.name [115.28.160.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0E0653;
-	Wed,  6 Sep 2023 05:31:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB7DC433C8;
-	Wed,  6 Sep 2023 05:31:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1693978299;
-	bh=rJ1kMZwOKUcLDxu3c5XV92Q+OBYmrSY6fvs4j7JYUJQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d98PVfbRPTrl4c9dtskIe/w9cA0opQKxZ4Q0w2VjfnEvX+av6xbVZix2Ms7pqozF1
-	 oAWk39a8kin313xtOe3cVEqIllzAtZLFQPlXL4jft+U3tU5rgK3hTP5JnqBs4ZhkpQ
-	 T8OfNcDRoF+T9K0mn1oI97URJbDZvz3eAyrwOU42ZAXIghm6zUBmTvp2kTTIJtnQvU
-	 rSC11fqXr1ixlOPuLBKkEZcP7rUiLysqbPHBohdz2aJSSYR/Va4tLTY5jhL8yspKCJ
-	 3Q6ME2VawtVOgHyl1GddusZFWiZWiTS2PsyUZCTjUCDPAH440Ca+y1WW+JgfDNEndc
-	 fFodJtNp+Jexw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.5 00/34] 6.5.2-rc1 review
-Date: Wed,  6 Sep 2023 05:31:36 +0000
-Message-Id: <20230906053136.72519-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230904182948.594404081@linuxfoundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D97ECF;
+	Wed,  6 Sep 2023 08:44:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xen0n.name; s=mail;
+	t=1693989342; bh=4Mfei+5ME77tqVWpNJ/dqxQFP44v5aASPV3skdpSyvk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pyfghuztHiaZCFHd568+VmOy/c9345b0CBr1Gu9Aoky7ggXFl15NXYQff5bo8Kcj/
+	 g6XzcMrDsbc3Jm/sQ0prroh76UrPjhgD2i8JXrbAItzYIDrHHfC6RC0Scf7z0I5mE4
+	 O974IGy2lt0uDUSOxugdzhYFnkRM5lgSoT8ADYSk=
+Received: from [192.168.9.172] (unknown [101.88.25.36])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mailbox.box.xen0n.name (Postfix) with ESMTPSA id E464B600AE;
+	Wed,  6 Sep 2023 16:35:41 +0800 (CST)
+Message-ID: <241da154-3092-7dc2-09b5-8e9cc7cac5be@xen0n.name>
+Date: Wed, 6 Sep 2023 16:35:41 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH] LoongArch: Drop unused parse_r and parse_v macros
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, chenhuacai@kernel.org
+Cc: loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20230905-loongarch-fix-clang-lto-parse_r-v1-1-d991ee630222@kernel.org>
+From: WANG Xuerui <kernel@xen0n.name>
+In-Reply-To: <20230905-loongarch-fix-clang-lto-parse_r-v1-1-d991ee630222@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On 9/6/23 07:06, Nathan Chancellor wrote:
+> When building with CONFIG_LTO_CLANG_FULL, there are several errors due
+> to the way that parse_r is defined with an __asm__ statement in a
+> header:
+>
+>    ld.lld: error: ld-temp.o <inline asm>:105:1: macro 'parse_r' is already defined
+>    .macro  parse_r var r
+>    ^
+>
+> This was an issue for arch/mips as well, which was resolved by
+> commit 67512a8cf5a7 ("MIPS: Avoid macro redefinitions").
+>
+> However, parse_r is unused in arch/loongarch after
+> commit 83d8b38967d2 ("LoongArch: Simplify the invtlb wrappers"), so
+> doing the same change does not make much sense now. Just remove parse_r
+> (and parse_v, which is also unused) to resolve the redefinition error.
+> If it needs to be brought back due to an actual use, it should be
+> brought back with the same changes as the aforementioned arch/mips
+> commit.
+>
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1924
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>   arch/loongarch/include/asm/asmmacro.h  | 107 ---------------------------------
+>   arch/loongarch/include/asm/loongarch.h |  43 -------------
+>   2 files changed, 150 deletions(-)
 
-On Mon, 4 Sep 2023 19:29:47 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+Doh, I must have overlooked this when I last refactored the relevant 
+helpers. Thanks for the clean-up!
 
-> This is the start of the stable review cycle for the 6.5.2 release.
-> There are 34 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 06 Sep 2023 18:29:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
+Reviewed-by: WANG Xuerui <git@xen0n.name>
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+-- 
+WANG "xen0n" Xuerui
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Linux/LoongArch mailing list: https://lore.kernel.org/loongarch/
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 3b1345379dfa ("Linux 6.5.2-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
-
-PASS
