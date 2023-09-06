@@ -1,37 +1,37 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A097C10954
-	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 20:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFA66AB3
+	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 20:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694030799; x=1725566799;
+  t=1694031213; x=1725567213;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=Yy84/Xk9VMmXeaZDz9etLBxRJHsaQPXyEOL3fPHQHKM=;
-  b=WNV+hUF/7GnCcCzy0gKb4uiEwPOq1k0K3gRGhwpM55hYh+/iDzS2rFEj
-   ogec0Do4ReYKT8FP5RCItK9//H9NRahBY698Hg+HX5qKsGKyVKSyu/gXu
-   bBYfMZBJuiAb0xMxZLOS/3bhQCliJJUxDLwrN4D26+lXIkBv3N8zibHOZ
-   u4pqxk/hp72vIF9LpkawPpKrJ6r4M6Pl4DxgrYA1KI//NYfZFlu3S+XOZ
-   rSvtgeJzsvwtimZSiKG2iwMOmxBL4soHx8YzdIVz3i+35SXddmfpobHxZ
-   Bd7TWOjAZ1Twk1D5qeNUvs8yoRcuk06LDMAr5M5Gk+wzlC5teMAsW0HB1
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="443559592"
+  bh=zX9IKg4GJKWsi/mIULaeZN5e6VR5b1qoI9Vm93n2kY8=;
+  b=el8bO5u6MVWIRQ9bF4SUJAdMhE8YDsa2zX6LoRmpONj3wjCpPD/nBa/T
+   5EWUip82vjC6N8EedVarNso7Ck3xk6x6C5+ek7mIkv8jRawbcMbjiel0B
+   P818WbMUa56Uqwz5MpvpyGj2j1yIHOtyi5MJOmL5rv5Tw8bAaeQ1/B/FA
+   j3l/86E3k1JivRPWHXm9BS9B71adFfn+wEMXHsgd6NXPBIORhBnhaAKXD
+   FEgWit5XKsvZZtjcfE/G2LNgohu/+QydsyW8/e4PM2sGF36GrFmiIDEpX
+   qkKxp54H1jI1EKuQ3pNk8mKY01A/xuqtnte5fS1UlDhiFQFhCzGm0KSL7
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="357484739"
 X-IronPort-AV: E=Sophos;i="6.02,233,1688454000"; 
-   d="scan'208";a="443559592"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:06:38 -0700
+   d="scan'208";a="357484739"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:13:32 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="811807912"
+X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="691431871"
 X-IronPort-AV: E=Sophos;i="6.02,233,1688454000"; 
-   d="scan'208";a="811807912"
+   d="scan'208";a="691431871"
 Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:06:36 -0700
+  by orsmga003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 13:13:30 -0700
 Received: from andy by smile.fi.intel.com with local (Exim 4.96)
 	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1qdynJ-00796e-1l;
-	Wed, 06 Sep 2023 23:06:33 +0300
-Date: Wed, 6 Sep 2023 23:06:33 +0300
+	id 1qdytz-0079B0-0r;
+	Wed, 06 Sep 2023 23:13:27 +0300
+Date: Wed, 6 Sep 2023 23:13:27 +0300
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
@@ -40,11 +40,11 @@ Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
 	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org,
 	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v2 2/3] platform/x86: intel_scu_ipc: Check status upon
- timeout in ipc_wait_for_interrupt()
-Message-ID: <ZPjbyckhj63Gw+SB@smile.fi.intel.com>
+Subject: Re: [PATCH v2 3/3] platform/x86: intel_scu_ipc: Fail IPC send if
+ still busy
+Message-ID: <ZPjdZ3xNmBEBvNiS@smile.fi.intel.com>
 References: <20230906180944.2197111-1-swboyd@chromium.org>
- <20230906180944.2197111-3-swboyd@chromium.org>
+ <20230906180944.2197111-4-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,29 +53,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230906180944.2197111-3-swboyd@chromium.org>
+In-Reply-To: <20230906180944.2197111-4-swboyd@chromium.org>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Wed, Sep 06, 2023 at 11:09:42AM -0700, Stephen Boyd wrote:
-> It's possible for the completion in ipc_wait_for_interrupt() to timeout,
-> simply because the interrupt was delayed in being processed. A timeout
-> in itself is not an error. This driver should check the status register
-> upon a timeout to ensure that scheduling or interrupt processing delays
-> don't affect the outcome of the IPC return value.
+On Wed, Sep 06, 2023 at 11:09:43AM -0700, Stephen Boyd wrote:
+> It's possible for interrupts to get significantly delayed to the point
+> that callers of intel_scu_ipc_dev_command() and friends can call the
+> function once, hit a timeout, and call it again while the interrupt
+> still hasn't been processed. This driver will get seriously confused if
+> the interrupt is finally processed after the second IPC has been sent
+> with ipc_command(). It won't know which IPC has been completed. This
+> could be quite disastrous if calling code assumes something has happened
+> upon return from intel_scu_ipc_dev_simple_command() when it actually
+> hasn't.
 > 
->  CPU0                                                   SCU
->  ----                                                   ---
->  ipc_wait_for_interrupt()
->   wait_for_completion_timeout(&scu->cmd_complete)
->   [TIMEOUT]                                             status[IPC_STATUS_BUSY]=0
-> 
-> Fix this problem by reading the status bit in all cases, regardless of
-> the timeout. If the completion times out, we'll assume the problem was
-> that the IPC_STATUS_BUSY bit was still set, but if the status bit is
-> cleared in the meantime we know that we hit some scheduling delay and we
-> should just check the error bit.
+> Let's avoid this scenario by simply returning -EBUSY in this case.
+> Hopefully higher layers will know to back off or fail gracefully when
+> this happens. It's all highly unlikely anyway, but it's better to be
+> correct here as we have no way to know which IPC the status register is
+> telling us about if we send a second IPC while the previous IPC is still
+> processing.
 
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+
+Also see below.
+
+...
+
+> @@ -450,6 +468,12 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
+>  		return -ENODEV;
+>  	}
+
+>  	scu = ipcdev;
+
+Side observation: Isn't this a bug? We should not override the supplied parameter.
+
+> +	err = intel_scu_ipc_busy(scu);
+> +	if (err) {
+> +		mutex_unlock(&ipclock);
+> +		return err;
+> +	}
+> +
+>  	cmdval = sub << 12 | cmd;
+>  	ipc_command(scu, cmdval);
+>  	err = intel_scu_ipc_check_status(scu);
 
 -- 
 With Best Regards,
