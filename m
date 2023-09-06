@@ -1,82 +1,81 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762346A0
-	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 14:32:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694010756; x=1725546756;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=V5V26GejPVyOSxfUjPT2mOYUtjVt5U4tPwu4TvOFpFo=;
-  b=AJ2FJxtXwRYZVxTl1JfB19M9GZ6KPycv+CdVlKMTJXFPx5hsIgzF23kb
-   Ig66j3RMsAsGaPg7bl+W4l5lVq8IU6QR7Q4UMp//heAXf4/EYOvHYWbc2
-   RndINb3lJAg1KYzv+F2cmF1NoDRXG/GrsUV7synuuLQzL25Rk/McXnzz4
-   1QYOH7wX7NnU9UiDbD512KrOlp6bL5RHdrnBYtwyMU40t2f/9BKs6srPA
-   AMk+QJs20XZx2PaDNNQXnt8n3Nn5vwoIArvd1pGjqgN+KDxdmZ6XmiWyu
-   xdnMsRFg2DZK7WPzZcEpG7MzMfNXiceu52mknXa2O27xcHr2hb2lQJ4A/
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="441055378"
-X-IronPort-AV: E=Sophos;i="6.02,232,1688454000"; 
-   d="scan'208";a="441055378"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2023 07:31:52 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="811685411"
-X-IronPort-AV: E=Sophos;i="6.02,232,1688454000"; 
-   d="scan'208";a="811685411"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga004.fm.intel.com with ESMTP; 06 Sep 2023 07:31:49 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1001)
-	id BCEB017D; Wed,  6 Sep 2023 17:31:47 +0300 (EEST)
-Date: Wed, 6 Sep 2023 17:31:47 +0300
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Stephen Boyd <swboyd@chromium.org>, Hans de Goede <hdegoede@redhat.com>,
-	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH 1/3] platform/x86: intel_scu_ipc: Check status after
- timeouts in busy_loop()
-Message-ID: <20230906143147.GD1599918@black.fi.intel.com>
-References: <20230831011405.3246849-1-swboyd@chromium.org>
- <20230831011405.3246849-2-swboyd@chromium.org>
- <20230901055011.GT3465@black.fi.intel.com>
- <CAE-0n50XCw7ugkoTAUfb5Jrr6-Vh=bvXfTOSeHV_ymyOQfRB2g@mail.gmail.com>
- <ZPiCz6AaLc4mqGH8@smile.fi.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDA0EDB
+	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 17:24:27 +0000 (UTC)
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-68a4bcf8a97so81081b3a.1
+        for <patches@lists.linux.dev>; Wed, 06 Sep 2023 10:24:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694021067; x=1694625867; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qccLOFn0NebA/jrIta/G+mGqQIcHSVpro0Pr6B+XGoU=;
+        b=XYXmsJjD8k4rtOliBJGMQ2L1CZ7/Mf0H5Q5srCtolmmNkXOeRrnhed+lvs6N2ypuAq
+         HNNNkWda+texArE5BFdGfIB5E6oNkcpAn+xjvtJnqb5jlTMOMHQ2sr/C6dfRzqyKkbEC
+         Og+kJEDXMUzeXdGGa6VSPWHiAmi282UwQ6om3djFI3Lo/3jMDqIRt143J08h+oRMQZsT
+         AKx/d+F9KdBRvJe8Zn6K+O35WwbSJsOZTSmtE6tTolhz4ZLo6Mc5ckzEy6PHIh1gsQ9R
+         VrWG4O5osELbgBU+gT2efQPRccshzVLRM7U73bSWvOuKGaVLGDB8Le56JIboWEwGDLCf
+         Slag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694021067; x=1694625867;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qccLOFn0NebA/jrIta/G+mGqQIcHSVpro0Pr6B+XGoU=;
+        b=jbB9v0ItZAdF19hLOnP+B/96lHAvixJje8kPymfU287OgDccWifzAoTDLedTr7L8th
+         9/lCnpYO9i7T0ghd4NVvpzyzfeoXDkHvicmjRTIyKunZJwCESDIiQZ6HYMrlEABlMhN+
+         dlo/2SlgUPr55FQvVPypFTck+WHRO91cOnusz7g4InvLBkSrrNLnOjo0cnwuV7kMXH+N
+         WhE7ex7BMILofTdlSonDYcIlqBdXIr8PsvxpXVQrQgZ0JUGboq78fshb4FuYnl78bHSg
+         NYHR1CJy/DOcUv+zdrmccHRPSpKHX9QQl8qd6HlXWpy9IB7R+PIU2o5dsn65UunLjD/u
+         YQvg==
+X-Gm-Message-State: AOJu0YzNwqmvkYRF3/3tM+tkhHQXXfOTNq0g2qFoklFCfccg2L7JP+KU
+	vOFobKjd1mkgN921y6C+Jo0=
+X-Google-Smtp-Source: AGHT+IHLPR0x8+QIk/pp2xjdgCSZFCLEoKwDAzs9xmdnRDM4BBGqiSDZNbnV8oeToyc0zaCR0qsepw==
+X-Received: by 2002:a05:6a00:1a93:b0:68a:69ba:6789 with SMTP id e19-20020a056a001a9300b0068a69ba6789mr16298253pfv.16.1694021066935;
+        Wed, 06 Sep 2023 10:24:26 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id c11-20020aa78c0b000000b0068a538cc7adsm11077577pfd.52.2023.09.06.10.24.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Sep 2023 10:24:19 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 6 Sep 2023 10:24:18 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 00/28] 5.15.131-rc1 review
+Message-ID: <4e5bda1a-67e7-48dd-a7b0-2b4a6ff02431@roeck-us.net>
+References: <20230904182945.178705038@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZPiCz6AaLc4mqGH8@smile.fi.intel.com>
+In-Reply-To: <20230904182945.178705038@linuxfoundation.org>
 
-On Wed, Sep 06, 2023 at 04:46:55PM +0300, Andy Shevchenko wrote:
-> On Tue, Sep 05, 2023 at 05:27:23PM -0500, Stephen Boyd wrote:
-> > Quoting Mika Westerberg (2023-08-31 22:50:11)
-> > > On Wed, Aug 30, 2023 at 06:14:01PM -0700, Stephen Boyd wrote:
-> > > > It's possible for the polling loop in busy_loop() to get scheduled away
-> > > > for a long time.
-> > > >
-> > > >   status = ipc_read_status(scu);
-> > > >   <long time scheduled away>
-> > > >   if (!(status & IPC_STATUS_BUSY))
-> > >
-> > > How can the status bit change here as we are the only user and the SCU
-> > > access is serialized by ipclock?
-> > 
-> > I don't know how the SCU works. I thought that IPC_STATUS_BUSY bit was
-> > cleared by the SCU when it was done processing. With that assumption, I
-> > tried to show that the status is read and then the process schedules
-> > away for a long time and has an outdated view of the busy bit.
+On Mon, Sep 04, 2023 at 07:30:31PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.131 release.
+> There are 28 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> We probably have different versions of firmwares for the different SoC
-> generations. But I _think_ that you are right, the SCU firmware should
-> clear the bit when it's done.
+> Responses should be made by Wed, 06 Sep 2023 18:29:29 +0000.
+> Anything received after that time might be too late.
+> 
 
-Yes, IIRC it does. Okay I see the (potential, although quite unlikely)
-problem now. Thanks!
+Build results:
+	total: 160 pass: 160 fail: 0
+Qemu test results:
+	total: 503 pass: 503 fail: 0
+
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+
+Guenter
