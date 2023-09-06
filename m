@@ -1,39 +1,40 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2638910953
-	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 18:12:29 +0000 (UTC)
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-68a3f1d8be2so106113b3a.3
-        for <patches@lists.linux.dev>; Wed, 06 Sep 2023 11:12:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA101097D
+	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 18:12:31 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-68a41031768so107207b3a.3
+        for <patches@lists.linux.dev>; Wed, 06 Sep 2023 11:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694023949; x=1694628749; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rzB/a+Y/lgN6TI3eOxXMKAuw0gNhLZ5Kr4Exadxywqo=;
-        b=Oh/vFJwfH0eO8ksTIxgBp6HHfO768Wa2X2+saIkqRfDDP/w4d4j8aoM5HxbNF4q6o6
-         ygvQo3PivwKk+mb4DZWWH+L9KKe0Kc+pyfC0WvYeQE6vf4KdL4Wzwr6lp0jPPtaC9uaO
-         6b/kb8xHTgNserXyPm8ZpAzn+wWVg4T2+8sn8=
+        d=chromium.org; s=google; t=1694023950; x=1694628750; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Edgvbmd5y4jUc7RB+Rf63E6o4J7BSjl9P5UimGRUsdQ=;
+        b=gP436iT5FR1DQCF00WjNWAwCA4PPpPE8Rzb4qtHFUKzR6Ve/TORrWDWo0kqO3HR+Ng
+         IU4RK7dHJ5LvZC3g45ZrqeZxiaby4+x2POX6mJwZbt/pfmX5M/tXawa5ACE1Ps44InRg
+         3jw0hCE0UAdwXurpMoG9sDFV8hbhQWwxOMKS8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694023949; x=1694628749;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rzB/a+Y/lgN6TI3eOxXMKAuw0gNhLZ5Kr4Exadxywqo=;
-        b=gBY7svvuRmeRRunzwciBhtONILETYSmso1daezwYNbfwSCjXpLdmQugzDY2qEkST9L
-         F9oXj30wjtVlrIZlzUcGzCavt/KI+gEJwtee96di4OfBFe4Z+12rV40aGQ5h5SgWO20z
-         mpDEIgGT6LviGbidjZ9neSVZ3e6mibUA+oBnxyH5JaV+3m+QKAfyo8pmAk0SpmZgOuxy
-         LDFF81ZjN6/ziOWFRsRhK26dOwz1GgcDL8sxS4kpohL/DX2bP2AIM135dzdbmdMNZsGI
-         koyeIshgmIu4qZf/0mk2/K9v0EPhlkv+rdaQPyak6GbXGh2wOOGqX5M+ly+5KNnYZaIY
-         Wrmg==
-X-Gm-Message-State: AOJu0YwxalG7dg0ZOASE1iuRytE8rtzqajNuoWrlJZwpxGTzLMeQ5nD1
-	zwsOBLOyYQtXMkw2uh3izMSA5UEhWu537YJiqp4=
-X-Google-Smtp-Source: AGHT+IFw80g3ey9sUj6HYD/2kE56XDAkqaOhhVXfaGukTfoWlgxr29tf8KH2PEk4eYpkhtgk61cguQ==
-X-Received: by 2002:a05:6a21:3e0b:b0:14c:5dc3:f1d5 with SMTP id bk11-20020a056a213e0b00b0014c5dc3f1d5mr15722364pzc.32.1694023949115;
-        Wed, 06 Sep 2023 11:12:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1694023950; x=1694628750;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Edgvbmd5y4jUc7RB+Rf63E6o4J7BSjl9P5UimGRUsdQ=;
+        b=IdrYQrWDWZZGk4V124bNZ8NtbEVnbBwyC+CR7MbK9I86fCc98nL10/LKwogO4JHUa7
+         aLziWme68XzLKLnHh/94hpnhU6iTG0tyPBAW9YaM/OdLR+z8BrVcylkLUkxXYCGfwFvJ
+         rpOTlTMbuCZUI4o3bFPkQmXp1AzFfBsb2EwAhkv23KCKHbzKyP7eqbEMb8p80ssiR0cw
+         PIVxNYvI3mCT5999tpkcDQsWyfMti70KautPpwXr8W0i7VrER7XvJXVS6eCKoukS1fOp
+         bZmjeq9Sd0Ipn1I4yZW8flqVTTzDKxYz+O/h9IoS5CawRZzCCzC3lf4U1va2SuDJ4HO9
+         B9RQ==
+X-Gm-Message-State: AOJu0Yw2e7Mzs5nwq/GkKyia/xqMOTvbWco73WuUXFeXsk/XHU5cwpLV
+	4q3QipDKhPEsbuBFRvakB8yxGA==
+X-Google-Smtp-Source: AGHT+IH6kSrFTL9eIlfDr/vwL8Fsw7IYLh/XA+8fJSBKdMHvlaTDr5JYbfbs2SSDKsWyskvF1jKHrg==
+X-Received: by 2002:a05:6a00:1786:b0:68a:3e68:f8ab with SMTP id s6-20020a056a00178600b0068a3e68f8abmr16812291pfg.14.1694023950511;
+        Wed, 06 Sep 2023 11:12:30 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:11a:201:a404:ed4a:5a1e:3b4a])
-        by smtp.gmail.com with ESMTPSA id c10-20020a62e80a000000b0064fde7ae1ffsm11080552pfi.38.2023.09.06.11.12.27
+        by smtp.gmail.com with ESMTPSA id c10-20020a62e80a000000b0064fde7ae1ffsm11080552pfi.38.2023.09.06.11.12.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Sep 2023 11:12:28 -0700 (PDT)
+        Wed, 06 Sep 2023 11:12:30 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -42,11 +43,15 @@ Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Sean Paul <sean@poorly.run>,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH 0/2] drm/msm/dp: More DPCD cleanups
-Date: Wed,  6 Sep 2023 11:12:24 -0700
-Message-ID: <20230906181226.2198441-1-swboyd@chromium.org>
+	freedreno@lists.freedesktop.org,
+	Vinod Polimera <quic_vpolimer@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: [PATCH 1/2] drm/msm/dp: Inline dp_display_is_sink_count_zero()
+Date: Wed,  6 Sep 2023 11:12:25 -0700
+Message-ID: <20230906181226.2198441-2-swboyd@chromium.org>
 X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
+In-Reply-To: <20230906181226.2198441-1-swboyd@chromium.org>
+References: <20230906181226.2198441-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,28 +60,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is a follow-on to this series[1]. I can resend the whole pile if
-desired.
+This function is basically a one-liner when you ignore the debug
+logging. Just inline the function and drop the log to simplify the code.
 
-[1] https://lore.kernel.org/r/20230829184735.2841739-1-swboyd@chromium.org
-
-Stephen Boyd (2):
-  drm/msm/dp: Inline dp_display_is_sink_count_zero()
-  drm/msm/dp: Remove error message when downstream port not connected
-
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
+Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
  drivers/gpu/drm/msm/dp/dp_display.c | 10 +---------
- drivers/gpu/drm/msm/dp/dp_panel.c   |  1 -
- 2 files changed, 1 insertion(+), 10 deletions(-)
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-
-base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
-prerequisite-patch-id: c637903336fb0fd5593f0016f0c863305c43a6b9
-prerequisite-patch-id: 8610693078de9cd5041266c70c4d044d15a5f701
-prerequisite-patch-id: e10675f41cc68dcefa566f7f288b2df72afdb116
-prerequisite-patch-id: 63280d764b830e3d25455ae642840cff5f90e118
-prerequisite-patch-id: 567e00d48c5a296b454079a51483f2acce357347
-prerequisite-patch-id: 1c18472728edc1ca8800dd6ed6ff12cb98084ea8
-prerequisite-patch-id: c6f74b922b3a4f2255bcdab11fe3a2ecf7891262
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 96bbf6fec2f1..2a5f1ab9a65b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -341,14 +341,6 @@ static const struct component_ops dp_display_comp_ops = {
+ 	.unbind = dp_display_unbind,
+ };
+ 
+-static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
+-{
+-	drm_dbg_dp(dp->drm_dev, "present=%#x sink_count=%d\n",
+-			dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
+-		dp->link->sink_count);
+-	return drm_dp_is_branch(dp->panel->dpcd) && dp->link->sink_count == 0;
+-}
+-
+ static void dp_display_send_hpd_event(struct msm_dp *dp_display)
+ {
+ 	struct dp_display_private *dp;
+@@ -507,7 +499,7 @@ static int dp_display_handle_port_ststus_changed(struct dp_display_private *dp)
+ {
+ 	int rc = 0;
+ 
+-	if (dp_display_is_sink_count_zero(dp)) {
++	if (drm_dp_is_branch(dp->panel->dpcd) && dp->link->sink_count == 0) {
+ 		drm_dbg_dp(dp->drm_dev, "sink count is zero, nothing to do\n");
+ 		if (dp->hpd_state != ST_DISCONNECTED) {
+ 			dp->hpd_state = ST_DISCONNECT_PENDING;
 -- 
 https://chromeos.dev
 
