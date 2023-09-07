@@ -1,86 +1,91 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8036ADB
-	for <patches@lists.linux.dev>; Wed,  6 Sep 2023 20:59:35 +0000 (UTC)
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5007c8308c3so361325e87.0
-        for <patches@lists.linux.dev>; Wed, 06 Sep 2023 13:59:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694033974; x=1694638774; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nEi+MWXrvIx8jzHRqj96TK8TejuRSgL7GuIT6Vvp9U0=;
-        b=mX0BheP12tbiA7YFOG635PSRfI8ru/fq+hJsYb2y/wuqu8EXhMRIXgoozIexjrJt3r
-         fT2ndTPusMDR44RDhh6iHZDWLGOptJCemE1OENIOuGp8Q5CUjhdm9GukLRYf1UzyGk50
-         1HEy7d6WiM6waHKlRTUePI3NcPZtMoCWrzzlQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694033974; x=1694638774;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nEi+MWXrvIx8jzHRqj96TK8TejuRSgL7GuIT6Vvp9U0=;
-        b=DMa3tU9SXTqLojZsPvOdy7bPVJXFP0WaCqneYzEXfZ8wPNdhx1JJSGfuJ7lDlsBqMx
-         +ng1dRB+xGvHo6HI9JsrUmjyQ6IQpKOUeECqQCmNgwN0GgxuAEt23RueUZhoNf/puVWO
-         ihdXj2jsvnFNZUHQgyv+EPK5tHRfQwcALWwlG90A4az9b4/LBmiWfuWNVi0Y6vnhJSDX
-         w/TRsF/Y8ZzIv68gPzwvTjre/bPYDrt2M8d/hLWedDwkwzdhy5oFiMYwZCXeZSCb6OUJ
-         axLnmh8PIPtIvwvxrVm+B1/AdpJC1/Az5AbDp5lhDS08jgvahzsDf1pBg7vd/0RCVuVs
-         A7og==
-X-Gm-Message-State: AOJu0YywDa5ihdtMWIsnsNeGg3+IZ6JTsJJEuDfurN+2X9eYTZAWwUy0
-	E8CaD63fWCm+w8bwQ2MsB4qxTRP3j+PV+ST7fqPnWQ==
-X-Google-Smtp-Source: AGHT+IExyQ6B5Nq4kK03+qra5dZ0VH65Eg+voPe+M/hd6T+GvGGoxMqejIJxTzOTvbr11ghTCOdd+KOwOCaSt4hl81w=
-X-Received: by 2002:a05:6512:3703:b0:4fe:d0f:1f1e with SMTP id
- z3-20020a056512370300b004fe0d0f1f1emr2918944lfr.25.1694033973824; Wed, 06 Sep
- 2023 13:59:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 6 Sep 2023 15:59:33 -0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2499A29;
+	Thu,  7 Sep 2023 01:36:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778ABC433C8;
+	Thu,  7 Sep 2023 01:36:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1694050598;
+	bh=K1eFDAwhbRf7Pi6Pvuv3Qv4AccmUHTSMDwU5bRVVpoU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=OmR3VWiuKBu6GwGNUSNd/MTIwDc2lN3s9oD9qTLLLOvpx4VjHIkDYIbbaSekHuTMf
+	 gEQhrzH/s6OG1XnUU+C7WBj1NAydN/XQkcuDKPsc3E9MJLO0Bc7LJ71DPUgT6/LNsq
+	 +sosp/3Y5JAhIJKnvn3SlcCZoGiJk7ikbkem40YGTcmt0XS0iFVsr3NT7wUYxZLkG7
+	 oqIQj/7pNqtXT+/874Z2UujbfvvAvZYy3kXUc6fnWDyeXoDmS5NczNI4C0ke/RvNMS
+	 3JGFgkB5NMYzq8yAGiAgpAWLWvX2+aY2ElQ8EoFAboZ2Hofw5zR2FJlUuoKQy4QGsu
+	 W7K2pdIuFnwEQ==
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so3312054a12.1;
+        Wed, 06 Sep 2023 18:36:38 -0700 (PDT)
+X-Gm-Message-State: AOJu0YzM1qcBJglOR6pqCnI7cWujvBnWqIAMSEGQn10zold8IJbdE+6r
+	FqnYAX7e92oFor9srKQivX/jhYNtTRt/odovvx8=
+X-Google-Smtp-Source: AGHT+IFSrgaoII2JeLHGoz+iy1OHR9VPNyJD5qJLZ1Uu0jZu49j7lK4FXM+HkkDci6x1+pekg5uDLrwJI5OAzveExq8=
+X-Received: by 2002:a05:6402:3551:b0:52a:586a:b19a with SMTP id
+ f17-20020a056402355100b0052a586ab19amr1333622edd.21.1694050596696; Wed, 06
+ Sep 2023 18:36:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZPjlIhDykHd44YTz@smile.fi.intel.com>
-References: <20230906180944.2197111-1-swboyd@chromium.org> <20230906180944.2197111-4-swboyd@chromium.org>
- <ZPjdZ3xNmBEBvNiS@smile.fi.intel.com> <CAE-0n53iGCL3q=CsDKZr28eMjx40miLNG6+-jf12JKMxuAKkKg@mail.gmail.com>
- <ZPjlIhDykHd44YTz@smile.fi.intel.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 6 Sep 2023 15:59:33 -0500
-Message-ID: <CAE-0n500OCS0nh_7v_FL1rtTccAJxKhoD8vuBE7AER1fwWihsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] platform/x86: intel_scu_ipc: Fail IPC send if
- still busy
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>, Hans de Goede <hdegoede@redhat.com>, 
-	Mark Gross <markgross@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	Prashant Malani <pmalani@chromium.org>
+References: <20230905-loongarch-fix-clang-lto-parse_r-v1-1-d991ee630222@kernel.org>
+ <241da154-3092-7dc2-09b5-8e9cc7cac5be@xen0n.name>
+In-Reply-To: <241da154-3092-7dc2-09b5-8e9cc7cac5be@xen0n.name>
+From: Huacai Chen <chenhuacai@kernel.org>
+Date: Thu, 7 Sep 2023 09:36:25 +0800
+X-Gmail-Original-Message-ID: <CAAhV-H4ZxssZDCTuQUF7UZ7v+O0hN+7Hmw2qwVFUDBDuewGL8w@mail.gmail.com>
+Message-ID: <CAAhV-H4ZxssZDCTuQUF7UZ7v+O0hN+7Hmw2qwVFUDBDuewGL8w@mail.gmail.com>
+Subject: Re: [PATCH] LoongArch: Drop unused parse_r and parse_v macros
+To: WANG Xuerui <kernel@xen0n.name>
+Cc: Nathan Chancellor <nathan@kernel.org>, loongarch@lists.linux.dev, llvm@lists.linux.dev, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Quoting Andy Shevchenko (2023-09-06 13:46:26)
-> On Wed, Sep 06, 2023 at 03:22:43PM -0500, Stephen Boyd wrote:
-> > Quoting Andy Shevchenko (2023-09-06 13:13:27)
-> > > On Wed, Sep 06, 2023 at 11:09:43AM -0700, Stephen Boyd wrote:
+Queued for loongarch-next, thanks.
+
+Huacai
+
+On Wed, Sep 6, 2023 at 4:36=E2=80=AFPM WANG Xuerui <kernel@xen0n.name> wrot=
+e:
 >
-> ...
->
-> > > > @@ -450,6 +468,12 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
-> > > >               return -ENODEV;
-> > > >       }
-> > >
-> > > >       scu = ipcdev;
-> > >
-> > > Side observation: Isn't this a bug? We should not override the supplied parameter.
+> On 9/6/23 07:06, Nathan Chancellor wrote:
+> > When building with CONFIG_LTO_CLANG_FULL, there are several errors due
+> > to the way that parse_r is defined with an __asm__ statement in a
+> > header:
 > >
-> > If it is a bug that would be great to know. I wanted to make an API that
-> > got the scu if it wasn't busy but then I ran across this code that
-> > replaced the scu with ipcdev.
+> >    ld.lld: error: ld-temp.o <inline asm>:105:1: macro 'parse_r' is alre=
+ady defined
+> >    .macro  parse_r var r
+> >    ^
+> >
+> > This was an issue for arch/mips as well, which was resolved by
+> > commit 67512a8cf5a7 ("MIPS: Avoid macro redefinitions").
+> >
+> > However, parse_r is unused in arch/loongarch after
+> > commit 83d8b38967d2 ("LoongArch: Simplify the invtlb wrappers"), so
+> > doing the same change does not make much sense now. Just remove parse_r
+> > (and parse_v, which is also unused) to resolve the redefinition error.
+> > If it needs to be brought back due to an actual use, it should be
+> > brought back with the same changes as the aforementioned arch/mips
+> > commit.
+> >
+> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1924
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >   arch/loongarch/include/asm/asmmacro.h  | 107 ------------------------=
+---------
+> >   arch/loongarch/include/asm/loongarch.h |  43 -------------
+> >   2 files changed, 150 deletions(-)
 >
-> To me this seems like a bug, because in other similar code we don't do that.
-> And even reading this one, why do we have a parameter if it's always being
-> rewritten?
-
-Yes. From what I can tell looking at commit f57fa18583f5 ("platform/x86:
-intel_scu_ipc: Introduce new SCU IPC API") it was an unintentional bug
-to leave that line there.
+> Doh, I must have overlooked this when I last refactored the relevant
+> helpers. Thanks for the clean-up!
+>
+> Reviewed-by: WANG Xuerui <git@xen0n.name>
+>
+> --
+> WANG "xen0n" Xuerui
+>
+> Linux/LoongArch mailing list: https://lore.kernel.org/loongarch/
+>
