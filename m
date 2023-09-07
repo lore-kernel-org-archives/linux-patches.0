@@ -1,191 +1,136 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFCF134A8
-	for <patches@lists.linux.dev>; Thu,  7 Sep 2023 16:19:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694103583; x=1725639583;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=uAWHLVg1qfsQr0lppp73XqZT9ttK0k7h98NBg8HAtgI=;
-  b=TQ6G/ew8vqqhq+DKsM3/F3vevDvLuAcvo16WC0S2kyCdVNP/l7oGs3T2
-   2agu9PuGBamO9Fdn9VEPhnDX7QGWST5Lv0eFKGH/acd6HuPqoGIkl8o/M
-   mamvgsOn63DFeO/q5xSV5B7Eeov3UQJE/ChlPg4qiBvpMWxwNYT1P+E6k
-   Bn1UMDoTGDOYfUnK6ZWLInmtwuRGdCGcUQb8kRj7/bH94ZtVU57bfJIxD
-   P+WHgUr12JAnpDpppqTSdmSXAEE45pGB/cQruOnJ+7d51O75UBh/Xf3Z9
-   jrNMHDmjhniCEbfJlZcOCJQ/J1lRrQQWwpY+xiZv+iHvZfh3uT6Vi61o4
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10826"; a="381209251"
-X-IronPort-AV: E=Sophos;i="6.02,235,1688454000"; 
-   d="scan'208";a="381209251"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Sep 2023 09:19:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10826"; a="742076980"
-X-IronPort-AV: E=Sophos;i="6.02,235,1688454000"; 
-   d="scan'208";a="742076980"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by orsmga002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 07 Sep 2023 09:19:41 -0700
-Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32; Thu, 7 Sep 2023 09:19:40 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.32 via Frontend Transport; Thu, 7 Sep 2023 09:19:40 -0700
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.176)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.27; Thu, 7 Sep 2023 09:19:40 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NYM5Z+OaLduQdrLDKxw3NZ7zwrJJIsGdXqzyaBZ96G7PqJbFh/LkGmO222pGuAK2VbFsJnk9ofhL8nTiXvtDXnXfT8Vo2ACg7PQMlFp8NtxL7/J54xh6LQPHUa5B3r9MuByzBY+BcCmTCmf4SG0Hkp5f7ILk99p/JOSJWXaCK+dHrcd/ss5B9o3KXPhmerjrWvfwQ+yGfn6OOXVP9w3pRMTv7hBpLPHXNZjTDFFmZDtiaNbBsyfAY3L3cu2bvkoAAwHKR2YQrR/zua1PPpb4gBYM7CpInhGkZTZ+7drG6AKYn6SeJBfXRuNjbq5ho0tyo49pWBQhTOH/vJq7zRDvrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RISBtQcTAwv8A5xS2dx6TStYjtcN4WAF+2LIL4evQbc=;
- b=DxWJjwmdBkpg1exjXCoUVVrYw4iC67MVG+nAuqQWaVKWkWdwaVy837whVryN22ak88oNv5SjENS9OHM25iIJXYykjUoeS9mP6UHVtfUrZFrngumB1Af70bKJAcjGfbEdkanTKiNVu1GlfFr53QfkiGpe0d+I2IGCXwZ8k8U+z0DWI1uiac+vAA2rhU+Z34w6AGXdOfNHNikfbxpsI4vXbnl+ihXo3Kir0vztvSQcWO4QHf/0khn7sjE8Wt/1B9PKj0dMRm/klSM5fompN3ml7LPfVXddmQrh9+O7KxtcRNTadwIgcm1hBBk02MsOQj93sSzpAob9UWhmHdKV3F5VBw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by CYYPR11MB8358.namprd11.prod.outlook.com (2603:10b6:930:c9::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.34; Thu, 7 Sep
- 2023 16:19:37 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::bbd6:576b:132:74e4%6]) with mapi id 15.20.6768.029; Thu, 7 Sep 2023
- 16:19:37 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, "Yu, Fenghua"
-	<fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>, Peter
- Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah Khan
-	<skhan@linuxfoundation.org>, "x86@kernel.org" <x86@kernel.org>
-CC: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH v5 8/8] selftests/resctrl: Adjust effective L3 cache size
- when SNC enabled
-Thread-Topic: [PATCH v5 8/8] selftests/resctrl: Adjust effective L3 cache size
- when SNC enabled
-Thread-Index: AQHZ2tLQzZViQZuDwEGXIVxBB0yNB7AO4J8AgAC3GnA=
-Date: Thu, 7 Sep 2023 16:19:37 +0000
-Message-ID: <SJ1PR11MB60839EB5CC3D172D864DF7A7FCEEA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20230722190740.326190-1-tony.luck@intel.com>
- <20230829234426.64421-1-tony.luck@intel.com>
- <20230829234426.64421-9-tony.luck@intel.com>
- <TYAPR01MB633033C489AAC0E514CBC6688BEEA@TYAPR01MB6330.jpnprd01.prod.outlook.com>
-In-Reply-To: <TYAPR01MB633033C489AAC0E514CBC6688BEEA@TYAPR01MB6330.jpnprd01.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels: =?iso-2022-jp?B?TVNJUF9MYWJlbF9hNzI5NWNjMS1kMjc5LTQyYWMtYWI0ZC0zYjBmNGZl?=
- =?iso-2022-jp?B?Y2UwNTBfQWN0aW9uSWQ9MmIyMmI5YzItN2VmYy00ZmE4LWI2NzEtMGNh?=
- =?iso-2022-jp?B?NDA0OTJkOTU5O01TSVBfTGFiZWxfYTcyOTVjYzEtZDI3OS00MmFjLWFi?=
- =?iso-2022-jp?B?NGQtM2IwZjRmZWNlMDUwX0NvbnRlbnRCaXRzPTA7TVNJUF9MYWJlbF9h?=
- =?iso-2022-jp?B?NzI5NWNjMS1kMjc5LTQyYWMtYWI0ZC0zYjBmNGZlY2UwNTBfRW5hYmxl?=
- =?iso-2022-jp?B?ZD10cnVlO01TSVBfTGFiZWxfYTcyOTVjYzEtZDI3OS00MmFjLWFiNGQt?=
- =?iso-2022-jp?B?M2IwZjRmZWNlMDUwX01ldGhvZD1TdGFuZGFyZDtNU0lQX0xhYmVsX2E3?=
- =?iso-2022-jp?B?Mjk1Y2MxLWQyNzktNDJhYy1hYjRkLTNiMGY0ZmVjZTA1MF9OYW1lPUZV?=
- =?iso-2022-jp?B?SklUU1UtUkVTVFJJQ1RFRBskQiJMJT8lUhsoQjtNU0lQX0xhYmVsX2E3?=
- =?iso-2022-jp?B?Mjk1Y2MxLWQyNzktNDJhYy1hYjRkLTNiMGY0ZmVjZTA1MF9TZXREYXRl?=
- =?iso-2022-jp?B?PTIwMjMtMDktMDdUMDQ6NTA6MzJaO01TSVBfTGFiZWxfYTcyOTVjYzEt?=
- =?iso-2022-jp?B?ZDI3OS00MmFjLWFiNGQtM2IwZjRmZWNlMDUwX1NpdGVJZD1hMTlmMTIx?=
- =?iso-2022-jp?B?ZC04MWUxLTQ4NTgtYTlkOC03MzZlMjY3ZmQ0Yzc7?=
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|CYYPR11MB8358:EE_
-x-ms-office365-filtering-correlation-id: 91d9cdeb-c212-4e8a-166a-08dbafbe3b19
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: FrjnczZ4tsyo5K5iaKIWwQipy/trTtDVOD59rIlTAFVm0p3u4QpoXLs8TnM82bUeiKwes6vENWxDSx2Djz2/g6PmFRFnDj4k6ItK5WV7/aRp/0tF/xgMG96d2iUzzC+/MYsX18+E3DUB/qdAibab2sKZ7KTK2W7+2pxG3oza0y4phW9PJ/NcW4lm2sZE+dzXV7OKfZvUHNctWPIC4TM1keOreDKySS3wpIONvocGDAeRyvE47T5ltkjgt+umQE2SHBdK8In+GNS20aRsHnhxMiepYTHDjr5ZZAkTHKN1DDfrG9WR3r5974usBiw7NybGeAjMmsoGDvd3xJifh0Wc5/qvjlyxEQDDMc4hYc5fdRkGrQfCPU1JgaBfBpcbj9G6Vu//tKKspGIqfMwVHZER6a7fIt0v0+UEZe3TYS6F14FUek0Ix7cNrRWbHre2CTsOVg1GpEuae5Fy54ImmkTw6/BAm6szpRct5d0rK++2FwLguvhkl8J1vAXZWDS29cQ3/LefHWbZSjqiDiHVhbl6AvyqLUfVnQ78ooHHmj5isRLZxN4ImQzKZapqDi1h91SD9PctR6lqV0rzcKTryTrrpBD+vVBdGHsG7SGg0uZtmZyWiWCjA9eHZVmrL5EGfz9j
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(39860400002)(366004)(396003)(346002)(376002)(186009)(1800799009)(451199024)(55016003)(33656002)(26005)(86362001)(66556008)(66476007)(54906003)(64756008)(66446008)(66946007)(316002)(76116006)(110136005)(5660300002)(38070700005)(41300700001)(38100700002)(52536014)(4326008)(8676002)(8936002)(6506007)(71200400001)(9686003)(7696005)(122000001)(478600001)(82960400001)(2906002)(4744005)(7416002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-2022-jp?B?Y2hTMDZaYnQvZktteWZ1UE1wUk9KQ0tuTS80elRMUlROdEM2clNTOUNs?=
- =?iso-2022-jp?B?M3EzelVONWRDOUlJNFJ6cE90cjFERDcrL3NuVWJtazJzWnBzZktuamQ4?=
- =?iso-2022-jp?B?b05Ecjk2OCtXYkdkMlZpNVhDSkdUbHByYnpRUlllN0xuSWdhRXhZeXhj?=
- =?iso-2022-jp?B?amNpcWJ1c2daOStJMXpjTytxTVYweU5ZVHd6cWNNaFdJK3Fvb2Naa0g5?=
- =?iso-2022-jp?B?NlVFNTlrQXVpZ3A5bUc1THNmUXlJSm9mbWxwOUhVaFFqNWFoNmVpd05H?=
- =?iso-2022-jp?B?R0JqVXJIdzltQjJoMVVwMGxYZEFSQ2RFMitnVGhJWC9YY0ViSnEyRFZw?=
- =?iso-2022-jp?B?eUQ5WkhiOVUydmNlR0szemZtWUtSUGlObHFhdFZaczNNbDBFUDlYOGpq?=
- =?iso-2022-jp?B?VktuY1RyUnRhOG5lQ01CZ1RyeGNMd0JXbjFJek1ydXZLVDdNVVhmMXlx?=
- =?iso-2022-jp?B?LzQ2aFkvc0hadVE2cE8zZWZqT0VmZWhvNE9wV3dmOWs2VG5LTVJkbHJG?=
- =?iso-2022-jp?B?eHhrNnNpemVzdE9STy9BT3pLczNadlp4REFWcTNkZ1lacEJ0bkZyTDdL?=
- =?iso-2022-jp?B?TTdFa3RDd0FXWnp4UFVlRms3L3RaQ2hXbVJPN3A1N0RweVpCWjUydXRW?=
- =?iso-2022-jp?B?UjdiNndybUhiQjhXQUJMejg4NDBhaHEyQVdJb0ZuN3dGWEFPdndmbk0z?=
- =?iso-2022-jp?B?bTNVbCtWMU9kRUs2YXlNUWhkUW53NS9OdjdSYmZrRkdvQ0pFcVphQkR6?=
- =?iso-2022-jp?B?NUNiOUtxKzIvaUNMUzJKbENYVUxhdWpLVUpiUmpaZnYvd3RkMjZtTXh2?=
- =?iso-2022-jp?B?b3krejJJZlNnaDh1UnppeldrL1l2RThyZkM3MlNSUzNtYmR0VXdtYjM1?=
- =?iso-2022-jp?B?Q2FDOERvSzZ1NEFaa1QrTjRCWk8velRZeTVpMytpeDVxMXVpMUhQQjU2?=
- =?iso-2022-jp?B?VmNoZkxERmxERFE5a21haURMS3N0RldaUWhHUXdpWWMxUnJlcTdKcmRZ?=
- =?iso-2022-jp?B?NUJaWGJ3blZVRFpMWjlnVWNzR2NWbGdzSVgvWk5Xc2ZaZzhuVEE3cUZi?=
- =?iso-2022-jp?B?a3Z2RTd1dE8yemg5TnJheUFuckdLSEJVQnhqdDlUc0ZzN0hzUVhvazNW?=
- =?iso-2022-jp?B?TU9DMzk3RWZuRWFOeDE0dTJ6bFdLQ09YZkFLeTk3SFdjYk5pVXhVL2p0?=
- =?iso-2022-jp?B?dXp1OXBvZENnS0Q5SEd6WWhtRE4rTkd2V1g4d01COW9BNW5mM3ZTNGcy?=
- =?iso-2022-jp?B?enVZNGtFaFMrWndZRXh3MGtuZDdCZUp1QXFydVBnNEhzK0lRNHhMRDNh?=
- =?iso-2022-jp?B?RDZIMysvWFJSOGdNYUtOUDRvbG8wOWY3L3BRS2d5bll3bnZWN3ExM1ZI?=
- =?iso-2022-jp?B?aDVnSmhITExtbXV5TW9sNytqVnBEN1FxWW1aUHhQODlwNTR3WGVKa0Jj?=
- =?iso-2022-jp?B?TzFHa1VQNmVGdFQwOHdyQjFLWmZkTDF3K3U2ZFlxbkZta3VLd1ZydTMz?=
- =?iso-2022-jp?B?NGZpUzNPdTlES1FHU05aTlFYVHAvWS9nZG5EWkVOSDVBY05qUkdoQ0px?=
- =?iso-2022-jp?B?UjFhc2g2eVRXS2kwRmdTVjAyWUFzcXVLcFdieFdwRHJRN3NFcW0vSi9v?=
- =?iso-2022-jp?B?UlU1Sng1NE9DRHo2OFRNRXJ5aDMzOGxSWmp0Q05Pa0ozOU13eldsR1k2?=
- =?iso-2022-jp?B?UUpUTXRWWVcrU3d6OWhiRjhyUk5uRUNXVnBROFBaKzdPL01teXRMZHJZ?=
- =?iso-2022-jp?B?UHF2aHNXeldhcHBXdEFhUy9XOFRCU3pSZjg4eDNoNmRjeWI4TDNRdjBi?=
- =?iso-2022-jp?B?TlBlWFBqajJmZ2U0YXZCcjlqdTdWaUhWSDdhT256SVg0cGNVS3l4QjZj?=
- =?iso-2022-jp?B?T3Z4NFI1R3RURi9NT3lBSVFyRHRoalVWRTZSUXlOLzRZdm1sT1ZVNm82?=
- =?iso-2022-jp?B?QjI3MklMSHpCaXEzaDR1cjM3SUhEbU54VjZYMTY0NzhNU1FpeVc1SkU1?=
- =?iso-2022-jp?B?Z0Q2RWF3UWgyUGN5bExBTmNFcVdyL2pMblhqTUllVTJGekdvdk0rcHhO?=
- =?iso-2022-jp?B?TU90L092QW10RlQ0Uk1aQ2RTeS91SytBbnVvYzNQRTdJWThzdW4rVmJU?=
- =?iso-2022-jp?B?Qyt3RnRXb01xSk9SMVdReXF6c1IxcXZ5RGIwQ1hCK0lGWWRCd3dSWnc5?=
- =?iso-2022-jp?B?RU96dVNnMk9GMmZnVk5DbU1nc1hNOVVPalNTWUZ5MGsyZGJnV1lXZmkw?=
- =?iso-2022-jp?B?bmVYSkpWQTRudXQvTzNGMWxscUVjQ1B5MD0=?=
-Content-Type: text/plain; charset="iso-2022-jp"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C56914008
+	for <patches@lists.linux.dev>; Thu,  7 Sep 2023 20:11:20 +0000 (UTC)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-500b0f06136so2318305e87.0
+        for <patches@lists.linux.dev>; Thu, 07 Sep 2023 13:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1694117478; x=1694722278; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oEHxSDa9suqIfWb1cKERrinpzjakMUw8unQ7h6nJqSc=;
+        b=O+SZnt8DRX6R4SAdNfhJ5Bv7Q0UATDhK7JeyAM5iihkcRpNHnUTxs7iMHVQvhoVQGa
+         DA7HiCzNQBvyXBPLIkTXG8lCZl9YMfB3YRpeD4hYItI1yd0s3j2AkiHUBm1OYDMZKuYz
+         OvWi/RH0LxthCdU79fObyP9mEuJRiLLOCGjRQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694117478; x=1694722278;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oEHxSDa9suqIfWb1cKERrinpzjakMUw8unQ7h6nJqSc=;
+        b=FbtlgnR5o+08aospJGVQ+/mhaY5qsJ34iwpJyzgzRzlYY8fOdCrnhYFbypYidcD06O
+         PKB83q3ksLScrrXouEJXLXs3i0wyIrMU8yul4dkx7edmwnJcwdNW6P5DfjZF79MXNTYx
+         yb8OqZaPjw+mCGkJA91PMimOu+dZye5K0IWMqIp/ufN2AAFrXEDupyAgyJ/24jwgp4U2
+         cl+5s9Ys2zmyFl/OcNbGnHuQl24M/+LX3vHUw7MypApgxJ+fmrpJLkY7pXX/EIYma1ZI
+         8nXlOAQOKEByn9ronBzXGMKPk+bkWumhnDYmNVftHDjxOv651zWQA/BptQOAiP/2AEKR
+         7NHA==
+X-Gm-Message-State: AOJu0YzE6sDYTt4ABBOHTGmZbXHWvZvqBBu0hPbTO7da3BCpQTd8WLm0
+	lmooerJ7672/9Q06POGTBefZK8kK6F0WWI0Ab0Xd7A==
+X-Google-Smtp-Source: AGHT+IGR5cMoVWwXVyWrK1LKM17/LRlIOSjJUog6feEzya5HRB58qZr2MIyqwOsYVySx4563NE0zbrLUR3k/No5bLKY=
+X-Received: by 2002:a05:6512:3a87:b0:4fb:9712:a717 with SMTP id
+ q7-20020a0565123a8700b004fb9712a717mr458584lfu.13.1694117477859; Thu, 07 Sep
+ 2023 13:11:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 7 Sep 2023 13:11:17 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 91d9cdeb-c212-4e8a-166a-08dbafbe3b19
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2023 16:19:37.2757
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8HXAhJA+wFFB+Jz7vuQdT9D/CGzirx6UsIglZDfFo4BfAjqF4D1z8u/o7NxDaGBKK6eoNnr/nGmppMwPw0xBNw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8358
-X-OriginatorOrg: intel.com
+In-Reply-To: <20230907053513.GH1599918@black.fi.intel.com>
+References: <20230906180944.2197111-1-swboyd@chromium.org> <20230906180944.2197111-2-swboyd@chromium.org>
+ <20230907053513.GH1599918@black.fi.intel.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 7 Sep 2023 13:11:17 -0700
+Message-ID: <CAE-0n51Ut296M2ZetuzXGpX32pS11bbWzfcbaFfqNxgSjzafJw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] platform/x86: intel_scu_ipc: Check status after
+ timeout in busy_loop()
+To: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	platform-driver-x86@vger.kernel.org, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	Prashant Malani <pmalani@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-> > +   if (4 * node_cpus >=3D cache_cpus)
-> > +           return 4;
-> > +   else if (2 * node_cpus >=3D cache_cpus)
-> > +           return 2;
+Quoting Mika Westerberg (2023-09-06 22:35:13)
+> On Wed, Sep 06, 2023 at 11:09:41AM -0700, Stephen Boyd wrote:
+> > It's possible for the polling loop in busy_loop() to get scheduled away
+> > for a long time.
+> >
+> >   status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
+> >   <long time scheduled away>
+> >   if (!(status & IPC_STATUS_BUSY))
+> >
+> > If this happens, then the status bit could change while the task is
+> > scheduled away and this function would never read the status again after
+> > timing out. Instead, the function will return -ETIMEDOUT when it's
+> > possible that scheduling didn't work out and the status bit was cleared.
+> > Bit polling code should always check the bit being polled one more time
+> > after the timeout in case this happens.
+> >
+> > Fix this by reading the status once more after the while loop breaks.
+> >
+> > Cc: Prashant Malani <pmalani@chromium.org>
+> > Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >
+> > This is sufficiently busy so I didn't add any tags from previous round.
+> >
+> >  drivers/platform/x86/intel_scu_ipc.c | 11 +++++++----
+> >  1 file changed, 7 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
+> > index 6851d10d6582..b2a2de22b8ff 100644
+> > --- a/drivers/platform/x86/intel_scu_ipc.c
+> > +++ b/drivers/platform/x86/intel_scu_ipc.c
+> > @@ -232,18 +232,21 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
+> >  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
+> >  {
+> >       unsigned long end = jiffies + IPC_TIMEOUT;
+> > +     u32 status;
+> >
+> >       do {
+> > -             u32 status;
+> > -
+> >               status = ipc_read_status(scu);
+> >               if (!(status & IPC_STATUS_BUSY))
+> > -                     return (status & IPC_STATUS_ERR) ? -EIO : 0;
+> > +                     goto not_busy;
+> >
+> >               usleep_range(50, 100);
+> >       } while (time_before(jiffies, end));
+> >
+> > -     return -ETIMEDOUT;
+> > +     status = ipc_read_status(scu);
 >
+> Does the issue happen again if we get scheduled away here for a long
+> time? ;-)
+
+Given the smiley I'll assume you're making a joke. But to clarify, the
+issue can't happen again because we've already waited at least
+IPC_TIMEOUT jiffies, maybe quite a bit more, so if we get scheduled away
+again it's a non-issue. If the status is still busy here then it's a
+timeout guaranteed.
+
 >
-> If "4 * node_cpus >=3D cache_cpus " is not true=1B$B!$=1B(B
-> "2 * node_cpus >=3D cache_cpus" will never be true.
-> Is it the following code?
->
-> +     if (2 * node_cpus >=3D cache_cpus)
-> +             return 2;
-> +     else if (4 * node_cpus >=3D cache_cpus)
-> +             return 4;
+> Regardless, I'm fine with this as is but if you make any changes, I
+> would prefer see readl_busy_timeout() used here instead (as was in the
+> previous version).
 
+We can't use readl_busy_timeout() (you mean readl_poll_timeout() right?)
+because that implements the timeout with timekeeping and we don't know
+if this is called from suspend paths after timekeeping is suspended or
+from early boot paths where timekeeping isn't started.
 
-Shaopeng TAN,
-
-Good catch. Your solution is the correct one.
-
-Will fix in next post.
-
--Tony
+We could use readl_poll_timeout_atomic() and then the usleep would be
+changed to udelay. Not sure that is acceptable though to delay 50
+microseconds vs. intentionally schedule away like the usleep call is
+doing.
