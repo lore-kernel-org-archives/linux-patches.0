@@ -1,137 +1,150 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D291111
-	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 04:59:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694149192; x=1725685192;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=frFa2A5SVWE7iimjbT1DhSuiHkk/xjKviFEZ54bN9r0=;
-  b=NtgXqvmSJSUBWZE0DBNCT0bnf84bN80LFJRIzMPBJGseu4LgrZWhHIT5
-   +9UeVeEUJ5eDxiY5x+x//mYrEGvvrx8NUv2W1DtLBL5TJ6cJ23wcl9Drd
-   U919dGkAvaisQzSkiQysltYkRUHIFrCc0HR4nqvsK3DGlsZkeTK7HlVs1
-   1VQpuTByD6NJ3/NAZAhKGeOnnfg/cSdvL8OQG1yFZsVM+503QSZczO94n
-   +C77l38Fm5z8A8PiMbCtsKMUETOzbUpx2YZfoXrNKzwsDp1rzc/ux1wcY
-   iTgOMnqZbXB7L9wIfH9wTGr0HdzBVEV17+47vCuzlyh9pxsAzktyNirN4
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10826"; a="463939481"
-X-IronPort-AV: E=Sophos;i="6.02,236,1688454000"; 
-   d="scan'208";a="463939481"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Sep 2023 21:59:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10826"; a="719007615"
-X-IronPort-AV: E=Sophos;i="6.02,236,1688454000"; 
-   d="scan'208";a="719007615"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga006.jf.intel.com with ESMTP; 07 Sep 2023 21:59:48 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1001)
-	id 41E49192; Fri,  8 Sep 2023 07:59:46 +0300 (EEST)
-Date: Fri, 8 Sep 2023 07:59:46 +0300
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	platform-driver-x86@vger.kernel.org,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v2 1/3] platform/x86: intel_scu_ipc: Check status after
- timeout in busy_loop()
-Message-ID: <20230908045946.GM1599918@black.fi.intel.com>
-References: <20230906180944.2197111-1-swboyd@chromium.org>
- <20230906180944.2197111-2-swboyd@chromium.org>
- <20230907053513.GH1599918@black.fi.intel.com>
- <CAE-0n51Ut296M2ZetuzXGpX32pS11bbWzfcbaFfqNxgSjzafJw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B85815C5
+	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 05:27:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1694150856;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kKCsrqis+BsCzL1au9M77zkgSqfPeD5/UYOFu7ubnBU=;
+	b=R5gwUl1QW/7KQlg9lMwIKnWjgpmjufM1XZEXs9ZdJK19vTzVTsR0nH9hETF+I7xCzGWs1U
+	W7q+/5SlIJn7wvwt411JfjdcJkt6d8RDs9vUTI5YddQSa50+Ve6GQEn8x669lnzLIuPA8f
+	UhStcyntstx2gO8DlIyGXvPyeOwbI7I=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-537-oE0pxHqHMNmCMd155ab6-g-1; Fri, 08 Sep 2023 01:27:32 -0400
+X-MC-Unique: oE0pxHqHMNmCMd155ab6-g-1
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-1c0aaf4caaaso22542045ad.2
+        for <patches@lists.linux.dev>; Thu, 07 Sep 2023 22:27:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694150852; x=1694755652;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kKCsrqis+BsCzL1au9M77zkgSqfPeD5/UYOFu7ubnBU=;
+        b=kSJfF8gJcelHLYXUlozNCJMhAbm8p2/PQLoG0VLY7ZmUi91TV8sKF4WqAS/f/lBSoU
+         0PSe+mwSGO7O80V0sFUISSeFgYZ3ap/12NDlmwP5AKz2U3H/xcHuedl0U9cGiyO9MOix
+         Fv3xM++2WJKMie3bfCDi7dEAQZo6pkOlfsgi+hMKyoOfgC0+R6i9MnVRuX5iLdyvPla4
+         sIK5Gdb/2/g4u6B1LtOTfrSOaGNL4YxI5kuHopZnV/pis9MVXzpK4619Gc9AycDOWmVp
+         Ot8tSDkTkcad7NiCs40TDlLZvin4XK4eOnU0Xi0qd3OyGW/QBL7Y/hl3oDls2BBgPQ4N
+         Qbig==
+X-Gm-Message-State: AOJu0YyXQYdZ1+GTNlW+9XbX9p4MxBrmiUrgoEBjxckSSMkz8INKZVBP
+	ahK35r81PMkHVnmwNdSQng+KpW8+JXY+Wt0UGfn7TGsy0CFz4r2Bicr4MMP1G8EPV75L3sal4wI
+	yy1/RQao9gzZQG7tOFg==
+X-Received: by 2002:a17:902:c945:b0:1bb:32de:95c5 with SMTP id i5-20020a170902c94500b001bb32de95c5mr1976914pla.65.1694150851694;
+        Thu, 07 Sep 2023 22:27:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJ40qCvKRfoIkm0b84FGgfTzvKoPpRC2DfetekChbsCofR092otCbVr1txAVQ/nG9XCDpMRg==
+X-Received: by 2002:a17:902:c945:b0:1bb:32de:95c5 with SMTP id i5-20020a170902c94500b001bb32de95c5mr1976899pla.65.1694150851352;
+        Thu, 07 Sep 2023 22:27:31 -0700 (PDT)
+Received: from zlang-mailbox ([43.228.180.230])
+        by smtp.gmail.com with ESMTPSA id jf20-20020a170903269400b001b80760fd04sm646012plb.112.2023.09.07.22.27.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Sep 2023 22:27:30 -0700 (PDT)
+Date: Fri, 8 Sep 2023 13:27:27 +0800
+From: Zorro Lang <zlang@redhat.com>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: fstests@vger.kernel.org, aalbersh@redhat.com, chandan.babu@oracle.com,
+	amir73il@gmail.com, djwong@kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] check: add support for --start-after
+Message-ID: <20230908052727.ccyxadtibouis74h@zlang-mailbox>
+References: <20230907221030.3037715-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20230907221030.3037715-1-mcgrof@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAE-0n51Ut296M2ZetuzXGpX32pS11bbWzfcbaFfqNxgSjzafJw@mail.gmail.com>
 
-On Thu, Sep 07, 2023 at 01:11:17PM -0700, Stephen Boyd wrote:
-> Quoting Mika Westerberg (2023-09-06 22:35:13)
-> > On Wed, Sep 06, 2023 at 11:09:41AM -0700, Stephen Boyd wrote:
-> > > It's possible for the polling loop in busy_loop() to get scheduled away
-> > > for a long time.
-> > >
-> > >   status = ipc_read_status(scu); // status = IPC_STATUS_BUSY
-> > >   <long time scheduled away>
-> > >   if (!(status & IPC_STATUS_BUSY))
-> > >
-> > > If this happens, then the status bit could change while the task is
-> > > scheduled away and this function would never read the status again after
-> > > timing out. Instead, the function will return -ETIMEDOUT when it's
-> > > possible that scheduling didn't work out and the status bit was cleared.
-> > > Bit polling code should always check the bit being polled one more time
-> > > after the timeout in case this happens.
-> > >
-> > > Fix this by reading the status once more after the while loop breaks.
-> > >
-> > > Cc: Prashant Malani <pmalani@chromium.org>
-> > > Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > > Fixes: e7b7ab3847c9 ("platform/x86: intel_scu_ipc: Sleeping is fine when polling")
-> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > > ---
-> > >
-> > > This is sufficiently busy so I didn't add any tags from previous round.
-> > >
-> > >  drivers/platform/x86/intel_scu_ipc.c | 11 +++++++----
-> > >  1 file changed, 7 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-> > > index 6851d10d6582..b2a2de22b8ff 100644
-> > > --- a/drivers/platform/x86/intel_scu_ipc.c
-> > > +++ b/drivers/platform/x86/intel_scu_ipc.c
-> > > @@ -232,18 +232,21 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
-> > >  static inline int busy_loop(struct intel_scu_ipc_dev *scu)
-> > >  {
-> > >       unsigned long end = jiffies + IPC_TIMEOUT;
-> > > +     u32 status;
-> > >
-> > >       do {
-> > > -             u32 status;
-> > > -
-> > >               status = ipc_read_status(scu);
-> > >               if (!(status & IPC_STATUS_BUSY))
-> > > -                     return (status & IPC_STATUS_ERR) ? -EIO : 0;
-> > > +                     goto not_busy;
-> > >
-> > >               usleep_range(50, 100);
-> > >       } while (time_before(jiffies, end));
-> > >
-> > > -     return -ETIMEDOUT;
-> > > +     status = ipc_read_status(scu);
-> >
-> > Does the issue happen again if we get scheduled away here for a long
-> > time? ;-)
+On Thu, Sep 07, 2023 at 03:10:30PM -0700, Luis Chamberlain wrote:
+> Often times one is running a new test baseline we want to continue to
+> start testing where we left off if the last test was a crash. To do
+> this the first thing that occurred to me was to use the check.time
+> file as an expunge file but that doesn't work so well if you crashed
+> as the file turns out empty.
 > 
-> Given the smiley I'll assume you're making a joke. But to clarify, the
-> issue can't happen again because we've already waited at least
-> IPC_TIMEOUT jiffies, maybe quite a bit more, so if we get scheduled away
-> again it's a non-issue. If the status is still busy here then it's a
-> timeout guaranteed.
-
-Got it thanks!
-
-> > Regardless, I'm fine with this as is but if you make any changes, I
-> > would prefer see readl_busy_timeout() used here instead (as was in the
-> > previous version).
+> So instead add super simple argument --start-after which let's you
+> skip all tests until the test infrastructure has "seen" the test
+> you want to skip. This does obviously work best if you are not using
+> a random order, but that is rather implied.
 > 
-> We can't use readl_busy_timeout() (you mean readl_poll_timeout() right?)
-> because that implements the timeout with timekeeping and we don't know
-> if this is called from suspend paths after timekeeping is suspended or
-> from early boot paths where timekeeping isn't started.
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  check | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/check b/check
+> index 71b9fbd07522..1ecf07c1cb37 100755
+> --- a/check
+> +++ b/check
+> @@ -18,6 +18,8 @@ showme=false
+>  have_test_arg=false
+>  randomize=false
+>  exact_order=false
+> +start_after=false
+> +start_after_test=""
+>  export here=`pwd`
+>  xfile=""
+>  subdir_xfile=""
+> @@ -80,6 +82,7 @@ check options
+>      -b			brief test summary
+>      -R fmt[,fmt]	generate report in formats specified. Supported formats: xunit, xunit-quiet
+>      --large-fs		optimise scratch device for large filesystems
+> +    --start-after	only start testing after the test specified
 
-Yes readl_poll_timeout(). :)
+This option conflicts with "-r" option.
 
-I don't think this code is used anymore outside of regular paths. It
-used to be with the Moorestown/Medfield board support code but that's
-gone already. Grepping for the users also don't reveal anything that
-could be using it early at boot.
+>      -s section		run only specified section from config file
+>      -S section		exclude the specified section from the config file
+>      -L <n>		loop tests <n> times following a failure, measuring aggregate pass/fail metrics
+> @@ -313,6 +316,11 @@ while [ $# -gt 0 ]; do
+>  				<(sed "s/#.*$//" $xfile)
+>  		fi
+>  		;;
+> +	--start-after)
+> +		start_after=true
+> +		start_after_test="$2"
+
+Do we really need two variables at here?
+
+> +		shift
+> +		;;
+>  	-s)	RUN_SECTION="$RUN_SECTION $2"; shift ;;
+>  	-S)	EXCLUDE_SECTION="$EXCLUDE_SECTION $2"; shift ;;
+>  	-l)	diff="diff" ;;
+> @@ -591,6 +599,15 @@ _expunge_test()
+>  {
+>  	local TEST_ID="$1"
+>  
+> +	if $start_after; then
+> +		if [[ "$start_after_test" == ${TEST_ID}* ]]; then
+> +			start_after=false
+> +		fi
+> +		echo "       [skipped]"
+> +		return 0
+> +
+> +	fi
+
+I can't understand how you use the --start-after. I though you'd like to remove
+all cases before the "start-after" from the running list. But when I saw here,
+I'm a little confused.
+
+Thanks,
+Zorro
+
+> +
+>  	for f in "${exclude_tests[@]}"; do
+>  		# $f may contain traling spaces and comments
+>  		local id_regex="^${TEST_ID}\b"
+> -- 
+> 2.39.2
+> 
+
