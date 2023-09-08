@@ -1,60 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFB01849
-	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 08:47:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E46AC433C7;
-	Fri,  8 Sep 2023 08:47:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694162869;
-	bh=RKazeNausWM6tPwdKCpl5s1mIWcdBnzHHJqJ5487TXQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=z62vsB6g3tQAwXvNxqDvT2MSnN2e8BQFvu7VPHVtY3o9dCp3qiV9soyQc3VSY+o9i
-	 e63/m30jM9eXsmvxaXQmPRGIZqibL7AGCgl+biR1wzg5HvSxwhG+GI36kYuAg+708p
-	 3KDgE6ZAaA0P52ik7aylgzdQzrrwDjZyPyCZirDM=
-Date: Fri, 8 Sep 2023 09:47:46 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Christoph Hellwig <hch@lst.de>
-Cc: Stefan Lippers-Hollmann <s.l-h@gmx.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Luis Chamberlain <mcgrof@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6.5 11/34] modules: only allow symbol_get of
- EXPORT_SYMBOL_GPL modules
-Message-ID: <2023090813-plug-path-b06f@gregkh>
-References: <20230904182948.594404081@linuxfoundation.org>
- <20230904182949.104100132@linuxfoundation.org>
- <20230907084135.02d97441@mir>
- <2023090719-virtuous-snowflake-d015@gregkh>
- <20230907221737.07f12f38@mir>
- <2023090848-chastise-paycheck-6d4d@gregkh>
- <2023090841-antitrust-reword-d6bc@gregkh>
- <20230908083139.GA9985@lst.de>
- <20230908083538.GA10228@lst.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC365390
+	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 14:53:20 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id D1FB121D24;
+	Fri,  8 Sep 2023 14:53:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1694184798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=jWUuKHA14Ro80eW+EcXMts9c3gnZ7g0AX+XfQ4t1ggo=;
+	b=Ofhto8mBB6G/WsRstp537Zic9CQSDdhN6TRK0U/zjUBosx5Jm4nYvx+3Q4XibW+tIzdBEU
+	TG/TQ3RELRcc16jMAmPLpYXNvybxpwzf6JfRCw1FAMUSAMDvb2tShc5MbywQ6QVBIIC2MZ
+	/WnoLDMNHcf6bG5Cic50TeNdme2d6rg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1694184798;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=jWUuKHA14Ro80eW+EcXMts9c3gnZ7g0AX+XfQ4t1ggo=;
+	b=pJOd4bGthsdKOztl2YrI8Zl1MZINaACKK+ir2PQ5tmQZNxaSEOtVZ6Iqh5Sn+ieEScDVO2
+	l/ejWD0T1dAuZZAg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9E385131FD;
+	Fri,  8 Sep 2023 14:53:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 1/TnJV41+2QaBQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 08 Sep 2023 14:53:18 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Jay Patel <jaypatel@linux.ibm.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>,
+	Pekka Enberg <penberg@kernel.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	linux-mm@kvack.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 0/4] SLUB: calculate_order() cleanups
+Date: Fri,  8 Sep 2023 16:53:03 +0200
+Message-ID: <20230908145302.30320-6-vbabka@suse.cz>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230908083538.GA10228@lst.de>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 08, 2023 at 10:35:38AM +0200, Christoph Hellwig wrote:
-> On Fri, Sep 08, 2023 at 10:31:39AM +0200, Christoph Hellwig wrote:
-> > On Fri, Sep 08, 2023 at 08:07:08AM +0100, Greg Kroah-Hartman wrote:
-> > > And it's over 130 symbols, attached, I'll figure out a way to script
-> > > this...
-> > 
-> > Eww. Sorry for missing this, and I suspect it really should be
-> > entirely reworked in the future.  But for now the scripting sounds
-> > right.  Let me know if you'd done anything, otherwise I can look into
-> > it this afternoon Chilean time.
-> 
-> .. and it turns out dvb_attach has already been deprecated for 5 years
-> time, it's just that it still has all these users around.
+Since reviewing recent patches made me finally dig into these functions
+in details for the first time, I've also noticed some opportunities for
+cleanups that should make them simpler and also deliver more consistent
+results for some corner case object sizes (probably not seen in
+practice). Thus patch 3 can increase slab orders somewhere, but only in
+the way that was already intended. Otherwise it's almost no functional
+changes.
 
-Yeah, apis never seem to go away.  I'm scripting it now, almost done...
+Vlastimil Babka (4):
+  mm/slub: simplify the last resort slab order calculation
+  mm/slub: remove min_objects loop from calculate_order()
+  mm/slub: attempt to find layouts up to 1/2 waste in calculate_order()
+  mm/slub: refactor calculate_order() and calc_slab_order()
 
-greg k-h
+ mm/slub.c | 63 ++++++++++++++++++++++++-------------------------------
+ 1 file changed, 27 insertions(+), 36 deletions(-)
+
+-- 
+2.42.0
+
