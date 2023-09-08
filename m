@@ -1,38 +1,42 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC365390
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71F56AA2
 	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 14:53:20 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id D1FB121D24;
-	Fri,  8 Sep 2023 14:53:18 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 2FCAB21D25;
+	Fri,  8 Sep 2023 14:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1694184798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=jWUuKHA14Ro80eW+EcXMts9c3gnZ7g0AX+XfQ4t1ggo=;
-	b=Ofhto8mBB6G/WsRstp537Zic9CQSDdhN6TRK0U/zjUBosx5Jm4nYvx+3Q4XibW+tIzdBEU
-	TG/TQ3RELRcc16jMAmPLpYXNvybxpwzf6JfRCw1FAMUSAMDvb2tShc5MbywQ6QVBIIC2MZ
-	/WnoLDMNHcf6bG5Cic50TeNdme2d6rg=
+	t=1694184799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1Z1sKJpFTH+GkYm0khClKXyg32JfDaf6DR+O1U32B1U=;
+	b=YuP4yGAgh8IJXJqsJ73xpH1c8mWzwQKxk19hlkWByx+xqNYN38WeOb48/N6bxU0xCx8maW
+	W1jKRpnjfatbKB8YELQlCeuLU2hRZzscE/fnXEfChJl//ljQGtUhCDbG9stCFPzEOpYgEa
+	m9vCuphfho6ykKwxQy2FsDwCQfrC7nE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1694184798;
+	s=susede2_ed25519; t=1694184799;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=jWUuKHA14Ro80eW+EcXMts9c3gnZ7g0AX+XfQ4t1ggo=;
-	b=pJOd4bGthsdKOztl2YrI8Zl1MZINaACKK+ir2PQ5tmQZNxaSEOtVZ6Iqh5Sn+ieEScDVO2
-	l/ejWD0T1dAuZZAg==
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1Z1sKJpFTH+GkYm0khClKXyg32JfDaf6DR+O1U32B1U=;
+	b=zdKRoEqR5QeAuWFifH3Asdg2OEmp22MdGD1d+kXPIOxuQfreIS8fFSyp4hCLbK4CVYH8py
+	dB2y1nrKP4MuEvDg==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9E385131FD;
-	Fri,  8 Sep 2023 14:53:18 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0857E131FD;
+	Fri,  8 Sep 2023 14:53:19 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 1/TnJV41+2QaBQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 08 Sep 2023 14:53:18 +0000
+	id AMVrAV81+2QaBQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 08 Sep 2023 14:53:19 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -45,10 +49,12 @@ Cc: Roman Gushchin <roman.gushchin@linux.dev>,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 0/4] SLUB: calculate_order() cleanups
-Date: Fri,  8 Sep 2023 16:53:03 +0200
-Message-ID: <20230908145302.30320-6-vbabka@suse.cz>
+Subject: [PATCH 2/4] mm/slub: remove min_objects loop from calculate_order()
+Date: Fri,  8 Sep 2023 16:53:05 +0200
+Message-ID: <20230908145302.30320-8-vbabka@suse.cz>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230908145302.30320-6-vbabka@suse.cz>
+References: <20230908145302.30320-6-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,23 +63,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since reviewing recent patches made me finally dig into these functions
-in details for the first time, I've also noticed some opportunities for
-cleanups that should make them simpler and also deliver more consistent
-results for some corner case object sizes (probably not seen in
-practice). Thus patch 3 can increase slab orders somewhere, but only in
-the way that was already intended. Otherwise it's almost no functional
-changes.
+calculate_order() currently has two nested loops. The inner one that
+gradually modifies the acceptable waste from 1/16 up to 1/4, and the
+outer one that decreases min_objects down to 2.
 
-Vlastimil Babka (4):
-  mm/slub: simplify the last resort slab order calculation
-  mm/slub: remove min_objects loop from calculate_order()
-  mm/slub: attempt to find layouts up to 1/2 waste in calculate_order()
-  mm/slub: refactor calculate_order() and calc_slab_order()
+Upon closer inspection, the outer loop is unnecessary. Decreasing
+min_objects could have in theory two effects to make the inner loop and
+its call to calc_slab_order() succeed where a previous iteration with
+higher min_objects would not:
 
- mm/slub.c | 63 ++++++++++++++++++++++++-------------------------------
- 1 file changed, 27 insertions(+), 36 deletions(-)
+- it could cause the min_objects-derived min_order to fit within
+  slub_max_order. But min_objects is already pre-capped to max_objects
+  that's derived from slub_max_order above the loops, so every iteration
+  tries at least slub_max_order in calc_slab_order()
 
+- it could cause calc_slab_order() to be called with lower min_objects
+  thus potentially lower min_order in its loop. This would make a
+  difference if the lower order could cause the fractional waste test to
+  succeed where a higher order has already failed with same fract_leftover
+  in the previous iteration with a higher min_order. But that's not
+  possible, because increasing the order can only result in lower (or
+  same) fractional waste. If we increase the slab size 2 times, we will
+  fit at least 2 times the number of objects (thus same fraction of
+  waste), or it will allow us to fit one more object (lower fraction of
+  waste).
+
+For more confidence I have tried adding a printk to notify when
+decreasing min_objects resulted in a success, and simulated calculations
+for a range of object sizes, nr_cpus and page_sizes. As expected, the
+printk never triggered.
+
+Thus remove the outer loop and adjust comments accordingly.
+
+There's almost no functional change except a weird corner case when
+slub_min_objects=1 on boot command line would cause the whole two nested
+loops to be skipped before this patch. Now it would try to find the best
+layout as usual, resulting in potentially higher orderthat minimizes
+waste. This is not wrong and will be further expanded by the next patch.
+
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+---
+ mm/slub.c | 38 ++++++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
+
+diff --git a/mm/slub.c b/mm/slub.c
+index c6e694cb17b9..5c287d96b212 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -4141,14 +4141,6 @@ static inline int calculate_order(unsigned int size)
+ 	unsigned int max_objects;
+ 	unsigned int nr_cpus;
+ 
+-	/*
+-	 * Attempt to find best configuration for a slab. This
+-	 * works by first attempting to generate a layout with
+-	 * the best configuration and backing off gradually.
+-	 *
+-	 * First we increase the acceptable waste in a slab. Then
+-	 * we reduce the minimum objects required in a slab.
+-	 */
+ 	min_objects = slub_min_objects;
+ 	if (!min_objects) {
+ 		/*
+@@ -4168,18 +4160,24 @@ static inline int calculate_order(unsigned int size)
+ 	max_objects = order_objects(slub_max_order, size);
+ 	min_objects = min(min_objects, max_objects);
+ 
+-	while (min_objects > 1) {
+-		unsigned int fraction;
+-
+-		fraction = 16;
+-		while (fraction >= 4) {
+-			order = calc_slab_order(size, min_objects,
+-					slub_max_order, fraction);
+-			if (order <= slub_max_order)
+-				return order;
+-			fraction /= 2;
+-		}
+-		min_objects--;
++	/*
++	 * Attempt to find best configuration for a slab. This works by first
++	 * attempting to generate a layout with the best possible configuration and
++	 * backing off gradually.
++	 *
++	 * We start with accepting at most 1/16 waste and try to find the
++	 * smallest order from min_objects-derived/slub_min_order up to
++	 * slub_max_order that will satisfy the constraint. Note that increasing
++	 * the order can only result in same or less fractional waste, not more.
++	 *
++	 * If that fails, we increase the acceptable fraction of waste and try
++	 * again.
++	 */
++	for (unsigned int fraction = 16; fraction >= 4; fraction /= 2) {
++		order = calc_slab_order(size, min_objects, slub_max_order,
++					fraction);
++		if (order <= slub_max_order)
++			return order;
+ 	}
+ 
+ 	/*
 -- 
 2.42.0
 
