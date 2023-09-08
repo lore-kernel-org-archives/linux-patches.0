@@ -1,150 +1,145 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B85815C5
-	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 05:27:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1694150856;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kKCsrqis+BsCzL1au9M77zkgSqfPeD5/UYOFu7ubnBU=;
-	b=R5gwUl1QW/7KQlg9lMwIKnWjgpmjufM1XZEXs9ZdJK19vTzVTsR0nH9hETF+I7xCzGWs1U
-	W7q+/5SlIJn7wvwt411JfjdcJkt6d8RDs9vUTI5YddQSa50+Ve6GQEn8x669lnzLIuPA8f
-	UhStcyntstx2gO8DlIyGXvPyeOwbI7I=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-537-oE0pxHqHMNmCMd155ab6-g-1; Fri, 08 Sep 2023 01:27:32 -0400
-X-MC-Unique: oE0pxHqHMNmCMd155ab6-g-1
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-1c0aaf4caaaso22542045ad.2
-        for <patches@lists.linux.dev>; Thu, 07 Sep 2023 22:27:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694150852; x=1694755652;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kKCsrqis+BsCzL1au9M77zkgSqfPeD5/UYOFu7ubnBU=;
-        b=kSJfF8gJcelHLYXUlozNCJMhAbm8p2/PQLoG0VLY7ZmUi91TV8sKF4WqAS/f/lBSoU
-         0PSe+mwSGO7O80V0sFUISSeFgYZ3ap/12NDlmwP5AKz2U3H/xcHuedl0U9cGiyO9MOix
-         Fv3xM++2WJKMie3bfCDi7dEAQZo6pkOlfsgi+hMKyoOfgC0+R6i9MnVRuX5iLdyvPla4
-         sIK5Gdb/2/g4u6B1LtOTfrSOaGNL4YxI5kuHopZnV/pis9MVXzpK4619Gc9AycDOWmVp
-         Ot8tSDkTkcad7NiCs40TDlLZvin4XK4eOnU0Xi0qd3OyGW/QBL7Y/hl3oDls2BBgPQ4N
-         Qbig==
-X-Gm-Message-State: AOJu0YyXQYdZ1+GTNlW+9XbX9p4MxBrmiUrgoEBjxckSSMkz8INKZVBP
-	ahK35r81PMkHVnmwNdSQng+KpW8+JXY+Wt0UGfn7TGsy0CFz4r2Bicr4MMP1G8EPV75L3sal4wI
-	yy1/RQao9gzZQG7tOFg==
-X-Received: by 2002:a17:902:c945:b0:1bb:32de:95c5 with SMTP id i5-20020a170902c94500b001bb32de95c5mr1976914pla.65.1694150851694;
-        Thu, 07 Sep 2023 22:27:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJ40qCvKRfoIkm0b84FGgfTzvKoPpRC2DfetekChbsCofR092otCbVr1txAVQ/nG9XCDpMRg==
-X-Received: by 2002:a17:902:c945:b0:1bb:32de:95c5 with SMTP id i5-20020a170902c94500b001bb32de95c5mr1976899pla.65.1694150851352;
-        Thu, 07 Sep 2023 22:27:31 -0700 (PDT)
-Received: from zlang-mailbox ([43.228.180.230])
-        by smtp.gmail.com with ESMTPSA id jf20-20020a170903269400b001b80760fd04sm646012plb.112.2023.09.07.22.27.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 22:27:30 -0700 (PDT)
-Date: Fri, 8 Sep 2023 13:27:27 +0800
-From: Zorro Lang <zlang@redhat.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: fstests@vger.kernel.org, aalbersh@redhat.com, chandan.babu@oracle.com,
-	amir73il@gmail.com, djwong@kernel.org,
-	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] check: add support for --start-after
-Message-ID: <20230908052727.ccyxadtibouis74h@zlang-mailbox>
-References: <20230907221030.3037715-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDA4368
+	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 06:46:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2B2C433C9;
+	Fri,  8 Sep 2023 06:46:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1694155619;
+	bh=F/+3AoZMSA6jGzbZvILpyJhqzHBMsKrZoIHomJSa4HI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Digbn9unnTDdYbaZjXuF+eTk9YuXPNpX0HcgtWvI6qysLqfZfbHtE0AqQlEZozKf1
+	 3DpBxe5JPnXQuE/su+szL/IPjrneBMc9YyAvAwtT/DnfBFs+QZef1Sadb8iX8GcCPA
+	 V2bo2I0EOag6gTdMy2NQE3in9n9efkPUmMKk0kxA=
+Date: Fri, 8 Sep 2023 07:46:56 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Stefan Lippers-Hollmann <s.l-h@gmx.de>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6.5 11/34] modules: only allow symbol_get of
+ EXPORT_SYMBOL_GPL modules
+Message-ID: <2023090848-chastise-paycheck-6d4d@gregkh>
+References: <20230904182948.594404081@linuxfoundation.org>
+ <20230904182949.104100132@linuxfoundation.org>
+ <20230907084135.02d97441@mir>
+ <2023090719-virtuous-snowflake-d015@gregkh>
+ <20230907221737.07f12f38@mir>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230907221030.3037715-1-mcgrof@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20230907221737.07f12f38@mir>
 
-On Thu, Sep 07, 2023 at 03:10:30PM -0700, Luis Chamberlain wrote:
-> Often times one is running a new test baseline we want to continue to
-> start testing where we left off if the last test was a crash. To do
-> this the first thing that occurred to me was to use the check.time
-> file as an expunge file but that doesn't work so well if you crashed
-> as the file turns out empty.
+On Thu, Sep 07, 2023 at 10:17:37PM +0200, Stefan Lippers-Hollmann wrote:
+> Hi
 > 
-> So instead add super simple argument --start-after which let's you
-> skip all tests until the test infrastructure has "seen" the test
-> you want to skip. This does obviously work best if you are not using
-> a random order, but that is rather implied.
+> On 2023-09-07, Greg Kroah-Hartman wrote:
+> > On Thu, Sep 07, 2023 at 08:41:35AM +0200, Stefan Lippers-Hollmann wrote:
+> > > On 2023-09-04, Greg Kroah-Hartman wrote:
+> > > > 6.5-stable review patch.  If anyone has any objections, please let me know.
+> > > >
+> > > > ------------------
+> > > >
+> > > > From: Christoph Hellwig <hch@lst.de>
+> > > >
+> > > > commit 9011e49d54dcc7653ebb8a1e05b5badb5ecfa9f9 upstream.
+> > > >
+> > > > It has recently come to my attention that nvidia is circumventing the
+> > > > protection added in 262e6ae7081d ("modules: inherit
+> > > > TAINT_PROPRIETARY_MODULE") by importing exports from their proprietary
+> > > > modules into an allegedly GPL licensed module and then rexporting them.
+> > > >
+> > > > Given that symbol_get was only ever intended for tightly cooperating
+> > > > modules using very internal symbols it is logical to restrict it to
+> > > > being used on EXPORT_SYMBOL_GPL and prevent nvidia from costly DMCA
+> > > > Circumvention of Access Controls law suites.
+> > > >
+> > > > All symbols except for four used through symbol_get were already exported
+> > > > as EXPORT_SYMBOL_GPL, and the remaining four ones were switched over in
+> > > > the preparation patches.
+> > >
+> > > This patch, as part of v6.5.2, breaks the in-kernel ds3000 module
+> > > (for a TeVii s480 v2 DVB-S2 card, which is a PCIe card attaching two
+> > > onboard TeVii s660 cards via an onboard USB2 controller (MCS9990),
+> > > https://www.linuxtv.org/wiki/index.php/TeVii_S480) from loading.
+> >
+> > This is also broken in Linus's tree, right?
 > 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  check | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
+> Yes, HEAD as of 6.5.0-12145-g4a0fc73da97e is affected just as well.
+
+Ok, good, thanks for confirming.
+
+> > > [    2.896589] dvbdev: dvb_create_media_entity: media entity 'dvb-demux' registered.
+> > > [    2.901085] failing symbol_get of non-GPLONLY symbol ds3000_attach.
+> > > [    2.901089] DVB: Unable to find symbol ds3000_attach()
+> >
+> > This is odd, where is that call coming from?  I don't see any call to
+> > symbol_get in the dvb code, where is this happening?
+> >
+> > Anyway, does the patch below fix this?
 > 
-> diff --git a/check b/check
-> index 71b9fbd07522..1ecf07c1cb37 100755
-> --- a/check
-> +++ b/check
-> @@ -18,6 +18,8 @@ showme=false
->  have_test_arg=false
->  randomize=false
->  exact_order=false
-> +start_after=false
-> +start_after_test=""
->  export here=`pwd`
->  xfile=""
->  subdir_xfile=""
-> @@ -80,6 +82,7 @@ check options
->      -b			brief test summary
->      -R fmt[,fmt]	generate report in formats specified. Supported formats: xunit, xunit-quiet
->      --large-fs		optimise scratch device for large filesystems
-> +    --start-after	only start testing after the test specified
-
-This option conflicts with "-r" option.
-
->      -s section		run only specified section from config file
->      -S section		exclude the specified section from the config file
->      -L <n>		loop tests <n> times following a failure, measuring aggregate pass/fail metrics
-> @@ -313,6 +316,11 @@ while [ $# -gt 0 ]; do
->  				<(sed "s/#.*$//" $xfile)
->  		fi
->  		;;
-> +	--start-after)
-> +		start_after=true
-> +		start_after_test="$2"
-
-Do we really need two variables at here?
-
-> +		shift
-> +		;;
->  	-s)	RUN_SECTION="$RUN_SECTION $2"; shift ;;
->  	-S)	EXCLUDE_SECTION="$EXCLUDE_SECTION $2"; shift ;;
->  	-l)	diff="diff" ;;
-> @@ -591,6 +599,15 @@ _expunge_test()
->  {
->  	local TEST_ID="$1"
->  
-> +	if $start_after; then
-> +		if [[ "$start_after_test" == ${TEST_ID}* ]]; then
-> +			start_after=false
-> +		fi
-> +		echo "       [skipped]"
-> +		return 0
-> +
-> +	fi
-
-I can't understand how you use the --start-after. I though you'd like to remove
-all cases before the "start-after" from the running list. But when I saw here,
-I'm a little confused.
-
-Thanks,
-Zorro
-
-> +
->  	for f in "${exclude_tests[@]}"; do
->  		# $f may contain traling spaces and comments
->  		local id_regex="^${TEST_ID}\b"
-> -- 
-> 2.39.2
+> That change alone only moves the issue down to ts2020_attach().
 > 
+> $ dmesg | grep -i -e dvb -e gpl -e symbol
+> [    1.464876] usb 3-1: Product: DVBS2BOX
+> [    1.482143] usb 5-1: Product: DVBS2BOX
+> [    3.692647] dvb-usb: found a 'TeVii S660 USB' in cold state, will try to load a firmware
+> [    3.692951] dvb-usb: downloading firmware from file 'dvb-usb-s660.fw'
+> [    3.860571] dvb-usb: found a 'TeVii S660 USB' in warm state.
+> [    3.860615] dvb-usb: will pass the complete MPEG2 transport stream to the software demuxer.
+> [    3.860944] dvbdev: DVB: registering new adapter (TeVii S660 USB)
+> [    4.097144] dvb-usb: MAC address: 00:18:XX:XX:XX:XX
+> [    4.097272] dvbdev: dvb_create_media_entity: media entity 'dvb-demux' registered.
+> [    4.111792] failing symbol_get of non-GPLONLY symbol ts2020_attach.
+> [    4.111795] DVB: Unable to find symbol ts2020_attach()
+> [    4.112759] usb 3-1: DVB: registering adapter 0 frontend 0 (Montage Technology DS3000)...
+> [    4.112764] dvbdev: dvb_create_media_entity: media entity 'Montage Technology DS3000' registered.
+> [    4.138938] dvb-usb: schedule remote query interval to 150 msecs.
+> [    4.138942] dvb-usb: TeVii S660 USB successfully initialized and connected.
+> [    4.138988] dvb-usb: found a 'TeVii S660 USB' in cold state, will try to load a firmware
+> [    4.139016] dvb-usb: downloading firmware from file 'dvb-usb-s660.fw'
+> [    4.292614] dvb-usb: found a 'TeVii S660 USB' in warm state.
+> [    4.292679] dvb-usb: will pass the complete MPEG2 transport stream to the software demuxer.
+> [    4.293075] dvbdev: DVB: registering new adapter (TeVii S660 USB)
+> [    4.538876] dvb-usb: MAC address: 00:18:XX:XX:XX:XX
+> [    4.539113] dvbdev: dvb_create_media_entity: media entity 'dvb-demux' registered.
+> [    4.543738] failing symbol_get of non-GPLONLY symbol ts2020_attach.
+> [    4.546349] failing symbol_get of non-GPLONLY symbol ts2020_attach.
+> [    4.546354] DVB: Unable to find symbol ts2020_attach()
+> [    4.548643] usb 5-1: DVB: registering adapter 1 frontend 0 (Montage Technology DS3000)...
+> [    4.548650] dvbdev: dvb_create_media_entity: media entity 'Montage Technology DS3000' registered.
+> [    4.549970] dvb-usb: schedule remote query interval to 150 msecs.
+> [    4.549973] dvb-usb: TeVii S660 USB successfully initialized and connected.
+> [    7.830408] ds3000_firmware_ondemand: Waiting for firmware upload (dvb-fe-ds3000.fw)...
+> [    8.367600] ds3000_firmware_ondemand: Waiting for firmware upload (dvb-fe-ds3000.fw)...
+> 
+> Extending this to approach to ts2020_attach() does fix the problem
+> for me. Searching the web for "failing symbol_get of non-GPLONLY
+> symbol" suggests that there might be further instances within the
+> DVB subsystem https://syzkaller.appspot.com/x/log.txt?x=11faa1eda80000
+> (this was merely gathered by a passive web search, I have no contact
+> to the poster or any further information about it).
 
+Ugh, it looks like everyone that calls dvb_attach() is going to be
+affected.  I can make up a patch for this later today, unless Christoph
+beats me to it :)
+
+Also, in commit 8f569c0b4e6b ("media: dvb-core: add helper functions for
+I2C binding"), way back in 2018, it says no one should be using this
+function anymore, but given I see over 700 uses of it, that's obviously
+not changing any time soon :(
+
+> [ now fully functional with EXPORT_SYMBOL_GPL(ds3000_attach) and
+>   EXPORT_SYMBOL_GPL(ts2020_attach) ]
+
+Thanks for testing this.
+
+greg k-h
