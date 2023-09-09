@@ -1,80 +1,93 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA3A1C39
-	for <patches@lists.linux.dev>; Fri,  8 Sep 2023 21:30:00 +0000 (UTC)
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2bcfdadd149so44184091fa.0
-        for <patches@lists.linux.dev>; Fri, 08 Sep 2023 14:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694208598; x=1694813398; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2qDdudysz/QEH80r6EgYVihuuCpmrfhapLn+3lG+eMs=;
-        b=S8X+IByWa+6gq9yMuOXrVftfFJMo6cQYJPQp/wywIv+jKEwHK49yQgaatG5LPnpEd2
-         i73YJ2ewKoqjfIsgUqI8HdhHIEfMwFocZ+1KjRnkUPLd88XWcSXKOrmvXMvH2c5/utLf
-         akTUsYyG55351+2wN7Tym/1z+GmpQE1eIFpzc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694208599; x=1694813399;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2qDdudysz/QEH80r6EgYVihuuCpmrfhapLn+3lG+eMs=;
-        b=OM0qiP9pYEwSOsa1HiJrXmq016SnoLvb1204uJiyZXdhGbqx0MF5A/eJBv4H53XDNg
-         +DBQwp6ijb1nx3bwhs63VQdtrD8yuoYYRDpgVxMQtBM8bXhWWeL/gxWZRMvxmbtx/ufj
-         a9UQR8mwUq0tkkMRZbQuNh7BJb/LKKeE2cVxY516mTbBJu7Pk4tgKilsJN/dvaFyiobm
-         phec5ZtDIWqPrhcc9IYqMWSIKzXWyRvN9K89wO1bVtRLgCyNWtPp8F9NeE6RPeVntKwu
-         nr1sAfBIFBonaswsD/SSN7sNHvSjVu6l2+d8bs6zDB2LN1ImvbQefIW/Ccv5hawBdcJM
-         Gs/w==
-X-Gm-Message-State: AOJu0YzicOL3qaYD2qKKoD4r9d041vSHlqWa4pdLNbtgceWoR/U6CFJG
-	WaX4O/HlxS8+pNrTtN8jVrAh4l8JFIK066mvBAqkJg==
-X-Google-Smtp-Source: AGHT+IHLxc6Pt+LOz/vNpPU9ODhICc7VbTgK0zhU7UukD8vadAWyMGPJPmRY8v9AfR6NmoYisAx+6DTfyXICbK2T2eY=
-X-Received: by 2002:ac2:4839:0:b0:500:ac71:8464 with SMTP id
- 25-20020ac24839000000b00500ac718464mr2558487lft.66.1694208598596; Fri, 08 Sep
- 2023 14:29:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 8 Sep 2023 16:29:57 -0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAD9163
+	for <patches@lists.linux.dev>; Sat,  9 Sep 2023 00:07:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83797C433C7;
+	Sat,  9 Sep 2023 00:07:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1694218024;
+	bh=8bKjNMrsD+rzvcII29VJTnYW3CdOpmYhoTwkp4WQ0LU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=lV2bPGPP14MM8bMUL8ehuFIGK1u464H5Yj6Wx/jqafWe0x5DKwCrl/zRUeYa8IkV2
+	 dXmGgMOcQ8/PIa5ElPTPWOjbDZEChv8DAHOk/KzhM6Aqo0tZd7GHSuRDMPqOdp3jhT
+	 C818kJXLGyj9gIDd9X5DQ3GxA4r7sBM+dee4IHUD7ZdpNX8ANawU5L6g/9R+jqYh6F
+	 ZxRAqoWppHALHpmw1Vtoh5VLg/TpGXqoJ9MxbAastt16gYgs6j4Qo+95qvL6hULdqT
+	 wYMnsmI4aWrUVuuxCqKxcOO/7ZZQt5JDDm7cOBZPdtXQGgbjqIz4ZdULT1CpbbpUd+
+	 ZpJGrXKuApsnA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] clk: asm9620: Remove 'hw' local variable that isn't checked
+Date: Fri,  8 Sep 2023 17:07:02 -0700
+Message-ID: <20230909000703.3478902-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230908045946.GM1599918@black.fi.intel.com>
-References: <20230906180944.2197111-1-swboyd@chromium.org> <20230906180944.2197111-2-swboyd@chromium.org>
- <20230907053513.GH1599918@black.fi.intel.com> <CAE-0n51Ut296M2ZetuzXGpX32pS11bbWzfcbaFfqNxgSjzafJw@mail.gmail.com>
- <20230908045946.GM1599918@black.fi.intel.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 8 Sep 2023 16:29:57 -0500
-Message-ID: <CAE-0n52VoAFopSgXiLMoSzBAdSLg4=x3i2R9Agjz5L7o8=1hew@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] platform/x86: intel_scu_ipc: Check status after
- timeout in busy_loop()
-To: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Hans de Goede <hdegoede@redhat.com>, Mark Gross <markgross@kernel.org>, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	platform-driver-x86@vger.kernel.org, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	Prashant Malani <pmalani@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Quoting Mika Westerberg (2023-09-07 21:59:46)
-> On Thu, Sep 07, 2023 at 01:11:17PM -0700, Stephen Boyd wrote:
-> >
-> > We can't use readl_busy_timeout() (you mean readl_poll_timeout() right?)
-> > because that implements the timeout with timekeeping and we don't know
-> > if this is called from suspend paths after timekeeping is suspended or
-> > from early boot paths where timekeeping isn't started.
->
-> Yes readl_poll_timeout(). :)
->
-> I don't think this code is used anymore outside of regular paths. It
-> used to be with the Moorestown/Medfield board support code but that's
-> gone already. Grepping for the users also don't reveal anything that
-> could be using it early at boot.
+The 'hw' pointer local variable in this function became unused after
+commit f5290d8e4f0c ("clk: asm9260: use parent index to link the
+reference clock"). Remove it to silence an unused but set variable
+warning.
 
-Ok. Assuming this isn't used from paths during suspend/resume when
-timekeeping is suspended it look like readl_poll_timeout() is the
-shorter and simpler approach. So if that works for you I'll send another
-round with that and a fix for the ipcdev being overwritten.
+ drivers/clk/clk-asm9260.c:258:17: warning: variable 'hw' set but not used [-Wunused-but-set-variable]
+           struct clk_hw *hw, *pll_hw;
+                          ^
+   1 warning generated.
+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: f5290d8e4f0c ("clk: asm9260: use parent index to link the reference clock")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309042014.IWERPl09-lkp@intel.com/
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/clk-asm9260.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/clk/clk-asm9260.c b/drivers/clk/clk-asm9260.c
+index 8b3c059e19a1..3432c801f1bd 100644
+--- a/drivers/clk/clk-asm9260.c
++++ b/drivers/clk/clk-asm9260.c
+@@ -255,7 +255,7 @@ static struct asm9260_mux_clock asm9260_mux_clks[] __initdata = {
+ 
+ static void __init asm9260_acc_init(struct device_node *np)
+ {
+-	struct clk_hw *hw, *pll_hw;
++	struct clk_hw *pll_hw;
+ 	struct clk_hw **hws;
+ 	const char *pll_clk = "pll";
+ 	struct clk_parent_data pll_parent_data = { .index = 0 };
+@@ -283,7 +283,7 @@ static void __init asm9260_acc_init(struct device_node *np)
+ 	for (n = 0; n < ARRAY_SIZE(asm9260_mux_clks); n++) {
+ 		const struct asm9260_mux_clock *mc = &asm9260_mux_clks[n];
+ 
+-		hw = clk_hw_register_mux_table_parent_data(NULL, mc->name, mc->parent_data,
++		clk_hw_register_mux_table_parent_data(NULL, mc->name, mc->parent_data,
+ 				mc->num_parents, mc->flags, base + mc->offset,
+ 				0, mc->mask, 0, mc->table, &asm9260_clk_lock);
+ 	}
+@@ -292,7 +292,7 @@ static void __init asm9260_acc_init(struct device_node *np)
+ 	for (n = 0; n < ARRAY_SIZE(asm9260_mux_gates); n++) {
+ 		const struct asm9260_gate_data *gd = &asm9260_mux_gates[n];
+ 
+-		hw = clk_hw_register_gate(NULL, gd->name,
++		clk_hw_register_gate(NULL, gd->name,
+ 			gd->parent_name, gd->flags | CLK_SET_RATE_PARENT,
+ 			base + gd->reg, gd->bit_idx, 0, &asm9260_clk_lock);
+ 	}
+
+base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
