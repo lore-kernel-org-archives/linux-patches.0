@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E4B11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27ACC433C7;
-	Mon, 11 Sep 2023 14:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247AC11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0EBC433C9;
+	Mon, 11 Sep 2023 14:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443673;
-	bh=FuoqCUlFLsXZsetp8F8QOdAuV210zECAhtI+pFimBPI=;
+	s=korg; t=1694443676;
+	bh=6P8BAr1SuwpP7ReqPxHnRJyhB/UCBu1D6wjRnXCBU5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkge5M0AVN8dkQW4bkJHlI6JmiIUlv84WNN8qCtc75k4DeQ03/NsSz+3trCr+5b2e
-	 paTAWcfTLM2riBnCtBHLI0R5Ecfsb85IqgmZqvXqgrwnP9kEAuCHAct3oHubxjqUp/
-	 aGKj5fahf/ZaFVtx3LNbHVIGTt5uDTGQzDjKBOZ4=
+	b=N3dq1pDdiu60IBiHm6AVTQ867b6176HC1JzAbDnfNV+kZn2S5iC36YIF1tCcup4Ox
+	 MPjZ0Thuu8yrzPVTIph7sSJsHbCiNTG6XTdqyQgFHjaxGHrX50fAw7QxDttkIMgSXd
+	 qymYt6ipAGHgb4Q13L7KNQ2to3vUhM07xJ8rZOZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 453/737] powerpc/perf: Convert fsl_emb notifier to state machine callbacks
-Date: Mon, 11 Sep 2023 15:45:12 +0200
-Message-ID: <20230911134703.255264061@linuxfoundation.org>
+Subject: [PATCH 6.4 462/737] NFSv4.2: Fix READ_PLUS smatch warnings
+Date: Mon, 11 Sep 2023 15:45:21 +0200
+Message-ID: <20230911134703.498818928@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,82 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-[ Upstream commit 34daf445f82bd3a4df852bb5f1dffd792ac830a0 ]
+[ Upstream commit bb05a617f06b7a882e19c4f475b8e37f14d9ceac ]
 
-  CC      arch/powerpc/perf/core-fsl-emb.o
-arch/powerpc/perf/core-fsl-emb.c:675:6: error: no previous prototype for 'hw_perf_event_setup' [-Werror=missing-prototypes]
-  675 | void hw_perf_event_setup(int cpu)
-      |      ^~~~~~~~~~~~~~~~~~~
+Smatch reports:
+  fs/nfs/nfs42xdr.c:1131 decode_read_plus() warn: missing error code? 'status'
 
-Looks like fsl_emb was completely missed by commit 3f6da3905398 ("perf:
-Rework and fix the arch CPU-hotplug hooks")
+Which Dan suggests to fix by doing a hardcoded "return 0" from the
+"if (segments == 0)" check.
 
-So, apply same changes as commit 3f6da3905398 ("perf: Rework and fix
-the arch CPU-hotplug hooks") then commit 57ecde42cc74 ("powerpc/perf:
-Convert book3s notifier to state machine callbacks")
+Additionally, smatch reports that the "status = -EIO" assignment is not
+used. This patch addresses both these issues.
 
-While at it, also fix following error:
-
-arch/powerpc/perf/core-fsl-emb.c: In function 'perf_event_interrupt':
-arch/powerpc/perf/core-fsl-emb.c:648:13: error: variable 'found' set but not used [-Werror=unused-but-set-variable]
-  648 |         int found = 0;
-      |             ^~~~~
-
-Fixes: 3f6da3905398 ("perf: Rework and fix the arch CPU-hotplug hooks")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/603e1facb32608f88f40b7d7b9094adc50e7b2dc.1692349125.git.christophe.leroy@csgroup.eu
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202305222209.6l5VM2lL-lkp@intel.com/
+Fixes: d3b00a802c845 ("NFS: Replace the READ_PLUS decoding code")
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/core-fsl-emb.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/nfs/nfs42xdr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
-index ee721f420a7ba..1a53ab08447cb 100644
---- a/arch/powerpc/perf/core-fsl-emb.c
-+++ b/arch/powerpc/perf/core-fsl-emb.c
-@@ -645,7 +645,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 	struct cpu_hw_events *cpuhw = this_cpu_ptr(&cpu_hw_events);
- 	struct perf_event *event;
- 	unsigned long val;
--	int found = 0;
+diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
+index a6df815a140c7..ef3b150970ff6 100644
+--- a/fs/nfs/nfs42xdr.c
++++ b/fs/nfs/nfs42xdr.c
+@@ -1136,13 +1136,12 @@ static int decode_read_plus(struct xdr_stream *xdr, struct nfs_pgio_res *res)
+ 	res->eof = be32_to_cpup(p++);
+ 	segments = be32_to_cpup(p++);
+ 	if (segments == 0)
+-		return status;
++		return 0;
  
- 	for (i = 0; i < ppmu->n_counter; ++i) {
- 		event = cpuhw->event[i];
-@@ -654,7 +653,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 		if ((int)val < 0) {
- 			if (event) {
- 				/* event has overflowed */
--				found = 1;
- 				record_and_restart(event, val, regs);
- 			} else {
- 				/*
-@@ -672,11 +670,13 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 	isync();
- }
+ 	segs = kmalloc_array(segments, sizeof(*segs), GFP_KERNEL);
+ 	if (!segs)
+ 		return -ENOMEM;
  
--void hw_perf_event_setup(int cpu)
-+static int fsl_emb_pmu_prepare_cpu(unsigned int cpu)
- {
- 	struct cpu_hw_events *cpuhw = &per_cpu(cpu_hw_events, cpu);
- 
- 	memset(cpuhw, 0, sizeof(*cpuhw));
-+
-+	return 0;
- }
- 
- int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
-@@ -689,6 +689,8 @@ int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
- 		pmu->name);
- 
- 	perf_pmu_register(&fsl_emb_pmu, "cpu", PERF_TYPE_RAW);
-+	cpuhp_setup_state(CPUHP_PERF_POWER, "perf/powerpc:prepare",
-+			  fsl_emb_pmu_prepare_cpu, NULL);
- 
- 	return 0;
- }
+-	status = -EIO;
+ 	for (i = 0; i < segments; i++) {
+ 		status = decode_read_plus_segment(xdr, &segs[i]);
+ 		if (status < 0)
 -- 
 2.40.1
 
