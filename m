@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713E11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADEAC433C7;
-	Mon, 11 Sep 2023 14:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32F411705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278F6C433CA;
+	Mon, 11 Sep 2023 14:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443008;
-	bh=BzJA00J92Jwiu9m1KydN/0SFGT1crpnvXUMxr7XTEcY=;
+	s=korg; t=1694443011;
+	bh=QpMOGEi8NmhqVMc14QXwJ2GvycgvKbAka5PydQ8j3qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDnOhDnAcwG5Ap0dGZ11MPxXCxEd0UT/quYLzrrOtQKPOK//qTQ0NvmTBBmluL4c5
-	 NqJOfxbLrMJNTOy3vHdehudo7POQQRGHC53vFTxFPyt9BJK103cRoF+7EWLeaCMfW1
-	 lLuZfOnRxIkfPu15fpstq0j4dRnvJ98GBPCMbJDg=
+	b=LA2AnbzOHYAxuqN+YR9eQFz8rTcle4ZRtB2AJakfYfYSv0mA8A3/03efMMe/dodGc
+	 t6cHivl6bKjvAIAjVv73ITMM2RdxvPxaLtvVSe+arPSogMKKc6CkoMq0XBvCUvDPWO
+	 T+k56SsW5s6iTaxfDPslhF1qKI/1tEIDRxJyjSFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Li Zetao <lizetao1@huawei.com>,
+	Polaris Pi <pinkperfect2021@gmail.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 208/737] selftests/bpf: Fix repeat option when kfunc_call verification fails
-Date: Mon, 11 Sep 2023 15:41:07 +0200
-Message-ID: <20230911134656.404158572@linuxfoundation.org>
+Subject: [PATCH 6.4 226/737] wifi: mwifiex: Fix missed return in oob checks failed path
+Date: Mon, 11 Sep 2023 15:41:25 +0200
+Message-ID: <20230911134656.893632327@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,37 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Polaris Pi <pinkperfect2021@gmail.com>
 
-[ Upstream commit 811915db674f8daf19bb4fcb67da9017235ce26d ]
+[ Upstream commit 2785851c627f2db05f9271f7f63661b5dbd95c4c ]
 
-There is no way where topts.repeat can be set to 1 when tc_test fails.
-Fix the typo where the break statement slipped by one line.
+Add missed return in mwifiex_uap_queue_bridged_pkt() and
+mwifiex_process_rx_packet().
 
-Fixes: fb66223a244f ("selftests/bpf: add test for accessing ctx from syscall program type")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Li Zetao <lizetao1@huawei.com>
-Link: https://lore.kernel.org/bpf/20230814031434.3077944-1-zouyipeng@huawei.com
+Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
+Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
+Reported-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230810083911.3725248-1-pinkperfect2021@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/kfunc_call.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/sta_rx.c   | 1 +
+ drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_call.c b/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
-index a543742cd7bd1..2eb71559713c9 100644
---- a/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
-@@ -173,8 +173,8 @@ static void verify_fail(struct kfunc_test_params *param)
- 	case tc_test:
- 		topts.data_in = &pkt_v4;
- 		topts.data_size_in = sizeof(pkt_v4);
--		break;
- 		topts.repeat = 1;
-+		break;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+index f2899d53a43f9..65420ad674167 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
+@@ -92,6 +92,7 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
+ 			    skb->len, rx_pkt_off);
+ 		priv->stats.rx_dropped++;
+ 		dev_kfree_skb_any(skb);
++		return -1;
  	}
  
- 	skel = kfunc_call_fail__open_opts(&opts);
+ 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+index 04ff051f5d186..c1b8d41dd7536 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+@@ -110,6 +110,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
+ 			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
+ 		priv->stats.rx_dropped++;
+ 		dev_kfree_skb_any(skb);
++		return;
+ 	}
+ 
+ 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
 -- 
 2.40.1
 
