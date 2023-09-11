@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711291170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFF4C433C8;
-	Mon, 11 Sep 2023 14:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D3F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0379C433C7;
+	Mon, 11 Sep 2023 14:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442184;
-	bh=vMWvPDhzDv8bO7QJu/T3BhB4VnXT4HVYdkLfk8d6X4I=;
+	s=korg; t=1694442187;
+	bh=5jVTFQJ/RqQLWONqzETGBgVI/DSok22N3up45fD3doU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6Va46TggUqueqv8bS9LhAeP89gme5eZOfKtL8zT4HjV7AwhvbNL5EZvo8xrRMVeZ
-	 XJgc5VRwZAGNk7HUCP9IK7RygTYoYb3CijxEBaMxq0kmUjWltdGAdIyxhW4k6NoRb8
-	 OtJN6Ap58f98bCZA8ndMLPvQ3AhNP/DF8xBaqDdg=
+	b=WogWZIeJt53n+cL2YgoIVcLC96E6nZj9J5kFoYu3BOWtNH2Jgukps7BwJzHm//TyJ
+	 KcA6jPRV7gM3tXuouDh0CLf4c1bhIt1IlOnk0M/aW/l04RdggPyU1O4nktUc1sgxxX
+	 ne9bQdw2nB8dwMZasNmqqNUX+oYiR2iOCSx3gPrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.5 668/739] xtensa: PMU: fix base address for the newer hardware
-Date: Mon, 11 Sep 2023 15:47:47 +0200
-Message-ID: <20230911134709.764437928@linuxfoundation.org>
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.5 677/739] ALSA: hda/cirrus: Fix broken audio on hardware with two CS42L42 codecs.
+Date: Mon, 11 Sep 2023 15:47:56 +0200
+Message-ID: <20230911134710.009413628@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -38,69 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-commit 687eb3c42f4ad81e7c947c50e2d865f692064291 upstream.
+commit 99bf5b0baac941176a6a3d5cef7705b29808de34 upstream.
 
-With introduction of ERI access control in RG.0 base address of the PMU
-unit registers has changed. Add support for the new PMU configuration.
+Recently in v6.3-rc1 there was a change affecting behaviour of hrtimers
+(commit 0c52310f260014d95c1310364379772cb74cf82d) and causing
+few issues on platforms with two CS42L42 codecs. Canonical/Dell
+has reported an issue with Vostro-3910.
+We need to increase this value by 15ms.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Link: https://bugs.launchpad.net/somerville/+bug/2031060
+Fixes: 9fb9fa18fb50 ("ALSA: hda/cirrus: Add extra 10 ms delay to allow PLL settle and lock.")
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230904160033.908135-1-vitalyr@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/include/asm/core.h  |    9 +++++++++
- arch/xtensa/kernel/perf_event.c |   17 +++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_cs8409.c |    2 +-
+ sound/pci/hda/patch_cs8409.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/xtensa/include/asm/core.h
-+++ b/arch/xtensa/include/asm/core.h
-@@ -52,4 +52,13 @@
- #define XTENSA_STACK_ALIGNMENT	16
- #endif
+--- a/sound/pci/hda/patch_cs8409.c
++++ b/sound/pci/hda/patch_cs8409.c
+@@ -888,7 +888,7 @@ static void cs42l42_resume(struct sub_co
  
-+#ifndef XCHAL_HW_MIN_VERSION
-+#if defined(XCHAL_HW_MIN_VERSION_MAJOR) && defined(XCHAL_HW_MIN_VERSION_MINOR)
-+#define XCHAL_HW_MIN_VERSION (XCHAL_HW_MIN_VERSION_MAJOR * 100 + \
-+			      XCHAL_HW_MIN_VERSION_MINOR)
-+#else
-+#define XCHAL_HW_MIN_VERSION 0
-+#endif
-+#endif
-+
- #endif
---- a/arch/xtensa/kernel/perf_event.c
-+++ b/arch/xtensa/kernel/perf_event.c
-@@ -13,17 +13,26 @@
- #include <linux/perf_event.h>
- #include <linux/platform_device.h>
+ 	/* Initialize CS42L42 companion codec */
+ 	cs8409_i2c_bulk_write(cs42l42, cs42l42->init_seq, cs42l42->init_seq_num);
+-	usleep_range(30000, 35000);
++	msleep(CS42L42_INIT_TIMEOUT_MS);
  
-+#include <asm/core.h>
- #include <asm/processor.h>
- #include <asm/stacktrace.h>
- 
-+#define XTENSA_HWVERSION_RG_2015_0	260000
-+
-+#if XCHAL_HW_MIN_VERSION >= XTENSA_HWVERSION_RG_2015_0
-+#define XTENSA_PMU_ERI_BASE		0x00101000
-+#else
-+#define XTENSA_PMU_ERI_BASE		0x00001000
-+#endif
-+
- /* Global control/status for all perf counters */
--#define XTENSA_PMU_PMG			0x1000
-+#define XTENSA_PMU_PMG			XTENSA_PMU_ERI_BASE
- /* Perf counter values */
--#define XTENSA_PMU_PM(i)		(0x1080 + (i) * 4)
-+#define XTENSA_PMU_PM(i)		(XTENSA_PMU_ERI_BASE + 0x80 + (i) * 4)
- /* Perf counter control registers */
--#define XTENSA_PMU_PMCTRL(i)		(0x1100 + (i) * 4)
-+#define XTENSA_PMU_PMCTRL(i)		(XTENSA_PMU_ERI_BASE + 0x100 + (i) * 4)
- /* Perf counter status registers */
--#define XTENSA_PMU_PMSTAT(i)		(0x1180 + (i) * 4)
-+#define XTENSA_PMU_PMSTAT(i)		(XTENSA_PMU_ERI_BASE + 0x180 + (i) * 4)
- 
- #define XTENSA_PMU_PMG_PMEN		0x1
- 
+ 	/* Clear interrupts, by reading interrupt status registers */
+ 	cs8409_i2c_bulk_read(cs42l42, irq_regs, ARRAY_SIZE(irq_regs));
+--- a/sound/pci/hda/patch_cs8409.h
++++ b/sound/pci/hda/patch_cs8409.h
+@@ -229,6 +229,7 @@ enum cs8409_coefficient_index_registers
+ #define CS42L42_I2C_SLEEP_US			(2000)
+ #define CS42L42_PDN_TIMEOUT_US			(250000)
+ #define CS42L42_PDN_SLEEP_US			(2000)
++#define CS42L42_INIT_TIMEOUT_MS			(45)
+ #define CS42L42_FULL_SCALE_VOL_MASK		(2)
+ #define CS42L42_FULL_SCALE_VOL_0DB		(1)
+ #define CS42L42_FULL_SCALE_VOL_MINUS6DB		(0)
 
 
