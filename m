@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47B711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C15C433C9;
-	Mon, 11 Sep 2023 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658B011718
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D57C433CB;
+	Mon, 11 Sep 2023 15:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444425;
-	bh=Ao29eAZGGIdCWuRwrX2OJ1hblcnY0rFIbgt2zNQvSgI=;
+	s=korg; t=1694444428;
+	bh=eyUfTNdGTeuOVv6Opaq8ZDFw0T7PXv3qlV8EdGSpjT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAHVBIwZQm8tl030bcJZUbpr/nPGgzW8NzFe4L8CPJG/eHOWeSCoCR5Q0Fbn1EONU
-	 kfpdhIZSjSI1v8Zrro5FYykIRZcfWa+p6HZc9eYbzC/Jg7RV3JDLFTa4SDU13MMNk4
-	 THYQhV/S81U5srzQ/TfIAjo3ylJRlWU/hrtlzquM=
+	b=bhEUTSVslLHMerSkCEYVl4n38p35zYkgBHnPCC29CHY1JR6UeteJnekONDwAzHE7c
+	 CrLrZr+QFdmDZLpf2Z/RRfFY9g3R9NE8xSyZ7gqMJcKl9NKrKplOZ3Ng/tSFyBtfHp
+	 FQg5NmtNJVmw7+OS/qve/g65v2tAiea6ey4SJ0ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Alex Lu <alex_lu@realsil.com.cn>,
+	Hilda Wu <hildawu@realtek.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 725/737] LoongArch: Ensure FP/SIMD registers in the core dump file is up to date
-Date: Mon, 11 Sep 2023 15:49:44 +0200
-Message-ID: <20230911134710.762393290@linuxfoundation.org>
+Subject: [PATCH 6.4 726/737] Bluetooth: msft: Extended monitor tracking by address filter
+Date: Mon, 11 Sep 2023 15:49:45 +0200
+Message-ID: <20230911134710.791795758@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,82 +42,667 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Hilda Wu <hildawu@realtek.com>
 
-[ Upstream commit 656f9aec07dba7c61d469727494a5d1b18d0bef4 ]
+[ Upstream commit 9e14606d8f38ea52a38c27692a9c1513c987a5da ]
 
-This is a port of commit 379eb01c21795edb4c ("riscv: Ensure the value
-of FP registers in the core dump file is up to date").
+Since limited tracking device per condition, this feature is to support
+tracking multiple devices concurrently.
+When a pattern monitor detects the device, this feature issues an address
+monitor for tracking that device. Let pattern monitor can keep monitor
+new devices.
+This feature adds an address filter when receiving a LE monitor device
+event which monitor handle is for a pattern, and the controller started
+monitoring the device. And this feature also has cancelled the monitor
+advertisement from address filters when receiving a LE monitor device
+event when the controller stopped monitoring the device specified by an
+address and monitor handle.
 
-The values of FP/SIMD registers in the core dump file come from the
-thread.fpu. However, kernel saves the FP/SIMD registers only before
-scheduling out the process. If no process switch happens during the
-exception handling, kernel will not have a chance to save the latest
-values of FP/SIMD registers. So it may cause their values in the core
-dump file incorrect. To solve this problem, force fpr_get()/simd_get()
-to save the FP/SIMD registers into the thread.fpu if the target task
-equals the current task.
+Below is an example to know the feature adds the address filter.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+//Add MSFT pattern monitor
+< HCI Command: Vendor (0x3f|0x00f0) plen 14          #142 [hci0] 55.552420
+        03 b8 a4 03 ff 01 01 06 09 05 5f 52 45 46        .........._REF
+> HCI Event: Command Complete (0x0e) plen 6          #143 [hci0] 55.653960
+      Vendor (0x3f|0x00f0) ncmd 2
+        Status: Success (0x00)
+        03 00
+
+//Got event from the pattern monitor
+> HCI Event: Vendor (0xff) plen 18                   #148 [hci0] 58.384953
+        23 79 54 33 77 88 97 68 02 00 fb c1 29 eb 27 b8  #yT3w..h....).'.
+        00 01                                            ..
+
+//Add MSFT address monitor (Sample address: B8:27:EB:29:C1:FB)
+< HCI Command: Vendor (0x3f|0x00f0) plen 13          #149 [hci0] 58.385067
+        03 b8 a4 03 ff 04 00 fb c1 29 eb 27 b8           .........).'.
+
+//Report to userspace about found device (ADV Monitor Device Found)
+@ MGMT Event: Unknown (0x002f) plen 38           {0x0003} [hci0] 58.680042
+        01 00 fb c1 29 eb 27 b8 01 ce 00 00 00 00 16 00  ....).'.........
+        0a 09 4b 45 59 42 44 5f 52 45 46 02 01 06 03 19  ..KEYBD_REF.....
+        c1 03 03 03 12 18                                ......
+
+//Got event from address monitor
+> HCI Event: Vendor (0xff) plen 18                   #152 [hci0] 58.672956
+        23 79 54 33 77 88 97 68 02 00 fb c1 29 eb 27 b8  #yT3w..h....).'.
+        01 01
+
+Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 253f3399f4c0 ("Bluetooth: HCI: Introduce HCI_QUIRK_BROKEN_LE_CODED")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/fpu.h | 22 ++++++++++++++++++----
- arch/loongarch/kernel/ptrace.c   |  2 ++
- 2 files changed, 20 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btrtl.c   |   4 +
+ include/net/bluetooth/hci.h |  10 +
+ net/bluetooth/msft.c        | 412 ++++++++++++++++++++++++++++++++++--
+ 3 files changed, 411 insertions(+), 15 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/fpu.h b/arch/loongarch/include/asm/fpu.h
-index 192f8e35d9126..b1dc4200ae6a4 100644
---- a/arch/loongarch/include/asm/fpu.h
-+++ b/arch/loongarch/include/asm/fpu.h
-@@ -117,16 +117,30 @@ static inline void restore_fp(struct task_struct *tsk)
- 		_restore_fp(&tsk->thread.fpu);
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index c22c1d10cc46e..03a20d617deee 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -1199,6 +1199,10 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
+ 		if (btrtl_dev->project_id == CHIP_ID_8852C)
+ 			btrealtek_set_flag(hdev, REALTEK_ALT6_CONTINUOUS_TX_CHIP);
+ 
++		if (btrtl_dev->project_id == CHIP_ID_8852A ||
++		    btrtl_dev->project_id == CHIP_ID_8852C)
++			set_bit(HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER, &hdev->quirks);
++
+ 		hci_set_aosp_capable(hdev);
+ 		break;
+ 	default:
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 872dcb91a540e..9ae6f60c96bf2 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -309,6 +309,16 @@ enum {
+ 	 * to support it.
+ 	 */
+ 	HCI_QUIRK_BROKEN_SET_RPA_TIMEOUT,
++
++	/* When this quirk is set, MSFT extension monitor tracking by
++	 * address filter is supported. Since tracking quantity of each
++	 * pattern is limited, this feature supports tracking multiple
++	 * devices concurrently if controller supports multiple
++	 * address filters.
++	 *
++	 * This quirk must be set before hci_register_dev is called.
++	 */
++	HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER,
+ };
+ 
+ /* HCI device flags */
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index bf5cee48916c7..b80a2162a5c33 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -91,6 +91,33 @@ struct msft_ev_le_monitor_device {
+ struct msft_monitor_advertisement_handle_data {
+ 	__u8  msft_handle;
+ 	__u16 mgmt_handle;
++	__s8 rssi_high;
++	__s8 rssi_low;
++	__u8 rssi_low_interval;
++	__u8 rssi_sampling_period;
++	__u8 cond_type;
++	struct list_head list;
++};
++
++enum monitor_addr_filter_state {
++	AF_STATE_IDLE,
++	AF_STATE_ADDING,
++	AF_STATE_ADDED,
++	AF_STATE_REMOVING,
++};
++
++#define MSFT_MONITOR_ADVERTISEMENT_TYPE_ADDR	0x04
++struct msft_monitor_addr_filter_data {
++	__u8     msft_handle;
++	__u8     pattern_handle; /* address filters pertain to */
++	__u16    mgmt_handle;
++	int      state;
++	__s8     rssi_high;
++	__s8     rssi_low;
++	__u8     rssi_low_interval;
++	__u8     rssi_sampling_period;
++	__u8     addr_type;
++	bdaddr_t bdaddr;
+ 	struct list_head list;
+ };
+ 
+@@ -99,9 +126,12 @@ struct msft_data {
+ 	__u8  evt_prefix_len;
+ 	__u8  *evt_prefix;
+ 	struct list_head handle_map;
++	struct list_head address_filters;
+ 	__u8 resuming;
+ 	__u8 suspending;
+ 	__u8 filter_enabled;
++	/* To synchronize add/remove address filter and monitor device event.*/
++	struct mutex filter_lock;
+ };
+ 
+ bool msft_monitor_supported(struct hci_dev *hdev)
+@@ -180,6 +210,24 @@ static struct msft_monitor_advertisement_handle_data *msft_find_handle_data
+ 	return NULL;
  }
  
--static inline union fpureg *get_fpu_regs(struct task_struct *tsk)
-+static inline void save_fpu_regs(struct task_struct *tsk)
++/* This function requires the caller holds msft->filter_lock */
++static struct msft_monitor_addr_filter_data *msft_find_address_data
++			(struct hci_dev *hdev, u8 addr_type, bdaddr_t *addr,
++			 u8 pattern_handle)
++{
++	struct msft_monitor_addr_filter_data *entry;
++	struct msft_data *msft = hdev->msft_data;
++
++	list_for_each_entry(entry, &msft->address_filters, list) {
++		if (entry->pattern_handle == pattern_handle &&
++		    addr_type == entry->addr_type &&
++		    !bacmp(addr, &entry->bdaddr))
++			return entry;
++	}
++
++	return NULL;
++}
++
+ /* This function requires the caller holds hdev->lock */
+ static int msft_monitor_device_del(struct hci_dev *hdev, __u16 mgmt_handle,
+ 				   bdaddr_t *bdaddr, __u8 addr_type,
+@@ -240,6 +288,7 @@ static int msft_le_monitor_advertisement_cb(struct hci_dev *hdev, u16 opcode,
+ 
+ 	handle_data->mgmt_handle = monitor->handle;
+ 	handle_data->msft_handle = rp->handle;
++	handle_data->cond_type   = MSFT_MONITOR_ADVERTISEMENT_TYPE_PATTERN;
+ 	INIT_LIST_HEAD(&handle_data->list);
+ 	list_add(&handle_data->list, &msft->handle_map);
+ 
+@@ -254,6 +303,70 @@ static int msft_le_monitor_advertisement_cb(struct hci_dev *hdev, u16 opcode,
+ 	return status;
+ }
+ 
++/* This function requires the caller holds hci_req_sync_lock */
++static void msft_remove_addr_filters_sync(struct hci_dev *hdev, u8 handle)
++{
++	struct msft_monitor_addr_filter_data *address_filter, *n;
++	struct msft_cp_le_cancel_monitor_advertisement cp;
++	struct msft_data *msft = hdev->msft_data;
++	struct list_head head;
++	struct sk_buff *skb;
++
++	INIT_LIST_HEAD(&head);
++
++	/* Cancel all corresponding address monitors */
++	mutex_lock(&msft->filter_lock);
++
++	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
++				 list) {
++		if (address_filter->pattern_handle != handle)
++			continue;
++
++		list_del(&address_filter->list);
++
++		/* Keep the address filter and let
++		 * msft_add_address_filter_sync() remove and free the address
++		 * filter.
++		 */
++		if (address_filter->state == AF_STATE_ADDING) {
++			address_filter->state = AF_STATE_REMOVING;
++			continue;
++		}
++
++		/* Keep the address filter and let
++		 * msft_cancel_address_filter_sync() remove and free the address
++		 * filter
++		 */
++		if (address_filter->state == AF_STATE_REMOVING)
++			continue;
++
++		list_add_tail(&address_filter->list, &head);
++	}
++
++	mutex_unlock(&msft->filter_lock);
++
++	list_for_each_entry_safe(address_filter, n, &head, list) {
++		list_del(&address_filter->list);
++
++		cp.sub_opcode = MSFT_OP_LE_CANCEL_MONITOR_ADVERTISEMENT;
++		cp.handle = address_filter->msft_handle;
++
++		skb = __hci_cmd_sync(hdev, hdev->msft_opcode, sizeof(cp), &cp,
++				     HCI_CMD_TIMEOUT);
++		if (IS_ERR_OR_NULL(skb)) {
++			kfree(address_filter);
++			continue;
++		}
++
++		kfree_skb(skb);
++
++		bt_dev_dbg(hdev, "MSFT: Canceled device %pMR address filter",
++			   &address_filter->bdaddr);
++
++		kfree(address_filter);
++	}
++}
++
+ static int msft_le_cancel_monitor_advertisement_cb(struct hci_dev *hdev,
+ 						   u16 opcode,
+ 						   struct adv_monitor *monitor,
+@@ -263,6 +376,7 @@ static int msft_le_cancel_monitor_advertisement_cb(struct hci_dev *hdev,
+ 	struct msft_monitor_advertisement_handle_data *handle_data;
+ 	struct msft_data *msft = hdev->msft_data;
+ 	int status = 0;
++	u8 msft_handle;
+ 
+ 	rp = (struct msft_rp_le_cancel_monitor_advertisement *)skb->data;
+ 	if (skb->len < sizeof(*rp)) {
+@@ -293,11 +407,17 @@ static int msft_le_cancel_monitor_advertisement_cb(struct hci_dev *hdev,
+ 						NULL, 0, false);
+ 		}
+ 
++		msft_handle = handle_data->msft_handle;
++
+ 		list_del(&handle_data->list);
+ 		kfree(handle_data);
+-	}
+ 
+-	hci_dev_unlock(hdev);
++		hci_dev_unlock(hdev);
++
++		msft_remove_addr_filters_sync(hdev, msft_handle);
++	} else {
++		hci_dev_unlock(hdev);
++	}
+ 
+ done:
+ 	return status;
+@@ -394,12 +514,14 @@ static int msft_add_monitor_sync(struct hci_dev *hdev,
  {
-+	unsigned int euen;
-+
- 	if (tsk == current) {
- 		preempt_disable();
--		if (is_fpu_owner())
-+
-+		euen = csr_read32(LOONGARCH_CSR_EUEN);
-+
-+#ifdef CONFIG_CPU_HAS_LASX
-+		if (euen & CSR_EUEN_LASXEN)
-+			_save_lasx(&current->thread.fpu);
-+		else
-+#endif
-+#ifdef CONFIG_CPU_HAS_LSX
-+		if (euen & CSR_EUEN_LSXEN)
-+			_save_lsx(&current->thread.fpu);
-+		else
-+#endif
-+		if (euen & CSR_EUEN_FPEN)
- 			_save_fp(&current->thread.fpu);
-+
- 		preempt_enable();
+ 	struct msft_cp_le_monitor_advertisement *cp;
+ 	struct msft_le_monitor_advertisement_pattern_data *pattern_data;
++	struct msft_monitor_advertisement_handle_data *handle_data;
+ 	struct msft_le_monitor_advertisement_pattern *pattern;
+ 	struct adv_pattern *entry;
+ 	size_t total_size = sizeof(*cp) + sizeof(*pattern_data);
+ 	ptrdiff_t offset = 0;
+ 	u8 pattern_count = 0;
+ 	struct sk_buff *skb;
++	int err;
+ 
+ 	if (!msft_monitor_pattern_valid(monitor))
+ 		return -EINVAL;
+@@ -436,16 +558,31 @@ static int msft_add_monitor_sync(struct hci_dev *hdev,
+ 
+ 	skb = __hci_cmd_sync(hdev, hdev->msft_opcode, total_size, cp,
+ 			     HCI_CMD_TIMEOUT);
+-	kfree(cp);
+ 
+ 	if (IS_ERR_OR_NULL(skb)) {
+-		if (!skb)
+-			return -EIO;
+-		return PTR_ERR(skb);
++		err = PTR_ERR(skb);
++		goto out_free;
  	}
--
--	return tsk->thread.fpu.fpr;
+ 
+-	return msft_le_monitor_advertisement_cb(hdev, hdev->msft_opcode,
+-						monitor, skb);
++	err = msft_le_monitor_advertisement_cb(hdev, hdev->msft_opcode,
++					       monitor, skb);
++	if (err)
++		goto out_free;
++
++	handle_data = msft_find_handle_data(hdev, monitor->handle, true);
++	if (!handle_data) {
++		err = -ENODATA;
++		goto out_free;
++	}
++
++	handle_data->rssi_high	= cp->rssi_high;
++	handle_data->rssi_low	= cp->rssi_low;
++	handle_data->rssi_low_interval	  = cp->rssi_low_interval;
++	handle_data->rssi_sampling_period = cp->rssi_sampling_period;
++
++out_free:
++	kfree(cp);
++	return err;
  }
  
- #endif /* _ASM_FPU_H */
-diff --git a/arch/loongarch/kernel/ptrace.c b/arch/loongarch/kernel/ptrace.c
-index 5fcffb4523676..286c0ca39eae0 100644
---- a/arch/loongarch/kernel/ptrace.c
-+++ b/arch/loongarch/kernel/ptrace.c
-@@ -147,6 +147,8 @@ static int fpr_get(struct task_struct *target,
+ /* This function requires the caller holds hci_req_sync_lock */
+@@ -538,6 +675,7 @@ void msft_do_close(struct hci_dev *hdev)
  {
- 	int r;
+ 	struct msft_data *msft = hdev->msft_data;
+ 	struct msft_monitor_advertisement_handle_data *handle_data, *tmp;
++	struct msft_monitor_addr_filter_data *address_filter, *n;
+ 	struct adv_monitor *monitor;
  
-+	save_fpu_regs(target);
+ 	if (!msft)
+@@ -559,6 +697,14 @@ void msft_do_close(struct hci_dev *hdev)
+ 		kfree(handle_data);
+ 	}
+ 
++	mutex_lock(&msft->filter_lock);
++	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
++				 list) {
++		list_del(&address_filter->list);
++		kfree(address_filter);
++	}
++	mutex_unlock(&msft->filter_lock);
 +
- 	if (sizeof(target->thread.fpu.fpr[0]) == sizeof(elf_fpreg_t))
- 		r = gfpr_get(target, &to);
- 	else
+ 	hci_dev_lock(hdev);
+ 
+ 	/* Clear any devices that are being monitored and notify device lost */
+@@ -568,6 +714,49 @@ void msft_do_close(struct hci_dev *hdev)
+ 	hci_dev_unlock(hdev);
+ }
+ 
++static int msft_cancel_address_filter_sync(struct hci_dev *hdev, void *data)
++{
++	struct msft_monitor_addr_filter_data *address_filter = data;
++	struct msft_cp_le_cancel_monitor_advertisement cp;
++	struct msft_data *msft = hdev->msft_data;
++	struct sk_buff *skb;
++	int err = 0;
++
++	if (!msft) {
++		bt_dev_err(hdev, "MSFT: msft data is freed");
++		return -EINVAL;
++	}
++
++	/* The address filter has been removed by hci dev close */
++	if (!test_bit(HCI_UP, &hdev->flags))
++		return 0;
++
++	mutex_lock(&msft->filter_lock);
++	list_del(&address_filter->list);
++	mutex_unlock(&msft->filter_lock);
++
++	cp.sub_opcode = MSFT_OP_LE_CANCEL_MONITOR_ADVERTISEMENT;
++	cp.handle = address_filter->msft_handle;
++
++	skb = __hci_cmd_sync(hdev, hdev->msft_opcode, sizeof(cp), &cp,
++			     HCI_CMD_TIMEOUT);
++	if (IS_ERR_OR_NULL(skb)) {
++		bt_dev_err(hdev, "MSFT: Failed to cancel address (%pMR) filter",
++			   &address_filter->bdaddr);
++		err = EIO;
++		goto done;
++	}
++	kfree_skb(skb);
++
++	bt_dev_dbg(hdev, "MSFT: Canceled device %pMR address filter",
++		   &address_filter->bdaddr);
++
++done:
++	kfree(address_filter);
++
++	return err;
++}
++
+ void msft_register(struct hci_dev *hdev)
+ {
+ 	struct msft_data *msft = NULL;
+@@ -581,7 +770,9 @@ void msft_register(struct hci_dev *hdev)
+ 	}
+ 
+ 	INIT_LIST_HEAD(&msft->handle_map);
++	INIT_LIST_HEAD(&msft->address_filters);
+ 	hdev->msft_data = msft;
++	mutex_init(&msft->filter_lock);
+ }
+ 
+ void msft_unregister(struct hci_dev *hdev)
+@@ -596,6 +787,7 @@ void msft_unregister(struct hci_dev *hdev)
+ 	hdev->msft_data = NULL;
+ 
+ 	kfree(msft->evt_prefix);
++	mutex_destroy(&msft->filter_lock);
+ 	kfree(msft);
+ }
+ 
+@@ -645,11 +837,149 @@ static void *msft_skb_pull(struct hci_dev *hdev, struct sk_buff *skb,
+ 	return data;
+ }
+ 
++static int msft_add_address_filter_sync(struct hci_dev *hdev, void *data)
++{
++	struct msft_monitor_addr_filter_data *address_filter = data;
++	struct msft_rp_le_monitor_advertisement *rp;
++	struct msft_cp_le_monitor_advertisement *cp;
++	struct msft_data *msft = hdev->msft_data;
++	struct sk_buff *skb = NULL;
++	bool remove = false;
++	size_t size;
++
++	if (!msft) {
++		bt_dev_err(hdev, "MSFT: msft data is freed");
++		return -EINVAL;
++	}
++
++	/* The address filter has been removed by hci dev close */
++	if (!test_bit(HCI_UP, &hdev->flags))
++		return -ENODEV;
++
++	/* We are safe to use the address filter from now on.
++	 * msft_monitor_device_evt() wouldn't delete this filter because it's
++	 * not been added by now.
++	 * And all other functions that requiring hci_req_sync_lock wouldn't
++	 * touch this filter before this func completes because it's protected
++	 * by hci_req_sync_lock.
++	 */
++
++	if (address_filter->state == AF_STATE_REMOVING) {
++		mutex_lock(&msft->filter_lock);
++		list_del(&address_filter->list);
++		mutex_unlock(&msft->filter_lock);
++		kfree(address_filter);
++		return 0;
++	}
++
++	size = sizeof(*cp) +
++	       sizeof(address_filter->addr_type) +
++	       sizeof(address_filter->bdaddr);
++	cp = kzalloc(size, GFP_KERNEL);
++	if (!cp) {
++		bt_dev_err(hdev, "MSFT: Alloc cmd param err");
++		remove = true;
++		goto done;
++	}
++	cp->sub_opcode           = MSFT_OP_LE_MONITOR_ADVERTISEMENT;
++	cp->rssi_high		 = address_filter->rssi_high;
++	cp->rssi_low		 = address_filter->rssi_low;
++	cp->rssi_low_interval    = address_filter->rssi_low_interval;
++	cp->rssi_sampling_period = address_filter->rssi_sampling_period;
++	cp->cond_type            = MSFT_MONITOR_ADVERTISEMENT_TYPE_ADDR;
++	cp->data[0]              = address_filter->addr_type;
++	memcpy(&cp->data[1], &address_filter->bdaddr,
++	       sizeof(address_filter->bdaddr));
++
++	skb = __hci_cmd_sync(hdev, hdev->msft_opcode, size, cp,
++			     HCI_CMD_TIMEOUT);
++	if (IS_ERR_OR_NULL(skb)) {
++		bt_dev_err(hdev, "Failed to enable address %pMR filter",
++			   &address_filter->bdaddr);
++		skb = NULL;
++		remove = true;
++		goto done;
++	}
++
++	rp = skb_pull_data(skb, sizeof(*rp));
++	if (!rp || rp->sub_opcode != MSFT_OP_LE_MONITOR_ADVERTISEMENT ||
++	    rp->status)
++		remove = true;
++
++done:
++	mutex_lock(&msft->filter_lock);
++
++	if (remove) {
++		bt_dev_warn(hdev, "MSFT: Remove address (%pMR) filter",
++			    &address_filter->bdaddr);
++		list_del(&address_filter->list);
++		kfree(address_filter);
++	} else {
++		address_filter->state = AF_STATE_ADDED;
++		address_filter->msft_handle = rp->handle;
++		bt_dev_dbg(hdev, "MSFT: Address %pMR filter enabled",
++			   &address_filter->bdaddr);
++	}
++	mutex_unlock(&msft->filter_lock);
++
++	kfree_skb(skb);
++
++	return 0;
++}
++
++/* This function requires the caller holds msft->filter_lock */
++static struct msft_monitor_addr_filter_data *msft_add_address_filter
++		(struct hci_dev *hdev, u8 addr_type, bdaddr_t *bdaddr,
++		 struct msft_monitor_advertisement_handle_data *handle_data)
++{
++	struct msft_monitor_addr_filter_data *address_filter = NULL;
++	struct msft_data *msft = hdev->msft_data;
++	int err;
++
++	address_filter = kzalloc(sizeof(*address_filter), GFP_KERNEL);
++	if (!address_filter)
++		return NULL;
++
++	address_filter->state             = AF_STATE_ADDING;
++	address_filter->msft_handle       = 0xff;
++	address_filter->pattern_handle    = handle_data->msft_handle;
++	address_filter->mgmt_handle       = handle_data->mgmt_handle;
++	address_filter->rssi_high         = handle_data->rssi_high;
++	address_filter->rssi_low          = handle_data->rssi_low;
++	address_filter->rssi_low_interval = handle_data->rssi_low_interval;
++	address_filter->rssi_sampling_period = handle_data->rssi_sampling_period;
++	address_filter->addr_type            = addr_type;
++	bacpy(&address_filter->bdaddr, bdaddr);
++
++	/* With the above AF_STATE_ADDING, duplicated address filter can be
++	 * avoided when receiving monitor device event (found/lost) frequently
++	 * for the same device.
++	 */
++	list_add_tail(&address_filter->list, &msft->address_filters);
++
++	err = hci_cmd_sync_queue(hdev, msft_add_address_filter_sync,
++				 address_filter, NULL);
++	if (err < 0) {
++		bt_dev_err(hdev, "MSFT: Add address %pMR filter err", bdaddr);
++		list_del(&address_filter->list);
++		kfree(address_filter);
++		return NULL;
++	}
++
++	bt_dev_dbg(hdev, "MSFT: Add device %pMR address filter",
++		   &address_filter->bdaddr);
++
++	return address_filter;
++}
++
+ /* This function requires the caller holds hdev->lock */
+ static void msft_monitor_device_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ {
++	struct msft_monitor_addr_filter_data *n, *address_filter = NULL;
+ 	struct msft_ev_le_monitor_device *ev;
+ 	struct msft_monitor_advertisement_handle_data *handle_data;
++	struct msft_data *msft = hdev->msft_data;
++	u16 mgmt_handle = 0xffff;
+ 	u8 addr_type;
+ 
+ 	ev = msft_skb_pull(hdev, skb, MSFT_EV_LE_MONITOR_DEVICE, sizeof(*ev));
+@@ -662,9 +992,53 @@ static void msft_monitor_device_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 		   ev->monitor_state, &ev->bdaddr);
+ 
+ 	handle_data = msft_find_handle_data(hdev, ev->monitor_handle, false);
+-	if (!handle_data)
++
++	if (!test_bit(HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER, &hdev->quirks)) {
++		if (!handle_data)
++			return;
++		mgmt_handle = handle_data->mgmt_handle;
++		goto report_state;
++	}
++
++	if (handle_data) {
++		/* Don't report any device found/lost event from pattern
++		 * monitors. Pattern monitor always has its address filters for
++		 * tracking devices.
++		 */
++
++		address_filter = msft_find_address_data(hdev, ev->addr_type,
++							&ev->bdaddr,
++							handle_data->msft_handle);
++		if (address_filter)
++			return;
++
++		if (ev->monitor_state && handle_data->cond_type ==
++				MSFT_MONITOR_ADVERTISEMENT_TYPE_PATTERN)
++			msft_add_address_filter(hdev, ev->addr_type,
++						&ev->bdaddr, handle_data);
++
+ 		return;
++	}
+ 
++	/* This device event is not from pattern monitor.
++	 * Report it if there is a corresponding address_filter for it.
++	 */
++	list_for_each_entry(n, &msft->address_filters, list) {
++		if (n->state == AF_STATE_ADDED &&
++		    n->msft_handle == ev->monitor_handle) {
++			mgmt_handle = n->mgmt_handle;
++			address_filter = n;
++			break;
++		}
++	}
++
++	if (!address_filter) {
++		bt_dev_warn(hdev, "MSFT: Unexpected device event %pMR, %u, %u",
++			    &ev->bdaddr, ev->monitor_handle, ev->monitor_state);
++		return;
++	}
++
++report_state:
+ 	switch (ev->addr_type) {
+ 	case ADDR_LE_DEV_PUBLIC:
+ 		addr_type = BDADDR_LE_PUBLIC;
+@@ -681,12 +1055,18 @@ static void msft_monitor_device_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 		return;
+ 	}
+ 
+-	if (ev->monitor_state)
+-		msft_device_found(hdev, &ev->bdaddr, addr_type,
+-				  handle_data->mgmt_handle);
+-	else
+-		msft_device_lost(hdev, &ev->bdaddr, addr_type,
+-				 handle_data->mgmt_handle);
++	if (ev->monitor_state) {
++		msft_device_found(hdev, &ev->bdaddr, addr_type, mgmt_handle);
++	} else {
++		if (address_filter && address_filter->state == AF_STATE_ADDED) {
++			address_filter->state = AF_STATE_REMOVING;
++			hci_cmd_sync_queue(hdev,
++					   msft_cancel_address_filter_sync,
++					   address_filter,
++					   NULL);
++		}
++		msft_device_lost(hdev, &ev->bdaddr, addr_type, mgmt_handle);
++	}
+ }
+ 
+ void msft_vendor_evt(struct hci_dev *hdev, void *data, struct sk_buff *skb)
+@@ -724,7 +1104,9 @@ void msft_vendor_evt(struct hci_dev *hdev, void *data, struct sk_buff *skb)
+ 
+ 	switch (*evt) {
+ 	case MSFT_EV_LE_MONITOR_DEVICE:
++		mutex_lock(&msft->filter_lock);
+ 		msft_monitor_device_evt(hdev, skb);
++		mutex_unlock(&msft->filter_lock);
+ 		break;
+ 
+ 	default:
 -- 
 2.40.1
 
