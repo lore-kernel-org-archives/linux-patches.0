@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B509E1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3262FC433C8;
-	Mon, 11 Sep 2023 14:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2C21170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C3FC433CA;
+	Mon, 11 Sep 2023 14:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441146;
-	bh=wZ8W5Pw+t5QogEnkbMD3G40478hFniQH/Ww/ZOy+NQg=;
+	s=korg; t=1694441149;
+	bh=6OWAg0ZdYXRhBAANZhI73RlElyOPkday7oL+mhUQv18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlv+5r/1sINOubk7NT9Yp7Vr86R39vkZVStRjk63P9P1gqCF5cQP8ndlsUEUh3DJk
-	 bzgCUCNlFluvQ/gOEL2Slwx5Dq3xA3DwFi6C5Q6szM5NLGTbFlliRm+gQzUcWOf188
-	 VuHCxE8ElLQXDNGEKU2t6E1BkDLEZDUpjuNsSmyg=
+	b=KbFGM0y7XBrFryhmDZyY9vxITFnk7tzzscugOe5GOpJ41uvzZI3SVCRPM6s3bDqju
+	 hoTDgvRAVivggC6aEGC8BL6e/VcTPh1PC5yZyNs3TeJwb8zP2MOm4r2D5rawRMuW6O
+	 ohY39RQpa0CgYUlPoepBHxdrYFImZnnB4UzCaU/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 284/739] ASoC: fsl: fsl_qmc_audio: Fix snd_pcm_format_t values handling
-Date: Mon, 11 Sep 2023 15:41:23 +0200
-Message-ID: <20230911134659.059968641@linuxfoundation.org>
+Subject: [PATCH 6.5 285/739] md: restore noio_flag for the last mddev_resume()
+Date: Mon, 11 Sep 2023 15:41:24 +0200
+Message-ID: <20230911134659.096575210@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,112 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 5befe22b3eebd07b334b2917f6d14ce7ee4c8404 ]
+[ Upstream commit e24ed04389f9619e0aaef615a8948633c182a8b0 ]
 
-Running sparse on fsl_qmc_audio (make C=1) raises the following warnings:
- fsl_qmc_audio.c:387:26: warning: restricted snd_pcm_format_t degrades to integer
- fsl_qmc_audio.c:389:59: warning: incorrect type in argument 1 (different base types)
- fsl_qmc_audio.c:389:59:    expected restricted snd_pcm_format_t [usertype] format
- fsl_qmc_audio.c:389:59:    got unsigned int [assigned] i
- fsl_qmc_audio.c:564:26: warning: restricted snd_pcm_format_t degrades to integer
- fsl_qmc_audio.c:569:50: warning: incorrect type in argument 1 (different base types)
- fsl_qmc_audio.c:569:50:    expected restricted snd_pcm_format_t [usertype] format
- fsl_qmc_audio.c:569:50:    got int [assigned] i
- fsl_qmc_audio.c:573:62: warning: incorrect type in argument 1 (different base types)
- fsl_qmc_audio.c:573:62:    expected restricted snd_pcm_format_t [usertype] format
- fsl_qmc_audio.c:573:62:    got int [assigned] i
+memalloc_noio_save() is called for the first mddev_suspend(), and
+repeated mddev_suspend() only increase 'suspended'. However,
+memalloc_noio_restore() is also called for the first mddev_resume(),
+which means that memory reclaim will be enabled before the last
+mddev_resume() is called, while the array is still suspended.
 
-These warnings are due to snd_pcm_format_t values handling done in the
-driver. Some macros and functions exist to handle safely these values.
+Fix this problem by restore 'noio_flag' for the last mddev_resume().
 
-Use dedicated macros and functions to remove these warnings.
-
-Fixes: 075c7125b11c ("ASoC: fsl: Add support for QMC audio")
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20230726161620.495298-1-herve.codina@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 78f57ef9d50a ("md: use memalloc scope APIs in mddev_suspend()/mddev_resume()")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230628012931.88911-3-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_qmc_audio.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/md/md.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_qmc_audio.c b/sound/soc/fsl/fsl_qmc_audio.c
-index 7cbb8e4758ccc..56d6b0b039a2e 100644
---- a/sound/soc/fsl/fsl_qmc_audio.c
-+++ b/sound/soc/fsl/fsl_qmc_audio.c
-@@ -372,8 +372,8 @@ static int qmc_dai_hw_rule_format_by_channels(struct qmc_dai *qmc_dai,
- 	struct snd_mask *f_old = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
- 	unsigned int channels = params_channels(params);
- 	unsigned int slot_width;
-+	snd_pcm_format_t format;
- 	struct snd_mask f_new;
--	unsigned int i;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 78be7811a89f5..2a4a3d3039fae 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -465,11 +465,13 @@ EXPORT_SYMBOL_GPL(mddev_suspend);
  
- 	if (!channels || channels > nb_ts) {
- 		dev_err(qmc_dai->dev, "channels %u not supported\n",
-@@ -384,10 +384,10 @@ static int qmc_dai_hw_rule_format_by_channels(struct qmc_dai *qmc_dai,
- 	slot_width = (nb_ts / channels) * 8;
- 
- 	snd_mask_none(&f_new);
--	for (i = 0; i <= SNDRV_PCM_FORMAT_LAST; i++) {
--		if (snd_mask_test(f_old, i)) {
--			if (snd_pcm_format_physical_width(i) <= slot_width)
--				snd_mask_set(&f_new, i);
-+	pcm_for_each_format(format) {
-+		if (snd_mask_test_format(f_old, format)) {
-+			if (snd_pcm_format_physical_width(format) <= slot_width)
-+				snd_mask_set_format(&f_new, format);
- 		}
- 	}
- 
-@@ -551,26 +551,26 @@ static const struct snd_soc_dai_ops qmc_dai_ops = {
- 
- static u64 qmc_audio_formats(u8 nb_ts)
+ void mddev_resume(struct mddev *mddev)
  {
--	u64 formats;
--	unsigned int chan_width;
- 	unsigned int format_width;
--	int i;
-+	unsigned int chan_width;
-+	snd_pcm_format_t format;
-+	u64 formats_mask;
- 
- 	if (!nb_ts)
- 		return 0;
- 
--	formats = 0;
-+	formats_mask = 0;
- 	chan_width = nb_ts * 8;
--	for (i = 0; i <= SNDRV_PCM_FORMAT_LAST; i++) {
-+	pcm_for_each_format(format) {
- 		/*
- 		 * Support format other than little-endian (ie big-endian or
- 		 * without endianness such as 8bit formats)
- 		 */
--		if (snd_pcm_format_little_endian(i) == 1)
-+		if (snd_pcm_format_little_endian(format) == 1)
- 			continue;
- 
- 		/* Support physical width multiple of 8bit */
--		format_width = snd_pcm_format_physical_width(i);
-+		format_width = snd_pcm_format_physical_width(format);
- 		if (format_width == 0 || format_width % 8)
- 			continue;
- 
-@@ -581,9 +581,9 @@ static u64 qmc_audio_formats(u8 nb_ts)
- 		if (format_width > chan_width || chan_width % format_width)
- 			continue;
- 
--		formats |= (1ULL << i);
-+		formats_mask |= pcm_format_to_bits(format);
- 	}
--	return formats;
-+	return formats_mask;
- }
- 
- static int qmc_audio_dai_parse(struct qmc_audio *qmc_audio, struct device_node *np,
+-	/* entred the memalloc scope from mddev_suspend() */
+-	memalloc_noio_restore(mddev->noio_flag);
+ 	lockdep_assert_held(&mddev->reconfig_mutex);
+ 	if (--mddev->suspended)
+ 		return;
++
++	/* entred the memalloc scope from mddev_suspend() */
++	memalloc_noio_restore(mddev->noio_flag);
++
+ 	percpu_ref_resurrect(&mddev->active_io);
+ 	wake_up(&mddev->sb_wait);
+ 	mddev->pers->quiesce(mddev, 0);
 -- 
 2.40.1
 
