@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC7311706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11BEC433C7;
-	Mon, 11 Sep 2023 15:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0215F11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741B1C433C7;
+	Mon, 11 Sep 2023 15:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444459;
-	bh=Y+nuTbIPYZpzCzsHW2Z2RX6Y/sIWafDBM4k00ZyOUw8=;
+	s=korg; t=1694444461;
+	bh=n53DhF8hzTyTI/j2CCH7cyYQXJwTPgi3/odqs8WAdis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yakN9gwgpf1chGckA7sbKTzPBaUcxdeNJqJuLUJcemKXIS68WlrhxS6S3iS4QO6YO
-	 1ne/3gOWayl9iU/Ke0hpg7km7KdnnA03jKyXH7DSJi3sOeqhZkCwYvb54+hu7A9Qvh
-	 wAKdDyUqb9ocNwVcOxJG/GN204vn7pm17dHshnFo=
+	b=CGCajlQ1an9C3sj5jEgjkZNg7gISOocggDf41OZxHYDff28DyGtd7e46fM1SZMLTe
+	 dzyIzU10swibfX/OdVTBtrivVvHDd9UNpW+WPZfcqUIGA7NJi2am3JUHzaoSnwzwKV
+	 cu06VOudzHDSKTd0VckStTLpSXM9nnIT6zZA/0Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.4 710/737] HID: logitech-hidpp: rework one more time the retries attempts
-Date: Mon, 11 Sep 2023 15:49:29 +0200
-Message-ID: <20230911134710.354395816@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.4 701/737] platform/chrome: chromeos_acpi: print hex string for ACPI_TYPE_BUFFER
+Date: Mon, 11 Sep 2023 15:49:20 +0200
+Message-ID: <20230911134710.104558507@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,184 +39,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 60165ab774cb0c509680a73cf826d0e158454653 upstream.
+commit 0820debb7d489e9eb1f68b7bb69e6ae210699b3f upstream.
 
-Extract the internal code inside a helper function, fix the
-initialization of the parameters used in the helper function
-(`hidpp->answer_available` was not reset and `*response` wasn't either),
-and use a `do {...} while();` loop.
+`element->buffer.pointer` should be binary blob.  `%s` doesn't work
+perfect for them.
 
-Fixes: 586e8fede795 ("HID: logitech-hidpp: Retry commands when device is busy")
+Print hex string for ACPI_TYPE_BUFFER.  Also update the documentation
+to reflect this.
+
+Fixes: 0a4cad9c11ad ("platform/chrome: Add ChromeOS ACPI device driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20230621-logitech-fixes-v2-1-3635f7f9c8af@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230803011245.3773756-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 115 ++++++++++++++++++++-----------
- 1 file changed, 75 insertions(+), 40 deletions(-)
+ Documentation/ABI/testing/sysfs-driver-chromeos-acpi |    2 -
+ drivers/platform/chrome/chromeos_acpi.c              |   31 ++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 340c1ac442ad..05f5b5f588a2 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -275,21 +275,22 @@ static int __hidpp_send_report(struct hid_device *hdev,
- }
- 
- /*
-- * hidpp_send_message_sync() returns 0 in case of success, and something else
-- * in case of a failure.
-- * - If ' something else' is positive, that means that an error has been raised
-- *   by the protocol itself.
-- * - If ' something else' is negative, that means that we had a classic error
-- *   (-ENOMEM, -EPIPE, etc...)
-+ * Effectively send the message to the device, waiting for its answer.
-+ *
-+ * Must be called with hidpp->send_mutex locked
-+ *
-+ * Same return protocol than hidpp_send_message_sync():
-+ * - success on 0
-+ * - negative error means transport error
-+ * - positive value means protocol error
-  */
--static int hidpp_send_message_sync(struct hidpp_device *hidpp,
-+static int __do_hidpp_send_message_sync(struct hidpp_device *hidpp,
- 	struct hidpp_report *message,
- 	struct hidpp_report *response)
- {
--	int ret = -1;
--	int max_retries = 3;
-+	int ret;
- 
--	mutex_lock(&hidpp->send_mutex);
-+	__must_hold(&hidpp->send_mutex);
- 
- 	hidpp->send_receive_buf = response;
- 	hidpp->answer_available = false;
-@@ -300,47 +301,74 @@ static int hidpp_send_message_sync(struct hidpp_device *hidpp,
- 	 */
- 	*response = *message;
- 
--	for (; max_retries != 0 && ret; max_retries--) {
--		ret = __hidpp_send_report(hidpp->hid_dev, message);
-+	ret = __hidpp_send_report(hidpp->hid_dev, message);
-+	if (ret) {
-+		dbg_hid("__hidpp_send_report returned err: %d\n", ret);
-+		memset(response, 0, sizeof(struct hidpp_report));
-+		return ret;
-+	}
- 
--		if (ret) {
--			dbg_hid("__hidpp_send_report returned err: %d\n", ret);
--			memset(response, 0, sizeof(struct hidpp_report));
--			break;
--		}
-+	if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
-+				5*HZ)) {
-+		dbg_hid("%s:timeout waiting for response\n", __func__);
-+		memset(response, 0, sizeof(struct hidpp_report));
-+		return -ETIMEDOUT;
-+	}
- 
--		if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
--					5*HZ)) {
--			dbg_hid("%s:timeout waiting for response\n", __func__);
--			memset(response, 0, sizeof(struct hidpp_report));
--			ret = -ETIMEDOUT;
--			break;
--		}
-+	if (response->report_id == REPORT_ID_HIDPP_SHORT &&
-+	    response->rap.sub_id == HIDPP_ERROR) {
-+		ret = response->rap.params[1];
-+		dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
-+		return ret;
-+	}
- 
--		if (response->report_id == REPORT_ID_HIDPP_SHORT &&
--		    response->rap.sub_id == HIDPP_ERROR) {
--			ret = response->rap.params[1];
--			dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
-+	if ((response->report_id == REPORT_ID_HIDPP_LONG ||
-+	     response->report_id == REPORT_ID_HIDPP_VERY_LONG) &&
-+	    response->fap.feature_index == HIDPP20_ERROR) {
-+		ret = response->fap.params[1];
-+		dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
-+		return ret;
-+	}
+--- a/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
++++ b/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
+@@ -134,4 +134,4 @@ KernelVersion:	5.19
+ Description:
+ 		Returns the verified boot data block shared between the
+ 		firmware verification step and the kernel verification step
+-		(binary).
++		(hex dump).
+--- a/drivers/platform/chrome/chromeos_acpi.c
++++ b/drivers/platform/chrome/chromeos_acpi.c
+@@ -90,7 +90,36 @@ static int chromeos_acpi_handle_package(
+ 	case ACPI_TYPE_STRING:
+ 		return sysfs_emit(buf, "%s\n", element->string.pointer);
+ 	case ACPI_TYPE_BUFFER:
+-		return sysfs_emit(buf, "%s\n", element->buffer.pointer);
++		{
++			int i, r, at, room_left;
++			const int byte_per_line = 16;
 +
-+	return 0;
-+}
++			at = 0;
++			room_left = PAGE_SIZE - 1;
++			for (i = 0; i < element->buffer.length && room_left; i += byte_per_line) {
++				r = hex_dump_to_buffer(element->buffer.pointer + i,
++						       element->buffer.length - i,
++						       byte_per_line, 1, buf + at, room_left,
++						       false);
++				if (r > room_left)
++					goto truncating;
++				at += r;
++				room_left -= r;
 +
-+/*
-+ * hidpp_send_message_sync() returns 0 in case of success, and something else
-+ * in case of a failure.
-+ *
-+ * See __do_hidpp_send_message_sync() for a detailed explanation of the returned
-+ * value.
-+ */
-+static int hidpp_send_message_sync(struct hidpp_device *hidpp,
-+	struct hidpp_report *message,
-+	struct hidpp_report *response)
-+{
-+	int ret;
-+	int max_retries = 3;
++				r = sysfs_emit_at(buf, at, "\n");
++				if (!r)
++					goto truncating;
++				at += r;
++				room_left -= r;
++			}
 +
-+	mutex_lock(&hidpp->send_mutex);
-+
-+	do {
-+		ret = __do_hidpp_send_message_sync(hidpp, message, response);
-+		if (ret != HIDPP20_ERROR_BUSY)
- 			break;
--		}
- 
--		if ((response->report_id == REPORT_ID_HIDPP_LONG ||
--		     response->report_id == REPORT_ID_HIDPP_VERY_LONG) &&
--		    response->fap.feature_index == HIDPP20_ERROR) {
--			ret = response->fap.params[1];
--			if (ret != HIDPP20_ERROR_BUSY) {
--				dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
--				break;
--			}
--			dbg_hid("%s:got busy hidpp 2.0 error %02X, retrying\n", __func__, ret);
--		}
--	}
-+		dbg_hid("%s:got busy hidpp 2.0 error %02X, retrying\n", __func__, ret);
-+	} while (--max_retries);
- 
- 	mutex_unlock(&hidpp->send_mutex);
- 	return ret;
- 
- }
- 
-+/*
-+ * hidpp_send_fap_command_sync() returns 0 in case of success, and something else
-+ * in case of a failure.
-+ *
-+ * See __do_hidpp_send_message_sync() for a detailed explanation of the returned
-+ * value.
-+ */
- static int hidpp_send_fap_command_sync(struct hidpp_device *hidpp,
- 	u8 feat_index, u8 funcindex_clientid, u8 *params, int param_count,
- 	struct hidpp_report *response)
-@@ -373,6 +401,13 @@ static int hidpp_send_fap_command_sync(struct hidpp_device *hidpp,
- 	return ret;
- }
- 
-+/*
-+ * hidpp_send_rap_command_sync() returns 0 in case of success, and something else
-+ * in case of a failure.
-+ *
-+ * See __do_hidpp_send_message_sync() for a detailed explanation of the returned
-+ * value.
-+ */
- static int hidpp_send_rap_command_sync(struct hidpp_device *hidpp_dev,
- 	u8 report_id, u8 sub_id, u8 reg_address, u8 *params, int param_count,
- 	struct hidpp_report *response)
--- 
-2.42.0
-
++			buf[at] = 0;
++			return at;
++truncating:
++			dev_info_once(dev, "truncating sysfs content for %s\n", name);
++			sysfs_emit_at(buf, PAGE_SIZE - 4, "..\n");
++			return PAGE_SIZE - 1;
++		}
+ 	default:
+ 		dev_err(dev, "element type %d not supported\n", element->type);
+ 		return -EINVAL;
 
 
