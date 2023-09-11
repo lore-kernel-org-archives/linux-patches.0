@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A821170F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DD8C433C8;
-	Mon, 11 Sep 2023 13:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26331170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231B5C433C8;
+	Mon, 11 Sep 2023 13:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440584;
-	bh=XZFjGDAP9daipokb4HbJySnGlnd2guff1/zTqPL4axE=;
+	s=korg; t=1694440587;
+	bh=ALPYHYN2XnfJO0yTHn8jw+/OrHPq0Arna6GTmDfyzqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnE3lB5ooVWm8cWoqnqzBvnyfX2yEHOV3TkFbvXDXzep8guDb3SBzuBS9x7tTXy5b
-	 XD3mj3LjFjsizw5KeNa1Ax4uf0Nb2/thfTmxpUQGytLiS1RQ1iLSACUM1JVnIyPZHL
-	 bZdDIxMwuHCWUp8rqtZLu9XeC2oO49N21/hS4jj8=
+	b=N1T7HDEPur12NhxfE6pf435wzKUypiiqYsqUIAOEwNOeXtBcMODa70dnlyjnjGL/z
+	 l8H66DHzZ+27cfP+rM1fm42osp/OZfz1EEAv+7QMaOGOy1PH2hwg24OJGU8yZ9K3WZ
+	 4azZwSlZNcArswWCQa7SUG9XjWlx/ctG8zebqp6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jordan Isaacs <mail@jdisaacs.com>,
+	"Ethan D. Twardy" <ethan.twardy@gmail.com>,
+	Tiago Lam <tiagolam@gmail.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 106/739] wifi: ath12k: fix memcpy array overflow in ath12k_peer_assoc_h_he()
-Date: Mon, 11 Sep 2023 15:38:25 +0200
-Message-ID: <20230911134654.060394359@linuxfoundation.org>
+Subject: [PATCH 6.5 115/739] kbuild: rust_is_available: fix confusion when a version appears in the path
+Date: Mon, 11 Sep 2023 15:38:34 +0200
+Message-ID: <20230911134654.309555828@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,44 +44,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 603cf6c2fcdcbc38f1daa316794e7268852677a7 ]
+[ Upstream commit 9eb7e20e0c5cd069457845f965b3e8a7d736ecb7 ]
 
-Two memory copies in this function copy from a short array into a longer one,
-using the wrong size, which leads to an out-of-bounds access:
+`bindgen`'s output for `libclang`'s version check contains paths, which
+in turn may contain strings that look like version numbers [1][2]:
 
-include/linux/fortify-string.h:592:4: error: call to '__read_overflow2_field' declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-                        __read_overflow2_field(q_size_field, size);
-                        ^
-include/linux/fortify-string.h:592:4: error: call to '__read_overflow2_field' declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-2 errors generated.
+    .../6.1.0-dev/.../rust_is_available_bindgen_libclang.h:2:9: warning: clang version 11.1.0  [-W#pragma-messages], err: false
 
-Fixes: d889913205cf7 ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230703123737.3420464-1-arnd@kernel.org
+which the script will pick up as the version instead of the latter.
+
+It is also the case that versions may appear after the actual version
+(e.g. distribution's version text), which was the reason behind `head` [3]:
+
+    .../rust-is-available-bindgen-libclang.h:2:9: warning: clang version 13.0.0 (Fedora 13.0.0-3.fc35) [-W#pragma-messages], err: false
+
+Thus instead ask for a match after the `clang version` string.
+
+Reported-by: Jordan Isaacs <mail@jdisaacs.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/942 [1]
+Reported-by: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Closes: https://lore.kernel.org/rust-for-linux/20230528131802.6390-2-ethan.twardy@gmail.com/ [2]
+Reported-by: Tiago Lam <tiagolam@gmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/pull/789 [3]
+Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Ethan Twardy <ethan.twardy@gmail.com>
+Tested-by: Ethan Twardy <ethan.twardy@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230616001631.463536-8-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/rust_is_available.sh | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 1bb9802ef5696..45d88e35fc2eb 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -1637,9 +1637,9 @@ static void ath12k_peer_assoc_h_he(struct ath12k *ar,
- 	arg->peer_nss = min(sta->deflink.rx_nss, max_nss);
- 
- 	memcpy(&arg->peer_he_cap_macinfo, he_cap->he_cap_elem.mac_cap_info,
--	       sizeof(arg->peer_he_cap_macinfo));
-+	       sizeof(he_cap->he_cap_elem.mac_cap_info));
- 	memcpy(&arg->peer_he_cap_phyinfo, he_cap->he_cap_elem.phy_cap_info,
--	       sizeof(arg->peer_he_cap_phyinfo));
-+	       sizeof(he_cap->he_cap_elem.phy_cap_info));
- 	arg->peer_he_ops = vif->bss_conf.he_oper.params;
- 
- 	/* the top most byte is used to indicate BSS color info */
+diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
+index c965895d80b97..7a925d2b20fc7 100755
+--- a/scripts/rust_is_available.sh
++++ b/scripts/rust_is_available.sh
+@@ -112,9 +112,7 @@ fi
+ # of the `libclang` found by the Rust bindings generator is suitable.
+ bindgen_libclang_version=$( \
+ 	echo "$bindgen_libclang_output" \
+-		| grep -F 'clang version ' \
+-		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+-		| head -n 1 \
++		| sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+ )
+ bindgen_libclang_min_version=$($min_tool_version llvm)
+ bindgen_libclang_cversion=$(get_canonical_version $bindgen_libclang_version)
 -- 
 2.40.1
 
