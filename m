@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78C11170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F3AC433C8;
-	Mon, 11 Sep 2023 14:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E959B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC6AC433C8;
+	Mon, 11 Sep 2023 14:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442299;
-	bh=qwhAqAE/5ARGmNqUMFCsiM/sJGf7+NsmsTPPhviAU2c=;
+	s=korg; t=1694442302;
+	bh=WBv7/3mRdV4IOeSziWWu1nyYyuvwIpySyU2dNccXTAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bm0OjNksaJzSPDI7y0aG0XonS7TA1GXDFP/c+RhvxcBTMmmZXpLtm10N+tyQuEWQH
-	 XJ4/3SxoMgzxbqwJPpfClqsgzW5UrqXGWLoqkEudiEKOa7j7CdEjxUxRZvugKaV1UA
-	 rCErXwpIYqoDynFRrudBETmhiH7ccot44qQvMDIM=
+	b=yUL3bduzYf4ev0be9exd1Js5LRs1mT0uESd7kRJcf/JS3o5/NMv5ZZX54wEaUrdlX
+	 hEwlQdXMlN3+DV3fCkXOnFn4fHl+S8kedW14qEqSoSb/9XK6qXK3UKQ5q0h/8tDnJE
+	 CgKpFKXW/+5ttnmguRUbwxLNESZA88o1rCK6ZJCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.5 716/739] s390/ipl: add missing secure/has_secure file to ipl type unknown
-Date: Mon, 11 Sep 2023 15:48:35 +0200
-Message-ID: <20230911134711.085388143@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 717/739] s390/dasd: fix string length handling
+Date: Mon, 11 Sep 2023 15:48:36 +0200
+Message-ID: <20230911134711.113686254@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,37 +42,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit ea5717cb13468323a7c3dd394748301802991f39 upstream.
+commit f7cf22424665043787a96a66a048ff6b2cfd473c upstream.
 
-OS installers are relying on /sys/firmware/ipl/has_secure to be
-present on machines supporting secure boot. This file is present
-for all IPL types, but not the unknown type, which prevents a secure
-installation when an LPAR is booted in HMC via FTP(s), because
-this is an unknown IPL type in linux. While at it, also add the secure
-file.
+Building dasd_eckd.o with latest clang reveals this bug:
 
-Fixes: c9896acc7851 ("s390/ipl: Provide has_secure sysfs attribute")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+    CC      drivers/s390/block/dasd_eckd.o
+      drivers/s390/block/dasd_eckd.c:1082:3: warning: 'snprintf' will always be truncated;
+      specified size is 1, but format string expands to at least 11 [-Wfortify-source]
+       1082 |                 snprintf(print_uid, sizeof(*print_uid),
+            |                 ^
+      drivers/s390/block/dasd_eckd.c:1087:3: warning: 'snprintf' will always be truncated;
+      specified size is 1, but format string expands to at least 10 [-Wfortify-source]
+       1087 |                 snprintf(print_uid, sizeof(*print_uid),
+            |                 ^
+
+Fix this by moving and using the existing UID_STRLEN for the arrays
+that are being written to. Also rename UID_STRLEN to DASD_UID_STRLEN
+to clarify its scope.
+
+Fixes: 23596961b437 ("s390/dasd: split up dasd_eckd_read_conf")
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com> # build
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1923
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20230828153142.2843753-2-hca@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/ipl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/block/dasd_devmap.c |    6 +-----
+ drivers/s390/block/dasd_eckd.c   |   10 +++++-----
+ drivers/s390/block/dasd_int.h    |    4 ++++
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/arch/s390/kernel/ipl.c
-+++ b/arch/s390/kernel/ipl.c
-@@ -640,6 +640,8 @@ static struct attribute_group ipl_ccw_at
+--- a/drivers/s390/block/dasd_devmap.c
++++ b/drivers/s390/block/dasd_devmap.c
+@@ -1378,16 +1378,12 @@ static ssize_t dasd_vendor_show(struct d
  
- static struct attribute *ipl_unknown_attrs[] = {
- 	&sys_ipl_type_attr.attr,
-+	&sys_ipl_secure_attr.attr,
-+	&sys_ipl_has_secure_attr.attr,
- 	NULL,
+ static DEVICE_ATTR(vendor, 0444, dasd_vendor_show, NULL);
+ 
+-#define UID_STRLEN ( /* vendor */ 3 + 1 + /* serial    */ 14 + 1 +\
+-		     /* SSID   */ 4 + 1 + /* unit addr */ 2 + 1 +\
+-		     /* vduit */ 32 + 1)
+-
+ static ssize_t
+ dasd_uid_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
++	char uid_string[DASD_UID_STRLEN];
+ 	struct dasd_device *device;
+ 	struct dasd_uid uid;
+-	char uid_string[UID_STRLEN];
+ 	char ua_string[3];
+ 
+ 	device = dasd_device_from_cdev(to_ccwdev(dev));
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -1079,12 +1079,12 @@ static void dasd_eckd_get_uid_string(str
+ 
+ 	create_uid(conf, &uid);
+ 	if (strlen(uid.vduit) > 0)
+-		snprintf(print_uid, sizeof(*print_uid),
++		snprintf(print_uid, DASD_UID_STRLEN,
+ 			 "%s.%s.%04x.%02x.%s",
+ 			 uid.vendor, uid.serial, uid.ssid,
+ 			 uid.real_unit_addr, uid.vduit);
+ 	else
+-		snprintf(print_uid, sizeof(*print_uid),
++		snprintf(print_uid, DASD_UID_STRLEN,
+ 			 "%s.%s.%04x.%02x",
+ 			 uid.vendor, uid.serial, uid.ssid,
+ 			 uid.real_unit_addr);
+@@ -1093,8 +1093,8 @@ static void dasd_eckd_get_uid_string(str
+ static int dasd_eckd_check_cabling(struct dasd_device *device,
+ 				   void *conf_data, __u8 lpm)
+ {
++	char print_path_uid[DASD_UID_STRLEN], print_device_uid[DASD_UID_STRLEN];
+ 	struct dasd_eckd_private *private = device->private;
+-	char print_path_uid[60], print_device_uid[60];
+ 	struct dasd_conf path_conf;
+ 
+ 	path_conf.data = conf_data;
+@@ -1293,9 +1293,9 @@ static void dasd_eckd_path_available_act
+ 	__u8 path_rcd_buf[DASD_ECKD_RCD_DATA_SIZE];
+ 	__u8 lpm, opm, npm, ppm, epm, hpfpm, cablepm;
+ 	struct dasd_conf_data *conf_data;
++	char print_uid[DASD_UID_STRLEN];
+ 	struct dasd_conf path_conf;
+ 	unsigned long flags;
+-	char print_uid[60];
+ 	int rc, pos;
+ 
+ 	opm = 0;
+@@ -5855,8 +5855,8 @@ static void dasd_eckd_dump_sense(struct
+ static int dasd_eckd_reload_device(struct dasd_device *device)
+ {
+ 	struct dasd_eckd_private *private = device->private;
++	char print_uid[DASD_UID_STRLEN];
+ 	int rc, old_base;
+-	char print_uid[60];
+ 	struct dasd_uid uid;
+ 	unsigned long flags;
+ 
+--- a/drivers/s390/block/dasd_int.h
++++ b/drivers/s390/block/dasd_int.h
+@@ -259,6 +259,10 @@ struct dasd_uid {
+ 	char vduit[33];
  };
  
++#define DASD_UID_STRLEN ( /* vendor */ 3 + 1 + /* serial    */ 14 + 1 +	\
++			  /* SSID   */ 4 + 1 + /* unit addr */ 2 + 1 +	\
++			  /* vduit */ 32 + 1)
++
+ /*
+  * PPRC Status data
+  */
 
 
