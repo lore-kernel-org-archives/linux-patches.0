@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684381170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45C9C433C7;
-	Mon, 11 Sep 2023 13:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386531170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85460C433C7;
+	Mon, 11 Sep 2023 13:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440693;
-	bh=x7sA8oM5gAdYD95GkvZ0vU5qq572CMBVI01wDoIs0Po=;
+	s=korg; t=1694440696;
+	bh=sKM4NzcPuRQ3vSF6ZfwfaqQtRmkCo5csv0gnUxvIL3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDWppOOANTqrnpm8TPXI8qjzb4Mz9oHh7T2ccTiKr54vb/9pIiZy+l4RLzIr0oYA6
-	 eVHnN488bs+lWi7MBcJzV4pbbLNBqv3tRjprtu5tNlwfq3R6n9mwldc9R+v9FsUA0q
-	 uqycuhVyhK1ClhD5kIBMYNCfRpknI0km9MhBMenk=
+	b=oOc3A8S/scCgb/cmrS4Csb+fO9Q9JzKMEe/p33ZmAn3Z8SimK9tDQmCX7B+A9XESm
+	 cnI2n0iVoYGd56i60aE5XBKzSWpz7nPSEP9JMUIQyo+bRcgiCZ++ZogN6/UOmz9AdD
+	 frQPmaL5szPRdUBNRlhn3zK2IyAoHEqIgZTQ1Okc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	kernel test robot <lkp@intel.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Pingfan Liu <kernelfans@gmail.com>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 152/739] watchdog/hardlockup: avoid large stack frames in watchdog_hardlockup_check()
-Date: Mon, 11 Sep 2023 15:39:11 +0200
-Message-ID: <20230911134655.379252397@linuxfoundation.org>
+Subject: [PATCH 6.5 153/739] fs: ocfs2: namei: check return value of ocfs2_add_entry()
+Date: Mon, 11 Sep 2023 15:39:12 +0200
+Message-ID: <20230911134655.413761672@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -45,69 +48,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit 1f38c86bb29f4548b8df01b47a313518e6ed2dfe ]
+[ Upstream commit 6b72e5f9e79360fce4f2be7fe81159fbdf4256a5 ]
 
-After commit 77c12fc95980 ("watchdog/hardlockup: add a "cpu" param to
-watchdog_hardlockup_check()") we started storing a `struct cpumask` on the
-stack in watchdog_hardlockup_check().  On systems with CONFIG_NR_CPUS set
-to 8192 this takes up 1K on the stack.  That triggers warnings with
-`CONFIG_FRAME_WARN` set to 1024.
+Process result of ocfs2_add_entry() in case we have an error
+value.
 
-We'll use the new trigger_allbutcpu_cpu_backtrace() to avoid needing to
-use a CPU mask at all.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Link: https://lkml.kernel.org/r/20230804065935.v4.2.I501ab68cb926ee33a7c87e063d207abf09b9943c@changeid
-Fixes: 77c12fc95980 ("watchdog/hardlockup: add a "cpu" param to watchdog_hardlockup_check()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202307310955.pLZDhpnl-lkp@intel.com
-Acked-by: Michal Hocko <mhocko@suse.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Cc: Pingfan Liu <kernelfans@gmail.com>
+Link: https://lkml.kernel.org/r/20230803145417.177649-1-artem.chernyshev@red-soft.ru
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watchdog.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/ocfs2/namei.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 085d7a78f62f0..d145305d95fe8 100644
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -151,9 +151,6 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs)
- 	 */
- 	if (is_hardlockup(cpu)) {
- 		unsigned int this_cpu = smp_processor_id();
--		struct cpumask backtrace_mask;
--
--		cpumask_copy(&backtrace_mask, cpu_online_mask);
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index 17c52225b87d4..03bccfd183f3c 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -1535,6 +1535,10 @@ static int ocfs2_rename(struct mnt_idmap *idmap,
+ 		status = ocfs2_add_entry(handle, new_dentry, old_inode,
+ 					 OCFS2_I(old_inode)->ip_blkno,
+ 					 new_dir_bh, &target_insert);
++		if (status < 0) {
++			mlog_errno(status);
++			goto bail;
++		}
+ 	}
  
- 		/* Only print hardlockups once. */
- 		if (per_cpu(watchdog_hardlockup_warned, cpu))
-@@ -167,10 +164,8 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs)
- 				show_regs(regs);
- 			else
- 				dump_stack();
--			cpumask_clear_cpu(cpu, &backtrace_mask);
- 		} else {
--			if (trigger_single_cpu_backtrace(cpu))
--				cpumask_clear_cpu(cpu, &backtrace_mask);
-+			trigger_single_cpu_backtrace(cpu);
- 		}
- 
- 		/*
-@@ -179,7 +174,7 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs)
- 		 */
- 		if (sysctl_hardlockup_all_cpu_backtrace &&
- 		    !test_and_set_bit(0, &watchdog_hardlockup_all_cpu_dumped))
--			trigger_cpumask_backtrace(&backtrace_mask);
-+			trigger_allbutcpu_cpu_backtrace(cpu);
- 
- 		if (hardlockup_panic)
- 			nmi_panic(regs, "Hard LOCKUP");
+ 	old_inode->i_ctime = current_time(old_inode);
 -- 
 2.40.1
 
