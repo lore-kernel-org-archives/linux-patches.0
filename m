@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7288FC433C7;
-	Mon, 11 Sep 2023 15:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D618B11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E78EC433C8;
+	Mon, 11 Sep 2023 15:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445707;
-	bh=F2xYqyts/k5qoxtqlAnHEAmuM8+0gdvA34FSnJ+RMpQ=;
+	s=korg; t=1694445710;
+	bh=Ezga5UQM0wH/oNDvQX3Kd7E2blp5KEHxXNIvlfOznzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFyssmaJSRWSggbuodftxslqzRjE7/R87asRU4E2w4iUZOwK8wjqDusGlYLa+fWIV
-	 m6eEKVqmfJqNs4pr6lob6nyqYeLDoLYjHQmnf/1RxKH5ppIJZQoSlmQnz7AL3bx/6o
-	 BgmV2hMupTnHz9GZ3Uji6B4teONMtS3WzVTaZjxM=
+	b=RBD7hn7Qms8hytJXc8siyBg2NMS0MFNPY5qxZN4qro79URoX7Kbb6nKFddDEG02kT
+	 Lr2r38Mo/CKiwWgIMpJFavK+tSwJXnyDkYars2ABmjJBP7bxZAVb86wbA/LJKGiWkv
+	 CXwkQD7SeS+cPmXJDumTbQzsGF1l5A5F4P/ErZK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 443/600] iommu/sprd: Add missing force_aperture
-Date: Mon, 11 Sep 2023 15:47:56 +0200
-Message-ID: <20230911134646.723417381@linuxfoundation.org>
+Subject: [PATCH 6.1 444/600] RDMA/hns: Fix port active speed
+Date: Mon, 11 Sep 2023 15:47:57 +0200
+Message-ID: <20230911134646.751768346@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,35 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit d48a51286c698f7fe8efc688f23a532f4fe9a904 ]
+[ Upstream commit df1bcf90a66a10967a3a43510b42cb3566208011 ]
 
-force_aperture was intended to false only by GART drivers that have an
-identity translation outside the aperture. This does not describe sprd, so
-add the missing 'force_aperture = true'.
+HW supports a variety of different speed, but the current speed
+is fixed.
 
-Fixes: b23e4fc4e3fa ("iommu: add Unisoc IOMMU basic driver")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Acked-by: Chunyan Zhang <zhang.lyra@gmail.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+The real speed should be querried from ethernet.
+
+Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20230804012711.808069-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sprd-iommu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
-index fadd2c907222b..8261066de07d7 100644
---- a/drivers/iommu/sprd-iommu.c
-+++ b/drivers/iommu/sprd-iommu.c
-@@ -147,6 +147,7 @@ static struct iommu_domain *sprd_iommu_domain_alloc(unsigned int domain_type)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 946ba1109e878..da1b33d818d82 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -219,6 +219,7 @@ static int hns_roce_query_port(struct ib_device *ib_dev, u32 port_num,
+ 	unsigned long flags;
+ 	enum ib_mtu mtu;
+ 	u32 port;
++	int ret;
  
- 	dom->domain.geometry.aperture_start = 0;
- 	dom->domain.geometry.aperture_end = SZ_256M - 1;
-+	dom->domain.geometry.force_aperture = true;
+ 	port = port_num - 1;
  
- 	return &dom->domain;
- }
+@@ -231,8 +232,10 @@ static int hns_roce_query_port(struct ib_device *ib_dev, u32 port_num,
+ 				IB_PORT_BOOT_MGMT_SUP;
+ 	props->max_msg_sz = HNS_ROCE_MAX_MSG_LEN;
+ 	props->pkey_tbl_len = 1;
+-	props->active_width = IB_WIDTH_4X;
+-	props->active_speed = 1;
++	ret = ib_get_eth_speed(ib_dev, port_num, &props->active_speed,
++			       &props->active_width);
++	if (ret)
++		ibdev_warn(ib_dev, "failed to get speed, ret = %d.\n", ret);
+ 
+ 	spin_lock_irqsave(&hr_dev->iboe.lock, flags);
+ 
 -- 
 2.40.1
 
