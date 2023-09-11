@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B54CF9F3
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE355C433C8;
-	Mon, 11 Sep 2023 13:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA48F9F3
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F80BC433C9;
+	Mon, 11 Sep 2023 13:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440523;
-	bh=oI+x22Ke9g5xe4/rHHClkOUfnjUMuQxveCdYR0WXIRo=;
+	s=korg; t=1694440525;
+	bh=FPlFrjoMWinjkwITt9Prp4I9ZZJNd4tQWTRXi/CMa6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uM12F9OmpCQtebhF961AebNswPfZXqifcvwL++NPW8VOYQoTytjeADnXHU0qftgm+
-	 Zqs2iFivo6rym95+XSpYu76B1YmqmYzkxwF2KDX94ZBAB0qnkqfssmeedUnDHGDqYA
-	 vVGrDVTHoLc38wYf40KDw1FO6etnQKK9y+Bz+Zdg=
+	b=FdtcegVFlzmvLGdFuZ/E5waunuIpugYqCy1NcEikgw8DmAtvGpAfku8IgLIsoIuCb
+	 lgkuimuIvjjEKL2xZpR72w1QfUh47pe1S+rBffGwBqp9Ju4a5RzwyQo+9VLIHEPP02
+	 wKyo/h/HEa/rlSR9+nSCb6lphyk9lhWlkOrOFBZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Joe Stringer <joe@cilium.io>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Rany Hany <rany_hany@riseup.net>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 092/739] bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign
-Date: Mon, 11 Sep 2023 15:38:11 +0200
-Message-ID: <20230911134653.673625252@linuxfoundation.org>
+Subject: [PATCH 6.5 093/739] wifi: mt76: mt7915: fix command timeout in AP stop period
+Date: Mon, 11 Sep 2023 15:38:12 +0200
+Message-ID: <20230911134653.700857996@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,330 +40,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenz Bauer <lmb@isovalent.com>
+From: Rany Hany <rany_hany@riseup.net>
 
-[ Upstream commit 9c02bec95954252c3c01bfbb3f7560e0b95ca955 ]
+[ Upstream commit c4f0755823045b66484fb53d686f85d3151400f4 ]
 
-Currently the bpf_sk_assign helper in tc BPF context refuses SO_REUSEPORT
-sockets. This means we can't use the helper to steer traffic to Envoy,
-which configures SO_REUSEPORT on its sockets. In turn, we're blocked
-from removing TPROXY from our setup.
+Due to AP stop improperly, mt7915 driver would face random command timeout
+by chip fw problem. Migrate AP start/stop process to .start_ap/.stop_ap and
+congiure BSS network settings in both hooks.
 
-The reason that bpf_sk_assign refuses such sockets is that the
-bpf_sk_lookup helpers don't execute SK_REUSEPORT programs. Instead,
-one of the reuseport sockets is selected by hash. This could cause
-dispatch to the "wrong" socket:
+The new flow is shown below.
+* AP start
+    .start_ap()
+      configure BSS network resource
+      set BSS to connected state
+    .bss_info_changed()
+      enable fw beacon offload
 
-    sk = bpf_sk_lookup_tcp(...) // select SO_REUSEPORT by hash
-    bpf_sk_assign(skb, sk) // SK_REUSEPORT wasn't executed
+* AP stop
+    .bss_info_changed()
+      disable fw beacon offload (skip this command)
+    .stop_ap()
+      set BSS to disconnected state (beacon offload disabled automatically)
+      destroy BSS network resource
 
-Fixing this isn't as simple as invoking SK_REUSEPORT from the lookup
-helpers unfortunately. In the tc context, L2 headers are at the start
-of the skb, while SK_REUSEPORT expects L3 headers instead.
+Based on "mt76: mt7921: fix command timeout in AP stop period"
 
-Instead, we execute the SK_REUSEPORT program when the assigned socket
-is pulled out of the skb, further up the stack. This creates some
-trickiness with regards to refcounting as bpf_sk_assign will put both
-refcounted and RCU freed sockets in skb->sk. reuseport sockets are RCU
-freed. We can infer that the sk_assigned socket is RCU freed if the
-reuseport lookup succeeds, but convincing yourself of this fact isn't
-straight forward. Therefore we defensively check refcounting on the
-sk_assign sock even though it's probably not required in practice.
-
-Fixes: 8e368dc72e86 ("bpf: Fix use of sk->sk_reuseport from sk_assign")
-Fixes: cf7fbe660f2d ("bpf: Add socket assign support")
-Co-developed-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Joe Stringer <joe@cilium.io>
-Link: https://lore.kernel.org/bpf/CACAyw98+qycmpQzKupquhkxbvWK4OFyDuuLMBNROnfWMZxUWeA@mail.gmail.com/
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-7-7021b683cdae@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Rany Hany <rany_hany@riseup.net>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 02a894046d5a ("wifi: mt76: mt7915: fix capabilities in non-AP mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet6_hashtables.h | 56 +++++++++++++++++++++++++++++++---
- include/net/inet_hashtables.h  | 49 +++++++++++++++++++++++++++--
- include/net/sock.h             |  7 +++--
- include/uapi/linux/bpf.h       |  3 --
- net/core/filter.c              |  2 --
- net/ipv4/udp.c                 |  8 +++--
- net/ipv6/udp.c                 |  8 +++--
- tools/include/uapi/linux/bpf.h |  3 --
- 8 files changed, 115 insertions(+), 21 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7915/main.c  | 63 +++++++++++++++----
+ 1 file changed, 50 insertions(+), 13 deletions(-)
 
-diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
-index f89320b6fee31..475e672b4facc 100644
---- a/include/net/inet6_hashtables.h
-+++ b/include/net/inet6_hashtables.h
-@@ -94,6 +94,46 @@ static inline struct sock *__inet6_lookup(struct net *net,
- 				     daddr, hnum, dif, sdif);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 2da57357c4174..13d429bd44e28 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -599,6 +599,7 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
+ {
+ 	struct mt7915_phy *phy = mt7915_hw_phy(hw);
+ 	struct mt7915_dev *dev = mt7915_hw_dev(hw);
++	int set_bss_info = -1, set_sta = -1;
  
-+static inline
-+struct sock *inet6_steal_sock(struct net *net, struct sk_buff *skb, int doff,
-+			      const struct in6_addr *saddr, const __be16 sport,
-+			      const struct in6_addr *daddr, const __be16 dport,
-+			      bool *refcounted, inet6_ehashfn_t *ehashfn)
-+{
-+	struct sock *sk, *reuse_sk;
-+	bool prefetched;
+ 	mutex_lock(&dev->mt76.mutex);
+ 
+@@ -607,15 +608,18 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
+ 	 * and then peer references bss_info_rfch to set bandwidth cap.
+ 	 */
+ 	if (changed & BSS_CHANGED_BSSID &&
+-	    vif->type == NL80211_IFTYPE_STATION) {
+-		bool join = !is_zero_ether_addr(info->bssid);
+-
+-		mt7915_mcu_add_bss_info(phy, vif, join);
+-		mt7915_mcu_add_sta(dev, vif, NULL, join);
+-	}
+-
++	    vif->type == NL80211_IFTYPE_STATION)
++		set_bss_info = set_sta = !is_zero_ether_addr(info->bssid);
+ 	if (changed & BSS_CHANGED_ASSOC)
+-		mt7915_mcu_add_bss_info(phy, vif, vif->cfg.assoc);
++		set_bss_info = vif->cfg.assoc;
++	if (changed & BSS_CHANGED_BEACON_ENABLED &&
++	    vif->type != NL80211_IFTYPE_AP)
++		set_bss_info = set_sta = info->enable_beacon;
 +
-+	sk = skb_steal_sock(skb, refcounted, &prefetched);
-+	if (!sk)
-+		return NULL;
++	if (set_bss_info == 1)
++		mt7915_mcu_add_bss_info(phy, vif, true);
++	if (set_sta == 1)
++		mt7915_mcu_add_sta(dev, vif, NULL, true);
+ 
+ 	if (changed & BSS_CHANGED_ERP_CTS_PROT)
+ 		mt7915_mac_enable_rtscts(dev, vif, info->use_cts_prot);
+@@ -629,11 +633,6 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
+ 		}
+ 	}
+ 
+-	if (changed & BSS_CHANGED_BEACON_ENABLED && info->enable_beacon) {
+-		mt7915_mcu_add_bss_info(phy, vif, true);
+-		mt7915_mcu_add_sta(dev, vif, NULL, true);
+-	}
+-
+ 	/* ensure that enable txcmd_mode after bss_info */
+ 	if (changed & (BSS_CHANGED_QOS | BSS_CHANGED_BEACON_ENABLED))
+ 		mt7915_mcu_set_tx(dev, vif);
+@@ -650,6 +649,42 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
+ 		       BSS_CHANGED_FILS_DISCOVERY))
+ 		mt7915_mcu_add_beacon(hw, vif, info->enable_beacon, changed);
+ 
++	if (set_bss_info == 0)
++		mt7915_mcu_add_bss_info(phy, vif, false);
++	if (set_sta == 0)
++		mt7915_mcu_add_sta(dev, vif, NULL, false);
 +
-+	if (!prefetched)
-+		return sk;
-+
-+	if (sk->sk_protocol == IPPROTO_TCP) {
-+		if (sk->sk_state != TCP_LISTEN)
-+			return sk;
-+	} else if (sk->sk_protocol == IPPROTO_UDP) {
-+		if (sk->sk_state != TCP_CLOSE)
-+			return sk;
-+	} else {
-+		return sk;
-+	}
-+
-+	reuse_sk = inet6_lookup_reuseport(net, sk, skb, doff,
-+					  saddr, sport, daddr, ntohs(dport),
-+					  ehashfn);
-+	if (!reuse_sk)
-+		return sk;
-+
-+	/* We've chosen a new reuseport sock which is never refcounted. This
-+	 * implies that sk also isn't refcounted.
-+	 */
-+	WARN_ON_ONCE(*refcounted);
-+
-+	return reuse_sk;
++	mutex_unlock(&dev->mt76.mutex);
 +}
 +
- static inline struct sock *__inet6_lookup_skb(struct inet_hashinfo *hashinfo,
- 					      struct sk_buff *skb, int doff,
- 					      const __be16 sport,
-@@ -101,14 +141,20 @@ static inline struct sock *__inet6_lookup_skb(struct inet_hashinfo *hashinfo,
- 					      int iif, int sdif,
- 					      bool *refcounted)
- {
--	struct sock *sk = skb_steal_sock(skb, refcounted);
--
-+	struct net *net = dev_net(skb_dst(skb)->dev);
-+	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
-+	struct sock *sk;
-+
-+	sk = inet6_steal_sock(net, skb, doff, &ip6h->saddr, sport, &ip6h->daddr, dport,
-+			      refcounted, inet6_ehashfn);
-+	if (IS_ERR(sk))
-+		return NULL;
- 	if (sk)
- 		return sk;
- 
--	return __inet6_lookup(dev_net(skb_dst(skb)->dev), hashinfo, skb,
--			      doff, &ipv6_hdr(skb)->saddr, sport,
--			      &ipv6_hdr(skb)->daddr, ntohs(dport),
-+	return __inet6_lookup(net, hashinfo, skb,
-+			      doff, &ip6h->saddr, sport,
-+			      &ip6h->daddr, ntohs(dport),
- 			      iif, sdif, refcounted);
- }
- 
-diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
-index ddfa2e67fdb51..a1b8eb147ce73 100644
---- a/include/net/inet_hashtables.h
-+++ b/include/net/inet_hashtables.h
-@@ -442,6 +442,46 @@ static inline struct sock *inet_lookup(struct net *net,
- 	return sk;
- }
- 
-+static inline
-+struct sock *inet_steal_sock(struct net *net, struct sk_buff *skb, int doff,
-+			     const __be32 saddr, const __be16 sport,
-+			     const __be32 daddr, const __be16 dport,
-+			     bool *refcounted, inet_ehashfn_t *ehashfn)
++static int
++mt7915_start_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
++		struct ieee80211_bss_conf *link_conf)
 +{
-+	struct sock *sk, *reuse_sk;
-+	bool prefetched;
++	struct mt7915_phy *phy = mt7915_hw_phy(hw);
++	struct mt7915_dev *dev = mt7915_hw_dev(hw);
++	int err;
 +
-+	sk = skb_steal_sock(skb, refcounted, &prefetched);
-+	if (!sk)
-+		return NULL;
++	mutex_lock(&dev->mt76.mutex);
 +
-+	if (!prefetched)
-+		return sk;
++	err = mt7915_mcu_add_bss_info(phy, vif, true);
++	if (err)
++		goto out;
++	err = mt7915_mcu_add_sta(dev, vif, NULL, true);
++out:
++	mutex_unlock(&dev->mt76.mutex);
 +
-+	if (sk->sk_protocol == IPPROTO_TCP) {
-+		if (sk->sk_state != TCP_LISTEN)
-+			return sk;
-+	} else if (sk->sk_protocol == IPPROTO_UDP) {
-+		if (sk->sk_state != TCP_CLOSE)
-+			return sk;
-+	} else {
-+		return sk;
-+	}
-+
-+	reuse_sk = inet_lookup_reuseport(net, sk, skb, doff,
-+					 saddr, sport, daddr, ntohs(dport),
-+					 ehashfn);
-+	if (!reuse_sk)
-+		return sk;
-+
-+	/* We've chosen a new reuseport sock which is never refcounted. This
-+	 * implies that sk also isn't refcounted.
-+	 */
-+	WARN_ON_ONCE(*refcounted);
-+
-+	return reuse_sk;
++	return err;
 +}
 +
- static inline struct sock *__inet_lookup_skb(struct inet_hashinfo *hashinfo,
- 					     struct sk_buff *skb,
- 					     int doff,
-@@ -450,13 +490,18 @@ static inline struct sock *__inet_lookup_skb(struct inet_hashinfo *hashinfo,
- 					     const int sdif,
- 					     bool *refcounted)
- {
--	struct sock *sk = skb_steal_sock(skb, refcounted);
-+	struct net *net = dev_net(skb_dst(skb)->dev);
- 	const struct iphdr *iph = ip_hdr(skb);
-+	struct sock *sk;
- 
-+	sk = inet_steal_sock(net, skb, doff, iph->saddr, sport, iph->daddr, dport,
-+			     refcounted, inet_ehashfn);
-+	if (IS_ERR(sk))
-+		return NULL;
- 	if (sk)
- 		return sk;
- 
--	return __inet_lookup(dev_net(skb_dst(skb)->dev), hashinfo, skb,
-+	return __inet_lookup(net, hashinfo, skb,
- 			     doff, iph->saddr, sport,
- 			     iph->daddr, dport, inet_iif(skb), sdif,
- 			     refcounted);
-diff --git a/include/net/sock.h b/include/net/sock.h
-index e8927f2d47a3c..11d503417591e 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2822,20 +2822,23 @@ sk_is_refcounted(struct sock *sk)
-  * skb_steal_sock - steal a socket from an sk_buff
-  * @skb: sk_buff to steal the socket from
-  * @refcounted: is set to true if the socket is reference-counted
-+ * @prefetched: is set to true if the socket was assigned from bpf
-  */
- static inline struct sock *
--skb_steal_sock(struct sk_buff *skb, bool *refcounted)
-+skb_steal_sock(struct sk_buff *skb, bool *refcounted, bool *prefetched)
- {
- 	if (skb->sk) {
- 		struct sock *sk = skb->sk;
- 
- 		*refcounted = true;
--		if (skb_sk_is_prefetched(skb))
-+		*prefetched = skb_sk_is_prefetched(skb);
-+		if (*prefetched)
- 			*refcounted = sk_is_refcounted(sk);
- 		skb->destructor = NULL;
- 		skb->sk = NULL;
- 		return sk;
- 	}
-+	*prefetched = false;
- 	*refcounted = false;
- 	return NULL;
++static void
++mt7915_stop_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
++	       struct ieee80211_bss_conf *link_conf)
++{
++	struct mt7915_dev *dev = mt7915_hw_dev(hw);
++
++	mutex_lock(&dev->mt76.mutex);
++	mt7915_mcu_add_sta(dev, vif, NULL, false);
+ 	mutex_unlock(&dev->mt76.mutex);
  }
-diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-index 60a9d59beeabb..d8cbae8220256 100644
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -4159,9 +4159,6 @@ union bpf_attr {
-  *		**-EOPNOTSUPP** if the operation is not supported, for example
-  *		a call from outside of TC ingress.
-  *
-- *		**-ESOCKTNOSUPPORT** if the socket type is not supported
-- *		(reuseport).
-- *
-  * long bpf_sk_assign(struct bpf_sk_lookup *ctx, struct bpf_sock *sk, u64 flags)
-  *	Description
-  *		Helper is overloaded depending on BPF program type. This
-diff --git a/net/core/filter.c b/net/core/filter.c
-index f1a5775400658..454da3538965a 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7350,8 +7350,6 @@ BPF_CALL_3(bpf_sk_assign, struct sk_buff *, skb, struct sock *, sk, u64, flags)
- 		return -EOPNOTSUPP;
- 	if (unlikely(dev_net(skb->dev) != sock_net(sk)))
- 		return -ENETUNREACH;
--	if (unlikely(sk_fullsock(sk) && sk->sk_reuseport))
--		return -ESOCKTNOSUPPORT;
- 	if (sk_unhashed(sk))
- 		return -EOPNOTSUPP;
- 	if (sk_is_refcounted(sk) &&
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index fd06e0e34bda3..f8b0fecc10659 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2414,7 +2414,11 @@ int __udp4_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 	if (udp4_csum_init(skb, uh, proto))
- 		goto csum_error;
  
--	sk = skb_steal_sock(skb, &refcounted);
-+	sk = inet_steal_sock(net, skb, sizeof(struct udphdr), saddr, uh->source, daddr, uh->dest,
-+			     &refcounted, udp_ehashfn);
-+	if (IS_ERR(sk))
-+		goto no_sk;
-+
- 	if (sk) {
- 		struct dst_entry *dst = skb_dst(skb);
- 		int ret;
-@@ -2435,7 +2439,7 @@ int __udp4_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 	sk = __udp4_lib_lookup_skb(skb, uh->source, uh->dest, udptable);
- 	if (sk)
- 		return udp_unicast_rcv_skb(sk, skb, uh);
--
-+no_sk:
- 	if (!xfrm4_policy_check(NULL, XFRM_POLICY_IN, skb))
- 		goto drop;
- 	nf_reset_ct(skb);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index a4b124e4bd3b4..82fdc69ee0813 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -992,7 +992,11 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 		goto csum_error;
- 
- 	/* Check if the socket is already available, e.g. due to early demux */
--	sk = skb_steal_sock(skb, &refcounted);
-+	sk = inet6_steal_sock(net, skb, sizeof(struct udphdr), saddr, uh->source, daddr, uh->dest,
-+			      &refcounted, udp6_ehashfn);
-+	if (IS_ERR(sk))
-+		goto no_sk;
-+
- 	if (sk) {
- 		struct dst_entry *dst = skb_dst(skb);
- 		int ret;
-@@ -1026,7 +1030,7 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
- 			goto report_csum_error;
- 		return udp6_unicast_rcv_skb(sk, skb, uh);
- 	}
--
-+no_sk:
- 	reason = SKB_DROP_REASON_NO_SOCKET;
- 
- 	if (!uh->check)
-diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
-index 60a9d59beeabb..d8cbae8220256 100644
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -4159,9 +4159,6 @@ union bpf_attr {
-  *		**-EOPNOTSUPP** if the operation is not supported, for example
-  *		a call from outside of TC ingress.
-  *
-- *		**-ESOCKTNOSUPPORT** if the socket type is not supported
-- *		(reuseport).
-- *
-  * long bpf_sk_assign(struct bpf_sk_lookup *ctx, struct bpf_sock *sk, u64 flags)
-  *	Description
-  *		Helper is overloaded depending on BPF program type. This
+@@ -1528,6 +1563,8 @@ const struct ieee80211_ops mt7915_ops = {
+ 	.conf_tx = mt7915_conf_tx,
+ 	.configure_filter = mt7915_configure_filter,
+ 	.bss_info_changed = mt7915_bss_info_changed,
++	.start_ap = mt7915_start_ap,
++	.stop_ap = mt7915_stop_ap,
+ 	.sta_add = mt7915_sta_add,
+ 	.sta_remove = mt7915_sta_remove,
+ 	.sta_pre_rcu_remove = mt76_sta_pre_rcu_remove,
 -- 
 2.40.1
 
