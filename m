@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FC811711
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CEBC433CD;
-	Mon, 11 Sep 2023 14:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6191170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44C1C433CA;
+	Mon, 11 Sep 2023 14:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441632;
-	bh=qf9khgTQ6Ls27khNMmLk4ckh4ufb9wzgSUrIYOFK7sw=;
+	s=korg; t=1694441635;
+	bh=Q1Gl0qzPOx1cg7lCmpzsCwUCQg3Z4X7zwuf1WzsNSWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxdLC1RX+qGOro3QDKcJx3pAVxBYR2QxGegj69cjjjE69nMV47XJ3p+L3U0c1+HKQ
-	 IWclRzQgPk698xOt5Q2od6sUbMp23GQPJ6lpUggK/ZaO2Jk6IZk3p93+NYZmplWcee
-	 nR0b7F5kiU8Ljd1ydS/NzaPHzE0/vRbuSgBSkAkg=
+	b=pW5se9wOWhzXPp3nZip5fpB4rIpLHesFNmlrvk6fthI5//vtEiDtF5t5T4EyUC5RV
+	 8OKZprIK1sebWpG3ZEX7s848zgfp0FsM9xE3Y1Vqw0X97JDV8yXsZ7wY5kL+Bquv7G
+	 ZxQlYtMV6Pnp0q3SQhBg2AjiykvL/PMWlZu4HxNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 464/739] dt-bindings: extcon: maxim,max77843: restrict connector properties
-Date: Mon, 11 Sep 2023 15:44:23 +0200
-Message-ID: <20230911134704.111138633@linuxfoundation.org>
+Subject: [PATCH 6.5 482/739] scsi: ufs: Fix residual handling
+Date: Mon, 11 Sep 2023 15:44:41 +0200
+Message-ID: <20230911134704.603982700@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,33 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit fb2c3f72e819254d8c76de95917e5f9ff232586c ]
+[ Upstream commit 2903265e27bfc6dea915dd9e17a1b2587f621f73 ]
 
-Do not allow any other properties in connector child, except what
-usb-connector.yaml evaluates.
+Only call scsi_set_resid() in case of an underflow. Do not call
+scsi_set_resid() in case of an overflow.
 
-Fixes: 9729cad0278b ("dt-bindings: extcon: maxim,max77843: Add MAX77843 bindings")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Cc: Avri Altman <avri.altman@wdc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: cb38845d90fc ("scsi: ufs: core: Set the residual byte count")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230724200843.3376570-2-bvanassche@acm.org
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/extcon/maxim,max77843.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufshcd.c | 12 ++++++++++--
+ include/ufs/ufs.h         |  6 ++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml b/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
-index 1289605456408..55800fb0221d0 100644
---- a/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
-+++ b/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
-@@ -23,6 +23,7 @@ properties:
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 1294467757964..fa18806e80b61 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5251,9 +5251,17 @@ ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp,
+ 	int result = 0;
+ 	int scsi_status;
+ 	enum utp_ocs ocs;
++	u8 upiu_flags;
++	u32 resid;
  
-   connector:
-     $ref: /schemas/connector/usb-connector.yaml#
-+    unevaluatedProperties: false
+-	scsi_set_resid(lrbp->cmd,
+-		be32_to_cpu(lrbp->ucd_rsp_ptr->sr.residual_transfer_count));
++	upiu_flags = be32_to_cpu(lrbp->ucd_rsp_ptr->header.dword_0) >> 16;
++	resid = be32_to_cpu(lrbp->ucd_rsp_ptr->sr.residual_transfer_count);
++	/*
++	 * Test !overflow instead of underflow to support UFS devices that do
++	 * not set either flag.
++	 */
++	if (resid && !(upiu_flags & UPIU_RSP_FLAG_OVERFLOW))
++		scsi_set_resid(lrbp->cmd, resid);
  
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
+ 	/* overall command status of utrd */
+ 	ocs = ufshcd_get_tr_ocs(lrbp, cqe);
+diff --git a/include/ufs/ufs.h b/include/ufs/ufs.h
+index 198cb391f9db2..29760d5cb273c 100644
+--- a/include/ufs/ufs.h
++++ b/include/ufs/ufs.h
+@@ -102,6 +102,12 @@ enum {
+ 	UPIU_CMD_FLAGS_READ	= 0x40,
+ };
+ 
++/* UPIU response flags */
++enum {
++	UPIU_RSP_FLAG_UNDERFLOW	= 0x20,
++	UPIU_RSP_FLAG_OVERFLOW	= 0x40,
++};
++
+ /* UPIU Task Attributes */
+ enum {
+ 	UPIU_TASK_ATTR_SIMPLE	= 0x00,
 -- 
 2.40.1
 
