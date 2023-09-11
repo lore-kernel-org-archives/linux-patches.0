@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AE711710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50211C433C8;
-	Mon, 11 Sep 2023 15:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88E411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE3BC433C7;
+	Mon, 11 Sep 2023 15:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445184;
-	bh=XJOg9qLDxuWy8C+iM6mar4kVfF/bxdqJiElkbULgKDw=;
+	s=korg; t=1694445187;
+	bh=oaHC+6dO3Vp3g+kzoIWTICjOHgi1J2V1+4GRXmm7N+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kj8HALq1gBpFEeK0KcsNOW8h6g2x5iRAnBULOyHOPZVCDytaFoqMSpQDLwRlVBRqz
-	 KPhIzrPD+Of0JU8wI7FDmzFWbMTwtiyjBITuz61Ssh3B+zx9VCkY+e/XmZKy32zZmo
-	 MyBJjf2uDTGgNAeDC8XCQtPDaJjrE5mTbZvP5LA4=
+	b=nw7v2MSJEIWEadf5ECelPI7oDN5HhHFLjb+EU8b9UJlxhK7/3SZPVhq7s79KhZbnO
+	 f1is21/xk8+Y4O7D63HIttvXADPiCGFMPr8RGuT9aHTGD0WohComF1RKtfG4We2agd
+	 i3iY6H2v66vfsp4T25uMgXroBg6WThoEpCMvHHoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 250/600] drm/amdgpu: avoid integer overflow warning in amdgpu_device_resize_fb_bar()
-Date: Mon, 11 Sep 2023 15:44:43 +0200
-Message-ID: <20230911134640.978261232@linuxfoundation.org>
+Subject: [PATCH 6.1 259/600] arm64: tegra: Fix HSUART for Smaug
+Date: Mon, 11 Sep 2023 15:44:52 +0200
+Message-ID: <20230911134641.254251038@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,53 +35,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-[ Upstream commit 822130b5e8834ab30ad410cf19a582e5014b9a85 ]
+[ Upstream commit 590bfe51838f6345a6a3288507661dc9b7208464 ]
 
-On 32-bit architectures comparing a resource against a value larger than
-U32_MAX can cause a warning:
+After commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") was applied, the HSUART failed to probe and the following
+error is seen:
 
-drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1344:18: error: result of comparison of constant 4294967296 with expression of type 'resource_size_t' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-                    res->start > 0x100000000ull)
-                    ~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
+ serial-tegra 70006300.serial: Couldn't get the reset
+ serial-tegra: probe of 70006300.serial failed with error -2
 
-As gcc does not warn about this in dead code, add an IS_ENABLED() check at
-the start of the function. This will always return success but not actually resize
-the BAR on 32-bit architectures without high memory, which is exactly what
-we want here, as the driver can fall back to bank switching the VRAM
-access.
+Commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") is correct because the "reset-names" property is not
+needed for 8250 UARTs. However, the "reset-names" is required for the
+HSUART and should have been populated as part of commit a63c0cd83720c
+("arm64: dts: tegra: smaug: Add Bluetooth node") that enabled the HSUART
+for the Pixel C. Fix this by populating the "reset-names" property for
+the HSUART on the Pixel C.
 
-Fixes: 31b8adab3247 ("drm/amdgpu: require a root bus window above 4GB for BAR resize")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: a63c0cd83720 ("arm64: dts: tegra: smaug: Add Bluetooth node")
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/nvidia/tegra210-smaug.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index e6427a00cf6d6..9aac9e755609d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1212,6 +1212,9 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
- 	u16 cmd;
- 	int r;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+index 7c569695b7052..2b4dbfac84a70 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+@@ -1312,6 +1312,7 @@ serial@70006000 {
  
-+	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
-+		return 0;
-+
- 	/* Bypass for VF */
- 	if (amdgpu_sriov_vf(adev))
- 		return 0;
+ 	uartd: serial@70006300 {
+ 		compatible = "nvidia,tegra30-hsuart";
++		reset-names = "serial";
+ 		status = "okay";
+ 
+ 		bluetooth {
 -- 
 2.40.1
 
