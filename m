@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC7F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F71AC433C8;
-	Mon, 11 Sep 2023 14:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFFA1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B82C433C9;
+	Mon, 11 Sep 2023 14:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441211;
-	bh=3xw3rTZhVxNuRu+ecXpoOBBQBSgBnPiwwcQHo+APiwA=;
+	s=korg; t=1694441214;
+	bh=iYqORxiwUecvKAG95dusQwsS1SR80N21jlOAd0tILXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO8eOvdomcE0frQLmMYNqpTX3qcO9do+K9mR4+CUpO2e4hQbzEHzY1709a+OqmC88
-	 fexsc90GCCJc6KEmYHcs5UcurN8Scme5ZudsQyCKvIPwgNHqqXCYXNbO1m8EL2pqsi
-	 RzmAvEf9Q9VlFF126hjJ3UTd/2rKqs3GZonDiEn4=
+	b=scT4xSYSguUbIRBGVQiKhCYFfhXXcExYvgEEVc08FRNldBVbiGODIasqVQk4l1YIU
+	 R6r/HCrzYtu95wvuEelPox036p5RtXD+VHVD7++uG1mg3WDp0kAZMGhYMRPufV41ig
+	 KrZz67Oh8PbKMl/FE3M+D//5wF4lSb1OLqVwRd98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vaishnav Achath <vaishnav.a@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 333/739] drm/mediatek: dp: Add missing error checks in mtk_dp_parse_capabilities
-Date: Mon, 11 Sep 2023 15:42:12 +0200
-Message-ID: <20230911134700.393027592@linuxfoundation.org>
+Subject: [PATCH 6.5 334/739] arm64: dts: ti: k3-j784s4-evm: Correct Pin mux offset for ADC
+Date: Mon, 11 Sep 2023 15:42:13 +0200
+Message-ID: <20230911134700.421142074@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,62 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Udit Kumar <u-kumar1@ti.com>
 
-[ Upstream commit cfc146137a9f12e883ba64bc496b6da4d23f26d5 ]
+[ Upstream commit 8be3ac2d8bd77bb9cb9ddbb7a545decf9f5e4181 ]
 
-If reading the RX capabilities fails the training pattern will be set
-wrongly: add error checking for drm_dp_read_dpcd_caps() and return if
-anything went wrong with it.
+After splitting wkup_pmx pin mux for J784S4 into four regions.
+Pin mux offset for ADC nodes were not updated to align with new
+regions, due to this while probing ADC driver out of range
+error was seen.
 
-While at it, also add a less critical error check when writing to
-clear the ESI0 IRQ vector.
+Pin mux offsets for ADC nodes are corrected in this patch.
 
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230725073234.55892-2-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 14462bd0b247 ("arm64: dts: ti: k3-j784s4: Fix wakeup pinmux range and pinctrl node offsets")
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Reviewed-by: Vaishnav Achath <vaishnav.a@ti.com>
+Link: https://lore.kernel.org/r/20230809050108.751164-1-u-kumar1@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j784s4-evm.dts | 32 ++++++++++++------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index 64eee77452c04..c58b775877a31 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -1588,7 +1588,9 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
- 	u8 val;
- 	ssize_t ret;
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts b/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
+index cb852031c8027..bf772f0641170 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
+@@ -340,27 +340,27 @@ J784S4_WKUP_IOPAD(0x030, PIN_INPUT, 0) /* (B35) MCU_MDIO0_MDIO */
  
--	drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
-+	ret = drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
-+	if (ret < 0)
-+		return ret;
+ 	mcu_adc0_pins_default: mcu-adc0-default-pins {
+ 		pinctrl-single,pins = <
+-			J784S4_WKUP_IOPAD(0x134, PIN_INPUT, 0) /* (P36) MCU_ADC0_AIN0 */
+-			J784S4_WKUP_IOPAD(0x138, PIN_INPUT, 0) /* (V36) MCU_ADC0_AIN1 */
+-			J784S4_WKUP_IOPAD(0x13c, PIN_INPUT, 0) /* (T34) MCU_ADC0_AIN2 */
+-			J784S4_WKUP_IOPAD(0x140, PIN_INPUT, 0) /* (T36) MCU_ADC0_AIN3 */
+-			J784S4_WKUP_IOPAD(0x144, PIN_INPUT, 0) /* (P34) MCU_ADC0_AIN4 */
+-			J784S4_WKUP_IOPAD(0x148, PIN_INPUT, 0) /* (R37) MCU_ADC0_AIN5 */
+-			J784S4_WKUP_IOPAD(0x14c, PIN_INPUT, 0) /* (R33) MCU_ADC0_AIN6 */
+-			J784S4_WKUP_IOPAD(0x150, PIN_INPUT, 0) /* (V38) MCU_ADC0_AIN7 */
++			J784S4_WKUP_IOPAD(0x0cc, PIN_INPUT, 0) /* (P36) MCU_ADC0_AIN0 */
++			J784S4_WKUP_IOPAD(0x0d0, PIN_INPUT, 0) /* (V36) MCU_ADC0_AIN1 */
++			J784S4_WKUP_IOPAD(0x0d4, PIN_INPUT, 0) /* (T34) MCU_ADC0_AIN2 */
++			J784S4_WKUP_IOPAD(0x0d8, PIN_INPUT, 0) /* (T36) MCU_ADC0_AIN3 */
++			J784S4_WKUP_IOPAD(0x0dc, PIN_INPUT, 0) /* (P34) MCU_ADC0_AIN4 */
++			J784S4_WKUP_IOPAD(0x0e0, PIN_INPUT, 0) /* (R37) MCU_ADC0_AIN5 */
++			J784S4_WKUP_IOPAD(0x0e4, PIN_INPUT, 0) /* (R33) MCU_ADC0_AIN6 */
++			J784S4_WKUP_IOPAD(0x0e8, PIN_INPUT, 0) /* (V38) MCU_ADC0_AIN7 */
+ 		>;
+ 	};
  
- 	if (drm_dp_tps4_supported(mtk_dp->rx_cap))
- 		mtk_dp->train_info.channel_eq_pattern = DP_TRAINING_PATTERN_4;
-@@ -1615,10 +1617,13 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
- 			return ret == 0 ? -EIO : ret;
- 		}
- 
--		if (val)
--			drm_dp_dpcd_writeb(&mtk_dp->aux,
--					   DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
--					   val);
-+		if (val) {
-+			ret = drm_dp_dpcd_writeb(&mtk_dp->aux,
-+						 DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
-+						 val);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
- 
- 	return 0;
+ 	mcu_adc1_pins_default: mcu-adc1-default-pins {
+ 		pinctrl-single,pins = <
+-			J784S4_WKUP_IOPAD(0x154, PIN_INPUT, 0) /* (Y38) MCU_ADC1_AIN0 */
+-			J784S4_WKUP_IOPAD(0x158, PIN_INPUT, 0) /* (Y34) MCU_ADC1_AIN1 */
+-			J784S4_WKUP_IOPAD(0x15c, PIN_INPUT, 0) /* (V34) MCU_ADC1_AIN2 */
+-			J784S4_WKUP_IOPAD(0x160, PIN_INPUT, 0) /* (W37) MCU_ADC1_AIN3 */
+-			J784S4_WKUP_IOPAD(0x164, PIN_INPUT, 0) /* (AA37) MCU_ADC1_AIN4 */
+-			J784S4_WKUP_IOPAD(0x168, PIN_INPUT, 0) /* (W33) MCU_ADC1_AIN5 */
+-			J784S4_WKUP_IOPAD(0x16c, PIN_INPUT, 0) /* (U33) MCU_ADC1_AIN6 */
+-			J784S4_WKUP_IOPAD(0x170, PIN_INPUT, 0) /* (Y36) MCU_ADC1_AIN7 */
++			J784S4_WKUP_IOPAD(0x0ec, PIN_INPUT, 0) /* (Y38) MCU_ADC1_AIN0 */
++			J784S4_WKUP_IOPAD(0x0f0, PIN_INPUT, 0) /* (Y34) MCU_ADC1_AIN1 */
++			J784S4_WKUP_IOPAD(0x0f4, PIN_INPUT, 0) /* (V34) MCU_ADC1_AIN2 */
++			J784S4_WKUP_IOPAD(0x0f8, PIN_INPUT, 0) /* (W37) MCU_ADC1_AIN3 */
++			J784S4_WKUP_IOPAD(0x0fc, PIN_INPUT, 0) /* (AA37) MCU_ADC1_AIN4 */
++			J784S4_WKUP_IOPAD(0x100, PIN_INPUT, 0) /* (W33) MCU_ADC1_AIN5 */
++			J784S4_WKUP_IOPAD(0x104, PIN_INPUT, 0) /* (U33) MCU_ADC1_AIN6 */
++			J784S4_WKUP_IOPAD(0x108, PIN_INPUT, 0) /* (Y36) MCU_ADC1_AIN7 */
+ 		>;
+ 	};
+ };
 -- 
 2.40.1
 
