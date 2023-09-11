@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4776F11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5CD3C433C8;
-	Mon, 11 Sep 2023 14:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1399C4C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842D1C433C7;
+	Mon, 11 Sep 2023 14:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443690;
-	bh=n4E9H+jhKfrruuJHPbYuqN1jN5R5QpvYrJIddx/69fk=;
+	s=korg; t=1694443692;
+	bh=qIu6qL9EVLWUwvT3qxCZucj0qfKtOHli99P4UIdJthE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwhHXc+LSplbmjYG++pqw7XWaKiPTTmB9Yx0A0F8IVDow2ro+1Li0BBZxooXnosZg
-	 JZoGCPUoHkAn4S7hUpsyad+njyiSwMK/PC8ZvsoQKiu+qoc/A9+upNTlYeZI35BgCg
-	 k/QSBIO82OANFzTTAw5VopxyG0NawZ3y5dC3RcRQ=
+	b=EtvMYzStZsLe0C1cQyOjZGuITfvlwepGkcoJLf3P0Cp7OE2zDV5qcMJrfddVTYzoA
+	 XxO6tF8PWlQhuuMT9kPoNJs3vn7jz126BdCvNMivqkaQ4XH8D8ISRe/RNNIVgCxzBE
+	 5sNNkb14lJ4L2olSg4R1pMhd6XVR6dxhfjuHaj/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 467/737] nfs/blocklayout: Use the passed in gfp flags
-Date: Mon, 11 Sep 2023 15:45:26 +0200
-Message-ID: <20230911134703.634573997@linuxfoundation.org>
+Subject: [PATCH 6.4 468/737] powerpc/pseries: Fix hcall tracepoints with JUMP_LABEL=n
+Date: Mon, 11 Sep 2023 15:45:27 +0200
+Message-ID: <20230911134703.663115035@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,45 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-[ Upstream commit 08b45fcb2d4675f6182fe0edc0d8b1fe604051fa ]
+[ Upstream commit 750bd41aeaeb1f0e0128aa4f8fcd6dd759713641 ]
 
-This allocation should use the passed in GFP_ flags instead of
-GFP_KERNEL.  One places where this matters is in filelayout_pg_init_write()
-which uses GFP_NOFS as the allocation flags.
+With JUMP_LABEL=n, hcall_tracepoint_refcount's address is being tested
+instead of its value. This results in the tracing slowpath always being
+taken unnecessarily.
 
-Fixes: 5c83746a0cf2 ("pnfs/blocklayout: in-kernel GETDEVICEINFO XDR parsing")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: 9a10ccb29c0a2 ("powerpc/pseries: move hcall_tracepoint_refcount out of .toc")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230509091600.70994-1-npiggin@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/pseries/hvCall.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
-index fea5f8821da5e..ce2ea62397972 100644
---- a/fs/nfs/blocklayout/dev.c
-+++ b/fs/nfs/blocklayout/dev.c
-@@ -402,7 +402,7 @@ bl_parse_concat(struct nfs_server *server, struct pnfs_block_dev *d,
- 	int ret, i;
- 
- 	d->children = kcalloc(v->concat.volumes_count,
--			sizeof(struct pnfs_block_dev), GFP_KERNEL);
-+			sizeof(struct pnfs_block_dev), gfp_mask);
- 	if (!d->children)
- 		return -ENOMEM;
- 
-@@ -431,7 +431,7 @@ bl_parse_stripe(struct nfs_server *server, struct pnfs_block_dev *d,
- 	int ret, i;
- 
- 	d->children = kcalloc(v->stripe.volumes_count,
--			sizeof(struct pnfs_block_dev), GFP_KERNEL);
-+			sizeof(struct pnfs_block_dev), gfp_mask);
- 	if (!d->children)
- 		return -ENOMEM;
- 
+diff --git a/arch/powerpc/platforms/pseries/hvCall.S b/arch/powerpc/platforms/pseries/hvCall.S
+index 35254ac7af5ee..ca0674b0b683e 100644
+--- a/arch/powerpc/platforms/pseries/hvCall.S
++++ b/arch/powerpc/platforms/pseries/hvCall.S
+@@ -91,6 +91,7 @@ BEGIN_FTR_SECTION;						\
+ 	b	1f;						\
+ END_FTR_SECTION(0, 1);						\
+ 	LOAD_REG_ADDR(r12, hcall_tracepoint_refcount) ;		\
++	ld	r12,0(r12);					\
+ 	std	r12,32(r1);					\
+ 	cmpdi	r12,0;						\
+ 	bne-	LABEL;						\
 -- 
 2.40.1
 
