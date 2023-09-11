@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D6111710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D461C433C8;
-	Mon, 11 Sep 2023 15:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BD711710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032FBC433C8;
+	Mon, 11 Sep 2023 15:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445572;
-	bh=2/2zZFU0tyS1C57lVMxdUsA4MtRGELUdOQwhMIVJwhU=;
+	s=korg; t=1694445575;
+	bh=hFFZn6UQpP5tWvwEnYmYFPdAB/llTlQGvfRXSiunN2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2uulBWAUtdgNXtFhZsd/RnZ0r/IcPPWtoDyVIaL1KOp9jsws6aXf2bIr0Z/ipyD5i
-	 AVb26a2rWgtTakDcgs+85GAnPuKQlWnhX0fVuCBJuEDM4KNb6WlTa10ppn98KGgyeK
-	 Xxn6mctK+ghcHR7FrzOjarBDewm9/OwJljdamEeI=
+	b=RtMXRMP8NF44pwmkjv4j5p1xMQFs1pKlEP75h+Ox4oEmP2xGfJxtYCnwIQMg252Mc
+	 eOX4GpR4LDmlLW+8dSsfNa1bkbOKsJ5mh73lOAIIMxF/XxMpJOxlioP6hcOn7fxgOt
+	 M2I0hfuGPW17AabIAjJneHpkMiltLdCKtLU09vr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Jeff Moyer <jmoyer@redhat.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 6.1 364/600] nvdimm: Fix dereference after free in register_nvdimm_pmu()
-Date: Mon, 11 Sep 2023 15:46:37 +0200
-Message-ID: <20230911134644.427076209@linuxfoundation.org>
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 365/600] powerpc/fadump: reset dump area size if fadump memory reserve fails
+Date: Mon, 11 Sep 2023 15:46:38 +0200
+Message-ID: <20230911134644.456553646@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,40 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit 08ca6906a4b7e48f8e93b7c1f49a742a415be6d5 ]
+[ Upstream commit d1eb75e0dfed80d2d85b664e28a39f65b290ab55 ]
 
-'nd_pmu->pmu.attr_groups' is dereferenced in function
-'nvdimm_pmu_free_hotplug_memory' call after it has been freed. Because in
-function 'nvdimm_pmu_free_hotplug_memory' memory pointed by the fields of
-'nd_pmu->pmu.attr_groups' is deallocated it is necessary to call 'kfree'
-after 'nvdimm_pmu_free_hotplug_memory'.
+In case fadump_reserve_mem() fails to reserve memory, the
+reserve_dump_area_size variable will retain the reserve area size. This
+will lead to /sys/kernel/fadump/mem_reserved node displaying an incorrect
+memory reserved by fadump.
 
-Fixes: 0fab1ba6ad6b ("drivers/nvdimm: Add perf interface to expose nvdimm performance stats")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Reviewed-by: Jeff Moyer <jmoyer@redhat.com>
-Link: https://lore.kernel.org/r/20230817114103.754977-1-konstantin.meskhidze@huawei.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+To fix this problem, reserve dump area size variable is set to 0 if fadump
+failed to reserve memory.
+
+Fixes: 8255da95e545 ("powerpc/fadump: release all the memory above boot memory size")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230704050715.203581-1-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/nd_perf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/fadump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvdimm/nd_perf.c b/drivers/nvdimm/nd_perf.c
-index 14881c4e03e6b..2b6dc80d8fb5b 100644
---- a/drivers/nvdimm/nd_perf.c
-+++ b/drivers/nvdimm/nd_perf.c
-@@ -308,8 +308,8 @@ int register_nvdimm_pmu(struct nvdimm_pmu *nd_pmu, struct platform_device *pdev)
- 
- 	rc = perf_pmu_register(&nd_pmu->pmu, nd_pmu->pmu.name, -1);
- 	if (rc) {
--		kfree(nd_pmu->pmu.attr_groups);
- 		nvdimm_pmu_free_hotplug_memory(nd_pmu);
-+		kfree(nd_pmu->pmu.attr_groups);
- 		return rc;
- 	}
+diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
+index ea0a073abd969..3ff2da7b120b5 100644
+--- a/arch/powerpc/kernel/fadump.c
++++ b/arch/powerpc/kernel/fadump.c
+@@ -654,6 +654,7 @@ int __init fadump_reserve_mem(void)
+ 	return ret;
+ error_out:
+ 	fw_dump.fadump_enabled = 0;
++	fw_dump.reserve_dump_area_size = 0;
+ 	return 0;
+ }
  
 -- 
 2.40.1
