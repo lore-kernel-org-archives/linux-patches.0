@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0A311706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26C3C433C8;
-	Mon, 11 Sep 2023 14:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C111706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69ECC433C8;
+	Mon, 11 Sep 2023 14:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444095;
-	bh=ggYWYrpl/+qqzZl+nwQU/qpOPyvFvzvKGPOmbpPZQ8A=;
+	s=korg; t=1694444098;
+	bh=pfqj5AgcXceFTCsqSQKSvOjQN8U1Sg4PuQ60eZtp4WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8Rp66jJELQ9CPhShMZTwVGtkSa1JyqWxPEOFnZwBcQ8oQ1wmJaPSI5omBhIxQqdl
-	 rmlwwvnvDEiZ43dKe7h2jDGYM4OrdZ68jk4dQOICwEL4TixwfWqa0iS48fHTVfJg3x
-	 4W04ZLv54H+nocNm6l2RX/L8Y3ViLA71+2qqVVEU=
+	b=a72oYTj5MyXnLehneSXELcHLeJHMF/JVezgASXZewYo61M4vqC5cjZZKfyrdW1Sdv
+	 PDOZWnbLMi6texqqaNUSYVJySxKNzRjy2I1hXuGVE4ab3FETc2A7+548wchMMubXXy
+	 8dzkhYyrQakjRv6Vcd+WXrXIDttYq391pYvkZdvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Christopher Bednarz <christopher.n.bednarz@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 582/737] coresight: trbe: Fix TRBE potential sleep in atomic context
-Date: Mon, 11 Sep 2023 15:47:21 +0200
-Message-ID: <20230911134706.785553475@linuxfoundation.org>
+Subject: [PATCH 6.4 583/737] RDMA/irdma: Prevent zero-length STAG registration
+Date: Mon, 11 Sep 2023 15:47:22 +0200
+Message-ID: <20230911134706.812878766@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,118 +41,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Christopher Bednarz <christopher.n.bednarz@intel.com>
 
-[ Upstream commit c0a232f1e19e378c5c4e5973a996392942c80090 ]
+[ Upstream commit bb6d73d9add68ad270888db327514384dfa44958 ]
 
-smp_call_function_single() will allocate an IPI interrupt vector to
-the target processor and send a function call request to the interrupt
-vector. After the target processor receives the IPI interrupt, it will
-execute arm_trbe_remove_coresight_cpu() call request in the interrupt
-handler.
+Currently irdma allows zero-length STAGs to be programmed in HW during
+the kernel mode fast register flow. Zero-length MR or STAG registration
+disable HW memory length checks.
 
-According to the device_unregister() stack information, if other process
-is useing the device, the down_write() may sleep, and trigger deadlocks
-or unexpected errors.
+Improve gaps in bounds checking in irdma by preventing zero-length STAG or
+MR registrations except if the IB_PD_UNSAFE_GLOBAL_RKEY is set.
 
-  arm_trbe_remove_coresight_cpu
-    coresight_unregister
-      device_unregister
-        device_del
-          kobject_del
-            __kobject_del
-              sysfs_remove_dir
-                kernfs_remove
-                  down_write ---------> it may sleep
+This addresses the disclosure CVE-2023-25775.
 
-Add a helper arm_trbe_disable_cpu() to disable TRBE precpu irq and reset
-per TRBE.
-Simply call arm_trbe_remove_coresight_cpu() directly without useing the
-smp_call_function_single(), which is the same as registering the TRBE
-coresight device.
-
-Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Link: https://lore.kernel.org/r/20230814093813.19152-2-hejunhao3@huawei.com
-[ Remove duplicate cpumask checks during removal ]
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-[ v3 - Remove the operation of assigning NULL to cpudata->drvdata ]
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230818084052.10116-1-hejunhao3@huawei.com
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Christopher Bednarz <christopher.n.bednarz@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20230818144838.1758-1-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-trbe.c | 32 +++++++++++---------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/irdma/ctrl.c  |  6 ++++++
+ drivers/infiniband/hw/irdma/type.h  |  2 ++
+ drivers/infiniband/hw/irdma/verbs.c | 10 ++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
-index 1fc4fd79a1c69..925f6c9cecff4 100644
---- a/drivers/hwtracing/coresight/coresight-trbe.c
-+++ b/drivers/hwtracing/coresight/coresight-trbe.c
-@@ -1223,6 +1223,16 @@ static void arm_trbe_enable_cpu(void *info)
- 	enable_percpu_irq(drvdata->irq, IRQ_TYPE_NONE);
- }
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 45e3344daa048..ef47ec271e19e 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -1061,6 +1061,9 @@ static int irdma_sc_alloc_stag(struct irdma_sc_dev *dev,
+ 	u64 hdr;
+ 	enum irdma_page_size page_size;
  
-+static void arm_trbe_disable_cpu(void *info)
-+{
-+	struct trbe_drvdata *drvdata = info;
-+	struct trbe_cpudata *cpudata = this_cpu_ptr(drvdata->cpudata);
++	if (!info->total_len && !info->all_memory)
++		return -EINVAL;
 +
-+	disable_percpu_irq(drvdata->irq);
-+	trbe_reset_local(cpudata);
-+}
+ 	if (info->page_size == 0x40000000)
+ 		page_size = IRDMA_PAGE_SIZE_1G;
+ 	else if (info->page_size == 0x200000)
+@@ -1126,6 +1129,9 @@ static int irdma_sc_mr_reg_non_shared(struct irdma_sc_dev *dev,
+ 	u8 addr_type;
+ 	enum irdma_page_size page_size;
+ 
++	if (!info->total_len && !info->all_memory)
++		return -EINVAL;
 +
-+
- static void arm_trbe_register_coresight_cpu(struct trbe_drvdata *drvdata, int cpu)
+ 	if (info->page_size == 0x40000000)
+ 		page_size = IRDMA_PAGE_SIZE_1G;
+ 	else if (info->page_size == 0x200000)
+diff --git a/drivers/infiniband/hw/irdma/type.h b/drivers/infiniband/hw/irdma/type.h
+index a20709577ab0a..3b1fa5bc0a585 100644
+--- a/drivers/infiniband/hw/irdma/type.h
++++ b/drivers/infiniband/hw/irdma/type.h
+@@ -971,6 +971,7 @@ struct irdma_allocate_stag_info {
+ 	bool remote_access:1;
+ 	bool use_hmc_fcn_index:1;
+ 	bool use_pf_rid:1;
++	bool all_memory:1;
+ 	u8 hmc_fcn_index;
+ };
+ 
+@@ -998,6 +999,7 @@ struct irdma_reg_ns_stag_info {
+ 	bool use_hmc_fcn_index:1;
+ 	u8 hmc_fcn_index;
+ 	bool use_pf_rid:1;
++	bool all_memory:1;
+ };
+ 
+ struct irdma_fast_reg_stag_info {
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 8f9378767f307..20d70f0d21e0f 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2552,7 +2552,8 @@ static int irdma_hw_alloc_stag(struct irdma_device *iwdev,
+ 			       struct irdma_mr *iwmr)
  {
- 	struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
-@@ -1324,18 +1334,12 @@ static void arm_trbe_probe_cpu(void *info)
- 	cpumask_clear_cpu(cpu, &drvdata->supported_cpus);
- }
- 
--static void arm_trbe_remove_coresight_cpu(void *info)
-+static void arm_trbe_remove_coresight_cpu(struct trbe_drvdata *drvdata, int cpu)
+ 	struct irdma_allocate_stag_info *info;
+-	struct irdma_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
++	struct ib_pd *pd = iwmr->ibmr.pd;
++	struct irdma_pd *iwpd = to_iwpd(pd);
+ 	int status;
+ 	struct irdma_cqp_request *cqp_request;
+ 	struct cqp_cmds_info *cqp_info;
+@@ -2568,6 +2569,7 @@ static int irdma_hw_alloc_stag(struct irdma_device *iwdev,
+ 	info->stag_idx = iwmr->stag >> IRDMA_CQPSQ_STAG_IDX_S;
+ 	info->pd_id = iwpd->sc_pd.pd_id;
+ 	info->total_len = iwmr->len;
++	info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
+ 	info->remote_access = true;
+ 	cqp_info->cqp_cmd = IRDMA_OP_ALLOC_STAG;
+ 	cqp_info->post_sq = 1;
+@@ -2615,6 +2617,8 @@ static struct ib_mr *irdma_alloc_mr(struct ib_pd *pd, enum ib_mr_type mr_type,
+ 	iwmr->type = IRDMA_MEMREG_TYPE_MEM;
+ 	palloc = &iwpbl->pble_alloc;
+ 	iwmr->page_cnt = max_num_sg;
++	/* Use system PAGE_SIZE as the sg page sizes are unknown at this point */
++	iwmr->len = max_num_sg * PAGE_SIZE;
+ 	err_code = irdma_get_pble(iwdev->rf->pble_rsrc, palloc, iwmr->page_cnt,
+ 				  false);
+ 	if (err_code)
+@@ -2694,7 +2698,8 @@ static int irdma_hwreg_mr(struct irdma_device *iwdev, struct irdma_mr *iwmr,
  {
--	int cpu = smp_processor_id();
--	struct trbe_drvdata *drvdata = info;
--	struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
- 	struct coresight_device *trbe_csdev = coresight_get_percpu_sink(cpu);
- 
--	disable_percpu_irq(drvdata->irq);
--	trbe_reset_local(cpudata);
- 	if (trbe_csdev) {
- 		coresight_unregister(trbe_csdev);
--		cpudata->drvdata = NULL;
- 		coresight_set_percpu_sink(cpu, NULL);
- 	}
- }
-@@ -1364,8 +1368,10 @@ static int arm_trbe_remove_coresight(struct trbe_drvdata *drvdata)
- {
- 	int cpu;
- 
--	for_each_cpu(cpu, &drvdata->supported_cpus)
--		smp_call_function_single(cpu, arm_trbe_remove_coresight_cpu, drvdata, 1);
-+	for_each_cpu(cpu, &drvdata->supported_cpus) {
-+		smp_call_function_single(cpu, arm_trbe_disable_cpu, drvdata, 1);
-+		arm_trbe_remove_coresight_cpu(drvdata, cpu);
-+	}
- 	free_percpu(drvdata->cpudata);
- 	return 0;
- }
-@@ -1404,12 +1410,8 @@ static int arm_trbe_cpu_teardown(unsigned int cpu, struct hlist_node *node)
- {
- 	struct trbe_drvdata *drvdata = hlist_entry_safe(node, struct trbe_drvdata, hotplug_node);
- 
--	if (cpumask_test_cpu(cpu, &drvdata->supported_cpus)) {
--		struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
--
--		disable_percpu_irq(drvdata->irq);
--		trbe_reset_local(cpudata);
--	}
-+	if (cpumask_test_cpu(cpu, &drvdata->supported_cpus))
-+		arm_trbe_disable_cpu(drvdata);
- 	return 0;
- }
- 
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+ 	struct irdma_reg_ns_stag_info *stag_info;
+-	struct irdma_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
++	struct ib_pd *pd = iwmr->ibmr.pd;
++	struct irdma_pd *iwpd = to_iwpd(pd);
+ 	struct irdma_pble_alloc *palloc = &iwpbl->pble_alloc;
+ 	struct irdma_cqp_request *cqp_request;
+ 	struct cqp_cmds_info *cqp_info;
+@@ -2713,6 +2718,7 @@ static int irdma_hwreg_mr(struct irdma_device *iwdev, struct irdma_mr *iwmr,
+ 	stag_info->total_len = iwmr->len;
+ 	stag_info->access_rights = irdma_get_mr_access(access);
+ 	stag_info->pd_id = iwpd->sc_pd.pd_id;
++	stag_info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
+ 	if (stag_info->access_rights & IRDMA_ACCESS_FLAGS_ZERO_BASED)
+ 		stag_info->addr_type = IRDMA_ADDR_TYPE_ZERO_BASED;
+ 	else
 -- 
 2.40.1
 
