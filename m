@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE991170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E231C433C9;
-	Mon, 11 Sep 2023 14:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EEE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AAAC433C7;
+	Mon, 11 Sep 2023 14:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441248;
-	bh=cqWSo0Ugx2kz5P7I1wAWzDzifL6shcu57BUg1eYTAdQ=;
+	s=korg; t=1694441251;
+	bh=u0W47arON9wkGxWZTEu+RWK+bPW3uia03lX2+2yth6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPjmrGFgTtrkRL+ZQduh/AVy2SpvzDxzwAEBoKIx2XUCEZVvZnZSFnYa6mByrWXS/
-	 9phT2vA1QZZ/gQuvby4OqQ+REI1OOWvAcREwaRX4dpfqqpEf1zImkdK4xrf7YLOjCV
-	 pNOB9W/CBFhSKRgtkyjhZ4Lcqo5+XdOBmYpV0Wl4=
+	b=cNLF5LD1vZOwdMGvn8kexPPi0ln8ACrrAUEdY5RcjixtX3t6e8ca4hIyUyqx0+QGU
+	 C8LvQwVcxf1usNMEzO+/Jy7pjbyee6+uatT7NRHmPbbK+C1a79zgwPVy/Z98BqCl9d
+	 deoM6yWNsYeQvyHCb+lqYZdwuei826ePUd2Y9kB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 320/739] ASoC: SOF: Intel: hda-mlink: fix off-by-one error
-Date: Mon, 11 Sep 2023 15:41:59 +0200
-Message-ID: <20230911134700.044946338@linuxfoundation.org>
+Subject: [PATCH 6.5 311/739] drm/msm/dpu: fix the irq index in dpu_encoder_phys_wb_wait_for_commit_done
+Date: Mon, 11 Sep 2023 15:41:50 +0200
+Message-ID: <20230911134659.804144078@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,58 +39,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 7075b0c91b3cd5d32b4ac7403f771a3253d3fbf6 ]
+[ Upstream commit d93cf453f51da168f4410ba73656f1e862096973 ]
 
-The HCHAN parameter should be the highest channel number, not the
-channel count.
+Since commit 1e7ac595fa46 ("drm/msm/dpu: pass irq to
+dpu_encoder_helper_wait_for_irq()") the
+dpu_encoder_phys_wb_wait_for_commit_done expects the IRQ index rather
+than the IRQ index in phys_enc->intr table, however writeback got the
+older invocation in place. This was unnoticed for several releases, but
+now it's time to fix it.
 
-While we're at it, handle LCHAN with the dual __ffs helper.
-
-Fixes: ccc2f0c1b6b6 ("ASoC: SOF: Intel: hda-mlink: add helper to program SoundWire PCMSyCM registers")
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Link: https://lore.kernel.org/r/20230807210959.506849-2-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/550924/
+Link: https://lore.kernel.org/r/20230802100426.4184892-2-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-mlink.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/hda-mlink.c b/sound/soc/sof/intel/hda-mlink.c
-index b7cbf66badf5b..acad3ea2f4710 100644
---- a/sound/soc/sof/intel/hda-mlink.c
-+++ b/sound/soc/sof/intel/hda-mlink.c
-@@ -781,6 +781,8 @@ int hdac_bus_eml_sdw_map_stream_ch(struct hdac_bus *bus, int sublink, int y,
- {
- 	struct hdac_ext2_link *h2link;
- 	u16 __iomem *pcmsycm;
-+	int hchan;
-+	int lchan;
- 	u16 val;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index a466ff70a4d62..78037a697633b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -446,7 +446,8 @@ static int dpu_encoder_phys_wb_wait_for_commit_done(
+ 	wait_info.atomic_cnt = &phys_enc->pending_kickoff_cnt;
+ 	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
  
- 	h2link = find_ext2_link(bus, true, AZX_REG_ML_LEPTR_ID_SDW);
-@@ -791,9 +793,17 @@ int hdac_bus_eml_sdw_map_stream_ch(struct hdac_bus *bus, int sublink, int y,
- 		h2link->instance_offset * sublink +
- 		AZX_REG_SDW_SHIM_PCMSyCM(y);
- 
-+	if (channel_mask) {
-+		hchan = __fls(channel_mask);
-+		lchan = __ffs(channel_mask);
-+	} else {
-+		hchan = 0;
-+		lchan = 0;
-+	}
-+
- 	mutex_lock(&h2link->eml_lock);
- 
--	hdaml_shim_map_stream_ch(pcmsycm, 0, hweight32(channel_mask),
-+	hdaml_shim_map_stream_ch(pcmsycm, lchan, hchan,
- 				 stream_id, dir);
- 
- 	mutex_unlock(&h2link->eml_lock);
+-	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_WB_DONE,
++	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
++			phys_enc->irq[INTR_IDX_WB_DONE],
+ 			dpu_encoder_phys_wb_done_irq, &wait_info);
+ 	if (ret == -ETIMEDOUT)
+ 		_dpu_encoder_phys_wb_handle_wbdone_timeout(phys_enc);
 -- 
 2.40.1
 
