@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949C211184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D88C433C9;
-	Mon, 11 Sep 2023 13:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E0D11184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E53C433C7;
+	Mon, 11 Sep 2023 13:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440749;
-	bh=3C3m55gZM02/Qwnc7DUycRqNc6P8D85g7ID5ZhqCGUI=;
+	s=korg; t=1694440752;
+	bh=mKcWR8IiEgZL/h9Y6LgXcatYCVbKDHh9nqrW5LZNfy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UsxJsN3r0UQuiD7GL+sLSLDSxa0APsp005akpxHSJ9ZuNqB/l30uNYB1++m2I5JBY
-	 0feDiqy3emZGidvVYiOFJc/ha9XUCkuibD0YMv0Szzns7xJlE12OsL3SzepdO9h1+i
-	 pT7fDW0sUV5YxbHEOv2Lc6v19dSZ2Zsys+T768oU=
+	b=tR/wB3wAkHiA8vzGca1wAyL/laRZriL8u0RQ+WRy+NaGaSq+nlGwL7F1iYTmQi+iJ
+	 LEHN4u+Ni5I4mFFGhtKw62hKUP7+iuFv0r6NdVUxauVzx08jLhKoi0Bujjn2MSDGve
+	 2COP9Sn8d3f5SyWnOInOdA7AFd+qsCUSJi4xKMTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexei Starovoitov <ast@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 135/739] net: Fix slab-out-of-bounds in inet[6]_steal_sock
-Date: Mon, 11 Sep 2023 15:38:54 +0200
-Message-ID: <20230911134654.862788030@linuxfoundation.org>
+Subject: [PATCH 6.5 165/739] bpf: Fix a bpf_kptr_xchg() issue with local kptr
+Date: Mon, 11 Sep 2023 15:39:24 +0200
+Message-ID: <20230911134655.781449680@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,61 +41,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenz Bauer <lmb@isovalent.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 8897562f67b3e61ad736cd5c9f307447d33280e4 ]
+[ Upstream commit ab6c637ad0276e42f8acabcbc64932a6d346dab3 ]
 
-Kumar reported a KASAN splat in tcp_v6_rcv:
+When reviewing local percpu kptr support, Alexei discovered a bug
+wherea bpf_kptr_xchg() may succeed even if the map value kptr type and
+locally allocated obj type do not match ([1]). Missed struct btf_id
+comparison is the reason for the bug. This patch added such struct btf_id
+comparison and will flag verification failure if types do not match.
 
-  bash-5.2# ./test_progs -t btf_skc_cls_ingress
-  ...
-  [   51.810085] BUG: KASAN: slab-out-of-bounds in tcp_v6_rcv+0x2d7d/0x3440
-  [   51.810458] Read of size 2 at addr ffff8881053f038c by task test_progs/226
+  [1] https://lore.kernel.org/bpf/20230819002907.io3iphmnuk43xblu@macbook-pro-8.dhcp.thefacebook.com/#t
 
-The problem is that inet[6]_steal_sock accesses sk->sk_protocol without
-accounting for request or timewait sockets. To fix this we can't just
-check sock_common->skc_reuseport since that flag is present on timewait
-sockets.
-
-Instead, add a fullsock check to avoid the out of bands access of sk_protocol.
-
-Fixes: 9c02bec95954 ("bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign")
-Reported-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230815-bpf-next-v2-1-95126eaa4c1b@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 738c96d5e2e3 ("bpf: Allow local kptrs to be exchanged via bpf_kptr_xchg")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230822050053.2886960-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet6_hashtables.h | 2 +-
- include/net/inet_hashtables.h  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
-index 475e672b4facc..12780b8fb5630 100644
---- a/include/net/inet6_hashtables.h
-+++ b/include/net/inet6_hashtables.h
-@@ -107,7 +107,7 @@ struct sock *inet6_steal_sock(struct net *net, struct sk_buff *skb, int doff,
- 	if (!sk)
- 		return NULL;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 600f57ad0ab58..903de82dec423 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4982,20 +4982,22 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 			       struct bpf_reg_state *reg, u32 regno)
+ {
+ 	const char *targ_name = btf_type_name(kptr_field->kptr.btf, kptr_field->kptr.btf_id);
+-	int perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
++	int perm_flags;
+ 	const char *reg_name = "";
  
--	if (!prefetched)
-+	if (!prefetched || !sk_fullsock(sk))
- 		return sk;
+-	/* Only unreferenced case accepts untrusted pointers */
+-	if (kptr_field->type == BPF_KPTR_UNREF)
+-		perm_flags |= PTR_UNTRUSTED;
++	if (btf_is_kernel(reg->btf)) {
++		perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
++
++		/* Only unreferenced case accepts untrusted pointers */
++		if (kptr_field->type == BPF_KPTR_UNREF)
++			perm_flags |= PTR_UNTRUSTED;
++	} else {
++		perm_flags = PTR_MAYBE_NULL | MEM_ALLOC;
++	}
  
- 	if (sk->sk_protocol == IPPROTO_TCP) {
-diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
-index a1b8eb147ce73..9414cb4e6e624 100644
---- a/include/net/inet_hashtables.h
-+++ b/include/net/inet_hashtables.h
-@@ -455,7 +455,7 @@ struct sock *inet_steal_sock(struct net *net, struct sk_buff *skb, int doff,
- 	if (!sk)
- 		return NULL;
+ 	if (base_type(reg->type) != PTR_TO_BTF_ID || (type_flag(reg->type) & ~perm_flags))
+ 		goto bad_type;
  
--	if (!prefetched)
-+	if (!prefetched || !sk_fullsock(sk))
- 		return sk;
+-	if (!btf_is_kernel(reg->btf)) {
+-		verbose(env, "R%d must point to kernel BTF\n", regno);
+-		return -EINVAL;
+-	}
+ 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
+ 	reg_name = btf_type_name(reg->btf, reg->btf_id);
  
- 	if (sk->sk_protocol == IPPROTO_TCP) {
+@@ -5008,7 +5010,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 	if (__check_ptr_off_reg(env, reg, regno, true))
+ 		return -EACCES;
+ 
+-	/* A full type match is needed, as BTF can be vmlinux or module BTF, and
++	/* A full type match is needed, as BTF can be vmlinux, module or prog BTF, and
+ 	 * we also need to take into account the reg->off.
+ 	 *
+ 	 * We want to support cases like:
+@@ -7750,7 +7752,10 @@ static int check_reg_type(struct bpf_verifier_env *env, u32 regno,
+ 			verbose(env, "verifier internal error: unimplemented handling of MEM_ALLOC\n");
+ 			return -EFAULT;
+ 		}
+-		/* Handled by helper specific checks */
++		if (meta->func_id == BPF_FUNC_kptr_xchg) {
++			if (map_kptr_match_type(env, meta->kptr_field, reg, regno))
++				return -EACCES;
++		}
+ 		break;
+ 	case PTR_TO_BTF_ID | MEM_PERCPU:
+ 	case PTR_TO_BTF_ID | MEM_PERCPU | PTR_TRUSTED:
 -- 
 2.40.1
 
