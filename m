@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA111170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98FEC433C8;
-	Mon, 11 Sep 2023 13:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9481170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00F5C433CA;
+	Mon, 11 Sep 2023 13:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440374;
-	bh=cALL11pxMCMbkkMlgSYOZevS+VGZLi48s8oi9YSpb6M=;
+	s=korg; t=1694440377;
+	bh=ilZCwAvPOfOn1lBO1hgtl/m3+pNzJHqeVBmc4+yUISU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWgba850dL5+DPVYtcrKnL2/RW693UlBNu2M/2Gw5h+rwxwepOmCZwih7a/y0CWJN
-	 MLMGX/YY5tLVMoPquDqMFKRGGJcHtjCXmulTKWSKMBC3NX/pDt3OWQUkEZytTtTcWB
-	 NzAuIA86I10I7HJ46exg1inftMpCYSTvd3VctEe4=
+	b=y8j8Fndz4YWoe6Nfd8tHDHXytO5xirhOv82Z207+kTiJO6m8P698TNwLLoBTrk2Nm
+	 P9wSuUeQqvFCblz4JMMpr68LmA+YAAqHDrl6VCosSABoQBNkqQnskzCrx7Yu2muLyw
+	 0OfTNNX9mRjK7qQF57MB9Cussk3SWBZ+Mpfjozsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Kajetan Puchalski <kajetan.puchalski@arm.com>
-Subject: [PATCH 6.5 038/739] cpuidle: teo: Update idle duration estimate when choosing shallower state
-Date: Mon, 11 Sep 2023 15:37:17 +0200
-Message-ID: <20230911134652.164667237@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 039/739] x86/decompressor: Dont rely on upper 32 bits of GPRs being preserved
+Date: Mon, 11 Sep 2023 15:37:18 +0200
+Message-ID: <20230911134652.194374204@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,97 +34,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 3f0b0966b30982e843950b170b7a9ddfd8094428 ]
+[ Upstream commit 264b82fdb4989cf6a44a2bcd0c6ea05e8026b2ac ]
 
-The TEO governor takes CPU utilization into account by refining idle state
-selection when the utilization is above a certain threshold.  This is done by
-choosing an idle state shallower than the previously selected one.
+The 4-to-5 level mode switch trampoline disables long mode and paging in
+order to be able to flick the LA57 bit. According to section 3.4.1.1 of
+the x86 architecture manual [0], 64-bit GPRs might not retain the upper
+32 bits of their contents across such a mode switch.
 
-However, when doing this, the idle duration estimate needs to be
-adjusted so as to prevent the scheduler tick from being stopped when the
-candidate idle state is shallow, which may lead to excessive energy
-usage if the CPU is not woken up quickly enough going forward.
-Moreover, if the scheduler tick has been stopped already and the new
-idle duration estimate is too small, the replacement candidate state
-cannot be used.
+Given that RBP, RBX and RSI are live at this point, preserve them on the
+stack, along with the return address that might be above 4G as well.
 
-Modify the relevant code to take the above observations into account.
+[0] Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1: Basic Architecture
 
-Fixes: 9ce0f7c4bc64 ("cpuidle: teo: Introduce util-awareness")
-Link: https://lore.kernel.org/linux-pm/CAJZ5v0jJxHj65r2HXBTd3wfbZtsg=_StzwO1kA5STDnaPe_dWA@mail.gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-and-tested-by: Kajetan Puchalski <kajetan.puchalski@arm.com>
+  "Because the upper 32 bits of 64-bit general-purpose registers are
+   undefined in 32-bit modes, the upper 32 bits of any general-purpose
+   register are not preserved when switching from 64-bit mode to a 32-bit
+   mode (to protected mode or compatibility mode). Software must not
+   depend on these bits to maintain a value after a 64-bit to 32-bit
+   mode switch."
+
+Fixes: 194a9749c73d650c ("x86/boot/compressed/64: Handle 5-level paging boot if kernel is above 4G")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230807162720.545787-2-ardb@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/teo.c | 40 ++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ arch/x86/boot/compressed/head_64.S | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
-index 987fc5f3997dc..2cdc711679a5f 100644
---- a/drivers/cpuidle/governors/teo.c
-+++ b/drivers/cpuidle/governors/teo.c
-@@ -397,13 +397,23 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 	 * the shallowest non-polling state and exit.
- 	 */
- 	if (drv->state_count < 3 && cpu_data->utilized) {
--		for (i = 0; i < drv->state_count; ++i) {
--			if (!dev->states_usage[i].disable &&
--			    !(drv->states[i].flags & CPUIDLE_FLAG_POLLING)) {
--				idx = i;
--				goto end;
--			}
--		}
-+		/* The CPU is utilized, so assume a short idle duration. */
-+		duration_ns = teo_middle_of_bin(0, drv);
-+		/*
-+		 * If state 0 is enabled and it is not a polling one, select it
-+		 * right away unless the scheduler tick has been stopped, in
-+		 * which case care needs to be taken to leave the CPU in a deep
-+		 * enough state in case it is not woken up any time soon after
-+		 * all.  If state 1 is disabled, though, state 0 must be used
-+		 * anyway.
-+		 */
-+		if ((!idx && !(drv->states[0].flags & CPUIDLE_FLAG_POLLING) &&
-+		    teo_time_ok(duration_ns)) || dev->states_usage[1].disable)
-+			idx = 0;
-+		else /* Assume that state 1 is not a polling one and use it. */
-+			idx = 1;
+diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
+index 03c4328a88cbd..f732426d3b483 100644
+--- a/arch/x86/boot/compressed/head_64.S
++++ b/arch/x86/boot/compressed/head_64.S
+@@ -459,11 +459,25 @@ SYM_CODE_START(startup_64)
+ 	/* Save the trampoline address in RCX */
+ 	movq	%rax, %rcx
+ 
++	/* Set up 32-bit addressable stack */
++	leaq	TRAMPOLINE_32BIT_STACK_END(%rcx), %rsp
 +
-+		goto end;
- 	}
- 
- 	/*
-@@ -539,10 +549,20 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 
- 	/*
- 	 * If the CPU is being utilized over the threshold, choose a shallower
--	 * non-polling state to improve latency
-+	 * non-polling state to improve latency, unless the scheduler tick has
-+	 * been stopped already and the shallower state's target residency is
-+	 * not sufficiently large.
- 	 */
--	if (cpu_data->utilized)
--		idx = teo_find_shallower_state(drv, dev, idx, duration_ns, true);
-+	if (cpu_data->utilized) {
-+		s64 span_ns;
++	/*
++	 * Preserve live 64-bit registers on the stack: this is necessary
++	 * because the architecture does not guarantee that GPRs will retain
++	 * their full 64-bit values across a 32-bit mode switch.
++	 */
++	pushq	%rbp
++	pushq	%rbx
++	pushq	%rsi
 +
-+		i = teo_find_shallower_state(drv, dev, idx, duration_ns, true);
-+		span_ns = teo_middle_of_bin(i, drv);
-+		if (teo_time_ok(span_ns)) {
-+			idx = i;
-+			duration_ns = span_ns;
-+		}
-+	}
+ 	/*
+-	 * Load the address of trampoline_return() into RDI.
+-	 * It will be used by the trampoline to return to the main code.
++	 * Push the 64-bit address of trampoline_return() onto the new stack.
++	 * It will be used by the trampoline to return to the main code. Due to
++	 * the 32-bit mode switch, it cannot be kept it in a register either.
+ 	 */
+ 	leaq	trampoline_return(%rip), %rdi
++	pushq	%rdi
  
- end:
+ 	/* Switch to compatibility mode (CS.L = 0 CS.D = 1) via far return */
+ 	pushq	$__KERNEL32_CS
+@@ -471,6 +485,11 @@ SYM_CODE_START(startup_64)
+ 	pushq	%rax
+ 	lretq
+ trampoline_return:
++	/* Restore live 64-bit registers */
++	popq	%rsi
++	popq	%rbx
++	popq	%rbp
++
+ 	/* Restore the stack, the 32-bit trampoline uses its own stack */
+ 	leaq	rva(boot_stack_end)(%rbx), %rsp
+ 
+@@ -582,7 +601,7 @@ SYM_FUNC_END(.Lrelocated)
+ /*
+  * This is the 32-bit trampoline that will be copied over to low memory.
+  *
+- * RDI contains the return address (might be above 4G).
++ * Return address is at the top of the stack (might be above 4G).
+  * ECX contains the base address of the trampoline memory.
+  * Non zero RDX means trampoline needs to enable 5-level paging.
+  */
+@@ -592,9 +611,6 @@ SYM_CODE_START(trampoline_32bit_src)
+ 	movl	%eax, %ds
+ 	movl	%eax, %ss
+ 
+-	/* Set up new stack */
+-	leal	TRAMPOLINE_32BIT_STACK_END(%ecx), %esp
+-
+ 	/* Disable paging */
+ 	movl	%cr0, %eax
+ 	btrl	$X86_CR0_PG_BIT, %eax
+@@ -671,7 +687,7 @@ SYM_CODE_END(trampoline_32bit_src)
+ 	.code64
+ SYM_FUNC_START_LOCAL_NOALIGN(.Lpaging_enabled)
+ 	/* Return from the trampoline */
+-	jmp	*%rdi
++	retq
+ SYM_FUNC_END(.Lpaging_enabled)
+ 
  	/*
 -- 
 2.40.1
