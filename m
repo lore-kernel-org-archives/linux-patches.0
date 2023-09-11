@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC25B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F87C433C8;
-	Mon, 11 Sep 2023 14:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306651170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0966C433C8;
+	Mon, 11 Sep 2023 14:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442505;
-	bh=0nARDVatOykrafj9wDj/2a8rPjC+f4lvqkiK4438gAg=;
+	s=korg; t=1694442508;
+	bh=j58lyBJushbWTmyjqH9m3+186XAsAvMZWsHWVfVWjeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCD3fo5YptoWuwFNokpGizaNa5XGvAvwxMUuEZTdXZjZy9tIlkkgHhZREX+9Z8PTw
-	 ZhqFpOYaJS+ZBu1/ppQ0iMh9GsusnRAjBL61nw2rGueUOir9hR7D5B4MQIJI6h29yg
-	 12GLwK441/pun/mQolEJpRI0ptGZFEtxeXVrex4o=
+	b=D/1ExaKjJKkZhHvy0LNKor4hiHFU4wlfUJ+IkWZRJDBMIsvYapTf1zG4s4qmS3G43
+	 5nCPEsm9zCIYhOLGhjm9FKgqCHukkluhnj+v3J1H/c4iJ0KvrYXTlN5eJgeDpqOxXl
+	 1S6nx7QGIo+dYOP4strh0bsU/CYwF5DJkJnTYecs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 048/737] kprobes: Prohibit probing on CFI preamble symbol
-Date: Mon, 11 Sep 2023 15:38:27 +0200
-Message-ID: <20230911134651.798157393@linuxfoundation.org>
+Subject: [PATCH 6.4 022/737] s390/dasd: use correct number of retries for ERP requests
+Date: Mon, 11 Sep 2023 15:38:01 +0200
+Message-ID: <20230911134650.972571058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,54 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit de02f2ac5d8cfb311f44f2bf144cc20002f1fbbd ]
+[ Upstream commit acea28a6b74f458defda7417d2217b051ba7d444 ]
 
-Do not allow to probe on "__cfi_" or "__pfx_" started symbol, because those
-are used for CFI and not executed. Probing it will break the CFI.
+If a DASD request fails an error recovery procedure (ERP) request might
+be built as a copy of the original request to do error recovery.
 
-Link: https://lore.kernel.org/all/168904024679.116016.18089228029322008512.stgit@devnote2/
+The ERP request gets a number of retries assigned.
+This number is always 256 no matter what other value might have been set
+for the original request. This is not what is expected when a user
+specifies a certain amount of retries for the device via sysfs.
 
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Correctly use the number of retries of the original request for ERP
+requests.
+
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/s390/block/dasd_3990_erp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 00e177de91ccd..3da9726232ff9 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1545,6 +1545,17 @@ static int check_ftrace_location(struct kprobe *p)
- 	return 0;
- }
+diff --git a/drivers/s390/block/dasd_3990_erp.c b/drivers/s390/block/dasd_3990_erp.c
+index f0f210627cadf..89957bb7244d2 100644
+--- a/drivers/s390/block/dasd_3990_erp.c
++++ b/drivers/s390/block/dasd_3990_erp.c
+@@ -2441,7 +2441,7 @@ static struct dasd_ccw_req *dasd_3990_erp_add_erp(struct dasd_ccw_req *cqr)
+ 	erp->block    = cqr->block;
+ 	erp->magic    = cqr->magic;
+ 	erp->expires  = cqr->expires;
+-	erp->retries  = 256;
++	erp->retries  = device->default_retries;
+ 	erp->buildclk = get_tod_clock();
+ 	erp->status = DASD_CQR_FILLED;
  
-+static bool is_cfi_preamble_symbol(unsigned long addr)
-+{
-+	char symbuf[KSYM_NAME_LEN];
-+
-+	if (lookup_symbol_name(addr, symbuf))
-+		return false;
-+
-+	return str_has_prefix("__cfi_", symbuf) ||
-+		str_has_prefix("__pfx_", symbuf);
-+}
-+
- static int check_kprobe_address_safe(struct kprobe *p,
- 				     struct module **probed_mod)
- {
-@@ -1563,7 +1574,8 @@ static int check_kprobe_address_safe(struct kprobe *p,
- 	    within_kprobe_blacklist((unsigned long) p->addr) ||
- 	    jump_label_text_reserved(p->addr, p->addr) ||
- 	    static_call_text_reserved(p->addr, p->addr) ||
--	    find_bug((unsigned long)p->addr)) {
-+	    find_bug((unsigned long)p->addr) ||
-+	    is_cfi_preamble_symbol((unsigned long)p->addr)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
 -- 
 2.40.1
 
