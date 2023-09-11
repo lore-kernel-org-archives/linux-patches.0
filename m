@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B590D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372C5C433C9;
-	Mon, 11 Sep 2023 13:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE371170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D35C433C8;
+	Mon, 11 Sep 2023 13:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440486;
-	bh=/fs99Kf97mabWZQXsEwLxkewzwe8q3p5coaJX19M2Ww=;
+	s=korg; t=1694440489;
+	bh=W+qHWwtO+/QefGL+7xYUPllX1MK7cZpugs2KAWAPfXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VzsZFXglwYzHKgAio3CkOyYSi8zfn9Eol26UK9jUOhVrW4JZ2vb+GwJhog2MC2Smi
-	 Xfm9cPAFRaO+kYS6vz8KNaxgqbVwgdEo7GSz6iXOU0RJBv8PblNq5frLFdfvIWN+aQ
-	 Giz2VvAU0Hwg+0Z8UwjgKc3S23Nbz/BDh95+Y7pw=
+	b=eBldDbwECv255T2OFQvdL4JEJqgVyDLT5a9Y66gTgTEUNCuq3VVQix9WCN7JJ4ZEs
+	 TeKZH2dMBt2NjiiWqk8uD5t9VEd1YSsxrk62KtEFJYCnvMQkZChKVanc53Qhcb7jPb
+	 E8sD4TBURvICUis4Pq4OMNjc3CKfyZXiGaVaCnNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Bjorn Helgaas <helgaas@kernel.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 052/739] ACPI: x86: s2idle: Post-increment variables when getting constraints
-Date: Mon, 11 Sep 2023 15:37:31 +0200
-Message-ID: <20230911134652.572644282@linuxfoundation.org>
+Subject: [PATCH 6.5 053/739] ACPI: x86: s2idle: Fix a logic error parsing AMD constraints table
+Date: Mon, 11 Sep 2023 15:37:32 +0200
+Message-ID: <20230911134652.600242923@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -44,61 +42,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 3c6b1212d20bbbffcad5709ab0f2d5ed9b5859a8 ]
+[ Upstream commit 9cc8cd086f05d9a01026c65c98da88561e9c619e ]
 
-When code uses a pre-increment it makes the reader question "why".
-In the constraint fetching code there is no reason for the variables
-to be pre-incremented so adjust to post-increment.
-No intended functional changes.
+The constraints table should be resetting the `list` object
+after running through all of `info_obj` iterations.
 
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+This adjusts whitespace as well as less code will now be included
+with each loop. This fixes a functional problem is fixed where a
+badly formed package in the inner loop may have incorrect data.
+
+Fixes: 146f1ed852a8 ("ACPI: PM: s2idle: Add AMD support to handle _DSM")
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 9cc8cd086f05 ("ACPI: x86: s2idle: Fix a logic error parsing AMD constraints table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/s2idle.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/acpi/x86/s2idle.c | 31 ++++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
-index ce62e61a9605e..7711dde68947f 100644
+index 7711dde68947f..60cc4605169c5 100644
 --- a/drivers/acpi/x86/s2idle.c
 +++ b/drivers/acpi/x86/s2idle.c
-@@ -123,13 +123,13 @@ static void lpi_device_get_constraints_amd(void)
- 			acpi_handle_debug(lps0_device_handle,
- 					  "LPI: constraints list begin:\n");
- 
--			for (j = 0; j < package->package.count; ++j) {
-+			for (j = 0; j < package->package.count; j++) {
- 				union acpi_object *info_obj = &package->package.elements[j];
- 				struct lpi_device_constraint_amd dev_info = {};
+@@ -129,12 +129,11 @@ static void lpi_device_get_constraints_amd(void)
  				struct lpi_constraints *list;
  				acpi_status status;
  
--				for (k = 0; k < info_obj->package.count; ++k) {
-+				for (k = 0; k < info_obj->package.count; k++) {
++				list = &lpi_constraints_table[lpi_constraints_table_size];
++
+ 				for (k = 0; k < info_obj->package.count; k++) {
  					union acpi_object *obj = &info_obj->package.elements[k];
  
- 					list = &lpi_constraints_table[lpi_constraints_table_size];
-@@ -214,7 +214,7 @@ static void lpi_device_get_constraints(void)
- 		if (!package)
- 			continue;
+-					list = &lpi_constraints_table[lpi_constraints_table_size];
+-					list->min_dstate = -1;
+-
+ 					switch (k) {
+ 					case 0:
+ 						dev_info.enabled = obj->integer.value;
+@@ -149,27 +148,21 @@ static void lpi_device_get_constraints_amd(void)
+ 						dev_info.min_dstate = obj->integer.value;
+ 						break;
+ 					}
++				}
  
--		for (j = 0; j < package->package.count; ++j) {
-+		for (j = 0; j < package->package.count; j++) {
- 			union acpi_object *element =
- 					&(package->package.elements[j]);
+-					if (!dev_info.enabled || !dev_info.name ||
+-					    !dev_info.min_dstate)
+-						continue;
++				if (!dev_info.enabled || !dev_info.name ||
++				    !dev_info.min_dstate)
++					continue;
  
-@@ -246,7 +246,7 @@ static void lpi_device_get_constraints(void)
+-					status = acpi_get_handle(NULL, dev_info.name,
+-								 &list->handle);
+-					if (ACPI_FAILURE(status))
+-						continue;
++				status = acpi_get_handle(NULL, dev_info.name, &list->handle);
++				if (ACPI_FAILURE(status))
++					continue;
  
- 		constraint->min_dstate = -1;
+-					acpi_handle_debug(lps0_device_handle,
+-							  "Name:%s\n", dev_info.name);
++				acpi_handle_debug(lps0_device_handle,
++						  "Name:%s\n", dev_info.name);
  
--		for (j = 0; j < package_count; ++j) {
-+		for (j = 0; j < package_count; j++) {
- 			union acpi_object *info_obj = &info.package[j];
- 			union acpi_object *cnstr_pkg;
- 			union acpi_object *obj;
+-					list->min_dstate = dev_info.min_dstate;
++				list->min_dstate = dev_info.min_dstate;
+ 
+-					if (list->min_dstate < 0) {
+-						acpi_handle_debug(lps0_device_handle,
+-								  "Incomplete constraint defined\n");
+-						continue;
+-					}
+-				}
+ 				lpi_constraints_table_size++;
+ 			}
+ 		}
 -- 
 2.40.1
 
