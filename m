@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24091170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528F1C433C8;
-	Mon, 11 Sep 2023 13:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D03C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB0DC433C7;
+	Mon, 11 Sep 2023 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440644;
-	bh=ZQu/xz1j6EMKnW1cXVVd56NH6nYsdB2B/5WPjBEXaV4=;
+	s=korg; t=1694440647;
+	bh=rNy+Pite8bb3hRMkLlH4K1oWTfaGm5oNM/37R0qeLpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGdd9v2DqilyZHJRiIrrtyhBd1aKymvloXZRiNmDZ9cBMMXge3teuoXMb+U33yHLM
-	 GlZEN0oQllhxxqgxLFemMNCcEd+VtzrwHqLg9yB9Sv77NXqkIBmf+rlTzsPVImHkcf
-	 +p5Lts+oprdiI294D+LF9hfnykTm5E1p/6B8cfF8=
+	b=T97cVLTuzDaNJg0O2qQq743Ne2zsdgMk7NEKvUrgvEytA82GOObdcujtaATwq1yXr
+	 YW0yev37l9WUt+mveY79zOmfxH3vYOb5Scc4TFVdrxmgRa7NtW8uGEdt0uT2baDyN6
+	 7ZC7NMwCy5P/KfWG5XHQF1Jly87fjTCDDhdIXljI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Danilenko <al.b.danilenko@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 134/739] spi: tegra114: Remove unnecessary NULL-pointer checks
-Date: Mon, 11 Sep 2023 15:38:53 +0200
-Message-ID: <20230911134654.832694547@linuxfoundation.org>
+Subject: [PATCH 6.5 108/739] power: supply: qcom_pmi8998_charger: fix uninitialized variable
+Date: Mon, 11 Sep 2023 15:38:27 +0200
+Message-ID: <20230911134654.115614313@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,71 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Danilenko <al.b.danilenko@gmail.com>
+From: Yu Liao <liaoyu15@huawei.com>
 
-[ Upstream commit 373c36bf7914e3198ac2654dede499f340c52950 ]
+[ Upstream commit 13a0d1088c8fea1565e30a169188b59bdd77759e ]
 
-cs_setup, cs_hold and cs_inactive points to fields of spi_device struct,
-so there is no sense in checking them for NULL.
+smatch warnings:
+  drivers/power/supply/qcom_pmi8998_charger.c:565 smb2_status_change_work() error: uninitialized symbol 'usb_online'.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+usb_online is used uninitialized whenever smb2_get_prop_usb_online()
+returns a negative value.
 
-Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
-Signed-off-by: Alexander Danilenko <al.b.danilenko@gmail.com>
-Link: https://lore.kernel.org/r/20230815092058.4083-1-al.b.danilenko@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Thus, fix the issue by initializing usb_online to 0.
+
+Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202307280638.556PrzIS-lkp@intel.com/
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org
+Link: https://lore.kernel.org/r/20230802023130.2516232-1-liaoyu15@huawei.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ drivers/power/supply/qcom_pmi8998_charger.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index 488df681eaefc..2226d77a5d20a 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -723,27 +723,23 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
- 	struct spi_delay *setup = &spi->cs_setup;
- 	struct spi_delay *hold = &spi->cs_hold;
- 	struct spi_delay *inactive = &spi->cs_inactive;
--	u8 setup_dly, hold_dly, inactive_dly;
-+	u8 setup_dly, hold_dly;
- 	u32 setup_hold;
- 	u32 spi_cs_timing;
- 	u32 inactive_cycles;
- 	u8 cs_state;
+diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
+index d16c5ee172496..cac89d233c388 100644
+--- a/drivers/power/supply/qcom_pmi8998_charger.c
++++ b/drivers/power/supply/qcom_pmi8998_charger.c
+@@ -556,7 +556,8 @@ static int smb2_set_current_limit(struct smb2_chip *chip, unsigned int val)
+ static void smb2_status_change_work(struct work_struct *work)
+ {
+ 	unsigned int charger_type, current_ua;
+-	int usb_online, count, rc;
++	int usb_online = 0;
++	int count, rc;
+ 	struct smb2_chip *chip;
  
--	if ((setup && setup->unit != SPI_DELAY_UNIT_SCK) ||
--	    (hold && hold->unit != SPI_DELAY_UNIT_SCK) ||
--	    (inactive && inactive->unit != SPI_DELAY_UNIT_SCK)) {
-+	if (setup->unit != SPI_DELAY_UNIT_SCK ||
-+	    hold->unit != SPI_DELAY_UNIT_SCK ||
-+	    inactive->unit != SPI_DELAY_UNIT_SCK) {
- 		dev_err(&spi->dev,
- 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
- 			SPI_DELAY_UNIT_SCK);
- 		return -EINVAL;
- 	}
- 
--	setup_dly = setup ? setup->value : 0;
--	hold_dly = hold ? hold->value : 0;
--	inactive_dly = inactive ? inactive->value : 0;
--
--	setup_dly = min_t(u8, setup_dly, MAX_SETUP_HOLD_CYCLES);
--	hold_dly = min_t(u8, hold_dly, MAX_SETUP_HOLD_CYCLES);
-+	setup_dly = min_t(u8, setup->value, MAX_SETUP_HOLD_CYCLES);
-+	hold_dly = min_t(u8, hold->value, MAX_SETUP_HOLD_CYCLES);
- 	if (setup_dly && hold_dly) {
- 		setup_hold = SPI_SETUP_HOLD(setup_dly - 1, hold_dly - 1);
- 		spi_cs_timing = SPI_CS_SETUP_HOLD(tspi->spi_cs_timing1,
-@@ -755,7 +751,7 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
- 		}
- 	}
- 
--	inactive_cycles = min_t(u8, inactive_dly, MAX_INACTIVE_CYCLES);
-+	inactive_cycles = min_t(u8, inactive->value, MAX_INACTIVE_CYCLES);
- 	if (inactive_cycles)
- 		inactive_cycles--;
- 	cs_state = inactive_cycles ? 0 : 1;
+ 	chip = container_of(work, struct smb2_chip, status_change_work.work);
 -- 
 2.40.1
 
