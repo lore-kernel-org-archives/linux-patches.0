@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F211511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7387BC433C8;
-	Mon, 11 Sep 2023 15:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AE711710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50211C433C8;
+	Mon, 11 Sep 2023 15:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445181;
-	bh=ZSqA4Uokhg3u04G+tT6NbJUqn8TwGuFfQ6B6JQ/tidY=;
+	s=korg; t=1694445184;
+	bh=XJOg9qLDxuWy8C+iM6mar4kVfF/bxdqJiElkbULgKDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K27ttgVhmjo+blwH8jCedo+yEGN8E+ivoHfGItlslGXZ/Dt5uljNMdd3xtrDgwuFd
-	 U1IQgS+vpfr2+RWnw+QNPmLB0ivHqVVEEVjSUi7Jx2yy5FlO1/JXwjVldUIss0++16
-	 4utCKFVprfNVSRT2SedKEac9PMfIxX/a5S3FuI88=
+	b=Kj8HALq1gBpFEeK0KcsNOW8h6g2x5iRAnBULOyHOPZVCDytaFoqMSpQDLwRlVBRqz
+	 KPhIzrPD+Of0JU8wI7FDmzFWbMTwtiyjBITuz61Ssh3B+zx9VCkY+e/XmZKy32zZmo
+	 MyBJjf2uDTGgNAeDC8XCQtPDaJjrE5mTbZvP5LA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/600] octeontx2-pf: Fix PFC TX scheduler free
-Date: Mon, 11 Sep 2023 15:43:59 +0200
-Message-ID: <20230911134639.697206014@linuxfoundation.org>
+Subject: [PATCH 6.1 250/600] drm/amdgpu: avoid integer overflow warning in amdgpu_device_resize_fb_bar()
+Date: Mon, 11 Sep 2023 15:44:43 +0200
+Message-ID: <20230911134640.978261232@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,71 +35,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a9ac2e18779597f280d68a5b5f5bdd51a34080fa ]
+[ Upstream commit 822130b5e8834ab30ad410cf19a582e5014b9a85 ]
 
-During PFC TX schedulers free, flag TXSCHQ_FREE_ALL was being set
-which caused free up all schedulers other than the PFC schedulers.
-This patch fixes that to free only the PFC Tx schedulers.
+On 32-bit architectures comparing a resource against a value larger than
+U32_MAX can cause a warning:
 
-Fixes: 99c969a83d82 ("octeontx2-pf: Add egress PFC support")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230824081032.436432-2-sumang@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1344:18: error: result of comparison of constant 4294967296 with expression of type 'resource_size_t' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+                    res->start > 0x100000000ull)
+                    ~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
+
+As gcc does not warn about this in dead code, add an IS_ENABLED() check at
+the start of the function. This will always return success but not actually resize
+the BAR on 32-bit architectures without high memory, which is exactly what
+we want here, as the driver can fall back to bank switching the VRAM
+access.
+
+Fixes: 31b8adab3247 ("drm/amdgpu: require a root bus window above 4GB for BAR resize")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_common.c  |  1 +
- .../ethernet/marvell/octeontx2/nic/otx2_dcbnl.c   | 15 ++++-----------
- 2 files changed, 5 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index dd97731f81698..011355e73696e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -773,6 +773,7 @@ void otx2_txschq_free_one(struct otx2_nic *pfvf, u16 lvl, u16 schq)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index e6427a00cf6d6..9aac9e755609d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1212,6 +1212,9 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
+ 	u16 cmd;
+ 	int r;
  
- 	mutex_unlock(&pfvf->mbox.lock);
- }
-+EXPORT_SYMBOL(otx2_txschq_free_one);
- 
- void otx2_txschq_stop(struct otx2_nic *pfvf)
- {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
-index ccaf97bb1ce03..6492749dd7c89 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
-@@ -125,19 +125,12 @@ int otx2_pfc_txschq_alloc(struct otx2_nic *pfvf)
- 
- static int otx2_pfc_txschq_stop_one(struct otx2_nic *pfvf, u8 prio)
- {
--	struct nix_txsch_free_req *free_req;
-+	int lvl;
- 
--	mutex_lock(&pfvf->mbox.lock);
- 	/* free PFC TLx nodes */
--	free_req = otx2_mbox_alloc_msg_nix_txsch_free(&pfvf->mbox);
--	if (!free_req) {
--		mutex_unlock(&pfvf->mbox.lock);
--		return -ENOMEM;
--	}
--
--	free_req->flags = TXSCHQ_FREE_ALL;
--	otx2_sync_mbox_msg(&pfvf->mbox);
--	mutex_unlock(&pfvf->mbox.lock);
-+	for (lvl = 0; lvl < pfvf->hw.txschq_link_cfg_lvl; lvl++)
-+		otx2_txschq_free_one(pfvf, lvl,
-+				     pfvf->pfc_schq_list[lvl][prio]);
- 
- 	pfvf->pfc_alloc_status[prio] = false;
- 	return 0;
++	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
++		return 0;
++
+ 	/* Bypass for VF */
+ 	if (amdgpu_sriov_vf(adev))
+ 		return 0;
 -- 
 2.40.1
 
