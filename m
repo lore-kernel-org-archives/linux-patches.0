@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C8511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F33C433C8;
-	Mon, 11 Sep 2023 15:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E5511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F7BC433C8;
+	Mon, 11 Sep 2023 15:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445830;
-	bh=OLDUhQT2KQa8FiztKy0EWxjqo5AJUn/pscCzHLZ5gD8=;
+	s=korg; t=1694445832;
+	bh=qYbKvh7XiLBB0p0MDxIUihMJPsrrG8HE3cRzplQUoKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qRfep93JxYfYJZCOnQtPJqXA4s/UPGB3Yn9O+hlsv4T6KC4HER03+sE2YB4Zy8zAy
-	 EZzGvTff307tHX6as+yPrxMkNuxVuvkOimQ186lbi24a4EADtyE8K8BGs7K7k7SRCz
-	 0z9jWmA74fpXsANGeA0JOYNp3Uz0iwfx+qRAYTvM=
+	b=VdsBN3I3hcKiQ1rJZMUS/b+wTbzpw43HPkpCeY3Jd2zInSvc3SJCIG9Cm7VMiBEmq
+	 edZMRruOdpDIdaEKIknklTU422GQlp/lHV6SrvHFdXq380SZnUjgNNGD8A2KJ5YGeJ
+	 dJJclnLi7fJFkHz/JwPnVcH6KquKgCESIYasg/RU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Nils Fuhler <nils@nilsfuhler.de>,
+	Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 460/600] drivers: base: Free devm resources when unregistering a device
-Date: Mon, 11 Sep 2023 15:48:13 +0200
-Message-ID: <20230911134647.231037830@linuxfoundation.org>
+Subject: [PATCH 6.1 461/600] HID: input: Support devices sending Eraser without Invert
+Date: Mon, 11 Sep 2023 15:48:14 +0200
+Message-ID: <20230911134647.260780286@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,62 +41,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>
 
-[ Upstream commit 699fb50d99039a50e7494de644f96c889279aca3 ]
+[ Upstream commit 276e14e6c3993317257e1787e93b7166fbc30905 ]
 
-In the current code, devres_release_all() only gets called if the device
-has a bus and has been probed.
+Some digitizers (notably XP-Pen Artist 24) do not report the Invert
+usage when erasing.  This causes the device to be permanently stuck with
+the BTN_TOOL_RUBBER tool after sending Eraser, as Invert is the only
+usage that can release the tool.  In this state, Touch and Inrange are
+no longer reported to userspace, rendering the pen unusable.
 
-This leads to issues when using bus-less or driver-less devices where
-the device might never get freed if a managed resource holds a reference
-to the device. This is happening in the DRM framework for example.
+Prior to commit 87562fcd1342 ("HID: input: remove the need for
+HID_QUIRK_INVERT"), BTN_TOOL_RUBBER was never set and Eraser events were
+simply translated into BTN_TOUCH without causing an inconsistent state.
 
-We should thus call devres_release_all() in the device_del() function to
-make sure that the device-managed actions are properly executed when the
-device is unregistered, even if it has neither a bus nor a driver.
+Introduce HID_QUIRK_NOINVERT for such digitizers and detect them during
+hidinput_configure_usage().  This quirk causes the tool to be released
+as soon as Eraser is reported as not set.  Set BTN_TOOL_RUBBER in
+input->keybit when mapping Eraser.
 
-This is effectively the same change than commit 2f8d16a996da ("devres:
-release resources on device_del()") that got reverted by commit
-a525a3ddeaca ("driver core: free devres in device_release") over
-memory leaks concerns.
-
-This patch effectively combines the two commits mentioned above to
-release the resources both on device_del() and device_release() and get
-the best of both worlds.
-
-Fixes: a525a3ddeaca ("driver core: free devres in device_release")
-Signed-off-by: David Gow <davidgow@google.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20230720-kunit-devm-inconsistencies-test-v3-3-6aa7e074f373@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 87562fcd1342 ("HID: input: remove the need for HID_QUIRK_INVERT")
+Co-developed-by: Nils Fuhler <nils@nilsfuhler.de>
+Signed-off-by: Nils Fuhler <nils@nilsfuhler.de>
+Signed-off-by: Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/hid/hid-input.c | 18 ++++++++++++++++--
+ include/linux/hid.h     |  1 +
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index e30223c2672fc..af90bfb0cc3d8 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3855,6 +3855,17 @@ void device_del(struct device *dev)
- 	device_platform_notify_remove(dev);
- 	device_links_purge(dev);
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 3acaaca888acd..77ee5e01e6111 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -961,6 +961,7 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
+ 			return;
  
-+	/*
-+	 * If a device does not have a driver attached, we need to clean
-+	 * up any managed resources. We do this in device_release(), but
-+	 * it's never called (and we leak the device) if a managed
-+	 * resource holds a reference to the device. So release all
-+	 * managed resources here, like we do in driver_detach(). We
-+	 * still need to do so again in device_release() in case someone
-+	 * adds a new resource after this point, though.
-+	 */
-+	devres_release_all(dev);
-+
- 	if (dev->bus)
- 		blocking_notifier_call_chain(&dev->bus->p->bus_notifier,
- 					     BUS_NOTIFY_REMOVED_DEVICE, dev);
+ 		case 0x3c: /* Invert */
++			device->quirks &= ~HID_QUIRK_NOINVERT;
+ 			map_key_clear(BTN_TOOL_RUBBER);
+ 			break;
+ 
+@@ -986,9 +987,13 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
+ 		case 0x45: /* ERASER */
+ 			/*
+ 			 * This event is reported when eraser tip touches the surface.
+-			 * Actual eraser (BTN_TOOL_RUBBER) is set by Invert usage when
+-			 * tool gets in proximity.
++			 * Actual eraser (BTN_TOOL_RUBBER) is set and released either
++			 * by Invert if tool reports proximity or by Eraser directly.
+ 			 */
++			if (!test_bit(BTN_TOOL_RUBBER, input->keybit)) {
++				device->quirks |= HID_QUIRK_NOINVERT;
++				set_bit(BTN_TOOL_RUBBER, input->keybit);
++			}
+ 			map_key_clear(BTN_TOUCH);
+ 			break;
+ 
+@@ -1532,6 +1537,15 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct
+ 		else if (report->tool != BTN_TOOL_RUBBER)
+ 			/* value is off, tool is not rubber, ignore */
+ 			return;
++		else if (*quirks & HID_QUIRK_NOINVERT &&
++			 !test_bit(BTN_TOUCH, input->key)) {
++			/*
++			 * There is no invert to release the tool, let hid_input
++			 * send BTN_TOUCH with scancode and release the tool after.
++			 */
++			hid_report_release_tool(report, input, BTN_TOOL_RUBBER);
++			return;
++		}
+ 
+ 		/* let hid-input set BTN_TOUCH */
+ 		break;
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 0a1ccc68e798a..784dd6b6046eb 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -357,6 +357,7 @@ struct hid_item {
+ #define HID_QUIRK_NO_OUTPUT_REPORTS_ON_INTR_EP	BIT(18)
+ #define HID_QUIRK_HAVE_SPECIAL_DRIVER		BIT(19)
+ #define HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE	BIT(20)
++#define HID_QUIRK_NOINVERT			BIT(21)
+ #define HID_QUIRK_FULLSPEED_INTERVAL		BIT(28)
+ #define HID_QUIRK_NO_INIT_REPORTS		BIT(29)
+ #define HID_QUIRK_NO_IGNORE			BIT(30)
 -- 
 2.40.1
 
