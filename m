@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC6E11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256B9C433C7;
-	Mon, 11 Sep 2023 15:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDBF11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1706AC433C8;
+	Mon, 11 Sep 2023 15:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444987;
-	bh=8wne8GVl+O/8uUP6UDjL3Rk/U6MgBhoN+EzznF6ZMB4=;
+	s=korg; t=1694444990;
+	bh=idEk75f73pL6HW/vYTyaS0nIUyqdyteKkjtVp9ZerQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZ4Axh4tQgIORj920e8JvsPnUloedaAN6OVCC4RsDD9wNyhixqrOEIdzfqhmIX5Gj
-	 pOYS0jvMfOt2MOqB53sGvCYZUDj+z1x+DtpzCyuKc2sQorwDl0Cq95rYgEd/z25jxJ
-	 cL5J165homUmX3bRq6kSOrHNMMr3iv1mEvgq34qw=
+	b=XuPRzt6WkSCRkKaadsLNC+zWDv2UObGfUTDWlJNtH9+2dQE/kuM6FFEK6ETxq7Lwf
+	 vZBga3TKEnXUqNoViLDQv8kvcMcq0bwI0873mftJVvi09tKXICsmR+sZVgxNyi5grU
+	 1Kp34KBhY9Y5uyfUe0z6KOmYfFByH33gLT/cMQjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Polaris Pi <pinkperfect2021@gmail.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 187/600] wifi: mwifiex: Fix missed return in oob checks failed path
-Date: Mon, 11 Sep 2023 15:43:40 +0200
-Message-ID: <20230911134639.144924814@linuxfoundation.org>
+Subject: [PATCH 6.1 188/600] ARM: dts: Add .dts files missing from the build
+Date: Mon, 11 Sep 2023 15:43:41 +0200
+Message-ID: <20230911134639.172520692@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,49 +39,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Polaris Pi <pinkperfect2021@gmail.com>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit 2785851c627f2db05f9271f7f63661b5dbd95c4c ]
+[ Upstream commit 86684c2481b6e6a46c2282acee13554e34e66071 ]
 
-Add missed return in mwifiex_uap_queue_bridged_pkt() and
-mwifiex_process_rx_packet().
+Comparing .dts files to built .dtb files yielded a few .dts files which
+are never built. Add them to the build.
 
-Fixes: 119585281617 ("wifi: mwifiex: Fix OOB and integer underflow when rx packets")
-Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
-Reported-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230810083911.3725248-1-pinkperfect2021@gmail.com
+Signed-off-by: Rob Herring <robh@kernel.org>
+Stable-dep-of: 92632115fb57 ("samples/bpf: fix bio latency check with tracepoint")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c   | 1 +
- drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 1 +
- 2 files changed, 2 insertions(+)
+ arch/arm/boot/dts/Makefile | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index f2899d53a43f9..65420ad674167 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -92,6 +92,7 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 			    skb->len, rx_pkt_off);
- 		priv->stats.rx_dropped++;
- 		dev_kfree_skb_any(skb);
-+		return -1;
- 	}
- 
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index 04ff051f5d186..c1b8d41dd7536 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -110,6 +110,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
- 			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
- 		priv->stats.rx_dropped++;
- 		dev_kfree_skb_any(skb);
-+		return;
- 	}
- 
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 6aa7dc4db2fc8..df6d905eeb877 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -331,6 +331,7 @@ dtb-$(CONFIG_MACH_KIRKWOOD) += \
+ 	kirkwood-iconnect.dtb \
+ 	kirkwood-iomega_ix2_200.dtb \
+ 	kirkwood-is2.dtb \
++	kirkwood-km_fixedeth.dtb \
+ 	kirkwood-km_kirkwood.dtb \
+ 	kirkwood-l-50.dtb \
+ 	kirkwood-laplug.dtb \
+@@ -861,7 +862,10 @@ dtb-$(CONFIG_ARCH_OMAP3) += \
+ 	am3517-craneboard.dtb \
+ 	am3517-evm.dtb \
+ 	am3517_mt_ventoux.dtb \
++	logicpd-torpedo-35xx-devkit.dtb \
+ 	logicpd-torpedo-37xx-devkit.dtb \
++	logicpd-torpedo-37xx-devkit-28.dtb \
++	logicpd-som-lv-35xx-devkit.dtb \
+ 	logicpd-som-lv-37xx-devkit.dtb \
+ 	omap3430-sdp.dtb \
+ 	omap3-beagle.dtb \
+@@ -1527,6 +1531,8 @@ dtb-$(CONFIG_MACH_ARMADA_38X) += \
+ 	armada-388-helios4.dtb \
+ 	armada-388-rd.dtb
+ dtb-$(CONFIG_MACH_ARMADA_39X) += \
++	armada-390-db.dtb \
++	armada-395-gp.dtb \
+ 	armada-398-db.dtb
+ dtb-$(CONFIG_MACH_ARMADA_XP) += \
+ 	armada-xp-axpwifiap.dtb \
+@@ -1556,6 +1562,7 @@ dtb-$(CONFIG_MACH_DOVE) += \
+ dtb-$(CONFIG_ARCH_MEDIATEK) += \
+ 	mt2701-evb.dtb \
+ 	mt6580-evbp1.dtb \
++	mt6582-prestigio-pmt5008-3g.dtb \
+ 	mt6589-aquaris5.dtb \
+ 	mt6589-fairphone-fp1.dtb \
+ 	mt6592-evb.dtb \
+@@ -1608,6 +1615,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-intel-s2600wf.dtb \
+ 	aspeed-bmc-inspur-fp5280g2.dtb \
+ 	aspeed-bmc-inspur-nf5280m6.dtb \
++	aspeed-bmc-inspur-on5263m5.dtb \
+ 	aspeed-bmc-lenovo-hr630.dtb \
+ 	aspeed-bmc-lenovo-hr855xg2.dtb \
+ 	aspeed-bmc-microsoft-olympus.dtb \
 -- 
 2.40.1
 
