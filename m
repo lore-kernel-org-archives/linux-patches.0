@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386CA11C84
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722ADC433C9;
-	Mon, 11 Sep 2023 15:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D104311C9F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561C4C433CD;
+	Mon, 11 Sep 2023 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446126;
-	bh=25GGYIv3aBG3y5EjHVi/8NPPEtPbCz0DL/JtPjzpMV8=;
+	s=korg; t=1694446129;
+	bh=NvtVzgSc9Om23mpOJmHud+DFVzl9nfq0NV+Bp5x1qqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dhh9UEVc7JFwfu71pUviT+xu3mjHfCg8f7g7mJaugEb7CR+eBj5Pp6OYCOY0gKICN
-	 /BQYTvYXVbbq/Gnp/rFw/Khz3Ly3f1xeU74a/1qzOdpwxBoI4NJSmh1Bc8dRLRqRAg
-	 HP+p4JcCn2F/d6Ya9B9Wdhl1NTKbBVy9snteGdeQ=
+	b=hwKFVlAKKaveiVqVHoB0+fUf4nUEcCu0EcNxMPS7q4m3rw2YD65rpzrZLa/cO4bgo
+	 I2doZ8Gc+Kx+vEj622F/RCefYu0RVhWeQnF6CJh1i9Mguc5nZis5woz3KVkTtmJukd
+	 tJ5sKCPU6B1sm/lMYS5i7285VaesweO4BAdrH3+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Lau <martin.lau@linux.dev>,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>
-Subject: [PATCH 6.1 591/600] net: remove duplicate INDIRECT_CALLABLE_DECLARE of udp[6]_ehashfn
-Date: Mon, 11 Sep 2023 15:50:24 +0200
-Message-ID: <20230911134651.083112308@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Brian Foster <bfoster@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 592/600] tracing: Zero the pipe cpumask on alloc to avoid spurious -EBUSY
+Date: Mon, 11 Sep 2023 15:50:25 +0200
+Message-ID: <20230911134651.118928570@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,46 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenz Bauer <lmb@isovalent.com>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 74bdfab4fd7c641e55f7fe9d1be9687eeb01df67 upstream.
+commit 3d07fa1dd19035eb0b13ae6697efd5caa9033e74 upstream.
 
-There are already INDIRECT_CALLABLE_DECLARE in the hashtable
-headers, no need to declare them again.
+The pipe cpumask used to serialize opens between the main and percpu
+trace pipes is not zeroed or initialized. This can result in
+spurious -EBUSY returns if underlying memory is not fully zeroed.
+This has been observed by immediate failure to read the main
+trace_pipe file on an otherwise newly booted and idle system:
 
-Fixes: 0f495f761722 ("net: remove duplicate reuseport_lookup functions")
-Suggested-by: Martin Lau <martin.lau@linux.dev>
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230731-indir-call-v1-1-4cd0aeaee64f@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+ # cat /sys/kernel/debug/tracing/trace_pipe
+ cat: /sys/kernel/debug/tracing/trace_pipe: Device or resource busy
+
+Zero the allocation of pipe_cpumask to avoid the problem.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230831125500.986862-1-bfoster@redhat.com
+
+Cc: stable@vger.kernel.org
+Fixes: c2489bb7e6be ("tracing: Introduce pipe_cpumask to avoid race on trace_pipes")
+Reviewed-by: Zheng Yejian <zhengyejian1@huawei.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_hashtables.c  |    2 --
- net/ipv6/inet6_hashtables.c |    2 --
- 2 files changed, 4 deletions(-)
+ kernel/trace/trace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -333,8 +333,6 @@ static inline int compute_score(struct s
- 	return score;
- }
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9395,7 +9395,7 @@ static struct trace_array *trace_array_c
+ 	if (!alloc_cpumask_var(&tr->tracing_cpumask, GFP_KERNEL))
+ 		goto out_free_tr;
  
--INDIRECT_CALLABLE_DECLARE(inet_ehashfn_t udp_ehashfn);
--
- struct sock *inet_lookup_reuseport(struct net *net, struct sock *sk,
- 				   struct sk_buff *skb, int doff,
- 				   __be32 saddr, __be16 sport,
---- a/net/ipv6/inet6_hashtables.c
-+++ b/net/ipv6/inet6_hashtables.c
-@@ -112,8 +112,6 @@ static inline int compute_score(struct s
- 	return score;
- }
+-	if (!alloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
+ 		goto out_free_tr;
  
--INDIRECT_CALLABLE_DECLARE(inet6_ehashfn_t udp6_ehashfn);
--
- struct sock *inet6_lookup_reuseport(struct net *net, struct sock *sk,
- 				    struct sk_buff *skb, int doff,
- 				    const struct in6_addr *saddr,
+ 	tr->trace_flags = global_trace.trace_flags & ~ZEROED_TRACE_FLAGS;
+@@ -10267,7 +10267,7 @@ __init static int tracer_alloc_buffers(v
+ 	if (trace_create_savedcmd() < 0)
+ 		goto out_free_temp_buffer;
+ 
+-	if (!alloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
+ 		goto out_free_savedcmd;
+ 
+ 	/* TODO: make the number of buffers hot pluggable with CPUS */
 
 
