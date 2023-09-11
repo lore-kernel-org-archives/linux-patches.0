@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D4C11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B08C433C7;
-	Mon, 11 Sep 2023 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EED11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB8BC433C8;
+	Mon, 11 Sep 2023 14:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444245;
-	bh=8mBdNcV2OXjl1W13GJmhkQeO0uulzeXtOZapwcACkqw=;
+	s=korg; t=1694444248;
+	bh=Rtec/up2QynAHEhgODF8TrbMhDV7gwkkN3DT2vGyY0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3kD4PLJQ4B8IOD705ylpM5v0QL11G9BevpJ18n53fIliQyfnLltB4lymJYQRy+nL
-	 um2K44PfFw/CN8uj9sL9Vl9wk8Owp54AEm+PLOgRrqOuKpHL/MtUQZH2e1kNuqrovT
-	 9WJIxh9vDncghErrldf17fFTcs1UssAbLZnYB304=
+	b=cg1UYYfNuprrYdXEz5CWtOQUu+rDCyBzh7rpP/lk0vQvntFzQQafrUMoFT98sJfHg
+	 2J1UQ021V/IJB78sE7Juofcik+TgqThu275UdfbqMeIk07+6tZ2xu+HlHhP171ScwM
+	 vmiGrnjxDR80d1Ab06vbetojSpnAcXHbm/+pTnQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 661/737] io_uring/sqpoll: fix io-wq affinity when IORING_SETUP_SQPOLL is used
-Date: Mon, 11 Sep 2023 15:48:40 +0200
-Message-ID: <20230911134708.989375812@linuxfoundation.org>
+Subject: [PATCH 6.4 662/737] io_uring: break out of iowq iopoll on teardown
+Date: Mon, 11 Sep 2023 15:48:41 +0200
+Message-ID: <20230911134709.016984874@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -38,148 +39,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit ebdfefc09c6de7897962769bd3e63a2ff443ebf5 upstream.
+commit 45500dc4e01c167ee063f3dcc22f51ced5b2b1e9 upstream.
 
-If we setup the ring with SQPOLL, then that polling thread has its
-own io-wq setup. This means that if the application uses
-IORING_REGISTER_IOWQ_AFF to set the io-wq affinity, we should not be
-setting it for the invoking task, but rather the sqpoll task.
+io-wq will retry iopoll even when it failed with -EAGAIN. If that
+races with task exit, which sets TIF_NOTIFY_SIGNAL for all its workers,
+such workers might potentially infinitely spin retrying iopoll again and
+again and each time failing on some allocation / waiting / etc. Don't
+keep spinning if io-wq is dying.
 
-Add an sqpoll helper that parks the thread and updates the affinity,
-and use that one if we're using SQPOLL.
-
-Fixes: fe76421d1da1 ("io_uring: allow user configurable IO thread CPU affinity")
-Cc: stable@vger.kernel.org # 5.10+
-Link: https://github.com/axboe/liburing/discussions/884
+Fixes: 561fb04a6a225 ("io_uring: replace workqueue usage with io-wq")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c    |    9 ++++++---
- io_uring/io-wq.h    |    2 +-
- io_uring/io_uring.c |   29 ++++++++++++++++++-----------
- io_uring/sqpoll.c   |   15 +++++++++++++++
- io_uring/sqpoll.h   |    1 +
- 5 files changed, 41 insertions(+), 15 deletions(-)
+ io_uring/io-wq.c    |   10 ++++++++++
+ io_uring/io-wq.h    |    1 +
+ io_uring/io_uring.c |    2 ++
+ 3 files changed, 13 insertions(+)
 
 --- a/io_uring/io-wq.c
 +++ b/io_uring/io-wq.c
-@@ -1285,13 +1285,16 @@ static int io_wq_cpu_offline(unsigned in
- 	return __io_wq_cpu_online(wq, cpu, false);
+@@ -174,6 +174,16 @@ static void io_worker_ref_put(struct io_
+ 		complete(&wq->worker_done);
  }
  
--int io_wq_cpu_affinity(struct io_wq *wq, cpumask_var_t mask)
-+int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask)
- {
-+	if (!tctx || !tctx->io_wq)
-+		return -EINVAL;
++bool io_wq_worker_stopped(void)
++{
++	struct io_worker *worker = current->worker_private;
 +
- 	rcu_read_lock();
- 	if (mask)
--		cpumask_copy(wq->cpu_mask, mask);
-+		cpumask_copy(tctx->io_wq->cpu_mask, mask);
- 	else
--		cpumask_copy(wq->cpu_mask, cpu_possible_mask);
-+		cpumask_copy(tctx->io_wq->cpu_mask, cpu_possible_mask);
- 	rcu_read_unlock();
- 
- 	return 0;
++	if (WARN_ON_ONCE(!io_wq_current_is_worker()))
++		return true;
++
++	return test_bit(IO_WQ_BIT_EXIT, &worker->wq->state);
++}
++
+ static void io_worker_cancel_cb(struct io_worker *worker)
+ {
+ 	struct io_wq_acct *acct = io_wq_get_acct(worker);
 --- a/io_uring/io-wq.h
 +++ b/io_uring/io-wq.h
-@@ -50,7 +50,7 @@ void io_wq_put_and_exit(struct io_wq *wq
- void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work);
- void io_wq_hash_work(struct io_wq_work *work, void *val);
+@@ -52,6 +52,7 @@ void io_wq_hash_work(struct io_wq_work *
  
--int io_wq_cpu_affinity(struct io_wq *wq, cpumask_var_t mask);
-+int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask);
+ int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask);
  int io_wq_max_workers(struct io_wq *wq, int *new_count);
++bool io_wq_worker_stopped(void);
  
  static inline bool io_wq_is_hashed(struct io_wq_work *work)
+ {
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -4177,16 +4177,28 @@ static int io_register_enable_rings(stru
- 	return 0;
- }
- 
-+static __cold int __io_register_iowq_aff(struct io_ring_ctx *ctx,
-+					 cpumask_var_t new_mask)
-+{
-+	int ret;
-+
-+	if (!(ctx->flags & IORING_SETUP_SQPOLL)) {
-+		ret = io_wq_cpu_affinity(current->io_uring, new_mask);
-+	} else {
-+		mutex_unlock(&ctx->uring_lock);
-+		ret = io_sqpoll_wq_cpu_affinity(ctx, new_mask);
-+		mutex_lock(&ctx->uring_lock);
-+	}
-+
-+	return ret;
-+}
-+
- static __cold int io_register_iowq_aff(struct io_ring_ctx *ctx,
- 				       void __user *arg, unsigned len)
- {
--	struct io_uring_task *tctx = current->io_uring;
- 	cpumask_var_t new_mask;
- 	int ret;
- 
--	if (!tctx || !tctx->io_wq)
--		return -EINVAL;
--
- 	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL))
- 		return -ENOMEM;
- 
-@@ -4207,19 +4219,14 @@ static __cold int io_register_iowq_aff(s
- 		return -EFAULT;
- 	}
- 
--	ret = io_wq_cpu_affinity(tctx->io_wq, new_mask);
-+	ret = __io_register_iowq_aff(ctx, new_mask);
- 	free_cpumask_var(new_mask);
- 	return ret;
- }
- 
- static __cold int io_unregister_iowq_aff(struct io_ring_ctx *ctx)
- {
--	struct io_uring_task *tctx = current->io_uring;
--
--	if (!tctx || !tctx->io_wq)
--		return -EINVAL;
--
--	return io_wq_cpu_affinity(tctx->io_wq, NULL);
-+	return __io_register_iowq_aff(ctx, NULL);
- }
- 
- static __cold int io_register_iowq_max_workers(struct io_ring_ctx *ctx,
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -421,3 +421,18 @@ err:
- 	io_sq_thread_finish(ctx);
- 	return ret;
- }
-+
-+__cold int io_sqpoll_wq_cpu_affinity(struct io_ring_ctx *ctx,
-+				     cpumask_var_t mask)
-+{
-+	struct io_sq_data *sqd = ctx->sq_data;
-+	int ret = -EINVAL;
-+
-+	if (sqd) {
-+		io_sq_thread_park(sqd);
-+		ret = io_wq_cpu_affinity(sqd->thread->io_uring, mask);
-+		io_sq_thread_unpark(sqd);
-+	}
-+
-+	return ret;
-+}
---- a/io_uring/sqpoll.h
-+++ b/io_uring/sqpoll.h
-@@ -27,3 +27,4 @@ void io_sq_thread_park(struct io_sq_data
- void io_sq_thread_unpark(struct io_sq_data *sqd);
- void io_put_sq_data(struct io_sq_data *sqd);
- void io_sqpoll_wait_sq(struct io_ring_ctx *ctx);
-+int io_sqpoll_wq_cpu_affinity(struct io_ring_ctx *ctx, cpumask_var_t mask);
+@@ -2050,6 +2050,8 @@ fail:
+ 		if (!needs_poll) {
+ 			if (!(req->ctx->flags & IORING_SETUP_IOPOLL))
+ 				break;
++			if (io_wq_worker_stopped())
++				break;
+ 			cond_resched();
+ 			continue;
+ 		}
 
 
