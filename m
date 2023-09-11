@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1975C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECF6C433C7;
-	Mon, 11 Sep 2023 13:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7861170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5E2C433C7;
+	Mon, 11 Sep 2023 13:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440542;
-	bh=Gp+Z/pjvv5cjbw+Bm1IoiZFqMSnxp8QV/s58Xotjluw=;
+	s=korg; t=1694440545;
+	bh=9tqaolkp0gDEJMetlaUSlJ5ZRF2bADD70NiGL1Rh+sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ml5mkQBLGNBpA9N1rFieiAqv3phUx5LodEsBfuQLzjw8YgMuqGah7bVGPHri6SLEO
-	 W7mcVorEBbXpyaLHFMwhaszXAS+VSSsyVBkBli9nM7os/jolNd2zE6NhZCwiqPSHdJ
-	 FMC9/gd7DiiosFp/0hSAUqw8ISzxQTyEPzYrHMdw=
+	b=IgtKEWvMxPaQQEpBO2Z2+LknQJG44ZLl+XfrPXUsFegpcWBJZYPEzQOl932nLPwag
+	 V3+AKqXMcrTjR8uyQV8qvx3j/Vz3KHWllsFEv5duZePMenzWLUv21s49qEBheuOWvW
+	 bDkRwcSgVPlUeo/BE6UeGFjHP8Sk1H4pkzOGVXQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 098/739] can: gs_usb: gs_usb_receive_bulk_callback(): count RX overflow errors also in case of OOM
-Date: Mon, 11 Sep 2023 15:38:17 +0200
-Message-ID: <20230911134653.839678870@linuxfoundation.org>
+Subject: [PATCH 6.5 099/739] can: tcan4x5x: Remove reserved register 0x814 from writable table
+Date: Mon, 11 Sep 2023 15:38:18 +0200
+Message-ID: <20230911134653.867419538@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,47 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit 6c8bc15f02b85bc8f47074110d8fd8caf7a1e42d ]
+[ Upstream commit fbe534f7bf213d485b0ed5362b24a41bf3e18803 ]
 
-In case of an RX overflow error from the CAN controller and an OOM
-where no skb can be allocated, the error counters are not incremented.
+The mentioned register is not writable. It is reserved and should not be
+written.
 
-Fix this by first incrementing the error counters and then allocate
-the skb.
-
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-7-c3b9154ec605@pengutronix.de
+Fixes: 39dbb21b6a29 ("can: tcan4x5x: Specify separate read/write ranges")
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://lore.kernel.org/all/20230728141923.162477-3-msp@baylibre.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/can/m_can/tcan4x5x-regmap.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index bd9eb066ecf15..129ef60a577c8 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -633,6 +633,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	}
- 
- 	if (hf->flags & GS_CAN_FLAG_OVERFLOW) {
-+		stats->rx_over_errors++;
-+		stats->rx_errors++;
-+
- 		skb = alloc_can_err_skb(netdev, &cf);
- 		if (!skb)
- 			goto resubmit_urb;
-@@ -640,8 +643,6 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 		cf->can_id |= CAN_ERR_CRTL;
- 		cf->len = CAN_ERR_DLC;
- 		cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
--		stats->rx_over_errors++;
--		stats->rx_errors++;
- 		netif_rx(skb);
- 	}
- 
+diff --git a/drivers/net/can/m_can/tcan4x5x-regmap.c b/drivers/net/can/m_can/tcan4x5x-regmap.c
+index 2b218ce04e9f2..fafa6daa67e69 100644
+--- a/drivers/net/can/m_can/tcan4x5x-regmap.c
++++ b/drivers/net/can/m_can/tcan4x5x-regmap.c
+@@ -95,7 +95,6 @@ static const struct regmap_range tcan4x5x_reg_table_wr_range[] = {
+ 	regmap_reg_range(0x000c, 0x0010),
+ 	/* Device configuration registers and Interrupt Flags*/
+ 	regmap_reg_range(0x0800, 0x080c),
+-	regmap_reg_range(0x0814, 0x0814),
+ 	regmap_reg_range(0x0820, 0x0820),
+ 	regmap_reg_range(0x0830, 0x0830),
+ 	/* M_CAN */
 -- 
 2.40.1
 
