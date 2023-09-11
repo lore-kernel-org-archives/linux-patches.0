@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E5511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F7BC433C8;
-	Mon, 11 Sep 2023 15:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF54F11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2FEC433C7;
+	Mon, 11 Sep 2023 15:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445832;
-	bh=qYbKvh7XiLBB0p0MDxIUihMJPsrrG8HE3cRzplQUoKs=;
+	s=korg; t=1694445835;
+	bh=DSXJbmzEAmjIjIk/0qu1t09buoij/2iimeZ16gFtEs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdsBN3I3hcKiQ1rJZMUS/b+wTbzpw43HPkpCeY3Jd2zInSvc3SJCIG9Cm7VMiBEmq
-	 edZMRruOdpDIdaEKIknklTU422GQlp/lHV6SrvHFdXq380SZnUjgNNGD8A2KJ5YGeJ
-	 dJJclnLi7fJFkHz/JwPnVcH6KquKgCESIYasg/RU=
+	b=gx/s5hwW9odq7Y2wgs3P892G5veT2e2+XwnDmf8t7StCpzIGzwH1z3kjUWvOlYF2b
+	 PlbbT7MHFUOVSOe8m1NwivGgqeVXOK6mTtXU5nq0H00hWwUvtDzmTchE32LboLDCsd
+	 dG+ZzmIJUjG+jVcZBMWfSt+qLMcFf0f326mziG7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nils Fuhler <nils@nilsfuhler.de>,
-	Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 461/600] HID: input: Support devices sending Eraser without Invert
-Date: Mon, 11 Sep 2023 15:48:14 +0200
-Message-ID: <20230911134647.260780286@linuxfoundation.org>
+Subject: [PATCH 6.1 452/600] platform/x86: dell-sysman: Fix reference leak
+Date: Mon, 11 Sep 2023 15:48:05 +0200
+Message-ID: <20230911134646.992011901@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,92 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 276e14e6c3993317257e1787e93b7166fbc30905 ]
+[ Upstream commit 7295a996fdab7bf83dc3d4078fa8b139b8e0a1bf ]
 
-Some digitizers (notably XP-Pen Artist 24) do not report the Invert
-usage when erasing.  This causes the device to be permanently stuck with
-the BTN_TOOL_RUBBER tool after sending Eraser, as Invert is the only
-usage that can release the tool.  In this state, Touch and Inrange are
-no longer reported to userspace, rendering the pen unusable.
+If a duplicate attribute is found using kset_find_obj(),
+a reference to that attribute is returned. This means
+that we need to dispose it accordingly. Use kobject_put()
+to dispose the duplicate attribute in such a case.
 
-Prior to commit 87562fcd1342 ("HID: input: remove the need for
-HID_QUIRK_INVERT"), BTN_TOOL_RUBBER was never set and Eraser events were
-simply translated into BTN_TOUCH without causing an inconsistent state.
+Compile-tested only.
 
-Introduce HID_QUIRK_NOINVERT for such digitizers and detect them during
-hidinput_configure_usage().  This quirk causes the tool to be released
-as soon as Eraser is reported as not set.  Set BTN_TOOL_RUBBER in
-input->keybit when mapping Eraser.
-
-Fixes: 87562fcd1342 ("HID: input: remove the need for HID_QUIRK_INVERT")
-Co-developed-by: Nils Fuhler <nils@nilsfuhler.de>
-Signed-off-by: Nils Fuhler <nils@nilsfuhler.de>
-Signed-off-by: Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20230805053610.7106-1-W_Armin@gmx.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 18 ++++++++++++++++--
- include/linux/hid.h     |  1 +
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-sysman/sysman.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 3acaaca888acd..77ee5e01e6111 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -961,6 +961,7 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 			return;
+diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
+index 0a6411a8a104c..b2406a595be9a 100644
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
+@@ -396,6 +396,7 @@ static int init_bios_attributes(int attr_type, const char *guid)
+ 	struct kobject *attr_name_kobj; //individual attribute names
+ 	union acpi_object *obj = NULL;
+ 	union acpi_object *elements;
++	struct kobject *duplicate;
+ 	struct kset *tmp_set;
+ 	int min_elements;
  
- 		case 0x3c: /* Invert */
-+			device->quirks &= ~HID_QUIRK_NOINVERT;
- 			map_key_clear(BTN_TOOL_RUBBER);
- 			break;
+@@ -454,9 +455,11 @@ static int init_bios_attributes(int attr_type, const char *guid)
+ 		else
+ 			tmp_set = wmi_priv.main_dir_kset;
  
-@@ -986,9 +987,13 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 		case 0x45: /* ERASER */
- 			/*
- 			 * This event is reported when eraser tip touches the surface.
--			 * Actual eraser (BTN_TOOL_RUBBER) is set by Invert usage when
--			 * tool gets in proximity.
-+			 * Actual eraser (BTN_TOOL_RUBBER) is set and released either
-+			 * by Invert if tool reports proximity or by Eraser directly.
- 			 */
-+			if (!test_bit(BTN_TOOL_RUBBER, input->keybit)) {
-+				device->quirks |= HID_QUIRK_NOINVERT;
-+				set_bit(BTN_TOOL_RUBBER, input->keybit);
-+			}
- 			map_key_clear(BTN_TOUCH);
- 			break;
+-		if (kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer)) {
+-			pr_debug("duplicate attribute name found - %s\n",
+-				elements[ATTR_NAME].string.pointer);
++		duplicate = kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer);
++		if (duplicate) {
++			pr_debug("Duplicate attribute name found - %s\n",
++				 elements[ATTR_NAME].string.pointer);
++			kobject_put(duplicate);
+ 			goto nextobj;
+ 		}
  
-@@ -1532,6 +1537,15 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct
- 		else if (report->tool != BTN_TOOL_RUBBER)
- 			/* value is off, tool is not rubber, ignore */
- 			return;
-+		else if (*quirks & HID_QUIRK_NOINVERT &&
-+			 !test_bit(BTN_TOUCH, input->key)) {
-+			/*
-+			 * There is no invert to release the tool, let hid_input
-+			 * send BTN_TOUCH with scancode and release the tool after.
-+			 */
-+			hid_report_release_tool(report, input, BTN_TOOL_RUBBER);
-+			return;
-+		}
- 
- 		/* let hid-input set BTN_TOUCH */
- 		break;
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 0a1ccc68e798a..784dd6b6046eb 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -357,6 +357,7 @@ struct hid_item {
- #define HID_QUIRK_NO_OUTPUT_REPORTS_ON_INTR_EP	BIT(18)
- #define HID_QUIRK_HAVE_SPECIAL_DRIVER		BIT(19)
- #define HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE	BIT(20)
-+#define HID_QUIRK_NOINVERT			BIT(21)
- #define HID_QUIRK_FULLSPEED_INTERVAL		BIT(28)
- #define HID_QUIRK_NO_INIT_REPORTS		BIT(29)
- #define HID_QUIRK_NO_IGNORE			BIT(30)
 -- 
 2.40.1
 
