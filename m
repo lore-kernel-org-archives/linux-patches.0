@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7CD11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1026C433CB;
-	Mon, 11 Sep 2023 14:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B33B11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B338DC433C8;
+	Mon, 11 Sep 2023 14:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443237;
-	bh=HGHPOmbdXF+YBO0OLEUG2irlZMlr0L8MIJC2gqjZooI=;
+	s=korg; t=1694443240;
+	bh=sRoTLzUW8Ewf086wt2zkVl15uS8Mu6yVL+g58Jdf+TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZouBgZF105zaGspL7BLB1kASq+Uv2DgNs9afIL9E93djQLt89C9XH0n7fv7euWux5
-	 9qBT/KDs5SXyVcs7fCL2RLKf6HV9wJl3Vmz+gfwzz1KM31Z6FEQO1XeCkbFRMSyt3G
-	 hjeP+NgfB002uC9oNtU8tOmNQXuXwa+kUZBQ7wkc=
+	b=GN1DPwxbzyD7IsydSnUH5dv1kyYH4JXGbEFj+StP3gcsYIHiYWnKgBlboByUePwmj
+	 rd/gQRd+KjBFDX1hCd2CMxAEhyVMYsUGBRGXs636WAEUcO0gf121F325FkUJDsdqQA
+	 dj+bbTHY6s7jMG0erL5NZPmaL7iPG2N9P3wknt6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco@dolcini.it>,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Nishanth Menon <nm@ti.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>
-Subject: [PATCH 6.4 307/737] firmware: ti_sci: Use system_state to determine polling
-Date: Mon, 11 Sep 2023 15:42:46 +0200
-Message-ID: <20230911134659.147575742@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 308/737] drm/amdgpu: avoid integer overflow warning in amdgpu_device_resize_fb_bar()
+Date: Mon, 11 Sep 2023 15:42:47 +0200
+Message-ID: <20230911134659.175468448@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -36,119 +35,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nishanth Menon <nm@ti.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9225bcdedf16297a346082e7d23b0e8434aa98ed ]
+[ Upstream commit 822130b5e8834ab30ad410cf19a582e5014b9a85 ]
 
-Commit b9e8a7d950ff ("firmware: ti_sci: Switch transport to polled
-mode during system suspend") aims to resolve issues with tisci
-operations during system suspend operation. However, the system may
-enter a no_irq stage in various other usage modes, including power-off
-and restart. To determine if polling mode is appropriate, use the
-system_state instead.
+On 32-bit architectures comparing a resource against a value larger than
+U32_MAX can cause a warning:
 
-While at this, drop the unused is_suspending state variable and
-related helpers.
+drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1344:18: error: result of comparison of constant 4294967296 with expression of type 'resource_size_t' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+                    res->start > 0x100000000ull)
+                    ~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
 
-Fixes: b9e8a7d950ff ("firmware: ti_sci: Switch transport to polled mode during system suspend")
-Reported-by: Francesco Dolcini <francesco@dolcini.it>
-Reported-by: Wadim Egorov <w.egorov@phytec.de>
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Verdin AM62
-Link: https://lore.kernel.org/r/20230620130329.4120443-1-nm@ti.com
-Closes: https://lore.kernel.org/all/ZGeHMjlnob2GFyHF@francesco-nb.int.toradex.com/
-Signed-off-by: Nishanth Menon <nm@ti.com>
+As gcc does not warn about this in dead code, add an IS_ENABLED() check at
+the start of the function. This will always return success but not actually resize
+the BAR on 32-bit architectures without high memory, which is exactly what
+we want here, as the driver can fall back to bank switching the VRAM
+access.
+
+Fixes: 31b8adab3247 ("drm/amdgpu: require a root bus window above 4GB for BAR resize")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 36 ++----------------------------------
- 1 file changed, 2 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 039d92a595ec6..91aaa0ca9bde8 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -97,7 +97,6 @@ struct ti_sci_desc {
-  * @node:	list head
-  * @host_id:	Host ID
-  * @users:	Number of users of this instance
-- * @is_suspending: Flag set to indicate in suspend path.
-  */
- struct ti_sci_info {
- 	struct device *dev;
-@@ -116,7 +115,6 @@ struct ti_sci_info {
- 	u8 host_id;
- 	/* protected by ti_sci_list_mutex */
- 	int users;
--	bool is_suspending;
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 3108f5219cf3b..f7770e9c9aaca 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1231,6 +1231,9 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
+ 	u16 cmd;
+ 	int r;
  
- #define cl_to_ti_sci_info(c)	container_of(c, struct ti_sci_info, cl)
-@@ -418,14 +416,14 @@ static inline int ti_sci_do_xfer(struct ti_sci_info *info,
- 
- 	ret = 0;
- 
--	if (!info->is_suspending) {
-+	if (system_state <= SYSTEM_RUNNING) {
- 		/* And we wait for the response. */
- 		timeout = msecs_to_jiffies(info->desc->max_rx_timeout_ms);
- 		if (!wait_for_completion_timeout(&xfer->done, timeout))
- 			ret = -ETIMEDOUT;
- 	} else {
- 		/*
--		 * If we are suspending, we cannot use wait_for_completion_timeout
-+		 * If we are !running, we cannot use wait_for_completion_timeout
- 		 * during noirq phase, so we must manually poll the completion.
- 		 */
- 		ret = read_poll_timeout_atomic(try_wait_for_completion, done_state,
-@@ -3281,35 +3279,6 @@ static int tisci_reboot_handler(struct notifier_block *nb, unsigned long mode,
- 	return NOTIFY_BAD;
- }
- 
--static void ti_sci_set_is_suspending(struct ti_sci_info *info, bool is_suspending)
--{
--	info->is_suspending = is_suspending;
--}
--
--static int ti_sci_suspend(struct device *dev)
--{
--	struct ti_sci_info *info = dev_get_drvdata(dev);
--	/*
--	 * We must switch operation to polled mode now as drivers and the genpd
--	 * layer may make late TI SCI calls to change clock and device states
--	 * from the noirq phase of suspend.
--	 */
--	ti_sci_set_is_suspending(info, true);
--
--	return 0;
--}
--
--static int ti_sci_resume(struct device *dev)
--{
--	struct ti_sci_info *info = dev_get_drvdata(dev);
--
--	ti_sci_set_is_suspending(info, false);
--
--	return 0;
--}
--
--static DEFINE_SIMPLE_DEV_PM_OPS(ti_sci_pm_ops, ti_sci_suspend, ti_sci_resume);
--
- /* Description for K2G */
- static const struct ti_sci_desc ti_sci_pmmc_k2g_desc = {
- 	.default_host_id = 2,
-@@ -3516,7 +3485,6 @@ static struct platform_driver ti_sci_driver = {
- 	.driver = {
- 		   .name = "ti-sci",
- 		   .of_match_table = of_match_ptr(ti_sci_of_match),
--		   .pm = &ti_sci_pm_ops,
- 	},
- };
- module_platform_driver(ti_sci_driver);
++	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
++		return 0;
++
+ 	/* Bypass for VF */
+ 	if (amdgpu_sriov_vf(adev))
+ 		return 0;
 -- 
 2.40.1
 
