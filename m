@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49BA11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570BAC433C8;
-	Mon, 11 Sep 2023 15:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C46B11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7D8C433C8;
+	Mon, 11 Sep 2023 15:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445327;
-	bh=AarfbOCC5VxLEqbNIW3EORUGdOJpPxhanSVCP5suymI=;
+	s=korg; t=1694445330;
+	bh=8As8puNIuxQFwgD+osdT3Zx3+kDGwJVoJxnhTlDdpYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2Bf1IAgztwLdCv4Niu9nUqmXGhsLjhFjZ8c4kQPmIRnGEKKr4Ow6x2lufZXIiqhz
-	 n8kDitYLgq8vd5esT5VMkTNXb/+gIkN8zaWyrU3Tg4Vd5gIQsCFlb77UNeO6dTzsLE
-	 h7LFcG23HjHFxOWD1OGVrLKumkLK5MehHBpHIKPI=
+	b=j+mEVP598eX/jByRPt0PvPwqqL+NORz+5cYh1xvtXYEgCxM6jrH7dtxWvMfWBCz/A
+	 W3AxcFYiIKF3rKq9g18VDFUmsQ4AAgUYKFSwkmF+rmVlk2qmm1SClDV/ggSDuckehB
+	 oyolvWDAAXt2NPK7c5EzUISJExwvTsxCzMO/PY+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	David Wronek <davidwronek@gmail.com>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 309/600] arm64: dts: qcom: msm8998: Add missing power domain to MMSS SMMU
-Date: Mon, 11 Sep 2023 15:45:42 +0200
-Message-ID: <20230911134642.761671964@linuxfoundation.org>
+Subject: [PATCH 6.1 310/600] arm64: dts: qcom: msm8996: Fix dsi1 interrupts
+Date: Mon, 11 Sep 2023 15:45:43 +0200
+Message-ID: <20230911134642.795587845@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,36 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: David Wronek <davidwronek@gmail.com>
 
-[ Upstream commit 7f828f3207142351750e9545527341425187de7b ]
+[ Upstream commit bd3b4ac11845b428996cfd2c7b8302ba6a07340d ]
 
-The MMSS SMMU has its own power domain. Attach it so that we can drop
-the "keep it always-on" hack.
+Fix IRQ flags mismatch which was keeping dsi1 from probing by changing
+interrupts = <4> to interrupts = <5>.
 
-Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu")
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-2-ba1b1fd9ee75@linaro.org
+Fixes: 2752bb7d9b58 ("arm64: dts: qcom: msm8996: add second DSI interface")
+Signed-off-by: David Wronek <davidwronek@gmail.com>
+Acked-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230805130936.359860-2-davidwronek@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 3d6c7940d2a04..b00b8164c4aa2 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2445,6 +2445,8 @@ mmss_smmu: iommu@cd00000 {
- 				<GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			power-domains = <&mmcc BIMC_SMMU_GDSC>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 7e381d8257ba1..9de2248a385a5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1063,7 +1063,7 @@ dsi1: dsi@996000 {
+ 				reg-names = "dsi_ctrl";
  
- 		remoteproc_adsp: remoteproc@17300000 {
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4>;
++				interrupts = <5>;
+ 
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_BYTE1_CLK>,
 -- 
 2.40.1
 
