@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DF91170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5479FC433C9;
-	Mon, 11 Sep 2023 13:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A821170F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DD8C433C8;
+	Mon, 11 Sep 2023 13:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440581;
-	bh=b7wzlfxVBpfudyafhR238ZfXu7tRbJlXHXYYpap+hqs=;
+	s=korg; t=1694440584;
+	bh=XZFjGDAP9daipokb4HbJySnGlnd2guff1/zTqPL4axE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B09gK8FV24lmJTugeTloKwSyRxdMNcmU666P2Ivk+vESJRXegVDd75sn1AGauNFof
-	 dUK7cG1qIKcB/ugjUI/UasRf691+vNb1QFw+/og4vN504FZXj5+to79f3S/a/Pz/e6
-	 O1xDP5CPXTRAOEM6sOgnp1l4mruQ+WCcLnGLc0L4=
+	b=HnE3lB5ooVWm8cWoqnqzBvnyfX2yEHOV3TkFbvXDXzep8guDb3SBzuBS9x7tTXy5b
+	 XD3mj3LjFjsizw5KeNa1Ax4uf0Nb2/thfTmxpUQGytLiS1RQ1iLSACUM1JVnIyPZHL
+	 bZdDIxMwuHCWUp8rqtZLu9XeC2oO49N21/hS4jj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 076/739] hwrng: pic32 - use devm_clk_get_enabled
-Date: Mon, 11 Sep 2023 15:37:55 +0200
-Message-ID: <20230911134653.238864477@linuxfoundation.org>
+Subject: [PATCH 6.5 106/739] wifi: ath12k: fix memcpy array overflow in ath12k_peer_assoc_h_he()
+Date: Mon, 11 Sep 2023 15:38:25 +0200
+Message-ID: <20230911134654.060394359@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,83 +40,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 6755ad74aac0fb1c79b14724feb81b2f6ff25847 ]
+[ Upstream commit 603cf6c2fcdcbc38f1daa316794e7268852677a7 ]
 
-Use devm_clk_get_enabled in the pic32 driver. Ensure that the clock is
-enabled as long as the driver is registered with the hwrng core.
+Two memory copies in this function copy from a short array into a longer one,
+using the wrong size, which leads to an out-of-bounds access:
 
-Fixes: 7ea39973d1e5 ("hwrng: pic32 - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+include/linux/fortify-string.h:592:4: error: call to '__read_overflow2_field' declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+                        __read_overflow2_field(q_size_field, size);
+                        ^
+include/linux/fortify-string.h:592:4: error: call to '__read_overflow2_field' declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+2 errors generated.
+
+Fixes: d889913205cf7 ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230703123737.3420464-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/pic32-rng.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/hw_random/pic32-rng.c b/drivers/char/hw_random/pic32-rng.c
-index 99c8bd0859a14..e04a054e89307 100644
---- a/drivers/char/hw_random/pic32-rng.c
-+++ b/drivers/char/hw_random/pic32-rng.c
-@@ -36,7 +36,6 @@
- struct pic32_rng {
- 	void __iomem	*base;
- 	struct hwrng	rng;
--	struct clk	*clk;
- };
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 1bb9802ef5696..45d88e35fc2eb 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -1637,9 +1637,9 @@ static void ath12k_peer_assoc_h_he(struct ath12k *ar,
+ 	arg->peer_nss = min(sta->deflink.rx_nss, max_nss);
  
- /*
-@@ -70,6 +69,7 @@ static int pic32_rng_read(struct hwrng *rng, void *buf, size_t max,
- static int pic32_rng_probe(struct platform_device *pdev)
- {
- 	struct pic32_rng *priv;
-+	struct clk *clk;
- 	u32 v;
- 	int ret;
+ 	memcpy(&arg->peer_he_cap_macinfo, he_cap->he_cap_elem.mac_cap_info,
+-	       sizeof(arg->peer_he_cap_macinfo));
++	       sizeof(he_cap->he_cap_elem.mac_cap_info));
+ 	memcpy(&arg->peer_he_cap_phyinfo, he_cap->he_cap_elem.phy_cap_info,
+-	       sizeof(arg->peer_he_cap_phyinfo));
++	       sizeof(he_cap->he_cap_elem.phy_cap_info));
+ 	arg->peer_he_ops = vif->bss_conf.he_oper.params;
  
-@@ -81,13 +81,9 @@ static int pic32_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->base))
- 		return PTR_ERR(priv->base);
- 
--	priv->clk = devm_clk_get(&pdev->dev, NULL);
--	if (IS_ERR(priv->clk))
--		return PTR_ERR(priv->clk);
--
--	ret = clk_prepare_enable(priv->clk);
--	if (ret)
--		return ret;
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
- 
- 	/* enable TRNG in enhanced mode */
- 	v = TRNGEN | TRNGMOD;
-@@ -98,15 +94,11 @@ static int pic32_rng_probe(struct platform_device *pdev)
- 
- 	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
- 	if (ret)
--		goto err_register;
-+		return ret;
- 
- 	platform_set_drvdata(pdev, priv);
- 
- 	return 0;
--
--err_register:
--	clk_disable_unprepare(priv->clk);
--	return ret;
- }
- 
- static int pic32_rng_remove(struct platform_device *pdev)
-@@ -114,7 +106,6 @@ static int pic32_rng_remove(struct platform_device *pdev)
- 	struct pic32_rng *rng = platform_get_drvdata(pdev);
- 
- 	writel(0, rng->base + RNGCON);
--	clk_disable_unprepare(rng->clk);
- 	return 0;
- }
- 
+ 	/* the top most byte is used to indicate BSS color info */
 -- 
 2.40.1
 
