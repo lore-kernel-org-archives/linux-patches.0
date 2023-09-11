@@ -1,104 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FAF4432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 12:48:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC36C433C8
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 12:48:13 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=axis.com header.i=@axis.com header.b="Pg2NjzVM"
-Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
-Resent-Date: Mon, 11 Sep 2023 13:48:10 +0100
-Resent-Message-ID: <ZP8MigUE/xn+xLQn@finisterre.sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Mon, 11 Sep 2023 13:42:58 +0100
-Received: from ams.source.kernel.org ([2604:1380:4601:e00::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=ThSf=E3=axis.com=Vincent.Whitchurch@kernel.org>)
-	id 1qfgFj-00AWd2-QU
-	for broonie@sirena.co.uk; Mon, 11 Sep 2023 13:42:58 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id CEBD6B812A3
-	for <broonie@sirena.co.uk>; Mon, 11 Sep 2023 12:42:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 5472FC4339A; Mon, 11 Sep 2023 12:42:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 58456C433C7
-	for <broonie@kernel.org>; Mon, 11 Sep 2023 12:42:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 58456C433C7
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=axis.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=axis.com; q=dns/txt; s=axis-central1; t=1694436171;
-  x=1725972171;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:to:cc;
-  bh=iRWKgzYyApFXq9hIJlEr7x3MLl9rxdsbG3Nqgvq7fM4=;
-  b=Pg2NjzVMf5xIU9kjje5DOQIAYpmuT0HXyONHVokdYME0Zah87IWOOiBi
-   35RVqE7OJHvFUJU/YK0QNg4iZUfxma4MTV9rba3F6ZlynaFh6+KAHmmYy
-   pEiDKXKzLBiC17+7lOuwtwM9QzoQV2vIaraJ12kTzE2EofwlMvfa+3H6A
-   MdkMFbumAB9jB2IEH+F6JBHd7ljo9Olr5zmx1AVqa5wP7OhrSUyVZIv4j
-   bU9gyU7tqY8p1Eij1lvDxNYsHREW307huoXkl6859UJBl7KB8sMf+J1L7
-   8S5PiydxyYU2oGMIZE4f7etYWmXrR4dX+KvXtqrU8mO1klamVOufL/EHh
-   w==;
-From: Vincent Whitchurch <vincent.whitchurch@axis.com>
-Date: Mon, 11 Sep 2023 14:42:47 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920BAE543
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA94C433C8;
+	Mon, 11 Sep 2023 13:51:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1694440288;
+	bh=twQAd1X5gu6nYc/u9rxH7DxtpMUqYki2AuBfzGLDJLo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PaB3IEwwOfSs5gj7iODKTWR20Nh8E7l+N9YY3HgMSzOYQwrzlQwqjGzU5sgq/b6za
+	 RNFWhOeufRAYK+EuSi1EcgofEvYehPNaYbtYIoOEEFyR/i6RQjoNNRJK2NXPjIsI8x
+	 L7AU4wUi7gV5oy495ztpSf8KynRIPiVbjVrkrXTo=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Michael Larabel <Michael@MichaelLarabel.com>
+Subject: [PATCH 6.5 001/739] drm/amd/display: ensure async flips are only accepted for fast updates
+Date: Mon, 11 Sep 2023 15:36:40 +0200
+Message-ID: <20230911134650.979430061@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
+References: <20230911134650.921299741@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230911-regulator-voltage-sel-v1-1-886eb1ade8d8@axis.com>
-X-B4-Tracking: v=1; b=H4sIAEYL/2QC/x2MQQqAMAzAviI9O2gnIvoV8TC2qoXhpFMRxL87P
- AaSPJBZhTMM1QPKl2RJWwGqK/Cr2xY2EgqDRdtgT2SUlzO6I6m5UjxcETJH03rCQD6g7RBKuyv
- Pcv/fcXrfDz1qBzVnAAAA
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Chen-Yu Tsai <wenst@chromium.org>
-CC: <linux-kernel@vger.kernel.org>, <kernel@axis.com>, Vincent Whitchurch
-	<vincent.whitchurch@axis.com>
-X-Mailer: b4 0.12.3
-X-SA-Exim-Connect-IP: 2604:1380:4601:e00::1
-X-SA-Exim-Mail-From: SRS0=ThSf=E3=axis.com=Vincent.Whitchurch@kernel.org
-Subject: [PATCH] regulator: Fix voltage range selection
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: 45UsfbYTTcAh
+Content-Transfer-Encoding: 8bit
 
-Use the correct field to fix wrong voltage range selection on regulators
-such as tps6287x since the blamed commit.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
-Fixes: 269cb04b601d ("regulator: Use bitfield values for range selectors")
-Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
+------------------
+
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+
+commit a7c0cad0dc060bb77e9c9d235d68441b0fc69507 upstream.
+
+We should be checking to see if async flips are supported in
+amdgpu_dm_atomic_check() (i.e. not dm_crtc_helper_atomic_check()). Also,
+async flipping isn't supported if a plane's framebuffer changes memory
+domains during an atomic commit. So, move the check from
+dm_crtc_helper_atomic_check() to amdgpu_dm_atomic_check() and check if
+the memory domain has changed in amdgpu_dm_atomic_check().
+
+Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2733
+Fixes: c1e18c44dc7f ("drm/amd/display: only accept async flips for fast updates")
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Michael Larabel <Michael@MichaelLarabel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      |   24 ++++++++++++++---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   12 --------
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/regulator/helpers.c b/drivers/regulator/helpers.c
-index 5ad5f3b3a6b5..d49268336553 100644
---- a/drivers/regulator/helpers.c
-+++ b/drivers/regulator/helpers.c
-@@ -197,7 +197,7 @@ int regulator_set_voltage_sel_pickable_regmap(struct regulator_dev *rdev,
- 	sel += rdev->desc->linear_ranges[i].min_sel;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8074,10 +8074,12 @@ static void amdgpu_dm_commit_planes(stru
+ 		 * fast updates.
+ 		 */
+ 		if (crtc->state->async_flip &&
+-		    acrtc_state->update_type != UPDATE_TYPE_FAST)
++		    (acrtc_state->update_type != UPDATE_TYPE_FAST ||
++		     get_mem_type(old_plane_state->fb) != get_mem_type(fb)))
+ 			drm_warn_once(state->dev,
+ 				      "[PLANE:%d:%s] async flip with non-fast update\n",
+ 				      plane->base.id, plane->name);
++
+ 		bundle->flip_addrs[planes_count].flip_immediate =
+ 			crtc->state->async_flip &&
+ 			acrtc_state->update_type == UPDATE_TYPE_FAST &&
+@@ -10040,6 +10042,11 @@ static int amdgpu_dm_atomic_check(struct
  
- 	range = rdev->desc->linear_range_selectors_bitfield[i];
--	range <<= ffs(rdev->desc->vsel_mask) - 1;
-+	range <<= ffs(rdev->desc->vsel_range_mask) - 1;
+ 	/* Remove exiting planes if they are modified */
+ 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
++		if (old_plane_state->fb && new_plane_state->fb &&
++		    get_mem_type(old_plane_state->fb) !=
++		    get_mem_type(new_plane_state->fb))
++			lock_and_validation_needed = true;
++
+ 		ret = dm_update_plane_state(dc, state, plane,
+ 					    old_plane_state,
+ 					    new_plane_state,
+@@ -10287,9 +10294,20 @@ static int amdgpu_dm_atomic_check(struct
+ 		struct dm_crtc_state *dm_new_crtc_state =
+ 			to_dm_crtc_state(new_crtc_state);
  
- 	if (rdev->desc->vsel_reg == rdev->desc->vsel_range_reg) {
- 		ret = regmap_update_bits(rdev->regmap,
++		/*
++		 * Only allow async flips for fast updates that don't change
++		 * the FB pitch, the DCC state, rotation, etc.
++		 */
++		if (new_crtc_state->async_flip && lock_and_validation_needed) {
++			drm_dbg_atomic(crtc->dev,
++				       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
++				       crtc->base.id, crtc->name);
++			ret = -EINVAL;
++			goto fail;
++		}
++
+ 		dm_new_crtc_state->update_type = lock_and_validation_needed ?
+-							 UPDATE_TYPE_FULL :
+-							 UPDATE_TYPE_FAST;
++			UPDATE_TYPE_FULL : UPDATE_TYPE_FAST;
+ 	}
+ 
+ 	/* Must be success */
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -398,18 +398,6 @@ static int dm_crtc_helper_atomic_check(s
+ 		return -EINVAL;
+ 	}
+ 
+-	/*
+-	 * Only allow async flips for fast updates that don't change the FB
+-	 * pitch, the DCC state, rotation, etc.
+-	 */
+-	if (crtc_state->async_flip &&
+-	    dm_crtc_state->update_type != UPDATE_TYPE_FAST) {
+-		drm_dbg_atomic(crtc->dev,
+-			       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
+-			       crtc->base.id, crtc->name);
+-		return -EINVAL;
+-	}
+-
+ 	/* In some use cases, like reset, no stream is attached */
+ 	if (!dm_crtc_state->stream)
+ 		return 0;
 
----
-base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
-change-id: 20230911-regulator-voltage-sel-5c10d1cd0270
-
-Best regards,
--- 
-Vincent Whitchurch <vincent.whitchurch@axis.com>
 
