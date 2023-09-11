@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092871170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E19AC433C9;
-	Mon, 11 Sep 2023 14:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072381170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760DCC433C8;
+	Mon, 11 Sep 2023 14:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441436;
-	bh=tzhWKsiuUSYbfVSTjTc/YOqsajtVtvm/JxDL7QK4E1c=;
+	s=korg; t=1694441439;
+	bh=mATBjk+lkVBdqxyGUobCzjp47mGu1zSgyQsVb8fV+nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4YXJD++DFNh8GyQZ1lN5Gj4U6qCqLpMgL6VlO/aTNBFiztOaiapm4m1Di+RR1zG1
-	 2PcuDn0vSIYov7VR68vEeN+mGDWk+7Vrwz1dbtrgJigbBO3kyGlMej+r1JHZAGpdXt
-	 CjVtsTgYBJPir9ungMB5ZzwZhn3q7oD3fPARaL0k=
+	b=FN51dIkTPjexPH/tmSUgKo9r75ZoyW6l+E7ESolpbopH2eNpKZkJUhiAKywPOhXNS
+	 yPtYu/CWyNTMVwle7sYDgYVBzrfJrWwh9YutZqSX6X6SKcQiBUqJi4NsFrW69E1Daj
+	 8gK7D8/eKXgZCSBsmmITuUXKDbMeCWRzMFSZTHtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 413/739] clk: imx: imx8ulp: update SPLL2 type
-Date: Mon, 11 Sep 2023 15:43:32 +0200
-Message-ID: <20230911134702.716033048@linuxfoundation.org>
+Subject: [PATCH 6.5 414/739] clk: imx8mp: fix sai4 clock
+Date: Mon, 11 Sep 2023 15:43:33 +0200
+Message-ID: <20230911134702.743616564@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,37 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit 7653a59be8af043adc4c09473975a860e6055ff9 ]
+[ Upstream commit c30f600f1f41dcf5ef0fb02e9a201f9b2e8f31bd ]
 
-The SPLL2 on iMX8ULP is different with other frac PLLs, it can
-support VCO from 650Mhz to 1Ghz. Following the changes to pllv4,
-use the new type IMX_PLLV4_IMX8ULP_1GHZ.
+The reference manual don't mention a SAI4 hardware block. This would be
+clock slice 78 which is skipped (TRM, page 237). Remove any reference to
+this clock to align the driver with the reality.
 
-Fixes: c43a801a5789 ("clk: imx: Add clock driver for imx8ulp")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230625123340.4067536-2-peng.fan@oss.nxp.com
+Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://lore.kernel.org/r/20230731142150.3186650-1-m.felsch@pengutronix.de
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8ulp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8mp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8ulp.c b/drivers/clk/imx/clk-imx8ulp.c
-index e308c88cb801c..1b04e2fc78ad5 100644
---- a/drivers/clk/imx/clk-imx8ulp.c
-+++ b/drivers/clk/imx/clk-imx8ulp.c
-@@ -167,7 +167,7 @@ static int imx8ulp_clk_cgc1_init(struct platform_device *pdev)
- 	clks[IMX8ULP_CLK_SPLL2_PRE_SEL]	= imx_clk_hw_mux_flags("spll2_pre_sel", base + 0x510, 0, 1, pll_pre_sels, ARRAY_SIZE(pll_pre_sels), CLK_SET_PARENT_GATE);
- 	clks[IMX8ULP_CLK_SPLL3_PRE_SEL]	= imx_clk_hw_mux_flags("spll3_pre_sel", base + 0x610, 0, 1, pll_pre_sels, ARRAY_SIZE(pll_pre_sels), CLK_SET_PARENT_GATE);
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 1469249386dd8..670aa2bab3017 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -178,10 +178,6 @@ static const char * const imx8mp_sai3_sels[] = {"osc_24m", "audio_pll1_out", "au
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext3", "clk_ext4", };
  
--	clks[IMX8ULP_CLK_SPLL2] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP, "spll2", "spll2_pre_sel", base + 0x500);
-+	clks[IMX8ULP_CLK_SPLL2] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP_1GHZ, "spll2", "spll2_pre_sel", base + 0x500);
- 	clks[IMX8ULP_CLK_SPLL3] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP, "spll3", "spll3_pre_sel", base + 0x600);
- 	clks[IMX8ULP_CLK_SPLL3_VCODIV] = imx_clk_hw_divider("spll3_vcodiv", "spll3", base + 0x604, 0, 6);
- 
+-static const char * const imx8mp_sai4_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+-						"clk_ext1", "clk_ext2", };
+-
+ static const char * const imx8mp_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+ 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
+ 						"clk_ext2", "clk_ext3", };
+@@ -567,7 +563,6 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_SAI1] = imx8m_clk_hw_composite("sai1", imx8mp_sai1_sels, ccm_base + 0xa580);
+ 	hws[IMX8MP_CLK_SAI2] = imx8m_clk_hw_composite("sai2", imx8mp_sai2_sels, ccm_base + 0xa600);
+ 	hws[IMX8MP_CLK_SAI3] = imx8m_clk_hw_composite("sai3", imx8mp_sai3_sels, ccm_base + 0xa680);
+-	hws[IMX8MP_CLK_SAI4] = imx8m_clk_hw_composite("sai4", imx8mp_sai4_sels, ccm_base + 0xa700);
+ 	hws[IMX8MP_CLK_SAI5] = imx8m_clk_hw_composite("sai5", imx8mp_sai5_sels, ccm_base + 0xa780);
+ 	hws[IMX8MP_CLK_SAI6] = imx8m_clk_hw_composite("sai6", imx8mp_sai6_sels, ccm_base + 0xa800);
+ 	hws[IMX8MP_CLK_ENET_QOS] = imx8m_clk_hw_composite("enet_qos", imx8mp_enet_qos_sels, ccm_base + 0xa880);
 -- 
 2.40.1
 
