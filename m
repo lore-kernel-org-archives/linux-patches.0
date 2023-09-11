@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F94611705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05D2C433C8;
-	Mon, 11 Sep 2023 14:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EE111705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3D6C433C7;
+	Mon, 11 Sep 2023 14:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443319;
-	bh=Hw9lbiXegzUkAw/cWrGDDp3lbZyh3cEMr3dvdiC9QaM=;
+	s=korg; t=1694443321;
+	bh=AIibMAyMmi5C7/Q6UT1TZJIpW7Gv8sZQfJIjf0rAotU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRuosbLjxzIUgiqP+SBckgsTG/ByYPyAjDHJwZsXWjvNs8Du3aV6kSvtvlYX6gyPi
-	 fUuG4rP2Qs/GAWML/C98c3TR59ODuRqdZqMY9x2n0ft+3IRpU8igTdHLxHH8MDmNvb
-	 3j4w8pTqPh5uvubT31rO3Lqplu0ZM91wrlnmMbBE=
+	b=hgdmFyrT86snYMb9IVWchFdzvPGaUdhLU9n+SfpobCgi4v0RDZbRupsElWTjebL2q
+	 djF3q6ck8M4ARBmd5wBapgO+aEuO02pf9/pQF3lQRNLjUJBsRpt68lcZPWwDnDrUFr
+	 n8VUaVo046MIihxe8Lox+qlsQwrgfvim/K7+Rrw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Bogdan Togorean <bogdan.togorean@analog.com>,
+	Alexandru Ardelean <alex@shruggie.ro>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 297/737] arm64: dts: qcom: pmr735b: fix thermal zone name
-Date: Mon, 11 Sep 2023 15:42:36 +0200
-Message-ID: <20230911134658.853199008@linuxfoundation.org>
+Subject: [PATCH 6.4 329/737] drm: adv7511: Fix low refresh rate register for ADV7533/5
+Date: Mon, 11 Sep 2023 15:43:08 +0200
+Message-ID: <20230911134659.735305964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,37 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Bogdan Togorean <bogdan.togorean@analog.com>
 
-[ Upstream commit 99f8cf491d546cd668236f573c7d846d3e94f2d6 ]
+[ Upstream commit d281eeaa4de2636ff0c8e6ae387bb07b50e5fcbb ]
 
-The name of the thermal zone in pmr735b.dtsi (pmr735a-thermal) conflicts
-with the thermal zone in pmr735a.dtsi. Rename the thermal zone according
-to the chip name.
+For ADV7533 and ADV7535 low refresh rate is selected using
+bits [3:2] of 0x4a main register.
+So depending on ADV model write 0xfb or 0x4a register.
 
-Fixes: 6f3426b3dea4 ("arm64: dts: qcom: pmr735b: add temp sensor and thermal zone config")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230707123027.1510723-5-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2437e7cd88e8 ("drm/bridge: adv7533: Initial support for ADV7533")
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Bogdan Togorean <bogdan.togorean@analog.com>
+Signed-off-by: Alexandru Ardelean <alex@shruggie.ro>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230719060143.63649-1-alex@shruggie.ro
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmr735b.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmr735b.dtsi b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
-index ec24c4478005a..f7473e2473224 100644
---- a/arch/arm64/boot/dts/qcom/pmr735b.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
-@@ -8,7 +8,7 @@
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+index ddceafa7b6374..8d6c93296503e 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+@@ -786,8 +786,13 @@ static void adv7511_mode_set(struct adv7511 *adv7511,
+ 	else
+ 		low_refresh_rate = ADV7511_LOW_REFRESH_RATE_NONE;
  
- / {
- 	thermal-zones {
--		pmr735a_thermal: pmr735a-thermal {
-+		pmr735b_thermal: pmr735b-thermal {
- 			polling-delay-passive = <100>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&pmr735b_temp_alarm>;
+-	regmap_update_bits(adv7511->regmap, 0xfb,
+-		0x6, low_refresh_rate << 1);
++	if (adv7511->type == ADV7511)
++		regmap_update_bits(adv7511->regmap, 0xfb,
++				   0x6, low_refresh_rate << 1);
++	else
++		regmap_update_bits(adv7511->regmap, 0x4a,
++				   0xc, low_refresh_rate << 2);
++
+ 	regmap_update_bits(adv7511->regmap, 0x17,
+ 		0x60, (vsync_polarity << 6) | (hsync_polarity << 5));
+ 
 -- 
 2.40.1
 
