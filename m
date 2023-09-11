@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5606111715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0E5C433C8;
-	Mon, 11 Sep 2023 15:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9C311715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83454C433C9;
+	Mon, 11 Sep 2023 15:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444839;
-	bh=WGSvBHcR3LI9xIBZidaP6gntcYAZVDV6VBTdE6xDQG4=;
+	s=korg; t=1694444841;
+	bh=smoqkgD9xQ8iWfZjDrYvR9RERP9xFvTx+85SkV1ZI/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DOTCNTwtFScPZ7yfXDzKtOHTF/CRHHFCvFTo+WtZ5nnXCQgIqY1E8AX2A7+ChZPZo
-	 PnakBusU9RVdH02WxZ4KHzeoFUYVf1HtTwf+KpZB0gnFkMGFp6/p6g+yut7ug7mRNb
-	 mcGwl+dqHAtAuco0Mkqspb0AL6Km6gTg0dmpx5o4=
+	b=DFYzRxVp4VjsCp7xaDRjLkopT5OlHeDEkwKAaWlaZ6kOcmelzgtUfC2+QhsQO5eSy
+	 1cbT1FV3tcVJK3xvNPh8GlROWaZa4WZy0MO5V7/2CWo3lI+8VJN4d8NVT1bFKwxm5+
+	 AdUmWqUf07ZprpROx1i89sAPSs3ahjvK54Zyyw0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/600] cpufreq: powernow-k8: Use related_cpus instead of cpus in driver.exit()
-Date: Mon, 11 Sep 2023 15:42:48 +0200
-Message-ID: <20230911134637.597102754@linuxfoundation.org>
+Subject: [PATCH 6.1 136/600] selftests/bpf: Fix bpf_nf failure upon test rerun
+Date: Mon, 11 Sep 2023 15:42:49 +0200
+Message-ID: <20230911134637.625789173@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,36 +40,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 03997da042dac73c69e60d91942c727c76828b65 ]
+[ Upstream commit 17e8e5d6e09adb4b4f4fb5c89b3ec3fcae2c64a6 ]
 
-Since the 'cpus' field of policy structure will become empty in the
-cpufreq core API, it is better to use 'related_cpus' in the exit()
-callback of driver.
+Alexei reported:
 
-Fixes: c3274763bfc3 ("cpufreq: powernow-k8: Initialize per-cpu data-structures properly")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+  After fast forwarding bpf-next today bpf_nf test started to fail when
+  run twice:
+
+  $ ./test_progs -t bpf_nf
+  #17      bpf_nf:OK
+  Summary: 1/10 PASSED, 0 SKIPPED, 0 FAILED
+
+  $ ./test_progs -t bpf_nf
+  All error logs:
+  test_bpf_nf_ct:PASS:test_bpf_nf__open_and_load 0 nsec
+  test_bpf_nf_ct:PASS:iptables-legacy -t raw -A PREROUTING -j CONNMARK
+  --set-mark 42/0 0 nsec
+  (network_helpers.c:102: errno: Address already in use) Failed to bind socket
+  test_bpf_nf_ct:FAIL:start_server unexpected start_server: actual -1 < expected 0
+  #17/1    bpf_nf/xdp-ct:FAIL
+  test_bpf_nf_ct:PASS:test_bpf_nf__open_and_load 0 nsec
+  test_bpf_nf_ct:PASS:iptables-legacy -t raw -A PREROUTING -j CONNMARK
+  --set-mark 42/0 0 nsec
+  (network_helpers.c:102: errno: Address already in use) Failed to bind socket
+  test_bpf_nf_ct:FAIL:start_server unexpected start_server: actual -1 < expected 0
+  #17/2    bpf_nf/tc-bpf-ct:FAIL
+  #17      bpf_nf:FAIL
+  Summary: 0/8 PASSED, 0 SKIPPED, 1 FAILED
+
+I was able to locally reproduce as well. Rearrange the connection teardown
+so that the client closes its connection first so that we don't need to
+linger in TCP time-wait.
+
+Fixes: e81fbd4c1ba7 ("selftests/bpf: Add existing connection bpf_*_ct_lookup() test")
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/CAADnVQ+0dnDq_v_vH1EfkacbfGnHANaon7zsw10pMb-D9FS0Pw@mail.gmail.com
+Link: https://lore.kernel.org/bpf/20230626131942.5100-1-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/powernow-k8.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/bpf_nf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/powernow-k8.c b/drivers/cpufreq/powernow-k8.c
-index d289036beff23..b10f7a1b77f11 100644
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1101,7 +1101,8 @@ static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
- 
- 	kfree(data->powernow_table);
- 	kfree(data);
--	for_each_cpu(cpu, pol->cpus)
-+	/* pol->cpus will be empty here, use related_cpus instead. */
-+	for_each_cpu(cpu, pol->related_cpus)
- 		per_cpu(powernow_data, cpu) = NULL;
- 
- 	return 0;
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+index 8a838ea8bdf3b..b2998896f9f7b 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+@@ -123,12 +123,13 @@ static void test_bpf_nf_ct(int mode)
+ 	ASSERT_EQ(skel->data->test_snat_addr, 0, "Test for source natting");
+ 	ASSERT_EQ(skel->data->test_dnat_addr, 0, "Test for destination natting");
+ end:
+-	if (srv_client_fd != -1)
+-		close(srv_client_fd);
+ 	if (client_fd != -1)
+ 		close(client_fd);
++	if (srv_client_fd != -1)
++		close(srv_client_fd);
+ 	if (srv_fd != -1)
+ 		close(srv_fd);
++
+ 	snprintf(cmd, sizeof(cmd), iptables, "-D");
+ 	system(cmd);
+ 	test_bpf_nf__destroy(skel);
 -- 
 2.40.1
 
