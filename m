@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331EB1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7BAC433C8;
-	Mon, 11 Sep 2023 14:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6001170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC2BC433C8;
+	Mon, 11 Sep 2023 14:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441573;
-	bh=mFBSJUUUni0D88EJ963uCj5R4YaiLj9Ms95iJ1BSRss=;
+	s=korg; t=1694441575;
+	bh=R/WEInI3T5X9sWQBqqmyE8vHJR2GT4qMttOfbZydpjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBjOPhaZQheyorsvkEtcjFGzDFbE6gWABg5IN22P6lV1uFH/ecCfznOcOHXLxbZyS
-	 wjWqxfEnDFDPaxIi7by1/I1BBVckvgH1npyfRy2WeNY7Qoyf6Nij1/LiPg2eP4MFz2
-	 F0jHY48rr/N/zekRpStTZEDHq01oLdoORukBwHWA=
+	b=KNVUK6HFIxRXlXCmdFsyhzt92X6KyUjuvVuwL0YkOrJdQpNhFB55+4i1NQvIlStpn
+	 6zspT5qss+aKgKdVFD89oA0ctdCAu5hgokMPTTtYhaUUzNxwbSGAY33nGWjx6uOjsn
+	 cAF762Mb5ApE8IuWhXG/6ieqsYhlnFHpwW/O2Jx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 459/739] media: dib7000p: Fix potential division by zero
-Date: Mon, 11 Sep 2023 15:44:18 +0200
-Message-ID: <20230911134703.975662008@linuxfoundation.org>
+Subject: [PATCH 6.5 460/739] media: dvb-usb: m920x: Fix a potential memory leak in m920x_i2c_xfer()
+Date: Mon, 11 Sep 2023 15:44:19 +0200
+Message-ID: <20230911134704.003985325@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,37 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit a1db7b2c5533fc67e2681eb5efc921a67bc7d5b8 ]
+[ Upstream commit ea9ef6c2e001c5dc94bee35ebd1c8a98621cf7b8 ]
 
-Variable loopdiv can be assigned 0, then it is used as a denominator,
-without checking it for 0.
+'read' is freed when it is known to be NULL, but not when a read error
+occurs.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Revert the logic to avoid a small leak, should a m920x_read() call fail.
 
-Fixes: 713d54a8bd81 ("[media] DiB7090: add support for the dib7090 based")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Fixes: a2ab06d7c4d6 ("media: m920x: don't use stack on USB reads")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-[hverkuil: (bw != NULL) -> bw]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib7000p.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb/m920x.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index a90d2f51868ff..632534eff0ffa 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -497,7 +497,7 @@ static int dib7000p_update_pll(struct dvb_frontend *fe, struct dibx000_bandwidth
- 	prediv = reg_1856 & 0x3f;
- 	loopdiv = (reg_1856 >> 6) & 0x3f;
+diff --git a/drivers/media/usb/dvb-usb/m920x.c b/drivers/media/usb/dvb-usb/m920x.c
+index fea5bcf72a31a..c88a202daf5fc 100644
+--- a/drivers/media/usb/dvb-usb/m920x.c
++++ b/drivers/media/usb/dvb-usb/m920x.c
+@@ -277,7 +277,6 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
+ 			char *read = kmalloc(1, GFP_KERNEL);
+ 			if (!read) {
+ 				ret = -ENOMEM;
+-				kfree(read);
+ 				goto unlock;
+ 			}
  
--	if ((bw != NULL) && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
-+	if (loopdiv && bw && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
- 		dprintk("Updating pll (prediv: old =  %d new = %d ; loopdiv : old = %d new = %d)\n", prediv, bw->pll_prediv, loopdiv, bw->pll_ratio);
- 		reg_1856 &= 0xf000;
- 		reg_1857 = dib7000p_read_word(state, 1857);
+@@ -288,8 +287,10 @@ static int m920x_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int nu
+ 
+ 				if ((ret = m920x_read(d->udev, M9206_I2C, 0x0,
+ 						      0x20 | stop,
+-						      read, 1)) != 0)
++						      read, 1)) != 0) {
++					kfree(read);
+ 					goto unlock;
++				}
+ 				msg[i].buf[j] = read[0];
+ 			}
+ 
 -- 
 2.40.1
 
