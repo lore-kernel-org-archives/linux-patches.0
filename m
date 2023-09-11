@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571AD11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB605C433C8;
-	Mon, 11 Sep 2023 14:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316F211706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3490C433C8;
+	Mon, 11 Sep 2023 14:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443770;
-	bh=5371y4qeFH9My2MFcesIpxDByri+8tzIo46ZhGVqCIc=;
+	s=korg; t=1694443773;
+	bh=KuaKsOLL4k3GVJyAUMGQRxlr+WNO6CuoS/U+E15ct5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oW/MCdCBfofWKNX53GDj+8BWqBqqjg69joxfMpcpw8aa9seEuQpy2EYOWdtGECbxv
-	 WJOAPKkA2rMLyAB/BdZuPGukY0eQVqWNDbNK+0StPy0aGY61Xi8igid7v76dg+8fdM
-	 Olq6HjRCe/2Zo/SJTpLdr7VtYhX1kgBQI9SULV78=
+	b=M0mIGnc671TX/dN9Oxqe2bu11VfBCSjkNb1JL478uVEoEWOD1+tyyzsls6GHkCpy1
+	 i+biot3mlbDbz57ZoH7Lrp8Q+W6nan0jrgymFcWQDOhmHQt9C1VdDE0FWvqhSjyD28
+	 KywXQNO0q6loBHqv/UQzImKqQfTPOA/Iqv238zVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 452/737] powerpc/fadump: reset dump area size if fadump memory reserve fails
-Date: Mon, 11 Sep 2023 15:45:11 +0200
-Message-ID: <20230911134703.224215198@linuxfoundation.org>
+Subject: [PATCH 6.4 488/737] media: dib7000p: Fix potential division by zero
+Date: Mon, 11 Sep 2023 15:45:47 +0200
+Message-ID: <20230911134704.206012953@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,40 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit d1eb75e0dfed80d2d85b664e28a39f65b290ab55 ]
+[ Upstream commit a1db7b2c5533fc67e2681eb5efc921a67bc7d5b8 ]
 
-In case fadump_reserve_mem() fails to reserve memory, the
-reserve_dump_area_size variable will retain the reserve area size. This
-will lead to /sys/kernel/fadump/mem_reserved node displaying an incorrect
-memory reserved by fadump.
+Variable loopdiv can be assigned 0, then it is used as a denominator,
+without checking it for 0.
 
-To fix this problem, reserve dump area size variable is set to 0 if fadump
-failed to reserve memory.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 8255da95e545 ("powerpc/fadump: release all the memory above boot memory size")
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230704050715.203581-1-sourabhjain@linux.ibm.com
+Fixes: 713d54a8bd81 ("[media] DiB7090: add support for the dib7090 based")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: (bw != NULL) -> bw]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/fadump.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/dvb-frontends/dib7000p.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
-index ea0a073abd969..3ff2da7b120b5 100644
---- a/arch/powerpc/kernel/fadump.c
-+++ b/arch/powerpc/kernel/fadump.c
-@@ -654,6 +654,7 @@ int __init fadump_reserve_mem(void)
- 	return ret;
- error_out:
- 	fw_dump.fadump_enabled = 0;
-+	fw_dump.reserve_dump_area_size = 0;
- 	return 0;
- }
+diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
+index a90d2f51868ff..632534eff0ffa 100644
+--- a/drivers/media/dvb-frontends/dib7000p.c
++++ b/drivers/media/dvb-frontends/dib7000p.c
+@@ -497,7 +497,7 @@ static int dib7000p_update_pll(struct dvb_frontend *fe, struct dibx000_bandwidth
+ 	prediv = reg_1856 & 0x3f;
+ 	loopdiv = (reg_1856 >> 6) & 0x3f;
  
+-	if ((bw != NULL) && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
++	if (loopdiv && bw && (bw->pll_prediv != prediv || bw->pll_ratio != loopdiv)) {
+ 		dprintk("Updating pll (prediv: old =  %d new = %d ; loopdiv : old = %d new = %d)\n", prediv, bw->pll_prediv, loopdiv, bw->pll_ratio);
+ 		reg_1856 &= 0xf000;
+ 		reg_1857 = dib7000p_read_word(state, 1857);
 -- 
 2.40.1
 
