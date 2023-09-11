@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2F911710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217F1C433C8;
-	Mon, 11 Sep 2023 15:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1391411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3797EC433C7;
+	Mon, 11 Sep 2023 15:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446066;
-	bh=dxdGTXpkLoQnBg2zEGXBrkWdpMTVIp/F/DQbyHPN6hM=;
+	s=korg; t=1694446069;
+	bh=qkVDtVl449FAfVDiF7Smp49HHCbYihgdU9DIFGaVUiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhyO4+mbH7gUPnIHTS9KvOGLK77r3Y7WbvkJpjn8Kt6ooYH9cHiN0E6mtF/Y7r72x
-	 hk8+2uaNDoI5yVXy8SOTuxiWwhchSl/IN+mGBYZ9/V0hTFaHuQH/500kz6EHJACral
-	 U1EvOAmqHjLS1qWoZFtCjwuXkEF/2A/0O6hc0X4E=
+	b=u3wQhp7VJPll4I/l8RU9R0+/EE+0GVucK0wauOAPrtRbdDT4JIo1iOp59QbsBP10n
+	 wj5eB76CF6ivPDqLRlkhH1yGachyfyCr9vD0JeHdVQ3kFlTY3OVCvDnQtEXC3A6yu0
+	 oWz13td7VKKIGhz8MoyUru8gTHCrtMO0divZ/E0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 6.1 569/600] fsverity: skip PKCS#7 parser when keyring is empty
-Date: Mon, 11 Sep 2023 15:50:02 +0200
-Message-ID: <20230911134650.406257862@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 570/600] x86/MCE: Always save CS register on AMD Zen IF Poison errors
+Date: Mon, 11 Sep 2023 15:50:03 +0200
+Message-ID: <20230911134650.435453928@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,52 +39,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 919dc320956ea353a7fb2d84265195ad5ef525ac upstream.
+commit 4240e2ebe67941ce2c4f5c866c3af4b5ac7a0c67 upstream.
 
-If an fsverity builtin signature is given for a file but the
-".fs-verity" keyring is empty, there's no real reason to run the PKCS#7
-parser.  Skip this to avoid the PKCS#7 attack surface when builtin
-signature support is configured into the kernel but is not being used.
+The Instruction Fetch (IF) units on current AMD Zen-based systems do not
+guarantee a synchronous #MC is delivered for poison consumption errors.
+Therefore, MCG_STATUS[EIPV|RIPV] will not be set. However, the
+microarchitecture does guarantee that the exception is delivered within
+the same context. In other words, the exact rIP is not known, but the
+context is known to not have changed.
 
-This is a hardening improvement, not a fix per se, but I've added
-Fixes and Cc stable to get it out to more users.
+There is no architecturally-defined method to determine this behavior.
 
-Fixes: 432434c9f8e1 ("fs-verity: support builtin file signatures")
+The Code Segment (CS) register is always valid on such IF unit poison
+errors regardless of the value of MCG_STATUS[EIPV|RIPV].
+
+Add a quirk to save the CS register for poison consumption from the IF
+unit banks.
+
+This is needed to properly determine the context of the error.
+Otherwise, the severity grading function will assume the context is
+IN_KERNEL due to the m->cs value being 0 (the initialized value). This
+leads to unnecessary kernel panics on data poison errors due to the
+kernel believing the poison consumption occurred in kernel context.
+
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20230820173237.2579-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230814200853.29258-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/verity/signature.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/x86/kernel/cpu/mce/core.c     |   26 ++++++++++++++++++++++++++
+ arch/x86/kernel/cpu/mce/internal.h |    5 ++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
---- a/fs/verity/signature.c
-+++ b/fs/verity/signature.c
-@@ -54,6 +54,22 @@ int fsverity_verify_signature(const stru
- 		return 0;
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -857,6 +857,26 @@ static noinstr bool quirk_skylake_repmov
+ }
+ 
+ /*
++ * Some Zen-based Instruction Fetch Units set EIPV=RIPV=0 on poison consumption
++ * errors. This means mce_gather_info() will not save the "ip" and "cs" registers.
++ *
++ * However, the context is still valid, so save the "cs" register for later use.
++ *
++ * The "ip" register is truly unknown, so don't save it or fixup EIPV/RIPV.
++ *
++ * The Instruction Fetch Unit is at MCA bank 1 for all affected systems.
++ */
++static __always_inline void quirk_zen_ifu(int bank, struct mce *m, struct pt_regs *regs)
++{
++	if (bank != 1)
++		return;
++	if (!(m->status & MCI_STATUS_POISON))
++		return;
++
++	m->cs = regs->cs;
++}
++
++/*
+  * Do a quick check if any of the events requires a panic.
+  * This decides if we keep the events around or clear them.
+  */
+@@ -875,6 +895,9 @@ static __always_inline int mce_no_way_ou
+ 		if (mce_flags.snb_ifu_quirk)
+ 			quirk_sandybridge_ifu(i, m, regs);
+ 
++		if (mce_flags.zen_ifu_quirk)
++			quirk_zen_ifu(i, m, regs);
++
+ 		m->bank = i;
+ 		if (mce_severity(m, regs, &tmp, true) >= MCE_PANIC_SEVERITY) {
+ 			mce_read_aux(m, i);
+@@ -1852,6 +1875,9 @@ static int __mcheck_cpu_apply_quirks(str
+ 		if (c->x86 == 0x15 && c->x86_model <= 0xf)
+ 			mce_flags.overflow_recov = 1;
+ 
++		if (c->x86 >= 0x17 && c->x86 <= 0x1A)
++			mce_flags.zen_ifu_quirk = 1;
++
  	}
  
-+	if (fsverity_keyring->keys.nr_leaves_on_tree == 0) {
-+		/*
-+		 * The ".fs-verity" keyring is empty, due to builtin signatures
-+		 * being supported by the kernel but not actually being used.
-+		 * In this case, verify_pkcs7_signature() would always return an
-+		 * error, usually ENOKEY.  It could also be EBADMSG if the
-+		 * PKCS#7 is malformed, but that isn't very important to
-+		 * distinguish.  So, just skip to ENOKEY to avoid the attack
-+		 * surface of the PKCS#7 parser, which would otherwise be
-+		 * reachable by any task able to execute FS_IOC_ENABLE_VERITY.
-+		 */
-+		fsverity_err(inode,
-+			     "fs-verity keyring is empty, rejecting signed file!");
-+		return -ENOKEY;
-+	}
+ 	if (c->x86_vendor == X86_VENDOR_INTEL) {
+--- a/arch/x86/kernel/cpu/mce/internal.h
++++ b/arch/x86/kernel/cpu/mce/internal.h
+@@ -157,6 +157,9 @@ struct mce_vendor_flags {
+ 	 */
+ 	smca			: 1,
+ 
++	/* Zen IFU quirk */
++	zen_ifu_quirk		: 1,
 +
- 	d = kzalloc(sizeof(*d) + hash_alg->digest_size, GFP_KERNEL);
- 	if (!d)
- 		return -ENOMEM;
+ 	/* AMD-style error thresholding banks present. */
+ 	amd_threshold		: 1,
+ 
+@@ -172,7 +175,7 @@ struct mce_vendor_flags {
+ 	/* Skylake, Cascade Lake, Cooper Lake REP;MOVS* quirk */
+ 	skx_repmov_quirk	: 1,
+ 
+-	__reserved_0		: 56;
++	__reserved_0		: 55;
+ };
+ 
+ extern struct mce_vendor_flags mce_flags;
 
 
