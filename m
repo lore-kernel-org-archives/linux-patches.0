@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513C711710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EDEC433C9;
-	Mon, 11 Sep 2023 15:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115D611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B82C433C7;
+	Mon, 11 Sep 2023 15:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446090;
-	bh=eCPL9xiUhoKWQNUyhX088CC5ek1lXCSbFOnysYwEoCM=;
+	s=korg; t=1694446092;
+	bh=Fm5EDDl58w4KeKRQDYtt623KkF51ZIgboKA3jssPIfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fSGt3Eis8sHq3/iMESaT2PufXbC/pNP8/l/9IOsIpuhmKqCWf4BR67I6VK1D5IRl4
-	 2Bl60jDNyovj68PoEB3CIivyvYhWyIljmSvcPiXGyBHk6fz6f0ooqGS442WhaGW7Dr
-	 XQyxolxui2iccsEEA0WSNjxe1yf5xJT5+LgyUjQU=
+	b=FIkkUHR1gWo3ydui2S24zAFtUP2J/9Bft5xNsJoVQ0o5bId+xGFNgtjgo8MWsRgSS
+	 OyV8VgbG86i8+6daq1DPpsKkmW9z5YoOVQ/0t3JLixXiqdnb9fJxzKoNvcolMmTSy/
+	 YC1PCKqKwSpaEEvEPPDcI+axq2+C7ly4q4XAN9lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	dri-devel@lists.freedesktop.org,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 6.1 539/600] backlight/bd6107: Compare against struct fb_info.device
-Date: Mon, 11 Sep 2023 15:49:32 +0200
-Message-ID: <20230911134649.532223192@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 572/600] mmc: renesas_sdhi: register irqs before registering controller
+Date: Mon, 11 Sep 2023 15:50:05 +0200
+Message-ID: <20230911134650.497422822@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -45,48 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 992bdddaabfba19bdc77c1c7a4977b2aa41ec891 upstream.
+commit 74f45de394d979cc7770271f92fafa53e1ed3119 upstream.
 
-Struct bd6107_platform_data refers to a platform device within
-the Linux device hierarchy. The test in bd6107_backlight_check_fb()
-compares it against the fbdev device in struct fb_info.dev, which
-is different. Fix the test by comparing to struct fb_info.device.
+IRQs should be ready to serve when we call mmc_add_host() via
+tmio_mmc_host_probe(). To achieve that, ensure that all irqs are masked
+before registering the handlers.
 
-Fixes a bug in the backlight driver and prepares fbdev for making
-struct fb_info.dev optional.
-
-v2:
-	* move renames into separate patch (Javier, Sam, Michael)
-
-Fixes: 67b43e590415 ("backlight: Add ROHM BD6107 backlight driver")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.12+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-2-tzimmermann@suse.de
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230712140011.18602-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/backlight/bd6107.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/renesas_sdhi_core.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/video/backlight/bd6107.c
-+++ b/drivers/video/backlight/bd6107.c
-@@ -104,7 +104,7 @@ static int bd6107_backlight_check_fb(str
- {
- 	struct bd6107 *bd = bl_get_data(backlight);
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -1006,6 +1006,8 @@ int renesas_sdhi_probe(struct platform_d
+ 		host->sdcard_irq_setbit_mask = TMIO_STAT_ALWAYS_SET_27;
+ 		host->sdcard_irq_mask_all = TMIO_MASK_ALL_RCAR2;
+ 		host->reset = renesas_sdhi_reset;
++	} else {
++		host->sdcard_irq_mask_all = TMIO_MASK_ALL;
+ 	}
  
--	return bd->pdata->fbdev == NULL || bd->pdata->fbdev == info->dev;
-+	return bd->pdata->fbdev == NULL || bd->pdata->fbdev == info->device;
- }
+ 	/* Orginally registers were 16 bit apart, could be 32 or 64 nowadays */
+@@ -1102,9 +1104,7 @@ int renesas_sdhi_probe(struct platform_d
+ 		host->ops.hs400_complete = renesas_sdhi_hs400_complete;
+ 	}
  
- static const struct backlight_ops bd6107_backlight_ops = {
+-	ret = tmio_mmc_host_probe(host);
+-	if (ret < 0)
+-		goto edisclk;
++	sd_ctrl_write32_as_16_and_16(host, CTL_IRQ_MASK, host->sdcard_irq_mask_all);
+ 
+ 	num_irqs = platform_irq_count(pdev);
+ 	if (num_irqs < 0) {
+@@ -1131,6 +1131,10 @@ int renesas_sdhi_probe(struct platform_d
+ 			goto eirq;
+ 	}
+ 
++	ret = tmio_mmc_host_probe(host);
++	if (ret < 0)
++		goto edisclk;
++
+ 	dev_info(&pdev->dev, "%s base at %pa, max clock rate %u MHz\n",
+ 		 mmc_hostname(host->mmc), &res->start, host->mmc->f_max / 1000000);
+ 
 
 
