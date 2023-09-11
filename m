@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C9D11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6A2C433C7;
-	Mon, 11 Sep 2023 15:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E3A11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCD0C433C7;
+	Mon, 11 Sep 2023 15:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445841;
-	bh=/TgsauaKS2duA+UvbNHHKCOHIis6GAIIKvnh0wBt1jI=;
+	s=korg; t=1694445844;
+	bh=uPXCkUqXnEJvJ7Wi1I8WxBUJm+YcfL044ZeJwZdCVu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f6v+qnWxm4pekTqfPGhROh7oIIsO/zx0M4a76GzQWslI8nN0VOn4Ju9sMTk/MUzjC
-	 IIs74ws15vXhVxsfajI3i/s+QMK/1/k3YmQoyB+wSJ1RbMehPX6oCJPpXhXZiEmbow
-	 NA3bNY8A292NHGFFKu0P1Grag/63Zpuh/87LrLM8=
+	b=TcvfUC10tD4mV0S3RDYWPCiJvUoS+I1AvCXC+0UOipaaj1fZ1DhHsd2PNJAgQn25v
+	 ODBqhYMMHtWgJKfM6/j2vFWoUNgGdF3TUDa8jS+UTe7npqERDvu/Y4ZXZgqSlsF6Oj
+	 6RSlkoFFwrxuT4zeBh6qXjEY45Fsh08eqVrEq1N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Margolin <mrgolin@amazon.com>,
-	Yossi Leybovich <sleybo@amazon.com>,
-	Yonatan Nachum <ynachum@amazon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 491/600] RDMA/efa: Fix wrong resources deallocation order
-Date: Mon, 11 Sep 2023 15:48:44 +0200
-Message-ID: <20230911134648.126139943@linuxfoundation.org>
+Subject: [PATCH 6.1 492/600] HID: logitech-dj: Fix error handling in logi_dj_recv_switch_to_dj_mode()
+Date: Mon, 11 Sep 2023 15:48:45 +0200
+Message-ID: <20230911134648.154443006@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,60 +40,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Nachum <ynachum@amazon.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit dc202c57e9a1423aed528e4b8dc949509cd32191 ]
+[ Upstream commit 6f20d3261265885f6a6be4cda49d7019728760e0 ]
 
-When trying to destroy QP or CQ, we first decrease the refcount and
-potentially free memory regions allocated for the object and then
-request the device to destroy the object. If the device fails, the
-object isn't fully destroyed so the user/IB core can try to destroy the
-object again which will lead to underflow when trying to decrease an
-already zeroed refcount.
+Presently, if a call to logi_dj_recv_send_report() fails, we do
+not learn about the error until after sending short
+HID_OUTPUT_REPORT with hid_hw_raw_request().
+To handle this somewhat unlikely issue, return on error in
+logi_dj_recv_send_report() (minding ugly sleep workaround) and
+take into account the result of hid_hw_raw_request().
 
-Deallocate resources in reverse order of allocating them to safely free
-them.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Fixes: ff6629f88c52 ("RDMA/efa: Do not delay freeing of DMA pages")
-Reviewed-by: Michael Margolin <mrgolin@amazon.com>
-Reviewed-by: Yossi Leybovich <sleybo@amazon.com>
-Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
-Link: https://lore.kernel.org/r/20230822082725.31719-1-ynachum@amazon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 6a9ddc897883 ("HID: logitech-dj: enable notifications on connect/disconnect")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20230613101635.77820-1-n.zhandarovich@fintech.ru
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/efa/efa_verbs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/hid-logitech-dj.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
-index f9526a4c75b26..90d5f1a96f3e5 100644
---- a/drivers/infiniband/hw/efa/efa_verbs.c
-+++ b/drivers/infiniband/hw/efa/efa_verbs.c
-@@ -443,12 +443,12 @@ int efa_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 
- 	ibdev_dbg(&dev->ibdev, "Destroy qp[%u]\n", ibqp->qp_num);
- 
--	efa_qp_user_mmap_entries_remove(qp);
--
- 	err = efa_destroy_qp_handle(dev, qp->qp_handle);
- 	if (err)
- 		return err;
- 
-+	efa_qp_user_mmap_entries_remove(qp);
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index c358778e070bc..08768e5accedc 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1285,6 +1285,9 @@ static int logi_dj_recv_switch_to_dj_mode(struct dj_receiver_dev *djrcv_dev,
+ 		 * 50 msec should gives enough time to the receiver to be ready.
+ 		 */
+ 		msleep(50);
 +
- 	if (qp->rq_cpu_addr) {
- 		ibdev_dbg(&dev->ibdev,
- 			  "qp->cpu_addr[0x%p] freed: size[%lu], dma[%pad]\n",
-@@ -1007,8 +1007,8 @@ int efa_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 		  "Destroy cq[%d] virt[0x%p] freed: size[%lu], dma[%pad]\n",
- 		  cq->cq_idx, cq->cpu_addr, cq->size, &cq->dma_addr);
++		if (retval)
++			return retval;
+ 	}
  
--	efa_cq_user_mmap_entries_remove(cq);
- 	efa_destroy_cq_idx(dev, cq->cq_idx);
-+	efa_cq_user_mmap_entries_remove(cq);
- 	if (cq->eq) {
- 		xa_erase(&dev->cqs_xa, cq->cq_idx);
- 		synchronize_irq(cq->eq->irq.irqn);
+ 	/*
+@@ -1306,7 +1309,7 @@ static int logi_dj_recv_switch_to_dj_mode(struct dj_receiver_dev *djrcv_dev,
+ 	buf[5] = 0x09;
+ 	buf[6] = 0x00;
+ 
+-	hid_hw_raw_request(hdev, REPORT_ID_HIDPP_SHORT, buf,
++	retval = hid_hw_raw_request(hdev, REPORT_ID_HIDPP_SHORT, buf,
+ 			HIDPP_REPORT_SHORT_LENGTH, HID_OUTPUT_REPORT,
+ 			HID_REQ_SET_REPORT);
+ 
 -- 
 2.40.1
 
