@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFAF11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:58:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865B9C433C9;
-	Mon, 11 Sep 2023 14:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74B711706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:58:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA21C433C8;
+	Mon, 11 Sep 2023 14:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444335;
-	bh=b7ZS+5AJMCj19q/uDGw7aBsssowOCA2Lj1cZJdvEXGA=;
+	s=korg; t=1694444338;
+	bh=EfgxQ/nq12xNGdl0rcyfVS+IpPQEHRYeWbZj8KxCh3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJ8HHpEKIN7ZbYVZXKcD+dKI+I6WY3FC4Iaow0oc8pDBk9jU2PnrZln0OMmaIrOLX
-	 c4svUFE9ZpqgO8A5Z6tdtVXYeCnltlKc+yFw7Hnr78QQC/M8ULr145KCOvno9Sk3En
-	 dVGaY5Vk77TY1FwzANI6/SEsfi6SbsepMh+NIN1s=
+	b=ewMqOb/SAD9gHUdTP5aZj2Y8b97qhIPo8BLV+Kf3hy04e0W2LqLjUvevZOu5GuSyS
+	 ycIPqekkmEuzBgDm9AAZom74AMItmg9Pa72pa4DsSt2U0cAIlO+H0xDsNr43O8WIUV
+	 yPW0UaPovbuQZUqQwxzubOCu+QAbR9slTUfj8Oto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 693/737] dccp: Fix out of bounds access in DCCP error handler
-Date: Mon, 11 Sep 2023 15:49:12 +0200
-Message-ID: <20230911134709.888011087@linuxfoundation.org>
+	Steve Rutherford <srutherford@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Ben Hillier <bhillier@google.com>
+Subject: [PATCH 6.4 694/737] x86/sev: Make enc_dec_hypercall() accept a size instead of npages
+Date: Mon, 11 Sep 2023 15:49:13 +0200
+Message-ID: <20230911134709.914973914@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,84 +42,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Steve Rutherford <srutherford@google.com>
 
-commit 977ad86c2a1bcaf58f01ab98df5cc145083c489c upstream.
+commit ac3f9c9f1b37edaa7d1a9b908bc79d843955a1a2 upstream.
 
-There was a previous attempt to fix an out-of-bounds access in the DCCP
-error handlers, but that fix assumed that the error handlers only want
-to access the first 8 bytes of the DCCP header. Actually, they also look
-at the DCCP sequence number, which is stored beyond 8 bytes, so an
-explicit pskb_may_pull() is required.
+enc_dec_hypercall() accepted a page count instead of a size, which
+forced its callers to round up. As a result, non-page aligned
+vaddrs caused pages to be spuriously marked as decrypted via the
+encryption status hypercall, which in turn caused consistent
+corruption of pages during live migration. Live migration requires
+accurate encryption status information to avoid migrating pages
+from the wrong perspective.
 
-Fixes: 6706a97fec96 ("dccp: fix out of bound access in dccp_v4_err()")
-Fixes: 1aa9d1a0e7ee ("ipv6: dccp: fix out of bound access in dccp_v6_err()")
+Fixes: 064ce6c550a0 ("mm: x86: Invoke hypercall when page encryption status is changed")
+Signed-off-by: Steve Rutherford <srutherford@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Tested-by: Ben Hillier <bhillier@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20230824223731.2055016-1-srutherford@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/ipv4.c |   13 +++++++++----
- net/dccp/ipv6.c |   15 ++++++++++-----
- 2 files changed, 19 insertions(+), 9 deletions(-)
+ arch/x86/include/asm/mem_encrypt.h |    6 +++---
+ arch/x86/kernel/kvm.c              |    4 +---
+ arch/x86/mm/mem_encrypt_amd.c      |   13 ++++++-------
+ 3 files changed, 10 insertions(+), 13 deletions(-)
 
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -255,12 +255,17 @@ static int dccp_v4_err(struct sk_buff *s
- 	int err;
- 	struct net *net = dev_net(skb->dev);
+--- a/arch/x86/include/asm/mem_encrypt.h
++++ b/arch/x86/include/asm/mem_encrypt.h
+@@ -50,8 +50,8 @@ void __init sme_enable(struct boot_param
  
--	/* Only need dccph_dport & dccph_sport which are the first
--	 * 4 bytes in dccp header.
-+	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
-+	 * which is in byte 7 of the dccp header.
- 	 * Our caller (icmp_socket_deliver()) already pulled 8 bytes for us.
-+	 *
-+	 * Later on, we want to access the sequence number fields, which are
-+	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
- 	 */
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_sport) > 8);
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_dport) > 8);
-+	dh = (struct dccp_hdr *)(skb->data + offset);
-+	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
-+		return -EINVAL;
-+	iph = (struct iphdr *)skb->data;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
+ int __init early_set_memory_decrypted(unsigned long vaddr, unsigned long size);
+ int __init early_set_memory_encrypted(unsigned long vaddr, unsigned long size);
+-void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr, int npages,
+-					    bool enc);
++void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr,
++					    unsigned long size, bool enc);
  
- 	sk = __inet_lookup_established(net, &dccp_hashinfo,
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -74,7 +74,7 @@ static inline __u64 dccp_v6_init_sequenc
- static int dccp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 			u8 type, u8 code, int offset, __be32 info)
+ void __init mem_encrypt_free_decrypted_mem(void);
+ 
+@@ -85,7 +85,7 @@ early_set_memory_decrypted(unsigned long
+ static inline int __init
+ early_set_memory_encrypted(unsigned long vaddr, unsigned long size) { return 0; }
+ static inline void __init
+-early_set_mem_enc_dec_hypercall(unsigned long vaddr, int npages, bool enc) {}
++early_set_mem_enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc) {}
+ 
+ static inline void mem_encrypt_free_decrypted_mem(void) { }
+ 
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -966,10 +966,8 @@ static void __init kvm_init_platform(voi
+ 		 * Ensure that _bss_decrypted section is marked as decrypted in the
+ 		 * shared pages list.
+ 		 */
+-		nr_pages = DIV_ROUND_UP(__end_bss_decrypted - __start_bss_decrypted,
+-					PAGE_SIZE);
+ 		early_set_mem_enc_dec_hypercall((unsigned long)__start_bss_decrypted,
+-						nr_pages, 0);
++						__end_bss_decrypted - __start_bss_decrypted, 0);
+ 
+ 		/*
+ 		 * If not booted using EFI, enable Live migration support.
+--- a/arch/x86/mm/mem_encrypt_amd.c
++++ b/arch/x86/mm/mem_encrypt_amd.c
+@@ -288,11 +288,10 @@ static bool amd_enc_cache_flush_required
+ 	return !cpu_feature_enabled(X86_FEATURE_SME_COHERENT);
+ }
+ 
+-static void enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
++static void enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc)
  {
--	const struct ipv6hdr *hdr = (const struct ipv6hdr *)skb->data;
-+	const struct ipv6hdr *hdr;
- 	const struct dccp_hdr *dh;
- 	struct dccp_sock *dp;
- 	struct ipv6_pinfo *np;
-@@ -83,12 +83,17 @@ static int dccp_v6_err(struct sk_buff *s
- 	__u64 seq;
- 	struct net *net = dev_net(skb->dev);
+ #ifdef CONFIG_PARAVIRT
+-	unsigned long sz = npages << PAGE_SHIFT;
+-	unsigned long vaddr_end = vaddr + sz;
++	unsigned long vaddr_end = vaddr + size;
  
--	/* Only need dccph_dport & dccph_sport which are the first
--	 * 4 bytes in dccp header.
-+	/* For the first __dccp_basic_hdr_len() check, we only need dh->dccph_x,
-+	 * which is in byte 7 of the dccp header.
- 	 * Our caller (icmpv6_notify()) already pulled 8 bytes for us.
-+	 *
-+	 * Later on, we want to access the sequence number fields, which are
-+	 * beyond 8 bytes, so we have to pskb_may_pull() ourselves.
- 	 */
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_sport) > 8);
--	BUILD_BUG_ON(offsetofend(struct dccp_hdr, dccph_dport) > 8);
-+	dh = (struct dccp_hdr *)(skb->data + offset);
-+	if (!pskb_may_pull(skb, offset + __dccp_basic_hdr_len(dh)))
-+		return -EINVAL;
-+	hdr = (const struct ipv6hdr *)skb->data;
- 	dh = (struct dccp_hdr *)(skb->data + offset);
+ 	while (vaddr < vaddr_end) {
+ 		int psize, pmask, level;
+@@ -342,7 +341,7 @@ static bool amd_enc_status_change_finish
+ 		snp_set_memory_private(vaddr, npages);
  
- 	sk = __inet6_lookup_established(net, &dccp_hashinfo,
+ 	if (!cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT))
+-		enc_dec_hypercall(vaddr, npages, enc);
++		enc_dec_hypercall(vaddr, npages << PAGE_SHIFT, enc);
+ 
+ 	return true;
+ }
+@@ -466,7 +465,7 @@ static int __init early_set_memory_enc_d
+ 
+ 	ret = 0;
+ 
+-	early_set_mem_enc_dec_hypercall(start, PAGE_ALIGN(size) >> PAGE_SHIFT, enc);
++	early_set_mem_enc_dec_hypercall(start, size, enc);
+ out:
+ 	__flush_tlb_all();
+ 	return ret;
+@@ -482,9 +481,9 @@ int __init early_set_memory_encrypted(un
+ 	return early_set_memory_enc_dec(vaddr, size, true);
+ }
+ 
+-void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
++void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc)
+ {
+-	enc_dec_hypercall(vaddr, npages, enc);
++	enc_dec_hypercall(vaddr, size, enc);
+ }
+ 
+ void __init sme_early_init(void)
 
 
