@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459E11170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:08:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AA3C433C7;
-	Mon, 11 Sep 2023 14:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D27B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:08:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9269EC433C8;
+	Mon, 11 Sep 2023 14:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441326;
-	bh=hxIrzVaCeunsb7tUx4YAGG/OxyE678sR/KdOCPu8WMU=;
+	s=korg; t=1694441328;
+	bh=lASbElQAZhzMUIkMIRUtBfgvWJJdbX3vU08Yox9Qd9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdG3YbYXpPjzl9cRkqmOYaobjAs5lgVTUSdTZsiKdc6dhhPDnExZxujoEpncFaKT+
-	 /3VPOtF+AGlDm9CWVcOj77SP7D+uf8LlRm+/G6+NqNhnNGZ5P4nDazbybpLxA3t2H4
-	 Pi8i6nsk078AFKfePnF5773np3r9ZoXbCsf8NsVE=
+	b=vRnshk3joUfI74p7d/wpl6NthlazRB+W7EicLnTGGmVA5mn0c2YQuoX2KyCIbijr5
+	 oF4hS3AMFcd1IqbpHmzme4/MdYlI+CapDqKBVgPwmWH8JsOFyoQe1Q+TAxfCYMT7op
+	 xIbFqGfApA1fgYxiQL7ZTScHzGOL6Wzz4nOO/6C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Rohit Agarwal <quic_rohiagar@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 347/739] arm64: dts: qcom: msm8998: Add missing power domain to MMSS SMMU
-Date: Mon, 11 Sep 2023 15:42:26 +0200
-Message-ID: <20230911134700.809577819@linuxfoundation.org>
+Subject: [PATCH 6.5 348/739] ARM: dts: qcom: sdx65-mtp: Update the pmic used in sdx65
+Date: Mon, 11 Sep 2023 15:42:27 +0200
+Message-ID: <20230911134700.838296243@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,36 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Rohit Agarwal <quic_rohiagar@quicinc.com>
 
-[ Upstream commit 7f828f3207142351750e9545527341425187de7b ]
+[ Upstream commit f636d6c356b339b0d29eed025f8bf9efcb6eb274 ]
 
-The MMSS SMMU has its own power domain. Attach it so that we can drop
-the "keep it always-on" hack.
+Update the pmic used in sdx65 platform to pm7250b.
 
-Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu")
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-2-ba1b1fd9ee75@linaro.org
+Fixes: 26380f298b2b (ARM: dts: qcom: sdx65-mtp: Add pmk8350b and pm8150b pmic)
+Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/1691415534-31820-7-git-send-email-quic_rohiagar@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 2c3e595091fbc..ed764d02819f7 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2764,6 +2764,8 @@ mmss_smmu: iommu@cd00000 {
- 				<GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			power-domains = <&mmcc BIMC_SMMU_GDSC>;
- 		};
+diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
+index 02d8d6e241ae1..fcf1c51c5e7a7 100644
+--- a/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
++++ b/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
+@@ -7,7 +7,7 @@
+ #include "qcom-sdx65.dtsi"
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include <arm64/qcom/pmk8350.dtsi>
+-#include <arm64/qcom/pm8150b.dtsi>
++#include <arm64/qcom/pm7250b.dtsi>
+ #include "qcom-pmx65.dtsi"
  
- 		remoteproc_adsp: remoteproc@17300000 {
+ / {
 -- 
 2.40.1
 
