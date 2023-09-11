@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB4211184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F00CC433C8;
-	Mon, 11 Sep 2023 14:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E73C11184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C432EC433C7;
+	Mon, 11 Sep 2023 14:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440904;
-	bh=Q/E9Hf6s8e/ZDWRuwGCYw6WEwxp88bf52Zh/yr0egpg=;
+	s=korg; t=1694440907;
+	bh=6qCkiht6I/0j8ufb6ruEfp2U1NkcMXSHwqEfbdXwwAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NRcEMCFgRKUimdvIpg3Csm7b87EkHP4p51yQk0o4oKd/WcQrQ13c7HKV+WSLOO7C
-	 cfN5s2erdRx5EfSu9Om6W9OQBTFIo+sve53HcO9lK0WTHIjh/U1kqrMmPtMG5XJIlB
-	 k6Djqv7qdB/aeqQHQ+aGHPc/mZ+mdmETZmrvj2wU=
+	b=XuHA0iQRIPwlozebqGfUDFOPMwSq6PBFkYMRKCEgBVwrLsR02lHFUL41r6mxyv7qL
+	 4pqsIo97vcAvbctc6EECf3d/wF6sUdxl8jflk0SYGELhG4m3Y4gjEJ8f9LAzvI7kRG
+	 6GyhEmgxs0fS6DPYs64ovCFtv4JVyuqRrCh9c/P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Robert Foss <rfoss@kernel.org>,
+	yixuanjiang <yixuanjiang@google.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 200/739] drm/bridge: tc358764: Fix debug print parameter order
-Date: Mon, 11 Sep 2023 15:39:59 +0200
-Message-ID: <20230911134656.772060732@linuxfoundation.org>
+Subject: [PATCH 6.5 201/739] ASoC: soc-compress: Fix deadlock in soc_compr_open_fe
+Date: Mon, 11 Sep 2023 15:40:00 +0200
+Message-ID: <20230911134656.799523082@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,38 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: yixuanjiang <yixuanjiang@google.com>
 
-[ Upstream commit 7f947be02aab5b154427cb5b0fffe858fc387b02 ]
+[ Upstream commit 2222214749a9969e09454b9ba7febfdfb09c1c8d ]
 
-The debug print parameters were swapped in the output and they were
-printed as decimal values, both the hardware address and the value.
-Update the debug print to print the parameters in correct order, and
-use hexadecimal print for both address and value.
+Modify the error handling flow by release lock.
+The require mutex will keep holding if open fail.
 
-Fixes: f38b7cca6d0e ("drm/bridge: tc358764: Add DSI to LVDS bridge driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230615152817.359420-1-marex@denx.de
+Fixes: aa9ff6a4955f ("ASoC: soc-compress: Reposition and add pcm_mutex")
+Signed-off-by: yixuanjiang <yixuanjiang@google.com>
+Link: https://lore.kernel.org/r/20230619033127.2522477-1-yixuanjiang@google.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358764.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-compress.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358764.c b/drivers/gpu/drm/bridge/tc358764.c
-index f85654f1b1045..8e938a7480f37 100644
---- a/drivers/gpu/drm/bridge/tc358764.c
-+++ b/drivers/gpu/drm/bridge/tc358764.c
-@@ -176,7 +176,7 @@ static void tc358764_read(struct tc358764 *ctx, u16 addr, u32 *val)
- 	if (ret >= 0)
- 		le32_to_cpus(val);
- 
--	dev_dbg(ctx->dev, "read: %d, addr: %d\n", addr, *val);
-+	dev_dbg(ctx->dev, "read: addr=0x%04x data=0x%08x\n", addr, *val);
- }
- 
- static void tc358764_write(struct tc358764 *ctx, u16 addr, u32 val)
+diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
+index 02fdb683f75f3..b58921e7921f8 100644
+--- a/sound/soc/soc-compress.c
++++ b/sound/soc/soc-compress.c
+@@ -193,6 +193,7 @@ static int soc_compr_open_fe(struct snd_compr_stream *cstream)
+ 	snd_soc_dai_compr_shutdown(cpu_dai, cstream, 1);
+ out:
+ 	dpcm_path_put(&list);
++	snd_soc_dpcm_mutex_unlock(fe);
+ be_err:
+ 	fe->dpcm[stream].runtime_update = SND_SOC_DPCM_UPDATE_NO;
+ 	snd_soc_card_mutex_unlock(fe->card);
 -- 
 2.40.1
 
