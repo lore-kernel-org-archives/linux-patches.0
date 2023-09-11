@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C23D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78CEC433C7;
-	Mon, 11 Sep 2023 14:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1847C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BBCC433C8;
+	Mon, 11 Sep 2023 14:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442402;
-	bh=CcFhzsMsbCtyZmzo+CkPz2R95FxsnaWrGTyrSESO8LA=;
+	s=korg; t=1694442404;
+	bh=MFYCr/fVXla8TEokWeL4XCmtR86ycjRXuOZmjN8WA8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meiyGTfG7d4GDR0Pyq07uKaM0hNPEk5068Yv9p4n1QvvyC0g7UVgEwmxtWSMK7RIx
-	 d0EnjHrlCVDeScHeMDlst4SOwvgkHTdT4IPjgQTy8oJO+yiVjIQkEcgiL7jZOHxtHw
-	 jLYOg1gdQZz9g0WZcNHtSVGjzW+imWpkzHmj29hU=
+	b=nog0F+DurZoBHW0Vf6kHvLhp1S0giaPK6JWfgQra4NWdNw7GQ3pC19hB5v+4khJyU
+	 rm6WxQI+s+3IbKLKlblUqcKPnHouKJAZjQV5OduVqOP3F8tUZw2N6a4mvwZ272TbTg
+	 fRHju9Nfsbe0D9AfLeOFrSHOhSFS4cBS+cBgDP7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
 	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.4 013/737] ksmbd: no response from compound read
-Date: Mon, 11 Sep 2023 15:37:52 +0200
-Message-ID: <20230911134650.698195011@linuxfoundation.org>
+Subject: [PATCH 6.4 014/737] ksmbd: fix out of bounds in init_smb2_rsp_hdr()
+Date: Mon, 11 Sep 2023 15:37:53 +0200
+Message-ID: <20230911134650.728565077@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,37 +43,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit e202a1e8634b186da38cbbff85382ea2b9e297cf ]
+[ Upstream commit 536bb492d39bb6c080c92f31e8a55fe9934f452b ]
 
-ksmbd doesn't support compound read. If client send read-read in
-compound to ksmbd, there can be memory leak from read buffer.
-Windows and linux clients doesn't send it to server yet. For now,
-No response from compound read. compound read will be supported soon.
+If client send smb2 negotiate request and then send smb1 negotiate
+request, init_smb2_rsp_hdr is called for smb1 negotiate request since
+need_neg is set to false. This patch ignore smb1 packets after ->need_neg
+is set to false.
 
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21587, ZDI-CAN-21588
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21541
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/server/server.c     |  7 ++++++-
+ fs/smb/server/smb_common.c | 19 +++++++++++--------
+ fs/smb/server/smb_common.h |  2 +-
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ca5af2d9e28bb..a61bc3a2649cb 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6223,6 +6223,11 @@ int smb2_read(struct ksmbd_work *work)
- 	unsigned int max_read_size = conn->vals->max_read_size;
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index ced7a9e916f01..9df121bdf3492 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -286,6 +286,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
+ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ {
+ 	struct ksmbd_work *work;
++	int err;
  
- 	WORK_BUFFERS(work, req, rsp);
-+	if (work->next_smb2_rcv_hdr_off) {
-+		work->send_no_response = 1;
-+		err = -EOPNOTSUPP;
-+		goto out;
+ 	work = ksmbd_alloc_work_struct();
+ 	if (!work) {
+@@ -297,7 +298,11 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ 	work->request_buf = conn->request_buf;
+ 	conn->request_buf = NULL;
+ 
+-	ksmbd_init_smb_server(work);
++	err = ksmbd_init_smb_server(work);
++	if (err) {
++		ksmbd_free_work_struct(work);
++		return 0;
 +	}
  
- 	if (test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_PIPE)) {
+ 	ksmbd_conn_enqueue_request(work);
+ 	atomic_inc(&conn->r_count);
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index 3e391a7d5a3ab..27b8bd039791e 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -388,26 +388,29 @@ static struct smb_version_cmds smb1_server_cmds[1] = {
+ 	[SMB_COM_NEGOTIATE_EX]	= { .proc = smb1_negotiate, },
+ };
+ 
+-static void init_smb1_server(struct ksmbd_conn *conn)
++static int init_smb1_server(struct ksmbd_conn *conn)
+ {
+ 	conn->ops = &smb1_server_ops;
+ 	conn->cmds = smb1_server_cmds;
+ 	conn->max_cmds = ARRAY_SIZE(smb1_server_cmds);
++	return 0;
+ }
+ 
+-void ksmbd_init_smb_server(struct ksmbd_work *work)
++int ksmbd_init_smb_server(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+ 	__le32 proto;
+ 
+-	if (conn->need_neg == false)
+-		return;
+-
+ 	proto = *(__le32 *)((struct smb_hdr *)work->request_buf)->Protocol;
++	if (conn->need_neg == false) {
++		if (proto == SMB1_PROTO_NUMBER)
++			return -EINVAL;
++		return 0;
++	}
++
+ 	if (proto == SMB1_PROTO_NUMBER)
+-		init_smb1_server(conn);
+-	else
+-		init_smb3_11_server(conn);
++		return init_smb1_server(conn);
++	return init_smb3_11_server(conn);
+ }
+ 
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
+index 6b0d5f1fe85ca..f0134d16067fb 100644
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -427,7 +427,7 @@ bool ksmbd_smb_request(struct ksmbd_conn *conn);
+ 
+ int ksmbd_lookup_dialect_by_id(__le16 *cli_dialects, __le16 dialects_count);
+ 
+-void ksmbd_init_smb_server(struct ksmbd_work *work);
++int ksmbd_init_smb_server(struct ksmbd_work *work);
+ 
+ struct ksmbd_kstat;
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work,
 -- 
 2.40.1
 
