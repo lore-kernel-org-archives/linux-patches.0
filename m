@@ -1,27 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D13411705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32A7C433CB;
-	Mon, 11 Sep 2023 15:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43239E57C;
+	Mon, 11 Sep 2023 15:05:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEC2C433C8;
+	Mon, 11 Sep 2023 15:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444713;
-	bh=gU1882pj9OpII++LCNyI2/kg9lVdpEzeoEMbMm9Eo2E=;
+	s=korg; t=1694444716;
+	bh=gKqYzOtmrb5mT8E3JBJBeA0x4l7Np5Du2SHbHf9/9co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ma4ABkzHV3Xt1ticPOaq9XHLEnUiaOJ7Amn2Cbdb4rUpi6iUV+Gz0hpVEct0QFNBg
-	 lm+M0/t1Sm20hHGJcdgL2duk0QZG0zxqE1kBo+lld+sX0brioZfz7ln6u3PBPEj131
-	 /Wlxwv7wjk3az0xovA2JnUy7zOK9yCTRR6R/pHjQ=
+	b=nbB/GVsmFBtROEFncTL2NMpv9C8y3bHqau90RJxcsvuYNI+Bl1bA3QFvyrYT5Fl3s
+	 ek2JzG5EmhjXJTEOHwi8wvH909Joe8E4XJOzSdpro49dKi8nZL0i2qEShhYrL55icM
+	 0ruiWXCZJ2s+R0YIKfE2b/VoM8rVNQKScDOGfxfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Sean Christopherson <seanjc@google.com>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 6.1 082/600] KVM: x86/mmu: Use kstrtobool() instead of strtobool()
-Date: Mon, 11 Sep 2023 15:41:55 +0200
-Message-ID: <20230911134636.036424575@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 091/600] tools lib subcmd: Add install target
+Date: Mon, 11 Sep 2023 15:42:04 +0200
+Message-ID: <20230911134636.295266151@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,45 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Ian Rogers <irogers@google.com>
 
-commit 11b36fe7d4500c8ef73677c087f302fd713101c2 upstream.
+commit 630ae80ea1dd253609cb50cff87f3248f901aca3 upstream.
 
-strtobool() is the same as kstrtobool().
-However, the latter is more used within the kernel.
+This allows libsubcmd to be installed as a dependency.
 
-In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-the other function name.
-
-While at it, include the corresponding header file (<linux/kstrtox.h>)
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/670882aa04dbdd171b46d3b20ffab87158454616.1673689135.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: bpf@vger.kernel.org
+Link: http://lore.kernel.org/lkml/20221109184914.1357295-3-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/lib/subcmd/Makefile |   49 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -42,6 +42,7 @@
- #include <linux/uaccess.h>
- #include <linux/hash.h>
- #include <linux/kern_levels.h>
-+#include <linux/kstrtox.h>
- #include <linux/kthread.h>
+--- a/tools/lib/subcmd/Makefile
++++ b/tools/lib/subcmd/Makefile
+@@ -17,6 +17,15 @@ RM = rm -f
  
- #include <asm/page.h>
-@@ -6667,7 +6668,7 @@ static int set_nx_huge_pages(const char
- 		new_val = 1;
- 	else if (sysfs_streq(val, "auto"))
- 		new_val = get_nx_auto_mode();
--	else if (strtobool(val, &new_val) < 0)
-+	else if (kstrtobool(val, &new_val) < 0)
- 		return -EINVAL;
+ MAKEFLAGS += --no-print-directory
  
- 	__set_nx_huge_pages(new_val);
++INSTALL = install
++
++# Use DESTDIR for installing into a different root directory.
++# This is useful for building a package. The program will be
++# installed in this directory as if it was the root directory.
++# Then the build tool can move it later.
++DESTDIR ?=
++DESTDIR_SQ = '$(subst ','\'',$(DESTDIR))'
++
+ LIBFILE = $(OUTPUT)libsubcmd.a
+ 
+ CFLAGS := -ggdb3 -Wall -Wextra -std=gnu99 -fPIC
+@@ -48,6 +57,18 @@ CFLAGS += $(EXTRA_WARNINGS) $(EXTRA_CFLA
+ 
+ SUBCMD_IN := $(OUTPUT)libsubcmd-in.o
+ 
++ifeq ($(LP64), 1)
++  libdir_relative = lib64
++else
++  libdir_relative = lib
++endif
++
++prefix ?=
++libdir = $(prefix)/$(libdir_relative)
++
++# Shell quotes
++libdir_SQ = $(subst ','\'',$(libdir))
++
+ all:
+ 
+ export srctree OUTPUT CC LD CFLAGS V
+@@ -61,6 +82,34 @@ $(SUBCMD_IN): FORCE
+ $(LIBFILE): $(SUBCMD_IN)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(SUBCMD_IN)
+ 
++define do_install_mkdir
++	if [ ! -d '$(DESTDIR_SQ)$1' ]; then             \
++		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$1'; \
++	fi
++endef
++
++define do_install
++	if [ ! -d '$(DESTDIR_SQ)$2' ]; then             \
++		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$2'; \
++	fi;                                             \
++	$(INSTALL) $1 $(if $3,-m $3,) '$(DESTDIR_SQ)$2'
++endef
++
++install_lib: $(LIBFILE)
++	$(call QUIET_INSTALL, $(LIBFILE)) \
++		$(call do_install_mkdir,$(libdir_SQ)); \
++		cp -fpR $(LIBFILE) $(DESTDIR)$(libdir_SQ)
++
++install_headers:
++	$(call QUIET_INSTALL, headers) \
++		$(call do_install,exec-cmd.h,$(prefix)/include/subcmd,644); \
++		$(call do_install,help.h,$(prefix)/include/subcmd,644); \
++		$(call do_install,pager.h,$(prefix)/include/subcmd,644); \
++		$(call do_install,parse-options.h,$(prefix)/include/subcmd,644); \
++		$(call do_install,run-command.h,$(prefix)/include/subcmd,644);
++
++install: install_lib install_headers
++
+ clean:
+ 	$(call QUIET_CLEAN, libsubcmd) $(RM) $(LIBFILE); \
+ 	find $(or $(OUTPUT),.) -name \*.o -or -name \*.o.cmd -or -name \*.o.d | xargs $(RM)
 
 
