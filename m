@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CA31170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788A8C433C8;
-	Mon, 11 Sep 2023 14:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC101170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D31AC433C7;
+	Mon, 11 Sep 2023 14:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442248;
-	bh=vpRa5oAZ88UFx1KSM94pXMrh7Mx29kKq7yHjq2q12PQ=;
+	s=korg; t=1694442251;
+	bh=G/G+u6IsulNRZWBS0S4rD91Na2a41MiVEYd05AHSv2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mPESp63BSH0YBIUucmwVKYrrHOWqPmHnw7aa7e1UbcMmnDHfUnaKwJN+qWMpvbsX
-	 e4KConRWPULooz01OMsI3HD5EdEZqcx0iTD/YUYPZYRGTNEr94xaWGw0de/nkcakxB
-	 tO6wUXeTD41AeFJDd65p0zCU1O3ndF3146QDjEDA=
+	b=a8GJugz3rxi2UcLHzypQ5NFVKGUXFosjvkXvm0UQmtwRmVttA6EeJW1kjDl6yBOnF
+	 fuih9o4j1se31LakDgxh0di/zww/14J0u2S5P7PYyRzq0CUWLET3HY8qWMo3Unf6/S
+	 yI1PlvhzlOMHS2JRaLa0e1hZdCwGZv8Pr7BSyRkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.5 672/739] i3c: master: svc: fix probe failure when no i3c device exist
-Date: Mon, 11 Sep 2023 15:47:51 +0200
-Message-ID: <20230911134709.874593468@linuxfoundation.org>
+	syzbot+c74fea926a78b8a91042@syzkaller.appspotmail.com,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 673/739] io_uring: Dont set affinity on a dying sqpoll thread
+Date: Mon, 11 Sep 2023 15:47:52 +0200
+Message-ID: <20230911134709.902365697@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,66 +40,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-commit 6e13d6528be2f7e801af63c8153b87293f25d736 upstream.
+commit bd6fc5da4c51107e1e0cec4a3a07963d1dae2c84 upstream.
 
-I3C masters are expected to support hot-join. This means at initialization
-time we might not yet discover any device and this should not be treated
-as a fatal error.
+Syzbot reported a null-ptr-deref of sqd->thread inside
+io_sqpoll_wq_cpu_affinity.  It turns out the sqd->thread can go away
+from under us during io_uring_register, in case the process gets a
+fatal signal during io_uring_register.
 
-During the DAA procedure which happens at probe time, if no device has
-joined, all CCC will be NACKed (from a bus perspective). This leads to an
-early return with an error code which fails the probe of the master.
+It is not particularly hard to hit the race, and while I am not sure
+this is the exact case hit by syzbot, it solves it.  Finally, checking
+->thread is enough to close the race because we locked sqd while
+"parking" the thread, thus preventing it from going away.
 
-Let's avoid this by just telling the core through an I3C_ERROR_M2
-return command code that no device was discovered, which is a valid
-situation. This way the master will no longer bail out and fail to probe
-for a wrong reason.
+I reproduced it fairly consistently with a program that does:
 
-Cc: stable@vger.kernel.org
-Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20230831141324.2841525-1-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+int main(void) {
+  ...
+  io_uring_queue_init(RING_LEN, &ring1, IORING_SETUP_SQPOLL);
+  while (1) {
+    io_uring_register_iowq_aff(ring, 1, &mask);
+  }
+}
+
+Executed in a loop with timeout to trigger SIGTERM:
+  while true; do timeout 1 /a.out ; done
+
+This will hit the following BUG() in very few attempts.
+
+BUG: kernel NULL pointer dereference, address: 00000000000007a8
+PGD 800000010e949067 P4D 800000010e949067 PUD 10e46e067 PMD 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 0 PID: 15715 Comm: dead-sqpoll Not tainted 6.5.0-rc7-next-20230825-g193296236fa0-dirty #23
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+RIP: 0010:io_sqpoll_wq_cpu_affinity+0x27/0x70
+Code: 90 90 90 0f 1f 44 00 00 55 53 48 8b 9f 98 03 00 00 48 85 db 74 4f
+48 89 df 48 89 f5 e8 e2 f8 ff ff 48 8b 43 38 48 85 c0 74 22 <48> 8b b8
+a8 07 00 00 48 89 ee e8 ba b1 00 00 48 89 df 89 c5 e8 70
+RSP: 0018:ffffb04040ea7e70 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff93c010749e40 RCX: 0000000000000001
+RDX: 0000000000000000 RSI: ffffffffa7653331 RDI: 00000000ffffffff
+RBP: ffffb04040ea7eb8 R08: 0000000000000000 R09: c0000000ffffdfff
+R10: ffff93c01141b600 R11: ffffb04040ea7d18 R12: ffff93c00ea74840
+R13: 0000000000000011 R14: 0000000000000000 R15: ffff93c00ea74800
+FS:  00007fb7c276ab80(0000) GS:ffff93c36f200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000007a8 CR3: 0000000111634003 CR4: 0000000000370ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? __die_body+0x1a/0x60
+ ? page_fault_oops+0x154/0x440
+ ? do_user_addr_fault+0x174/0x7b0
+ ? exc_page_fault+0x63/0x140
+ ? asm_exc_page_fault+0x22/0x30
+ ? io_sqpoll_wq_cpu_affinity+0x27/0x70
+ __io_register_iowq_aff+0x2b/0x60
+ __io_uring_register+0x614/0xa70
+ __x64_sys_io_uring_register+0xaa/0x1a0
+ do_syscall_64+0x3a/0x90
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+RIP: 0033:0x7fb7c226fec9
+Code: 2e 00 b8 ca 00 00 00 0f 05 eb a5 66 0f 1f 44 00 00 48 89 f8 48 89
+f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
+f0 ff ff 73 01 c3 48 8b 0d 97 7f 2d 00 f7 d8 64 89 01 48
+RSP: 002b:00007ffe2c0674f8 EFLAGS: 00000246 ORIG_RAX: 00000000000001ab
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fb7c226fec9
+RDX: 00007ffe2c067530 RSI: 0000000000000011 RDI: 0000000000000003
+RBP: 00007ffe2c0675d0 R08: 00007ffe2c067550 R09: 00007ffe2c067550
+R10: 0000000000000001 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffe2c067750 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+Modules linked in:
+CR2: 00000000000007a8
+---[ end trace 0000000000000000 ]---
+
+Reported-by: syzbot+c74fea926a78b8a91042@syzkaller.appspotmail.com
+Fixes: ebdfefc09c6d ("io_uring/sqpoll: fix io-wq affinity when IORING_SETUP_SQPOLL is used")
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://lore.kernel.org/r/87v8cybuo6.fsf@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ io_uring/sqpoll.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -789,6 +789,10 @@ static int svc_i3c_master_do_daa_locked(
- 				 */
- 				break;
- 			} else if (SVC_I3C_MSTATUS_NACKED(reg)) {
-+				/* No I3C devices attached */
-+				if (dev_nb == 0)
-+					break;
-+
- 				/*
- 				 * A slave device nacked the address, this is
- 				 * allowed only once, DAA will be stopped and
-@@ -1263,11 +1267,17 @@ static int svc_i3c_master_send_ccc_cmd(s
- {
- 	struct svc_i3c_master *master = to_svc_i3c_master(m);
- 	bool broadcast = cmd->id < 0x80;
-+	int ret;
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -430,7 +430,9 @@ __cold int io_sqpoll_wq_cpu_affinity(str
  
- 	if (broadcast)
--		return svc_i3c_master_send_bdcast_ccc_cmd(master, cmd);
-+		ret = svc_i3c_master_send_bdcast_ccc_cmd(master, cmd);
- 	else
--		return svc_i3c_master_send_direct_ccc_cmd(master, cmd);
-+		ret = svc_i3c_master_send_direct_ccc_cmd(master, cmd);
-+
-+	if (ret)
-+		cmd->err = I3C_ERROR_M2;
-+
-+	return ret;
- }
+ 	if (sqd) {
+ 		io_sq_thread_park(sqd);
+-		ret = io_wq_cpu_affinity(sqd->thread->io_uring, mask);
++		/* Don't set affinity for a dying thread */
++		if (sqd->thread)
++			ret = io_wq_cpu_affinity(sqd->thread->io_uring, mask);
+ 		io_sq_thread_unpark(sqd);
+ 	}
  
- static int svc_i3c_master_priv_xfers(struct i3c_dev_desc *dev,
 
 
