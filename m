@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241B911705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC37C433CB;
-	Mon, 11 Sep 2023 14:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9560C153
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1B9C433C7;
+	Mon, 11 Sep 2023 14:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443367;
-	bh=hK8tKTD58vkXQYYnpK4pkvmXALuEu4tnWzQukoEWbNs=;
+	s=korg; t=1694443369;
+	bh=ghbZtLnlh0uoY5ys7LgPXPg/BJskO7R0ph06ehLwhQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5Q4E1SNGS73J6nvyiP5T4R5toZq7Vv6GJ7khCQuQRuZYQuofFz0qh4Wwykq5qhpV
-	 f67O46SMby/a2GdzCtDykv98RPLGbgs+rpAjNG4hawWpQZ/5s0CCMLCMltwrTBUq0s
-	 3w+bhNngWWFo95h3MaUDpFJWGSlJmBubqT+cGoPY=
+	b=mz2kU/X2btWEpl4eQCk5WMNkobZd/6Jns/8k6gXqeBmexdg6x2IwylYTVXUDcPFuP
+	 husPcrmF++ryQRs+R+kB0Tzjn6mSI9auMZlmnsOA3kby+OfPcRgk4xV+6kKDPlWUaY
+	 H53lTICN821Ewo/r2rlm/Q36YhHC/h+YHas1vVrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 352/737] ima: Remove deprecated IMA_TRUSTED_KEYRING Kconfig
-Date: Mon, 11 Sep 2023 15:43:31 +0200
-Message-ID: <20230911134700.351102001@linuxfoundation.org>
+Subject: [PATCH 6.4 353/737] drm: xlnx: zynqmp_dpsub: Add missing check for dma_set_mask
+Date: Mon, 11 Sep 2023 15:43:32 +0200
+Message-ID: <20230911134700.377603232@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,43 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nayna Jain <nayna@linux.ibm.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 5087fd9e80e539d2163accd045b73da64de7de95 ]
+[ Upstream commit 1832fba7f9780aff67c96ad30f397c2d76141833 ]
 
-Time to remove "IMA_TRUSTED_KEYRING".
+Add check for dma_set_mask() and return the error if it fails.
 
-Fixes: f4dc37785e9b ("integrity: define '.evm' as a builtin 'trusted' keyring") # v4.5+
-Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/Kconfig | 12 ------------
- 1 file changed, 12 deletions(-)
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
-index 60a511c6b583e..c17660bf5f347 100644
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -248,18 +248,6 @@ config IMA_APPRAISE_MODSIG
- 	   The modsig keyword can be used in the IMA policy to allow a hook
- 	   to accept such signatures.
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+index bab862484d429..068413be65275 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+@@ -227,7 +227,9 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
+ 	dpsub->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, dpsub);
  
--config IMA_TRUSTED_KEYRING
--	bool "Require all keys on the .ima keyring be signed (deprecated)"
--	depends on IMA_APPRAISE && SYSTEM_TRUSTED_KEYRING
--	depends on INTEGRITY_ASYMMETRIC_KEYS
--	select INTEGRITY_TRUSTED_KEYRING
--	default y
--	help
--	   This option requires that all keys added to the .ima
--	   keyring be signed by a key on the system trusted keyring.
--
--	   This option is deprecated in favor of INTEGRITY_TRUSTED_KEYRING
--
- config IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
- 	bool "Permit keys validly signed by a built-in or secondary CA cert (EXPERIMENTAL)"
- 	depends on SYSTEM_TRUSTED_KEYRING
+-	dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
++	ret = dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
++	if (ret)
++		return ret;
+ 
+ 	/* Try the reserved memory. Proceed if there's none. */
+ 	of_reserved_mem_device_init(&pdev->dev);
 -- 
 2.40.1
 
