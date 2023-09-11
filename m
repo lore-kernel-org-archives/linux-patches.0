@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA7FF9F3
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9737AC433C8;
-	Mon, 11 Sep 2023 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97F6F9F3
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58449C433C8;
+	Mon, 11 Sep 2023 13:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440453;
-	bh=LMtISV337OFr4YN3ZIeY+rSIlfXikcpzSuXJoBHaE8o=;
+	s=korg; t=1694440455;
+	bh=hEz8FR8mLBKaotlYJZj91tMBEikZtjpGrxopvT0jebg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksyFP9JW3RdzQpuC5pM7SkeSAG2BwuSDrMgy93Q4oc3dtYILq3JR8OcJ+PxR+lo6P
-	 xiYWO0LDfbgFFjpZH0jZ/6vGsZmaguRvEpaUMo5wSF9wNAeKed2KH3clL3ryw99Z8K
-	 E/MN1C+OkbKqlMKj5Mj46UwSRqVOw3E1f3hWl34A=
+	b=jELarS+w6C5X+2Nl0KkAVXnzcEFGOCkdOlTeiA0NuRZKo529AvihIuwOcSFvN7qwi
+	 Zt39tfHNZmlVJPI6eXe+SWNGLvugd3A30agz7ZsaRx9wDKTrXEbGC+AmiOxKNMTdco
+	 67Tg0VutedI28OuR+BDJq95B1qb4k3uOF/jJ+jNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 049/739] s390/pkey: fix PKEY_TYPE_EP11_AES handling for sysfs attributes
-Date: Mon, 11 Sep 2023 15:37:28 +0200
-Message-ID: <20230911134652.489926170@linuxfoundation.org>
+Subject: [PATCH 6.5 067/739] bpftool: Use a local copy of BPF_LINK_TYPE_PERF_EVENT in pid_iter.bpf.c
+Date: Mon, 11 Sep 2023 15:37:46 +0200
+Message-ID: <20230911134652.977435700@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,76 +40,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Quentin Monnet <quentin@isovalent.com>
 
-[ Upstream commit b9352e4b9b9eff949bcc6907b8569b3a1d992f1e ]
+[ Upstream commit 44ba7b30e84fb40da2295e85a6d209e199fdc977 ]
 
-Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
-private keys")' introduced a new PKEY_TYPE_EP11_AES securekey type as
-a supplement to the existing PKEY_TYPE_EP11 (which won't work in
-environments with session-bound keys). The pkey EP11 securekey
-attributes use PKEY_TYPE_EP11_AES (instead of PKEY_TYPE_EP11)
-keyblobs, to make the generated keyblobs usable also in environments,
-where session-bound keys are required.
+In order to allow the BPF program in bpftool's pid_iter.bpf.c to compile
+correctly on hosts where vmlinux.h does not define
+BPF_LINK_TYPE_PERF_EVENT (running kernel versions lower than 5.15, for
+example), define and use a local copy of the enum value. This requires
+LLVM 12 or newer to build the BPF program.
 
-There should be no negative impacts to userspace because the internal
-structure of the keyblobs is opaque. The increased size of the
-generated keyblobs is reflected by the changed size of the attributes.
-
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: cbdaf71f7e65 ("bpftool: Add bpf_cookie to link output")
+Signed-off-by: Quentin Monnet <quentin@isovalent.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230707095425.168126-4-quentin@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/uapi/asm/pkey.h | 2 +-
- drivers/s390/crypto/pkey_api.c    | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/include/uapi/asm/pkey.h b/arch/s390/include/uapi/asm/pkey.h
-index 5faf0a1d2c167..5ad76471e73ff 100644
---- a/arch/s390/include/uapi/asm/pkey.h
-+++ b/arch/s390/include/uapi/asm/pkey.h
-@@ -26,7 +26,7 @@
- #define MAXCLRKEYSIZE	32	   /* a clear key value may be up to 32 bytes */
- #define MAXAESCIPHERKEYSIZE 136  /* our aes cipher keys have always 136 bytes */
- #define MINEP11AESKEYBLOBSIZE 256  /* min EP11 AES key blob size  */
--#define MAXEP11AESKEYBLOBSIZE 320  /* max EP11 AES key blob size */
-+#define MAXEP11AESKEYBLOBSIZE 336  /* max EP11 AES key blob size */
+diff --git a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
+index 3a4c4f7d83d86..26004f0c5a6ae 100644
+--- a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
++++ b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
+@@ -24,6 +24,10 @@ struct perf_event___local {
+ 	u64 bpf_cookie;
+ } __attribute__((preserve_access_index));
  
- /* Minimum size of a key blob */
- #define MINKEYBLOBSIZE	SECKEYBLOBSIZE
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index 8d6f35ccc561d..396a159afdf5b 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -2142,7 +2142,7 @@ static struct attribute_group ccacipher_attr_group = {
-  * (i.e. off != 0 or count < key blob size) -EINVAL is returned.
-  * This function and the sysfs attributes using it provide EP11 key blobs
-  * padded to the upper limit of MAXEP11AESKEYBLOBSIZE which is currently
-- * 320 bytes.
-+ * 336 bytes.
-  */
- static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
- 				       bool is_xts, char *buf, loff_t off,
-@@ -2171,7 +2171,7 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
- 		card = apqns[i] >> 16;
- 		dom = apqns[i] & 0xFFFF;
- 		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
--				    PKEY_TYPE_EP11);
-+				    PKEY_TYPE_EP11_AES);
- 		if (rc == 0)
- 			break;
- 	}
-@@ -2182,7 +2182,7 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
- 		keysize = MAXEP11AESKEYBLOBSIZE;
- 		buf += MAXEP11AESKEYBLOBSIZE;
- 		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
--				    PKEY_TYPE_EP11);
-+				    PKEY_TYPE_EP11_AES);
- 		if (rc == 0)
- 			return 2 * MAXEP11AESKEYBLOBSIZE;
- 	}
++enum bpf_link_type___local {
++	BPF_LINK_TYPE_PERF_EVENT___local = 7,
++};
++
+ extern const void bpf_link_fops __ksym;
+ extern const void bpf_map_fops __ksym;
+ extern const void bpf_prog_fops __ksym;
+@@ -93,10 +97,13 @@ int iter(struct bpf_iter__task_file *ctx)
+ 	e.pid = task->tgid;
+ 	e.id = get_obj_id(file->private_data, obj_type);
+ 
+-	if (obj_type == BPF_OBJ_LINK) {
++	if (obj_type == BPF_OBJ_LINK &&
++	    bpf_core_enum_value_exists(enum bpf_link_type___local,
++				       BPF_LINK_TYPE_PERF_EVENT___local)) {
+ 		struct bpf_link *link = (struct bpf_link *) file->private_data;
+ 
+-		if (BPF_CORE_READ(link, type) == BPF_LINK_TYPE_PERF_EVENT) {
++		if (link->type == bpf_core_enum_value(enum bpf_link_type___local,
++						      BPF_LINK_TYPE_PERF_EVENT___local)) {
+ 			e.has_bpf_cookie = true;
+ 			e.bpf_cookie = get_bpf_cookie(link);
+ 		}
 -- 
 2.40.1
 
