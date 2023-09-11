@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1BB8472
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B107C433C9;
-	Mon, 11 Sep 2023 14:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898A1E57C
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F368FC433C8;
+	Mon, 11 Sep 2023 14:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442880;
-	bh=5YCjcl9HFmQMyHDUYAT2R2RTAbn1H8w1pPqll9GKypY=;
+	s=korg; t=1694442883;
+	bh=Fzf/7AIHAzWCeVLEwm98e3tTnBE2BY9HIxhxYcA0+z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lj4ys45iZGge44KJ8AKqS7BO39VlMRNB0B61J7l6RRnSfOETw8ruhysCDAF1bIUQH
-	 SDt60SpGqsTFAC2dNvbH/vv1UYQwOJ2OxPdqX7xbJdVPf1hRylk50RDP+mA2wj9htY
-	 W8NID/DQdUu+9WzccFiFNy/2Zh+7C0Z1mQFzwnaU=
+	b=yXGdUG2fwxAJBdRT79QoT3f9yy4+2Ip3HJoHTy5GA8yD3lrDtMgMO8OiKLbdnb80y
+	 6NQVmmuP2HEGqzSyC6U/8ZvW83wNHv1FOpzYUQGp8BGWIQzbDZrbS08xusWijEmf8D
+	 +k8iaNApKWzUQQHLFM4Yq6xtiNP+Q7yhyfpu9GSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 153/737] hwrng: pic32 - use devm_clk_get_enabled
-Date: Mon, 11 Sep 2023 15:40:12 +0200
-Message-ID: <20230911134654.759425455@linuxfoundation.org>
+Subject: [PATCH 6.4 154/737] regmap: Load register defaults in blocks rather than register by register
+Date: Mon, 11 Sep 2023 15:40:13 +0200
+Message-ID: <20230911134654.788298054@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,83 +39,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 6755ad74aac0fb1c79b14724feb81b2f6ff25847 ]
+[ Upstream commit 3a48d2127f4dbd767d43bf8280b67d585e701f75 ]
 
-Use devm_clk_get_enabled in the pic32 driver. Ensure that the clock is
-enabled as long as the driver is registered with the hwrng core.
+Currently we use the normal single register write function to load the
+default values into the cache, resulting in a large number of reallocations
+when there are blocks of registers as we extend the memory region we are
+using to store the values. Instead scan through the list of defaults for
+blocks of adjacent registers and do a single allocation and insert for each
+such block. No functional change.
 
-Fixes: 7ea39973d1e5 ("hwrng: pic32 - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+We do not take advantage of the maple tree preallocation, this is purely at
+the regcache level. It is not clear to me yet if the maple tree level would
+help much here or if we'd have more overhead from overallocating and then
+freeing maple tree data.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20230523-regcache-maple-load-defaults-v1-1-0c04336f005d@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: b0393e1fe40e ("regmap: maple: Use alloc_flags for memory allocations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/pic32-rng.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ drivers/base/regmap/regcache-maple.c | 58 +++++++++++++++++++++++++---
+ 1 file changed, 52 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/char/hw_random/pic32-rng.c b/drivers/char/hw_random/pic32-rng.c
-index 99c8bd0859a14..e04a054e89307 100644
---- a/drivers/char/hw_random/pic32-rng.c
-+++ b/drivers/char/hw_random/pic32-rng.c
-@@ -36,7 +36,6 @@
- struct pic32_rng {
- 	void __iomem	*base;
- 	struct hwrng	rng;
--	struct clk	*clk;
- };
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index c2e3a0f6c2183..14f6f49af097c 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -242,11 +242,41 @@ static int regcache_maple_exit(struct regmap *map)
+ 	return 0;
+ }
  
- /*
-@@ -70,6 +69,7 @@ static int pic32_rng_read(struct hwrng *rng, void *buf, size_t max,
- static int pic32_rng_probe(struct platform_device *pdev)
++static int regcache_maple_insert_block(struct regmap *map, int first,
++					int last)
++{
++	struct maple_tree *mt = map->cache;
++	MA_STATE(mas, mt, first, last);
++	unsigned long *entry;
++	int i, ret;
++
++	entry = kcalloc(last - first + 1, sizeof(unsigned long), GFP_KERNEL);
++	if (!entry)
++		return -ENOMEM;
++
++	for (i = 0; i < last - first + 1; i++)
++		entry[i] = map->reg_defaults[first + i].def;
++
++	mas_lock(&mas);
++
++	mas_set_range(&mas, map->reg_defaults[first].reg,
++		      map->reg_defaults[last].reg);
++	ret = mas_store_gfp(&mas, entry, GFP_KERNEL);
++
++	mas_unlock(&mas);
++
++	if (ret)
++		kfree(entry);
++
++	return ret;
++}
++
+ static int regcache_maple_init(struct regmap *map)
  {
- 	struct pic32_rng *priv;
-+	struct clk *clk;
- 	u32 v;
+ 	struct maple_tree *mt;
+ 	int i;
  	int ret;
++	int range_start;
  
-@@ -81,13 +81,9 @@ static int pic32_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->base))
- 		return PTR_ERR(priv->base);
+ 	mt = kmalloc(sizeof(*mt), GFP_KERNEL);
+ 	if (!mt)
+@@ -255,14 +285,30 @@ static int regcache_maple_init(struct regmap *map)
  
--	priv->clk = devm_clk_get(&pdev->dev, NULL);
--	if (IS_ERR(priv->clk))
--		return PTR_ERR(priv->clk);
--
--	ret = clk_prepare_enable(priv->clk);
--	if (ret)
--		return ret;
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
+ 	mt_init(mt);
  
- 	/* enable TRNG in enhanced mode */
- 	v = TRNGEN | TRNGMOD;
-@@ -98,15 +94,11 @@ static int pic32_rng_probe(struct platform_device *pdev)
+-	for (i = 0; i < map->num_reg_defaults; i++) {
+-		ret = regcache_maple_write(map,
+-					   map->reg_defaults[i].reg,
+-					   map->reg_defaults[i].def);
+-		if (ret)
+-			goto err;
++	if (!map->num_reg_defaults)
++		return 0;
++
++	range_start = 0;
++
++	/* Scan for ranges of contiguous registers */
++	for (i = 1; i < map->num_reg_defaults; i++) {
++		if (map->reg_defaults[i].reg !=
++		    map->reg_defaults[i - 1].reg + 1) {
++			ret = regcache_maple_insert_block(map, range_start,
++							  i - 1);
++			if (ret != 0)
++				goto err;
++
++			range_start = i;
++		}
+ 	}
  
- 	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
- 	if (ret)
--		goto err_register;
-+		return ret;
- 
- 	platform_set_drvdata(pdev, priv);
- 
++	/* Add the last block */
++	ret = regcache_maple_insert_block(map, range_start,
++					  map->num_reg_defaults - 1);
++	if (ret != 0)
++		goto err;
++
  	return 0;
--
--err_register:
--	clk_disable_unprepare(priv->clk);
--	return ret;
- }
  
- static int pic32_rng_remove(struct platform_device *pdev)
-@@ -114,7 +106,6 @@ static int pic32_rng_remove(struct platform_device *pdev)
- 	struct pic32_rng *rng = platform_get_drvdata(pdev);
- 
- 	writel(0, rng->base + RNGCON);
--	clk_disable_unprepare(rng->clk);
- 	return 0;
- }
- 
+ err:
 -- 
 2.40.1
 
