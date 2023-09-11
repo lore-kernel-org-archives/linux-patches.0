@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772784C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE58C433C8;
-	Mon, 11 Sep 2023 14:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E774C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5191C433C8;
+	Mon, 11 Sep 2023 14:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442721;
-	bh=tLcH3GcWkYI/0qLU0CNsHzUnSv+zXPR8JinwbcHPVns=;
+	s=korg; t=1694442724;
+	bh=Ix6E76ph/b6yJHkPXu2ablcKZ1kobIqd+KKTn0W6IP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEh4NdCDgrO8SngHewPVW0h71KM5gJ1Q3siKITcLdfNif9P75ZUUWzACeDbvAeQ7Y
-	 8NU3r+Log2h5rHDUC71KrgnMqiXOFBLG5kiUOTHZXaJCg3+2A8Nw3b3rElzN7b8KUT
-	 KyYi8CERHxTK7qPueRQ9FhtiqCIWcG1ULWFkb94I=
+	b=VxGo6fv4fc84X0Y+WHj9xJyoLVu9P0/OyFher5KPl2TJ8bNJ7XraFAnJikW9leq2z
+	 Gk/+11ZFDy9mWaxTsp7+k9EvigGr0hqNWMexbTl4TKf9rjo74NfgB6JzJIwZI5EZJy
+	 Jeb3SDn8XXqeNaLkISWONzyv2QGZLCPUWfIPJRzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 117/737] selftests/resctrl: Close perf value read fd on errors
-Date: Mon, 11 Sep 2023 15:39:36 +0200
-Message-ID: <20230911134653.773737293@linuxfoundation.org>
+Subject: [PATCH 6.4 126/737] s390/pkey: fix/harmonize internal keyblob headers
+Date: Mon, 11 Sep 2023 15:39:45 +0200
+Message-ID: <20230911134654.023724254@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -36,89 +35,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
+[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
 
-Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
+PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
+which is opaque to the userspace. The header structures for
+PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
+is no reason, why different structures are used. In preparation to fix
+the keyversion handling in the broken PKEY IOCTLs, the same header
+structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
+reduces the number of different code paths and increases the
+readability.
 
-Close fd_lm only in cat_val() to make it easier to track it is always
-closed.
-
-Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/s390/crypto/pkey_api.c        | 2 +-
+ drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
+ drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 8a4fe8693be63..289b619116fec 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -87,21 +87,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
- static int get_llc_perf(unsigned long *llc_perf_miss)
- {
- 	__u64 total_misses;
-+	int ret;
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index a8def50c149bd..e650df3fe7ccb 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -747,7 +747,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 		if (ktype)
+ 			*ktype = PKEY_TYPE_EP11;
+ 		if (ksize)
+-			*ksize = kb->head.keybitlen;
++			*ksize = kb->head.bitlen;
  
- 	/* Stop counters after one span to get miss rate */
+ 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
+ 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index f67d19d08571b..79dc57e720ff1 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -787,7 +787,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
- 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
+ out:
+ 	kfree(req);
+@@ -1055,7 +1055,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
--	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
-+	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
-+	if (ret == -1) {
- 		perror("Could not get llc misses through perf");
--
- 		return -1;
- 	}
- 
- 	total_misses = rf_cqm.values[0].value;
--
--	close(fd_lm);
--
- 	*llc_perf_miss = total_misses;
- 
- 	return 0;
-@@ -253,19 +251,25 @@ int cat_val(struct resctrl_val_param *param)
- 					 memflush, operation, resctrl_val)) {
- 				fprintf(stderr, "Error-running fill buffer\n");
- 				ret = -1;
--				break;
-+				goto pe_close;
- 			}
- 
- 			sleep(1);
- 			ret = measure_cache_vals(param, bm_pid);
- 			if (ret)
--				break;
-+				goto pe_close;
-+
-+			close(fd_lm);
- 		} else {
- 			break;
- 		}
- 	}
- 
- 	return ret;
-+
-+pe_close:
-+	close(fd_lm);
-+	return ret;
- }
- 
- /*
+ out:
+ 	kfree(req);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index 07445041869fe..912b3918c10a1 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -29,14 +29,7 @@ struct ep11keyblob {
+ 	union {
+ 		u8 session[32];
+ 		/* only used for PKEY_TYPE_EP11: */
+-		struct {
+-			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
+-			u8  res0;      /* unused */
+-			u16 len;       /* total length in bytes of this blob */
+-			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
+-			u8  res1;      /* unused */
+-			u16 keybitlen; /* clear key bit len, 0 for unknown */
+-		} head;
++		struct ep11kblob_header head;
+ 	};
+ 	u8  wkvp[16];  /* wrapping key verification pattern */
+ 	u64 attr;      /* boolean key attributes */
 -- 
 2.40.1
 
