@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA21170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A763C433C8;
-	Mon, 11 Sep 2023 14:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709941170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E876DC433C8;
+	Mon, 11 Sep 2023 14:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441159;
-	bh=hxilh9q+EWJNqjIbr5YG6Th/wpgWc5gg/NDgsBGix5k=;
+	s=korg; t=1694441163;
+	bh=Ma0qEr9KXjtn5TBETQKv7bFF+XrVpwQuiehz/hDQ+1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3lKbOuBk9qwAueTCJLWBfZ4ysgoM3tFpId8b+Bs08S6WRUOUUgurlTzjTf4jNY/j
-	 wnfTSPyG5B+wjJcqiehepQl1vxBZlAmpK2layqApDSRDecdmERJsYu9wcb7fR/b26f
-	 MV9r6pgXqAW8HJHRukPNzC23cvxNmAQ3GSCrKZWY=
+	b=fZhcNynlsoKRJAx+VshDiP+pTBbGevCrItJZGKv5L1iMUqbIpw0AbMLXN5BPavW9Q
+	 ahJxApe9JVD+NwnVApXyVeoFDKnyfJisflZ+DKUnH0VIkOavZnB62x4mVXnCK7BuQl
+	 H0efWvt/MfXdXMH3IODu9KXIKOyuAmDCiCTyQ6UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 288/739] md/md-bitmap: remove unnecessary local variable in backlog_store()
-Date: Mon, 11 Sep 2023 15:41:27 +0200
-Message-ID: <20230911134659.178264863@linuxfoundation.org>
+Subject: [PATCH 6.5 289/739] md/md-bitmap: hold reconfig_mutex in backlog_store()
+Date: Mon, 11 Sep 2023 15:41:28 +0200
+Message-ID: <20230911134659.208456607@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,33 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit b4d129640f194ffc4cc64c3e97f98ae944c072e8 ]
+[ Upstream commit 44abfa6a95df425c0660d56043020b67e6d93ab8 ]
 
-Local variable is definied first in the beginning of backlog_store(),
-there is no need to define it again.
+Several reasons why 'reconfig_mutex' should be held:
 
-Fixes: 8c13ab115b57 ("md/bitmap: don't set max_write_behind if there is no write mostly device")
+1) rdev_for_each() is not safe to be called without the lock, because
+   rdev can be removed concurrently.
+2) mddev_destroy_serial_pool() and mddev_create_serial_pool() should not
+   be called concurrently.
+3) mddev_suspend() from mddev_destroy/create_serial_pool() should be
+   protected by the lock.
+
+Fixes: 10c92fca636e ("md-bitmap: create and destroy wb_info_pool with the change of backlog")
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230706083727.608914-2-yukuai1@huaweicloud.com
+Link: https://lore.kernel.org/r/20230706083727.608914-3-yukuai1@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/md/md-bitmap.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 1ff712889a3b3..697ca41c186c6 100644
+index 697ca41c186c6..a08bf6b9accb4 100644
 --- a/drivers/md/md-bitmap.c
 +++ b/drivers/md/md-bitmap.c
-@@ -2565,8 +2565,6 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
- 			mddev_destroy_serial_pool(mddev, NULL, false);
- 	} else if (backlog && !mddev->serial_info_pool) {
- 		/* serial_info_pool is needed since backlog is not zero */
--		struct md_rdev *rdev;
--
- 		rdev_for_each(rdev, mddev)
- 			mddev_create_serial_pool(mddev, rdev, false);
+@@ -2542,6 +2542,10 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
+ 	if (backlog > COUNTER_MAX)
+ 		return -EINVAL;
+ 
++	rv = mddev_lock(mddev);
++	if (rv)
++		return rv;
++
+ 	/*
+ 	 * Without write mostly device, it doesn't make sense to set
+ 	 * backlog for max_write_behind.
+@@ -2555,6 +2559,7 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
+ 	if (!has_write_mostly) {
+ 		pr_warn_ratelimited("%s: can't set backlog, no write mostly device available\n",
+ 				    mdname(mddev));
++		mddev_unlock(mddev);
+ 		return -EINVAL;
  	}
+ 
+@@ -2570,6 +2575,8 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
+ 	}
+ 	if (old_mwb != backlog)
+ 		md_bitmap_update_sb(mddev->bitmap);
++
++	mddev_unlock(mddev);
+ 	return len;
+ }
+ 
 -- 
 2.40.1
 
