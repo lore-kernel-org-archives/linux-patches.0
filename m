@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C646D1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE03CC433C8;
-	Mon, 11 Sep 2023 14:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD511170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEB3C433C7;
+	Mon, 11 Sep 2023 14:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441567;
-	bh=K5yGtOWGn9pAuEhbthS3oiOC7BAtigJxhJ4Qb/SJaqA=;
+	s=korg; t=1694441570;
+	bh=ytnhtsW3b4OEINSZbHRv5IrC4/ZjiwL8pUziL6RJaGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qun36LQZnGsq6DaKUSmUp+gRGPjeLGJCcLXVJqBc8/wq3OW1JiBcB9ttYr5N6kCCq
-	 7fRMC/QHXM1DxQkaD0vhHx329a+pxOZDuq/xefRW6OiszBEiTk1NRUUjzJHCePUapi
-	 DuSU9zULFN7k/LX9ZwGS73n5pYK0AVqPYNDuj/Wk=
+	b=1YzW+U0rDlPhKv8TlbyBrC+zwKg9Tbg0vAhERjl1GgpTaZqVecVbzDf0cPqK3lnvp
+	 PlidoC3TCoiNcfLdTf5mr/PCZlShkKU/ZobymomC3L16ICb6rfpAuQ1RW4GQoVJ+fR
+	 A90myEKdNiUjAHGlZTL1SVKMT1szWxr3GsCmV+qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 431/739] NFSv4.2: Fix READ_PLUS size calculations
-Date: Mon, 11 Sep 2023 15:43:50 +0200
-Message-ID: <20230911134703.214106167@linuxfoundation.org>
+Subject: [PATCH 6.5 458/739] drivers: usb: smsusb: fix error handling code in smsusb_init_device
+Date: Mon, 11 Sep 2023 15:44:17 +0200
+Message-ID: <20230911134703.946466142@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,57 +40,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-[ Upstream commit 8d18f6c5bb864d97a730f471c56cdecf313efe64 ]
+[ Upstream commit b9c7141f384097fa4fa67d2f72e5731d628aef7c ]
 
-I bump the decode_read_plus_maxsz to account for hole segments, but I
-need to subtract out this increase when calling
-rpc_prepare_reply_pages() so the common case of single data segment
-replies can be directly placed into the xdr pages without needing to be
-shifted around.
+The previous commit 4b208f8b561f ("[media] siano: register media controller
+earlier")moves siano_media_device_register before smscore_register_device,
+and adds corresponding error handling code if smscore_register_device
+fails. However, it misses the following error handling code of
+smsusb_init_device.
 
-Reported-by: Chuck Lever <chuck.lever@oracle.com>
-Fixes: d3b00a802c845 ("NFS: Replace the READ_PLUS decoding code")
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fix this by moving error handling code at the end of smsusb_init_device
+and adding a goto statement in the following error handling parts.
+
+Fixes: 4b208f8b561f ("[media] siano: register media controller earlier")
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42xdr.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/usb/siano/smsusb.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
-index d0919c5bf61c7..78193f04d8928 100644
---- a/fs/nfs/nfs42xdr.c
-+++ b/fs/nfs/nfs42xdr.c
-@@ -54,10 +54,16 @@
- 					(1 /* data_content4 */ + \
- 					 2 /* data_info4.di_offset */ + \
- 					 1 /* data_info4.di_length */)
-+#define NFS42_READ_PLUS_HOLE_SEGMENT_SIZE \
-+					(1 /* data_content4 */ + \
-+					 2 /* data_info4.di_offset */ + \
-+					 2 /* data_info4.di_length */)
-+#define READ_PLUS_SEGMENT_SIZE_DIFF	(NFS42_READ_PLUS_HOLE_SEGMENT_SIZE - \
-+					 NFS42_READ_PLUS_DATA_SEGMENT_SIZE)
- #define decode_read_plus_maxsz		(op_decode_hdr_maxsz + \
- 					 1 /* rpr_eof */ + \
- 					 1 /* rpr_contents count */ + \
--					 NFS42_READ_PLUS_DATA_SEGMENT_SIZE)
-+					 NFS42_READ_PLUS_HOLE_SEGMENT_SIZE)
- #define encode_seek_maxsz		(op_encode_hdr_maxsz + \
- 					 encode_stateid_maxsz + \
- 					 2 /* offset */ + \
-@@ -617,8 +623,8 @@ static void nfs4_xdr_enc_read_plus(struct rpc_rqst *req,
- 	encode_putfh(xdr, args->fh, &hdr);
- 	encode_read_plus(xdr, args, &hdr);
+diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
+index 640737d3b8aeb..8a39cac76c585 100644
+--- a/drivers/media/usb/siano/smsusb.c
++++ b/drivers/media/usb/siano/smsusb.c
+@@ -455,12 +455,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smscore_register_device(&params, &dev->coredev, 0, mdev);
+ 	if (rc < 0) {
+ 		pr_err("smscore_register_device(...) failed, rc %d\n", rc);
+-		smsusb_term_device(intf);
+-#ifdef CONFIG_MEDIA_CONTROLLER_DVB
+-		media_device_unregister(mdev);
+-#endif
+-		kfree(mdev);
+-		return rc;
++		goto err_unregister_device;
+ 	}
  
--	rpc_prepare_reply_pages(req, args->pages, args->pgbase,
--				args->count, hdr.replen);
-+	rpc_prepare_reply_pages(req, args->pages, args->pgbase, args->count,
-+				hdr.replen - READ_PLUS_SEGMENT_SIZE_DIFF);
- 	encode_nops(&hdr);
+ 	smscore_set_board_id(dev->coredev, board_id);
+@@ -477,8 +472,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smsusb_start_streaming(dev);
+ 	if (rc < 0) {
+ 		pr_err("smsusb_start_streaming(...) failed\n");
+-		smsusb_term_device(intf);
+-		return rc;
++		goto err_unregister_device;
+ 	}
+ 
+ 	dev->state = SMSUSB_ACTIVE;
+@@ -486,13 +480,20 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
+ 	rc = smscore_start_device(dev->coredev);
+ 	if (rc < 0) {
+ 		pr_err("smscore_start_device(...) failed\n");
+-		smsusb_term_device(intf);
+-		return rc;
++		goto err_unregister_device;
+ 	}
+ 
+ 	pr_debug("device 0x%p created\n", dev);
+ 
+ 	return rc;
++
++err_unregister_device:
++	smsusb_term_device(intf);
++#ifdef CONFIG_MEDIA_CONTROLLER_DVB
++	media_device_unregister(mdev);
++#endif
++	kfree(mdev);
++	return rc;
  }
  
+ static int smsusb_probe(struct usb_interface *intf,
 -- 
 2.40.1
 
