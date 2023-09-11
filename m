@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6624D11711
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8995C433C7;
-	Mon, 11 Sep 2023 14:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C61B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B484AC433C8;
+	Mon, 11 Sep 2023 14:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442368;
-	bh=ciYGroQR3Iy9K/wZhr3sRhSgpbq8Tce3KzkAo2+zmXc=;
+	s=korg; t=1694442371;
+	bh=6sMB2t9NDbKSNEbk87OLjdcaBUHGHCgrVwvg25+5bw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfS/UYxPVWLp5/8K+JpkO/I83rfuaVoS/oQGSCF2+b8PtwKLtB3vyiwX6UGmBXjtO
-	 f7L50ifMVPBJcW+e0MRV3IUL7ZPPGohrNvNXYpANWNKfP3n9X771QTElAcFVSNbUXj
-	 HRv4qS37yZamycmWlXCoVbhHqCk9y8sqlOpX84Ec=
+	b=LEehNLNLASwsjsBzEl+O2D7MtdJYxiLhxVQba6YUQrehFZwMISQbWq6xkEcTBSwko
+	 0gkb/NIbbUqTCB2mla0o1QWZSrFBFrMdqtLBckgKAnWGkRqR3z9hFSazaR70vRQbWo
+	 wTlm7UDkgv2t2KIZeJmHbR3G7cvE41Zwr0T/jgmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Lech Perczak <lech.perczak@camlingroup.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 730/739] Bluetooth: HCI: Introduce HCI_QUIRK_BROKEN_LE_CODED
-Date: Mon, 11 Sep 2023 15:48:49 +0200
-Message-ID: <20230911134711.455104155@linuxfoundation.org>
+Subject: [PATCH 6.5 731/739] serial: sc16is7xx: remove obsolete out_thread label
+Date: Mon, 11 Sep 2023 15:48:50 +0200
+Message-ID: <20230911134711.482147596@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,104 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 253f3399f4c09ce6f4e67350f839be0361b4d5ff ]
+[ Upstream commit dabc54a45711fe77674a6c0348231e00e66bd567 ]
 
-This introduces HCI_QUIRK_BROKEN_LE_CODED which is used to indicate
-that LE Coded PHY shall not be used, it is then set for some Intel
-models that claim to support it but when used causes many problems.
+Commit c8f71b49ee4d ("serial: sc16is7xx: setup GPIO controller later
+in probe") moved GPIO setup code later in probe function. Doing so
+also required to move ports cleanup code (out_ports label) after the
+GPIO cleanup code.
 
-Cc: stable@vger.kernel.org # 6.4.y+
-Link: https://github.com/bluez/bluez/issues/577
-Link: https://github.com/bluez/bluez/issues/582
-Link: https://lore.kernel.org/linux-bluetooth/CABBYNZKco-v7wkjHHexxQbgwwSz-S=GZ=dZKbRE1qxT1h4fFbQ@mail.gmail.com/T/#
-Fixes: 288c90224eec ("Bluetooth: Enable all supported LE PHY by default")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+After these moves, the out_thread label becomes misplaced and makes
+part of the cleanup code illogical.
+
+This patch remove the now obsolete out_thread label and make GPIO
+setup code jump to out_ports label if it fails.
+
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
+Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230807214556.540627-3-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 049994292834 ("serial: sc16is7xx: fix regression with GPIO configuration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c      |  6 ++++++
- include/net/bluetooth/hci.h      | 10 ++++++++++
- include/net/bluetooth/hci_core.h |  4 +++-
- net/bluetooth/hci_sync.c         |  5 ++++-
- 4 files changed, 23 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sc16is7xx.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index d9349ba48281e..7ba60151a16a6 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -2658,6 +2658,9 @@ static int btintel_setup_combined(struct hci_dev *hdev)
- 			set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED,
- 				&hdev->quirks);
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index faeb3dc371c05..f714ba3abc980 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1529,7 +1529,7 @@ static int sc16is7xx_probe(struct device *dev,
+ 		s->gpio.can_sleep	 = 1;
+ 		ret = gpiochip_add_data(&s->gpio, s);
+ 		if (ret)
+-			goto out_thread;
++			goto out_ports;
+ 	}
+ #endif
  
-+			/* These variants don't seem to support LE Coded PHY */
-+			set_bit(HCI_QUIRK_BROKEN_LE_CODED, &hdev->quirks);
-+
- 			/* Setup MSFT Extension support */
- 			btintel_set_msft_opcode(hdev, ver.hw_variant);
+@@ -1555,8 +1555,6 @@ static int sc16is7xx_probe(struct device *dev,
+ #ifdef CONFIG_GPIOLIB
+ 	if (devtype->nr_gpio)
+ 		gpiochip_remove(&s->gpio);
+-
+-out_thread:
+ #endif
  
-@@ -2729,6 +2732,9 @@ static int btintel_setup_combined(struct hci_dev *hdev)
- 		 */
- 		set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
- 
-+		/* These variants don't seem to support LE Coded PHY */
-+		set_bit(HCI_QUIRK_BROKEN_LE_CODED, &hdev->quirks);
-+
- 		/* Set Valid LE States quirk */
- 		set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
- 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 9ae6f60c96bf2..3ff822ebb3a47 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -319,6 +319,16 @@ enum {
- 	 * This quirk must be set before hci_register_dev is called.
- 	 */
- 	HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER,
-+
-+	/*
-+	 * When this quirk is set, LE Coded PHY shall not be used. This is
-+	 * required for some Intel controllers which erroneously claim to
-+	 * support it but it causes problems with extended scanning.
-+	 *
-+	 * This quirk can be set before hci_register_dev is called or
-+	 * during the hdev->setup vendor callback.
-+	 */
-+	HCI_QUIRK_BROKEN_LE_CODED,
- };
- 
- /* HCI device flags */
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 2a9cdbdb8a81e..c0a87558aea71 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1770,7 +1770,9 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
- #define scan_2m(dev) (((dev)->le_tx_def_phys & HCI_LE_SET_PHY_2M) || \
- 		      ((dev)->le_rx_def_phys & HCI_LE_SET_PHY_2M))
- 
--#define le_coded_capable(dev) (((dev)->le_features[1] & HCI_LE_PHY_CODED))
-+#define le_coded_capable(dev) (((dev)->le_features[1] & HCI_LE_PHY_CODED) && \
-+			       !test_bit(HCI_QUIRK_BROKEN_LE_CODED, \
-+					 &(dev)->quirks))
- 
- #define scan_coded(dev) (((dev)->le_tx_def_phys & HCI_LE_SET_PHY_CODED) || \
- 			 ((dev)->le_rx_def_phys & HCI_LE_SET_PHY_CODED))
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index bc84b4617e824..402b8522c2228 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4684,7 +4684,10 @@ static const struct {
- 			 "advertised, but not supported."),
- 	HCI_QUIRK_BROKEN(SET_RPA_TIMEOUT,
- 			 "HCI LE Set Random Private Address Timeout command is "
--			 "advertised, but not supported.")
-+			 "advertised, but not supported."),
-+	HCI_QUIRK_BROKEN(LE_CODED,
-+			 "HCI LE Coded PHY feature bit is set, "
-+			 "but its usage is not supported.")
- };
- 
- /* This function handles hdev setup stage:
+ out_ports:
 -- 
 2.40.1
 
