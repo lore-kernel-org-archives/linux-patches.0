@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCBD11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F256FC433C8;
-	Mon, 11 Sep 2023 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4703F11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCC7C433C9;
+	Mon, 11 Sep 2023 15:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444487;
-	bh=uFsgvhJkcIYIYQNXv240upZOuxgxfTOJgBrjPu/A+bE=;
+	s=korg; t=1694444490;
+	bh=1UGwEQrFE3rUPrY26es/KUVUgjqF1Vl5uy50RnZ2Gls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WoN9sUTn+d6McsFjRojfrxCe2uDAHhK73pvX6b5eO8LQFJN88i4yWyIQgmdLaas4t
-	 jmMPqnFMfutsjzGMk2buSgokNtCetxX1CHwcMfOJmNJANhQCBE3RU3MoUMcNy3pf8l
-	 OOWywDNaZ6zZQM4OZFDtV8WvFbHpzBYlvekCbPqU=
+	b=1eN+6AU+iD7MqcxR0XhDNhJiA5ghOGlOz81Nh+0qo7BvUpERwWT+eeMH1V1tKOkFO
+	 7upGGmBlhBc9vV2c0RyTyoet2OvqW3hZhY7uy6jbONCPEJVI4VmuEV9ANJLtmOhn39
+	 bbvugaSFObNyHoDMYj4S7UX+ihFmEqtFh4DI8hbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	ming_qian <ming.qian@nxp.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/600] phy: qcom-snps-femto-v2: use qcom_snps_hsphy_suspend/resume error code
-Date: Mon, 11 Sep 2023 15:40:43 +0200
-Message-ID: <20230911134633.921993234@linuxfoundation.org>
+Subject: [PATCH 6.1 011/600] media: amphion: use dev_err_probe
+Date: Mon, 11 Sep 2023 15:40:44 +0200
+Message-ID: <20230911134633.951087821@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,45 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrien Thierry <athierry@redhat.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 8932089b566c24ea19b57e37704c492678de1420 ]
+[ Upstream commit 517f088385e1b8015606143e6212cb30f8714070 ]
 
-The return value from qcom_snps_hsphy_suspend/resume is not used. Make
-sure qcom_snps_hsphy_runtime_suspend/resume return this value as well.
+This simplifies the code and silences -517 error messages. Also
+the reason is listed in /sys/kernel/debug/devices_deferred.
 
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
-Link: https://lore.kernel.org/r/20230629144542.14906-4-athierry@redhat.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: ming_qian <ming.qian@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/platform/amphion/vpu_mbox.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index 6170f8fd118e2..d0319bee01c0f 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -214,8 +214,7 @@ static int __maybe_unused qcom_snps_hsphy_runtime_suspend(struct device *dev)
- 	if (!hsphy->phy_initialized)
- 		return 0;
+diff --git a/drivers/media/platform/amphion/vpu_mbox.c b/drivers/media/platform/amphion/vpu_mbox.c
+index bf759eb2fd46d..b6d5b4844f672 100644
+--- a/drivers/media/platform/amphion/vpu_mbox.c
++++ b/drivers/media/platform/amphion/vpu_mbox.c
+@@ -46,11 +46,10 @@ static int vpu_mbox_request_channel(struct device *dev, struct vpu_mbox *mbox)
+ 	cl->rx_callback = vpu_mbox_rx_callback;
  
--	qcom_snps_hsphy_suspend(hsphy);
--	return 0;
-+	return qcom_snps_hsphy_suspend(hsphy);
- }
+ 	ch = mbox_request_channel_byname(cl, mbox->name);
+-	if (IS_ERR(ch)) {
+-		dev_err(dev, "Failed to request mbox chan %s, ret : %ld\n",
+-			mbox->name, PTR_ERR(ch));
+-		return PTR_ERR(ch);
+-	}
++	if (IS_ERR(ch))
++		return dev_err_probe(dev, PTR_ERR(ch),
++				     "Failed to request mbox chan %s\n",
++				     mbox->name);
  
- static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
-@@ -225,8 +224,7 @@ static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
- 	if (!hsphy->phy_initialized)
- 		return 0;
- 
--	qcom_snps_hsphy_resume(hsphy);
--	return 0;
-+	return qcom_snps_hsphy_resume(hsphy);
- }
- 
- static int qcom_snps_hsphy_set_mode(struct phy *phy, enum phy_mode mode,
+ 	mbox->ch = ch;
+ 	return 0;
 -- 
 2.40.1
 
