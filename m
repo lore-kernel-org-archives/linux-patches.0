@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E90C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11D1C433C7;
-	Mon, 11 Sep 2023 14:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088DF1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFA3C433C8;
+	Mon, 11 Sep 2023 14:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442337;
-	bh=an282FUfmSaRSWpr/3BEHxEKa9X7z1omwIpoWjcORdE=;
+	s=korg; t=1694442339;
+	bh=61D1kthUek0IR9XnPkew+uROd+QNdjlkoqdNRbO3uS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/8PnxQeQ4aeFj1+hZ9qlU+vkm6kz1zsSnXpGiQjmU71gj5UqCkilT0fzd0+DB8EG
-	 hp0SKHMlts5G/hBWFr1Gx1Nf8pKs6sjfocCI+rhti8f6kNrHHzsBcifZDRwXgANAuL
-	 q3yNgqDHOlHtE72YbQkdnYKKYY3juRnFNuV7/4gM=
+	b=KgDwPqilJn3nCqwuVbCDWXEPt9FKdfMapKNARR6idGjtTy/HPJBCVTRHHvFXZBN47
+	 iNqg0//7DVHKVKGQ9KqA7G8uX1j2mJcmL/UPQZt9CSrllIWrXRqLpA2OU1Z+iW4zY3
+	 HxGg0jwU+6oVV34m+CkWSyCdlFHVzD1ylKBam86w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Rutherford <srutherford@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Ben Hillier <bhillier@google.com>
-Subject: [PATCH 6.5 701/739] x86/sev: Make enc_dec_hypercall() accept a size instead of npages
-Date: Mon, 11 Sep 2023 15:48:20 +0200
-Message-ID: <20230911134710.670419444@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.5 702/739] r8169: fix ASPM-related issues on a number of systems with NIC version from RTL8168h
+Date: Mon, 11 Sep 2023 15:48:21 +0200
+Message-ID: <20230911134710.696285694@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,114 +39,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Rutherford <srutherford@google.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit ac3f9c9f1b37edaa7d1a9b908bc79d843955a1a2 upstream.
+commit 90ca51e8c654699b672ba61aeaa418dfb3252e5e upstream.
 
-enc_dec_hypercall() accepted a page count instead of a size, which
-forced its callers to round up. As a result, non-page aligned
-vaddrs caused pages to be spuriously marked as decrypted via the
-encryption status hypercall, which in turn caused consistent
-corruption of pages during live migration. Live migration requires
-accurate encryption status information to avoid migrating pages
-from the wrong perspective.
+This effectively reverts 4b5f82f6aaef. On a number of systems ASPM L1
+causes tx timeouts with RTL8168h, see referenced bug report.
 
-Fixes: 064ce6c550a0 ("mm: x86: Invoke hypercall when page encryption status is changed")
-Signed-off-by: Steve Rutherford <srutherford@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Tested-by: Ben Hillier <bhillier@google.com>
+Fixes: 4b5f82f6aaef ("r8169: enable ASPM L1/L1.1 from RTL8168h")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230824223731.2055016-1-srutherford@google.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217814
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/mem_encrypt.h |    6 +++---
- arch/x86/kernel/kvm.c              |    4 +---
- arch/x86/mm/mem_encrypt_amd.c      |   13 ++++++-------
- 3 files changed, 10 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/arch/x86/include/asm/mem_encrypt.h
-+++ b/arch/x86/include/asm/mem_encrypt.h
-@@ -50,8 +50,8 @@ void __init sme_enable(struct boot_param
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -5239,13 +5239,9 @@ static int rtl_init_one(struct pci_dev *
  
- int __init early_set_memory_decrypted(unsigned long vaddr, unsigned long size);
- int __init early_set_memory_encrypted(unsigned long vaddr, unsigned long size);
--void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr, int npages,
--					    bool enc);
-+void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr,
-+					    unsigned long size, bool enc);
- 
- void __init mem_encrypt_free_decrypted_mem(void);
- 
-@@ -85,7 +85,7 @@ early_set_memory_decrypted(unsigned long
- static inline int __init
- early_set_memory_encrypted(unsigned long vaddr, unsigned long size) { return 0; }
- static inline void __init
--early_set_mem_enc_dec_hypercall(unsigned long vaddr, int npages, bool enc) {}
-+early_set_mem_enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc) {}
- 
- static inline void mem_encrypt_free_decrypted_mem(void) { }
- 
---- a/arch/x86/kernel/kvm.c
-+++ b/arch/x86/kernel/kvm.c
-@@ -966,10 +966,8 @@ static void __init kvm_init_platform(voi
- 		 * Ensure that _bss_decrypted section is marked as decrypted in the
- 		 * shared pages list.
- 		 */
--		nr_pages = DIV_ROUND_UP(__end_bss_decrypted - __start_bss_decrypted,
--					PAGE_SIZE);
- 		early_set_mem_enc_dec_hypercall((unsigned long)__start_bss_decrypted,
--						nr_pages, 0);
-+						__end_bss_decrypted - __start_bss_decrypted, 0);
- 
- 		/*
- 		 * If not booted using EFI, enable Live migration support.
---- a/arch/x86/mm/mem_encrypt_amd.c
-+++ b/arch/x86/mm/mem_encrypt_amd.c
-@@ -288,11 +288,10 @@ static bool amd_enc_cache_flush_required
- 	return !cpu_feature_enabled(X86_FEATURE_SME_COHERENT);
- }
- 
--static void enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
-+static void enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc)
- {
- #ifdef CONFIG_PARAVIRT
--	unsigned long sz = npages << PAGE_SHIFT;
--	unsigned long vaddr_end = vaddr + sz;
-+	unsigned long vaddr_end = vaddr + size;
- 
- 	while (vaddr < vaddr_end) {
- 		int psize, pmask, level;
-@@ -342,7 +341,7 @@ static bool amd_enc_status_change_finish
- 		snp_set_memory_private(vaddr, npages);
- 
- 	if (!cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT))
--		enc_dec_hypercall(vaddr, npages, enc);
-+		enc_dec_hypercall(vaddr, npages << PAGE_SHIFT, enc);
- 
- 	return true;
- }
-@@ -466,7 +465,7 @@ static int __init early_set_memory_enc_d
- 
- 	ret = 0;
- 
--	early_set_mem_enc_dec_hypercall(start, PAGE_ALIGN(size) >> PAGE_SHIFT, enc);
-+	early_set_mem_enc_dec_hypercall(start, size, enc);
- out:
- 	__flush_tlb_all();
- 	return ret;
-@@ -482,9 +481,9 @@ int __init early_set_memory_encrypted(un
- 	return early_set_memory_enc_dec(vaddr, size, true);
- }
- 
--void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
-+void __init early_set_mem_enc_dec_hypercall(unsigned long vaddr, unsigned long size, bool enc)
- {
--	enc_dec_hypercall(vaddr, npages, enc);
-+	enc_dec_hypercall(vaddr, size, enc);
- }
- 
- void __init sme_early_init(void)
+ 	/* Disable ASPM L1 as that cause random device stop working
+ 	 * problems as well as full system hangs for some PCIe devices users.
+-	 * Chips from RTL8168h partially have issues with L1.2, but seem
+-	 * to work fine with L1 and L1.1.
+ 	 */
+ 	if (rtl_aspm_is_safe(tp))
+ 		rc = 0;
+-	else if (tp->mac_version >= RTL_GIGA_MAC_VER_46)
+-		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
+ 	else
+ 		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1);
+ 	tp->aspm_manageable = !rc;
 
 
