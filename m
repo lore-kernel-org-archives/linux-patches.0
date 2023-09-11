@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0FA11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD6AC433C7;
-	Mon, 11 Sep 2023 14:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C8511706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD72AC433C8;
+	Mon, 11 Sep 2023 14:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443829;
-	bh=/az30cSXhQmP5sKD7vADZymiYcNLqq+PAscCQ+xjkNU=;
+	s=korg; t=1694443832;
+	bh=PSIjA8qXUnbtXkfscTGbVvTIWWIdmphAaBZDxVHeXbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O9jwvHSHqZ/8hFDIBLH6DdQFMabbd1Np/AqLQSKZxfJdrmQBjMhaoUu6Lba1oPpBO
-	 ciC7dIHrmTQnNRhf/p9crAGKoOTpeelSeMv/AIHcg5rSTHMm2cI6VZ9Ut4HHXWU/c8
-	 AU0+CZldn22dW+gVam5/whUzwaYBoVIyoi3E9Tmc=
+	b=gCV2FXpnQCOgoYQfUTBVUQR8dz6/vEuTlmwfAv3J84HQhmUnZEbNZTbN3xyO6V/Y8
+	 oMbd/DThIrgv4yrCGQ3Lal/Qfyo3hZ651UzlqOXxyzwU2d+f8gfkZNbXCFA/39jIGs
+	 yB63zT5ZfTR5enAjHmRlJFnjdTuTXiDkbQEYDiPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 515/737] scsi: qla4xxx: Add length check when parsing nlattrs
-Date: Mon, 11 Sep 2023 15:46:14 +0200
-Message-ID: <20230911134704.941483693@linuxfoundation.org>
+Subject: [PATCH 6.4 490/737] media: cx24120: Add retval check for cx24120_message_send()
+Date: Mon, 11 Sep 2023 15:45:49 +0200
+Message-ID: <20230911134704.264008388@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,78 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
+[ Upstream commit 96002c0ac824e1773d3f706b1f92e2a9f2988047 ]
 
-There are three places that qla4xxx parses nlattrs:
+If cx24120_message_send() returns error, we should keep local struct
+unchanged.
 
- - qla4xxx_set_chap_entry()
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
- - qla4xxx_iface_set_param()
-
- - qla4xxx_sysfs_ddb_set_param()
-
-and each of them directly converts the nlattr to specific pointer of
-structure without length checking. This could be dangerous as those
-attributes are not validated and a malformed nlattr (e.g., length 0) could
-result in an OOB read that leaks heap dirty data.
-
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
-
-Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
-Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
-Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 5afc9a25be8d ("[media] Add support for TechniSat Skystar S2")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/media/dvb-frontends/cx24120.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index ee6d784c095c9..b6959470ddc04 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -968,6 +968,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
- 	memset(&chap_rec, 0, sizeof(chap_rec));
+diff --git a/drivers/media/dvb-frontends/cx24120.c b/drivers/media/dvb-frontends/cx24120.c
+index d8acd582c7111..0f778660c72b8 100644
+--- a/drivers/media/dvb-frontends/cx24120.c
++++ b/drivers/media/dvb-frontends/cx24120.c
+@@ -973,7 +973,9 @@ static void cx24120_set_clock_ratios(struct dvb_frontend *fe)
+ 	cmd.arg[8] = (clock_ratios_table[idx].rate >> 8) & 0xff;
+ 	cmd.arg[9] = (clock_ratios_table[idx].rate >> 0) & 0xff;
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*param_info)) {
-+			rc = -EINVAL;
-+			goto exit_set_chap;
-+		}
-+
- 		param_info = nla_data(attr);
+-	cx24120_message_send(state, &cmd);
++	ret = cx24120_message_send(state, &cmd);
++	if (ret != 0)
++		return;
  
- 		switch (param_info->param) {
-@@ -2750,6 +2755,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
- 	}
- 
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*iface_param)) {
-+			rval = -EINVAL;
-+			goto exit_init_fw_cb;
-+		}
-+
- 		iface_param = nla_data(attr);
- 
- 		if (iface_param->param_type == ISCSI_NET_PARAM) {
-@@ -8104,6 +8114,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
- 
- 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*fnode_param)) {
-+			rc = -EINVAL;
-+			goto exit_set_param;
-+		}
-+
- 		fnode_param = nla_data(attr);
- 
- 		switch (fnode_param->param) {
+ 	/* Calculate ber window rates for stat work */
+ 	cx24120_calculate_ber_window(state, clock_ratios_table[idx].rate);
 -- 
 2.40.1
 
