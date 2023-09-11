@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFAFF51E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8662C433C8;
-	Mon, 11 Sep 2023 14:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A458472
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4893C433C7;
+	Mon, 11 Sep 2023 14:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442886;
-	bh=QTbAQoQ4NlXJVx8w4qQSvRKXRBZVVHK1aavT6fj4R8I=;
+	s=korg; t=1694442889;
+	bh=oCVP9VSGguqHVs5So0qrQ6T/LdNHDhq060/XPHt0JUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6L3aejpeDTx5nz5UU/OckGadZMJmdWZEsntlYPcFoV3eFDushjPo8Y7A45PLZwSA
-	 UnmbAo5HrrAMfUr7Lxh0h6P208V418yhZwnVujWEn3uISt0U+JjXmh0HGkCZNKzQXN
-	 770C/S537JiVW/jeCh3BJmo59F8vqvLNqCnFyNc4=
+	b=UiXj9DEt1G4nOl4kgeP7Gmpv6NcJ/2ySxwfYCr4oM/tFFV2pyr3OlxXith6KSAYY0
+	 S9ABHwyiM/tJfmWae0ZhoRTM2aIvzBL+CJfGGn/Cx2JCyBZK6DDpqakp/HKs9HBQol
+	 iuhPssdTxzCvaTnFqgCOF6AfX3ubQEtnYHM9sS8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Mark Brown <broonie@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 155/737] regmap: maple: Use alloc_flags for memory allocations
-Date: Mon, 11 Sep 2023 15:40:14 +0200
-Message-ID: <20230911134654.817502190@linuxfoundation.org>
+Subject: [PATCH 6.4 146/737] libbpf: Fix realloc API handling in zero-sized edge cases
+Date: Mon, 11 Sep 2023 15:40:05 +0200
+Message-ID: <20230911134654.571552357@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,132 +40,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit b0393e1fe40e962574613a5cdc4a470d6c1de023 ]
+[ Upstream commit 8a0260dbf6553c969248b6530cafadac46562f47 ]
 
-REGCACHE_MAPLE needs to allocate memory for regmap operations.
-This results in lockdep splats if used with fast_io since fast_io uses
-spinlocks for locking.
+realloc() and reallocarray() can either return NULL or a special
+non-NULL pointer, if their size argument is zero. This requires a bit
+more care to handle NULL-as-valid-result situation differently from
+NULL-as-error case. This has caused real issues before ([0]), and just
+recently bit again in production when performing bpf_program__attach_usdt().
 
-BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
-in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 167, name: kunit_try_catch
-preempt_count: 1, expected: 0
-1 lock held by kunit_try_catch/167:
- #0: 838e9c10 (regmap_kunit:86:(config)->lock){....}-{2:2}, at: regmap_lock_spinlock+0x14/0x1c
-irq event stamp: 146
-hardirqs last  enabled at (145): [<8078bfa8>] crng_make_state+0x1a0/0x294
-hardirqs last disabled at (146): [<80c5f62c>] _raw_spin_lock_irqsave+0x7c/0x80
-softirqs last  enabled at (0): [<80110cc4>] copy_process+0x810/0x216c
-softirqs last disabled at (0): [<00000000>] 0x0
-CPU: 0 PID: 167 Comm: kunit_try_catch Tainted: G                 N 6.5.0-rc1-00028-gc4be22597a36-dirty #6
-Hardware name: Generic DT based system
- unwind_backtrace from show_stack+0x18/0x1c
- show_stack from dump_stack_lvl+0x38/0x5c
- dump_stack_lvl from __might_resched+0x188/0x2d0
- __might_resched from __kmem_cache_alloc_node+0x1f4/0x258
- __kmem_cache_alloc_node from __kmalloc+0x48/0x170
- __kmalloc from regcache_maple_write+0x194/0x248
- regcache_maple_write from _regmap_write+0x88/0x140
- _regmap_write from regmap_write+0x44/0x68
- regmap_write from basic_read_write+0x8c/0x27c
- basic_read_write from kunit_generic_run_threadfn_adapter+0x1c/0x28
- kunit_generic_run_threadfn_adapter from kthread+0xf8/0x120
- kthread from ret_from_fork+0x14/0x3c
-Exception stack(0x881a5fb0 to 0x881a5ff8)
-5fa0:                                     00000000 00000000 00000000 00000000
-5fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-5fe0: 00000000 00000000 00000000 00000000 00000013 00000000
+This patch fixes 4 places that do or potentially could suffer from this
+mishandling of NULL, including the reported USDT-related one.
 
-Use map->alloc_flags instead of GFP_KERNEL for memory allocations to fix
-the problem.
+There are many other places where realloc()/reallocarray() is used and
+NULL is always treated as an error value, but all those have guarantees
+that their size is always non-zero, so those spot don't need any extra
+handling.
 
-Fixes: f033c26de5a5 ("regmap: Add maple tree based register cache")
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230720172021.2617326-1-linux@roeck-us.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  [0] d08ab82f59d5 ("libbpf: Fix double-free when linker processes empty sections")
+
+Fixes: 999783c8bbda ("libbpf: Wire up spec management and other arch-independent USDT logic")
+Fixes: b63b3c490eee ("libbpf: Add bpf_program__set_insns function")
+Fixes: 697f104db8a6 ("libbpf: Support custom SEC() handlers")
+Fixes: b12688267280 ("libbpf: Change the order of data and text relocations.")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230711024150.1566433-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/lib/bpf/libbpf.c | 15 ++++++++++++---
+ tools/lib/bpf/usdt.c   |  5 ++++-
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 14f6f49af097c..08316d578be23 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -74,7 +74,7 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
- 	rcu_read_unlock();
- 
- 	entry = kmalloc((last - index + 1) * sizeof(unsigned long),
--			GFP_KERNEL);
-+			map->alloc_flags);
- 	if (!entry)
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 57c040a9c3705..2a4dbe7d9b3d4 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -6136,7 +6136,11 @@ static int append_subprog_relos(struct bpf_program *main_prog, struct bpf_progra
+ 	if (main_prog == subprog)
+ 		return 0;
+ 	relos = libbpf_reallocarray(main_prog->reloc_desc, new_cnt, sizeof(*relos));
+-	if (!relos)
++	/* if new count is zero, reallocarray can return a valid NULL result;
++	 * in this case the previous pointer will be freed, so we *have to*
++	 * reassign old pointer to the new value (even if it's NULL)
++	 */
++	if (!relos && new_cnt)
  		return -ENOMEM;
+ 	if (subprog->nr_reloc)
+ 		memcpy(relos + main_prog->nr_reloc, subprog->reloc_desc,
+@@ -8504,7 +8508,8 @@ int bpf_program__set_insns(struct bpf_program *prog,
+ 		return -EBUSY;
  
-@@ -92,7 +92,7 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
- 	mas_lock(&mas);
- 
- 	mas_set_range(&mas, index, last);
--	ret = mas_store_gfp(&mas, entry, GFP_KERNEL);
-+	ret = mas_store_gfp(&mas, entry, map->alloc_flags);
- 
- 	mas_unlock(&mas);
- 
-@@ -134,7 +134,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 
- 			lower = kmemdup(entry, ((min - mas.index) *
- 						sizeof(unsigned long)),
--					GFP_KERNEL);
-+					map->alloc_flags);
- 			if (!lower) {
- 				ret = -ENOMEM;
- 				goto out_unlocked;
-@@ -148,7 +148,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 			upper = kmemdup(&entry[max + 1],
- 					((mas.last - max) *
- 					 sizeof(unsigned long)),
--					GFP_KERNEL);
-+					map->alloc_flags);
- 			if (!upper) {
- 				ret = -ENOMEM;
- 				goto out_unlocked;
-@@ -162,7 +162,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 		/* Insert new nodes with the saved data */
- 		if (lower) {
- 			mas_set_range(&mas, lower_index, lower_last);
--			ret = mas_store_gfp(&mas, lower, GFP_KERNEL);
-+			ret = mas_store_gfp(&mas, lower, map->alloc_flags);
- 			if (ret != 0)
- 				goto out;
- 			lower = NULL;
-@@ -170,7 +170,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 
- 		if (upper) {
- 			mas_set_range(&mas, upper_index, upper_last);
--			ret = mas_store_gfp(&mas, upper, GFP_KERNEL);
-+			ret = mas_store_gfp(&mas, upper, map->alloc_flags);
- 			if (ret != 0)
- 				goto out;
- 			upper = NULL;
-@@ -250,7 +250,7 @@ static int regcache_maple_insert_block(struct regmap *map, int first,
- 	unsigned long *entry;
- 	int i, ret;
- 
--	entry = kcalloc(last - first + 1, sizeof(unsigned long), GFP_KERNEL);
-+	entry = kcalloc(last - first + 1, sizeof(unsigned long), map->alloc_flags);
- 	if (!entry)
+ 	insns = libbpf_reallocarray(prog->insns, new_insn_cnt, sizeof(*insns));
+-	if (!insns) {
++	/* NULL is a valid return from reallocarray if the new count is zero */
++	if (!insns && new_insn_cnt) {
+ 		pr_warn("prog '%s': failed to realloc prog code\n", prog->name);
  		return -ENOMEM;
+ 	}
+@@ -8813,7 +8818,11 @@ int libbpf_unregister_prog_handler(int handler_id)
  
-@@ -261,7 +261,7 @@ static int regcache_maple_insert_block(struct regmap *map, int first,
+ 	/* try to shrink the array, but it's ok if we couldn't */
+ 	sec_defs = libbpf_reallocarray(custom_sec_defs, custom_sec_def_cnt, sizeof(*sec_defs));
+-	if (sec_defs)
++	/* if new count is zero, reallocarray can return a valid NULL result;
++	 * in this case the previous pointer will be freed, so we *have to*
++	 * reassign old pointer to the new value (even if it's NULL)
++	 */
++	if (sec_defs || custom_sec_def_cnt == 0)
+ 		custom_sec_defs = sec_defs;
  
- 	mas_set_range(&mas, map->reg_defaults[first].reg,
- 		      map->reg_defaults[last].reg);
--	ret = mas_store_gfp(&mas, entry, GFP_KERNEL);
-+	ret = mas_store_gfp(&mas, entry, map->alloc_flags);
- 
- 	mas_unlock(&mas);
- 
+ 	return 0;
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index 086eef355ab3d..1af77f9935833 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -852,8 +852,11 @@ static int bpf_link_usdt_detach(struct bpf_link *link)
+ 		 * system is so exhausted on memory, it's the least of user's
+ 		 * concerns, probably.
+ 		 * So just do our best here to return those IDs to usdt_manager.
++		 * Another edge case when we can legitimately get NULL is when
++		 * new_cnt is zero, which can happen in some edge cases, so we
++		 * need to be careful about that.
+ 		 */
+-		if (new_free_ids) {
++		if (new_free_ids || new_cnt == 0) {
+ 			memcpy(new_free_ids + man->free_spec_cnt, usdt_link->spec_ids,
+ 			       usdt_link->spec_cnt * sizeof(*usdt_link->spec_ids));
+ 			man->free_spec_ids = new_free_ids;
 -- 
 2.40.1
 
