@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7079211710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB879C433C7;
-	Mon, 11 Sep 2023 15:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241F811710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7BAC433C8;
+	Mon, 11 Sep 2023 15:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445410;
-	bh=0CuxGKHs2pjK+xD40JpGNxYv0G6imNDuxcCJ7kobijY=;
+	s=korg; t=1694445413;
+	bh=X7H6BghpsAaXmYiLnIpf9NUsH6HgzN8ZhAEw/FINTa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJKEhL+SJkGAtdEc6aj0JcXUZ2tiAUhNT5pk+BMDpnuF4wS/JrBQ87DaqwzzVZrsx
-	 ZmkjKMpSdme4BPD7mAL++OVxGK5zQGe2/HMXU1n2AQWwDCmItTGGu6F1Q1KXOcIZnM
-	 CqPlwDgm011k2h4NIV/mPoLddXOf7n4+9fmetQBo=
+	b=EOVQZ1kERwoDCCkcT0VMnbVzVZpwz4cmQqQ5TtfFpnQMXbOEhL2hm0Gz2dQjhUrJD
+	 5EDaeDFwryn8St8WD5ZJSIZyfSdinFcZManvVUeegJEWBxH7C2ABBVWwmE7hEdPxZy
+	 4VPDvPAzvJmw7GVSTnnMEVvSSTyl+jX+E7xINWtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ira Weiny <ira.weiny@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Zhang Jianhua <chris.zjh@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 338/600] PCI/DOE: Fix destroy_work_on_stack() race
-Date: Mon, 11 Sep 2023 15:46:11 +0200
-Message-ID: <20230911134643.668118999@linuxfoundation.org>
+Subject: [PATCH 6.1 339/600] clk: sunxi-ng: Modify mismatched function name
+Date: Mon, 11 Sep 2023 15:46:12 +0200
+Message-ID: <20230911134643.696703081@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,59 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Zhang Jianhua <chris.zjh@huawei.com>
 
-[ Upstream commit e3a3a097eaebaf234a482b4d2f9f18fe989208c1 ]
+[ Upstream commit 075d9ca5b4e17f84fd1c744a405e69ec743be7f0 ]
 
-The following debug object splat was observed in testing:
+No functional modification involved.
 
-  ODEBUG: free active (active state 0) object: 0000000097d23782 object type: work_struct hint: doe_statemachine_work+0x0/0x510
-  WARNING: CPU: 1 PID: 71 at lib/debugobjects.c:514 debug_print_object+0x7d/0xb0
-  ...
-  Workqueue: pci 0000:36:00.0 DOE [1 doe_statemachine_work
-  RIP: 0010:debug_print_object+0x7d/0xb0
-  ...
-  Call Trace:
-   ? debug_print_object+0x7d/0xb0
-   ? __pfx_doe_statemachine_work+0x10/0x10
-   debug_object_free.part.0+0x11b/0x150
-   doe_statemachine_work+0x45e/0x510
-   process_one_work+0x1d4/0x3c0
+drivers/clk/sunxi-ng/ccu_mmc_timing.c:54: warning: expecting prototype for sunxi_ccu_set_mmc_timing_mode(). Prototype was for sunxi_ccu_get_mmc_timing_mode() instead
 
-This occurs because destroy_work_on_stack() was called after signaling
-the completion in the calling thread.  This creates a race between
-destroy_work_on_stack() and the task->work struct going out of scope in
-pci_doe().
-
-Signal the work complete after destroying the work struct.  This is safe
-because signal_task_complete() is the final thing the work item does and
-the workqueue code is careful not to access the work struct after.
-
-Fixes: abf04be0e707 ("PCI/DOE: Fix memory leak with CONFIG_DEBUG_OBJECTS=y")
-Link: https://lore.kernel.org/r/20230726-doe-fix-v1-1-af07e614d4dd@intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Acked-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: f6f64ed868d3 ("clk: sunxi-ng: Add interface to query or configure MMC timing modes.")
+Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20230722153107.2078179-1-chris.zjh@huawei.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/doe.c | 2 +-
+ drivers/clk/sunxi-ng/ccu_mmc_timing.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/doe.c b/drivers/pci/doe.c
-index e5e9b287b9766..c1776f82b7fce 100644
---- a/drivers/pci/doe.c
-+++ b/drivers/pci/doe.c
-@@ -223,8 +223,8 @@ static int pci_doe_recv_resp(struct pci_doe_mb *doe_mb, struct pci_doe_task *tas
- static void signal_task_complete(struct pci_doe_task *task, int rv)
- {
- 	task->rv = rv;
--	task->complete(task);
- 	destroy_work_on_stack(&task->work);
-+	task->complete(task);
- }
+diff --git a/drivers/clk/sunxi-ng/ccu_mmc_timing.c b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
+index de33414fc5c28..c6a6ce98ca03a 100644
+--- a/drivers/clk/sunxi-ng/ccu_mmc_timing.c
++++ b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
+@@ -43,7 +43,7 @@ int sunxi_ccu_set_mmc_timing_mode(struct clk *clk, bool new_mode)
+ EXPORT_SYMBOL_GPL(sunxi_ccu_set_mmc_timing_mode);
  
- static void signal_task_abort(struct pci_doe_task *task, int rv)
+ /**
+- * sunxi_ccu_set_mmc_timing_mode: Get the current MMC clock timing mode
++ * sunxi_ccu_get_mmc_timing_mode: Get the current MMC clock timing mode
+  * @clk: clock to query
+  *
+  * Returns 0 if the clock is in old timing mode, > 0 if it is in
 -- 
 2.40.1
 
