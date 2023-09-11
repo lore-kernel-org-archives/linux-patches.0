@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0215F11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741B1C433C7;
-	Mon, 11 Sep 2023 15:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D806A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3132BC433C7;
+	Mon, 11 Sep 2023 15:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444461;
-	bh=n53DhF8hzTyTI/j2CCH7cyYQXJwTPgi3/odqs8WAdis=;
+	s=korg; t=1694444464;
+	bh=0fcy7PKO8A/lkmxOYlZawnNyfK0CVSj55kt8VWaXdHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGCajlQ1an9C3sj5jEgjkZNg7gISOocggDf41OZxHYDff28DyGtd7e46fM1SZMLTe
-	 dzyIzU10swibfX/OdVTBtrivVvHDd9UNpW+WPZfcqUIGA7NJi2am3JUHzaoSnwzwKV
-	 cu06VOudzHDSKTd0VckStTLpSXM9nnIT6zZA/0Cs=
+	b=wW+E+Cnyf4jCAh4tJG3UAt6jV+S1nbr07zckAPpRinW8WUxNGb3zIyiaHyx+Ch2hD
+	 AJTeIk+Oxea/fr8O0JSCqZPlaHXvwXYRC+tnWqu2gDSMoULaDBoWNyBOYmpzcI6Wli
+	 12plF9RM4ddowOp5GeG367fopf2n1gXB4dj7Qkmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.4 701/737] platform/chrome: chromeos_acpi: print hex string for ACPI_TYPE_BUFFER
-Date: Mon, 11 Sep 2023 15:49:20 +0200
-Message-ID: <20230911134710.104558507@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Daniel Verkamp <dverkamp@chromium.org>,
+	Jeff Xu <jeffxu@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 732/737] memfd: do not -EACCES old memfd_create() users with vm.memfd_noexec=2
+Date: Mon, 11 Sep 2023 15:49:51 +0200
+Message-ID: <20230911134710.958738899@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,74 +46,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 0820debb7d489e9eb1f68b7bb69e6ae210699b3f upstream.
+[ Upstream commit 202e14222fadb246dfdf182e67de1518e86a1e20 ]
 
-`element->buffer.pointer` should be binary blob.  `%s` doesn't work
-perfect for them.
+Given the difficulty of auditing all of userspace to figure out whether
+every memfd_create() user has switched to passing MFD_EXEC and
+MFD_NOEXEC_SEAL flags, it seems far less distruptive to make it possible
+for older programs that don't make use of executable memfds to run under
+vm.memfd_noexec=2.  Otherwise, a small dependency change can result in
+spurious errors.  For programs that don't use executable memfds, passing
+MFD_NOEXEC_SEAL is functionally a no-op and thus having the same
 
-Print hex string for ACPI_TYPE_BUFFER.  Also update the documentation
-to reflect this.
+In addition, every failure under vm.memfd_noexec=2 needs to print to the
+kernel log so that userspace can figure out where the error came from.
+The concerns about pr_warn_ratelimited() spam that caused the switch to
+pr_warn_once()[1,2] do not apply to the vm.memfd_noexec=2 case.
 
-Fixes: 0a4cad9c11ad ("platform/chrome: Add ChromeOS ACPI device driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230803011245.3773756-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is a user-visible API change, but as it allows programs to do
+something that would be blocked before, and the sysctl itself was broken
+and recently released, it seems unlikely this will cause any issues.
+
+[1]: https://lore.kernel.org/Y5yS8wCnuYGLHMj4@x1n/
+[2]: https://lore.kernel.org/202212161233.85C9783FB@keescook/
+
+Link: https://lkml.kernel.org/r/20230814-memfd-vm-noexec-uapi-fixes-v2-2-7ff9e3e10ba6@cyphar.com
+Fixes: 105ff5339f49 ("mm/memfd: add MFD_NOEXEC_SEAL and MFD_EXEC")
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Cc: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Daniel Verkamp <dverkamp@chromium.org>
+Cc: Jeff Xu <jeffxu@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-driver-chromeos-acpi |    2 -
- drivers/platform/chrome/chromeos_acpi.c              |   31 ++++++++++++++++++-
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ include/linux/pid_namespace.h              | 16 +++---------
+ mm/memfd.c                                 | 30 ++++++++--------------
+ tools/testing/selftests/memfd/memfd_test.c | 22 ++++++++++++----
+ 3 files changed, 32 insertions(+), 36 deletions(-)
 
---- a/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
-+++ b/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
-@@ -134,4 +134,4 @@ KernelVersion:	5.19
- Description:
- 		Returns the verified boot data block shared between the
- 		firmware verification step and the kernel verification step
--		(binary).
-+		(hex dump).
---- a/drivers/platform/chrome/chromeos_acpi.c
-+++ b/drivers/platform/chrome/chromeos_acpi.c
-@@ -90,7 +90,36 @@ static int chromeos_acpi_handle_package(
- 	case ACPI_TYPE_STRING:
- 		return sysfs_emit(buf, "%s\n", element->string.pointer);
- 	case ACPI_TYPE_BUFFER:
--		return sysfs_emit(buf, "%s\n", element->buffer.pointer);
-+		{
-+			int i, r, at, room_left;
-+			const int byte_per_line = 16;
+diff --git a/include/linux/pid_namespace.h b/include/linux/pid_namespace.h
+index c758809d5bcf3..53974d79d98e8 100644
+--- a/include/linux/pid_namespace.h
++++ b/include/linux/pid_namespace.h
+@@ -17,18 +17,10 @@
+ struct fs_pin;
+ 
+ #if defined(CONFIG_SYSCTL) && defined(CONFIG_MEMFD_CREATE)
+-/*
+- * sysctl for vm.memfd_noexec
+- * 0: memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL
+- *	acts like MFD_EXEC was set.
+- * 1: memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL
+- *	acts like MFD_NOEXEC_SEAL was set.
+- * 2: memfd_create() without MFD_NOEXEC_SEAL will be
+- *	rejected.
+- */
+-#define MEMFD_NOEXEC_SCOPE_EXEC			0
+-#define MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL		1
+-#define MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED	2
++/* modes for vm.memfd_noexec sysctl */
++#define MEMFD_NOEXEC_SCOPE_EXEC			0 /* MFD_EXEC implied if unset */
++#define MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL		1 /* MFD_NOEXEC_SEAL implied if unset */
++#define MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED	2 /* same as 1, except MFD_EXEC rejected */
+ #endif
+ 
+ struct pid_namespace {
+diff --git a/mm/memfd.c b/mm/memfd.c
+index 0bdbd2335af75..d65485c762def 100644
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -271,30 +271,22 @@ long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg)
+ static int check_sysctl_memfd_noexec(unsigned int *flags)
+ {
+ #ifdef CONFIG_SYSCTL
+-	char comm[TASK_COMM_LEN];
+-	int sysctl = MEMFD_NOEXEC_SCOPE_EXEC;
+-	struct pid_namespace *ns;
+-
+-	ns = task_active_pid_ns(current);
+-	if (ns)
+-		sysctl = ns->memfd_noexec_scope;
++	int sysctl = task_active_pid_ns(current)->memfd_noexec_scope;
+ 
+ 	if (!(*flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
+-		if (sysctl == MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
++		if (sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
+ 			*flags |= MFD_NOEXEC_SEAL;
+ 		else
+ 			*flags |= MFD_EXEC;
+ 	}
+ 
+-	if (*flags & MFD_EXEC && sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED) {
+-		pr_warn_once(
+-			"memfd_create(): MFD_NOEXEC_SEAL is enforced, pid=%d '%s'\n",
+-			task_pid_nr(current), get_task_comm(comm, current));
+-
++	if (!(*flags & MFD_NOEXEC_SEAL) && sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED) {
++		pr_err_ratelimited(
++			"%s[%d]: memfd_create() requires MFD_NOEXEC_SEAL with vm.memfd_noexec=%d\n",
++			current->comm, task_pid_nr(current), sysctl);
+ 		return -EACCES;
+ 	}
+ #endif
+-
+ 	return 0;
+ }
+ 
+@@ -302,7 +294,6 @@ SYSCALL_DEFINE2(memfd_create,
+ 		const char __user *, uname,
+ 		unsigned int, flags)
+ {
+-	char comm[TASK_COMM_LEN];
+ 	unsigned int *file_seals;
+ 	struct file *file;
+ 	int fd, error;
+@@ -325,12 +316,13 @@ SYSCALL_DEFINE2(memfd_create,
+ 
+ 	if (!(flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
+ 		pr_warn_once(
+-			"memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL, pid=%d '%s'\n",
+-			task_pid_nr(current), get_task_comm(comm, current));
++			"%s[%d]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set\n",
++			current->comm, task_pid_nr(current));
+ 	}
+ 
+-	if (check_sysctl_memfd_noexec(&flags) < 0)
+-		return -EACCES;
++	error = check_sysctl_memfd_noexec(&flags);
++	if (error < 0)
++		return error;
+ 
+ 	/* length includes terminating zero */
+ 	len = strnlen_user(uname, MFD_NAME_MAX_LEN + 1);
+diff --git a/tools/testing/selftests/memfd/memfd_test.c b/tools/testing/selftests/memfd/memfd_test.c
+index 8eb49204f9eac..8b7390ad81d11 100644
+--- a/tools/testing/selftests/memfd/memfd_test.c
++++ b/tools/testing/selftests/memfd/memfd_test.c
+@@ -1145,11 +1145,23 @@ static void test_sysctl_child(void)
+ 
+ 	printf("%s sysctl 2\n", memfd_str);
+ 	sysctl_assert_write("2");
+-	mfd_fail_new("kern_memfd_sysctl_2",
+-		MFD_CLOEXEC | MFD_ALLOW_SEALING);
+-	mfd_fail_new("kern_memfd_sysctl_2_MFD_EXEC",
+-		MFD_CLOEXEC | MFD_EXEC);
+-	fd = mfd_assert_new("", 0, MFD_NOEXEC_SEAL);
++	mfd_fail_new("kern_memfd_sysctl_2_exec",
++		     MFD_EXEC | MFD_CLOEXEC | MFD_ALLOW_SEALING);
 +
-+			at = 0;
-+			room_left = PAGE_SIZE - 1;
-+			for (i = 0; i < element->buffer.length && room_left; i += byte_per_line) {
-+				r = hex_dump_to_buffer(element->buffer.pointer + i,
-+						       element->buffer.length - i,
-+						       byte_per_line, 1, buf + at, room_left,
-+						       false);
-+				if (r > room_left)
-+					goto truncating;
-+				at += r;
-+				room_left -= r;
++	fd = mfd_assert_new("kern_memfd_sysctl_2_dfl",
++			    mfd_def_size,
++			    MFD_CLOEXEC | MFD_ALLOW_SEALING);
++	mfd_assert_mode(fd, 0666);
++	mfd_assert_has_seals(fd, F_SEAL_EXEC);
++	mfd_fail_chmod(fd, 0777);
++	close(fd);
 +
-+				r = sysfs_emit_at(buf, at, "\n");
-+				if (!r)
-+					goto truncating;
-+				at += r;
-+				room_left -= r;
-+			}
-+
-+			buf[at] = 0;
-+			return at;
-+truncating:
-+			dev_info_once(dev, "truncating sysfs content for %s\n", name);
-+			sysfs_emit_at(buf, PAGE_SIZE - 4, "..\n");
-+			return PAGE_SIZE - 1;
-+		}
- 	default:
- 		dev_err(dev, "element type %d not supported\n", element->type);
- 		return -EINVAL;
++	fd = mfd_assert_new("kern_memfd_sysctl_2_noexec_seal",
++			    mfd_def_size,
++			    MFD_NOEXEC_SEAL | MFD_CLOEXEC | MFD_ALLOW_SEALING);
++	mfd_assert_mode(fd, 0666);
++	mfd_assert_has_seals(fd, F_SEAL_EXEC);
++	mfd_fail_chmod(fd, 0777);
+ 	close(fd);
+ 
+ 	sysctl_fail_write("0");
+-- 
+2.40.1
+
 
 
