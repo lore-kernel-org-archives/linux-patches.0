@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54DA11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A64C433C8;
-	Mon, 11 Sep 2023 14:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191211706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B6CC433C9;
+	Mon, 11 Sep 2023 14:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444197;
-	bh=r5mEYeUDjwXlCAUzn9jdewtq2sjvcQszpcDzN3mqDxs=;
+	s=korg; t=1694444200;
+	bh=wniMVd1Ab9YMOLjSDrTD4Xd/8+xtbCB7+HtF+7ZUC0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aE2oW1KcQZxV92GQHlLROYkxskmYk0D9XATgb+PXKHabDlSaJyg6A/me3ZVqt3eOD
-	 ZEV3M4xCjHdU+qpJDOkjpXlQ/2JMlzn4d8FDZmK8nDzv/97mk0omyU8qSXKduCjiYe
-	 7BS1ZRe6Id3vBqygbQVQue2cWaZqal13dBrkW9ok=
+	b=Fk2a3ftEsqnUmdk1Z7kpwVODSp9HRT+wEnUw7N6P7zrarJDnN/GMbAlWuki7t4+sK
+	 Onwkit2j3pw9L811jPdUJ7RehrV2+o7BXCT6hVQv8PN9Iv3A5neeeatu16vrm+tBhY
+	 htrFLoWoFixA2uRNw5eH6KbAZo8mdmz18FyV9RFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Marek Vasut <marex@denx.de>,
+	Peng Fan <peng.fan@nxp.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 616/737] thermal/drivers/mediatek/lvts_thermal: Manage threshold between sensors
-Date: Mon, 11 Sep 2023 15:47:55 +0200
-Message-ID: <20230911134707.738907642@linuxfoundation.org>
+Subject: [PATCH 6.4 617/737] thermal/drivers/imx8mm: Suppress log message on probe deferral
+Date: Mon, 11 Sep 2023 15:47:56 +0200
+Message-ID: <20230911134707.766813407@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -36,166 +36,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 2bba1acf7a4cbe62abbb4c686e0414209ec5943b ]
+[ Upstream commit 4afcb58ea47e66c025d2b0a5f091dce5aaf95b0f ]
 
-Each LVTS thermal controller can have up to four sensors, each capable
-of triggering its own interrupt when its measured temperature crosses
-the configured threshold. The threshold for each sensor is handled
-separately by the thermal framework, since each one is registered with
-its own thermal zone and trips. However, the temperature thresholds are
-configured on the controller, and therefore are shared between all
-sensors on that controller.
+nvmem_cell_read_u32() may return -EPROBE_DEFER if NVMEM supplier has not
+yet been probed. Future reprobe may succeed, so printing:
 
-When the temperature measured by the sensors is different enough to
-cause the thermal framework to configure different thresholds for each
-one, interrupts start triggering on sensors outside the last threshold
-configured.
+  i.mx8mm_thermal 30260000.tmu: Failed to read OCOTP nvmem cell (-517).
 
-To address the issue, track the thresholds required by each sensor and
-only actually set the highest one in the hardware, and disable
-interrupts for all sensors outside the current configured range.
+to the log is confusing. Fix this by using dev_err_probe. This also
+elevates the message from warning to error, which is more correct: The
+log message is only ever printed in probe error path and probe aborts
+afterwards, so it really warrants an error-level message.
 
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 403291648823 ("thermal/drivers/imx: Add support for loading calibration data from OCOTP")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230706153823.201943-7-nfraprado@collabora.com
+Link: https://lore.kernel.org/r/20230708112647.2897294-1-a.fatoum@pengutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 69 +++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
+ drivers/thermal/imx8mm_thermal.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index a6bdcdfffa333..d4f160e8c7dbc 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -65,6 +65,11 @@
- #define LVTS_CALSCALE_CONF			0x300
- #define LVTS_MONINT_CONF			0x8300318C
+diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
+index d8005e9ec992b..1f780c4a1c890 100644
+--- a/drivers/thermal/imx8mm_thermal.c
++++ b/drivers/thermal/imx8mm_thermal.c
+@@ -179,10 +179,8 @@ static int imx8mm_tmu_probe_set_calib_v1(struct platform_device *pdev,
+ 	int ret;
  
-+#define LVTS_MONINT_OFFSET_SENSOR0		0xC
-+#define LVTS_MONINT_OFFSET_SENSOR1		0x180
-+#define LVTS_MONINT_OFFSET_SENSOR2		0x3000
-+#define LVTS_MONINT_OFFSET_SENSOR3		0x3000000
-+
- #define LVTS_INT_SENSOR0			0x0009001F
- #define LVTS_INT_SENSOR1			0x001203E0
- #define LVTS_INT_SENSOR2			0x00247C00
-@@ -110,6 +115,8 @@ struct lvts_sensor {
- 	void __iomem *base;
- 	int id;
- 	int dt_id;
-+	int low_thresh;
-+	int high_thresh;
- };
+ 	ret = nvmem_cell_read_u32(&pdev->dev, "calib", &ana0);
+-	if (ret) {
+-		dev_warn(dev, "Failed to read OCOTP nvmem cell (%d).\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to read OCOTP nvmem cell\n");
  
- struct lvts_ctrl {
-@@ -119,6 +126,8 @@ struct lvts_ctrl {
- 	int num_lvts_sensor;
- 	int mode;
- 	void __iomem *base;
-+	int low_thresh;
-+	int high_thresh;
- };
- 
- struct lvts_domain {
-@@ -290,12 +299,66 @@ static int lvts_get_temp(struct thermal_zone_device *tz, int *temp)
- 	return 0;
- }
- 
-+static void lvts_update_irq_mask(struct lvts_ctrl *lvts_ctrl)
-+{
-+	u32 masks[] = {
-+		LVTS_MONINT_OFFSET_SENSOR0,
-+		LVTS_MONINT_OFFSET_SENSOR1,
-+		LVTS_MONINT_OFFSET_SENSOR2,
-+		LVTS_MONINT_OFFSET_SENSOR3,
-+	};
-+	u32 value = 0;
-+	int i;
-+
-+	value = readl(LVTS_MONINT(lvts_ctrl->base));
-+
-+	for (i = 0; i < ARRAY_SIZE(masks); i++) {
-+		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
-+		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
-+			value |= masks[i];
-+		else
-+			value &= ~masks[i];
-+	}
-+
-+	writel(value, LVTS_MONINT(lvts_ctrl->base));
-+}
-+
-+static bool lvts_should_update_thresh(struct lvts_ctrl *lvts_ctrl, int high)
-+{
-+	int i;
-+
-+	if (high > lvts_ctrl->high_thresh)
-+		return true;
-+
-+	for (i = 0; i < lvts_ctrl->num_lvts_sensor; i++)
-+		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
-+		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
-+			return false;
-+
-+	return true;
-+}
-+
- static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
- 	struct lvts_sensor *lvts_sensor = thermal_zone_device_priv(tz);
-+	struct lvts_ctrl *lvts_ctrl = container_of(lvts_sensor, struct lvts_ctrl, sensors[lvts_sensor->id]);
- 	void __iomem *base = lvts_sensor->base;
- 	u32 raw_low = lvts_temp_to_raw(low != -INT_MAX ? low : LVTS_MINIMUM_THRESHOLD);
- 	u32 raw_high = lvts_temp_to_raw(high);
-+	bool should_update_thresh;
-+
-+	lvts_sensor->low_thresh = low;
-+	lvts_sensor->high_thresh = high;
-+
-+	should_update_thresh = lvts_should_update_thresh(lvts_ctrl, high);
-+	if (should_update_thresh) {
-+		lvts_ctrl->high_thresh = high;
-+		lvts_ctrl->low_thresh = low;
-+	}
-+	lvts_update_irq_mask(lvts_ctrl);
-+
-+	if (!should_update_thresh)
-+		return 0;
- 
- 	/*
- 	 * Low offset temperature threshold
-@@ -519,6 +582,9 @@ static int lvts_sensor_init(struct device *dev, struct lvts_ctrl *lvts_ctrl,
- 		 */
- 		lvts_sensor[i].msr = lvts_ctrl_data->mode == LVTS_MSR_IMMEDIATE_MODE ?
- 			imm_regs[i] : msr_regs[i];
-+
-+		lvts_sensor[i].low_thresh = INT_MIN;
-+		lvts_sensor[i].high_thresh = INT_MIN;
- 	};
- 
- 	lvts_ctrl->num_lvts_sensor = lvts_ctrl_data->num_lvts_sensor;
-@@ -686,6 +752,9 @@ static int lvts_ctrl_init(struct device *dev, struct lvts_domain *lvts_td,
- 		 */
- 		lvts_ctrl[i].hw_tshut_raw_temp =
- 			lvts_temp_to_raw(lvts_data->lvts_ctrl[i].hw_tshut_temp);
-+
-+		lvts_ctrl[i].low_thresh = INT_MIN;
-+		lvts_ctrl[i].high_thresh = INT_MIN;
- 	}
- 
- 	/*
+ 	writel(FIELD_PREP(TASR_BUF_VREF_MASK,
+ 			  FIELD_GET(ANA0_BUF_VREF_MASK, ana0)) |
 -- 
 2.40.1
 
