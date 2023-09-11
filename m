@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB2411705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD33C433C9;
-	Mon, 11 Sep 2023 14:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F94611705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05D2C433C8;
+	Mon, 11 Sep 2023 14:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443316;
-	bh=WzzaH+HxH5Bz5KLp2cMgkGtBBiWkbnHQEuZ5zCDedMk=;
+	s=korg; t=1694443319;
+	bh=Hw9lbiXegzUkAw/cWrGDDp3lbZyh3cEMr3dvdiC9QaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyRupq3lGjJQLTzILPrGqpoOgjeqdlWxJdw5KvZRyBLdbbgWWvOms7zx43pk9Ibvh
-	 WYJeeZfRdINfreFiRsaFZN7sJqpn+kJOopAbEO6GbRwJljTYRPcikGenZNK6zhtHuY
-	 QgDOgp9Rc511/mB1IPabBCvhOOxqb684Ce8pHlCU=
+	b=CRuosbLjxzIUgiqP+SBckgsTG/ByYPyAjDHJwZsXWjvNs8Du3aV6kSvtvlYX6gyPi
+	 fUuG4rP2Qs/GAWML/C98c3TR59ODuRqdZqMY9x2n0ft+3IRpU8igTdHLxHH8MDmNvb
+	 3j4w8pTqPh5uvubT31rO3Lqplu0ZM91wrlnmMbBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 306/737] ARM: dts: stm32: Add missing detach mailbox for DHCOR SoM
-Date: Mon, 11 Sep 2023 15:42:45 +0200
-Message-ID: <20230911134659.117478397@linuxfoundation.org>
+Subject: [PATCH 6.4 297/737] arm64: dts: qcom: pmr735b: fix thermal zone name
+Date: Mon, 11 Sep 2023 15:42:36 +0200
+Message-ID: <20230911134658.853199008@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,45 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 2f38de940f072db369edd3e6e8d82bb8f42c5c9b ]
+[ Upstream commit 99f8cf491d546cd668236f573c7d846d3e94f2d6 ]
 
-Add missing "detach" mailbox to this board to permit the CPU to inform
-the remote processor on a detach. This signal allows the remote processor
-firmware to stop IPC communication and to reinitialize the resources for
-a re-attach.
+The name of the thermal zone in pmr735b.dtsi (pmr735a-thermal) conflicts
+with the thermal zone in pmr735a.dtsi. Rename the thermal zone according
+to the chip name.
 
-Without this mailbox, detach is not possible and kernel log contains the
-following warning to, so make sure all the STM32MP15xx platform DTs are
-in sync regarding the mailboxes to fix the detach issue and the warning:
-"
-stm32-rproc 10000000.m4: mbox_request_channel_byname() could not locate channel named "detach"
-"
-
-Fixes: 6257dfc1c412 ("ARM: dts: stm32: Add coprocessor detach mbox on stm32mp15x-dkx boards")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 6f3426b3dea4 ("arm64: dts: qcom: pmr735b: add temp sensor and thermal zone config")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230707123027.1510723-5-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/pmr735b.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
-index bba19f21e5277..89881a26c6141 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
-@@ -227,8 +227,8 @@ &iwdg2 {
- &m4_rproc {
- 	memory-region = <&retram>, <&mcuram>, <&mcuram2>, <&vdev0vring0>,
- 			<&vdev0vring1>, <&vdev0buffer>;
--	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>;
--	mbox-names = "vq0", "vq1", "shutdown";
-+	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>, <&ipcc 3>;
-+	mbox-names = "vq0", "vq1", "shutdown", "detach";
- 	interrupt-parent = <&exti>;
- 	interrupts = <68 1>;
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/pmr735b.dtsi b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
+index ec24c4478005a..f7473e2473224 100644
+--- a/arch/arm64/boot/dts/qcom/pmr735b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
+@@ -8,7 +8,7 @@
+ 
+ / {
+ 	thermal-zones {
+-		pmr735a_thermal: pmr735a-thermal {
++		pmr735b_thermal: pmr735b-thermal {
+ 			polling-delay-passive = <100>;
+ 			polling-delay = <0>;
+ 			thermal-sensors = <&pmr735b_temp_alarm>;
 -- 
 2.40.1
 
