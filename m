@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B141170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A0CC433C8;
-	Mon, 11 Sep 2023 14:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71DF1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4084CC433C8;
+	Mon, 11 Sep 2023 14:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441845;
-	bh=ttHV1JS89jdehL2uaXJimIp/blNE4rGLl7ytz2xJ4eA=;
+	s=korg; t=1694441848;
+	bh=8UFl4AnrnLbEsv7iJtPYFeoL1rel8kz4vDooVRAS1dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6l0r7VDtHE4PK4IbLkhl4jTz8IrlmRka/khmkErlzNzqmj9d7P4HqprgVLfZHwxX
-	 51oZoxa22aD76OBfs3AX/Y0td0qzmVZ1ogEohTAHCKkYDM+e19HjDfxu+S029Z6ouV
-	 nPoElhPGlBgX/n/b9pMh+ycs32oBvgOIf75hpWwY=
+	b=eJcAc46YXNjo8mLxggmP4Xy58zv7oSUwsDs6xwz0CtpHn4whEbt/6ByrjmewVKF1m
+	 /G+RUtTesdnf9veT7K1fUlJBsCtGglcOn/Y770x5EkjKylE8504p+xkx6dW8Tu1zrT
+	 J0AWt5I35mS7f4hph2Sk2Ps8Af/AR3pntYFcN7Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	linux-f2fs-devel@lists.sourceforge.net,
+	Yangtao Li <frank.li@vivo.com>,
+	Konstantin Vyshetsky <vkon@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 520/739] iommu/qcom: Disable and reset context bank before programming
-Date: Mon, 11 Sep 2023 15:45:19 +0200
-Message-ID: <20230911134705.637093546@linuxfoundation.org>
+Subject: [PATCH 6.5 550/739] f2fs: fix spelling in ABI documentation
+Date: Mon, 11 Sep 2023 15:45:49 +0200
+Message-ID: <20230911134706.453276358@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,45 +44,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 9f3fef23d9b5a858a6e6d5f478bb1b6b76265e76 ]
+[ Upstream commit c709d099a0d2befa2b16c249ef8df722b43e6c28 ]
 
-Writing	the new	TTBRs, TCRs and MAIRs on a previously enabled
-context bank may trigger a context fault, resulting in firmware
-driven AP resets: change the domain initialization programming
-sequence to disable the context bank(s) and to also clear the
-related fault address (CB_FAR) and fault status (CB_FSR)
-registers before writing new values to TTBR0/1, TCR/TCR2, MAIR0/1.
+Correct spelling problems as identified by codespell.
 
-Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230622092742.74819-4-angelogioacchino.delregno@collabora.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 9e615dbba41e ("f2fs: add missing description for ipu_policy node")
+Fixes: b2e4a2b300e5 ("f2fs: expose discard related parameters in sysfs")
+Fixes: 846ae671ad36 ("f2fs: expose extension_list sysfs entry")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Chao Yu <chao@kernel.org>
+Cc: linux-f2fs-devel@lists.sourceforge.net
+Cc: Yangtao Li <frank.li@vivo.com>
+Cc: Konstantin Vyshetsky <vkon@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/ABI/testing/sysfs-fs-f2fs | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index a503ed758ec30..3e551ca6afdb9 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -273,6 +273,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 			ctx->secure_init = true;
- 		}
+diff --git a/Documentation/ABI/testing/sysfs-fs-f2fs b/Documentation/ABI/testing/sysfs-fs-f2fs
+index 8140fc98f5aee..ad3d76d37c8ba 100644
+--- a/Documentation/ABI/testing/sysfs-fs-f2fs
++++ b/Documentation/ABI/testing/sysfs-fs-f2fs
+@@ -54,9 +54,9 @@ Description:	Controls the in-place-update policy.
+ 		0x00  DISABLE         disable IPU(=default option in LFS mode)
+ 		0x01  FORCE           all the time
+ 		0x02  SSR             if SSR mode is activated
+-		0x04  UTIL            if FS utilization is over threashold
++		0x04  UTIL            if FS utilization is over threshold
+ 		0x08  SSR_UTIL        if SSR mode is activated and FS utilization is over
+-		                      threashold
++		                      threshold
+ 		0x10  FSYNC           activated in fsync path only for high performance
+ 		                      flash storages. IPU will be triggered only if the
+ 		                      # of dirty pages over min_fsync_blocks.
+@@ -117,7 +117,7 @@ Date:		December 2021
+ Contact:	"Konstantin Vyshetsky" <vkon@google.com>
+ Description:	Controls the number of discards a thread will issue at a time.
+ 		Higher number will allow the discard thread to finish its work
+-		faster, at the cost of higher latency for incomming I/O.
++		faster, at the cost of higher latency for incoming I/O.
  
-+		/* Disable context bank before programming */
-+		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
-+
-+		/* Clear context bank fault address fault status registers */
-+		iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
-+		iommu_writel(ctx, ARM_SMMU_CB_FSR, ARM_SMMU_FSR_FAULT);
-+
- 		/* TTBRs */
- 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
- 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
+ What:		/sys/fs/f2fs/<disk>/min_discard_issue_time
+ Date:		December 2021
+@@ -334,7 +334,7 @@ Description:	This indicates how many GC can be failed for the pinned
+ 		state. 2048 trials is set by default.
+ 
+ What:		/sys/fs/f2fs/<disk>/extension_list
+-Date:		Feburary 2018
++Date:		February 2018
+ Contact:	"Chao Yu" <yuchao0@huawei.com>
+ Description:	Used to control configure extension list:
+ 		- Query: cat /sys/fs/f2fs/<disk>/extension_list
 -- 
 2.40.1
 
