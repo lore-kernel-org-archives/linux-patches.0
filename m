@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B367C11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:11:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDB1C433C8;
-	Mon, 11 Sep 2023 15:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869BD11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:11:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0843AC433C7;
+	Mon, 11 Sep 2023 15:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445091;
-	bh=Vd06oWSu2mhjizJKKq/PMzrmG/lwZezzHaXJolkna84=;
+	s=korg; t=1694445094;
+	bh=uXpGHgRfJVouFi7ds/iphviLOcmcoG+VIrlFw220cSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCxfbb9sOurjA8aw8iXKDVfW1U1uZlRvuBUGg7EIPWJUni6wINQ4TI5Num97kF5XM
-	 f/P1ojN+YaoS0eMPcCnQsFNDlwvJzKPwN2XxC/jNVFhhmsNRXBG3TZ0lZkxh4ZZ0+f
-	 VmjA5RxWQHbyj81sJAqgG2sW/SO3awqTbF7iaSFw=
+	b=MxAbWCks5doF26+pxqR23rKGlFFrp+JCVoHGtNGtKtmM9gEcfguT4Urxa+4+mcAAc
+	 loSE7VO9xhy0wjP5AowFn+zB/xXM+qt5qtD6jfwlNTenoUj2+UqF+ts8XgUirgornN
+	 QchkQmhQYCQEp7f+OgYCifTmHvrNXPfN803mPhv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Nikita Travkin <nikita@trvn.ru>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alex Austin <alex.austin@amd.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/600] arm64: dts: qcom: msm8916-l8150: correct light sensor VDDIO supply
-Date: Mon, 11 Sep 2023 15:44:18 +0200
-Message-ID: <20230911134640.255214528@linuxfoundation.org>
+Subject: [PATCH 6.1 208/600] sfc: Check firmware supports Ethernet PTP filter
+Date: Mon, 11 Sep 2023 15:44:01 +0200
+Message-ID: <20230911134639.757340086@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,37 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Alex Austin <alex.austin@amd.com>
 
-[ Upstream commit 6a541eaa6e8e5283efb993ae7a947bede8d01fa5 ]
+[ Upstream commit c4413a20fa6d7c4888009fb7dd391685f196cd36 ]
 
-liteon,ltr559 light sensor takes VDDIO, not VIO, supply:
+Not all firmware variants support RSS filters. Do not fail all PTP
+functionality when raw ethernet PTP filters fail to insert.
 
-  msm8916-longcheer-l8150.dtb: light-sensor@23: 'vio-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
-
-Fixes: 3016af34ef8d ("arm64: dts: qcom: msm8916-longcheer-l8150: Add light and proximity sensor")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://lore.kernel.org/r/20230617171541.286957-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e4616f64726b ("sfc: support PTP over Ethernet")
+Signed-off-by: Alex Austin <alex.austin@amd.com>
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Link: https://lore.kernel.org/r/20230824164657.42379-1-alex.austin@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/ptp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index d85e7f7c0835a..75f7b4f35fe82 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -163,7 +163,7 @@ light-sensor@23 {
- 		pinctrl-0 = <&light_int_default>;
+diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
+index eaef4a15008a3..692c7f132e9f9 100644
+--- a/drivers/net/ethernet/sfc/ptp.c
++++ b/drivers/net/ethernet/sfc/ptp.c
+@@ -1387,7 +1387,8 @@ static int efx_ptp_insert_multicast_filters(struct efx_nic *efx)
+ 			goto fail;
  
- 		vdd-supply = <&pm8916_l17>;
--		vio-supply = <&pm8916_l6>;
-+		vddio-supply = <&pm8916_l6>;
- 	};
+ 		rc = efx_ptp_insert_eth_filter(efx);
+-		if (rc < 0)
++		/* Not all firmware variants support this filter */
++		if (rc < 0 && rc != -EPROTONOSUPPORT)
+ 			goto fail;
+ 	}
  
- 	gyroscope@68 {
 -- 
 2.40.1
 
