@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018991170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78585C433C8;
-	Mon, 11 Sep 2023 14:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CCE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DB7C433C7;
+	Mon, 11 Sep 2023 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442353;
-	bh=Q6HbyP/5GNYR6BMnm3er+Y+uvBzKtbUP6LI9dVKTWoQ=;
+	s=korg; t=1694442356;
+	bh=Q/hoxHRIliDBkAEVouOBxMAdNZF54nktHzrx64W5RUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=doYghrq7aX6xiFEhytM9d4C+s4/DT916DdG8HLm6ITXP1IE14OMdO8Di6a7vLnMZi
-	 rulD1Cn3ihuasBJWEkY6KErfCi5xph0mWtZP8ipSbJfci9uVAu+x9mD5RDIyhs/6i6
-	 wYby3U5+YOHUNa4TsLNc5FUlYtZKpm9PST57JKzg=
+	b=xRvgDlwdNqm6yqgxxP9SC0TnOUZzDr6nRPKwjqD2jRGp3gKlIYpK/EASjuT3fvibu
+	 nIxgB1WYZ8GUh8L5QILSz78aJv2K7BqxJdpN5AaFNZ80UPOqwlUUnesWFa4hwS9XLC
+	 /Uvi3nWPDWCtyosf5cQektXuUNPlNxFfcb9dRJeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.5 728/739] media: ipu3-cio2: allow ipu_bridge to be a module again
-Date: Mon, 11 Sep 2023 15:48:47 +0200
-Message-ID: <20230911134711.402814048@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Daniel Verkamp <dverkamp@chromium.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Kees Cook <keescook@chromium.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 737/739] memfd: improve userspace warnings for missing exec-related flags
+Date: Mon, 11 Sep 2023 15:48:56 +0200
+Message-ID: <20230911134711.642197375@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,119 +45,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@kernel.org>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 2545a2c02ba1da9cfb9ec218623c71b00eb4a555 upstream.
+[ Upstream commit 434ed3350f57c03a9654fe0619755cc137a58935 ]
 
-This code was previously part of the VIDEO_IPU3_CIO2 driver, which could
-be built-in or a loadable module, but after the move it turned into a
-builtin-only driver. This fails to link when the I2C subsystem is a
-module:
+In order to incentivise userspace to switch to passing MFD_EXEC and
+MFD_NOEXEC_SEAL, we need to provide a warning on each attempt to call
+memfd_create() without the new flags.  pr_warn_once() is not useful
+because on most systems the one warning is burned up during the boot
+process (on my system, systemd does this within the first second of boot)
+and thus userspace will in practice never see the warnings to push them to
+switch to the new flags.
 
-x86_64-linux-ld: drivers/media/pci/intel/ipu-bridge.o: in function `ipu_bridge_unregister_sensors':
-ipu-bridge.c:(.text+0x50): undefined reference to `i2c_unregister_device'
-x86_64-linux-ld: drivers/media/pci/intel/ipu-bridge.o: in function `ipu_bridge_init':
-ipu-bridge.c:(.text+0x9c9): undefined reference to `i2c_acpi_new_device_by_fwnode'
+The original patchset[1] used pr_warn_ratelimited(), however there were
+concerns about the degree of spam in the kernel log[2,3].  The resulting
+inability to detect every case was flagged as an issue at the time[4].
 
-In general, drivers should not have to be built-in, so change the option
-to a tristate with the corresponding dependency. This in turn opens a
-new problem with the dependency, as the IPU bridge can be a loadable module
-while the ipu3 driver itself is built-in, producing a new link failure:
+While we could come up with an alternative rate-limiting scheme such as
+only outputting the message if vm.memfd_noexec has been modified, or only
+outputting the message once for a given task, these alternatives have
+downsides that don't make sense given how low-stakes a single kernel
+warning message is.  Switching to pr_info_ratelimited() instead should be
+fine -- it's possible some monitoring tool will be unhappy with a stream
+of warning-level messages but there's already plenty of info-level message
+spam in dmesg.
 
-86_64-linux-ld: drivers/media/pci/intel/ipu3/ipu3-cio2.o: in function `cio2_pci_probe':
-ipu3-cio2.c:(.text+0x197e): undefined reference to `ipu_bridge_init'
+[1]: https://lore.kernel.org/20221215001205.51969-4-jeffxu@google.com/
+[2]: https://lore.kernel.org/202212161233.85C9783FB@keescook/
+[3]: https://lore.kernel.org/Y5yS8wCnuYGLHMj4@x1n/
+[4]: https://lore.kernel.org/f185bb42-b29c-977e-312e-3349eea15383@linuxfoundation.org/
 
-In order to fix this, restore the old Kconfig option that controlled
-the ipu bridge driver before it was split out, but make it select a
-hidden symbol that now corresponds to the bridge driver.
-
-When other drivers get added that share ipu-bridge, this should cover
-all corner cases, and allow any combination of them to be built-in
-or modular.
-
-Link: https://lore.kernel.org/linux-media/20230727122331.2421453-1-arnd@kernel.org
-
-Fixes: 881ca25978c6 ("media: ipu3-cio2: rename cio2 bridge to ipu bridge and move out of ipu3")'
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20230814-memfd-vm-noexec-uapi-fixes-v2-3-7ff9e3e10ba6@cyphar.com
+Fixes: 105ff5339f49 ("mm/memfd: add MFD_NOEXEC_SEAL and MFD_EXEC")
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Daniel Verkamp <dverkamp@chromium.org>
+Cc: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/Kconfig      |   21 +++++----------------
- drivers/media/pci/intel/ipu-bridge.c |    3 +++
- drivers/media/pci/intel/ipu3/Kconfig |   20 ++++++++++++++++++++
- 3 files changed, 28 insertions(+), 16 deletions(-)
+ mm/memfd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/pci/intel/Kconfig
-+++ b/drivers/media/pci/intel/Kconfig
-@@ -1,21 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config IPU_BRIDGE
--	bool "Intel IPU Sensors Bridge"
--	depends on VIDEO_IPU3_CIO2 && ACPI
--	depends on I2C
-+	tristate
-+	depends on I2C && ACPI
- 	help
--	  This extension provides an API for the Intel IPU driver to create
--	  connections to cameras that are hidden in the SSDB buffer in ACPI.
--	  It can be used to enable support for cameras in detachable / hybrid
--	  devices that ship with Windows.
--
--	  Say Y here if your device is a detachable / hybrid laptop that comes
--	  with Windows installed by the OEM, for example:
--
--		- Microsoft Surface models (except Surface Pro 3)
--		- The Lenovo Miix line (for example the 510, 520, 710 and 720)
--		- Dell 7285
--
--	  If in doubt, say N here.
-+	  This is a helper module for the IPU bridge, which can be
-+	  used by ipu3 and other drivers. In order to handle module
-+	  dependencies, this is selected by each driver that needs it.
+diff --git a/mm/memfd.c b/mm/memfd.c
+index 2dba2cb6f0d0f..1cad1904fc26b 100644
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -316,7 +316,7 @@ SYSCALL_DEFINE2(memfd_create,
+ 		return -EINVAL;
  
- source "drivers/media/pci/intel/ipu3/Kconfig"
---- a/drivers/media/pci/intel/ipu-bridge.c
-+++ b/drivers/media/pci/intel/ipu-bridge.c
-@@ -497,3 +497,6 @@ err_free_bridge:
- 	return ret;
- }
- EXPORT_SYMBOL_NS_GPL(ipu_bridge_init, INTEL_IPU_BRIDGE);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Intel IPU Sensors Bridge driver");
---- a/drivers/media/pci/intel/ipu3/Kconfig
-+++ b/drivers/media/pci/intel/ipu3/Kconfig
-@@ -8,6 +8,7 @@ config VIDEO_IPU3_CIO2
- 	select VIDEO_V4L2_SUBDEV_API
- 	select V4L2_FWNODE
- 	select VIDEOBUF2_DMA_SG
-+	select IPU_BRIDGE if CIO2_BRIDGE
- 
- 	help
- 	  This is the Intel IPU3 CIO2 CSI-2 receiver unit, found in Intel
-@@ -17,3 +18,22 @@ config VIDEO_IPU3_CIO2
- 	  Say Y or M here if you have a Skylake/Kaby Lake SoC with MIPI CSI-2
- 	  connected camera.
- 	  The module will be called ipu3-cio2.
-+
-+config CIO2_BRIDGE
-+	bool "IPU3 CIO2 Sensors Bridge"
-+	depends on VIDEO_IPU3_CIO2 && ACPI
-+	depends on I2C
-+	help
-+	  This extension provides an API for the ipu3-cio2 driver to create
-+	  connections to cameras that are hidden in the SSDB buffer in ACPI.
-+	  It can be used to enable support for cameras in detachable / hybrid
-+	  devices that ship with Windows.
-+
-+	  Say Y here if your device is a detachable / hybrid laptop that comes
-+	  with Windows installed by the OEM, for example:
-+
-+		- Microsoft Surface models (except Surface Pro 3)
-+		- The Lenovo Miix line (for example the 510, 520, 710 and 720)
-+		- Dell 7285
-+
-+	  If in doubt, say N here.
+ 	if (!(flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
+-		pr_warn_once(
++		pr_info_ratelimited(
+ 			"%s[%d]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set\n",
+ 			current->comm, task_pid_nr(current));
+ 	}
+-- 
+2.40.1
+
 
 
