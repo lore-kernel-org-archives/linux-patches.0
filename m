@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6441170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F39C433C7;
-	Mon, 11 Sep 2023 13:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6340C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4286C433C8;
+	Mon, 11 Sep 2023 13:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440331;
-	bh=UJ8H1wA8PBIzn8qU+H73b1C+Avn9y1S0i3TQ8+0RLMQ=;
+	s=korg; t=1694440334;
+	bh=xBMzTCh0Pce5e2uy3yJTZT0guc0BsHcPJoIawDxmR3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W60X4Nff7PBskOHPgC5SUMoIRpmHqEYqtMtQAs7m2RtRF7wWyBWgLP3D1I68WqDnk
-	 hhrrV9Y7ybSWWGXh8vS5e8oRa8savRCEQ/MkiTofdN3NhVLNsV7/dPwfGlDGWYKq17
-	 RkS6HpA1nC2EfHGY0fnT86kQxqXjErCL9XISZCKI=
+	b=xDDgrzFPeZkAtB9LI12j0KEjwfl/h6y8SSCmsb2VaAW0n8BDjOqVz/nL3qrr9B/6H
+	 YQAupv7cosuShkqgMyAwRDxmRqCpFFkSVBLHeYL/AKVUmsbNcxEXDyRMb+NbLYtpLk
+	 WzKmN5ZtBUhhOTH4CqJZcvQoOBU1iXLOqZHs97+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.5 008/739] Revert "f2fs: clean up w/ sbi->log_sectors_per_block"
-Date: Mon, 11 Sep 2023 15:36:47 +0200
-Message-ID: <20230911134651.221827085@linuxfoundation.org>
+	Vidya Sagar <vidyas@nvidia.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 6.5 009/739] Revert "PCI: tegra194: Enable support for 256 Byte payload"
+Date: Mon, 11 Sep 2023 15:36:48 +0200
+Message-ID: <20230911134651.253205337@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,140 +34,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-commit 579c7e41507e85dc3eedf998a3dca14a2a1526ad upstream.
+commit ebfde1584d9f037b6309fc682c96e22dac7bcb7a upstream.
 
-This reverts commit bfd476623999118d9c509cb0fa9380f2912bc225.
+After commit 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte
+payload"), we initialize MPS=256 for tegra194 Root Ports before enumerating
+the hierarchy.
 
-Shinichiro Kawasaki reported:
+Consider an Endpoint that supports only MPS=128.  In the default situation
+(CONFIG_PCIE_BUS_DEFAULT set and no "pci=pcie_bus_*" parameter), Linux
+tries to configure the MPS of every device to match the upstream bridge.
+If the Endpoint is directly below the Root Port, Linux can reduce the Root
+Port MPS to 128 to match the Endpoint.  But if there's a switch in the
+middle, Linux doesn't reduce the Root Port MPS because other devices below
+the switch may already be configured with MPS larger than 128.
 
-When I ran workloads on f2fs using v6.5-rcX with fixes [1][2] and a zoned block
-devices with 4kb logical block size, I observe mount failure as follows. When
-I revert this commit, the failure goes away.
+This scenario results in uncorrectable Malformed TLP errors if the Root
+Port sends TLPs with payloads larger than 128 bytes.  These errors can
+be avoided by using the "pci=pcie_bus_safe" parameter, but it doesn't
+seem to be a good idea to always have this parameter even for basic
+functionality to work.
 
-[  167.781975][ T1555] F2FS-fs (dm-0): IO Block Size:        4 KB
-[  167.890728][ T1555] F2FS-fs (dm-0): Found nat_bits in checkpoint
-[  171.482588][ T1555] F2FS-fs (dm-0): Zone without valid block has non-zero write pointer. Reset the write pointer: wp[0x1300,0x8]
-[  171.496000][ T1555] F2FS-fs (dm-0): (0) : Unaligned zone reset attempted (block 280000 + 80000)
-[  171.505037][ T1555] F2FS-fs (dm-0): Discard zone failed:  (errno=-5)
+Revert commit 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte
+payload") so the Root Ports default to MPS=128, which all devices
+support.
 
-The patch replaced "sbi->log_blocksize - SECTOR_SHIFT" with
-"sbi->log_sectors_per_block". However, I think these two are not equal when the
-device has 4k logical block size. The former uses Linux kernel sector size 512
-byte. The latter use 512b sector size or 4kb sector size depending on the
-device. mkfs.f2fs obtains logical block size via BLKSSZGET ioctl from the device
-and reflects it to the value sbi->log_sector_size_per_block. This causes
-unexpected write pointer calculations in check_zone_write_pointer(). This
-resulted in unexpected zone reset and the mount failure.
+If peer-to-peer DMA is not required, one can use "pci=pcie_bus_perf" to
+get the benefit of larger MPS settings.
 
-[1] https://lkml.kernel.org/linux-f2fs-devel/20230711050101.GA19128@lst.de/
-[2] https://lore.kernel.org/linux-f2fs-devel/20230804091556.2372567-1-shinichiro.kawasaki@wdc.com/
-
-Cc: stable@vger.kernel.org
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Fixes: bfd476623999 ("f2fs: clean up w/ sbi->log_sectors_per_block")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[bhelgaas: commit log; kwilczynski: retain "u16 val_16" declaration at
+the top, add missing acked by tag]
+Fixes: 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte payload")
+Link: https://lore.kernel.org/linux-pci/20230619102604.3735001-1-vidyas@nvidia.com
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Cc: stable@vger.kernel.org # v6.0-rc1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 0457d620011f..cbb4bd95ea19 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -4846,17 +4846,17 @@ static int check_zone_write_pointer(struct f2fs_sb_info *sbi,
- {
- 	unsigned int wp_segno, wp_blkoff, zone_secno, zone_segno, segno;
- 	block_t zone_block, wp_block, last_valid_block;
-+	unsigned int log_sectors_per_block = sbi->log_blocksize - SECTOR_SHIFT;
- 	int i, s, b, ret;
- 	struct seg_entry *se;
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -900,11 +900,6 @@ static int tegra_pcie_dw_host_init(struc
+ 		pcie->pcie_cap_base = dw_pcie_find_capability(&pcie->pci,
+ 							      PCI_CAP_ID_EXP);
  
- 	if (zone->type != BLK_ZONE_TYPE_SEQWRITE_REQ)
- 		return 0;
+-	val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
+-	val_16 &= ~PCI_EXP_DEVCTL_PAYLOAD;
+-	val_16 |= PCI_EXP_DEVCTL_PAYLOAD_256B;
+-	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_16);
+-
+ 	val = dw_pcie_readl_dbi(pci, PCI_IO_BASE);
+ 	val &= ~(IO_BASE_IO_DECODE | IO_BASE_IO_DECODE_BIT8);
+ 	dw_pcie_writel_dbi(pci, PCI_IO_BASE, val);
+@@ -1887,11 +1882,6 @@ static void pex_ep_event_pex_rst_deasser
+ 	pcie->pcie_cap_base = dw_pcie_find_capability(&pcie->pci,
+ 						      PCI_CAP_ID_EXP);
  
--	wp_block = fdev->start_blk + (zone->wp >> sbi->log_sectors_per_block);
-+	wp_block = fdev->start_blk + (zone->wp >> log_sectors_per_block);
- 	wp_segno = GET_SEGNO(sbi, wp_block);
- 	wp_blkoff = wp_block - START_BLOCK(sbi, wp_segno);
--	zone_block = fdev->start_blk + (zone->start >>
--						sbi->log_sectors_per_block);
-+	zone_block = fdev->start_blk + (zone->start >> log_sectors_per_block);
- 	zone_segno = GET_SEGNO(sbi, zone_block);
- 	zone_secno = GET_SEC_FROM_SEG(sbi, zone_segno);
- 
-@@ -4906,7 +4906,7 @@ static int check_zone_write_pointer(struct f2fs_sb_info *sbi,
- 			    "pointer. Reset the write pointer: wp[0x%x,0x%x]",
- 			    wp_segno, wp_blkoff);
- 		ret = __f2fs_issue_discard_zone(sbi, fdev->bdev, zone_block,
--				zone->len >> sbi->log_sectors_per_block);
-+					zone->len >> log_sectors_per_block);
- 		if (ret)
- 			f2fs_err(sbi, "Discard zone failed: %s (errno=%d)",
- 				 fdev->path, ret);
-@@ -4967,6 +4967,7 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
- 	struct blk_zone zone;
- 	unsigned int cs_section, wp_segno, wp_blkoff, wp_sector_off;
- 	block_t cs_zone_block, wp_block;
-+	unsigned int log_sectors_per_block = sbi->log_blocksize - SECTOR_SHIFT;
- 	sector_t zone_sector;
- 	int err;
- 
-@@ -4978,8 +4979,8 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
- 		return 0;
- 
- 	/* report zone for the sector the curseg points to */
--	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk) <<
--						sbi->log_sectors_per_block;
-+	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk)
-+		<< log_sectors_per_block;
- 	err = blkdev_report_zones(zbd->bdev, zone_sector, 1,
- 				  report_one_zone_cb, &zone);
- 	if (err != 1) {
-@@ -4991,10 +4992,10 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
- 	if (zone.type != BLK_ZONE_TYPE_SEQWRITE_REQ)
- 		return 0;
- 
--	wp_block = zbd->start_blk + (zone.wp >> sbi->log_sectors_per_block);
-+	wp_block = zbd->start_blk + (zone.wp >> log_sectors_per_block);
- 	wp_segno = GET_SEGNO(sbi, wp_block);
- 	wp_blkoff = wp_block - START_BLOCK(sbi, wp_segno);
--	wp_sector_off = zone.wp & GENMASK(sbi->log_sectors_per_block - 1, 0);
-+	wp_sector_off = zone.wp & GENMASK(log_sectors_per_block - 1, 0);
- 
- 	if (cs->segno == wp_segno && cs->next_blkoff == wp_blkoff &&
- 		wp_sector_off == 0)
-@@ -5021,8 +5022,8 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
- 	if (!zbd)
- 		return 0;
- 
--	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk) <<
--						sbi->log_sectors_per_block;
-+	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk)
-+		<< log_sectors_per_block;
- 	err = blkdev_report_zones(zbd->bdev, zone_sector, 1,
- 				  report_one_zone_cb, &zone);
- 	if (err != 1) {
-@@ -5040,7 +5041,7 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
- 			    "Reset the zone: curseg[0x%x,0x%x]",
- 			    type, cs->segno, cs->next_blkoff);
- 		err = __f2fs_issue_discard_zone(sbi, zbd->bdev,	cs_zone_block,
--					zone.len >> sbi->log_sectors_per_block);
-+					zone.len >> log_sectors_per_block);
- 		if (err) {
- 			f2fs_err(sbi, "Discard zone failed: %s (errno=%d)",
- 				 zbd->path, err);
--- 
-2.42.0
-
+-	val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
+-	val_16 &= ~PCI_EXP_DEVCTL_PAYLOAD;
+-	val_16 |= PCI_EXP_DEVCTL_PAYLOAD_256B;
+-	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_16);
+-
+ 	/* Clear Slot Clock Configuration bit if SRNS configuration */
+ 	if (pcie->enable_srns) {
+ 		val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base +
 
 
