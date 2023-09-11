@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8221170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AEEC433C9;
-	Mon, 11 Sep 2023 14:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CCE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB34C433C8;
+	Mon, 11 Sep 2023 14:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442005;
-	bh=oxb8qf0UmaAYCcSnIpjEO8xMqnThVCj8bmaMVGeta4c=;
+	s=korg; t=1694442008;
+	bh=k0Jng5tNiI0AyuvKN5JOS3N9CJHn8+aoJrLMYxcHMBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIOYmI2vI8rqffR2cx2g4wRIa9TdXFwlOzZQ/cHhZiQaI14vtcRgnGFQBQo2826LQ
-	 472gNOKVxpvSJ5G4wE5avNX7/PWVtpnXPTLpxLZnDg8frAL41MNzSH0ITUfxLSGcHA
-	 6CHHUgEg0H5ZEayYSAP8zuyIAQZydwCs+UAVBni0=
+	b=z0TIz7uRQhlmE9qBEOHhrgIZqqkNhHEHDchqRjuYTIWyw7XLa4K7nR0jeIrFGZQEb
+	 FOSR8uls8kATU6EXzAJ6psHDsdcng+gf7tg31S5YWEZU2JrKnzBzXuOCCIw7tHEIMw
+	 rrVOOiaxx1f/dnhzLppP69FLgYcO55ftS7VGNFFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maxime Ripard <mripard@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 586/739] HID: multitouch: Correct devm device reference for hidinput input_dev name
-Date: Mon, 11 Sep 2023 15:46:25 +0200
-Message-ID: <20230911134707.473042713@linuxfoundation.org>
+Subject: [PATCH 6.5 587/739] HID: nvidia-shield: Reference hid_device devm allocation of input_dev name
+Date: Mon, 11 Sep 2023 15:46:26 +0200
+Message-ID: <20230911134707.500583506@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,64 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 4794394635293a3e74591351fff469cea7ad15a2 ]
+[ Upstream commit 197d3143520fec9fde89aebabc9f0d7464f08e50 ]
 
-Reference the HID device rather than the input device for the devm
-allocation of the input_dev name. Referencing the input_dev would lead to a
-use-after-free when the input_dev was unregistered and subsequently fires a
-uevent that depends on the name. At the point of firing the uevent, the
-name would be freed by devres management.
-
-Use devm_kasprintf to simplify the logic for allocating memory and
-formatting the input_dev name string.
+Use hid_device for devm allocation of the input_dev name to avoid a
+use-after-free. input_unregister_device would trigger devres cleanup of all
+resources associated with the input_dev, free-ing the name. The name would
+subsequently be used in a uevent fired at the end of unregistering the
+input_dev.
 
 Reported-by: Maxime Ripard <mripard@kernel.org>
 Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
-Fixes: c08d46aa805b ("HID: multitouch: devm conversion")
+Fixes: 09308562d4af ("HID: nvidia-shield: Initial driver implementation with Thunderstrike support")
 Suggested-by: Maxime Ripard <mripard@kernel.org>
 Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20230824061308.222021-3-sergeantsagara@protonmail.com
+Link: https://lore.kernel.org/r/20230824061308.222021-4-sergeantsagara@protonmail.com
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/hid/hid-nvidia-shield.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index e31be0cb8b850..521b2ffb42449 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1594,7 +1594,6 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app)
- static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- {
- 	struct mt_device *td = hid_get_drvdata(hdev);
--	char *name;
- 	const char *suffix = NULL;
- 	struct mt_report_data *rdata;
- 	struct mt_application *mt_application = NULL;
-@@ -1645,15 +1644,9 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 		break;
- 	}
- 
--	if (suffix) {
--		name = devm_kzalloc(&hi->input->dev,
--				    strlen(hdev->name) + strlen(suffix) + 2,
--				    GFP_KERNEL);
--		if (name) {
--			sprintf(name, "%s %s", hdev->name, suffix);
--			hi->input->name = name;
--		}
--	}
-+	if (suffix)
-+		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
-+						 "%s %s", hdev->name, suffix);
- 
- 	return 0;
- }
+diff --git a/drivers/hid/hid-nvidia-shield.c b/drivers/hid/hid-nvidia-shield.c
+index 4e183650c4478..9c44974135079 100644
+--- a/drivers/hid/hid-nvidia-shield.c
++++ b/drivers/hid/hid-nvidia-shield.c
+@@ -164,7 +164,7 @@ static struct input_dev *shield_allocate_input_dev(struct hid_device *hdev,
+ 	idev->id.product = hdev->product;
+ 	idev->id.version = hdev->version;
+ 	idev->uniq = hdev->uniq;
+-	idev->name = devm_kasprintf(&idev->dev, GFP_KERNEL, "%s %s", hdev->name,
++	idev->name = devm_kasprintf(&hdev->dev, GFP_KERNEL, "%s %s", hdev->name,
+ 				    name_suffix);
+ 	if (!idev->name)
+ 		goto err_name;
 -- 
 2.40.1
 
