@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9442D11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FCAC433C8;
-	Mon, 11 Sep 2023 15:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B8C11728
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A8EC433C9;
+	Mon, 11 Sep 2023 15:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446024;
-	bh=h5xJE8kGXMtEL3zsAphY1KLhYvutgmj2VDkzCEbnDPg=;
+	s=korg; t=1694446027;
+	bh=wvPjOIglBieHp99YVZ7EbU3eErqtrHKq8YJv+i+d8hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9vJiHVsvFJ2KFF/JQ/p9n/WKiYbneiigDljEc3TGtEKntNbYHa9e+O2jn6vtuO5e
-	 J0Nr8M7aIhvizpp0s6I+EpJWPVzxrSZrkWGkaamjaMeEp8Jl0MKy9DmJ15lAT1SZBj
-	 BWGB70LKifJMYeOXd1DbNalcrPvDYylIi/+PYI2Y=
+	b=VSGpdL6KzQZ0oHqULVEp/fOwaO4FAW59RYkMH/RB10k00OhxikfrGU2jMVa64/Fa8
+	 vTy9D7zn3GGkO1gkLCMZZvY1YGyeebYsbPtOyUGPTU/AHr1PQ2L/WZFttGYpAA7Vva
+	 iRTNthqVY4WrZlJVUusi2AqCc9HfnXsglSUBxXjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Logan Gunthorpe <logang@deltatee.com>,
-	renlonglong <ren.longlong@h3c.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 6.1 556/600] ntb: Fix calculation ntb_transport_tx_free_entry()
-Date: Mon, 11 Sep 2023 15:49:49 +0200
-Message-ID: <20230911134650.028436735@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.1 557/600] Revert "PCI: Mark NVIDIA T4 GPUs to avoid bus reset"
+Date: Mon, 11 Sep 2023 15:49:50 +0200
+Message-ID: <20230911134650.056633003@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,35 +38,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 5a7693e6bbf19b22fd6c1d2c4b7beb0a03969e2c upstream.
+commit 5260bd6d36c83c5b269c33baaaf8c78e520908b0 upstream.
 
-ntb_transport_tx_free_entry() never returns 0 with the current
-calculation. If head == tail, then it would return qp->tx_max_entry.
-Change compare to tail >= head and when they are equal, a 0 would be
-returned.
+This reverts commit d5af729dc2071273f14cbb94abbc60608142fd83.
 
-Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: renlonglong <ren.longlong@h3c.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+d5af729dc207 ("PCI: Mark NVIDIA T4 GPUs to avoid bus reset") avoided
+Secondary Bus Reset on the T4 because the reset seemed to not work when the
+T4 was directly attached to a Root Port.
+
+But NVIDIA thinks the issue is probably related to some issue with the Root
+Port, not with the T4.  The T4 provides neither PM nor FLR reset, so
+masking bus reset compromises this device for assignment scenarios.
+
+Revert d5af729dc207 as requested by Wu Zongyong.  This will leave SBR
+broken in the specific configuration Wu tested, as it was in v6.5, so Wu
+will debug that further.
+
+Link: https://lore.kernel.org/r/ZPqMCDWvITlOLHgJ@wuzongyong-alibaba
+Link: https://lore.kernel.org/r/20230908201104.GA305023@bhelgaas
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |    2 +-
+ drivers/pci/quirks.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -2429,7 +2429,7 @@ unsigned int ntb_transport_tx_free_entry
- 	unsigned int head = qp->tx_index;
- 	unsigned int tail = qp->remote_rx_info->entry;
- 
--	return tail > head ? tail - head : qp->tx_max_entry + tail - head;
-+	return tail >= head ? tail - head : qp->tx_max_entry + tail - head;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3631,7 +3631,7 @@ static void quirk_no_bus_reset(struct pc
+  */
+ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+ {
+-	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
++	if ((dev->device & 0xffc0) == 0x2340)
+ 		quirk_no_bus_reset(dev);
  }
- EXPORT_SYMBOL_GPL(ntb_transport_tx_free_entry);
- 
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
 
 
