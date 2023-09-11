@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1399C4C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842D1C433C7;
-	Mon, 11 Sep 2023 14:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0804C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2A5C433C8;
+	Mon, 11 Sep 2023 14:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443692;
-	bh=qIu6qL9EVLWUwvT3qxCZucj0qfKtOHli99P4UIdJthE=;
+	s=korg; t=1694443695;
+	bh=zoLgNaMcPnqCQkkMurDsdfYwV6z6OA6f68YvAhwUkGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EtvMYzStZsLe0C1cQyOjZGuITfvlwepGkcoJLf3P0Cp7OE2zDV5qcMJrfddVTYzoA
-	 XxO6tF8PWlQhuuMT9kPoNJs3vn7jz126BdCvNMivqkaQ4XH8D8ISRe/RNNIVgCxzBE
-	 5sNNkb14lJ4L2olSg4R1pMhd6XVR6dxhfjuHaj/M=
+	b=ijkeFBM8h3LR9RlD9gbVBF+9MOxXHZUEsasTQ4WRQEXPPE98ejlk0n+CgUGA/e5Ee
+	 0qgw94xe22B6RAypHyKcsOZGCLj8IF1BaSKjEAAEicAOpYWyirH4dww0Ltk5ZnE8YI
+	 2k865yvfEesV+sgeswHNB2Tt+Zus3+oPX/BYkB7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
+	Liang He <windhl@126.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 468/737] powerpc/pseries: Fix hcall tracepoints with JUMP_LABEL=n
-Date: Mon, 11 Sep 2023 15:45:27 +0200
-Message-ID: <20230911134703.663115035@linuxfoundation.org>
+Subject: [PATCH 6.4 469/737] powerpc/mpc5xxx: Add missing fwnode_handle_put()
+Date: Mon, 11 Sep 2023 15:45:28 +0200
+Message-ID: <20230911134703.689444929@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,35 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 750bd41aeaeb1f0e0128aa4f8fcd6dd759713641 ]
+[ Upstream commit b9bbbf4979073d5536b7650decd37fcb901e6556 ]
 
-With JUMP_LABEL=n, hcall_tracepoint_refcount's address is being tested
-instead of its value. This results in the tracing slowpath always being
-taken unnecessarily.
+In mpc5xxx_fwnode_get_bus_frequency(), we should add
+fwnode_handle_put() when break out of the iteration
+fwnode_for_each_parent_node() as it will automatically
+increase and decrease the refcounter.
 
-Fixes: 9a10ccb29c0a2 ("powerpc/pseries: move hcall_tracepoint_refcount out of .toc")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Fixes: de06fba62af6 ("powerpc/mpc5xxx: Switch mpc5xxx_get_bus_frequency() to use fwnode")
+Signed-off-by: Liang He <windhl@126.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230509091600.70994-1-npiggin@gmail.com
+Link: https://msgid.link/20230322030423.1855440-1-windhl@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/hvCall.S | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/sysdev/mpc5xxx_clocks.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/pseries/hvCall.S b/arch/powerpc/platforms/pseries/hvCall.S
-index 35254ac7af5ee..ca0674b0b683e 100644
---- a/arch/powerpc/platforms/pseries/hvCall.S
-+++ b/arch/powerpc/platforms/pseries/hvCall.S
-@@ -91,6 +91,7 @@ BEGIN_FTR_SECTION;						\
- 	b	1f;						\
- END_FTR_SECTION(0, 1);						\
- 	LOAD_REG_ADDR(r12, hcall_tracepoint_refcount) ;		\
-+	ld	r12,0(r12);					\
- 	std	r12,32(r1);					\
- 	cmpdi	r12,0;						\
- 	bne-	LABEL;						\
+diff --git a/arch/powerpc/sysdev/mpc5xxx_clocks.c b/arch/powerpc/sysdev/mpc5xxx_clocks.c
+index c5bf7e1b37804..58cee28e23992 100644
+--- a/arch/powerpc/sysdev/mpc5xxx_clocks.c
++++ b/arch/powerpc/sysdev/mpc5xxx_clocks.c
+@@ -25,8 +25,10 @@ unsigned long mpc5xxx_fwnode_get_bus_frequency(struct fwnode_handle *fwnode)
+ 
+ 	fwnode_for_each_parent_node(fwnode, parent) {
+ 		ret = fwnode_property_read_u32(parent, "bus-frequency", &bus_freq);
+-		if (!ret)
++		if (!ret) {
++			fwnode_handle_put(parent);
+ 			return bus_freq;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.40.1
 
