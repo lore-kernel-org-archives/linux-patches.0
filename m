@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AA91170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34CAC433C8;
-	Mon, 11 Sep 2023 14:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198E51170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F993C433C8;
+	Mon, 11 Sep 2023 14:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441320;
-	bh=Uy33v24bNUOH46rNx6UVgra+nJMBZXSJBs1yhNl5dgk=;
+	s=korg; t=1694441322;
+	bh=CUNP1aNxlLHA8H8MCkRFcG3ULhdJuipOA7w3xkGqJVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C01H9EzRPRORHq6WKUxKSKz/jRTPQ3MXO1RLd729cVW3ioRyeSap/qOlRKCskT0/s
-	 n5YitSMYJWbMn0YvUqbrldnLAm0ykpopFhW3zGa9jDTL5FT5zVIlYVgdgoJM1ZmWs/
-	 aDE9YnsKi6KkMyFDkBCZp/sAQdyHq8+GsbZGF4l8=
+	b=WjNP42cNSo8xOfulSr21H7dzypVRZ4UNSn+zl5P6Y6sYI6zVtKWQqQNLxGaYRY/Sa
+	 VX9RUoVAMgpWbASC2HycHn/06+5fgYoNaoSCo2HkNF3lQE6M9vekz4jfye05kKXt6S
+	 ZUJzjp+aLKJzxnRwCFI0p4wFEK29z5JhP3Lar+10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 345/739] arm64: dts: qcom: apq8016-sbc: Rename ov5640 enable-gpios to powerdown-gpios
-Date: Mon, 11 Sep 2023 15:42:24 +0200
-Message-ID: <20230911134700.750242543@linuxfoundation.org>
+Subject: [PATCH 6.5 346/739] arm64: dts: qcom: msm8998: Drop bus clock reference from MMSS SMMU
+Date: Mon, 11 Sep 2023 15:42:25 +0200
+Message-ID: <20230911134700.779556207@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,41 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 4facccb44a82129195878750eed8f9890091c1b8 ]
+[ Upstream commit a3ce236364b82688ca4c7605f63c4efd68e9589c ]
 
-There are two control lines controlled by GPIO going into ov5640
+The MMSS SMMU has been abusingly consuming the exposed RPM interconnect
+clock. Drop it.
 
-- Reset
-- Powerdown
-
-The driver and yaml expect "reset-gpios" and "powerdown-gpios" there has
-never been an "enable-gpios".
-
-Fixes: 39e0ce6cd1bf ("arm64: dts: qcom: apq8016-sbc: Add CCI/Sensor nodes")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811234738.2859417-6-bryan.odonoghue@linaro.org
+Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu")
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-1-ba1b1fd9ee75@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 1a71dfe75a921..5ee098c12801c 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -278,7 +278,7 @@ camera_rear@3b {
- 		compatible = "ovti,ov5640";
- 		reg = <0x3b>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index d5cb244d00d0e..2c3e595091fbc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -2737,10 +2737,10 @@ mmss_smmu: iommu@cd00000 {
  
--		enable-gpios = <&tlmm 34 GPIO_ACTIVE_HIGH>;
-+		powerdown-gpios = <&tlmm 34 GPIO_ACTIVE_HIGH>;
- 		reset-gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&camera_rear_default>;
+ 			clocks = <&mmcc MNOC_AHB_CLK>,
+ 				 <&mmcc BIMC_SMMU_AHB_CLK>,
+-				 <&rpmcc RPM_SMD_MMAXI_CLK>,
+ 				 <&mmcc BIMC_SMMU_AXI_CLK>;
+-			clock-names = "iface-mm", "iface-smmu",
+-				      "bus-mm", "bus-smmu";
++			clock-names = "iface-mm",
++				      "iface-smmu",
++				      "bus-smmu";
+ 
+ 			#global-interrupts = <0>;
+ 			interrupts =
 -- 
 2.40.1
 
