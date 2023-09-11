@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8897411705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE54C433C7;
-	Mon, 11 Sep 2023 14:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B35E11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA5DC433C7;
+	Mon, 11 Sep 2023 14:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443344;
-	bh=C4T5SMuu8v/c7ell4pOR55iNgeIHhdS/eUMsVPPTQDI=;
+	s=korg; t=1694443347;
+	bh=q2odPgU2HzJBSPgl5kFaqaphxIH0gUtvuGBm5ZAq9q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+DHP8MVp4gQUEnv415loSZfQKFCfAJJhBLKDiUCdBsWhVrlcC2q5ZCPdM/lpFURD
-	 ZvTlRrtGa7LkNuEWEgOBpkbPJQHWnRwyGXaWY9Z5WsFsBwcOk4U6uDYoPESMIzr8aB
-	 1Y1nWDXUG/BJaSPmxTPm5don5Na2MwidsmiViwEE=
+	b=Zrn4PgqCcg+nFgvDWiFaxsZo90WThrqm6GaSxGJvgZksUmHLQhrYXkGrauxoEn0vC
+	 +hSScwjQPBPQZ5OXicEdhfEg4REbbiP7Tg7LfOvQzoQJ1mEKIXZ1KB2nTL6VKAaqFm
+	 OWjIEKyLMdRc+tG79Brbx4FKzl7m9MMiZFKTjpQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Zeyan Li <qaz6750@outlook.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 345/737] of: unittest: fix null pointer dereferencing in of_unittest_find_node_by_name()
-Date: Mon, 11 Sep 2023 15:43:24 +0200
-Message-ID: <20230911134700.162066411@linuxfoundation.org>
+Subject: [PATCH 6.4 346/737] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
+Date: Mon, 11 Sep 2023 15:43:25 +0200
+Message-ID: <20230911134700.189804351@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,71 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Zeyan Li <qaz6750@outlook.com>
 
-[ Upstream commit d6ce4f0ea19c32f10867ed93d8386924326ab474 ]
+[ Upstream commit f9568d22ce06192a7e14bda3a29dc216659554ff ]
 
-when kmalloc() fail to allocate memory in kasprintf(), name
-or full_name will be NULL, strcmp() will cause
-null pointer dereference.
+I2C6 and I2C7 use the same interrupts, which is incorrect.
+In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
 
-Fixes: 0d638a07d3a1 ("of: Convert to using %pOF instead of full_name")
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230727080246.519539-1-ruanjinjie@huawei.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: 81bee6953b58 ("arm64: dts: qcom: sm8150: add i2c nodes")
+Signed-off-by: Zeyan Li <qaz6750@outlook.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/SY7P282MB378712225CBCEA95FE71554DB201A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 4fe02e9f7dcdd..be41eb246b6b2 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -77,7 +77,7 @@ static void __init of_unittest_find_node_by_name(void)
- 
- 	np = of_find_node_by_path("/testcase-data");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data", name),
-+	unittest(np && name && !strcmp("/testcase-data", name),
- 		"find /testcase-data failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -88,14 +88,14 @@ static void __init of_unittest_find_node_by_name(void)
- 
- 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-a");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
-+	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
- 		"find /testcase-data/phandle-tests/consumer-a failed\n");
- 	of_node_put(np);
- 	kfree(name);
- 
- 	np = of_find_node_by_path("testcase-alias");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data", name),
-+	unittest(np && name && !strcmp("/testcase-data", name),
- 		"find testcase-alias failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -106,7 +106,7 @@ static void __init of_unittest_find_node_by_name(void)
- 
- 	np = of_find_node_by_path("testcase-alias/phandle-tests/consumer-a");
- 	name = kasprintf(GFP_KERNEL, "%pOF", np);
--	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
-+	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
- 		"find testcase-alias/phandle-tests/consumer-a failed\n");
- 	of_node_put(np);
- 	kfree(name);
-@@ -1533,6 +1533,8 @@ static void attach_node_and_children(struct device_node *np)
- 	const char *full_name;
- 
- 	full_name = kasprintf(GFP_KERNEL, "%pOF", np);
-+	if (!full_name)
-+		return;
- 
- 	if (!strcmp(full_name, "/__local_fixups__") ||
- 	    !strcmp(full_name, "/__fixups__")) {
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index fe2d401a858a7..c4d87092e6d9c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1231,7 +1231,7 @@ i2c7: i2c@89c000 {
+ 				dma-names = "tx", "rx";
+ 				pinctrl-names = "default";
+ 				pinctrl-0 = <&qup_i2c7_default>;
+-				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 				status = "disabled";
 -- 
 2.40.1
 
