@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F241170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961B9C433C8;
-	Mon, 11 Sep 2023 14:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2121170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F328C433C7;
+	Mon, 11 Sep 2023 14:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441516;
-	bh=ZGHi1LU8B7w4sTr/gQB3Mb7+6gGcui8lSAG0jb8wYUQ=;
+	s=korg; t=1694441518;
+	bh=tUak1P5RtKzq/rCYTuaL109NCt0cR5WTgoWfIQShJhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBgx/k1+NPklgQIFNotDgN7Dc5abQlB9T1bSDR4uvOe+BN2HUl5f1s1OBkcYJaZyR
-	 wAJbrBB+CE6+a+jtbsP42LNTSbPYcjdYk5Z8atiVCM1uV29l/1L8yBflOaTU8+urmK
-	 oiI6sMhEZWc/5NMwhggF57V9EUxEp7plD8+XKGNA=
+	b=W70OLLg6ZMeFUsxvi/9qJmqBOfHs8hMZJ+qjEOsTU13CCb+KrqBagLC9S+buQd9pO
+	 SBPf8YQDUmI2/iXSndYQQKK62Qhh7hey72W0NXxqMRLxGnosGAHow6t+uOvfJObuDG
+	 ex4U7giuTgjI5/NkXQ7a4h1U0jQn03YA6Cmlngx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Filippov <halip0503@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+5f088f29593e6b4c8db8@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 441/739] jfs: validate max amount of blocks before allocation.
-Date: Mon, 11 Sep 2023 15:44:00 +0200
-Message-ID: <20230911134703.486112890@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 442/739] SUNRPC: Fix the recent bv_offset fix
+Date: Mon, 11 Sep 2023 15:44:01 +0200
+Message-ID: <20230911134703.513496812@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,40 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Filippov <halip0503@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0225e10972fa809728b8d4c1bd2772b3ec3fdb57 ]
+[ Upstream commit f16ff1cafbf1e65cc706af912df90bcc15d39a6c ]
 
-The lack of checking bmp->db_max_freebud in extBalloc() can lead to
-shift out of bounds, so this patch prevents undefined behavior, because
-bmp->db_max_freebud == -1 only if there is no free space.
+Jeff confirmed his original fix addressed his pynfs test failure,
+but this same bug also impacted qemu: accessing qcow2 virtual disks
+using direct I/O was failing. Jeff's fix missed that you have to
+shorten the bio_vec element by the same amount as you increased
+the page offset.
 
-Signed-off-by: Aleksei Filippov <halip0503@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+5f088f29593e6b4c8db8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=01abadbd6ae6a08b1f1987aa61554c6b3ac19ff2
+Reported-by: Maxim Levitsky <mlevitsk@redhat.com>
+Fixes: c96e2a695e00 ("sunrpc: set the bv_offset of first bvec in svc_tcp_sendmsg")
+Tested-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_extent.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/sunrpc/svcsock.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_extent.c b/fs/jfs/jfs_extent.c
-index ae99a7e232eeb..a82751e6c47f9 100644
---- a/fs/jfs/jfs_extent.c
-+++ b/fs/jfs/jfs_extent.c
-@@ -311,6 +311,11 @@ extBalloc(struct inode *ip, s64 hint, s64 * nblocks, s64 * blkno)
- 	 * blocks in the map. in that case, we'll start off with the
- 	 * maximum free.
- 	 */
-+
-+	/* give up if no space left */
-+	if (bmp->db_maxfreebud == -1)
-+		return -ENOSPC;
-+
- 	max = (s64) 1 << bmp->db_maxfreebud;
- 	if (*nblocks >= max && *nblocks > nbperpage)
- 		nb = nblks = (max > nbperpage) ? max : nbperpage;
+diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
+index 2eb8df44f894d..589020ed909dc 100644
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -1244,8 +1244,10 @@ static int svc_tcp_sendmsg(struct socket *sock, struct xdr_buf *xdr,
+ 	if (ret != head->iov_len)
+ 		goto out;
+ 
+-	if (xdr_buf_pagecount(xdr))
++	if (xdr_buf_pagecount(xdr)) {
+ 		xdr->bvec[0].bv_offset = offset_in_page(xdr->page_base);
++		xdr->bvec[0].bv_len -= offset_in_page(xdr->page_base);
++	}
+ 
+ 	msg.msg_flags = MSG_SPLICE_PAGES;
+ 	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, xdr->bvec,
 -- 
 2.40.1
 
