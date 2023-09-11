@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C57411715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49B6C433C7;
-	Mon, 11 Sep 2023 15:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363FB11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCE0C433C7;
+	Mon, 11 Sep 2023 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444884;
-	bh=g5xMUg55JBgTwQ0vm99jcR5yD5Yh4hKNWp44eUj+GKY=;
+	s=korg; t=1694444887;
+	bh=1/BGC3fzy5QMs9ZMNP0G4fCVxzZ5egtEATH38cCiP4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XM9SoOsO/wdU1NpQI5sjj5FJBpLlNX76EZ0dA5BfBB3P4XqTkWmc0oDAVmDaZGl+7
-	 4fZ30MOtJ7QzrxIDW8jzj6mfPfyv9mVNlFfWCchbbU2MuYsK5h0UaFJxWvsD/lfkf0
-	 AevKR83USMJa1MQHEUFolxG5jzZxYaHymP112Oj0=
+	b=elqjmeRBlKe3LEs1BB0pkcHIozjcTm6GPXrOtKpylhAp4dJbXQJlCpdPE/6puY2P+
+	 YfZ8ZHsVA6/ZGSn65kUUF/Ai/JOTl//M27qlonuGHGR9udmA7mc2PEeBOeFPfLQQQU
+	 gvl20DeqFI3KhjBdH8o4vodRNLfNlMBZuN+WkULk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Deren Wu <deren.wu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/600] wifi: mt76: mt7921: fix non-PSC channel scan fail
-Date: Mon, 11 Sep 2023 15:43:03 +0200
-Message-ID: <20230911134638.038680904@linuxfoundation.org>
+Subject: [PATCH 6.1 124/600] s390/pkey: fix/harmonize internal keyblob headers
+Date: Mon, 11 Sep 2023 15:42:37 +0200
+Message-ID: <20230911134637.275553262@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,38 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 0e5911bb7cc92c00dda9b4d635c1266b7ca915c6 ]
+[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
 
-Due to the scan command may only request legacy bands and PSC channel
-in 6GHz band, we are unable to scan the APs on non-PSC channel in this
-case. Enable WIPHY_FLAG_SPLIT_SCAN_6GHZ to support non-PSC channel
-(obtained during scan on legacy bands) in 6GHz scan request.
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
+PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
+which is opaque to the userspace. The header structures for
+PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
+is no reason, why different structures are used. In preparation to fix
+the keyversion handling in the broken PKEY IOCTLs, the same header
+structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
+reduces the number of different code paths and increases the
+readability.
 
-Fixes: 50ac15a511e3 ("mt76: mt7921: add 6GHz support")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/init.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/pkey_api.c        | 2 +-
+ drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
+ drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-index 4ad66b3443838..c997b8d3ea590 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-@@ -80,7 +80,8 @@ mt7921_init_wiphy(struct ieee80211_hw *hw)
- 	wiphy->max_sched_scan_ssids = MT76_CONNAC_MAX_SCHED_SCAN_SSID;
- 	wiphy->max_match_sets = MT76_CONNAC_MAX_SCAN_MATCH;
- 	wiphy->max_sched_scan_reqs = 1;
--	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH;
-+	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH |
-+			WIPHY_FLAG_SPLIT_SCAN_6GHZ;
- 	wiphy->reg_notifier = mt7921_regd_notifier;
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index a8def50c149bd..e650df3fe7ccb 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -747,7 +747,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 		if (ktype)
+ 			*ktype = PKEY_TYPE_EP11;
+ 		if (ksize)
+-			*ksize = kb->head.keybitlen;
++			*ksize = kb->head.bitlen;
  
- 	wiphy->features |= NL80211_FEATURE_SCHED_SCAN_RANDOM_MAC_ADDR |
+ 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
+ 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index b1c29017be5bc..497de7faa2fc5 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -787,7 +787,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
+ 
+ out:
+ 	kfree(req);
+@@ -1055,7 +1055,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
+ 
+ out:
+ 	kfree(req);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index 07445041869fe..912b3918c10a1 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -29,14 +29,7 @@ struct ep11keyblob {
+ 	union {
+ 		u8 session[32];
+ 		/* only used for PKEY_TYPE_EP11: */
+-		struct {
+-			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
+-			u8  res0;      /* unused */
+-			u16 len;       /* total length in bytes of this blob */
+-			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
+-			u8  res1;      /* unused */
+-			u16 keybitlen; /* clear key bit len, 0 for unknown */
+-		} head;
++		struct ep11kblob_header head;
+ 	};
+ 	u8  wkvp[16];  /* wrapping key verification pattern */
+ 	u64 attr;      /* boolean key attributes */
 -- 
 2.40.1
 
