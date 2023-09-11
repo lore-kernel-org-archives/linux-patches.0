@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31D04C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00099C433C7;
-	Mon, 11 Sep 2023 14:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4279C4C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8324C433C8;
+	Mon, 11 Sep 2023 14:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443653;
-	bh=VEKOQ2XiSLKMTPr0yk3OKcyyapcwUTr2t7whCEG6pzU=;
+	s=korg; t=1694443656;
+	bh=p9Zf2O6fgobDWE2CcMaGybzEFKcdIl7qxcsVjHSKDXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReUAQpD66S0oU+Y0C5gR8bQisiDr5j1HLkNw+HaDvIfLUQL8nHabtrpRsXU2+j46q
-	 BDzHyptjfo/eXW/GcVqkRI5wqJ1FV9sSY7mvH2xAnCTwhk4LalfTiyHgceiCEy8AmY
-	 Bt/9WuD8m4EFexF2Nw5uu1Pma85wIzxgHAH6zwtw=
+	b=mN0WupwyP8kx1LLQm22XeBb13nDZYVOcs1w/D0+q6IdRIXZ0ZrNwd/91W6vhTW9on
+	 c5Yp4fm894qQgHki2IqV5LyuzbfTXga/LVK9JLa3vssDiJKhOePc/C6+8+Xx4AXgVj
+	 sAPMRcFwlSJTTWOv163tA1WEHPNnupZ0oy9MQ0bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wronek <davidwronek@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ee Wey Lim <ee.wey.lim@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 424/737] clk: qcom: gcc-sc7180: Fix up gcc_sdcc2_apps_clk_src
-Date: Mon, 11 Sep 2023 15:44:43 +0200
-Message-ID: <20230911134702.445688410@linuxfoundation.org>
+Subject: [PATCH 6.4 425/737] EDAC/igen6: Fix the issue of no error events
+Date: Mon, 11 Sep 2023 15:44:44 +0200
+Message-ID: <20230911134702.472288650@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,35 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wronek <davidwronek@gmail.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit fd0b5ba87ad5709f0fd3d2bc4b7870494a75f96a ]
+[ Upstream commit ce53ad81ed36c24aff075f94474adecfabfcf239 ]
 
-Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-didn't update its configuration" error.
+Current igen6_edac checks for pending errors before the registration
+of the error handler. However, there is a possibility that the error
+occurs during the registration process, leading to unhandled pending
+errors and no future error events. This issue can be reproduced by
+repeatedly injecting errors during the loading of the igen6_edac.
 
-Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
-Signed-off-by: David Wronek <davidwronek@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230723190725.1619193-2-davidwronek@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this issue by moving the pending error handler after the registration
+of the error handler, ensuring that no pending errors are left unhandled.
+
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Reported-by: Ee Wey Lim <ee.wey.lim@intel.com>
+Tested-by: Ee Wey Lim <ee.wey.lim@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20230725080427.23883-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sc7180.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/edac/igen6_edac.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-index cef3c77564cfd..49f36e1df4fa8 100644
---- a/drivers/clk/qcom/gcc-sc7180.c
-+++ b/drivers/clk/qcom/gcc-sc7180.c
-@@ -651,6 +651,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 544dd19072eab..1a18693294db4 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -27,7 +27,7 @@
+ #include "edac_mc.h"
+ #include "edac_module.h"
+ 
+-#define IGEN6_REVISION	"v2.5"
++#define IGEN6_REVISION	"v2.5.1"
+ 
+ #define EDAC_MOD_STR	"igen6_edac"
+ #define IGEN6_NMI_NAME	"igen6_ibecc"
+@@ -1216,9 +1216,6 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	INIT_WORK(&ecclog_work, ecclog_work_cb);
+ 	init_irq_work(&ecclog_irq_work, ecclog_irq_work_cb);
+ 
+-	/* Check if any pending errors before registering the NMI handler */
+-	ecclog_handler();
+-
+ 	rc = register_err_handler();
+ 	if (rc)
+ 		goto fail3;
+@@ -1230,6 +1227,9 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		goto fail4;
+ 	}
+ 
++	/* Check if any pending errors before/during the registration of the error handler */
++	ecclog_handler();
++
+ 	igen6_debug_setup();
+ 	return 0;
+ fail4:
 -- 
 2.40.1
 
