@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D61A11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0785C433CA;
-	Mon, 11 Sep 2023 15:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E086411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6209EC433C8;
+	Mon, 11 Sep 2023 15:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445283;
-	bh=i4j6f1xaMXy4i4Pdci6UVcZS7WhrKAdqO00Jn8vd2uM=;
+	s=korg; t=1694445285;
+	bh=wuuQxkqdlaKhAPeF6YfbdiFIk5/T3j6YxfhingqXH+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSUut/NeeoPAnd0Y5XyuDyzWZ/w3KRkhbzRmHqq1KvhJjtFWnq6sN98hq4itICHJM
-	 tuCjxSz04JcVc9KAkSf/u/h+o4UMOcCXzidl4ype4vm8Y08hkIjKUtCbF4/mXF5epX
-	 JEZjPSLJClDMwhM4i+KoHIhJvPX1BU09ukZH0AZA=
+	b=0KPLsM2wZnCWjnjjgQ5n1hQgAGYO1skwTPoz5OdryM2M1zmyq5iUc/rdnehnL+S14
+	 /FkRkWhDXQeezXdBBM1rCUoAVvg5KYNblhCLbQETAwVCUplfqgI5/u6+WUjWcFfgqh
+	 9MPceUAF4vz+peRu66DixcKa7s4LyRjumX1Ms+8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 290/600] ima: Remove deprecated IMA_TRUSTED_KEYRING Kconfig
-Date: Mon, 11 Sep 2023 15:45:23 +0200
-Message-ID: <20230911134642.168426895@linuxfoundation.org>
+Subject: [PATCH 6.1 254/600] arm64: tegra: Fix HSUART for Jetson AGX Orin
+Date: Mon, 11 Sep 2023 15:44:47 +0200
+Message-ID: <20230911134641.100924136@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,43 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nayna Jain <nayna@linux.ibm.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 5087fd9e80e539d2163accd045b73da64de7de95 ]
+[ Upstream commit 861dbb2b15b1049113887fb95e856f7123eea0cc ]
 
-Time to remove "IMA_TRUSTED_KEYRING".
+After commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") was applied, the HSUART failed to probe and the following
+error is seen:
 
-Fixes: f4dc37785e9b ("integrity: define '.evm' as a builtin 'trusted' keyring") # v4.5+
-Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+ serial-tegra 3100000.serial: Couldn't get the reset
+ serial-tegra: probe of 3100000.serial failed with error -2
+
+Commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") is correct because the "reset-names" property is not
+needed for 8250 UARTs. However, the "reset-names" is required for the
+HSUART and should have been populated as part of commit ff578db7b693
+("arm64: tegra: Enable UART instance on 40-pin header") that
+enabled the HSUART for Jetson AGX Orin. Fix this by populating the
+"reset-names" property for the HSUART on Jetson AGX Orin.
+
+Fixes: ff578db7b693 ("arm64: tegra: Enable UART instance on 40-pin header")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/Kconfig | 12 ------------
- 1 file changed, 12 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
-index 60a511c6b583e..c17660bf5f347 100644
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -248,18 +248,6 @@ config IMA_APPRAISE_MODSIG
- 	   The modsig keyword can be used in the IMA policy to allow a hook
- 	   to accept such signatures.
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
+index 57ab753288144..f094011be9ed9 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
+@@ -2004,6 +2004,7 @@ interrupt-controller@2a40000 {
  
--config IMA_TRUSTED_KEYRING
--	bool "Require all keys on the .ima keyring be signed (deprecated)"
--	depends on IMA_APPRAISE && SYSTEM_TRUSTED_KEYRING
--	depends on INTEGRITY_ASYMMETRIC_KEYS
--	select INTEGRITY_TRUSTED_KEYRING
--	default y
--	help
--	   This option requires that all keys added to the .ima
--	   keyring be signed by a key on the system trusted keyring.
--
--	   This option is deprecated in favor of INTEGRITY_TRUSTED_KEYRING
--
- config IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
- 	bool "Permit keys validly signed by a built-in or secondary CA cert (EXPERIMENTAL)"
- 	depends on SYSTEM_TRUSTED_KEYRING
+ 		serial@3100000 {
+ 			compatible = "nvidia,tegra194-hsuart";
++			reset-names = "serial";
+ 			status = "okay";
+ 		};
+ 
 -- 
 2.40.1
 
