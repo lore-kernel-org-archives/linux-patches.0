@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811991170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0014CC433C7;
-	Mon, 11 Sep 2023 14:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC25B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F87C433C8;
+	Mon, 11 Sep 2023 14:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442502;
-	bh=AOB/GnguU1RvLrjZjWTkZmN2ZTkssVJzTSz+y+bXJkg=;
+	s=korg; t=1694442505;
+	bh=0nARDVatOykrafj9wDj/2a8rPjC+f4lvqkiK4438gAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ki3BHhLXzt2fNCrrxnA77EvJmvnW/RmMqPrwQS1b7Z+UcI2QCxn5MKoqRL6CFHAHU
-	 gRrZtqRSBVZmCY9oFeAMgGXCD9dqVDmRMU8H/Qei9qVm+fFhPxoLjGC66OqqvfKkjK
-	 ewxJFwIxXCqg2IJ3UCtcTXEszxMBo9mZ1kOakh00=
+	b=gCD3fo5YptoWuwFNokpGizaNa5XGvAvwxMUuEZTdXZjZy9tIlkkgHhZREX+9Z8PTw
+	 ZhqFpOYaJS+ZBu1/ppQ0iMh9GsusnRAjBL61nw2rGueUOir9hR7D5B4MQIJI6h29yg
+	 12GLwK441/pun/mQolEJpRI0ptGZFEtxeXVrex4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 047/737] security: keys: perform capable check only on privileged operations
-Date: Mon, 11 Sep 2023 15:38:26 +0200
-Message-ID: <20230911134651.765913951@linuxfoundation.org>
+Subject: [PATCH 6.4 048/737] kprobes: Prohibit probing on CFI preamble symbol
+Date: Mon, 11 Sep 2023 15:38:27 +0200
+Message-ID: <20230911134651.798157393@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,68 +34,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 2d7f105edbb3b2be5ffa4d833abbf9b6965e9ce7 ]
+[ Upstream commit de02f2ac5d8cfb311f44f2bf144cc20002f1fbbd ]
 
-If the current task fails the check for the queried capability via
-`capable(CAP_SYS_ADMIN)` LSMs like SELinux generate a denial message.
-Issuing such denial messages unnecessarily can lead to a policy author
-granting more privileges to a subject than needed to silence them.
+Do not allow to probe on "__cfi_" or "__pfx_" started symbol, because those
+are used for CFI and not executed. Probing it will break the CFI.
 
-Reorder CAP_SYS_ADMIN checks after the check whether the operation is
-actually privileged.
+Link: https://lore.kernel.org/all/168904024679.116016.18089228029322008512.stgit@devnote2/
 
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyctl.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/kprobes.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/security/keys/keyctl.c b/security/keys/keyctl.c
-index d54f73c558f72..19be69fa4d052 100644
---- a/security/keys/keyctl.c
-+++ b/security/keys/keyctl.c
-@@ -980,14 +980,19 @@ long keyctl_chown_key(key_serial_t id, uid_t user, gid_t group)
- 	ret = -EACCES;
- 	down_write(&key->sem);
+diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+index 00e177de91ccd..3da9726232ff9 100644
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1545,6 +1545,17 @@ static int check_ftrace_location(struct kprobe *p)
+ 	return 0;
+ }
  
--	if (!capable(CAP_SYS_ADMIN)) {
-+	{
-+		bool is_privileged_op = false;
++static bool is_cfi_preamble_symbol(unsigned long addr)
++{
++	char symbuf[KSYM_NAME_LEN];
 +
- 		/* only the sysadmin can chown a key to some other UID */
- 		if (user != (uid_t) -1 && !uid_eq(key->uid, uid))
--			goto error_put;
-+			is_privileged_op = true;
- 
- 		/* only the sysadmin can set the key's GID to a group other
- 		 * than one of those that the current process subscribes to */
- 		if (group != (gid_t) -1 && !gid_eq(gid, key->gid) && !in_group_p(gid))
-+			is_privileged_op = true;
++	if (lookup_symbol_name(addr, symbuf))
++		return false;
 +
-+		if (is_privileged_op && !capable(CAP_SYS_ADMIN))
- 			goto error_put;
++	return str_has_prefix("__cfi_", symbuf) ||
++		str_has_prefix("__pfx_", symbuf);
++}
++
+ static int check_kprobe_address_safe(struct kprobe *p,
+ 				     struct module **probed_mod)
+ {
+@@ -1563,7 +1574,8 @@ static int check_kprobe_address_safe(struct kprobe *p,
+ 	    within_kprobe_blacklist((unsigned long) p->addr) ||
+ 	    jump_label_text_reserved(p->addr, p->addr) ||
+ 	    static_call_text_reserved(p->addr, p->addr) ||
+-	    find_bug((unsigned long)p->addr)) {
++	    find_bug((unsigned long)p->addr) ||
++	    is_cfi_preamble_symbol((unsigned long)p->addr)) {
+ 		ret = -EINVAL;
+ 		goto out;
  	}
- 
-@@ -1088,7 +1093,7 @@ long keyctl_setperm_key(key_serial_t id, key_perm_t perm)
- 	down_write(&key->sem);
- 
- 	/* if we're not the sysadmin, we can only change a key that we own */
--	if (capable(CAP_SYS_ADMIN) || uid_eq(key->uid, current_fsuid())) {
-+	if (uid_eq(key->uid, current_fsuid()) || capable(CAP_SYS_ADMIN)) {
- 		key->perm = perm;
- 		notify_key(key, NOTIFY_KEY_SETATTR, 0);
- 		ret = 0;
 -- 
 2.40.1
 
