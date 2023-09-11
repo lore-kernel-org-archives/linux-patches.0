@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2469B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9412FC433C7;
-	Mon, 11 Sep 2023 13:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4D71170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3E8C433C8;
+	Mon, 11 Sep 2023 13:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440411;
-	bh=89CA5l0AobDrkj6Qnrt75EtKU0Nhf8QAgXtGPcbaD9U=;
+	s=korg; t=1694440413;
+	bh=5yUGHIad9CdLQvhVkZ+IymeYQSXroYWqvocdPkKfV54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEKDYsl1zzRDJfzwQyoesqqkMg1cmTql6CeQFchLwKjc411RK2sQqYwOafGsuqJMq
-	 BhVNLVBJ8EaH1hflekZXl0/CxszKGCQKLVroXWWom3muvRx0qGfMy1QD9Yaj+SSgkg
-	 7TQMq2ibTrD0RABXaCIM8h6Wvw9MOYDo8EiFVyf8=
+	b=Ic54JIVlMPx7LgyzaeELzZNZWktCpPuJKlk1YLNoRXgJ2tIW9pmdt8mkFH0BIgeIq
+	 jccmWAN2mQ2EpvzO9EkK7HjTHPCeGNcHvasbcIfJCvMY9ctOj6rzeNxY13ILHsLkkG
+	 u14cdPFrmuCu4Z7G5MfSkBqbGDwGqXtyhHMXoO8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlemagne Lasse <charlemagnelasse@gmail.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Waiman Long <longman@redhat.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 025/739] locking/arch: Avoid variable shadowing in local_try_cmpxchg()
-Date: Mon, 11 Sep 2023 15:37:04 +0200
-Message-ID: <20230911134651.762159183@linuxfoundation.org>
+Subject: [PATCH 6.5 026/739] refscale: Fix uninitalized use of wait_queue_head_t
+Date: Mon, 11 Sep 2023 15:37:05 +0200
+Message-ID: <20230911134651.791344456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,74 +43,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit d6b45484c130f4095313ae3edeb4aae662c12fb1 ]
+[ Upstream commit f5063e8948dad7f31adb007284a5d5038ae31bb8 ]
 
-Several architectures define arch_try_local_cmpxchg macro using
-internal temporary variables named ___old, __old or _old. Remove
-temporary varible in local_try_cmpxchg to avoid variable shadowing.
+Running the refscale test occasionally crashes the kernel with the
+following error:
 
-No functional change intended.
+[ 8569.952896] BUG: unable to handle page fault for address: ffffffffffffffe8
+[ 8569.952900] #PF: supervisor read access in kernel mode
+[ 8569.952902] #PF: error_code(0x0000) - not-present page
+[ 8569.952904] PGD c4b048067 P4D c4b049067 PUD c4b04b067 PMD 0
+[ 8569.952910] Oops: 0000 [#1] PREEMPT_RT SMP NOPTI
+[ 8569.952916] Hardware name: Dell Inc. PowerEdge R750/0WMWCR, BIOS 1.2.4 05/28/2021
+[ 8569.952917] RIP: 0010:prepare_to_wait_event+0x101/0x190
+  :
+[ 8569.952940] Call Trace:
+[ 8569.952941]  <TASK>
+[ 8569.952944]  ref_scale_reader+0x380/0x4a0 [refscale]
+[ 8569.952959]  kthread+0x10e/0x130
+[ 8569.952966]  ret_from_fork+0x1f/0x30
+[ 8569.952973]  </TASK>
 
-Fixes: d994f2c8e241 ("locking/arch: Wire up local_try_cmpxchg()")
-Closes: https://lore.kernel.org/lkml/CAFGhKbyxtuk=LoW-E3yLXgcmR93m+Dfo5-u9oQA_YC5Fcy_t9g@mail.gmail.com/
-Reported-by: Charlemagne Lasse <charlemagnelasse@gmail.com>
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20230708090048.63046-1-ubizjak@gmail.com
+The likely cause is that init_waitqueue_head() is called after the call to
+the torture_create_kthread() function that creates the ref_scale_reader
+kthread.  Although this init_waitqueue_head() call will very likely
+complete before this kthread is created and starts running, it is
+possible that the calling kthread will be delayed between the calls to
+torture_create_kthread() and init_waitqueue_head().  In this case, the
+new kthread will use the waitqueue head before it is properly initialized,
+which is not good for the kernel's health and well-being.
+
+The above crash happened here:
+
+	static inline void __add_wait_queue(...)
+	{
+		:
+		if (!(wq->flags & WQ_FLAG_PRIORITY)) <=== Crash here
+
+The offset of flags from list_head entry in wait_queue_entry is
+-0x18. If reader_tasks[i].wq.head.next is NULL as allocated reader_task
+structure is zero initialized, the instruction will try to access address
+0xffffffffffffffe8, which is exactly the fault address listed above.
+
+This commit therefore invokes init_waitqueue_head() before creating
+the kthread.
+
+Fixes: 653ed64b01dc ("refperf: Add a test to measure performance of read-side synchronization")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/local.h | 4 ++--
- arch/mips/include/asm/local.h      | 4 ++--
- arch/x86/include/asm/local.h       | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ kernel/rcu/refscale.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/local.h b/arch/loongarch/include/asm/local.h
-index 83e995b30e472..c49675852bdcd 100644
---- a/arch/loongarch/include/asm/local.h
-+++ b/arch/loongarch/include/asm/local.h
-@@ -63,8 +63,8 @@ static inline long local_cmpxchg(local_t *l, long old, long new)
+diff --git a/kernel/rcu/refscale.c b/kernel/rcu/refscale.c
+index 1970ce5f22d40..71d138573856f 100644
+--- a/kernel/rcu/refscale.c
++++ b/kernel/rcu/refscale.c
+@@ -1107,12 +1107,11 @@ ref_scale_init(void)
+ 	VERBOSE_SCALEOUT("Starting %d reader threads", nreaders);
  
- static inline bool local_try_cmpxchg(local_t *l, long *old, long new)
- {
--	typeof(l->a.counter) *__old = (typeof(l->a.counter) *) old;
--	return try_cmpxchg_local(&l->a.counter, __old, new);
-+	return try_cmpxchg_local(&l->a.counter,
-+				 (typeof(l->a.counter) *) old, new);
- }
+ 	for (i = 0; i < nreaders; i++) {
++		init_waitqueue_head(&reader_tasks[i].wq);
+ 		firsterr = torture_create_kthread(ref_scale_reader, (void *)i,
+ 						  reader_tasks[i].task);
+ 		if (torture_init_error(firsterr))
+ 			goto unwind;
+-
+-		init_waitqueue_head(&(reader_tasks[i].wq));
+ 	}
  
- #define local_xchg(l, n) (atomic_long_xchg((&(l)->a), (n)))
-diff --git a/arch/mips/include/asm/local.h b/arch/mips/include/asm/local.h
-index 5daf6fe8e3e9a..e6ae3df0349d2 100644
---- a/arch/mips/include/asm/local.h
-+++ b/arch/mips/include/asm/local.h
-@@ -101,8 +101,8 @@ static __inline__ long local_cmpxchg(local_t *l, long old, long new)
- 
- static __inline__ bool local_try_cmpxchg(local_t *l, long *old, long new)
- {
--	typeof(l->a.counter) *__old = (typeof(l->a.counter) *) old;
--	return try_cmpxchg_local(&l->a.counter, __old, new);
-+	return try_cmpxchg_local(&l->a.counter,
-+				 (typeof(l->a.counter) *) old, new);
- }
- 
- #define local_xchg(l, n) (atomic_long_xchg((&(l)->a), (n)))
-diff --git a/arch/x86/include/asm/local.h b/arch/x86/include/asm/local.h
-index 56d4ef604b919..635132a127782 100644
---- a/arch/x86/include/asm/local.h
-+++ b/arch/x86/include/asm/local.h
-@@ -127,8 +127,8 @@ static inline long local_cmpxchg(local_t *l, long old, long new)
- 
- static inline bool local_try_cmpxchg(local_t *l, long *old, long new)
- {
--	typeof(l->a.counter) *__old = (typeof(l->a.counter) *) old;
--	return try_cmpxchg_local(&l->a.counter, __old, new);
-+	return try_cmpxchg_local(&l->a.counter,
-+				 (typeof(l->a.counter) *) old, new);
- }
- 
- /* Always has a lock prefix */
+ 	// Main Task
 -- 
 2.40.1
 
