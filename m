@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3831611706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:51:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD162C433C7;
-	Mon, 11 Sep 2023 14:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0540011706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7691AC433C7;
+	Mon, 11 Sep 2023 14:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443918;
-	bh=mHaCUmzQY3dq3vRpQnJmTZcVT4DW+8AJ3EbPgNqNEYI=;
+	s=korg; t=1694443920;
+	bh=dZFb7Omq+POchCQNNI1rj+0ZR24PiD9Plq+A6m3C4Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCTHVAbJyULIoNuszihRaO6IFR5SNwZPhwERXVdSEjSwgIEUaGjJiSKS+MFef45mN
-	 OmCt7L1LC90zvhDN0bC3Rv1POYZLkjZTtpnvboZFGhnfRzS8zA67Wm9ntA+ST1aOjU
-	 NZEJKjaMkAQeCT6n1QSzAz7fNsc05qoe9TDH+OWg=
+	b=VeEV/g7ZaHhn515fsT/47ulEjMyRCgoRSgKgis9hAV4BTbzjCEjKeXpglb5SMEhgm
+	 +z+PmxaQAx82SCbpEJRXJhGxkYEYV0hQgr0PxtcAf3Iq6DPCZayNFEXCb0JXHyZnnK
+	 NBQ8k7mXxpFdkavoVwXnDCOhGxlUp6ieyzpkijyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	x86@kernel.org,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Corentin Labbe <clabbe.montjoie@gmail.com>,
+	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 519/737] x86/APM: drop the duplicate APM_MINOR_DEV macro
-Date: Mon, 11 Sep 2023 15:46:18 +0200
-Message-ID: <20230911134705.069887052@linuxfoundation.org>
+Subject: [PATCH 6.4 546/737] tty: serial: qcom-geni-serial: Poll primary sequencer irq status after cancel_tx
+Date: Mon, 11 Sep 2023 15:46:45 +0200
+Message-ID: <20230911134705.811876344@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,44 +39,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 
-[ Upstream commit 4ba2909638a29630a346d6c4907a3105409bee7d ]
+[ Upstream commit 9c8441330bb399cba6177acce9b0e68c0dbaa597 ]
 
-This source file already includes <linux/miscdevice.h>, which contains
-the same macro. It doesn't need to be defined here again.
+TX is handled by primary sequencer. After cancelling primary command, poll
+primary sequencer's irq status instead of that of secondary.
+While at it, also remove a couple of redundant lines that read from IRQ_EN
+register and write back same.
 
-Fixes: 874bcd00f520 ("apm-emulation: move APM_MINOR_DEV to include/linux/miscdevice.h")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: x86@kernel.org
-Cc: Sohil Mehta <sohil.mehta@intel.com>
-Cc: Corentin Labbe <clabbe.montjoie@gmail.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Link: https://lore.kernel.org/r/20230728011120.759-1-rdunlap@infradead.org
+Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Link: https://lore.kernel.org/r/1691578393-9891-1-git-send-email-quic_vnivarth@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apm_32.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kernel/apm_32.c b/arch/x86/kernel/apm_32.c
-index c6c15ce1952fb..5934ee5bc087e 100644
---- a/arch/x86/kernel/apm_32.c
-+++ b/arch/x86/kernel/apm_32.c
-@@ -238,12 +238,6 @@
- extern int (*console_blank_hook)(int);
- #endif
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 24ebdb0b63a8e..ae632a9d4f3ae 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -592,7 +592,6 @@ static void qcom_geni_serial_stop_tx_dma(struct uart_port *uport)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	bool done;
+-	u32 m_irq_en;
  
--/*
-- * The apm_bios device is one of the misc char devices.
-- * This is its minor number.
-- */
--#define	APM_MINOR_DEV	134
--
- /*
-  * Various options can be changed at boot time as follows:
-  * (We allow underscores for compatibility with the modules code)
+ 	if (!qcom_geni_serial_main_active(uport))
+ 		return;
+@@ -604,12 +603,10 @@ static void qcom_geni_serial_stop_tx_dma(struct uart_port *uport)
+ 		port->tx_remaining = 0;
+ 	}
+ 
+-	m_irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
+-	writel(m_irq_en, uport->membase + SE_GENI_M_IRQ_EN);
+ 	geni_se_cancel_m_cmd(&port->se);
+ 
+-	done = qcom_geni_serial_poll_bit(uport, SE_GENI_S_IRQ_STATUS,
+-					 S_CMD_CANCEL_EN, true);
++	done = qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
++					 M_CMD_CANCEL_EN, true);
+ 	if (!done) {
+ 		geni_se_abort_m_cmd(&port->se);
+ 		done = qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
 -- 
 2.40.1
 
