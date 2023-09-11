@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB3B1171B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE11C433C8;
-	Mon, 11 Sep 2023 15:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F831171B
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C4FC433C7;
+	Mon, 11 Sep 2023 15:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444512;
-	bh=UoQd5jayEi8d5kM4O0PQ609q0Zfdv1zYwxmMiI/VoiQ=;
+	s=korg; t=1694444515;
+	bh=nwmdVDhKsk3oU09doMeHFyvmc7Lype4R9m7xFSxsTA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iF3jeonTG4a6yrz17D4ueAtxWP7T52DV4BqrdH98It+2zwyUgn2bBFEhXuavlIIyi
-	 XcjWo89tyXEv0+dI1ykAnR7vlv/BZ0ijERcsNcCVfvBQZfFe9vEynfH96gPED+a5az
-	 ApfJIxzbCPJTTKChIRWslCIh1KBv86wQkMmVuKhw=
+	b=JpoXwTb2oKx5DfbGReV8hyYkp0obDgf7tOyhrwsRSF1c+igAMQoSSvepJJ1l1XTwP
+	 GV/QYgywi0N90tZAF9LqfpkoJdPWLVKnLrWos2SdEA/HWR6uE7849I3qL4Z4YyYP2T
+	 ozwBv5awokXkLHDkLLg9cSHZ7Fz2m0Ojhki7fWWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stylon Wang <stylon.wang@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <rjordrigo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/600] Revert "Revert drm/amd/display: Enable Freesync Video Mode by default"
-Date: Mon, 11 Sep 2023 15:40:37 +0200
-Message-ID: <20230911134633.754524708@linuxfoundation.org>
+Subject: [PATCH 6.1 005/600] ARM: dts: imx: Set default tuning step for imx7d usdhc
+Date: Mon, 11 Sep 2023 15:40:38 +0200
+Message-ID: <20230911134633.781405058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,76 +41,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 11b92df8a2f7f4605ccc764ce6ae4a72760674df ]
+[ Upstream commit be18293e47cbca7c6acee9231fc851601d69563a ]
 
-This reverts commit 4243c84aa082d8fba70c45f48eb2bb5c19799060.
+If the tuning step is not set, the tuning step is set to 1.
+For some sd cards, the following Tuning timeout will occur.
 
-Enables freesync video by default, since the hang and corruption issue
-on eDP panels are now fixed.
+Tuning failed, falling back to fixed sampling clock
+mmc0: Tuning failed, falling back to fixed sampling clock
 
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Rodrigo Siqueira <rjordrigo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+So set the default tuning step. This refers to the NXP vendor's
+commit below:
+
+https://github.com/nxp-imx/linux-imx/blob/lf-6.1.y/
+arch/arm/boot/dts/imx7s.dtsi#L1216-L1217
+
+Fixes: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/imx7s.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 249b269e2cc53..9beb326a9528e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5921,8 +5921,7 @@ create_stream_for_sink(struct amdgpu_dm_connector *aconnector,
- 		 */
- 		DRM_DEBUG_DRIVER("No preferred mode found\n");
- 	} else {
--		recalculate_timing = amdgpu_freesync_vid_mode &&
--				 is_freesync_video_mode(&mode, aconnector);
-+		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
- 		if (recalculate_timing) {
- 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
- 			drm_mode_copy(&saved_mode, &mode);
-@@ -7016,7 +7015,7 @@ static void amdgpu_dm_connector_add_freesync_modes(struct drm_connector *connect
- 	struct amdgpu_dm_connector *amdgpu_dm_connector =
- 		to_amdgpu_dm_connector(connector);
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index 11b9321badc51..667568aa4326a 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -1184,6 +1184,8 @@
+ 					<&clks IMX7D_USDHC1_ROOT_CLK>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-step = <2>;
++				fsl,tuning-start-tap = <20>;
+ 				status = "disabled";
+ 			};
  
--	if (!(amdgpu_freesync_vid_mode && edid))
-+	if (!edid)
- 		return;
+@@ -1196,6 +1198,8 @@
+ 					<&clks IMX7D_USDHC2_ROOT_CLK>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-step = <2>;
++				fsl,tuning-start-tap = <20>;
+ 				status = "disabled";
+ 			};
  
- 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
-@@ -9022,8 +9021,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
- 		 * TODO: Refactor this function to allow this check to work
- 		 * in all conditions.
- 		 */
--		if (amdgpu_freesync_vid_mode &&
--		    dm_new_crtc_state->stream &&
-+		if (dm_new_crtc_state->stream &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
- 			goto skip_modeset;
+@@ -1208,6 +1212,8 @@
+ 					<&clks IMX7D_USDHC3_ROOT_CLK>;
+ 				clock-names = "ipg", "ahb", "per";
+ 				bus-width = <4>;
++				fsl,tuning-step = <2>;
++				fsl,tuning-start-tap = <20>;
+ 				status = "disabled";
+ 			};
  
-@@ -9063,7 +9061,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
- 		}
- 
- 		/* Now check if we should set freesync video mode */
--		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
-+		if (dm_new_crtc_state->stream &&
- 		    dc_is_stream_unchanged(new_stream, dm_old_crtc_state->stream) &&
- 		    dc_is_stream_scaling_unchanged(new_stream, dm_old_crtc_state->stream) &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state,
-@@ -9076,7 +9074,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
- 			set_freesync_fixed_config(dm_new_crtc_state);
- 
- 			goto skip_modeset;
--		} else if (amdgpu_freesync_vid_mode && aconnector &&
-+		} else if (aconnector &&
- 			   is_freesync_video_mode(&new_crtc_state->mode,
- 						  aconnector)) {
- 			struct drm_display_mode *high_mode;
 -- 
 2.40.1
 
