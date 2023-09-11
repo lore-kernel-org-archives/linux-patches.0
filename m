@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C871170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:04:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F059C433C8;
-	Mon, 11 Sep 2023 14:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F3C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:04:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590D9C433C7;
+	Mon, 11 Sep 2023 14:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441063;
-	bh=aHWhKORo1I4ZkUlzYt6nwUI7cw0BtQ7sJocn0UE/Wtg=;
+	s=korg; t=1694441066;
+	bh=q8vlF1f6dQHJa7TDEh5uRG0Ipa6cyVHJpQWP9JVqnY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cji+Fi1W4sRkzEoP6xiUz3SYqOECAv2CkGliDXB45nq1qOvPhedk3yivYEEuAm7h6
-	 En3GQBSmD4aFQMpsfrwPwRWepBmVg4oDbfxOmMO5hsYWiqbw0ax9qL/p/fEfr21D/x
-	 9vVt+2N5omjijF34GrkSPYLLbhf4PQ168kWevbvU=
+	b=TXna1C1qsbA+AJ8y9YzqnDwq/tgd2gagxR8BahVH0E+RbiDRGeSS6NLmSpCOqLfBz
+	 OhYfEb1loOk90xxm4x52QDvdKnNKOOqOR4yaV19trJnFAuE5Zi5Kk8v98elekUtgDw
+	 Pi7kBDEVsQ31GEpJooACsVkhaoV8sbvYekRkwEqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 256/739] arm64: dts: qcom: pmi8994: Add missing OVP interrupt
-Date: Mon, 11 Sep 2023 15:40:55 +0200
-Message-ID: <20230911134658.301769920@linuxfoundation.org>
+Subject: [PATCH 6.5 257/739] arm64: dts: qcom: sc8180x: Add missing cache-unified to L3
+Date: Mon, 11 Sep 2023 15:40:56 +0200
+Message-ID: <20230911134658.328443359@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,37 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 8db94432690371b1736e9a2566a9b3d8a73d5a97 ]
+[ Upstream commit e4322bb818bbcd36b441de9880fa4ac911a5eb51 ]
 
-Add the missing OVP interrupt. This fixes the schema warning:
+Add the missing property to fix the dt checker warning:
 
-wled@d800: interrupt-names: ['short'] is too short
+qcom/sc8180x-primus.dtb: l3-cache: 'cache-unified' is a required property
 
-Fixes: 37aa540cbd30 ("arm64: dts: qcom: pmi8994: Add WLED node")
+Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-6-254ae8642e69@linaro.org
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-7-254ae8642e69@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmi8994.dtsi | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-index 0192968f4d9b3..36d6a1fb553ac 100644
---- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-@@ -54,8 +54,9 @@ pmi8994_spmi_regulators: regulators {
- 		pmi8994_wled: wled@d800 {
- 			compatible = "qcom,pmi8994-wled";
- 			reg = <0xd800>, <0xd900>;
--			interrupts = <3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "short";
-+			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
-+				     <0x3 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "ovp", "short";
- 			qcom,cabc;
- 			qcom,external-pfet;
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index 363f438ff6059..8a6d9e0914ad9 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -64,6 +64,7 @@ L2_0: l2-cache {
+ 				L3_0: l3-cache {
+ 					compatible = "cache";
+ 					cache-level = <3>;
++					cache-unified;
+ 				};
+ 			};
+ 		};
 -- 
 2.40.1
 
