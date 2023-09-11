@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199DB11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3A3C433C7;
-	Mon, 11 Sep 2023 15:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C9A11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59587C433C7;
+	Mon, 11 Sep 2023 15:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445023;
-	bh=6weEiBFK299dyJxFHnRPUpyzJSqD9zQnIuBYark7yKA=;
+	s=korg; t=1694445026;
+	bh=a2QnJnAmslut7NoI9oQoLQ7w47GYevXFzbBTZq3JA7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MeWBwEpxiVcOnugtoKCn6X+EEEakKL/b4Mheg6UQWU8r4h16XtzbddwJ1HmN2GugO
-	 WSoKOhaFkFLNdz4/hlCZfq0EDLPSs7ypo7OzgHXZ2jjnekkT/FRzo6zLs6sC7GFUQ8
-	 QFMMeILiqleZFoEkoacxZzCT6EaNQGA2wGHuMIXU=
+	b=UIVNAJUxjueBI9zBrPK/htaOLVfAOO+YaP6JysAzBEKr/vnpJ/whvYzyPrZMWtHyu
+	 3JC2xJ24/jYq6dZX9dCi/pSoWiCjHKEwhs+o1Ceeexp4w/MSyo80oieUpRJvd0tvi/
+	 bK+E+n3OxhzC8Snx7lhjqiQg70NoqEMqRWdGbHg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddaraju DH <siddaraju.dh@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>
-Subject: [PATCH 6.1 199/600] ice: avoid executing commands on other ports when driving sync
-Date: Mon, 11 Sep 2023 15:43:52 +0200
-Message-ID: <20230911134639.490384360@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 200/600] net: arcnet: Do not call kfree_skb() under local_irq_disable()
+Date: Mon, 11 Sep 2023 15:43:53 +0200
+Message-ID: <20230911134639.519082713@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -44,201 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 0aacec49c29e7c5b1487e859b0c0a42388c34092 ]
+[ Upstream commit 786c96e92fb9e854cb8b0cb7399bb2fb28e15c4b ]
 
-The ice hardware has a synchronization mechanism used to drive the
-simultaneous application of commands on both PHY ports and the source timer
-in the MAC.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+local_irq_disable(). Compile tested only.
 
-When issuing a sync via ice_ptp_exec_tmr_cmd(), the hardware will
-simultaneously apply the commands programmed for the main timer and each
-PHY port. Neither the main timer command register, nor the PHY port command
-registers auto clear on command execution.
-
-During the execution of a timer command intended for a single port on E822
-devices, such as those used to configure a PHY during link up, the driver
-is not correctly clearing the previous commands.
-
-This results in unintentionally executing the last programmed command on
-the main timer and other PHY ports whenever performing reconfiguration on
-E822 ports after link up. This results in unintended side effects on other
-timers, depending on what command was previously programmed.
-
-To fix this, the driver must ensure that the main timer and all other PHY
-ports are properly initialized to perform no action.
-
-The enumeration for timer commands does not include an enumeration value
-for doing nothing. Introduce ICE_PTP_NOP for this purpose. When writing a
-timer command to hardware, leave the command bits set to zero which
-indicates that no operation should be performed on that port.
-
-Modify ice_ptp_one_port_cmd() to always initialize all ports. For all ports
-other than the one being configured, write their timer command register to
-ICE_PTP_NOP. This ensures that no side effect happens on the timer command.
-
-To fix this for the PHY ports, modify ice_ptp_one_port_cmd() to always
-initialize all other ports to ICE_PTP_NOP. This ensures that no side
-effects happen on the other ports.
-
-Call ice_ptp_src_cmd() with a command value if ICE_PTP_NOP in
-ice_sync_phy_timer_e822() and ice_start_phy_timer_e822().
-
-With both of these changes, the driver should no longer execute a stale
-command on the main timer or another PHY port when reconfiguring one of the
-PHY ports after link up.
-
-Fixes: 3a7496234d17 ("ice: implement basic E822 PTP support")
-Signed-off-by: Siddaraju DH <siddaraju.dh@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 05fcd31cc472 ("arcnet: add err_skb package for package status feedback")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 55 +++++++++++++++++++--
- drivers/net/ethernet/intel/ice/ice_ptp_hw.h |  3 +-
- 2 files changed, 52 insertions(+), 6 deletions(-)
+ drivers/net/arcnet/arcnet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 772b1f566d6ed..813acd6a4b469 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -131,6 +131,8 @@ static void ice_ptp_src_cmd(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
- 	case READ_TIME:
- 		cmd_val |= GLTSYN_CMD_READ_TIME;
- 		break;
-+	case ICE_PTP_NOP:
-+		break;
- 	}
+diff --git a/drivers/net/arcnet/arcnet.c b/drivers/net/arcnet/arcnet.c
+index 1bad1866ae462..a48220f91a2df 100644
+--- a/drivers/net/arcnet/arcnet.c
++++ b/drivers/net/arcnet/arcnet.c
+@@ -468,7 +468,7 @@ static void arcnet_reply_tasklet(struct tasklet_struct *t)
  
- 	wr32(hw, GLTSYN_CMD, cmd_val);
-@@ -1200,18 +1202,18 @@ ice_ptp_read_port_capture(struct ice_hw *hw, u8 port, u64 *tx_ts, u64 *rx_ts)
- }
+ 	ret = sock_queue_err_skb(sk, ackskb);
+ 	if (ret)
+-		kfree_skb(ackskb);
++		dev_kfree_skb_irq(ackskb);
  
- /**
-- * ice_ptp_one_port_cmd - Prepare a single PHY port for a timer command
-+ * ice_ptp_write_port_cmd_e822 - Prepare a single PHY port for a timer command
-  * @hw: pointer to HW struct
-  * @port: Port to which cmd has to be sent
-  * @cmd: Command to be sent to the port
-  *
-  * Prepare the requested port for an upcoming timer sync command.
-  *
-- * Note there is no equivalent of this operation on E810, as that device
-- * always handles all external PHYs internally.
-+ * Do not use this function directly. If you want to configure exactly one
-+ * port, use ice_ptp_one_port_cmd() instead.
-  */
- static int
--ice_ptp_one_port_cmd(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
-+ice_ptp_write_port_cmd_e822(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
- {
- 	u32 cmd_val, val;
- 	u8 tmr_idx;
-@@ -1235,6 +1237,8 @@ ice_ptp_one_port_cmd(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
- 	case ADJ_TIME_AT_TIME:
- 		cmd_val |= PHY_CMD_ADJ_TIME_AT_TIME;
- 		break;
-+	case ICE_PTP_NOP:
-+		break;
- 	}
- 
- 	/* Tx case */
-@@ -1280,6 +1284,39 @@ ice_ptp_one_port_cmd(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
- 	return 0;
- }
- 
-+/**
-+ * ice_ptp_one_port_cmd - Prepare one port for a timer command
-+ * @hw: pointer to the HW struct
-+ * @configured_port: the port to configure with configured_cmd
-+ * @configured_cmd: timer command to prepare on the configured_port
-+ *
-+ * Prepare the configured_port for the configured_cmd, and prepare all other
-+ * ports for ICE_PTP_NOP. This causes the configured_port to execute the
-+ * desired command while all other ports perform no operation.
-+ */
-+static int
-+ice_ptp_one_port_cmd(struct ice_hw *hw, u8 configured_port,
-+		     enum ice_ptp_tmr_cmd configured_cmd)
-+{
-+	u8 port;
-+
-+	for (port = 0; port < ICE_NUM_EXTERNAL_PORTS; port++) {
-+		enum ice_ptp_tmr_cmd cmd;
-+		int err;
-+
-+		if (port == configured_port)
-+			cmd = configured_cmd;
-+		else
-+			cmd = ICE_PTP_NOP;
-+
-+		err = ice_ptp_write_port_cmd_e822(hw, port, cmd);
-+		if (err)
-+			return err;
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * ice_ptp_port_cmd_e822 - Prepare all ports for a timer command
-  * @hw: pointer to the HW struct
-@@ -1296,7 +1333,7 @@ ice_ptp_port_cmd_e822(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
- 	for (port = 0; port < ICE_NUM_EXTERNAL_PORTS; port++) {
- 		int err;
- 
--		err = ice_ptp_one_port_cmd(hw, port, cmd);
-+		err = ice_ptp_write_port_cmd_e822(hw, port, cmd);
- 		if (err)
- 			return err;
- 	}
-@@ -2245,6 +2282,9 @@ static int ice_sync_phy_timer_e822(struct ice_hw *hw, u8 port)
- 	if (err)
- 		goto err_unlock;
- 
-+	/* Do not perform any action on the main timer */
-+	ice_ptp_src_cmd(hw, ICE_PTP_NOP);
-+
- 	/* Issue the sync to activate the time adjustment */
- 	ice_ptp_exec_tmr_cmd(hw);
- 
-@@ -2371,6 +2411,9 @@ ice_start_phy_timer_e822(struct ice_hw *hw, u8 port, bool bypass)
- 	if (err)
- 		return err;
- 
-+	/* Do not perform any action on the main timer */
-+	ice_ptp_src_cmd(hw, ICE_PTP_NOP);
-+
- 	ice_ptp_exec_tmr_cmd(hw);
- 
- 	err = ice_read_phy_reg_e822(hw, port, P_REG_PS, &val);
-@@ -2914,6 +2957,8 @@ static int ice_ptp_port_cmd_e810(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
- 	case ADJ_TIME_AT_TIME:
- 		cmd_val = GLTSYN_CMD_ADJ_INIT_TIME;
- 		break;
-+	case ICE_PTP_NOP:
-+		return 0;
- 	}
- 
- 	/* Read, modify, write */
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-index 2bda64c76abc3..071f545aa85e8 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-@@ -9,7 +9,8 @@ enum ice_ptp_tmr_cmd {
- 	INIT_INCVAL,
- 	ADJ_TIME,
- 	ADJ_TIME_AT_TIME,
--	READ_TIME
-+	READ_TIME,
-+	ICE_PTP_NOP,
+ 	local_irq_enable();
  };
- 
- enum ice_ptp_serdes {
 -- 
 2.40.1
 
