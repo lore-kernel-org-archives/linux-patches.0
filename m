@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24BA1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D3BC433C8;
-	Mon, 11 Sep 2023 14:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B141170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A0CC433C8;
+	Mon, 11 Sep 2023 14:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441842;
-	bh=cFx53V1nR3le4Skggb/jXxBehg0tZgOPMG3qkkdxJ3g=;
+	s=korg; t=1694441845;
+	bh=ttHV1JS89jdehL2uaXJimIp/blNE4rGLl7ytz2xJ4eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeaDa9Kk+b7c4ouk6ZR+AKODEVLEkwIG14w+Lc7I6t06vpEcokGOb28gKQMnCur/K
-	 S7qFsSOVIUpPBfqOsHHTCL+j9h8aZzoUieizS5cMJckmk8T7pr5qlKOI1wyUg6tMg3
-	 wE+6shDFfuHU0oXxSkBYq/SO/7gudmrpi8JQtcM8=
+	b=D6l0r7VDtHE4PK4IbLkhl4jTz8IrlmRka/khmkErlzNzqmj9d7P4HqprgVLfZHwxX
+	 51oZoxa22aD76OBfs3AX/Y0td0qzmVZ1ogEohTAHCKkYDM+e19HjDfxu+S029Z6ouV
+	 nPoElhPGlBgX/n/b9pMh+ycs32oBvgOIf75hpWwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Fabian=20W=C3=BCthrich?= <me@fabwu.ch>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 529/739] media: ipu-bridge: Fix null pointer deref on SSDB/PLD parsing warnings
-Date: Mon, 11 Sep 2023 15:45:28 +0200
-Message-ID: <20230911134705.884092553@linuxfoundation.org>
+Subject: [PATCH 6.5 520/739] iommu/qcom: Disable and reset context bank before programming
+Date: Mon, 11 Sep 2023 15:45:19 +0200
+Message-ID: <20230911134705.637093546@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -37,53 +35,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 284be5693163343e1cf17c03917eecd1d6681bcf ]
+[ Upstream commit 9f3fef23d9b5a858a6e6d5f478bb1b6b76265e76 ]
 
-When ipu_bridge_parse_rotation() and ipu_bridge_parse_orientation() run
-sensor->adev is not set yet.
+Writing	the new	TTBRs, TCRs and MAIRs on a previously enabled
+context bank may trigger a context fault, resulting in firmware
+driven AP resets: change the domain initialization programming
+sequence to disable the context bank(s) and to also clear the
+related fault address (CB_FAR) and fault status (CB_FSR)
+registers before writing new values to TTBR0/1, TCR/TCR2, MAIR0/1.
 
-So if either of the dev_warn() calls about unknown values are hit this
-will lead to a NULL pointer deref.
-
-Set sensor->adev earlier, with a borrowed ref to avoid making unrolling
-on errors harder, to fix this.
-
-Fixes: 485aa3df0dff ("media: ipu3-cio2: Parse sensor orientation and rotation")
-Cc: Fabian Wüthrich <me@fabwu.ch>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230622092742.74819-4-angelogioacchino.delregno@collabora.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu3/cio2-bridge.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/pci/intel/ipu3/cio2-bridge.c b/drivers/media/pci/intel/ipu3/cio2-bridge.c
-index 3c2accfe54551..7fba87736b6b8 100644
---- a/drivers/media/pci/intel/ipu3/cio2-bridge.c
-+++ b/drivers/media/pci/intel/ipu3/cio2-bridge.c
-@@ -308,6 +308,11 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index a503ed758ec30..3e551ca6afdb9 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -273,6 +273,13 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
+ 			ctx->secure_init = true;
  		}
  
- 		sensor = &bridge->sensors[bridge->n_sensors];
-+		/*
-+		 * Borrow our adev ref to the sensor for now, on success
-+		 * acpi_dev_get(adev) is done further below.
-+		 */
-+		sensor->adev = adev;
- 
- 		ret = cio2_bridge_read_acpi_buffer(adev, "SSDB",
- 						   &sensor->ssdb,
++		/* Disable context bank before programming */
++		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
++
++		/* Clear context bank fault address fault status registers */
++		iommu_writel(ctx, ARM_SMMU_CB_FAR, 0);
++		iommu_writel(ctx, ARM_SMMU_CB_FSR, ARM_SMMU_FSR_FAULT);
++
+ 		/* TTBRs */
+ 		iommu_writeq(ctx, ARM_SMMU_CB_TTBR0,
+ 				pgtbl_cfg.arm_lpae_s1_cfg.ttbr |
 -- 
 2.40.1
 
