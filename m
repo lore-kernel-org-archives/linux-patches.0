@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80CD1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAFFC433C7;
-	Mon, 11 Sep 2023 13:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D901170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A84C433C8;
+	Mon, 11 Sep 2023 13:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440399;
-	bh=TRkChM4GBJS8MNRVFJx9+wk9vQV6ADJLp9ngS6KSwoQ=;
+	s=korg; t=1694440402;
+	bh=JjCF7Wx0lVt8SeQDM2dFHSKWW7LA9C5vXS8TrSro9wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BorzZCn9U872pb3yBqDnkwIVRNIrPUZbQifLkLmxgd8A75nTKd9WBEl/Pxp1eZs4o
-	 Ecv/6hDDCpUC/HHFgyUxVgrGKo01ZRw4RYJ1Gc6JIcyFZxTquGHgcLNiVtVbeMaQpx
-	 ebs1bs/sJUXl4cOcp/lRUcQfFCoO2kAx4/AIHns4=
+	b=dgApSD54KPFw/fokDBJhgoAmQKUA3aZMDegDwLBMpzLZll0+mIK3cEG+FfpiwDeWN
+	 hs3BjwZOZkPLhCi3UYPEcwRyzPh1jBoHsfSUPq/zBGwb6GuzaHdCA1wRDWInbtv7p9
+	 UJeTXcFnxjopgg2jf8uThtc6nd4yBKXnUzZnwlgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 021/739] ARM: ptrace: Restore syscall restart tracing
-Date: Mon, 11 Sep 2023 15:37:00 +0200
-Message-ID: <20230911134651.636583372@linuxfoundation.org>
+Subject: [PATCH 6.5 022/739] ARM: ptrace: Restore syscall skipping for tracers
+Date: Mon, 11 Sep 2023 15:37:01 +0200
+Message-ID: <20230911134651.665981774@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -47,14 +47,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit cf007647475b5090819c5fe8da771073145c7334 ]
+[ Upstream commit 4697b5848bd933f68ebd04836362c8de0cacaf71 ]
 
 Since commit 4e57a4ddf6b0 ("ARM: 9107/1: syscall: always store
-thread_info->abi_syscall"), the seccomp selftests "syscall_restart" has
-been broken. This was caused by the restart syscall not being stored to
-"abi_syscall" during restart setup before branching to the "local_restart"
-label. Tracers would see the wrong syscall, and scno would get overwritten
-while returning from the TIF_WORK path. Add the missing store.
+thread_info->abi_syscall"), the seccomp selftests "syscall_errno"
+and "syscall_faked" have been broken. Both seccomp and PTRACE depend
+on using the special value of "-1" for skipping syscalls. This value
+wasn't working because it was getting masked by __NR_SYSCALL_MASK in
+both PTRACE_SET_SYSCALL and get_syscall_nr().
+
+Explicitly test for -1 in PTRACE_SET_SYSCALL and get_syscall_nr(),
+leaving it exposed when present, allowing tracers to skip syscalls
+again.
 
 Cc: Russell King <linux@armlinux.org.uk>
 Cc: Arnd Bergmann <arnd@kernel.org>
@@ -63,25 +67,44 @@ Cc: Oleg Nesterov <oleg@redhat.com>
 Cc: linux-arm-kernel@lists.infradead.org
 Fixes: 4e57a4ddf6b0 ("ARM: 9107/1: syscall: always store thread_info->abi_syscall")
 Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230810195422.2304827-1-keescook@chromium.org
+Link: https://lore.kernel.org/r/20230810195422.2304827-2-keescook@chromium.org
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/entry-common.S | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/include/asm/syscall.h | 3 +++
+ arch/arm/kernel/ptrace.c       | 5 +++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/kernel/entry-common.S b/arch/arm/kernel/entry-common.S
-index bcc4c9ec3aa4e..5c31e9de7a602 100644
---- a/arch/arm/kernel/entry-common.S
-+++ b/arch/arm/kernel/entry-common.S
-@@ -90,6 +90,7 @@ slow_work_pending:
- 	cmp	r0, #0
- 	beq	no_work_pending
- 	movlt	scno, #(__NR_restart_syscall - __NR_SYSCALL_BASE)
-+	str	scno, [tsk, #TI_ABI_SYSCALL]	@ make sure tracers see update
- 	ldmia	sp, {r0 - r6}			@ have to reload r0 - r6
- 	b	local_restart			@ ... and off we go
- ENDPROC(ret_fast_syscall)
+diff --git a/arch/arm/include/asm/syscall.h b/arch/arm/include/asm/syscall.h
+index dfeed440254a8..fe4326d938c18 100644
+--- a/arch/arm/include/asm/syscall.h
++++ b/arch/arm/include/asm/syscall.h
+@@ -25,6 +25,9 @@ static inline int syscall_get_nr(struct task_struct *task,
+ 	if (IS_ENABLED(CONFIG_AEABI) && !IS_ENABLED(CONFIG_OABI_COMPAT))
+ 		return task_thread_info(task)->abi_syscall;
+ 
++	if (task_thread_info(task)->abi_syscall == -1)
++		return -1;
++
+ 	return task_thread_info(task)->abi_syscall & __NR_SYSCALL_MASK;
+ }
+ 
+diff --git a/arch/arm/kernel/ptrace.c b/arch/arm/kernel/ptrace.c
+index 2d8e2516906b6..fef32d73f9120 100644
+--- a/arch/arm/kernel/ptrace.c
++++ b/arch/arm/kernel/ptrace.c
+@@ -783,8 +783,9 @@ long arch_ptrace(struct task_struct *child, long request,
+ 			break;
+ 
+ 		case PTRACE_SET_SYSCALL:
+-			task_thread_info(child)->abi_syscall = data &
+-							__NR_SYSCALL_MASK;
++			if (data != -1)
++				data &= __NR_SYSCALL_MASK;
++			task_thread_info(child)->abi_syscall = data;
+ 			ret = 0;
+ 			break;
+ 
 -- 
 2.40.1
 
