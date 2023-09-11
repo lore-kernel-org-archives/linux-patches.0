@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5FD11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83757C433C9;
-	Mon, 11 Sep 2023 15:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0348911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE4AC433C8;
+	Mon, 11 Sep 2023 15:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446002;
-	bh=EUGIBxSdmAjFmieVW7DJwK6CHb+ujANFOaFtxBP9u5g=;
+	s=korg; t=1694446004;
+	bh=kvooBjwJGhsV+k6f/GA9QE4/9h1HcKOQk/ZCFamfymU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQYXCXI6xTkv8+au38xLCcs/HFJM9f7YDsUedPM35WSq0UVVD3gep8sUUvE9tDznM
-	 m47DDEbY72f79wrRjY87O8flym+3+qDRqJErFwBaU8XfqHvBNsJJNz3DU0E2OZRTnj
-	 yQvxCd4rl8WaOop5YR+athE2m1Ku21dcFuHVbdHc=
+	b=repEoMNjn9FiwqGzwR7r7Hs06FITowXqBC3xgQ+gMl8ifo6iJWGfk6HWbwLYiUO2w
+	 3lrmC9naj/rYNoxJ5kr9krmvQSbw4I+pOsvFPkOJx5+fa/zO7F8fBwQ/gM7YxSeUhL
+	 NaEHCrnrTxw+W41VMBW0EZYXO+ufKdRxvyG43G3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Lee Jones <lee@kernel.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	linux-sh@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 6.1 540/600] backlight/lv5207lp: Compare against struct fb_info.device
-Date: Mon, 11 Sep 2023 15:49:33 +0200
-Message-ID: <20230911134649.561773969@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 549/600] Revert "scsi: qla2xxx: Fix buffer overrun"
+Date: Mon, 11 Sep 2023 15:49:42 +0200
+Message-ID: <20230911134649.824811536@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -49,52 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 1ca8819320fd84e7d95b04e7668efc5f9fe9fa5c upstream.
+commit 641671d97b9199f1ba35ccc2222d4b189a6a5de5 upstream.
 
-Struct lv5207lp_platform_data refers to a platform device within
-the Linux device hierarchy. The test in lv5207lp_backlight_check_fb()
-compares it against the fbdev device in struct fb_info.dev, which
-is different. Fix the test by comparing to struct fb_info.device.
+Revert due to Get PLOGI Template failed.
+This reverts commit b68710a8094fdffe8dd4f7a82c82649f479bb453.
 
-Fixes a bug in the backlight driver and prepares fbdev for making
-struct fb_info.dev optional.
-
-v2:
-	* move renames into separate patch (Javier, Sam, Michael)
-
-Fixes: 82e5c40d88f9 ("backlight: Add Sanyo LV5207LP backlight driver")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Rich Felker <dalias@libc.org>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
-Cc: linux-sh@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.12+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-6-tzimmermann@suse.de
+Cc: stable@vger.kernel.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230821130045.34850-9-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/backlight/lv5207lp.c |    2 +-
+ drivers/scsi/qla2xxx/qla_init.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/backlight/lv5207lp.c
-+++ b/drivers/video/backlight/lv5207lp.c
-@@ -67,7 +67,7 @@ static int lv5207lp_backlight_check_fb(s
- {
- 	struct lv5207lp *lv = bl_get_data(backlight);
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -5571,7 +5571,7 @@ static void qla_get_login_template(scsi_
+ 	__be32 *q;
  
--	return lv->pdata->fbdev == NULL || lv->pdata->fbdev == info->dev;
-+	return lv->pdata->fbdev == NULL || lv->pdata->fbdev == info->device;
- }
- 
- static const struct backlight_ops lv5207lp_backlight_ops = {
+ 	memset(ha->init_cb, 0, ha->init_cb_size);
+-	sz = min_t(int, sizeof(struct fc_els_csp), ha->init_cb_size);
++	sz = min_t(int, sizeof(struct fc_els_flogi), ha->init_cb_size);
+ 	rval = qla24xx_get_port_login_templ(vha, ha->init_cb_dma,
+ 					    ha->init_cb, sz);
+ 	if (rval != QLA_SUCCESS) {
 
 
