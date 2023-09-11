@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CCE1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB34C433C8;
-	Mon, 11 Sep 2023 14:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797F91170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE812C433C8;
+	Mon, 11 Sep 2023 14:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442008;
-	bh=k0Jng5tNiI0AyuvKN5JOS3N9CJHn8+aoJrLMYxcHMBc=;
+	s=korg; t=1694442011;
+	bh=/goFSqXm6e1PjC3MAJyUqztOn6q/L67VDEYqhzslp6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0TIz7uRQhlmE9qBEOHhrgIZqqkNhHEHDchqRjuYTIWyw7XLa4K7nR0jeIrFGZQEb
-	 FOSR8uls8kATU6EXzAJ6psHDsdcng+gf7tg31S5YWEZU2JrKnzBzXuOCCIw7tHEIMw
-	 rrVOOiaxx1f/dnhzLppP69FLgYcO55ftS7VGNFFU=
+	b=it/TQmjFA4bjiIhQ8i9I8UPCi2kCDdH9MQtinGHEoJtQL4qcbvASA6sa9VLRc2dIW
+	 EEWsFVKbGPs6ecHpqs6wRtbhMOGwZbjTsdbz9sTSwqwTunBMR9LpGygItM+rQD9iDO
+	 QBtmjndKqOZniru7jIBwTfuIEYWkX0/DpnjlzgVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 587/739] HID: nvidia-shield: Reference hid_device devm allocation of input_dev name
-Date: Mon, 11 Sep 2023 15:46:26 +0200
-Message-ID: <20230911134707.500583506@linuxfoundation.org>
+Subject: [PATCH 6.5 588/739] platform/x86/amd/pmf: Fix a missing cleanup path
+Date: Mon, 11 Sep 2023 15:46:27 +0200
+Message-ID: <20230911134707.527838605@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,43 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 197d3143520fec9fde89aebabc9f0d7464f08e50 ]
+[ Upstream commit 4dbd6e61adc7e52dd1c9165f0ccaa90806611e40 ]
 
-Use hid_device for devm allocation of the input_dev name to avoid a
-use-after-free. input_unregister_device would trigger devres cleanup of all
-resources associated with the input_dev, free-ing the name. The name would
-subsequently be used in a uevent fired at the end of unregistering the
-input_dev.
+On systems that support slider notifications but don't otherwise support
+granular slider the SPS cleanup path doesn't run.
 
-Reported-by: Maxime Ripard <mripard@kernel.org>
-Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
-Fixes: 09308562d4af ("HID: nvidia-shield: Initial driver implementation with Thunderstrike support")
-Suggested-by: Maxime Ripard <mripard@kernel.org>
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20230824061308.222021-4-sergeantsagara@protonmail.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+This means that loading/unloading/loading leads to failures because
+the sysfs files don't get setup properly when reloaded.
+
+Add the missing cleanup path.
+
+Fixes: 33c9ab5b493a ("platform/x86/amd/pmf: Notify OS power slider update")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230823185421.23959-1-mario.limonciello@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-nvidia-shield.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-nvidia-shield.c b/drivers/hid/hid-nvidia-shield.c
-index 4e183650c4478..9c44974135079 100644
---- a/drivers/hid/hid-nvidia-shield.c
-+++ b/drivers/hid/hid-nvidia-shield.c
-@@ -164,7 +164,7 @@ static struct input_dev *shield_allocate_input_dev(struct hid_device *hdev,
- 	idev->id.product = hdev->product;
- 	idev->id.version = hdev->version;
- 	idev->uniq = hdev->uniq;
--	idev->name = devm_kasprintf(&idev->dev, GFP_KERNEL, "%s %s", hdev->name,
-+	idev->name = devm_kasprintf(&hdev->dev, GFP_KERNEL, "%s %s", hdev->name,
- 				    name_suffix);
- 	if (!idev->name)
- 		goto err_name;
+diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
+index 57bf1a9f0e766..78ed3ee22555d 100644
+--- a/drivers/platform/x86/amd/pmf/core.c
++++ b/drivers/platform/x86/amd/pmf/core.c
+@@ -324,7 +324,8 @@ static void amd_pmf_init_features(struct amd_pmf_dev *dev)
+ 
+ static void amd_pmf_deinit_features(struct amd_pmf_dev *dev)
+ {
+-	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR)) {
++	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR) ||
++	    is_apmf_func_supported(dev, APMF_FUNC_OS_POWER_SLIDER_UPDATE)) {
+ 		power_supply_unreg_notifier(&dev->pwr_src_notifier);
+ 		amd_pmf_deinit_sps(dev);
+ 	}
 -- 
 2.40.1
 
