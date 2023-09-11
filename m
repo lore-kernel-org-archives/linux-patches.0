@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAC311706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:44:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83559C433C8;
-	Mon, 11 Sep 2023 14:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D3111706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:44:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEE5C433CA;
+	Mon, 11 Sep 2023 14:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443475;
-	bh=BYDocawa27QUK5Gt2H8gn6fph9LWtDCUIfYjlm1soLQ=;
+	s=korg; t=1694443478;
+	bh=TcQEXWi/i/5Ja09I4YlQ1tqYpm2KStVHS3ckn+Ak5Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYD3Ca6luB7dfBORLhjE8Xm4LcfWQlGkZ79/LeKSPyYAx9sqV31bWW/25e8QvHuDd
-	 bjAIC2Lvp1p6YGfR6CEtepkzQMQBCdp9cbU3qsqQd8dIBVUbgpegD0+0ospA6Bu08x
-	 vkBMjgZBKc8I0IIJyARWP7T/NUR/XvPbi/FgH618=
+	b=mbjhQ/4aqkNY7XTIJNy1LUeU0dSWdj3nWMLr7quFU1Tbg0210wk4FWYAqNCt8Rg4Z
+	 dmOcH0UFmXzKI4+IPNRt3x62wM91MUJ9Blz2oDXj01vQx9yNSDndn+NFmC4qiLB6dk
+	 OCCduiV3vPOttvxxZjAUtdQy5DGEQoPdwe4V0Al4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 363/737] drm/msm/a2xx: Call adreno_gpu_init() earlier
-Date: Mon, 11 Sep 2023 15:43:42 +0200
-Message-ID: <20230911134700.674835395@linuxfoundation.org>
+Subject: [PATCH 6.4 364/737] drm/msm/a6xx: Fix GMU lockdep splat
+Date: Mon, 11 Sep 2023 15:43:43 +0200
+Message-ID: <20230911134700.704803649@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,56 +40,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit db07ce5da8b26bfeaf437a676ae49bd3bb1eace6 ]
+[ Upstream commit 3136a0f83519076edfbc14be65f286785434189a ]
 
-The adreno_is_a20x() and adreno_is_a225() functions rely on the
-GPU revision, but such information is retrieved inside adreno_gpu_init(),
-which is called afterwards.
+For normal GPU devfreq, we need to acquire the GMU lock while already
+holding devfreq locks.  But in the teardown path, we were calling
+dev_pm_domain_detach() while already holding the GMU lock, resulting in
+this lockdep splat:
 
-Fix this problem by caling adreno_gpu_init() earlier, so that
-the GPU information revision is available when adreno_is_a20x()
-and adreno_is_a225() run.
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   6.4.3-debug+ #3 Not tainted
+   ------------------------------------------------------
+   ring0/391 is trying to acquire lock:
+   ffffff80a025c078 (&devfreq->lock){+.+.}-{3:3}, at: qos_notifier_call+0x30/0x74
 
-Tested on a imx53-qsb board.
+   but task is already holding lock:
+   ffffff809b8c1ce8 (&(c->notifiers)->rwsem){++++}-{3:3}, at: blocking_notifier_call_chain+0x34/0x78
 
-Fixes: 21af872cd8c6 ("drm/msm/adreno: add a2xx")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/543456/
+   which lock already depends on the new lock.
+
+   the existing dependency chain (in reverse order) is:
+
+   -> #4 (&(c->notifiers)->rwsem){++++}-{3:3}:
+          down_write+0x58/0x74
+          __blocking_notifier_chain_register+0x64/0x84
+          blocking_notifier_chain_register+0x1c/0x28
+          freq_qos_add_notifier+0x5c/0x7c
+          dev_pm_qos_add_notifier+0xd4/0xf0
+          devfreq_add_device+0x42c/0x560
+          devm_devfreq_add_device+0x6c/0xb8
+          msm_devfreq_init+0xa8/0x16c [msm]
+          msm_gpu_init+0x368/0x54c [msm]
+          adreno_gpu_init+0x248/0x2b0 [msm]
+          a6xx_gpu_init+0x2d0/0x384 [msm]
+          adreno_bind+0x264/0x2bc [msm]
+          component_bind_all+0x124/0x1f4
+          msm_drm_bind+0x2d0/0x5f4 [msm]
+          try_to_bring_up_aggregate_device+0x88/0x1a4
+          __component_add+0xd4/0x128
+          component_add+0x1c/0x28
+          dp_display_probe+0x37c/0x3c0 [msm]
+          platform_probe+0x70/0xc0
+          really_probe+0x148/0x280
+          __driver_probe_device+0xfc/0x114
+          driver_probe_device+0x44/0x100
+          __device_attach_driver+0x64/0xdc
+          bus_for_each_drv+0xb0/0xd8
+          __device_attach+0xe4/0x140
+          device_initial_probe+0x1c/0x28
+          bus_probe_device+0x44/0xb0
+          deferred_probe_work_func+0xb0/0xc8
+          process_one_work+0x288/0x3d8
+          worker_thread+0x1f0/0x260
+          kthread+0xf0/0x100
+          ret_from_fork+0x10/0x20
+
+   -> #3 (dev_pm_qos_mtx){+.+.}-{3:3}:
+          __mutex_lock+0xc8/0x388
+          mutex_lock_nested+0x2c/0x38
+          dev_pm_qos_remove_notifier+0x3c/0xc8
+          genpd_remove_device+0x40/0x11c
+          genpd_dev_pm_detach+0x88/0x130
+          dev_pm_domain_detach+0x2c/0x3c
+          a6xx_gmu_remove+0x44/0xdc [msm]
+          a6xx_destroy+0x7c/0xa4 [msm]
+          adreno_unbind+0x50/0x64 [msm]
+          component_unbind+0x44/0x64
+          component_unbind_all+0xb4/0xbc
+          msm_drm_uninit.isra.0+0x124/0x17c [msm]
+          msm_drm_bind+0x340/0x5f4 [msm]
+          try_to_bring_up_aggregate_device+0x88/0x1a4
+          __component_add+0xd4/0x128
+          component_add+0x1c/0x28
+          dp_display_probe+0x37c/0x3c0 [msm]
+          platform_probe+0x70/0xc0
+          really_probe+0x148/0x280
+          __driver_probe_device+0xfc/0x114
+          driver_probe_device+0x44/0x100
+          __device_attach_driver+0x64/0xdc
+          bus_for_each_drv+0xb0/0xd8
+          __device_attach+0xe4/0x140
+          device_initial_probe+0x1c/0x28
+          bus_probe_device+0x44/0xb0
+          deferred_probe_work_func+0xb0/0xc8
+          process_one_work+0x288/0x3d8
+          worker_thread+0x1f0/0x260
+          kthread+0xf0/0x100
+          ret_from_fork+0x10/0x20
+
+   -> #2 (&a6xx_gpu->gmu.lock){+.+.}-{3:3}:
+          __mutex_lock+0xc8/0x388
+          mutex_lock_nested+0x2c/0x38
+          a6xx_gpu_set_freq+0x38/0x64 [msm]
+          msm_devfreq_target+0x170/0x18c [msm]
+          devfreq_set_target+0x90/0x1e4
+          devfreq_update_target+0xb4/0xf0
+          update_devfreq+0x1c/0x28
+          devfreq_monitor+0x3c/0x10c
+          process_one_work+0x288/0x3d8
+          worker_thread+0x1f0/0x260
+          kthread+0xf0/0x100
+          ret_from_fork+0x10/0x20
+
+   -> #1 (&df->lock){+.+.}-{3:3}:
+          __mutex_lock+0xc8/0x388
+          mutex_lock_nested+0x2c/0x38
+          msm_devfreq_get_dev_status+0x4c/0x104 [msm]
+          devfreq_simple_ondemand_func+0x5c/0x128
+          devfreq_update_target+0x68/0xf0
+          update_devfreq+0x1c/0x28
+          devfreq_monitor+0x3c/0x10c
+          process_one_work+0x288/0x3d8
+          worker_thread+0x1f0/0x260
+          kthread+0xf0/0x100
+          ret_from_fork+0x10/0x20
+
+   -> #0 (&devfreq->lock){+.+.}-{3:3}:
+          __lock_acquire+0xdf8/0x109c
+          lock_acquire+0x234/0x284
+          __mutex_lock+0xc8/0x388
+          mutex_lock_nested+0x2c/0x38
+          qos_notifier_call+0x30/0x74
+          qos_min_notifier_call+0x1c/0x28
+          notifier_call_chain+0xf4/0x114
+          blocking_notifier_call_chain+0x4c/0x78
+          pm_qos_update_target+0x184/0x190
+          freq_qos_apply+0x4c/0x64
+          apply_constraint+0xf8/0xfc
+          __dev_pm_qos_update_request+0x138/0x164
+          dev_pm_qos_update_request+0x44/0x68
+          msm_devfreq_boost+0x40/0x70 [msm]
+          msm_devfreq_active+0xc0/0xf0 [msm]
+          msm_gpu_submit+0xc8/0x12c [msm]
+          msm_job_run+0x88/0x128 [msm]
+          drm_sched_main+0x240/0x324 [gpu_sched]
+          kthread+0xf0/0x100
+          ret_from_fork+0x10/0x20
+
+   other info that might help us debug this:
+   Chain exists of:
+     &devfreq->lock --> dev_pm_qos_mtx --> &(c->notifiers)->rwsem
+    Possible unsafe locking scenario:
+          CPU0                    CPU1
+          ----                    ----
+     rlock(&(c->notifiers)->rwsem);
+                                  lock(dev_pm_qos_mtx);
+                                  lock(&(c->notifiers)->rwsem);
+     lock(&devfreq->lock);
+
+    *** DEADLOCK ***
+   4 locks held by ring0/391:
+    #0: ffffff809c811170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x7c/0x128 [msm]
+    #1: ffffff809c811208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_submit+0xa8/0x12c [msm]
+    #2: ffffffecbbb46600 (dev_pm_qos_mtx){+.+.}-{3:3}, at: dev_pm_qos_update_request+0x38/0x68
+    #3: ffffff809b8c1ce8 (&(c->notifiers)->rwsem){++++}-{3:3}, at: blocking_notifier_call_chain+0x34/0x78
+
+   stack backtrace:
+   CPU: 6 PID: 391 Comm: ring0 Not tainted 6.4.3debug+ #3
+   Hardware name: Google Villager (rev1+) with LTE (DT)
+   Call trace:
+    dump_backtrace+0xb4/0xf0
+    show_stack+0x20/0x30
+    dump_stack_lvl+0x60/0x84
+    dump_stack+0x18/0x24
+    print_circular_bug+0x1cc/0x234
+    check_noncircular+0x78/0xac
+    __lock_acquire+0xdf8/0x109c
+    lock_acquire+0x234/0x284
+    __mutex_lock+0xc8/0x388
+    mutex_lock_nested+0x2c/0x38
+    qos_notifier_call+0x30/0x74
+    qos_min_notifier_call+0x1c/0x28
+    notifier_call_chain+0xf4/0x114
+    blocking_notifier_call_chain+0x4c/0x78
+    pm_qos_update_target+0x184/0x190
+    freq_qos_apply+0x4c/0x64
+    apply_constraint+0xf8/0xfc
+    __dev_pm_qos_update_request+0x138/0x164
+    dev_pm_qos_update_request+0x44/0x68
+    msm_devfreq_boost+0x40/0x70 [msm]
+    msm_devfreq_active+0xc0/0xf0 [msm]
+    msm_gpu_submit+0xc8/0x12c [msm]
+    msm_job_run+0x88/0x128 [msm]
+    drm_sched_main+0x240/0x324 [gpu_sched]
+    kthread+0xf0/0x100
+    ret_from_fork+0x10/0x20
+
+Fix this by only synchronizing access to gmu->initialized.
+
+Fixes: 4cd15a3e8b36 ("drm/msm/a6xx: Make GPU destroy a bit safer")
+Cc: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/551171/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 11 ++++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  2 --
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-index c67089a7ebc10..ad4570d60abf2 100644
---- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-@@ -540,6 +540,10 @@ struct msm_gpu *a2xx_gpu_init(struct drm_device *dev)
- 	gpu->perfcntrs = perfcntrs;
- 	gpu->num_perfcntrs = ARRAY_SIZE(perfcntrs);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 8914992378f21..1ff2a71e1aea5 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1472,8 +1472,15 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+ 	struct platform_device *pdev = to_platform_device(gmu->dev);
  
-+	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
-+	if (ret)
-+		goto fail;
+-	if (!gmu->initialized)
++	mutex_lock(&gmu->lock);
++	if (!gmu->initialized) {
++		mutex_unlock(&gmu->lock);
+ 		return;
++	}
 +
- 	if (adreno_is_a20x(adreno_gpu))
- 		adreno_gpu->registers = a200_registers;
- 	else if (adreno_is_a225(adreno_gpu))
-@@ -547,10 +551,6 @@ struct msm_gpu *a2xx_gpu_init(struct drm_device *dev)
- 	else
- 		adreno_gpu->registers = a220_registers;
++	gmu->initialized = false;
++
++	mutex_unlock(&gmu->lock);
  
--	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
--	if (ret)
--		goto fail;
+ 	pm_runtime_force_suspend(gmu->dev);
+ 
+@@ -1501,8 +1508,6 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 
+ 	/* Drop reference taken in of_find_device_by_node */
+ 	put_device(gmu->dev);
 -
- 	if (!gpu->aspace) {
- 		dev_err(dev->dev, "No memory protection without MMU\n");
- 		if (!allow_vram_carveout) {
+-	gmu->initialized = false;
+ }
+ 
+ static int cxpd_notifier_cb(struct notifier_block *nb,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 411b7a5fa2f32..bdda1a6336543 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1697,9 +1697,7 @@ static void a6xx_destroy(struct msm_gpu *gpu)
+ 
+ 	a6xx_llc_slices_destroy(a6xx_gpu);
+ 
+-	mutex_lock(&a6xx_gpu->gmu.lock);
+ 	a6xx_gmu_remove(a6xx_gpu);
+-	mutex_unlock(&a6xx_gpu->gmu.lock);
+ 
+ 	adreno_gpu_cleanup(adreno_gpu);
+ 
 -- 
 2.40.1
 
