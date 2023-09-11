@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724F811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9482C433C8;
-	Mon, 11 Sep 2023 15:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5FD11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83757C433C9;
+	Mon, 11 Sep 2023 15:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445999;
-	bh=O/BqkHx7zndWrbukTWVI/Mh1geerrsg7X62TxEK+YJk=;
+	s=korg; t=1694446002;
+	bh=EUGIBxSdmAjFmieVW7DJwK6CHb+ujANFOaFtxBP9u5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IHn9lJuDh8fb989EZACFwio1nyzOAdZyIzep1PBqt0cEP0G5cu1sYje/C5UO3hvk0
-	 fnF+ia3gF9Kg3PkEElUCInMHVHiRlURcjrw56Bxqdn3Q2JYRNXBvMYTxynLFRtVKud
-	 VYYAlUNIwRGNbjrgFDcmbix3hOqAYu390wUW08CI=
+	b=AQYXCXI6xTkv8+au38xLCcs/HFJM9f7YDsUedPM35WSq0UVVD3gep8sUUvE9tDznM
+	 m47DDEbY72f79wrRjY87O8flym+3+qDRqJErFwBaU8XfqHvBNsJJNz3DU0E2OZRTnj
+	 yQvxCd4rl8WaOop5YR+athE2m1Ku21dcFuHVbdHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 510/600] mtd: spi-nor: Check bus width while setting QE bit
-Date: Mon, 11 Sep 2023 15:49:03 +0200
-Message-ID: <20230911134648.675133984@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Rich Felker <dalias@libc.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Lee Jones <lee@kernel.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	linux-sh@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH 6.1 540/600] backlight/lv5207lp: Compare against struct fb_info.device
+Date: Mon, 11 Sep 2023 15:49:33 +0200
+Message-ID: <20230911134649.561773969@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,63 +49,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Yi Wang <hsinyi@chromium.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit f01d8155a92e33cdaa85d20bfbe6c441907b3c1f ]
+commit 1ca8819320fd84e7d95b04e7668efc5f9fe9fa5c upstream.
 
-spi_nor_write_16bit_sr_and_check() should also check if bus width is
-4 before setting QE bit.
+Struct lv5207lp_platform_data refers to a platform device within
+the Linux device hierarchy. The test in lv5207lp_backlight_check_fb()
+compares it against the fbdev device in struct fb_info.dev, which
+is different. Fix the test by comparing to struct fb_info.device.
 
-Fixes: 39d1e3340c73 ("mtd: spi-nor: Fix clearing of QE bit on lock()/unlock()")
-Suggested-by: Michael Walle <michael@walle.cc>
-Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Reviewed-by: Michael Walle <michael@walle.cc>
-Link: https://lore.kernel.org/r/20230818064524.1229100-2-hsinyi@chromium.org
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes a bug in the backlight driver and prepares fbdev for making
+struct fb_info.dev optional.
+
+v2:
+	* move renames into separate patch (Javier, Sam, Michael)
+
+Fixes: 82e5c40d88f9 ("backlight: Add Sanyo LV5207LP backlight driver")
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+Cc: Rich Felker <dalias@libc.org>
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-sh@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.12+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-6-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/video/backlight/lv5207lp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index dc4d86ceee447..a9000b0ebe690 100644
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -770,21 +770,22 @@ static int spi_nor_write_16bit_sr_and_check(struct spi_nor *nor, u8 sr1)
- 		ret = spi_nor_read_cr(nor, &sr_cr[1]);
- 		if (ret)
- 			return ret;
--	} else if (nor->params->quad_enable) {
-+	} else if (spi_nor_get_protocol_width(nor->read_proto) == 4 &&
-+		   spi_nor_get_protocol_width(nor->write_proto) == 4 &&
-+		   nor->params->quad_enable) {
- 		/*
- 		 * If the Status Register 2 Read command (35h) is not
- 		 * supported, we should at least be sure we don't
- 		 * change the value of the SR2 Quad Enable bit.
- 		 *
--		 * We can safely assume that when the Quad Enable method is
--		 * set, the value of the QE bit is one, as a consequence of the
--		 * nor->params->quad_enable() call.
-+		 * When the Quad Enable method is set and the buswidth is 4, we
-+		 * can safely assume that the value of the QE bit is one, as a
-+		 * consequence of the nor->params->quad_enable() call.
- 		 *
--		 * We can safely assume that the Quad Enable bit is present in
--		 * the Status Register 2 at BIT(1). According to the JESD216
--		 * revB standard, BFPT DWORDS[15], bits 22:20, the 16-bit
--		 * Write Status (01h) command is available just for the cases
--		 * in which the QE bit is described in SR2 at BIT(1).
-+		 * According to the JESD216 revB standard, BFPT DWORDS[15],
-+		 * bits 22:20, the 16-bit Write Status (01h) command is
-+		 * available just for the cases in which the QE bit is
-+		 * described in SR2 at BIT(1).
- 		 */
- 		sr_cr[1] = SR2_QUAD_EN_BIT1;
- 	} else {
--- 
-2.40.1
-
+--- a/drivers/video/backlight/lv5207lp.c
++++ b/drivers/video/backlight/lv5207lp.c
+@@ -67,7 +67,7 @@ static int lv5207lp_backlight_check_fb(s
+ {
+ 	struct lv5207lp *lv = bl_get_data(backlight);
+ 
+-	return lv->pdata->fbdev == NULL || lv->pdata->fbdev == info->dev;
++	return lv->pdata->fbdev == NULL || lv->pdata->fbdev == info->device;
+ }
+ 
+ static const struct backlight_ops lv5207lp_backlight_ops = {
 
 
