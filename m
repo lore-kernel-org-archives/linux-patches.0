@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0C011715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5BC433C7;
-	Mon, 11 Sep 2023 15:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C9C11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BF9C433C7;
+	Mon, 11 Sep 2023 15:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444861;
-	bh=lRj0IxsOo0/rlIWE65/dY0927bx3I5/b2RVTJUTegTA=;
+	s=korg; t=1694444864;
+	bh=mT83a3mAiQOF9BsexD2Xc4iaVuFlr6+kz/se6xvxkk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IpFROfxGUvXFQM/rSBhQQ3LDIy+lmKuzRteqMG+I6SZ2e9u6r6FKcFqrLdACuPoYF
-	 gdF3/XoG+7ziX1Aw0btAK50cM3JE1zgyBzkU33flPon1U0esqXhFpYBP427vghQhzy
-	 /G7YftjUQP+obAttf0AZ2pZ9RmBdrl1on5S3rX8E=
+	b=YC3wN5e8LYggq2bb/5Byd5o1gmKzTKRlsYVOUdODj7Q2wdDycRN/t1lZCnKzPne3d
+	 BP/FvTNiXYdgN+OOLC/xRbEbfMPLDOFGe9jJTWNRDc3LLMtg5w2XHBOOLgsh0tM0hG
+	 vEA3vT9vCJGyU6Ckg96YsIqmzMVgZZJe8NqWN7AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yafang Shao <laoar.shao@gmail.com>,
-	Yonghong Song <yhs@fb.com>,
-	Jiri Olsa <jolsa@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/600] bpf: Clear the probe_addr for uprobe
-Date: Mon, 11 Sep 2023 15:42:55 +0200
-Message-ID: <20230911134637.799961277@linuxfoundation.org>
+Subject: [PATCH 6.1 143/600] bpf: Fix an error in verifying a field in a union
+Date: Mon, 11 Sep 2023 15:42:56 +0200
+Message-ID: <20230911134637.828969443@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -44,73 +42,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 5125e757e62f6c1d5478db4c2b61a744060ddf3f ]
+[ Upstream commit 33937607efa050d9e237e0c4ac4ada02d961c466 ]
 
-To avoid returning uninitialized or random values when querying the file
-descriptor (fd) and accessing probe_addr, it is necessary to clear the
-variable prior to its use.
+We are utilizing BPF LSM to monitor BPF operations within our container
+environment. When we add support for raw_tracepoint, it hits below
+error.
 
-Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+; (const void *)attr->raw_tracepoint.name);
+27: (79) r3 = *(u64 *)(r2 +0)
+access beyond the end of member map_type (mend:4) in struct (anon) with off 0 size 8
+
+It can be reproduced with below BPF prog.
+
+SEC("lsm/bpf")
+int BPF_PROG(bpf_audit, int cmd, union bpf_attr *attr, unsigned int size)
+{
+	switch (cmd) {
+	case BPF_RAW_TRACEPOINT_OPEN:
+		bpf_printk("raw_tracepoint is %s", attr->raw_tracepoint.name);
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
+
+The reason is that when accessing a field in a union, such as bpf_attr,
+if the field is located within a nested struct that is not the first
+member of the union, it can result in incorrect field verification.
+
+  union bpf_attr {
+      struct {
+          __u32 map_type; <<<< Actually it will find that field.
+          __u32 key_size;
+          __u32 value_size;
+         ...
+      };
+      ...
+      struct {
+          __u64 name;    <<<< We want to verify this field.
+          __u32 prog_fd;
+      } raw_tracepoint;
+  };
+
+Considering the potential deep nesting levels, finding a perfect
+solution to address this issue has proven challenging. Therefore, I
+propose a solution where we simply skip the verification process if the
+field in question is located within a union.
+
+Fixes: 7e3617a72df3 ("bpf: Add array support to btf_struct_access")
 Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230709025630.3735-6-laoar.shao@gmail.com
+Link: https://lore.kernel.org/r/20230713025642.27477-4-laoar.shao@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/trace_events.h | 3 ++-
- kernel/trace/bpf_trace.c     | 2 +-
- kernel/trace/trace_uprobe.c  | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ kernel/bpf/btf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 04c59f8d801f1..422f4ca656cf9 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -863,7 +863,8 @@ extern int  perf_uprobe_init(struct perf_event *event,
- extern void perf_uprobe_destroy(struct perf_event *event);
- extern int bpf_get_uprobe_info(const struct perf_event *event,
- 			       u32 *fd_type, const char **filename,
--			       u64 *probe_offset, bool perf_type_tracepoint);
-+			       u64 *probe_offset, u64 *probe_addr,
-+			       bool perf_type_tracepoint);
- #endif
- extern int  ftrace_profile_set_filter(struct perf_event *event, int event_id,
- 				     char *filter_str);
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index ad04390883ada..9fc5db194027b 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2390,7 +2390,7 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
- #ifdef CONFIG_UPROBE_EVENTS
- 		if (flags & TRACE_EVENT_FL_UPROBE)
- 			err = bpf_get_uprobe_info(event, fd_type, buf,
--						  probe_offset,
-+						  probe_offset, probe_addr,
- 						  event->attr.type == PERF_TYPE_TRACEPOINT);
- #endif
- 	}
-diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
-index 2ac06a642863a..127c78aec17db 100644
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -1418,7 +1418,7 @@ static void uretprobe_perf_func(struct trace_uprobe *tu, unsigned long func,
- 
- int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
- 			const char **filename, u64 *probe_offset,
--			bool perf_type_tracepoint)
-+			u64 *probe_addr, bool perf_type_tracepoint)
- {
- 	const char *pevent = trace_event_name(event->tp_event);
- 	const char *group = event->tp_event->class->system;
-@@ -1435,6 +1435,7 @@ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
- 				    : BPF_FD_TYPE_UPROBE;
- 	*filename = tu->filename;
- 	*probe_offset = tu->offset;
-+	*probe_addr = 0;
- 	return 0;
- }
- #endif	/* CONFIG_PERF_EVENTS */
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index fb78bb26786fc..7582ec4fd4131 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -5788,7 +5788,7 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+ 		 * that also allows using an array of int as a scratch
+ 		 * space. e.g. skb->cb[].
+ 		 */
+-		if (off + size > mtrue_end) {
++		if (off + size > mtrue_end && !(*flag & PTR_UNTRUSTED)) {
+ 			bpf_log(log,
+ 				"access beyond the end of member %s (mend:%u) in struct %s with off %u size %u\n",
+ 				mname, mtrue_end, tname, off, size);
 -- 
 2.40.1
 
