@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CCB11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0338C433C7;
-	Mon, 11 Sep 2023 14:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE311705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B03BC433C7;
+	Mon, 11 Sep 2023 14:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443243;
-	bh=/dw0PdWLhq8PXZG/HH3yVgaPHTanHl1qQ8ntVEW5pe8=;
+	s=korg; t=1694443245;
+	bh=BzNzAcSsStQ8QclTsW8QSn91l2LbnP3YjC0yAQoCOGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyGhZhr6+VlI4J7B9lB8FcrBIfaNcbs68BX/W3sYpj2sRC+BtZyBj3Laa57Nlv2Y5
-	 Snu1upOlkr+Nh+WN5w+N2WK2vpOJUzodAZJ56MKu70VsGUrU2BPbxAFbaBAqk6Qzp+
-	 RQr1koSweKxIeKBmaCSvMe9K8lDPYOdNKv4J2ZTA=
+	b=r7ImUHD1uaQbUATsZKAlSge3Iu0+C9CYAYFRpvQ2WqDS2zScVDlxLU/6S5TjRIipA
+	 FcaUsDyV3GhkRiTyZ5DBuHoDeXjVdKPivpyqPn/FhxW2hZpF7Rq9/SnyEaYzKQEf6i
+	 yZzGhE3F0RQ2Ws7NtUSxp79UDOOmSWaVrtbI6F9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 309/737] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
-Date: Mon, 11 Sep 2023 15:42:48 +0200
-Message-ID: <20230911134659.201311685@linuxfoundation.org>
+Subject: [PATCH 6.4 310/737] ARM: dts: BCM53573: Drop nonexistent #usb-cells
+Date: Mon, 11 Sep 2023 15:42:49 +0200
+Message-ID: <20230911134659.229077484@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,61 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
+[ Upstream commit 05d2c3d552b8c92fc397377d9d1112fc58e2cd59 ]
 
-There is no such trigger documented or implemented in Linux. It was a
-copy & paste mistake.
+Such property simply doesn't exist (is not documented or used anywhere).
 
 This fixes:
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
-        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
-        'default-off' does not match '^cpu[0-9]*$'
-        'default-off' does not match '^hci[0-9]+-power$'
-        'default-off' does not match '^mmc[0-9]+$'
-        'default-off' does not match '^phy[0-9]+tx$'
-        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: usb@d000: Unevaluated properties are not allowed ('#usb-cells' was unexpected)
+        From schema: Documentation/devicetree/bindings/usb/generic-ohci.yaml
 
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20230707114004.2740-2-zajec5@gmail.com
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
- 2 files changed, 3 deletions(-)
+ arch/arm/boot/dts/bcm53573.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index 0734aa249b8e0..b9dd508444198 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -26,7 +26,6 @@ leds {
- 		led-wlan {
- 			label = "bcm53xx:blue:wlan";
- 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
--			linux,default-trigger = "default-off";
- 		};
+diff --git a/arch/arm/boot/dts/bcm53573.dtsi b/arch/arm/boot/dts/bcm53573.dtsi
+index 3f03a381db0f2..3cb71829e8597 100644
+--- a/arch/arm/boot/dts/bcm53573.dtsi
++++ b/arch/arm/boot/dts/bcm53573.dtsi
+@@ -156,8 +156,6 @@ ehci_port2: port@2 {
+ 			};
  
- 		led-system {
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index e6fb6cbe69633..cb22ae2a02e54 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -26,7 +26,6 @@ leds-0 {
- 		led-5ghz {
- 			label = "bcm53xx:blue:5ghz";
- 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
- 
- 		led-system {
-@@ -42,7 +41,6 @@ leds-1 {
- 		led-2ghz {
- 			label = "bcm53xx:blue:2ghz";
- 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
- 	};
- 
+ 			ohci: usb@d000 {
+-				#usb-cells = <0>;
+-
+ 				compatible = "generic-ohci";
+ 				reg = <0xd000 0x1000>;
+ 				interrupt-parent = <&gic>;
 -- 
 2.40.1
 
