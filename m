@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285441170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CFBC433C7;
-	Mon, 11 Sep 2023 13:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003591170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73236C433C8;
+	Mon, 11 Sep 2023 13:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440481;
-	bh=3YC5nF9e2UVeVnWln37YGrn56aV2lNII8hCd6uORyxs=;
+	s=korg; t=1694440483;
+	bh=ipdhutseK9XcB3OIZPe6zWBW/ag7fNvSnEwjk5hN58A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NzonIdVIYtqGHxSo8bmRnvRYlZ6H8NKyP6/s6Efn3O0XuqgoKiTnckyvLBmvMLjsu
-	 Wbl+iq6SHU0oFEIiTca8ksseZlfU/o1NbrudYhHp7wEDZn1H+3I3Av/Zvq6eR9RUJs
-	 ID7xXmRAwQqw4suDzFQce2U3V2lyedXET9lUYR4E=
+	b=0EbHObQy+IrTD8DSG21yX9/f6zORr3/IXNIIeGsn9PHwfnC/L2FJMxroC1Ugf0oav
+	 Mkrsyvd7RfyOS+GvGDRbboGil4WAw4GEh0/DirvJ1iUECZApuLnn+QXSwyzz/NYgXG
+	 /NOUXF4E+yqAdFX0v/BuFDE4I+vOyg98PDpppSpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Bibo Mao <maobibo@loongson.cn>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 050/739] s390/paes: fix PKEY_TYPE_EP11_AES handling for secure keyblobs
-Date: Mon, 11 Sep 2023 15:37:29 +0200
-Message-ID: <20230911134652.517341927@linuxfoundation.org>
+Subject: [PATCH 6.5 051/739] irqchip/loongson-eiointc: Fix return value checking of eiointc_index
+Date: Mon, 11 Sep 2023 15:37:30 +0200
+Message-ID: <20230911134652.545785011@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -35,44 +35,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit cba33db3fc4dbf2e54294b0e499d2335a3a00d78 ]
+[ Upstream commit 2e99b73afde18853754c5fae8e8d1a66fe5e3f64 ]
 
-Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
-private keys")' introduced PKEY_TYPE_EP11_AES securekey blobs as a
-supplement to the PKEY_TYPE_EP11 (which won't work in environments
-with session-bound keys). This new keyblobs has a different maximum
-size, so fix paes crypto module to accept also these larger keyblobs.
+Return value of function eiointc_index is int, however it is converted
+into uint32_t and then compared smaller than zero, this will cause logic
+problem.
 
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: dd281e1a1a93 ("irqchip: Add Loongson Extended I/O interrupt controller support")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230811095805.2974722-2-maobibo@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/crypto/paes_s390.c | 2 +-
+ drivers/irqchip/irq-loongson-eiointc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/crypto/paes_s390.c b/arch/s390/crypto/paes_s390.c
-index 38349150c96e8..8b541e44151d4 100644
---- a/arch/s390/crypto/paes_s390.c
-+++ b/arch/s390/crypto/paes_s390.c
-@@ -35,7 +35,7 @@
-  * and padding is also possible, the limits need to be generous.
-  */
- #define PAES_MIN_KEYSIZE 16
--#define PAES_MAX_KEYSIZE 320
-+#define PAES_MAX_KEYSIZE MAXEP11AESKEYBLOBSIZE
+diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
+index 92d8aa28bdf54..1623cd7791752 100644
+--- a/drivers/irqchip/irq-loongson-eiointc.c
++++ b/drivers/irqchip/irq-loongson-eiointc.c
+@@ -144,7 +144,7 @@ static int eiointc_router_init(unsigned int cpu)
+ 	int i, bit;
+ 	uint32_t data;
+ 	uint32_t node = cpu_to_eio_node(cpu);
+-	uint32_t index = eiointc_index(node);
++	int index = eiointc_index(node);
  
- static u8 *ctrblk;
- static DEFINE_MUTEX(ctrblk_lock);
+ 	if (index < 0) {
+ 		pr_err("Error: invalid nodemap!\n");
 -- 
 2.40.1
 
