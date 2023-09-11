@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1583A11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89760C433C8;
-	Mon, 11 Sep 2023 14:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC7311705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652F0C433C8;
+	Mon, 11 Sep 2023 14:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443039;
-	bh=rmd3KKu17/gzn0iaFPIJGgzq07Wzm47mO4nA89HNsxE=;
+	s=korg; t=1694443042;
+	bh=IDMPUwszd1u/C8VodDerEqKEOnlmh5dRjMm/0++6Z7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssG/vvQhh7IMgMlCL/qEfj8uW9CSx2CtkIKRDT/0DnUuJYJDbPBKiQKViRI5SzNEe
-	 GOaZILHWTLfOOLGrchBqoH0b9rl8zGC1hKGLDJCSyJXq8cI/4/+51mjn8Z176qcyO5
-	 AmgdB6XlVIfF+jo76bfOKSB4IJaDXM4IMN50L8/g=
+	b=Ad/PDuVHL7qfW2kUcZVizJaz7i9yWM8W7iVSGCnJQbR37McIdn8VegUXwc5aKMr6H
+	 0RPLKKq4ZXUCSm0VFLzBlBkUW7AUK1zQnc80nXrMCH3pl1q4eyyU3nI6BRQpTjg5Ci
+	 gEzntwAZXKs0D82tOnepIeB55vNSBwR1E0ulTFWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 209/737] selftests/bpf: Clean up fmod_ret in bench_rename test script
-Date: Mon, 11 Sep 2023 15:41:08 +0200
-Message-ID: <20230911134656.431593349@linuxfoundation.org>
+Subject: [PATCH 6.4 236/737] wifi: nl80211/cfg80211: add forgotten nla_policy for BSS color attribute
+Date: Mon, 11 Sep 2023 15:41:35 +0200
+Message-ID: <20230911134657.200769085@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,54 +35,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 83a89c4b6ae93481d3f618aba6a29d89208d26ed ]
+[ Upstream commit 218d690c49b7e9c94ad0d317adbdd4af846ea0dc ]
 
-Running the bench_rename test script, the following error occurs:
+The previous commit dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to
+NDP ranging parameters") adds a parameter for NDP ranging by introducing
+a new attribute type named NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR.
 
-  # ./benchs/run_bench_rename.sh
-  base      :    0.819 ± 0.012M/s
-  kprobe    :    0.538 ± 0.009M/s
-  kretprobe :    0.503 ± 0.004M/s
-  rawtp     :    0.779 ± 0.020M/s
-  fentry    :    0.726 ± 0.007M/s
-  fexit     :    0.691 ± 0.007M/s
-  benchmark 'rename-fmodret' not found
+However, the author forgot to also describe the nla_policy at
+nl80211_pmsr_ftm_req_attr_policy (net/wireless/nl80211.c). Just
+complement it to avoid malformed attribute that causes out-of-attribute
+access.
 
-The bench_rename_fmodret has been removed in commit b000def2e052
-("selftests: Remove fmod_ret from test_overhead"), thus remove it
-from the runners in the test script.
-
-Fixes: b000def2e052 ("selftests: Remove fmod_ret from test_overhead")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230814030727.3010390-1-zouyipeng@huawei.com
+Fixes: dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to NDP ranging parameters")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809033151.768910-1-linma@zju.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/benchs/run_bench_rename.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/nl80211.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/benchs/run_bench_rename.sh b/tools/testing/selftests/bpf/benchs/run_bench_rename.sh
-index 16f774b1cdbed..7b281dbe41656 100755
---- a/tools/testing/selftests/bpf/benchs/run_bench_rename.sh
-+++ b/tools/testing/selftests/bpf/benchs/run_bench_rename.sh
-@@ -2,7 +2,7 @@
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 1b688745ce0a1..be798ce8a20ff 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -323,6 +323,7 @@ nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
+ 	[NL80211_PMSR_FTM_REQ_ATTR_TRIGGER_BASED] = { .type = NLA_FLAG },
+ 	[NL80211_PMSR_FTM_REQ_ATTR_NON_TRIGGER_BASED] = { .type = NLA_FLAG },
+ 	[NL80211_PMSR_FTM_REQ_ATTR_LMR_FEEDBACK] = { .type = NLA_FLAG },
++	[NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR] = { .type = NLA_U8 },
+ };
  
- set -eufo pipefail
- 
--for i in base kprobe kretprobe rawtp fentry fexit fmodret
-+for i in base kprobe kretprobe rawtp fentry fexit
- do
- 	summary=$(sudo ./bench -w2 -d5 -a rename-$i | tail -n1 | cut -d'(' -f1 | cut -d' ' -f3-)
- 	printf "%-10s: %s\n" $i "$summary"
+ static const struct nla_policy
 -- 
 2.40.1
 
