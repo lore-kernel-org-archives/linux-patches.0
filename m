@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE0D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FE3C433C8;
-	Mon, 11 Sep 2023 13:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7091170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C38C433C8;
+	Mon, 11 Sep 2023 13:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440576;
-	bh=J+ppi9b3IVPjX3+RGI24/1B9Qh6vFzD7VT1A8aIp+Vw=;
+	s=korg; t=1694440578;
+	bh=Oj/KkJHDj6CeEtsID+5FOpk7zZechjY4TrdXYU0wjUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKAXair9er0icQ/MyenMaFpa/jdr6EyVIXKcCIS5TTLe5h4AMTFhP/iwlDFqb+vNv
-	 B+azDJNZkJkHPg5brjL9agQ4GInqyhgzc09zOrSzUqjCUe7ime5fUyu6JSCU+RmmIq
-	 oo/VtbFpXizmZgO068D8M20CCqgPUNEGCY2FCvUY=
+	b=qdVoYpxjmU9FtJ0MfmAr5Zcx5/UIR+fWqZrTEiBT9TrnBcvQTld3XMVI/9HOT/3h6
+	 yffR7TJQPG+Kxm0zHf1CMxL7DMWAY5YqVpCe8snnzDchf10sI4G7/yZid2hfPsFi5V
+	 Nc/kxWOyz0h3vLSAwfOvUWUOpTi953kjYv8p5354=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Deren Wu <deren.wu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 084/739] wifi: mt76: mt7921: fix non-PSC channel scan fail
-Date: Mon, 11 Sep 2023 15:38:03 +0200
-Message-ID: <20230911134653.457846052@linuxfoundation.org>
+Subject: [PATCH 6.5 085/739] wifi: mt76: mt7996: fix bss wlan_idx when sending bss_info command
+Date: Mon, 11 Sep 2023 15:38:04 +0200
+Message-ID: <20230911134653.483610538@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,38 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 0e5911bb7cc92c00dda9b4d635c1266b7ca915c6 ]
+[ Upstream commit cc945b546227423488fe4be0ab92fd126b703246 ]
 
-Due to the scan command may only request legacy bands and PSC channel
-in 6GHz band, we are unable to scan the APs on non-PSC channel in this
-case. Enable WIPHY_FLAG_SPLIT_SCAN_6GHZ to support non-PSC channel
-(obtained during scan on legacy bands) in 6GHz scan request.
+The bmc_tx_wlan_idx should be the wlan_idx of the current bss rather
+than peer AP's wlan_idx, otherwise there will appear some frame
+decryption problems on station mode.
 
-Fixes: 50ac15a511e3 ("mt76: mt7921: add 6GHz support")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Reviewed-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/init.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-index bf1da9fddfaba..f41975e37d06a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-@@ -113,7 +113,8 @@ mt7921_init_wiphy(struct ieee80211_hw *hw)
- 	wiphy->max_sched_scan_ssids = MT76_CONNAC_MAX_SCHED_SCAN_SSID;
- 	wiphy->max_match_sets = MT76_CONNAC_MAX_SCAN_MATCH;
- 	wiphy->max_sched_scan_reqs = 1;
--	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH;
-+	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH |
-+			WIPHY_FLAG_SPLIT_SCAN_6GHZ;
- 	wiphy->reg_notifier = mt7921_regd_notifier;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 88e2f9d0e5130..cd54e81d73044 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -712,6 +712,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
+ 	struct cfg80211_chan_def *chandef = &phy->chandef;
+ 	struct mt76_connac_bss_basic_tlv *bss;
+ 	u32 type = CONNECTION_INFRA_AP;
++	u16 sta_wlan_idx = wlan_idx;
+ 	struct tlv *tlv;
+ 	int idx;
  
- 	wiphy->features |= NL80211_FEATURE_SCHED_SCAN_RANDOM_MAC_ADDR |
+@@ -731,7 +732,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
+ 				struct mt76_wcid *wcid;
+ 
+ 				wcid = (struct mt76_wcid *)sta->drv_priv;
+-				wlan_idx = wcid->idx;
++				sta_wlan_idx = wcid->idx;
+ 			}
+ 			rcu_read_unlock();
+ 		}
+@@ -751,7 +752,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
+ 	bss->bcn_interval = cpu_to_le16(vif->bss_conf.beacon_int);
+ 	bss->dtim_period = vif->bss_conf.dtim_period;
+ 	bss->bmc_tx_wlan_idx = cpu_to_le16(wlan_idx);
+-	bss->sta_idx = cpu_to_le16(wlan_idx);
++	bss->sta_idx = cpu_to_le16(sta_wlan_idx);
+ 	bss->conn_type = cpu_to_le32(type);
+ 	bss->omac_idx = mvif->omac_idx;
+ 	bss->band_idx = mvif->band_idx;
 -- 
 2.40.1
 
