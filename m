@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF2511184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7464C433C7;
-	Mon, 11 Sep 2023 14:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CADD11184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9CDC433C7;
+	Mon, 11 Sep 2023 14:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440873;
-	bh=ghQw8FrcA4Bv1qQuro2XOdUDcEHCmXcLE00yvIkb3VI=;
+	s=korg; t=1694440876;
+	bh=KfHkM4ww3FfFvl4qL4MmnR8ZdhCDf06EflMAxqMnOHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOPocNBAE1bJvcc7EM6TduDYuwYoY3Gsb+t/2fyshq7aUt4jfPtB1F/0TLCdK19LI
-	 E4rSLzO/huZULtQ1AddBI9q2P9hIhazZXHocly+KFCXQ+Dg0ojwqNswjGqo+u8Wfhl
-	 n16U89I/O4hhiX8kgoa57O0sOrQLCFysERQjWIFs=
+	b=Qm1eDSYL+WLMd7NVaikkqW8V3O0PrMN1R7AWw4wnxW5AIn3b4cH/unr9lneEjgbkQ
+	 4H84aBw3qg9HXMN/llflPdBNaAQ9bzxsjW52o1VhKHfEjJptRtgGbANXy9LaSEgDPi
+	 VShm38ZteiiMN48q8g3E1l0LXl+kcXM6c+EziOww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 215/739] Revert "arm64: dts: qcom: msm8996: rename labels for HDMI nodes"
-Date: Mon, 11 Sep 2023 15:40:14 +0200
-Message-ID: <20230911134657.195244757@linuxfoundation.org>
+Subject: [PATCH 6.5 216/739] arm64: dts: qcom: sm8250: correct dynamic power coefficients
+Date: Mon, 11 Sep 2023 15:40:15 +0200
+Message-ID: <20230911134657.222019984@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,238 +40,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 2b812caf5f64df959555e48dfc7bf8f061d9fe8f ]
+[ Upstream commit 775a5283c25d160b2a1359018c447bc518096547 ]
 
-The commit f43b6dc7d56e ("arm64: dts: qcom: msm8996: rename labels for
-HDMI nodes") is broken, it changes all the HDMI node names,
-compatible strings instead of changing just node aliases. Revert the
-commit in order to land a proper clean version.
+sm8250 faces the same problem with its Energy Model as sdm845. The energy
+cost of LITTLE cores is reported to be higher than medium or big cores
 
-Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Fixes: f43b6dc7d56e ("arm64: dts: qcom: msm8996: rename labels for HDMI nodes")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230615083422.350297-2-dmitry.baryshkov@linaro.org
+EM computes the energy with formula:
+
+energy = OPP's cost / maximum cpu capacity * utilization
+
+On v6.4-rc6 we have:
+max capacity of CPU0 = 284
+capacity of CPU0's OPP(1612800 Hz) = 253
+cost of CPU0's OPP(1612800 Hz) = 191704
+
+max capacity of CPU4 = 871
+capacity of CPU4's OPP(710400 Hz) = 255
+cost of CPU4's OPP(710400 Hz) = 343217
+
+Both OPPs have almost the same compute capacity but the estimated energy
+per unit of utilization will be estimated to:
+
+energy CPU0 = 191704 / 284 * 1 = 675
+energy CPU4 = 343217 / 871 * 1 = 394
+
+EM estimates that little CPU0 will consume 71% more than medium CPU4 for
+the same compute capacity. According to [1], little consumes 25% less than
+medium core for Coremark benchmark at those OPPs for the same duration.
+
+Set the dynamic-power-coefficient of CPU0-3 to 105 to fix the energy model
+for little CPUs.
+
+[1] https://github.com/kdrag0n/freqbench/tree/master/results/sm8250/k30s
+
+Fixes: 6aabed5526ee ("arm64: dts: qcom: sm8250: Add CPU capacities and energy model")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230615154852.130076-1-vincent.guittot@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts  | 50 ++++++++++----------
- arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts |  6 +--
- arch/arm64/boot/dts/qcom/msm8996-mtp.dts     |  4 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 16 +++----
- 4 files changed, 38 insertions(+), 38 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index 537547b97459b..b599909c44639 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -208,6 +208,25 @@ &gpu {
- 	status = "okay";
- };
- 
-+&hdmi {
-+	status = "okay";
-+
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
-+	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
-+
-+	core-vdda-supply = <&vreg_l12a_1p8>;
-+	core-vcc-supply = <&vreg_s4a_1p8>;
-+};
-+
-+&hdmi_phy {
-+	status = "okay";
-+
-+	vddio-supply = <&vreg_l12a_1p8>;
-+	vcca-supply = <&vreg_l28a_0p925>;
-+	#phy-cells = <0>;
-+};
-+
- &hsusb_phy1 {
- 	status = "okay";
- 
-@@ -232,25 +251,6 @@ &mdss {
- 	status = "okay";
- };
- 
--&mdss_hdmi {
--	status = "okay";
--
--	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&mdss_hdmi_hpd_active &mdss_hdmi_ddc_active>;
--	pinctrl-1 = <&mdss_hdmi_hpd_suspend &mdss_hdmi_ddc_suspend>;
--
--	core-vdda-supply = <&vreg_l12a_1p8>;
--	core-vcc-supply = <&vreg_s4a_1p8>;
--};
--
--&mdss_hdmi_phy {
--	status = "okay";
--
--	vddio-supply = <&vreg_l12a_1p8>;
--	vcca-supply = <&vreg_l28a_0p925>;
--	#phy-cells = <0>;
--};
--
- &mmcc {
- 	vdd-gfx-supply = <&vdd_gfx>;
- };
-@@ -433,28 +433,28 @@ sdc2_cd_off: sdc2-cd-off-state {
- 		drive-strength = <2>;
- 	};
- 
--	mdss_hdmi_hpd_active: mdss_hdmi-hpd-active-state {
-+	hdmi_hpd_active: hdmi-hpd-active-state {
- 		pins = "gpio34";
- 		function = "hdmi_hot";
- 		bias-pull-down;
- 		drive-strength = <16>;
- 	};
- 
--	mdss_hdmi_hpd_suspend: mdss_hdmi-hpd-suspend-state {
-+	hdmi_hpd_suspend: hdmi-hpd-suspend-state {
- 		pins = "gpio34";
- 		function = "hdmi_hot";
- 		bias-pull-down;
- 		drive-strength = <2>;
- 	};
- 
--	mdss_hdmi_ddc_active: mdss_hdmi-ddc-active-state {
-+	hdmi_ddc_active: hdmi-ddc-active-state {
- 		pins = "gpio32", "gpio33";
- 		function = "hdmi_ddc";
- 		drive-strength = <2>;
- 		bias-pull-up;
- 	};
- 
--	mdss_hdmi_ddc_suspend: mdss_hdmi-ddc-suspend-state {
-+	hdmi_ddc_suspend: hdmi-ddc-suspend-state {
- 		pins = "gpio32", "gpio33";
- 		function = "hdmi_ddc";
- 		drive-strength = <2>;
-@@ -1043,7 +1043,7 @@ cpu {
- 		};
- 	};
- 
--	mdss_hdmi-dai-link {
-+	hdmi-dai-link {
- 		link-name = "HDMI";
- 		cpu {
- 			sound-dai = <&q6afedai HDMI_RX>;
-@@ -1054,7 +1054,7 @@ platform {
- 		};
- 
- 		codec {
--			sound-dai = <&mdss_hdmi 0>;
-+			sound-dai = <&hdmi 0>;
- 		};
- 	};
- 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-index ac6471d1db1f7..ed2e2f6c6775a 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-@@ -92,15 +92,15 @@ &gpu {
- 	status = "okay";
- };
- 
--&mdss {
-+&hdmi {
- 	status = "okay";
- };
- 
--&mdss_hdmi {
-+&hdmi_phy {
- 	status = "okay";
- };
- 
--&mdss_hdmi_phy {
-+&mdss {
- 	status = "okay";
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-index 495d45a16e63a..596ad4c896f55 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-@@ -24,10 +24,10 @@ &blsp2_uart2 {
- 	status = "okay";
- };
- 
--&mdss_hdmi {
-+&hdmi {
- 	status = "okay";
- };
- 
--&mdss_hdmi_phy {
-+&hdmi_phy {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 0cb2d4f08c3a1..3855366ca89fd 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -895,7 +895,7 @@ mmcc: clock-controller@8c0000 {
- 				 <&mdss_dsi0_phy 0>,
- 				 <&mdss_dsi1_phy 1>,
- 				 <&mdss_dsi1_phy 0>,
--				 <&mdss_hdmi_phy>;
-+				 <&hdmi_phy>;
- 			clock-names = "xo",
- 				      "gpll0",
- 				      "gcc_mmss_noc_cfg_ahb_clk",
-@@ -980,7 +980,7 @@ ports {
- 					port@0 {
- 						reg = <0>;
- 						mdp5_intf3_out: endpoint {
--							remote-endpoint = <&mdss_hdmi_in>;
-+							remote-endpoint = <&hdmi_in>;
- 						};
- 					};
- 
-@@ -1136,8 +1136,8 @@ mdss_dsi1_phy: phy@996400 {
- 				status = "disabled";
- 			};
- 
--			mdss_hdmi: mdss_hdmi-tx@9a0000 {
--				compatible = "qcom,mdss_hdmi-tx-8996";
-+			hdmi: hdmi-tx@9a0000 {
-+				compatible = "qcom,hdmi-tx-8996";
- 				reg =	<0x009a0000 0x50c>,
- 					<0x00070000 0x6158>,
- 					<0x009e0000 0xfff>;
-@@ -1160,7 +1160,7 @@ mdss_hdmi: mdss_hdmi-tx@9a0000 {
- 					"alt_iface",
- 					"extp";
- 
--				phys = <&mdss_hdmi_phy>;
-+				phys = <&hdmi_phy>;
- 				#sound-dai-cells = <1>;
- 
- 				status = "disabled";
-@@ -1171,16 +1171,16 @@ ports {
- 
- 					port@0 {
- 						reg = <0>;
--						mdss_hdmi_in: endpoint {
-+						hdmi_in: endpoint {
- 							remote-endpoint = <&mdp5_intf3_out>;
- 						};
- 					};
- 				};
- 			};
- 
--			mdss_hdmi_phy: phy@9a0600 {
-+			hdmi_phy: phy@9a0600 {
- 				#phy-cells = <0>;
--				compatible = "qcom,mdss_hdmi-phy-8996";
-+				compatible = "qcom,hdmi-phy-8996";
- 				reg = <0x009a0600 0x1c4>,
- 				      <0x009a0a00 0x124>,
- 				      <0x009a0c00 0x124>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 1efa07f2caff4..21ae36196efad 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -100,7 +100,7 @@ CPU0: cpu@0 {
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <448>;
+-			dynamic-power-coefficient = <205>;
++			dynamic-power-coefficient = <105>;
+ 			next-level-cache = <&L2_0>;
+ 			power-domains = <&CPU_PD0>;
+ 			power-domain-names = "psci";
+@@ -131,7 +131,7 @@ CPU1: cpu@100 {
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <448>;
+-			dynamic-power-coefficient = <205>;
++			dynamic-power-coefficient = <105>;
+ 			next-level-cache = <&L2_100>;
+ 			power-domains = <&CPU_PD1>;
+ 			power-domain-names = "psci";
+@@ -156,7 +156,7 @@ CPU2: cpu@200 {
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <448>;
+-			dynamic-power-coefficient = <205>;
++			dynamic-power-coefficient = <105>;
+ 			next-level-cache = <&L2_200>;
+ 			power-domains = <&CPU_PD2>;
+ 			power-domain-names = "psci";
+@@ -181,7 +181,7 @@ CPU3: cpu@300 {
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <448>;
+-			dynamic-power-coefficient = <205>;
++			dynamic-power-coefficient = <105>;
+ 			next-level-cache = <&L2_300>;
+ 			power-domains = <&CPU_PD3>;
+ 			power-domain-names = "psci";
 -- 
 2.40.1
 
