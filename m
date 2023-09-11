@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AC511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA01DC433C9;
-	Mon, 11 Sep 2023 15:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5B711710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FF2C433C8;
+	Mon, 11 Sep 2023 15:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445387;
-	bh=vquO9jfW7yXkVHHMWSNUnQyQS/1DFj6/WI/AAbN9Mls=;
+	s=korg; t=1694445390;
+	bh=4grWZrazo7ZPKSTtVQ0Y8W51DLU2mTrFjlDMCHUPDtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xc+m1j1IMXEqIlNCmH4p7t1q8lZRB2CTvJ0mfYfVG/QVL/llhzQ8UbNb48WgmaOH+
-	 DI4YFf+MHxQRNxhERA8J4ovB5pK1FgurfQl18YfQKjHZfhvr+4D5jnGghX7+ze2NaV
-	 dK+wIxTwQMeULrDaHVwHbJtJixdeatnYEYjov0Vg=
+	b=lLLfAXryzpi8T7OUyXW++FAmfhoxop1eBLFCl0eSSyr+PqXiOsgFGuSAHRC6rNISR
+	 eVl049ZU/nqikiTzvW9ZIrwzwKE+GApsKOaucy7fSBa/dBmtBUaWApM0sqGtMYYFs9
+	 o6Rc6HddvqowF6n/Su5skXAHk5c0T5tNyzxnX/P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/600] drm/msm/dpu: fix the irq index in dpu_encoder_phys_wb_wait_for_commit_done
-Date: Mon, 11 Sep 2023 15:45:28 +0200
-Message-ID: <20230911134642.317661076@linuxfoundation.org>
+Subject: [PATCH 6.1 296/600] smackfs: Prevent underflow in smk_set_cipso()
+Date: Mon, 11 Sep 2023 15:45:29 +0200
+Message-ID: <20230911134642.345154572@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,40 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d93cf453f51da168f4410ba73656f1e862096973 ]
+[ Upstream commit 3ad49d37cf5759c3b8b68d02e3563f633d9c1aee ]
 
-Since commit 1e7ac595fa46 ("drm/msm/dpu: pass irq to
-dpu_encoder_helper_wait_for_irq()") the
-dpu_encoder_phys_wb_wait_for_commit_done expects the IRQ index rather
-than the IRQ index in phys_enc->intr table, however writeback got the
-older invocation in place. This was unnoticed for several releases, but
-now it's time to fix it.
+There is a upper bound to "catlen" but no lower bound to prevent
+negatives.  I don't see that this necessarily causes a problem but we
+may as well be safe.
 
-Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/550924/
-Link: https://lore.kernel.org/r/20230802100426.4184892-2-dmitry.baryshkov@linaro.org
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/smack/smackfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 62f6ff6abf410..42c7e378d504d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -460,7 +460,8 @@ static int dpu_encoder_phys_wb_wait_for_commit_done(
- 	wait_info.atomic_cnt = &phys_enc->pending_kickoff_cnt;
- 	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index 4b58526450d49..da7db9e22ce7c 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -896,7 +896,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
+ 	}
  
--	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_WB_DONE,
-+	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
-+			phys_enc->irq[INTR_IDX_WB_DONE],
- 			dpu_encoder_phys_wb_done_irq, &wait_info);
- 	if (ret == -ETIMEDOUT)
- 		_dpu_encoder_phys_wb_handle_wbdone_timeout(phys_enc);
+ 	ret = sscanf(rule, "%d", &catlen);
+-	if (ret != 1 || catlen > SMACK_CIPSO_MAXCATNUM)
++	if (ret != 1 || catlen < 0 || catlen > SMACK_CIPSO_MAXCATNUM)
+ 		goto out;
+ 
+ 	if (format == SMK_FIXED24_FMT &&
 -- 
 2.40.1
 
