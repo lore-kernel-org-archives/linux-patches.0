@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBF91170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1FFC433C8;
-	Mon, 11 Sep 2023 14:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A491170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7CBC433C8;
+	Mon, 11 Sep 2023 14:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442325;
-	bh=kUv2N4bWDE8iOQg4/lvkvMkOhL49QOMYvGyZmj5f3ac=;
+	s=korg; t=1694442328;
+	bh=Lp16CY7BhTg1fEmg2r5b3rzImD8J7Bs9rBTRaVD8XFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvZMGHiV3uyA2Jxw0U5ons/1AP9ghdomA74oHIltOuqu8nQNMubKxGuB8V8s+oJqc
-	 VWFlztgz/nhvk7ylETvW1PwxPuokGANE/2RkEjV73lVVZ77WY6AuOWc2YfZD2lloCa
-	 SOHM4Bqkr/xYwkzp7iGFBJF5vN3N6kDxMEJ3fcZ8=
+	b=rXOhTn05Uh8cn/ZoVqWaYEtx4F8s2qPMXI0w7QXoA+qPbckY1BAgTlaYir+b7wCck
+	 eFJHZ/1NacL1azrB+im9FIflu0su5d1jK07Hmvz6IlNXEoZ3plWvEXE002rJsWrmKL
+	 abESeTgFR/ZMCggxX+6BXCeKbk1JtQsFYutsV4E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yu.zhang@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Haitao Huang <haitao.huang@linux.intel.com>
-Subject: [PATCH 6.5 725/739] x86/sgx: Break up long non-preemptible delays in sgx_vepc_release()
-Date: Mon, 11 Sep 2023 15:48:44 +0200
-Message-ID: <20230911134711.326265761@linuxfoundation.org>
+	Barry Marson <bmarson@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.5 699/739] dlm: fix plock lookup when using multiple lockspaces
+Date: Mon, 11 Sep 2023 15:48:18 +0200
+Message-ID: <20230911134710.616768642@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,70 +40,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 3d7d72a34e05b23e21bafc8bfb861e73c86b31f3 upstream.
+commit 7c53e847ff5e97f033fdd31f71949807633d506b upstream.
 
-On large enclaves we hit the softlockup warning with following call trace:
+All posix lock ops, for all lockspaces (gfs2 file systems) are
+sent to userspace (dlm_controld) through a single misc device.
+The dlm_controld daemon reads the ops from the misc device
+and sends them to other cluster nodes using separate, per-lockspace
+cluster api communication channels.  The ops for a single lockspace
+are ordered at this level, so that the results are received in
+the same sequence that the requests were sent.  When the results
+are sent back to the kernel via the misc device, they are again
+funneled through the single misc device for all lockspaces.  When
+the dlm code in the kernel processes the results from the misc
+device, these results will be returned in the same sequence that
+the requests were sent, on a per-lockspace basis.  A recent change
+in this request/reply matching code missed the "per-lockspace"
+check (fsid comparison) when matching request and reply, so replies
+could be incorrectly matched to requests from other lockspaces.
 
-	xa_erase()
-	sgx_vepc_release()
-	__fput()
-	task_work_run()
-	do_exit()
-
-The latency issue is similar to the one fixed in:
-
-  8795359e35bc ("x86/sgx: Silence softlockup detection when releasing large enclaves")
-
-The test system has 64GB of enclave memory, and all is assigned to a single VM.
-Release of 'vepc' takes a longer time and causes long latencies, which triggers
-the softlockup warning.
-
-Add cond_resched() to give other tasks a chance to run and reduce
-latencies, which also avoids the softlockup detector.
-
-[ mingo: Rewrote the changelog. ]
-
-Fixes: 540745ddbc70 ("x86/sgx: Introduce virtual EPC for use by KVM guests")
-Reported-by: Yu Zhang <yu.zhang@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Yu Zhang <yu.zhang@ionos.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Acked-by: Haitao Huang <haitao.huang@linux.intel.com>
 Cc: stable@vger.kernel.org
+Reported-by: Barry Marson <bmarson@redhat.com>
+Fixes: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/sgx/virt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/dlm/plock.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/cpu/sgx/virt.c
-+++ b/arch/x86/kernel/cpu/sgx/virt.c
-@@ -204,6 +204,7 @@ static int sgx_vepc_release(struct inode
- 			continue;
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -456,7 +456,8 @@ static ssize_t dev_write(struct file *fi
+ 		}
+ 	} else {
+ 		list_for_each_entry(iter, &recv_list, list) {
+-			if (!iter->info.wait) {
++			if (!iter->info.wait &&
++			    iter->info.fsid == info.fsid) {
+ 				op = iter;
+ 				break;
+ 			}
+@@ -468,8 +469,7 @@ static ssize_t dev_write(struct file *fi
+ 		if (info.wait)
+ 			WARN_ON(op->info.optype != DLM_PLOCK_OP_LOCK);
+ 		else
+-			WARN_ON(op->info.fsid != info.fsid ||
+-				op->info.number != info.number ||
++			WARN_ON(op->info.number != info.number ||
+ 				op->info.owner != info.owner ||
+ 				op->info.optype != info.optype);
  
- 		xa_erase(&vepc->page_array, index);
-+		cond_resched();
- 	}
- 
- 	/*
-@@ -222,6 +223,7 @@ static int sgx_vepc_release(struct inode
- 			list_add_tail(&epc_page->list, &secs_pages);
- 
- 		xa_erase(&vepc->page_array, index);
-+		cond_resched();
- 	}
- 
- 	/*
-@@ -243,6 +245,7 @@ static int sgx_vepc_release(struct inode
- 
- 		if (sgx_vepc_free_page(epc_page))
- 			list_add_tail(&epc_page->list, &secs_pages);
-+		cond_resched();
- 	}
- 
- 	if (!list_empty(&secs_pages))
 
 
