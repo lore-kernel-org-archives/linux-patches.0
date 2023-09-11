@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9E11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7FFC433C7;
-	Mon, 11 Sep 2023 15:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0412211706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDB6C433C8;
+	Mon, 11 Sep 2023 15:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444588;
-	bh=jsicp2xLiIYNz1hjPyZh8kBuqGB8NWej4WAulKB8Yak=;
+	s=korg; t=1694444591;
+	bh=3L7DANyHwf/d3P3IhT6piUst9RYIS7JVGg/Q/7xlNkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3T3qqPOfxCQP0+D0MAxu/8co4eYzx0LHXsmva8Tz8qja3UyORK259X19h5SWvT2B
-	 Uis6vfod/dtuE4QqATi93ObGzGcGPvuYg1I/K2rtKufvszuq7jXQ+C6U+bfvVB0g1R
-	 2WRXPYFUXIK9cZxnH7jk/3yXMILbN7ymexznk9tw=
+	b=s6ZsLtfWj/Br6VhL3SWxQOM0Dfhtc1i3Kfh5lliNrPMTHp5l0SoHJTncEJ7/xsber
+	 1y5jtP8jtS8hf/njtdafATVgrPLoG8K7dXFAMs7pHVBQxoQDHw5R/n1I9XVymWbiBw
+	 EmRefMQoYZbKZyF2hu1QhGJFITvcATnGN7EdNfBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Gallais-Pou <rgallaispou@gmail.com>,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/600] staging: fbtft: ili9341: use macro FBTFT_REGISTER_SPI_DRIVER
-Date: Mon, 11 Sep 2023 15:41:18 +0200
-Message-ID: <20230911134634.925989646@linuxfoundation.org>
+Subject: [PATCH 6.1 046/600] security: keys: perform capable check only on privileged operations
+Date: Mon, 11 Sep 2023 15:41:19 +0200
+Message-ID: <20230911134634.957267701@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -33,40 +34,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Gallais-Pou <rgallaispou@gmail.com>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-[ Upstream commit 4912649e1cf0317bf563f91655e04a303cacaf8d ]
+[ Upstream commit 2d7f105edbb3b2be5ffa4d833abbf9b6965e9ce7 ]
 
-Using FBTFT_REGISTER_DRIVER resolves to a NULL struct spi_device_id. This
-ultimately causes a warning when the module probes. Fixes it.
+If the current task fails the check for the queried capability via
+`capable(CAP_SYS_ADMIN)` LSMs like SELinux generate a denial message.
+Issuing such denial messages unnecessarily can lead to a policy author
+granting more privileges to a subject than needed to silence them.
 
-Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
-Link: https://lore.kernel.org/r/20230718172024.67488-1-rgallaispou@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reorder CAP_SYS_ADMIN checks after the check whether the operation is
+actually privileged.
+
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fb_ili9341.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/keys/keyctl.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/fbtft/fb_ili9341.c b/drivers/staging/fbtft/fb_ili9341.c
-index 9ccd0823c3ab3..47e72b87d76d9 100644
---- a/drivers/staging/fbtft/fb_ili9341.c
-+++ b/drivers/staging/fbtft/fb_ili9341.c
-@@ -145,7 +145,7 @@ static struct fbtft_display display = {
- 	},
- };
+diff --git a/security/keys/keyctl.c b/security/keys/keyctl.c
+index d54f73c558f72..19be69fa4d052 100644
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -980,14 +980,19 @@ long keyctl_chown_key(key_serial_t id, uid_t user, gid_t group)
+ 	ret = -EACCES;
+ 	down_write(&key->sem);
  
--FBTFT_REGISTER_DRIVER(DRVNAME, "ilitek,ili9341", &display);
-+FBTFT_REGISTER_SPI_DRIVER(DRVNAME, "ilitek", "ili9341", &display);
+-	if (!capable(CAP_SYS_ADMIN)) {
++	{
++		bool is_privileged_op = false;
++
+ 		/* only the sysadmin can chown a key to some other UID */
+ 		if (user != (uid_t) -1 && !uid_eq(key->uid, uid))
+-			goto error_put;
++			is_privileged_op = true;
  
- MODULE_ALIAS("spi:" DRVNAME);
- MODULE_ALIAS("platform:" DRVNAME);
+ 		/* only the sysadmin can set the key's GID to a group other
+ 		 * than one of those that the current process subscribes to */
+ 		if (group != (gid_t) -1 && !gid_eq(gid, key->gid) && !in_group_p(gid))
++			is_privileged_op = true;
++
++		if (is_privileged_op && !capable(CAP_SYS_ADMIN))
+ 			goto error_put;
+ 	}
+ 
+@@ -1088,7 +1093,7 @@ long keyctl_setperm_key(key_serial_t id, key_perm_t perm)
+ 	down_write(&key->sem);
+ 
+ 	/* if we're not the sysadmin, we can only change a key that we own */
+-	if (capable(CAP_SYS_ADMIN) || uid_eq(key->uid, current_fsuid())) {
++	if (uid_eq(key->uid, current_fsuid()) || capable(CAP_SYS_ADMIN)) {
+ 		key->perm = perm;
+ 		notify_key(key, NOTIFY_KEY_SETATTR, 0);
+ 		ret = 0;
 -- 
 2.40.1
 
