@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAC21170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EDEC433C8;
-	Mon, 11 Sep 2023 14:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBEF1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6DFC433C8;
+	Mon, 11 Sep 2023 14:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441641;
-	bh=wSj8lRujX1SpSKzf97+2Ies0JHYYMERjS45jKl98/bI=;
+	s=korg; t=1694441643;
+	bh=M3XDf7p4LeQg7KX9DFPSCunF9mJYG3AdNu2ua8On/vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btBAGEmamtZaMWC8GF8Cq5K2Mx/xBkZ0vl3mT+IC293ddZJ2abTaWaFB74tnKcRxo
-	 U4DC1WvEq1GwFGM84z83aybBZhA6+8zWeRRdB399fs5rQU82i7vyddTAnz2UdF0jkZ
-	 V6FuUUgClbhmcKqnXQmgNlxnOBoKcyZCkCZ6eL0U=
+	b=E5Jhtx2LgvTV8NefiLBU4fO+lzS19mWz2IlpobaLvKlfU7cr2TzxpZzXqr5qisPit
+	 KYCMuTeMkLjB0m6ZNgh/i4W42kuqVqHnboUC3ExYE9HfrXD/MXkz9iwUkTCGNQ7ips
+	 hSX8QOkgG2Zc0jEcb3FnxiBHMtVjLMD9qQqxXW9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Leech <cleech@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 484/739] scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()
-Date: Mon, 11 Sep 2023 15:44:43 +0200
-Message-ID: <20230911134704.657739872@linuxfoundation.org>
+Subject: [PATCH 6.5 485/739] scsi: be2iscsi: Add length check when parsing nlattrs
+Date: Mon, 11 Sep 2023 15:44:44 +0200
+Message-ID: <20230911134704.684341737@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,75 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit ce51c817008450ef4188471db31639d42d37a5e1 ]
+[ Upstream commit ee0268f230f66cb472df3424f380ea668da2749a ]
 
-The functions iscsi_if_set_param() and iscsi_if_set_host_param() convert an
-nlattr payload to type char* and then call C string handling functions like
-sscanf and kstrdup:
+beiscsi_iface_set_param() parses nlattr with nla_for_each_attr and assumes
+every attributes can be viewed as struct iscsi_iface_param_info.
 
-  char *data = (char*)ev + sizeof(*ev);
-  ...
-  sscanf(data, "%d", &value);
+This is not true because there is no any nla_policy to validate the
+attributes passed from the upper function iscsi_set_iface_params().
 
-However, since the nlattr is provided by the user-space program and the
-nlmsg skb is allocated with GFP_KERNEL instead of GFP_ZERO flag (see
-netlink_alloc_large_skb() in netlink_sendmsg()), dirty data on the heap can
-lead to an OOB access for those string handling functions.
+Add the nla_len check before accessing the nlattr data and return EINVAL if
+the length check fails.
 
-By investigating how the bug is introduced, we find it is really
-interesting as the old version parsing code starting from commit
-fd7255f51a13 ("[SCSI] iscsi: add sysfs attrs for uspace sync up") treated
-the nlattr as integer bytes instead of string and had length check in
-iscsi_copy_param():
-
-  if (ev->u.set_param.len != sizeof(uint32_t))
-    BUG();
-
-But, since the commit a54a52caad4b ("[SCSI] iscsi: fixup set/get param
-functions"), the code treated the nlattr as C string while forgetting to
-add any strlen checks(), opening the possibility of an OOB access.
-
-Fix the potential OOB by adding the strlen() check before accessing the
-buf. If the data passes this check, all low-level set_param handlers can
-safely treat this buf as legal C string.
-
-Fixes: fd7255f51a13 ("[SCSI] iscsi: add sysfs attrs for uspace sync up")
-Fixes: 1d9bf13a9cf9 ("[SCSI] iscsi class: add iscsi host set param event")
+Fixes: 0e43895ec1f4 ("[SCSI] be2iscsi: adding functionality to change network settings using iscsiadm")
 Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723075820.3713119-1-linma@zju.edu.cn
+Link: https://lore.kernel.org/r/20230723075938.3713864-1-linma@zju.edu.cn
 Reviewed-by: Chris Leech <cleech@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_iscsi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/be2iscsi/be_iscsi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
-index 62b24f1c0232f..3075b2ddf7a69 100644
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -3030,6 +3030,10 @@ iscsi_if_set_param(struct iscsi_transport *transport, struct iscsi_uevent *ev, u
- 	if (!conn || !session)
- 		return -EINVAL;
- 
-+	/* data will be regarded as NULL-ended string, do length check */
-+	if (strlen(data) > ev->u.set_param.len)
-+		return -EINVAL;
-+
- 	switch (ev->u.set_param.param) {
- 	case ISCSI_PARAM_SESS_RECOVERY_TMO:
- 		sscanf(data, "%d", &value);
-@@ -3203,6 +3207,10 @@ iscsi_set_host_param(struct iscsi_transport *transport,
- 		return -ENODEV;
+diff --git a/drivers/scsi/be2iscsi/be_iscsi.c b/drivers/scsi/be2iscsi/be_iscsi.c
+index 8aeaddc93b167..8d374ae863ba2 100644
+--- a/drivers/scsi/be2iscsi/be_iscsi.c
++++ b/drivers/scsi/be2iscsi/be_iscsi.c
+@@ -450,6 +450,10 @@ int beiscsi_iface_set_param(struct Scsi_Host *shost,
  	}
  
-+	/* see similar check in iscsi_if_set_param() */
-+	if (strlen(data) > ev->u.set_host_param.len)
-+		return -EINVAL;
+ 	nla_for_each_attr(attrib, data, dt_len, rm_len) {
++		/* ignore nla_type as it is never used */
++		if (nla_len(attrib) < sizeof(*iface_param))
++			return -EINVAL;
 +
- 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
- 					data, ev->u.set_host_param.len);
- 	scsi_host_put(shost);
+ 		iface_param = nla_data(attrib);
+ 
+ 		if (iface_param->param_type != ISCSI_NET_PARAM)
 -- 
 2.40.1
 
