@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A0111711
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:04:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09444C433C8;
-	Mon, 11 Sep 2023 14:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550441170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:04:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD299C433C8;
+	Mon, 11 Sep 2023 14:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441049;
-	bh=gs7hxhKO1DMTVC1WMVz9z5/9Imj35MB2VlGsUTjPH+8=;
+	s=korg; t=1694441052;
+	bh=7LRfqi/nKAQHm1j9G6/YmUBr3ugXtpoUR3rS+72uvDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=up4ib8CZW1V4c1WqtuDuX6vGasIWjhBqEO7PIJl/ztmlFKKegf+0VbgrDVgzB02xf
-	 SPSyjGIc8pfdUve9TQbbmXQKQhyXqGFVoH5omCQWodzZ5JyfEyCRke6KEqncGEQAco
-	 G7ivXqX8CHoht+5L/Ks5ykuDq+Liw8iHHrJn/Dcw=
+	b=dkUQq5O+t2hxEtU8Stchvg/3w7miTTrdrVrngRZZ/1APckT1qz+u71PDM9srdqgKr
+	 Vq+JLkvjHxYiiZluH/gwRQjbdn+KENsRTgnwfJQ5ZL7Fvi7ll2eE44SFltMhw+2RCO
+	 McHr+oOGmxmCnWdFhXlEDTl/2uPgUFS4pCA9BXE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 277/739] arm64: dts: qcom: sc8180x-pmics: align LPG node name with dtschema
-Date: Mon, 11 Sep 2023 15:41:16 +0200
-Message-ID: <20230911134658.861530254@linuxfoundation.org>
+Subject: [PATCH 6.5 278/739] dt-bindings: arm: msm: kpss-acc: Make the optional reg truly optional
+Date: Mon, 11 Sep 2023 15:41:17 +0200
+Message-ID: <20230911134658.888649703@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,38 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 4af302a7e29e70bd930e80ab8f967da48a99a31a ]
+[ Upstream commit 7dc3ea5ea8e8df2a82a1e78bef2382fb2c982ed3 ]
 
-Bindings expect the LPG node name to be "pwm":
+The description of reg[1] says that register is optional. Adjust
+minItems to make it truly optional.
 
-  sc8180x-lenovo-flex-5g.dtb: pmic@5: 'lpg' does not match any of the regexes:
-
-Fixes: d3302290f59e ("arm64: dts: qcom: sc8180x: Add pmics")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230720083500.73554-4-krzysztof.kozlowski@linaro.org
+Fixes: 4260ddfb6496 ("dt-bindings: arm: msm: Convert and split kpss-acc driver Documentation to yaml")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230627-topic-more_bindings-v1-9-6b4b6cd081e5@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
-index ffd374b9b3158..925047af734fc 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
-@@ -315,7 +315,7 @@ pmic@5 {
- 		compatible = "qcom,pmc8180c", "qcom,spmi-pmic";
- 		reg = <0x5 SPMI_USID>;
+diff --git a/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml b/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
+index 202a5d51ee88c..facaafefb4414 100644
+--- a/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
++++ b/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
+@@ -21,6 +21,7 @@ properties:
+     const: qcom,kpss-acc-v2
  
--		pmc8180c_lpg: lpg {
-+		pmc8180c_lpg: pwm {
- 			compatible = "qcom,pmc8180c-lpg";
- 
- 			#address-cells = <1>;
+   reg:
++    minItems: 1
+     items:
+       - description: Base address and size of the register region
+       - description: Optional base address and size of the alias register region
 -- 
 2.40.1
 
