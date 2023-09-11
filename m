@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE371170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D35C433C8;
-	Mon, 11 Sep 2023 13:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFBF1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51DAC433C8;
+	Mon, 11 Sep 2023 13:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440489;
-	bh=W+qHWwtO+/QefGL+7xYUPllX1MK7cZpugs2KAWAPfXA=;
+	s=korg; t=1694440492;
+	bh=n3hiEBmtOjgF5ngAgwSK/+pKWrG6TGv/5nQIDdYgPxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBldDbwECv255T2OFQvdL4JEJqgVyDLT5a9Y66gTgTEUNCuq3VVQix9WCN7JJ4ZEs
-	 TeKZH2dMBt2NjiiWqk8uD5t9VEd1YSsxrk62KtEFJYCnvMQkZChKVanc53Qhcb7jPb
-	 E8sD4TBURvICUis4Pq4OMNjc3CKfyZXiGaVaCnNg=
+	b=k6SvllXW6GBr4D9z5CIchHfwA5E4YOFu0MDpBXzVMfUZKxlkwFpmqvTRGF78IZnMc
+	 H5q5XW8gepanE1T7UH7V83kaKcUlI4QS5oqI40zEqlMn6NKd0bxK1BIZ5eph6RDb4W
+	 l8s3MctmfvFPhbu/JBiYZbjVlFGok0BGozbcLEqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 053/739] ACPI: x86: s2idle: Fix a logic error parsing AMD constraints table
-Date: Mon, 11 Sep 2023 15:37:32 +0200
-Message-ID: <20230911134652.600242923@linuxfoundation.org>
+Subject: [PATCH 6.5 054/739] thermal/of: Fix potential uninitialized value access
+Date: Mon, 11 Sep 2023 15:37:33 +0200
+Message-ID: <20230911134652.626798652@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,82 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 9cc8cd086f05d9a01026c65c98da88561e9c619e ]
+[ Upstream commit f96801f0cfcefc0a16b146596577c53c75ee9773 ]
 
-The constraints table should be resetting the `list` object
-after running through all of `info_obj` iterations.
+If of_parse_phandle_with_args() called from __thermal_of_bind() or
+__thermal_of_unbind() fails, cooling_spec.np will not be initialized,
+so move the of_node_put() calls below the respective return value checks
+to avoid dereferencing an uninitialized pointer.
 
-This adjusts whitespace as well as less code will now be included
-with each loop. This fixes a functional problem is fixed where a
-badly formed package in the inner loop may have incorrect data.
-
-Fixes: 146f1ed852a8 ("ACPI: PM: s2idle: Add AMD support to handle _DSM")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+[ rjw: Subject and changelog edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/s2idle.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ drivers/thermal/thermal_of.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
-index 7711dde68947f..60cc4605169c5 100644
---- a/drivers/acpi/x86/s2idle.c
-+++ b/drivers/acpi/x86/s2idle.c
-@@ -129,12 +129,11 @@ static void lpi_device_get_constraints_amd(void)
- 				struct lpi_constraints *list;
- 				acpi_status status;
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index bc07ae1c284cf..22272f9c5934a 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -292,13 +292,13 @@ static int __thermal_of_unbind(struct device_node *map_np, int index, int trip_i
+ 	ret = of_parse_phandle_with_args(map_np, "cooling-device", "#cooling-cells",
+ 					 index, &cooling_spec);
  
-+				list = &lpi_constraints_table[lpi_constraints_table_size];
-+
- 				for (k = 0; k < info_obj->package.count; k++) {
- 					union acpi_object *obj = &info_obj->package.elements[k];
- 
--					list = &lpi_constraints_table[lpi_constraints_table_size];
--					list->min_dstate = -1;
+-	of_node_put(cooling_spec.np);
 -
- 					switch (k) {
- 					case 0:
- 						dev_info.enabled = obj->integer.value;
-@@ -149,27 +148,21 @@ static void lpi_device_get_constraints_amd(void)
- 						dev_info.min_dstate = obj->integer.value;
- 						break;
- 					}
-+				}
+ 	if (ret < 0) {
+ 		pr_err("Invalid cooling-device entry\n");
+ 		return ret;
+ 	}
  
--					if (!dev_info.enabled || !dev_info.name ||
--					    !dev_info.min_dstate)
--						continue;
-+				if (!dev_info.enabled || !dev_info.name ||
-+				    !dev_info.min_dstate)
-+					continue;
++	of_node_put(cooling_spec.np);
++
+ 	if (cooling_spec.args_count < 2) {
+ 		pr_err("wrong reference to cooling device, missing limits\n");
+ 		return -EINVAL;
+@@ -325,13 +325,13 @@ static int __thermal_of_bind(struct device_node *map_np, int index, int trip_id,
+ 	ret = of_parse_phandle_with_args(map_np, "cooling-device", "#cooling-cells",
+ 					 index, &cooling_spec);
  
--					status = acpi_get_handle(NULL, dev_info.name,
--								 &list->handle);
--					if (ACPI_FAILURE(status))
--						continue;
-+				status = acpi_get_handle(NULL, dev_info.name, &list->handle);
-+				if (ACPI_FAILURE(status))
-+					continue;
+-	of_node_put(cooling_spec.np);
+-
+ 	if (ret < 0) {
+ 		pr_err("Invalid cooling-device entry\n");
+ 		return ret;
+ 	}
  
--					acpi_handle_debug(lps0_device_handle,
--							  "Name:%s\n", dev_info.name);
-+				acpi_handle_debug(lps0_device_handle,
-+						  "Name:%s\n", dev_info.name);
- 
--					list->min_dstate = dev_info.min_dstate;
-+				list->min_dstate = dev_info.min_dstate;
- 
--					if (list->min_dstate < 0) {
--						acpi_handle_debug(lps0_device_handle,
--								  "Incomplete constraint defined\n");
--						continue;
--					}
--				}
- 				lpi_constraints_table_size++;
- 			}
- 		}
++	of_node_put(cooling_spec.np);
++
+ 	if (cooling_spec.args_count < 2) {
+ 		pr_err("wrong reference to cooling device, missing limits\n");
+ 		return -EINVAL;
 -- 
 2.40.1
 
