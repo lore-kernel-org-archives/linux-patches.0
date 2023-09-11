@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1775F51E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10553C433C8;
-	Mon, 11 Sep 2023 15:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCCDF51E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64DBC433C9;
+	Mon, 11 Sep 2023 15:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445302;
-	bh=mtPQp7OK7+LmI/FxDd6ZXMlGXpB0k+TBNlyIA037KGc=;
+	s=korg; t=1694445305;
+	bh=Nq/59gWCM5RsvKHt3ssgFgZqx73BmoXx+7kLpvK/PvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3lj3vNsNnAymyu3AnURt1wtaDKpkG/8mLUsYbih+ZhyKVinkBhLGp2HwhmAgpbrh
-	 hrcvB6tLvFP8wxq90VBrF1SV8vMHWpvkOgRYlgB/JqYnoAnMGsz29e2uJ6JhqAXyIN
-	 Gpd8+nKyCh7NFbD5rd1K1s6Axp0DZziEI9S05iPo=
+	b=U7HDsMkjS015AdhDlsuSRbxZVyULJxE44twMIlP7VFi2jhOZFJUGRAtGMfkf+orac
+	 KYonGJKggEUOnPu+ZGRdvlylcJEcZStS6NKXSwU1I7XY9PD71b2bs+l89TvHfmFLxz
+	 3M8tagIztov6mGCCtHVLHKuwMNr+Ac8uAanKSxoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jiahao <chenjiahao16@huawei.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 292/600] soc: qcom: smem: Fix incompatible types in comparison
-Date: Mon, 11 Sep 2023 15:45:25 +0200
-Message-ID: <20230911134642.230087198@linuxfoundation.org>
+Subject: [PATCH 6.1 301/600] io_uring: fix drain stalls by invalid SQE
+Date: Mon, 11 Sep 2023 15:45:34 +0200
+Message-ID: <20230911134642.499392774@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,41 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Jiahao <chenjiahao16@huawei.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 5f908786cf44fcb397cfe0f322ef2f41b0909e2a ]
+[ Upstream commit cfdbaa3a291d6fd2cb4a1a70d74e63b4abc2f5ec ]
 
-This patch fixes the following sparse error:
+cq_extra is protected by ->completion_lock, which io_get_sqe() misses.
+The bug is harmless as it doesn't happen in real life, requires invalid
+SQ index array and racing with submission, and only messes up the
+userspace, i.e. stall requests execution but will be cleaned up on
+ring destruction.
 
-drivers/soc/qcom/smem.c:738:30: error: incompatible types in comparison expression (different add        ress spaces):
-drivers/soc/qcom/smem.c:738:30:    void *
-drivers/soc/qcom/smem.c:738:30:    void [noderef] __iomem *
-
-In addr_in_range(), "base" is of type void __iomem *, converting
-void *addr to the same type to fix above sparse error.
-
-Fixes: 20bb6c9de1b7 ("soc: qcom: smem: map only partitions used by local HOST")
-Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
-Link: https://lore.kernel.org/r/20230801094807.4146779-1-chenjiahao16@huawei.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 15641e427070f ("io_uring: don't cache number of dropped SQEs")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/66096d54651b1a60534bb2023f2947f09f50ef73.1691538547.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/smem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index 4f163d62942c1..af8d90efd91fa 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -723,7 +723,7 @@ EXPORT_SYMBOL(qcom_smem_get_free_space);
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index b0e47fe1eb4bb..e15abe26a0e61 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2240,7 +2240,9 @@ static const struct io_uring_sqe *io_get_sqe(struct io_ring_ctx *ctx)
+ 	}
  
- static bool addr_in_range(void __iomem *base, size_t size, void *addr)
- {
--	return base && (addr >= base && addr < base + size);
-+	return base && ((void __iomem *)addr >= base && (void __iomem *)addr < base + size);
- }
- 
- /**
+ 	/* drop invalid entries */
++	spin_lock(&ctx->completion_lock);
+ 	ctx->cq_extra--;
++	spin_unlock(&ctx->completion_lock);
+ 	WRITE_ONCE(ctx->rings->sq_dropped,
+ 		   READ_ONCE(ctx->rings->sq_dropped) + 1);
+ 	return NULL;
 -- 
 2.40.1
 
