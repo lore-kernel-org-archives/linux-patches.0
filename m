@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBE711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE76C433C7;
-	Mon, 11 Sep 2023 15:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E83A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867A3C433C8;
+	Mon, 11 Sep 2023 15:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444414;
-	bh=n9InwVEC0IoT3SAef0k3LMRZ2dAfvfrf6TBh7KuMR+0=;
+	s=korg; t=1694444416;
+	bh=2EfkddGdZh5KwATzfyIBvJzRdaVt9a9KKDidRGZVxzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEQzd8/EOzJK9Uv/QE3yrgVF/ocWMXgQSyjXsHSXpK0tcuTCv9g2ntbMsxD8o68vx
-	 KiI/t6beU7zrGKQXArutEgTjZTeHRNQN6C2vaiuznlXAXCKyhI7Nr+p2WkaU7iptp3
-	 wk5l6cF+UcvJ3Par7MuwBC3PdOFM8caFHG6fVuEU=
+	b=Kfim+BUR8NBSE6+Mmh28us/3TuWojkFA7+Et/n4ya63cVEYsG1bigPooIVTpkC453
+	 L7daCOoyZWUvTBUg3QJgEk9/0dtmcjxOc7d1VV5IwOva5Ouy8PZAUd6PO6eMEA36AS
+	 BzueIeB5zn5nDEpFPQnX1TQ1zKrp+SUMcQ2cVw6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yu.zhang@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
+	Song Liu <song@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Haitao Huang <haitao.huang@linux.intel.com>
-Subject: [PATCH 6.4 721/737] x86/sgx: Break up long non-preemptible delays in sgx_vepc_release()
-Date: Mon, 11 Sep 2023 15:49:40 +0200
-Message-ID: <20230911134710.654621898@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.4 722/737] x86/build: Fix linker fill bytes quirk/incompatibility for ld.lld
+Date: Mon, 11 Sep 2023 15:49:41 +0200
+Message-ID: <20230911134710.681147959@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,70 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Song Liu <song@kernel.org>
 
-commit 3d7d72a34e05b23e21bafc8bfb861e73c86b31f3 upstream.
+commit 65e710899fd19f435f40268f3a92dfaa11f14470 upstream.
 
-On large enclaves we hit the softlockup warning with following call trace:
+With ":text =0xcccc", ld.lld fills unused text area with 0xcccc0000.
+Example objdump -D output:
 
-	xa_erase()
-	sgx_vepc_release()
-	__fput()
-	task_work_run()
-	do_exit()
+	ffffffff82b04203:       00 00                   add    %al,(%rax)
+	ffffffff82b04205:       cc                      int3
+	ffffffff82b04206:       cc                      int3
+	ffffffff82b04207:       00 00                   add    %al,(%rax)
+	ffffffff82b04209:       cc                      int3
+	ffffffff82b0420a:       cc                      int3
 
-The latency issue is similar to the one fixed in:
+Replace it with ":text =0xcccccccc", so we get the following instead:
 
-  8795359e35bc ("x86/sgx: Silence softlockup detection when releasing large enclaves")
+	ffffffff82b04203:       cc                      int3
+	ffffffff82b04204:       cc                      int3
+	ffffffff82b04205:       cc                      int3
+	ffffffff82b04206:       cc                      int3
+	ffffffff82b04207:       cc                      int3
+	ffffffff82b04208:       cc                      int3
 
-The test system has 64GB of enclave memory, and all is assigned to a single VM.
-Release of 'vepc' takes a longer time and causes long latencies, which triggers
-the softlockup warning.
+gcc/ld doesn't seem to have the same issue. The generated code stays the
+same for gcc/ld.
 
-Add cond_resched() to give other tasks a chance to run and reduce
-latencies, which also avoids the softlockup detector.
-
-[ mingo: Rewrote the changelog. ]
-
-Fixes: 540745ddbc70 ("x86/sgx: Introduce virtual EPC for use by KVM guests")
-Reported-by: Yu Zhang <yu.zhang@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Yu Zhang <yu.zhang@ionos.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Acked-by: Haitao Huang <haitao.huang@linux.intel.com>
-Cc: stable@vger.kernel.org
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 7705dc855797 ("x86/vmlinux: Use INT3 instead of NOP for linker fill bytes")
+Link: https://lore.kernel.org/r/20230906175215.2236033-1-song@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/sgx/virt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/vmlinux.lds.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/sgx/virt.c
-+++ b/arch/x86/kernel/cpu/sgx/virt.c
-@@ -204,6 +204,7 @@ static int sgx_vepc_release(struct inode
- 			continue;
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -156,7 +156,7 @@ SECTIONS
+ 		ALIGN_ENTRY_TEXT_END
+ 		*(.gnu.warning)
  
- 		xa_erase(&vepc->page_array, index);
-+		cond_resched();
- 	}
+-	} :text =0xcccc
++	} :text = 0xcccccccc
  
- 	/*
-@@ -222,6 +223,7 @@ static int sgx_vepc_release(struct inode
- 			list_add_tail(&epc_page->list, &secs_pages);
- 
- 		xa_erase(&vepc->page_array, index);
-+		cond_resched();
- 	}
- 
- 	/*
-@@ -243,6 +245,7 @@ static int sgx_vepc_release(struct inode
- 
- 		if (sgx_vepc_free_page(epc_page))
- 			list_add_tail(&epc_page->list, &secs_pages);
-+		cond_resched();
- 	}
- 
- 	if (!list_empty(&secs_pages))
+ 	/* End of text section, which should occupy whole number of pages */
+ 	_etext = .;
 
 
