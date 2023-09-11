@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A1911710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65BEC433C8;
-	Mon, 11 Sep 2023 15:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC31311710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EAC6C433C8;
+	Mon, 11 Sep 2023 15:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445615;
-	bh=OmZGBOVxOz0j+C4UABSXkQX0GhVEbs1VdflCQMkQ488=;
+	s=korg; t=1694445617;
+	bh=8KVILE3RnJt9f9aC/JvvGpNlzlUbBJ2bwlrwvxqLVDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BvCqZo2Ts4dVHgV1Q9VY4huySUjPk+cZXLfBav5rL2BPa2+jlHJaikfD3yB9G5hdF
-	 O3gOvMnG4J11PGUI7F2efOf1qCuo8qh7mUbvtFrSlb9BIzBOJc+HC8KVonyrAriPFN
-	 Z727ubWVb0dMOtw4hn5JMiKQO8MCpXgfzDnqkq/k=
+	b=eOBiZlYIdf2RIAfx2cQYULUCnsnrgFz1pv7uFb1YdDGywBlS2w4h2LYOaxIWUjobk
+	 NMlL+vrWVi47vykOpkaOw79eLSwSgoXfr6moY3Sr4qGsRRBnUKVZOQp329FHyCaX9X
+	 2KMbqw0nGgcrKfiQeaGf6fG4hyobf1QUH2Kw8uaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 411/600] media: amphion: fix UNINIT issues reported by coverity
-Date: Mon, 11 Sep 2023 15:47:24 +0200
-Message-ID: <20230911134645.807835350@linuxfoundation.org>
+Subject: [PATCH 6.1 394/600] media: v4l2-core: Fix a potential resource leak in v4l2_fwnode_parse_link()
+Date: Mon, 11 Sep 2023 15:47:07 +0200
+Message-ID: <20230911134645.307045352@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,79 +41,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit c224d0497a31ea2d173e1ea16af308945bff9037 ]
+[ Upstream commit d7b13edd4cb4bfa335b6008ab867ac28582d3e5c ]
 
-using uninitialized value may introduce risk
+If fwnode_graph_get_remote_endpoint() fails, 'fwnode' is known to be NULL,
+so fwnode_handle_put() is a no-op.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Release the reference taken from a previous fwnode_graph_get_port_parent()
+call instead.
+
+Also handle fwnode_graph_get_port_parent() failures.
+
+In order to fix these issues, add an error handling path to the function
+and the needed gotos.
+
+Fixes: ca50c197bd96 ("[media] v4l: fwnode: Support generic fwnode for parsing standardised properties")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_msgs.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/v4l2-core/v4l2-fwnode.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
-index f9eb488d1b5e2..d0ead051f7d18 100644
---- a/drivers/media/platform/amphion/vpu_msgs.c
-+++ b/drivers/media/platform/amphion/vpu_msgs.c
-@@ -32,7 +32,7 @@ static void vpu_session_handle_start_done(struct vpu_inst *inst, struct vpu_rpc_
+diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
+index 3d85a8600f576..69c8b3b656860 100644
+--- a/drivers/media/v4l2-core/v4l2-fwnode.c
++++ b/drivers/media/v4l2-core/v4l2-fwnode.c
+@@ -551,19 +551,29 @@ int v4l2_fwnode_parse_link(struct fwnode_handle *fwnode,
+ 	link->local_id = fwep.id;
+ 	link->local_port = fwep.port;
+ 	link->local_node = fwnode_graph_get_port_parent(fwnode);
++	if (!link->local_node)
++		return -ENOLINK;
  
- static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
- {
--	struct vpu_pkt_mem_req_data req_data;
-+	struct vpu_pkt_mem_req_data req_data = { 0 };
+ 	fwnode = fwnode_graph_get_remote_endpoint(fwnode);
+-	if (!fwnode) {
+-		fwnode_handle_put(fwnode);
+-		return -ENOLINK;
+-	}
++	if (!fwnode)
++		goto err_put_local_node;
  
- 	vpu_iface_unpack_msg_data(inst->core, pkt, (void *)&req_data);
- 	vpu_trace(inst->dev, "[%d] %d:%d %d:%d %d:%d\n",
-@@ -80,7 +80,7 @@ static void vpu_session_handle_resolution_change(struct vpu_inst *inst, struct v
+ 	fwnode_graph_parse_endpoint(fwnode, &fwep);
+ 	link->remote_id = fwep.id;
+ 	link->remote_port = fwep.port;
+ 	link->remote_node = fwnode_graph_get_port_parent(fwnode);
++	if (!link->remote_node)
++		goto err_put_remote_endpoint;
  
- static void vpu_session_handle_enc_frame_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
- {
--	struct vpu_enc_pic_info info;
-+	struct vpu_enc_pic_info info = { 0 };
+ 	return 0;
++
++err_put_remote_endpoint:
++	fwnode_handle_put(fwnode);
++
++err_put_local_node:
++	fwnode_handle_put(link->local_node);
++
++	return -ENOLINK;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_fwnode_parse_link);
  
- 	vpu_iface_unpack_msg_data(inst->core, pkt, (void *)&info);
- 	dev_dbg(inst->dev, "[%d] frame id = %d, wptr = 0x%x, size = %d\n",
-@@ -90,7 +90,7 @@ static void vpu_session_handle_enc_frame_done(struct vpu_inst *inst, struct vpu_
- 
- static void vpu_session_handle_frame_request(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
- {
--	struct vpu_fs_info fs;
-+	struct vpu_fs_info fs = { 0 };
- 
- 	vpu_iface_unpack_msg_data(inst->core, pkt, &fs);
- 	call_void_vop(inst, event_notify, VPU_MSG_ID_FRAME_REQ, &fs);
-@@ -107,7 +107,7 @@ static void vpu_session_handle_frame_release(struct vpu_inst *inst, struct vpu_r
- 		info.type = inst->out_format.type;
- 		call_void_vop(inst, buf_done, &info);
- 	} else if (inst->core->type == VPU_CORE_TYPE_DEC) {
--		struct vpu_fs_info fs;
-+		struct vpu_fs_info fs = { 0 };
- 
- 		vpu_iface_unpack_msg_data(inst->core, pkt, &fs);
- 		call_void_vop(inst, event_notify, VPU_MSG_ID_FRAME_RELEASE, &fs);
-@@ -122,7 +122,7 @@ static void vpu_session_handle_input_done(struct vpu_inst *inst, struct vpu_rpc_
- 
- static void vpu_session_handle_pic_decoded(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
- {
--	struct vpu_dec_pic_info info;
-+	struct vpu_dec_pic_info info = { 0 };
- 
- 	vpu_iface_unpack_msg_data(inst->core, pkt, (void *)&info);
- 	call_void_vop(inst, get_one_frame, &info);
-@@ -130,7 +130,7 @@ static void vpu_session_handle_pic_decoded(struct vpu_inst *inst, struct vpu_rpc
- 
- static void vpu_session_handle_pic_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
- {
--	struct vpu_dec_pic_info info;
-+	struct vpu_dec_pic_info info = { 0 };
- 	struct vpu_frame_info frame;
- 
- 	memset(&frame, 0, sizeof(frame));
 -- 
 2.40.1
 
