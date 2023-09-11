@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0381170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AE2C433C9;
-	Mon, 11 Sep 2023 13:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455691170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6DC433C7;
+	Mon, 11 Sep 2023 13:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440503;
-	bh=RgBh0AohFzH+eH19dmWsGzvN2c49s1A7H0EqP6rIjaE=;
+	s=korg; t=1694440506;
+	bh=JqL5N+Cq3gxhLx0eYtaKxpvLpm5//cvRVyKcgfFYTQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl/791OQzs2YuX0fmxnUt5Diz7i/soprBE887UcYCivNpRdbI/PrVZcil3SSJz9uy
-	 oU1Q7EEJlNBVIBwlpTcc5oVpk9NPc5JETONi9IcPH6ebMF49DHl6/2xLsPJm6pjzEs
-	 C0tKWoRWJmSNwKYx+5Ip2a3ny3tJgTAbThuAYHNY=
+	b=KnHOotjzToSM6WQvDf+Bph/A0FVtEEhC3SPOhIua4JF9FT+dV9SSfBQPTnaGxtbN/
+	 NhQGeIZc33U48NotrzeaQ4HTkUdZ+a7fpnLh5vlQ8yIotzouBfdX0q19/d035Xhanc
+	 yssmHAjjYHgwebIUPGh/tlkqN93MoNFqdD4wRQyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Mark Brown <broonie@kernel.org>,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 077/739] regmap: maple: Use alloc_flags for memory allocations
-Date: Mon, 11 Sep 2023 15:37:56 +0200
-Message-ID: <20230911134653.267104159@linuxfoundation.org>
+Subject: [PATCH 6.5 086/739] wifi: mt76: mt7996: use correct phy for background radar event
+Date: Mon, 11 Sep 2023 15:38:05 +0200
+Message-ID: <20230911134653.510371462@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,131 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit b0393e1fe40e962574613a5cdc4a470d6c1de023 ]
+[ Upstream commit 9ffe0d5690ed916e09baad2cc9ee7ec65b110038 ]
 
-REGCACHE_MAPLE needs to allocate memory for regmap operations.
-This results in lockdep splats if used with fast_io since fast_io uses
-spinlocks for locking.
+If driver directly uses the band_idx reported from the radar event to
+access mt76_phy array, it will get the wrong phy for background radar.
+Fix this by adjusting the statement.
 
-BUG: sleeping function called from invalid context at include/linux/sched/mm.h:306
-in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 167, name: kunit_try_catch
-preempt_count: 1, expected: 0
-1 lock held by kunit_try_catch/167:
- #0: 838e9c10 (regmap_kunit:86:(config)->lock){....}-{2:2}, at: regmap_lock_spinlock+0x14/0x1c
-irq event stamp: 146
-hardirqs last  enabled at (145): [<8078bfa8>] crng_make_state+0x1a0/0x294
-hardirqs last disabled at (146): [<80c5f62c>] _raw_spin_lock_irqsave+0x7c/0x80
-softirqs last  enabled at (0): [<80110cc4>] copy_process+0x810/0x216c
-softirqs last disabled at (0): [<00000000>] 0x0
-CPU: 0 PID: 167 Comm: kunit_try_catch Tainted: G                 N 6.5.0-rc1-00028-gc4be22597a36-dirty #6
-Hardware name: Generic DT based system
- unwind_backtrace from show_stack+0x18/0x1c
- show_stack from dump_stack_lvl+0x38/0x5c
- dump_stack_lvl from __might_resched+0x188/0x2d0
- __might_resched from __kmem_cache_alloc_node+0x1f4/0x258
- __kmem_cache_alloc_node from __kmalloc+0x48/0x170
- __kmalloc from regcache_maple_write+0x194/0x248
- regcache_maple_write from _regmap_write+0x88/0x140
- _regmap_write from regmap_write+0x44/0x68
- regmap_write from basic_read_write+0x8c/0x27c
- basic_read_write from kunit_generic_run_threadfn_adapter+0x1c/0x28
- kunit_generic_run_threadfn_adapter from kthread+0xf8/0x120
- kthread from ret_from_fork+0x14/0x3c
-Exception stack(0x881a5fb0 to 0x881a5ff8)
-5fa0:                                     00000000 00000000 00000000 00000000
-5fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-5fe0: 00000000 00000000 00000000 00000000 00000013 00000000
-
-Use map->alloc_flags instead of GFP_KERNEL for memory allocations to fix
-the problem.
-
-Fixes: f033c26de5a5 ("regmap: Add maple tree based register cache")
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230720172021.2617326-1-linux@roeck-us.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 283c2e02a2985..41edd6a430eb4 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -74,7 +74,7 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
- 	rcu_read_unlock();
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index cd54e81d73044..62a02b03d83ba 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -339,7 +339,11 @@ mt7996_mcu_rx_radar_detected(struct mt7996_dev *dev, struct sk_buff *skb)
+ 	if (r->band_idx >= ARRAY_SIZE(dev->mt76.phys))
+ 		return;
  
- 	entry = kmalloc((last - index + 1) * sizeof(unsigned long),
--			GFP_KERNEL);
-+			map->alloc_flags);
- 	if (!entry)
- 		return -ENOMEM;
- 
-@@ -92,7 +92,7 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
- 	mas_lock(&mas);
- 
- 	mas_set_range(&mas, index, last);
--	ret = mas_store_gfp(&mas, entry, GFP_KERNEL);
-+	ret = mas_store_gfp(&mas, entry, map->alloc_flags);
- 
- 	mas_unlock(&mas);
- 
-@@ -134,7 +134,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 
- 			lower = kmemdup(entry, ((min - mas.index) *
- 						sizeof(unsigned long)),
--					GFP_KERNEL);
-+					map->alloc_flags);
- 			if (!lower) {
- 				ret = -ENOMEM;
- 				goto out_unlocked;
-@@ -148,7 +148,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 			upper = kmemdup(&entry[max + 1],
- 					((mas.last - max) *
- 					 sizeof(unsigned long)),
--					GFP_KERNEL);
-+					map->alloc_flags);
- 			if (!upper) {
- 				ret = -ENOMEM;
- 				goto out_unlocked;
-@@ -162,7 +162,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 		/* Insert new nodes with the saved data */
- 		if (lower) {
- 			mas_set_range(&mas, lower_index, lower_last);
--			ret = mas_store_gfp(&mas, lower, GFP_KERNEL);
-+			ret = mas_store_gfp(&mas, lower, map->alloc_flags);
- 			if (ret != 0)
- 				goto out;
- 			lower = NULL;
-@@ -170,7 +170,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 
- 		if (upper) {
- 			mas_set_range(&mas, upper_index, upper_last);
--			ret = mas_store_gfp(&mas, upper, GFP_KERNEL);
-+			ret = mas_store_gfp(&mas, upper, map->alloc_flags);
- 			if (ret != 0)
- 				goto out;
- 			upper = NULL;
-@@ -320,7 +320,7 @@ static int regcache_maple_insert_block(struct regmap *map, int first,
- 	unsigned long *entry;
- 	int i, ret;
- 
--	entry = kcalloc(last - first + 1, sizeof(unsigned long), GFP_KERNEL);
-+	entry = kcalloc(last - first + 1, sizeof(unsigned long), map->alloc_flags);
- 	if (!entry)
- 		return -ENOMEM;
- 
-@@ -331,7 +331,7 @@ static int regcache_maple_insert_block(struct regmap *map, int first,
- 
- 	mas_set_range(&mas, map->reg_defaults[first].reg,
- 		      map->reg_defaults[last].reg);
--	ret = mas_store_gfp(&mas, entry, GFP_KERNEL);
-+	ret = mas_store_gfp(&mas, entry, map->alloc_flags);
- 
- 	mas_unlock(&mas);
+-	mphy = dev->mt76.phys[r->band_idx];
++	if (dev->rdd2_phy && r->band_idx == MT_RX_SEL2)
++		mphy = dev->rdd2_phy->mt76;
++	else
++		mphy = dev->mt76.phys[r->band_idx];
++
+ 	if (!mphy)
+ 		return;
  
 -- 
 2.40.1
