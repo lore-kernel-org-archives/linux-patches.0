@@ -1,37 +1,37 @@
 Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0198953AC
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 21:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5FD2F44
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 21:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694467177; x=1726003177;
+  t=1694467364; x=1726003364;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=KyY0bt2hfAVv84BS0o9R1NkNlZaPTKwHSs6qfsZUiAk=;
-  b=gKKHSdu80Dotqxg+O3onod7fI44zdum0Fa84694PqIcw3xE/9HzXBuNq
-   P1fhEEbJOE642hvUWHUKb6K/JXEdxO3LkyZxdhmDa+mUm237Az9R86iFQ
-   bwSrVI4PLmSbvPMpgjWMGSVfa25bc0xtGI8XJP5+zWAfdstOvRhYp/0fm
-   b5UvM371R6zRuB4PCIsOdtWWfLjmwPCQo8VXlSnBKDVtPR1ZvLe3oijeP
-   dgtZQoe99aC36+Wqkaa5VUUhwb4rpgLv5AoKwuy2vQ6RrLK1yO1zZtF1Y
-   VHEscds0d22RBhy93Kqf+2q7el1dX82koXuQgXs4dBsuA99lNU04jKJdY
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10830"; a="380907812"
+  bh=HcGBa4u1K5hnQPCpGg0DbVeBeHvuKVebaPsTI8ufq4M=;
+  b=dQyi3lxxLIEr1laebn9t0oa5aGQGMmb1ZIHrQoDrUV4O3R3dNc2nabnF
+   CXQAHQnl5yFZb4JXG10aKQYP2tpD93PwDVJY/ZLQ2auxgs1ObMYnUvXTW
+   WfxhUDlXtwMZxFccLX4M/8/uJ/pONxdMStz9JZIIbc1DkUXdCvoJBJV6C
+   amnLy8anTa38mebcSX62K1/qfi3DY5NwXYCWQwikdciSExJUvE4C/TYrn
+   g8Q1ux6A2mAQx+ZP1JvmHBV/iLrw0RPFiuqImT5/h+t7PcVkixrg90ADw
+   JjNoNTf0PM+ijS0aT+w5I1UO3i6HuzMjyQHPRSf96IYncAyv1UKJpe40y
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10830"; a="380908534"
 X-IronPort-AV: E=Sophos;i="6.02,244,1688454000"; 
-   d="scan'208";a="380907812"
+   d="scan'208";a="380908534"
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 14:19:35 -0700
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 14:22:44 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10830"; a="813545721"
+X-IronPort-AV: E=McAfee;i="6600,9927,10830"; a="813546290"
 X-IronPort-AV: E=Sophos;i="6.02,244,1688454000"; 
-   d="scan'208";a="813545721"
+   d="scan'208";a="813546290"
 Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 14:19:31 -0700
+  by fmsmga004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 14:22:41 -0700
 Received: from andy by smile.fi.intel.com with local (Exim 4.96)
 	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1qfoJc-008QUx-1r;
-	Tue, 12 Sep 2023 00:19:28 +0300
-Date: Tue, 12 Sep 2023 00:19:28 +0300
+	id 1qfoMg-008QX4-2Z;
+	Tue, 12 Sep 2023 00:22:38 +0300
+Date: Tue, 12 Sep 2023 00:22:38 +0300
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
@@ -40,12 +40,11 @@ Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
 	patches@lists.linux.dev, platform-driver-x86@vger.kernel.org,
 	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Prashant Malani <pmalani@chromium.org>
-Subject: Re: [PATCH v3 1/4] platform/x86: intel_scu_ipc: Check status after
- timeout in busy_loop()
-Message-ID: <ZP+EYOkT2kVX2UCi@smile.fi.intel.com>
+Subject: Re: [PATCH v3 4/4] platform/x86: intel_scu_ipc: Fail IPC send if
+ still busy
+Message-ID: <ZP+FHs+GBROf0zH8@smile.fi.intel.com>
 References: <20230911193937.302552-1-swboyd@chromium.org>
- <20230911193937.302552-2-swboyd@chromium.org>
- <ZP+D4hlUXhAboFBJ@smile.fi.intel.com>
+ <20230911193937.302552-5-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,25 +53,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZP+D4hlUXhAboFBJ@smile.fi.intel.com>
+In-Reply-To: <20230911193937.302552-5-swboyd@chromium.org>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Tue, Sep 12, 2023 at 12:17:22AM +0300, Andy Shevchenko wrote:
-> On Mon, Sep 11, 2023 at 12:39:33PM -0700, Stephen Boyd wrote:
+On Mon, Sep 11, 2023 at 12:39:36PM -0700, Stephen Boyd wrote:
+> It's possible for interrupts to get significantly delayed to the point
+> that callers of intel_scu_ipc_dev_command() and friends can call the
+> function once, hit a timeout, and call it again while the interrupt
+> still hasn't been processed. This driver will get seriously confused if
+> the interrupt is finally processed after the second IPC has been sent
+> with ipc_command(). It won't know which IPC has been completed. This
+> could be quite disastrous if calling code assumes something has happened
+> upon return from intel_scu_ipc_dev_simple_command() when it actually
+> hasn't.
+> 
+> Let's avoid this scenario by simply returning -EBUSY in this case.
+> Hopefully higher layers will know to back off or fail gracefully when
+> this happens. It's all highly unlikely anyway, but it's better to be
+> correct here as we have no way to know which IPC the status register is
+> telling us about if we send a second IPC while the previous IPC is still
+> processing.
 
 ...
 
-> > +	err = read_poll_timeout(ipc_read_status, status, !(status & IPC_STATUS_BUSY),
-> > +				100, jiffies_to_usecs(IPC_TIMEOUT), false, scu);
-> 
-> Since "false" you probably can utilize readx_poll_timeout().
+> +static struct intel_scu_ipc_dev *intel_scu_ipc_get(struct intel_scu_ipc_dev *scu)
+> +{
+> +	u8 status;
 
-...and because only a single parameter taken.
+> +	if (!scu)
+> +		scu = ipcdev;
 
-> > +	if (err)
-> > +		return err;
+I would write this as
 
-With that,
+	scu = scu ?: ipcdev;
+
+> +	if (!scu)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	status = ipc_read_status(scu);
+> +	if (status & IPC_STATUS_BUSY) {
+> +		dev_dbg(&scu->dev, "device is busy\n");
+> +		return ERR_PTR(-EBUSY);
+> +	}
+> +
+> +	return scu;
+> +}
+
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
 -- 
