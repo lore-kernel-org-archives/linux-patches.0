@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8253B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059D1C433C8;
-	Mon, 11 Sep 2023 14:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F4711705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B18C433C7;
+	Mon, 11 Sep 2023 14:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442974;
-	bh=VBS+QXAL3inaCLRDVb8/E1fRSp6iJ6QTkaSIBD4Fdy8=;
+	s=korg; t=1694442977;
+	bh=fqGR8d0iW3E4EAuVBMINA3mxo88L/gRoZIgkheAZLyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyClLwDzvwxsCMxgj0g+MeZ159VQg8pASAACTbfn6DgKRN06FEuziYpBDfyIaxXfV
-	 QUo8vrmT+rrwl4gHYMUyLSKTsKI+pWHihR0eNnQnjwor13zlqfH1CmP0saOCDaxsHD
-	 cRiaO3hkk77FEtk71Gthj8JqDlpNrW6jCaTdbpSc=
+	b=Ts6r+RZ311BUYLlgVAyrZ6Wyy6tmIVV1o25zER2hBfLSe0ZEw94qDrsO57tAFm8jF
+	 6g3FWEapgHo2bDNSlcUocRqAnmArh/2gyoa/OV5zgSfLHWvYapHB+Pk7hmqQtLiIOC
+	 5rWzBudmQp5tuPf01L63TgogAwL11X7ajscuHYv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Menglong Dong <imagedong@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 176/737] can: gs_usb: gs_usb_receive_bulk_callback(): count RX overflow errors also in case of OOM
-Date: Mon, 11 Sep 2023 15:40:35 +0200
-Message-ID: <20230911134655.453430561@linuxfoundation.org>
+Subject: [PATCH 6.4 207/737] net: tcp: fix unexcepted socket die when snd_wnd is 0
+Date: Mon, 11 Sep 2023 15:41:06 +0200
+Message-ID: <20230911134656.377704269@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,47 +41,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Menglong Dong <imagedong@tencent.com>
 
-[ Upstream commit 6c8bc15f02b85bc8f47074110d8fd8caf7a1e42d ]
+[ Upstream commit e89688e3e97868451a5d05b38a9d2633d6785cd4 ]
 
-In case of an RX overflow error from the CAN controller and an OOM
-where no skb can be allocated, the error counters are not incremented.
+In tcp_retransmit_timer(), a window shrunk connection will be regarded
+as timeout if 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX'. This is not
+right all the time.
 
-Fix this by first incrementing the error counters and then allocate
-the skb.
+The retransmits will become zero-window probes in tcp_retransmit_timer()
+if the 'snd_wnd==0'. Therefore, the icsk->icsk_rto will come up to
+TCP_RTO_MAX sooner or later.
 
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-7-c3b9154ec605@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+However, the timer can be delayed and be triggered after 122877ms, not
+TCP_RTO_MAX, as I tested.
+
+Therefore, 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX' is always true
+once the RTO come up to TCP_RTO_MAX, and the socket will die.
+
+Fix this by replacing the 'tcp_jiffies32' with '(u32)icsk->icsk_timeout',
+which is exact the timestamp of the timeout.
+
+However, "tp->rcv_tstamp" can restart from idle, then tp->rcv_tstamp
+could already be a long time (minutes or hours) in the past even on the
+first RTO. So we double check the timeout with the duration of the
+retransmission.
+
+Meanwhile, making "2 * TCP_RTO_MAX" as the timeout to avoid the socket
+dying too soon.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/CADxym3YyMiO+zMD4zj03YPM3FBi-1LHi6gSD2XT8pyAMM096pg@mail.gmail.com/
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_timer.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index bd9eb066ecf15..129ef60a577c8 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -633,6 +633,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	}
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 366c3c25ebe20..db90bd2d4ed66 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -441,6 +441,22 @@ static void tcp_fastopen_synack_timer(struct sock *sk, struct request_sock *req)
+ 			  req->timeout << req->num_timeout, TCP_RTO_MAX);
+ }
  
- 	if (hf->flags & GS_CAN_FLAG_OVERFLOW) {
-+		stats->rx_over_errors++;
-+		stats->rx_errors++;
++static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
++				     const struct sk_buff *skb)
++{
++	const struct tcp_sock *tp = tcp_sk(sk);
++	const int timeout = TCP_RTO_MAX * 2;
++	u32 rcv_delta, rtx_delta;
 +
- 		skb = alloc_can_err_skb(netdev, &cf);
- 		if (!skb)
- 			goto resubmit_urb;
-@@ -640,8 +643,6 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 		cf->can_id |= CAN_ERR_CRTL;
- 		cf->len = CAN_ERR_DLC;
- 		cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
--		stats->rx_over_errors++;
--		stats->rx_errors++;
- 		netif_rx(skb);
- 	}
++	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
++	if (rcv_delta <= timeout)
++		return false;
++
++	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
++			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
++
++	return rtx_delta > timeout;
++}
  
+ /**
+  *  tcp_retransmit_timer() - The TCP retransmit timeout handler
+@@ -506,7 +522,7 @@ void tcp_retransmit_timer(struct sock *sk)
+ 					    tp->snd_una, tp->snd_nxt);
+ 		}
+ #endif
+-		if (tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX) {
++		if (tcp_rtx_probe0_timed_out(sk, skb)) {
+ 			tcp_write_err(sk);
+ 			goto out;
+ 		}
 -- 
 2.40.1
 
