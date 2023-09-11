@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B03F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDF0C433C8;
-	Mon, 11 Sep 2023 14:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17981170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F36C433C8;
+	Mon, 11 Sep 2023 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440973;
-	bh=2+p1u9nU/hc217bj5DygjZuEKhaU5rWVTQeKI7rQwTw=;
+	s=korg; t=1694440975;
+	bh=8h8x9x0spwTkrVwfiiJGLQWYchtYi+VlFVGTExybF1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8sQ2R2POoPXFxrm0ZbrctM3kv+37TlgAh4xrTiNzEAcmt12VH9qMQ+jr+duSEYZh
-	 5HkWFMw1PE4lOP9CLvcUIOayDPklk0wIjl1NiIdXN8oGNlKffRPc6rXjDU0c2lZ9W6
-	 Wt0xrhrZMH4F/oTYCC09n/LuqV4vDcox1jn5g/bQ=
+	b=uDavieyfKJqIru6pAZgYkOSr1F8crRiipKMGCnTM38C4aGwMTNhsfS2CkW/mzt6sN
+	 5C6Lbysh5qMlaD/+T/fx40GSPXbUG8TG+bPWT0BHbNyh5gic8fd3GjYhmkDsUfStcW
+	 Kg9r0d0xfaC5GpYSY7/ZekgRcN2bf9rusGEMvnac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 250/739] arm64: tegra: Add missing alias for NVIDIA IGX Orin
-Date: Mon, 11 Sep 2023 15:40:49 +0200
-Message-ID: <20230911134658.137371305@linuxfoundation.org>
+Subject: [PATCH 6.5 251/739] arm64: tegra: Fix HSUART for Jetson AGX Orin
+Date: Mon, 11 Sep 2023 15:40:50 +0200
+Message-ID: <20230911134658.164753762@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,34 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit d97966df30ed8c7df0350b8ff6662e38ee88c39f ]
+[ Upstream commit 861dbb2b15b1049113887fb95e856f7123eea0cc ]
 
-The following error is seen on boot for the NVIDIA IGX Orin platform ...
+After commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") was applied, the HSUART failed to probe and the following
+error is seen:
 
- serial-tegra 3100000.serial: failed to get alias id, errno -19
+ serial-tegra 3100000.serial: Couldn't get the reset
+ serial-tegra: probe of 3100000.serial failed with error -2
 
-Fix this by populating the necessary alias for the serial device.
+Commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") is correct because the "reset-names" property is not
+needed for 8250 UARTs. However, the "reset-names" is required for the
+HSUART and should have been populated as part of commit ff578db7b693
+("arm64: tegra: Enable UART instance on 40-pin header") that
+enabled the HSUART for Jetson AGX Orin. Fix this by populating the
+"reset-names" property for the HSUART on Jetson AGX Orin.
 
-Fixes: c95711d7dbc4 ("arm64: tegra: Add support for IGX Orin")
+Fixes: ff578db7b693 ("arm64: tegra: Enable UART instance on 40-pin header")
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts | 1 +
+ arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
-index 43d797e5544f5..b35044812ecfd 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
-@@ -12,6 +12,7 @@ / {
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
+index cd13cf2381dde..513cc2cd0b668 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
+@@ -2010,6 +2010,7 @@ interrupt-controller@2a40000 {
  
- 	aliases {
- 		serial0 = &tcu;
-+		serial1 = &uarta;
- 	};
+ 		serial@3100000 {
+ 			compatible = "nvidia,tegra194-hsuart";
++			reset-names = "serial";
+ 			status = "okay";
+ 		};
  
- 	chosen {
 -- 
 2.40.1
 
