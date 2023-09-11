@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0925C11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB0AC433C7;
-	Mon, 11 Sep 2023 15:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B983111715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7F2C433C8;
+	Mon, 11 Sep 2023 15:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444956;
-	bh=qkw8NEz5hFemAyJfDb3nvXjDtFVwepeiVhpa50mrUnU=;
+	s=korg; t=1694444959;
+	bh=PLD8dB/JyHTzh3VCFDpXVYw/loEl941DCU7KC1D5NQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNIznjdfOeVUwYAWDHbQN520pJw0ewpCzQwQHGLJkGHPwlE85bsPPfBfRaThj9/Ey
-	 62cZmcOpn+v3On1Jtd2s/+ZyoQE9B+hqWAlPf3JRQL6ZTeXCTNJxOzie/p042cvUjk
-	 34K/LmGTt4tNj0lLub5WmlogwgNexC07fzbWJfuw=
+	b=lww2/CzVmUtBiRSKBZUlxY1b6yxtGQgwAqgNXIK4IuBwf3wu9sJuXQH0JPVuWq98s
+	 7lG1dsPk16/fGK9d82r5sCua7eh7f91ES+2mgvu/3ydcyeYxIoE7HwKckVPqtSYNXv
+	 6csYMGD/teL8LB/wJLynPo1D3HG2lZbiN8U9rqho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 177/600] net: Fix slab-out-of-bounds in inet[6]_steal_sock
-Date: Mon, 11 Sep 2023 15:43:30 +0200
-Message-ID: <20230911134638.826926163@linuxfoundation.org>
+Subject: [PATCH 6.1 178/600] net-memcg: Fix scope of sockmem pressure indicators
+Date: Mon, 11 Sep 2023 15:43:31 +0200
+Message-ID: <20230911134638.855441118@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,61 +41,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenz Bauer <lmb@isovalent.com>
+From: Abel Wu <wuyun.abel@bytedance.com>
 
-[ Upstream commit 8897562f67b3e61ad736cd5c9f307447d33280e4 ]
+[ Upstream commit ac8a52962164a50e693fa021d3564d7745b83a7f ]
 
-Kumar reported a KASAN splat in tcp_v6_rcv:
+Now there are two indicators of socket memory pressure sit inside
+struct mem_cgroup, socket_pressure and tcpmem_pressure, indicating
+memory reclaim pressure in memcg->memory and ->tcpmem respectively.
 
-  bash-5.2# ./test_progs -t btf_skc_cls_ingress
-  ...
-  [   51.810085] BUG: KASAN: slab-out-of-bounds in tcp_v6_rcv+0x2d7d/0x3440
-  [   51.810458] Read of size 2 at addr ffff8881053f038c by task test_progs/226
+When in legacy mode (cgroupv1), the socket memory is charged into
+->tcpmem which is independent of ->memory, so socket_pressure has
+nothing to do with socket's pressure at all. Things could be worse
+by taking socket_pressure into consideration in legacy mode, as a
+pressure in ->memory can lead to premature reclamation/throttling
+in socket.
 
-The problem is that inet[6]_steal_sock accesses sk->sk_protocol without
-accounting for request or timewait sockets. To fix this we can't just
-check sock_common->skc_reuseport since that flag is present on timewait
-sockets.
+While for the default mode (cgroupv2), the socket memory is charged
+into ->memory, and ->tcpmem/->tcpmem_pressure are simply not used.
 
-Instead, add a fullsock check to avoid the out of bands access of sk_protocol.
+So {socket,tcpmem}_pressure are only used in default/legacy mode
+respectively for indicating socket memory pressure. This patch fixes
+the pieces of code that make mixed use of both.
 
-Fixes: 9c02bec95954 ("bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign")
-Reported-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
-Link: https://lore.kernel.org/r/20230815-bpf-next-v2-1-95126eaa4c1b@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 8e8ae645249b ("mm: memcontrol: hook up vmpressure to socket pressure")
+Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet6_hashtables.h | 2 +-
- include/net/inet_hashtables.h  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/linux/memcontrol.h | 9 +++++++--
+ mm/vmpressure.c            | 8 ++++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
-index 475e672b4facc..12780b8fb5630 100644
---- a/include/net/inet6_hashtables.h
-+++ b/include/net/inet6_hashtables.h
-@@ -107,7 +107,7 @@ struct sock *inet6_steal_sock(struct net *net, struct sk_buff *skb, int doff,
- 	if (!sk)
- 		return NULL;
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index e039763029563..099521835cd14 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -283,6 +283,11 @@ struct mem_cgroup {
+ 	atomic_long_t		memory_events[MEMCG_NR_MEMORY_EVENTS];
+ 	atomic_long_t		memory_events_local[MEMCG_NR_MEMORY_EVENTS];
  
--	if (!prefetched)
-+	if (!prefetched || !sk_fullsock(sk))
- 		return sk;
++	/*
++	 * Hint of reclaim pressure for socket memroy management. Note
++	 * that this indicator should NOT be used in legacy cgroup mode
++	 * where socket memory is accounted/charged separately.
++	 */
+ 	unsigned long		socket_pressure;
  
- 	if (sk->sk_protocol == IPPROTO_TCP) {
-diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
-index a1b8eb147ce73..9414cb4e6e624 100644
---- a/include/net/inet_hashtables.h
-+++ b/include/net/inet_hashtables.h
-@@ -455,7 +455,7 @@ struct sock *inet_steal_sock(struct net *net, struct sk_buff *skb, int doff,
- 	if (!sk)
- 		return NULL;
+ 	/* Legacy tcp memory accounting */
+@@ -1704,8 +1709,8 @@ void mem_cgroup_sk_alloc(struct sock *sk);
+ void mem_cgroup_sk_free(struct sock *sk);
+ static inline bool mem_cgroup_under_socket_pressure(struct mem_cgroup *memcg)
+ {
+-	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && memcg->tcpmem_pressure)
+-		return true;
++	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
++		return !!memcg->tcpmem_pressure;
+ 	do {
+ 		if (time_before(jiffies, READ_ONCE(memcg->socket_pressure)))
+ 			return true;
+diff --git a/mm/vmpressure.c b/mm/vmpressure.c
+index b52644771cc43..22c6689d93027 100644
+--- a/mm/vmpressure.c
++++ b/mm/vmpressure.c
+@@ -244,6 +244,14 @@ void vmpressure(gfp_t gfp, struct mem_cgroup *memcg, bool tree,
+ 	if (mem_cgroup_disabled())
+ 		return;
  
--	if (!prefetched)
-+	if (!prefetched || !sk_fullsock(sk))
- 		return sk;
++	/*
++	 * The in-kernel users only care about the reclaim efficiency
++	 * for this @memcg rather than the whole subtree, and there
++	 * isn't and won't be any in-kernel user in a legacy cgroup.
++	 */
++	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && !tree)
++		return;
++
+ 	vmpr = memcg_to_vmpressure(memcg);
  
- 	if (sk->sk_protocol == IPPROTO_TCP) {
+ 	/*
 -- 
 2.40.1
 
