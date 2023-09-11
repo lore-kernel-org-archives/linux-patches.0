@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9591170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:29:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD74BC433C7;
-	Mon, 11 Sep 2023 14:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48C1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:29:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C644C433C7;
+	Mon, 11 Sep 2023 14:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442591;
-	bh=jNwsntOPTASt6w+7Sik8WYy75YVzkby2yOw/No3gDso=;
+	s=korg; t=1694442594;
+	bh=iybcmXumYn8jC5NqrMTTUK+tY5tn7BlvP+gTJjDSsJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQVn6IJFidZEnRE9L39Cbu/SaETACvppYjhIIytwXeJj/eHVsrNWr4IMGTtMQZW1j
-	 fQSBoNIPkHPLRoakO28tdd3mqhbZt+xPSJJ2iDYF8I1cX/bnx0otXIL7pWeyCtcRv/
-	 r5O84Tm/SVH6c5QmC/4ZwqLUJ15WbT0BsiJNx/7E=
+	b=RMyP4qWwTxS7Ae1Zw0iaNgkVWRByz3A+C1bCUmULbL2X61/xOPllTR0y2RS2/L03h
+	 28y6arzHwK8zUBctakXev+fASGmDSPJarJBcpZhXZFeD9wpLvNoI7EVJMCJddpqQaW
+	 MGbVzLrptOM/5iE7JjNkD1ZcVION8fz+25NouQ0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Wang <wangzhu9@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 078/737] fbdev: goldfishfb: Do not check 0 for platform_get_irq()
-Date: Mon, 11 Sep 2023 15:38:57 +0200
-Message-ID: <20230911134652.691487067@linuxfoundation.org>
+Subject: [PATCH 6.4 079/737] broadcom: b44: Use b44_writephy() return value
+Date: Mon, 11 Sep 2023 15:38:58 +0200
+Message-ID: <20230911134652.718190122@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,40 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Wang <wangzhu9@huawei.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit 0650d5098f8b6b232cd5ea0e15437fc38f7d63ba ]
+[ Upstream commit 9944d203fa63721b87eee84a89f7275dc3d25c05 ]
 
-Since platform_get_irq() never returned zero, so it need not to check
-whether it returned zero, and we use the return error code of
-platform_get_irq() to replace the current return error code.
+Return result of b44_writephy() instead of zero to
+deal with possible error.
 
-Please refer to the commit a85a6c86c25b ("driver core: platform: Clarify
-that IRQ 0 is invalid") to get that platform_get_irq() never returned
-zero.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Zhu Wang <wangzhu9@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/goldfishfb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/b44.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/video/fbdev/goldfishfb.c b/drivers/video/fbdev/goldfishfb.c
-index 6fa2108fd912d..e41c9fef4a3b6 100644
---- a/drivers/video/fbdev/goldfishfb.c
-+++ b/drivers/video/fbdev/goldfishfb.c
-@@ -203,8 +203,8 @@ static int goldfish_fb_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/net/ethernet/broadcom/b44.c b/drivers/net/ethernet/broadcom/b44.c
+index 392ec09a1d8a6..3e4fb3c3e8342 100644
+--- a/drivers/net/ethernet/broadcom/b44.c
++++ b/drivers/net/ethernet/broadcom/b44.c
+@@ -1793,11 +1793,9 @@ static int b44_nway_reset(struct net_device *dev)
+ 	b44_readphy(bp, MII_BMCR, &bmcr);
+ 	b44_readphy(bp, MII_BMCR, &bmcr);
+ 	r = -EINVAL;
+-	if (bmcr & BMCR_ANENABLE) {
+-		b44_writephy(bp, MII_BMCR,
+-			     bmcr | BMCR_ANRESTART);
+-		r = 0;
+-	}
++	if (bmcr & BMCR_ANENABLE)
++		r = b44_writephy(bp, MII_BMCR,
++				 bmcr | BMCR_ANRESTART);
+ 	spin_unlock_irq(&bp->lock);
  
- 	fb->irq = platform_get_irq(pdev, 0);
--	if (fb->irq <= 0) {
--		ret = -ENODEV;
-+	if (fb->irq < 0) {
-+		ret = fb->irq;
- 		goto err_no_irq;
- 	}
- 
+ 	return r;
 -- 
 2.40.1
 
