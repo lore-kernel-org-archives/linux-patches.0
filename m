@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE7D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863D0C433C8;
-	Mon, 11 Sep 2023 14:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273881170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7A1C433C7;
+	Mon, 11 Sep 2023 14:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441223;
-	bh=KxW68Ueh3bRI3JzsBdQhuPw61tZ5i21y9ABPMbx9UNk=;
+	s=korg; t=1694441226;
+	bh=lF/NazABTk6h5wktyneg8+VhxzPi3Oa3WdUUuWnpMqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjvOXdxu6p5/yjgOrl58zs45yPEM+R2IXaug/EVYpNeCB6wLHHNFxzkjsOqmT9kPK
-	 M+6WEdk/Od4yWkb4jjmXrHjvLB81wtbLUndyTC8GlmmQ4xb5g9Gkshsje/Y7LKJ2T6
-	 NE78ZDs6QMDbsp7uh7wVkIjSEHUyKt20Pps+TvWU=
+	b=Gwt5zU4hndK8o0Xg/ak58g2/gnMuBvw89saY96+uGS4iyhCmtHffHcjOrvFiCFMvv
+	 IcAIqkD/cPbeiyTgmxO8vN8A8g7Bs6vt06ntGW+gRvpVsTkou2hxUmnwco/5jzr6sD
+	 8yVt+Th4mgwNv35i7bsbQIBlu/qRsFd3fMCqVaJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexandre Mergnat <amergnat@baylibre.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 337/739] drm/mediatek: Remove freeing not dynamic allocated memory
-Date: Mon, 11 Sep 2023 15:42:16 +0200
-Message-ID: <20230911134700.515074906@linuxfoundation.org>
+Subject: [PATCH 6.5 338/739] drm/mediatek: Add cnt checking for coverity issue
+Date: Mon, 11 Sep 2023 15:42:17 +0200
+Message-ID: <20230911134700.544644172@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -45,58 +45,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 27b9e2ea3f2757da26bb8280e46f7fdbb1acb219 ]
+[ Upstream commit d761b9450e31e5abd212f0085d424ed32760de5a ]
 
-Fixing the coverity issue of:
-mtk_drm_cmdq_pkt_destroy frees address of mtk_crtc->cmdq_handle
+CERT-C Characters and Strings (CERT STR31-C)
+all_drm_priv[cnt] evaluates to an address that could be at negative
+offset of an array.
 
-So remove the free function.
+In mtk_drm_get_all_drm_priv():
+Guarantee that storage for strings has sufficient space for character
+data and the null terminator.
 
-Fixes: 7627122fd1c0 ("drm/mediatek: Add cmdq_handle in mtk_crtc")
+So change cnt to unsigned int and check its max value.
+
+Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
 Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: CK Hu <ck.hu@mediatek.com>
 Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230714094908.13087-2-jason-jh.lin@mediatek.com/
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230714094908.13087-3-jason-jh.lin@mediatek.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index d40142842f85c..8d44f3df116fa 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -116,10 +116,9 @@ static int mtk_drm_cmdq_pkt_create(struct cmdq_client *client, struct cmdq_pkt *
- 	dma_addr_t dma_addr;
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index 6dcb4ba2466c0..fc217e0acd45d 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -354,7 +354,7 @@ static bool mtk_drm_get_all_drm_priv(struct device *dev)
+ 	const struct of_device_id *of_id;
+ 	struct device_node *node;
+ 	struct device *drm_dev;
+-	int cnt = 0;
++	unsigned int cnt = 0;
+ 	int i, j;
  
- 	pkt->va_base = kzalloc(size, GFP_KERNEL);
--	if (!pkt->va_base) {
--		kfree(pkt);
-+	if (!pkt->va_base)
- 		return -ENOMEM;
--	}
+ 	for_each_child_of_node(phandle->parent, node) {
+@@ -375,6 +375,9 @@ static bool mtk_drm_get_all_drm_priv(struct device *dev)
+ 		all_drm_priv[cnt] = dev_get_drvdata(drm_dev);
+ 		if (all_drm_priv[cnt] && all_drm_priv[cnt]->mtk_drm_bound)
+ 			cnt++;
 +
- 	pkt->buf_size = size;
- 	pkt->cl = (void *)client;
- 
-@@ -129,7 +128,6 @@ static int mtk_drm_cmdq_pkt_create(struct cmdq_client *client, struct cmdq_pkt *
- 	if (dma_mapping_error(dev, dma_addr)) {
- 		dev_err(dev, "dma map failed, size=%u\n", (u32)(u64)size);
- 		kfree(pkt->va_base);
--		kfree(pkt);
- 		return -ENOMEM;
++		if (cnt == MAX_CRTC)
++			break;
  	}
  
-@@ -145,7 +143,6 @@ static void mtk_drm_cmdq_pkt_destroy(struct cmdq_pkt *pkt)
- 	dma_unmap_single(client->chan->mbox->dev, pkt->pa_base, pkt->buf_size,
- 			 DMA_TO_DEVICE);
- 	kfree(pkt->va_base);
--	kfree(pkt);
- }
- #endif
- 
+ 	if (drm_priv->data->mmsys_dev_num == cnt) {
 -- 
 2.40.1
 
