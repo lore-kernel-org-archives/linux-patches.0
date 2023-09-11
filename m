@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED52911710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CA8C433C8;
-	Mon, 11 Sep 2023 15:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B94811710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DBFC433C8;
+	Mon, 11 Sep 2023 15:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446078;
-	bh=Ee7VVOQKB94UosNSKdvs+QT/MWt+55Quy+mjrzDR+xQ=;
+	s=korg; t=1694446081;
+	bh=+z5PYyhH9oTjyJNITYybeFkHTAEagxFpW6638dp4q/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mU06nTVGkTVc1Ifl5k9kwAEQCvz84XcntEnqG6TZUzXH2y8aJkQtwaFUnBathjzGo
-	 Y8hL9rZL0HBfB84z171PjX3L49D8/zmJNriBm7fR7tDrUY7dWNGOxRL/6arm5Ph83Q
-	 qtr3SaQ9vvwKGSLNwAmc4QKWc3/DGIF5Ea+9yHo8=
+	b=oJqip+U38Qs5+4f1Nf6px6j6KlWr/iBgLRibL6kWL42uECZVhWOktQCm2cYidrw6N
+	 FaOABDroQHEuTpqnh0jViJnApnVP+FS+RulsBe5rzV0s4sTaSGwNU6v5739KU2ueQA
+	 mdDT9s+MjDMKl/itF5U0Nwdv+AtTC8E5UewTitKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 545/600] arm64: csum: Fix OoB access in IP checksum code for negative lengths
-Date: Mon, 11 Sep 2023 15:49:38 +0200
-Message-ID: <20230911134649.707769460@linuxfoundation.org>
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 546/600] ALSA: hda/cirrus: Fix broken audio on hardware with two CS42L42 codecs.
+Date: Mon, 11 Sep 2023 15:49:39 +0200
+Message-ID: <20230911134649.737871765@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,75 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-commit 8bd795fedb8450ecbef18eeadbd23ed8fc7630f5 upstream.
+commit 99bf5b0baac941176a6a3d5cef7705b29808de34 upstream.
 
-Although commit c2c24edb1d9c ("arm64: csum: Fix pathological zero-length
-calls") added an early return for zero-length input, syzkaller has
-popped up with an example of a _negative_ length which causes an
-undefined shift and an out-of-bounds read:
+Recently in v6.3-rc1 there was a change affecting behaviour of hrtimers
+(commit 0c52310f260014d95c1310364379772cb74cf82d) and causing
+few issues on platforms with two CS42L42 codecs. Canonical/Dell
+has reported an issue with Vostro-3910.
+We need to increase this value by 15ms.
 
- | BUG: KASAN: slab-out-of-bounds in do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
- | Read of size 4294966928 at addr ffff0000d7ac0170 by task syz-executor412/5975
- |
- | CPU: 0 PID: 5975 Comm: syz-executor412 Not tainted 6.4.0-rc4-syzkaller-g908f31f2a05b #0
- | Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
- | Call trace:
- |  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:233
- |  show_stack+0x2c/0x44 arch/arm64/kernel/stacktrace.c:240
- |  __dump_stack lib/dump_stack.c:88 [inline]
- |  dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
- |  print_address_description mm/kasan/report.c:351 [inline]
- |  print_report+0x174/0x514 mm/kasan/report.c:462
- |  kasan_report+0xd4/0x130 mm/kasan/report.c:572
- |  kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:187
- |  __kasan_check_read+0x20/0x30 mm/kasan/shadow.c:31
- |  do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
- |  csum_partial+0x30/0x58 lib/checksum.c:128
- |  gso_make_checksum include/linux/skbuff.h:4928 [inline]
- |  __udp_gso_segment+0xaf4/0x1bc4 net/ipv4/udp_offload.c:332
- |  udp6_ufo_fragment+0x540/0xca0 net/ipv6/udp_offload.c:47
- |  ipv6_gso_segment+0x5cc/0x1760 net/ipv6/ip6_offload.c:119
- |  skb_mac_gso_segment+0x2b4/0x5b0 net/core/gro.c:141
- |  __skb_gso_segment+0x250/0x3d0 net/core/dev.c:3401
- |  skb_gso_segment include/linux/netdevice.h:4859 [inline]
- |  validate_xmit_skb+0x364/0xdbc net/core/dev.c:3659
- |  validate_xmit_skb_list+0x94/0x130 net/core/dev.c:3709
- |  sch_direct_xmit+0xe8/0x548 net/sched/sch_generic.c:327
- |  __dev_xmit_skb net/core/dev.c:3805 [inline]
- |  __dev_queue_xmit+0x147c/0x3318 net/core/dev.c:4210
- |  dev_queue_xmit include/linux/netdevice.h:3085 [inline]
- |  packet_xmit+0x6c/0x318 net/packet/af_packet.c:276
- |  packet_snd net/packet/af_packet.c:3081 [inline]
- |  packet_sendmsg+0x376c/0x4c98 net/packet/af_packet.c:3113
- |  sock_sendmsg_nosec net/socket.c:724 [inline]
- |  sock_sendmsg net/socket.c:747 [inline]
- |  __sys_sendto+0x3b4/0x538 net/socket.c:2144
-
-Extend the early return to reject negative lengths as well, aligning our
-implementation with the generic code in lib/checksum.c
-
-Cc: Robin Murphy <robin.murphy@arm.com>
-Fixes: 5777eaed566a ("arm64: Implement optimised checksum routine")
-Reported-by: syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/000000000000e0e94c0603f8d213@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://bugs.launchpad.net/somerville/+bug/2031060
+Fixes: 9fb9fa18fb50 ("ALSA: hda/cirrus: Add extra 10 ms delay to allow PLL settle and lock.")
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230904160033.908135-1-vitalyr@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/lib/csum.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_cs8409.c |    2 +-
+ sound/pci/hda/patch_cs8409.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/lib/csum.c
-+++ b/arch/arm64/lib/csum.c
-@@ -24,7 +24,7 @@ unsigned int __no_sanitize_address do_cs
- 	const u64 *ptr;
- 	u64 data, sum64 = 0;
+--- a/sound/pci/hda/patch_cs8409.c
++++ b/sound/pci/hda/patch_cs8409.c
+@@ -888,7 +888,7 @@ static void cs42l42_resume(struct sub_co
  
--	if (unlikely(len == 0))
-+	if (unlikely(len <= 0))
- 		return 0;
+ 	/* Initialize CS42L42 companion codec */
+ 	cs8409_i2c_bulk_write(cs42l42, cs42l42->init_seq, cs42l42->init_seq_num);
+-	usleep_range(30000, 35000);
++	msleep(CS42L42_INIT_TIMEOUT_MS);
  
- 	offset = (unsigned long)buff & 7;
+ 	/* Clear interrupts, by reading interrupt status registers */
+ 	cs8409_i2c_bulk_read(cs42l42, irq_regs, ARRAY_SIZE(irq_regs));
+--- a/sound/pci/hda/patch_cs8409.h
++++ b/sound/pci/hda/patch_cs8409.h
+@@ -229,6 +229,7 @@ enum cs8409_coefficient_index_registers
+ #define CS42L42_I2C_SLEEP_US			(2000)
+ #define CS42L42_PDN_TIMEOUT_US			(250000)
+ #define CS42L42_PDN_SLEEP_US			(2000)
++#define CS42L42_INIT_TIMEOUT_MS			(45)
+ #define CS42L42_FULL_SCALE_VOL_MASK		(2)
+ #define CS42L42_FULL_SCALE_VOL_0DB		(1)
+ #define CS42L42_FULL_SCALE_VOL_MINUS6DB		(0)
 
 
