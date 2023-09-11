@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D5E1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14753C433CB;
-	Mon, 11 Sep 2023 14:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE30E1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DE3C433C9;
+	Mon, 11 Sep 2023 14:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442516;
-	bh=RfOXefkb/ViyT7bHHFPcyY542dVq93YXHY10GlDpZA4=;
+	s=korg; t=1694442519;
+	bh=gZ6CBj0FDNnEsOMhoeNctjqEUpr+z3BROmGKOuggT9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCSZE70mkjVIQLVk8yQUtMWHxYKWuPDwavqAcBgTVN8MQF32YDotFOdHzIvCZm5M6
-	 3fcq6XaeubiSYdFHInHfMYQOId0yWkAF4qDmUjMvBPFz6OWKhVxlBO6OFzWStalUO5
-	 BNJEtK9sIEqw0yiDXrpR8WRUzw8/y3dIEAWUv+ew=
+	b=RDushILIABXEoRDSGS4CdGOG6slVjZZquJoQTspnkgR3P5zBPmWoG/T5dI5a+IHxq
+	 XjlSCmVVrzu505000xrc6GxNTgPZiwrXZjY2D/A4xSOAACPXfT0nPQVoO3sRg0Hh4A
+	 GXaOflvt0/wYL2NByXrNkG19DY9v+A9O/9JrtVsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@kernel.org>,
+	Lukasz Majewski <lukma@denx.de>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 051/737] Revert "wifi: ath6k: silence false positive -Wno-dangling-pointer warning on GCC 12"
-Date: Mon, 11 Sep 2023 15:38:30 +0200
-Message-ID: <20230911134651.893327767@linuxfoundation.org>
+Subject: [PATCH 6.4 052/737] net: dsa: microchip: KSZ9477 register regmap alignment to 32 bit boundaries
+Date: Mon, 11 Sep 2023 15:38:31 +0200
+Message-ID: <20230911134651.926619927@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,39 +41,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalle Valo <kvalo@kernel.org>
+From: Lukasz Majewski <lukma@denx.de>
 
-[ Upstream commit a1ce186db7f0e449f35d12fb55ae0da2a1b400e2 ]
+[ Upstream commit 8d7ae22ae9f8c8a4407f8e993df64440bdbd0cee ]
 
-This reverts commit bd1d129daa3ede265a880e2c6a7f91eab0f4dc62.
+The commit (SHA1: 5c844d57aa7894154e49cf2fc648bfe2f1aefc1c) provided code
+to apply "Module 6: Certain PHY registers must be written as pairs instead
+of singly" errata for KSZ9477 as this chip for certain PHY registers
+(0xN120 to 0xN13F, N=1,2,3,4,5) must be accesses as 32 bit words instead
+of 16 or 8 bit access.
+Otherwise, adjacent registers (no matter if reserved or not) are
+overwritten with 0x0.
 
-The dangling-pointer warnings were disabled kernel-wide by commit 49beadbd47c2
-("gcc-12: disable '-Wdangling-pointer' warning for now") for v5.19. So this
-hack in ath6kl is not needed anymore.
+Without this patch some registers (e.g. 0x113c or 0x1134) required for 32
+bit access are out of valid regmap ranges.
 
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230724100823.2948804-1-kvalo@kernel.org
+As a result, following error is observed and KSZ9477 is not properly
+configured:
+
+ksz-switch spi1.0: can't rmw 32bit reg 0x113c: -EIO
+ksz-switch spi1.0: can't rmw 32bit reg 0x1134: -EIO
+ksz-switch spi1.0 lan1 (uninitialized): failed to connect to PHY: -EIO
+ksz-switch spi1.0 lan1 (uninitialized): error -5 setting up PHY for tree 0, switch 0, port 0
+
+The solution is to modify regmap_reg_range to allow accesses with 4 bytes
+boundaries.
+
+Signed-off-by: Lukasz Majewski <lukma@denx.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/Makefile | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 35 +++++++++++---------------
+ 1 file changed, 15 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/Makefile b/drivers/net/wireless/ath/ath6kl/Makefile
-index a75bfa9fd1cfd..dc2b3b46781e1 100644
---- a/drivers/net/wireless/ath/ath6kl/Makefile
-+++ b/drivers/net/wireless/ath/ath6kl/Makefile
-@@ -36,11 +36,6 @@ ath6kl_core-y += wmi.o
- ath6kl_core-y += core.o
- ath6kl_core-y += recovery.o
- 
--# FIXME: temporarily silence -Wdangling-pointer on non W=1+ builds
--ifndef KBUILD_EXTRA_WARN
--CFLAGS_htc_mbox.o += $(call cc-disable-warning, dangling-pointer)
--endif
--
- ath6kl_core-$(CONFIG_NL80211_TESTMODE) += testmode.o
- ath6kl_core-$(CONFIG_ATH6KL_TRACING) += trace.o
- 
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index a0ba2605bb620..f87ed14fa2ab2 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -635,10 +635,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
+ 	regmap_reg_range(0x1030, 0x1030),
+ 	regmap_reg_range(0x1100, 0x1115),
+ 	regmap_reg_range(0x111a, 0x111f),
+-	regmap_reg_range(0x1122, 0x1127),
+-	regmap_reg_range(0x112a, 0x112b),
+-	regmap_reg_range(0x1136, 0x1139),
+-	regmap_reg_range(0x113e, 0x113f),
++	regmap_reg_range(0x1120, 0x112b),
++	regmap_reg_range(0x1134, 0x113b),
++	regmap_reg_range(0x113c, 0x113f),
+ 	regmap_reg_range(0x1400, 0x1401),
+ 	regmap_reg_range(0x1403, 0x1403),
+ 	regmap_reg_range(0x1410, 0x1417),
+@@ -669,10 +668,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
+ 	regmap_reg_range(0x2030, 0x2030),
+ 	regmap_reg_range(0x2100, 0x2115),
+ 	regmap_reg_range(0x211a, 0x211f),
+-	regmap_reg_range(0x2122, 0x2127),
+-	regmap_reg_range(0x212a, 0x212b),
+-	regmap_reg_range(0x2136, 0x2139),
+-	regmap_reg_range(0x213e, 0x213f),
++	regmap_reg_range(0x2120, 0x212b),
++	regmap_reg_range(0x2134, 0x213b),
++	regmap_reg_range(0x213c, 0x213f),
+ 	regmap_reg_range(0x2400, 0x2401),
+ 	regmap_reg_range(0x2403, 0x2403),
+ 	regmap_reg_range(0x2410, 0x2417),
+@@ -703,10 +701,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
+ 	regmap_reg_range(0x3030, 0x3030),
+ 	regmap_reg_range(0x3100, 0x3115),
+ 	regmap_reg_range(0x311a, 0x311f),
+-	regmap_reg_range(0x3122, 0x3127),
+-	regmap_reg_range(0x312a, 0x312b),
+-	regmap_reg_range(0x3136, 0x3139),
+-	regmap_reg_range(0x313e, 0x313f),
++	regmap_reg_range(0x3120, 0x312b),
++	regmap_reg_range(0x3134, 0x313b),
++	regmap_reg_range(0x313c, 0x313f),
+ 	regmap_reg_range(0x3400, 0x3401),
+ 	regmap_reg_range(0x3403, 0x3403),
+ 	regmap_reg_range(0x3410, 0x3417),
+@@ -737,10 +734,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
+ 	regmap_reg_range(0x4030, 0x4030),
+ 	regmap_reg_range(0x4100, 0x4115),
+ 	regmap_reg_range(0x411a, 0x411f),
+-	regmap_reg_range(0x4122, 0x4127),
+-	regmap_reg_range(0x412a, 0x412b),
+-	regmap_reg_range(0x4136, 0x4139),
+-	regmap_reg_range(0x413e, 0x413f),
++	regmap_reg_range(0x4120, 0x412b),
++	regmap_reg_range(0x4134, 0x413b),
++	regmap_reg_range(0x413c, 0x413f),
+ 	regmap_reg_range(0x4400, 0x4401),
+ 	regmap_reg_range(0x4403, 0x4403),
+ 	regmap_reg_range(0x4410, 0x4417),
+@@ -771,10 +767,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
+ 	regmap_reg_range(0x5030, 0x5030),
+ 	regmap_reg_range(0x5100, 0x5115),
+ 	regmap_reg_range(0x511a, 0x511f),
+-	regmap_reg_range(0x5122, 0x5127),
+-	regmap_reg_range(0x512a, 0x512b),
+-	regmap_reg_range(0x5136, 0x5139),
+-	regmap_reg_range(0x513e, 0x513f),
++	regmap_reg_range(0x5120, 0x512b),
++	regmap_reg_range(0x5134, 0x513b),
++	regmap_reg_range(0x513c, 0x513f),
+ 	regmap_reg_range(0x5400, 0x5401),
+ 	regmap_reg_range(0x5403, 0x5403),
+ 	regmap_reg_range(0x5410, 0x5417),
 -- 
 2.40.1
 
