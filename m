@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E0D11184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E53C433C7;
-	Mon, 11 Sep 2023 13:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B42F9F4
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA6DC433C8;
+	Mon, 11 Sep 2023 13:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440752;
-	bh=mKcWR8IiEgZL/h9Y6LgXcatYCVbKDHh9nqrW5LZNfy4=;
+	s=korg; t=1694440754;
+	bh=FxwHFyyPsRrhU+wcj5T6wknjdbfIn6Wlymeu4iw3cHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tR/wB3wAkHiA8vzGca1wAyL/laRZriL8u0RQ+WRy+NaGaSq+nlGwL7F1iYTmQi+iJ
-	 LEHN4u+Ni5I4mFFGhtKw62hKUP7+iuFv0r6NdVUxauVzx08jLhKoi0Bujjn2MSDGve
-	 2COP9Sn8d3f5SyWnOInOdA7AFd+qsCUSJi4xKMTw=
+	b=pSlOqZ1m1CzOcu7jBNtjU5moCJbODYE+5rxAsaFumYMYh5pVYGCn4TfoteW6hc144
+	 C+dwBdFKwAIrQJzfyAzR9F8Mtx5TZ2DtTx9W/Tfj4pGPshDkZowH4A537wNU428c+F
+	 HxqpaRnXldBsgtQDWibAGGdHjJff8BT5/MrUrLGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 165/739] bpf: Fix a bpf_kptr_xchg() issue with local kptr
-Date: Mon, 11 Sep 2023 15:39:24 +0200
-Message-ID: <20230911134655.781449680@linuxfoundation.org>
+Subject: [PATCH 6.5 174/739] Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync
+Date: Mon, 11 Sep 2023 15:39:33 +0200
+Message-ID: <20230911134656.056171418@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,85 +40,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit ab6c637ad0276e42f8acabcbc64932a6d346dab3 ]
+[ Upstream commit 94d9ba9f9888b748d4abd2aa1547af56ae85f772 ]
 
-When reviewing local percpu kptr support, Alexei discovered a bug
-wherea bpf_kptr_xchg() may succeed even if the map value kptr type and
-locally allocated obj type do not match ([1]). Missed struct btf_id
-comparison is the reason for the bug. This patch added such struct btf_id
-comparison and will flag verification failure if types do not match.
+Use-after-free can occur in hci_disconnect_all_sync if a connection is
+deleted by concurrent processing of a controller event.
 
-  [1] https://lore.kernel.org/bpf/20230819002907.io3iphmnuk43xblu@macbook-pro-8.dhcp.thefacebook.com/#t
+To prevent this the code now tries to iterate over the list backwards
+to ensure the links are cleanup before its parents, also it no longer
+relies on a cursor, instead it always uses the last element since
+hci_abort_conn_sync is guaranteed to call hci_conn_del.
 
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Fixes: 738c96d5e2e3 ("bpf: Allow local kptrs to be exchanged via bpf_kptr_xchg")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20230822050053.2886960-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+UAF crash log:
+==================================================================
+BUG: KASAN: slab-use-after-free in hci_set_powered_sync
+(net/bluetooth/hci_sync.c:5424) [bluetooth]
+Read of size 8 at addr ffff888009d9c000 by task kworker/u9:0/124
+
+CPU: 0 PID: 124 Comm: kworker/u9:0 Tainted: G        W
+6.5.0-rc1+ #10
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+1.16.2-1.fc38 04/01/2014
+Workqueue: hci0 hci_cmd_sync_work [bluetooth]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5b/0x90
+ print_report+0xcf/0x670
+ ? __virt_addr_valid+0xdd/0x160
+ ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+ kasan_report+0xa6/0xe0
+ ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+ ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+ hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+ ? __pfx_hci_set_powered_sync+0x10/0x10 [bluetooth]
+ ? __pfx_lock_release+0x10/0x10
+ ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+ hci_cmd_sync_work+0x137/0x220 [bluetooth]
+ process_one_work+0x526/0x9d0
+ ? __pfx_process_one_work+0x10/0x10
+ ? __pfx_do_raw_spin_lock+0x10/0x10
+ ? mark_held_locks+0x1a/0x90
+ worker_thread+0x92/0x630
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x196/0x1e0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2c/0x50
+ </TASK>
+
+Allocated by task 1782:
+ kasan_save_stack+0x33/0x60
+ kasan_set_track+0x25/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ hci_conn_add+0xa5/0xa80 [bluetooth]
+ hci_bind_cis+0x881/0x9b0 [bluetooth]
+ iso_connect_cis+0x121/0x520 [bluetooth]
+ iso_sock_connect+0x3f6/0x790 [bluetooth]
+ __sys_connect+0x109/0x130
+ __x64_sys_connect+0x40/0x50
+ do_syscall_64+0x60/0x90
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Freed by task 695:
+ kasan_save_stack+0x33/0x60
+ kasan_set_track+0x25/0x30
+ kasan_save_free_info+0x2b/0x50
+ __kasan_slab_free+0x10a/0x180
+ __kmem_cache_free+0x14d/0x2e0
+ device_release+0x5d/0xf0
+ kobject_put+0xdf/0x270
+ hci_disconn_complete_evt+0x274/0x3a0 [bluetooth]
+ hci_event_packet+0x579/0x7e0 [bluetooth]
+ hci_rx_work+0x287/0xaa0 [bluetooth]
+ process_one_work+0x526/0x9d0
+ worker_thread+0x92/0x630
+ kthread+0x196/0x1e0
+ ret_from_fork+0x2c/0x50
+==================================================================
+
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_sync.c | 55 +++++++++++++++++++++++++---------------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 600f57ad0ab58..903de82dec423 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4982,20 +4982,22 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
- 			       struct bpf_reg_state *reg, u32 regno)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index fa675bacfb309..bc84b4617e824 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5337,6 +5337,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
  {
- 	const char *targ_name = btf_type_name(kptr_field->kptr.btf, kptr_field->kptr.btf_id);
--	int perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
-+	int perm_flags;
- 	const char *reg_name = "";
+ 	int err = 0;
+ 	u16 handle = conn->handle;
++	struct hci_conn *c;
  
--	/* Only unreferenced case accepts untrusted pointers */
--	if (kptr_field->type == BPF_KPTR_UNREF)
--		perm_flags |= PTR_UNTRUSTED;
-+	if (btf_is_kernel(reg->btf)) {
-+		perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
-+
-+		/* Only unreferenced case accepts untrusted pointers */
-+		if (kptr_field->type == BPF_KPTR_UNREF)
-+			perm_flags |= PTR_UNTRUSTED;
-+	} else {
-+		perm_flags = PTR_MAYBE_NULL | MEM_ALLOC;
-+	}
- 
- 	if (base_type(reg->type) != PTR_TO_BTF_ID || (type_flag(reg->type) & ~perm_flags))
- 		goto bad_type;
- 
--	if (!btf_is_kernel(reg->btf)) {
--		verbose(env, "R%d must point to kernel BTF\n", regno);
--		return -EINVAL;
--	}
- 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
- 	reg_name = btf_type_name(reg->btf, reg->btf_id);
- 
-@@ -5008,7 +5010,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
- 	if (__check_ptr_off_reg(env, reg, regno, true))
- 		return -EACCES;
- 
--	/* A full type match is needed, as BTF can be vmlinux or module BTF, and
-+	/* A full type match is needed, as BTF can be vmlinux, module or prog BTF, and
- 	 * we also need to take into account the reg->off.
- 	 *
- 	 * We want to support cases like:
-@@ -7750,7 +7752,10 @@ static int check_reg_type(struct bpf_verifier_env *env, u32 regno,
- 			verbose(env, "verifier internal error: unimplemented handling of MEM_ALLOC\n");
- 			return -EFAULT;
+ 	switch (conn->state) {
+ 	case BT_CONNECTED:
+@@ -5358,43 +5359,57 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
  		}
--		/* Handled by helper specific checks */
-+		if (meta->func_id == BPF_FUNC_kptr_xchg) {
-+			if (map_kptr_match_type(env, meta->kptr_field, reg, regno))
-+				return -EACCES;
-+		}
  		break;
- 	case PTR_TO_BTF_ID | MEM_PERCPU:
- 	case PTR_TO_BTF_ID | MEM_PERCPU | PTR_TRUSTED:
+ 	default:
++		hci_dev_lock(hdev);
+ 		conn->state = BT_CLOSED;
++		hci_disconn_cfm(conn, reason);
++		hci_conn_del(conn);
++		hci_dev_unlock(hdev);
+ 		return 0;
+ 	}
+ 
++	hci_dev_lock(hdev);
++
++	/* Check if the connection hasn't been cleanup while waiting
++	 * commands to complete.
++	 */
++	c = hci_conn_hash_lookup_handle(hdev, handle);
++	if (!c || c != conn) {
++		err = 0;
++		goto unlock;
++	}
++
+ 	/* Cleanup hci_conn object if it cannot be cancelled as it
+ 	 * likelly means the controller and host stack are out of sync
+ 	 * or in case of LE it was still scanning so it can be cleanup
+ 	 * safely.
+ 	 */
+-	if (err) {
+-		struct hci_conn *c;
+-
+-		/* Check if the connection hasn't been cleanup while waiting
+-		 * commands to complete.
+-		 */
+-		c = hci_conn_hash_lookup_handle(hdev, handle);
+-		if (!c || c != conn)
+-			return 0;
+-
+-		hci_dev_lock(hdev);
+-		hci_conn_failed(conn, err);
+-		hci_dev_unlock(hdev);
+-	}
++	hci_conn_failed(conn, reason);
+ 
++unlock:
++	hci_dev_unlock(hdev);
+ 	return err;
+ }
+ 
+ static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
+ {
+-	struct hci_conn *conn, *tmp;
+-	int err;
++	struct list_head *head = &hdev->conn_hash.list;
++	struct hci_conn *conn;
+ 
+-	list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
+-		err = hci_abort_conn_sync(hdev, conn, reason);
+-		if (err)
+-			return err;
++	rcu_read_lock();
++	while ((conn = list_first_or_null_rcu(head, struct hci_conn, list))) {
++		/* Make sure the connection is not freed while unlocking */
++		conn = hci_conn_get(conn);
++		rcu_read_unlock();
++		/* Disregard possible errors since hci_conn_del shall have been
++		 * called even in case of errors had occurred since it would
++		 * then cause hci_conn_failed to be called which calls
++		 * hci_conn_del internally.
++		 */
++		hci_abort_conn_sync(hdev, conn, reason);
++		hci_conn_put(conn);
++		rcu_read_lock();
+ 	}
++	rcu_read_unlock();
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
