@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9CE11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A48EC433C8;
-	Mon, 11 Sep 2023 14:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B38C11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28CCC433C7;
+	Mon, 11 Sep 2023 14:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443296;
-	bh=71kWOVC4xLJqtXfKH0wEqudEENFy5ICF0Nbk+GBmEAs=;
+	s=korg; t=1694443299;
+	bh=r3dmspe3Z/06cPl9pNIgRPMjrF2XAjfbqe8G62astIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVByiv3YiVISHMzj5OSST2XsKRQxpKepkwRjo/A6B0iTA3KwWO+hwXirv1G8Y9sxm
-	 N1rmfFNyVrZHTRhEIsSI04+suhwDuLcPf7YlFcOrTCyx7m7INyjhjxOf1gePgtku1K
-	 iBboXJeDtgQI9ObbioKkKW5LWHZCuZuus1MMRlOc=
+	b=kP1EFF1uQBpdiL5aKi1j1+aqXtnT2CRUjbyJnhyO3/bqCyhrz0oSuYHsCOWM0ebBX
+	 ptjGl4zbUakv5P/G4I3dBN0zaawpujA3LezObTnoKj/A1bvNTsKdNpNVxrcesyngZj
+	 xZQDfvYWgqhSpRp7ZhFeLdu8c0v7+E9XBn3yE7zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 300/737] arm64: dts: qcom: sm8250: Mark PCIe hosts as DMA coherent
-Date: Mon, 11 Sep 2023 15:42:39 +0200
-Message-ID: <20230911134658.934789602@linuxfoundation.org>
+Subject: [PATCH 6.4 327/737] ARM: dts: s5pv210: add dummy 5V regulator for backlight on SMDKv210
+Date: Mon, 11 Sep 2023 15:43:06 +0200
+Message-ID: <20230911134659.681862703@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,49 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 339d38a436f30d0f874815eafc7de2257346bf26 ]
+[ Upstream commit b77904ba177a9c67b6dbc3637fdf1faa22df6e5c ]
 
-The PCIe hosts on SM8250 are cache-coherent. Mark them as such.
+Backlight is supplied by DC5V regulator.  The DTS has no PMIC node, so
+just add a regulator-fixed to solve it and fix dtbs_check warning:
 
-Fixes: e53bdfc00977 ("arm64: dts: qcom: sm8250: Add PCIe support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230704-topic-8250_pcie_dmac-v1-1-799603a980b0@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  s5pv210-smdkv210.dtb: backlight: 'power-supply' is a required property
+
+Link: https://lore.kernel.org/r/20230421095721.31857-4-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 982655cb0e7f ("ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/s5pv210-smdkv210.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 4b0835109b01e..29f0b0381b278 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1905,6 +1905,7 @@ pcie0: pci@1c00000 {
+diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
+index fbae768d65e27..6e26c67e0a26e 100644
+--- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
++++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
+@@ -55,6 +55,14 @@ backlight {
+ 		default-brightness-level = <6>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pwm3_out>;
++		power-supply = <&dc5v_reg>;
++	};
++
++	dc5v_reg: regulator-0 {
++		compatible = "regulator-fixed";
++		regulator-name = "DC5V";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
+ 	};
+ };
  
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&pcie0_default_state>;
-+			dma-coherent;
- 
- 			status = "disabled";
- 		};
-@@ -2011,6 +2012,7 @@ pcie1: pci@1c08000 {
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&pcie1_default_state>;
-+			dma-coherent;
- 
- 			status = "disabled";
- 		};
-@@ -2119,6 +2121,7 @@ pcie2: pci@1c10000 {
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&pcie2_default_state>;
-+			dma-coherent;
- 
- 			status = "disabled";
- 		};
 -- 
 2.40.1
 
