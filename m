@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC951172F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02ADFC433C7;
-	Mon, 11 Sep 2023 15:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3A21172F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB97DC433C9;
+	Mon, 11 Sep 2023 15:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445872;
-	bh=DSaSrz7oqaPk1s33MLvDUc1sucOSKSigCPEtdaH6Yrs=;
+	s=korg; t=1694445875;
+	bh=4kJaWg4mADHgUuw2LKw4yO9zf1h7oR5tCs4zZrNaqT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3euHv/JXhgOG6Aq2ngeoAd6F10a6jxt+9QeteXjfMOhgatZllXCxguqW/eTfG88o
-	 jx58wlPaqsyKbUefWCyQqQ4+OMRThW8VvzSqnLxCHUC9X2pJXM0CZ2k/lDBQgQ64QW
-	 pMGm/u3G1M2dTe0MPBHrJpekMg+4HtQ5zMnMLDz4=
+	b=Dsd7NcJOChyxXkYV17vSiX3R7QhDi7seph7GhsFtn8c8eXNtBebg8rpqTVbtfUsqX
+	 dwSqDjmIumxYmFK57WRhLu9Ccbp9qNREzwdr62DlrQy5DGP+RCvxMmBWc38UZNU+V9
+	 84XtuWURaJI09vPv10VNMocIyZFIkaOMPYIupfM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Zhang <rex.zhang@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 501/600] dmaengine: idxd: Modify the dependence of attribute pasid_enabled
-Date: Mon, 11 Sep 2023 15:48:54 +0200
-Message-ID: <20230911134648.414674405@linuxfoundation.org>
+Subject: [PATCH 6.1 502/600] phy/rockchip: inno-hdmi: use correct vco_div_5 macro on rk3328
+Date: Mon, 11 Sep 2023 15:48:55 +0200
+Message-ID: <20230911134648.443072820@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,42 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Zhang <rex.zhang@intel.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 50c5e6f41d5ad7c731c31135a30d0e4f0e4fea26 ]
+[ Upstream commit 644c06dfbd0da713f772abf0a8f8581ac78e6264 ]
 
-Kernel PASID and user PASID are separately enabled. User needs to know the
-user PASID enabling status to decide how to use IDXD device in user space.
-This is done via the attribute /sys/bus/dsa/devices/dsa0/pasid_enabled.
-It's unnecessary for user to know the kernel PASID enabling status because
-user won't use the kernel PASID. But instead of showing the user PASID
-enabling status, the attribute shows the kernel PASID enabling status. Fix
-the issue by showing the user PASID enabling status in the attribute.
+inno_hdmi_phy_rk3328_clk_set_rate() is using the RK3228 macro
+when configuring vco_div_5 on RK3328.
 
-Fixes: 42a1b73852c4 ("dmaengine: idxd: Separate user and kernel pasid enabling")
-Signed-off-by: Rex Zhang <rex.zhang@intel.com>
-Acked-by: Fenghua Yu <fenghua.yu@intel.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230614062706.1743078-1-rex.zhang@intel.com
+Fix this by using correct vco_div_5 macro for RK3328.
+
+Fixes: 53706a116863 ("phy: add Rockchip Innosilicon hdmi phy")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20230615171005.2251032-2-jonas@kwiboo.se
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 18cd8151dee02..6e1e14b376e65 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1426,7 +1426,7 @@ static ssize_t pasid_enabled_show(struct device *dev,
- {
- 	struct idxd_device *idxd = confdev_to_idxd(dev);
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+index 80acca4e9e146..15339338aae35 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+@@ -790,8 +790,8 @@ static int inno_hdmi_phy_rk3328_clk_set_rate(struct clk_hw *hw,
+ 			 RK3328_PRE_PLL_POWER_DOWN);
  
--	return sysfs_emit(buf, "%u\n", device_pasid_enabled(idxd));
-+	return sysfs_emit(buf, "%u\n", device_user_pasid_enabled(idxd));
- }
- static DEVICE_ATTR_RO(pasid_enabled);
+ 	/* Configure pre-pll */
+-	inno_update_bits(inno, 0xa0, RK3228_PCLK_VCO_DIV_5_MASK,
+-			 RK3228_PCLK_VCO_DIV_5(cfg->vco_div_5_en));
++	inno_update_bits(inno, 0xa0, RK3328_PCLK_VCO_DIV_5_MASK,
++			 RK3328_PCLK_VCO_DIV_5(cfg->vco_div_5_en));
+ 	inno_write(inno, 0xa1, RK3328_PRE_PLL_PRE_DIV(cfg->prediv));
  
+ 	val = RK3328_SPREAD_SPECTRUM_MOD_DISABLE;
 -- 
 2.40.1
 
