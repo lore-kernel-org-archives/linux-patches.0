@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510101170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C127BC433C7;
-	Mon, 11 Sep 2023 14:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAA51170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F262C433C8;
+	Mon, 11 Sep 2023 14:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441556;
-	bh=ThUc+kqUFrt5a5D+4kYaUtc79CMLGMe6knmiZCgJSUw=;
+	s=korg; t=1694441558;
+	bh=moFL05icBGrlmue6hs+gAR5OMjSBZ4U6F3C5yHlllp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5KXd9pMV64yewD9eKrRT3Lr5QPWpFmOLlNkbSQwIgXBKR3fjzQIJnrgzCKVU1Tpz
-	 dozeWSEYiVtgUs7EkqrVf8WLxAxP7zo7vPezijITU7CZR+J7FuDOC4hMw10DTJEB8X
-	 DMXW4Fu2fSq7ZGj/w8A6RoXZeB+h7m5L/Q+Lyg/8=
+	b=Kpq3vCTndGbrhOuz7/ulsbycdfMtuUEX4ZXGJ9ScIfR7L20zFmYjMqfG4FceeWj05
+	 qLOMcBB+0rtlC7ME+q5mZQr2PGbBWyNwSU8kwGSlotiER7kyQK/4ZCN9sucevQiXKc
+	 v4rS/XRzpStdrw4ElHDTIsb0iZSNVtlv/G1lnHrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 454/739] media: i2c: tvp5150: check return value of devm_kasprintf()
-Date: Mon, 11 Sep 2023 15:44:13 +0200
-Message-ID: <20230911134703.838176881@linuxfoundation.org>
+Subject: [PATCH 6.5 455/739] media: v4l2-core: Fix a potential resource leak in v4l2_fwnode_parse_link()
+Date: Mon, 11 Sep 2023 15:44:14 +0200
+Message-ID: <20230911134703.864930861@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,39 +41,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 26ce7054d804be73935b9268d6e0ecf2fbbc8aef ]
+[ Upstream commit d7b13edd4cb4bfa335b6008ab867ac28582d3e5c ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+If fwnode_graph_get_remote_endpoint() fails, 'fwnode' is known to be NULL,
+so fwnode_handle_put() is a no-op.
 
-Fixes: 0556f1d580d4 ("media: tvp5150: add input source selection of_graph support")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Release the reference taken from a previous fwnode_graph_get_port_parent()
+call instead.
+
+Also handle fwnode_graph_get_port_parent() failures.
+
+In order to fix these issues, add an error handling path to the function
+and the needed gotos.
+
+Fixes: ca50c197bd96 ("[media] v4l: fwnode: Support generic fwnode for parsing standardised properties")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tvp5150.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/v4l2-core/v4l2-fwnode.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/tvp5150.c b/drivers/media/i2c/tvp5150.c
-index c7fb35ee3f9de..e543b3f7a4d89 100644
---- a/drivers/media/i2c/tvp5150.c
-+++ b/drivers/media/i2c/tvp5150.c
-@@ -2068,6 +2068,10 @@ static int tvp5150_parse_dt(struct tvp5150 *decoder, struct device_node *np)
- 		tvpc->ent.name = devm_kasprintf(dev, GFP_KERNEL, "%s %s",
- 						v4l2c->name, v4l2c->label ?
- 						v4l2c->label : "");
-+		if (!tvpc->ent.name) {
-+			ret = -ENOMEM;
-+			goto err_free;
-+		}
- 	}
+diff --git a/drivers/media/v4l2-core/v4l2-fwnode.c b/drivers/media/v4l2-core/v4l2-fwnode.c
+index 049c2f2001eaa..4fa9225aa3d93 100644
+--- a/drivers/media/v4l2-core/v4l2-fwnode.c
++++ b/drivers/media/v4l2-core/v4l2-fwnode.c
+@@ -568,19 +568,29 @@ int v4l2_fwnode_parse_link(struct fwnode_handle *fwnode,
+ 	link->local_id = fwep.id;
+ 	link->local_port = fwep.port;
+ 	link->local_node = fwnode_graph_get_port_parent(fwnode);
++	if (!link->local_node)
++		return -ENOLINK;
  
- 	ep_np = of_graph_get_endpoint_by_regs(np, TVP5150_PAD_VID_OUT, 0);
+ 	fwnode = fwnode_graph_get_remote_endpoint(fwnode);
+-	if (!fwnode) {
+-		fwnode_handle_put(fwnode);
+-		return -ENOLINK;
+-	}
++	if (!fwnode)
++		goto err_put_local_node;
+ 
+ 	fwnode_graph_parse_endpoint(fwnode, &fwep);
+ 	link->remote_id = fwep.id;
+ 	link->remote_port = fwep.port;
+ 	link->remote_node = fwnode_graph_get_port_parent(fwnode);
++	if (!link->remote_node)
++		goto err_put_remote_endpoint;
+ 
+ 	return 0;
++
++err_put_remote_endpoint:
++	fwnode_handle_put(fwnode);
++
++err_put_local_node:
++	fwnode_handle_put(link->local_node);
++
++	return -ENOLINK;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_fwnode_parse_link);
+ 
 -- 
 2.40.1
 
