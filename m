@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AF111710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DBCC433C8;
-	Mon, 11 Sep 2023 15:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D215C433C8;
+	Mon, 11 Sep 2023 15:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445883;
-	bh=eVTFQ6CrxaLrGrCfE/McUcTa/v4TIbnRMbVK9eBm438=;
+	s=korg; t=1694445886;
+	bh=27nKyDR4ra6wcAg6tApOC79OcDskFoUrwNmvWD8Vieo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0PovGGWP6iFT2Q6xY+XJsnzy3b46qVx/gSbWunx3j2QSdpaI3SqC3CVe0Bze4yNZ8
-	 9V7uI3yxHgbW+pWiW3doA5hd0zhjSCJr2QVzqAl4hhVeFUE8TXXbMTfDRw77/MW1A4
-	 vPlp9YvrRU7nYGSBP+N5dkTg48F1Xfhc84A3hNCM=
+	b=1nu1FRtb621mN4ui/YrPEksaJEgR7CS/s+EN8NwNuvA1ZjMiPKFjB3KLwyJ/hFwfd
+	 kKWAVePv/RiSb6twzBy21MM3Rh2WGR4fgzlh7o91JMeqmD5dBVbFRX9U3v1tL0vy+7
+	 8AuPkG6cjSVznwrDxiRkZQCKEpylupzvzhQEzoSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 505/600] rpmsg: glink: Add check for kstrdup
-Date: Mon, 11 Sep 2023 15:48:58 +0200
-Message-ID: <20230911134648.526804010@linuxfoundation.org>
+Subject: [PATCH 6.1 506/600] leds: pwm: Fix error code in led_pwm_create_fwnode()
+Date: Mon, 11 Sep 2023 15:48:59 +0200
+Message-ID: <20230911134648.554381713@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,37 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit b5c9ee8296a3760760c7b5d2e305f91412adc795 ]
+[ Upstream commit cadb2de2a7fd9e955381307de3eddfcc386c208e ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+Negative -EINVAL was intended, not positive EINVAL.  Fix it.
 
-Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230619030631.12361-1-jiasheng@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 95138e01275e ("leds: pwm: Make error handling more robust")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/a33b981a-b2c4-4dc2-b00a-626a090d2f11@moroto.mountain
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/leds/leds-pwm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 67e7664efb0dc..cb8f65c1d4e3b 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -224,6 +224,10 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
+diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
+index 6832180c1c54f..cc892ecd52408 100644
+--- a/drivers/leds/leds-pwm.c
++++ b/drivers/leds/leds-pwm.c
+@@ -146,7 +146,7 @@ static int led_pwm_create_fwnode(struct device *dev, struct led_pwm_priv *priv)
+ 			led.name = to_of_node(fwnode)->name;
  
- 	channel->glink = glink;
- 	channel->name = kstrdup(name, GFP_KERNEL);
-+	if (!channel->name) {
-+		kfree(channel);
-+		return ERR_PTR(-ENOMEM);
-+	}
+ 		if (!led.name) {
+-			ret = EINVAL;
++			ret = -EINVAL;
+ 			goto err_child_out;
+ 		}
  
- 	init_completion(&channel->open_req);
- 	init_completion(&channel->open_ack);
 -- 
 2.40.1
 
