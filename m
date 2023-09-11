@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3F61170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29DAC433C7;
-	Mon, 11 Sep 2023 13:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E101170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2E8C433C7;
+	Mon, 11 Sep 2023 13:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440707;
-	bh=FCORFtzPcMBE5PCZPpwyczDlFBbG5o9K7HUz5H1SaLc=;
+	s=korg; t=1694440710;
+	bh=uCkuAZ1VMNwBoQX/0f9u01s5A6VQ4IIvb47phhiZJPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UkcNQbLfsRiaLChNoGE8cqCOovxB/oriV057AJ+5GO1NoAAsoWewXalSznYJ3yVWe
-	 Nb4pp8uOWZ6/ZMbau4f99VifzbWAt8Z5i36TicwiuJG9R2BAj+fLUnZSSuh3mpMGoT
-	 Y1psOwjUQHibnRpg1aUVwFdaOoC27vSS/9VYriW4=
+	b=k9NVRZMZi+EFHfQCxCaJIdZGmV4WPB/dXzc/EOE30vRP8+N4MXfr7dqE9zH8cVmJl
+	 rh8q01iLTf/92E3DIkelUU4rWGXLEFtBInbSd2qz0jAPgfA5kZFeII8X33imTly29k
+	 TxjGNM52MDB5mYW3YTK5JM9D5qKqpfAgQrIyen4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Shalygin <eugene.shalygin@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 156/739] hwmon: (asus-ec-sensosrs) fix mutex path for X670E Hero
-Date: Mon, 11 Sep 2023 15:39:15 +0200
-Message-ID: <20230911134655.506458881@linuxfoundation.org>
+Subject: [PATCH 6.5 157/739] wifi: mwifiex: fix memory leak in mwifiex_histogram_read()
+Date: Mon, 11 Sep 2023 15:39:16 +0200
+Message-ID: <20230911134655.536125511@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,37 +41,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugene Shalygin <eugene.shalygin@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 9c53fb0ad1acaf227718ccae16e8fb8e01c05918 ]
+[ Upstream commit 9c8fd72a5c2a031cbc680a2990107ecd958ffcdb ]
 
-A user reported that they observe race condition warning [1] and after
-looking once again into the DSDT source it was found that wrong mutex
-was used.
+Always free the zeroed page on return from 'mwifiex_histogram_read()'.
 
-[1] https://github.com/zeule/asus-ec-sensors/issues/43
+Fixes: cbf6e05527a7 ("mwifiex: add rx histogram statistics support")
 
-Fixes: 790dec13c012 ("hwmon: (asus-ec-sensors) add ROG Crosshair X670E Hero.")
-Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
-Link: https://lore.kernel.org/r/20230821115418.25733-2-eugene.shalygin@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230802160726.85545-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/debugfs.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index f52a539eb33e9..51f9c2db403e7 100644
---- a/drivers/hwmon/asus-ec-sensors.c
-+++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -340,7 +340,7 @@ static const struct ec_board_info board_info_crosshair_x670e_hero = {
- 	.sensors = SENSOR_TEMP_CPU | SENSOR_TEMP_CPU_PACKAGE |
- 		SENSOR_TEMP_MB | SENSOR_TEMP_VRM |
- 		SENSOR_SET_TEMP_WATER,
--	.mutex_path = ASUS_HW_ACCESS_MUTEX_RMTW_ASMX,
-+	.mutex_path = ACPI_GLOBAL_LOCK_PSEUDO_PATH,
- 	.family = family_amd_600_series,
- };
+diff --git a/drivers/net/wireless/marvell/mwifiex/debugfs.c b/drivers/net/wireless/marvell/mwifiex/debugfs.c
+index 52b18f4a774b7..0cdd6c50c1c08 100644
+--- a/drivers/net/wireless/marvell/mwifiex/debugfs.c
++++ b/drivers/net/wireless/marvell/mwifiex/debugfs.c
+@@ -253,8 +253,11 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
+ 	if (!p)
+ 		return -ENOMEM;
+ 
+-	if (!priv || !priv->hist_data)
+-		return -EFAULT;
++	if (!priv || !priv->hist_data) {
++		ret = -EFAULT;
++		goto free_and_exit;
++	}
++
+ 	phist_data = priv->hist_data;
+ 
+ 	p += sprintf(p, "\n"
+@@ -309,6 +312,8 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
+ 	ret = simple_read_from_buffer(ubuf, count, ppos, (char *)page,
+ 				      (unsigned long)p - page);
+ 
++free_and_exit:
++	free_page(page);
+ 	return ret;
+ }
  
 -- 
 2.40.1
