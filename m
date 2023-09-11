@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBC31172F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00315C433C8;
-	Mon, 11 Sep 2023 15:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EAD11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF520C433C8;
+	Mon, 11 Sep 2023 15:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445671;
-	bh=sA2w6D8rP0vawXD4vFDBFj4nG9jVkf4K4sBmEiv7L10=;
+	s=korg; t=1694445674;
+	bh=PNNCmRNsS5rM1fKdAOOEuTpCfTahaBZ55MTjGKE1jT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UbMyK3LB/3/Dwp9Kk2AOaa5KdmSocYkuMZE9VlBFbNIfxdwmsYo/b+8+xQ7YdOfoc
-	 yzWdprFhhVb1tgVvadKSsAvqNJzq/tCYIIP9DjtQw3XprY2xYkx8cg5t7qWxZbt6pH
-	 5mECfkn3AtBSwM1C2Or6FvIk29GnRz2VpQcxb3BI=
+	b=OVXmC7rfNCT9RFMhqSpMgX6Toq7Ss0dZtRWZmV8HL9Tku3A+R7HJSxmXjs6NAvKOl
+	 k5R6hNRvRybyRt4ei2NiVMt/oBfr/aIcRiddTuF0Ot1wh5pmPQaR+0et2CmjkpFSL6
+	 QmIbWCbNAB0v76Nbox+8/8gL7EKoJDDn7LI1W2Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Machek <pavel@ucw.cz>,
-	Ricardo Ribalda Delgado <ribalda@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 392/600] media: ad5820: Drop unsupported ad5823 from i2c_ and of_device_id tables
-Date: Mon, 11 Sep 2023 15:47:05 +0200
-Message-ID: <20230911134645.247419001@linuxfoundation.org>
+Subject: [PATCH 6.1 424/600] iio: accel: adxl313: Fix adxl313_i2c_id[] table
+Date: Mon, 11 Sep 2023 15:47:37 +0200
+Message-ID: <20230911134646.178328149@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -44,63 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit f126ff7e4024f6704e6ec0d4137037568708a3c7 ]
+[ Upstream commit f636554c4cd1c644109cc525900a056495b86cc9 ]
 
-The supported ad5820 and ad5821 VCMs both use a single 16 bit register
-which is written by sending 2 bytes with the data directly after sending
-the i2c-client address.
+The .driver_data in adxl313_i2c_id[] for adxl312 and adxl314 is
+wrong. Fix this issue by adding corresponding adxl31x_chip_info
+data.
 
-The ad5823 OTOH has a more typical i2c / smbus device setup with multiple
-8 bit registers where the first byte send after the i2c-client address is
-the register address and the actual data only starts from the second byte
-after the i2c-client address.
-
-The ad5823 i2c_ and of_device_id-s was added at the same time as
-the ad5821 ids with as rationale:
-
-"""
-Some camera modules also refer that AD5823 is a replacement of AD5820:
-https://download.kamami.com/p564094-OV8865_DS.pdf
-"""
-
-The AD5823 may be an electrical and functional replacement of the AD5820,
-but from a software pov it is not compatible at all and it is going to
-need its own driver, drop its id from the ad5820 driver.
-
-Fixes: b8bf73136bae ("media: ad5820: Add support for ad5821 and ad5823")
-Cc: Pavel Machek <pavel@ucw.cz>
-Cc: Ricardo Ribalda Delgado <ribalda@kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reported-by: Jonathan Cameron <jic23@kernel.org>
+Closes: https://lore.kernel.org/all/20230722172832.04ad7738@jic23-huawei
+Fixes: a7a1c60bc4c9 ("drivers: iio: accel: adxl312 and adxl314 support")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230725171624.331283-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ad5820.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/iio/accel/adxl313_i2c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
-index a12fedcc3a1ce..088c29c4e2529 100644
---- a/drivers/media/i2c/ad5820.c
-+++ b/drivers/media/i2c/ad5820.c
-@@ -356,7 +356,6 @@ static void ad5820_remove(struct i2c_client *client)
- static const struct i2c_device_id ad5820_id_table[] = {
- 	{ "ad5820", 0 },
- 	{ "ad5821", 0 },
--	{ "ad5823", 0 },
+diff --git a/drivers/iio/accel/adxl313_i2c.c b/drivers/iio/accel/adxl313_i2c.c
+index 99cc7fc294882..68785bd3ef2f0 100644
+--- a/drivers/iio/accel/adxl313_i2c.c
++++ b/drivers/iio/accel/adxl313_i2c.c
+@@ -40,8 +40,8 @@ static const struct regmap_config adxl31x_i2c_regmap_config[] = {
+ 
+ static const struct i2c_device_id adxl313_i2c_id[] = {
+ 	{ .name = "adxl312", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
+-	{ .name = "adxl313", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
+-	{ .name = "adxl314", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
++	{ .name = "adxl313", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL313] },
++	{ .name = "adxl314", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL314] },
  	{ }
  };
- MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
-@@ -364,7 +363,6 @@ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
- static const struct of_device_id ad5820_of_table[] = {
- 	{ .compatible = "adi,ad5820" },
- 	{ .compatible = "adi,ad5821" },
--	{ .compatible = "adi,ad5823" },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, ad5820_of_table);
+ 
 -- 
 2.40.1
 
