@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2B5F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DB0C433C8;
-	Mon, 11 Sep 2023 14:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811A8472
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF4FC433C9;
+	Mon, 11 Sep 2023 14:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442781;
-	bh=LzN4vyUnuMuUa3eb0ivn+A6Jf2lccXQesQbfr2ixnjo=;
+	s=korg; t=1694442783;
+	bh=DiQKsMBonqxvj2xbKNagFmAXBpcHJu6CI0LVP8830/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MqCxjnI+waRIUH6O9lurhfSAQaTpESIppRUqwGuZjzhFuMijUs+Y2m9KMxjb9NeLb
-	 ZDb1XZ8F/EKvF5ViQAJJw47EAD+byockqwYvCELbSqL3oZ0MjtXV/J0/ihZxaZ/NaD
-	 0oCvJXsPIvUqCQ523qLV4OaYJDNMHuE7O2aRo0xA=
+	b=Kh5gf0ZHMmxXdGicxXt32q4vIWW6351cQWZ7xrg5pwMMTo3vh3ZafO/ULXr4gs+Ox
+	 J1PkLFVwDX+8aiTVGd/S2yad5adwOjZ7CIHuiQUdBpxcLve+UXbIGsvA+4jHPiajib
+	 pAjdZ4dgkQq0nXtIybPgc+/+ZhHTdIz7YMo/WEog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexander Lobakin <alobakin@pm.me>,
-	Quentin Monnet <quentin@isovalent.com>,
+	kernel test robot <lkp@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 145/737] bpftool: Use a local bpf_perf_event_value to fix accessing its fields
-Date: Mon, 11 Sep 2023 15:40:04 +0200
-Message-ID: <20230911134654.545150471@linuxfoundation.org>
+Subject: [PATCH 6.4 119/737] sched/psi: Select KERNFS as needed
+Date: Mon, 11 Sep 2023 15:39:38 +0200
+Message-ID: <20230911134653.826077033@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,135 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <alobakin@pm.me>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 658ac06801315b739774a15796ff06913ef5cad5 ]
+[ Upstream commit 98dfdd9ee93995a408192dbbf3dd219ba23e3738 ]
 
-Fix the following error when building bpftool:
+Users of KERNFS should select it to enforce its being built, so
+do this to prevent a build error.
 
-  CLANG   profiler.bpf.o
-  CLANG   pid_iter.bpf.o
-skeleton/profiler.bpf.c:18:21: error: invalid application of 'sizeof' to an incomplete type 'struct bpf_perf_event_value'
-        __uint(value_size, sizeof(struct bpf_perf_event_value));
-                           ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:13:39: note: expanded from macro '__uint'
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helper_defs.h:7:8: note: forward declaration of 'struct bpf_perf_event_value'
-struct bpf_perf_event_value;
-       ^
+In file included from ../kernel/sched/build_utility.c:97:
+../kernel/sched/psi.c: In function 'psi_trigger_poll':
+../kernel/sched/psi.c:1479:17: error: implicit declaration of function 'kernfs_generic_poll' [-Werror=implicit-function-declaration]
+ 1479 |                 kernfs_generic_poll(t->of, wait);
 
-struct bpf_perf_event_value is being used in the kernel only when
-CONFIG_BPF_EVENTS is enabled, so it misses a BTF entry then.
-Define struct bpf_perf_event_value___local with the
-`preserve_access_index` attribute inside the pid_iter BPF prog to
-allow compiling on any configs. It is a full mirror of a UAPI
-structure, so is compatible both with and w/o CO-RE.
-bpf_perf_event_read_value() requires a pointer of the original type,
-so a cast is needed.
-
-Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Alexander Lobakin <alobakin@pm.me>
-Signed-off-by: Quentin Monnet <quentin@isovalent.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230707095425.168126-5-quentin@isovalent.com
+Fixes: aff037078eca ("sched/psi: use kernfs polling functions for PSI trigger polling")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Link: lore.kernel.org/r/202307310732.r65EQFY0-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/profiler.bpf.c | 27 ++++++++++++++---------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ init/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-index ce5b65e07ab10..2f80edc682f11 100644
---- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
-+++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-@@ -4,6 +4,12 @@
- #include <bpf/bpf_helpers.h>
- #include <bpf/bpf_tracing.h>
+diff --git a/init/Kconfig b/init/Kconfig
+index 32c24950c4ced..c70617066a4c8 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -629,6 +629,7 @@ config TASK_IO_ACCOUNTING
  
-+struct bpf_perf_event_value___local {
-+	__u64 counter;
-+	__u64 enabled;
-+	__u64 running;
-+} __attribute__((preserve_access_index));
-+
- /* map of perf event fds, num_cpu * num_metric entries */
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
-@@ -15,14 +21,14 @@ struct {
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
- 	__uint(key_size, sizeof(u32));
--	__uint(value_size, sizeof(struct bpf_perf_event_value));
-+	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
- } fentry_readings SEC(".maps");
- 
- /* accumulated readings */
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
- 	__uint(key_size, sizeof(u32));
--	__uint(value_size, sizeof(struct bpf_perf_event_value));
-+	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
- } accum_readings SEC(".maps");
- 
- /* sample counts, one per cpu */
-@@ -39,7 +45,7 @@ const volatile __u32 num_metric = 1;
- SEC("fentry/XXX")
- int BPF_PROG(fentry_XXX)
- {
--	struct bpf_perf_event_value *ptrs[MAX_NUM_MATRICS];
-+	struct bpf_perf_event_value___local *ptrs[MAX_NUM_MATRICS];
- 	u32 key = bpf_get_smp_processor_id();
- 	u32 i;
- 
-@@ -53,10 +59,10 @@ int BPF_PROG(fentry_XXX)
- 	}
- 
- 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
--		struct bpf_perf_event_value reading;
-+		struct bpf_perf_event_value___local reading;
- 		int err;
- 
--		err = bpf_perf_event_read_value(&events, key, &reading,
-+		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
- 						sizeof(reading));
- 		if (err)
- 			return 0;
-@@ -68,14 +74,14 @@ int BPF_PROG(fentry_XXX)
- }
- 
- static inline void
--fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
-+fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
- {
--	struct bpf_perf_event_value *before, diff;
-+	struct bpf_perf_event_value___local *before, diff;
- 
- 	before = bpf_map_lookup_elem(&fentry_readings, &id);
- 	/* only account samples with a valid fentry_reading */
- 	if (before && before->counter) {
--		struct bpf_perf_event_value *accum;
-+		struct bpf_perf_event_value___local *accum;
- 
- 		diff.counter = after->counter - before->counter;
- 		diff.enabled = after->enabled - before->enabled;
-@@ -93,7 +99,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
- SEC("fexit/XXX")
- int BPF_PROG(fexit_XXX)
- {
--	struct bpf_perf_event_value readings[MAX_NUM_MATRICS];
-+	struct bpf_perf_event_value___local readings[MAX_NUM_MATRICS];
- 	u32 cpu = bpf_get_smp_processor_id();
- 	u32 i, zero = 0;
- 	int err;
-@@ -102,7 +108,8 @@ int BPF_PROG(fexit_XXX)
- 	/* read all events before updating the maps, to reduce error */
- 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
- 		err = bpf_perf_event_read_value(&events, cpu + i * num_cpu,
--						readings + i, sizeof(*readings));
-+						(void *)(readings + i),
-+						sizeof(*readings));
- 		if (err)
- 			return 0;
- 	}
+ config PSI
+ 	bool "Pressure stall information tracking"
++	select KERNFS
+ 	help
+ 	  Collect metrics that indicate how overcommitted the CPU, memory,
+ 	  and IO capacity are in the system.
 -- 
 2.40.1
 
