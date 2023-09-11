@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFB3F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045ABC433C7;
-	Mon, 11 Sep 2023 14:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46071F9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EBFC433C9;
+	Mon, 11 Sep 2023 14:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442735;
-	bh=KjxfeO6B3ZNjSBfxCqx5CxPRkMjcjF5qEkdZ0Au+p5I=;
+	s=korg; t=1694442738;
+	bh=37dmBk4kAbcH0Y8cCGjrgwUAPWfG+l8wfN96T4UOTeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0HRJ5b6ATp99iQFJg8EnBUM/INO8GweTvViBl968lLW+NRbktAr6D/NhDLqHelIz
-	 o2iVTpr8PD/6QmDPFr+ydrnDU5/63e4hgX5o7NciO9LJfCmTby1UeCSb3H6wA+iOxW
-	 neGZ/n4h+RFobVeQBpQ2FaMbGwh4KVIFaO5n/KYY=
+	b=aO6zQOt/pKEyYM+vYI2nORZlYUYID1BaCSpRncaX1/6rb+F7MooeNi5fNK+BPM49b
+	 tml3o6Oi8DDRSmySNbfypqFH0QZUhtsJ9Ak4V50/DWPxvxNA+WHv3IoBYQoI33qMt6
+	 Sq3LfADspkD5LP/zV+Xybs7HQwyXJxiannGZ+JYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 130/737] irqchip/loongson-eiointc: Fix return value checking of eiointc_index
-Date: Mon, 11 Sep 2023 15:39:49 +0200
-Message-ID: <20230911134654.134660204@linuxfoundation.org>
+Subject: [PATCH 6.4 131/737] ACPI: x86: s2idle: Post-increment variables when getting constraints
+Date: Mon, 11 Sep 2023 15:39:50 +0200
+Message-ID: <20230911134654.162008842@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -35,44 +36,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 2e99b73afde18853754c5fae8e8d1a66fe5e3f64 ]
+[ Upstream commit 3c6b1212d20bbbffcad5709ab0f2d5ed9b5859a8 ]
 
-Return value of function eiointc_index is int, however it is converted
-into uint32_t and then compared smaller than zero, this will cause logic
-problem.
+When code uses a pre-increment it makes the reader question "why".
+In the constraint fetching code there is no reason for the variables
+to be pre-incremented so adjust to post-increment.
+No intended functional changes.
 
-Fixes: dd281e1a1a93 ("irqchip: Add Loongson Extended I/O interrupt controller support")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230811095805.2974722-2-maobibo@loongson.cn
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 9cc8cd086f05 ("ACPI: x86: s2idle: Fix a logic error parsing AMD constraints table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-eiointc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/x86/s2idle.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
-index a7fcde3e3ecc7..ae28918df5c59 100644
---- a/drivers/irqchip/irq-loongson-eiointc.c
-+++ b/drivers/irqchip/irq-loongson-eiointc.c
-@@ -143,7 +143,7 @@ static int eiointc_router_init(unsigned int cpu)
- 	int i, bit;
- 	uint32_t data;
- 	uint32_t node = cpu_to_eio_node(cpu);
--	uint32_t index = eiointc_index(node);
-+	int index = eiointc_index(node);
+diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
+index e499c60c45791..3a9195df1aab3 100644
+--- a/drivers/acpi/x86/s2idle.c
++++ b/drivers/acpi/x86/s2idle.c
+@@ -122,13 +122,13 @@ static void lpi_device_get_constraints_amd(void)
+ 			acpi_handle_debug(lps0_device_handle,
+ 					  "LPI: constraints list begin:\n");
  
- 	if (index < 0) {
- 		pr_err("Error: invalid nodemap!\n");
+-			for (j = 0; j < package->package.count; ++j) {
++			for (j = 0; j < package->package.count; j++) {
+ 				union acpi_object *info_obj = &package->package.elements[j];
+ 				struct lpi_device_constraint_amd dev_info = {};
+ 				struct lpi_constraints *list;
+ 				acpi_status status;
+ 
+-				for (k = 0; k < info_obj->package.count; ++k) {
++				for (k = 0; k < info_obj->package.count; k++) {
+ 					union acpi_object *obj = &info_obj->package.elements[k];
+ 
+ 					list = &lpi_constraints_table[lpi_constraints_table_size];
+@@ -213,7 +213,7 @@ static void lpi_device_get_constraints(void)
+ 		if (!package)
+ 			continue;
+ 
+-		for (j = 0; j < package->package.count; ++j) {
++		for (j = 0; j < package->package.count; j++) {
+ 			union acpi_object *element =
+ 					&(package->package.elements[j]);
+ 
+@@ -245,7 +245,7 @@ static void lpi_device_get_constraints(void)
+ 
+ 		constraint->min_dstate = -1;
+ 
+-		for (j = 0; j < package_count; ++j) {
++		for (j = 0; j < package_count; j++) {
+ 			union acpi_object *info_obj = &info.package[j];
+ 			union acpi_object *cnstr_pkg;
+ 			union acpi_object *obj;
 -- 
 2.40.1
 
