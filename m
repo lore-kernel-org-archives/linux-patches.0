@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3886D1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A0EC433C9;
-	Mon, 11 Sep 2023 14:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE861170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEB3C433C8;
+	Mon, 11 Sep 2023 14:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441487;
-	bh=o1/7yg+yoXJ4OetYIdtfJN418BnAWah0pveV5+vJ1zc=;
+	s=korg; t=1694441490;
+	bh=a4tGVZEPEnj4HpcWOXjyevLUiOFGcHKis/2N4W8y0L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7qKi0WMl5FQeSTGCCV+2EPX88NVhOscB2o0KI+c75jP5jMy+VIcg9M+IysBYlVei
-	 4Kh1nNih2JkFDqmwdeMq3ISOhxEq7HhEnpFffJZ+7n3rqbhyg9SLy3s9bH4/T5aPgQ
-	 i/EN9OvIu3IT8GXkcCARNkw5K3ZBAbWQ1ZUNjm18=
+	b=E7PYYuYyGYnQGDRt73xdpFtYNd5Nf9QhOX/EscdCG+8Qij8RxjtxSHlbnrcnGPtGX
+	 6re4tqcELyc1JgJhSIEJHryjEilZrd5/YpjC8x8RBpFIlH3KgMq3n8oJEubffPtwSP
+	 zMuauE5RaXcSSFldndlhV1YPy9SlRe8cN/pliWxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Zongyong <wuzongyong@linux.alibaba.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 403/739] PCI: Mark NVIDIA T4 GPUs to avoid bus reset
-Date: Mon, 11 Sep 2023 15:43:22 +0200
-Message-ID: <20230911134702.437017586@linuxfoundation.org>
+Subject: [PATCH 6.5 404/739] pinctrl: mcp23s08: check return value of devm_kasprintf()
+Date: Mon, 11 Sep 2023 15:43:23 +0200
+Message-ID: <20230911134702.463695526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,42 +35,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wu Zongyong <wuzongyong@linux.alibaba.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit d5af729dc2071273f14cbb94abbc60608142fd83 ]
+[ Upstream commit f941714a7c7698eadb59bc27d34d6d6f38982705 ]
 
-NVIDIA T4 GPUs do not work with SBR. This problem is found when the T4 card
-is direct attached to a Root Port only. Avoid bus reset by marking T4 GPUs
-PCI_DEV_FLAGS_NO_BUS_RESET.
+devm_kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: 4c207e7121fa ("PCI: Mark some NVIDIA GPUs to avoid bus reset")
-Link: https://lore.kernel.org/r/2dcebea53a6eb9bd212ec6d8974af2e5e0333ef6.1681129861.git.wuzongyong@linux.alibaba.com
-Signed-off-by: Wu Zongyong <wuzongyong@linux.alibaba.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 0f04a81784fe ("pinctrl: mcp23s08: Split to three parts: core, I²C, SPI")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230621100409.1608395-1-claudiu.beznea@microchip.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-mcp23s08_spi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 321156ca273d5..dc96a126aad4e 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3724,7 +3724,7 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
-  */
- static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
- {
--	if ((dev->device & 0xffc0) == 0x2340)
-+	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
- 		quirk_no_bus_reset(dev);
- }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
+diff --git a/drivers/pinctrl/pinctrl-mcp23s08_spi.c b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
+index 9ae10318f6f35..ea059b9c5542e 100644
+--- a/drivers/pinctrl/pinctrl-mcp23s08_spi.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
+@@ -91,18 +91,28 @@ static int mcp23s08_spi_regmap_init(struct mcp23s08 *mcp, struct device *dev,
+ 		mcp->reg_shift = 0;
+ 		mcp->chip.ngpio = 8;
+ 		mcp->chip.label = devm_kasprintf(dev, GFP_KERNEL, "mcp23s08.%d", addr);
++		if (!mcp->chip.label)
++			return -ENOMEM;
+ 
+ 		config = &mcp23x08_regmap;
+ 		name = devm_kasprintf(dev, GFP_KERNEL, "%d", addr);
++		if (!name)
++			return -ENOMEM;
++
+ 		break;
+ 
+ 	case MCP_TYPE_S17:
+ 		mcp->reg_shift = 1;
+ 		mcp->chip.ngpio = 16;
+ 		mcp->chip.label = devm_kasprintf(dev, GFP_KERNEL, "mcp23s17.%d", addr);
++		if (!mcp->chip.label)
++			return -ENOMEM;
+ 
+ 		config = &mcp23x17_regmap;
+ 		name = devm_kasprintf(dev, GFP_KERNEL, "%d", addr);
++		if (!name)
++			return -ENOMEM;
++
+ 		break;
+ 
+ 	case MCP_TYPE_S18:
 -- 
 2.40.1
 
