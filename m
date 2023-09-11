@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B374511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32679C433C7;
-	Mon, 11 Sep 2023 15:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F7711710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33673C433C7;
+	Mon, 11 Sep 2023 15:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445784;
-	bh=1r9KtgJdsnllXB11O9E/voh0o+1m0RGy/0UmEsVIVg0=;
+	s=korg; t=1694445787;
+	bh=Riiw00nV4Y1esyXa16KOmK2haxKT1kfhPGj3Fm47LPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uu2dRXfOHt41y/KuCyscmwKGkbUV27ohU8kyu2Tf+KeUInWERMQKR4Tu9qHlAud07
-	 pEfAKCsTJyeGxp29ctYN655WmECuZCD4q5NP3O0HUMFJlZe7wY4+3wei34yyxo48kW
-	 CsbCZ1KK12Cvz+7KOYSxYeOye7DvqogU9byhcGY0=
+	b=IfLmTswc23VGPfac3xKRUyPb1YRWaROqx9p5PRKMzuq3OIrUpCvM2PhT4qLgv/avO
+	 c1hXVcObdWq0gtHv24vx4jhZ4Ig9ivXMvRu1/xvT/QXqdIHypeMJUivcU7AHP1Rw7o
+	 Ly3wm3+cqPeq9xsrZfrRWlerVIbuVk50HnUvV5bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 471/600] media: ov2680: Fix ov2680_set_fmt() which == V4L2_SUBDEV_FORMAT_TRY not working
-Date: Mon, 11 Sep 2023 15:48:24 +0200
-Message-ID: <20230911134647.549062501@linuxfoundation.org>
+Subject: [PATCH 6.1 454/600] media: cec: core: add adap_unconfigured() callback
+Date: Mon, 11 Sep 2023 15:48:07 +0200
+Message-ID: <20230911134647.055775994@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,92 +40,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit c0e97a4b4f20639f74cd5809b42ba6cbf9736a7d ]
+[ Upstream commit 948a77aaecf202f722cf2264025f9987e5bd5c26 ]
 
-ov2680_set_fmt() which == V4L2_SUBDEV_FORMAT_TRY was getting
-the try_fmt v4l2_mbus_framefmt struct from the passed in sd_state
-and then storing the contents of that into the return by reference
-format->format struct.
+The adap_configured() callback was called with the adap->lock mutex
+held if the 'configured' argument was false, and without the adap->lock
+mutex held if that argument was true.
 
-While the right thing to do would be filling format->format based on
-the just looked up mode and then store the results of that in
-sd_state->pads[0].try_fmt .
+That was very confusing, and so split this up in a adap_unconfigured()
+callback and a high-level configured() callback.
 
-Before the previous change introducing ov2680_fill_format() this
-resulted in ov2680_set_fmt() which == V4L2_SUBDEV_FORMAT_TRY always
-returning the zero-ed out sd_state->pads[0].try_fmt in format->format
-breaking callers using this.
+This also makes it easier to understand when the mutex is held: all
+low-level adap_* callbacks are called with the mutex held. All other
+callbacks are called without that mutex held.
 
-After the introduction of ov2680_fill_format() which at least
-initializes sd_state->pads[0].try_fmt properly, format->format
-is now always being filled with the default 800x600 mode set by
-ov2680_init_cfg() independent of the actual requested mode.
-
-Move the filling of format->format with ov2680_fill_format() to
-before the if (which == V4L2_SUBDEV_FORMAT_TRY) and then store
-the filled in format->format in sd_state->pads[0].try_fmt to
-fix this.
-
-Note this removes the fmt local variable because IMHO having a local
-variable which points to a sub-struct of one of the function arguments
-just leads to confusion when reading the code.
-
-Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: f1b57164305d ("media: cec: add optional adap_configured callback")
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/media/cec/core/cec-adap.c | 4 ++--
+ include/media/cec.h               | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index 6e0e8d21d189f..a24344ef9852c 100644
---- a/drivers/media/i2c/ov2680.c
-+++ b/drivers/media/i2c/ov2680.c
-@@ -603,7 +603,6 @@ static int ov2680_set_fmt(struct v4l2_subdev *sd,
- 			  struct v4l2_subdev_format *format)
- {
- 	struct ov2680_dev *sensor = to_ov2680_dev(sd);
--	struct v4l2_mbus_framefmt *fmt = &format->format;
- 	struct v4l2_mbus_framefmt *try_fmt;
- 	const struct ov2680_mode_info *mode;
- 	int ret = 0;
-@@ -612,14 +611,18 @@ static int ov2680_set_fmt(struct v4l2_subdev *sd,
- 		return -EINVAL;
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index aed3e51d6d354..4bc2a705029e6 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -1345,7 +1345,7 @@ static void cec_adap_unconfigure(struct cec_adapter *adap)
+ 	cec_flush(adap);
+ 	wake_up_interruptible(&adap->kthread_waitq);
+ 	cec_post_state_event(adap);
+-	call_void_op(adap, adap_configured, false);
++	call_void_op(adap, adap_unconfigured);
+ }
  
- 	mode = v4l2_find_nearest_size(ov2680_mode_data,
--				      ARRAY_SIZE(ov2680_mode_data), width,
--				      height, fmt->width, fmt->height);
-+				      ARRAY_SIZE(ov2680_mode_data),
-+				      width, height,
-+				      format->format.width,
-+				      format->format.height);
- 	if (!mode)
- 		return -EINVAL;
+ /*
+@@ -1536,7 +1536,7 @@ static int cec_config_thread_func(void *arg)
+ 	adap->kthread_config = NULL;
+ 	complete(&adap->config_completion);
+ 	mutex_unlock(&adap->lock);
+-	call_void_op(adap, adap_configured, true);
++	call_void_op(adap, configured);
+ 	return 0;
  
-+	ov2680_fill_format(sensor, &format->format, mode->width, mode->height);
-+
- 	if (format->which == V4L2_SUBDEV_FORMAT_TRY) {
- 		try_fmt = v4l2_subdev_get_try_format(sd, sd_state, 0);
--		format->format = *try_fmt;
-+		*try_fmt = format->format;
- 		return 0;
- 	}
+ unconfigure:
+diff --git a/include/media/cec.h b/include/media/cec.h
+index 6556cc161dc0a..9c007f83569aa 100644
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -113,12 +113,12 @@ struct cec_fh {
+ #define CEC_FREE_TIME_TO_USEC(ft)		((ft) * 2400)
  
-@@ -630,8 +633,6 @@ static int ov2680_set_fmt(struct v4l2_subdev *sd,
- 		goto unlock;
- 	}
+ struct cec_adap_ops {
+-	/* Low-level callbacks */
++	/* Low-level callbacks, called with adap->lock held */
+ 	int (*adap_enable)(struct cec_adapter *adap, bool enable);
+ 	int (*adap_monitor_all_enable)(struct cec_adapter *adap, bool enable);
+ 	int (*adap_monitor_pin_enable)(struct cec_adapter *adap, bool enable);
+ 	int (*adap_log_addr)(struct cec_adapter *adap, u8 logical_addr);
+-	void (*adap_configured)(struct cec_adapter *adap, bool configured);
++	void (*adap_unconfigured)(struct cec_adapter *adap);
+ 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
+ 			     u32 signal_free_time, struct cec_msg *msg);
+ 	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
+@@ -131,6 +131,7 @@ struct cec_adap_ops {
+ 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
  
--	ov2680_fill_format(sensor, fmt, mode->width, mode->height);
--
- 	sensor->current_mode = mode;
- 	sensor->fmt = format->format;
- 	sensor->mode_pending_changes = true;
+ 	/* High-level CEC message callback, called without adap->lock held */
++	void (*configured)(struct cec_adapter *adap);
+ 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
+ };
+ 
 -- 
 2.40.1
 
