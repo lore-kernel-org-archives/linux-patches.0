@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E0F4C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2963EC433C7;
-	Mon, 11 Sep 2023 14:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772784C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE58C433C8;
+	Mon, 11 Sep 2023 14:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442718;
-	bh=wn4tdGZwvmYV7QkXXAW2KiN0qUzQS6rvda70Cse9x/s=;
+	s=korg; t=1694442721;
+	bh=tLcH3GcWkYI/0qLU0CNsHzUnSv+zXPR8JinwbcHPVns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2C0/7JQ8id3ur109RnXj+dyJKsHUSkiZQGzloegtuChAGxzDPQMQnvsWrsk9mlA0
-	 L5SL6ylGh8daUpqrNlFWcJX7khsQAgf01sqKskrs+fArYOykKLwjYEt0zZApJ3qsNv
-	 Hg46YDc/Mv4oFVgXyDsqy1p9TUrHcTdio/r6nndY=
+	b=EEh4NdCDgrO8SngHewPVW0h71KM5gJ1Q3siKITcLdfNif9P75ZUUWzACeDbvAeQ7Y
+	 8NU3r+Log2h5rHDUC71KrgnMqiXOFBLG5kiUOTHZXaJCg3+2A8Nw3b3rElzN7b8KUT
+	 KyYi8CERHxTK7qPueRQ9FhtiqCIWcG1ULWFkb94I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jie <yang.jie@linux.intel.com>,
-	Doug Smythies <dsmythies@telus.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.4 087/737] cpufreq: intel_pstate: set stale CPU frequency to minimum
-Date: Mon, 11 Sep 2023 15:39:06 +0200
-Message-ID: <20230911134652.934272058@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Babu Moger <babu.moger@amd.com>,
+	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 117/737] selftests/resctrl: Close perf value read fd on errors
+Date: Mon, 11 Sep 2023 15:39:36 +0200
+Message-ID: <20230911134653.773737293@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,53 +36,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Doug Smythies <dsmythies@telus.net>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit d51847acb018d83186e4af67bc93f9a00a8644f7 upstream.
+[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
 
-The intel_pstate CPU frequency scaling driver does not
-use policy->cur and it is 0.
-When the CPU frequency is outdated arch_freq_get_on_cpu()
-will default to the nominal clock frequency when its call to
-cpufreq_quick_getpolicy_cur returns the never updated 0.
-Thus, the listed frequency might be outside of currently
-set limits. Some users are complaining about the high
-reported frequency, albeit stale, when their system is
-idle and/or it is above the reduced maximum they have set.
+Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
 
-This patch will maintain policy_cur for the intel_pstate
-driver at the current minimum CPU frequency.
+Close fd_lm only in cat_val() to make it easier to track it is always
+closed.
 
-Reported-by: Yang Jie <yang.jie@linux.intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217597
-Signed-off-by: Doug Smythies <dsmythies@telus.net>
-[ rjw: White space damage fixes and comment adjustment ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Keyon Jie <yang.jie@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2570,6 +2570,11 @@ static int intel_pstate_set_policy(struc
- 			intel_pstate_clear_update_util_hook(policy->cpu);
- 		intel_pstate_hwp_set(policy->cpu);
+diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
+index 8a4fe8693be63..289b619116fec 100644
+--- a/tools/testing/selftests/resctrl/cache.c
++++ b/tools/testing/selftests/resctrl/cache.c
+@@ -87,21 +87,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
+ static int get_llc_perf(unsigned long *llc_perf_miss)
+ {
+ 	__u64 total_misses;
++	int ret;
+ 
+ 	/* Stop counters after one span to get miss rate */
+ 
+ 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
+ 
+-	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
++	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
++	if (ret == -1) {
+ 		perror("Could not get llc misses through perf");
+-
+ 		return -1;
  	}
-+	/*
-+	 * policy->cur is never updated with the intel_pstate driver, but it
-+	 * is used as a stale frequency value. So, keep it within limits.
-+	 */
-+	policy->cur = policy->min;
  
- 	mutex_unlock(&intel_pstate_limits_lock);
+ 	total_misses = rf_cqm.values[0].value;
+-
+-	close(fd_lm);
+-
+ 	*llc_perf_miss = total_misses;
  
+ 	return 0;
+@@ -253,19 +251,25 @@ int cat_val(struct resctrl_val_param *param)
+ 					 memflush, operation, resctrl_val)) {
+ 				fprintf(stderr, "Error-running fill buffer\n");
+ 				ret = -1;
+-				break;
++				goto pe_close;
+ 			}
+ 
+ 			sleep(1);
+ 			ret = measure_cache_vals(param, bm_pid);
+ 			if (ret)
+-				break;
++				goto pe_close;
++
++			close(fd_lm);
+ 		} else {
+ 			break;
+ 		}
+ 	}
+ 
+ 	return ret;
++
++pe_close:
++	close(fd_lm);
++	return ret;
+ }
+ 
+ /*
+-- 
+2.40.1
+
 
 
