@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130DA11711
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89824C433C7;
-	Mon, 11 Sep 2023 14:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293471170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD28C433C7;
+	Mon, 11 Sep 2023 14:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441612;
-	bh=sA8IZQz3pJ9aMwFGwXkYekvwr9qpePhhu37wJJCSf5s=;
+	s=korg; t=1694441615;
+	bh=r/ALvqjdSIK0bQb9MuIDqkBEjanuyBWXm6Gj63eNGTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UubU0r2pGIWS2vvtgjYU1GCzXUZsB21oIFd/rOnFaPXH1UIUOFnEBxaPTvdK8rbcq
-	 oaIICQvzh/K9G0tTrMVUL10Anr+Ifwy/MUQEmlW2foBoj2pk/HFbLhY3uUL0VoMdfw
-	 Gu4qq4tJt3hQddBWqx5e3JwCbaojp9Ez33kiQwtc=
+	b=RohRiIvUtKj+lOZn48m7cWYfIl1Tp2/K/oW+kvECT038yZse1ykr09ZubEJLUQXf9
+	 QhcNgRIJMa1/McdFZiK33P0d7e2ZiHUBPnBBbjUN8VFNPWaMnsaLFZB3mbRGaivetk
+	 o76APuhhqQ0+ZNRKMeWrVajR69GXOG2KFUwlexH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Ming Qian <ming.qian@nxp.com>,
+	Xiaoyong Lu <xiaoyong.lu@mediatek.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 475/739] media: amphion: ensure the bitops dont cross boundaries
-Date: Mon, 11 Sep 2023 15:44:34 +0200
-Message-ID: <20230911134704.411648657@linuxfoundation.org>
+Subject: [PATCH 6.5 476/739] media: mediatek: vcodec: fix AV1 decode fail for 36bit iova
+Date: Mon, 11 Sep 2023 15:44:35 +0200
+Message-ID: <20230911134704.438510173@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,36 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Xiaoyong Lu <xiaoyong.lu@mediatek.com>
 
-[ Upstream commit 5bd28eae48589694ff4e5badb03bf75dae695b3f ]
+[ Upstream commit 89a4f369b20810a8365f87badf7862c67d344bbe ]
 
-the supported_instance_count determine the instance index range,
-it shouldn't exceed the bits number of instance_mask,
-otherwise the bitops of instance_mask may cross boundaries
+Fix av1 decode fail when iova is 36bit.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Decoder hardware will access incorrect iova address when tile buffer is
+36bit, it will lead to iommu fault when hardware access dram data.
+
+Fixes: 2f5d0aef37c6 ("media: mediatek: vcodec: support stateless AV1 decoder")
+Signed-off-by: Xiaoyong Lu<xiaoyong.lu@mediatek.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../mediatek/vcodec/vdec/vdec_av1_req_lat_if.c       | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index 7863b7b53494c..2bb9f187e163c 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -88,6 +88,8 @@ static int vpu_core_boot_done(struct vpu_core *core)
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c
+index 404a1a23fd402..b00b423274b3b 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_av1_req_lat_if.c
+@@ -1658,9 +1658,9 @@ static void vdec_av1_slice_setup_tile_buffer(struct vdec_av1_slice_instance *ins
+ 	u32 allow_update_cdf = 0;
+ 	u32 sb_boundary_x_m1 = 0, sb_boundary_y_m1 = 0;
+ 	int tile_info_base;
+-	u32 tile_buf_pa;
++	u64 tile_buf_pa;
+ 	u32 *tile_info_buf = instance->tile.va;
+-	u32 pa = (u32)bs->dma_addr;
++	u64 pa = (u64)bs->dma_addr;
  
- 		core->supported_instance_count = min(core->supported_instance_count, count);
- 	}
-+	if (core->supported_instance_count >= BITS_PER_TYPE(core->instance_mask))
-+		core->supported_instance_count = BITS_PER_TYPE(core->instance_mask);
- 	core->fw_version = fw_version;
- 	vpu_core_set_state(core, VPU_CORE_ACTIVE);
+ 	if (uh->disable_cdf_update == 0)
+ 		allow_update_cdf = 1;
+@@ -1673,8 +1673,12 @@ static void vdec_av1_slice_setup_tile_buffer(struct vdec_av1_slice_instance *ins
+ 		tile_info_buf[tile_info_base + 0] = (tile_group->tile_size[tile_num] << 3);
+ 		tile_buf_pa = pa + tile_group->tile_start_offset[tile_num];
  
+-		tile_info_buf[tile_info_base + 1] = (tile_buf_pa >> 4) << 4;
+-		tile_info_buf[tile_info_base + 2] = (tile_buf_pa % 16) << 3;
++		/* save av1 tile high 4bits(bit 32-35) address in lower 4 bits position
++		 * and clear original for hw requirement.
++		 */
++		tile_info_buf[tile_info_base + 1] = (tile_buf_pa & 0xFFFFFFF0ull) |
++			((tile_buf_pa & 0xF00000000ull) >> 32);
++		tile_info_buf[tile_info_base + 2] = (tile_buf_pa & 0xFull) << 3;
+ 
+ 		sb_boundary_x_m1 =
+ 			(tile->mi_col_starts[tile_col + 1] - tile->mi_col_starts[tile_col] - 1) &
 -- 
 2.40.1
 
