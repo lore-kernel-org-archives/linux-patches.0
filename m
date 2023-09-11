@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E2511705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC37EC433C7;
-	Mon, 11 Sep 2023 14:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2392611705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C91C433C7;
+	Mon, 11 Sep 2023 14:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443282;
-	bh=dgQHAwIsE17afQZcqUWDFxeXdYajhjq/vVkbBUbEXKw=;
+	s=korg; t=1694443285;
+	bh=E3QOJeiwpTCE5/qtfXr7QlO8m6FrNLASkmIkpfmFc18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/HnYe/8eWfTjIV4dNkQrc2badcv+2BD+97l7zE8F6RtQL2l5E9syqdYeZ0V8K7W1
-	 /QJ2qzqKjFibpXIssLC0T9secm1xy+YeEjzIf60anTBKhrCB0ZiuNCnwaVj6dGYPl0
-	 NRbCRc/aRT1vwf8s/aL3VeK2zaNs58Oy9Zdc2l/s=
+	b=z3aojbgkB6LpUebcCwf+Mi1VMNR4LeshGqazypbIgTh0AZ9GazvMvi4R+32o5EWwo
+	 SsbPOmCDEDPh/Z0DzVve+HK6B4CcPcvheqQ7MmEFZq0hdQ5CTmxZv7jnSa3BHa+HXV
+	 rDm/UgElHhe/qYV0ma5qSTjXow6N+locUwXaDkpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 322/737] block: dont allow enabling a cache on devices that dont support it
-Date: Mon, 11 Sep 2023 15:43:01 +0200
-Message-ID: <20230911134659.550490012@linuxfoundation.org>
+Subject: [PATCH 6.4 323/737] x86/mm: Fix PAT bit missing from page protection modify mask
+Date: Mon, 11 Sep 2023 15:43:02 +0200
+Message-ID: <20230911134659.576365153@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,93 +37,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-[ Upstream commit 43c9835b144c7ce29efe142d662529662a9eb376 ]
+[ Upstream commit 548cb932051fb6232ac983ed6673dae7bdf3cf4c ]
 
-Currently the write_cache attribute allows enabling the QUEUE_FLAG_WC
-flag on devices that never claimed the capability.
+Visible glitches have been observed when running graphics applications on
+Linux under Xen hypervisor.  Those observations have been confirmed with
+failures from kms_pwrite_crc Intel GPU test that verifies data coherency
+of DRM frame buffer objects using hardware CRC checksums calculated by
+display controllers, exposed to userspace via debugfs.  Affected
+processing paths have then been identified with new IGT test variants that
+mmap the objects using different methods and caching modes [1].
 
-Fix that by adding a QUEUE_FLAG_HW_WC flag that is set by
-blk_queue_write_cache and guards re-enabling the cache through sysfs.
+When running as a Xen PV guest, Linux uses Xen provided PAT configuration
+which is different from its native one.  In particular, Xen specific PTE
+encoding of write-combining caching, likely used by graphics applications,
+differs from the Linux default one found among statically defined minimal
+set of supported modes.  Since Xen defines PTE encoding of the WC mode as
+_PAGE_PAT, it no longer belongs to the minimal set, depends on correct
+handling of _PAGE_PAT bit, and can be mismatched with write-back caching.
 
-Note that any rescan that calls blk_queue_write_cache will still
-re-enable the write cache as in the current code.
+When a user calls mmap() for a DRM buffer object, DRM device specific
+.mmap file operation, called from mmap_region(), takes care of setting PTE
+encoding bits in a vm_page_prot field of an associated virtual memory area
+structure.  Unfortunately, _PAGE_PAT bit is not preserved when the vma's
+.vm_flags are then applied to .vm_page_prot via vm_set_page_prot().  Bits
+to be preserved are determined with _PAGE_CHG_MASK symbol that doesn't
+cover _PAGE_PAT.  As a consequence, WB caching is requested instead of WC
+when running under Xen (also, WP is silently changed to WT, and UC
+downgraded to UC_MINUS).  When running on bare metal, WC is not affected,
+but WP and WT extra modes are unintentionally replaced with WC and UC,
+respectively.
 
-Fixes: 93e9d8e836cb ("block: add ability to flag write back caching on a device")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230707094239.107968-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+WP and WT modes, encoded with _PAGE_PAT bit set, were introduced by commit
+281d4078bec3 ("x86: Make page cache mode a real type").  Care was taken
+to extend _PAGE_CACHE_MASK symbol with that additional bit, but that
+symbol has never been used for identification of bits preserved when
+applying page protection flags.  Support for all cache modes under Xen,
+including the problematic WC mode, was then introduced by commit
+47591df50512 ("xen: Support Xen pv-domains using PAT").
+
+The issue needs to be fixed by including _PAGE_PAT bit into a bitmask used
+by pgprot_modify() for selecting bits to be preserved.  We can do that
+either internally to pgprot_modify() (as initially proposed), or by making
+_PAGE_PAT a part of _PAGE_CHG_MASK.  If we go for the latter then, since
+_PAGE_PAT is the same as _PAGE_PSE, we need to note that _HPAGE_CHG_MASK
+-- a huge pmds' counterpart of _PAGE_CHG_MASK, introduced by commit
+c489f1257b8c ("thp: add pmd_modify"), defined as (_PAGE_CHG_MASK |
+_PAGE_PSE) -- will no longer differ from _PAGE_CHG_MASK.  If such
+modification of _PAGE_CHG_MASK was irrelevant to its users then one might
+wonder why that new _HPAGE_CHG_MASK symbol was introduced instead of
+reusing the existing one with that otherwise irrelevant bit (_PAGE_PSE in
+that case) added.
+
+Add _PAGE_PAT to _PAGE_CHG_MASK and _PAGE_PAT_LARGE to _HPAGE_CHG_MASK for
+symmetry.  Split out common bits from both symbols to a common symbol for
+clarity.
+
+[ dhansen: tweak the solution changelog description ]
+
+[1] https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/commit/0f0754413f14
+
+Fixes: 281d4078bec3 ("x86: Make page cache mode a real type")
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/7648
+Link: https://lore.kernel.org/all/20230710073613.8006-2-janusz.krzysztofik%40linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c   |  7 +++++--
- block/blk-sysfs.c      | 11 +++++++----
- include/linux/blkdev.h |  1 +
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/pgtable_types.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 4dd59059b788e..0046b447268f9 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -830,10 +830,13 @@ EXPORT_SYMBOL(blk_set_queue_depth);
+diff --git a/arch/x86/include/asm/pgtable_types.h b/arch/x86/include/asm/pgtable_types.h
+index 447d4bee25c48..97533e6b1c61b 100644
+--- a/arch/x86/include/asm/pgtable_types.h
++++ b/arch/x86/include/asm/pgtable_types.h
+@@ -125,11 +125,12 @@
+  * instance, and is *not* included in this mask since
+  * pte_modify() does modify it.
   */
- void blk_queue_write_cache(struct request_queue *q, bool wc, bool fua)
- {
--	if (wc)
-+	if (wc) {
-+		blk_queue_flag_set(QUEUE_FLAG_HW_WC, q);
- 		blk_queue_flag_set(QUEUE_FLAG_WC, q);
--	else
-+	} else {
-+		blk_queue_flag_clear(QUEUE_FLAG_HW_WC, q);
- 		blk_queue_flag_clear(QUEUE_FLAG_WC, q);
-+	}
- 	if (fua)
- 		blk_queue_flag_set(QUEUE_FLAG_FUA, q);
- 	else
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 50a0094300f2d..b7fc4cf3f992c 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -517,13 +517,16 @@ static ssize_t queue_wc_show(struct request_queue *q, char *page)
- static ssize_t queue_wc_store(struct request_queue *q, const char *page,
- 			      size_t count)
- {
--	if (!strncmp(page, "write back", 10))
-+	if (!strncmp(page, "write back", 10)) {
-+		if (!test_bit(QUEUE_FLAG_HW_WC, &q->queue_flags))
-+			return -EINVAL;
- 		blk_queue_flag_set(QUEUE_FLAG_WC, q);
--	else if (!strncmp(page, "write through", 13) ||
--		 !strncmp(page, "none", 4))
-+	} else if (!strncmp(page, "write through", 13) ||
-+		 !strncmp(page, "none", 4)) {
- 		blk_queue_flag_clear(QUEUE_FLAG_WC, q);
--	else
-+	} else {
- 		return -EINVAL;
-+	}
+-#define _PAGE_CHG_MASK	(PTE_PFN_MASK | _PAGE_PCD | _PAGE_PWT |		\
+-			 _PAGE_SPECIAL | _PAGE_ACCESSED | _PAGE_DIRTY |	\
+-			 _PAGE_SOFT_DIRTY | _PAGE_DEVMAP | _PAGE_ENC |  \
+-			 _PAGE_UFFD_WP)
+-#define _HPAGE_CHG_MASK (_PAGE_CHG_MASK | _PAGE_PSE)
++#define _COMMON_PAGE_CHG_MASK	(PTE_PFN_MASK | _PAGE_PCD | _PAGE_PWT |	       \
++				 _PAGE_SPECIAL | _PAGE_ACCESSED | _PAGE_DIRTY |\
++				 _PAGE_SOFT_DIRTY | _PAGE_DEVMAP | _PAGE_ENC | \
++				 _PAGE_UFFD_WP)
++#define _PAGE_CHG_MASK	(_COMMON_PAGE_CHG_MASK | _PAGE_PAT)
++#define _HPAGE_CHG_MASK (_COMMON_PAGE_CHG_MASK | _PAGE_PSE | _PAGE_PAT_LARGE)
  
- 	return count;
- }
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 67e942d776bd8..2e2cd4b824e7f 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -546,6 +546,7 @@ struct request_queue {
- #define QUEUE_FLAG_ADD_RANDOM	10	/* Contributes to random pool */
- #define QUEUE_FLAG_SYNCHRONOUS	11	/* always completes in submit context */
- #define QUEUE_FLAG_SAME_FORCE	12	/* force complete on same CPU */
-+#define QUEUE_FLAG_HW_WC	18	/* Write back caching supported */
- #define QUEUE_FLAG_INIT_DONE	14	/* queue is initialized */
- #define QUEUE_FLAG_STABLE_WRITES 15	/* don't modify blks until WB is done */
- #define QUEUE_FLAG_POLL		16	/* IO polling enabled if set */
+ /*
+  * The cache modes defined here are used to translate between pure SW usage
 -- 
 2.40.1
 
