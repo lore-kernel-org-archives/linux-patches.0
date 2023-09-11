@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D08111C82
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF279C433CA;
-	Mon, 11 Sep 2023 15:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244A811C82
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDD4C433C8;
+	Mon, 11 Sep 2023 15:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446121;
-	bh=SKg6pdVlVFIyKtO0fItVzFO5mPmwYYZ/jiSNOajoxvU=;
+	s=korg; t=1694446124;
+	bh=fZRcsBSp2kqrWrVCcfpr9zniFx29VnO7uXg+5TM0so0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFfcVgsHf8vOp86bXWvqw6OA6RwhHt1dkrjaWbv0Mi+JdWq025rSWqB/vlbqT3mx3
-	 WyYe3lrG9P5vRhm2ZIdYX8ZInDaxpTGUYAsDkwSycg/KjHJGDQTow44xd1V3E2Uhj5
-	 tl9xPGYB6Y2nvpD/XtDOYESUsd0/FOpNzzQ1Lw/M=
+	b=AS8k5sPfqBdK0r3/POxeYq3F/90b0EMNPsyKRLiCwYjCRfFzBsY/WzVy1PkrTPXnC
+	 Xfn7AMPkBS+r42q9Dnvf6BV0aD2fEy4JkJJUNs0MQuk0zL85wCHvsDYLSa6GYnLx2x
+	 sOwRhPiLgmCjBkIr+ZJz/feVr8PcrbfoEdtq7Qds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Lech Perczak <lech.perczak@camlingroup.com>,
-	Rob Herring <robh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 590/600] serial: sc16is7xx: fix regression with GPIO configuration
-Date: Mon, 11 Sep 2023 15:50:23 +0200
-Message-ID: <20230911134651.050611599@linuxfoundation.org>
+	Yunlong Xing <yunlong.xing@unisoc.com>,
+	Enlin Mu <enlin.mu@unisoc.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 573/600] pstore/ram: Check start of empty przs during init
+Date: Mon, 11 Sep 2023 15:50:06 +0200
+Message-ID: <20230911134650.527240909@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,287 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Enlin Mu <enlin.mu@unisoc.com>
 
-[ Upstream commit 0499942928341d572a42199580433c2b0725211e ]
+commit fe8c3623ab06603eb760444a032d426542212021 upstream.
 
-Commit 679875d1d880 ("sc16is7xx: Separate GPIOs from modem control lines")
-and commit 21144bab4f11 ("sc16is7xx: Handle modem status lines")
-changed the function of the GPIOs pins to act as modem control
-lines without any possibility of selecting GPIO function.
+After commit 30696378f68a ("pstore/ram: Do not treat empty buffers as
+valid"), initialization would assume a prz was valid after seeing that
+the buffer_size is zero (regardless of the buffer start position). This
+unchecked start value means it could be outside the bounds of the buffer,
+leading to future access panics when written to:
 
-As a consequence, applications that depends on GPIO lines configured
-by default as GPIO pins no longer work as expected.
+ sysdump_panic_event+0x3b4/0x5b8
+ atomic_notifier_call_chain+0x54/0x90
+ panic+0x1c8/0x42c
+ die+0x29c/0x2a8
+ die_kernel_fault+0x68/0x78
+ __do_kernel_fault+0x1c4/0x1e0
+ do_bad_area+0x40/0x100
+ do_translation_fault+0x68/0x80
+ do_mem_abort+0x68/0xf8
+ el1_da+0x1c/0xc0
+ __raw_writeb+0x38/0x174
+ __memcpy_toio+0x40/0xac
+ persistent_ram_update+0x44/0x12c
+ persistent_ram_write+0x1a8/0x1b8
+ ramoops_pstore_write+0x198/0x1e8
+ pstore_console_write+0x94/0xe0
+ ...
 
-Also, the change to select modem control lines function was done only
-for channel A of dual UART variants (752/762). This was not documented
-in the log message.
+To avoid this, also check if the prz start is 0 during the initialization
+phase. If not, the next prz sanity check case will discover it (start >
+size) and zap the buffer back to a sane state.
 
-Allow to specify GPIO or modem control line function in the device
-tree, and for each of the ports (A or B).
-
-Do so by using the new device-tree property named
-"nxp,modem-control-line-ports" (property added in separate patch).
-
-When registering GPIO chip controller, mask-out GPIO pins declared as
-modem control lines according to this new DT property.
-
-Fixes: 679875d1d880 ("sc16is7xx: Separate GPIOs from modem control lines")
-Fixes: 21144bab4f11 ("sc16is7xx: Handle modem status lines")
+Fixes: 30696378f68a ("pstore/ram: Do not treat empty buffers as valid")
+Cc: Yunlong Xing <yunlong.xing@unisoc.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
-Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230807214556.540627-5-hugo@hugovil.com
+Signed-off-by: Enlin Mu <enlin.mu@unisoc.com>
+Link: https://lore.kernel.org/r/20230801060432.1307717-1-yunlong.xing@unisoc.com
+[kees: update commit log with backtrace and clarifications]
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 143 +++++++++++++++++++++++++--------
- 1 file changed, 108 insertions(+), 35 deletions(-)
+ fs/pstore/ram_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index c481c84019f4a..21145eb8f2a9c 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -236,7 +236,8 @@
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -518,7 +518,7 @@ static int persistent_ram_post_init(stru
+ 	sig ^= PERSISTENT_RAM_SIG;
  
- /* IOControl register bits (Only 750/760) */
- #define SC16IS7XX_IOCONTROL_LATCH_BIT	(1 << 0) /* Enable input latching */
--#define SC16IS7XX_IOCONTROL_MODEM_BIT	(1 << 1) /* Enable GPIO[7:4] as modem pins */
-+#define SC16IS7XX_IOCONTROL_MODEM_A_BIT	(1 << 1) /* Enable GPIO[7:4] as modem A pins */
-+#define SC16IS7XX_IOCONTROL_MODEM_B_BIT	(1 << 2) /* Enable GPIO[3:0] as modem B pins */
- #define SC16IS7XX_IOCONTROL_SRESET_BIT	(1 << 3) /* Software Reset */
- 
- /* EFCR register bits */
-@@ -301,12 +302,12 @@
- /* Misc definitions */
- #define SC16IS7XX_FIFO_SIZE		(64)
- #define SC16IS7XX_REG_SHIFT		2
-+#define SC16IS7XX_GPIOS_PER_BANK	4
- 
- struct sc16is7xx_devtype {
- 	char	name[10];
- 	int	nr_gpio;
- 	int	nr_uart;
--	int	has_mctrl;
- };
- 
- #define SC16IS7XX_RECONF_MD		(1 << 0)
-@@ -336,7 +337,9 @@ struct sc16is7xx_port {
- 	struct clk			*clk;
- #ifdef CONFIG_GPIOLIB
- 	struct gpio_chip		gpio;
-+	unsigned long			gpio_valid_mask;
- #endif
-+	u8				mctrl_mask;
- 	unsigned char			buf[SC16IS7XX_FIFO_SIZE];
- 	struct kthread_worker		kworker;
- 	struct task_struct		*kworker_task;
-@@ -447,35 +450,30 @@ static const struct sc16is7xx_devtype sc16is74x_devtype = {
- 	.name		= "SC16IS74X",
- 	.nr_gpio	= 0,
- 	.nr_uart	= 1,
--	.has_mctrl	= 0,
- };
- 
- static const struct sc16is7xx_devtype sc16is750_devtype = {
- 	.name		= "SC16IS750",
--	.nr_gpio	= 4,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 1,
--	.has_mctrl	= 1,
- };
- 
- static const struct sc16is7xx_devtype sc16is752_devtype = {
- 	.name		= "SC16IS752",
--	.nr_gpio	= 0,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 2,
--	.has_mctrl	= 1,
- };
- 
- static const struct sc16is7xx_devtype sc16is760_devtype = {
- 	.name		= "SC16IS760",
--	.nr_gpio	= 4,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 1,
--	.has_mctrl	= 1,
- };
- 
- static const struct sc16is7xx_devtype sc16is762_devtype = {
- 	.name		= "SC16IS762",
--	.nr_gpio	= 0,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 2,
--	.has_mctrl	= 1,
- };
- 
- static bool sc16is7xx_regmap_volatile(struct device *dev, unsigned int reg)
-@@ -1360,8 +1358,98 @@ static int sc16is7xx_gpio_direction_output(struct gpio_chip *chip,
- 
- 	return 0;
- }
-+
-+static int sc16is7xx_gpio_init_valid_mask(struct gpio_chip *chip,
-+					  unsigned long *valid_mask,
-+					  unsigned int ngpios)
-+{
-+	struct sc16is7xx_port *s = gpiochip_get_data(chip);
-+
-+	*valid_mask = s->gpio_valid_mask;
-+
-+	return 0;
-+}
-+
-+static int sc16is7xx_setup_gpio_chip(struct sc16is7xx_port *s)
-+{
-+	struct device *dev = s->p[0].port.dev;
-+
-+	if (!s->devtype->nr_gpio)
-+		return 0;
-+
-+	switch (s->mctrl_mask) {
-+	case 0:
-+		s->gpio_valid_mask = GENMASK(7, 0);
-+		break;
-+	case SC16IS7XX_IOCONTROL_MODEM_A_BIT:
-+		s->gpio_valid_mask = GENMASK(3, 0);
-+		break;
-+	case SC16IS7XX_IOCONTROL_MODEM_B_BIT:
-+		s->gpio_valid_mask = GENMASK(7, 4);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	if (s->gpio_valid_mask == 0)
-+		return 0;
-+
-+	s->gpio.owner		 = THIS_MODULE;
-+	s->gpio.parent		 = dev;
-+	s->gpio.label		 = dev_name(dev);
-+	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
-+	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
-+	s->gpio.get		 = sc16is7xx_gpio_get;
-+	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
-+	s->gpio.set		 = sc16is7xx_gpio_set;
-+	s->gpio.base		 = -1;
-+	s->gpio.ngpio		 = s->devtype->nr_gpio;
-+	s->gpio.can_sleep	 = 1;
-+
-+	return gpiochip_add_data(&s->gpio, s);
-+}
- #endif
- 
-+/*
-+ * Configure ports designated to operate as modem control lines.
-+ */
-+static int sc16is7xx_setup_mctrl_ports(struct sc16is7xx_port *s)
-+{
-+	int i;
-+	int ret;
-+	int count;
-+	u32 mctrl_port[2];
-+	struct device *dev = s->p[0].port.dev;
-+
-+	count = device_property_count_u32(dev, "nxp,modem-control-line-ports");
-+	if (count < 0 || count > ARRAY_SIZE(mctrl_port))
-+		return 0;
-+
-+	ret = device_property_read_u32_array(dev, "nxp,modem-control-line-ports",
-+					     mctrl_port, count);
-+	if (ret)
-+		return ret;
-+
-+	s->mctrl_mask = 0;
-+
-+	for (i = 0; i < count; i++) {
-+		/* Use GPIO lines as modem control lines */
-+		if (mctrl_port[i] == 0)
-+			s->mctrl_mask |= SC16IS7XX_IOCONTROL_MODEM_A_BIT;
-+		else if (mctrl_port[i] == 1)
-+			s->mctrl_mask |= SC16IS7XX_IOCONTROL_MODEM_B_BIT;
-+	}
-+
-+	if (s->mctrl_mask)
-+		regmap_update_bits(
-+			s->regmap,
-+			SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
-+			SC16IS7XX_IOCONTROL_MODEM_A_BIT |
-+			SC16IS7XX_IOCONTROL_MODEM_B_BIT, s->mctrl_mask);
-+
-+	return 0;
-+}
-+
- static const struct serial_rs485 sc16is7xx_rs485_supported = {
- 	.flags = SER_RS485_ENABLED | SER_RS485_RTS_AFTER_SEND,
- 	.delay_rts_before_send = 1,
-@@ -1474,12 +1562,6 @@ static int sc16is7xx_probe(struct device *dev,
- 				     SC16IS7XX_EFCR_RXDISABLE_BIT |
- 				     SC16IS7XX_EFCR_TXDISABLE_BIT);
- 
--		/* Use GPIO lines as modem status registers */
--		if (devtype->has_mctrl)
--			sc16is7xx_port_write(&s->p[i].port,
--					     SC16IS7XX_IOCONTROL_REG,
--					     SC16IS7XX_IOCONTROL_MODEM_BIT);
--
- 		/* Initialize kthread work structs */
- 		kthread_init_work(&s->p[i].tx_work, sc16is7xx_tx_proc);
- 		kthread_init_work(&s->p[i].reg_work, sc16is7xx_reg_proc);
-@@ -1517,23 +1599,14 @@ static int sc16is7xx_probe(struct device *dev,
- 				s->p[u].irda_mode = true;
- 	}
- 
-+	ret = sc16is7xx_setup_mctrl_ports(s);
-+	if (ret)
-+		goto out_ports;
-+
- #ifdef CONFIG_GPIOLIB
--	if (devtype->nr_gpio) {
--		/* Setup GPIO cotroller */
--		s->gpio.owner		 = THIS_MODULE;
--		s->gpio.parent		 = dev;
--		s->gpio.label		 = dev_name(dev);
--		s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
--		s->gpio.get		 = sc16is7xx_gpio_get;
--		s->gpio.direction_output = sc16is7xx_gpio_direction_output;
--		s->gpio.set		 = sc16is7xx_gpio_set;
--		s->gpio.base		 = -1;
--		s->gpio.ngpio		 = devtype->nr_gpio;
--		s->gpio.can_sleep	 = 1;
--		ret = gpiochip_add_data(&s->gpio, s);
--		if (ret)
--			goto out_ports;
--	}
-+	ret = sc16is7xx_setup_gpio_chip(s);
-+	if (ret)
-+		goto out_ports;
- #endif
- 
- 	/*
-@@ -1556,7 +1629,7 @@ static int sc16is7xx_probe(struct device *dev,
- 		return 0;
- 
- #ifdef CONFIG_GPIOLIB
--	if (devtype->nr_gpio)
-+	if (s->gpio_valid_mask)
- 		gpiochip_remove(&s->gpio);
- #endif
- 
-@@ -1580,7 +1653,7 @@ static void sc16is7xx_remove(struct device *dev)
- 	int i;
- 
- #ifdef CONFIG_GPIOLIB
--	if (s->devtype->nr_gpio)
-+	if (s->gpio_valid_mask)
- 		gpiochip_remove(&s->gpio);
- #endif
- 
--- 
-2.40.1
-
+ 	if (prz->buffer->sig == sig) {
+-		if (buffer_size(prz) == 0) {
++		if (buffer_size(prz) == 0 && buffer_start(prz) == 0) {
+ 			pr_debug("found existing empty buffer\n");
+ 			return 0;
+ 		}
 
 
