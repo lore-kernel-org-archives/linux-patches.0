@@ -1,37 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A795711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F289EC433C7;
-	Mon, 11 Sep 2023 14:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BFC11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102CEC433C8;
+	Mon, 11 Sep 2023 14:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443940;
-	bh=8k7yvM6UqimuVPBlvfAyut5D2bVf7w+KZrhEhQXFOmw=;
+	s=korg; t=1694443943;
+	bh=XBsidfZzR5PVv40H6gBk8xj0NAEsMkacrX4XxO/LnJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBWV3+Dq6kild6S83sVTJjNoqFsFaeQfF27AHrxoCL6U8LCfzduzrqHj9tFnFo4bX
-	 v92EbtZc4aPHOHtd6xkDdAtJxdjDOPWRW01tyy8F2Jt5UM0g8WbzglbfaumrPHS/bN
-	 N1sS+c4zMfw6n/F8kN1CPCJwquL8b+WNlKD0n/C4=
+	b=PiiFEUH55sTxrkBExi+JSdlpwmeFjiGchbgc+00+MLu9nqIzwaArpGfUwp05kul3p
+	 CGeW4fDv9oGlYnTk8uAAFSW+pNzX62R7pq9lGqudMSxFXEy/G8FwXWHxySwZPwx1Qm
+	 PQM4FLYCQmBsBSfw87byUYq+yeitCH5CQvp4TR8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Rob Evers <revers@redhat.com>,
-	Johannes Thumshirn <Johannes.Thumshirn@wdc.com>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Jozef Bacik <jobacik@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	GR-QLogic-Storage-Upstream@marvell.com,
-	linux-scsi@vger.kernel.org,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Oleksandr Natalenko <oleksandr@redhat.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 525/737] scsi: qedf: Do not touch __user pointer in qedf_dbg_debug_cmd_read() directly
-Date: Mon, 11 Sep 2023 15:46:24 +0200
-Message-ID: <20230911134705.241928535@linuxfoundation.org>
+Subject: [PATCH 6.4 516/737] iio: accel: adxl313: Fix adxl313_i2c_id[] table
+Date: Mon, 11 Sep 2023 15:46:15 +0200
+Message-ID: <20230911134704.968596919@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -50,64 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Natalenko <oleksandr@redhat.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 31b5991a9a91ba97237ac9da509d78eec453ff72 ]
+[ Upstream commit f636554c4cd1c644109cc525900a056495b86cc9 ]
 
-The qedf_dbg_debug_cmd_read() function invokes sprintf() directly on a
-__user pointer, which may crash the kernel.
+The .driver_data in adxl313_i2c_id[] for adxl312 and adxl314 is
+wrong. Fix this issue by adding corresponding adxl31x_chip_info
+data.
 
-Avoid doing that by using a small on-stack buffer for scnprintf() and then
-calling simple_read_from_buffer() which does a proper copy_to_user() call.
-
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Link: https://lore.kernel.org/lkml/20230724120241.40495-1-oleksandr@redhat.com/
-Link: https://lore.kernel.org/linux-scsi/20230726101236.11922-1-skashyap@marvell.com/
-Cc: Saurav Kashyap <skashyap@marvell.com>
-Cc: Rob Evers <revers@redhat.com>
-Cc: Johannes Thumshirn <Johannes.Thumshirn@wdc.com>
-Cc: David Laight <David.Laight@ACULAB.COM>
-Cc: Jozef Bacik <jobacik@redhat.com>
-Cc: Laurence Oberman <loberman@redhat.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: GR-QLogic-Storage-Upstream@marvell.com
-Cc: linux-scsi@vger.kernel.org
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Laurence Oberman <loberman@redhat.com>
-Acked-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
-Link: https://lore.kernel.org/r/20230731084034.37021-3-oleksandr@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Jonathan Cameron <jic23@kernel.org>
+Closes: https://lore.kernel.org/all/20230722172832.04ad7738@jic23-huawei
+Fixes: a7a1c60bc4c9 ("drivers: iio: accel: adxl312 and adxl314 support")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230725171624.331283-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_debugfs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/iio/accel/adxl313_i2c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_debugfs.c b/drivers/scsi/qedf/qedf_debugfs.c
-index 3eb4334ac6a32..1c5716540e465 100644
---- a/drivers/scsi/qedf/qedf_debugfs.c
-+++ b/drivers/scsi/qedf/qedf_debugfs.c
-@@ -138,15 +138,14 @@ qedf_dbg_debug_cmd_read(struct file *filp, char __user *buffer, size_t count,
- 			loff_t *ppos)
- {
- 	int cnt;
-+	char cbuf[32];
- 	struct qedf_dbg_ctx *qedf_dbg =
- 				(struct qedf_dbg_ctx *)filp->private_data;
+diff --git a/drivers/iio/accel/adxl313_i2c.c b/drivers/iio/accel/adxl313_i2c.c
+index 99cc7fc294882..68785bd3ef2f0 100644
+--- a/drivers/iio/accel/adxl313_i2c.c
++++ b/drivers/iio/accel/adxl313_i2c.c
+@@ -40,8 +40,8 @@ static const struct regmap_config adxl31x_i2c_regmap_config[] = {
  
- 	QEDF_INFO(qedf_dbg, QEDF_LOG_DEBUGFS, "debug mask=0x%x\n", qedf_debug);
--	cnt = sprintf(buffer, "debug mask = 0x%x\n", qedf_debug);
-+	cnt = scnprintf(cbuf, sizeof(cbuf), "debug mask = 0x%x\n", qedf_debug);
+ static const struct i2c_device_id adxl313_i2c_id[] = {
+ 	{ .name = "adxl312", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
+-	{ .name = "adxl313", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
+-	{ .name = "adxl314", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
++	{ .name = "adxl313", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL313] },
++	{ .name = "adxl314", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL314] },
+ 	{ }
+ };
  
--	cnt = min_t(int, count, cnt - *ppos);
--	*ppos += cnt;
--	return cnt;
-+	return simple_read_from_buffer(buffer, count, ppos, cbuf, cnt);
- }
- 
- static ssize_t
 -- 
 2.40.1
 
