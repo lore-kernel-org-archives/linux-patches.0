@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F51911706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F30EC433CA;
-	Mon, 11 Sep 2023 14:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD6A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D364AC433C9;
+	Mon, 11 Sep 2023 14:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444259;
-	bh=/kpNMW48JpbR8w1YiJc+WFmEQOnM0KPTZTsAjJxjehA=;
+	s=korg; t=1694444262;
+	bh=S3KcD8JFwM5EvTgvpNBXOgs3Cjrqk0MNBvv/bk1jXvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkN1UkIakOXcAPybgQ71NUxIHb/lXutrfbAvOp2YCSIFb5bHp4JbOCynMwigczoLy
-	 hU2JfZRcawP+mteYUcPo94Md9QPIcimI+3o5iXIhqePV9Bb6hcjUCHLtKpWUodXEKs
-	 MBvsykXwMoN3HXw7Xgwsb7a9dyFDuhF/TYih8bA8=
+	b=zB0++nr8MjeJ/AK3924Bi8jJqVfQbtc5IudIEjF4ftax5HDYedOpci5RZY7IpNJ+/
+	 sDiC8iWBLdwMfic4hqmScyrZD2mfeESVVYtovU7OKkx4KEp/5qPcuSBUAv90gmGZhH
+	 PdTLuR7HFMX+yMnOnqJgL+W06z1/bJZxW8QmJ15o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Swapnil Patel <swapnil.patel@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.4 666/737] drm/amd/display: register edp_backlight_control() for DCN301
-Date: Mon, 11 Sep 2023 15:48:45 +0200
-Message-ID: <20230911134709.148260336@linuxfoundation.org>
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 6.4 667/737] xtensa: PMU: fix base address for the newer hardware
+Date: Mon, 11 Sep 2023 15:48:46 +0200
+Message-ID: <20230911134709.174849788@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,38 +38,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-commit 1611917f39bee1abfc01501238db8ac19649042d upstream.
+commit 687eb3c42f4ad81e7c947c50e2d865f692064291 upstream.
 
-As made mention of in commit 099303e9a9bd ("drm/amd/display: eDP
-intermittent black screen during PnP"), we need to turn off the
-display's backlight before powering off an eDP display. Not doing so
-will result in undefined behaviour according to the eDP spec. So, set
-DCN301's edp_backlight_control() function pointer to
-dce110_edp_backlight_control().
+With introduction of ERI access control in RG.0 base address of the PMU
+unit registers has changed. Add support for the new PMU configuration.
 
 Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2765
-Fixes: 9c75891feef0 ("drm/amd/display: rework recent update PHY state commit")
-Suggested-by: Swapnil Patel <swapnil.patel@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn301/dcn301_init.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/xtensa/include/asm/core.h  |    9 +++++++++
+ arch/xtensa/kernel/perf_event.c |   17 +++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_init.c
-@@ -75,6 +75,7 @@ static const struct hw_sequencer_funcs d
- 	.get_hw_state = dcn10_get_hw_state,
- 	.clear_status_bits = dcn10_clear_status_bits,
- 	.wait_for_mpcc_disconnect = dcn10_wait_for_mpcc_disconnect,
-+	.edp_backlight_control = dce110_edp_backlight_control,
- 	.edp_power_control = dce110_edp_power_control,
- 	.edp_wait_for_hpd_ready = dce110_edp_wait_for_hpd_ready,
- 	.set_cursor_position = dcn10_set_cursor_position,
+--- a/arch/xtensa/include/asm/core.h
++++ b/arch/xtensa/include/asm/core.h
+@@ -44,4 +44,13 @@
+ #define XTENSA_STACK_ALIGNMENT	16
+ #endif
+ 
++#ifndef XCHAL_HW_MIN_VERSION
++#if defined(XCHAL_HW_MIN_VERSION_MAJOR) && defined(XCHAL_HW_MIN_VERSION_MINOR)
++#define XCHAL_HW_MIN_VERSION (XCHAL_HW_MIN_VERSION_MAJOR * 100 + \
++			      XCHAL_HW_MIN_VERSION_MINOR)
++#else
++#define XCHAL_HW_MIN_VERSION 0
++#endif
++#endif
++
+ #endif
+--- a/arch/xtensa/kernel/perf_event.c
++++ b/arch/xtensa/kernel/perf_event.c
+@@ -13,17 +13,26 @@
+ #include <linux/perf_event.h>
+ #include <linux/platform_device.h>
+ 
++#include <asm/core.h>
+ #include <asm/processor.h>
+ #include <asm/stacktrace.h>
+ 
++#define XTENSA_HWVERSION_RG_2015_0	260000
++
++#if XCHAL_HW_MIN_VERSION >= XTENSA_HWVERSION_RG_2015_0
++#define XTENSA_PMU_ERI_BASE		0x00101000
++#else
++#define XTENSA_PMU_ERI_BASE		0x00001000
++#endif
++
+ /* Global control/status for all perf counters */
+-#define XTENSA_PMU_PMG			0x1000
++#define XTENSA_PMU_PMG			XTENSA_PMU_ERI_BASE
+ /* Perf counter values */
+-#define XTENSA_PMU_PM(i)		(0x1080 + (i) * 4)
++#define XTENSA_PMU_PM(i)		(XTENSA_PMU_ERI_BASE + 0x80 + (i) * 4)
+ /* Perf counter control registers */
+-#define XTENSA_PMU_PMCTRL(i)		(0x1100 + (i) * 4)
++#define XTENSA_PMU_PMCTRL(i)		(XTENSA_PMU_ERI_BASE + 0x100 + (i) * 4)
+ /* Perf counter status registers */
+-#define XTENSA_PMU_PMSTAT(i)		(0x1180 + (i) * 4)
++#define XTENSA_PMU_PMSTAT(i)		(XTENSA_PMU_ERI_BASE + 0x180 + (i) * 4)
+ 
+ #define XTENSA_PMU_PMG_PMEN		0x1
+ 
 
 
