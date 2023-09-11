@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BFC11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102CEC433C8;
-	Mon, 11 Sep 2023 14:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688FF11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE9CC433C8;
+	Mon, 11 Sep 2023 14:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443943;
-	bh=XBsidfZzR5PVv40H6gBk8xj0NAEsMkacrX4XxO/LnJg=;
+	s=korg; t=1694443946;
+	bh=IknDzujTlU5asqd1ghx3DAdUuFZfoB5KnDSGmz5EXQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiiFEUH55sTxrkBExi+JSdlpwmeFjiGchbgc+00+MLu9nqIzwaArpGfUwp05kul3p
-	 CGeW4fDv9oGlYnTk8uAAFSW+pNzX62R7pq9lGqudMSxFXEy/G8FwXWHxySwZPwx1Qm
-	 PQM4FLYCQmBsBSfw87byUYq+yeitCH5CQvp4TR8E=
+	b=SxmkaJ0ZVYhnW3y9l50DBixFMEheI+4zbD6LueRqkJQuG5uWdWqc3kE/0AbSU8/KE
+	 GlZ01RUf6bGzXGSxbt4FBr7ytNwdQVKokxXlmGmaqCu3y5PIgQnz1Zf3uXAaDjfUL2
+	 HM/g8OyIc3aepOxfDhZ7caOD/mRPcNsqwgPwgnAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Zheng Zhang <zheng.zhang@email.ucr.edu>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 516/737] iio: accel: adxl313: Fix adxl313_i2c_id[] table
-Date: Mon, 11 Sep 2023 15:46:15 +0200
-Message-ID: <20230911134704.968596919@linuxfoundation.org>
+Subject: [PATCH 6.4 549/737] media: cec: core: add adap_nb_transmit_canceled() callback
+Date: Mon, 11 Sep 2023 15:46:48 +0200
+Message-ID: <20230911134705.894585957@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,39 +41,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit f636554c4cd1c644109cc525900a056495b86cc9 ]
+[ Upstream commit da53c36ddd3f118a525a04faa8c47ca471e6c467 ]
 
-The .driver_data in adxl313_i2c_id[] for adxl312 and adxl314 is
-wrong. Fix this issue by adding corresponding adxl31x_chip_info
-data.
+A potential deadlock was found by Zheng Zhang with a local syzkaller
+instance.
 
-Reported-by: Jonathan Cameron <jic23@kernel.org>
-Closes: https://lore.kernel.org/all/20230722172832.04ad7738@jic23-huawei
-Fixes: a7a1c60bc4c9 ("drivers: iio: accel: adxl312 and adxl314 support")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230725171624.331283-2-biju.das.jz@bp.renesas.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The problem is that when a non-blocking CEC transmit is canceled by calling
+cec_data_cancel, that in turn can call the high-level received() driver
+callback, which can call cec_transmit_msg() to transmit a new message.
+
+The cec_data_cancel() function is called with the adap->lock mutex held,
+and cec_transmit_msg() tries to take that same lock.
+
+The root cause is that the received() callback can either be used to pass
+on a received message (and then adap->lock is not held), or to report a
+canceled transmit (and then adap->lock is held).
+
+This is confusing, so create a new low-level adap_nb_transmit_canceled
+callback that reports back that a non-blocking transmit was canceled.
+
+And the received() callback is only called when a message is received,
+as was the case before commit f9d0ecbf56f4 ("media: cec: correctly pass
+on reply results") complicated matters.
+
+Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: f9d0ecbf56f4 ("media: cec: correctly pass on reply results")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/adxl313_i2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/cec/core/cec-adap.c | 4 ++--
+ include/media/cec.h               | 6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/accel/adxl313_i2c.c b/drivers/iio/accel/adxl313_i2c.c
-index 99cc7fc294882..68785bd3ef2f0 100644
---- a/drivers/iio/accel/adxl313_i2c.c
-+++ b/drivers/iio/accel/adxl313_i2c.c
-@@ -40,8 +40,8 @@ static const struct regmap_config adxl31x_i2c_regmap_config[] = {
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index 241b1621b197c..a9b73fb33888d 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -385,8 +385,8 @@ static void cec_data_cancel(struct cec_data *data, u8 tx_status, u8 rx_status)
+ 	cec_queue_msg_monitor(adap, &data->msg, 1);
  
- static const struct i2c_device_id adxl313_i2c_id[] = {
- 	{ .name = "adxl312", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
--	{ .name = "adxl313", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
--	{ .name = "adxl314", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL312] },
-+	{ .name = "adxl313", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL313] },
-+	{ .name = "adxl314", .driver_data = (kernel_ulong_t)&adxl31x_chip_info[ADXL314] },
- 	{ }
+ 	if (!data->blocking && data->msg.sequence)
+-		/* Allow drivers to process the message first */
+-		call_op(adap, received, &data->msg);
++		/* Allow drivers to react to a canceled transmit */
++		call_void_op(adap, adap_nb_transmit_canceled, &data->msg);
+ 
+ 	cec_data_completed(data);
+ }
+diff --git a/include/media/cec.h b/include/media/cec.h
+index abee41ae02d0e..6556cc161dc0a 100644
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -121,14 +121,16 @@ struct cec_adap_ops {
+ 	void (*adap_configured)(struct cec_adapter *adap, bool configured);
+ 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
+ 			     u32 signal_free_time, struct cec_msg *msg);
++	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
++					  const struct cec_msg *msg);
+ 	void (*adap_status)(struct cec_adapter *adap, struct seq_file *file);
+ 	void (*adap_free)(struct cec_adapter *adap);
+ 
+-	/* Error injection callbacks */
++	/* Error injection callbacks, called without adap->lock held */
+ 	int (*error_inj_show)(struct cec_adapter *adap, struct seq_file *sf);
+ 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
+ 
+-	/* High-level CEC message callback */
++	/* High-level CEC message callback, called without adap->lock held */
+ 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
  };
  
 -- 
