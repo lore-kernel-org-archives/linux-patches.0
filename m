@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAA011705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29919C433C7;
-	Mon, 11 Sep 2023 14:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9CE11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A48EC433C8;
+	Mon, 11 Sep 2023 14:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443293;
-	bh=p/BDK5NiDzxFQth0EtzToiQRtEIpORRH+62rTxu5vuU=;
+	s=korg; t=1694443296;
+	bh=71kWOVC4xLJqtXfKH0wEqudEENFy5ICF0Nbk+GBmEAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqgKtK6hrfbi1SpcMr214nW7XmVogW19ltlcDuMSh+xtMlPOyK1xNNCb5Kb/Ig2pk
-	 xuFZa9vZiLF6oC/hGnaUyWoLqpRozZmwPA9KKNiURoCUm6UpNMJHDsLEPdAKmjteJ5
-	 91pw/0yMllOmHZ5H94nIpzy2cbzwGXY/Y4L1Pykk=
+	b=MVByiv3YiVISHMzj5OSST2XsKRQxpKepkwRjo/A6B0iTA3KwWO+hwXirv1G8Y9sxm
+	 N1rmfFNyVrZHTRhEIsSI04+suhwDuLcPf7YlFcOrTCyx7m7INyjhjxOf1gePgtku1K
+	 iBboXJeDtgQI9ObbioKkKW5LWHZCuZuus1MMRlOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 326/737] ARM: dts: samsung: s3c6410-mini6410: correct ethernet reg addresses (split)
-Date: Mon, 11 Sep 2023 15:43:05 +0200
-Message-ID: <20230911134659.655679139@linuxfoundation.org>
+Subject: [PATCH 6.4 300/737] arm64: dts: qcom: sm8250: Mark PCIe hosts as DMA coherent
+Date: Mon, 11 Sep 2023 15:42:39 +0200
+Message-ID: <20230911134658.934789602@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,34 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit cf0cb2af6a18f28b84f9f1416bff50ca60d6e98a ]
+[ Upstream commit 339d38a436f30d0f874815eafc7de2257346bf26 ]
 
-The davicom,dm9000 Ethernet Controller accepts two reg addresses.
+The PCIe hosts on SM8250 are cache-coherent. Mark them as such.
 
-Fixes: a43736deb47d ("ARM: dts: Add dts file for S3C6410-based Mini6410 board")
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20230713152926.82884-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: e53bdfc00977 ("arm64: dts: qcom: sm8250: Add PCIe support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230704-topic-8250_pcie_dmac-v1-1-799603a980b0@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s3c6410-mini6410.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/s3c6410-mini6410.dts b/arch/arm/boot/dts/s3c6410-mini6410.dts
-index 17097da36f5ed..0b07b3c319604 100644
---- a/arch/arm/boot/dts/s3c6410-mini6410.dts
-+++ b/arch/arm/boot/dts/s3c6410-mini6410.dts
-@@ -51,7 +51,7 @@ srom-cs1-bus@18000000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 4b0835109b01e..29f0b0381b278 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1905,6 +1905,7 @@ pcie0: pci@1c00000 {
  
- 		ethernet@18000000 {
- 			compatible = "davicom,dm9000";
--			reg = <0x18000000 0x2 0x18000004 0x2>;
-+			reg = <0x18000000 0x2>, <0x18000004 0x2>;
- 			interrupt-parent = <&gpn>;
- 			interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
- 			davicom,no-eeprom;
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie0_default_state>;
++			dma-coherent;
+ 
+ 			status = "disabled";
+ 		};
+@@ -2011,6 +2012,7 @@ pcie1: pci@1c08000 {
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie1_default_state>;
++			dma-coherent;
+ 
+ 			status = "disabled";
+ 		};
+@@ -2119,6 +2121,7 @@ pcie2: pci@1c10000 {
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie2_default_state>;
++			dma-coherent;
+ 
+ 			status = "disabled";
+ 		};
 -- 
 2.40.1
 
