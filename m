@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCBD1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933DAC433C8;
-	Mon, 11 Sep 2023 14:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41711170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56187C433C9;
+	Mon, 11 Sep 2023 14:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441678;
-	bh=NK/YvXIUGrjTQ92639si5SP4VEzAJ1/2jXnHmj/yIa4=;
+	s=korg; t=1694441680;
+	bh=35fX18uqjhHv3EwPPAcEA69MHSPWkjUCGwP2F4P6TSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGDDsiB9ZBEV1G/rne7ulkbATPOTZ/H3gYHQalK6jhUx9oIM0ChnF8YT2LwlCYXlz
-	 31SPVt1FCqYu9BGFth+HfNs8tUWU+fDDfUFuubA0Uh6Yqt2usfSCnUbbgBj04tyg6k
-	 su7Y4xUf1dlWWB/kgiHrpY2PULlY/GPQhR7HssYU=
+	b=mFvf6QJVb2ePzWacvhB3RFwtJGi3XZs2B5tAS1WP4PJ3nyrPkHmD5Fsk+zt94RGId
+	 c+9+dRxv4gKKN9orrehUZCGbSanroI2WbHOXtC0THQebooSbD2EhzXqtR/ZngbxG0b
+	 6xreebZLxqbM6OsM4ljh15Pn4rwc7kVZBd65CdDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Tom Talpey <tom@talpey.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 471/739] media: amphion: fix CHECKED_RETURN issues reported by coverity
-Date: Mon, 11 Sep 2023 15:44:30 +0200
-Message-ID: <20230911134704.301145746@linuxfoundation.org>
+Subject: [PATCH 6.5 462/739] RDMA/siw: Fabricate a GID on tun and loopback devices
+Date: Mon, 11 Sep 2023 15:44:21 +0200
+Message-ID: <20230911134704.057866202@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,97 +42,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit b237b058adbc7825da9c8f358f1ff3f0467d623a ]
+[ Upstream commit bad5b6e34ffbaacc77ad28a0f482e33b3929e635 ]
 
-calling "vpu_cmd_send/vpu_get_buffer_state/vpu_session_alloc_fs"
-without checking return value
+LOOPBACK and NONE (tunnel) devices have all-zero MAC addresses.
+Currently, siw_device_create() falls back to copying the IB device's
+name in those cases, because an all-zero MAC address breaks the RDMA
+core address resolution mechanism.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+However, at the point when siw_device_create() constructs a GID, the
+ib_device::name field is uninitialized, leaving the MAC address to
+remain in an all-zero state.
+
+Fabricate a random artificial GID for such devices, and ensure this
+artificial GID is returned for all device query operations.
+
+Link: https://lore.kernel.org/r/168960673260.3007.12378736853793339110.stgit@manet.1015granger.net
+Reported-by: Tom Talpey <tom@talpey.com>
+Fixes: a2d36b02c15d ("RDMA/siw: Enable siw on tunnel devices")
+Reviewed-by: Bernard Metzler <bmt@zurich.ibm.com>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vdec.c     |  5 ++++-
- drivers/media/platform/amphion/vpu_cmds.c |  3 ++-
- drivers/media/platform/amphion/vpu_dbg.c  | 11 +++++++++--
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/infiniband/sw/siw/siw.h       |  1 +
+ drivers/infiniband/sw/siw/siw_main.c  | 22 ++++++++--------------
+ drivers/infiniband/sw/siw/siw_verbs.c |  4 ++--
+ 3 files changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
-index eeb2ef72df5b3..133d77d1ea0c3 100644
---- a/drivers/media/platform/amphion/vdec.c
-+++ b/drivers/media/platform/amphion/vdec.c
-@@ -1019,6 +1019,7 @@ static int vdec_response_frame_abnormal(struct vpu_inst *inst)
- {
- 	struct vdec_t *vdec = inst->priv;
- 	struct vpu_fs_info info;
-+	int ret;
+diff --git a/drivers/infiniband/sw/siw/siw.h b/drivers/infiniband/sw/siw/siw.h
+index 2f3a9cda3850f..8b4a710b82bc1 100644
+--- a/drivers/infiniband/sw/siw/siw.h
++++ b/drivers/infiniband/sw/siw/siw.h
+@@ -74,6 +74,7 @@ struct siw_device {
  
- 	if (!vdec->req_frame_count)
- 		return 0;
-@@ -1026,7 +1027,9 @@ static int vdec_response_frame_abnormal(struct vpu_inst *inst)
- 	memset(&info, 0, sizeof(info));
- 	info.type = MEM_RES_FRAME;
- 	info.tag = vdec->seq_tag + 0xf0;
--	vpu_session_alloc_fs(inst, &info);
-+	ret = vpu_session_alloc_fs(inst, &info);
-+	if (ret)
-+		return ret;
- 	vdec->req_frame_count--;
+ 	u32 vendor_part_id;
+ 	int numa_node;
++	char raw_gid[ETH_ALEN];
  
+ 	/* physical port state (only one port per device) */
+ 	enum ib_port_state state;
+diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
+index 65b5cda5457ba..f45600d169ae7 100644
+--- a/drivers/infiniband/sw/siw/siw_main.c
++++ b/drivers/infiniband/sw/siw/siw_main.c
+@@ -75,8 +75,7 @@ static int siw_device_register(struct siw_device *sdev, const char *name)
+ 		return rv;
+ 	}
+ 
+-	siw_dbg(base_dev, "HWaddr=%pM\n", sdev->netdev->dev_addr);
+-
++	siw_dbg(base_dev, "HWaddr=%pM\n", sdev->raw_gid);
  	return 0;
-diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
-index 647d94554fb5d..7e137f276c3b1 100644
---- a/drivers/media/platform/amphion/vpu_cmds.c
-+++ b/drivers/media/platform/amphion/vpu_cmds.c
-@@ -306,7 +306,8 @@ static void vpu_core_keep_active(struct vpu_core *core)
- 
- 	dev_dbg(core->dev, "try to wake up\n");
- 	mutex_lock(&core->cmd_lock);
--	vpu_cmd_send(core, &pkt);
-+	if (vpu_cmd_send(core, &pkt))
-+		dev_err(core->dev, "fail to keep active\n");
- 	mutex_unlock(&core->cmd_lock);
  }
  
-diff --git a/drivers/media/platform/amphion/vpu_dbg.c b/drivers/media/platform/amphion/vpu_dbg.c
-index adc523b950618..982c2c777484c 100644
---- a/drivers/media/platform/amphion/vpu_dbg.c
-+++ b/drivers/media/platform/amphion/vpu_dbg.c
-@@ -50,6 +50,13 @@ static char *vpu_stat_name[] = {
- 	[VPU_BUF_STATE_ERROR] = "error",
- };
+@@ -313,24 +312,19 @@ static struct siw_device *siw_device_create(struct net_device *netdev)
+ 		return NULL;
  
-+static inline const char *to_vpu_stat_name(int state)
-+{
-+	if (state <= VPU_BUF_STATE_ERROR)
-+		return vpu_stat_name[state];
-+	return "unknown";
-+}
-+
- static int vpu_dbg_instance(struct seq_file *s, void *data)
- {
- 	struct vpu_inst *inst = s->private;
-@@ -141,7 +148,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
- 		num = scnprintf(str, sizeof(str),
- 				"output [%2d] state = %10s, %8s\n",
- 				i, vb2_stat_name[vb->state],
--				vpu_stat_name[vpu_get_buffer_state(vbuf)]);
-+				to_vpu_stat_name(vpu_get_buffer_state(vbuf)));
- 		if (seq_write(s, str, num))
- 			return 0;
+ 	base_dev = &sdev->base_dev;
+-
+ 	sdev->netdev = netdev;
+ 
+-	if (netdev->type != ARPHRD_LOOPBACK && netdev->type != ARPHRD_NONE) {
+-		addrconf_addr_eui48((unsigned char *)&base_dev->node_guid,
+-				    netdev->dev_addr);
++	if (netdev->addr_len) {
++		memcpy(sdev->raw_gid, netdev->dev_addr,
++		       min_t(unsigned int, netdev->addr_len, ETH_ALEN));
+ 	} else {
+ 		/*
+-		 * This device does not have a HW address,
+-		 * but connection mangagement lib expects gid != 0
++		 * This device does not have a HW address, but
++		 * connection mangagement requires a unique gid.
+ 		 */
+-		size_t len = min_t(size_t, strlen(base_dev->name), 6);
+-		char addr[6] = { };
+-
+-		memcpy(addr, base_dev->name, len);
+-		addrconf_addr_eui48((unsigned char *)&base_dev->node_guid,
+-				    addr);
++		eth_random_addr(sdev->raw_gid);
  	}
-@@ -156,7 +163,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
- 		num = scnprintf(str, sizeof(str),
- 				"capture[%2d] state = %10s, %8s\n",
- 				i, vb2_stat_name[vb->state],
--				vpu_stat_name[vpu_get_buffer_state(vbuf)]);
-+				to_vpu_stat_name(vpu_get_buffer_state(vbuf)));
- 		if (seq_write(s, str, num))
- 			return 0;
- 	}
++	addrconf_addr_eui48((u8 *)&base_dev->node_guid, sdev->raw_gid);
+ 
+ 	base_dev->uverbs_cmd_mask |= BIT_ULL(IB_USER_VERBS_CMD_POST_SEND);
+ 
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index 398ec13db6248..32b0befd25e27 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -157,7 +157,7 @@ int siw_query_device(struct ib_device *base_dev, struct ib_device_attr *attr,
+ 	attr->vendor_part_id = sdev->vendor_part_id;
+ 
+ 	addrconf_addr_eui48((u8 *)&attr->sys_image_guid,
+-			    sdev->netdev->dev_addr);
++			    sdev->raw_gid);
+ 
+ 	return 0;
+ }
+@@ -218,7 +218,7 @@ int siw_query_gid(struct ib_device *base_dev, u32 port, int idx,
+ 
+ 	/* subnet_prefix == interface_id == 0; */
+ 	memset(gid, 0, sizeof(*gid));
+-	memcpy(&gid->raw[0], sdev->netdev->dev_addr, 6);
++	memcpy(gid->raw, sdev->raw_gid, ETH_ALEN);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
