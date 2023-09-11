@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306651170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0966C433C8;
-	Mon, 11 Sep 2023 14:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB411170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAA7C433C7;
+	Mon, 11 Sep 2023 14:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442508;
-	bh=j58lyBJushbWTmyjqH9m3+186XAsAvMZWsHWVfVWjeE=;
+	s=korg; t=1694442510;
+	bh=pyR5PsWEn2NNie5H8Ireh8g+wBNLdMRO0Y1mmp0dnus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D/1ExaKjJKkZhHvy0LNKor4hiHFU4wlfUJ+IkWZRJDBMIsvYapTf1zG4s4qmS3G43
-	 5nCPEsm9zCIYhOLGhjm9FKgqCHukkluhnj+v3J1H/c4iJ0KvrYXTlN5eJgeDpqOxXl
-	 1S6nx7QGIo+dYOP4strh0bsU/CYwF5DJkJnTYecs=
+	b=SWJ0IwTjStPsgMN/KQbvAh0+KB+LoHnaVaHxl8eWgEsZKSz2jHJ2MbHqqfJ81Pm//
+	 RDivkY68YSRI/5YJdReLAe/vH78FTxaWxzr4Na8geeVluafFQhDc14G/ezKOmbgt5n
+	 rQDo3Nso6gt/owljsafGhY2VKnZ1ffHVdjLlu9Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 022/737] s390/dasd: use correct number of retries for ERP requests
-Date: Mon, 11 Sep 2023 15:38:01 +0200
-Message-ID: <20230911134650.972571058@linuxfoundation.org>
+Subject: [PATCH 6.4 049/737] clk: fixed-mmio: make COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM
+Date: Mon, 11 Sep 2023 15:38:28 +0200
+Message-ID: <20230911134651.829658114@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,42 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit acea28a6b74f458defda7417d2217b051ba7d444 ]
+[ Upstream commit e7dd44f4f3166db45248414f5df8f615392de47a ]
 
-If a DASD request fails an error recovery procedure (ERP) request might
-be built as a copy of the original request to do error recovery.
+On s390 systems (aka mainframes), it has classic channel devices for
+networking and permanent storage that are currently even more common
+than PCI devices. Hence it could have a fully functional s390 kernel
+with CONFIG_PCI=n, then the relevant iomem mapping functions
+[including ioremap(), devm_ioremap(), etc.] are not available.
 
-The ERP request gets a number of retries assigned.
-This number is always 256 no matter what other value might have been set
-for the original request. This is not what is expected when a user
-specifies a certain amount of retries for the device via sysfs.
+Here let COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM so that it won't
+be built to cause below compiling error if PCI is unset:
 
-Correctly use the number of retries of the original request for ERP
-requests.
+------
+ld: drivers/clk/clk-fixed-mmio.o: in function `fixed_mmio_clk_setup':
+clk-fixed-mmio.c:(.text+0x5e): undefined reference to `of_iomap'
+ld: clk-fixed-mmio.c:(.text+0xba): undefined reference to `iounmap'
+------
 
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org
+Link: https://lore.kernel.org/r/20230707135852.24292-8-bhe@redhat.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_3990_erp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/s390/block/dasd_3990_erp.c b/drivers/s390/block/dasd_3990_erp.c
-index f0f210627cadf..89957bb7244d2 100644
---- a/drivers/s390/block/dasd_3990_erp.c
-+++ b/drivers/s390/block/dasd_3990_erp.c
-@@ -2441,7 +2441,7 @@ static struct dasd_ccw_req *dasd_3990_erp_add_erp(struct dasd_ccw_req *cqr)
- 	erp->block    = cqr->block;
- 	erp->magic    = cqr->magic;
- 	erp->expires  = cqr->expires;
--	erp->retries  = 256;
-+	erp->retries  = device->default_retries;
- 	erp->buildclk = get_tod_clock();
- 	erp->status = DASD_CQR_FILLED;
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index 016814e15536a..52dfbae4f361c 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -444,6 +444,7 @@ config COMMON_CLK_BD718XX
+ config COMMON_CLK_FIXED_MMIO
+ 	bool "Clock driver for Memory Mapped Fixed values"
+ 	depends on COMMON_CLK && OF
++	depends on HAS_IOMEM
+ 	help
+ 	  Support for Memory Mapped IO Fixed clocks
  
 -- 
 2.40.1
