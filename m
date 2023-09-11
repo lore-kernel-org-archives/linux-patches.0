@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8158011705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042E4C433CA;
-	Mon, 11 Sep 2023 14:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B35011705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF93EC433C7;
+	Mon, 11 Sep 2023 14:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443147;
-	bh=2KSkbcue2oBoTklx8jOQpBug/0YeaRCTmK49JfWh9t4=;
+	s=korg; t=1694443150;
+	bh=nglbuDNTGDCwOQpQV0knPtfwCQBvI5oPQeR8wx/SGVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qcn+mUdi9Yovmg6wFNwEc/vTrzQ6esnX7ThfRBccNAd/oCCOPU3kCGfQvE5xpfIBR
-	 2Gn9k/dD1khs4c17DJWORhN7gkY/8MZypvsoY0fJghYGzk24aNoagXy9kawtaOu3RD
-	 xUFZzcW5LXpiDFBm44I68touN+KcSy4j0CfP/PwM=
+	b=z8+PzdhdPKSbfuC/Ji/4BWi9Ak5gIz4vmdPxnALifBGUZOFcAxPahZdCAlyi8VXUT
+	 A7L3CQMLkuP2oALbf6NcaHe9c0vCRJwq7hOQkTPQK8WvfER6K/Dhx6iRbtjhXQh4qo
+	 PySDWt0VXCWDSK/65QG2UAg76ybb+LL+5r+n5msI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 247/737] net/mlx5: Dynamic cyclecounter shift calculation for PTP free running clock
-Date: Mon, 11 Sep 2023 15:41:46 +0200
-Message-ID: <20230911134657.500384220@linuxfoundation.org>
+Subject: [PATCH 6.4 238/737] bpf: Fix check_func_arg_reg_off bug for graph root/node
+Date: Mon, 11 Sep 2023 15:41:37 +0200
+Message-ID: <20230911134657.257159129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -44,95 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 84a58e60038fa0366006977dba85eae16b2e3d78 ]
+[ Upstream commit 6785b2edf48c6b1c3ea61fe3b0d2e02b8fbf90c0 ]
 
-Use a dynamic calculation to determine the shift value for the internal
-timer cyclecounter that will lead to the highest precision frequency
-adjustments. Previously used a constant for the shift value assuming all
-devices supported by the driver had a nominal frequency of 1GHz. However,
-there are devices that operate at different frequencies. The previous shift
-value constant would break the PHC functionality for those devices.
+The commit being fixed introduced a hunk into check_func_arg_reg_off
+that bypasses reg->off == 0 enforcement when offset points to a graph
+node or root. This might possibly be done for treating bpf_rbtree_remove
+and others as KF_RELEASE and then later check correct reg->off in helper
+argument checks.
 
-Reported-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Closes: https://lore.kernel.org/netdev/20230815151507.3028503-1-vadfed@meta.com/
-Fixes: 6a4010927562 ("net/mlx5: Update cyclecounter shift value to improve ptp free running mode precision")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Tested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20230821230554.236210-1-rrameshbabu@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+But this is not the case, those helpers are already not KF_RELEASE and
+permit non-zero reg->off and verify it later to match the subobject in
+BTF type.
+
+However, this logic leads to bpf_obj_drop permitting free of register
+arguments with non-zero offset when they point to a graph root or node
+within them, which is not ok.
+
+For instance:
+
+struct foo {
+	int i;
+	int j;
+	struct bpf_rb_node node;
+};
+
+struct foo *f = bpf_obj_new(typeof(*f));
+if (!f) ...
+bpf_obj_drop(f); // OK
+bpf_obj_drop(&f->i); // still ok from verifier PoV
+bpf_obj_drop(&f->node); // Not OK, but permitted right now
+
+Fix this by dropping the whole part of code altogether.
+
+Fixes: 6a3cd3318ff6 ("bpf: Migrate release_on_unlock logic to non-owning ref semantics")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230822175140.1317749-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/lib/clock.c   | 32 ++++++++++++++++---
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ kernel/bpf/verifier.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-index dba4c5e2f7667..94a1635ecdd47 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-@@ -32,16 +32,13 @@
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b9e4dbdfa296a..d4a6120edbb86 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7611,17 +7611,6 @@ int check_func_arg_reg_off(struct bpf_verifier_env *env,
+ 		if (arg_type_is_dynptr(arg_type) && type == PTR_TO_STACK)
+ 			return 0;
  
- #include <linux/clocksource.h>
- #include <linux/highmem.h>
-+#include <linux/log2.h>
- #include <linux/ptp_clock_kernel.h>
- #include <rdma/mlx5-abi.h>
- #include "lib/eq.h"
- #include "en.h"
- #include "clock.h"
- 
--enum {
--	MLX5_CYCLES_SHIFT	= 31
--};
+-		if ((type_is_ptr_alloc_obj(type) || type_is_non_owning_ref(type)) && reg->off) {
+-			if (reg_find_field_offset(reg, reg->off, BPF_GRAPH_NODE_OR_ROOT))
+-				return __check_ptr_off_reg(env, reg, regno, true);
 -
- enum {
- 	MLX5_PIN_MODE_IN		= 0x0,
- 	MLX5_PIN_MODE_OUT		= 0x1,
-@@ -93,6 +90,31 @@ static bool mlx5_modify_mtutc_allowed(struct mlx5_core_dev *mdev)
- 	return MLX5_CAP_MCAM_FEATURE(mdev, ptpcyc2realtime_modify);
- }
- 
-+static u32 mlx5_ptp_shift_constant(u32 dev_freq_khz)
-+{
-+	/* Optimal shift constant leads to corrections above just 1 scaled ppm.
-+	 *
-+	 * Two sets of equations are needed to derive the optimal shift
-+	 * constant for the cyclecounter.
-+	 *
-+	 *    dev_freq_khz * 1000 / 2^shift_constant = 1 scaled_ppm
-+	 *    ppb = scaled_ppm * 1000 / 2^16
-+	 *
-+	 * Using the two equations together
-+	 *
-+	 *    dev_freq_khz * 1000 / 1 scaled_ppm = 2^shift_constant
-+	 *    dev_freq_khz * 2^16 / 1 ppb = 2^shift_constant
-+	 *    dev_freq_khz = 2^(shift_constant - 16)
-+	 *
-+	 * then yields
-+	 *
-+	 *    shift_constant = ilog2(dev_freq_khz) + 16
-+	 */
-+
-+	return min(ilog2(dev_freq_khz) + 16,
-+		   ilog2((U32_MAX / NSEC_PER_MSEC) * dev_freq_khz));
-+}
-+
- static bool mlx5_is_mtutc_time_adj_cap(struct mlx5_core_dev *mdev, s64 delta)
- {
- 	s64 min = MLX5_MTUTC_OPERATION_ADJUST_TIME_MIN;
-@@ -910,7 +932,7 @@ static void mlx5_timecounter_init(struct mlx5_core_dev *mdev)
- 
- 	dev_freq = MLX5_CAP_GEN(mdev, device_frequency_khz);
- 	timer->cycles.read = read_internal_timer;
--	timer->cycles.shift = MLX5_CYCLES_SHIFT;
-+	timer->cycles.shift = mlx5_ptp_shift_constant(dev_freq);
- 	timer->cycles.mult = clocksource_khz2mult(dev_freq,
- 						  timer->cycles.shift);
- 	timer->nominal_c_mult = timer->cycles.mult;
+-			verbose(env, "R%d must have zero offset when passed to release func\n",
+-				regno);
+-			verbose(env, "No graph node or root found at R%d type:%s off:%d\n", regno,
+-				btf_type_name(reg->btf, reg->btf_id), reg->off);
+-			return -EINVAL;
+-		}
+-
+ 		/* Doing check_ptr_off_reg check for the offset will catch this
+ 		 * because fixed_off_ok is false, but checking here allows us
+ 		 * to give the user a better error message.
 -- 
 2.40.1
 
