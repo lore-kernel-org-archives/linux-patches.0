@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B5E11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD1FC433C9;
-	Mon, 11 Sep 2023 15:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8AB1171B
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37CCC433C8;
+	Mon, 11 Sep 2023 15:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444906;
-	bh=vrjLNQRC6FhLfzmlwGqnQwkGxfY48UL8DVC/3HEoKk0=;
+	s=korg; t=1694444909;
+	bh=ESi3CjJuNILH7eOljagiROc5UjYRbefeZD+FBqtLNPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBcyS7dboeiGv/g8bCSSuW/M5BwTs2/aADxyabg69wJPYGhYcKncjd/4I7tK8w0Ak
-	 R8q2wvveX2mpivLjryzWZasVW3HArf5S941in176ElIrzn5bdsRJ1bvT8y6fGS0+3R
-	 c+0Lzmz5WYqSA5yfWEN42TMiH5lWhvliYTEJtg8A=
+	b=EQwTEyO70UVi7T+hTUEKyRtb4MZOFNqQkyrmZJHYZM79XAm45HecZ0gXnjOFbN+Tq
+	 vkVCjhhp1ZnO/hAbbRQ6tiF7OOR0+Y1HNbb1jUv96ARwAf/R0b6HGXfmIezsJAQuaR
+	 y0m+53OKVyHxgZL6hAmJENokYsFk31ucwmya2fB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 157/600] spi: tegra20-sflash: fix to check return value of platform_get_irq() in tegra_sflash_probe()
-Date: Mon, 11 Sep 2023 15:43:10 +0200
-Message-ID: <20230911134638.244333590@linuxfoundation.org>
+Subject: [PATCH 6.1 158/600] can: gs_usb: gs_usb_receive_bulk_callback(): count RX overflow errors also in case of OOM
+Date: Mon, 11 Sep 2023 15:43:11 +0200
+Message-ID: <20230911134638.273310588@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,41 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 29a449e765ff70a5bd533be94babb6d36985d096 ]
+[ Upstream commit 6c8bc15f02b85bc8f47074110d8fd8caf7a1e42d ]
 
-The platform_get_irq might be failed and return a negative result. So
-there should have an error handling code.
+In case of an RX overflow error from the CAN controller and an OOM
+where no skb can be allocated, the error counters are not incremented.
 
-Fixed this by adding an error handling code.
+Fix this by first incrementing the error counters and then allocate
+the skb.
 
-Fixes: 8528547bcc33 ("spi: tegra: add spi driver for sflash controller")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Link: https://lore.kernel.org/r/tencent_71FC162D589E4788C2152AAC84CD8D5C6D06@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-7-c3b9154ec605@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra20-sflash.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra20-sflash.c b/drivers/spi/spi-tegra20-sflash.c
-index 220ee08c4a06c..d4bebb4314172 100644
---- a/drivers/spi/spi-tegra20-sflash.c
-+++ b/drivers/spi/spi-tegra20-sflash.c
-@@ -455,7 +455,11 @@ static int tegra_sflash_probe(struct platform_device *pdev)
- 		goto exit_free_master;
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index 5858cbafbc965..264a0f764e011 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -626,6 +626,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
  	}
  
--	tsd->irq = platform_get_irq(pdev, 0);
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
-+		goto exit_free_master;
-+	tsd->irq = ret;
+ 	if (hf->flags & GS_CAN_FLAG_OVERFLOW) {
++		stats->rx_over_errors++;
++		stats->rx_errors++;
 +
- 	ret = request_irq(tsd->irq, tegra_sflash_isr, 0,
- 			dev_name(&pdev->dev), tsd);
- 	if (ret < 0) {
+ 		skb = alloc_can_err_skb(netdev, &cf);
+ 		if (!skb)
+ 			goto resubmit_urb;
+@@ -633,8 +636,6 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 		cf->can_id |= CAN_ERR_CRTL;
+ 		cf->len = CAN_ERR_DLC;
+ 		cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
+-		stats->rx_over_errors++;
+-		stats->rx_errors++;
+ 		netif_rx(skb);
+ 	}
+ 
 -- 
 2.40.1
 
