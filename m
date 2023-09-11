@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB691170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF6AC433C8;
-	Mon, 11 Sep 2023 13:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79301170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356B1C433C7;
+	Mon, 11 Sep 2023 13:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440351;
-	bh=RLnomFS5Et5ZuDjwT1EtJpfDvkJG/LRtN42AgmXFIsI=;
+	s=korg; t=1694440354;
+	bh=nHk+EUNQOFA2VsrbK0Y86veDQ6rhCio99WOjcLhtcOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQ8D2/uWxS3gxFAwueeVCLobY3xuPFjijBHS3tbPOkrhu1kaoJ2A9C1X13LtE6jIL
-	 oemiqxh6XKB6kb2j7E2r37mK6LJlzpTaK2eaqpprLha+3TTB9X6PyELwCE5Y/MB0J/
-	 rTgvQ/kCFENhZVWpbF5LYOD/brIdKMM0qbTqqICY=
+	b=1ZjOIjnBclEiO5x1zBXXs3K8T9b51yonfB6zmNWEbGFUZqMEPSKLzHDEE1qyBdqxX
+	 nrEj6kgT8uGK+FUsWIcXXoeLHILbnB3ZI+bsGdrZ/CTTAQ1jQWdT5PZRXI55wSJlU9
+	 sebDTCUUvLSe2kARscFf4EP+WOZUtkuxIw211XfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 031/739] selftests/resctrl: Add resctrl.h into build deps
-Date: Mon, 11 Sep 2023 15:37:10 +0200
-Message-ID: <20230911134651.954485459@linuxfoundation.org>
+Subject: [PATCH 6.5 032/739] selftests/resctrl: Dont leak buffer in fill_cache()
+Date: Mon, 11 Sep 2023 15:37:11 +0200
+Message-ID: <20230911134651.983780164@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -46,14 +46,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 8e289f4542890168705219e54f0231dccfabddbe ]
+[ Upstream commit 2d320b1029ee7329ee0638181be967789775b962 ]
 
-Makefile only lists *.c as build dependencies for the resctrl_tests
-executable which excludes resctrl.h.
+The error path in fill_cache() does return before the allocated buffer
+is freed leaking the buffer.
 
-Add *.h to wildcard() to include resctrl.h.
+The leak was introduced when fill_cache_read() started to return errors
+in commit c7b607fa9325 ("selftests/resctrl: Fix null pointer
+dereference on open failed"), before that both fill functions always
+returned 0.
 
-Fixes: 591a6e8588fc ("selftests/resctrl: Add basic resctrl file system operations and data")
+Move free() earlier to prevent the mem leak.
+
+Fixes: c7b607fa9325 ("selftests/resctrl: Fix null pointer dereference on open failed")
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
@@ -61,19 +66,28 @@ Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/resctrl/fill_buf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/Makefile b/tools/testing/selftests/resctrl/Makefile
-index 73d53257df42f..5073dbc961258 100644
---- a/tools/testing/selftests/resctrl/Makefile
-+++ b/tools/testing/selftests/resctrl/Makefile
-@@ -7,4 +7,4 @@ TEST_GEN_PROGS := resctrl_tests
+diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
+index 341cc93ca84c4..3b328c8448964 100644
+--- a/tools/testing/selftests/resctrl/fill_buf.c
++++ b/tools/testing/selftests/resctrl/fill_buf.c
+@@ -177,12 +177,13 @@ fill_cache(unsigned long long buf_size, int malloc_and_init, int memflush,
+ 	else
+ 		ret = fill_cache_write(start_ptr, end_ptr, resctrl_val);
  
- include ../lib.mk
++	free(startptr);
++
+ 	if (ret) {
+ 		printf("\n Error in fill cache read/write...\n");
+ 		return -1;
+ 	}
  
--$(OUTPUT)/resctrl_tests: $(wildcard *.c)
-+$(OUTPUT)/resctrl_tests: $(wildcard *.[ch])
+-	free(startptr);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
