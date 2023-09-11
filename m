@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415401170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:09:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D0BC433C7;
-	Mon, 11 Sep 2023 14:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294CA1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:09:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B13C433C9;
+	Mon, 11 Sep 2023 14:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441343;
-	bh=nvUEg4ZmPNvL3LaD0GnnAMQ3vl07PrKgZMS+I8GmAew=;
+	s=korg; t=1694441346;
+	bh=hBQr7QgKYv1b6+cv0d0VXpeU/DffSYrttqPh78EJuRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLFb8k1aHVFkaLSZUJrLOskGN2hQ5dh7XhY+5X4RdYcoR4ojwmFjPR3CXgKPLL1un
-	 mrR7/KsdYghwOmqkXjAQ7jQ4j8u9yPEuVfJi0w8fdxCf3KSrqhS/k5SMeMY0rserWF
-	 2Gu50D73HXWek4X1eTcSk5az/+oA8K407RAlHhtM=
+	b=WH0JESD/Ou2fLXnsZ6C0TiVLUSH3azzGw7mo7UYaEgN5tkOiSbar9i2QpNmxFLHAJ
+	 BEilxEGNFCsquTy/qRfbfd+QXr+hMuRHNxHSg5EANw/AjNxTOzckvfx3krmkrcCJgU
+	 pPIFFnkCugvGmWDchKOV/gjeucoi55iw1QSYQErE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Danila Tikhonov <danila@jiaxyga.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 380/739] clk: qcom: gcc-sc8280xp: Add missing GDSCs
-Date: Mon, 11 Sep 2023 15:42:59 +0200
-Message-ID: <20230911134701.791298308@linuxfoundation.org>
+Subject: [PATCH 6.5 381/739] clk: qcom: gcc-sm7150: Add CLK_OPS_PARENT_ENABLE to sdcc2 rcg
+Date: Mon, 11 Sep 2023 15:43:00 +0200
+Message-ID: <20230911134701.823331087@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,141 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Danila Tikhonov <danila@jiaxyga.com>
 
-[ Upstream commit 4712eb7ff85bd3dd09c6668b8de4080e02b3eea9 ]
+[ Upstream commit ff19022b9112d6bbd7c117c83e944cb21b438e91 ]
 
-There are 10 more GDSCs that we've not been caring about, and by extension
-(and perhaps even more importantly), not putting to sleep. Add them.
+Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
+didn't update its configuration" error.
 
-Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20230620-topic-sc8280_gccgdsc-v2-3-562c1428c10d@linaro.org
+Fixes: a808d58ddf29 ("clk: qcom: Add Global Clock Controller (GCC) driver for SM7150")
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230630191944.20282-1-danila@jiaxyga.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sc8280xp.c | 100 ++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+ drivers/clk/qcom/gcc-sm7150.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index 64bea886322d4..3e1a62fa3a074 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -6897,6 +6897,96 @@ static struct gdsc emac_1_gdsc = {
- 	.flags = RETAIN_FF_ENABLE,
+diff --git a/drivers/clk/qcom/gcc-sm7150.c b/drivers/clk/qcom/gcc-sm7150.c
+index 6b628178f62c4..6da87f0436d0c 100644
+--- a/drivers/clk/qcom/gcc-sm7150.c
++++ b/drivers/clk/qcom/gcc-sm7150.c
+@@ -739,6 +739,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_6),
+ 		.ops = &clk_rcg2_floor_ops,
++		.flags = CLK_OPS_PARENT_ENABLE,
+ 	},
  };
  
-+static struct gdsc usb4_1_gdsc = {
-+	.gdscr = 0xb8004,
-+	.pd = {
-+		.name = "usb4_1_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE,
-+};
-+
-+static struct gdsc usb4_gdsc = {
-+	.gdscr = 0x2a004,
-+	.pd = {
-+		.name = "usb4_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE,
-+};
-+
-+static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
-+	.gdscr = 0x7d050,
-+	.pd = {
-+		.name = "hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
-+	.gdscr = 0x7d058,
-+	.pd = {
-+		.name = "hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc = {
-+	.gdscr = 0x7d054,
-+	.pd = {
-+		.name = "hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf1_gdsc = {
-+	.gdscr = 0x7d06c,
-+	.pd = {
-+		.name = "hlos1_vote_mmnoc_mmu_tbu_sf1_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_turing_mmu_tbu0_gdsc = {
-+	.gdscr = 0x7d05c,
-+	.pd = {
-+		.name = "hlos1_vote_turing_mmu_tbu0_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_turing_mmu_tbu1_gdsc = {
-+	.gdscr = 0x7d060,
-+	.pd = {
-+		.name = "hlos1_vote_turing_mmu_tbu1_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_turing_mmu_tbu2_gdsc = {
-+	.gdscr = 0x7d0a0,
-+	.pd = {
-+		.name = "hlos1_vote_turing_mmu_tbu2_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
-+static struct gdsc hlos1_vote_turing_mmu_tbu3_gdsc = {
-+	.gdscr = 0x7d0a4,
-+	.pd = {
-+		.name = "hlos1_vote_turing_mmu_tbu3_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
-+};
-+
- static struct clk_regmap *gcc_sc8280xp_clocks[] = {
- 	[GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie0_tunnel_axi_clk.clkr,
- 	[GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie1_tunnel_axi_clk.clkr,
-@@ -7377,6 +7467,16 @@ static struct gdsc *gcc_sc8280xp_gdscs[] = {
- 	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
- 	[EMAC_0_GDSC] = &emac_0_gdsc,
- 	[EMAC_1_GDSC] = &emac_1_gdsc,
-+	[USB4_1_GDSC] = &usb4_1_gdsc,
-+	[USB4_GDSC] = &usb4_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_SF0_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_SF1_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_sf1_gdsc,
-+	[HLOS1_VOTE_TURING_MMU_TBU0_GDSC] = &hlos1_vote_turing_mmu_tbu0_gdsc,
-+	[HLOS1_VOTE_TURING_MMU_TBU1_GDSC] = &hlos1_vote_turing_mmu_tbu1_gdsc,
-+	[HLOS1_VOTE_TURING_MMU_TBU2_GDSC] = &hlos1_vote_turing_mmu_tbu2_gdsc,
-+	[HLOS1_VOTE_TURING_MMU_TBU3_GDSC] = &hlos1_vote_turing_mmu_tbu3_gdsc,
- };
- 
- static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
 -- 
 2.40.1
 
