@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B2E11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7690FC433C7;
-	Mon, 11 Sep 2023 15:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D880711715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A88C433C8;
+	Mon, 11 Sep 2023 15:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444914;
-	bh=QcLamvaK79wWI3wGd7gVwWyoKSwwe7cc8b3DoeLDyy4=;
+	s=korg; t=1694444917;
+	bh=/wpPSe4RFYkGUSVTSEmpv89uaM+Y+eQDzzL/PQdMIXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZ9bkhwxVVszPBrWyYE8h9pB0oUdDsVqBHtbzlp2x2IIAYQTwuFSYcUCvdO0V3zND
-	 Oq+Zc/bPvPAzMSjrEUDkq8/oKW2mEM51kmxEaRys3FyP03nwDdoa2a1LbMPG6XJLZI
-	 oAR8OrGFUmLF1Dag2Ru+VjnJlj2gBy/zdft6Iu3c=
+	b=w7aRvHB2ZbcZpmHApwRD0/8esYfoOIdDCOyxdycWvhZUzl3/zPCtiLofUwiwTtxsj
+	 FAFvy0Fi1ssv4fUS6PJ9i5jnwgj1EVeHCZint9rRMhwerrcW9Y+1ide9SYhZ9HkxQ5
+	 zZBVB4q/poIe8rP2fQQnL8yxvY6kNZMdH3dap4rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Polaris Pi <pinkperfect2021@gmail.com>,
-	Matthew Wang <matthewmwang@chromium.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 160/600] wifi: mwifiex: Fix OOB and integer underflow when rx packets
-Date: Mon, 11 Sep 2023 15:43:13 +0200
-Message-ID: <20230911134638.332144837@linuxfoundation.org>
+Subject: [PATCH 6.1 125/600] s390/pkey: fix PKEY_TYPE_EP11_AES handling in PKEY_GENSECK2 IOCTL
+Date: Mon, 11 Sep 2023 15:42:38 +0200
+Message-ID: <20230911134637.305632264@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,125 +41,274 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Polaris Pi <pinkperfect2021@gmail.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 11958528161731c58e105b501ed60b83a91ea941 ]
+[ Upstream commit fb249ce7f7bfd8621a38e4ad401ba74b680786d4 ]
 
-Make sure mwifiex_process_mgmt_packet,
-mwifiex_process_sta_rx_packet and mwifiex_process_uap_rx_packet,
-mwifiex_uap_queue_bridged_pkt and mwifiex_process_rx_packet
-not out-of-bounds access the skb->data buffer.
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES for the PKEY_GENSECK2
+IOCTL, to enable userspace to generate securekey blobs of this
+type. Unfortunately, all PKEY_GENSECK2 IOCTL requests for
+PKEY_TYPE_EP11_AES return with an error (-EINVAL). Fix the handling
+for PKEY_TYPE_EP11_AES in PKEY_GENSECK2 IOCTL, so that userspace can
+generate securekey blobs of this type.
 
-Fixes: 2dbaf751b1de ("mwifiex: report received management frames to cfg80211")
-Signed-off-by: Polaris Pi <pinkperfect2021@gmail.com>
-Reviewed-by: Matthew Wang <matthewmwang@chromium.org>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230723070741.1544662-1-pinkperfect2021@gmail.com
+The start of the header and the keyblob, as well as the length need
+special handling, depending on the internal keyversion. Add a helper
+function that splits an uninitialized buffer into start and size of
+the header as well as start and size of the payload, depending on the
+requested keyversion.
+
+Do the header-related calculations and the raw genkey request handling
+in separate functions. Use the raw genkey request function for
+internal purposes.
+
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_rx.c | 11 ++++++++++-
- .../net/wireless/marvell/mwifiex/uap_txrx.c   | 19 +++++++++++++++++++
- drivers/net/wireless/marvell/mwifiex/util.c   | 10 +++++++---
- 3 files changed, 36 insertions(+), 4 deletions(-)
+ drivers/s390/crypto/pkey_api.c        |  18 +++--
+ drivers/s390/crypto/zcrypt_ep11misc.c | 103 ++++++++++++++++++++++----
+ drivers/s390/crypto/zcrypt_ep11misc.h |   2 +-
+ 3 files changed, 102 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_rx.c b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-index 13659b02ba882..f2899d53a43f9 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_rx.c
-@@ -86,6 +86,14 @@ int mwifiex_process_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_len = le16_to_cpu(local_rx_pd->rx_pkt_length);
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_off;
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index e650df3fe7ccb..79568da580c67 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -565,6 +565,11 @@ static int pkey_genseckey2(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 		if (*keybufsize < MINEP11AESKEYBLOBSIZE)
+ 			return -EINVAL;
+ 		break;
++	case PKEY_TYPE_EP11_AES:
++		if (*keybufsize < (sizeof(struct ep11kblob_header) +
++				   MINEP11AESKEYBLOBSIZE))
++			return -EINVAL;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -581,9 +586,10 @@ static int pkey_genseckey2(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 	for (i = 0, rc = -ENODEV; i < nr_apqns; i++) {
+ 		card = apqns[i].card;
+ 		dom = apqns[i].domain;
+-		if (ktype == PKEY_TYPE_EP11) {
++		if (ktype == PKEY_TYPE_EP11 ||
++		    ktype == PKEY_TYPE_EP11_AES) {
+ 			rc = ep11_genaeskey(card, dom, ksize, kflags,
+-					    keybuf, keybufsize);
++					    keybuf, keybufsize, ktype);
+ 		} else if (ktype == PKEY_TYPE_CCA_DATA) {
+ 			rc = cca_genseckey(card, dom, ksize, keybuf);
+ 			*keybufsize = (rc ? 0 : SECKEYBLOBSIZE);
+@@ -1313,7 +1319,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		apqns = _copy_apqns_from_user(kgs.apqns, kgs.apqn_entries);
+ 		if (IS_ERR(apqns))
+ 			return PTR_ERR(apqns);
+-		kkey = kmalloc(klen, GFP_KERNEL);
++		kkey = kzalloc(klen, GFP_KERNEL);
+ 		if (!kkey) {
+ 			kfree(apqns);
+ 			return -ENOMEM;
+@@ -1969,7 +1975,8 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 	for (i = 0, rc = -ENODEV; i < nr_apqns; i++) {
+ 		card = apqns[i] >> 16;
+ 		dom = apqns[i] & 0xFFFF;
+-		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize);
++		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
++				    PKEY_TYPE_EP11);
+ 		if (rc == 0)
+ 			break;
+ 	}
+@@ -1979,7 +1986,8 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 	if (is_xts) {
+ 		keysize = MAXEP11AESKEYBLOBSIZE;
+ 		buf += MAXEP11AESKEYBLOBSIZE;
+-		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize);
++		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
++				    PKEY_TYPE_EP11);
+ 		if (rc == 0)
+ 			return 2 * MAXEP11AESKEYBLOBSIZE;
+ 	}
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 497de7faa2fc5..20bbeec1a1a22 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -113,6 +113,50 @@ static void __exit card_cache_free(void)
+ 	spin_unlock_bh(&card_list_lock);
+ }
  
-+	if (sizeof(*rx_pkt_hdr) + rx_pkt_off > skb->len) {
-+		mwifiex_dbg(priv->adapter, ERROR,
-+			    "wrong rx packet offset: len=%d, rx_pkt_off=%d\n",
-+			    skb->len, rx_pkt_off);
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
++static int ep11_kb_split(const u8 *kb, size_t kblen, u32 kbver,
++			 struct ep11kblob_header **kbhdr, size_t *kbhdrsize,
++			 u8 **kbpl, size_t *kbplsize)
++{
++	struct ep11kblob_header *hdr = NULL;
++	size_t hdrsize, plsize = 0;
++	int rc = -EINVAL;
++	u8 *pl = NULL;
++
++	if (kblen < sizeof(struct ep11kblob_header))
++		goto out;
++	hdr = (struct ep11kblob_header *)kb;
++
++	switch (kbver) {
++	case TOKVER_EP11_AES:
++		/* header overlays the payload */
++		hdrsize = 0;
++		break;
++	case TOKVER_EP11_ECC_WITH_HEADER:
++	case TOKVER_EP11_AES_WITH_HEADER:
++		/* payload starts after the header */
++		hdrsize = sizeof(struct ep11kblob_header);
++		break;
++	default:
++		goto out;
 +	}
 +
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
- 		     sizeof(bridge_tunnel_header))) ||
- 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-@@ -194,7 +202,8 @@ int mwifiex_process_sta_rx_packet(struct mwifiex_private *priv,
++	plsize = kblen - hdrsize;
++	pl = (u8 *)kb + hdrsize;
++
++	if (kbhdr)
++		*kbhdr = hdr;
++	if (kbhdrsize)
++		*kbhdrsize = hdrsize;
++	if (kbpl)
++		*kbpl = pl;
++	if (kbplsize)
++		*kbplsize = plsize;
++
++	rc = 0;
++out:
++	return rc;
++}
++
+ /*
+  * Simple check if the key blob is a valid EP11 AES key blob with header.
+  */
+@@ -664,8 +708,9 @@ EXPORT_SYMBOL(ep11_get_domain_info);
+  */
+ #define KEY_ATTR_DEFAULTS 0x00200c00
  
- 	rx_pkt_hdr = (void *)local_rx_pd + rx_pkt_offset;
+-int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+-		   u8 *keybuf, size_t *keybufsize)
++static int _ep11_genaeskey(u16 card, u16 domain,
++			   u32 keybitsize, u32 keygenflags,
++			   u8 *keybuf, size_t *keybufsize)
+ {
+ 	struct keygen_req_pl {
+ 		struct pl_head head;
+@@ -701,7 +746,6 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	struct ep11_cprb *req = NULL, *rep = NULL;
+ 	struct ep11_target_dev target;
+ 	struct ep11_urb *urb = NULL;
+-	struct ep11keyblob *kb;
+ 	int api, rc = -ENOMEM;
  
--	if ((rx_pkt_offset + rx_pkt_length) > (u16) skb->len) {
-+	if ((rx_pkt_offset + rx_pkt_length) > skb->len ||
-+	    sizeof(rx_pkt_hdr->eth803_hdr) + rx_pkt_offset > skb->len) {
- 		mwifiex_dbg(adapter, ERROR,
- 			    "wrong rx packet: len=%d, rx_pkt_offset=%d, rx_pkt_length=%d\n",
- 			    skb->len, rx_pkt_offset, rx_pkt_length);
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-index e495f7eaea033..04ff051f5d186 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
-@@ -103,6 +103,15 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
- 		return;
+ 	switch (keybitsize) {
+@@ -780,14 +824,9 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 		goto out;
  	}
  
-+	if (sizeof(*rx_pkt_hdr) +
-+	    le16_to_cpu(uap_rx_pd->rx_pkt_offset) > skb->len) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "wrong rx packet offset: len=%d,rx_pkt_offset=%d\n",
-+			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
+-	/* copy key blob and set header values */
++	/* copy key blob */
+ 	memcpy(keybuf, rep_pl->data, rep_pl->data_len);
+ 	*keybufsize = rep_pl->data_len;
+-	kb = (struct ep11keyblob *)keybuf;
+-	kb->head.type = TOKTYPE_NON_CCA;
+-	kb->head.len = rep_pl->data_len;
+-	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.bitlen = keybitsize;
+ 
+ out:
+ 	kfree(req);
+@@ -795,6 +834,43 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	kfree(urb);
+ 	return rc;
+ }
++
++int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
++		   u8 *keybuf, size_t *keybufsize, u32 keybufver)
++{
++	struct ep11kblob_header *hdr;
++	size_t hdr_size, pl_size;
++	u8 *pl;
++	int rc;
++
++	switch (keybufver) {
++	case TOKVER_EP11_AES:
++	case TOKVER_EP11_AES_WITH_HEADER:
++		break;
++	default:
++		return -EINVAL;
 +	}
 +
- 	if ((!memcmp(&rx_pkt_hdr->rfc1042_hdr, bridge_tunnel_header,
- 		     sizeof(bridge_tunnel_header))) ||
- 	    (!memcmp(&rx_pkt_hdr->rfc1042_hdr, rfc1042_header,
-@@ -367,6 +376,16 @@ int mwifiex_process_uap_rx_packet(struct mwifiex_private *priv,
- 	rx_pkt_type = le16_to_cpu(uap_rx_pd->rx_pkt_type);
- 	rx_pkt_hdr = (void *)uap_rx_pd + le16_to_cpu(uap_rx_pd->rx_pkt_offset);
- 
-+	if (le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
-+	    sizeof(rx_pkt_hdr->eth803_hdr) > skb->len) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "wrong rx packet for struct ethhdr: len=%d, offset=%d\n",
-+			    skb->len, le16_to_cpu(uap_rx_pd->rx_pkt_offset));
-+		priv->stats.rx_dropped++;
-+		dev_kfree_skb_any(skb);
-+		return 0;
-+	}
++	rc = ep11_kb_split(keybuf, *keybufsize, keybufver,
++			   &hdr, &hdr_size, &pl, &pl_size);
++	if (rc)
++		return rc;
 +
- 	ether_addr_copy(ta, rx_pkt_hdr->eth803_hdr.h_source);
++	rc = _ep11_genaeskey(card, domain, keybitsize, keygenflags,
++			     pl, &pl_size);
++	if (rc)
++		return rc;
++
++	*keybufsize = hdr_size + pl_size;
++
++	/* update header information */
++	hdr->type = TOKTYPE_NON_CCA;
++	hdr->len = *keybufsize;
++	hdr->version = keybufver;
++	hdr->bitlen = keybitsize;
++
++	return 0;
++}
+ EXPORT_SYMBOL(ep11_genaeskey);
  
- 	if ((le16_to_cpu(uap_rx_pd->rx_pkt_offset) +
-diff --git a/drivers/net/wireless/marvell/mwifiex/util.c b/drivers/net/wireless/marvell/mwifiex/util.c
-index 94c2d219835da..745b1d925b217 100644
---- a/drivers/net/wireless/marvell/mwifiex/util.c
-+++ b/drivers/net/wireless/marvell/mwifiex/util.c
-@@ -393,11 +393,15 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
+ static int ep11_cryptsingle(u16 card, u16 domain,
+@@ -1201,7 +1277,6 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 		     const u8 *clrkey, u8 *keybuf, size_t *keybufsize)
+ {
+ 	int rc;
+-	struct ep11keyblob *kb;
+ 	u8 encbuf[64], *kek = NULL;
+ 	size_t clrkeylen, keklen, encbuflen = sizeof(encbuf);
+ 
+@@ -1223,17 +1298,15 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
  	}
  
- 	rx_pd = (struct rxpd *)skb->data;
-+	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
-+	if (pkt_len < sizeof(struct ieee80211_hdr) + sizeof(pkt_len)) {
-+		mwifiex_dbg(priv->adapter, ERROR, "invalid rx_pkt_length");
-+		return -1;
-+	}
+ 	/* Step 1: generate AES 256 bit random kek key */
+-	rc = ep11_genaeskey(card, domain, 256,
+-			    0x00006c00, /* EN/DECRYPT, WRAP/UNWRAP */
+-			    kek, &keklen);
++	rc = _ep11_genaeskey(card, domain, 256,
++			     0x00006c00, /* EN/DECRYPT, WRAP/UNWRAP */
++			     kek, &keklen);
+ 	if (rc) {
+ 		DEBUG_ERR(
+ 			"%s generate kek key failed, rc=%d\n",
+ 			__func__, rc);
+ 		goto out;
+ 	}
+-	kb = (struct ep11keyblob *)kek;
+-	memset(&kb->head, 0, sizeof(kb->head));
  
- 	skb_pull(skb, le16_to_cpu(rx_pd->rx_pkt_offset));
- 	skb_pull(skb, sizeof(pkt_len));
--
--	pkt_len = le16_to_cpu(rx_pd->rx_pkt_length);
-+	pkt_len -= sizeof(pkt_len);
+ 	/* Step 2: encrypt clear key value with the kek key */
+ 	rc = ep11_cryptsingle(card, domain, 0, 0, def_iv, kek, keklen,
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index 912b3918c10a1..ed328c354bade 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -107,7 +107,7 @@ int ep11_get_domain_info(u16 card, u16 domain, struct ep11_domain_info *info);
+  * Generate (random) EP11 AES secure key.
+  */
+ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+-		   u8 *keybuf, size_t *keybufsize);
++		   u8 *keybuf, size_t *keybufsize, u32 keybufver);
  
- 	ieee_hdr = (void *)skb->data;
- 	if (ieee80211_is_mgmt(ieee_hdr->frame_control)) {
-@@ -410,7 +414,7 @@ mwifiex_process_mgmt_packet(struct mwifiex_private *priv,
- 		skb->data + sizeof(struct ieee80211_hdr),
- 		pkt_len - sizeof(struct ieee80211_hdr));
- 
--	pkt_len -= ETH_ALEN + sizeof(pkt_len);
-+	pkt_len -= ETH_ALEN;
- 	rx_pd->rx_pkt_length = cpu_to_le16(pkt_len);
- 
- 	cfg80211_rx_mgmt(&priv->wdev, priv->roc_cfg.chan.center_freq,
+ /*
+  * Generate EP11 AES secure key with given clear key value.
 -- 
 2.40.1
 
