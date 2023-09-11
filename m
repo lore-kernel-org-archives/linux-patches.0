@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC7311705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652F0C433C8;
-	Mon, 11 Sep 2023 14:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB38511705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E650C433C7;
+	Mon, 11 Sep 2023 14:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443042;
-	bh=IDMPUwszd1u/C8VodDerEqKEOnlmh5dRjMm/0++6Z7k=;
+	s=korg; t=1694443045;
+	bh=MnL/delfwatnVFYU4jy4iMBeSjyHPuKzTnHHFW483Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ad/PDuVHL7qfW2kUcZVizJaz7i9yWM8W7iVSGCnJQbR37McIdn8VegUXwc5aKMr6H
-	 0RPLKKq4ZXUCSm0VFLzBlBkUW7AUK1zQnc80nXrMCH3pl1q4eyyU3nI6BRQpTjg5Ci
-	 gEzntwAZXKs0D82tOnepIeB55vNSBwR1E0ulTFWk=
+	b=Dyo9EVEnA1J5XV3OoD3iSnAb+0zVewQjYitIk9OHO4jdEDuEqTi5c2jWreLXqn/NG
+	 zxBIsmWhJs0Oqgimu7D3CLLuiiq36kRP6DBPebeitLw03D4llr0T4sbrtRgZiiQnEy
+	 vAF8VYmuzTRi/v5+Hb4v6tOBD9erKfTaEAH1ATv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <keescook@chromium.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 236/737] wifi: nl80211/cfg80211: add forgotten nla_policy for BSS color attribute
-Date: Mon, 11 Sep 2023 15:41:35 +0200
-Message-ID: <20230911134657.200769085@linuxfoundation.org>
+Subject: [PATCH 6.4 237/737] mac80211: make ieee80211_tx_info padding explicit
+Date: Mon, 11 Sep 2023 15:41:36 +0200
+Message-ID: <20230911134657.230430446@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,41 +41,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 218d690c49b7e9c94ad0d317adbdd4af846ea0dc ]
+[ Upstream commit a7a2ef0c4b3efbd7d6f3fabd87dbbc0b3f2de5af ]
 
-The previous commit dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to
-NDP ranging parameters") adds a parameter for NDP ranging by introducing
-a new attribute type named NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR.
+While looking at a bug, I got rather confused by the layout of the
+'status' field in ieee80211_tx_info. Apparently, the intention is that
+status_driver_data[] is used for driver specific data, and fills up the
+size of the union to 40 bytes, just like the other ones.
 
-However, the author forgot to also describe the nla_policy at
-nl80211_pmsr_ftm_req_attr_policy (net/wireless/nl80211.c). Just
-complement it to avoid malformed attribute that causes out-of-attribute
-access.
+This is indeed what actually happens, but only because of the
+combination of two mistakes:
 
-Fixes: dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to NDP ranging parameters")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230809033151.768910-1-linma@zju.edu.cn
+ - "void *status_driver_data[18 / sizeof(void *)];" is intended
+   to be 18 bytes long but is actually two bytes shorter because of
+   rounding-down in the division, to a multiple of the pointer
+   size (4 bytes or 8 bytes).
+
+ - The other fields combined are intended to be 22 bytes long, but
+   are actually 24 bytes because of padding in front of the
+   unaligned tx_time member, and in front of the pointer array.
+
+The two mistakes cancel out. so the size ends up fine, but it seems
+more helpful to make this explicit, by having a multiple of 8 bytes
+in the size calculation and explicitly describing the padding.
+
+Fixes: ea5907db2a9cc ("mac80211: fix struct ieee80211_tx_info size")
+Fixes: 02219b3abca59 ("mac80211: add WMM admission control support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230623152443.2296825-2-arnd@kernel.org
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/mac80211.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 1b688745ce0a1..be798ce8a20ff 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -323,6 +323,7 @@ nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
- 	[NL80211_PMSR_FTM_REQ_ATTR_TRIGGER_BASED] = { .type = NLA_FLAG },
- 	[NL80211_PMSR_FTM_REQ_ATTR_NON_TRIGGER_BASED] = { .type = NLA_FLAG },
- 	[NL80211_PMSR_FTM_REQ_ATTR_LMR_FEEDBACK] = { .type = NLA_FLAG },
-+	[NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR] = { .type = NLA_U8 },
- };
- 
- static const struct nla_policy
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 67d81f7186660..52b336ada480c 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -1192,9 +1192,11 @@ struct ieee80211_tx_info {
+ 			u8 ampdu_ack_len;
+ 			u8 ampdu_len;
+ 			u8 antenna;
++			u8 pad;
+ 			u16 tx_time;
+ 			u8 flags;
+-			void *status_driver_data[18 / sizeof(void *)];
++			u8 pad2;
++			void *status_driver_data[16 / sizeof(void *)];
+ 		} status;
+ 		struct {
+ 			struct ieee80211_tx_rate driver_rates[
 -- 
 2.40.1
 
