@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477D41172F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A78C433C8;
-	Mon, 11 Sep 2023 15:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAE71172F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80AABC433C7;
+	Mon, 11 Sep 2023 15:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445878;
-	bh=GH9BgkS5esxtJX2tP7G46h+fDnrqQpxlc4PLsE+eGro=;
+	s=korg; t=1694445880;
+	bh=wtVWWGlfVJlnxu6wL1TATBu6dcdGnvqxCCtgpOBa8uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5XrczTkNYAvrDODylTFeyG2WdpeFMDqbHDAUGhDUMrPmlvsz/NOm3IvUl/x2ER9u
-	 aJd1xAmCL1hp9er3Jrb466Lk3GiUff1PoZAoVjrjaWiP1B6Ao31J+0xbXmKolPf7Nj
-	 HZdS68l56Ry4ypOMh7L20+zwf09o80Xw7D/H4Te0=
+	b=JWDIysuevMiBE2wbofQPtQirxr7lIieHIu0bOmPJWy9GPt4dviX2ZkAW5aFnQ+5R5
+	 OkNIEm8VUDhyL2TdX4X2fGJsJkHURlVw1MIcN1c+BKj8xQEPxODu2HlgM7Qq1y7eLt
+	 KSNEZYMZwe6J4sh+XuQaWunOZuLEf6J2CS/uwWUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yang <zhengyang@rock-chips.com>,
 	Jonas Karlman <jonas@kwiboo.se>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 503/600] phy/rockchip: inno-hdmi: round fractal pixclock in rk3328 recalc_rate
-Date: Mon, 11 Sep 2023 15:48:56 +0200
-Message-ID: <20230911134648.471099335@linuxfoundation.org>
+Subject: [PATCH 6.1 504/600] phy/rockchip: inno-hdmi: do not power on rk3328 post pll on reg write
+Date: Mon, 11 Sep 2023 15:48:57 +0200
+Message-ID: <20230911134648.498743646@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,48 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yang <zhengyang@rock-chips.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit d5ef343c1d62bc4c4c2c393af654a41cb34b449f ]
+[ Upstream commit 19a1d46bd699940a496d3b0d4e142ef99834988c ]
 
-inno_hdmi_phy_rk3328_clk_recalc_rate() is returning a rate not found
-in the pre pll config table when the fractal divider is used.
-This can prevent proper power_on because a tmdsclock for the new rate
-is not found in the pre pll config table.
+inno_write is used to configure 0xaa reg, that also hold the
+POST_PLL_POWER_DOWN bit.
+When POST_PLL_REFCLK_SEL_TMDS is configured the power down bit is not
+taken into consideration.
 
-Fix this by saving and returning a rounded pixel rate that exist
-in the pre pll config table.
+Fix this by keeping the power down bit until configuration is complete.
+Also reorder the reg write order for consistency.
 
 Fixes: 53706a116863 ("phy: add Rockchip Innosilicon hdmi phy")
-Signed-off-by: Zheng Yang <zhengyang@rock-chips.com>
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20230615171005.2251032-3-jonas@kwiboo.se
+Link: https://lore.kernel.org/r/20230615171005.2251032-5-jonas@kwiboo.se
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
-index 15339338aae35..15a008a1ac7b9 100644
+index 15a008a1ac7b9..2556caf475c0c 100644
 --- a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
 +++ b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
-@@ -745,10 +745,12 @@ unsigned long inno_hdmi_phy_rk3328_clk_recalc_rate(struct clk_hw *hw,
- 		do_div(vco, (nd * (no_a == 1 ? no_b : no_a) * no_d * 2));
+@@ -1023,9 +1023,10 @@ inno_hdmi_phy_rk3328_power_on(struct inno_hdmi_phy *inno,
+ 
+ 	inno_write(inno, 0xac, RK3328_POST_PLL_FB_DIV_7_0(cfg->fbdiv));
+ 	if (cfg->postdiv == 1) {
+-		inno_write(inno, 0xaa, RK3328_POST_PLL_REFCLK_SEL_TMDS);
+ 		inno_write(inno, 0xab, RK3328_POST_PLL_FB_DIV_8(cfg->fbdiv) |
+ 			   RK3328_POST_PLL_PRE_DIV(cfg->prediv));
++		inno_write(inno, 0xaa, RK3328_POST_PLL_REFCLK_SEL_TMDS |
++			   RK3328_POST_PLL_POWER_DOWN);
+ 	} else {
+ 		v = (cfg->postdiv / 2) - 1;
+ 		v &= RK3328_POST_PLL_POST_DIV_MASK;
+@@ -1033,7 +1034,8 @@ inno_hdmi_phy_rk3328_power_on(struct inno_hdmi_phy *inno,
+ 		inno_write(inno, 0xab, RK3328_POST_PLL_FB_DIV_8(cfg->fbdiv) |
+ 			   RK3328_POST_PLL_PRE_DIV(cfg->prediv));
+ 		inno_write(inno, 0xaa, RK3328_POST_PLL_POST_DIV_ENABLE |
+-			   RK3328_POST_PLL_REFCLK_SEL_TMDS);
++			   RK3328_POST_PLL_REFCLK_SEL_TMDS |
++			   RK3328_POST_PLL_POWER_DOWN);
  	}
  
--	inno->pixclock = vco;
--	dev_dbg(inno->dev, "%s rate %lu\n", __func__, inno->pixclock);
-+	inno->pixclock = DIV_ROUND_CLOSEST((unsigned long)vco, 1000) * 1000;
- 
--	return vco;
-+	dev_dbg(inno->dev, "%s rate %lu vco %llu\n",
-+		__func__, inno->pixclock, vco);
-+
-+	return inno->pixclock;
- }
- 
- static long inno_hdmi_phy_rk3328_clk_round_rate(struct clk_hw *hw,
+ 	for (v = 0; v < 14; v++)
 -- 
 2.40.1
 
