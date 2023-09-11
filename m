@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D195E1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552CDC433C7;
-	Mon, 11 Sep 2023 14:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF341170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F555C433C8;
+	Mon, 11 Sep 2023 14:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441598;
-	bh=yXBezTM4l84KrdeQRcJGaHK7HdkbG9uJ4hakC7gFtxg=;
+	s=korg; t=1694441601;
+	bh=VS3RU8xZ2ZA4uIdWoA13uHNVsAPmc6wfzasWdDK+vu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgCJBN7gwS3bjCmmmJDnZT2jiH2xrG6YZB0HE9j1yqrtJEqlxEhSLDpva8PTqghjM
-	 EjeGTm2giVDq8AhZmgTlhsorviCEo0k7UITBkjWLIKIgflIyvbdLx6Lkj08f8FFPQA
-	 /QRWt8+jM3xucRdPtSv/gIobIYXy06uKyCRmI1DM=
+	b=pG2BQ/aM4+mlpr0PFMS+tgZ7eqD6VI9PvvWfAfG27ugodWFlZCwEUH29BeYp5o84r
+	 IbiTFwSDaZyib1SiHd2oMt0afgcTCSzAq1rkWEkU5ijcUNJ+kBGeWYSLhFsSdvjezr
+	 YgY1nw8NT88VxlaPaVBnLuOY9TX5zhyqRmFljRro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 428/739] wifi: ath12k: Use RMW accessors for changing LNKCTL
-Date: Mon, 11 Sep 2023 15:43:47 +0200
-Message-ID: <20230911134703.131846053@linuxfoundation.org>
+Subject: [PATCH 6.5 463/739] scsi: hisi_sas: Fix normally completed I/O analysed as failed
+Date: Mon, 11 Sep 2023 15:44:22 +0200
+Message-ID: <20230911134704.084589785@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -37,64 +35,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit f5a7ac118faf6d4f794975947b3300717eae8fc5 ]
+[ Upstream commit f5393a5602cacfda2014e0ff8220e5a7564e7cd1 ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.
+The PIO read command has no response frame and the struct iu[1024] won't be
+filled. I/Os which are normally completed will be treated as failed in
+sas_ata_task_done() when iu contains abnormal dirty data.
 
-Use RMW capability accessors which do proper locking to avoid losing
-concurrent updates to the register value. On restore, clear the ASPMC field
-properly.
+Consequently ending_fis should not be filled by iu when the response frame
+hasn't been written to memory.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Link: https://lore.kernel.org/r/20230717120503.15276-10-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
+Fixes: d380f55503ed ("scsi: hisi_sas: Don't bother clearing status buffer IU in task prep")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1689045300-44318-2-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 11 +++++++++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  6 ++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 5990a55801f0a..e4f08a066ca10 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -794,8 +794,8 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
- 		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index 87d8e408ccd1c..404aa7e179cba 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2026,6 +2026,11 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
+ 	u16 dma_tx_err_type = le16_to_cpu(err_record->dma_tx_err_type);
+ 	u16 sipc_rx_err_type = le16_to_cpu(err_record->sipc_rx_err_type);
+ 	u32 dma_rx_err_type = le32_to_cpu(err_record->dma_rx_err_type);
++	struct hisi_sas_complete_v2_hdr *complete_queue =
++			hisi_hba->complete_hdr[slot->cmplt_queue];
++	struct hisi_sas_complete_v2_hdr *complete_hdr =
++			&complete_queue[slot->cmplt_queue_slot];
++	u32 dw0 = le32_to_cpu(complete_hdr->dw0);
+ 	int error = -1;
  
- 	/* disable L0s and L1 */
--	pcie_capability_write_word(ab_pci->pdev, PCI_EXP_LNKCTL,
--				   ab_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-+				   PCI_EXP_LNKCTL_ASPMC);
- 
- 	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
- }
-@@ -803,8 +803,10 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
- static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
- {
- 	if (test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
--		pcie_capability_write_word(ab_pci->pdev, PCI_EXP_LNKCTL,
--					   ab_pci->link_ctl);
-+		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_ASPMC,
-+						   ab_pci->link_ctl &
-+						   PCI_EXP_LNKCTL_ASPMC);
- }
- 
- static void ath12k_pci_kill_tasklets(struct ath12k_base *ab)
+ 	if (err_phase == 1) {
+@@ -2310,7 +2315,8 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
+ 			break;
+ 		}
+ 		}
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 	}
+ 		break;
+ 	default:
+@@ -2443,7 +2449,8 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
+ 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
+ 	{
+ 		ts->stat = SAS_SAM_STAT_GOOD;
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 		break;
+ 	}
+ 	default:
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 20e1607c62828..2f33e6b4a92fb 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -2257,7 +2257,8 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 			ts->stat = SAS_OPEN_REJECT;
+ 			ts->open_rej_reason = SAS_OREJ_RSVD_RETRY;
+ 		}
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 		break;
+ 	case SAS_PROTOCOL_SMP:
+ 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
+@@ -2384,7 +2385,8 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+ 	case SAS_PROTOCOL_STP:
+ 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
+ 		ts->stat = SAS_SAM_STAT_GOOD;
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 		break;
+ 	default:
+ 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
 -- 
 2.40.1
 
