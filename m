@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D672711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505FAC433C7;
-	Mon, 11 Sep 2023 14:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9627311706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D60C433C7;
+	Mon, 11 Sep 2023 14:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444380;
-	bh=9otKf8loXp0++gGrAqx+i0+S8Y39VZ+WCmbArwWX1w0=;
+	s=korg; t=1694444383;
+	bh=Q2iiDv4pBmYHnY68pFdnb+lGC4oC45tZWZIYTMAbmcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7lQ2Ag6KGGvWc6TnJIlaIMQ7MbuG0H2X+QjMWraEfeBaw55hupK73OIgVJEpEuyb
-	 4Xyyx2lWlvVoXHkGdiobvRuJAe8NXH0vzGq9lIqEH6K/gvsv4yfR1rdv+O+4BK1TvV
-	 6zV1A+lpLexiIpb1d6kUgnofJL3OJsSeu2BKM804=
+	b=o0xcbAdUeZLg4XvUoB9FVkxvEd8AvUI5foEEPaxdlQtJibY47tlx1PXvUbKR1/SWU
+	 wyRTmf6BdZ9h2jq4za/5pw64VFKsdpNf7j8+M8Tb8yrOmXtYM5i8WKTJP8RG+e9XLh
+	 tWgw0UmL3lmtOXPoCmVW1XhSho43w/obJ6niduak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.4 702/737] mmc: renesas_sdhi: register irqs before registering controller
-Date: Mon, 11 Sep 2023 15:49:21 +0200
-Message-ID: <20230911134710.131413933@linuxfoundation.org>
+	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.4 711/737] crypto: stm32 - fix loop iterating through scatterlist for DMA
+Date: Mon, 11 Sep 2023 15:49:30 +0200
+Message-ID: <20230911134710.383439975@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,58 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 
-commit 74f45de394d979cc7770271f92fafa53e1ed3119 upstream.
+commit d9c83f71eeceed2cb54bb78be84f2d4055fd9a1f upstream.
 
-IRQs should be ready to serve when we call mmc_add_host() via
-tmio_mmc_host_probe(). To achieve that, ensure that all irqs are masked
-before registering the handlers.
+We were reading the length of the scatterlist sg after copying value of
+tsg inside.
+So we are using the size of the previous scatterlist and for the first
+one we are using an unitialised value.
+Fix this by copying tsg in sg[0] before reading the size.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes : 8a1012d3f2ab ("crypto: stm32 - Support for STM32 HASH module")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230712140011.18602-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/crypto/stm32/stm32-hash.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -1006,6 +1006,8 @@ int renesas_sdhi_probe(struct platform_d
- 		host->sdcard_irq_setbit_mask = TMIO_STAT_ALWAYS_SET_27;
- 		host->sdcard_irq_mask_all = TMIO_MASK_ALL_RCAR2;
- 		host->reset = renesas_sdhi_reset;
-+	} else {
-+		host->sdcard_irq_mask_all = TMIO_MASK_ALL;
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -627,9 +627,9 @@ static int stm32_hash_dma_send(struct st
  	}
  
- 	/* Orginally registers were 16 bit apart, could be 32 or 64 nowadays */
-@@ -1100,9 +1102,7 @@ int renesas_sdhi_probe(struct platform_d
- 		host->ops.hs400_complete = renesas_sdhi_hs400_complete;
- 	}
+ 	for_each_sg(rctx->sg, tsg, rctx->nents, i) {
++		sg[0] = *tsg;
+ 		len = sg->length;
  
--	ret = tmio_mmc_host_probe(host);
--	if (ret < 0)
--		goto edisclk;
-+	sd_ctrl_write32_as_16_and_16(host, CTL_IRQ_MASK, host->sdcard_irq_mask_all);
- 
- 	num_irqs = platform_irq_count(pdev);
- 	if (num_irqs < 0) {
-@@ -1129,6 +1129,10 @@ int renesas_sdhi_probe(struct platform_d
- 			goto eirq;
- 	}
- 
-+	ret = tmio_mmc_host_probe(host);
-+	if (ret < 0)
-+		goto edisclk;
-+
- 	dev_info(&pdev->dev, "%s base at %pa, max clock rate %u MHz\n",
- 		 mmc_hostname(host->mmc), &res->start, host->mmc->f_max / 1000000);
- 
+-		sg[0] = *tsg;
+ 		if (sg_is_last(sg)) {
+ 			if (hdev->dma_mode == 1) {
+ 				len = (ALIGN(sg->length, 16) - 16);
 
 
