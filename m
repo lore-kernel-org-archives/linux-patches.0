@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DC411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0B9C433C7;
-	Mon, 11 Sep 2023 15:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E72011710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930A3C433C8;
+	Mon, 11 Sep 2023 15:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445204;
-	bh=eFKKE67VGLkVvTWJUzb0woVI9Qis7y2DecCdja1Nm88=;
+	s=korg; t=1694445206;
+	bh=5Wmi72pcrj8+kxYhgMd3N24pVj/SCKuN5ZHAWvKOekM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rw59T4R6xfLY+CHjKkqav7RSYh3JAa2IEnt/82YeLQ8jb9AaCd9DldcqOuXhK+wEw
-	 OtgqAq66EYSrzyh0q+ZD/vWztON/JaPyjyfICso2HSRb73kczgRuPmwQ7mgKRMqysK
-	 0Qzi3vJQbYtU/CMyendeGyeokuEaH0ekRnFuSUbc=
+	b=y4I327aIxNR1oIBKtQfzzHwKbxeEfzjJxX0E5K43779mWpCc3qKpxOMdRCwNdulhy
+	 ZXRSQZUSho9SWgd3aT3MG8R1Avc5NcukOOX4F9qQGE7YK09fVs76mL6D8J0O+v/ktX
+	 kJH5MH6mFqLCP2RHdXnto1T9fxeLpVhopLgcr5jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 265/600] drm/bridge: anx7625: Use common macros for HDCP capabilities
-Date: Mon, 11 Sep 2023 15:44:58 +0200
-Message-ID: <20230911134641.431302180@linuxfoundation.org>
+Subject: [PATCH 6.1 266/600] ARM: dts: samsung: s3c6410-mini6410: correct ethernet reg addresses (split)
+Date: Mon, 11 Sep 2023 15:44:59 +0200
+Message-ID: <20230911134641.460471863@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,49 +34,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 41639b3a8b0f1f194dfe0577d99db70613f78626 ]
+[ Upstream commit cf0cb2af6a18f28b84f9f1416bff50ca60d6e98a ]
 
-The DRM DP code has macros for the DP HDCP capabilities. Use them in the
-anx7625 driver instead of raw numbers.
+The davicom,dm9000 Ethernet Controller accepts two reg addresses.
 
-Fixes: cd1637c7e480 ("drm/bridge: anx7625: add HDCP support")
-Suggested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230710091203.1874317-1-wenst@chromium.org
+Fixes: a43736deb47d ("ARM: dts: Add dts file for S3C6410-based Mini6410 board")
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Link: https://lore.kernel.org/r/20230713152926.82884-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/s3c6410-mini6410.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 36ec9dedadfe1..cf86cc05b7fca 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -874,11 +874,11 @@ static int anx7625_hdcp_enable(struct anx7625_data *ctx)
- 	}
+diff --git a/arch/arm/boot/dts/s3c6410-mini6410.dts b/arch/arm/boot/dts/s3c6410-mini6410.dts
+index 17097da36f5ed..0b07b3c319604 100644
+--- a/arch/arm/boot/dts/s3c6410-mini6410.dts
++++ b/arch/arm/boot/dts/s3c6410-mini6410.dts
+@@ -51,7 +51,7 @@ srom-cs1-bus@18000000 {
  
- 	/* Read downstream capability */
--	ret = anx7625_aux_trans(ctx, DP_AUX_NATIVE_READ, 0x68028, 1, &bcap);
-+	ret = anx7625_aux_trans(ctx, DP_AUX_NATIVE_READ, DP_AUX_HDCP_BCAPS, 1, &bcap);
- 	if (ret < 0)
- 		return ret;
- 
--	if (!(bcap & 0x01)) {
-+	if (!(bcap & DP_BCAPS_HDCP_CAPABLE)) {
- 		pr_warn("downstream not support HDCP 1.4, cap(%x).\n", bcap);
- 		return 0;
- 	}
+ 		ethernet@18000000 {
+ 			compatible = "davicom,dm9000";
+-			reg = <0x18000000 0x2 0x18000004 0x2>;
++			reg = <0x18000000 0x2>, <0x18000004 0x2>;
+ 			interrupt-parent = <&gpn>;
+ 			interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
+ 			davicom,no-eeprom;
 -- 
 2.40.1
 
