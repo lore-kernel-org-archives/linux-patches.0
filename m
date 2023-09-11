@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D95311710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969ADC433C9;
-	Mon, 11 Sep 2023 15:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01EF11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DDEC433C7;
+	Mon, 11 Sep 2023 15:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446016;
-	bh=Mc0/e3rhDZ3XPzQNEEv6yAq0kx1cDMiCP+3/6MqE0ME=;
+	s=korg; t=1694446018;
+	bh=rAcUfWGD4BReb+OLJE5309r+1jQBqrmEVRN84+FL2tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOXbtq9tgffYR2A647WqBTQ/W2nd6uRTLBTxYkiCBJpLgu99LmDfPLrlBoVOPyM+l
-	 xrZSyQv1S24NttinV2Pbk9QhW+aXeaRXWTGl1639Q955zINBllHQz6leU10bgluKzq
-	 GFdOa5oFtiiKXIVibdcRZsGkolXavzX7BI6RiRgI=
+	b=Mo65bfs2vbdJUTQ7Qv2TVwdDa0E+W1cHaYq/oz0JXtJhPS6E6cZ6nvK+P9xd84ay9
+	 7EcFFmkV/JjAvXwN+2Swh3/6auswPm2GhUx7gC/ncrIHwEHKMPKtveZayV/A0rbRJP
+	 Uh3gimEq6nS/UgPQeIpWdrqL3GPo/nEtBic3F5I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feiyang Chen <chenfeiyang@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: [PATCH 6.1 553/600] PCI/PM: Only read PCI_PM_CTRL register when available
-Date: Mon, 11 Sep 2023 15:49:46 +0200
-Message-ID: <20230911134649.939902583@linuxfoundation.org>
+	Yuan Y Lu <yuan.y.lu@intel.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jon Mason <jdmason@kudzu.us>
+Subject: [PATCH 6.1 554/600] ntb: Drop packets when qp link is down
+Date: Mon, 11 Sep 2023 15:49:47 +0200
+Message-ID: <20230911134649.971471786@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,73 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feiyang Chen <chenfeiyang@loongson.cn>
+From: Dave Jiang <dave.jiang@intel.com>
 
-commit 5694ba13b004eea683c6d4faeb6d6e7a9636bda0 upstream.
+commit f195a1a6fe416882984f8bd6c61afc1383171860 upstream.
 
-For a device with no Power Management Capability, pci_power_up() previously
-returned 0 (success) if the platform was able to put the device in D0,
-which led to pci_set_full_power_state() trying to read PCI_PM_CTRL, even
-though it doesn't exist.
+Currently when the transport receive packets after netdev has closed the
+transport returns error and triggers tx errors to be incremented and
+carrier to be stopped. There is no reason to return error if the device is
+already closed. Drop the packet and return 0.
 
-Since dev->pm_cap == 0 in this case, pci_set_full_power_state() actually
-read the wrong register, interpreted it as PCI_PM_CTRL, and corrupted
-dev->current_state.  This led to messages like this in some cases:
-
-  pci 0000:01:00.0: Refused to change power state from D3hot to D0
-
-To prevent this, make pci_power_up() always return a negative failure code
-if the device lacks a Power Management Capability, even if non-PCI platform
-power management has been able to put the device in D0.  The failure will
-prevent pci_set_full_power_state() from trying to access PCI_PM_CTRL.
-
-Fixes: e200904b275c ("PCI/PM: Split pci_power_up()")
-Link: https://lore.kernel.org/r/20230824013738.1894965-1-chenfeiyang@loongson.cn
-Signed-off-by: Feiyang Chen <chenfeiyang@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: stable@vger.kernel.org	# v5.19+
+Fixes: e26a5843f7f5 ("NTB: Split ntb_hw_intel and ntb_transport drivers")
+Reported-by: Yuan Y Lu <yuan.y.lu@intel.com>
+Tested-by: Yuan Y Lu <yuan.y.lu@intel.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/ntb/ntb_transport.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1193,6 +1193,10 @@ static int pci_dev_wait(struct pci_dev *
-  *
-  * On success, return 0 or 1, depending on whether or not it is necessary to
-  * restore the device's BARs subsequently (1 is returned in that case).
-+ *
-+ * On failure, return a negative error code.  Always return failure if @dev
-+ * lacks a Power Management Capability, even if the platform was able to
-+ * put the device in D0 via non-PCI means.
-  */
- int pci_power_up(struct pci_dev *dev)
- {
-@@ -1209,9 +1213,6 @@ int pci_power_up(struct pci_dev *dev)
- 		else
- 			dev->current_state = state;
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -2276,9 +2276,13 @@ int ntb_transport_tx_enqueue(struct ntb_
+ 	struct ntb_queue_entry *entry;
+ 	int rc;
  
--		if (state == PCI_D0)
--			return 0;
--
- 		return -EIO;
- 	}
+-	if (!qp || !qp->link_is_up || !len)
++	if (!qp || !len)
+ 		return -EINVAL;
  
-@@ -1269,8 +1270,12 @@ static int pci_set_full_power_state(stru
- 	int ret;
- 
- 	ret = pci_power_up(dev);
--	if (ret < 0)
-+	if (ret < 0) {
-+		if (dev->current_state == PCI_D0)
-+			return 0;
++	/* If the qp link is down already, just ignore. */
++	if (!qp->link_is_up)
++		return 0;
 +
- 		return ret;
-+	}
- 
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	dev->current_state = pmcsr & PCI_PM_CTRL_STATE_MASK;
+ 	entry = ntb_list_rm(&qp->ntb_tx_free_q_lock, &qp->tx_free_q);
+ 	if (!entry) {
+ 		qp->tx_err_no_buf++;
 
 
