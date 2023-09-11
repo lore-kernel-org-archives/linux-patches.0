@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C46A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825A4C433C7;
-	Mon, 11 Sep 2023 14:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB88C11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E811C433C7;
+	Mon, 11 Sep 2023 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443661;
-	bh=spQo77mKRvJnkc0HXOI0DAeRr3LcgdPb2Tugah1a4ZQ=;
+	s=korg; t=1694443664;
+	bh=8SlWh2U15QCLekzM+ux0idkK3LDf3wc6r7xJQ6SmoAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RbpTdfc4098/sjgnZ2eKEhP4NUhTc4ERmY2s/ZmTY1kmpBCaYp/hPPOg82eKLdRki
-	 udHqpqwVqaP3m++Mi6hkhhN2ekTOL30eyQt16uxab3ev4AqcTFSj0YkkGmTGmayMxL
-	 iY14r5UQeOObAua+Vy3OAKaX011a07ZBsKal/YdU=
+	b=H13fYelJS5M5dNfhEelMEc8QHU916WEStNva3vbWx+FWsj6Mmcz0zafCJIeiNo1np
+	 zpyODj5M+s7TnAI5jkGc19c2FBeL2YxZRnDXU35ndAmJZ2Y+9s8h3UYtdbIuVf8n4b
+	 38+S4u7nv8MsC5quYpdG4vghnp+3Qce2vEF4K52E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Patrick Whewell <patrick.whewell@sightlineapplications.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 427/737] ext4: avoid potential data overflow in next_linear_group
-Date: Mon, 11 Sep 2023 15:44:46 +0200
-Message-ID: <20230911134702.527403803@linuxfoundation.org>
+Subject: [PATCH 6.4 428/737] clk: qcom: gcc-sm8250: Fix gcc_sdcc2_apps_clk_src
+Date: Mon, 11 Sep 2023 15:44:47 +0200
+Message-ID: <20230911134702.555356162@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,42 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Patrick Whewell <patrick.whewell@sightlineapplications.com>
 
-[ Upstream commit 60c672b7f2d1e5dd1774f2399b355c9314e709f8 ]
+[ Upstream commit 783cb693828ce487cf0bc6ad16cbcf2caae6f8d9 ]
 
-ngroups is ext4_group_t (unsigned int) while next_linear_group treat it
-in int. If ngroups is bigger than max number described by int, it will
-be treat as a negative number. Then "return group + 1 >= ngroups ? 0 :
-group + 1;" may keep returning 0.
-Switch int to ext4_group_t in next_linear_group to fix the overflow.
+GPLL9 is not on by default, which causes a "gcc_sdcc2_apps_clk_src: rcg
+didn't update its configuration" error when booting. Set .flags =
+CLK_OPS_PARENT_ENABLE to fix the error.
 
-Fixes: 196e402adf2e ("ext4: improve cr 0 / cr 1 group scanning")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230801143204.2284343-3-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Patrick Whewell <patrick.whewell@sightlineapplications.com>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230802210359.408-1-patrick.whewell@sightlineapplications.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-sm8250.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 98e12326b0d6a..333439b3ac146 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -966,8 +966,9 @@ static inline int should_optimize_scan(struct ext4_allocation_context *ac)
-  * Return next linear group for allocation. If linear traversal should not be
-  * performed, this function just returns the same group
-  */
--static int
--next_linear_group(struct ext4_allocation_context *ac, int group, int ngroups)
-+static ext4_group_t
-+next_linear_group(struct ext4_allocation_context *ac, ext4_group_t group,
-+		  ext4_group_t ngroups)
- {
- 	if (!should_optimize_scan(ac))
- 		goto inc_and_return;
+diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
+index b6cf4bc88d4d4..d3c75bb55946a 100644
+--- a/drivers/clk/qcom/gcc-sm8250.c
++++ b/drivers/clk/qcom/gcc-sm8250.c
+@@ -721,6 +721,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.name = "gcc_sdcc2_apps_clk_src",
+ 		.parent_data = gcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
++		.flags = CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 -- 
 2.40.1
 
