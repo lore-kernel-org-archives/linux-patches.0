@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA911710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A931C433C7;
-	Mon, 11 Sep 2023 15:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BC211710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090D6C433C7;
+	Mon, 11 Sep 2023 15:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445522;
-	bh=QysvTCLdelS+oIe8onAEe2gatpb9BrdisuSt7gnTZd4=;
+	s=korg; t=1694445525;
+	bh=95vNOmkZ88PVpNBRMgrMDa/VPtiBFDnlQcfr+8rWhPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lG8m0Ll30POjL3oDrYO2nDCjP4kQawQl8yRJW1X51pASQ9goErIV+91qUdEd0K02P
-	 H2Fw1s0y8/FuJjsMaBdP5396eOum5q6fuXANho6wcr6zgU+mzBGa7KA+0Sjhp0ToHN
-	 ecAx98+BNB1+uwVEr6SgCC/iUBePA3wlfMBo0844=
+	b=pVwsTtdQ/fh8wNOYL6iWZ4/zbdWetUeyyLLLldHqdeg+TWRSYkz5gjUGh4FIbRSIx
+	 KHpAqcAp8pyAT21dhJIgG7yALJUs0K15p6Qq7tVSr2OrtNKcObVr+w7VnCBx5+Arlz
+	 aPH3x40eLh4C18yriU4f8I3NbrlgFO2AIWbcI+1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 360/600] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
-Date: Mon, 11 Sep 2023 15:46:33 +0200
-Message-ID: <20230911134644.305535372@linuxfoundation.org>
+Subject: [PATCH 6.1 378/600] nfs/blocklayout: Use the passed in gfp flags
+Date: Mon, 11 Sep 2023 15:46:51 +0200
+Message-ID: <20230911134644.831507311@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,74 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
+[ Upstream commit 08b45fcb2d4675f6182fe0edc0d8b1fe604051fa ]
 
-Reconfiguring the clock divider to the exact same value is observed
-on an i.MX8MN to often cause a longer than usual clock pause, probably
-because the divider restarts counting whenever the register is rewritten.
+This allocation should use the passed in GFP_ flags instead of
+GFP_KERNEL.  One places where this matters is in filelayout_pg_init_write()
+which uses GFP_NOFS as the allocation flags.
 
-This issue doesn't show up normally, because the clock framework will
-take care to not call set_rate when the clock rate is the same.
-However, when we reconfigure an upstream clock, the common code will
-call set_rate with the newly calculated rate on all children, e.g.:
-
-  - sai5 is running normally and divides Audio PLL out by 16.
-  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
-  - rates for children are recalculated and rates are set recursively
-  - imx8m_clk_composite_divider_set_rate(sai5) is called with
-    32/16 = 2Hz more
-  - imx8m_clk_composite_divider_set_rate computes same divider as before
-  - divider register is written, so it restarts counting from zero and
-    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
-
-Some external clock consumers can be upset by such unexpected clock pauses,
-so let's make sure we only rewrite the divider value when the value to be
-written is actually different.
-
-Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 5c83746a0cf2 ("pnfs/blocklayout: in-kernel GETDEVICEINFO XDR parsing")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/nfs/blocklayout/dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index cbf0d7955a00a..3e9a092e136c1 100644
---- a/drivers/clk/imx/clk-composite-8m.c
-+++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -97,7 +97,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
- 	int prediv_value;
- 	int div_value;
- 	int ret;
--	u32 val;
-+	u32 orig, val;
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index fea5f8821da5e..ce2ea62397972 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -402,7 +402,7 @@ bl_parse_concat(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	int ret, i;
  
- 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
- 						&prediv_value, &div_value);
-@@ -106,13 +106,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+ 	d->children = kcalloc(v->concat.volumes_count,
+-			sizeof(struct pnfs_block_dev), GFP_KERNEL);
++			sizeof(struct pnfs_block_dev), gfp_mask);
+ 	if (!d->children)
+ 		return -ENOMEM;
  
- 	spin_lock_irqsave(divider->lock, flags);
+@@ -431,7 +431,7 @@ bl_parse_stripe(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	int ret, i;
  
--	val = readl(divider->reg);
--	val &= ~((clk_div_mask(divider->width) << divider->shift) |
--			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
-+	orig = readl(divider->reg);
-+	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
-+		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
- 
- 	val |= (u32)(prediv_value  - 1) << divider->shift;
- 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
--	writel(val, divider->reg);
-+
-+	if (val != orig)
-+		writel(val, divider->reg);
- 
- 	spin_unlock_irqrestore(divider->lock, flags);
+ 	d->children = kcalloc(v->stripe.volumes_count,
+-			sizeof(struct pnfs_block_dev), GFP_KERNEL);
++			sizeof(struct pnfs_block_dev), gfp_mask);
+ 	if (!d->children)
+ 		return -ENOMEM;
  
 -- 
 2.40.1
