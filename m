@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E43E57C
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55D1C433C8;
-	Mon, 11 Sep 2023 14:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300CFF51E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A200AC433C7;
+	Mon, 11 Sep 2023 14:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442860;
-	bh=2Bb/GxSXDVplnPhgILAxUaI/krpr6yilIYLH+Erxzh4=;
+	s=korg; t=1694442863;
+	bh=aJYTIArU1C5mWANst98qPZX4L9ORaSwGwRlde/4gB0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DdW6SCI4Q56IsTAq2KsWl11P8+0hNm+qNYdbw4wamKsdXMBaIhBw7x7w9SiH1fWUr
-	 xk3VHifb16TtPY94hcZF/+A4gle2tYIc0m1MoRdrNNfd+0COtvYwc1T3yBUZWsxVa7
-	 nPS5vKtjUgKrrfg7tPa9pTQEx0A5aVzDo7K2bgfk=
+	b=gMf/ZauMEjKK4qywukb7CFo/0TqIvP72eskjywfA6FqWyhhejhC3K+UKllnnKKRKd
+	 D1YOlXyVIqu8nqXxVi9sfLK/xn0YjeUTKPlDfFrOC9U6+psjW6mVGwuTCybMvV8wAC
+	 QLQRm3haIZGddtlJWILfA9jy6jgZAk6N9OT4BkiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lin Ma <linma@zju.edu.cn>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 173/737] wifi: mt76: mt7915: remove VHT160 capability on MT7915
-Date: Mon, 11 Sep 2023 15:40:32 +0200
-Message-ID: <20230911134655.362254526@linuxfoundation.org>
+Subject: [PATCH 6.4 174/737] wifi: mt76: testmode: add nla_policy for MT76_TM_ATTR_TX_LENGTH
+Date: Mon, 11 Sep 2023 15:40:33 +0200
+Message-ID: <20230911134655.391691213@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,32 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 3ec5ac12ac8a4e6b1e085374325a5fbd1b650fd5 ]
+[ Upstream commit 74f12d511625e603fac8c0c2b6872e687e56dd61 ]
 
-The IEEE80211_VHT_CAP_EXT_NSS_BW value already indicates support for half-NSS
-160 MHz support, so it is wrong to also advertise full 160 MHz support.
+It seems that the nla_policy in mt76_tm_policy is missed for attribute
+MT76_TM_ATTR_TX_LENGTH. This patch adds the correct description to make
+sure the
 
-Fixes: c2f73eacee3b ("wifi: mt76: mt7915: add back 160MHz channel width support for MT7915")
+  u32 val = nla_get_u32(tb[MT76_TM_ATTR_TX_LENGTH]);
+
+in function mt76_testmode_cmd() is safe and will not result in
+out-of-attribute read.
+
+Fixes: f0efa8621550 ("mt76: add API for testmode support")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/init.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/testmode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index 927a98a315ae8..9defd2b3c2f8d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -414,7 +414,6 @@ mt7915_init_wiphy(struct mt7915_phy *phy)
- 			if (!dev->dbdc_support)
- 				vht_cap->cap |=
- 					IEEE80211_VHT_CAP_SHORT_GI_160 |
--					IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ |
- 					FIELD_PREP(IEEE80211_VHT_CAP_EXT_NSS_BW_MASK, 1);
- 		} else {
- 			vht_cap->cap |=
+diff --git a/drivers/net/wireless/mediatek/mt76/testmode.c b/drivers/net/wireless/mediatek/mt76/testmode.c
+index 0accc71a91c9a..4644dace9bb34 100644
+--- a/drivers/net/wireless/mediatek/mt76/testmode.c
++++ b/drivers/net/wireless/mediatek/mt76/testmode.c
+@@ -8,6 +8,7 @@ const struct nla_policy mt76_tm_policy[NUM_MT76_TM_ATTRS] = {
+ 	[MT76_TM_ATTR_RESET] = { .type = NLA_FLAG },
+ 	[MT76_TM_ATTR_STATE] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_COUNT] = { .type = NLA_U32 },
++	[MT76_TM_ATTR_TX_LENGTH] = { .type = NLA_U32 },
+ 	[MT76_TM_ATTR_TX_RATE_MODE] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_RATE_NSS] = { .type = NLA_U8 },
+ 	[MT76_TM_ATTR_TX_RATE_IDX] = { .type = NLA_U8 },
 -- 
 2.40.1
 
