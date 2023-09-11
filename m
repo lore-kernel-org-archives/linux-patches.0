@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C21D11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B755C433C7;
-	Mon, 11 Sep 2023 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB8C11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFCAC433C8;
+	Mon, 11 Sep 2023 14:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444033;
-	bh=OOYRjZXQug16bQQGEUKiZUmf+v+vywx4nqLVEZ2oHHo=;
+	s=korg; t=1694444036;
+	bh=/wSlVXKeXyjA6gRbyAV/QlWNN9gVcTRSO9kpCM2NlC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjGTWoDkvrx9i7Xt5r5gbRIXk9FxCLoot8cAPkdCUuhx2pjbLgsgHRIxpmYiUSjvE
-	 gaMqw/7bL8mlnN3ev4MsK4AEJVVAc7JsG6EAmRbkFeoaGN9hJ6c86jpA26+jHay50N
-	 Bd5cjJvv1Cb5RXCg3A66uQU9vREj0MwZhDwEBbrs=
+	b=eef9oHy4+uNKFtlWNTOR8T80RiGK/wAk6VRLFkgYQ75B6+0y3m5dAiHt1wvoLS8Qe
+	 wGd4AmNVq75nU2pizqPofLxapsFu/MNp+6YXp2PEFv5ma3dVCPKQlMJ/isIO0GjL7s
+	 lXaux86qr0NQc6+TTOMPEgZK7nWPLTCO11VjPa9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 548/737] platform/x86: dell-sysman: Fix reference leak
-Date: Mon, 11 Sep 2023 15:46:47 +0200
-Message-ID: <20230911134705.867524090@linuxfoundation.org>
+Subject: [PATCH 6.4 580/737] f2fs: fix to drop all dirty meta/node pages during umount()
+Date: Mon, 11 Sep 2023 15:47:19 +0200
+Message-ID: <20230911134706.730957963@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,54 +40,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 7295a996fdab7bf83dc3d4078fa8b139b8e0a1bf ]
+[ Upstream commit 20872584b8c0b006c007da9588a272c9e28d2e18 ]
 
-If a duplicate attribute is found using kset_find_obj(),
-a reference to that attribute is returned. This means
-that we need to dispose it accordingly. Use kobject_put()
-to dispose the duplicate attribute in such a case.
+For cp error case, there will be dirty meta/node pages remained after
+f2fs_write_checkpoint() in f2fs_put_super(), drop them explicitly, and
+do sanity check on reference count of dirty pages and inflight IOs.
 
-Compile-tested only.
-
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230805053610.7106-1-W_Armin@gmx.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: eb61c2cca2eb ("f2fs: fix to account cp stats correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/sysman.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/f2fs/super.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-index 0285b47d99d13..1dd5aa37ecc8b 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-@@ -396,6 +396,7 @@ static int init_bios_attributes(int attr_type, const char *guid)
- 	struct kobject *attr_name_kobj; //individual attribute names
- 	union acpi_object *obj = NULL;
- 	union acpi_object *elements;
-+	struct kobject *duplicate;
- 	struct kset *tmp_set;
- 	int min_elements;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 751ac088bc19e..20f1bda0e1a17 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1571,6 +1571,7 @@ static void f2fs_put_super(struct super_block *sb)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+ 	int i;
++	int err = 0;
+ 	bool done;
  
-@@ -454,9 +455,11 @@ static int init_bios_attributes(int attr_type, const char *guid)
- 		else
- 			tmp_set = wmi_priv.main_dir_kset;
+ 	/* unregister procfs/sysfs entries in advance to avoid race case */
+@@ -1597,7 +1598,7 @@ static void f2fs_put_super(struct super_block *sb)
+ 		struct cp_control cpc = {
+ 			.reason = CP_UMOUNT,
+ 		};
+-		f2fs_write_checkpoint(sbi, &cpc);
++		err = f2fs_write_checkpoint(sbi, &cpc);
+ 	}
  
--		if (kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer)) {
--			pr_debug("duplicate attribute name found - %s\n",
--				elements[ATTR_NAME].string.pointer);
-+		duplicate = kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer);
-+		if (duplicate) {
-+			pr_debug("Duplicate attribute name found - %s\n",
-+				 elements[ATTR_NAME].string.pointer);
-+			kobject_put(duplicate);
- 			goto nextobj;
- 		}
+ 	/* be sure to wait for any on-going discard commands */
+@@ -1606,7 +1607,7 @@ static void f2fs_put_super(struct super_block *sb)
+ 		struct cp_control cpc = {
+ 			.reason = CP_UMOUNT | CP_TRIMMED,
+ 		};
+-		f2fs_write_checkpoint(sbi, &cpc);
++		err = f2fs_write_checkpoint(sbi, &cpc);
+ 	}
  
+ 	/*
+@@ -1623,6 +1624,19 @@ static void f2fs_put_super(struct super_block *sb)
+ 
+ 	f2fs_wait_on_all_pages(sbi, F2FS_WB_CP_DATA);
+ 
++	if (err) {
++		truncate_inode_pages_final(NODE_MAPPING(sbi));
++		truncate_inode_pages_final(META_MAPPING(sbi));
++	}
++
++	for (i = 0; i < NR_COUNT_TYPE; i++) {
++		if (!get_pages(sbi, i))
++			continue;
++		f2fs_err(sbi, "detect filesystem reference count leak during "
++			"umount, type: %d, count: %lld", i, get_pages(sbi, i));
++		f2fs_bug_on(sbi, 1);
++	}
++
+ 	f2fs_bug_on(sbi, sbi->fsync_node_num);
+ 
+ 	f2fs_destroy_compress_inode(sbi);
 -- 
 2.40.1
 
