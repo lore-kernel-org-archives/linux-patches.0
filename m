@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40041170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AEFC433C7;
-	Mon, 11 Sep 2023 14:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8253B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059D1C433C8;
+	Mon, 11 Sep 2023 14:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442971;
-	bh=p/xNuthaiJauC3e7kNrOyeoq9UlCVXrj8oX3evznlio=;
+	s=korg; t=1694442974;
+	bh=VBS+QXAL3inaCLRDVb8/E1fRSp6iJ6QTkaSIBD4Fdy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+2qsANLn0LGAQIGCLsJSl9bf7YxTJWrc8Yb6R8fT5QgvtHAEkLRofhEPxYT0q/0K
-	 1JZD348kTcdFW9as6MQ9zHvOo34HibIhjoIoqmAIVk+5sUsQJD5Bf86DmIUBgrb7oX
-	 bUvhqyuU2/fxMCtJcdJkx+obQTBJg3gtw2Tk9QBk=
+	b=XyClLwDzvwxsCMxgj0g+MeZ159VQg8pASAACTbfn6DgKRN06FEuziYpBDfyIaxXfV
+	 QUo8vrmT+rrwl4gHYMUyLSKTsKI+pWHihR0eNnQnjwor13zlqfH1CmP0saOCDaxsHD
+	 cRiaO3hkk77FEtk71Gthj8JqDlpNrW6jCaTdbpSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colm Harrington <colm.harrington@oracle.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 185/737] selftests/bpf: fix static assert compilation issue for test_cls_*.c
-Date: Mon, 11 Sep 2023 15:40:44 +0200
-Message-ID: <20230911134655.739594868@linuxfoundation.org>
+Subject: [PATCH 6.4 176/737] can: gs_usb: gs_usb_receive_bulk_callback(): count RX overflow errors also in case of OOM
+Date: Mon, 11 Sep 2023 15:40:35 +0200
+Message-ID: <20230911134655.453430561@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,80 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 416c6d01244ecbf0abfdb898fd091b50ef951b48 ]
+[ Upstream commit 6c8bc15f02b85bc8f47074110d8fd8caf7a1e42d ]
 
-commit bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
+In case of an RX overflow error from the CAN controller and an OOM
+where no skb can be allocated, the error counters are not incremented.
 
-...was backported to stable trees such as 5.15. The problem is that with older
-LLVM/clang (14/15) - which is often used for older kernels - we see compilation
-failures in BPF selftests now:
+Fix this by first incrementing the error counters and then allocate
+the skb.
 
-In file included from progs/test_cls_redirect_subprogs.c:2:
-progs/test_cls_redirect.c:90:2: error: static assertion expression is not an integral constant expression
-        sizeof(flow_ports_t) !=
-        ^~~~~~~~~~~~~~~~~~~~~~~
-progs/test_cls_redirect.c:91:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
-                offsetofend(struct bpf_sock_tuple, ipv4.dport) -
-                ^
-progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
-        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
-         ^
-tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
-                                 ^
-In file included from progs/test_cls_redirect_subprogs.c:2:
-progs/test_cls_redirect.c:95:2: error: static assertion expression is not an integral constant expression
-        sizeof(flow_ports_t) !=
-        ^~~~~~~~~~~~~~~~~~~~~~~
-progs/test_cls_redirect.c:96:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
-                offsetofend(struct bpf_sock_tuple, ipv6.dport) -
-                ^
-progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
-        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
-         ^
-tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
-                                 ^
-2 errors generated.
-make: *** [Makefile:594: tools/testing/selftests/bpf/test_cls_redirect_subprogs.bpf.o] Error 1
-
-The problem is the new offsetof() does not play nice with static asserts.
-Given that the context is a static assert (and CO-RE relocation is not
-needed at compile time), offsetof() usage can be replaced by restoring
-the original offsetof() definition as __builtin_offsetof().
-
-Fixes: bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
-Reported-by: Colm Harrington <colm.harrington@oracle.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Tested-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20230802073906.3197480-1-alan.maguire@oracle.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://lore.kernel.org/all/20230718-gs_usb-cleanups-v1-7-c3b9154ec605@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_cls_redirect.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/can/usb/gs_usb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect.h b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-index 76eab0aacba0c..233b089d1fbac 100644
---- a/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-+++ b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-@@ -12,6 +12,15 @@
- #include <linux/ipv6.h>
- #include <linux/udp.h>
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index bd9eb066ecf15..129ef60a577c8 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -633,6 +633,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 	}
  
-+/* offsetof() is used in static asserts, and the libbpf-redefined CO-RE
-+ * friendly version breaks compilation for older clang versions <= 15
-+ * when invoked in a static assert.  Restore original here.
-+ */
-+#ifdef offsetof
-+#undef offsetof
-+#define offsetof(type, member) __builtin_offsetof(type, member)
-+#endif
+ 	if (hf->flags & GS_CAN_FLAG_OVERFLOW) {
++		stats->rx_over_errors++;
++		stats->rx_errors++;
 +
- struct gre_base_hdr {
- 	uint16_t flags;
- 	uint16_t protocol;
+ 		skb = alloc_can_err_skb(netdev, &cf);
+ 		if (!skb)
+ 			goto resubmit_urb;
+@@ -640,8 +643,6 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 		cf->can_id |= CAN_ERR_CRTL;
+ 		cf->len = CAN_ERR_DLC;
+ 		cf->data[1] = CAN_ERR_CRTL_RX_OVERFLOW;
+-		stats->rx_over_errors++;
+-		stats->rx_errors++;
+ 		netif_rx(skb);
+ 	}
+ 
 -- 
 2.40.1
 
