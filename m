@@ -1,40 +1,40 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9037015AC2
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 19:39:45 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1c0d5b16aacso39412015ad.1
-        for <patches@lists.linux.dev>; Mon, 11 Sep 2023 12:39:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F263015AC2
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 19:39:46 +0000 (UTC)
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5778fda7c06so461064a12.3
+        for <patches@lists.linux.dev>; Mon, 11 Sep 2023 12:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694461185; x=1695065985; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1694461186; x=1695065986; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iZS9exdhsXGWlwAB3PPHAHPTpMkYjkQ66zHV37ZNnIo=;
-        b=GShbjDqfYq33HsbhaYq9ieQiNlDP3XIgBVioaV0Y+czfxy9nYrLq3Yub0MxXEukb89
-         irwXKsiUFo5Ur1mhqh1eCXREsRyMlkgZez+OXqJUY6vWmLyiYqDD6gQ1/S2qPdNaxUDw
-         D8Pe+qOg3D2hV9GWzQGGSyo/bXGmsgZyr/JMk=
+        bh=CIfVld1coOvYARfYOzv2HqS0W6bVI+gXrtF9tymreUw=;
+        b=kW6R5+bwUTjFvxvYXTFhX97beIQFYRAbCCEeg1fBs6K+wBe43sv5fYM8IG7XBEk5QM
+         TnmnTW5ZtYgwk1kbBUNibniOrtbBI5FGYlM5MZ/Ne5KNOPXWmYQCJu5p+ukfWPUbURSd
+         OAKnzPB3T1Z1yBCkW6m2DsMCHxUHAQciJUwBw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694461185; x=1695065985;
+        d=1e100.net; s=20230601; t=1694461186; x=1695065986;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iZS9exdhsXGWlwAB3PPHAHPTpMkYjkQ66zHV37ZNnIo=;
-        b=v3ROyGHaVKM3V+LsaIs51inpTOdw9b5aItyoODAA7i5NkkLlzO8TJD9+eRPFfEV7iy
-         eriw8QUL9VfneySeMjQgff4e6xbkVbxGMzZoQ64a36S4S+HE1Vzt5P6dnUFefV6e/1Bn
-         vGqqZRoaSHRXHAq6RCKW3oAM7/Pq+qCjugSwoAndrwkYYp6hE3q4P+bMGAgX+BHLJQCI
-         TLZ3H4ulMtyP23mfG5/CM3GQmCEdmrzfZidV0EERXfBBc7XQaFZIczP85z/vlQExU/3O
-         Zs6aVVJBZRO2CgxBQm+WIHcRqi+FU2wO/GCFM7j5fZY+LdYHit9F7kTsurvOYMuDApq8
-         QE/w==
-X-Gm-Message-State: AOJu0YzkyFTUr9eXUuA1buRSXvOBwxDA0E4Q4fPz53z5SnzZHK7k3lhq
-	C5ECuz7RhCdjCcWjTsrMX2fNOA==
-X-Google-Smtp-Source: AGHT+IE7TogpeCC/K5uuUl78NkURxmB6xAcGOF09QSqED+BJ2qE4ZV0Dxs2vBHRHl4QM+fNIhII6jQ==
-X-Received: by 2002:a17:90b:164e:b0:268:10a3:cea8 with SMTP id il14-20020a17090b164e00b0026810a3cea8mr8146677pjb.9.1694461184937;
-        Mon, 11 Sep 2023 12:39:44 -0700 (PDT)
+        bh=CIfVld1coOvYARfYOzv2HqS0W6bVI+gXrtF9tymreUw=;
+        b=li/42Oygiu+pCGjr5IjqahAqCz6//SJjNMaryvlBi/4TQkydLAi1ek2hl890GZhQg/
+         zesCEijzXM3zQO3pKMo9fEewXNomfCw+oQ/0tldNnNcxseF2GVSRccFaE7o02diEE/Al
+         bVZZKrVm+9al/aHXkNC7E6eeljApvPj40wiCKGWY/+lGSrupGkXbVeYWvrbCF0ByS/Jq
+         g9gkKfuE5zx+l6AveyJVvLM5zK8kV0yzsGNnbgSmTT8ZLKeAWEh19F/y9EmME7iPcRtY
+         q6MNZMQOij30pDS3lr8bvGRUM43Q3hmmgfzreZg+JaDEq/mfyDRwKLp8cBhOuqGZ3p3P
+         zNDQ==
+X-Gm-Message-State: AOJu0YyalkgHsm028Q+Pg8qiOi2NB9WoC6ta33FFNO07PvHo3PL66GI1
+	mgE7dbX3h6QEUr7/kvk5z0Lx2g==
+X-Google-Smtp-Source: AGHT+IEJD9aaS/paLlM3NnqHlPKypKmKoRzToVoKSA/lBjh/RRD+ka+skD5NVC21QofiO/2bL20UVQ==
+X-Received: by 2002:a17:90b:1c0f:b0:273:ee6c:ee5c with SMTP id oc15-20020a17090b1c0f00b00273ee6cee5cmr5142476pjb.7.1694461186242;
+        Mon, 11 Sep 2023 12:39:46 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:11a:201:d487:5e33:6656:3711])
-        by smtp.gmail.com with ESMTPSA id fu8-20020a17090ad18800b00262e485156esm7736543pjb.57.2023.09.11.12.39.43
+        by smtp.gmail.com with ESMTPSA id fu8-20020a17090ad18800b00262e485156esm7736543pjb.57.2023.09.11.12.39.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 12:39:44 -0700 (PDT)
+        Mon, 11 Sep 2023 12:39:45 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
@@ -45,9 +45,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Prashant Malani <pmalani@chromium.org>
-Subject: [PATCH v3 3/4] platform/x86: intel_scu_ipc: Don't override scu in intel_scu_ipc_dev_simple_command()
-Date: Mon, 11 Sep 2023 12:39:35 -0700
-Message-ID: <20230911193937.302552-4-swboyd@chromium.org>
+Subject: [PATCH v3 4/4] platform/x86: intel_scu_ipc: Fail IPC send if still busy
+Date: Mon, 11 Sep 2023 12:39:36 -0700
+Message-ID: <20230911193937.302552-5-swboyd@chromium.org>
 X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
 In-Reply-To: <20230911193937.302552-1-swboyd@chromium.org>
 References: <20230911193937.302552-1-swboyd@chromium.org>
@@ -59,35 +59,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Andy discovered this bug during patch review. The 'scu' argument to this
-function shouldn't be overridden by the function itself. It doesn't make
-any sense. Looking at the commit history, we see that commit
-f57fa18583f5 ("platform/x86: intel_scu_ipc: Introduce new SCU IPC API")
-removed the setting of the scu to ipcdev in other functions, but not
-this one. That was an oversight. Remove this line so that we stop
-overriding the scu instance that is used by this function.
+It's possible for interrupts to get significantly delayed to the point
+that callers of intel_scu_ipc_dev_command() and friends can call the
+function once, hit a timeout, and call it again while the interrupt
+still hasn't been processed. This driver will get seriously confused if
+the interrupt is finally processed after the second IPC has been sent
+with ipc_command(). It won't know which IPC has been completed. This
+could be quite disastrous if calling code assumes something has happened
+upon return from intel_scu_ipc_dev_simple_command() when it actually
+hasn't.
 
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Closes: https://lore.kernel.org/r/ZPjdZ3xNmBEBvNiS@smile.fi.intel.com
+Let's avoid this scenario by simply returning -EBUSY in this case.
+Hopefully higher layers will know to back off or fail gracefully when
+this happens. It's all highly unlikely anyway, but it's better to be
+correct here as we have no way to know which IPC the status register is
+telling us about if we send a second IPC while the previous IPC is still
+processing.
+
 Cc: Prashant Malani <pmalani@chromium.org>
-Fixes: f57fa18583f5 ("platform/x86: intel_scu_ipc: Introduce new SCU IPC API")
+Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: ed12f295bfd5 ("ipc: Added support for IPC interrupt mode")
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/platform/x86/intel_scu_ipc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/platform/x86/intel_scu_ipc.c | 40 +++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-index 8be1686e22e9..6958265db29d 100644
+index 6958265db29d..c5b15450598e 100644
 --- a/drivers/platform/x86/intel_scu_ipc.c
 +++ b/drivers/platform/x86/intel_scu_ipc.c
-@@ -443,7 +443,6 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
+@@ -265,6 +265,24 @@ static int intel_scu_ipc_check_status(struct intel_scu_ipc_dev *scu)
+ 	return scu->irq > 0 ? ipc_wait_for_interrupt(scu) : busy_loop(scu);
+ }
+ 
++static struct intel_scu_ipc_dev *intel_scu_ipc_get(struct intel_scu_ipc_dev *scu)
++{
++	u8 status;
++
++	if (!scu)
++		scu = ipcdev;
++	if (!scu)
++		return ERR_PTR(-ENODEV);
++
++	status = ipc_read_status(scu);
++	if (status & IPC_STATUS_BUSY) {
++		dev_dbg(&scu->dev, "device is busy\n");
++		return ERR_PTR(-EBUSY);
++	}
++
++	return scu;
++}
++
+ /* Read/Write power control(PMIC in Langwell, MSIC in PenWell) registers */
+ static int pwr_reg_rdwr(struct intel_scu_ipc_dev *scu, u16 *addr, u8 *data,
+ 			u32 count, u32 op, u32 id)
+@@ -278,11 +296,10 @@ static int pwr_reg_rdwr(struct intel_scu_ipc_dev *scu, u16 *addr, u8 *data,
+ 	memset(cbuf, 0, sizeof(cbuf));
+ 
+ 	mutex_lock(&ipclock);
+-	if (!scu)
+-		scu = ipcdev;
+-	if (!scu) {
++	scu = intel_scu_ipc_get(scu);
++	if (IS_ERR(scu)) {
  		mutex_unlock(&ipclock);
- 		return -ENODEV;
+-		return -ENODEV;
++		return PTR_ERR(scu);
  	}
--	scu = ipcdev;
+ 
+ 	for (nc = 0; nc < count; nc++, offset += 2) {
+@@ -437,12 +454,12 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
+ 	int err;
+ 
+ 	mutex_lock(&ipclock);
+-	if (!scu)
+-		scu = ipcdev;
+-	if (!scu) {
++	scu = intel_scu_ipc_get(scu);
++	if (IS_ERR(scu)) {
+ 		mutex_unlock(&ipclock);
+-		return -ENODEV;
++		return PTR_ERR(scu);
+ 	}
++
  	cmdval = sub << 12 | cmd;
  	ipc_command(scu, cmdval);
  	err = intel_scu_ipc_check_status(scu);
+@@ -482,11 +499,10 @@ int intel_scu_ipc_dev_command_with_size(struct intel_scu_ipc_dev *scu, int cmd,
+ 		return -EINVAL;
+ 
+ 	mutex_lock(&ipclock);
+-	if (!scu)
+-		scu = ipcdev;
+-	if (!scu) {
++	scu = intel_scu_ipc_get(scu);
++	if (IS_ERR(scu)) {
+ 		mutex_unlock(&ipclock);
+-		return -ENODEV;
++		return PTR_ERR(scu);
+ 	}
+ 
+ 	memcpy(inbuf, in, inlen);
 -- 
 https://chromeos.dev
 
