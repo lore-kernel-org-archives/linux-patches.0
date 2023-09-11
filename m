@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5FD11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D1CC433C9;
-	Mon, 11 Sep 2023 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4D711715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6045C433CA;
+	Mon, 11 Sep 2023 15:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444867;
-	bh=ACQcNbWpflEesWC5DgfH1wCQkb69Vixc9UhpEFQZaH4=;
+	s=korg; t=1694444870;
+	bh=7CyeIJq9a94SVp/rE3FrHt9gzqPjpQL/OKfz0YtskxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOPLJhD0FrIvAVQrmvkMICqKHwfBCiuRWqbn+vap3kdL5g5+pkLi6hY/5xQB4pb0E
-	 AyzVMSTSshixPEgIji5bHkf1okrsi4cF40w8ZZlB8+mzmrn1bDPAhYig88wGs5cXBP
-	 cBhSnHxWax3TSbE0JGpAE4B+3+JXO5/luz/MfNBs=
+	b=X+YdGU0P82SYWPjcxl3qjEoDPALGnlD74yjvDrkeVNwYct+ksl8isgEeQn7Z2U4rL
+	 lAD50vNOb4onWolFTQkhCoD76uch8F7MvmFjjkfBFzYeIj1IXm5vwklMOfB/haFRKd
+	 +QIJgble4N2NacZ6bLCFdmQbqZFFw/cxjaHVIiOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/600] crypto: qat - change value of default idle filter
-Date: Mon, 11 Sep 2023 15:42:57 +0200
-Message-ID: <20230911134637.857663926@linuxfoundation.org>
+Subject: [PATCH 6.1 145/600] tcp: tcp_enter_quickack_mode() should be static
+Date: Mon, 11 Sep 2023 15:42:58 +0200
+Message-ID: <20230911134637.887791526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,38 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0f942bdfe9d463be3073301519492f8d53c6b2d5 ]
+[ Upstream commit 03b123debcbc8db987bda17ed8412cc011064c22 ]
 
-The power management configuration of 4xxx devices is too aggressive
-and in some conditions the device might be prematurely put to a low
-power state.
-Increase the idle filter value to prevent that.
-In future, this will be set by firmware.
+After commit d2ccd7bc8acd ("tcp: avoid resetting ACK timer in DCTCP"),
+tcp_enter_quickack_mode() is only used from net/ipv4/tcp_input.c.
 
-Fixes: e5745f34113b ("crypto: qat - enable power management for QAT GEN4")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d2ccd7bc8acd ("tcp: avoid resetting ACK timer in DCTCP")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yuchung Cheng <ycheng@google.com>
+Cc: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20230718162049.1444938-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_gen4_pm.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/tcp.h    | 1 -
+ net/ipv4/tcp_input.c | 3 +--
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_common/adf_gen4_pm.h b/drivers/crypto/qat/qat_common/adf_gen4_pm.h
-index f8f8a9ee29e5b..db4326933d1c0 100644
---- a/drivers/crypto/qat/qat_common/adf_gen4_pm.h
-+++ b/drivers/crypto/qat/qat_common/adf_gen4_pm.h
-@@ -35,7 +35,7 @@
- #define ADF_GEN4_PM_MSG_PENDING			BIT(0)
- #define ADF_GEN4_PM_MSG_PAYLOAD_BIT_MASK	GENMASK(28, 1)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index e9c8f88f47696..5fd69f2342a44 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -355,7 +355,6 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
+ struct sk_buff *tcp_stream_alloc_skb(struct sock *sk, int size, gfp_t gfp,
+ 				     bool force_schedule);
  
--#define ADF_GEN4_PM_DEFAULT_IDLE_FILTER		(0x0)
-+#define ADF_GEN4_PM_DEFAULT_IDLE_FILTER		(0x6)
- #define ADF_GEN4_PM_MAX_IDLE_FILTER		(0x7)
+-void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks);
+ static inline void tcp_dec_quickack_mode(struct sock *sk,
+ 					 const unsigned int pkts)
+ {
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index e2d3ea2e34561..c697836f2b5b4 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -287,7 +287,7 @@ static void tcp_incr_quickack(struct sock *sk, unsigned int max_quickacks)
+ 		icsk->icsk_ack.quick = quickacks;
+ }
  
- int adf_gen4_enable_pm(struct adf_accel_dev *accel_dev);
+-void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
++static void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 
+@@ -295,7 +295,6 @@ void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
+ 	inet_csk_exit_pingpong_mode(sk);
+ 	icsk->icsk_ack.ato = TCP_ATO_MIN;
+ }
+-EXPORT_SYMBOL(tcp_enter_quickack_mode);
+ 
+ /* Send ACKs quickly, if "quick" count is not exhausted
+  * and the session is not interactive.
 -- 
 2.40.1
 
