@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4321172A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D516C433C8;
-	Mon, 11 Sep 2023 14:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6608811727
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45FAC433C7;
+	Mon, 11 Sep 2023 14:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442636;
-	bh=Qx4Ko2zLTen7TSlh8f0ILRjVMEANggugSShoim7qRtU=;
+	s=korg; t=1694442639;
+	bh=rd1bWokMPBOvmS2kyH+FHN3d+qK3DrGGEcr+rglJadE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EKDzpQcVPj5n9qUMMa7O4EuuSqF/v2N+PSW+nRU116KuGFWVQqLJqIrcsjR9NTAR
-	 bySQlIsbHYiAiUChDOgJN3+94bLrmBXWc2TnXhDLJZXSkc2Hsx0/HhCqIzKvLY8Z2M
-	 WrXpbCcNeVlx8DCyqdffkM4mfD2/5tBFJs/J/hrs=
+	b=yVNdIqyDjmEYLOUGxppfgJwIZ79z1uRv7b5qDmG0vPCjCLxwCwCtAofJnKMXT4y1S
+	 JzYqU9C51cCGwzKv2itYYWabSDL4bNWVQgsg5KkzkGShqveMKzIoPvj8fa66ZfGTgS
+	 KcupPOJOCjOANRxISMm4Biw7FTIWtiCBUROf/lA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 057/737] x86/hyperv: add noop functions to x86_init mpparse functions
-Date: Mon, 11 Sep 2023 15:38:36 +0200
-Message-ID: <20230911134652.082161784@linuxfoundation.org>
+	Todd Brandt <todd.e.brandt@intel.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Raymond Jay Golo <rjgolo@gmail.com>,
+	Ronan Pigott <ronan@rjp.ie>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Thorsten Leemhuis <regressions@leemhuis.info>
+Subject: [PATCH 6.4 088/737] tpm: Enable hwrng only for Pluton on AMD CPUs
+Date: Mon, 11 Sep 2023 15:39:07 +0200
+Message-ID: <20230911134652.961214749@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,51 +44,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 9e2d0c336524706fb327e9b87477f5f3337ad7a6 ]
+commit 8f7f35e5aa6f2182eabcfa3abef4d898a48e9aa8 upstream.
 
-Hyper-V can run VMs at different privilege "levels" known as Virtual
-Trust Levels (VTL). Sometimes, it chooses to run two different VMs
-at different levels but they share some of their address space. In
-such setups VTL2 (higher level VM) has visibility of all of the
-VTL0 (level 0) memory space.
+The vendor check introduced by commit 554b841d4703 ("tpm: Disable RNG for
+all AMD fTPMs") doesn't work properly on a number of Intel fTPMs.  On the
+reported systems the TPM doesn't reply at bootup and returns back the
+command code. This makes the TPM fail probe on Lenovo Legion Y540 laptop.
 
-When the CONFIG_X86_MPPARSE is enabled for VTL2, the VTL2 kernel
-performs a search within the low memory to locate MP tables. However,
-in systems where VTL0 manages the low memory and may contain valid
-tables, this scanning can result in incorrect MP table information
-being provided to the VTL2 kernel, mistakenly considering VTL0's MP
-table as its own
+Since only Microsoft Pluton is the only known combination of AMD CPU and
+fTPM from other vendor, disable hwrng otherwise. In order to make sysadmin
+aware of this, print also info message to the klog.
 
-Add noop functions to avoid MP parse scan by VTL2.
-
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/1687537688-5397-1-git-send-email-ssengar@linux.microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 554b841d4703 ("tpm: Disable RNG for all AMD fTPMs")
+Reported-by: Todd Brandt <todd.e.brandt@intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217804
+Reported-by: Patrick Steinhardt <ps@pks.im>
+Reported-by: Raymond Jay Golo <rjgolo@gmail.com>
+Reported-by: Ronan Pigott <ronan@rjp.ie>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/hyperv/hv_vtl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/char/tpm/tpm_crb.c |   33 ++++++++-------------------------
+ 1 file changed, 8 insertions(+), 25 deletions(-)
 
-diff --git a/arch/x86/hyperv/hv_vtl.c b/arch/x86/hyperv/hv_vtl.c
-index 85d38b9f35861..db5d2ea39fc0d 100644
---- a/arch/x86/hyperv/hv_vtl.c
-+++ b/arch/x86/hyperv/hv_vtl.c
-@@ -25,6 +25,10 @@ void __init hv_vtl_init_platform(void)
- 	x86_init.irqs.pre_vector_init = x86_init_noop;
- 	x86_init.timers.timer_init = x86_init_noop;
+--- a/drivers/char/tpm/tpm_crb.c
++++ b/drivers/char/tpm/tpm_crb.c
+@@ -463,28 +463,6 @@ static bool crb_req_canceled(struct tpm_
+ 	return (cancel & CRB_CANCEL_INVOKE) == CRB_CANCEL_INVOKE;
+ }
  
-+	/* Avoid searching for BIOS MP tables */
-+	x86_init.mpparse.find_smp_config = x86_init_noop;
-+	x86_init.mpparse.get_smp_config = x86_init_uint_noop;
-+
- 	x86_platform.get_wallclock = get_rtc_noop;
- 	x86_platform.set_wallclock = set_rtc_noop;
- 	x86_platform.get_nmi_reason = hv_get_nmi_reason;
--- 
-2.40.1
-
+-static int crb_check_flags(struct tpm_chip *chip)
+-{
+-	u32 val;
+-	int ret;
+-
+-	ret = crb_request_locality(chip, 0);
+-	if (ret)
+-		return ret;
+-
+-	ret = tpm2_get_tpm_pt(chip, TPM2_PT_MANUFACTURER, &val, NULL);
+-	if (ret)
+-		goto release;
+-
+-	if (val == 0x414D4400U /* AMD */)
+-		chip->flags |= TPM_CHIP_FLAG_HWRNG_DISABLED;
+-
+-release:
+-	crb_relinquish_locality(chip, 0);
+-
+-	return ret;
+-}
+-
+ static const struct tpm_class_ops tpm_crb = {
+ 	.flags = TPM_OPS_AUTO_STARTUP,
+ 	.status = crb_status,
+@@ -826,9 +804,14 @@ static int crb_acpi_add(struct acpi_devi
+ 	if (rc)
+ 		goto out;
+ 
+-	rc = crb_check_flags(chip);
+-	if (rc)
+-		goto out;
++#ifdef CONFIG_X86
++	/* A quirk for https://www.amd.com/en/support/kb/faq/pa-410 */
++	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD &&
++	    priv->sm != ACPI_TPM2_COMMAND_BUFFER_WITH_PLUTON) {
++		dev_info(dev, "Disabling hwrng\n");
++		chip->flags |= TPM_CHIP_FLAG_HWRNG_DISABLED;
++	}
++#endif /* CONFIG_X86 */
+ 
+ 	rc = tpm_chip_register(chip);
+ 
 
 
