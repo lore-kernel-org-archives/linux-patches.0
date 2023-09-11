@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F6F11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FE9C433C7;
-	Mon, 11 Sep 2023 14:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC60011706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D275C433C8;
+	Mon, 11 Sep 2023 14:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444073;
-	bh=/ve7Vj1FGlxihhcU9MJNREFRmyNfety+eiIqhN5fi3k=;
+	s=korg; t=1694444075;
+	bh=W4kIPxfqlbVZ3xKpDfqNW5UNkM/MYseNTrAFW+85BUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khIQMM8JtrxiekGmSBMXAf0oRzbtu+MnFpSqh+3a/uSfluB1yXM8apTvf4jKA1bQq
-	 VmA2pwFBr0k5zp2e9TTCkQA7h9N+srILeFv/WPVCQAmWPHJGaRyKX63c++zbYYlArV
-	 l13ZWtsa7IXh9ozyvX9Q2pi6vszotWDmCmmQUanM=
+	b=hKA0W5iRoBMA/5yfqC0hHOgICQB/2cDyqTXiyMDfaun2cUNK6HBSUZZqetRoIocHw
+	 slSPycytVuiOwoBGywpX4OlZ9JNC2CYqaqOBKfkhc+UEy5oN9qpOsUTbWo2eF2wTaS
+	 PlqWO2nenfGcV5PBpANLJPshp260uX2XwySR5GyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gortmaker <paul.gortmaker@windriver.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Wen Yang <wenyang.linux@foxmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Michael Zhivich <mzhivich@akamai.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 600/737] tick/rcu: Fix false positive "softirq work is pending" messages
-Date: Mon, 11 Sep 2023 15:47:39 +0200
-Message-ID: <20230911134707.297884260@linuxfoundation.org>
+Subject: [PATCH 6.4 601/737] x86/speculation: Mark all Skylake CPUs as vulnerable to GDS
+Date: Mon, 11 Sep 2023 15:47:40 +0200
+Message-ID: <20230911134707.324669657@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,77 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-[ Upstream commit 96c1fa04f089a7e977a44e4e8fdc92e81be20bef ]
+[ Upstream commit c9f4c45c8ec3f07f4f083f9750032a1ec3eab6b2 ]
 
-In commit 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle") the
-new function report_idle_softirq() was created by breaking code out of the
-existing can_stop_idle_tick() for kernels v5.18 and newer.
+The Gather Data Sampling (GDS) vulnerability is common to all Skylake
+processors.  However, the "client" Skylakes* are now in this list:
 
-In doing so, the code essentially went from a one conditional:
+	https://www.intel.com/content/www/us/en/support/articles/000022396/processors.html
 
-	if (a && b && c)
-		warn();
+which means they are no longer included for new vulnerabilities here:
 
-to a three conditional:
+	https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
 
-	if (!a)
-		return;
-	if (!b)
-		return;
-	if (!c)
-		return;
-	warn();
+or in other GDS documentation.  Thus, they were not included in the
+original GDS mitigation patches.
 
-But that conversion got the condition for the RT specific
-local_bh_blocked() wrong. The original condition was:
+Mark SKYLAKE and SKYLAKE_L as vulnerable to GDS to match all the
+other Skylake CPUs (which include Kaby Lake).  Also group the CPUs
+so that the ones that share the exact same vulnerabilities are next
+to each other.
 
-   	!local_bh_blocked()
+Last, move SRBDS to the end of each line.  This makes it clear at a
+glance that SKYLAKE_X is unique.  Of the five Skylakes, it is the
+only "server" CPU and has a different implementation from the
+clients of the "special register" hardware, making it immune to SRBDS.
 
-but the conversion failed to negate it so it ended up as:
+This makes the diff much harder to read, but the resulting table is
+worth it.
 
-        if (!local_bh_blocked())
-		return false;
+I very much appreciate the report from Michael Zhivich about this
+issue.  Despite what level of support a hardware vendor is providing,
+the kernel very much needs an accurate and up-to-date list of
+vulnerable CPUs.  More reports like this are very welcome.
 
-This issue lay dormant until another fixup for the same commit was added
-in commit a7e282c77785 ("tick/rcu: Fix bogus ratelimit condition").
-This commit realized the ratelimit was essentially set to zero instead
-of ten, and hence *no* softirq pending messages would ever be issued.
+* Client Skylakes are CPUID 406E3/506E3 which is family 6, models
+  0x4E and 0x5E, aka INTEL_FAM6_SKYLAKE and INTEL_FAM6_SKYLAKE_L.
 
-Once this commit was backported via linux-stable, both the v6.1 and v6.4
-preempt-rt kernels started printing out 10 instances of this at boot:
-
-  NOHZ tick-stop error: local softirq work is pending, handler #80!!!
-
-Remove the negation and return when local_bh_blocked() evaluates to true to
-bring the correct behaviour back.
-
-Fixes: 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle")
-Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Wen Yang <wenyang.linux@foxmail.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20230818200757.1808398-1-paul.gortmaker@windriver.com
+Reported-by: Michael Zhivich <mzhivich@akamai.com>
+Fixes: 8974eb588283 ("x86/speculation: Add Gather Data Sampling mitigation")
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/common.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index 4df14db4da490..87015e9deacc9 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -1045,7 +1045,7 @@ static bool report_idle_softirq(void)
- 		return false;
- 
- 	/* On RT, softirqs handling may be waiting on some lock */
--	if (!local_bh_blocked())
-+	if (local_bh_blocked())
- 		return false;
- 
- 	pr_warn("NOHZ tick-stop error: local softirq work is pending, handler #%02x!!!\n",
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 19c74e68c0a21..aa26c2bb70259 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1282,11 +1282,11 @@ static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_G,	X86_STEPPING_ANY,		SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_X,	X86_STEPPING_ANY,		MMIO),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL,	X86_STEPPING_ANY,		SRBDS),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
+ 	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED | GDS),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED | GDS),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
++	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
++	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(CANNONLAKE_L,	X86_STEPPING_ANY,		RETBLEED),
+ 	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS),
+ 	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS),
 -- 
 2.40.1
 
