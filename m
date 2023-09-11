@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3321170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21475C433C8;
-	Mon, 11 Sep 2023 14:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648781170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0DBC433C7;
+	Mon, 11 Sep 2023 14:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441462;
-	bh=iZhlbBgPWoFM8oMSXmectafHF1OQtskAtMYZVLmWaWs=;
+	s=korg; t=1694441465;
+	bh=U/26fRIAn6hxdwgYkKUrLFpEbgR0H4rNqyNJQRPRCGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCkugtUE9Ad6vX24+pJdjGDQdxMKaK5b9Rqo8KbjGx4y7z4WfISLR6R0AOD8UWwQj
-	 whpopTh85t4/m6H3f2MxEcbfPxFOiP70tnu4BjiN25VRP24wb9bAXvEEicTw/U4ORh
-	 OYgPdR/+yM3viy81YI8LJinQIAsOWizCHR0HBEGE=
+	b=htg+XIv1/yYQS5dE0phW1qcU+kcn0K+gAZhZhPE5RcYe/Gu+WZPdjBtFqrWZnrM0A
+	 FdGqd2zvsbUbDfMkBX2C7TnTNecPJw+Y1ZIGuRK/Pt4LRMvwYmkogxhvuod3J0gaKH
+	 xT3Sm4Y6mlgiTqM1UKF9MjYUSdbZA8fsBebUuTYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 421/739] powerpc/perf: Convert fsl_emb notifier to state machine callbacks
-Date: Mon, 11 Sep 2023 15:43:40 +0200
-Message-ID: <20230911134702.935475004@linuxfoundation.org>
+Subject: [PATCH 6.5 422/739] pinctrl: mediatek: fix pull_type data for MT7981
+Date: Mon, 11 Sep 2023 15:43:41 +0200
+Message-ID: <20230911134702.961867074@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,82 +40,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 34daf445f82bd3a4df852bb5f1dffd792ac830a0 ]
+[ Upstream commit 8f6f16fe1553ce63edfb98a39ef9d4754a0c39bf ]
 
-  CC      arch/powerpc/perf/core-fsl-emb.o
-arch/powerpc/perf/core-fsl-emb.c:675:6: error: no previous prototype for 'hw_perf_event_setup' [-Werror=missing-prototypes]
-  675 | void hw_perf_event_setup(int cpu)
-      |      ^~~~~~~~~~~~~~~~~~~
+MediaTek has released pull_type data for MT7981 in their SDK.
+Use it and set functions to configure pin bias.
 
-Looks like fsl_emb was completely missed by commit 3f6da3905398 ("perf:
-Rework and fix the arch CPU-hotplug hooks")
-
-So, apply same changes as commit 3f6da3905398 ("perf: Rework and fix
-the arch CPU-hotplug hooks") then commit 57ecde42cc74 ("powerpc/perf:
-Convert book3s notifier to state machine callbacks")
-
-While at it, also fix following error:
-
-arch/powerpc/perf/core-fsl-emb.c: In function 'perf_event_interrupt':
-arch/powerpc/perf/core-fsl-emb.c:648:13: error: variable 'found' set but not used [-Werror=unused-but-set-variable]
-  648 |         int found = 0;
-      |             ^~~~~
-
-Fixes: 3f6da3905398 ("perf: Rework and fix the arch CPU-hotplug hooks")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/603e1facb32608f88f40b7d7b9094adc50e7b2dc.1692349125.git.christophe.leroy@csgroup.eu
+Fixes: 6c83b2d94fcc ("pinctrl: add mt7981 pinctrl driver")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/7bcc8ead25dbfabc7f5a85d066224a926fbb4941.1692327317.git.daniel@makrotopia.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/core-fsl-emb.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mt7981.c | 44 +++++++----------------
+ 1 file changed, 13 insertions(+), 31 deletions(-)
 
-diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
-index ee721f420a7ba..1a53ab08447cb 100644
---- a/arch/powerpc/perf/core-fsl-emb.c
-+++ b/arch/powerpc/perf/core-fsl-emb.c
-@@ -645,7 +645,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 	struct cpu_hw_events *cpuhw = this_cpu_ptr(&cpu_hw_events);
- 	struct perf_event *event;
- 	unsigned long val;
--	int found = 0;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt7981.c b/drivers/pinctrl/mediatek/pinctrl-mt7981.c
+index 18abc57800111..0fd2c0c451f95 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt7981.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt7981.c
+@@ -457,37 +457,15 @@ static const unsigned int mt7981_pull_type[] = {
+ 	MTK_PULL_PUPD_R1R0_TYPE,/*34*/ MTK_PULL_PUPD_R1R0_TYPE,/*35*/
+ 	MTK_PULL_PUPD_R1R0_TYPE,/*36*/ MTK_PULL_PUPD_R1R0_TYPE,/*37*/
+ 	MTK_PULL_PUPD_R1R0_TYPE,/*38*/ MTK_PULL_PUPD_R1R0_TYPE,/*39*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*40*/ MTK_PULL_PUPD_R1R0_TYPE,/*41*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*42*/ MTK_PULL_PUPD_R1R0_TYPE,/*43*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*44*/ MTK_PULL_PUPD_R1R0_TYPE,/*45*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*46*/ MTK_PULL_PUPD_R1R0_TYPE,/*47*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*48*/ MTK_PULL_PUPD_R1R0_TYPE,/*49*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*50*/ MTK_PULL_PUPD_R1R0_TYPE,/*51*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*52*/ MTK_PULL_PUPD_R1R0_TYPE,/*53*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*54*/ MTK_PULL_PUPD_R1R0_TYPE,/*55*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*56*/ MTK_PULL_PUPD_R1R0_TYPE,/*57*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*58*/ MTK_PULL_PUPD_R1R0_TYPE,/*59*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*60*/ MTK_PULL_PUPD_R1R0_TYPE,/*61*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*62*/ MTK_PULL_PUPD_R1R0_TYPE,/*63*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*64*/ MTK_PULL_PUPD_R1R0_TYPE,/*65*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*66*/ MTK_PULL_PUPD_R1R0_TYPE,/*67*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*68*/ MTK_PULL_PU_PD_TYPE,/*69*/
+-	MTK_PULL_PU_PD_TYPE,/*70*/ MTK_PULL_PU_PD_TYPE,/*71*/
+-	MTK_PULL_PU_PD_TYPE,/*72*/ MTK_PULL_PU_PD_TYPE,/*73*/
+-	MTK_PULL_PU_PD_TYPE,/*74*/ MTK_PULL_PU_PD_TYPE,/*75*/
+-	MTK_PULL_PU_PD_TYPE,/*76*/ MTK_PULL_PU_PD_TYPE,/*77*/
+-	MTK_PULL_PU_PD_TYPE,/*78*/ MTK_PULL_PU_PD_TYPE,/*79*/
+-	MTK_PULL_PU_PD_TYPE,/*80*/ MTK_PULL_PU_PD_TYPE,/*81*/
+-	MTK_PULL_PU_PD_TYPE,/*82*/ MTK_PULL_PU_PD_TYPE,/*83*/
+-	MTK_PULL_PU_PD_TYPE,/*84*/ MTK_PULL_PU_PD_TYPE,/*85*/
+-	MTK_PULL_PU_PD_TYPE,/*86*/ MTK_PULL_PU_PD_TYPE,/*87*/
+-	MTK_PULL_PU_PD_TYPE,/*88*/ MTK_PULL_PU_PD_TYPE,/*89*/
+-	MTK_PULL_PU_PD_TYPE,/*90*/ MTK_PULL_PU_PD_TYPE,/*91*/
+-	MTK_PULL_PU_PD_TYPE,/*92*/ MTK_PULL_PU_PD_TYPE,/*93*/
+-	MTK_PULL_PU_PD_TYPE,/*94*/ MTK_PULL_PU_PD_TYPE,/*95*/
+-	MTK_PULL_PU_PD_TYPE,/*96*/ MTK_PULL_PU_PD_TYPE,/*97*/
+-	MTK_PULL_PU_PD_TYPE,/*98*/ MTK_PULL_PU_PD_TYPE,/*99*/
+-	MTK_PULL_PU_PD_TYPE,/*100*/
++	MTK_PULL_PU_PD_TYPE,/*40*/ MTK_PULL_PU_PD_TYPE,/*41*/
++	MTK_PULL_PU_PD_TYPE,/*42*/ MTK_PULL_PU_PD_TYPE,/*43*/
++	MTK_PULL_PU_PD_TYPE,/*44*/ MTK_PULL_PU_PD_TYPE,/*45*/
++	MTK_PULL_PU_PD_TYPE,/*46*/ MTK_PULL_PU_PD_TYPE,/*47*/
++	MTK_PULL_PU_PD_TYPE,/*48*/ MTK_PULL_PU_PD_TYPE,/*49*/
++	MTK_PULL_PU_PD_TYPE,/*50*/ MTK_PULL_PU_PD_TYPE,/*51*/
++	MTK_PULL_PU_PD_TYPE,/*52*/ MTK_PULL_PU_PD_TYPE,/*53*/
++	MTK_PULL_PU_PD_TYPE,/*54*/ MTK_PULL_PU_PD_TYPE,/*55*/
++	MTK_PULL_PU_PD_TYPE,/*56*/
+ };
  
- 	for (i = 0; i < ppmu->n_counter; ++i) {
- 		event = cpuhw->event[i];
-@@ -654,7 +653,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 		if ((int)val < 0) {
- 			if (event) {
- 				/* event has overflowed */
--				found = 1;
- 				record_and_restart(event, val, regs);
- 			} else {
- 				/*
-@@ -672,11 +670,13 @@ static void perf_event_interrupt(struct pt_regs *regs)
- 	isync();
- }
- 
--void hw_perf_event_setup(int cpu)
-+static int fsl_emb_pmu_prepare_cpu(unsigned int cpu)
- {
- 	struct cpu_hw_events *cpuhw = &per_cpu(cpu_hw_events, cpu);
- 
- 	memset(cpuhw, 0, sizeof(*cpuhw));
-+
-+	return 0;
- }
- 
- int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
-@@ -689,6 +689,8 @@ int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
- 		pmu->name);
- 
- 	perf_pmu_register(&fsl_emb_pmu, "cpu", PERF_TYPE_RAW);
-+	cpuhp_setup_state(CPUHP_PERF_POWER, "perf/powerpc:prepare",
-+			  fsl_emb_pmu_prepare_cpu, NULL);
- 
- 	return 0;
- }
+ static const struct mtk_pin_reg_calc mt7981_reg_cals[] = {
+@@ -1014,6 +992,10 @@ static struct mtk_pin_soc mt7981_data = {
+ 	.ies_present = false,
+ 	.base_names = mt7981_pinctrl_register_base_names,
+ 	.nbase_names = ARRAY_SIZE(mt7981_pinctrl_register_base_names),
++	.bias_disable_set = mtk_pinconf_bias_disable_set,
++	.bias_disable_get = mtk_pinconf_bias_disable_get,
++	.bias_set = mtk_pinconf_bias_set,
++	.bias_get = mtk_pinconf_bias_get,
+ 	.pull_type = mt7981_pull_type,
+ 	.bias_set_combo = mtk_pinconf_bias_set_combo,
+ 	.bias_get_combo = mtk_pinconf_bias_get_combo,
 -- 
 2.40.1
 
