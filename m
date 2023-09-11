@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B38C11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28CCC433C7;
-	Mon, 11 Sep 2023 14:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2691A11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB46C433C8;
+	Mon, 11 Sep 2023 14:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443299;
-	bh=r3dmspe3Z/06cPl9pNIgRPMjrF2XAjfbqe8G62astIw=;
+	s=korg; t=1694443302;
+	bh=WouarAXRtmM/lWexHVRmjrlV73HPvoEgfs2URwRCAYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kP1EFF1uQBpdiL5aKi1j1+aqXtnT2CRUjbyJnhyO3/bqCyhrz0oSuYHsCOWM0ebBX
-	 ptjGl4zbUakv5P/G4I3dBN0zaawpujA3LezObTnoKj/A1bvNTsKdNpNVxrcesyngZj
-	 xZQDfvYWgqhSpRp7ZhFeLdu8c0v7+E9XBn3yE7zw=
+	b=0PfZ13E3nj6Yss0ovvKxo8D1Xfn0u6530NqFPICV3LH5GDX9O7m5f4HeRzw63+q59
+	 xUI8dudcnE90n4hhaR0xFJWl5p5zsed8V3ARBLGosPr5J5PWRz/mgxNOSikwkuxEhB
+	 yfzasYNEvGLGLUcH36dq/TCDR1CKHdYi4aT5H2/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 327/737] ARM: dts: s5pv210: add dummy 5V regulator for backlight on SMDKv210
-Date: Mon, 11 Sep 2023 15:43:06 +0200
-Message-ID: <20230911134659.681862703@linuxfoundation.org>
+Subject: [PATCH 6.4 301/737] ARM: dts: stm32: adopt generic iio bindings for adc channels on emstamp-argon
+Date: Mon, 11 Sep 2023 15:42:40 +0200
+Message-ID: <20230911134658.961445243@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,42 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit b77904ba177a9c67b6dbc3637fdf1faa22df6e5c ]
+[ Upstream commit c46e9b6cc98245f7264a8d15394d1f95d433abec ]
 
-Backlight is supplied by DC5V regulator.  The DTS has no PMIC node, so
-just add a regulator-fixed to solve it and fix dtbs_check warning:
+Use STM32 ADC generic bindings instead of legacy bindings on
+emtrion GmbH Argon boards.
 
-  s5pv210-smdkv210.dtb: backlight: 'power-supply' is a required property
+The STM32 ADC specific binding to declare channels has been deprecated,
+hence adopt the generic IIO channels bindings, instead.
+The STM32MP151 device tree now exposes internal channels using the
+generic binding. This makes the change mandatory here to avoid a mixed
+use of legacy and generic binding, which is not supported by the driver.
 
-Link: https://lore.kernel.org/r/20230421095721.31857-4-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Stable-dep-of: 982655cb0e7f ("ARM: dts: samsung: s5pv210-smdkv210: correct ethernet reg addresses (split)")
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Stable-dep-of: 0ee0ef38aa9f ("ARM: dts: stm32: Add missing detach mailbox for emtrion emSBC-Argon")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/s5pv210-smdkv210.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/s5pv210-smdkv210.dts b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-index fbae768d65e27..6e26c67e0a26e 100644
---- a/arch/arm/boot/dts/s5pv210-smdkv210.dts
-+++ b/arch/arm/boot/dts/s5pv210-smdkv210.dts
-@@ -55,6 +55,14 @@ backlight {
- 		default-brightness-level = <6>;
+diff --git a/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi b/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi
+index b01470a9a3d53..94e38141af672 100644
+--- a/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi
++++ b/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi
+@@ -97,9 +97,11 @@ &adc {
+ 	adc1: adc@0 {
  		pinctrl-names = "default";
- 		pinctrl-0 = <&pwm3_out>;
-+		power-supply = <&dc5v_reg>;
-+	};
-+
-+	dc5v_reg: regulator-0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "DC5V";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
+ 		pinctrl-0 = <&adc1_in6_pins_a>;
+-		st,min-sample-time-nsecs = <5000>;
+-		st,adc-channels = <6>;
+ 		status = "disabled";
++		channel@6 {
++			reg = <6>;
++			st,min-sample-time-ns = <5000>;
++		};
  	};
- };
  
+ 	adc2: adc@100 {
 -- 
 2.40.1
 
