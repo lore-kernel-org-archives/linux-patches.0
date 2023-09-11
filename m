@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488B611705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCCBC433C7;
-	Mon, 11 Sep 2023 14:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7AF11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85181C433C7;
+	Mon, 11 Sep 2023 14:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443184;
-	bh=5FStGcfLBJQaZObbOevclynX8LTRrIbVeV7ZaLAm9Jg=;
+	s=korg; t=1694443186;
+	bh=KO0MFBhY7NFoG1zDcbkG88i8Fp5i4U7dqaFfAw06YfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DnXWKu6BfVViSlLUe4pEPlLVSVuff9p+qHliEB13124QfDfIgbkKMuqGL6jFD8HcQ
-	 PuZaLMotBAFLH6hxKxv7/gQbvMwjbCBm8x2P8XX/WICurZVmi7ZeDlPW1938wArirD
-	 LYHH2+CRwk5jz+uHjW1vCvV0UyWi42rSQ+LMTS6k=
+	b=VAMCXxMQ4eByRgNxCtGFPxVuTXvvkEvJr0xmOo0rhtaBHz5cI/ojweKql63Yh12OX
+	 5gKXYquRbMpIvP7CzI3AkURDM4WjJceIjE3n9frQ6ZWjfoPdDD+GCF7dqe/XUycQUz
+	 mNtF9mAyI5VUNsEDa1Oj8Z2z0p2wK6N1/jnHNTqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 270/737] drm: bridge: dw-mipi-dsi: Fix enable/disable of DSI controller
-Date: Mon, 11 Sep 2023 15:42:09 +0200
-Message-ID: <20230911134658.121174369@linuxfoundation.org>
+Subject: [PATCH 6.4 288/737] arm64: dts: qcom: sc8280xp-crd: Correct vreg_misc_3p3 GPIO
+Date: Mon, 11 Sep 2023 15:42:27 +0200
+Message-ID: <20230911134658.608718056@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,190 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Jirman <megi@xff.cz>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 05aa61334592adb230749ff465b103ee10e63936 ]
+[ Upstream commit 9566b5271f68bdf6e69b7c511850e3fb75cd18be ]
 
-Before this patch, booting to Linux VT and doing a simple:
+The vreg_misc_3p3 regulator is controlled by PMC8280_1 GPIO 2, not 1, on
+the CRD.
 
-  echo 2 > /sys/class/graphics/fb0/blank
-  echo 0 > /sys/class/graphics/fb0/blank
-
-would result in failures to re-enable the panel. Mode set callback is
-called only once during boot in this scenario, while calls to
-enable/disable callbacks are balanced afterwards. The driver doesn't
-work unless userspace calls modeset before enabling the CRTC/connector.
-
-This patch moves enabling of the DSI host from mode_set into pre_enable
-callback, and removes some old hacks where this bridge driver is
-directly calling into other bridge driver's callbacks.
-
-pre_enable_prev_first flag is set on the panel's bridge so that panel
-drivers will get their prepare function called between DSI host's
-pre_enable and enable callbacks, so that they get a chance to
-perform panel setup while DSI host is already enabled in command
-mode. Otherwise panel's prepare would be called before DSI host
-is enabled, and any DSI communication used in prepare callback
-would fail.
-
-With all these changes, the enable/disable sequence is now well
-balanced, and host's and panel's callbacks are called in proper order
-documented in the drm_panel API documentation without needing the old
-hacks. (Mainly that panel->prepare is called when DSI host is ready to
-allow the panel driver to send DSI commands and vice versa during
-disable.)
-
-Tested on Pinephone Pro. Trace of the callbacks follows.
-
-Before:
-
-[    1.253882] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
-[    1.290732] panel-himax-hx8394 ff960000.dsi.0: prepare
-[    1.475576] dw-mipi-dsi-rockchip ff960000.dsi: enable
-[    1.475593] panel-himax-hx8394 ff960000.dsi.0: enable
-
-echo 2 > /sys/class/graphics/fb0/blank
-
-[   13.722799] panel-himax-hx8394 ff960000.dsi.0: disable
-[   13.774502] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
-[   13.774526] panel-himax-hx8394 ff960000.dsi.0: unprepare
-
-echo 0 > /sys/class/graphics/fb0/blank
-
-[   17.735796] panel-himax-hx8394 ff960000.dsi.0: prepare
-[   17.923522] dw-mipi-dsi-rockchip ff960000.dsi: enable
-[   17.923540] panel-himax-hx8394 ff960000.dsi.0: enable
-[   17.944330] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
-[   17.944335] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
-[   17.944340] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
-
-echo 2 > /sys/class/graphics/fb0/blank
-
-[  431.148583] panel-himax-hx8394 ff960000.dsi.0: disable
-[  431.169259] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
-[  431.169268] panel-himax-hx8394 ff960000.dsi.0: Failed to enter sleep mode: -110
-[  431.169282] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
-[  431.169316] panel-himax-hx8394 ff960000.dsi.0: unprepare
-[  431.169357] pclk_mipi_dsi0 already disabled
-
-echo 0 > /sys/class/graphics/fb0/blank
-
-[  432.796851] panel-himax-hx8394 ff960000.dsi.0: prepare
-[  432.981537] dw-mipi-dsi-rockchip ff960000.dsi: enable
-[  432.981568] panel-himax-hx8394 ff960000.dsi.0: enable
-[  433.002290] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
-[  433.002299] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
-[  433.002312] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
-
------------------------------------------------------------------------
-
-After:
-
-[    1.248372] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
-[    1.248704] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
-[    1.285377] panel-himax-hx8394 ff960000.dsi.0: prepare
-[    1.468392] dw-mipi-dsi-rockchip ff960000.dsi: enable
-[    1.468421] panel-himax-hx8394 ff960000.dsi.0: enable
-
-echo 2 > /sys/class/graphics/fb0/blank
-
-[   16.210357] panel-himax-hx8394 ff960000.dsi.0: disable
-[   16.261315] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
-[   16.261339] panel-himax-hx8394 ff960000.dsi.0: unprepare
-
-echo 0 > /sys/class/graphics/fb0/blank
-
-[   19.161453] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
-[   19.197869] panel-himax-hx8394 ff960000.dsi.0: prepare
-[   19.382141] dw-mipi-dsi-rockchip ff960000.dsi: enable
-[   19.382158] panel-himax-hx8394 ff960000.dsi.0: enable
-
-       (But depends on functionality intorduced in Linux 6.3, so this patch will
-        not build on older kernels when applied to older stable branches.)
-
-Fixes: 46fc51546d44 ("drm/bridge/synopsys: Add MIPI DSI host controller bridge")
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230617224915.1923630-1-megi@xff.cz
+Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230620203915.141337-1-quic_bjorande@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 28 +++++++++++--------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-index b2efecf7d1603..4291798bd70f5 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-@@ -265,6 +265,7 @@ struct dw_mipi_dsi {
- 	struct dw_mipi_dsi *master; /* dual-dsi master ptr */
- 	struct dw_mipi_dsi *slave; /* dual-dsi slave ptr */
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index 5b25d54b95911..4fa9a4f242273 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -167,7 +167,7 @@ vreg_misc_3p3: regulator-misc-3p3 {
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
  
-+	struct drm_display_mode mode;
- 	const struct dw_mipi_dsi_plat_data *plat_data;
+-		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
++		gpio = <&pmc8280_1_gpios 2 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 
+ 		pinctrl-names = "default";
+@@ -696,7 +696,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
+ 	};
+ 
+ 	misc_3p3_reg_en: misc-3p3-reg-en-state {
+-		pins = "gpio1";
++		pins = "gpio2";
+ 		function = "normal";
+ 	};
  };
- 
-@@ -332,6 +333,7 @@ static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
- 	if (IS_ERR(bridge))
- 		return PTR_ERR(bridge);
- 
-+	bridge->pre_enable_prev_first = true;
- 	dsi->panel_bridge = bridge;
- 
- 	drm_bridge_add(&dsi->bridge);
-@@ -859,15 +861,6 @@ static void dw_mipi_dsi_bridge_post_atomic_disable(struct drm_bridge *bridge,
- 	 */
- 	dw_mipi_dsi_set_mode(dsi, 0);
- 
--	/*
--	 * TODO Only way found to call panel-bridge post_disable &
--	 * panel unprepare before the dsi "final" disable...
--	 * This needs to be fixed in the drm_bridge framework and the API
--	 * needs to be updated to manage our own call chains...
--	 */
--	if (dsi->panel_bridge->funcs->post_disable)
--		dsi->panel_bridge->funcs->post_disable(dsi->panel_bridge);
--
- 	if (phy_ops->power_off)
- 		phy_ops->power_off(dsi->plat_data->priv_data);
- 
-@@ -942,15 +935,25 @@ static void dw_mipi_dsi_mode_set(struct dw_mipi_dsi *dsi,
- 		phy_ops->power_on(dsi->plat_data->priv_data);
- }
- 
-+static void dw_mipi_dsi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
-+						 struct drm_bridge_state *old_bridge_state)
-+{
-+	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
-+
-+	/* Power up the dsi ctl into a command mode */
-+	dw_mipi_dsi_mode_set(dsi, &dsi->mode);
-+	if (dsi->slave)
-+		dw_mipi_dsi_mode_set(dsi->slave, &dsi->mode);
-+}
-+
- static void dw_mipi_dsi_bridge_mode_set(struct drm_bridge *bridge,
- 					const struct drm_display_mode *mode,
- 					const struct drm_display_mode *adjusted_mode)
- {
- 	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
- 
--	dw_mipi_dsi_mode_set(dsi, adjusted_mode);
--	if (dsi->slave)
--		dw_mipi_dsi_mode_set(dsi->slave, adjusted_mode);
-+	/* Store the display mode for later use in pre_enable callback */
-+	drm_mode_copy(&dsi->mode, adjusted_mode);
- }
- 
- static void dw_mipi_dsi_bridge_atomic_enable(struct drm_bridge *bridge,
-@@ -1004,6 +1007,7 @@ static const struct drm_bridge_funcs dw_mipi_dsi_bridge_funcs = {
- 	.atomic_duplicate_state	= drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state	= drm_atomic_helper_bridge_destroy_state,
- 	.atomic_reset		= drm_atomic_helper_bridge_reset,
-+	.atomic_pre_enable	= dw_mipi_dsi_bridge_atomic_pre_enable,
- 	.atomic_enable		= dw_mipi_dsi_bridge_atomic_enable,
- 	.atomic_post_disable	= dw_mipi_dsi_bridge_post_atomic_disable,
- 	.mode_set		= dw_mipi_dsi_bridge_mode_set,
 -- 
 2.40.1
 
