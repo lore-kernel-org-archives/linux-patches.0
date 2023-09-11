@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5835411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1226C433C7;
-	Mon, 11 Sep 2023 15:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158D311710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89988C433C8;
+	Mon, 11 Sep 2023 15:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445362;
-	bh=f0lllBbjC7+5PS24b37/XcP83NQatNtyqN9t0N7dtyQ=;
+	s=korg; t=1694445364;
+	bh=0v4kOuipInV2Fi+HO0PCprubCUzH54jDqVyJLS5XK2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZnl/+hn3AQx08U1C/Z4UZKvftKEdTc3ex7vaPRJ6xbB7ps/kidqUVQAA0xmDHaYe
-	 Ae4h56HXcKNgk0W5U83ouD8lfoR8WZ0sV00IH2XoI73ksoHyF0q11CcZrGSrxblXjA
-	 /wpZwphZWJoLevesxnXuvTJZbr/bKNOxby2QdoaA=
+	b=nZ42mXaqbjDc3Lce0Ogin4y1XhTJiB8daI3+SePXyQhJtL4vKe6cMc7uHBrkdCGxD
+	 SbWTGDvhM88gYWQrvQBJJ2mpejUCBbk+cwBdyMgb8abadSj9GLvjf5emOYM5IYX1Pj
+	 DEkV8z8obkDB2KqOIs2Im1wBhRaUh2S/3znYCFwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 320/600] md/raid0: Fix performance regression for large sequential writes
-Date: Mon, 11 Sep 2023 15:45:53 +0200
-Message-ID: <20230911134643.134047873@linuxfoundation.org>
+Subject: [PATCH 6.1 294/600] firmware: meson_sm: fix to avoid potential NULL pointer dereference
+Date: Mon, 11 Sep 2023 15:45:27 +0200
+Message-ID: <20230911134642.289789126@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,89 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 319ff40a542736d67e5bce18635de35d0e7a0bff ]
+[ Upstream commit f2ed165619c16577c02b703a114a1f6b52026df4 ]
 
-Commit f00d7c85be9e ("md/raid0: fix up bio splitting.") among other
-things changed how bio that needs to be split is submitted. Before this
-commit, we have split the bio, mapped and submitted each part. After
-this commit, we map only the first part of the split bio and submit the
-second part unmapped. Due to bio sorting in __submit_bio_noacct() this
-results in the following request ordering:
+of_match_device() may fail and returns a NULL pointer.
 
-  9,0   18     1181     0.525037895 15995  Q  WS 1479315464 + 63392
+Fix this by checking the return value of of_match_device.
 
-  Split off chunk-sized (1024 sectors) request:
-
-  9,0   18     1182     0.629019647 15995  X  WS 1479315464 / 1479316488
-
-  Request is unaligned to the chunk so it's split in
-  raid0_make_request().  This is the first part mapped and punted to
-  bio_list:
-
-  8,0   18     7053     0.629020455 15995  A  WS 739921928 + 1016 <- (9,0) 1479315464
-
-  Now raid0_make_request() returns, second part is postponed on
-  bio_list. __submit_bio_noacct() resorts the bio_list, mapped request
-  is submitted to the underlying device:
-
-  8,0   18     7054     0.629022782 15995  G  WS 739921928 + 1016
-
-  Now we take another request from the bio_list which is the remainder
-  of the original huge request. Split off another chunk-sized bit from
-  it and the situation repeats:
-
-  9,0   18     1183     0.629024499 15995  X  WS 1479316488 / 1479317512
-  8,16  18     6998     0.629025110 15995  A  WS 739921928 + 1016 <- (9,0) 1479316488
-  8,16  18     6999     0.629026728 15995  G  WS 739921928 + 1016
-  ...
-  9,0   18     1184     0.629032940 15995  X  WS 1479317512 / 1479318536 [libnetacq-write]
-  8,0   18     7059     0.629033294 15995  A  WS 739922952 + 1016 <- (9,0) 1479317512
-  8,0   18     7060     0.629033902 15995  G  WS 739922952 + 1016
-  ...
-
-  This repeats until we consume the whole original huge request. Now we
-  finally get to processing the second parts of the split off requests
-  (in reverse order):
-
-  8,16  18     7181     0.629161384 15995  A  WS 739952640 + 8 <- (9,0) 1479377920
-  8,0   18     7239     0.629162140 15995  A  WS 739952640 + 8 <- (9,0) 1479376896
-  8,16  18     7186     0.629163881 15995  A  WS 739951616 + 8 <- (9,0) 1479375872
-  8,0   18     7242     0.629164421 15995  A  WS 739951616 + 8 <- (9,0) 1479374848
-  ...
-
-I guess it is obvious that this IO pattern is extremely inefficient way
-to perform sequential IO. It also makes bio_list to grow to rather long
-lengths.
-
-Change raid0_make_request() to map both parts of the split bio. Since we
-know we are provided with at most chunk-sized bios, we will always need
-to split the incoming bio at most once.
-
-Fixes: f00d7c85be9e ("md/raid0: fix up bio splitting.")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230814092720.3931-2-jack@suse.cz
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 8cde3c2153e8 ("firmware: meson_sm: Rework driver as a proper platform driver")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/tencent_AA08AAA6C4F34D53ADCE962E188A879B8206@qq.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/meson/meson_sm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
-index d3c55f2e9b185..595856948dff8 100644
---- a/drivers/md/raid0.c
-+++ b/drivers/md/raid0.c
-@@ -626,7 +626,7 @@ static bool raid0_make_request(struct mddev *mddev, struct bio *bio)
- 		struct bio *split = bio_split(bio, sectors, GFP_NOIO,
- 					      &mddev->bio_set);
- 		bio_chain(split, bio);
--		submit_bio_noacct(bio);
-+		raid0_map_submit_bio(mddev, bio);
- 		bio = split;
- 	}
+diff --git a/drivers/firmware/meson/meson_sm.c b/drivers/firmware/meson/meson_sm.c
+index 77aa5c6398aa6..d081a6312627b 100644
+--- a/drivers/firmware/meson/meson_sm.c
++++ b/drivers/firmware/meson/meson_sm.c
+@@ -292,6 +292,8 @@ static int __init meson_sm_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
+ 	chip = of_match_device(meson_sm_ids, dev)->data;
++	if (!chip)
++		return -EINVAL;
+ 
+ 	if (chip->cmd_shmem_in_base) {
+ 		fw->sm_shmem_in_base = meson_sm_map_shmem(chip->cmd_shmem_in_base,
 -- 
 2.40.1
 
