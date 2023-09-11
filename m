@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F911170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1475CC433C7;
-	Mon, 11 Sep 2023 13:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C741170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81B6C433C9;
+	Mon, 11 Sep 2023 13:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440388;
-	bh=m74/3i4RXhaKV10SJ2r09Hm/j2/Z8HWjAuMqeOO4iFA=;
+	s=korg; t=1694440391;
+	bh=jEts0mPqEXbAXuDYlR3zoLhxeUw9Yf176uTiNfiSX0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlf/Jp9iQJfOrgMhxbMB2iiWCURdX7KMpbRBZothkhJbG1a8oK7iO7jSoHXuj4HzK
-	 mhP7S+8hjPZyktQlV+31jitYyFtJZSHXET+423cR7naqdvj4X75dATo1GmmBleZNz5
-	 at83s2B7Gi6eNlN5hIDqPJGRLNCUUM+TwVWaKvH0=
+	b=drCIwrf5GtcpVi93rkPf5URrQch3cy7mynO2K7kanWDDCiOMLP5jxJKvgYW6zSbk7
+	 5ccF4TW8nAjyo52Ndz/e83aZwN3VQfpBdFzN0xgDLq2rM2+NxT9n7zRpmGvaazsjag
+	 jkJIE3n9VRFvXq3avT5aCkqqmY7YDq6aBPMCcVqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nysal Jan K.A" <nysal@linux.ibm.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 043/739] selftests/futex: Order calls to futex_lock_pi
-Date: Mon, 11 Sep 2023 15:37:22 +0200
-Message-ID: <20230911134652.320502382@linuxfoundation.org>
+Subject: [PATCH 6.5 044/739] s390/pkey: fix/harmonize internal keyblob headers
+Date: Mon, 11 Sep 2023 15:37:23 +0200
+Message-ID: <20230911134652.349810478@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,74 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nysal Jan K.A <nysal@linux.ibm.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit fbf4dec702774286db409815ffb077711a96b824 ]
+[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
 
-Observed occassional failures in the futex_wait_timeout test:
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
+PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
+which is opaque to the userspace. The header structures for
+PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
+is no reason, why different structures are used. In preparation to fix
+the keyversion handling in the broken PKEY IOCTLs, the same header
+structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
+reduces the number of different code paths and increases the
+readability.
 
-ok 1 futex_wait relative succeeds
-ok 2 futex_wait_bitset realtime succeeds
-ok 3 futex_wait_bitset monotonic succeeds
-ok 4 futex_wait_requeue_pi realtime succeeds
-ok 5 futex_wait_requeue_pi monotonic succeeds
-not ok 6 futex_lock_pi realtime returned 0
-......
-
-The test expects the child thread to complete some steps before
-the parent thread gets to run. There is an implicit expectation
-of the order of invocation of futex_lock_pi between the child thread
-and the parent thread. Make this order explicit. If the order is
-not met, the futex_lock_pi call in the parent thread succeeds and
-will not timeout.
-
-Fixes: f4addd54b161 ("selftests: futex: Expand timeout test")
-Signed-off-by: Nysal Jan K.A <nysal@linux.ibm.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/futex/functional/futex_wait_timeout.c        | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/s390/crypto/pkey_api.c        | 2 +-
+ drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
+ drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/futex_wait_timeout.c b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-index 3651ce17beeb9..d183f878360bc 100644
---- a/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-+++ b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
-@@ -24,6 +24,7 @@
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index e58bfd2253231..ba8581e0809cd 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -895,7 +895,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 		if (ktype)
+ 			*ktype = PKEY_TYPE_EP11;
+ 		if (ksize)
+-			*ksize = kb->head.keybitlen;
++			*ksize = kb->head.bitlen;
  
- static long timeout_ns = 100000;	/* 100us default timeout */
- static futex_t futex_pi;
-+static pthread_barrier_t barrier;
+ 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
+ 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 958f5ee47f1b0..d7ecd6ce5b7a7 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -787,7 +787,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
- void usage(char *prog)
- {
-@@ -48,6 +49,8 @@ void *get_pi_lock(void *arg)
- 	if (ret != 0)
- 		error("futex_lock_pi failed\n", ret);
+ out:
+ 	kfree(req);
+@@ -1055,7 +1055,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	kb->head.type = TOKTYPE_NON_CCA;
+ 	kb->head.len = rep_pl->data_len;
+ 	kb->head.version = TOKVER_EP11_AES;
+-	kb->head.keybitlen = keybitsize;
++	kb->head.bitlen = keybitsize;
  
-+	pthread_barrier_wait(&barrier);
-+
- 	/* Blocks forever */
- 	ret = futex_wait(&lock, 0, NULL, 0);
- 	error("futex_wait failed\n", ret);
-@@ -130,6 +133,7 @@ int main(int argc, char *argv[])
- 	       basename(argv[0]));
- 	ksft_print_msg("\tArguments: timeout=%ldns\n", timeout_ns);
- 
-+	pthread_barrier_init(&barrier, NULL, 2);
- 	pthread_create(&thread, NULL, get_pi_lock, NULL);
- 
- 	/* initialize relative timeout */
-@@ -163,6 +167,9 @@ int main(int argc, char *argv[])
- 	res = futex_wait_requeue_pi(&f1, f1, &futex_pi, &to, 0);
- 	test_timeout(res, &ret, "futex_wait_requeue_pi monotonic", ETIMEDOUT);
- 
-+	/* Wait until the other thread calls futex_lock_pi() */
-+	pthread_barrier_wait(&barrier);
-+	pthread_barrier_destroy(&barrier);
- 	/*
- 	 * FUTEX_LOCK_PI with CLOCK_REALTIME
- 	 * Due to historical reasons, FUTEX_LOCK_PI supports only realtime
+ out:
+ 	kfree(req);
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index a3eddf51242da..67cc80d71ba3b 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -29,14 +29,7 @@ struct ep11keyblob {
+ 	union {
+ 		u8 session[32];
+ 		/* only used for PKEY_TYPE_EP11: */
+-		struct {
+-			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
+-			u8  res0;      /* unused */
+-			u16 len;       /* total length in bytes of this blob */
+-			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
+-			u8  res1;      /* unused */
+-			u16 keybitlen; /* clear key bit len, 0 for unknown */
+-		} head;
++		struct ep11kblob_header head;
+ 	};
+ 	u8  wkvp[16];  /* wrapping key verification pattern */
+ 	u64 attr;      /* boolean key attributes */
 -- 
 2.40.1
 
