@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9C311715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83454C433C9;
-	Mon, 11 Sep 2023 15:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D305F11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55856C433C8;
+	Mon, 11 Sep 2023 15:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444841;
-	bh=smoqkgD9xQ8iWfZjDrYvR9RERP9xFvTx+85SkV1ZI/s=;
+	s=korg; t=1694444844;
+	bh=wYyLacA63f/iih+pcWwtKBX5+7RDE0YbDXORsy6sBCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFYzRxVp4VjsCp7xaDRjLkopT5OlHeDEkwKAaWlaZ6kOcmelzgtUfC2+QhsQO5eSy
-	 1cbT1FV3tcVJK3xvNPh8GlROWaZa4WZy0MO5V7/2CWo3lI+8VJN4d8NVT1bFKwxm5+
-	 AdUmWqUf07ZprpROx1i89sAPSs3ahjvK54Zyyw0U=
+	b=ixcQZ9oCQV8K8wLcw5GZ9ZTh6NQwgcNFr5NEMC0H5l0fNonA/MPICbluQ1S/23TLL
+	 2woRFz5zYjQj26PORxPf6XShdbzIyyRsQsKZCk87JMCR20+97HOBSRWfcmzsQtHxtW
+	 PimQoG8C/A7A0rNvACTLgzTuX/6dzSRZw60Rryhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexander Lobakin <alobakin@pm.me>,
+	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 136/600] selftests/bpf: Fix bpf_nf failure upon test rerun
-Date: Mon, 11 Sep 2023 15:42:49 +0200
-Message-ID: <20230911134637.625789173@linuxfoundation.org>
+Subject: [PATCH 6.1 137/600] bpftool: use a local copy of perf_event to fix accessing :: Bpf_cookie
+Date: Mon, 11 Sep 2023 15:42:50 +0200
+Message-ID: <20230911134637.654648928@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,70 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Alexander Lobakin <alobakin@pm.me>
 
-[ Upstream commit 17e8e5d6e09adb4b4f4fb5c89b3ec3fcae2c64a6 ]
+[ Upstream commit 4cbeeb0dc02f8ac7b975b2ab0080ace53d43d62a ]
 
-Alexei reported:
+When CONFIG_PERF_EVENTS is not set, struct perf_event remains empty.
+However, the structure is being used by bpftool indirectly via BTF.
+This leads to:
 
-  After fast forwarding bpf-next today bpf_nf test started to fail when
-  run twice:
+skeleton/pid_iter.bpf.c:49:30: error: no member named 'bpf_cookie' in 'struct perf_event'
+        return BPF_CORE_READ(event, bpf_cookie);
+               ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
 
-  $ ./test_progs -t bpf_nf
-  #17      bpf_nf:OK
-  Summary: 1/10 PASSED, 0 SKIPPED, 0 FAILED
+...
 
-  $ ./test_progs -t bpf_nf
-  All error logs:
-  test_bpf_nf_ct:PASS:test_bpf_nf__open_and_load 0 nsec
-  test_bpf_nf_ct:PASS:iptables-legacy -t raw -A PREROUTING -j CONNMARK
-  --set-mark 42/0 0 nsec
-  (network_helpers.c:102: errno: Address already in use) Failed to bind socket
-  test_bpf_nf_ct:FAIL:start_server unexpected start_server: actual -1 < expected 0
-  #17/1    bpf_nf/xdp-ct:FAIL
-  test_bpf_nf_ct:PASS:test_bpf_nf__open_and_load 0 nsec
-  test_bpf_nf_ct:PASS:iptables-legacy -t raw -A PREROUTING -j CONNMARK
-  --set-mark 42/0 0 nsec
-  (network_helpers.c:102: errno: Address already in use) Failed to bind socket
-  test_bpf_nf_ct:FAIL:start_server unexpected start_server: actual -1 < expected 0
-  #17/2    bpf_nf/tc-bpf-ct:FAIL
-  #17      bpf_nf:FAIL
-  Summary: 0/8 PASSED, 0 SKIPPED, 1 FAILED
+skeleton/pid_iter.bpf.c:49:9: error: returning 'void' from a function with incompatible result type '__u64' (aka 'unsigned long long')
+        return BPF_CORE_READ(event, bpf_cookie);
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-I was able to locally reproduce as well. Rearrange the connection teardown
-so that the client closes its connection first so that we don't need to
-linger in TCP time-wait.
+Tools and samples can't use any CONFIG_ definitions, so the fields
+used there should always be present.
+Define struct perf_event___local with the `preserve_access_index`
+attribute inside the pid_iter BPF prog to allow compiling on any
+configs. CO-RE will substitute it with the real struct perf_event
+accesses later on.
 
-Fixes: e81fbd4c1ba7 ("selftests/bpf: Add existing connection bpf_*_ct_lookup() test")
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/CAADnVQ+0dnDq_v_vH1EfkacbfGnHANaon7zsw10pMb-D9FS0Pw@mail.gmail.com
-Link: https://lore.kernel.org/bpf/20230626131942.5100-1-daniel@iogearbox.net
+Fixes: cbdaf71f7e65 ("bpftool: Add bpf_cookie to link output")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Alexander Lobakin <alobakin@pm.me>
+Signed-off-by: Quentin Monnet <quentin@isovalent.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230707095425.168126-2-quentin@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bpf_nf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-index 8a838ea8bdf3b..b2998896f9f7b 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-@@ -123,12 +123,13 @@ static void test_bpf_nf_ct(int mode)
- 	ASSERT_EQ(skel->data->test_snat_addr, 0, "Test for source natting");
- 	ASSERT_EQ(skel->data->test_dnat_addr, 0, "Test for destination natting");
- end:
--	if (srv_client_fd != -1)
--		close(srv_client_fd);
- 	if (client_fd != -1)
- 		close(client_fd);
-+	if (srv_client_fd != -1)
-+		close(srv_client_fd);
- 	if (srv_fd != -1)
- 		close(srv_fd);
+diff --git a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
+index eb05ea53afb12..e2af8e5fb29ec 100644
+--- a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
++++ b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
+@@ -15,6 +15,10 @@ enum bpf_obj_type {
+ 	BPF_OBJ_BTF,
+ };
+ 
++struct perf_event___local {
++	u64 bpf_cookie;
++} __attribute__((preserve_access_index));
 +
- 	snprintf(cmd, sizeof(cmd), iptables, "-D");
- 	system(cmd);
- 	test_bpf_nf__destroy(skel);
+ extern const void bpf_link_fops __ksym;
+ extern const void bpf_map_fops __ksym;
+ extern const void bpf_prog_fops __ksym;
+@@ -41,8 +45,8 @@ static __always_inline __u32 get_obj_id(void *ent, enum bpf_obj_type type)
+ /* could be used only with BPF_LINK_TYPE_PERF_EVENT links */
+ static __u64 get_bpf_cookie(struct bpf_link *link)
+ {
++	struct perf_event___local *event;
+ 	struct bpf_perf_link *perf_link;
+-	struct perf_event *event;
+ 
+ 	perf_link = container_of(link, struct bpf_perf_link, link);
+ 	event = BPF_CORE_READ(perf_link, perf_file, private_data);
 -- 
 2.40.1
 
