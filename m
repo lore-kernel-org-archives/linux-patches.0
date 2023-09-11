@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1F511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B521C433C7;
-	Mon, 11 Sep 2023 15:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB5E11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B49C433C8;
+	Mon, 11 Sep 2023 15:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445435;
-	bh=blF+Gg+GE1JtxqLLpjjZJIJql7RAbJPX73RiiC1YMCc=;
+	s=korg; t=1694445438;
+	bh=gsBhYsT1TB31zr4+EsysvC8365837z3H4kEDlDPRCmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+oHJVJ4aYgNwvjDD4QLk0YV8RLG0u7y4B0J70BMsfQsXqIjrScuNzyaaNkVogwq7
-	 HJb8o9qCfN/qYWH0mNIxIsRjHYtl+HvrcZozCOwN8ydjlS6+ORHI0u3Nqik52cu/3m
-	 pr4fzF1kfht7KwC3xISfTGbacm06Kd5+uClWrMUw=
+	b=tyklRf4QLMKs0A/U/MAr4W83mALsBlrC3cTsRx5uXiYy28nYVao4Fnxn+HGUXKvvG
+	 JxDeyrI4WcXbLaZh7Z8KyOl2p+H9730brtNWh7+PayR+nDQsM/UCg05k23Qgm7tpyb
+	 6T2qxnrHSSuiXRi2V4iUtPEEU10/Bcg4itOo4Qns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stephen Boyd <sboyd@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 347/600] clk: qcom: reset: Use the correct type of sleep/delay based on length
-Date: Mon, 11 Sep 2023 15:46:20 +0200
-Message-ID: <20230911134643.928217574@linuxfoundation.org>
+Subject: [PATCH 6.1 330/600] clk: qcom: gcc-sc8280xp: Add EMAC GDSCs
+Date: Mon, 11 Sep 2023 15:46:03 +0200
+Message-ID: <20230911134643.429350708@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,38 +43,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 181b66ee7cdd824797fc99b53bec29cf5630a04f ]
+[ Upstream commit 32c2f2a46db1322caaf78d5ea747ed5c56d2e353 ]
 
-Use the fsleep() helper that (based on the length of the delay, see: [1])
-chooses the correct sleep/delay functions.
+Add the EMAC GDSCs to allow the EMAC hardware to be enabled.
 
-[1] https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
-
-Fixes: 2cb8a39b6781 ("clk: qcom: reset: Allow specifying custom reset delay")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230726-topic-qcom_reset-v3-1-5958facd5db2@linaro.org
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230413191541.1073027-2-ahalaney@redhat.com
+Stable-dep-of: 2fd02de27054 ("clk: qcom: gcc-sc8280xp: Add missing GDSC flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/reset.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sc8280xp.c               | 18 ++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc8280xp.h |  2 ++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
-index 0e914ec7aeae1..e45e32804d2c7 100644
---- a/drivers/clk/qcom/reset.c
-+++ b/drivers/clk/qcom/reset.c
-@@ -16,7 +16,8 @@ static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
- 	struct qcom_reset_controller *rst = to_qcom_reset_controller(rcdev);
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index b3198784e1c3d..04a99dbaa57e0 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -6873,6 +6873,22 @@ static struct gdsc usb30_sec_gdsc = {
+ 	.pwrsts = PWRSTS_RET_ON,
+ };
  
- 	rcdev->ops->assert(rcdev, id);
--	udelay(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
-+	fsleep(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
++static struct gdsc emac_0_gdsc = {
++	.gdscr = 0xaa004,
++	.pd = {
++		.name = "emac_0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
 +
- 	rcdev->ops->deassert(rcdev, id);
- 	return 0;
- }
++static struct gdsc emac_1_gdsc = {
++	.gdscr = 0xba004,
++	.pd = {
++		.name = "emac_1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
+ static struct clk_regmap *gcc_sc8280xp_clocks[] = {
+ 	[GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie0_tunnel_axi_clk.clkr,
+ 	[GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK] = &gcc_aggre_noc_pcie1_tunnel_axi_clk.clkr,
+@@ -7351,6 +7367,8 @@ static struct gdsc *gcc_sc8280xp_gdscs[] = {
+ 	[USB30_MP_GDSC] = &usb30_mp_gdsc,
+ 	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+ 	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
++	[EMAC_0_GDSC] = &emac_0_gdsc,
++	[EMAC_1_GDSC] = &emac_1_gdsc,
+ };
+ 
+ static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
+diff --git a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+index cb2fb638825ca..721105ea4fad8 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
++++ b/include/dt-bindings/clock/qcom,gcc-sc8280xp.h
+@@ -492,5 +492,7 @@
+ #define USB30_MP_GDSC					9
+ #define USB30_PRIM_GDSC					10
+ #define USB30_SEC_GDSC					11
++#define EMAC_0_GDSC					12
++#define EMAC_1_GDSC					13
+ 
+ #endif
 -- 
 2.40.1
 
