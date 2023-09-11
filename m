@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1355F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC86C433C7;
-	Mon, 11 Sep 2023 14:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AE61170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051A4C433C8;
+	Mon, 11 Sep 2023 14:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442198;
-	bh=Lv1NKOg82lki41tgK0SHqljC2HbKVyyCERc2RsVr6kw=;
+	s=korg; t=1694442201;
+	bh=UDr4vRWb29uXfF0yYHc8oqIy7z4IVWLq9gO0/PNYY9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3pU75jms3vy4wkA1QOr8NyK9Kka4RcmA3WRM9WRnGKgTo8NI1dPOuvmUi+As6QCC
-	 hbdNVh2qaFo3W43zT1Mad7e+AIRQAguMnIrgmB0M8dl0V5pxyFLSuHeke877RkuZ00
-	 I/UGfRDNHbxhnrGI0QQKni6ocB71ss1/PELmz3Ko=
+	b=0vm0ljDP8vs/2jGJckIKqSErqxZ685PGQLqzQPt0yS0rPC2dn5YTkHNE7z/LMc3KQ
+	 dHsiS7B2DVJlI+KqgEBON2wcFO/dWHJEh3Yxdlrma2oLOV8/8/agXTBfcfWoNjzDEp
+	 AGjJ74SVJ1yDT5gTAVQzGYFC0VY9j4++MsoHoRUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.5 681/739] media: nxp: Fix wrong return pointer check in mxc_isi_crossbar_init()
-Date: Mon, 11 Sep 2023 15:48:00 +0200
-Message-ID: <20230911134710.120144229@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.5 682/739] Revert "scsi: qla2xxx: Fix buffer overrun"
+Date: Mon, 11 Sep 2023 15:48:01 +0200
+Message-ID: <20230911134710.147606717@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,34 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 4b60db99babad0254129ddc58e0927ffa9e93e35 upstream.
+commit 641671d97b9199f1ba35ccc2222d4b189a6a5de5 upstream.
 
-It should check 'xbar->inputs', when allocate memory for it.
+Revert due to Get PLOGI Template failed.
+This reverts commit b68710a8094fdffe8dd4f7a82c82649f479bb453.
 
 Cc: stable@vger.kernel.org
-Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230821130045.34850-9-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c |    2 +-
+ drivers/scsi/qla2xxx/qla_init.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-@@ -483,7 +483,7 @@ int mxc_isi_crossbar_init(struct mxc_isi
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -5549,7 +5549,7 @@ static void qla_get_login_template(scsi_
+ 	__be32 *q;
  
- 	xbar->inputs = kcalloc(xbar->num_sinks, sizeof(*xbar->inputs),
- 			       GFP_KERNEL);
--	if (!xbar->pads) {
-+	if (!xbar->inputs) {
- 		ret = -ENOMEM;
- 		goto err_free;
- 	}
+ 	memset(ha->init_cb, 0, ha->init_cb_size);
+-	sz = min_t(int, sizeof(struct fc_els_csp), ha->init_cb_size);
++	sz = min_t(int, sizeof(struct fc_els_flogi), ha->init_cb_size);
+ 	rval = qla24xx_get_port_login_templ(vha, ha->init_cb_dma,
+ 					    ha->init_cb, sz);
+ 	if (rval != QLA_SUCCESS) {
 
 
