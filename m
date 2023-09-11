@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E584A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B56C433C7;
-	Mon, 11 Sep 2023 13:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14751170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:53:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB49C433C7;
+	Mon, 11 Sep 2023 13:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440419;
-	bh=WDCmjdq37sYOXg9Sf1BXi57Wj3kEgHl15mTI9pjXnhs=;
+	s=korg; t=1694440422;
+	bh=u2mAFRkqG0LaPcxyd8hGcM31BgmaXykQ2wzdQ8+trCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksdWJ5rqxbvTaUtV1CRl58xVhzh6/k1MtLMcvjulumpw3vBMjCpMYmWTOAw+IemL+
-	 t/y8Y0az2C/tEdbupkRFgoFYprB3A14wS79IcNxLrHtgSW9o2fWFAGZCUcyVFAtbgY
-	 UgeEoMU9HsCWqyw9SLDHQoBjpXAyAGZ3VYGIIsEY=
+	b=BBzDtfdTjMQLLMHXVf7eAWj2U/WtZiCzlw6jVDZiJy2HaSP0OL1DKvHNAaNQQGRH9
+	 q1IylU4U8GrTC5/Ey8OevmyjQHDyQiTM0cY7PQLCqg6je36DgjIhwqiMcZgLSbpapF
+	 2IC095yl0cutVdzRke51Nx9z9AT/TJot7zPpk3LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Seth Jenkins <sethjenkins@google.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 018/739] tmpfs: verify {g,u}id mount options correctly
-Date: Mon, 11 Sep 2023 15:36:57 +0200
-Message-ID: <20230911134651.546426576@linuxfoundation.org>
+Subject: [PATCH 6.5 048/739] s390/pkey: fix PKEY_TYPE_EP11_AES handling in PKEY_VERIFYKEY2 IOCTL
+Date: Mon, 11 Sep 2023 15:37:27 +0200
+Message-ID: <20230911134652.462107024@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,96 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 0200679fc7953177941e41c2a4241d0b6c2c5de8 ]
+[ Upstream commit 745742dbca11a1b63684ec7032a81aaedcf51fb0 ]
 
-A while ago we received the following report:
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced a new PKEY_TYPE_EP11_AES type for the
+PKEY_VERIFYKEY2 IOCTL to verify keyblobs of this type. Unfortunately,
+all PKEY_VERIFYKEY2 IOCTL requests with keyblobs of this type return
+with an error (-EINVAL). Fix PKEY_TYPE_EP11_AES handling in
+PKEY_VERIFYKEY2 IOCTL, so that userspace can verify keyblobs of this
+type.
 
-"The other outstanding issue I noticed comes from the fact that
-fsconfig syscalls may occur in a different userns than that which
-called fsopen. That means that resolving the uid/gid via
-current_user_ns() can save a kuid that isn't mapped in the associated
-namespace when the filesystem is finally mounted. This means that it
-is possible for an unprivileged user to create files owned by any
-group in a tmpfs mount (since we can set the SUID bit on the tmpfs
-directory), or a tmpfs that is owned by any user, including the root
-group/user."
-
-The contract for {g,u}id mount options and {g,u}id values in general set
-from userspace has always been that they are translated according to the
-caller's idmapping. In so far, tmpfs has been doing the correct thing.
-But since tmpfs is mountable in unprivileged contexts it is also
-necessary to verify that the resulting {k,g}uid is representable in the
-namespace of the superblock to avoid such bugs as above.
-
-The new mount api's cross-namespace delegation abilities are already
-widely used. After having talked to a bunch of userspace this is the
-most faithful solution with minimal regression risks. I know of one
-users - systemd - that makes use of the new mount api in this way and
-they don't set unresolable {g,u}ids. So the regression risk is minimal.
-
-Link: https://lore.kernel.org/lkml/CALxfFW4BXhEwxR0Q5LSkg-8Vb4r2MONKCcUCVioehXQKr35eHg@mail.gmail.com
-Fixes: f32356261d44 ("vfs: Convert ramfs, shmem, tmpfs, devtmpfs, rootfs to use the new mount API")
-Reviewed-by: "Seth Forshee (DigitalOcean)" <sforshee@kernel.org>
-Reported-by: Seth Jenkins <sethjenkins@google.com>
-Message-Id: <20230801-vfs-fs_context-uidgid-v1-1-daf46a050bbf@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ drivers/s390/crypto/pkey_api.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index d963c747dabca..79a998b38ac85 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -3641,6 +3641,8 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 	unsigned long long size;
- 	char *rest;
- 	int opt;
-+	kuid_t kuid;
-+	kgid_t kgid;
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 75d7f0d5f14ef..8d6f35ccc561d 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -912,7 +912,8 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 			*ksize = kb->head.bitlen;
  
- 	opt = fs_parse(fc, shmem_fs_parameters, param, &result);
- 	if (opt < 0)
-@@ -3676,14 +3678,32 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->mode = result.uint_32 & 07777;
- 		break;
- 	case Opt_uid:
--		ctx->uid = make_kuid(current_user_ns(), result.uint_32);
--		if (!uid_valid(ctx->uid))
-+		kuid = make_kuid(current_user_ns(), result.uint_32);
-+		if (!uid_valid(kuid))
- 			goto bad_value;
+ 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
+-				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
++				    ZCRYPT_CEX7, EP11_API_V,
++				    ep11_kb_wkvp(key, keylen));
+ 		if (rc)
+ 			goto out;
+ 
+@@ -922,6 +923,30 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
+ 		*cardnr = ((struct pkey_apqn *)_apqns)->card;
+ 		*domain = ((struct pkey_apqn *)_apqns)->domain;
+ 
++	} else if (hdr->type == TOKTYPE_NON_CCA &&
++		   hdr->version == TOKVER_EP11_AES_WITH_HEADER) {
++		struct ep11kblob_header *kh = (struct ep11kblob_header *)key;
 +
-+		/*
-+		 * The requested uid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kuid_has_mapping(fc->user_ns, kuid))
-+			goto bad_value;
++		rc = ep11_check_aes_key_with_hdr(debug_info, 3,
++						 key, keylen, 1);
++		if (rc)
++			goto out;
++		if (ktype)
++			*ktype = PKEY_TYPE_EP11_AES;
++		if (ksize)
++			*ksize = kh->bitlen;
 +
-+		ctx->uid = kuid;
- 		break;
- 	case Opt_gid:
--		ctx->gid = make_kgid(current_user_ns(), result.uint_32);
--		if (!gid_valid(ctx->gid))
-+		kgid = make_kgid(current_user_ns(), result.uint_32);
-+		if (!gid_valid(kgid))
- 			goto bad_value;
++		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
++				    ZCRYPT_CEX7, EP11_API_V,
++				    ep11_kb_wkvp(key, keylen));
++		if (rc)
++			goto out;
 +
-+		/*
-+		 * The requested gid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kgid_has_mapping(fc->user_ns, kgid))
-+			goto bad_value;
++		if (flags)
++			*flags = PKEY_FLAGS_MATCH_CUR_MKVP;
 +
-+		ctx->gid = kgid;
- 		break;
- 	case Opt_huge:
- 		ctx->huge = result.uint_32;
++		*cardnr = ((struct pkey_apqn *)_apqns)->card;
++		*domain = ((struct pkey_apqn *)_apqns)->domain;
+ 	} else {
+ 		rc = -EINVAL;
+ 	}
 -- 
 2.40.1
 
