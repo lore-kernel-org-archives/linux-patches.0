@@ -1,29 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136901170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866FAC433C8;
-	Mon, 11 Sep 2023 14:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32031170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6AAC433C9;
+	Mon, 11 Sep 2023 14:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442373;
-	bh=n2HhWCeDIZuQasx8dXMEvXZZforiPUgEGvbYxwy3AzA=;
+	s=korg; t=1694442376;
+	bh=KqQijokocSJMQM+tOwVF8Yi3meHxmbmaU1h2ZJweJCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1QmK6LPUHg1ht4RVcnpNQN0iCye5JEW7KRYyUv+E991NoMrNdD2sHQFvLqFc92Ol
-	 99Gtvn8/p8chvG4H4HlpDr6Jcfdn/ZMTcCGjScU1wmBDeW+x8hFPQ0A3bP/obbCj8W
-	 eFluOjxFHHrbylteFldBBQdccuxTH/hhz54JVSNA=
+	b=gbw24jIXfo9aT2uwtKDPcObddH8H72ccGZhkSF3wLrTKqt+2wL/pUNCFDwQLSZuyb
+	 ymP8u76QubFNzOddjSEiPSe6ZN+NyXC9KkKkLJdwQJlTBoklxzTFMHNz7tam0Mm5CR
+	 J54YeYInMgbQGZzdhFah8ngM0p8qv9V3QiXOKyNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Lech Perczak <lech.perczak@camlingroup.com>,
-	Rob Herring <robh@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	kernel test robot <lkp@intel.com>,
+	Jeff Xu <jeffxu@google.com>,
+	Daniel Verkamp <dverkamp@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Hugh Dickins <hughd@google.com>,
+	Jann Horn <jannh@google.com>,
+	Jorge Lucangeli Obes <jorgelo@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 732/739] serial: sc16is7xx: fix regression with GPIO configuration
-Date: Mon, 11 Sep 2023 15:48:51 +0200
-Message-ID: <20230911134711.508791399@linuxfoundation.org>
+Subject: [PATCH 6.5 733/739] mm/memfd: sysctl: fix MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED
+Date: Mon, 11 Sep 2023 15:48:52 +0200
+Message-ID: <20230911134711.534408062@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,285 +50,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Jeff Xu <jeffxu@google.com>
 
-[ Upstream commit 0499942928341d572a42199580433c2b0725211e ]
+[ Upstream commit 72de259130229412ca49871e70ffaf17dc9fba98 ]
 
-Commit 679875d1d880 ("sc16is7xx: Separate GPIOs from modem control lines")
-and commit 21144bab4f11 ("sc16is7xx: Handle modem status lines")
-changed the function of the GPIOs pins to act as modem control
-lines without any possibility of selecting GPIO function.
+Patch series "mm/memfd: fix sysctl MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED", v2.
 
-As a consequence, applications that depends on GPIO lines configured
-by default as GPIO pins no longer work as expected.
+When sysctl vm.memfd_noexec is 2 (MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED),
+memfd_create(.., MFD_EXEC) should fail.
 
-Also, the change to select modem control lines function was done only
-for channel A of dual UART variants (752/762). This was not documented
-in the log message.
+This complies with how MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED is defined -
+"memfd_create() without MFD_NOEXEC_SEAL will be rejected"
 
-Allow to specify GPIO or modem control line function in the device
-tree, and for each of the ports (A or B).
+Thanks to Dominique Martinet <asmadeus@codewreck.org> who reported the bug.
+see [1] for context.
 
-Do so by using the new device-tree property named
-"nxp,modem-control-line-ports" (property added in separate patch).
+[1] https://lore.kernel.org/linux-mm/CABi2SkXUX_QqTQ10Yx9bBUGpN1wByOi_=gZU6WEy5a8MaQY3Jw@mail.gmail.com/T/
 
-When registering GPIO chip controller, mask-out GPIO pins declared as
-modem control lines according to this new DT property.
+This patch (of 2):
 
-Fixes: 679875d1d880 ("sc16is7xx: Separate GPIOs from modem control lines")
-Fixes: 21144bab4f11 ("sc16is7xx: Handle modem status lines")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
-Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230807214556.540627-5-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When vm.memfd_noexec is 2 (MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED),
+memfd_create(.., MFD_EXEC) should fail.
+
+This complies with how MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED is
+defined - "memfd_create() without MFD_NOEXEC_SEAL will be rejected"
+
+Link: https://lkml.kernel.org/r/20230705063315.3680666-1-jeffxu@google.com
+Link: https://lkml.kernel.org/r/20230705063315.3680666-2-jeffxu@google.com
+Fixes: 105ff5339f49 ("mm/memfd: add MFD_NOEXEC_SEAL and MFD_EXEC")
+Reported-by: Dominique Martinet <asmadeus@codewreck.org>
+Closes: https://lore.kernel.org/linux-mm/CABi2SkXUX_QqTQ10Yx9bBUGpN1wByOi_=gZU6WEy5a8MaQY3Jw@mail.gmail.com/T/
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306301351.kkbSegQW-lkp@intel.com/
+Signed-off-by: Jeff Xu <jeffxu@google.com>
+Cc: Daniel Verkamp <dverkamp@chromium.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jorge Lucangeli Obes <jorgelo@chromium.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 202e14222fad ("memfd: do not -EACCES old memfd_create() users with vm.memfd_noexec=2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 143 +++++++++++++++++++++++++--------
- 1 file changed, 108 insertions(+), 35 deletions(-)
+ mm/memfd.c | 57 +++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 33 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index f714ba3abc980..289ca7d4e5669 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -236,7 +236,8 @@
+diff --git a/mm/memfd.c b/mm/memfd.c
+index e763e76f11064..0bdbd2335af75 100644
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -268,6 +268,36 @@ long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg)
  
- /* IOControl register bits (Only 750/760) */
- #define SC16IS7XX_IOCONTROL_LATCH_BIT	(1 << 0) /* Enable input latching */
--#define SC16IS7XX_IOCONTROL_MODEM_BIT	(1 << 1) /* Enable GPIO[7:4] as modem pins */
-+#define SC16IS7XX_IOCONTROL_MODEM_A_BIT	(1 << 1) /* Enable GPIO[7:4] as modem A pins */
-+#define SC16IS7XX_IOCONTROL_MODEM_B_BIT	(1 << 2) /* Enable GPIO[3:0] as modem B pins */
- #define SC16IS7XX_IOCONTROL_SRESET_BIT	(1 << 3) /* Software Reset */
+ #define MFD_ALL_FLAGS (MFD_CLOEXEC | MFD_ALLOW_SEALING | MFD_HUGETLB | MFD_NOEXEC_SEAL | MFD_EXEC)
  
- /* EFCR register bits */
-@@ -301,12 +302,12 @@
- /* Misc definitions */
- #define SC16IS7XX_FIFO_SIZE		(64)
- #define SC16IS7XX_REG_SHIFT		2
-+#define SC16IS7XX_GPIOS_PER_BANK	4
- 
- struct sc16is7xx_devtype {
- 	char	name[10];
- 	int	nr_gpio;
- 	int	nr_uart;
--	int	has_mctrl;
- };
- 
- #define SC16IS7XX_RECONF_MD		(1 << 0)
-@@ -336,7 +337,9 @@ struct sc16is7xx_port {
- 	struct clk			*clk;
- #ifdef CONFIG_GPIOLIB
- 	struct gpio_chip		gpio;
-+	unsigned long			gpio_valid_mask;
- #endif
-+	u8				mctrl_mask;
- 	unsigned char			buf[SC16IS7XX_FIFO_SIZE];
- 	struct kthread_worker		kworker;
- 	struct task_struct		*kworker_task;
-@@ -447,35 +450,30 @@ static const struct sc16is7xx_devtype sc16is74x_devtype = {
- 	.name		= "SC16IS74X",
- 	.nr_gpio	= 0,
- 	.nr_uart	= 1,
--	.has_mctrl	= 0,
- };
- 
- static const struct sc16is7xx_devtype sc16is750_devtype = {
- 	.name		= "SC16IS750",
--	.nr_gpio	= 4,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 1,
--	.has_mctrl	= 1,
- };
- 
- static const struct sc16is7xx_devtype sc16is752_devtype = {
- 	.name		= "SC16IS752",
--	.nr_gpio	= 0,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 2,
--	.has_mctrl	= 1,
- };
- 
- static const struct sc16is7xx_devtype sc16is760_devtype = {
- 	.name		= "SC16IS760",
--	.nr_gpio	= 4,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 1,
--	.has_mctrl	= 1,
- };
- 
- static const struct sc16is7xx_devtype sc16is762_devtype = {
- 	.name		= "SC16IS762",
--	.nr_gpio	= 0,
-+	.nr_gpio	= 8,
- 	.nr_uart	= 2,
--	.has_mctrl	= 1,
- };
- 
- static bool sc16is7xx_regmap_volatile(struct device *dev, unsigned int reg)
-@@ -1357,8 +1355,98 @@ static int sc16is7xx_gpio_direction_output(struct gpio_chip *chip,
- 
- 	return 0;
- }
-+
-+static int sc16is7xx_gpio_init_valid_mask(struct gpio_chip *chip,
-+					  unsigned long *valid_mask,
-+					  unsigned int ngpios)
++static int check_sysctl_memfd_noexec(unsigned int *flags)
 +{
-+	struct sc16is7xx_port *s = gpiochip_get_data(chip);
++#ifdef CONFIG_SYSCTL
++	char comm[TASK_COMM_LEN];
++	int sysctl = MEMFD_NOEXEC_SCOPE_EXEC;
++	struct pid_namespace *ns;
 +
-+	*valid_mask = s->gpio_valid_mask;
++	ns = task_active_pid_ns(current);
++	if (ns)
++		sysctl = ns->memfd_noexec_scope;
++
++	if (!(*flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
++		if (sysctl == MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
++			*flags |= MFD_NOEXEC_SEAL;
++		else
++			*flags |= MFD_EXEC;
++	}
++
++	if (*flags & MFD_EXEC && sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED) {
++		pr_warn_once(
++			"memfd_create(): MFD_NOEXEC_SEAL is enforced, pid=%d '%s'\n",
++			task_pid_nr(current), get_task_comm(comm, current));
++
++		return -EACCES;
++	}
++#endif
 +
 +	return 0;
 +}
 +
-+static int sc16is7xx_setup_gpio_chip(struct sc16is7xx_port *s)
-+{
-+	struct device *dev = s->p[0].port.dev;
-+
-+	if (!s->devtype->nr_gpio)
-+		return 0;
-+
-+	switch (s->mctrl_mask) {
-+	case 0:
-+		s->gpio_valid_mask = GENMASK(7, 0);
-+		break;
-+	case SC16IS7XX_IOCONTROL_MODEM_A_BIT:
-+		s->gpio_valid_mask = GENMASK(3, 0);
-+		break;
-+	case SC16IS7XX_IOCONTROL_MODEM_B_BIT:
-+		s->gpio_valid_mask = GENMASK(7, 4);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	if (s->gpio_valid_mask == 0)
-+		return 0;
-+
-+	s->gpio.owner		 = THIS_MODULE;
-+	s->gpio.parent		 = dev;
-+	s->gpio.label		 = dev_name(dev);
-+	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
-+	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
-+	s->gpio.get		 = sc16is7xx_gpio_get;
-+	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
-+	s->gpio.set		 = sc16is7xx_gpio_set;
-+	s->gpio.base		 = -1;
-+	s->gpio.ngpio		 = s->devtype->nr_gpio;
-+	s->gpio.can_sleep	 = 1;
-+
-+	return gpiochip_add_data(&s->gpio, s);
-+}
- #endif
+ SYSCALL_DEFINE2(memfd_create,
+ 		const char __user *, uname,
+ 		unsigned int, flags)
+@@ -294,35 +324,14 @@ SYSCALL_DEFINE2(memfd_create,
+ 		return -EINVAL;
  
-+/*
-+ * Configure ports designated to operate as modem control lines.
-+ */
-+static int sc16is7xx_setup_mctrl_ports(struct sc16is7xx_port *s)
-+{
-+	int i;
-+	int ret;
-+	int count;
-+	u32 mctrl_port[2];
-+	struct device *dev = s->p[0].port.dev;
-+
-+	count = device_property_count_u32(dev, "nxp,modem-control-line-ports");
-+	if (count < 0 || count > ARRAY_SIZE(mctrl_port))
-+		return 0;
-+
-+	ret = device_property_read_u32_array(dev, "nxp,modem-control-line-ports",
-+					     mctrl_port, count);
-+	if (ret)
-+		return ret;
-+
-+	s->mctrl_mask = 0;
-+
-+	for (i = 0; i < count; i++) {
-+		/* Use GPIO lines as modem control lines */
-+		if (mctrl_port[i] == 0)
-+			s->mctrl_mask |= SC16IS7XX_IOCONTROL_MODEM_A_BIT;
-+		else if (mctrl_port[i] == 1)
-+			s->mctrl_mask |= SC16IS7XX_IOCONTROL_MODEM_B_BIT;
-+	}
-+
-+	if (s->mctrl_mask)
-+		regmap_update_bits(
-+			s->regmap,
-+			SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
-+			SC16IS7XX_IOCONTROL_MODEM_A_BIT |
-+			SC16IS7XX_IOCONTROL_MODEM_B_BIT, s->mctrl_mask);
-+
-+	return 0;
-+}
-+
- static const struct serial_rs485 sc16is7xx_rs485_supported = {
- 	.flags = SER_RS485_ENABLED | SER_RS485_RTS_AFTER_SEND,
- 	.delay_rts_before_send = 1,
-@@ -1471,12 +1559,6 @@ static int sc16is7xx_probe(struct device *dev,
- 				     SC16IS7XX_EFCR_RXDISABLE_BIT |
- 				     SC16IS7XX_EFCR_TXDISABLE_BIT);
- 
--		/* Use GPIO lines as modem status registers */
--		if (devtype->has_mctrl)
--			sc16is7xx_port_write(&s->p[i].port,
--					     SC16IS7XX_IOCONTROL_REG,
--					     SC16IS7XX_IOCONTROL_MODEM_BIT);
+ 	if (!(flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
+-#ifdef CONFIG_SYSCTL
+-		int sysctl = MEMFD_NOEXEC_SCOPE_EXEC;
+-		struct pid_namespace *ns;
 -
- 		/* Initialize kthread work structs */
- 		kthread_init_work(&s->p[i].tx_work, sc16is7xx_tx_proc);
- 		kthread_init_work(&s->p[i].reg_work, sc16is7xx_reg_proc);
-@@ -1514,23 +1596,14 @@ static int sc16is7xx_probe(struct device *dev,
- 				s->p[u].irda_mode = true;
+-		ns = task_active_pid_ns(current);
+-		if (ns)
+-			sysctl = ns->memfd_noexec_scope;
+-
+-		switch (sysctl) {
+-		case MEMFD_NOEXEC_SCOPE_EXEC:
+-			flags |= MFD_EXEC;
+-			break;
+-		case MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL:
+-			flags |= MFD_NOEXEC_SEAL;
+-			break;
+-		default:
+-			pr_warn_once(
+-				"memfd_create(): MFD_NOEXEC_SEAL is enforced, pid=%d '%s'\n",
+-				task_pid_nr(current), get_task_comm(comm, current));
+-			return -EINVAL;
+-		}
+-#else
+-		flags |= MFD_EXEC;
+-#endif
+ 		pr_warn_once(
+ 			"memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL, pid=%d '%s'\n",
+ 			task_pid_nr(current), get_task_comm(comm, current));
  	}
  
-+	ret = sc16is7xx_setup_mctrl_ports(s);
-+	if (ret)
-+		goto out_ports;
++	if (check_sysctl_memfd_noexec(&flags) < 0)
++		return -EACCES;
 +
- #ifdef CONFIG_GPIOLIB
--	if (devtype->nr_gpio) {
--		/* Setup GPIO cotroller */
--		s->gpio.owner		 = THIS_MODULE;
--		s->gpio.parent		 = dev;
--		s->gpio.label		 = dev_name(dev);
--		s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
--		s->gpio.get		 = sc16is7xx_gpio_get;
--		s->gpio.direction_output = sc16is7xx_gpio_direction_output;
--		s->gpio.set		 = sc16is7xx_gpio_set;
--		s->gpio.base		 = -1;
--		s->gpio.ngpio		 = devtype->nr_gpio;
--		s->gpio.can_sleep	 = 1;
--		ret = gpiochip_add_data(&s->gpio, s);
--		if (ret)
--			goto out_ports;
--	}
-+	ret = sc16is7xx_setup_gpio_chip(s);
-+	if (ret)
-+		goto out_ports;
- #endif
- 
- 	/*
-@@ -1553,7 +1626,7 @@ static int sc16is7xx_probe(struct device *dev,
- 		return 0;
- 
- #ifdef CONFIG_GPIOLIB
--	if (devtype->nr_gpio)
-+	if (s->gpio_valid_mask)
- 		gpiochip_remove(&s->gpio);
- #endif
- 
-@@ -1577,7 +1650,7 @@ static void sc16is7xx_remove(struct device *dev)
- 	int i;
- 
- #ifdef CONFIG_GPIOLIB
--	if (s->devtype->nr_gpio)
-+	if (s->gpio_valid_mask)
- 		gpiochip_remove(&s->gpio);
- #endif
- 
+ 	/* length includes terminating zero */
+ 	len = strnlen_user(uname, MFD_NAME_MAX_LEN + 1);
+ 	if (len <= 0)
 -- 
 2.40.1
 
