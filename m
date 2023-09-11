@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E2A11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:11:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D29C433C9;
-	Mon, 11 Sep 2023 15:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B367C11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:11:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDB1C433C8;
+	Mon, 11 Sep 2023 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445088;
-	bh=QfoZjAqwBJgcQYxB6e8EEd2Xyb16AjlklHmWaZOdaJ4=;
+	s=korg; t=1694445091;
+	bh=Vd06oWSu2mhjizJKKq/PMzrmG/lwZezzHaXJolkna84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FA/nwUJ7hRuDRfsmWqDTPfET9Jd8UGXjGQuBgu5vyaOPvtkaTp0sv9hpvNFHIp5Bp
-	 QklmyzrExp5gw1Nwix82uHyTY7SZqWE/ai3pXUrwxpcugp+PmkJeiBDcGAFqKLvwa/
-	 2Cku6KHeChd/9+2/SJPBAqMQOE4XmzYRByxFPFpw=
+	b=BCxfbb9sOurjA8aw8iXKDVfW1U1uZlRvuBUGg7EIPWJUni6wINQ4TI5Num97kF5XM
+	 f/P1ojN+YaoS0eMPcCnQsFNDlwvJzKPwN2XxC/jNVFhhmsNRXBG3TZ0lZkxh4ZZ0+f
+	 VmjA5RxWQHbyj81sJAqgG2sW/SO3awqTbF7iaSFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Nikita Travkin <nikita@trvn.ru>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/600] arm64: dts: qcom: sm8250: correct dynamic power coefficients
-Date: Mon, 11 Sep 2023 15:44:17 +0200
-Message-ID: <20230911134640.227920982@linuxfoundation.org>
+Subject: [PATCH 6.1 225/600] arm64: dts: qcom: msm8916-l8150: correct light sensor VDDIO supply
+Date: Mon, 11 Sep 2023 15:44:18 +0200
+Message-ID: <20230911134640.255214528@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,90 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 775a5283c25d160b2a1359018c447bc518096547 ]
+[ Upstream commit 6a541eaa6e8e5283efb993ae7a947bede8d01fa5 ]
 
-sm8250 faces the same problem with its Energy Model as sdm845. The energy
-cost of LITTLE cores is reported to be higher than medium or big cores
+liteon,ltr559 light sensor takes VDDIO, not VIO, supply:
 
-EM computes the energy with formula:
+  msm8916-longcheer-l8150.dtb: light-sensor@23: 'vio-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-energy = OPP's cost / maximum cpu capacity * utilization
-
-On v6.4-rc6 we have:
-max capacity of CPU0 = 284
-capacity of CPU0's OPP(1612800 Hz) = 253
-cost of CPU0's OPP(1612800 Hz) = 191704
-
-max capacity of CPU4 = 871
-capacity of CPU4's OPP(710400 Hz) = 255
-cost of CPU4's OPP(710400 Hz) = 343217
-
-Both OPPs have almost the same compute capacity but the estimated energy
-per unit of utilization will be estimated to:
-
-energy CPU0 = 191704 / 284 * 1 = 675
-energy CPU4 = 343217 / 871 * 1 = 394
-
-EM estimates that little CPU0 will consume 71% more than medium CPU4 for
-the same compute capacity. According to [1], little consumes 25% less than
-medium core for Coremark benchmark at those OPPs for the same duration.
-
-Set the dynamic-power-coefficient of CPU0-3 to 105 to fix the energy model
-for little CPUs.
-
-[1] https://github.com/kdrag0n/freqbench/tree/master/results/sm8250/k30s
-
-Fixes: 6aabed5526ee ("arm64: dts: qcom: sm8250: Add CPU capacities and energy model")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230615154852.130076-1-vincent.guittot@linaro.org
+Fixes: 3016af34ef8d ("arm64: dts: qcom: msm8916-longcheer-l8150: Add light and proximity sensor")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Nikita Travkin <nikita@trvn.ru>
+Link: https://lore.kernel.org/r/20230617171541.286957-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index e93955525a107..c27f88c9f7b2a 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -99,7 +99,7 @@ CPU0: cpu@0 {
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <448>;
--			dynamic-power-coefficient = <205>;
-+			dynamic-power-coefficient = <105>;
- 			next-level-cache = <&L2_0>;
- 			power-domains = <&CPU_PD0>;
- 			power-domain-names = "psci";
-@@ -123,7 +123,7 @@ CPU1: cpu@100 {
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <448>;
--			dynamic-power-coefficient = <205>;
-+			dynamic-power-coefficient = <105>;
- 			next-level-cache = <&L2_100>;
- 			power-domains = <&CPU_PD1>;
- 			power-domain-names = "psci";
-@@ -144,7 +144,7 @@ CPU2: cpu@200 {
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <448>;
--			dynamic-power-coefficient = <205>;
-+			dynamic-power-coefficient = <105>;
- 			next-level-cache = <&L2_200>;
- 			power-domains = <&CPU_PD2>;
- 			power-domain-names = "psci";
-@@ -165,7 +165,7 @@ CPU3: cpu@300 {
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <448>;
--			dynamic-power-coefficient = <205>;
-+			dynamic-power-coefficient = <105>;
- 			next-level-cache = <&L2_300>;
- 			power-domains = <&CPU_PD3>;
- 			power-domain-names = "psci";
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+index d85e7f7c0835a..75f7b4f35fe82 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+@@ -163,7 +163,7 @@ light-sensor@23 {
+ 		pinctrl-0 = <&light_int_default>;
+ 
+ 		vdd-supply = <&pm8916_l17>;
+-		vio-supply = <&pm8916_l6>;
++		vddio-supply = <&pm8916_l6>;
+ 	};
+ 
+ 	gyroscope@68 {
 -- 
 2.40.1
 
