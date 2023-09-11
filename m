@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CCAF9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809FFC433C8;
-	Mon, 11 Sep 2023 14:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2577CF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C13C433C8;
+	Mon, 11 Sep 2023 14:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442804;
-	bh=y4R94f14i5oX2WbgJxTcjLJuymBRVBvXDyruPmTfG6A=;
+	s=korg; t=1694442807;
+	bh=A95/oHiPNQFEmEbmuTNK/Jj/OkAfuPmIyCIoNbdNFlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZAwEfVYG+EX0trc7RMhoblrOo1/PLF9pfF4rSCM++GFqTaGeO0YCR2+FmZEetbTs
-	 +6EHRzW5Bg2c2XnjD4uR/gvQoS9kqDMS7zu6sYdx6GPdGabOa54P43jkTU3yI3oFJx
-	 1kLNlwpzvam8t6QVH/syW1sEOeaW3VaJMPI1W17A=
+	b=pULdEaFX0uC3hs8WCjF+vTZqpqrEN6bO3RJzAq5f1pJWNR02c0GfssFt3Bl5WEa6G
+	 iBB1s6AsYLeGCbvOC+8Av5WidND1PYYgVTf+xxst8DtY9QUvJfV4SC4UJE6A4B+1qN
+	 GgQvkFotvYUj9qHPQjruK4CgIlUsu98KXflzJTu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Yonghong Song <yhs@fb.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 116/737] selftests/resctrl: Unmount resctrl FS if child fails to run benchmark
-Date: Mon, 11 Sep 2023 15:39:35 +0200
-Message-ID: <20230911134653.745142031@linuxfoundation.org>
+Subject: [PATCH 6.4 147/737] bpf: Clear the probe_addr for uprobe
+Date: Mon, 11 Sep 2023 15:40:06 +0200
+Message-ID: <20230911134654.597494992@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -37,46 +36,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit f99e413eb54652e2436cc56d081176bc9a34cd8d ]
+[ Upstream commit 5125e757e62f6c1d5478db4c2b61a744060ddf3f ]
 
-A child calls PARENT_EXIT() when it fails to run a benchmark to kill
-the parent process. PARENT_EXIT() lacks unmount for the resctrl FS and
-the parent won't be there to unmount it either after it gets killed.
+To avoid returning uninitialized or random values when querying the file
+descriptor (fd) and accessing probe_addr, it is necessary to clear the
+variable prior to its use.
 
-Add the resctrl FS unmount also to PARENT_EXIT().
-
-Fixes: 591a6e8588fc ("selftests/resctrl: Add basic resctrl file system operations and data")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230709025630.3735-6-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrl.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/trace_events.h | 3 ++-
+ kernel/trace/bpf_trace.c     | 2 +-
+ kernel/trace/trace_uprobe.c  | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index 87e39456dee08..f455f0b7e314b 100644
---- a/tools/testing/selftests/resctrl/resctrl.h
-+++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -43,6 +43,7 @@
- 	do {					\
- 		perror(err_msg);		\
- 		kill(ppid, SIGKILL);		\
-+		umount_resctrlfs();		\
- 		exit(EXIT_FAILURE);		\
- 	} while (0)
+diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
+index c55fc453e33b5..6a41ad2ca84cc 100644
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -875,7 +875,8 @@ extern int  perf_uprobe_init(struct perf_event *event,
+ extern void perf_uprobe_destroy(struct perf_event *event);
+ extern int bpf_get_uprobe_info(const struct perf_event *event,
+ 			       u32 *fd_type, const char **filename,
+-			       u64 *probe_offset, bool perf_type_tracepoint);
++			       u64 *probe_offset, u64 *probe_addr,
++			       bool perf_type_tracepoint);
+ #endif
+ extern int  ftrace_profile_set_filter(struct perf_event *event, int event_id,
+ 				     char *filter_str);
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index a53524f3f7d82..3d8d5c383dfe5 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2391,7 +2391,7 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ #ifdef CONFIG_UPROBE_EVENTS
+ 		if (flags & TRACE_EVENT_FL_UPROBE)
+ 			err = bpf_get_uprobe_info(event, fd_type, buf,
+-						  probe_offset,
++						  probe_offset, probe_addr,
+ 						  event->attr.type == PERF_TYPE_TRACEPOINT);
+ #endif
+ 	}
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index 7b47e9a2c0102..9173fcfc03820 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -1416,7 +1416,7 @@ static void uretprobe_perf_func(struct trace_uprobe *tu, unsigned long func,
  
+ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
+ 			const char **filename, u64 *probe_offset,
+-			bool perf_type_tracepoint)
++			u64 *probe_addr, bool perf_type_tracepoint)
+ {
+ 	const char *pevent = trace_event_name(event->tp_event);
+ 	const char *group = event->tp_event->class->system;
+@@ -1433,6 +1433,7 @@ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
+ 				    : BPF_FD_TYPE_UPROBE;
+ 	*filename = tu->filename;
+ 	*probe_offset = tu->offset;
++	*probe_addr = 0;
+ 	return 0;
+ }
+ #endif	/* CONFIG_PERF_EVENTS */
 -- 
 2.40.1
 
