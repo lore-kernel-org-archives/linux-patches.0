@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AC71170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170B9C433C8;
-	Mon, 11 Sep 2023 14:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9E81170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE333C433C8;
+	Mon, 11 Sep 2023 14:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441822;
-	bh=U7IFqnIx6NroFEzTnYVVd5axkV5U5AqWSUERyXBdQD8=;
+	s=korg; t=1694441825;
+	bh=vvtmUvVj502ZIsFJKCxMcHZa9KsdzpCT+U+/LWVXV/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ca2z5ok7JvJtr/FJx3B55NxIJoWQU1K5XYDEykq1AJJo7OZTKUKMKQbAuuoykmrFn
-	 zDNKCDPzM4DA/TjGul4KMyauQG7/gz/JCqprh0VK7FJ7IlnAy8OF0FCDyfXxyaEMrx
-	 M3BHQ8UZkKUCtZaMrUKnJmXZBlrncKkBWp4whkBc=
+	b=sHKSGLYN9YIzA4ABesH0Cg6qvWRjSFxB3s2MKCEn5dLra3Mbq17uCobN6vCNq5mie
+	 jkpp2kpyGmCSh30LL4ZoB9Hk1DjKzZc4v/cHgXWxlxd55t62GYbokb4WEnPSuPo5IM
+	 cuPGGvnPdAbhdlcgd+OsahkztuuVPHJpH93C9yCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 548/739] media: ov2680: Fix regulators being left enabled on ov2680_power_on() errors
-Date: Mon, 11 Sep 2023 15:45:47 +0200
-Message-ID: <20230911134706.400381836@linuxfoundation.org>
+Subject: [PATCH 6.5 523/739] platform/x86: dell-sysman: Fix reference leak
+Date: Mon, 11 Sep 2023 15:45:22 +0200
+Message-ID: <20230911134705.722007633@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,61 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 84b4bd7e0d98166aa32fd470e672721190492eae ]
+[ Upstream commit 7295a996fdab7bf83dc3d4078fa8b139b8e0a1bf ]
 
-When the ov2680_power_on() "sensor soft reset failed" path is hit during
-probe() the WARN() about putting an enabled regulator at
-drivers/regulator/core.c:2398 triggers 3 times (once for each regulator),
-filling dmesg with backtraces.
+If a duplicate attribute is found using kset_find_obj(),
+a reference to that attribute is returned. This means
+that we need to dispose it accordingly. Use kobject_put()
+to dispose the duplicate attribute in such a case.
 
-Fix this by properly disabling the regulators on ov2680_power_on() errors.
+Compile-tested only.
 
-Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20230805053610.7106-1-W_Armin@gmx.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-sysman/sysman.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index 7fc4b39ebb371..55fc56ffad31c 100644
---- a/drivers/media/i2c/ov2680.c
-+++ b/drivers/media/i2c/ov2680.c
-@@ -475,7 +475,7 @@ static int ov2680_power_on(struct ov2680_dev *sensor)
- 		ret = ov2680_write_reg(sensor, OV2680_REG_SOFT_RESET, 0x01);
- 		if (ret != 0) {
- 			dev_err(dev, "sensor soft reset failed\n");
--			return ret;
-+			goto err_disable_regulators;
+diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
+index b68dd11cb8924..b929b4f824205 100644
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
+@@ -393,6 +393,7 @@ static int init_bios_attributes(int attr_type, const char *guid)
+ 	struct kobject *attr_name_kobj; //individual attribute names
+ 	union acpi_object *obj = NULL;
+ 	union acpi_object *elements;
++	struct kobject *duplicate;
+ 	struct kset *tmp_set;
+ 	int min_elements;
+ 
+@@ -451,9 +452,11 @@ static int init_bios_attributes(int attr_type, const char *guid)
+ 		else
+ 			tmp_set = wmi_priv.main_dir_kset;
+ 
+-		if (kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer)) {
+-			pr_debug("duplicate attribute name found - %s\n",
+-				elements[ATTR_NAME].string.pointer);
++		duplicate = kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer);
++		if (duplicate) {
++			pr_debug("Duplicate attribute name found - %s\n",
++				 elements[ATTR_NAME].string.pointer);
++			kobject_put(duplicate);
+ 			goto nextobj;
  		}
- 		usleep_range(1000, 2000);
- 	} else {
-@@ -485,7 +485,7 @@ static int ov2680_power_on(struct ov2680_dev *sensor)
  
- 	ret = clk_prepare_enable(sensor->xvclk);
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_regulators;
- 
- 	sensor->is_enabled = true;
- 
-@@ -495,6 +495,10 @@ static int ov2680_power_on(struct ov2680_dev *sensor)
- 	ov2680_stream_disable(sensor);
- 
- 	return 0;
-+
-+err_disable_regulators:
-+	regulator_bulk_disable(OV2680_NUM_SUPPLIES, sensor->supplies);
-+	return ret;
- }
- 
- static int ov2680_s_power(struct v4l2_subdev *sd, int on)
 -- 
 2.40.1
 
