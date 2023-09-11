@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F6111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78630C433C8;
-	Mon, 11 Sep 2023 14:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD1111706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:47:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CED9C433C7;
+	Mon, 11 Sep 2023 14:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443627;
-	bh=y2MQyTEskxMv10JG6aoK49Gz8rr5mhA7uDmPGMx2TZs=;
+	s=korg; t=1694443630;
+	bh=EDUm73TArN0Z9ocXzweyb2PH3RRN505/XEyq7dGmVO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mEEXqcfseFuZTLk7AOBZP3wN18qWu3ROQWWtAsUsOBSNyIykiTAmgiDxwBZemeHH
-	 C8HPDRHvm1jBezxWV8mV6Wso3X9TtSTVvQEjFZR0UwL0tGkleGVZLIKFVULXjQAyEN
-	 i4d5aMjYBquiWXkvmT6+bXFdwNoUn7D+HAY/VdvA=
+	b=JX6IXCsAI3mlO1/R7NOH+8v8N1SJoq+Z+m8IJBQCSd43dowqxfGwkux/Wy97w9thn
+	 heNBGg0FrpT1tDNmwReMKv2pGZKM8bQ5uNo0YSfiWENUGgspwWMr+ilC+8SFpCyS2L
+	 lHl79q559YdN/MayQ/2t4Y0rD/TsE0/hA3YwtTp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peng Fan <peng.fan@nxp.com>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Ye Li <ye.li@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 444/737] clk: imx: pllv4: Fix SPLL2 MULT range
-Date: Mon, 11 Sep 2023 15:45:03 +0200
-Message-ID: <20230911134702.999857520@linuxfoundation.org>
+Subject: [PATCH 6.4 445/737] clk: imx: imx8ulp: update SPLL2 type
+Date: Mon, 11 Sep 2023 15:45:04 +0200
+Message-ID: <20230911134703.029268592@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,148 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Li <ye.li@nxp.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 3f0cdb945471f1abd1cf4d172190e9c489c5052a ]
+[ Upstream commit 7653a59be8af043adc4c09473975a860e6055ff9 ]
 
 The SPLL2 on iMX8ULP is different with other frac PLLs, it can
-support VCO from 650Mhz to 1Ghz. According to RM, the MULT is
-using a range from 27 to 54, not some fixed values. If using
-current PLL implementation, some clock rate can't be supported.
+support VCO from 650Mhz to 1Ghz. Following the changes to pllv4,
+use the new type IMX_PLLV4_IMX8ULP_1GHZ.
 
-Fix the issue by adding new type for the SPLL2 and use MULT range
-to replace MULT table
-
-Fixes: 5f0601c47c33 ("clk: imx: Update the pllv4 to support imx8ulp")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Ye Li <ye.li@nxp.com>
+Fixes: c43a801a5789 ("clk: imx: Add clock driver for imx8ulp")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230625123340.4067536-1-peng.fan@oss.nxp.com
+Link: https://lore.kernel.org/r/20230625123340.4067536-2-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-pllv4.c | 46 +++++++++++++++++++++++++++++--------
- drivers/clk/imx/clk.h       |  1 +
- 2 files changed, 37 insertions(+), 10 deletions(-)
+ drivers/clk/imx/clk-imx8ulp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-pllv4.c b/drivers/clk/imx/clk-pllv4.c
-index 6e7e34571fc8d..9b136c951762c 100644
---- a/drivers/clk/imx/clk-pllv4.c
-+++ b/drivers/clk/imx/clk-pllv4.c
-@@ -44,11 +44,15 @@ struct clk_pllv4 {
- 	u32		cfg_offset;
- 	u32		num_offset;
- 	u32		denom_offset;
-+	bool		use_mult_range;
- };
+diff --git a/drivers/clk/imx/clk-imx8ulp.c b/drivers/clk/imx/clk-imx8ulp.c
+index e308c88cb801c..1b04e2fc78ad5 100644
+--- a/drivers/clk/imx/clk-imx8ulp.c
++++ b/drivers/clk/imx/clk-imx8ulp.c
+@@ -167,7 +167,7 @@ static int imx8ulp_clk_cgc1_init(struct platform_device *pdev)
+ 	clks[IMX8ULP_CLK_SPLL2_PRE_SEL]	= imx_clk_hw_mux_flags("spll2_pre_sel", base + 0x510, 0, 1, pll_pre_sels, ARRAY_SIZE(pll_pre_sels), CLK_SET_PARENT_GATE);
+ 	clks[IMX8ULP_CLK_SPLL3_PRE_SEL]	= imx_clk_hw_mux_flags("spll3_pre_sel", base + 0x610, 0, 1, pll_pre_sels, ARRAY_SIZE(pll_pre_sels), CLK_SET_PARENT_GATE);
  
- /* Valid PLL MULT Table */
- static const int pllv4_mult_table[] = {33, 27, 22, 20, 17, 16};
+-	clks[IMX8ULP_CLK_SPLL2] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP, "spll2", "spll2_pre_sel", base + 0x500);
++	clks[IMX8ULP_CLK_SPLL2] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP_1GHZ, "spll2", "spll2_pre_sel", base + 0x500);
+ 	clks[IMX8ULP_CLK_SPLL3] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP, "spll3", "spll3_pre_sel", base + 0x600);
+ 	clks[IMX8ULP_CLK_SPLL3_VCODIV] = imx_clk_hw_divider("spll3_vcodiv", "spll3", base + 0x604, 0, 6);
  
-+/* Valid PLL MULT range, (max, min) */
-+static const int pllv4_mult_range[] = {54, 27};
-+
- #define to_clk_pllv4(__hw) container_of(__hw, struct clk_pllv4, hw)
- 
- #define LOCK_TIMEOUT_US		USEC_PER_MSEC
-@@ -94,17 +98,30 @@ static unsigned long clk_pllv4_recalc_rate(struct clk_hw *hw,
- static long clk_pllv4_round_rate(struct clk_hw *hw, unsigned long rate,
- 				 unsigned long *prate)
- {
-+	struct clk_pllv4 *pll = to_clk_pllv4(hw);
- 	unsigned long parent_rate = *prate;
- 	unsigned long round_rate, i;
- 	u32 mfn, mfd = DEFAULT_MFD;
- 	bool found = false;
- 	u64 temp64;
--
--	for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
--		round_rate = parent_rate * pllv4_mult_table[i];
--		if (rate >= round_rate) {
-+	u32 mult;
-+
-+	if (pll->use_mult_range) {
-+		temp64 = (u64)rate;
-+		do_div(temp64, parent_rate);
-+		mult = temp64;
-+		if (mult >= pllv4_mult_range[1] &&
-+		    mult <= pllv4_mult_range[0]) {
-+			round_rate = parent_rate * mult;
- 			found = true;
--			break;
-+		}
-+	} else {
-+		for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
-+			round_rate = parent_rate * pllv4_mult_table[i];
-+			if (rate >= round_rate) {
-+				found = true;
-+				break;
-+			}
- 		}
- 	}
- 
-@@ -138,14 +155,20 @@ static long clk_pllv4_round_rate(struct clk_hw *hw, unsigned long rate,
- 	return round_rate + (u32)temp64;
- }
- 
--static bool clk_pllv4_is_valid_mult(unsigned int mult)
-+static bool clk_pllv4_is_valid_mult(struct clk_pllv4 *pll, unsigned int mult)
- {
- 	int i;
- 
- 	/* check if mult is in valid MULT table */
--	for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
--		if (pllv4_mult_table[i] == mult)
-+	if (pll->use_mult_range) {
-+		if (mult >= pllv4_mult_range[1] &&
-+		    mult <= pllv4_mult_range[0])
- 			return true;
-+	} else {
-+		for (i = 0; i < ARRAY_SIZE(pllv4_mult_table); i++) {
-+			if (pllv4_mult_table[i] == mult)
-+				return true;
-+		}
- 	}
- 
- 	return false;
-@@ -160,7 +183,7 @@ static int clk_pllv4_set_rate(struct clk_hw *hw, unsigned long rate,
- 
- 	mult = rate / parent_rate;
- 
--	if (!clk_pllv4_is_valid_mult(mult))
-+	if (!clk_pllv4_is_valid_mult(pll, mult))
- 		return -EINVAL;
- 
- 	if (parent_rate <= MAX_MFD)
-@@ -227,10 +250,13 @@ struct clk_hw *imx_clk_hw_pllv4(enum imx_pllv4_type type, const char *name,
- 
- 	pll->base = base;
- 
--	if (type == IMX_PLLV4_IMX8ULP) {
-+	if (type == IMX_PLLV4_IMX8ULP ||
-+	    type == IMX_PLLV4_IMX8ULP_1GHZ) {
- 		pll->cfg_offset = IMX8ULP_PLL_CFG_OFFSET;
- 		pll->num_offset = IMX8ULP_PLL_NUM_OFFSET;
- 		pll->denom_offset = IMX8ULP_PLL_DENOM_OFFSET;
-+		if (type == IMX_PLLV4_IMX8ULP_1GHZ)
-+			pll->use_mult_range = true;
- 	} else {
- 		pll->cfg_offset = PLL_CFG_OFFSET;
- 		pll->num_offset = PLL_NUM_OFFSET;
-diff --git a/drivers/clk/imx/clk.h b/drivers/clk/imx/clk.h
-index 1031468701d7f..6f752f07d125d 100644
---- a/drivers/clk/imx/clk.h
-+++ b/drivers/clk/imx/clk.h
-@@ -46,6 +46,7 @@ enum imx_pll14xx_type {
- enum imx_pllv4_type {
- 	IMX_PLLV4_IMX7ULP,
- 	IMX_PLLV4_IMX8ULP,
-+	IMX_PLLV4_IMX8ULP_1GHZ,
- };
- 
- enum imx_pfdv2_type {
 -- 
 2.40.1
 
