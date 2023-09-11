@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B551011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38020C433C8;
-	Mon, 11 Sep 2023 15:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8089411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04018C433C7;
+	Mon, 11 Sep 2023 15:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445341;
-	bh=xcGruUL41PrshpdcG5e5hbWdmpEmHR/0tt/7LTKji6w=;
+	s=korg; t=1694445344;
+	bh=98mCHClD++n33fU7vGwNcnTkw3HQfnCgf87MdFE2QQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oTxxz3w545Wdv8VIQy0HAdC1beib00jhdlUH6Wa+5SxKp56x2BFpWyetLTNb69z09
-	 rJxOieRG4l8bHOwbQt0aKKEkVP4XXtbbCTwNYDlAmAeFgjp8Q29+BFcbmvLeL4Te/g
-	 IA2/vkcI5hJe0gIFxpJAw7N13jPlFI9yxBpy2bGc=
+	b=zESjDlzh50Qx1H6MsYnN2A9S0zETcpVK0uK8wgZlj2oTp7H65Lx83MsbMbJaPuf2Z
+	 dx4zoFv4oZGMareNNiJGBETpvK9XU3q1wGJZ6ZcpaF8lNpUaArTBwgQaQ3il+umnty
+	 MyiDxnIyBZ6ypf0nnz/HyT5IWhLQ+ogfJmjTwwJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 313/600] md/raid5-cache: fix a deadlock in r5l_exit_log()
-Date: Mon, 11 Sep 2023 15:45:46 +0200
-Message-ID: <20230911134642.902260021@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Corey Hickey <bugfood-ml@fatooh.org>
+Subject: [PATCH 6.1 314/600] md/raid5-cache: fix null-ptr-deref for r5l_flush_stripe_to_raid()
+Date: Mon, 11 Sep 2023 15:45:47 +0200
+Message-ID: <20230911134642.935196371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,59 +44,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit a705b11b358dee677aad80630e7608b2d5f56691 ]
+[ Upstream commit 0d0bd28c500173bfca78aa840f8f36d261ef1765 ]
 
-Commit b13015af94cf ("md/raid5-cache: Clear conf->log after finishing
-work") introduce a new problem:
+r5l_flush_stripe_to_raid() will check if the list 'flushing_ios' is
+empty, and then submit 'flush_bio', however, r5l_log_flush_endio()
+is clearing the list first and then clear the bio, which will cause
+null-ptr-deref:
 
-// caller hold reconfig_mutex
-r5l_exit_log
- flush_work(&log->disable_writeback_work)
-			r5c_disable_writeback_async
-			 wait_event
-			  /*
-			   * conf->log is not NULL, and mddev_trylock()
-			   * will fail, wait_event() can never pass.
-			   */
- conf->log = NULL
+T1: submit flush io
+raid5d
+ handle_active_stripes
+  r5l_flush_stripe_to_raid
+   // list is empty
+   // add 'io_end_ios' to the list
+   bio_init
+   submit_bio
+   // io1
 
-Fix this problem by setting 'config->log' to NULL before wake_up() as it
-used to be, so that wait_event() from r5c_disable_writeback_async() can
-exist. In the meantime, move forward md_unregister_thread() so that
-null-ptr-deref this commit fixed can still be fixed.
+T2: io1 is done
+r5l_log_flush_endio
+ list_splice_tail_init
+ // clear the list
+			T3: submit new flush io
+			...
+			r5l_flush_stripe_to_raid
+			 // list is empty
+			 // add 'io_end_ios' to the list
+			 bio_init
+ bio_uninit
+ // clear bio->bi_blkg
+			 submit_bio
+			 // null-ptr-deref
 
-Fixes: b13015af94cf ("md/raid5-cache: Clear conf->log after finishing work")
+Fix this problem by clearing bio before clearing the list in
+r5l_log_flush_endio().
+
+Fixes: 0dd00cba99c3 ("raid5-cache: fully initialize flush_bio when needed")
+Reported-and-tested-by: Corey Hickey <bugfood-ml@fatooh.org>
+Closes: https://lore.kernel.org/all/cddd7213-3dfd-4ab7-a3ac-edd54d74a626@fatooh.org/
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230708091727.1417894-1-yukuai1@huaweicloud.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5-cache.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/raid5-cache.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
-index 832d8566e1656..477e3ae17545a 100644
+index 477e3ae17545a..eb66d0bfe39d2 100644
 --- a/drivers/md/raid5-cache.c
 +++ b/drivers/md/raid5-cache.c
-@@ -3166,12 +3166,15 @@ void r5l_exit_log(struct r5conf *conf)
- {
- 	struct r5l_log *log = conf->log;
+@@ -1260,14 +1260,13 @@ static void r5l_log_flush_endio(struct bio *bio)
  
--	/* Ensure disable_writeback_work wakes up and exits */
--	wake_up(&conf->mddev->sb_wait);
--	flush_work(&log->disable_writeback_work);
- 	md_unregister_thread(&log->reclaim_thread);
+ 	if (bio->bi_status)
+ 		md_error(log->rdev->mddev, log->rdev);
++	bio_uninit(bio);
  
-+	/*
-+	 * 'reconfig_mutex' is held by caller, set 'confg->log' to NULL to
-+	 * ensure disable_writeback_work wakes up and exits.
-+	 */
- 	conf->log = NULL;
-+	wake_up(&conf->mddev->sb_wait);
-+	flush_work(&log->disable_writeback_work);
+ 	spin_lock_irqsave(&log->io_list_lock, flags);
+ 	list_for_each_entry(io, &log->flushing_ios, log_sibling)
+ 		r5l_io_run_stripes(io);
+ 	list_splice_tail_init(&log->flushing_ios, &log->finished_ios);
+ 	spin_unlock_irqrestore(&log->io_list_lock, flags);
+-
+-	bio_uninit(bio);
+ }
  
- 	mempool_exit(&log->meta_pool);
- 	bioset_exit(&log->bs);
+ /*
 -- 
 2.40.1
 
