@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363FB11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCE0C433C7;
-	Mon, 11 Sep 2023 15:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB44C11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4C1C433CA;
+	Mon, 11 Sep 2023 15:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444887;
-	bh=1/BGC3fzy5QMs9ZMNP0G4fCVxzZ5egtEATH38cCiP4Y=;
+	s=korg; t=1694444889;
+	bh=cq7xmEyF04rD/7f8/ofxqp6viSAx7JPbygOXIq1l5GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elqjmeRBlKe3LEs1BB0pkcHIozjcTm6GPXrOtKpylhAp4dJbXQJlCpdPE/6puY2P+
-	 YfZ8ZHsVA6/ZGSn65kUUF/Ai/JOTl//M27qlonuGHGR9udmA7mc2PEeBOeFPfLQQQU
-	 gvl20DeqFI3KhjBdH8o4vodRNLfNlMBZuN+WkULk=
+	b=xqlLf/FgI3Y1SEytOtP2L2JIwwrRWUiArPKCPlymHmG6fBTLtE+ppmnlnP1QFWPtW
+	 HqxfTmHe4p1RHJA/KhCVRYJDsCleF72ISkbmzR+EnWFhYzRRsCzOF3JkXup6X8fPMS
+	 eE0piZmJkHDsdV/gB0GMV9FR16WuVpdXI6U1pe6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/600] s390/pkey: fix/harmonize internal keyblob headers
-Date: Mon, 11 Sep 2023 15:42:37 +0200
-Message-ID: <20230911134637.275553262@linuxfoundation.org>
+Subject: [PATCH 6.1 151/600] udp: re-score reuseport groups when connected sockets are present
+Date: Mon, 11 Sep 2023 15:43:04 +0200
+Message-ID: <20230911134638.067366653@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,87 +41,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit 37a08f010b7c423b5e4c9ed3b187d21166553007 ]
+[ Upstream commit f0ea27e7bfe1c34e1f451a63eb68faa1d4c3a86d ]
 
-Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
-private keys")' introduced PKEY_TYPE_EP11_AES as a supplement to
-PKEY_TYPE_EP11. All pkeys have an internal header/payload structure,
-which is opaque to the userspace. The header structures for
-PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES are nearly identical and there
-is no reason, why different structures are used. In preparation to fix
-the keyversion handling in the broken PKEY IOCTLs, the same header
-structure is used for PKEY_TYPE_EP11 and PKEY_TYPE_EP11_AES. This
-reduces the number of different code paths and increases the
-readability.
+Contrary to TCP, UDP reuseport groups can contain TCP_ESTABLISHED
+sockets. To support these properly we remember whether a group has
+a connected socket and skip the fast reuseport early-return. In
+effect we continue scoring all reuseport sockets and then choose the
+one with the highest score.
 
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+The current code fails to re-calculate the score for the result of
+lookup_reuseport. According to Kuniyuki Iwashima:
+
+    1) SO_INCOMING_CPU is set
+       -> selected sk might have +1 score
+
+    2) BPF prog returns ESTABLISHED and/or SO_INCOMING_CPU sk
+       -> selected sk will have more than 8
+
+  Using the old score could trigger more lookups depending on the
+  order that sockets are created.
+
+    sk -> sk (SO_INCOMING_CPU) -> sk (ESTABLISHED)
+    |     |
+    `-> select the next SO_INCOMING_CPU sk
+          |
+          `-> select itself (We should save this lookup)
+
+Fixes: efc6b6f6c311 ("udp: Improve load balancing for SO_REUSEPORT.")
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-1-7021b683cdae@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c        | 2 +-
- drivers/s390/crypto/zcrypt_ep11misc.c | 4 ++--
- drivers/s390/crypto/zcrypt_ep11misc.h | 9 +--------
- 3 files changed, 4 insertions(+), 11 deletions(-)
+ net/ipv4/udp.c | 20 +++++++++++++++-----
+ net/ipv6/udp.c | 19 ++++++++++++++-----
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index a8def50c149bd..e650df3fe7ccb 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -747,7 +747,7 @@ static int pkey_verifykey2(const u8 *key, size_t keylen,
- 		if (ktype)
- 			*ktype = PKEY_TYPE_EP11;
- 		if (ksize)
--			*ksize = kb->head.keybitlen;
-+			*ksize = kb->head.bitlen;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 956d6797c76f3..42c1f7d9a980a 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -445,14 +445,24 @@ static struct sock *udp4_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
- 		rc = ep11_findcard2(&_apqns, &_nr_apqns, *cardnr, *domain,
- 				    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
-index b1c29017be5bc..497de7faa2fc5 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.c
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.c
-@@ -787,7 +787,7 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	kb->head.type = TOKTYPE_NON_CCA;
- 	kb->head.len = rep_pl->data_len;
- 	kb->head.version = TOKVER_EP11_AES;
--	kb->head.keybitlen = keybitsize;
-+	kb->head.bitlen = keybitsize;
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(result, net, saddr, sport,
++						daddr, hnum, dif, sdif);
++
+ 		}
+ 	}
+ 	return result;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 27348172b25b9..64b36c2ba774a 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -193,14 +193,23 @@ static struct sock *udp6_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
- out:
- 	kfree(req);
-@@ -1055,7 +1055,7 @@ static int ep11_unwrapkey(u16 card, u16 domain,
- 	kb->head.type = TOKTYPE_NON_CCA;
- 	kb->head.len = rep_pl->data_len;
- 	kb->head.version = TOKVER_EP11_AES;
--	kb->head.keybitlen = keybitsize;
-+	kb->head.bitlen = keybitsize;
- 
- out:
- 	kfree(req);
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
-index 07445041869fe..912b3918c10a1 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.h
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.h
-@@ -29,14 +29,7 @@ struct ep11keyblob {
- 	union {
- 		u8 session[32];
- 		/* only used for PKEY_TYPE_EP11: */
--		struct {
--			u8  type;      /* 0x00 (TOKTYPE_NON_CCA) */
--			u8  res0;      /* unused */
--			u16 len;       /* total length in bytes of this blob */
--			u8  version;   /* 0x03 (TOKVER_EP11_AES) */
--			u8  res1;      /* unused */
--			u16 keybitlen; /* clear key bit len, 0 for unknown */
--		} head;
-+		struct ep11kblob_header head;
- 	};
- 	u8  wkvp[16];  /* wrapping key verification pattern */
- 	u64 attr;      /* boolean key attributes */
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(sk, net, saddr, sport,
++						daddr, hnum, dif, sdif);
+ 		}
+ 	}
+ 	return result;
 -- 
 2.40.1
 
