@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1508D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0BEC433C7;
-	Mon, 11 Sep 2023 13:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CEE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51518C433C7;
+	Mon, 11 Sep 2023 13:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440607;
-	bh=QxihB0PtO90yK4bvQasqjfHyOKxnR3iGBcmjrGourCE=;
+	s=korg; t=1694440610;
+	bh=/4rRWVIGwnP8zHtrAE72AUtMqX+eJ9mewmhJBIsmY+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfPZIO9QJa8U8Leskgs7lVv0zFBApNmBu85Ih/aPX9oSnansCNq29513Z0sLZzAwD
-	 br/msPV4hJO1q3HAGKiXmeSambaK3BecHVkOBEIrlDqN620QDVwzBBlf2c2zJxjAlC
-	 dic+Vp/0YhFtCd98jpuVj31uTwwjJwYdsw+cL+9I=
+	b=RF4+aty5Cq9VwGf3fip9HqjbjQCXp6tFmzLAiMubylm+FZJJVq6shyYbKluo3zFpN
+	 SHu80+Whjs5xpFu4NqE27SsQXwfU2WdBavW3JycCWtUTBwKU4uRX3dlTb82D/+Plzl
+	 Vi6yaWnt2vF0GzFqIBzhRscUeBqS9fudiQuhlUlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 122/739] Bluetooth: hci_conn: Fix not allowing valid CIS ID
-Date: Mon, 11 Sep 2023 15:38:41 +0200
-Message-ID: <20230911134654.503221546@linuxfoundation.org>
+Subject: [PATCH 6.5 123/739] Bluetooth: hci_conn: Fix hci_le_set_cig_params
+Date: Mon, 11 Sep 2023 15:38:42 +0200
+Message-ID: <20230911134654.530484101@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,38 +41,233 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit f2f84a70f9d0c9a3263194ca9d82e7bc6027d356 ]
+[ Upstream commit a091289218202bc09d9b9caa8afcde1018584aec ]
 
-Only the number of CIS shall be limited to 0x1f, the CIS ID in the
-other hand is up to 0xef.
+When running with concurrent task only one CIS was being assigned so
+this attempts to rework the way the PDU is constructed so it is handled
+later at the callback instead of in place.
 
 Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_conn.c | 157 ++++++++++++++++-----------------------
+ 1 file changed, 63 insertions(+), 94 deletions(-)
 
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 4b5223e62141c..b338e2585144e 100644
+index b338e2585144e..a746f01659621 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -1862,9 +1862,12 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
- 		cis_add(&data, qos);
- 	}
+@@ -791,7 +791,6 @@ struct iso_list_data {
+ 		u16 sync_handle;
+ 	};
+ 	int count;
+-	struct iso_cig_params pdu;
+ 	bool big_term;
+ };
  
--	/* Reprogram all CIS(s) with the same CIG */
--	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0x11;
--	     data.cis++) {
+@@ -1719,42 +1718,6 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	return sco;
+ }
+ 
+-static void cis_add(struct iso_list_data *d, struct bt_iso_qos *qos)
+-{
+-	struct hci_cis_params *cis = &d->pdu.cis[d->pdu.cp.num_cis];
+-
+-	cis->cis_id = qos->ucast.cis;
+-	cis->c_sdu  = cpu_to_le16(qos->ucast.out.sdu);
+-	cis->p_sdu  = cpu_to_le16(qos->ucast.in.sdu);
+-	cis->c_phy  = qos->ucast.out.phy ? qos->ucast.out.phy : qos->ucast.in.phy;
+-	cis->p_phy  = qos->ucast.in.phy ? qos->ucast.in.phy : qos->ucast.out.phy;
+-	cis->c_rtn  = qos->ucast.out.rtn;
+-	cis->p_rtn  = qos->ucast.in.rtn;
+-
+-	d->pdu.cp.num_cis++;
+-}
+-
+-static void cis_list(struct hci_conn *conn, void *data)
+-{
+-	struct iso_list_data *d = data;
+-
+-	/* Skip if broadcast/ANY address */
+-	if (!bacmp(&conn->dst, BDADDR_ANY))
+-		return;
+-
+-	if (d->cig != conn->iso_qos.ucast.cig || d->cis == BT_ISO_QOS_CIS_UNSET ||
+-	    d->cis != conn->iso_qos.ucast.cis)
+-		return;
+-
+-	d->count++;
+-
+-	if (d->pdu.cp.cig_id == BT_ISO_QOS_CIG_UNSET ||
+-	    d->count >= ARRAY_SIZE(d->pdu.cis))
+-		return;
+-
+-	cis_add(d, &conn->iso_qos);
+-}
+-
+ static int hci_le_create_big(struct hci_conn *conn, struct bt_iso_qos *qos)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+@@ -1787,25 +1750,62 @@ static int hci_le_create_big(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	return hci_send_cmd(hdev, HCI_OP_LE_CREATE_BIG, sizeof(cp), &cp);
+ }
+ 
+-static void set_cig_params_complete(struct hci_dev *hdev, void *data, int err)
++static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+ {
+-	struct iso_cig_params *pdu = data;
++	u8 cig_id = PTR_ERR(data);
++	struct hci_conn *conn;
++	struct bt_iso_qos *qos;
++	struct iso_cig_params pdu;
++	u8 cis_id;
+ 
+-	bt_dev_dbg(hdev, "");
++	conn = hci_conn_hash_lookup_cig(hdev, cig_id);
++	if (!conn)
++		return 0;
+ 
+-	if (err)
+-		bt_dev_err(hdev, "Unable to set CIG parameters: %d", err);
++	memset(&pdu, 0, sizeof(pdu));
+ 
+-	kfree(pdu);
+-}
++	qos = &conn->iso_qos;
++	pdu.cp.cig_id = cig_id;
++	hci_cpu_to_le24(qos->ucast.out.interval, pdu.cp.c_interval);
++	hci_cpu_to_le24(qos->ucast.in.interval, pdu.cp.p_interval);
++	pdu.cp.sca = qos->ucast.sca;
++	pdu.cp.packing = qos->ucast.packing;
++	pdu.cp.framing = qos->ucast.framing;
++	pdu.cp.c_latency = cpu_to_le16(qos->ucast.out.latency);
++	pdu.cp.p_latency = cpu_to_le16(qos->ucast.in.latency);
+ 
+-static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+-{
+-	struct iso_cig_params *pdu = data;
+-	u32 plen;
 +	/* Reprogram all CIS(s) with the same CIG, valid range are:
 +	 * num_cis: 0x00 to 0x1F
 +	 * cis_id: 0x00 to 0xEF
 +	 */
-+	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0xf0 &&
-+	     data.pdu.cp.num_cis < ARRAY_SIZE(data.pdu.cis); data.cis++) {
- 		data.count = 0;
++	for (cis_id = 0x00; cis_id < 0xf0 &&
++	     pdu.cp.num_cis < ARRAY_SIZE(pdu.cis); cis_id++) {
++		struct hci_cis_params *cis;
++
++		conn = hci_conn_hash_lookup_cis(hdev, NULL, 0, cig_id, cis_id);
++		if (!conn)
++			continue;
  
- 		hci_conn_hash_list_state(hdev, cis_list, ISO_LINK, BT_BOUND,
+-	plen = sizeof(pdu->cp) + pdu->cp.num_cis * sizeof(pdu->cis[0]);
+-	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_CIG_PARAMS, plen, pdu,
++		qos = &conn->iso_qos;
++
++		cis = &pdu.cis[pdu.cp.num_cis++];
++		cis->cis_id = cis_id;
++		cis->c_sdu  = cpu_to_le16(conn->iso_qos.ucast.out.sdu);
++		cis->p_sdu  = cpu_to_le16(conn->iso_qos.ucast.in.sdu);
++		cis->c_phy  = qos->ucast.out.phy ? qos->ucast.out.phy :
++			      qos->ucast.in.phy;
++		cis->p_phy  = qos->ucast.in.phy ? qos->ucast.in.phy :
++			      qos->ucast.out.phy;
++		cis->c_rtn  = qos->ucast.out.rtn;
++		cis->p_rtn  = qos->ucast.in.rtn;
++	}
++
++	if (!pdu.cp.num_cis)
++		return 0;
++
++	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_CIG_PARAMS,
++				     sizeof(pdu.cp) +
++				     pdu.cp.num_cis * sizeof(pdu.cis[0]), &pdu,
+ 				     HCI_CMD_TIMEOUT);
+ }
+ 
+@@ -1813,7 +1813,6 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 	struct iso_list_data data;
+-	struct iso_cig_params *pdu;
+ 
+ 	memset(&data, 0, sizeof(data));
+ 
+@@ -1840,61 +1839,31 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 		qos->ucast.cig = data.cig;
+ 	}
+ 
+-	data.pdu.cp.cig_id = qos->ucast.cig;
+-	hci_cpu_to_le24(qos->ucast.out.interval, data.pdu.cp.c_interval);
+-	hci_cpu_to_le24(qos->ucast.in.interval, data.pdu.cp.p_interval);
+-	data.pdu.cp.sca = qos->ucast.sca;
+-	data.pdu.cp.packing = qos->ucast.packing;
+-	data.pdu.cp.framing = qos->ucast.framing;
+-	data.pdu.cp.c_latency = cpu_to_le16(qos->ucast.out.latency);
+-	data.pdu.cp.p_latency = cpu_to_le16(qos->ucast.in.latency);
+-
+ 	if (qos->ucast.cis != BT_ISO_QOS_CIS_UNSET) {
+-		data.count = 0;
+-		data.cig = qos->ucast.cig;
+-		data.cis = qos->ucast.cis;
+-
+-		hci_conn_hash_list_state(hdev, cis_list, ISO_LINK, BT_BOUND,
+-					 &data);
+-		if (data.count)
++		if (hci_conn_hash_lookup_cis(hdev, NULL, 0, qos->ucast.cig,
++					     qos->ucast.cis))
+ 			return false;
+-
+-		cis_add(&data, qos);
++		goto done;
+ 	}
+ 
+-	/* Reprogram all CIS(s) with the same CIG, valid range are:
+-	 * num_cis: 0x00 to 0x1F
+-	 * cis_id: 0x00 to 0xEF
+-	 */
+-	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0xf0 &&
+-	     data.pdu.cp.num_cis < ARRAY_SIZE(data.pdu.cis); data.cis++) {
+-		data.count = 0;
+-
+-		hci_conn_hash_list_state(hdev, cis_list, ISO_LINK, BT_BOUND,
+-					 &data);
+-		if (data.count)
+-			continue;
+-
+-		/* Allocate a CIS if not set */
+-		if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET) {
++	/* Allocate first available CIS if not set */
++	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0xf0;
++	     data.cis++) {
++		if (!hci_conn_hash_lookup_cis(hdev, NULL, 0, data.cig,
++					      data.cis)) {
+ 			/* Update CIS */
+ 			qos->ucast.cis = data.cis;
+-			cis_add(&data, qos);
++			break;
+ 		}
+ 	}
+ 
+-	if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET || !data.pdu.cp.num_cis)
++	if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET)
+ 		return false;
+ 
+-	pdu = kmemdup(&data.pdu, sizeof(*pdu), GFP_KERNEL);
+-	if (!pdu)
+-		return false;
+-
+-	if (hci_cmd_sync_queue(hdev, set_cig_params_sync, pdu,
+-			       set_cig_params_complete) < 0) {
+-		kfree(pdu);
++done:
++	if (hci_cmd_sync_queue(hdev, set_cig_params_sync,
++			       ERR_PTR(qos->ucast.cig), NULL) < 0)
+ 		return false;
+-	}
+ 
+ 	return true;
+ }
 -- 
 2.40.1
 
