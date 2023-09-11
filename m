@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC211170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7270EC433C8;
-	Mon, 11 Sep 2023 13:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF3B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0C2C433C7;
+	Mon, 11 Sep 2023 13:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440497;
-	bh=l32feCs0tOIgd0TqieEIWloSiHimX1krwg5PeF9faN0=;
+	s=korg; t=1694440500;
+	bh=hdtwdbRmcqygL+SH95YZLjwd1R+zyFt8MFJ8Kfy9QUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2khTYU/xQO/jFP7NqUYK2nOlpbXNYPyVwSsoOh8rkQNriJBUoExYwE1IlkprnrjUV
-	 ctACmUsFDdvTxpxvMBbh0E6+u35JY0/frHnyHCMGBEps7gCTRbvIVyXwKvQF8rCdJE
-	 dG/XND3WrAUuXOy4L2LG2RAIQivnKzUOuLoXaiMM=
+	b=Fu3AFnV/zsb/meADu32cTl7s/y92w732ACJaQF7uZdrdGX7pnoQfCvzik7rBfh0lc
+	 jSH7/8CuLqA1SjyiDhJm6lVT6OwUL32c5WRG+kTxOj6k/7T7mjs3QOk4CApAPus9hV
+	 XSAinABfuPVwkXpZbgrdW9HrOcuD0/UdqSLu39C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Meng Li <li.meng@amd.com>,
-	Wyes Karny <wyes.karny@amd.com>,
-	Swapnil Sapkal <swapnil.sapkal@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 056/739] cpufreq: amd-pstate-ut: Fix kernel panic when loading the driver
-Date: Mon, 11 Sep 2023 15:37:35 +0200
-Message-ID: <20230911134652.681425005@linuxfoundation.org>
+Subject: [PATCH 6.5 047/739] s390/pkey: fix PKEY_TYPE_EP11_AES handling in PKEY_KBLOB2PROTK[23]
+Date: Mon, 11 Sep 2023 15:37:26 +0200
+Message-ID: <20230911134652.435140561@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,170 +41,349 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Swapnil Sapkal <swapnil.sapkal@amd.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 60dd283804479c4a52f995b713f448e2cd65b8c8 ]
+[ Upstream commit d1fdfb0b2f339cf882c0b5431084a1950b8b73b9 ]
 
-After loading the amd-pstate-ut driver, amd_pstate_ut_check_perf()
-and amd_pstate_ut_check_freq() use cpufreq_cpu_get() to get the policy
-of the CPU and mark it as busy.
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced a new PKEY_TYPE_EP11_AES type for the
+PKEY_KBLOB2PROTK2 and a new IOCTL, PKEY_KBLOB2PROTK3, which both
+allows userspace to convert opaque securekey blobs of this type into
+protectedkey blobs. Unfortunately, all PKEY_KBLOB2PROTK2 and
+PKEY_KBLOB2PROTK3 IOCTL requests with this keyblobs of this type
+return with an error (-EINVAL). Fix PKEY_TYPE_EP11_AES handling in
+PKEY_KBLOB2PROTK2 and PKEY_KBLOB2PROTK3 IOCTLs, so that userspace can
+convert PKEY_TYPE_EP11_AES keyblobs into protectedkey blobs.
 
-In these functions, cpufreq_cpu_put() should be used to release the
-policy, but it is not, so any other entity trying to access the policy
-is blocked indefinitely.
+Add a helper function to decode the start and size of the internal
+header as well as start and size of the keyblob payload of an existing
+keyblob. Also validate the length of header and keyblob, as well as
+the keyblob magic.
 
-One such scenario is when amd_pstate mode is changed, leading to the
-following splat:
+Introduce another helper function, which handles a raw key wrapping
+request and do the keyblob decoding in the calling function. Remove
+all other header-related calculations.
 
-[ 1332.103727] INFO: task bash:2929 blocked for more than 120 seconds.
-[ 1332.110001]       Not tainted 6.5.0-rc2-amd-pstate-ut #5
-[ 1332.115315] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 1332.123140] task:bash            state:D stack:0     pid:2929  ppid:2873   flags:0x00004006
-[ 1332.123143] Call Trace:
-[ 1332.123145]  <TASK>
-[ 1332.123148]  __schedule+0x3c1/0x16a0
-[ 1332.123154]  ? _raw_read_lock_irqsave+0x2d/0x70
-[ 1332.123157]  schedule+0x6f/0x110
-[ 1332.123160]  schedule_timeout+0x14f/0x160
-[ 1332.123162]  ? preempt_count_add+0x86/0xd0
-[ 1332.123165]  __wait_for_common+0x92/0x190
-[ 1332.123168]  ? __pfx_schedule_timeout+0x10/0x10
-[ 1332.123170]  wait_for_completion+0x28/0x30
-[ 1332.123173]  cpufreq_policy_put_kobj+0x4d/0x90
-[ 1332.123177]  cpufreq_policy_free+0x157/0x1d0
-[ 1332.123178]  ? preempt_count_add+0x58/0xd0
-[ 1332.123180]  cpufreq_remove_dev+0xb6/0x100
-[ 1332.123182]  subsys_interface_unregister+0x114/0x120
-[ 1332.123185]  ? preempt_count_add+0x58/0xd0
-[ 1332.123187]  ? __pfx_amd_pstate_change_driver_mode+0x10/0x10
-[ 1332.123190]  cpufreq_unregister_driver+0x3b/0xd0
-[ 1332.123192]  amd_pstate_change_driver_mode+0x1e/0x50
-[ 1332.123194]  store_status+0xe9/0x180
-[ 1332.123197]  dev_attr_store+0x1b/0x30
-[ 1332.123199]  sysfs_kf_write+0x42/0x50
-[ 1332.123202]  kernfs_fop_write_iter+0x143/0x1d0
-[ 1332.123204]  vfs_write+0x2df/0x400
-[ 1332.123208]  ksys_write+0x6b/0xf0
-[ 1332.123210]  __x64_sys_write+0x1d/0x30
-[ 1332.123213]  do_syscall_64+0x60/0x90
-[ 1332.123216]  ? fpregs_assert_state_consistent+0x2e/0x50
-[ 1332.123219]  ? exit_to_user_mode_prepare+0x49/0x1a0
-[ 1332.123223]  ? irqentry_exit_to_user_mode+0xd/0x20
-[ 1332.123225]  ? irqentry_exit+0x3f/0x50
-[ 1332.123226]  ? exc_page_fault+0x8e/0x190
-[ 1332.123228]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[ 1332.123232] RIP: 0033:0x7fa74c514a37
-[ 1332.123234] RSP: 002b:00007ffe31dd0788 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-[ 1332.123238] RAX: ffffffffffffffda RBX: 0000000000000008 RCX: 00007fa74c514a37
-[ 1332.123239] RDX: 0000000000000008 RSI: 000055e27c447aa0 RDI: 0000000000000001
-[ 1332.123241] RBP: 000055e27c447aa0 R08: 00007fa74c5d1460 R09: 000000007fffffff
-[ 1332.123242] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000008
-[ 1332.123244] R13: 00007fa74c61a780 R14: 00007fa74c616600 R15: 00007fa74c615a00
-[ 1332.123247]  </TASK>
-
-Fix this by calling cpufreq_cpu_put() wherever necessary.
-
-Fixes: 14eb1c96e3a3 ("cpufreq: amd-pstate: Add test module for amd-pstate driver")
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Meng Li <li.meng@amd.com>
-Reviewed-by: Wyes Karny <wyes.karny@amd.com>
-Suggested-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate-ut.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/s390/crypto/pkey_api.c        |  33 +++----
+ drivers/s390/crypto/zcrypt_ep11misc.c | 123 ++++++++++++++++----------
+ drivers/s390/crypto/zcrypt_ep11misc.h |   6 ++
+ 3 files changed, 100 insertions(+), 62 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
-index cf07ee77d3ccf..502d494499ae8 100644
---- a/drivers/cpufreq/amd-pstate-ut.c
-+++ b/drivers/cpufreq/amd-pstate-ut.c
-@@ -140,7 +140,7 @@ static void amd_pstate_ut_check_perf(u32 index)
- 			if (ret) {
- 				amd_pstate_ut_cases[index].result = AMD_PSTATE_UT_RESULT_FAIL;
- 				pr_err("%s cppc_get_perf_caps ret=%d error!\n", __func__, ret);
--				return;
-+				goto skip_test;
- 			}
- 
- 			nominal_perf = cppc_perf.nominal_perf;
-@@ -151,7 +151,7 @@ static void amd_pstate_ut_check_perf(u32 index)
- 			if (ret) {
- 				amd_pstate_ut_cases[index].result = AMD_PSTATE_UT_RESULT_FAIL;
- 				pr_err("%s read CPPC_CAP1 ret=%d error!\n", __func__, ret);
--				return;
-+				goto skip_test;
- 			}
- 
- 			nominal_perf = AMD_CPPC_NOMINAL_PERF(cap1);
-@@ -169,7 +169,7 @@ static void amd_pstate_ut_check_perf(u32 index)
- 				nominal_perf, cpudata->nominal_perf,
- 				lowest_nonlinear_perf, cpudata->lowest_nonlinear_perf,
- 				lowest_perf, cpudata->lowest_perf);
--			return;
-+			goto skip_test;
- 		}
- 
- 		if (!((highest_perf >= nominal_perf) &&
-@@ -180,11 +180,15 @@ static void amd_pstate_ut_check_perf(u32 index)
- 			pr_err("%s cpu%d highest=%d >= nominal=%d > lowest_nonlinear=%d > lowest=%d > 0, the formula is incorrect!\n",
- 				__func__, cpu, highest_perf, nominal_perf,
- 				lowest_nonlinear_perf, lowest_perf);
--			return;
-+			goto skip_test;
- 		}
-+		cpufreq_cpu_put(policy);
- 	}
- 
- 	amd_pstate_ut_cases[index].result = AMD_PSTATE_UT_RESULT_PASS;
-+	return;
-+skip_test:
-+	cpufreq_cpu_put(policy);
- }
- 
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 7543757c82e2e..75d7f0d5f14ef 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -288,10 +288,9 @@ static int pkey_clr2ep11key(const u8 *clrkey, size_t clrkeylen,
  /*
-@@ -212,14 +216,14 @@ static void amd_pstate_ut_check_freq(u32 index)
- 			pr_err("%s cpu%d max=%d >= nominal=%d > lowest_nonlinear=%d > min=%d > 0, the formula is incorrect!\n",
- 				__func__, cpu, cpudata->max_freq, cpudata->nominal_freq,
- 				cpudata->lowest_nonlinear_freq, cpudata->min_freq);
--			return;
-+			goto skip_test;
- 		}
+  * Find card and transform EP11 secure key into protected key.
+  */
+-static int pkey_ep11key2pkey(const u8 *key, u8 *protkey,
+-			     u32 *protkeylen, u32 *protkeytype)
++static int pkey_ep11key2pkey(const u8 *key, size_t keylen,
++			     u8 *protkey, u32 *protkeylen, u32 *protkeytype)
+ {
+-	struct ep11keyblob *kb = (struct ep11keyblob *)key;
+ 	u32 nr_apqns, *apqns = NULL;
+ 	u16 card, dom;
+ 	int i, rc;
+@@ -300,7 +299,8 @@ static int pkey_ep11key2pkey(const u8 *key, u8 *protkey,
  
- 		if (cpudata->min_freq != policy->min) {
- 			amd_pstate_ut_cases[index].result = AMD_PSTATE_UT_RESULT_FAIL;
- 			pr_err("%s cpu%d cpudata_min_freq=%d policy_min=%d, they should be equal!\n",
- 				__func__, cpu, cpudata->min_freq, policy->min);
--			return;
-+			goto skip_test;
- 		}
+ 	/* build a list of apqns suitable for this key */
+ 	rc = ep11_findcard2(&apqns, &nr_apqns, 0xFFFF, 0xFFFF,
+-			    ZCRYPT_CEX7, EP11_API_V, kb->wkvp);
++			    ZCRYPT_CEX7, EP11_API_V,
++			    ep11_kb_wkvp(key, keylen));
+ 	if (rc)
+ 		goto out;
  
- 		if (cpudata->boost_supported) {
-@@ -231,16 +235,20 @@ static void amd_pstate_ut_check_freq(u32 index)
- 				pr_err("%s cpu%d policy_max=%d should be equal cpu_max=%d or cpu_nominal=%d !\n",
- 					__func__, cpu, policy->max, cpudata->max_freq,
- 					cpudata->nominal_freq);
--				return;
-+				goto skip_test;
- 			}
- 		} else {
- 			amd_pstate_ut_cases[index].result = AMD_PSTATE_UT_RESULT_FAIL;
- 			pr_err("%s cpu%d must support boost!\n", __func__, cpu);
--			return;
-+			goto skip_test;
- 		}
-+		cpufreq_cpu_put(policy);
+@@ -308,7 +308,7 @@ static int pkey_ep11key2pkey(const u8 *key, u8 *protkey,
+ 	for (rc = -ENODEV, i = 0; i < nr_apqns; i++) {
+ 		card = apqns[i] >> 16;
+ 		dom = apqns[i] & 0xFFFF;
+-		rc = ep11_kblob2protkey(card, dom, key, kb->head.len,
++		rc = ep11_kblob2protkey(card, dom, key, keylen,
+ 					protkey, protkeylen, protkeytype);
+ 		if (rc == 0)
+ 			break;
+@@ -496,7 +496,7 @@ static int nonccatokaes2pkey(const struct clearkeytoken *t,
+ 			      tmpbuf, &tmpbuflen);
+ 	if (rc)
+ 		goto failure;
+-	rc = pkey_ep11key2pkey(tmpbuf,
++	rc = pkey_ep11key2pkey(tmpbuf, tmpbuflen,
+ 			       protkey, protkeylen, protkeytype);
+ 	if (!rc)
+ 		goto out;
+@@ -612,7 +612,7 @@ static int pkey_nonccatok2pkey(const u8 *key, u32 keylen,
+ 		rc = ep11_check_aes_key(debug_info, 3, key, keylen, 1);
+ 		if (rc)
+ 			goto out;
+-		rc = pkey_ep11key2pkey(key,
++		rc = pkey_ep11key2pkey(key, keylen,
+ 				       protkey, protkeylen, protkeytype);
+ 		break;
  	}
- 
- 	amd_pstate_ut_cases[index].result = AMD_PSTATE_UT_RESULT_PASS;
-+	return;
-+skip_test:
-+	cpufreq_cpu_put(policy);
+@@ -621,7 +621,7 @@ static int pkey_nonccatok2pkey(const u8 *key, u32 keylen,
+ 		rc = ep11_check_aes_key_with_hdr(debug_info, 3, key, keylen, 1);
+ 		if (rc)
+ 			goto out;
+-		rc = pkey_ep11key2pkey(key + sizeof(struct ep11kblob_header),
++		rc = pkey_ep11key2pkey(key, keylen,
+ 				       protkey, protkeylen, protkeytype);
+ 		break;
+ 	default:
+@@ -963,10 +963,12 @@ static int pkey_keyblob2pkey2(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 		}
+ 	} else if (hdr->type == TOKTYPE_NON_CCA) {
+ 		if (hdr->version == TOKVER_EP11_AES) {
+-			if (keylen < sizeof(struct ep11keyblob))
+-				return -EINVAL;
+ 			if (ep11_check_aes_key(debug_info, 3, key, keylen, 1))
+ 				return -EINVAL;
++		} else if (hdr->version == TOKVER_EP11_AES_WITH_HEADER) {
++			if (ep11_check_aes_key_with_hdr(debug_info, 3,
++							key, keylen, 1))
++				return -EINVAL;
+ 		} else {
+ 			return pkey_nonccatok2pkey(key, keylen,
+ 						   protkey, protkeylen,
+@@ -994,10 +996,7 @@ static int pkey_keyblob2pkey2(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 						protkey, protkeylen,
+ 						protkeytype);
+ 		} else {
+-			/* EP11 AES secure key blob */
+-			struct ep11keyblob *kb = (struct ep11keyblob *)key;
+-
+-			rc = ep11_kblob2protkey(card, dom, key, kb->head.len,
++			rc = ep11_kblob2protkey(card, dom, key, keylen,
+ 						protkey, protkeylen,
+ 						protkeytype);
+ 		}
+@@ -1257,12 +1256,14 @@ static int pkey_keyblob2pkey3(const struct pkey_apqn *apqns, size_t nr_apqns,
+ 		     hdr->version == TOKVER_EP11_ECC_WITH_HEADER) &&
+ 		    is_ep11_keyblob(key + sizeof(struct ep11kblob_header)))
+ 			rc = ep11_kblob2protkey(card, dom, key, hdr->len,
+-						protkey, protkeylen, protkeytype);
++						protkey, protkeylen,
++						protkeytype);
+ 		else if (hdr->type == TOKTYPE_NON_CCA &&
+ 			 hdr->version == TOKVER_EP11_AES &&
+ 			 is_ep11_keyblob(key))
+ 			rc = ep11_kblob2protkey(card, dom, key, hdr->len,
+-						protkey, protkeylen, protkeytype);
++						protkey, protkeylen,
++						protkeytype);
+ 		else if (hdr->type == TOKTYPE_CCA_INTERNAL &&
+ 			 hdr->version == TOKVER_CCA_AES)
+ 			rc = cca_sec2protkey(card, dom, key, protkey,
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
+index 355d30bc0aac8..669ad6f5d5b07 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.c
++++ b/drivers/s390/crypto/zcrypt_ep11misc.c
+@@ -157,6 +157,65 @@ static int ep11_kb_split(const u8 *kb, size_t kblen, u32 kbver,
+ 	return rc;
  }
  
- static int __init amd_pstate_ut_init(void)
++static int ep11_kb_decode(const u8 *kb, size_t kblen,
++			  struct ep11kblob_header **kbhdr, size_t *kbhdrsize,
++			  struct ep11keyblob **kbpl, size_t *kbplsize)
++{
++	struct ep11kblob_header *tmph, *hdr = NULL;
++	size_t hdrsize = 0, plsize = 0;
++	struct ep11keyblob *pl = NULL;
++	int rc = -EINVAL;
++	u8 *tmpp;
++
++	if (kblen < sizeof(struct ep11kblob_header))
++		goto out;
++	tmph = (struct ep11kblob_header *)kb;
++
++	if (tmph->type != TOKTYPE_NON_CCA &&
++	    tmph->len > kblen)
++		goto out;
++
++	if (ep11_kb_split(kb, kblen, tmph->version,
++			  &hdr, &hdrsize, &tmpp, &plsize))
++		goto out;
++
++	if (plsize < sizeof(struct ep11keyblob))
++		goto out;
++
++	if (!is_ep11_keyblob(tmpp))
++		goto out;
++
++	pl = (struct ep11keyblob *)tmpp;
++	plsize = hdr->len - hdrsize;
++
++	if (kbhdr)
++		*kbhdr = hdr;
++	if (kbhdrsize)
++		*kbhdrsize = hdrsize;
++	if (kbpl)
++		*kbpl = pl;
++	if (kbplsize)
++		*kbplsize = plsize;
++
++	rc = 0;
++out:
++	return rc;
++}
++
++/*
++ * For valid ep11 keyblobs, returns a reference to the wrappingkey verification
++ * pattern. Otherwise NULL.
++ */
++const u8 *ep11_kb_wkvp(const u8 *keyblob, size_t keybloblen)
++{
++	struct ep11keyblob *kb;
++
++	if (ep11_kb_decode(keyblob, keybloblen, NULL, NULL, &kb, NULL))
++		return NULL;
++	return kb->wkvp;
++}
++EXPORT_SYMBOL(ep11_kb_wkvp);
++
+ /*
+  * Simple check if the key blob is a valid EP11 AES key blob with header.
+  */
+@@ -1170,10 +1229,10 @@ static int ep11_unwrapkey(u16 card, u16 domain,
+ 	return 0;
+ }
+ 
+-static int ep11_wrapkey(u16 card, u16 domain,
+-			const u8 *key, size_t keysize,
+-			u32 mech, const u8 *iv,
+-			u8 *databuf, size_t *datasize)
++static int _ep11_wrapkey(u16 card, u16 domain,
++			 const u8 *key, size_t keysize,
++			 u32 mech, const u8 *iv,
++			 u8 *databuf, size_t *datasize)
+ {
+ 	struct wk_req_pl {
+ 		struct pl_head head;
+@@ -1203,20 +1262,10 @@ static int ep11_wrapkey(u16 card, u16 domain,
+ 	struct ep11_cprb *req = NULL, *rep = NULL;
+ 	struct ep11_target_dev target;
+ 	struct ep11_urb *urb = NULL;
+-	struct ep11keyblob *kb;
+ 	size_t req_pl_size;
+ 	int api, rc = -ENOMEM;
+-	bool has_header = false;
+ 	u8 *p;
+ 
+-	/* maybe the session field holds a header with key info */
+-	kb = (struct ep11keyblob *)key;
+-	if (kb->head.type == TOKTYPE_NON_CCA &&
+-	    kb->head.version == TOKVER_EP11_AES) {
+-		has_header = true;
+-		keysize = min_t(size_t, kb->head.len, keysize);
+-	}
+-
+ 	/* request cprb and payload */
+ 	req_pl_size = sizeof(struct wk_req_pl) + (iv ? 16 : 0)
+ 		+ ASN1TAGLEN(keysize) + 4;
+@@ -1241,11 +1290,6 @@ static int ep11_wrapkey(u16 card, u16 domain,
+ 	}
+ 	/* key blob */
+ 	p += asn1tag_write(p, 0x04, key, keysize);
+-	/* maybe the key argument needs the head data cleaned out */
+-	if (has_header) {
+-		kb = (struct ep11keyblob *)(p - keysize);
+-		memset(&kb->head, 0, sizeof(kb->head));
+-	}
+ 	/* empty kek tag */
+ 	*p++ = 0x04;
+ 	*p++ = 0;
+@@ -1366,11 +1410,12 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
+ }
+ EXPORT_SYMBOL(ep11_clr2keyblob);
+ 
+-int ep11_kblob2protkey(u16 card, u16 dom, const u8 *keyblob, size_t keybloblen,
++int ep11_kblob2protkey(u16 card, u16 dom,
++		       const u8 *keyblob, size_t keybloblen,
+ 		       u8 *protkey, u32 *protkeylen, u32 *protkeytype)
+ {
+-	int rc = -EIO;
+-	u8 *wkbuf = NULL;
++	struct ep11kblob_header *hdr;
++	struct ep11keyblob *key;
+ 	size_t wkbuflen, keylen;
+ 	struct wk_info {
+ 		u16 version;
+@@ -1381,31 +1426,17 @@ int ep11_kblob2protkey(u16 card, u16 dom, const u8 *keyblob, size_t keybloblen,
+ 		u8  res2[8];
+ 		u8  pkey[];
+ 	} __packed * wki;
+-	const u8 *key;
+-	struct ep11kblob_header *hdr;
++	u8 *wkbuf = NULL;
++	int rc = -EIO;
+ 
+-	/* key with or without header ? */
+-	hdr = (struct ep11kblob_header *)keyblob;
+-	if (hdr->type == TOKTYPE_NON_CCA &&
+-	    (hdr->version == TOKVER_EP11_AES_WITH_HEADER ||
+-	     hdr->version == TOKVER_EP11_ECC_WITH_HEADER) &&
+-	    is_ep11_keyblob(keyblob + sizeof(struct ep11kblob_header))) {
+-		/* EP11 AES or ECC key with header */
+-		key = keyblob + sizeof(struct ep11kblob_header);
+-		keylen = hdr->len - sizeof(struct ep11kblob_header);
+-	} else if (hdr->type == TOKTYPE_NON_CCA &&
+-		   hdr->version == TOKVER_EP11_AES &&
+-		   is_ep11_keyblob(keyblob)) {
+-		/* EP11 AES key (old style) */
+-		key = keyblob;
+-		keylen = hdr->len;
+-	} else if (is_ep11_keyblob(keyblob)) {
+-		/* raw EP11 key blob */
+-		key = keyblob;
+-		keylen = keybloblen;
+-	} else {
++	if (ep11_kb_decode((u8 *)keyblob, keybloblen, &hdr, NULL, &key, &keylen))
+ 		return -EINVAL;
++
++	if (hdr->version == TOKVER_EP11_AES) {
++		/* wipe overlayed header */
++		memset(hdr, 0, sizeof(*hdr));
+ 	}
++	/* !!! hdr is no longer a valid header !!! */
+ 
+ 	/* alloc temp working buffer */
+ 	wkbuflen = (keylen + AES_BLOCK_SIZE) & (~(AES_BLOCK_SIZE - 1));
+@@ -1414,8 +1445,8 @@ int ep11_kblob2protkey(u16 card, u16 dom, const u8 *keyblob, size_t keybloblen,
+ 		return -ENOMEM;
+ 
+ 	/* ep11 secure key -> protected key + info */
+-	rc = ep11_wrapkey(card, dom, key, keylen,
+-			  0, def_iv, wkbuf, &wkbuflen);
++	rc = _ep11_wrapkey(card, dom, (u8 *)key, keylen,
++			   0, def_iv, wkbuf, &wkbuflen);
+ 	if (rc) {
+ 		DEBUG_ERR(
+ 			"%s rewrapping ep11 key to pkey failed, rc=%d\n",
+diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
+index b611cf64231d5..a0de1cccebbe0 100644
+--- a/drivers/s390/crypto/zcrypt_ep11misc.h
++++ b/drivers/s390/crypto/zcrypt_ep11misc.h
+@@ -48,6 +48,12 @@ static inline bool is_ep11_keyblob(const u8 *key)
+ 	return (kb->version == EP11_STRUCT_MAGIC);
+ }
+ 
++/*
++ * For valid ep11 keyblobs, returns a reference to the wrappingkey verification
++ * pattern. Otherwise NULL.
++ */
++const u8 *ep11_kb_wkvp(const u8 *kblob, size_t kbloblen);
++
+ /*
+  * Simple check if the key blob is a valid EP11 AES key blob with header.
+  * If checkcpacfexport is enabled, the key is also checked for the
 -- 
 2.40.1
 
