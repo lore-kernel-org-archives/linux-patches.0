@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718381170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D6AC433C7;
-	Mon, 11 Sep 2023 14:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B451170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58D9C433C8;
+	Mon, 11 Sep 2023 14:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442294;
-	bh=frl/p3tOpteIvwr/V9ZrKQ+8c1icHAdKwnFP5ijGTuI=;
+	s=korg; t=1694442297;
+	bh=7arcCSyzYzrkuJbRBoioCwEiy+Wzj9F1je0RwZ2mCvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2E/shmUWOzFUuUd/Bgt6Il+XFIoX7WEKxYAh5cSHWqdO0r+pVyP+46YwxlXZUcZd
-	 QdWNr5+X2voZR5TmzPZw7C6sNuRAxeBqdtokSfvQ579uKWjCkMSQkFTq/UxGx59Z2e
-	 PSE2HrG7chd4GNvG83bmu4wVR+Qg/8vRBsRG9f38=
+	b=KxGFgvjleFJLU8jjn+rLEc4ts80BV+6Z/13biWh9JHVQCLtvTRnbsgDtjxIPufkVg
+	 SNHxTlJ4HtgQItGWhLK8/SA0nauWEI0quBaXtuc3iRGhceJ1gEQM/lBs96gTZoIzjM
+	 p2TY+f69cKcrvEOaAkZTtsoLltks9qKDW4viYyJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Subject: [PATCH 6.5 715/739] s390/dcssblk: fix kernel crash with list_add corruption
-Date: Mon, 11 Sep 2023 15:48:34 +0200
-Message-ID: <20230911134711.056986504@linuxfoundation.org>
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.5 698/739] bpf: Fix issue in verifying allow_ptr_leaks
+Date: Mon, 11 Sep 2023 15:48:17 +0200
+Message-ID: <20230911134710.590538494@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,70 +42,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-commit c8f40a0bccefd613748d080147469a4652d6e74c upstream.
+commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
 
-Commit fb08a1908cb1 ("dax: simplify the dax_device <-> gendisk
-association") introduced new logic for gendisk association, requiring
-drivers to explicitly call dax_add_host() and dax_remove_host().
+After we converted the capabilities of our networking-bpf program from
+cap_sys_admin to cap_net_admin+cap_bpf, our networking-bpf program
+failed to start. Because it failed the bpf verifier, and the error log
+is "R3 pointer comparison prohibited".
 
-For dcssblk driver, some dax_remove_host() calls were missing, e.g. in
-device remove path. The commit also broke error handling for out_dax case
-in device add path, resulting in an extra put_device() w/o the previous
-get_device() in that case.
+A simple reproducer as follows,
 
-This lead to stale xarray entries after device add / remove cycles. In the
-case when a previously used struct gendisk pointer (xarray index) would be
-used again, because blk_alloc_disk() happened to return such a pointer, the
-xa_insert() in dax_add_host() would fail and go to out_dax, doing the extra
-put_device() in the error path. In combination with an already flawed error
-handling in dcssblk (device_register() cleanup), which needs to be
-addressed in a separate patch, this resulted in a missing device_del() /
-klist_del(), and eventually in the kernel crash with list_add corruption on
-a subsequent device_add() / klist_add().
+SEC("cls-ingress")
+int ingress(struct __sk_buff *skb)
+{
+	struct iphdr *iph = (void *)(long)skb->data + sizeof(struct ethhdr);
 
-Fix this by adding the missing dax_remove_host() calls, and also move the
-put_device() in the error path to restore the previous logic.
+	if ((long)(iph + 1) > (long)skb->data_end)
+		return TC_ACT_STOLEN;
+	return TC_ACT_OK;
+}
 
-Fixes: fb08a1908cb1 ("dax: simplify the dax_device <-> gendisk association")
-Cc: <stable@vger.kernel.org> # 5.17+
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Per discussion with Yonghong and Alexei [1], comparison of two packet
+pointers is not a pointer leak. This patch fixes it.
+
+Our local kernel is 6.1.y and we expect this fix to be backported to
+6.1.y, so stable is CCed.
+
+[1]. https://lore.kernel.org/bpf/CAADnVQ+Nmspr7Si+pxWn8zkE7hX-7s93ugwC+94aXSy4uQ9vBg@mail.gmail.com/
+
+Suggested-by: Yonghong Song <yonghong.song@linux.dev>
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230823020703.3790-2-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dcssblk.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/s390/block/dcssblk.c
-+++ b/drivers/s390/block/dcssblk.c
-@@ -412,6 +412,7 @@ removeseg:
- 	}
- 	list_del(&dev_info->lh);
- 
-+	dax_remove_host(dev_info->gd);
- 	kill_dax(dev_info->dax_dev);
- 	put_dax(dev_info->dax_dev);
- 	del_gendisk(dev_info->gd);
-@@ -707,9 +708,9 @@ dcssblk_add_store(struct device *dev, st
- 	goto out;
- 
- out_dax_host:
-+	put_device(&dev_info->dev);
- 	dax_remove_host(dev_info->gd);
- out_dax:
--	put_device(&dev_info->dev);
- 	kill_dax(dev_info->dax_dev);
- 	put_dax(dev_info->dax_dev);
- put_dev:
-@@ -789,6 +790,7 @@ dcssblk_remove_store(struct device *dev,
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13816,6 +13816,12 @@ static int check_cond_jmp_op(struct bpf_
+ 		return -EINVAL;
  	}
  
- 	list_del(&dev_info->lh);
-+	dax_remove_host(dev_info->gd);
- 	kill_dax(dev_info->dax_dev);
- 	put_dax(dev_info->dax_dev);
- 	del_gendisk(dev_info->gd);
++	/* check src2 operand */
++	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
++	if (err)
++		return err;
++
++	dst_reg = &regs[insn->dst_reg];
+ 	if (BPF_SRC(insn->code) == BPF_X) {
+ 		if (insn->imm != 0) {
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+@@ -13827,12 +13833,13 @@ static int check_cond_jmp_op(struct bpf_
+ 		if (err)
+ 			return err;
+ 
+-		if (is_pointer_value(env, insn->src_reg)) {
++		src_reg = &regs[insn->src_reg];
++		if (!(reg_is_pkt_pointer_any(dst_reg) && reg_is_pkt_pointer_any(src_reg)) &&
++		    is_pointer_value(env, insn->src_reg)) {
+ 			verbose(env, "R%d pointer comparison prohibited\n",
+ 				insn->src_reg);
+ 			return -EACCES;
+ 		}
+-		src_reg = &regs[insn->src_reg];
+ 	} else {
+ 		if (insn->src_reg != BPF_REG_0) {
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+@@ -13840,12 +13847,6 @@ static int check_cond_jmp_op(struct bpf_
+ 		}
+ 	}
+ 
+-	/* check src2 operand */
+-	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
+-	if (err)
+-		return err;
+-
+-	dst_reg = &regs[insn->dst_reg];
+ 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
+ 
+ 	if (BPF_SRC(insn->code) == BPF_K) {
 
 
