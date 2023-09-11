@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFEF1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1075C433C7;
-	Mon, 11 Sep 2023 14:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711291170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFF4C433C8;
+	Mon, 11 Sep 2023 14:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442181;
-	bh=9Jz+6T1Hw8pETNs2dNALOUyItSK5H5Kw0WgCYzMfXZU=;
+	s=korg; t=1694442184;
+	bh=vMWvPDhzDv8bO7QJu/T3BhB4VnXT4HVYdkLfk8d6X4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjRpuavysfTEhIeZsODMQRLfd4j3x+O+3vgWr0ZUO4YDTPJw7ajyRF8T1DRBmqno3
-	 hdkuKS/0fS+ww1TV431vtg5hXKoX7Pspv+Sr+ZVkxfpI5AeYVBvlICxB/YJxjhreY5
-	 vROVyDfwH7e+5RcSP85mFL4Bg7PXTiBTuZ8fiS9E=
+	b=c6Va46TggUqueqv8bS9LhAeP89gme5eZOfKtL8zT4HjV7AwhvbNL5EZvo8xrRMVeZ
+	 XJgc5VRwZAGNk7HUCP9IK7RygTYoYb3CijxEBaMxq0kmUjWltdGAdIyxhW4k6NoRb8
+	 OtJN6Ap58f98bCZA8ndMLPvQ3AhNP/DF8xBaqDdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serguei Ivantsov <manowar@gsc-game.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 637/739] drbd: swap bvec_set_page len and offset
-Date: Mon, 11 Sep 2023 15:47:16 +0200
-Message-ID: <20230911134708.886626982@linuxfoundation.org>
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 6.5 668/739] xtensa: PMU: fix base address for the newer hardware
+Date: Mon, 11 Sep 2023 15:47:47 +0200
+Message-ID: <20230911134709.764437928@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,58 +32,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-commit 4b9c2edaf7282d60e069551b4b28abc2932cd3e3 upstream.
+commit 687eb3c42f4ad81e7c947c50e2d865f692064291 upstream.
 
-bvec_set_page has the following signature:
+With introduction of ERI access control in RG.0 base address of the PMU
+unit registers has changed. Add support for the new PMU configuration.
 
-static inline void bvec_set_page(struct bio_vec *bv, struct page *page,
-		unsigned int len, unsigned int offset)
-
-However, the usage in DRBD swaps the len and offset parameters. This
-leads to a bvec with length=0 instead of the intended length=4096, which
-causes sock_sendmsg to return -EIO.
-
-This leaves DRBD unable to transmit any pages and thus completely
-broken.
-
-Swapping the parameters fixes the regression.
-
-Fixes: eeac7405c735 ("drbd: Use sendmsg(MSG_SPLICE_PAGES) rather than sendpage()")
-Reported-by: Serguei Ivantsov <manowar@gsc-game.com>
-Link: https://lore.kernel.org/regressions/CAKH+VT3YLmAn0Y8=q37UTDShqxDLsqPcQ4hBMzY7HPn7zNx+RQ@mail.gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://lore.kernel.org/r/20230906133034.948817-1-christoph.boehmwalder@linbit.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/xtensa/include/asm/core.h  |    9 +++++++++
+ arch/xtensa/kernel/perf_event.c |   17 +++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index 79ab532aabaf..6bc86106c7b2 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -1557,7 +1557,7 @@ static int _drbd_send_page(struct drbd_peer_device *peer_device, struct page *pa
- 	do {
- 		int sent;
+--- a/arch/xtensa/include/asm/core.h
++++ b/arch/xtensa/include/asm/core.h
+@@ -52,4 +52,13 @@
+ #define XTENSA_STACK_ALIGNMENT	16
+ #endif
  
--		bvec_set_page(&bvec, page, offset, len);
-+		bvec_set_page(&bvec, page, len, offset);
- 		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, len);
++#ifndef XCHAL_HW_MIN_VERSION
++#if defined(XCHAL_HW_MIN_VERSION_MAJOR) && defined(XCHAL_HW_MIN_VERSION_MINOR)
++#define XCHAL_HW_MIN_VERSION (XCHAL_HW_MIN_VERSION_MAJOR * 100 + \
++			      XCHAL_HW_MIN_VERSION_MINOR)
++#else
++#define XCHAL_HW_MIN_VERSION 0
++#endif
++#endif
++
+ #endif
+--- a/arch/xtensa/kernel/perf_event.c
++++ b/arch/xtensa/kernel/perf_event.c
+@@ -13,17 +13,26 @@
+ #include <linux/perf_event.h>
+ #include <linux/platform_device.h>
  
- 		sent = sock_sendmsg(socket, &msg);
--- 
-2.42.0
-
++#include <asm/core.h>
+ #include <asm/processor.h>
+ #include <asm/stacktrace.h>
+ 
++#define XTENSA_HWVERSION_RG_2015_0	260000
++
++#if XCHAL_HW_MIN_VERSION >= XTENSA_HWVERSION_RG_2015_0
++#define XTENSA_PMU_ERI_BASE		0x00101000
++#else
++#define XTENSA_PMU_ERI_BASE		0x00001000
++#endif
++
+ /* Global control/status for all perf counters */
+-#define XTENSA_PMU_PMG			0x1000
++#define XTENSA_PMU_PMG			XTENSA_PMU_ERI_BASE
+ /* Perf counter values */
+-#define XTENSA_PMU_PM(i)		(0x1080 + (i) * 4)
++#define XTENSA_PMU_PM(i)		(XTENSA_PMU_ERI_BASE + 0x80 + (i) * 4)
+ /* Perf counter control registers */
+-#define XTENSA_PMU_PMCTRL(i)		(0x1100 + (i) * 4)
++#define XTENSA_PMU_PMCTRL(i)		(XTENSA_PMU_ERI_BASE + 0x100 + (i) * 4)
+ /* Perf counter status registers */
+-#define XTENSA_PMU_PMSTAT(i)		(0x1180 + (i) * 4)
++#define XTENSA_PMU_PMSTAT(i)		(XTENSA_PMU_ERI_BASE + 0x180 + (i) * 4)
+ 
+ #define XTENSA_PMU_PMG_PMEN		0x1
+ 
 
 
