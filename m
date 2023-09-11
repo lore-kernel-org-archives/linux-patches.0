@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7091170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C38C433C8;
-	Mon, 11 Sep 2023 13:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DF91170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5479FC433C9;
+	Mon, 11 Sep 2023 13:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440578;
-	bh=Oj/KkJHDj6CeEtsID+5FOpk7zZechjY4TrdXYU0wjUo=;
+	s=korg; t=1694440581;
+	bh=b7wzlfxVBpfudyafhR238ZfXu7tRbJlXHXYYpap+hqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdVoYpxjmU9FtJ0MfmAr5Zcx5/UIR+fWqZrTEiBT9TrnBcvQTld3XMVI/9HOT/3h6
-	 yffR7TJQPG+Kxm0zHf1CMxL7DMWAY5YqVpCe8snnzDchf10sI4G7/yZid2hfPsFi5V
-	 Nc/kxWOyz0h3vLSAwfOvUWUOpTi953kjYv8p5354=
+	b=B09gK8FV24lmJTugeTloKwSyRxdMNcmU666P2Ivk+vESJRXegVDd75sn1AGauNFof
+	 dUK7cG1qIKcB/ugjUI/UasRf691+vNb1QFw+/og4vN504FZXj5+to79f3S/a/Pz/e6
+	 O1xDP5CPXTRAOEM6sOgnp1l4mruQ+WCcLnGLc0L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 085/739] wifi: mt76: mt7996: fix bss wlan_idx when sending bss_info command
-Date: Mon, 11 Sep 2023 15:38:04 +0200
-Message-ID: <20230911134653.483610538@linuxfoundation.org>
+Subject: [PATCH 6.5 076/739] hwrng: pic32 - use devm_clk_get_enabled
+Date: Mon, 11 Sep 2023 15:37:55 +0200
+Message-ID: <20230911134653.238864477@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,54 +40,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit cc945b546227423488fe4be0ab92fd126b703246 ]
+[ Upstream commit 6755ad74aac0fb1c79b14724feb81b2f6ff25847 ]
 
-The bmc_tx_wlan_idx should be the wlan_idx of the current bss rather
-than peer AP's wlan_idx, otherwise there will appear some frame
-decryption problems on station mode.
+Use devm_clk_get_enabled in the pic32 driver. Ensure that the clock is
+enabled as long as the driver is registered with the hwrng core.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Reviewed-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 7ea39973d1e5 ("hwrng: pic32 - Use device-managed registration API")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/pic32-rng.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 88e2f9d0e5130..cd54e81d73044 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -712,6 +712,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
- 	struct cfg80211_chan_def *chandef = &phy->chandef;
- 	struct mt76_connac_bss_basic_tlv *bss;
- 	u32 type = CONNECTION_INFRA_AP;
-+	u16 sta_wlan_idx = wlan_idx;
- 	struct tlv *tlv;
- 	int idx;
+diff --git a/drivers/char/hw_random/pic32-rng.c b/drivers/char/hw_random/pic32-rng.c
+index 99c8bd0859a14..e04a054e89307 100644
+--- a/drivers/char/hw_random/pic32-rng.c
++++ b/drivers/char/hw_random/pic32-rng.c
+@@ -36,7 +36,6 @@
+ struct pic32_rng {
+ 	void __iomem	*base;
+ 	struct hwrng	rng;
+-	struct clk	*clk;
+ };
  
-@@ -731,7 +732,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
- 				struct mt76_wcid *wcid;
+ /*
+@@ -70,6 +69,7 @@ static int pic32_rng_read(struct hwrng *rng, void *buf, size_t max,
+ static int pic32_rng_probe(struct platform_device *pdev)
+ {
+ 	struct pic32_rng *priv;
++	struct clk *clk;
+ 	u32 v;
+ 	int ret;
  
- 				wcid = (struct mt76_wcid *)sta->drv_priv;
--				wlan_idx = wcid->idx;
-+				sta_wlan_idx = wcid->idx;
- 			}
- 			rcu_read_unlock();
- 		}
-@@ -751,7 +752,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
- 	bss->bcn_interval = cpu_to_le16(vif->bss_conf.beacon_int);
- 	bss->dtim_period = vif->bss_conf.dtim_period;
- 	bss->bmc_tx_wlan_idx = cpu_to_le16(wlan_idx);
--	bss->sta_idx = cpu_to_le16(wlan_idx);
-+	bss->sta_idx = cpu_to_le16(sta_wlan_idx);
- 	bss->conn_type = cpu_to_le32(type);
- 	bss->omac_idx = mvif->omac_idx;
- 	bss->band_idx = mvif->band_idx;
+@@ -81,13 +81,9 @@ static int pic32_rng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->base))
+ 		return PTR_ERR(priv->base);
+ 
+-	priv->clk = devm_clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(priv->clk))
+-		return PTR_ERR(priv->clk);
+-
+-	ret = clk_prepare_enable(priv->clk);
+-	if (ret)
+-		return ret;
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
+ 
+ 	/* enable TRNG in enhanced mode */
+ 	v = TRNGEN | TRNGMOD;
+@@ -98,15 +94,11 @@ static int pic32_rng_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
+ 	if (ret)
+-		goto err_register;
++		return ret;
+ 
+ 	platform_set_drvdata(pdev, priv);
+ 
+ 	return 0;
+-
+-err_register:
+-	clk_disable_unprepare(priv->clk);
+-	return ret;
+ }
+ 
+ static int pic32_rng_remove(struct platform_device *pdev)
+@@ -114,7 +106,6 @@ static int pic32_rng_remove(struct platform_device *pdev)
+ 	struct pic32_rng *rng = platform_get_drvdata(pdev);
+ 
+ 	writel(0, rng->base + RNGCON);
+-	clk_disable_unprepare(rng->clk);
+ 	return 0;
+ }
+ 
 -- 
 2.40.1
 
