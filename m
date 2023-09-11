@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15B411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B63C433C7;
-	Mon, 11 Sep 2023 15:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AFA11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC44C433C8;
+	Mon, 11 Sep 2023 15:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445449;
-	bh=CPxAcJAxEntbmOzbsf1Mf4nNm1Yq1DY5P3TVLLl+LyQ=;
+	s=korg; t=1694445452;
+	bh=Krf4GLxGSDGEnyGADgfkBxHUKHBgtYqIact631v+bZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWPakpri2KLABYBJtfM8ms1JDmToePLSa5URFi6H6EOxhBAohnGEOeS6j2cquImlg
-	 jkx9z1TOvjX9RV3xeV618y7wztlTZQazOp+hkY9khORLeWsRsmfexXbId9flX4P3T8
-	 iYJCtAq4noi9uJdP5y+hQtR3gKg8/FQ9YRAu1iNs=
+	b=OSFTJ4l98xuTHVAq5fhbvQbhrF09VB7Xue9CnGFfAXlgIVyrHd1OfwGWgm7cVAfGM
+	 KbuBeLO4fwhdrMpj6uqLKfkJgZWyIISABHlTRXGUmGQ3g7irelUO1Y3bNvVIWNFa0J
+	 OW2lgfzXTSEK8knGC5MNZ+VcK7g/N1kttygp9Iuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 351/600] pinctrl: mcp23s08: check return value of devm_kasprintf()
-Date: Mon, 11 Sep 2023 15:46:24 +0200
-Message-ID: <20230911134644.041116872@linuxfoundation.org>
+Subject: [PATCH 6.1 352/600] PCI: Allow drivers to request exclusive config regions
+Date: Mon, 11 Sep 2023 15:46:25 +0200
+Message-ID: <20230911134644.069404709@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,64 +36,193 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Ira Weiny <ira.weiny@intel.com>
 
-[ Upstream commit f941714a7c7698eadb59bc27d34d6d6f38982705 ]
+[ Upstream commit 278294798ac9118412c9624a801d3f20f2279363 ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+PCI config space access from user space has traditionally been
+unrestricted with writes being an understood risk for device operation.
 
-Fixes: 0f04a81784fe ("pinctrl: mcp23s08: Split to three parts: core, I²C, SPI")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230621100409.1608395-1-claudiu.beznea@microchip.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Unfortunately, device breakage or odd behavior from config writes lacks
+indicators that can leave driver writers confused when evaluating
+failures.  This is especially true with the new PCIe Data Object
+Exchange (DOE) mailbox protocol where backdoor shenanigans from user
+space through things such as vendor defined protocols may affect device
+operation without complete breakage.
+
+A prior proposal restricted read and writes completely.[1]  Greg and
+Bjorn pointed out that proposal is flawed for a couple of reasons.
+First, lspci should always be allowed and should not interfere with any
+device operation.  Second, setpci is a valuable tool that is sometimes
+necessary and it should not be completely restricted.[2]  Finally
+methods exist for full lock of device access if required.
+
+Even though access should not be restricted it would be nice for driver
+writers to be able to flag critical parts of the config space such that
+interference from user space can be detected.
+
+Introduce pci_request_config_region_exclusive() to mark exclusive config
+regions.  Such regions trigger a warning and kernel taint if accessed
+via user space.
+
+Create pci_warn_once() to restrict the user from spamming the log.
+
+[1] https://lore.kernel.org/all/161663543465.1867664.5674061943008380442.stgit@dwillia2-desk3.amr.corp.intel.com/
+[2] https://lore.kernel.org/all/YF8NGeGv9vYcMfTV@kroah.com/
+
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20220926215711.2893286-2-ira.weiny@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 5e70d0acf082 ("PCI: Add locking to RMW PCI Express Capability Register accessors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-mcp23s08_spi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pci/pci-sysfs.c |  7 +++++++
+ drivers/pci/probe.c     |  6 ++++++
+ include/linux/ioport.h  |  2 ++
+ include/linux/pci.h     | 17 +++++++++++++++++
+ kernel/resource.c       | 13 ++++++++-----
+ 5 files changed, 40 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-mcp23s08_spi.c b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-index 9ae10318f6f35..ea059b9c5542e 100644
---- a/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-+++ b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-@@ -91,18 +91,28 @@ static int mcp23s08_spi_regmap_init(struct mcp23s08 *mcp, struct device *dev,
- 		mcp->reg_shift = 0;
- 		mcp->chip.ngpio = 8;
- 		mcp->chip.label = devm_kasprintf(dev, GFP_KERNEL, "mcp23s08.%d", addr);
-+		if (!mcp->chip.label)
-+			return -ENOMEM;
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index ba38fc47d35e9..dd0d9d9bc5097 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -756,6 +756,13 @@ static ssize_t pci_write_config(struct file *filp, struct kobject *kobj,
+ 	if (ret)
+ 		return ret;
  
- 		config = &mcp23x08_regmap;
- 		name = devm_kasprintf(dev, GFP_KERNEL, "%d", addr);
-+		if (!name)
-+			return -ENOMEM;
++	if (resource_is_exclusive(&dev->driver_exclusive_resource, off,
++				  count)) {
++		pci_warn_once(dev, "%s: Unexpected write to kernel-exclusive config offset %llx",
++			      current->comm, off);
++		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
++	}
 +
- 		break;
- 
- 	case MCP_TYPE_S17:
- 		mcp->reg_shift = 1;
- 		mcp->chip.ngpio = 16;
- 		mcp->chip.label = devm_kasprintf(dev, GFP_KERNEL, "mcp23s17.%d", addr);
-+		if (!mcp->chip.label)
-+			return -ENOMEM;
- 
- 		config = &mcp23x17_regmap;
- 		name = devm_kasprintf(dev, GFP_KERNEL, "%d", addr);
-+		if (!name)
-+			return -ENOMEM;
+ 	if (off > dev->cfg_size)
+ 		return 0;
+ 	if (off + count > dev->cfg_size) {
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 7170516298b0b..e3a1dc6432bcd 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -2306,6 +2306,12 @@ struct pci_dev *pci_alloc_dev(struct pci_bus *bus)
+ 	INIT_LIST_HEAD(&dev->bus_list);
+ 	dev->dev.type = &pci_dev_type;
+ 	dev->bus = pci_bus_get(bus);
++	dev->driver_exclusive_resource = (struct resource) {
++		.name = "PCI Exclusive",
++		.start = 0,
++		.end = -1,
++	};
 +
- 		break;
+ #ifdef CONFIG_PCI_MSI
+ 	raw_spin_lock_init(&dev->msi_lock);
+ #endif
+diff --git a/include/linux/ioport.h b/include/linux/ioport.h
+index 27642ca15d932..4ae3c541ea6f4 100644
+--- a/include/linux/ioport.h
++++ b/include/linux/ioport.h
+@@ -318,6 +318,8 @@ extern void __devm_release_region(struct device *dev, struct resource *parent,
+ 				  resource_size_t start, resource_size_t n);
+ extern int iomem_map_sanity_check(resource_size_t addr, unsigned long size);
+ extern bool iomem_is_exclusive(u64 addr);
++extern bool resource_is_exclusive(struct resource *resource, u64 addr,
++				  resource_size_t size);
  
- 	case MCP_TYPE_S18:
+ extern int
+ walk_system_ram_range(unsigned long start_pfn, unsigned long nr_pages,
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 9f617ffdb863f..4ea8de6890bea 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -409,6 +409,7 @@ struct pci_dev {
+ 	 */
+ 	unsigned int	irq;
+ 	struct resource resource[DEVICE_COUNT_RESOURCE]; /* I/O and memory regions + expansion ROMs */
++	struct resource driver_exclusive_resource;	 /* driver exclusive resource ranges */
+ 
+ 	bool		match_driver;		/* Skip attaching driver */
+ 
+@@ -1408,6 +1409,21 @@ int pci_request_selected_regions(struct pci_dev *, int, const char *);
+ int pci_request_selected_regions_exclusive(struct pci_dev *, int, const char *);
+ void pci_release_selected_regions(struct pci_dev *, int);
+ 
++static inline __must_check struct resource *
++pci_request_config_region_exclusive(struct pci_dev *pdev, unsigned int offset,
++				    unsigned int len, const char *name)
++{
++	return __request_region(&pdev->driver_exclusive_resource, offset, len,
++				name, IORESOURCE_EXCLUSIVE);
++}
++
++static inline void pci_release_config_region(struct pci_dev *pdev,
++					     unsigned int offset,
++					     unsigned int len)
++{
++	__release_region(&pdev->driver_exclusive_resource, offset, len);
++}
++
+ /* drivers/pci/bus.c */
+ void pci_add_resource(struct list_head *resources, struct resource *res);
+ void pci_add_resource_offset(struct list_head *resources, struct resource *res,
+@@ -2487,6 +2503,7 @@ void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
+ #define pci_crit(pdev, fmt, arg...)	dev_crit(&(pdev)->dev, fmt, ##arg)
+ #define pci_err(pdev, fmt, arg...)	dev_err(&(pdev)->dev, fmt, ##arg)
+ #define pci_warn(pdev, fmt, arg...)	dev_warn(&(pdev)->dev, fmt, ##arg)
++#define pci_warn_once(pdev, fmt, arg...) dev_warn_once(&(pdev)->dev, fmt, ##arg)
+ #define pci_notice(pdev, fmt, arg...)	dev_notice(&(pdev)->dev, fmt, ##arg)
+ #define pci_info(pdev, fmt, arg...)	dev_info(&(pdev)->dev, fmt, ##arg)
+ #define pci_dbg(pdev, fmt, arg...)	dev_dbg(&(pdev)->dev, fmt, ##arg)
+diff --git a/kernel/resource.c b/kernel/resource.c
+index 1aeeededdd4c8..8f52f88009652 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1693,18 +1693,15 @@ static int strict_iomem_checks;
+  *
+  * Returns true if exclusive to the kernel, otherwise returns false.
+  */
+-bool iomem_is_exclusive(u64 addr)
++bool resource_is_exclusive(struct resource *root, u64 addr, resource_size_t size)
+ {
+ 	const unsigned int exclusive_system_ram = IORESOURCE_SYSTEM_RAM |
+ 						  IORESOURCE_EXCLUSIVE;
+ 	bool skip_children = false, err = false;
+-	int size = PAGE_SIZE;
+ 	struct resource *p;
+ 
+-	addr = addr & PAGE_MASK;
+-
+ 	read_lock(&resource_lock);
+-	for_each_resource(&iomem_resource, p, skip_children) {
++	for_each_resource(root, p, skip_children) {
+ 		if (p->start >= addr + size)
+ 			break;
+ 		if (p->end < addr) {
+@@ -1743,6 +1740,12 @@ bool iomem_is_exclusive(u64 addr)
+ 	return err;
+ }
+ 
++bool iomem_is_exclusive(u64 addr)
++{
++	return resource_is_exclusive(&iomem_resource, addr & PAGE_MASK,
++				     PAGE_SIZE);
++}
++
+ struct resource_entry *resource_list_create_entry(struct resource *res,
+ 						  size_t extra_size)
+ {
 -- 
 2.40.1
 
