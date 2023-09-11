@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A151170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F62C433C9;
-	Mon, 11 Sep 2023 13:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8381170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3F2C433C8;
+	Mon, 11 Sep 2023 13:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440633;
-	bh=PklztfbmiBpwIxtkId3+NwrUzWvnWu7xGP6L0gYToPU=;
+	s=korg; t=1694440636;
+	bh=s7UhqM2SnS08/mny9mDQEA1AFgjWlIz4jW1KnQv2fp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMIxGwuGmT2q0XDeZ2/MM04qAIYY+GNvKnuPWpwJnpRxtZcQIc5+P5gL4hXGLFqDs
-	 yQSoGNhBlXywb5j542LbCE+MVhRAGmBCpXJEbtdOXmjjvr6RDzjfB/THn8vMBA5GTn
-	 H5j+LGhEIKtECrKOrD29SE4bKCYfXQ2JDHoAGcno=
+	b=C1ZBS1rIFPmqSQAGgM9eflfxYho7auPkFDZllXE90RXsplgjmNGbis6oSvu0h2+ye
+	 ZtWdtqPQTvP7Gv4R8Rvs0wWDIzXIgn8fR3/y0llA7IpRypACkRhLqT/FNwmJEqjBe/
+	 MIkT0el2kpIhWTIZoZrlCyAIBar/iFzE7yBLcon8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marco Vedovati <marco.vedovati@crowdstrike.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 130/739] net: pcs: lynx: fix lynx_pcs_link_up_sgmii() not doing anything in fixed-link mode
-Date: Mon, 11 Sep 2023 15:38:49 +0200
-Message-ID: <20230911134654.716850285@linuxfoundation.org>
+Subject: [PATCH 6.5 131/739] libbpf: Set close-on-exec flag on gzopen
+Date: Mon, 11 Sep 2023 15:38:50 +0200
+Message-ID: <20230911134654.746219531@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,44 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Marco Vedovati <marco.vedovati@crowdstrike.com>
 
-[ Upstream commit 2f4503f94c5d81d1589842bfb457be466c8c670b ]
+[ Upstream commit 8e50750f122e59ea4cab4b4f696ef22b391bedc9 ]
 
-lynx_pcs_link_up_sgmii() is supposed to update the PCS speed and duplex
-for the non-inband operating modes, and prior to the blamed commit, it
-did just that, but a mistake sneaked into the conversion and reversed
-the condition.
+Enable the close-on-exec flag when using gzopen. This is especially important
+for multithreaded programs making use of libbpf, where a fork + exec could
+race with libbpf library calls, potentially resulting in a file descriptor
+leaked to the new process. This got missed in 59842c5451fe ("libbpf: Ensure
+libbpf always opens files with O_CLOEXEC").
 
-It is easy for this to go undetected on platforms that also initialize
-the PCS in the bootloader, because Linux doesn't reset it (although
-maybe it should). The nature of the bug is that phylink will not touch
-the IF_MODE_HALF_DUPLEX | IF_MODE_SPEED_MSK fields when it should, and
-it will apparently keep working if the previous values set by the
-bootloader were correct.
-
-Fixes: c689a6528c22 ("net: pcs: lynx: update PCS driver to use neg_mode")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 59842c5451fe ("libbpf: Ensure libbpf always opens files with O_CLOEXEC")
+Signed-off-by: Marco Vedovati <marco.vedovati@crowdstrike.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230810214350.106301-1-martin.kelly@crowdstrike.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pcs/pcs-lynx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/bpf/libbpf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/pcs/pcs-lynx.c b/drivers/net/pcs/pcs-lynx.c
-index 9021b96d4f9df..dc3962b2aa6b0 100644
---- a/drivers/net/pcs/pcs-lynx.c
-+++ b/drivers/net/pcs/pcs-lynx.c
-@@ -216,7 +216,7 @@ static void lynx_pcs_link_up_sgmii(struct mdio_device *pcs,
- 	/* The PCS needs to be configured manually only
- 	 * when not operating on in-band mode
- 	 */
--	if (neg_mode != PHYLINK_PCS_NEG_INBAND_ENABLED)
-+	if (neg_mode == PHYLINK_PCS_NEG_INBAND_ENABLED)
- 		return;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 7cc79bf764550..e07dff7eba600 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -1975,9 +1975,9 @@ static int bpf_object__read_kconfig_file(struct bpf_object *obj, void *data)
+ 		return -ENAMETOOLONG;
  
- 	if (duplex == DUPLEX_HALF)
+ 	/* gzopen also accepts uncompressed files. */
+-	file = gzopen(buf, "r");
++	file = gzopen(buf, "re");
+ 	if (!file)
+-		file = gzopen("/proc/config.gz", "r");
++		file = gzopen("/proc/config.gz", "re");
+ 
+ 	if (!file) {
+ 		pr_warn("failed to open system Kconfig\n");
 -- 
 2.40.1
 
