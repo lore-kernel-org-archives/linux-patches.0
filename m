@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F4711705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B18C433C7;
-	Mon, 11 Sep 2023 14:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC411705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C835CC433C8;
+	Mon, 11 Sep 2023 14:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442977;
-	bh=fqGR8d0iW3E4EAuVBMINA3mxo88L/gRoZIgkheAZLyc=;
+	s=korg; t=1694442980;
+	bh=nfYcFaQ2IqaVXgN5CxDIk0n4YF8UtRhJMGo2SxgEj9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ts6r+RZ311BUYLlgVAyrZ6Wyy6tmIVV1o25zER2hBfLSe0ZEw94qDrsO57tAFm8jF
-	 6g3FWEapgHo2bDNSlcUocRqAnmArh/2gyoa/OV5zgSfLHWvYapHB+Pk7hmqQtLiIOC
-	 5rWzBudmQp5tuPf01L63TgogAwL11X7ajscuHYv4=
+	b=yE7g8Sg+xntk4uokcFmvJgiKW6mDg5AlSDpP3uuzkPJYcBkBKI2VmcvrGMybo0tn6
+	 lguM7dfiPn+/Gw+iLUV36bIgiSHDW2/2p77AwJeRiOYFs/bKv1pKZXQve9hmHipt4z
+	 59lAo+ebCQrxgjzqaGhkPvxFtSF6sa2Zhho1y81c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <imagedong@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 207/737] net: tcp: fix unexcepted socket die when snd_wnd is 0
-Date: Mon, 11 Sep 2023 15:41:06 +0200
-Message-ID: <20230911134656.377704269@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.4 216/737] ice: ice_aq_check_events: fix off-by-one check when filling buffer
+Date: Mon, 11 Sep 2023 15:41:15 +0200
+Message-ID: <20230911134656.623716602@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,81 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <imagedong@tencent.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit e89688e3e97868451a5d05b38a9d2633d6785cd4 ]
+[ Upstream commit e1e8a142c43336e3d25bfa1cb3a4ae7d00875c48 ]
 
-In tcp_retransmit_timer(), a window shrunk connection will be regarded
-as timeout if 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX'. This is not
-right all the time.
+Allow task's event buffer to be filled also in the case that it's size
+is exactly the size of the message.
 
-The retransmits will become zero-window probes in tcp_retransmit_timer()
-if the 'snd_wnd==0'. Therefore, the icsk->icsk_rto will come up to
-TCP_RTO_MAX sooner or later.
-
-However, the timer can be delayed and be triggered after 122877ms, not
-TCP_RTO_MAX, as I tested.
-
-Therefore, 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX' is always true
-once the RTO come up to TCP_RTO_MAX, and the socket will die.
-
-Fix this by replacing the 'tcp_jiffies32' with '(u32)icsk->icsk_timeout',
-which is exact the timestamp of the timeout.
-
-However, "tp->rcv_tstamp" can restart from idle, then tp->rcv_tstamp
-could already be a long time (minutes or hours) in the past even on the
-first RTO. So we double check the timeout with the duration of the
-retransmission.
-
-Meanwhile, making "2 * TCP_RTO_MAX" as the timeout to avoid the socket
-dying too soon.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/CADxym3YyMiO+zMD4zj03YPM3FBi-1LHi6gSD2XT8pyAMM096pg@mail.gmail.com/
-Signed-off-by: Menglong Dong <imagedong@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d69ea414c9b4 ("ice: implement device flash update via devlink")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 366c3c25ebe20..db90bd2d4ed66 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -441,6 +441,22 @@ static void tcp_fastopen_synack_timer(struct sock *sk, struct request_sock *req)
- 			  req->timeout << req->num_timeout, TCP_RTO_MAX);
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index cfb76612bd2f9..66bd06ea0a703 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -1346,6 +1346,7 @@ int ice_aq_wait_for_event(struct ice_pf *pf, u16 opcode, unsigned long timeout,
+ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
+ 				struct ice_rq_event_info *event)
+ {
++	struct ice_rq_event_info *task_ev;
+ 	struct ice_aq_task *task;
+ 	bool found = false;
  
-+static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
-+				     const struct sk_buff *skb)
-+{
-+	const struct tcp_sock *tp = tcp_sk(sk);
-+	const int timeout = TCP_RTO_MAX * 2;
-+	u32 rcv_delta, rtx_delta;
-+
-+	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
-+	if (rcv_delta <= timeout)
-+		return false;
-+
-+	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
-+			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
-+
-+	return rtx_delta > timeout;
-+}
+@@ -1354,15 +1355,15 @@ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
+ 		if (task->state || task->opcode != opcode)
+ 			continue;
  
- /**
-  *  tcp_retransmit_timer() - The TCP retransmit timeout handler
-@@ -506,7 +522,7 @@ void tcp_retransmit_timer(struct sock *sk)
- 					    tp->snd_una, tp->snd_nxt);
+-		memcpy(&task->event->desc, &event->desc, sizeof(event->desc));
+-		task->event->msg_len = event->msg_len;
++		task_ev = task->event;
++		memcpy(&task_ev->desc, &event->desc, sizeof(event->desc));
++		task_ev->msg_len = event->msg_len;
+ 
+ 		/* Only copy the data buffer if a destination was set */
+-		if (task->event->msg_buf &&
+-		    task->event->buf_len > event->buf_len) {
+-			memcpy(task->event->msg_buf, event->msg_buf,
++		if (task_ev->msg_buf && task_ev->buf_len >= event->buf_len) {
++			memcpy(task_ev->msg_buf, event->msg_buf,
+ 			       event->buf_len);
+-			task->event->buf_len = event->buf_len;
++			task_ev->buf_len = event->buf_len;
  		}
- #endif
--		if (tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX) {
-+		if (tcp_rtx_probe0_timed_out(sk, skb)) {
- 			tcp_write_err(sk);
- 			goto out;
- 		}
+ 
+ 		task->state = ICE_AQ_TASK_COMPLETE;
 -- 
 2.40.1
 
