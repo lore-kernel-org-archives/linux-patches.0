@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4642D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90DDC433CC;
-	Mon, 11 Sep 2023 14:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C521170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:19:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CE3C433C7;
+	Mon, 11 Sep 2023 14:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441949;
-	bh=Ye7Hfc66QVTVVRQ7Y5+aPM3p5aUPXOGXmFt6l9+SZeI=;
+	s=korg; t=1694441951;
+	bh=piP8ZnFUex2ukLDAltozxZuwLm5C7/hiC/ulpFtJ8pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsvZ1ZyHABWw6WwuJNYscSlpqiZj8CoXbLhA8bmrA1rd7iH4MxHsaHGfjZumngw4S
-	 V5wCSMItS20tRyURnYBXiMRIYU34VMxc3OhrDJ+tLqUTpMxdtOGjfGyFTPMPWTiOGJ
-	 9foBrRiffDpAbPhV1llSyS2ZpkGMjVOb+hW+y5vI=
+	b=Hky/EM4rqBjsEv9ieUv9o0vHhmbvjio4kmd0ma6OYXjgy+f715uRXi7rpzJmzNA+x
+	 eLMGAAWfx62xh62avr5XDcDVbCOfKWWRAWRk7ut5ICL32D+K4Z/mmY23J4zGsA7tpQ
+	 7UwB49Kfm/ZXL3CGOzfHlwgTt3Xo+zIYEuqRO8W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Hugh Dickins <hughd@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 593/739] tracing: Fix race issue between cpu buffer write and swap
-Date: Mon, 11 Sep 2023 15:46:32 +0200
-Message-ID: <20230911134707.665505579@linuxfoundation.org>
+Subject: [PATCH 6.5 594/739] mm/pagewalk: fix bootstopping regression from extra pte_unmap()
+Date: Mon, 11 Sep 2023 15:46:33 +0200
+Message-ID: <20230911134707.692764295@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,139 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit 3163f635b20e9e1fb4659e74f47918c9dddfe64e ]
+[ Upstream commit ee40d543e97d23d3392d8fb1ec9972eb4e9c7611 ]
 
-Warning happened in rb_end_commit() at code:
-	if (RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing)))
+Mikhail reports early-6.6-based Fedora Rawhide not booting: "rcu_preempt
+detected expedited stalls", minutes wait, and then hung_task splat while
+kworker trying to synchronize_rcu_expedited().  Nothing logged to disk.
 
-  WARNING: CPU: 0 PID: 139 at kernel/trace/ring_buffer.c:3142
-	rb_commit+0x402/0x4a0
-  Call Trace:
-   ring_buffer_unlock_commit+0x42/0x250
-   trace_buffer_unlock_commit_regs+0x3b/0x250
-   trace_event_buffer_commit+0xe5/0x440
-   trace_event_buffer_reserve+0x11c/0x150
-   trace_event_raw_event_sched_switch+0x23c/0x2c0
-   __traceiter_sched_switch+0x59/0x80
-   __schedule+0x72b/0x1580
-   schedule+0x92/0x120
-   worker_thread+0xa0/0x6f0
+He bisected to my 6.6 a349d72fd9ef ("mm/pgtable: add rcu_read_lock() and
+rcu_read_unlock()s"): but the one to blame is my 6.5 commit to fix the
+espfix "bad pmd" warnings when booting x86_64 with CONFIG_EFI_PGT_DUMP=y.
 
-It is because the race between writing event into cpu buffer and swapping
-cpu buffer through file per_cpu/cpu0/snapshot:
+Gaah, that added an "addr >= TASK_SIZE" check to avoid pte_offset_map(),
+but failed to add the equivalent check when choosing to pte_unmap().
 
-  Write on CPU 0             Swap buffer by per_cpu/cpu0/snapshot on CPU 1
-  --------                   --------
-                             tracing_snapshot_write()
-                               [...]
+It's not a problem on 6.5 (for different reasons, it's harmless on both
+64-bit and 32-bit), but becomes a bootstopper on 6.6 with the unbalanced
+rcu_read_unlock() - RCU has a WARN_ON_ONCE for that, but it would have
+scrolled off Mikhail's console too quickly.
 
-  ring_buffer_lock_reserve()
-    cpu_buffer = buffer->buffers[cpu]; // 1. Suppose find 'cpu_buffer_a';
-    [...]
-    rb_reserve_next_event()
-      [...]
-
-                               ring_buffer_swap_cpu()
-                                 if (local_read(&cpu_buffer_a->committing))
-                                     goto out_dec;
-                                 if (local_read(&cpu_buffer_b->committing))
-                                     goto out_dec;
-                                 buffer_a->buffers[cpu] = cpu_buffer_b;
-                                 buffer_b->buffers[cpu] = cpu_buffer_a;
-                                 // 2. cpu_buffer has swapped here.
-
-      rb_start_commit(cpu_buffer);
-      if (unlikely(READ_ONCE(cpu_buffer->buffer)
-          != buffer)) { // 3. This check passed due to 'cpu_buffer->buffer'
-        [...]           //    has not changed here.
-        return NULL;
-      }
-                                 cpu_buffer_b->buffer = buffer_a;
-                                 cpu_buffer_a->buffer = buffer_b;
-                                 [...]
-
-      // 4. Reserve event from 'cpu_buffer_a'.
-
-  ring_buffer_unlock_commit()
-    [...]
-    cpu_buffer = buffer->buffers[cpu]; // 5. Now find 'cpu_buffer_b' !!!
-    rb_commit(cpu_buffer)
-      rb_end_commit()  // 6. WARN for the wrong 'committing' state !!!
-
-Based on above analysis, we can easily reproduce by following testcase:
-  ``` bash
-  #!/bin/bash
-
-  dmesg -n 7
-  sysctl -w kernel.panic_on_warn=1
-  TR=/sys/kernel/tracing
-  echo 7 > ${TR}/buffer_size_kb
-  echo "sched:sched_switch" > ${TR}/set_event
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  while [ true ]; do
-          echo 1 > ${TR}/per_cpu/cpu0/snapshot
-  done &
-  ```
-
-To fix it, IIUC, we can use smp_call_function_single() to do the swap on
-the target cpu where the buffer is located, so that above race would be
-avoided.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230831132739.4070878-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Fixes: f1affcaaa861 ("tracing: Add snapshot in the per_cpu trace directories")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/CABXGCsNi8Tiv5zUPNXr6UJw6qV1VdaBEfGqEAMkkXE3QPvZuAQ@mail.gmail.com/
+Fixes: 8b1cb4a2e819 ("mm/pagewalk: fix EFI_PGT_DUMP of espfix area")
+Fixes: a349d72fd9ef ("mm/pgtable: add rcu_read_lock() and rcu_read_unlock()s")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ mm/pagewalk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 2656ca3b9b39c..745332d10b3e1 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7618,6 +7618,11 @@ static int tracing_snapshot_open(struct inode *inode, struct file *file)
- 	return ret;
- }
- 
-+static void tracing_swap_cpu_buffer(void *tr)
-+{
-+	update_max_tr_single((struct trace_array *)tr, current, smp_processor_id());
-+}
-+
- static ssize_t
- tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 		       loff_t *ppos)
-@@ -7676,13 +7681,15 @@ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
- 			ret = tracing_alloc_snapshot_instance(tr);
- 		if (ret < 0)
- 			break;
--		local_irq_disable();
- 		/* Now, we're going to swap */
--		if (iter->cpu_file == RING_BUFFER_ALL_CPUS)
-+		if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
-+			local_irq_disable();
- 			update_max_tr(tr, current, smp_processor_id(), NULL);
--		else
--			update_max_tr_single(tr, current, iter->cpu_file);
--		local_irq_enable();
-+			local_irq_enable();
-+		} else {
-+			smp_call_function_single(iter->cpu_file, tracing_swap_cpu_buffer,
-+						 (void *)tr, 1);
-+		}
- 		break;
- 	default:
- 		if (tr->allocated_snapshot) {
+diff --git a/mm/pagewalk.c b/mm/pagewalk.c
+index 9b2d23fbf4d35..b7d7e4fcfad7a 100644
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -58,7 +58,7 @@ static int walk_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
+ 			pte = pte_offset_map(pmd, addr);
+ 		if (pte) {
+ 			err = walk_pte_range_inner(pte, addr, end, walk);
+-			if (walk->mm != &init_mm)
++			if (walk->mm != &init_mm && addr < TASK_SIZE)
+ 				pte_unmap(pte);
+ 		}
+ 	} else {
 -- 
 2.40.1
 
