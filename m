@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1691170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1358C433C8;
-	Mon, 11 Sep 2023 14:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F651170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE40C433C7;
+	Mon, 11 Sep 2023 14:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442274;
-	bh=F+vBbWqLHDrJCk0A/54f2N8GV/Mk9Pp5xgCMdNjg6qc=;
+	s=korg; t=1694442277;
+	bh=WX0MHsCwvTojTgKubD8jUhF3HHKi9n22FSL3p8S6BJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sby3yVyFXsSsOoJMzzEomQMzV+aCjDPMkw6qn3N4vdo35lWwwi0UOZZSuAV0pbDbE
-	 FI5V0SuJBRDFsH51V0JqXFmf+JX0uWEMULQhT6Z1HfnmChHGq4moxaaD41i96Zn9Lo
-	 VBxlbD4eKZkzztrrPm+Kt5CEpYsMPfOtmHRlsMl0=
+	b=I91iKVw5z1D4OsMzaAyGiHSNsqjDh+aVKTNVQizsXkpI72dtUheHEBalN6j3O2cZ3
+	 f/RK7/nShlWrgeIV+0snrxaD5aPAQTA6UC/wMPw/MubmY+6tXyj7gBxA3ZKoikMNTo
+	 KNkvVVDKoC3Csrq51wkPoam+0BPE/b/H4aRuRXc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.5 708/739] platform/chrome: chromeos_acpi: print hex string for ACPI_TYPE_BUFFER
-Date: Mon, 11 Sep 2023 15:48:27 +0200
-Message-ID: <20230911134710.859816736@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.5 709/739] mmc: renesas_sdhi: register irqs before registering controller
+Date: Mon, 11 Sep 2023 15:48:28 +0200
+Message-ID: <20230911134710.886462878@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,74 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 0820debb7d489e9eb1f68b7bb69e6ae210699b3f upstream.
+commit 74f45de394d979cc7770271f92fafa53e1ed3119 upstream.
 
-`element->buffer.pointer` should be binary blob.  `%s` doesn't work
-perfect for them.
+IRQs should be ready to serve when we call mmc_add_host() via
+tmio_mmc_host_probe(). To achieve that, ensure that all irqs are masked
+before registering the handlers.
 
-Print hex string for ACPI_TYPE_BUFFER.  Also update the documentation
-to reflect this.
-
-Fixes: 0a4cad9c11ad ("platform/chrome: Add ChromeOS ACPI device driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Cc: stable@vger.kernel.org
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230803011245.3773756-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20230712140011.18602-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/testing/sysfs-driver-chromeos-acpi |    2 -
- drivers/platform/chrome/chromeos_acpi.c              |   31 ++++++++++++++++++-
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ drivers/mmc/host/renesas_sdhi_core.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
-+++ b/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
-@@ -134,4 +134,4 @@ KernelVersion:	5.19
- Description:
- 		Returns the verified boot data block shared between the
- 		firmware verification step and the kernel verification step
--		(binary).
-+		(hex dump).
---- a/drivers/platform/chrome/chromeos_acpi.c
-+++ b/drivers/platform/chrome/chromeos_acpi.c
-@@ -90,7 +90,36 @@ static int chromeos_acpi_handle_package(
- 	case ACPI_TYPE_STRING:
- 		return sysfs_emit(buf, "%s\n", element->string.pointer);
- 	case ACPI_TYPE_BUFFER:
--		return sysfs_emit(buf, "%s\n", element->buffer.pointer);
-+		{
-+			int i, r, at, room_left;
-+			const int byte_per_line = 16;
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -1006,6 +1006,8 @@ int renesas_sdhi_probe(struct platform_d
+ 		host->sdcard_irq_setbit_mask = TMIO_STAT_ALWAYS_SET_27;
+ 		host->sdcard_irq_mask_all = TMIO_MASK_ALL_RCAR2;
+ 		host->reset = renesas_sdhi_reset;
++	} else {
++		host->sdcard_irq_mask_all = TMIO_MASK_ALL;
+ 	}
+ 
+ 	/* Orginally registers were 16 bit apart, could be 32 or 64 nowadays */
+@@ -1100,9 +1102,7 @@ int renesas_sdhi_probe(struct platform_d
+ 		host->ops.hs400_complete = renesas_sdhi_hs400_complete;
+ 	}
+ 
+-	ret = tmio_mmc_host_probe(host);
+-	if (ret < 0)
+-		goto edisclk;
++	sd_ctrl_write32_as_16_and_16(host, CTL_IRQ_MASK, host->sdcard_irq_mask_all);
+ 
+ 	num_irqs = platform_irq_count(pdev);
+ 	if (num_irqs < 0) {
+@@ -1129,6 +1129,10 @@ int renesas_sdhi_probe(struct platform_d
+ 			goto eirq;
+ 	}
+ 
++	ret = tmio_mmc_host_probe(host);
++	if (ret < 0)
++		goto edisclk;
 +
-+			at = 0;
-+			room_left = PAGE_SIZE - 1;
-+			for (i = 0; i < element->buffer.length && room_left; i += byte_per_line) {
-+				r = hex_dump_to_buffer(element->buffer.pointer + i,
-+						       element->buffer.length - i,
-+						       byte_per_line, 1, buf + at, room_left,
-+						       false);
-+				if (r > room_left)
-+					goto truncating;
-+				at += r;
-+				room_left -= r;
-+
-+				r = sysfs_emit_at(buf, at, "\n");
-+				if (!r)
-+					goto truncating;
-+				at += r;
-+				room_left -= r;
-+			}
-+
-+			buf[at] = 0;
-+			return at;
-+truncating:
-+			dev_info_once(dev, "truncating sysfs content for %s\n", name);
-+			sysfs_emit_at(buf, PAGE_SIZE - 4, "..\n");
-+			return PAGE_SIZE - 1;
-+		}
- 	default:
- 		dev_err(dev, "element type %d not supported\n", element->type);
- 		return -EINVAL;
+ 	dev_info(&pdev->dev, "%s base at %pa, max clock rate %u MHz\n",
+ 		 mmc_hostname(host->mmc), &res->start, host->mmc->f_max / 1000000);
+ 
 
 
