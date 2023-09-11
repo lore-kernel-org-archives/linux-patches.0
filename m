@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B42F9F4
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA6DC433C8;
-	Mon, 11 Sep 2023 13:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68C7F9F4
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C41C433C7;
+	Mon, 11 Sep 2023 13:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440754;
-	bh=FxwHFyyPsRrhU+wcj5T6wknjdbfIn6Wlymeu4iw3cHM=;
+	s=korg; t=1694440757;
+	bh=JV/esFEVJXJfEIQs6VvwwNuFwA8ODePOtnsknUGsbdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSlOqZ1m1CzOcu7jBNtjU5moCJbODYE+5rxAsaFumYMYh5pVYGCn4TfoteW6hc144
-	 C+dwBdFKwAIrQJzfyAzR9F8Mtx5TZ2DtTx9W/Tfj4pGPshDkZowH4A537wNU428c+F
-	 HxqpaRnXldBsgtQDWibAGGdHjJff8BT5/MrUrLGY=
+	b=uhVnoa/q2uZZbiqnsg3CKWRRjGtlt4bx3ZiDqjyEwWeEJREA586beYHrRT5Dch3A2
+	 As3MSkC9Rw2gEABnA6qxI6FdC27edaAZZTXVaPyiK9RqY42SfW/ER+5+Po9ZMXU8UB
+	 FchVwsvz8SmwFCK+vbKRZ/AlwRJUri6ZyyaWhoow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+cf54c1da6574b6c1b049@syzkaller.appspotmail.com,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 174/739] Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync
-Date: Mon, 11 Sep 2023 15:39:33 +0200
-Message-ID: <20230911134656.056171418@linuxfoundation.org>
+Subject: [PATCH 6.5 175/739] Bluetooth: hci_conn: fail SCO/ISO via hci_conn_failed if ACL gone early
+Date: Mon, 11 Sep 2023 15:39:34 +0200
+Message-ID: <20230911134656.084465097@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,182 +41,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 94d9ba9f9888b748d4abd2aa1547af56ae85f772 ]
+[ Upstream commit 3344d318337d9dca928fd448e966557ec5063f85 ]
 
-Use-after-free can occur in hci_disconnect_all_sync if a connection is
-deleted by concurrent processing of a controller event.
+Not calling hci_(dis)connect_cfm before deleting conn referred to by a
+socket generally results to use-after-free.
 
-To prevent this the code now tries to iterate over the list backwards
-to ensure the links are cleanup before its parents, also it no longer
-relies on a cursor, instead it always uses the last element since
-hci_abort_conn_sync is guaranteed to call hci_conn_del.
+When cleaning up SCO connections when the parent ACL is deleted too
+early, use hci_conn_failed to do the connection cleanup properly.
 
-UAF crash log:
-==================================================================
-BUG: KASAN: slab-use-after-free in hci_set_powered_sync
-(net/bluetooth/hci_sync.c:5424) [bluetooth]
-Read of size 8 at addr ffff888009d9c000 by task kworker/u9:0/124
+We also need to clean up ISO connections in a similar situation when
+connecting has started but LE Create CIS is not yet sent, so do it too
+here.
 
-CPU: 0 PID: 124 Comm: kworker/u9:0 Tainted: G        W
-6.5.0-rc1+ #10
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-1.16.2-1.fc38 04/01/2014
-Workqueue: hci0 hci_cmd_sync_work [bluetooth]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5b/0x90
- print_report+0xcf/0x670
- ? __virt_addr_valid+0xdd/0x160
- ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
- kasan_report+0xa6/0xe0
- ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
- ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
- hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
- ? __pfx_hci_set_powered_sync+0x10/0x10 [bluetooth]
- ? __pfx_lock_release+0x10/0x10
- ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
- hci_cmd_sync_work+0x137/0x220 [bluetooth]
- process_one_work+0x526/0x9d0
- ? __pfx_process_one_work+0x10/0x10
- ? __pfx_do_raw_spin_lock+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- worker_thread+0x92/0x630
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x196/0x1e0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2c/0x50
- </TASK>
-
-Allocated by task 1782:
- kasan_save_stack+0x33/0x60
- kasan_set_track+0x25/0x30
- __kasan_kmalloc+0x8f/0xa0
- hci_conn_add+0xa5/0xa80 [bluetooth]
- hci_bind_cis+0x881/0x9b0 [bluetooth]
- iso_connect_cis+0x121/0x520 [bluetooth]
- iso_sock_connect+0x3f6/0x790 [bluetooth]
- __sys_connect+0x109/0x130
- __x64_sys_connect+0x40/0x50
- do_syscall_64+0x60/0x90
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Freed by task 695:
- kasan_save_stack+0x33/0x60
- kasan_set_track+0x25/0x30
- kasan_save_free_info+0x2b/0x50
- __kasan_slab_free+0x10a/0x180
- __kmem_cache_free+0x14d/0x2e0
- device_release+0x5d/0xf0
- kobject_put+0xdf/0x270
- hci_disconn_complete_evt+0x274/0x3a0 [bluetooth]
- hci_event_packet+0x579/0x7e0 [bluetooth]
- hci_rx_work+0x287/0xaa0 [bluetooth]
- process_one_work+0x526/0x9d0
- worker_thread+0x92/0x630
- kthread+0x196/0x1e0
- ret_from_fork+0x2c/0x50
-==================================================================
-
-Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+Fixes: ca1fd42e7dbf ("Bluetooth: Fix potential double free caused by hci_conn_unlink")
+Reported-by: syzbot+cf54c1da6574b6c1b049@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-bluetooth/00000000000013b93805fbbadc50@google.com/
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 55 +++++++++++++++++++++++++---------------
- 1 file changed, 35 insertions(+), 20 deletions(-)
+ net/bluetooth/hci_conn.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index fa675bacfb309..bc84b4617e824 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5337,6 +5337,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- {
- 	int err = 0;
- 	u16 handle = conn->handle;
-+	struct hci_conn *c;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 7f2e3a2d2768d..ce76931d11d86 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1040,6 +1040,29 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	return conn;
+ }
  
- 	switch (conn->state) {
- 	case BT_CONNECTED:
-@@ -5358,43 +5359,57 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 		}
- 		break;
- 	default:
-+		hci_dev_lock(hdev);
- 		conn->state = BT_CLOSED;
-+		hci_disconn_cfm(conn, reason);
-+		hci_conn_del(conn);
-+		hci_dev_unlock(hdev);
- 		return 0;
- 	}
- 
-+	hci_dev_lock(hdev);
++static void hci_conn_cleanup_child(struct hci_conn *conn, u8 reason)
++{
++	if (!reason)
++		reason = HCI_ERROR_REMOTE_USER_TERM;
 +
-+	/* Check if the connection hasn't been cleanup while waiting
-+	 * commands to complete.
++	/* Due to race, SCO/ISO conn might be not established yet at this point,
++	 * and nothing else will clean it up. In other cases it is done via HCI
++	 * events.
 +	 */
-+	c = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (!c || c != conn) {
-+		err = 0;
-+		goto unlock;
++	switch (conn->type) {
++	case SCO_LINK:
++	case ESCO_LINK:
++		if (HCI_CONN_HANDLE_UNSET(conn->handle))
++			hci_conn_failed(conn, reason);
++		break;
++	case ISO_LINK:
++		if (conn->state != BT_CONNECTED &&
++		    !test_bit(HCI_CONN_CREATE_CIS, &conn->flags))
++			hci_conn_failed(conn, reason);
++		break;
 +	}
++}
 +
- 	/* Cleanup hci_conn object if it cannot be cancelled as it
- 	 * likelly means the controller and host stack are out of sync
- 	 * or in case of LE it was still scanning so it can be cleanup
- 	 * safely.
- 	 */
--	if (err) {
--		struct hci_conn *c;
--
--		/* Check if the connection hasn't been cleanup while waiting
--		 * commands to complete.
--		 */
--		c = hci_conn_hash_lookup_handle(hdev, handle);
--		if (!c || c != conn)
--			return 0;
--
--		hci_dev_lock(hdev);
--		hci_conn_failed(conn, err);
--		hci_dev_unlock(hdev);
--	}
-+	hci_conn_failed(conn, reason);
- 
-+unlock:
-+	hci_dev_unlock(hdev);
- 	return err;
- }
- 
- static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
+ static void hci_conn_unlink(struct hci_conn *conn)
  {
--	struct hci_conn *conn, *tmp;
--	int err;
-+	struct list_head *head = &hdev->conn_hash.list;
-+	struct hci_conn *conn;
+ 	struct hci_dev *hdev = conn->hdev;
+@@ -1062,14 +1085,7 @@ static void hci_conn_unlink(struct hci_conn *conn)
+ 			if (!test_bit(HCI_UP, &hdev->flags))
+ 				continue;
  
--	list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
--		err = hci_abort_conn_sync(hdev, conn, reason);
--		if (err)
--			return err;
-+	rcu_read_lock();
-+	while ((conn = list_first_or_null_rcu(head, struct hci_conn, list))) {
-+		/* Make sure the connection is not freed while unlocking */
-+		conn = hci_conn_get(conn);
-+		rcu_read_unlock();
-+		/* Disregard possible errors since hci_conn_del shall have been
-+		 * called even in case of errors had occurred since it would
-+		 * then cause hci_conn_failed to be called which calls
-+		 * hci_conn_del internally.
-+		 */
-+		hci_abort_conn_sync(hdev, conn, reason);
-+		hci_conn_put(conn);
-+		rcu_read_lock();
- 	}
-+	rcu_read_unlock();
+-			/* Due to race, SCO connection might be not established
+-			 * yet at this point. Delete it now, otherwise it is
+-			 * possible for it to be stuck and can't be deleted.
+-			 */
+-			if ((child->type == SCO_LINK ||
+-			     child->type == ESCO_LINK) &&
+-			    HCI_CONN_HANDLE_UNSET(child->handle))
+-				hci_conn_del(child);
++			hci_conn_cleanup_child(child, conn->abort_reason);
+ 		}
  
- 	return 0;
- }
+ 		return;
 -- 
 2.40.1
 
