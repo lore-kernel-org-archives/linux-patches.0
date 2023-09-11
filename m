@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE0F1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14318C433C8;
-	Mon, 11 Sep 2023 14:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2811170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094EAC433C7;
+	Mon, 11 Sep 2023 14:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441507;
-	bh=mTLrn/ZdcrPF+TgIMXbgwFdg3W/16BHdpXSDRT7jOZo=;
+	s=korg; t=1694441510;
+	bh=4vJmPdIdWiUixAiuzq3/AkBWaaRAcN2qjaRlxGXVIQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0r7C73A9ieAgJpTyxWxUniQs0a2TOOMo/RNamFMMRYnzm9myXnZa8FJWFITs/M0f5
-	 Zz6f1Br/onzl0sdWyxtLOb9R+Np4qDAT9N/V8pWRUu+V3HQRrQNyvLA4RgqokSdCIc
-	 6tWeixpbTCtNBhrBk8Rk1/QZrBPwDMfR7AUUElvc=
+	b=sQ6oJLU9seQF1y/2B+9+f+EEhNichmG6JqNGHFTuqPvqthp6iuN63iPC5bUBL8BOD
+	 AbOv+QinJJn56YdGhjUckMaegLbHyfK9lIPTtPWVeJX0okp0Fu3INGAvNxptCyT+/P
+	 NojoFugNQQk77hm+//LfQqGc9v4/l9IvuiUIs0L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Russell Currey <ruscur@russell.cc>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 438/739] powerpc/mpc5xxx: Add missing fwnode_handle_put()
-Date: Mon, 11 Sep 2023 15:43:57 +0200
-Message-ID: <20230911134703.403470752@linuxfoundation.org>
+Subject: [PATCH 6.5 439/739] powerpc/iommu: Fix notifiers being shared by PCI and VIO buses
+Date: Mon, 11 Sep 2023 15:43:58 +0200
+Message-ID: <20230911134703.430859073@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,38 +42,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang He <windhl@126.com>
+From: Russell Currey <ruscur@russell.cc>
 
-[ Upstream commit b9bbbf4979073d5536b7650decd37fcb901e6556 ]
+[ Upstream commit c37b6908f7b2bd24dcaaf14a180e28c9132b9c58 ]
 
-In mpc5xxx_fwnode_get_bus_frequency(), we should add
-fwnode_handle_put() when break out of the iteration
-fwnode_for_each_parent_node() as it will automatically
-increase and decrease the refcounter.
+fail_iommu_setup() registers the fail_iommu_bus_notifier struct to both
+PCI and VIO buses.  struct notifier_block is a linked list node, so this
+causes any notifiers later registered to either bus type to also be
+registered to the other since they share the same node.
 
-Fixes: de06fba62af6 ("powerpc/mpc5xxx: Switch mpc5xxx_get_bus_frequency() to use fwnode")
-Signed-off-by: Liang He <windhl@126.com>
+This causes issues in (at least) the vgaarb code, which registers a
+notifier for PCI buses.  pci_notify() ends up being called on a vio
+device, converted with to_pci_dev() even though it's not a PCI device,
+and finally makes a bad access in vga_arbiter_add_pci_device() as
+discovered with KASAN:
+
+ BUG: KASAN: slab-out-of-bounds in vga_arbiter_add_pci_device+0x60/0xe00
+ Read of size 4 at addr c000000264c26fdc by task swapper/0/1
+
+ Call Trace:
+   dump_stack_lvl+0x1bc/0x2b8 (unreliable)
+   print_report+0x3f4/0xc60
+   kasan_report+0x244/0x698
+   __asan_load4+0xe8/0x250
+   vga_arbiter_add_pci_device+0x60/0xe00
+   pci_notify+0x88/0x444
+   notifier_call_chain+0x104/0x320
+   blocking_notifier_call_chain+0xa0/0x140
+   device_add+0xac8/0x1d30
+   device_register+0x58/0x80
+   vio_register_device_node+0x9ac/0xce0
+   vio_bus_scan_register_devices+0xc4/0x13c
+   __machine_initcall_pseries_vio_device_init+0x94/0xf0
+   do_one_initcall+0x12c/0xaa8
+   kernel_init_freeable+0xa48/0xba8
+   kernel_init+0x64/0x400
+   ret_from_kernel_thread+0x5c/0x64
+
+Fix this by creating separate notifier_block structs for each bus type.
+
+Fixes: d6b9a81b2a45 ("powerpc: IOMMU fault injection")
+Reported-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Russell Currey <ruscur@russell.cc>
+Tested-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+[mpe: Add #ifdef to fix CONFIG_IBMVIO=n build]
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230322030423.1855440-1-windhl@126.com
+Link: https://msgid.link/20230322035322.328709-1-ruscur@russell.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/mpc5xxx_clocks.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/iommu.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/mpc5xxx_clocks.c b/arch/powerpc/sysdev/mpc5xxx_clocks.c
-index c5bf7e1b37804..58cee28e23992 100644
---- a/arch/powerpc/sysdev/mpc5xxx_clocks.c
-+++ b/arch/powerpc/sysdev/mpc5xxx_clocks.c
-@@ -25,8 +25,10 @@ unsigned long mpc5xxx_fwnode_get_bus_frequency(struct fwnode_handle *fwnode)
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index c52449ae6936a..14251bc5219eb 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -172,17 +172,28 @@ static int fail_iommu_bus_notify(struct notifier_block *nb,
+ 	return 0;
+ }
  
- 	fwnode_for_each_parent_node(fwnode, parent) {
- 		ret = fwnode_property_read_u32(parent, "bus-frequency", &bus_freq);
--		if (!ret)
-+		if (!ret) {
-+			fwnode_handle_put(parent);
- 			return bus_freq;
-+		}
- 	}
+-static struct notifier_block fail_iommu_bus_notifier = {
++/*
++ * PCI and VIO buses need separate notifier_block structs, since they're linked
++ * list nodes.  Sharing a notifier_block would mean that any notifiers later
++ * registered for PCI buses would also get called by VIO buses and vice versa.
++ */
++static struct notifier_block fail_iommu_pci_bus_notifier = {
+ 	.notifier_call = fail_iommu_bus_notify
+ };
+ 
++#ifdef CONFIG_IBMVIO
++static struct notifier_block fail_iommu_vio_bus_notifier = {
++	.notifier_call = fail_iommu_bus_notify
++};
++#endif
++
+ static int __init fail_iommu_setup(void)
+ {
+ #ifdef CONFIG_PCI
+-	bus_register_notifier(&pci_bus_type, &fail_iommu_bus_notifier);
++	bus_register_notifier(&pci_bus_type, &fail_iommu_pci_bus_notifier);
+ #endif
+ #ifdef CONFIG_IBMVIO
+-	bus_register_notifier(&vio_bus_type, &fail_iommu_bus_notifier);
++	bus_register_notifier(&vio_bus_type, &fail_iommu_vio_bus_notifier);
+ #endif
  
  	return 0;
 -- 
