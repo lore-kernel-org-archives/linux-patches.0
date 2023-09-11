@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F6A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002DDC433C8;
-	Mon, 11 Sep 2023 14:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571AD11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB605C433C8;
+	Mon, 11 Sep 2023 14:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443767;
-	bh=Is5B+u2i2DwCkz61vdAhcgm9s+K4e0fImer0/e1ZddU=;
+	s=korg; t=1694443770;
+	bh=5371y4qeFH9My2MFcesIpxDByri+8tzIo46ZhGVqCIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZI0Z1iYqFsX1dOhd+BnejyV3Y7Jde3rr5RsdcvhB8IFkClglI31/MI6qZE/2CHhCp
-	 ImwynR82T4rljXYmXWeViXtv1pX1pN6C3I3JCGQ1FdRM5agMu5338W15rl5u/Tw9e1
-	 IXAWRPJDqqh1pk0gPIeC7ZfHoUILCfgOIpNegjck=
+	b=oW/MCdCBfofWKNX53GDj+8BWqBqqjg69joxfMpcpw8aa9seEuQpy2EYOWdtGECbxv
+	 WJOAPKkA2rMLyAB/BdZuPGukY0eQVqWNDbNK+0StPy0aGY61Xi8igid7v76dg+8fdM
+	 Olq6HjRCe/2Zo/SJTpLdr7VtYhX1kgBQI9SULV78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 461/737] wifi: ath10k: Use RMW accessors for changing LNKCTL
-Date: Mon, 11 Sep 2023 15:45:20 +0200
-Message-ID: <20230911134703.472336081@linuxfoundation.org>
+Subject: [PATCH 6.4 452/737] powerpc/fadump: reset dump area size if fadump memory reserve fails
+Date: Mon, 11 Sep 2023 15:45:11 +0200
+Message-ID: <20230911134703.224215198@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -37,63 +35,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
+[ Upstream commit d1eb75e0dfed80d2d85b664e28a39f65b290ab55 ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.
+In case fadump_reserve_mem() fails to reserve memory, the
+reserve_dump_area_size variable will retain the reserve area size. This
+will lead to /sys/kernel/fadump/mem_reserved node displaying an incorrect
+memory reserved by fadump.
 
-Use RMW capability accessors which does proper locking to avoid losing
-concurrent updates to the register value. On restore, clear the ASPMC field
-properly.
+To fix this problem, reserve dump area size variable is set to 0 if fadump
+failed to reserve memory.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 76d870ed09ab ("ath10k: enable ASPM")
-Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
+Fixes: 8255da95e545 ("powerpc/fadump: release all the memory above boot memory size")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230704050715.203581-1-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/powerpc/kernel/fadump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index a7f44f6335fb8..9275a672f90cb 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -1963,8 +1963,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
- 	ath10k_pci_irq_enable(ar);
- 	ath10k_pci_rx_post(ar);
- 
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl);
-+	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC,
-+					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
- 
+diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
+index ea0a073abd969..3ff2da7b120b5 100644
+--- a/arch/powerpc/kernel/fadump.c
++++ b/arch/powerpc/kernel/fadump.c
+@@ -654,6 +654,7 @@ int __init fadump_reserve_mem(void)
+ 	return ret;
+ error_out:
+ 	fw_dump.fadump_enabled = 0;
++	fw_dump.reserve_dump_area_size = 0;
  	return 0;
  }
-@@ -2821,8 +2822,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
  
- 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
- 				  &ar_pci->link_ctl);
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+				   PCI_EXP_LNKCTL_ASPMC);
- 
- 	/*
- 	 * Bring the target up cleanly.
 -- 
 2.40.1
 
