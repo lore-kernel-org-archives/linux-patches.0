@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E9311705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F5FC433C8;
-	Mon, 11 Sep 2023 14:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B0411705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79371C433C8;
+	Mon, 11 Sep 2023 14:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442966;
-	bh=g6J4utbLk7qFmNiHXaJHwwUZ8L+gtW7MuavgOOqZVHI=;
+	s=korg; t=1694442968;
+	bh=00iuae5JbGwT1LwcMk0YSqpaBvYIEmC1lvCMRwk3MA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UjOrg6pi17k6tAVXYE0WhNertuuiJZ/YXdbXtlGB4GfkLyVaCBMKFjl79XkU3WS+W
-	 x7wUk3FARJNhZh9bR0N2D/eGqvR6WonwlaYkLXy9W+X4nPF9uzLUdmMYzKo9krltOZ
-	 FkQiNOdw0favMDqHf0Y2A3AZjMAEdH3yudD3IpyU=
+	b=DR76MMRxOz6k2FW/0WYrVONF/aGkQeVdIjJbB4vY6XMVQu15IxJzhaG8yb8YBg/Bn
+	 nU+lsV/+wUAtiJ635RuTGIk0Jg1A1jkCH0dmuvfquhJAWmHlEr10es3G351LxeNn4r
+	 iXAHgAgvLGqfDh3KWKqhBUmbG0OCqJ0U3TmQvmWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 183/737] wifi: ath11k: fix band selection for ppdu received in channel 177 of 5 GHz
-Date: Mon, 11 Sep 2023 15:40:42 +0200
-Message-ID: <20230911134655.677399841@linuxfoundation.org>
+Subject: [PATCH 6.4 184/737] wifi: ath12k: fix memcpy array overflow in ath12k_peer_assoc_h_he()
+Date: Mon, 11 Sep 2023 15:40:43 +0200
+Message-ID: <20230911134655.710692118@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,44 +40,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Kumar Singh <quic_adisi@quicinc.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 72c8caf904aed2caed5d6e75233294b6159ddb5d ]
+[ Upstream commit 603cf6c2fcdcbc38f1daa316794e7268852677a7 ]
 
-5 GHz band channel 177 support was added with the commit e5e94d10c856 ("wifi:
-ath11k: add channel 177 into 5 GHz channel list"). However, during processing
-for the received ppdu in ath11k_dp_rx_h_ppdu(), channel number is checked only
-till 173. This leads to driver code checking for channel and then fetching the
-band from it which is extra effort since firmware has already given the channel
-number in the metadata.
+Two memory copies in this function copy from a short array into a longer one,
+using the wrong size, which leads to an out-of-bounds access:
 
-Fix this issue by checking the channel number till 177 since we support
-it now.
+include/linux/fortify-string.h:592:4: error: call to '__read_overflow2_field' declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+                        __read_overflow2_field(q_size_field, size);
+                        ^
+include/linux/fortify-string.h:592:4: error: call to '__read_overflow2_field' declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+2 errors generated.
 
-Found via code review. Compile tested only.
-
-Fixes: e5e94d10c856 ("wifi: ath11k: add channel 177 into 5 GHz channel list")
-Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Fixes: d889913205cf7 ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230726044624.20507-1-quic_adisi@quicinc.com
+Link: https://lore.kernel.org/r/20230703123737.3420464-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index f67ce62b2b48d..c5ff1bc02999e 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2408,7 +2408,7 @@ static void ath11k_dp_rx_h_ppdu(struct ath11k *ar, struct hal_rx_desc *rx_desc,
- 		rx_status->freq = center_freq;
- 	} else if (channel_num >= 1 && channel_num <= 14) {
- 		rx_status->band = NL80211_BAND_2GHZ;
--	} else if (channel_num >= 36 && channel_num <= 173) {
-+	} else if (channel_num >= 36 && channel_num <= 177) {
- 		rx_status->band = NL80211_BAND_5GHZ;
- 	} else {
- 		spin_lock_bh(&ar->data_lock);
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 58acfe8fdf8c0..faccea2d8148c 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -1634,9 +1634,9 @@ static void ath12k_peer_assoc_h_he(struct ath12k *ar,
+ 	arg->peer_nss = min(sta->deflink.rx_nss, max_nss);
+ 
+ 	memcpy(&arg->peer_he_cap_macinfo, he_cap->he_cap_elem.mac_cap_info,
+-	       sizeof(arg->peer_he_cap_macinfo));
++	       sizeof(he_cap->he_cap_elem.mac_cap_info));
+ 	memcpy(&arg->peer_he_cap_phyinfo, he_cap->he_cap_elem.phy_cap_info,
+-	       sizeof(arg->peer_he_cap_phyinfo));
++	       sizeof(he_cap->he_cap_elem.phy_cap_info));
+ 	arg->peer_he_ops = vif->bss_conf.he_oper.params;
+ 
+ 	/* the top most byte is used to indicate BSS color info */
 -- 
 2.40.1
 
