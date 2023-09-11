@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E537F11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67676C433C9;
-	Mon, 11 Sep 2023 15:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B551011710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38020C433C8;
+	Mon, 11 Sep 2023 15:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445338;
-	bh=ZFOc3T11SbssFWa/UB0c+WTaZ5uf035tfrPKBZot0dE=;
+	s=korg; t=1694445341;
+	bh=xcGruUL41PrshpdcG5e5hbWdmpEmHR/0tt/7LTKji6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8x/aIJxj5INRpbSAINlQY5BLzK2bhClxX/tyO4SD9iTWPtNmXD8Ktz8qU/HgyzTw
-	 /lEJE/7VTxfl68iJIBMt4eBZx0al+gpA6RzWeDLkjoz18bh5av/crD2xe2GmN32Sz2
-	 ORvgdVCduCDZn/4+ngu0CRkoUoMHNic7JUIJDGMg=
+	b=oTxxz3w545Wdv8VIQy0HAdC1beib00jhdlUH6Wa+5SxKp56x2BFpWyetLTNb69z09
+	 rJxOieRG4l8bHOwbQt0aKKEkVP4XXtbbCTwNYDlAmAeFgjp8Q29+BFcbmvLeL4Te/g
+	 IA2/vkcI5hJe0gIFxpJAw7N13jPlFI9yxBpy2bGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	kernel test robot <lkp@intel.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 312/600] bus: ti-sysc: Fix cast to enum warning
-Date: Mon, 11 Sep 2023 15:45:45 +0200
-Message-ID: <20230911134642.861625517@linuxfoundation.org>
+Subject: [PATCH 6.1 313/600] md/raid5-cache: fix a deadlock in r5l_exit_log()
+Date: Mon, 11 Sep 2023 15:45:46 +0200
+Message-ID: <20230911134642.902260021@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,36 +40,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit de44bf2f7683347f75690ef6cf61a1d5ba8f0891 ]
+[ Upstream commit a705b11b358dee677aad80630e7608b2d5f56691 ]
 
-Fix warning for "cast to smaller integer type 'enum sysc_soc' from 'const
-void *'".
+Commit b13015af94cf ("md/raid5-cache: Clear conf->log after finishing
+work") introduce a new problem:
 
-Cc: Nishanth Menon <nm@ti.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202308150723.ziuGCdM3-lkp@intel.com/
-Fixes: e1e1e9bb9d94 ("bus: ti-sysc: Fix build warning for 64-bit build")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+// caller hold reconfig_mutex
+r5l_exit_log
+ flush_work(&log->disable_writeback_work)
+			r5c_disable_writeback_async
+			 wait_event
+			  /*
+			   * conf->log is not NULL, and mddev_trylock()
+			   * will fail, wait_event() can never pass.
+			   */
+ conf->log = NULL
+
+Fix this problem by setting 'config->log' to NULL before wake_up() as it
+used to be, so that wait_event() from r5c_disable_writeback_async() can
+exist. In the meantime, move forward md_unregister_thread() so that
+null-ptr-deref this commit fixed can still be fixed.
+
+Fixes: b13015af94cf ("md/raid5-cache: Clear conf->log after finishing work")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230708091727.1417894-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5-cache.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 0c933788d8575..ac36b01cf6d5d 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -3125,7 +3125,7 @@ static int sysc_init_static_data(struct sysc *ddata)
+diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
+index 832d8566e1656..477e3ae17545a 100644
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -3166,12 +3166,15 @@ void r5l_exit_log(struct r5conf *conf)
+ {
+ 	struct r5l_log *log = conf->log;
  
- 	match = soc_device_match(sysc_soc_match);
- 	if (match && match->data)
--		sysc_soc->soc = (enum sysc_soc)match->data;
-+		sysc_soc->soc = (enum sysc_soc)(uintptr_t)match->data;
+-	/* Ensure disable_writeback_work wakes up and exits */
+-	wake_up(&conf->mddev->sb_wait);
+-	flush_work(&log->disable_writeback_work);
+ 	md_unregister_thread(&log->reclaim_thread);
  
- 	/*
- 	 * Check and warn about possible old incomplete dtb. We now want to see
++	/*
++	 * 'reconfig_mutex' is held by caller, set 'confg->log' to NULL to
++	 * ensure disable_writeback_work wakes up and exits.
++	 */
+ 	conf->log = NULL;
++	wake_up(&conf->mddev->sb_wait);
++	flush_work(&log->disable_writeback_work);
+ 
+ 	mempool_exit(&log->meta_pool);
+ 	bioset_exit(&log->bs);
 -- 
 2.40.1
 
