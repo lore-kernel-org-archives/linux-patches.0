@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABA011705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D239C433C7;
-	Mon, 11 Sep 2023 14:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FCD11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F57C433C7;
+	Mon, 11 Sep 2023 14:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443071;
-	bh=0TI97JvwdXHwDf/uLofCwvM4mF/7vk8O1RPn4gN8xFA=;
+	s=korg; t=1694443074;
+	bh=HLw6lIUlP2Y66eciXT/Kfa3vCCHocT0VPI/rtoftwZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ByvbnF0mD7qMCIF1Untfyjre/EpdpIRPGZct6yGsVC43SxBgF1c+t3RkMl4ifUiEh
-	 K0Ol3UrqXRYMBuDx9pArAZEPljkaG/n5ojGgozv4Ud/VzQyKaDHb/gGhTROcx1nKUu
-	 D7t+QbeLrMXGyytKzM/u8nEPZE5dWGT/dZ80/Lks=
+	b=gGnDEmQxWmcRWxcQLZktWQ+hwL3en7OReuMWuawswH21+hUjQl3t+IsgxiAa3Vohl
+	 4qeKbOzEWAO3ApASq4GwLABbHE/Oj99zk9o1saHrO1wlv+QmWjEFWqfoZ1Pv86ocsj
+	 IO4cZmVCV8IRfXrFQm1Uhf/h4GU0g64gSHXSbZh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Ming <machel@vivo.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 248/737] wifi: ath9k: use IS_ERR() with debugfs_create_dir()
-Date: Mon, 11 Sep 2023 15:41:47 +0200
-Message-ID: <20230911134657.527207124@linuxfoundation.org>
+	Siddaraju DH <siddaraju.dh@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>
+Subject: [PATCH 6.4 249/737] ice: avoid executing commands on other ports when driving sync
+Date: Mon, 11 Sep 2023 15:41:48 +0200
+Message-ID: <20230911134657.553425418@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -35,46 +38,207 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Ming <machel@vivo.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 1e4134610d93271535ecf900a676e1f094e9944c ]
+[ Upstream commit 0aacec49c29e7c5b1487e859b0c0a42388c34092 ]
 
-The debugfs_create_dir() function returns error pointers,
-it never returns NULL. Most incorrect error checks were fixed,
-but the one in ath9k_htc_init_debug() was forgotten.
+The ice hardware has a synchronization mechanism used to drive the
+simultaneous application of commands on both PHY ports and the source timer
+in the MAC.
 
-Fix the remaining error check.
+When issuing a sync via ice_ptp_exec_tmr_cmd(), the hardware will
+simultaneously apply the commands programmed for the main timer and each
+PHY port. Neither the main timer command register, nor the PHY port command
+registers auto clear on command execution.
 
-Fixes: e5facc75fa91 ("ath9k_htc: Cleanup HTC debugfs")
-Signed-off-by: Wang Ming <machel@vivo.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230713030358.12379-1-machel@vivo.com
+During the execution of a timer command intended for a single port on E822
+devices, such as those used to configure a PHY during link up, the driver
+is not correctly clearing the previous commands.
+
+This results in unintentionally executing the last programmed command on
+the main timer and other PHY ports whenever performing reconfiguration on
+E822 ports after link up. This results in unintended side effects on other
+timers, depending on what command was previously programmed.
+
+To fix this, the driver must ensure that the main timer and all other PHY
+ports are properly initialized to perform no action.
+
+The enumeration for timer commands does not include an enumeration value
+for doing nothing. Introduce ICE_PTP_NOP for this purpose. When writing a
+timer command to hardware, leave the command bits set to zero which
+indicates that no operation should be performed on that port.
+
+Modify ice_ptp_one_port_cmd() to always initialize all ports. For all ports
+other than the one being configured, write their timer command register to
+ICE_PTP_NOP. This ensures that no side effect happens on the timer command.
+
+To fix this for the PHY ports, modify ice_ptp_one_port_cmd() to always
+initialize all other ports to ICE_PTP_NOP. This ensures that no side
+effects happen on the other ports.
+
+Call ice_ptp_src_cmd() with a command value if ICE_PTP_NOP in
+ice_sync_phy_timer_e822() and ice_start_phy_timer_e822().
+
+With both of these changes, the driver should no longer execute a stale
+command on the main timer or another PHY port when reconfiguring one of the
+PHY ports after link up.
+
+Fixes: 3a7496234d17 ("ice: implement basic E822 PTP support")
+Signed-off-by: Siddaraju DH <siddaraju.dh@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 55 +++++++++++++++++++--
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.h |  3 +-
+ 2 files changed, 52 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index b3ed65e5c4da8..c55aab01fff5d 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -491,7 +491,7 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index a38614d21ea8f..de1d83300481d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -131,6 +131,8 @@ static void ice_ptp_src_cmd(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
+ 	case READ_TIME:
+ 		cmd_val |= GLTSYN_CMD_READ_TIME;
+ 		break;
++	case ICE_PTP_NOP:
++		break;
+ 	}
  
- 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
- 					     priv->hw->wiphy->debugfsdir);
--	if (!priv->debug.debugfs_phy)
-+	if (IS_ERR(priv->debug.debugfs_phy))
- 		return -ENOMEM;
+ 	wr32(hw, GLTSYN_CMD, cmd_val);
+@@ -1226,18 +1228,18 @@ ice_ptp_read_port_capture(struct ice_hw *hw, u8 port, u64 *tx_ts, u64 *rx_ts)
+ }
  
- 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
+ /**
+- * ice_ptp_one_port_cmd - Prepare a single PHY port for a timer command
++ * ice_ptp_write_port_cmd_e822 - Prepare a single PHY port for a timer command
+  * @hw: pointer to HW struct
+  * @port: Port to which cmd has to be sent
+  * @cmd: Command to be sent to the port
+  *
+  * Prepare the requested port for an upcoming timer sync command.
+  *
+- * Note there is no equivalent of this operation on E810, as that device
+- * always handles all external PHYs internally.
++ * Do not use this function directly. If you want to configure exactly one
++ * port, use ice_ptp_one_port_cmd() instead.
+  */
+ static int
+-ice_ptp_one_port_cmd(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
++ice_ptp_write_port_cmd_e822(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
+ {
+ 	u32 cmd_val, val;
+ 	u8 tmr_idx;
+@@ -1261,6 +1263,8 @@ ice_ptp_one_port_cmd(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
+ 	case ADJ_TIME_AT_TIME:
+ 		cmd_val |= PHY_CMD_ADJ_TIME_AT_TIME;
+ 		break;
++	case ICE_PTP_NOP:
++		break;
+ 	}
+ 
+ 	/* Tx case */
+@@ -1306,6 +1310,39 @@ ice_ptp_one_port_cmd(struct ice_hw *hw, u8 port, enum ice_ptp_tmr_cmd cmd)
+ 	return 0;
+ }
+ 
++/**
++ * ice_ptp_one_port_cmd - Prepare one port for a timer command
++ * @hw: pointer to the HW struct
++ * @configured_port: the port to configure with configured_cmd
++ * @configured_cmd: timer command to prepare on the configured_port
++ *
++ * Prepare the configured_port for the configured_cmd, and prepare all other
++ * ports for ICE_PTP_NOP. This causes the configured_port to execute the
++ * desired command while all other ports perform no operation.
++ */
++static int
++ice_ptp_one_port_cmd(struct ice_hw *hw, u8 configured_port,
++		     enum ice_ptp_tmr_cmd configured_cmd)
++{
++	u8 port;
++
++	for (port = 0; port < ICE_NUM_EXTERNAL_PORTS; port++) {
++		enum ice_ptp_tmr_cmd cmd;
++		int err;
++
++		if (port == configured_port)
++			cmd = configured_cmd;
++		else
++			cmd = ICE_PTP_NOP;
++
++		err = ice_ptp_write_port_cmd_e822(hw, port, cmd);
++		if (err)
++			return err;
++	}
++
++	return 0;
++}
++
+ /**
+  * ice_ptp_port_cmd_e822 - Prepare all ports for a timer command
+  * @hw: pointer to the HW struct
+@@ -1322,7 +1359,7 @@ ice_ptp_port_cmd_e822(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
+ 	for (port = 0; port < ICE_NUM_EXTERNAL_PORTS; port++) {
+ 		int err;
+ 
+-		err = ice_ptp_one_port_cmd(hw, port, cmd);
++		err = ice_ptp_write_port_cmd_e822(hw, port, cmd);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -2252,6 +2289,9 @@ static int ice_sync_phy_timer_e822(struct ice_hw *hw, u8 port)
+ 	if (err)
+ 		goto err_unlock;
+ 
++	/* Do not perform any action on the main timer */
++	ice_ptp_src_cmd(hw, ICE_PTP_NOP);
++
+ 	/* Issue the sync to activate the time adjustment */
+ 	ice_ptp_exec_tmr_cmd(hw);
+ 
+@@ -2372,6 +2412,9 @@ int ice_start_phy_timer_e822(struct ice_hw *hw, u8 port)
+ 	if (err)
+ 		return err;
+ 
++	/* Do not perform any action on the main timer */
++	ice_ptp_src_cmd(hw, ICE_PTP_NOP);
++
+ 	ice_ptp_exec_tmr_cmd(hw);
+ 
+ 	err = ice_read_phy_reg_e822(hw, port, P_REG_PS, &val);
+@@ -2847,6 +2890,8 @@ static int ice_ptp_port_cmd_e810(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
+ 	case ADJ_TIME_AT_TIME:
+ 		cmd_val = GLTSYN_CMD_ADJ_INIT_TIME;
+ 		break;
++	case ICE_PTP_NOP:
++		return 0;
+ 	}
+ 
+ 	/* Read, modify, write */
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
+index 3b68cb91bd819..096685237ca61 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
+@@ -9,7 +9,8 @@ enum ice_ptp_tmr_cmd {
+ 	INIT_INCVAL,
+ 	ADJ_TIME,
+ 	ADJ_TIME_AT_TIME,
+-	READ_TIME
++	READ_TIME,
++	ICE_PTP_NOP,
+ };
+ 
+ enum ice_ptp_serdes {
 -- 
 2.40.1
 
