@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B451170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58D9C433C8;
-	Mon, 11 Sep 2023 14:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78C11170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F3AC433C8;
+	Mon, 11 Sep 2023 14:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442297;
-	bh=7arcCSyzYzrkuJbRBoioCwEiy+Wzj9F1je0RwZ2mCvY=;
+	s=korg; t=1694442299;
+	bh=qwhAqAE/5ARGmNqUMFCsiM/sJGf7+NsmsTPPhviAU2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxGFgvjleFJLU8jjn+rLEc4ts80BV+6Z/13biWh9JHVQCLtvTRnbsgDtjxIPufkVg
-	 SNHxTlJ4HtgQItGWhLK8/SA0nauWEI0quBaXtuc3iRGhceJ1gEQM/lBs96gTZoIzjM
-	 p2TY+f69cKcrvEOaAkZTtsoLltks9qKDW4viYyJU=
+	b=bm0OjNksaJzSPDI7y0aG0XonS7TA1GXDFP/c+RhvxcBTMmmZXpLtm10N+tyQuEWQH
+	 XJ4/3SxoMgzxbqwJPpfClqsgzW5UrqXGWLoqkEudiEKOa7j7CdEjxUxRZvugKaV1UA
+	 rCErXwpIYqoDynFRrudBETmhiH7ccot44qQvMDIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.5 698/739] bpf: Fix issue in verifying allow_ptr_leaks
-Date: Mon, 11 Sep 2023 15:48:17 +0200
-Message-ID: <20230911134710.590538494@linuxfoundation.org>
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.5 716/739] s390/ipl: add missing secure/has_secure file to ipl type unknown
+Date: Mon, 11 Sep 2023 15:48:35 +0200
+Message-ID: <20230911134711.085388143@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,90 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
+commit ea5717cb13468323a7c3dd394748301802991f39 upstream.
 
-After we converted the capabilities of our networking-bpf program from
-cap_sys_admin to cap_net_admin+cap_bpf, our networking-bpf program
-failed to start. Because it failed the bpf verifier, and the error log
-is "R3 pointer comparison prohibited".
+OS installers are relying on /sys/firmware/ipl/has_secure to be
+present on machines supporting secure boot. This file is present
+for all IPL types, but not the unknown type, which prevents a secure
+installation when an LPAR is booted in HMC via FTP(s), because
+this is an unknown IPL type in linux. While at it, also add the secure
+file.
 
-A simple reproducer as follows,
-
-SEC("cls-ingress")
-int ingress(struct __sk_buff *skb)
-{
-	struct iphdr *iph = (void *)(long)skb->data + sizeof(struct ethhdr);
-
-	if ((long)(iph + 1) > (long)skb->data_end)
-		return TC_ACT_STOLEN;
-	return TC_ACT_OK;
-}
-
-Per discussion with Yonghong and Alexei [1], comparison of two packet
-pointers is not a pointer leak. This patch fixes it.
-
-Our local kernel is 6.1.y and we expect this fix to be backported to
-6.1.y, so stable is CCed.
-
-[1]. https://lore.kernel.org/bpf/CAADnVQ+Nmspr7Si+pxWn8zkE7hX-7s93ugwC+94aXSy4uQ9vBg@mail.gmail.com/
-
-Suggested-by: Yonghong Song <yonghong.song@linux.dev>
-Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: c9896acc7851 ("s390/ipl: Provide has_secure sysfs attribute")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230823020703.3790-2-laoar.shao@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/s390/kernel/ipl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -13816,6 +13816,12 @@ static int check_cond_jmp_op(struct bpf_
- 		return -EINVAL;
- 	}
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -640,6 +640,8 @@ static struct attribute_group ipl_ccw_at
  
-+	/* check src2 operand */
-+	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
-+	if (err)
-+		return err;
-+
-+	dst_reg = &regs[insn->dst_reg];
- 	if (BPF_SRC(insn->code) == BPF_X) {
- 		if (insn->imm != 0) {
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
-@@ -13827,12 +13833,13 @@ static int check_cond_jmp_op(struct bpf_
- 		if (err)
- 			return err;
+ static struct attribute *ipl_unknown_attrs[] = {
+ 	&sys_ipl_type_attr.attr,
++	&sys_ipl_secure_attr.attr,
++	&sys_ipl_has_secure_attr.attr,
+ 	NULL,
+ };
  
--		if (is_pointer_value(env, insn->src_reg)) {
-+		src_reg = &regs[insn->src_reg];
-+		if (!(reg_is_pkt_pointer_any(dst_reg) && reg_is_pkt_pointer_any(src_reg)) &&
-+		    is_pointer_value(env, insn->src_reg)) {
- 			verbose(env, "R%d pointer comparison prohibited\n",
- 				insn->src_reg);
- 			return -EACCES;
- 		}
--		src_reg = &regs[insn->src_reg];
- 	} else {
- 		if (insn->src_reg != BPF_REG_0) {
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
-@@ -13840,12 +13847,6 @@ static int check_cond_jmp_op(struct bpf_
- 		}
- 	}
- 
--	/* check src2 operand */
--	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
--	if (err)
--		return err;
--
--	dst_reg = &regs[insn->dst_reg];
- 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
- 
- 	if (BPF_SRC(insn->code) == BPF_K) {
 
 
