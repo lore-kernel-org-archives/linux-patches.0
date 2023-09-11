@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A9A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4278FC433C8;
-	Mon, 11 Sep 2023 14:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C551170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AAFC433C7;
+	Mon, 11 Sep 2023 14:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440833;
-	bh=wGTJFxMAKGzIEhdEvGxumrflg96s+fCysP+3r8LKR2M=;
+	s=korg; t=1694440836;
+	bh=Jxm1Yf44UozXoVwzyRo9u8tElS6hL5jNJGrfRr6zlIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xORMNa4ip7nfHhhfGDQroN6LA89kmJ88N8VHJCh6YPp7QgW0H/HQHnyhkr7Xj61ab
-	 c/jwau2kMuOguzKlM8LupZDD8Nr6DfCYoejwSs9STTPeYXY1HG5hrr/xywRMO4t9Qg
-	 apv3Xzo45hY5EqUeeGkbumS+WvfRWSumaim1zWPk=
+	b=nY3m7PmXwJJGk6ckMUM3+xkf0YFrUJsFkCLaYFz2vQnNidi1Tf0IdxYSSDg+SVDdt
+	 8owGP93qJUdABOzbcNTMHNtdStXTgrg/rMVnBOshC0l0mtfrqhlmcUjPrwkRvXt6hm
+	 t0makJVg4bwB93Bw8oMXG/60HNV3eK79egEmPu1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 164/739] wifi: ath9k: protect WMI command response buffer replacement with a lock
-Date: Mon, 11 Sep 2023 15:39:23 +0200
-Message-ID: <20230911134655.750244320@linuxfoundation.org>
+Subject: [PATCH 6.5 195/739] pds_core: no health reporter in VF
+Date: Mon, 11 Sep 2023 15:39:54 +0200
+Message-ID: <20230911134656.636488858@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -35,79 +36,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 454994cfa9e4c18b6df9f78b60db8eadc20a6c25 ]
+[ Upstream commit e48b894a1db7f6ce66bff0402ab21ff9f0e56034 ]
 
-If ath9k_wmi_cmd() has exited with a timeout, it is possible that during
-next ath9k_wmi_cmd() call the wmi_rsp callback for previous wmi command
-writes to new wmi->cmd_rsp_buf and makes a completion. This results in an
-invalid ath9k_wmi_cmd() return value.
+Make sure the health reporter is set up before we use it in
+our devlink health updates, especially since the VF doesn't
+set up the health reporter.
 
-Move the replacement of WMI command response buffer and length under
-wmi_lock. Note that last_seq_id value is updated there, too.
-
-Thus, the buffer cannot be written to by a belated wmi_rsp callback
-because that path is properly rejected by the last_seq_id check.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230425192607.18015-2-pchelkin@ispras.ru
+Fixes: 25b450c05a49 ("pds_core: add devlink health facilities")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230824161754.34264-3-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 04f363cb90fe5..1476b42b52a91 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -283,7 +283,8 @@ int ath9k_wmi_connect(struct htc_target *htc, struct wmi *wmi,
- 
- static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 			       struct sk_buff *skb,
--			       enum wmi_cmd_id cmd, u16 len)
-+			       enum wmi_cmd_id cmd, u16 len,
-+			       u8 *rsp_buf, u32 rsp_len)
- {
- 	struct wmi_cmd_hdr *hdr;
- 	unsigned long flags;
-@@ -293,6 +294,11 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 	hdr->seq_no = cpu_to_be16(++wmi->tx_seq_id);
- 
- 	spin_lock_irqsave(&wmi->wmi_lock, flags);
-+
-+	/* record the rsp buffer and length */
-+	wmi->cmd_rsp_buf = rsp_buf;
-+	wmi->cmd_rsp_len = rsp_len;
-+
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
- 
-@@ -333,11 +339,7 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 		goto out;
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index f2c79456d7452..383e3311a52c2 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -524,7 +524,8 @@ static void pdsc_fw_down(struct pdsc *pdsc)
  	}
  
--	/* record the rsp buffer and length */
--	wmi->cmd_rsp_buf = rsp_buf;
--	wmi->cmd_rsp_len = rsp_len;
--
--	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len);
-+	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len, rsp_buf, rsp_len);
- 	if (ret)
- 		goto out;
+ 	/* Notify clients of fw_down */
+-	devlink_health_report(pdsc->fw_reporter, "FW down reported", pdsc);
++	if (pdsc->fw_reporter)
++		devlink_health_report(pdsc->fw_reporter, "FW down reported", pdsc);
+ 	pdsc_notify(PDS_EVENT_RESET, &reset_event);
  
+ 	pdsc_stop(pdsc);
+@@ -554,8 +555,9 @@ static void pdsc_fw_up(struct pdsc *pdsc)
+ 
+ 	/* Notify clients of fw_up */
+ 	pdsc->fw_recoveries++;
+-	devlink_health_reporter_state_update(pdsc->fw_reporter,
+-					     DEVLINK_HEALTH_REPORTER_STATE_HEALTHY);
++	if (pdsc->fw_reporter)
++		devlink_health_reporter_state_update(pdsc->fw_reporter,
++						     DEVLINK_HEALTH_REPORTER_STATE_HEALTHY);
+ 	pdsc_notify(PDS_EVENT_RESET, &reset_event);
+ 
+ 	return;
 -- 
 2.40.1
 
