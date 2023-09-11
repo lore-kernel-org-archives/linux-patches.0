@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEA74432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:09:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C361EC433C8;
-	Mon, 11 Sep 2023 14:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B94C153
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:09:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A4EC433C7;
+	Mon, 11 Sep 2023 14:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441394;
-	bh=QQLb70N59cXUcaqR840b3/jQpvp/ERFxdBd2873OCkw=;
+	s=korg; t=1694441396;
+	bh=HZGeXZvwWQT9Iy//NlhVypQSrvUwVwmrdG6CHU103qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYjnPUidlvaTQ06Q/1bwQjzREModyzm8BK41McRtKZzDlhztDv/kiKmiLnE07fOq0
-	 r6Q51QoGi5H5ihV8g8uOPk35/gGQoAJlqaUzll56Lh9/UfTHtWqjWT20pj5FvD7aIq
-	 6JIHCaHS6h0XqEXfjEyQvLReY/PPmw4OQflYbTFU=
+	b=YfBEO3qq1WeeDGWrvJRpxKDr8lwoR9t7TM7LayBaQqwKAgmtlJq+PXry17CZCmfiH
+	 tmLQ4BY4MDLgjKIK9n4zYBQ1PEcA/V64ozHupbuipN2UvHI/3fU2kKXR3dKVvUGO8R
+	 EJKnmBz2w4XYNiZfiXN2hB1sfgZN1lL4ZQxdfOzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 397/739] clk: qcom: fix some Kconfig corner cases
-Date: Mon, 11 Sep 2023 15:43:16 +0200
-Message-ID: <20230911134702.271016210@linuxfoundation.org>
+Subject: [PATCH 6.5 372/739] ALSA: ump: Dont create unused substreams for static blocks
+Date: Mon, 11 Sep 2023 15:42:51 +0200
+Message-ID: <20230911134701.552455475@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,72 +39,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b6bcd1c0c27e1f210228346e6d23a2ec0c263e8c ]
+[ Upstream commit b2bcbd031d34d1ba1f491b9152474cf9f6d4d51b ]
 
-The SM_GCC_8550 symbol and others can only be built for ARM64 or when
-compile testing, but it gets selected by other drivers that can also be
-built for 32-bit ARCH_QCOM when not compile testing, which results in
-a Kconfig warning:
+When the UMP Endpoint is declared as "static", that is, no dynamic
+reassignment of UMP Groups, it makes little sense to expose always all
+16 groups with 16 substreams.  Many of those substreams are disabled
+groups, hence they are useless, but applications don't know it and try
+to open / access all those substreams unnecessarily.
 
-WARNING: unmet direct dependencies detected for SM_GCC_8550
-  Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=m] && (ARM64 || COMPILE_TEST [=n])
-  Selected by [m]:
-  - SM_GPUCC_8550 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
-  - SM_VIDEOCC_8550 [=m] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=m]
+This patch limits the number of UMP legacy rawmidi substreams only to
+the active groups.  The behavior is changed only for the static
+endpoint (i.e. devices without UMP v1.1 feature implemented or with
+the static block flag is set).
 
-Add further 'depends on' statements to tighten this in a way that
-avoids the missing dependencies.
-
-Fixes: fd0b5b106fcab ("clk: qcom: Introduce SM8350 VIDEOCC")
-Fixes: 441fe711be384 ("clk: qcom: videocc-sm8450: Add video clock controller driver for SM8450")
-Fixes: f53153a37969c ("clk: qcom: videocc-sm8550: Add video clock controller driver for SM8550")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230801105718.3658612-1-arnd@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 0b5288f5fe63 ("ALSA: ump: Add legacy raw MIDI support")
+Link: https://lore.kernel.org/r/20230824075108.29958-4-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/Kconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/sound/ump.h |  1 +
+ sound/core/ump.c    | 43 +++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 263e55d75e3f5..ed7dc3349e34e 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -995,6 +995,7 @@ config SM_GPUCC_8450
+diff --git a/include/sound/ump.h b/include/sound/ump.h
+index 44d2c2fd021d2..91238dabe3075 100644
+--- a/include/sound/ump.h
++++ b/include/sound/ump.h
+@@ -45,6 +45,7 @@ struct snd_ump_endpoint {
+ 	spinlock_t legacy_locks[2];
+ 	struct snd_rawmidi *legacy_rmidi;
+ 	struct snd_rawmidi_substream *legacy_substreams[2][SNDRV_UMP_MAX_GROUPS];
++	unsigned char legacy_mapping[SNDRV_UMP_MAX_GROUPS];
  
- config SM_GPUCC_8550
- 	tristate "SM8550 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8550
- 	help
- 	  Support for the graphics clock controller on SM8550 devices.
-@@ -1031,6 +1032,7 @@ config SM_VIDEOCC_8250
+ 	/* for legacy output; need to open the actual substream unlike input */
+ 	int legacy_out_opens;
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index beb439f25b09e..9d6e3e748f7e7 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -984,7 +984,7 @@ static int snd_ump_legacy_open(struct snd_rawmidi_substream *substream)
+ {
+ 	struct snd_ump_endpoint *ump = substream->rmidi->private_data;
+ 	int dir = substream->stream;
+-	int group = substream->number;
++	int group = ump->legacy_mapping[substream->number];
+ 	int err;
  
- config SM_VIDEOCC_8350
- 	tristate "SM8350 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8350
- 	select QCOM_GDSC
- 	help
-@@ -1040,6 +1042,7 @@ config SM_VIDEOCC_8350
+ 	mutex_lock(&ump->open_mutex);
+@@ -1016,7 +1016,7 @@ static int snd_ump_legacy_close(struct snd_rawmidi_substream *substream)
+ {
+ 	struct snd_ump_endpoint *ump = substream->rmidi->private_data;
+ 	int dir = substream->stream;
+-	int group = substream->number;
++	int group = ump->legacy_mapping[substream->number];
  
- config SM_VIDEOCC_8550
- 	tristate "SM8550 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8550
- 	select QCOM_GDSC
- 	help
-@@ -1088,6 +1091,7 @@ config CLK_GFM_LPASS_SM8250
+ 	mutex_lock(&ump->open_mutex);
+ 	spin_lock_irq(&ump->legacy_locks[dir]);
+@@ -1123,6 +1123,34 @@ static void process_legacy_input(struct snd_ump_endpoint *ump, const u32 *src,
+ 	spin_unlock_irqrestore(&ump->legacy_locks[dir], flags);
+ }
  
- config SM_VIDEOCC_8450
- 	tristate "SM8450 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8450
- 	select QCOM_GDSC
- 	help
++/* Fill ump->legacy_mapping[] for groups to be used for legacy rawmidi */
++static int fill_legacy_mapping(struct snd_ump_endpoint *ump)
++{
++	struct snd_ump_block *fb;
++	unsigned int group_maps = 0;
++	int i, num;
++
++	if (ump->info.flags & SNDRV_UMP_EP_INFO_STATIC_BLOCKS) {
++		list_for_each_entry(fb, &ump->block_list, list) {
++			for (i = 0; i < fb->info.num_groups; i++)
++				group_maps |= 1U << (fb->info.first_group + i);
++		}
++		if (!group_maps)
++			ump_info(ump, "No UMP Group is found in FB\n");
++	}
++
++	/* use all groups for non-static case */
++	if (!group_maps)
++		group_maps = (1U << SNDRV_UMP_MAX_GROUPS) - 1;
++
++	num = 0;
++	for (i = 0; i < SNDRV_UMP_MAX_GROUPS; i++)
++		if (group_maps & (1U << i))
++			ump->legacy_mapping[num++] = i;
++
++	return num;
++}
++
+ static void fill_substream_names(struct snd_ump_endpoint *ump,
+ 				 struct snd_rawmidi *rmidi, int dir)
+ {
+@@ -1130,7 +1158,7 @@ static void fill_substream_names(struct snd_ump_endpoint *ump,
+ 
+ 	list_for_each_entry(s, &rmidi->streams[dir].substreams, list)
+ 		snprintf(s->name, sizeof(s->name), "Group %d (%s)",
+-			 s->number + 1, ump->info.name);
++			 ump->legacy_mapping[s->number] + 1, ump->info.name);
+ }
+ 
+ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
+@@ -1138,16 +1166,19 @@ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
+ {
+ 	struct snd_rawmidi *rmidi;
+ 	bool input, output;
+-	int err;
++	int err, num;
+ 
+-	ump->out_cvts = kcalloc(16, sizeof(*ump->out_cvts), GFP_KERNEL);
++	ump->out_cvts = kcalloc(SNDRV_UMP_MAX_GROUPS,
++				sizeof(*ump->out_cvts), GFP_KERNEL);
+ 	if (!ump->out_cvts)
+ 		return -ENOMEM;
+ 
++	num = fill_legacy_mapping(ump);
++
+ 	input = ump->core.info_flags & SNDRV_RAWMIDI_INFO_INPUT;
+ 	output = ump->core.info_flags & SNDRV_RAWMIDI_INFO_OUTPUT;
+ 	err = snd_rawmidi_new(ump->core.card, id, device,
+-			      output ? 16 : 0, input ? 16 : 0,
++			      output ? num : 0, input ? num : 0,
+ 			      &rmidi);
+ 	if (err < 0) {
+ 		kfree(ump->out_cvts);
 -- 
 2.40.1
 
