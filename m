@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D179611715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53485C433C8;
-	Mon, 11 Sep 2023 15:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A189F11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B03C433C8;
+	Mon, 11 Sep 2023 15:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445220;
-	bh=8bpDvyPyQBverwT/0B9ieErGYB7LKocXKOUkT69N/7I=;
+	s=korg; t=1694445223;
+	bh=N0k5jieWtYA+nD1520UGJ+5xprSzNsB1mNk/Ufjqq5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OvrEuQkMcibELrZFeLyKeT1VxnURY7tR3ucvgqj1aEbDfdHfcCHbJwBg0yhIW2CLy
-	 EOEl0ig1GGHzjBIc4KmyUgJ1sqzD7Vj/Uv0fkEC3LdJn2GPXQw97OsI9N1UJBeF7pR
-	 FtM/KnjadNP69Up/KI2wA7qdLt3FSQunMP0pVq4Q=
+	b=E7NwtHthKpkkQehK7U+KP29C4h6wns1WowBaRNTrywFlfyAkBxdPyCU2wFlUnvajY
+	 SLt0YQ+4+ldM8JIQFcu+zvxI139WA/6GPPW5UVvrQVn2IabZiozF3ec1ZHEwNvMbyR
+	 DykpO2zJk4E/7oZEq9XeoX5aXJEGwbOmMYby3Htg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/600] ARM: dts: BCM53573: Fix Ethernet info for Luxul devices
-Date: Mon, 11 Sep 2023 15:45:03 +0200
-Message-ID: <20230911134641.577952562@linuxfoundation.org>
+Subject: [PATCH 6.1 271/600] arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC
+Date: Mon, 11 Sep 2023 15:45:04 +0200
+Message-ID: <20230911134641.608668721@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -34,89 +36,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 44ad8207806973f4e4f7d870fff36cc01f494250 ]
+[ Upstream commit 4b6ea15c0a1122422b44bf6c47a3c22fc8d46777 ]
 
-Both Luxul's XAP devices (XAP-810 and XAP-1440) are access points that
-use a non-default design. They don't include switch but have a single
-Ethernet port and BCM54210E PHY connected to the Ethernet controller's
-MDIO bus.
+GCC and it's GDSCs are under the RPMh CX power domain. So let's add the
+missing RPMh power domain to the GCC node.
 
-Support for those devices regressed due to two changes:
-
-1. Describing MDIO bus with switch
-After commit 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125
-rev 4 switch") Linux stopped probing for MDIO devices.
-
-2. Dropping hardcoded BCM54210E delays
-In commit fea7fda7f50a ("net: phy: broadcom: Fix RGMII delays
-configuration for BCM54210E") support for other PHY modes was added but
-that requires a proper "phy-mode" value in DT.
-
-Both above changes are correct (they don't need to be reverted or
-anything) but they need this fix for DT data to be correct and for Linux
-to work properly.
-
-Fixes: 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125 rev 4 switch")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230713111145.14864-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: 6d4cf750d03a ("arm64: dts: sdm845: Add minimal dts/dtsi files for sdm845 SoC and MTP")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20230720054100.9940-4-manivannan.sadhasivam@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 13 +++++++++++++
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 13 +++++++++++++
- 2 files changed, 26 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index e20b6d2eb274a..1e23e0a807819 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -46,3 +46,16 @@ button-restart {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index b7ba70857d0ad..375c86633b5b9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -1099,6 +1099,7 @@ gcc: clock-controller@100000 {
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
++			power-domains = <&rpmhpd SDM845_CX>;
  		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index 9d863570fcf3a..5dbb950c8113e 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -83,3 +83,16 @@ pcie0_chipcommon: chipcommon@0 {
- 		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
+ 
+ 		qfprom@784000 {
 -- 
 2.40.1
 
