@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9AF11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BB7C433C8;
-	Mon, 11 Sep 2023 14:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9C711705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B855C433C8;
+	Mon, 11 Sep 2023 14:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443415;
-	bh=sY2tCPx522qtUB3LByl0b9OQzI23estZhuzoKHMwj2M=;
+	s=korg; t=1694443419;
+	bh=uSrQzmmdOPUMCoNboBPbwNOVTy1D0dluaVP23kjqIwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xa1LtoaeL60y54UUyCKL7DIaWSTHjws7UQrc9s37UlAzuW7TS687sB8IRUiX/4FR5
-	 DWWQ8PyV5PS6ZQRbkIrT33/dqQ9fYXzhycXuqoR94gkhaOIw7u4HEcL4tmmOA4nctD
-	 AAMBXzUjr6nOpsXTBI6yGbjXo6emHVOeh+DAWOJY=
+	b=Y560RaCr7uWmxut1natbi/E+XU7XzyNMFtWXTLo1WJwJGkPmqPszaJNXDkg40Ats8
+	 jThG14+yNIdkvm1Ze4tu2F3HFui/D+towBxSsnVIfSC3CXx74T3gOXz9lFDQWz0fYu
+	 lq9yPF6OFN7Hc8x8j9CL/vjHZ6OwncTRQdRxKPzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 370/737] io_uring: fix drain stalls by invalid SQE
-Date: Mon, 11 Sep 2023 15:43:49 +0200
-Message-ID: <20230911134700.882368429@linuxfoundation.org>
+Subject: [PATCH 6.4 371/737] drm/mediatek: dp: Add missing error checks in mtk_dp_parse_capabilities
+Date: Mon, 11 Sep 2023 15:43:50 +0200
+Message-ID: <20230911134700.911363790@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,39 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit cfdbaa3a291d6fd2cb4a1a70d74e63b4abc2f5ec ]
+[ Upstream commit cfc146137a9f12e883ba64bc496b6da4d23f26d5 ]
 
-cq_extra is protected by ->completion_lock, which io_get_sqe() misses.
-The bug is harmless as it doesn't happen in real life, requires invalid
-SQ index array and racing with submission, and only messes up the
-userspace, i.e. stall requests execution but will be cleaned up on
-ring destruction.
+If reading the RX capabilities fails the training pattern will be set
+wrongly: add error checking for drm_dp_read_dpcd_caps() and return if
+anything went wrong with it.
 
-Fixes: 15641e427070f ("io_uring: don't cache number of dropped SQEs")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/66096d54651b1a60534bb2023f2947f09f50ef73.1691538547.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+While at it, also add a less critical error check when writing to
+clear the ESI0 IRQ vector.
+
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230725073234.55892-2-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index a57bdf336ca8a..d029e578bdfe1 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2468,7 +2468,9 @@ static bool io_get_sqe(struct io_ring_ctx *ctx, const struct io_uring_sqe **sqe)
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 64eee77452c04..c58b775877a31 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -1588,7 +1588,9 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
+ 	u8 val;
+ 	ssize_t ret;
+ 
+-	drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
++	ret = drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
++	if (ret < 0)
++		return ret;
+ 
+ 	if (drm_dp_tps4_supported(mtk_dp->rx_cap))
+ 		mtk_dp->train_info.channel_eq_pattern = DP_TRAINING_PATTERN_4;
+@@ -1615,10 +1617,13 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
+ 			return ret == 0 ? -EIO : ret;
+ 		}
+ 
+-		if (val)
+-			drm_dp_dpcd_writeb(&mtk_dp->aux,
+-					   DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
+-					   val);
++		if (val) {
++			ret = drm_dp_dpcd_writeb(&mtk_dp->aux,
++						 DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
++						 val);
++			if (ret < 0)
++				return ret;
++		}
  	}
  
- 	/* drop invalid entries */
-+	spin_lock(&ctx->completion_lock);
- 	ctx->cq_extra--;
-+	spin_unlock(&ctx->completion_lock);
- 	WRITE_ONCE(ctx->rings->sq_dropped,
- 		   READ_ONCE(ctx->rings->sq_dropped) + 1);
- 	return false;
+ 	return 0;
 -- 
 2.40.1
 
