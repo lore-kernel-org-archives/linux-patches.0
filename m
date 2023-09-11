@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F9411715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18A2C433C8;
-	Mon, 11 Sep 2023 15:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C57411715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49B6C433C7;
+	Mon, 11 Sep 2023 15:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444881;
-	bh=jVx8E95FvZZlMeTI410ElanCHiYnGyPeiQIzxicxbEM=;
+	s=korg; t=1694444884;
+	bh=g5xMUg55JBgTwQ0vm99jcR5yD5Yh4hKNWp44eUj+GKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ceKhS2XTJxpr7RsLFcpE3Xg21A2iWHrcxfBLaD41CdP7/XwwLu5BdmTLcYeOXubLI
-	 gNHsmE7tzWS3zwGmlafrLxmSLeMYVQYTs+BrxanJ51VkpVaUi0xgFAYZBNZssnMoEV
-	 Kt3SZvQg4ooMm3rsUo18mQsDF+8zcRNJe5LjuhlM=
+	b=XM9SoOsO/wdU1NpQI5sjj5FJBpLlNX76EZ0dA5BfBB3P4XqTkWmc0oDAVmDaZGl+7
+	 4fZ30MOtJ7QzrxIDW8jzj6mfPfyv9mVNlFfWCchbbU2MuYsK5h0UaFJxWvsD/lfkf0
+	 AevKR83USMJa1MQHEUFolxG5jzZxYaHymP112Oj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/600] wifi: rtw89: debug: Fix error handling in rtw89_debug_priv_btc_manual_set()
-Date: Mon, 11 Sep 2023 15:43:02 +0200
-Message-ID: <20230911134638.009878988@linuxfoundation.org>
+Subject: [PATCH 6.1 150/600] wifi: mt76: mt7921: fix non-PSC channel scan fail
+Date: Mon, 11 Sep 2023 15:43:03 +0200
+Message-ID: <20230911134638.038680904@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,50 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 59b4cc439f184c5eaa34161ec67af1e16ffabed4 ]
+[ Upstream commit 0e5911bb7cc92c00dda9b4d635c1266b7ca915c6 ]
 
-If there is a failure during kstrtobool_from_user()
-rtw89_debug_priv_btc_manual_set should return a negative error code
-instead of returning the count directly.
+Due to the scan command may only request legacy bands and PSC channel
+in 6GHz band, we are unable to scan the APs on non-PSC channel in this
+case. Enable WIPHY_FLAG_SPLIT_SCAN_6GHZ to support non-PSC channel
+(obtained during scan on legacy bands) in 6GHz scan request.
 
-Fix this bug by returning an error code instead of a count after
-a failed call of the function "kstrtobool_from_user". Moreover
-I omitted the label "out" with this source code correction.
-
-Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/tencent_1C09B99BD7DA9CAD18B00C8F0F050F540607@qq.com
+Fixes: 50ac15a511e3 ("mt76: mt7921: add 6GHz support")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/debug.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/init.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
-index ec0af903961f0..3a8fe60d0bb7b 100644
---- a/drivers/net/wireless/realtek/rtw89/debug.c
-+++ b/drivers/net/wireless/realtek/rtw89/debug.c
-@@ -2302,12 +2302,14 @@ static ssize_t rtw89_debug_priv_btc_manual_set(struct file *filp,
- 	struct rtw89_dev *rtwdev = debugfs_priv->rtwdev;
- 	struct rtw89_btc *btc = &rtwdev->btc;
- 	bool btc_manual;
-+	int ret;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+index 4ad66b3443838..c997b8d3ea590 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+@@ -80,7 +80,8 @@ mt7921_init_wiphy(struct ieee80211_hw *hw)
+ 	wiphy->max_sched_scan_ssids = MT76_CONNAC_MAX_SCHED_SCAN_SSID;
+ 	wiphy->max_match_sets = MT76_CONNAC_MAX_SCAN_MATCH;
+ 	wiphy->max_sched_scan_reqs = 1;
+-	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH;
++	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH |
++			WIPHY_FLAG_SPLIT_SCAN_6GHZ;
+ 	wiphy->reg_notifier = mt7921_regd_notifier;
  
--	if (kstrtobool_from_user(user_buf, count, &btc_manual))
--		goto out;
-+	ret = kstrtobool_from_user(user_buf, count, &btc_manual);
-+	if (ret)
-+		return ret;
- 
- 	btc->ctrl.manual = btc_manual;
--out:
-+
- 	return count;
- }
- 
+ 	wiphy->features |= NL80211_FEATURE_SCHED_SCAN_RANDOM_MAC_ADDR |
 -- 
 2.40.1
 
