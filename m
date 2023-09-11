@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD6A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D364AC433C9;
-	Mon, 11 Sep 2023 14:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0F611706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE95BC433C8;
+	Mon, 11 Sep 2023 14:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444262;
-	bh=S3KcD8JFwM5EvTgvpNBXOgs3Cjrqk0MNBvv/bk1jXvg=;
+	s=korg; t=1694444265;
+	bh=6X+Gx96Jj4VyxmJO5fV2EJ5MypQiljitmCtQbtczV6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zB0++nr8MjeJ/AK3924Bi8jJqVfQbtc5IudIEjF4ftax5HDYedOpci5RZY7IpNJ+/
-	 sDiC8iWBLdwMfic4hqmScyrZD2mfeESVVYtovU7OKkx4KEp/5qPcuSBUAv90gmGZhH
-	 PdTLuR7HFMX+yMnOnqJgL+W06z1/bJZxW8QmJ15o=
+	b=jgk/d3YkZ6fb2kyXg3ponet6pAa9BR6inSE0kyxghQOke1g7zdtm3ki00Zxn92bvx
+	 Yr8FwcRRA2PqFhmMvzeJ7KUXDqhvCBYPR5pkhS9nRQn+DLW+qOW+cGUb+mCHxKDaSl
+	 wniv0Ua19ACHpi+WnRDbAPeoLFgpkeESrs2FOnak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.4 667/737] xtensa: PMU: fix base address for the newer hardware
-Date: Mon, 11 Sep 2023 15:48:46 +0200
-Message-ID: <20230911134709.174849788@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Hongchen Zhang <zhanghongchen@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.4 668/737] LoongArch: mm: Add p?d_leaf() definitions
+Date: Mon, 11 Sep 2023 15:48:47 +0200
+Message-ID: <20230911134709.201868274@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -38,69 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Hongchen Zhang <zhanghongchen@loongson.cn>
 
-commit 687eb3c42f4ad81e7c947c50e2d865f692064291 upstream.
+commit 303be4b33562a5b689261ced1616bf16ad49efa7 upstream.
 
-With introduction of ERI access control in RG.0 base address of the PMU
-unit registers has changed. Add support for the new PMU configuration.
+When I do LTP test, LTP test case ksm06 caused panic at
+	break_ksm_pmd_entry
+	  -> pmd_leaf (Huge page table but False)
+	  -> pte_present (panic)
 
+The reason is pmd_leaf() is not defined, So like commit 501b81046701
+("mips: mm: add p?d_leaf() definitions") add p?d_leaf() definition for
+LoongArch.
+
+Fixes: 09cfefb7fa70 ("LoongArch: Add memory management")
 Cc: stable@vger.kernel.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/include/asm/core.h  |    9 +++++++++
- arch/xtensa/kernel/perf_event.c |   17 +++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ arch/loongarch/include/asm/pgtable.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/xtensa/include/asm/core.h
-+++ b/arch/xtensa/include/asm/core.h
-@@ -44,4 +44,13 @@
- #define XTENSA_STACK_ALIGNMENT	16
- #endif
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -593,6 +593,9 @@ static inline long pmd_protnone(pmd_t pm
+ }
+ #endif /* CONFIG_NUMA_BALANCING */
  
-+#ifndef XCHAL_HW_MIN_VERSION
-+#if defined(XCHAL_HW_MIN_VERSION_MAJOR) && defined(XCHAL_HW_MIN_VERSION_MINOR)
-+#define XCHAL_HW_MIN_VERSION (XCHAL_HW_MIN_VERSION_MAJOR * 100 + \
-+			      XCHAL_HW_MIN_VERSION_MINOR)
-+#else
-+#define XCHAL_HW_MIN_VERSION 0
-+#endif
-+#endif
++#define pmd_leaf(pmd)		((pmd_val(pmd) & _PAGE_HUGE) != 0)
++#define pud_leaf(pud)		((pud_val(pud) & _PAGE_HUGE) != 0)
 +
- #endif
---- a/arch/xtensa/kernel/perf_event.c
-+++ b/arch/xtensa/kernel/perf_event.c
-@@ -13,17 +13,26 @@
- #include <linux/perf_event.h>
- #include <linux/platform_device.h>
- 
-+#include <asm/core.h>
- #include <asm/processor.h>
- #include <asm/stacktrace.h>
- 
-+#define XTENSA_HWVERSION_RG_2015_0	260000
-+
-+#if XCHAL_HW_MIN_VERSION >= XTENSA_HWVERSION_RG_2015_0
-+#define XTENSA_PMU_ERI_BASE		0x00101000
-+#else
-+#define XTENSA_PMU_ERI_BASE		0x00001000
-+#endif
-+
- /* Global control/status for all perf counters */
--#define XTENSA_PMU_PMG			0x1000
-+#define XTENSA_PMU_PMG			XTENSA_PMU_ERI_BASE
- /* Perf counter values */
--#define XTENSA_PMU_PM(i)		(0x1080 + (i) * 4)
-+#define XTENSA_PMU_PM(i)		(XTENSA_PMU_ERI_BASE + 0x80 + (i) * 4)
- /* Perf counter control registers */
--#define XTENSA_PMU_PMCTRL(i)		(0x1100 + (i) * 4)
-+#define XTENSA_PMU_PMCTRL(i)		(XTENSA_PMU_ERI_BASE + 0x100 + (i) * 4)
- /* Perf counter status registers */
--#define XTENSA_PMU_PMSTAT(i)		(0x1180 + (i) * 4)
-+#define XTENSA_PMU_PMSTAT(i)		(XTENSA_PMU_ERI_BASE + 0x180 + (i) * 4)
- 
- #define XTENSA_PMU_PMG_PMEN		0x1
- 
+ /*
+  * We provide our own get_unmapped area to cope with the virtual aliasing
+  * constraints placed on us by the cache architecture.
 
 
