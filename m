@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9DB11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA7AC433C7;
-	Mon, 11 Sep 2023 15:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DA411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2A7C433C7;
+	Mon, 11 Sep 2023 15:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445503;
-	bh=EsbgawzGW9ko4Opn5PZChhyMAWx+5AnQtX3WMDY8WZo=;
+	s=korg; t=1694445505;
+	bh=11zuF0wd4CH28OMKOgZh7RioE56lzVa1ptOIiyhOVfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzAfk6D25JPnK54GQB6kgtxOEKeWyzpX8gZMun5BA1X7D/pu8Ik2EsX7h5DAxAPg0
-	 9dJ1vzykZ3E2cdS1X+Olx4MYjSvm+8Ut0JUjzySAvoLUB2SrADEB7GYwrCyMV2eL9E
-	 Cqjab+/MDBsxV3rbH4cqSkTcB5kcI//7+GXuluNg=
+	b=m3khoVPzkP564+EP8o+2mXXCvW7tjDtJTEfklYOQSXvpq175fGFWuQMjNYsNTwzse
+	 c82x8KjOiA1IJKOM33dyrer+OViN/tp56RmnLCVh4pBI6aRyQIRvWfA97cLsCTwpXH
+	 Cz75LPltrCZcMS3ETCXlG7N49oCVu0qf3ELMuYls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 371/600] wifi: ath10k: Use RMW accessors for changing LNKCTL
-Date: Mon, 11 Sep 2023 15:46:44 +0200
-Message-ID: <20230911134644.632672723@linuxfoundation.org>
+Subject: [PATCH 6.1 372/600] NFSv4.2: Rework scratch handling for READ_PLUS
+Date: Mon, 11 Sep 2023 15:46:45 +0200
+Message-ID: <20230911134644.661125798@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -37,63 +33,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
+[ Upstream commit fbd2a05f29a95d5b42b294bf47e55a711424965b ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.
+Instead of using a tiny, static scratch buffer, we should use a kmalloc()-ed
+buffer that is allocated when checking for read plus usage. This lets us
+use the buffer before decoding any part of the READ_PLUS operation
+instead of setting it right before segment decoding, meaning it should
+be a little more robust.
 
-Use RMW capability accessors which does proper locking to avoid losing
-concurrent updates to the register value. On restore, clear the ASPMC field
-properly.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 76d870ed09ab ("ath10k: enable ASPM")
-Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Stable-dep-of: bb05a617f06b ("NFSv4.2: Fix READ_PLUS smatch warnings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/nfs/nfs42xdr.c       |  4 ++--
+ fs/nfs/nfs4proc.c       | 17 ++++++++++++-----
+ include/linux/nfs_xdr.h |  1 +
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index 728d607289c36..522691ba4c5d2 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -1963,8 +1963,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
- 	ath10k_pci_irq_enable(ar);
- 	ath10k_pci_rx_post(ar);
+diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
+index 2fd465cab631d..08c1dd094f010 100644
+--- a/fs/nfs/nfs42xdr.c
++++ b/fs/nfs/nfs42xdr.c
+@@ -1121,7 +1121,6 @@ static int decode_read_plus(struct xdr_stream *xdr, struct nfs_pgio_res *res)
+ 	uint32_t segments;
+ 	struct read_plus_segment *segs;
+ 	int status, i;
+-	char scratch_buf[16];
+ 	__be32 *p;
  
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl);
-+	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC,
-+					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
+ 	status = decode_op_hdr(xdr, OP_READ_PLUS);
+@@ -1142,7 +1141,6 @@ static int decode_read_plus(struct xdr_stream *xdr, struct nfs_pgio_res *res)
+ 	if (!segs)
+ 		return -ENOMEM;
  
- 	return 0;
+-	xdr_set_scratch_buffer(xdr, &scratch_buf, sizeof(scratch_buf));
+ 	status = -EIO;
+ 	for (i = 0; i < segments; i++) {
+ 		status = decode_read_plus_segment(xdr, &segs[i]);
+@@ -1347,6 +1345,8 @@ static int nfs4_xdr_dec_read_plus(struct rpc_rqst *rqstp,
+ 	struct compound_hdr hdr;
+ 	int status;
+ 
++	xdr_set_scratch_buffer(xdr, res->scratch, sizeof(res->scratch));
++
+ 	status = decode_compound_hdr(xdr, &hdr);
+ 	if (status)
+ 		goto out;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 1044305e77996..3f96ccc386c34 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -5446,6 +5446,8 @@ static bool nfs4_read_plus_not_supported(struct rpc_task *task,
+ 
+ static int nfs4_read_done(struct rpc_task *task, struct nfs_pgio_header *hdr)
+ {
++	if (hdr->res.scratch)
++		kfree(hdr->res.scratch);
+ 	if (!nfs4_sequence_done(task, &hdr->res.seq_res))
+ 		return -EAGAIN;
+ 	if (nfs4_read_stateid_changed(task, &hdr->args))
+@@ -5459,17 +5461,22 @@ static int nfs4_read_done(struct rpc_task *task, struct nfs_pgio_header *hdr)
  }
-@@ -2821,8 +2822,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
  
- 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
- 				  &ar_pci->link_ctl);
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+				   PCI_EXP_LNKCTL_ASPMC);
+ #if defined CONFIG_NFS_V4_2 && defined CONFIG_NFS_V4_2_READ_PLUS
+-static void nfs42_read_plus_support(struct nfs_pgio_header *hdr,
++static bool nfs42_read_plus_support(struct nfs_pgio_header *hdr,
+ 				    struct rpc_message *msg)
+ {
+ 	/* Note: We don't use READ_PLUS with pNFS yet */
+-	if (nfs_server_capable(hdr->inode, NFS_CAP_READ_PLUS) && !hdr->ds_clp)
++	if (nfs_server_capable(hdr->inode, NFS_CAP_READ_PLUS) && !hdr->ds_clp) {
+ 		msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_READ_PLUS];
++		hdr->res.scratch = kmalloc(32, GFP_KERNEL);
++		return hdr->res.scratch != NULL;
++	}
++	return false;
+ }
+ #else
+-static void nfs42_read_plus_support(struct nfs_pgio_header *hdr,
++static bool nfs42_read_plus_support(struct nfs_pgio_header *hdr,
+ 				    struct rpc_message *msg)
+ {
++	return false;
+ }
+ #endif /* CONFIG_NFS_V4_2 */
  
- 	/*
- 	 * Bring the target up cleanly.
+@@ -5479,8 +5486,8 @@ static void nfs4_proc_read_setup(struct nfs_pgio_header *hdr,
+ 	hdr->timestamp   = jiffies;
+ 	if (!hdr->pgio_done_cb)
+ 		hdr->pgio_done_cb = nfs4_read_done_cb;
+-	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_READ];
+-	nfs42_read_plus_support(hdr, msg);
++	if (!nfs42_read_plus_support(hdr, msg))
++		msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_READ];
+ 	nfs4_init_sequence(&hdr->args.seq_args, &hdr->res.seq_res, 0, 0);
+ }
+ 
+diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
+index e86cf6642d212..2fd973d188c47 100644
+--- a/include/linux/nfs_xdr.h
++++ b/include/linux/nfs_xdr.h
+@@ -670,6 +670,7 @@ struct nfs_pgio_res {
+ 		struct {
+ 			unsigned int		replen;		/* used by read */
+ 			int			eof;		/* used by read */
++			void *			scratch;	/* used by read */
+ 		};
+ 		struct {
+ 			struct nfs_writeverf *	verf;		/* used by write */
 -- 
 2.40.1
 
