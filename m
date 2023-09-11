@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D65D11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:38:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7BFC433CA;
-	Mon, 11 Sep 2023 14:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEF21170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF66C433C8;
+	Mon, 11 Sep 2023 14:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443139;
-	bh=0Ce9NxlyhX8VrGOvqnFBIXKaG0FXMOuKEFPz3WG07nw=;
+	s=korg; t=1694443141;
+	bh=n/8Sdnp2p4NYvbs0yq3HWyDQT8uKvBe+yFVhII68qJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/eOMxVMRnL2jyXVrbQjPdwGDoCjXfq/peGKOPxr8ODDaSEI1zpJzobgo9fnPD4WU
-	 zY8URE7s/EtISbXBOHIlEZhHygHdrfQRPZbkVWS8wVhmupGdA6eRLtwhM4mNAoRT00
-	 YVQxN4ucg10nxR7AAVMzwfp05Wwbzkgv8GrnEkaM=
+	b=wrb/uYbIrsEFEjCDYM6Rm7HQ6w3YgE0FFFG8ShyhybhBh+OcjPDn6Tjz/ru2PNIm4
+	 i2OwMo4uGlrWuWWkUTuabs4kGGhn4FwQv1Um9DIZKZtM3VKyhILWSjG4xnSioK8b+o
+	 uj6C1KlgrdoIdMFYAL0QSLfxe+b6P2iJeiN6NHgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cf54c1da6574b6c1b049@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 244/737] Bluetooth: hci_conn: fail SCO/ISO via hci_conn_failed if ACL gone early
-Date: Mon, 11 Sep 2023 15:41:43 +0200
-Message-ID: <20230911134657.420142601@linuxfoundation.org>
+Subject: [PATCH 6.4 245/737] Bluetooth: btusb: Do not call kfree_skb() under spin_lock_irqsave()
+Date: Mon, 11 Sep 2023 15:41:44 +0200
+Message-ID: <20230911134657.447288167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,80 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 3344d318337d9dca928fd448e966557ec5063f85 ]
+[ Upstream commit 2a05334d7f91ff189692089c05fc48cc1d8204de ]
 
-Not calling hci_(dis)connect_cfm before deleting conn referred to by a
-socket generally results to use-after-free.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+spin_lock_irqsave(). Compile tested only.
 
-When cleaning up SCO connections when the parent ACL is deleted too
-early, use hci_conn_failed to do the connection cleanup properly.
-
-We also need to clean up ISO connections in a similar situation when
-connecting has started but LE Create CIS is not yet sent, so do it too
-here.
-
-Fixes: ca1fd42e7dbf ("Bluetooth: Fix potential double free caused by hci_conn_unlink")
-Reported-by: syzbot+cf54c1da6574b6c1b049@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-bluetooth/00000000000013b93805fbbadc50@google.com/
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: baac6276c0a9 ("Bluetooth: btusb: handle mSBC audio over USB Endpoints")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btusb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 4f31340c2c932..eb2802ef34bfe 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1040,6 +1040,29 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
- 	return conn;
- }
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 025e803ba55c2..5559d6d8ae8b2 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2077,7 +2077,7 @@ static int btusb_switch_alt_setting(struct hci_dev *hdev, int new_alts)
+ 		 * alternate setting.
+ 		 */
+ 		spin_lock_irqsave(&data->rxlock, flags);
+-		kfree_skb(data->sco_skb);
++		dev_kfree_skb_irq(data->sco_skb);
+ 		data->sco_skb = NULL;
+ 		spin_unlock_irqrestore(&data->rxlock, flags);
  
-+static void hci_conn_cleanup_child(struct hci_conn *conn, u8 reason)
-+{
-+	if (!reason)
-+		reason = HCI_ERROR_REMOTE_USER_TERM;
-+
-+	/* Due to race, SCO/ISO conn might be not established yet at this point,
-+	 * and nothing else will clean it up. In other cases it is done via HCI
-+	 * events.
-+	 */
-+	switch (conn->type) {
-+	case SCO_LINK:
-+	case ESCO_LINK:
-+		if (HCI_CONN_HANDLE_UNSET(conn->handle))
-+			hci_conn_failed(conn, reason);
-+		break;
-+	case ISO_LINK:
-+		if (conn->state != BT_CONNECTED &&
-+		    !test_bit(HCI_CONN_CREATE_CIS, &conn->flags))
-+			hci_conn_failed(conn, reason);
-+		break;
-+	}
-+}
-+
- static void hci_conn_unlink(struct hci_conn *conn)
- {
- 	struct hci_dev *hdev = conn->hdev;
-@@ -1062,14 +1085,7 @@ static void hci_conn_unlink(struct hci_conn *conn)
- 			if (!test_bit(HCI_UP, &hdev->flags))
- 				continue;
- 
--			/* Due to race, SCO connection might be not established
--			 * yet at this point. Delete it now, otherwise it is
--			 * possible for it to be stuck and can't be deleted.
--			 */
--			if ((child->type == SCO_LINK ||
--			     child->type == ESCO_LINK) &&
--			    HCI_CONN_HANDLE_UNSET(child->handle))
--				hci_conn_del(child);
-+			hci_conn_cleanup_child(child, conn->abort_reason);
- 		}
- 
- 		return;
 -- 
 2.40.1
 
