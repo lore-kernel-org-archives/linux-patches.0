@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B1F11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82DBC433C9;
-	Mon, 11 Sep 2023 15:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3140411715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32AEC433C7;
+	Mon, 11 Sep 2023 15:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444937;
-	bh=4/1l3lQwBGUdmieDk5QHaBLH+5/Vy3K8wgxHtj+qosI=;
+	s=korg; t=1694444940;
+	bh=8mFCaV4s66q96OXtgb+fb9NsbeCoJ66jxLf0aVzcfT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1Sx5+FkwWh8+0byKgQrOL5RDM6/IwQVGVozRgFPmypAmELoI7sTAJEP/TihmE+xi
-	 bNch8zgzfgISaFXOqYfZcSoiYPJHzuFiVb/Maoihx7Q9eObkfft393EVoy/gdLqeGo
-	 HIW7jbxqAJby9Hoj0xjOTbGXeyxZlxMBqh9bnMjY=
+	b=KaHdmok9hhavMyx1GBr7ClBqvb3JHkI2qT3Gd1l9TDgQZnYeQ8adZAcwftBk3Fekg
+	 ys8qGRXpbh12fVw51WQx8JqLnt14hSw+dvFuyA0d13aZeABTiKJESHY5djnXrDTutQ
+	 aIVj7e/eYq8nxK537pLlXEN1qYdsfuyRctCDPlxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Cyril Hrubis <chrubis@suse.cz>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Petr Vorel <pvorel@suse.cz>,
+	Mel Gorman <mgorman@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/600] ACPI: x86: s2idle: Fix a logic error parsing AMD constraints table
-Date: Mon, 11 Sep 2023 15:42:43 +0200
-Message-ID: <20230911134637.454370371@linuxfoundation.org>
+Subject: [PATCH 6.1 121/600] sched/rt: Fix sysctl_sched_rr_timeslice intial value
+Date: Mon, 11 Sep 2023 15:42:34 +0200
+Message-ID: <20230911134637.185702203@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,82 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Cyril Hrubis <chrubis@suse.cz>
 
-[ Upstream commit 9cc8cd086f05d9a01026c65c98da88561e9c619e ]
+[ Upstream commit c7fcb99877f9f542c918509b2801065adcaf46fa ]
 
-The constraints table should be resetting the `list` object
-after running through all of `info_obj` iterations.
+There is a 10% rounding error in the intial value of the
+sysctl_sched_rr_timeslice with CONFIG_HZ_300=y.
 
-This adjusts whitespace as well as less code will now be included
-with each loop. This fixes a functional problem is fixed where a
-badly formed package in the inner loop may have incorrect data.
+This was found with LTP test sched_rr_get_interval01:
 
-Fixes: 146f1ed852a8 ("ACPI: PM: s2idle: Add AMD support to handle _DSM")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
+sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
+sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
+sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
+sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
+sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
+
+What this test does is to compare the return value from the
+sched_rr_get_interval() and the sched_rr_timeslice_ms sysctl file and
+fails if they do not match.
+
+The problem it found is the intial sysctl file value which was computed as:
+
+static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
+
+which works fine as long as MSEC_PER_SEC is multiple of HZ, however it
+introduces 10% rounding error for CONFIG_HZ_300:
+
+(MSEC_PER_SEC / HZ) * (100 * HZ / 1000)
+
+(1000 / 300) * (100 * 300 / 1000)
+
+3 * 30 = 90
+
+This can be easily fixed by reversing the order of the multiplication
+and division. After this fix we get:
+
+(MSEC_PER_SEC * (100 * HZ / 1000)) / HZ
+
+(1000 * (100 * 300 / 1000)) / 300
+
+(1000 * 30) / 300 = 100
+
+Fixes: 975e155ed873 ("sched/rt: Show the 'sched_rr_timeslice' SCHED_RR timeslice tuning knob in milliseconds")
+Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Acked-by: Mel Gorman <mgorman@suse.de>
+Tested-by: Petr Vorel <pvorel@suse.cz>
+Link: https://lore.kernel.org/r/20230802151906.25258-2-chrubis@suse.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/s2idle.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ kernel/sched/rt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
-index 3a9195df1aab3..ec84da6cc1bff 100644
---- a/drivers/acpi/x86/s2idle.c
-+++ b/drivers/acpi/x86/s2idle.c
-@@ -128,12 +128,11 @@ static void lpi_device_get_constraints_amd(void)
- 				struct lpi_constraints *list;
- 				acpi_status status;
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 4f5796dd26a56..576eb2f51f043 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -25,7 +25,7 @@ unsigned int sysctl_sched_rt_period = 1000000;
+ int sysctl_sched_rt_runtime = 950000;
  
-+				list = &lpi_constraints_table[lpi_constraints_table_size];
-+
- 				for (k = 0; k < info_obj->package.count; k++) {
- 					union acpi_object *obj = &info_obj->package.elements[k];
- 
--					list = &lpi_constraints_table[lpi_constraints_table_size];
--					list->min_dstate = -1;
--
- 					switch (k) {
- 					case 0:
- 						dev_info.enabled = obj->integer.value;
-@@ -148,27 +147,21 @@ static void lpi_device_get_constraints_amd(void)
- 						dev_info.min_dstate = obj->integer.value;
- 						break;
- 					}
-+				}
- 
--					if (!dev_info.enabled || !dev_info.name ||
--					    !dev_info.min_dstate)
--						continue;
-+				if (!dev_info.enabled || !dev_info.name ||
-+				    !dev_info.min_dstate)
-+					continue;
- 
--					status = acpi_get_handle(NULL, dev_info.name,
--								 &list->handle);
--					if (ACPI_FAILURE(status))
--						continue;
-+				status = acpi_get_handle(NULL, dev_info.name, &list->handle);
-+				if (ACPI_FAILURE(status))
-+					continue;
- 
--					acpi_handle_debug(lps0_device_handle,
--							  "Name:%s\n", dev_info.name);
-+				acpi_handle_debug(lps0_device_handle,
-+						  "Name:%s\n", dev_info.name);
- 
--					list->min_dstate = dev_info.min_dstate;
-+				list->min_dstate = dev_info.min_dstate;
- 
--					if (list->min_dstate < 0) {
--						acpi_handle_debug(lps0_device_handle,
--								  "Incomplete constraint defined\n");
--						continue;
--					}
--				}
- 				lpi_constraints_table_size++;
- 			}
- 		}
+ #ifdef CONFIG_SYSCTL
+-static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
++static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC * RR_TIMESLICE) / HZ;
+ static int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+ 		size_t *lenp, loff_t *ppos);
+ static int sched_rr_handler(struct ctl_table *table, int write, void *buffer,
 -- 
 2.40.1
 
