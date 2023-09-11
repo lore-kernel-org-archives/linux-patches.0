@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C25611715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1D5C433C7;
-	Mon, 11 Sep 2023 15:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F45F11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9362C433C8;
+	Mon, 11 Sep 2023 15:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444923;
-	bh=dI+BDpE42zrX9V7qkes4CBZDwbR04OxiotVmiEGt6gY=;
+	s=korg; t=1694444926;
+	bh=DZ/Dd3srd0wRNzvLTG6LrWf3rpmmH+umQQ5pVsreoso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjMDpaRn5dNQZBfPRUfi21kIXW7lyuCkWkr29RgyeZj2y7Qj1CrhFYFFdNNsluofW
-	 VodhH2G+lEZMCl/MqmKCSmuCVuCYkhtKgDsjiUk4nlPb34pjy6Bx+rBnwJUGGwDtrq
-	 Qun7ir76hIc1bo1pol+7q8YrzK4i++uGvFVErBqk=
+	b=0eo4JH3M0eMpTqrEGNQsgrNJmRXpwOCDROI1Eanks5K55qwljF/UKpsypNrKJHS50
+	 WfTMWUEeLbWjnGXNhSoALsNmMfj22XKtXnFkssJpmOFygoQP+HZsH58inZfbKTSmk4
+	 60aDUKT7tsuWwrLYM00FKjHbP8Wa1aICiFjCvUzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colm Harrington <colm.harrington@oracle.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/600] selftests/bpf: fix static assert compilation issue for test_cls_*.c
-Date: Mon, 11 Sep 2023 15:43:15 +0200
-Message-ID: <20230911134638.391213489@linuxfoundation.org>
+Subject: [PATCH 6.1 126/600] s390/pkey: fix PKEY_TYPE_EP11_AES handling for sysfs attributes
+Date: Mon, 11 Sep 2023 15:42:39 +0200
+Message-ID: <20230911134637.335245023@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,80 +41,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 416c6d01244ecbf0abfdb898fd091b50ef951b48 ]
+[ Upstream commit b9352e4b9b9eff949bcc6907b8569b3a1d992f1e ]
 
-commit bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced a new PKEY_TYPE_EP11_AES securekey type as
+a supplement to the existing PKEY_TYPE_EP11 (which won't work in
+environments with session-bound keys). The pkey EP11 securekey
+attributes use PKEY_TYPE_EP11_AES (instead of PKEY_TYPE_EP11)
+keyblobs, to make the generated keyblobs usable also in environments,
+where session-bound keys are required.
 
-...was backported to stable trees such as 5.15. The problem is that with older
-LLVM/clang (14/15) - which is often used for older kernels - we see compilation
-failures in BPF selftests now:
+There should be no negative impacts to userspace because the internal
+structure of the keyblobs is opaque. The increased size of the
+generated keyblobs is reflected by the changed size of the attributes.
 
-In file included from progs/test_cls_redirect_subprogs.c:2:
-progs/test_cls_redirect.c:90:2: error: static assertion expression is not an integral constant expression
-        sizeof(flow_ports_t) !=
-        ^~~~~~~~~~~~~~~~~~~~~~~
-progs/test_cls_redirect.c:91:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
-                offsetofend(struct bpf_sock_tuple, ipv4.dport) -
-                ^
-progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
-        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
-         ^
-tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
-                                 ^
-In file included from progs/test_cls_redirect_subprogs.c:2:
-progs/test_cls_redirect.c:95:2: error: static assertion expression is not an integral constant expression
-        sizeof(flow_ports_t) !=
-        ^~~~~~~~~~~~~~~~~~~~~~~
-progs/test_cls_redirect.c:96:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
-                offsetofend(struct bpf_sock_tuple, ipv6.dport) -
-                ^
-progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
-        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
-         ^
-tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
-                                 ^
-2 errors generated.
-make: *** [Makefile:594: tools/testing/selftests/bpf/test_cls_redirect_subprogs.bpf.o] Error 1
-
-The problem is the new offsetof() does not play nice with static asserts.
-Given that the context is a static assert (and CO-RE relocation is not
-needed at compile time), offsetof() usage can be replaced by restoring
-the original offsetof() definition as __builtin_offsetof().
-
-Fixes: bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
-Reported-by: Colm Harrington <colm.harrington@oracle.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Tested-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20230802073906.3197480-1-alan.maguire@oracle.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_cls_redirect.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/s390/include/uapi/asm/pkey.h | 2 +-
+ drivers/s390/crypto/pkey_api.c    | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect.h b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-index 76eab0aacba0c..233b089d1fbac 100644
---- a/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-+++ b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-@@ -12,6 +12,15 @@
- #include <linux/ipv6.h>
- #include <linux/udp.h>
+diff --git a/arch/s390/include/uapi/asm/pkey.h b/arch/s390/include/uapi/asm/pkey.h
+index 924b876f992c1..29c6fd369761e 100644
+--- a/arch/s390/include/uapi/asm/pkey.h
++++ b/arch/s390/include/uapi/asm/pkey.h
+@@ -26,7 +26,7 @@
+ #define MAXCLRKEYSIZE	32	   /* a clear key value may be up to 32 bytes */
+ #define MAXAESCIPHERKEYSIZE 136  /* our aes cipher keys have always 136 bytes */
+ #define MINEP11AESKEYBLOBSIZE 256  /* min EP11 AES key blob size  */
+-#define MAXEP11AESKEYBLOBSIZE 320  /* max EP11 AES key blob size */
++#define MAXEP11AESKEYBLOBSIZE 336  /* max EP11 AES key blob size */
  
-+/* offsetof() is used in static asserts, and the libbpf-redefined CO-RE
-+ * friendly version breaks compilation for older clang versions <= 15
-+ * when invoked in a static assert.  Restore original here.
-+ */
-+#ifdef offsetof
-+#undef offsetof
-+#define offsetof(type, member) __builtin_offsetof(type, member)
-+#endif
-+
- struct gre_base_hdr {
- 	uint16_t flags;
- 	uint16_t protocol;
+ /* Minimum size of a key blob */
+ #define MINKEYBLOBSIZE	SECKEYBLOBSIZE
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 79568da580c67..2b92ec20ed68e 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -1947,7 +1947,7 @@ static struct attribute_group ccacipher_attr_group = {
+  * (i.e. off != 0 or count < key blob size) -EINVAL is returned.
+  * This function and the sysfs attributes using it provide EP11 key blobs
+  * padded to the upper limit of MAXEP11AESKEYBLOBSIZE which is currently
+- * 320 bytes.
++ * 336 bytes.
+  */
+ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 				       bool is_xts, char *buf, loff_t off,
+@@ -1976,7 +1976,7 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 		card = apqns[i] >> 16;
+ 		dom = apqns[i] & 0xFFFF;
+ 		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
+-				    PKEY_TYPE_EP11);
++				    PKEY_TYPE_EP11_AES);
+ 		if (rc == 0)
+ 			break;
+ 	}
+@@ -1987,7 +1987,7 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 		keysize = MAXEP11AESKEYBLOBSIZE;
+ 		buf += MAXEP11AESKEYBLOBSIZE;
+ 		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
+-				    PKEY_TYPE_EP11);
++				    PKEY_TYPE_EP11_AES);
+ 		if (rc == 0)
+ 			return 2 * MAXEP11AESKEYBLOBSIZE;
+ 	}
 -- 
 2.40.1
 
