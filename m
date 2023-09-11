@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879B11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C918EC433C8;
-	Mon, 11 Sep 2023 14:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8E411706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F41C433C8;
+	Mon, 11 Sep 2023 14:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443958;
-	bh=UStgQd2S1rjnuhzJE0j64wZvWTlnLqXhdnYegDOc7lM=;
+	s=korg; t=1694443961;
+	bh=+xIO/LvGtu0WpJsa/JO9XIiHo0M5QvX12CQMmBbupO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgHMXBM3RfrT5tThdnbMUMLG3yGokVc3c0bP7dvNRYUw644qqN1/4761bCn7DnBCf
-	 pzzhCjnyDfoK1FWlFU4kojzEgyj72bEUBGCT/UdAyn00Vhr0Mmw8hMqjxWN8CyqPuq
-	 eSPIjkD2a1BRJ+wP4/wzBCZ9AcKXz59yz0gzpCt8=
+	b=gvxSc1Vt/qbzN4bU1MZtDF+kUf00nmocMPxUsw9asY7xHhw5Ooy8QyFIY0oJsjG00
+	 UCK3sEz/3XhptqwFDOIe6lzseaZgzV8besAZklBgLys6mlB9z+WkoFQWIUR5mCHHj9
+	 fzZ6CRAJONbkeERG70PB5lF3viK5cOQ8suhtmkL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nils Fuhler <nils@nilsfuhler.de>,
-	Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 561/737] HID: input: Support devices sending Eraser without Invert
-Date: Mon, 11 Sep 2023 15:47:00 +0200
-Message-ID: <20230911134706.219699164@linuxfoundation.org>
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Marek Vasut <marex@denx.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jai Luthra <j-luthra@ti.com>
+Subject: [PATCH 6.4 562/737] media: ov5640: Enable MIPI interface in ov5640_set_power_mipi()
+Date: Mon, 11 Sep 2023 15:47:01 +0200
+Message-ID: <20230911134706.248164689@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,92 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 276e14e6c3993317257e1787e93b7166fbc30905 ]
+[ Upstream commit 98cb72d3b9c5e03b10fa993752ecfcbd9c572d8c ]
 
-Some digitizers (notably XP-Pen Artist 24) do not report the Invert
-usage when erasing.  This causes the device to be permanently stuck with
-the BTN_TOOL_RUBBER tool after sending Eraser, as Invert is the only
-usage that can release the tool.  In this state, Touch and Inrange are
-no longer reported to userspace, rendering the pen unusable.
+Set OV5640_REG_IO_MIPI_CTRL00 bit 2 to 1 instead of 0, since 1 means
+MIPI CSI2 interface, while 0 means CPI parallel interface.
 
-Prior to commit 87562fcd1342 ("HID: input: remove the need for
-HID_QUIRK_INVERT"), BTN_TOOL_RUBBER was never set and Eraser events were
-simply translated into BTN_TOUCH without causing an inconsistent state.
+In the ov5640_set_power_mipi() the interface should obviously be set
+to MIPI CSI2 since this functions is used to power up the sensor when
+operated in MIPI CSI2 mode. The sensor should not be in CPI mode in
+that case.
 
-Introduce HID_QUIRK_NOINVERT for such digitizers and detect them during
-hidinput_configure_usage().  This quirk causes the tool to be released
-as soon as Eraser is reported as not set.  Set BTN_TOOL_RUBBER in
-input->keybit when mapping Eraser.
+This fixes a corner case where capturing the first frame on i.MX8MN
+with CSI/ISI resulted in corrupted frame.
 
-Fixes: 87562fcd1342 ("HID: input: remove the need for HID_QUIRK_INVERT")
-Co-developed-by: Nils Fuhler <nils@nilsfuhler.de>
-Signed-off-by: Nils Fuhler <nils@nilsfuhler.de>
-Signed-off-by: Illia Ostapyshyn <ostapyshyn@sra.uni-hannover.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: aa4bb8b8838f ("media: ov5640: Re-work MIPI startup sequence")
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Tested-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com> # [Test on imx6q]
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Jai Luthra <j-luthra@ti.com> # [Test on bplay, sk-am62]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 18 ++++++++++++++++--
- include/linux/hid.h     |  1 +
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ov5640.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 851ee86eff32a..40a5645f8fe81 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -988,6 +988,7 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 			return;
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index 1bc4d72a906e5..74cfe2d373577 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -2542,9 +2542,9 @@ static int ov5640_set_power_mipi(struct ov5640_dev *sensor, bool on)
+ 	 *		  "ov5640_set_stream_mipi()")
+ 	 * [4] = 0	: Power up MIPI HS Tx
+ 	 * [3] = 0	: Power up MIPI LS Rx
+-	 * [2] = 0	: MIPI interface disabled
++	 * [2] = 1	: MIPI interface enabled
+ 	 */
+-	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x40);
++	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x44);
+ 	if (ret)
+ 		return ret;
  
- 		case 0x3c: /* Invert */
-+			device->quirks &= ~HID_QUIRK_NOINVERT;
- 			map_key_clear(BTN_TOOL_RUBBER);
- 			break;
- 
-@@ -1013,9 +1014,13 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 		case 0x45: /* ERASER */
- 			/*
- 			 * This event is reported when eraser tip touches the surface.
--			 * Actual eraser (BTN_TOOL_RUBBER) is set by Invert usage when
--			 * tool gets in proximity.
-+			 * Actual eraser (BTN_TOOL_RUBBER) is set and released either
-+			 * by Invert if tool reports proximity or by Eraser directly.
- 			 */
-+			if (!test_bit(BTN_TOOL_RUBBER, input->keybit)) {
-+				device->quirks |= HID_QUIRK_NOINVERT;
-+				set_bit(BTN_TOOL_RUBBER, input->keybit);
-+			}
- 			map_key_clear(BTN_TOUCH);
- 			break;
- 
-@@ -1580,6 +1585,15 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct
- 		else if (report->tool != BTN_TOOL_RUBBER)
- 			/* value is off, tool is not rubber, ignore */
- 			return;
-+		else if (*quirks & HID_QUIRK_NOINVERT &&
-+			 !test_bit(BTN_TOUCH, input->key)) {
-+			/*
-+			 * There is no invert to release the tool, let hid_input
-+			 * send BTN_TOUCH with scancode and release the tool after.
-+			 */
-+			hid_report_release_tool(report, input, BTN_TOOL_RUBBER);
-+			return;
-+		}
- 
- 		/* let hid-input set BTN_TOUCH */
- 		break;
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 4e4c4fe369118..7cbc10073a1fe 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -360,6 +360,7 @@ struct hid_item {
- #define HID_QUIRK_NO_OUTPUT_REPORTS_ON_INTR_EP	BIT(18)
- #define HID_QUIRK_HAVE_SPECIAL_DRIVER		BIT(19)
- #define HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE	BIT(20)
-+#define HID_QUIRK_NOINVERT			BIT(21)
- #define HID_QUIRK_FULLSPEED_INTERVAL		BIT(28)
- #define HID_QUIRK_NO_INIT_REPORTS		BIT(29)
- #define HID_QUIRK_NO_IGNORE			BIT(30)
 -- 
 2.40.1
 
