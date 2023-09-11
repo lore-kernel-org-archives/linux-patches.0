@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D542611710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFAAC433C8;
-	Mon, 11 Sep 2023 15:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85F911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E50C433C8;
+	Mon, 11 Sep 2023 15:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445648;
-	bh=fPe+phdJM330acCkBPrAwBN9GxOEDQdGuOFdQLeVDcw=;
+	s=korg; t=1694445651;
+	bh=3sO9tv3kAWuvWiO3hE209NvRmq/AYxVnY32yNGADHP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcukMdzW3mrD9u7Y3MU+C1RJ6WSj/gTJeBA3eop/z/ACZiB4AhxGxcKlw0P6C3+Sa
-	 i2PUr58mUMKqAb8qgWAWDkbkW5O73pZ3oHbUJuuUJGjkiHIHwybLyKL2a0Fzs+Jr6C
-	 /O3Lt1D5mL/VDLHxOmUIRKKGS34BDiIyvXWeqYhQ=
+	b=DHqd4ipo2bsF82v4QYTBqVXyYPphPPUAARNmrlKwBcdqCLyUlEY/HMSSbPSSDdvY9
+	 1Rvn7DCHOaZI6SGAEusvnK7DijcAqiVxGFBc2Z+hQdaZI1Tzn6AW8g4Tl/O38tDbcn
+	 cfzv4S5b0XQX/B6/knewhEPSnibViJje/KyKwS3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Marcovitch <dmarcovitch@nvidia.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Lin Ma <linma@zju.edu.cn>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 395/600] iommu/amd/iommu_v2: Fix pasid_state refcount dec hit 0 warning on pasid unbind
-Date: Mon, 11 Sep 2023 15:47:08 +0200
-Message-ID: <20230911134645.337274873@linuxfoundation.org>
+Subject: [PATCH 6.1 422/600] scsi: be2iscsi: Add length check when parsing nlattrs
+Date: Mon, 11 Sep 2023 15:47:35 +0200
+Message-ID: <20230911134646.121720017@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,51 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Marcovitch <dmarcovitch@nvidia.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 534103bcd52ca9c1fecbc70e717b4a538dc4ded8 ]
+[ Upstream commit ee0268f230f66cb472df3424f380ea668da2749a ]
 
-When unbinding pasid - a race condition exists vs outstanding page faults.
+beiscsi_iface_set_param() parses nlattr with nla_for_each_attr and assumes
+every attributes can be viewed as struct iscsi_iface_param_info.
 
-To prevent this, the pasid_state object contains a refcount.
-    * set to 1 on pasid bind
-    * incremented on each ppr notification start
-    * decremented on each ppr notification done
-    * decremented on pasid unbind
+This is not true because there is no any nla_policy to validate the
+attributes passed from the upper function iscsi_set_iface_params().
 
-Since refcount_dec assumes that refcount will never reach 0:
-  the current implementation causes the following to be invoked on
-  pasid unbind:
-        REFCOUNT_WARN("decrement hit 0; leaking memory")
+Add the nla_len check before accessing the nlattr data and return EINVAL if
+the length check fails.
 
-Fix this issue by changing refcount_dec to refcount_dec_and_test
-to explicitly handle refcount=1.
-
-Fixes: 8bc54824da4e ("iommu/amd: Convert from atomic_t to refcount_t on pasid_state->count")
-Signed-off-by: Daniel Marcovitch <dmarcovitch@nvidia.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230609105146.7773-2-vasant.hegde@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 0e43895ec1f4 ("[SCSI] be2iscsi: adding functionality to change network settings using iscsiadm")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://lore.kernel.org/r/20230723075938.3713864-1-linma@zju.edu.cn
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu_v2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/be2iscsi/be_iscsi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/amd/iommu_v2.c b/drivers/iommu/amd/iommu_v2.c
-index 75355ddca6575..4caa023048a08 100644
---- a/drivers/iommu/amd/iommu_v2.c
-+++ b/drivers/iommu/amd/iommu_v2.c
-@@ -262,8 +262,8 @@ static void put_pasid_state(struct pasid_state *pasid_state)
+diff --git a/drivers/scsi/be2iscsi/be_iscsi.c b/drivers/scsi/be2iscsi/be_iscsi.c
+index 8aeaddc93b167..8d374ae863ba2 100644
+--- a/drivers/scsi/be2iscsi/be_iscsi.c
++++ b/drivers/scsi/be2iscsi/be_iscsi.c
+@@ -450,6 +450,10 @@ int beiscsi_iface_set_param(struct Scsi_Host *shost,
+ 	}
  
- static void put_pasid_state_wait(struct pasid_state *pasid_state)
- {
--	refcount_dec(&pasid_state->count);
--	wait_event(pasid_state->wq, !refcount_read(&pasid_state->count));
-+	if (!refcount_dec_and_test(&pasid_state->count))
-+		wait_event(pasid_state->wq, !refcount_read(&pasid_state->count));
- 	free_pasid_state(pasid_state);
- }
+ 	nla_for_each_attr(attrib, data, dt_len, rm_len) {
++		/* ignore nla_type as it is never used */
++		if (nla_len(attrib) < sizeof(*iface_param))
++			return -EINVAL;
++
+ 		iface_param = nla_data(attrib);
  
+ 		if (iface_param->param_type != ISCSI_NET_PARAM)
 -- 
 2.40.1
 
