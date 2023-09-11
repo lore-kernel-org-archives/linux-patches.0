@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25A611710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E84CC433C7;
-	Mon, 11 Sep 2023 15:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9D011710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C99C433C7;
+	Mon, 11 Sep 2023 15:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445404;
-	bh=XcTKGLAp+5dh+5pLKZRXbbiz/rpnpH0ZbWMmUz00J0M=;
+	s=korg; t=1694445407;
+	bh=Pfb4qv0z7psGi375GTxxW5tNff3WK1aaFrzMItS2eqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKK5rV7eB2H+79I5Yns+0nbz8s5cZuBV7Fvg78kWsKO81DbxgpHYSElO35pOhnm4v
-	 7Z2ku8lKoW0uEWQZUyuXd+rLgZalpFdCz0sLBJq+iDZi0/Ll5HVWdBSjCxrIVD11ZC
-	 QMh+4il/0EUEEj2x1tAPxax/YJoYbQpGfU4DtSZs=
+	b=PZwd67oDHsMgz5zE9TBp8lHW+N5wQ/FawS/q9BikMQEiWgHfQMV8czfCmJG3E5aYH
+	 ncNhCcTcYAPUqcAX9UUn/DXC/yH4ypzZxraxkxq2BgcvKTz5o4tUGWw8F1r26E2Dzc
+	 4tTs6ihOIGt/HVW+PhVvLLF7MOvqdWRKpBBCZwLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 291/600] drm: xlnx: zynqmp_dpsub: Add missing check for dma_set_mask
-Date: Mon, 11 Sep 2023 15:45:24 +0200
-Message-ID: <20230911134642.197965232@linuxfoundation.org>
+Subject: [PATCH 6.1 329/600] clk: qcom: gpucc-sm6350: Fix clock source names
+Date: Mon, 11 Sep 2023 15:46:02 +0200
+Message-ID: <20230911134643.398049353@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,37 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 1832fba7f9780aff67c96ad30f397c2d76141833 ]
+[ Upstream commit 743913b343a3ec2510fe3c0dfaff03d049659922 ]
 
-Add check for dma_set_mask() and return the error if it fails.
+fw_name for GCC inputs didn't match the bindings. Fix it.
 
-Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 013804a727a0 ("clk: qcom: Add GPU clock controller driver for SM6350")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230315-topic-lagoon_gpu-v2-2-afcdfb18bb13@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gpucc-sm6350.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-index 1de2d927c32b0..fcaa958d841c9 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-@@ -201,7 +201,9 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
- 	dpsub->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, dpsub);
+diff --git a/drivers/clk/qcom/gpucc-sm6350.c b/drivers/clk/qcom/gpucc-sm6350.c
+index a9887d1f0ed71..0bcbba2a29436 100644
+--- a/drivers/clk/qcom/gpucc-sm6350.c
++++ b/drivers/clk/qcom/gpucc-sm6350.c
+@@ -132,8 +132,8 @@ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+ 	{ .index = DT_BI_TCXO, .fw_name = "bi_tcxo" },
+ 	{ .hw = &gpu_cc_pll0.clkr.hw },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+-	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk" },
+-	{ .index = DT_GPLL0_OUT_MAIN_DIV, .fw_name = "gcc_gpu_gpll0_div_clk" },
++	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk_src" },
++	{ .index = DT_GPLL0_OUT_MAIN_DIV, .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+ };
  
--	dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
-+	ret = dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
-+	if (ret)
-+		return ret;
+ static const struct parent_map gpu_cc_parent_map_1[] = {
+@@ -151,7 +151,7 @@ static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+ 	{ .hw = &gpu_cc_pll0.clkr.hw },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+-	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk" },
++	{ .index = DT_GPLL0_OUT_MAIN, .fw_name = "gcc_gpu_gpll0_clk_src" },
+ };
  
- 	/* Try the reserved memory. Proceed if there's none. */
- 	of_reserved_mem_device_init(&pdev->dev);
+ static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
 -- 
 2.40.1
 
