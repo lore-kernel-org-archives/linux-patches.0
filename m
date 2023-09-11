@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69ECC433C8;
-	Mon, 11 Sep 2023 14:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC15D11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C2CC433C7;
+	Mon, 11 Sep 2023 14:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444098;
-	bh=pfqj5AgcXceFTCsqSQKSvOjQN8U1Sg4PuQ60eZtp4WE=;
+	s=korg; t=1694444100;
+	bh=RXwspTBJ79eOM338nUP1LK5j1xjd1OlK5bVgNa3twnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a72oYTj5MyXnLehneSXELcHLeJHMF/JVezgASXZewYo61M4vqC5cjZZKfyrdW1Sdv
-	 PDOZWnbLMi6texqqaNUSYVJySxKNzRjy2I1hXuGVE4ab3FETc2A7+548wchMMubXXy
-	 8dzkhYyrQakjRv6Vcd+WXrXIDttYq391pYvkZdvA=
+	b=HBrWf72s81+M4+y4YJyqc8A2dsQ8XfAYY2cftJjbDZhYQ9F7qBXMXkveD6uHdRa41
+	 fuiU25CGrRWIJPEc4ODBV0sFyZY/RX7ZKIyLE0AYho8LsT/TsO+NcBxzd8X34dxgIb
+	 4NuGzSAJ+GsCXxPs1KnsP42D5cmlQoh4KBXaq5TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Bednarz <christopher.n.bednarz@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tony Battersby <tonyb@cybernetics.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 583/737] RDMA/irdma: Prevent zero-length STAG registration
-Date: Mon, 11 Sep 2023 15:47:22 +0200
-Message-ID: <20230911134706.812878766@linuxfoundation.org>
+Subject: [PATCH 6.4 584/737] scsi: core: Use 32-bit hostnum in scsi_host_lookup()
+Date: Mon, 11 Sep 2023 15:47:23 +0200
+Message-ID: <20230911134706.841127291@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,124 +41,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Bednarz <christopher.n.bednarz@intel.com>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit bb6d73d9add68ad270888db327514384dfa44958 ]
+[ Upstream commit 62ec2092095b678ff89ce4ba51c2938cd1e8e630 ]
 
-Currently irdma allows zero-length STAGs to be programmed in HW during
-the kernel mode fast register flow. Zero-length MR or STAG registration
-disable HW memory length checks.
+Change scsi_host_lookup() hostnum argument type from unsigned short to
+unsigned int to match the type used everywhere else.
 
-Improve gaps in bounds checking in irdma by preventing zero-length STAG or
-MR registrations except if the IB_PD_UNSAFE_GLOBAL_RKEY is set.
-
-This addresses the disclosure CVE-2023-25775.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Christopher Bednarz <christopher.n.bednarz@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230818144838.1758-1-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 6d49f63b415c ("[SCSI] Make host_no an unsigned int")
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Link: https://lore.kernel.org/r/a02497e7-c12b-ef15-47fc-3f0a0b00ffce@cybernetics.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c  |  6 ++++++
- drivers/infiniband/hw/irdma/type.h  |  2 ++
- drivers/infiniband/hw/irdma/verbs.c | 10 ++++++++--
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/scsi/hosts.c     | 4 ++--
+ include/scsi/scsi_host.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index 45e3344daa048..ef47ec271e19e 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -1061,6 +1061,9 @@ static int irdma_sc_alloc_stag(struct irdma_sc_dev *dev,
- 	u64 hdr;
- 	enum irdma_page_size page_size;
- 
-+	if (!info->total_len && !info->all_memory)
-+		return -EINVAL;
-+
- 	if (info->page_size == 0x40000000)
- 		page_size = IRDMA_PAGE_SIZE_1G;
- 	else if (info->page_size == 0x200000)
-@@ -1126,6 +1129,9 @@ static int irdma_sc_mr_reg_non_shared(struct irdma_sc_dev *dev,
- 	u8 addr_type;
- 	enum irdma_page_size page_size;
- 
-+	if (!info->total_len && !info->all_memory)
-+		return -EINVAL;
-+
- 	if (info->page_size == 0x40000000)
- 		page_size = IRDMA_PAGE_SIZE_1G;
- 	else if (info->page_size == 0x200000)
-diff --git a/drivers/infiniband/hw/irdma/type.h b/drivers/infiniband/hw/irdma/type.h
-index a20709577ab0a..3b1fa5bc0a585 100644
---- a/drivers/infiniband/hw/irdma/type.h
-+++ b/drivers/infiniband/hw/irdma/type.h
-@@ -971,6 +971,7 @@ struct irdma_allocate_stag_info {
- 	bool remote_access:1;
- 	bool use_hmc_fcn_index:1;
- 	bool use_pf_rid:1;
-+	bool all_memory:1;
- 	u8 hmc_fcn_index;
- };
- 
-@@ -998,6 +999,7 @@ struct irdma_reg_ns_stag_info {
- 	bool use_hmc_fcn_index:1;
- 	u8 hmc_fcn_index;
- 	bool use_pf_rid:1;
-+	bool all_memory:1;
- };
- 
- struct irdma_fast_reg_stag_info {
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 8f9378767f307..20d70f0d21e0f 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2552,7 +2552,8 @@ static int irdma_hw_alloc_stag(struct irdma_device *iwdev,
- 			       struct irdma_mr *iwmr)
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index f0bc8bbb39381..13ee3453e56a1 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -536,7 +536,7 @@ EXPORT_SYMBOL(scsi_host_alloc);
+ static int __scsi_host_match(struct device *dev, const void *data)
  {
- 	struct irdma_allocate_stag_info *info;
--	struct irdma_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
-+	struct ib_pd *pd = iwmr->ibmr.pd;
-+	struct irdma_pd *iwpd = to_iwpd(pd);
- 	int status;
- 	struct irdma_cqp_request *cqp_request;
- 	struct cqp_cmds_info *cqp_info;
-@@ -2568,6 +2569,7 @@ static int irdma_hw_alloc_stag(struct irdma_device *iwdev,
- 	info->stag_idx = iwmr->stag >> IRDMA_CQPSQ_STAG_IDX_S;
- 	info->pd_id = iwpd->sc_pd.pd_id;
- 	info->total_len = iwmr->len;
-+	info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
- 	info->remote_access = true;
- 	cqp_info->cqp_cmd = IRDMA_OP_ALLOC_STAG;
- 	cqp_info->post_sq = 1;
-@@ -2615,6 +2617,8 @@ static struct ib_mr *irdma_alloc_mr(struct ib_pd *pd, enum ib_mr_type mr_type,
- 	iwmr->type = IRDMA_MEMREG_TYPE_MEM;
- 	palloc = &iwpbl->pble_alloc;
- 	iwmr->page_cnt = max_num_sg;
-+	/* Use system PAGE_SIZE as the sg page sizes are unknown at this point */
-+	iwmr->len = max_num_sg * PAGE_SIZE;
- 	err_code = irdma_get_pble(iwdev->rf->pble_rsrc, palloc, iwmr->page_cnt,
- 				  false);
- 	if (err_code)
-@@ -2694,7 +2698,8 @@ static int irdma_hwreg_mr(struct irdma_device *iwdev, struct irdma_mr *iwmr,
+ 	struct Scsi_Host *p;
+-	const unsigned short *hostnum = data;
++	const unsigned int *hostnum = data;
+ 
+ 	p = class_to_shost(dev);
+ 	return p->host_no == *hostnum;
+@@ -553,7 +553,7 @@ static int __scsi_host_match(struct device *dev, const void *data)
+  *	that scsi_host_get() took. The put_device() below dropped
+  *	the reference from class_find_device().
+  **/
+-struct Scsi_Host *scsi_host_lookup(unsigned short hostnum)
++struct Scsi_Host *scsi_host_lookup(unsigned int hostnum)
  {
- 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
- 	struct irdma_reg_ns_stag_info *stag_info;
--	struct irdma_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
-+	struct ib_pd *pd = iwmr->ibmr.pd;
-+	struct irdma_pd *iwpd = to_iwpd(pd);
- 	struct irdma_pble_alloc *palloc = &iwpbl->pble_alloc;
- 	struct irdma_cqp_request *cqp_request;
- 	struct cqp_cmds_info *cqp_info;
-@@ -2713,6 +2718,7 @@ static int irdma_hwreg_mr(struct irdma_device *iwdev, struct irdma_mr *iwmr,
- 	stag_info->total_len = iwmr->len;
- 	stag_info->access_rights = irdma_get_mr_access(access);
- 	stag_info->pd_id = iwpd->sc_pd.pd_id;
-+	stag_info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
- 	if (stag_info->access_rights & IRDMA_ACCESS_FLAGS_ZERO_BASED)
- 		stag_info->addr_type = IRDMA_ADDR_TYPE_ZERO_BASED;
- 	else
+ 	struct device *cdev;
+ 	struct Scsi_Host *shost = NULL;
+diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
+index 0f29799efa021..6b90b476a03cb 100644
+--- a/include/scsi/scsi_host.h
++++ b/include/scsi/scsi_host.h
+@@ -763,7 +763,7 @@ extern void scsi_remove_host(struct Scsi_Host *);
+ extern struct Scsi_Host *scsi_host_get(struct Scsi_Host *);
+ extern int scsi_host_busy(struct Scsi_Host *shost);
+ extern void scsi_host_put(struct Scsi_Host *t);
+-extern struct Scsi_Host *scsi_host_lookup(unsigned short);
++extern struct Scsi_Host *scsi_host_lookup(unsigned int hostnum);
+ extern const char *scsi_host_state_name(enum scsi_host_state);
+ extern void scsi_host_complete_all_commands(struct Scsi_Host *shost,
+ 					    enum scsi_host_status status);
 -- 
 2.40.1
 
