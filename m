@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF9E1172A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DF2C433C9;
-	Mon, 11 Sep 2023 15:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA691172A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BF2C433C7;
+	Mon, 11 Sep 2023 15:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444758;
-	bh=pbxvJWBxEDHzdcQwTYA5JxWqxaqbbFK0coFQJaikw2U=;
+	s=korg; t=1694444761;
+	bh=esm69iuRQACi1l3kV/rSJP+4DAXFLFoir62lsDfT7MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEDhcH9oHwlQbHQqr+Ba5hjPUfrxpaHHpfR6LUWfr2KCQLPyvu+jxZ1XFkg+XLFxf
-	 MiRohGRrYtFmGXI5Lbom0CXrywEQZP4PVNd6LWclYCfdTo96eG7qwRXVtSW3ihcd5q
-	 Prjj8WXD4xGrxjCF6+hVAqqzXQsvFqt+7sezgvV0=
+	b=uTizd1eq6iffpoXJNzJkXKuUDwFqyhTlo2TKk0CuZUoS7OG3gMBlDRbVefEdSIJVZ
+	 kFZkyV7S8EnWX3FbzPPy25Wl8GMD+Qn5uiKyyDYEfR+Ji5bCGqx9ToRddu3z0+jvf4
+	 OcB4d9YmUVOEqFHSAwlJV490yVKxubAnu3qPLwl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Seth Jenkins <sethjenkins@google.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Andy Lutomirski <luto@amacapital.net>,
+	Will Drewry <wad@chromium.org>,
+	linux-kselftest@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/600] tmpfs: verify {g,u}id mount options correctly
-Date: Mon, 11 Sep 2023 15:42:18 +0200
-Message-ID: <20230911134636.699047519@linuxfoundation.org>
+Subject: [PATCH 6.1 106/600] selftests/harness: Actually report SKIP for signal tests
+Date: Mon, 11 Sep 2023 15:42:19 +0200
+Message-ID: <20230911134636.727403296@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,96 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 0200679fc7953177941e41c2a4241d0b6c2c5de8 ]
+[ Upstream commit b3d46e11fec0c5a8972e5061bb1462119ae5736d ]
 
-A while ago we received the following report:
+Tests that were expecting a signal were not correctly checking for a
+SKIP condition. Move the check before the signal checking when
+processing test result.
 
-"The other outstanding issue I noticed comes from the fact that
-fsconfig syscalls may occur in a different userns than that which
-called fsopen. That means that resolving the uid/gid via
-current_user_ns() can save a kuid that isn't mapped in the associated
-namespace when the filesystem is finally mounted. This means that it
-is possible for an unprivileged user to create files owned by any
-group in a tmpfs mount (since we can set the SUID bit on the tmpfs
-directory), or a tmpfs that is owned by any user, including the root
-group/user."
-
-The contract for {g,u}id mount options and {g,u}id values in general set
-from userspace has always been that they are translated according to the
-caller's idmapping. In so far, tmpfs has been doing the correct thing.
-But since tmpfs is mountable in unprivileged contexts it is also
-necessary to verify that the resulting {k,g}uid is representable in the
-namespace of the superblock to avoid such bugs as above.
-
-The new mount api's cross-namespace delegation abilities are already
-widely used. After having talked to a bunch of userspace this is the
-most faithful solution with minimal regression risks. I know of one
-users - systemd - that makes use of the new mount api in this way and
-they don't set unresolable {g,u}ids. So the regression risk is minimal.
-
-Link: https://lore.kernel.org/lkml/CALxfFW4BXhEwxR0Q5LSkg-8Vb4r2MONKCcUCVioehXQKr35eHg@mail.gmail.com
-Fixes: f32356261d44 ("vfs: Convert ramfs, shmem, tmpfs, devtmpfs, rootfs to use the new mount API")
-Reviewed-by: "Seth Forshee (DigitalOcean)" <sforshee@kernel.org>
-Reported-by: Seth Jenkins <sethjenkins@google.com>
-Message-Id: <20230801-vfs-fs_context-uidgid-v1-1-daf46a050bbf@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Andy Lutomirski <luto@amacapital.net>
+Cc: Will Drewry <wad@chromium.org>
+Cc: linux-kselftest@vger.kernel.org
+Fixes: 9847d24af95c ("selftests/harness: Refactor XFAIL into SKIP")
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ tools/testing/selftests/kselftest_harness.h | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 10365ced5b1fc..806741bbe4a68 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -3485,6 +3485,8 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 	unsigned long long size;
- 	char *rest;
- 	int opt;
-+	kuid_t kuid;
-+	kgid_t kgid;
- 
- 	opt = fs_parse(fc, shmem_fs_parameters, param, &result);
- 	if (opt < 0)
-@@ -3520,14 +3522,32 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->mode = result.uint_32 & 07777;
- 		break;
- 	case Opt_uid:
--		ctx->uid = make_kuid(current_user_ns(), result.uint_32);
--		if (!uid_valid(ctx->uid))
-+		kuid = make_kuid(current_user_ns(), result.uint_32);
-+		if (!uid_valid(kuid))
- 			goto bad_value;
-+
-+		/*
-+		 * The requested uid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kuid_has_mapping(fc->user_ns, kuid))
-+			goto bad_value;
-+
-+		ctx->uid = kuid;
- 		break;
- 	case Opt_gid:
--		ctx->gid = make_kgid(current_user_ns(), result.uint_32);
--		if (!gid_valid(ctx->gid))
-+		kgid = make_kgid(current_user_ns(), result.uint_32);
-+		if (!gid_valid(kgid))
- 			goto bad_value;
-+
-+		/*
-+		 * The requested gid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kgid_has_mapping(fc->user_ns, kgid))
-+			goto bad_value;
-+
-+		ctx->gid = kgid;
- 		break;
- 	case Opt_huge:
- 		ctx->huge = result.uint_32;
+diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
+index 25f4d54067c0e..584687c3286dd 100644
+--- a/tools/testing/selftests/kselftest_harness.h
++++ b/tools/testing/selftests/kselftest_harness.h
+@@ -937,7 +937,11 @@ void __wait_for_test(struct __test_metadata *t)
+ 		fprintf(TH_LOG_STREAM,
+ 			"# %s: Test terminated by timeout\n", t->name);
+ 	} else if (WIFEXITED(status)) {
+-		if (t->termsig != -1) {
++		if (WEXITSTATUS(status) == 255) {
++			/* SKIP */
++			t->passed = 1;
++			t->skip = 1;
++		} else if (t->termsig != -1) {
+ 			t->passed = 0;
+ 			fprintf(TH_LOG_STREAM,
+ 				"# %s: Test exited normally instead of by signal (code: %d)\n",
+@@ -949,11 +953,6 @@ void __wait_for_test(struct __test_metadata *t)
+ 			case 0:
+ 				t->passed = 1;
+ 				break;
+-			/* SKIP */
+-			case 255:
+-				t->passed = 1;
+-				t->skip = 1;
+-				break;
+ 			/* Other failure, assume step report. */
+ 			default:
+ 				t->passed = 0;
 -- 
 2.40.1
 
