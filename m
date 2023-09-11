@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D4A291E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75692C433C8;
-	Mon, 11 Sep 2023 13:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7AB291E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D50EC433C8;
+	Mon, 11 Sep 2023 13:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440785;
-	bh=3t2BoGaPyniXSBiB40EU5084WlX1WgTgzE1ta99Kg0U=;
+	s=korg; t=1694440788;
+	bh=homkzxdMdrk8VOnJLAnbNMLLO6VDijDRXkzL58KGs1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0JlEFFsbugGevA0ZbJcNjFDTuAlEPN2emSNkXfQ2GlNtGXuNWvhu3IMPZuKcu3r9t
-	 L72c8whk2vBugcdfvNasAEsAdlbySqwhQJd8qOsQqkhvEEpycDob3d4YDwu4dhQA6J
-	 WZGaS4KlNArkLty4dhkDLuR1oqNysE8MPhiX9Ug4=
+	b=tEdyjJZH4OKEbcd3xXi2QC9iZcmX4dYzHK2ioLf5qm6AKbt6ON2PcJME5umghqUxM
+	 0LaoOvHZp8QzxL39UXrBO9mDMZiDfNOmyCYuIB0W5t3hyOdh/Vb5WNrWR5KvVavex+
+	 yDgpgPs9zDuaZVR5e+WJJwdQtr/W1iFGwAMhVwsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vadim Pasternak <vadimp@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Petr Machata <petrm@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 184/739] mlxsw: i2c: Fix chunk size setting in output mailbox buffer
-Date: Mon, 11 Sep 2023 15:39:43 +0200
-Message-ID: <20230911134656.335653245@linuxfoundation.org>
+Subject: [PATCH 6.5 185/739] mlxsw: i2c: Limit single transaction buffer size
+Date: Mon, 11 Sep 2023 15:39:44 +0200
+Message-ID: <20230911134656.361920735@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -44,39 +43,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit 146c7c330507c0384bf29d567186632bfe975927 ]
+[ Upstream commit d7248f1cc835bd80e936dc5b2d94b149bdd0077d ]
 
-The driver reads commands output from the output mailbox. If the size
-of the output mailbox is not a multiple of the transaction /
-block size, then the driver will not issue enough read transactions
-to read the entire output, which can result in driver initialization
-errors.
+Maximum size of buffer is obtained from underlying I2C adapter and in
+case adapter allows I2C transaction buffer size greater than 100 bytes,
+transaction will fail due to firmware limitation.
 
-Fix by determining the number of transactions using DIV_ROUND_UP().
+As a result driver will fail initialization.
+
+Limit the maximum size of transaction buffer by 100 bytes to fit to
+firmware.
+
+Remove unnecessary calculation:
+max_t(u16, MLXSW_I2C_BLK_DEF, quirk_size).
+This condition can not happened.
 
 Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
 Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/i2c.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-index 41298835a11e1..47af7ef7e4eee 100644
+index 47af7ef7e4eee..d23f293e285cb 100644
 --- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
 +++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-@@ -444,7 +444,7 @@ mlxsw_i2c_cmd(struct device *dev, u16 opcode, u32 in_mod, size_t in_mbox_size,
- 	} else {
- 		/* No input mailbox is case of initialization query command. */
- 		reg_size = MLXSW_I2C_MAX_DATA_SIZE;
--		num = reg_size / mlxsw_i2c->block_size;
-+		num = DIV_ROUND_UP(reg_size, mlxsw_i2c->block_size);
+@@ -48,6 +48,7 @@
+ #define MLXSW_I2C_MBOX_SIZE_BITS	12
+ #define MLXSW_I2C_ADDR_BUF_SIZE		4
+ #define MLXSW_I2C_BLK_DEF		32
++#define MLXSW_I2C_BLK_MAX		100
+ #define MLXSW_I2C_RETRY			5
+ #define MLXSW_I2C_TIMEOUT_MSECS		5000
+ #define MLXSW_I2C_MAX_DATA_SIZE		256
+@@ -653,7 +654,7 @@ static int mlxsw_i2c_probe(struct i2c_client *client)
+ 			return -EOPNOTSUPP;
+ 		}
  
- 		if (mutex_lock_interruptible(&mlxsw_i2c->cmd.lock) < 0) {
- 			dev_err(&client->dev, "Could not acquire lock");
+-		mlxsw_i2c->block_size = max_t(u16, MLXSW_I2C_BLK_DEF,
++		mlxsw_i2c->block_size = min_t(u16, MLXSW_I2C_BLK_MAX,
+ 					      min_t(u16, quirks->max_read_len,
+ 						    quirks->max_write_len));
+ 	} else {
 -- 
 2.40.1
 
