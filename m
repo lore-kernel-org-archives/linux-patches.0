@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A6C153
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CF3C433CA;
-	Mon, 11 Sep 2023 14:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308EBC153
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BAAC433C7;
+	Mon, 11 Sep 2023 14:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443223;
-	bh=bk/n1is+SsXooN1p/kF91Czhezvgg802uZL7cpoI3AA=;
+	s=korg; t=1694443226;
+	bh=h5MLCy8BzRvRFaY+b1qfdYnAH8KkNNfaT3vuPksMX8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9f8jHenlJqHwuAJdPff4whFWly9PIElvhclODTWaNqxUbVvFZWqIw7dJUFrf9G1z
-	 uDgGEGEC0eGPXBEmhRPcZ48By7fEK/ujlEdWZDc8OXZbQwhdNfD1RL/H/lM5SXdx07
-	 W4zVYr4tmUDL6xqW6qwo3jcCoSd2X4aj7nk1safM=
+	b=DHqqccR16bocicy6VaUbYvrdZ4QjdcNKTaPvu/jGR3IM2H3cHkjiW7FYcU5aDk11l
+	 gkkScLBEaxvtafJvIS1isTqJOV4k9kw2YcWr4vGItZi5x6NspgpoOquTFh6cGbJ+1M
+	 He3kc/tGmsLJAHHXSCQrOwy7PlqUTi6Ao5wg0dT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 275/737] drm/amd/display: Do not set drr on pipe commit
-Date: Mon, 11 Sep 2023 15:42:14 +0200
-Message-ID: <20230911134658.257359075@linuxfoundation.org>
+Subject: [PATCH 6.4 276/737] drm/hyperv: Fix a compilation issue because of not including screen_info.h
+Date: Mon, 11 Sep 2023 15:42:15 +0200
+Message-ID: <20230911134658.284102358@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,71 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Chalmers <Wesley.Chalmers@amd.com>
+From: Sui Jingfeng <suijingfeng@loongson.cn>
 
-[ Upstream commit e101bf95ea87ccc03ac2f48dfc0757c6364ff3c7 ]
+[ Upstream commit 8d1077cf2e43b15fefd76ebec2b71541eb27ef2c ]
 
-[WHY]
-Writing to DRR registers such as OTG_V_TOTAL_MIN on the same frame as a
-pipe commit can cause underflow.
+Fixes the following build errors on arm64:
 
-[HOW]
-Move DMUB p-state delegate into optimze_bandwidth; enabling FAMS sets
-optimized_required.
+drivers/video/fbdev/hyperv_fb.c: In function 'hvfb_getmem':
+>> drivers/video/fbdev/hyperv_fb.c:1033:24: error: 'screen_info' undeclared (first use in this function)
+    1033 |                 base = screen_info.lfb_base;
+         |                        ^~~~~~~~~~~
+drivers/video/fbdev/hyperv_fb.c:1033:24: note: each undeclared identifier is reported only once for each function it appears in
 
-This change expects that Freesync requests are blocked when
-optimized_required is true.
+>> drivers/gpu/drm/hyperv/hyperv_drm_drv.c:75:54: error: 'screen_info' undeclared (first use in this function)
+      75 |         drm_aperture_remove_conflicting_framebuffers(screen_info.lfb_base,
+	 |                                                      ^~~~~~~~~~~
+drivers/gpu/drm/hyperv/hyperv_drm_drv.c:75:54: note: each undeclared identifier is reported only once for each function it appears in
 
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307090823.nxnT8Kk5-lkp@intel.com/
+Fixes: 81d2393485f0 ("fbdev/hyperv-fb: Do not set struct fb_info.apertures")
+Fixes: 8b0d13545b09 ("efi: Do not include <linux/screen_info.h> from EFI header")
+Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230709100514.703759-1-suijingfeng@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 6 ++++++
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c | 7 +++++++
- 2 files changed, 13 insertions(+)
+ drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index a621b6a27c1fc..1ed30eba152e1 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -2124,6 +2124,12 @@ void dcn20_optimize_bandwidth(
- 	if (hubbub->funcs->program_compbuf_size)
- 		hubbub->funcs->program_compbuf_size(hubbub, context->bw_ctx.bw.dcn.compbuf_size_kb, true);
+diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+index f830d62a5ce60..559ce242919df 100644
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+@@ -7,6 +7,7 @@
+ #include <linux/hyperv.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
++#include <linux/screen_info.h>
  
-+	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching) {
-+		dc_dmub_srv_p_state_delegate(dc,
-+			true, context);
-+		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
-+	}
-+
- 	dc->clk_mgr->funcs->update_clocks(
- 			dc->clk_mgr,
- 			context,
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-index 32121db2851e6..f923224e85fc6 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-@@ -985,11 +985,18 @@ void dcn30_set_disp_pattern_generator(const struct dc *dc,
- void dcn30_prepare_bandwidth(struct dc *dc,
- 			     struct dc_state *context)
- {
-+	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching) {
-+		dc->optimized_required = true;
-+		context->bw_ctx.bw.dcn.clk.p_state_change_support = false;
-+	}
-+
- 	if (dc->clk_mgr->dc_mode_softmax_enabled)
- 		if (dc->clk_mgr->clks.dramclk_khz <= dc->clk_mgr->bw_params->dc_mode_softmax_memclk * 1000 &&
- 				context->bw_ctx.bw.dcn.clk.dramclk_khz > dc->clk_mgr->bw_params->dc_mode_softmax_memclk * 1000)
- 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
- 
- 	dcn20_prepare_bandwidth(dc, context);
-+
-+	dc_dmub_srv_p_state_delegate(dc, false, context);
- }
- 
+ #include <drm/drm_aperture.h>
+ #include <drm/drm_atomic_helper.h>
 -- 
 2.40.1
 
