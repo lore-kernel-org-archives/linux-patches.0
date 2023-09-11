@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9277311705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16474C433CA;
-	Mon, 11 Sep 2023 14:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C96F11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE51BC433C7;
+	Mon, 11 Sep 2023 14:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443031;
-	bh=JE0UpFEaCOzzT3lGJrMSbgQEtzK2Xg0h0yAdbHnTnrE=;
+	s=korg; t=1694443034;
+	bh=IuD6U8I4kO8L6YZe1GFSL2ruiKsBPAUsHg4kYTdeItE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eq+TyJofScZLU6Yi5fJ+6z1xiMJxN1laTOKFrChcZPjXcwvq03wfddg3HlEM4f+Cb
-	 75hlrGQaeRkpmtBO54NlDkxWCXxQ0OYh/TFuIVCsrPutvrjwlqzfWKKalypoxspZmG
-	 8VoSW2+ZTYcr/KD6/Lw2lOpcfJXVDzptjSaHEDdI=
+	b=lZbbKzw6ThOyi2eRfjlgaBrwIN/igXBgW3PiPvOpdVMpQZHoo5c8jGXdPG7TSFnp0
+	 /jgBd1h3Y4tx4kPD0Bdn66zWjK8U+Mx11yZa9b42mzd9faVGXVgcf7p6ofPfAvEC31
+	 k+wWc/rOiKlJu953BhPGHg2GZT/A6JvoQHpTaHcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 233/737] wifi: ath9k: protect WMI command response buffer replacement with a lock
-Date: Mon, 11 Sep 2023 15:41:32 +0200
-Message-ID: <20230911134657.115563600@linuxfoundation.org>
+Subject: [PATCH 6.4 234/737] bpf: Fix a bpf_kptr_xchg() issue with local kptr
+Date: Mon, 11 Sep 2023 15:41:33 +0200
+Message-ID: <20230911134657.143987264@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -35,79 +35,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 454994cfa9e4c18b6df9f78b60db8eadc20a6c25 ]
+[ Upstream commit ab6c637ad0276e42f8acabcbc64932a6d346dab3 ]
 
-If ath9k_wmi_cmd() has exited with a timeout, it is possible that during
-next ath9k_wmi_cmd() call the wmi_rsp callback for previous wmi command
-writes to new wmi->cmd_rsp_buf and makes a completion. This results in an
-invalid ath9k_wmi_cmd() return value.
+When reviewing local percpu kptr support, Alexei discovered a bug
+wherea bpf_kptr_xchg() may succeed even if the map value kptr type and
+locally allocated obj type do not match ([1]). Missed struct btf_id
+comparison is the reason for the bug. This patch added such struct btf_id
+comparison and will flag verification failure if types do not match.
 
-Move the replacement of WMI command response buffer and length under
-wmi_lock. Note that last_seq_id value is updated there, too.
+  [1] https://lore.kernel.org/bpf/20230819002907.io3iphmnuk43xblu@macbook-pro-8.dhcp.thefacebook.com/#t
 
-Thus, the buffer cannot be written to by a belated wmi_rsp callback
-because that path is properly rejected by the last_seq_id check.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230425192607.18015-2-pchelkin@ispras.ru
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 738c96d5e2e3 ("bpf: Allow local kptrs to be exchanged via bpf_kptr_xchg")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230822050053.2886960-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 04f363cb90fe5..1476b42b52a91 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -283,7 +283,8 @@ int ath9k_wmi_connect(struct htc_target *htc, struct wmi *wmi,
- 
- static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 			       struct sk_buff *skb,
--			       enum wmi_cmd_id cmd, u16 len)
-+			       enum wmi_cmd_id cmd, u16 len,
-+			       u8 *rsp_buf, u32 rsp_len)
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index cef173614fc8f..b9e4dbdfa296a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4790,20 +4790,22 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 			       struct bpf_reg_state *reg, u32 regno)
  {
- 	struct wmi_cmd_hdr *hdr;
- 	unsigned long flags;
-@@ -293,6 +294,11 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
- 	hdr->seq_no = cpu_to_be16(++wmi->tx_seq_id);
+ 	const char *targ_name = btf_type_name(kptr_field->kptr.btf, kptr_field->kptr.btf_id);
+-	int perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
++	int perm_flags;
+ 	const char *reg_name = "";
  
- 	spin_lock_irqsave(&wmi->wmi_lock, flags);
+-	/* Only unreferenced case accepts untrusted pointers */
+-	if (kptr_field->type == BPF_KPTR_UNREF)
+-		perm_flags |= PTR_UNTRUSTED;
++	if (btf_is_kernel(reg->btf)) {
++		perm_flags = PTR_MAYBE_NULL | PTR_TRUSTED | MEM_RCU;
 +
-+	/* record the rsp buffer and length */
-+	wmi->cmd_rsp_buf = rsp_buf;
-+	wmi->cmd_rsp_len = rsp_len;
-+
- 	wmi->last_seq_id = wmi->tx_seq_id;
- 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
++		/* Only unreferenced case accepts untrusted pointers */
++		if (kptr_field->type == BPF_KPTR_UNREF)
++			perm_flags |= PTR_UNTRUSTED;
++	} else {
++		perm_flags = PTR_MAYBE_NULL | MEM_ALLOC;
++	}
  
-@@ -333,11 +339,7 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
- 		goto out;
- 	}
+ 	if (base_type(reg->type) != PTR_TO_BTF_ID || (type_flag(reg->type) & ~perm_flags))
+ 		goto bad_type;
  
--	/* record the rsp buffer and length */
--	wmi->cmd_rsp_buf = rsp_buf;
--	wmi->cmd_rsp_len = rsp_len;
--
--	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len);
-+	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len, rsp_buf, rsp_len);
- 	if (ret)
- 		goto out;
+-	if (!btf_is_kernel(reg->btf)) {
+-		verbose(env, "R%d must point to kernel BTF\n", regno);
+-		return -EINVAL;
+-	}
+ 	/* We need to verify reg->type and reg->btf, before accessing reg->btf */
+ 	reg_name = btf_type_name(reg->btf, reg->btf_id);
  
+@@ -4816,7 +4818,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 	if (__check_ptr_off_reg(env, reg, regno, true))
+ 		return -EACCES;
+ 
+-	/* A full type match is needed, as BTF can be vmlinux or module BTF, and
++	/* A full type match is needed, as BTF can be vmlinux, module or prog BTF, and
+ 	 * we also need to take into account the reg->off.
+ 	 *
+ 	 * We want to support cases like:
+@@ -7554,7 +7556,10 @@ static int check_reg_type(struct bpf_verifier_env *env, u32 regno,
+ 			verbose(env, "verifier internal error: unimplemented handling of MEM_ALLOC\n");
+ 			return -EFAULT;
+ 		}
+-		/* Handled by helper specific checks */
++		if (meta->func_id == BPF_FUNC_kptr_xchg) {
++			if (map_kptr_match_type(env, meta->kptr_field, reg, regno))
++				return -EACCES;
++		}
+ 		break;
+ 	case PTR_TO_BTF_ID | MEM_PERCPU:
+ 	case PTR_TO_BTF_ID | MEM_PERCPU | PTR_TRUSTED:
 -- 
 2.40.1
 
