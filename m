@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD9011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44DFC433C8;
-	Mon, 11 Sep 2023 15:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7288FC433C7;
+	Mon, 11 Sep 2023 15:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445705;
-	bh=HhYdb5marBmYTniShP4d2ffMMpgun96KdHCA8HF5Z0U=;
+	s=korg; t=1694445707;
+	bh=F2xYqyts/k5qoxtqlAnHEAmuM8+0gdvA34FSnJ+RMpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/pyMQCWvqtOjuPgCPZ1+Qf5WIUH4TdqG0ruiMVYl7hJ9+sKwAjUNimmLqV9MXlo4
-	 iYjSsv4SvG9LB//VM8jcyTDKBySaH3UCz9gqm6WCS0z7gGgtuVa74WLcbg6icdilRE
-	 LD4FaafOx7pPWgFfWYNIbAocdWIk4Iol4/rXO5C8=
+	b=AFyssmaJSRWSggbuodftxslqzRjE7/R87asRU4E2w4iUZOwK8wjqDusGlYLa+fWIV
+	 m6eEKVqmfJqNs4pr6lob6nyqYeLDoLYjHQmnf/1RxKH5ppIJZQoSlmQnz7AL3bx/6o
+	 BgmV2hMupTnHz9GZ3Uji6B4teONMtS3WzVTaZjxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <chunyan.zhang@unisoc.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 425/600] serial: sprd: Assign sprd_port after initialized to avoid wrong access
-Date: Mon, 11 Sep 2023 15:47:38 +0200
-Message-ID: <20230911134646.208325484@linuxfoundation.org>
+Subject: [PATCH 6.1 443/600] iommu/sprd: Add missing force_aperture
+Date: Mon, 11 Sep 2023 15:47:56 +0200
+Message-ID: <20230911134646.723417381@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,115 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunyan Zhang <chunyan.zhang@unisoc.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit f9608f1887568b728839d006024585ab02ef29e5 ]
+[ Upstream commit d48a51286c698f7fe8efc688f23a532f4fe9a904 ]
 
-The global pointer 'sprd_port' may not zero when sprd_probe returns
-failure, that is a risk for sprd_port to be accessed afterward, and
-may lead to unexpected errors.
+force_aperture was intended to false only by GART drivers that have an
+identity translation outside the aperture. This does not describe sprd, so
+add the missing 'force_aperture = true'.
 
-For example:
-
-There are two UART ports, UART1 is used for console and configured in
-kernel command line, i.e. "console=";
-
-The UART1 probe failed and the memory allocated to sprd_port[1] was
-released, but sprd_port[1] was not set to NULL;
-
-In UART2 probe, the same virtual address was allocated to sprd_port[2],
-and UART2 probe process finally will go into sprd_console_setup() to
-register UART1 as console since it is configured as preferred console
-(filled to console_cmdline[]), but the console parameters (sprd_port[1])
-belong to UART2.
-
-So move the sprd_port[] assignment to where the port already initialized
-can avoid the above issue.
-
-Fixes: b7396a38fb28 ("tty/serial: Add Spreadtrum sc9836-uart driver support")
-Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
-Link: https://lore.kernel.org/r/20230725064053.235448-1-chunyan.zhang@unisoc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b23e4fc4e3fa ("iommu: add Unisoc IOMMU basic driver")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Acked-by: Chunyan Zhang <zhang.lyra@gmail.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sprd_serial.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/iommu/sprd-iommu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
-index 342a879676315..58825443529f3 100644
---- a/drivers/tty/serial/sprd_serial.c
-+++ b/drivers/tty/serial/sprd_serial.c
-@@ -1132,7 +1132,7 @@ static bool sprd_uart_is_console(struct uart_port *uport)
- static int sprd_clk_init(struct uart_port *uport)
- {
- 	struct clk *clk_uart, *clk_parent;
--	struct sprd_uart_port *u = sprd_port[uport->line];
-+	struct sprd_uart_port *u = container_of(uport, struct sprd_uart_port, port);
+diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
+index fadd2c907222b..8261066de07d7 100644
+--- a/drivers/iommu/sprd-iommu.c
++++ b/drivers/iommu/sprd-iommu.c
+@@ -147,6 +147,7 @@ static struct iommu_domain *sprd_iommu_domain_alloc(unsigned int domain_type)
  
- 	clk_uart = devm_clk_get(uport->dev, "uart");
- 	if (IS_ERR(clk_uart)) {
-@@ -1175,22 +1175,22 @@ static int sprd_probe(struct platform_device *pdev)
- {
- 	struct resource *res;
- 	struct uart_port *up;
-+	struct sprd_uart_port *sport;
- 	int irq;
- 	int index;
- 	int ret;
+ 	dom->domain.geometry.aperture_start = 0;
+ 	dom->domain.geometry.aperture_end = SZ_256M - 1;
++	dom->domain.geometry.force_aperture = true;
  
- 	index = of_alias_get_id(pdev->dev.of_node, "serial");
--	if (index < 0 || index >= ARRAY_SIZE(sprd_port)) {
-+	if (index < 0 || index >= UART_NR_MAX) {
- 		dev_err(&pdev->dev, "got a wrong serial alias id %d\n", index);
- 		return -EINVAL;
- 	}
- 
--	sprd_port[index] = devm_kzalloc(&pdev->dev, sizeof(*sprd_port[index]),
--					GFP_KERNEL);
--	if (!sprd_port[index])
-+	sport = devm_kzalloc(&pdev->dev, sizeof(*sport), GFP_KERNEL);
-+	if (!sport)
- 		return -ENOMEM;
- 
--	up = &sprd_port[index]->port;
-+	up = &sport->port;
- 	up->dev = &pdev->dev;
- 	up->line = index;
- 	up->type = PORT_SPRD;
-@@ -1221,7 +1221,7 @@ static int sprd_probe(struct platform_device *pdev)
- 	 * Allocate one dma buffer to prepare for receive transfer, in case
- 	 * memory allocation failure at runtime.
- 	 */
--	ret = sprd_rx_alloc_buf(sprd_port[index]);
-+	ret = sprd_rx_alloc_buf(sport);
- 	if (ret)
- 		return ret;
- 
-@@ -1232,14 +1232,23 @@ static int sprd_probe(struct platform_device *pdev)
- 			return ret;
- 		}
- 	}
-+
- 	sprd_ports_num++;
-+	sprd_port[index] = sport;
- 
- 	ret = uart_add_one_port(&sprd_uart_driver, up);
- 	if (ret)
--		sprd_remove(pdev);
-+		goto clean_port;
- 
- 	platform_set_drvdata(pdev, up);
- 
-+	return 0;
-+
-+clean_port:
-+	sprd_port[index] = NULL;
-+	if (--sprd_ports_num == 0)
-+		uart_unregister_driver(&sprd_uart_driver);
-+	sprd_rx_free_buf(sport);
- 	return ret;
+ 	return &dom->domain;
  }
- 
 -- 
 2.40.1
 
