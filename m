@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F2311710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05917C433C8;
-	Mon, 11 Sep 2023 14:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542FE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:07:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8FEC433C8;
+	Mon, 11 Sep 2023 14:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441254;
-	bh=Vjat6pwbQ3VmY8kOMSe/J9x7nyo3HUkYfulJpjjKjpY=;
+	s=korg; t=1694441257;
+	bh=Hx6eyoBYnb+pnGzYPtggFA0mLHPBX3H3UkMymILi7t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b59R8O+KK0DwyF4zsWAad6jYf5zVwFIidt9JpzqVGkxOJ1Var5XQNZcScOlmJYS9A
-	 KsFo+XJvgB5xWhK2lyPmZ9INpEOhrgM0SmBIpT4jR9DdXF6pcNstOVBLUCH7hOkt2V
-	 wkWEYp9KSCuGzw/RPimWqVvVV3J+RcGRYjqxLG5Q=
+	b=YanaccKYaPOAulhXKkCDpO0SsDzdAgwPuBGRPPDrCzT1egk/xVOg1aJfpzcrWE17R
+	 jBqFkhdcbhcQkPFbP2TF4OT7FAtFFQtfV2sGBUAuOyOm+oBUw2+3VuP6Lce0mZPFnZ
+	 VRB/djMOwIEv6uPLNa1d2T0TJeGhAG0HEuA17m4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 341/739] arm64: dts: ti: k3-am62x-sk-common: Update main-i2c1 frequency
-Date: Mon, 11 Sep 2023 15:42:20 +0200
-Message-ID: <20230911134700.631529859@linuxfoundation.org>
+Subject: [PATCH 6.5 350/739] arm64: dts: qcom: sc8280xp-x13s: Unreserve NC pins
+Date: Mon, 11 Sep 2023 15:42:29 +0200
+Message-ID: <20230911134700.896062096@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,47 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aradhya Bhatia <a-bhatia1@ti.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 73387da70f9c26b6fba4f62371d013cce14663d9 ]
+[ Upstream commit 7868ed0144b33903e16a50485775f669c109e41a ]
 
-The Display Data Channel (DDC) transactions between an HDMI transmitter
-(SIL9022A in this case) and an HDMI monitor, occur at a maximum of
-100KHz. That's the maximum supported frequency within DDC standards.
+Pins 83-86 and 158-160 are NC, so there's no point in keeping them
+reserved. Take care of that.
 
-While the SIL9022A can transact with the core at 400KHz, it needs to
-drop the frequency to 100KHz when communicating with the monitor,
-otherwise, the i2c controller times out and shows warning like this.
-
-[  985.773431] omap_i2c 20010000.i2c: controller timed out
-
-That feature, however, has not been enabled in the SIL9022 driver.
-
-Since, dropping the frequency doesn't affect any other devices on the
-bus, drop the main-i2c1 frequency from 400KHz to 100KHz.
-
-Fixes: a841581451af ("arm64: dts: ti: Refractor AM625 SK dts")
-Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Link: https://lore.kernel.org/r/20230809084559.17322-2-a-bhatia1@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 32c231385ed4 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230803-topic-x13s_pin-v1-1-fae792274e89@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-index 34c8ffc553ec3..540ed8a0d7fb6 100644
---- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-@@ -300,7 +300,7 @@ &main_i2c1 {
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&main_i2c1_pins_default>;
--	clock-frequency = <400000>;
-+	clock-frequency = <100000>;
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 7cc3028440b64..059dfccdfe7c2 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1246,7 +1246,7 @@ hastings_reg_en: hastings-reg-en-state {
+ };
  
- 	tlv320aic3106: audio-codec@1b {
- 		#sound-dai-cells = <0>;
+ &tlmm {
+-	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
++	gpio-reserved-ranges = <70 2>, <74 6>, <125 2>, <128 2>, <154 4>;
+ 
+ 	bt_default: bt-default-state {
+ 		hstp-bt-en-pins {
 -- 
 2.40.1
 
