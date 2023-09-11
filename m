@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6423911706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB10AC433C8;
-	Mon, 11 Sep 2023 14:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4895711706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B355FC433C8;
+	Mon, 11 Sep 2023 14:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443929;
-	bh=/7PQcGbXpIXX2suuloLKXiQ2i59Tnd3kNLrysKk/2jE=;
+	s=korg; t=1694443932;
+	bh=j8ch/LwteBJ3IAKAoIlCQ8R82TWW5G2YuF5QwadcvpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqyPj8fMYqnWQ0TiYDciDmV1FSZflLFxIBf/0yVk7LppTpQ+ddMu+ky+E0r/GH97j
-	 EETYlVLqjP8lAK9scJnzkli7L2svY6OZBF9V7mIkFe4ukFzz83cY9IyAhvRAgANzNK
-	 U7HbLFmzRCiyCpPGS0CCcjC8e2specV7Y1m8Qhbo=
+	b=UaRUKKXnHRuOSQ/jWUknfkJWO5IaQL/GC499CKIOvIbpQQVHS+vllAg5UqSWElsck
+	 RbUmEVh5uWdssrqTj8VIrq8FE7ze3S0X3NpDfnelg20jMcKpQmFtOSSVJPQJ7c1zrA
+	 OesQrf3Sydy1cLvD65tM1sfZKotVd7oX00uEOsEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2da1965168e7dbcba136@syzkaller.appspotmail.com,
 	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 521/737] RDMA/rxe: Fix unsafe drain work queue code
-Date: Mon, 11 Sep 2023 15:46:20 +0200
-Message-ID: <20230911134705.131358244@linuxfoundation.org>
+Subject: [PATCH 6.4 522/737] RDMA/rxe: Fix rxe_modify_srq
+Date: Mon, 11 Sep 2023 15:46:21 +0200
+Message-ID: <20230911134705.159218425@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,56 +42,160 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 5993b75d0bc71cd2b441d174b028fc36180f032c ]
+[ Upstream commit cc28f351155def8db209647f2e20a59a7080825b ]
 
-If create_qp does not fully succeed it is possible for qp cleanup
-code to attempt to drain the send or recv work queues before the
-queues have been created causing a seg fault. This patch checks
-to see if the queues exist before attempting to drain them.
+This patch corrects an error in rxe_modify_srq where if the
+caller changes the srq size the actual new value is not returned
+to the caller since it may be larger than what is requested.
+Additionally it open codes the subroutine rcv_wqe_size() which
+adds very little value, and makes some whitespace changes.
 
-Link: https://lore.kernel.org/r/20230620135519.9365-3-rpearsonhpe@gmail.com
-Reported-by: syzbot+2da1965168e7dbcba136@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-rdma/00000000000012d89205fe7cfe00@google.com/raw
-Fixes: 49dc9c1f0c7e ("RDMA/rxe: Cleanup reset state handling in rxe_resp.c")
-Fixes: fbdeb828a21f ("RDMA/rxe: Cleanup error state handling in rxe_comp.c")
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20230620140142.9452-1-rpearsonhpe@gmail.com
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_comp.c | 4 ++++
- drivers/infiniband/sw/rxe/rxe_resp.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_loc.h |  6 ---
+ drivers/infiniband/sw/rxe/rxe_srq.c | 60 +++++++++++++++++------------
+ 2 files changed, 36 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
-index f46c5a5fd0aea..44fece204abdd 100644
---- a/drivers/infiniband/sw/rxe/rxe_comp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_comp.c
-@@ -597,6 +597,10 @@ static void flush_send_queue(struct rxe_qp *qp, bool notify)
- 	struct rxe_queue *q = qp->sq.queue;
- 	int err;
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index 804b15e929dd9..5b32724a95c8d 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -138,12 +138,6 @@ static inline int qp_mtu(struct rxe_qp *qp)
+ 		return IB_MTU_4096;
+ }
  
-+	/* send queue never got created. nothing to do. */
-+	if (!qp->sq.queue)
-+		return;
-+
- 	while ((wqe = queue_head(q, q->type))) {
- 		if (notify) {
- 			err = flush_send_wqe(qp, wqe);
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index ee68306555b99..ed5af55237d9f 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -1452,6 +1452,10 @@ static void flush_recv_queue(struct rxe_qp *qp, bool notify)
- 	if (qp->srq)
- 		return;
+-static inline int rcv_wqe_size(int max_sge)
+-{
+-	return sizeof(struct rxe_recv_wqe) +
+-		max_sge * sizeof(struct ib_sge);
+-}
+-
+ void free_rd_atomic_resource(struct resp_res *res);
  
-+	/* recv queue not created. nothing to do. */
-+	if (!qp->rq.queue)
-+		return;
+ static inline void rxe_advance_resp_resource(struct rxe_qp *qp)
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 27ca82ec0826b..3661cb627d28a 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -45,40 +45,41 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		      struct ib_srq_init_attr *init, struct ib_udata *udata,
+ 		      struct rxe_create_srq_resp __user *uresp)
+ {
+-	int err;
+-	int srq_wqe_size;
+ 	struct rxe_queue *q;
+-	enum queue_type type;
++	int wqe_size;
++	int err;
+ 
+-	srq->ibsrq.event_handler	= init->event_handler;
+-	srq->ibsrq.srq_context		= init->srq_context;
+-	srq->limit		= init->attr.srq_limit;
+-	srq->srq_num		= srq->elem.index;
+-	srq->rq.max_wr		= init->attr.max_wr;
+-	srq->rq.max_sge		= init->attr.max_sge;
++	srq->ibsrq.event_handler = init->event_handler;
++	srq->ibsrq.srq_context = init->srq_context;
++	srq->limit = init->attr.srq_limit;
++	srq->srq_num = srq->elem.index;
++	srq->rq.max_wr = init->attr.max_wr;
++	srq->rq.max_sge = init->attr.max_sge;
+ 
+-	srq_wqe_size		= rcv_wqe_size(srq->rq.max_sge);
++	wqe_size = sizeof(struct rxe_recv_wqe) +
++			srq->rq.max_sge*sizeof(struct ib_sge);
+ 
+ 	spin_lock_init(&srq->rq.producer_lock);
+ 	spin_lock_init(&srq->rq.consumer_lock);
+ 
+-	type = QUEUE_TYPE_FROM_CLIENT;
+-	q = rxe_queue_init(rxe, &srq->rq.max_wr, srq_wqe_size, type);
++	q = rxe_queue_init(rxe, &srq->rq.max_wr, wqe_size,
++			   QUEUE_TYPE_FROM_CLIENT);
+ 	if (!q) {
+ 		rxe_dbg_srq(srq, "Unable to allocate queue\n");
+-		return -ENOMEM;
++		err = -ENOMEM;
++		goto err_out;
+ 	}
+ 
+-	srq->rq.queue = q;
+-
+ 	err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata, q->buf,
+ 			   q->buf_size, &q->ip);
+ 	if (err) {
+-		vfree(q->buf);
+-		kfree(q);
+-		return err;
++		rxe_dbg_srq(srq, "Unable to init mmap info for caller\n");
++		goto err_free;
+ 	}
+ 
++	srq->rq.queue = q;
++	init->attr.max_wr = srq->rq.max_wr;
 +
- 	while ((wqe = queue_head(q, q->type))) {
- 		if (notify) {
- 			err = flush_recv_wqe(qp, wqe);
+ 	if (uresp) {
+ 		if (copy_to_user(&uresp->srq_num, &srq->srq_num,
+ 				 sizeof(uresp->srq_num))) {
+@@ -88,6 +89,12 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 	}
+ 
+ 	return 0;
++
++err_free:
++	vfree(q->buf);
++	kfree(q);
++err_out:
++	return err;
+ }
+ 
+ int rxe_srq_chk_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+@@ -145,9 +152,10 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		      struct ib_srq_attr *attr, enum ib_srq_attr_mask mask,
+ 		      struct rxe_modify_srq_cmd *ucmd, struct ib_udata *udata)
+ {
+-	int err;
+ 	struct rxe_queue *q = srq->rq.queue;
+ 	struct mminfo __user *mi = NULL;
++	int wqe_size;
++	int err;
+ 
+ 	if (mask & IB_SRQ_MAX_WR) {
+ 		/*
+@@ -156,12 +164,16 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		 */
+ 		mi = u64_to_user_ptr(ucmd->mmap_info_addr);
+ 
+-		err = rxe_queue_resize(q, &attr->max_wr,
+-				       rcv_wqe_size(srq->rq.max_sge), udata, mi,
+-				       &srq->rq.producer_lock,
++		wqe_size = sizeof(struct rxe_recv_wqe) +
++				srq->rq.max_sge*sizeof(struct ib_sge);
++
++		err = rxe_queue_resize(q, &attr->max_wr, wqe_size,
++				       udata, mi, &srq->rq.producer_lock,
+ 				       &srq->rq.consumer_lock);
+ 		if (err)
+-			goto err2;
++			goto err_free;
++
++		srq->rq.max_wr = attr->max_wr;
+ 	}
+ 
+ 	if (mask & IB_SRQ_LIMIT)
+@@ -169,7 +181,7 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 
+ 	return 0;
+ 
+-err2:
++err_free:
+ 	rxe_queue_cleanup(q);
+ 	srq->rq.queue = NULL;
+ 	return err;
 -- 
 2.40.1
 
