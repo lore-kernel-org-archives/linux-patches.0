@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9E81170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE333C433C8;
-	Mon, 11 Sep 2023 14:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510851170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2917C433C8;
+	Mon, 11 Sep 2023 14:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441825;
-	bh=vvtmUvVj502ZIsFJKCxMcHZa9KsdzpCT+U+/LWVXV/g=;
+	s=korg; t=1694441828;
+	bh=jeX/K2vzdWxPxw72RVdrOEUoYjgA1q058TH5/3O/pQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHKSGLYN9YIzA4ABesH0Cg6qvWRjSFxB3s2MKCEn5dLra3Mbq17uCobN6vCNq5mie
-	 jkpp2kpyGmCSh30LL4ZoB9Hk1DjKzZc4v/cHgXWxlxd55t62GYbokb4WEnPSuPo5IM
-	 cuPGGvnPdAbhdlcgd+OsahkztuuVPHJpH93C9yCU=
+	b=q/rXASeZgZQBKRr9Wr2A8IF8oJ97YIt0oW0Tki6AiirJ+e6//0InADbo7xpDurtSG
+	 UV99X8PycZc1jyVKKgmYPSfVwiuOj76H3px9U8fcQ8SUJl7Gynn0pPAl/e47JMwF0Y
+	 LOPf56MdCW5iSYMclGsvzivoVdZhRWIRMrsr1uzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Zheng Zhang <zheng.zhang@email.ucr.edu>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 523/739] platform/x86: dell-sysman: Fix reference leak
-Date: Mon, 11 Sep 2023 15:45:22 +0200
-Message-ID: <20230911134705.722007633@linuxfoundation.org>
+Subject: [PATCH 6.5 524/739] media: cec: core: add adap_nb_transmit_canceled() callback
+Date: Mon, 11 Sep 2023 15:45:23 +0200
+Message-ID: <20230911134705.748082320@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,53 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 7295a996fdab7bf83dc3d4078fa8b139b8e0a1bf ]
+[ Upstream commit da53c36ddd3f118a525a04faa8c47ca471e6c467 ]
 
-If a duplicate attribute is found using kset_find_obj(),
-a reference to that attribute is returned. This means
-that we need to dispose it accordingly. Use kobject_put()
-to dispose the duplicate attribute in such a case.
+A potential deadlock was found by Zheng Zhang with a local syzkaller
+instance.
 
-Compile-tested only.
+The problem is that when a non-blocking CEC transmit is canceled by calling
+cec_data_cancel, that in turn can call the high-level received() driver
+callback, which can call cec_transmit_msg() to transmit a new message.
 
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230805053610.7106-1-W_Armin@gmx.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+The cec_data_cancel() function is called with the adap->lock mutex held,
+and cec_transmit_msg() tries to take that same lock.
+
+The root cause is that the received() callback can either be used to pass
+on a received message (and then adap->lock is not held), or to report a
+canceled transmit (and then adap->lock is held).
+
+This is confusing, so create a new low-level adap_nb_transmit_canceled
+callback that reports back that a non-blocking transmit was canceled.
+
+And the received() callback is only called when a message is received,
+as was the case before commit f9d0ecbf56f4 ("media: cec: correctly pass
+on reply results") complicated matters.
+
+Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: f9d0ecbf56f4 ("media: cec: correctly pass on reply results")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/sysman.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/media/cec/core/cec-adap.c | 4 ++--
+ include/media/cec.h               | 6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-index b68dd11cb8924..b929b4f824205 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-@@ -393,6 +393,7 @@ static int init_bios_attributes(int attr_type, const char *guid)
- 	struct kobject *attr_name_kobj; //individual attribute names
- 	union acpi_object *obj = NULL;
- 	union acpi_object *elements;
-+	struct kobject *duplicate;
- 	struct kset *tmp_set;
- 	int min_elements;
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index 241b1621b197c..a9b73fb33888d 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -385,8 +385,8 @@ static void cec_data_cancel(struct cec_data *data, u8 tx_status, u8 rx_status)
+ 	cec_queue_msg_monitor(adap, &data->msg, 1);
  
-@@ -451,9 +452,11 @@ static int init_bios_attributes(int attr_type, const char *guid)
- 		else
- 			tmp_set = wmi_priv.main_dir_kset;
+ 	if (!data->blocking && data->msg.sequence)
+-		/* Allow drivers to process the message first */
+-		call_op(adap, received, &data->msg);
++		/* Allow drivers to react to a canceled transmit */
++		call_void_op(adap, adap_nb_transmit_canceled, &data->msg);
  
--		if (kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer)) {
--			pr_debug("duplicate attribute name found - %s\n",
--				elements[ATTR_NAME].string.pointer);
-+		duplicate = kset_find_obj(tmp_set, elements[ATTR_NAME].string.pointer);
-+		if (duplicate) {
-+			pr_debug("Duplicate attribute name found - %s\n",
-+				 elements[ATTR_NAME].string.pointer);
-+			kobject_put(duplicate);
- 			goto nextobj;
- 		}
+ 	cec_data_completed(data);
+ }
+diff --git a/include/media/cec.h b/include/media/cec.h
+index abee41ae02d0e..6556cc161dc0a 100644
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -121,14 +121,16 @@ struct cec_adap_ops {
+ 	void (*adap_configured)(struct cec_adapter *adap, bool configured);
+ 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
+ 			     u32 signal_free_time, struct cec_msg *msg);
++	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
++					  const struct cec_msg *msg);
+ 	void (*adap_status)(struct cec_adapter *adap, struct seq_file *file);
+ 	void (*adap_free)(struct cec_adapter *adap);
+ 
+-	/* Error injection callbacks */
++	/* Error injection callbacks, called without adap->lock held */
+ 	int (*error_inj_show)(struct cec_adapter *adap, struct seq_file *sf);
+ 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
+ 
+-	/* High-level CEC message callback */
++	/* High-level CEC message callback, called without adap->lock held */
+ 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
+ };
  
 -- 
 2.40.1
