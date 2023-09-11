@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEFF1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBB6C433C8;
-	Mon, 11 Sep 2023 14:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CA31170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788A8C433C8;
+	Mon, 11 Sep 2023 14:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442246;
-	bh=FKXilathzeXQ1jJofE5P21cmCHCpoR21ZaHxO7MPWkw=;
+	s=korg; t=1694442248;
+	bh=vpRa5oAZ88UFx1KSM94pXMrh7Mx29kKq7yHjq2q12PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZ58P5Vm1Wd1+q9U9KuCnVI2t9zsVnk+ONzdIOz6DO41rz8s0LSUVmEoMMcp0lvDH
-	 bTk3fRTrmD07XmO6sKJ6Vk3wAswM1G5okzC9CZmkkDxGp8OtSBenXzF25oLt1eDlCT
-	 2Ye4raU5W3wwFcPO/fqnBeHYoOUNHOOweL831MAE=
+	b=2mPESp63BSH0YBIUucmwVKYrrHOWqPmHnw7aa7e1UbcMmnDHfUnaKwJN+qWMpvbsX
+	 e4KConRWPULooz01OMsI3HD5EdEZqcx0iTD/YUYPZYRGTNEr94xaWGw0de/nkcakxB
+	 tO6wUXeTD41AeFJDd65p0zCU1O3ndF3146QDjEDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen N Rao <naveen@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.5 671/739] powerpc/ftrace: Fix dropping weak symbols with older toolchains
-Date: Mon, 11 Sep 2023 15:47:50 +0200
-Message-ID: <20230911134709.847475591@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.5 672/739] i3c: master: svc: fix probe failure when no i3c device exist
+Date: Mon, 11 Sep 2023 15:47:51 +0200
+Message-ID: <20230911134709.874593468@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,46 +40,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit f6834c8c59a8e977a6f6e4f96c5d28dfa5db8430 upstream.
+commit 6e13d6528be2f7e801af63c8153b87293f25d736 upstream.
 
-The minimum level of gcc supported for building the kernel is v5.1.
-v5.x releases of gcc emitted a three instruction sequence for
--mprofile-kernel:
-	mflr	r0
-	std	r0, 16(r1)
-	bl	_mcount
+I3C masters are expected to support hot-join. This means at initialization
+time we might not yet discover any device and this should not be treated
+as a fatal error.
 
-It is only with the v6.x releases that gcc started emitting the two
-instruction sequence for -mprofile-kernel, omitting the second store
-instruction.
+During the DAA procedure which happens at probe time, if no device has
+joined, all CCC will be NACKed (from a bus perspective). This leads to an
+early return with an error code which fails the probe of the master.
 
-With the older three instruction sequence, the actual ftrace location
-can be the 5th instruction into a function. Update the allowed offset
-for ftrace location from 12 to 16 to accommodate the same.
+Let's avoid this by just telling the core through an I3C_ERROR_M2
+return command code that no device was discovered, which is a valid
+situation. This way the master will no longer bail out and fail to probe
+for a wrong reason.
 
 Cc: stable@vger.kernel.org
-Fixes: 7af82ff90a2b06 ("powerpc/ftrace: Ignore weak functions")
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/7b265908a9461e38fc756ef9b569703860a80621.1687166935.git.naveen@kernel.org
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230831141324.2841525-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/ftrace.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/svc-i3c-master.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/include/asm/ftrace.h
-+++ b/arch/powerpc/include/asm/ftrace.h
-@@ -12,7 +12,7 @@
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -789,6 +789,10 @@ static int svc_i3c_master_do_daa_locked(
+ 				 */
+ 				break;
+ 			} else if (SVC_I3C_MSTATUS_NACKED(reg)) {
++				/* No I3C devices attached */
++				if (dev_nb == 0)
++					break;
++
+ 				/*
+ 				 * A slave device nacked the address, this is
+ 				 * allowed only once, DAA will be stopped and
+@@ -1263,11 +1267,17 @@ static int svc_i3c_master_send_ccc_cmd(s
+ {
+ 	struct svc_i3c_master *master = to_svc_i3c_master(m);
+ 	bool broadcast = cmd->id < 0x80;
++	int ret;
  
- /* Ignore unused weak functions which will have larger offsets */
- #ifdef CONFIG_MPROFILE_KERNEL
--#define FTRACE_MCOUNT_MAX_OFFSET	12
-+#define FTRACE_MCOUNT_MAX_OFFSET	16
- #elif defined(CONFIG_PPC32)
- #define FTRACE_MCOUNT_MAX_OFFSET	8
- #endif
+ 	if (broadcast)
+-		return svc_i3c_master_send_bdcast_ccc_cmd(master, cmd);
++		ret = svc_i3c_master_send_bdcast_ccc_cmd(master, cmd);
+ 	else
+-		return svc_i3c_master_send_direct_ccc_cmd(master, cmd);
++		ret = svc_i3c_master_send_direct_ccc_cmd(master, cmd);
++
++	if (ret)
++		cmd->err = I3C_ERROR_M2;
++
++	return ret;
+ }
+ 
+ static int svc_i3c_master_priv_xfers(struct i3c_dev_desc *dev,
 
 
