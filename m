@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4338C11718
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A1CC433C8;
-	Mon, 11 Sep 2023 15:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F3A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738C3C433C7;
+	Mon, 11 Sep 2023 15:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444617;
-	bh=lVrotdtn+3HpaV/SDkdMoIPCrvQ5/PNBGQ94r9UeMPU=;
+	s=korg; t=1694444619;
+	bh=LyAXghCpPbICLiBCjjN4zYAA7Qlhl1D5XbBW5TMWgGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXV6zSO8N7vL1O0kB8w8l3jAfjuF2n4LBthoU2ot88Vc5L6fYwjberYgB/xFcrEId
-	 GaZvp5IdHH/DxTnyFQT6VlfVL5dFzs4TxTzbq28B8tfSHbxeOZkTAnz38rYzH0IbR2
-	 J63A2IpudQyfkmJDNPtb/9uQo2Gs37QAepvDOOv8=
+	b=jsujhMc/3KRRCpMoFAsoAqMR2ejAOT+IQwH/TSIka4vZTjBfQ0nrpujylffTOxU3Y
+	 wjge9Lyt/iasJ1uBWOJA250OXtAEjDyCtp10pzLMST8g+mDaK7hdnfQF1UCszh6wmw
+	 sVAcnPYWJNvIBSykFX+lk1D3Zm5RirWInXAv9PiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 017/600] ksmbd: validate session id and tree id in compound request
-Date: Mon, 11 Sep 2023 15:40:50 +0200
-Message-ID: <20230911134634.124272698@linuxfoundation.org>
+	Ani Sinha <anisinha@redhat.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 049/600] vmbus_testing: fix wrong python syntax for integer value comparison
+Date: Mon, 11 Sep 2023 15:41:22 +0200
+Message-ID: <20230911134635.049714069@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,70 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ani Sinha <anisinha@redhat.com>
 
-[ Upstream commit 3df0411e132ee74a87aa13142dfd2b190275332e ]
+[ Upstream commit ed0cf84e9cc42e6310961c87709621f1825c2bb8 ]
 
-`smb2_get_msg()` in smb2_get_ksmbd_tcon() and smb2_check_user_session()
-will always return the first request smb2 header in a compound request.
-if `SMB2_TREE_CONNECT_HE` is the first command in compound request, will
-return 0, i.e. The tree id check is skipped.
-This patch use ksmbd_req_buf_next() to get current command in compound.
+It is incorrect in python to compare integer values using the "is" keyword.
+The "is" keyword in python is used to compare references to two objects,
+not their values. Newer version of python3 (version 3.8) throws a warning
+when such incorrect comparison is made. For value comparison, "==" should
+be used.
 
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21506
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this in the code and suppress the following warning:
+
+/usr/sbin/vmbus_testing:167: SyntaxWarning: "is" with a literal. Did you mean "=="?
+
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20230705134408.6302-1-anisinha@redhat.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/hv/vmbus_testing | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ee954c5ab9c2b..74c245809772e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -86,9 +86,9 @@ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn
-  */
- int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
- {
--	struct smb2_hdr *req_hdr = smb2_get_msg(work->request_buf);
-+	struct smb2_hdr *req_hdr = ksmbd_req_buf_next(work);
- 	unsigned int cmd = le16_to_cpu(req_hdr->Command);
--	int tree_id;
-+	unsigned int tree_id;
+diff --git a/tools/hv/vmbus_testing b/tools/hv/vmbus_testing
+index e7212903dd1d9..4467979d8f699 100755
+--- a/tools/hv/vmbus_testing
++++ b/tools/hv/vmbus_testing
+@@ -164,7 +164,7 @@ def recursive_file_lookup(path, file_map):
+ def get_all_devices_test_status(file_map):
  
- 	if (cmd == SMB2_TREE_CONNECT_HE ||
- 	    cmd ==  SMB2_CANCEL_HE ||
-@@ -113,7 +113,7 @@ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
- 			pr_err("The first operation in the compound does not have tcon\n");
- 			return -EINVAL;
- 		}
--		if (work->tcon->id != tree_id) {
-+		if (tree_id != UINT_MAX && work->tcon->id != tree_id) {
- 			pr_err("tree id(%u) is different with id(%u) in first operation\n",
- 					tree_id, work->tcon->id);
- 			return -EINVAL;
-@@ -565,9 +565,9 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
-  */
- int smb2_check_user_session(struct ksmbd_work *work)
- {
--	struct smb2_hdr *req_hdr = smb2_get_msg(work->request_buf);
-+	struct smb2_hdr *req_hdr = ksmbd_req_buf_next(work);
- 	struct ksmbd_conn *conn = work->conn;
--	unsigned int cmd = conn->ops->get_cmd_val(work);
-+	unsigned int cmd = le16_to_cpu(req_hdr->Command);
- 	unsigned long long sess_id;
+         for device in file_map:
+-                if (get_test_state(locate_state(device, file_map)) is 1):
++                if (get_test_state(locate_state(device, file_map)) == 1):
+                         print("Testing = ON for: {}"
+                               .format(device.split("/")[5]))
+                 else:
+@@ -203,7 +203,7 @@ def write_test_files(path, value):
+ def set_test_state(state_path, state_value, quiet):
  
- 	/*
-@@ -593,7 +593,7 @@ int smb2_check_user_session(struct ksmbd_work *work)
- 			pr_err("The first operation in the compound does not have sess\n");
- 			return -EINVAL;
- 		}
--		if (work->sess->id != sess_id) {
-+		if (sess_id != ULLONG_MAX && work->sess->id != sess_id) {
- 			pr_err("session id(%llu) is different with the first operation(%lld)\n",
- 					sess_id, work->sess->id);
- 			return -EINVAL;
+         write_test_files(state_path, state_value)
+-        if (get_test_state(state_path) is 1):
++        if (get_test_state(state_path) == 1):
+                 if (not quiet):
+                         print("Testing = ON for device: {}"
+                               .format(state_path.split("/")[5]))
 -- 
 2.40.1
 
