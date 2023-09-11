@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7357C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1635C433C8;
-	Mon, 11 Sep 2023 13:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEF61170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE9A2C433C7;
+	Mon, 11 Sep 2023 13:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440616;
-	bh=xfQ1I86H8ZyYHtCt5KBb7WWOWArNauwvbcPPq4axhQg=;
+	s=korg; t=1694440619;
+	bh=gHqyLQaep5kEiAbo84spPZ9iNAFfgfzvkL1SU7Q9XpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mb3vvkMlHynTOLkHb+blyQN/ea171ODwWGO3lnynZFHPRBbtMK2ErbvlVgqESlWZ3
-	 dXGTbCW6Nya6gZaoPctmIcofsLJcMl5Q+zlBQnKxSLaHlPNp3d6QJGSwvT940GmVvT
-	 GtpVkDYRJ+1y2IFzA+BGPI6KJWUZfnwmC28TByC4=
+	b=yesHowEDt9uXTpf2YxHwqFwQ3MoTY4sRx1OsWDVrUReaGBXShImMZ97Q+bIOfyzOD
+	 kfGRAP1SoYpbaAIT+1SL+Gj5biYhnZHjpKBlxrc9lkzQRg9Jt0uAw5IrX6+bwWo1UM
+	 NK5C6HA6oF8zqn7zccPhEmyeqU2V+uS1tb45NGLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colm Harrington <colm.harrington@oracle.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 107/739] selftests/bpf: fix static assert compilation issue for test_cls_*.c
-Date: Mon, 11 Sep 2023 15:38:26 +0200
-Message-ID: <20230911134654.087424214@linuxfoundation.org>
+Subject: [PATCH 6.5 125/739] Bluetooth: hci_sync: Dont double print name in add/remove adv_monitor
+Date: Mon, 11 Sep 2023 15:38:44 +0200
+Message-ID: <20230911134654.583891252@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,80 +41,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 416c6d01244ecbf0abfdb898fd091b50ef951b48 ]
+[ Upstream commit 6f55eea116ba3646fb5fbb31de703f8cf79d8214 ]
 
-commit bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
+The hci_add_adv_monitor() hci_remove_adv_monitor() functions call
+bt_dev_dbg() to print some debug statements. The bt_dev_dbg() macro
+automatically adds in the device's name. That means that we shouldn't
+include the name in the bt_dev_dbg() calls.
 
-...was backported to stable trees such as 5.15. The problem is that with older
-LLVM/clang (14/15) - which is often used for older kernels - we see compilation
-failures in BPF selftests now:
-
-In file included from progs/test_cls_redirect_subprogs.c:2:
-progs/test_cls_redirect.c:90:2: error: static assertion expression is not an integral constant expression
-        sizeof(flow_ports_t) !=
-        ^~~~~~~~~~~~~~~~~~~~~~~
-progs/test_cls_redirect.c:91:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
-                offsetofend(struct bpf_sock_tuple, ipv4.dport) -
-                ^
-progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
-        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
-         ^
-tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
-                                 ^
-In file included from progs/test_cls_redirect_subprogs.c:2:
-progs/test_cls_redirect.c:95:2: error: static assertion expression is not an integral constant expression
-        sizeof(flow_ports_t) !=
-        ^~~~~~~~~~~~~~~~~~~~~~~
-progs/test_cls_redirect.c:96:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
-                offsetofend(struct bpf_sock_tuple, ipv6.dport) -
-                ^
-progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
-        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
-         ^
-tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
-                                 ^
-2 errors generated.
-make: *** [Makefile:594: tools/testing/selftests/bpf/test_cls_redirect_subprogs.bpf.o] Error 1
-
-The problem is the new offsetof() does not play nice with static asserts.
-Given that the context is a static assert (and CO-RE relocation is not
-needed at compile time), offsetof() usage can be replaced by restoring
-the original offsetof() definition as __builtin_offsetof().
-
-Fixes: bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
-Reported-by: Colm Harrington <colm.harrington@oracle.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Tested-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20230802073906.3197480-1-alan.maguire@oracle.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a2bcd2b63271 ("Bluetooth: hci_sync: Avoid use-after-free in dbg for hci_add_adv_monitor()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_cls_redirect.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/hci_core.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect.h b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-index 76eab0aacba0c..233b089d1fbac 100644
---- a/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-+++ b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
-@@ -12,6 +12,15 @@
- #include <linux/ipv6.h>
- #include <linux/udp.h>
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 793b66da22653..04b51ffd946b7 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1949,14 +1949,14 @@ int hci_add_adv_monitor(struct hci_dev *hdev, struct adv_monitor *monitor)
  
-+/* offsetof() is used in static asserts, and the libbpf-redefined CO-RE
-+ * friendly version breaks compilation for older clang versions <= 15
-+ * when invoked in a static assert.  Restore original here.
-+ */
-+#ifdef offsetof
-+#undef offsetof
-+#define offsetof(type, member) __builtin_offsetof(type, member)
-+#endif
-+
- struct gre_base_hdr {
- 	uint16_t flags;
- 	uint16_t protocol;
+ 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
+ 	case HCI_ADV_MONITOR_EXT_NONE:
+-		bt_dev_dbg(hdev, "%s add monitor %d status %d", hdev->name,
++		bt_dev_dbg(hdev, "add monitor %d status %d",
+ 			   monitor->handle, status);
+ 		/* Message was not forwarded to controller - not an error */
+ 		break;
+ 
+ 	case HCI_ADV_MONITOR_EXT_MSFT:
+ 		status = msft_add_monitor_pattern(hdev, monitor);
+-		bt_dev_dbg(hdev, "%s add monitor %d msft status %d", hdev->name,
++		bt_dev_dbg(hdev, "add monitor %d msft status %d",
+ 			   monitor->handle, status);
+ 		break;
+ 	}
+@@ -1976,15 +1976,15 @@ static int hci_remove_adv_monitor(struct hci_dev *hdev,
+ 
+ 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
+ 	case HCI_ADV_MONITOR_EXT_NONE: /* also goes here when powered off */
+-		bt_dev_dbg(hdev, "%s remove monitor %d status %d", hdev->name,
++		bt_dev_dbg(hdev, "remove monitor %d status %d",
+ 			   monitor->handle, status);
+ 		goto free_monitor;
+ 
+ 	case HCI_ADV_MONITOR_EXT_MSFT:
+ 		handle = monitor->handle;
+ 		status = msft_remove_monitor(hdev, monitor);
+-		bt_dev_dbg(hdev, "%s remove monitor %d msft status %d",
+-			   hdev->name, handle, status);
++		bt_dev_dbg(hdev, "remove monitor %d msft status %d",
++			   handle, status);
+ 		break;
+ 	}
+ 
 -- 
 2.40.1
 
