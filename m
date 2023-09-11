@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111CAF51E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86744C433C8;
-	Mon, 11 Sep 2023 15:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FE811710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765F6C433C8;
+	Mon, 11 Sep 2023 15:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445307;
-	bh=tWrv344rMd5hKSZ5byvwWtG9g/xzBss5S0GJcWfjevo=;
+	s=korg; t=1694445310;
+	bh=zpA8iSmvRyVRgaUS3y+hWCYnS60m30I2IyMjbb2ZUtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jv7ARtV7Lyf31OE98mesD39oYx+jreVzk33otODGS5RPFEesJFK8gvyN/961Ud7B4
-	 lmIsDvsAPRE4ObUWV7KA06faNtFT/2+nOkCEVYNbW4ib1VaJ5wvBd4tP62xF5I5ibN
-	 Zxb/BG84VdWWbnMSV60qLeRx3tpYokqG6ZNu4bQ0=
+	b=NuxzKVpjfGrcUxM+TvERbPpnvyyAa+hc71PU4Gx+ejr1VuG8aY5MlXTxU/G3L78zf
+	 NRP+Ev41OTGdGs/PrkHiFCFioElhxFLPPThOVKgI2omAo5s2rRpj0Onjmdo059EiUP
+	 tfS7hxkRuKUbzVDRW3Y2Q+3ygikyEIwNNjYhgyO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 302/600] drm/mediatek: dp: Add missing error checks in mtk_dp_parse_capabilities
-Date: Mon, 11 Sep 2023 15:45:35 +0200
-Message-ID: <20230911134642.528786085@linuxfoundation.org>
+Subject: [PATCH 6.1 303/600] bus: ti-sysc: Fix build warning for 64-bit build
+Date: Mon, 11 Sep 2023 15:45:36 +0200
+Message-ID: <20230911134642.558801406@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,62 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit cfc146137a9f12e883ba64bc496b6da4d23f26d5 ]
+[ Upstream commit e1e1e9bb9d943ec690670a609a5f660ca10eaf85 ]
 
-If reading the RX capabilities fails the training pattern will be set
-wrongly: add error checking for drm_dp_read_dpcd_caps() and return if
-anything went wrong with it.
+Fix "warning: cast from pointer to integer of different size" on 64-bit
+builds.
 
-While at it, also add a less critical error check when writing to
-clear the ESI0 IRQ vector.
+Note that this is a cosmetic fix at this point as the driver is not yet
+used for 64-bit systems.
 
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230725073234.55892-2-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: feaa8baee82a ("bus: ti-sysc: Implement SoC revision handling")
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Reviewed-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/bus/ti-sysc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index 007af69e5026f..4c249939a6c3b 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -1588,7 +1588,9 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
- 	u8 val;
- 	ssize_t ret;
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 9b7268bae66ab..0c933788d8575 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -3125,7 +3125,7 @@ static int sysc_init_static_data(struct sysc *ddata)
  
--	drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
-+	ret = drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
-+	if (ret < 0)
-+		return ret;
+ 	match = soc_device_match(sysc_soc_match);
+ 	if (match && match->data)
+-		sysc_soc->soc = (int)match->data;
++		sysc_soc->soc = (enum sysc_soc)match->data;
  
- 	if (drm_dp_tps4_supported(mtk_dp->rx_cap))
- 		mtk_dp->train_info.channel_eq_pattern = DP_TRAINING_PATTERN_4;
-@@ -1615,10 +1617,13 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
- 			return ret == 0 ? -EIO : ret;
- 		}
- 
--		if (val)
--			drm_dp_dpcd_writeb(&mtk_dp->aux,
--					   DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
--					   val);
-+		if (val) {
-+			ret = drm_dp_dpcd_writeb(&mtk_dp->aux,
-+						 DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
-+						 val);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
- 
- 	return 0;
+ 	/*
+ 	 * Check and warn about possible old incomplete dtb. We now want to see
 -- 
 2.40.1
 
