@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989E0F51E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF144C433C7;
-	Mon, 11 Sep 2023 14:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DBBF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB451C433C8;
+	Mon, 11 Sep 2023 14:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442798;
-	bh=45OLhJN925HuBE/QRLHWW+5cwvs0bFTkvJFzsuQQFPo=;
+	s=korg; t=1694442801;
+	bh=vfvCvHA7+BFf7bkTP5O73ZyMqE6Z8+fSQvIFzqiVDSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9iXVJAPGs06UI6DYiUYPpAyCQndVquyEid5kCfQw1o+odGvwxZtsYDNWxNgMY+Ss
-	 G/yxtU0gWBYcwGEjW5LaZoOJrRwXGk2qsWMaTgX52vOW/DEEfbfwCxDPiR3KgwdNvK
-	 zkCnBIFPtO+UpI3rJeVvX0y/9JBJ+1Xwgc3xL8Lo=
+	b=XIl77r7t2/LWmOQxEQdI+obv9DGbcTsR1Gnv6TM1CiBMmlH2RiaPfFkVewSLqXt+C
+	 yOjr9136n5sIMLZm9A8h6w2amMsFBtQQ8jgvBY1klvNlSBnH9UwIiwB6k/CoMxu9nH
+	 REuvLxB4DftvGex3ewJwwxD8wpV+q36nNtLYcB9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Will Deacon <will@kernel.org>,
+	"Nysal Jan K.A" <nysal@linux.ibm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 124/737] perf/imx_ddr: dont enable counter0 if none of 4 counters are used
-Date: Mon, 11 Sep 2023 15:39:43 +0200
-Message-ID: <20230911134653.968807804@linuxfoundation.org>
+Subject: [PATCH 6.4 125/737] selftests/futex: Order calls to futex_lock_pi
+Date: Mon, 11 Sep 2023 15:39:44 +0200
+Message-ID: <20230911134653.995986374@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,88 +40,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Nysal Jan K.A <nysal@linux.ibm.com>
 
-[ Upstream commit f4e2bd91ddf5e8543cbe7ad80b3fba3d2dc63fa3 ]
+[ Upstream commit fbf4dec702774286db409815ffb077711a96b824 ]
 
-In current driver, counter0 will be enabled after ddr_perf_pmu_enable()
-is called even though none of the 4 counters are used. This will cause
-counter0 continue to count until ddr_perf_pmu_disabled() is called. If
-pmu is not disabled all the time, the pmu interrupt will be asserted
-from time to time due to counter0 will overflow and irq handler will
-clear it. It's not an expected behavior. This patch will not enable
-counter0 if none of 4 counters are used.
+Observed occassional failures in the futex_wait_timeout test:
 
-Fixes: 9a66d36cc7ac ("drivers/perf: imx_ddr: Add DDR performance counter support to perf")
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230811015438.1999307-2-xu.yang_2@nxp.com
-Signed-off-by: Will Deacon <will@kernel.org>
+ok 1 futex_wait relative succeeds
+ok 2 futex_wait_bitset realtime succeeds
+ok 3 futex_wait_bitset monotonic succeeds
+ok 4 futex_wait_requeue_pi realtime succeeds
+ok 5 futex_wait_requeue_pi monotonic succeeds
+not ok 6 futex_lock_pi realtime returned 0
+......
+
+The test expects the child thread to complete some steps before
+the parent thread gets to run. There is an implicit expectation
+of the order of invocation of futex_lock_pi between the child thread
+and the parent thread. Make this order explicit. If the order is
+not met, the futex_lock_pi call in the parent thread succeeds and
+will not timeout.
+
+Fixes: f4addd54b161 ("selftests: futex: Expand timeout test")
+Signed-off-by: Nysal Jan K.A <nysal@linux.ibm.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/fsl_imx8_ddr_perf.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ .../selftests/futex/functional/futex_wait_timeout.c        | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
-index 5222ba1e79d0e..c684aab407f86 100644
---- a/drivers/perf/fsl_imx8_ddr_perf.c
-+++ b/drivers/perf/fsl_imx8_ddr_perf.c
-@@ -101,6 +101,7 @@ struct ddr_pmu {
- 	const struct fsl_ddr_devtype_data *devtype_data;
- 	int irq;
- 	int id;
-+	int active_counter;
- };
+diff --git a/tools/testing/selftests/futex/functional/futex_wait_timeout.c b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
+index 3651ce17beeb9..d183f878360bc 100644
+--- a/tools/testing/selftests/futex/functional/futex_wait_timeout.c
++++ b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
+@@ -24,6 +24,7 @@
  
- static ssize_t ddr_perf_identifier_show(struct device *dev,
-@@ -495,6 +496,10 @@ static void ddr_perf_event_start(struct perf_event *event, int flags)
+ static long timeout_ns = 100000;	/* 100us default timeout */
+ static futex_t futex_pi;
++static pthread_barrier_t barrier;
  
- 	ddr_perf_counter_enable(pmu, event->attr.config, counter, true);
- 
-+	if (!pmu->active_counter++)
-+		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
-+			EVENT_CYCLES_COUNTER, true);
-+
- 	hwc->state = 0;
- }
- 
-@@ -548,6 +553,10 @@ static void ddr_perf_event_stop(struct perf_event *event, int flags)
- 	ddr_perf_counter_enable(pmu, event->attr.config, counter, false);
- 	ddr_perf_event_update(event);
- 
-+	if (!--pmu->active_counter)
-+		ddr_perf_counter_enable(pmu, EVENT_CYCLES_ID,
-+			EVENT_CYCLES_COUNTER, false);
-+
- 	hwc->state |= PERF_HES_STOPPED;
- }
- 
-@@ -565,25 +574,10 @@ static void ddr_perf_event_del(struct perf_event *event, int flags)
- 
- static void ddr_perf_pmu_enable(struct pmu *pmu)
+ void usage(char *prog)
  {
--	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
--
--	/* enable cycle counter if cycle is not active event list */
--	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
--		ddr_perf_counter_enable(ddr_pmu,
--				      EVENT_CYCLES_ID,
--				      EVENT_CYCLES_COUNTER,
--				      true);
- }
+@@ -48,6 +49,8 @@ void *get_pi_lock(void *arg)
+ 	if (ret != 0)
+ 		error("futex_lock_pi failed\n", ret);
  
- static void ddr_perf_pmu_disable(struct pmu *pmu)
- {
--	struct ddr_pmu *ddr_pmu = to_ddr_pmu(pmu);
--
--	if (ddr_pmu->events[EVENT_CYCLES_COUNTER] == NULL)
--		ddr_perf_counter_enable(ddr_pmu,
--				      EVENT_CYCLES_ID,
--				      EVENT_CYCLES_COUNTER,
--				      false);
- }
++	pthread_barrier_wait(&barrier);
++
+ 	/* Blocks forever */
+ 	ret = futex_wait(&lock, 0, NULL, 0);
+ 	error("futex_wait failed\n", ret);
+@@ -130,6 +133,7 @@ int main(int argc, char *argv[])
+ 	       basename(argv[0]));
+ 	ksft_print_msg("\tArguments: timeout=%ldns\n", timeout_ns);
  
- static int ddr_perf_init(struct ddr_pmu *pmu, void __iomem *base,
++	pthread_barrier_init(&barrier, NULL, 2);
+ 	pthread_create(&thread, NULL, get_pi_lock, NULL);
+ 
+ 	/* initialize relative timeout */
+@@ -163,6 +167,9 @@ int main(int argc, char *argv[])
+ 	res = futex_wait_requeue_pi(&f1, f1, &futex_pi, &to, 0);
+ 	test_timeout(res, &ret, "futex_wait_requeue_pi monotonic", ETIMEDOUT);
+ 
++	/* Wait until the other thread calls futex_lock_pi() */
++	pthread_barrier_wait(&barrier);
++	pthread_barrier_destroy(&barrier);
+ 	/*
+ 	 * FUTEX_LOCK_PI with CLOCK_REALTIME
+ 	 * Due to historical reasons, FUTEX_LOCK_PI supports only realtime
 -- 
 2.40.1
 
