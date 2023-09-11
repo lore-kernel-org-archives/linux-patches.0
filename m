@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AF81170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D9BC433C7;
-	Mon, 11 Sep 2023 13:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B790F9F3
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B4EC433C8;
+	Mon, 11 Sep 2023 13:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440447;
-	bh=Jp0uUzgioDIQmyNfubPjS6X4ZijuL9wzjxf8vi+NrYQ=;
+	s=korg; t=1694440450;
+	bh=cw9IngoCM6TR0OEcqt9Nrl3EMBDOLJEnq2fi10ovQg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8ihi5nvXf+zALNKNQbE1AEM47p1vdjI7Cu2n1wR/wf78rUY+wvaV7pw2yUzywpZc
-	 EKcDJzu5/ikum3kQCSvR2/3npV9k4lbafzQICN69m9k9ZX389FhSAouAkvjhFDnVod
-	 UMbppX9n37TAFFaUYptDhfRkrxUzcTJTVzErV43U=
+	b=TLoaomEX7mLafLA8Hv1GX1lHFLEYh4D2L69bCK7KmwxGZMntFiNqT6E7lxPX222nX
+	 8OWx1ehNY4Yo1s4zPCYyhVyOiXBpI2sE4CQeRW7ai5Q5hiRu8MhBKME0ftMwnOYDMV
+	 G+D+dp4UqJehgZID43BRKg0OWgNT4TeLL7q53qtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Lobakin <alobakin@pm.me>,
 	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 065/739] bpftool: use a local copy of perf_event to fix accessing :: Bpf_cookie
-Date: Mon, 11 Sep 2023 15:37:44 +0200
-Message-ID: <20230911134652.923487573@linuxfoundation.org>
+Subject: [PATCH 6.5 066/739] bpftool: Define a local bpf_perf_link to fix accessing its fields
+Date: Mon, 11 Sep 2023 15:37:45 +0200
+Message-ID: <20230911134652.950916647@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,65 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Lobakin <alobakin@pm.me>
 
-[ Upstream commit 4cbeeb0dc02f8ac7b975b2ab0080ace53d43d62a ]
+[ Upstream commit 67a43462ee2405c94e985a747bdcb8e3a0d66203 ]
 
-When CONFIG_PERF_EVENTS is not set, struct perf_event remains empty.
-However, the structure is being used by bpftool indirectly via BTF.
-This leads to:
+When building bpftool with !CONFIG_PERF_EVENTS:
 
-skeleton/pid_iter.bpf.c:49:30: error: no member named 'bpf_cookie' in 'struct perf_event'
-        return BPF_CORE_READ(event, bpf_cookie);
-               ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+skeleton/pid_iter.bpf.c:47:14: error: incomplete definition of type 'struct bpf_perf_link'
+        perf_link = container_of(link, struct bpf_perf_link, link);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:74:22: note: expanded from macro 'container_of'
+                ((type *)(__mptr - offsetof(type, member)));    \
+                                   ^~~~~~~~~~~~~~~~~~~~~~
+tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:68:60: note: expanded from macro 'offsetof'
+ #define offsetof(TYPE, MEMBER)  ((unsigned long)&((TYPE *)0)->MEMBER)
+                                                  ~~~~~~~~~~~^
+skeleton/pid_iter.bpf.c:44:9: note: forward declaration of 'struct bpf_perf_link'
+        struct bpf_perf_link *perf_link;
+               ^
 
-...
-
-skeleton/pid_iter.bpf.c:49:9: error: returning 'void' from a function with incompatible result type '__u64' (aka 'unsigned long long')
-        return BPF_CORE_READ(event, bpf_cookie);
-               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Tools and samples can't use any CONFIG_ definitions, so the fields
-used there should always be present.
-Define struct perf_event___local with the `preserve_access_index`
+&bpf_perf_link is being defined and used only under the ifdef.
+Define struct bpf_perf_link___local with the `preserve_access_index`
 attribute inside the pid_iter BPF prog to allow compiling on any
-configs. CO-RE will substitute it with the real struct perf_event
+configs. CO-RE will substitute it with the real struct bpf_perf_link
 accesses later on.
+container_of() uses offsetof(), which does the necessary CO-RE
+relocation if the field is specified with `preserve_access_index` - as
+is the case for struct bpf_perf_link___local.
 
 Fixes: cbdaf71f7e65 ("bpftool: Add bpf_cookie to link output")
 Suggested-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Alexander Lobakin <alobakin@pm.me>
 Signed-off-by: Quentin Monnet <quentin@isovalent.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230707095425.168126-2-quentin@isovalent.com
+Link: https://lore.kernel.org/bpf/20230707095425.168126-3-quentin@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-index eb05ea53afb12..e2af8e5fb29ec 100644
+index e2af8e5fb29ec..3a4c4f7d83d86 100644
 --- a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
 +++ b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-@@ -15,6 +15,10 @@ enum bpf_obj_type {
+@@ -15,6 +15,11 @@ enum bpf_obj_type {
  	BPF_OBJ_BTF,
  };
  
-+struct perf_event___local {
-+	u64 bpf_cookie;
++struct bpf_perf_link___local {
++	struct bpf_link link;
++	struct file *perf_file;
 +} __attribute__((preserve_access_index));
 +
- extern const void bpf_link_fops __ksym;
- extern const void bpf_map_fops __ksym;
- extern const void bpf_prog_fops __ksym;
-@@ -41,8 +45,8 @@ static __always_inline __u32 get_obj_id(void *ent, enum bpf_obj_type type)
+ struct perf_event___local {
+ 	u64 bpf_cookie;
+ } __attribute__((preserve_access_index));
+@@ -45,10 +50,10 @@ static __always_inline __u32 get_obj_id(void *ent, enum bpf_obj_type type)
  /* could be used only with BPF_LINK_TYPE_PERF_EVENT links */
  static __u64 get_bpf_cookie(struct bpf_link *link)
  {
-+	struct perf_event___local *event;
- 	struct bpf_perf_link *perf_link;
--	struct perf_event *event;
++	struct bpf_perf_link___local *perf_link;
+ 	struct perf_event___local *event;
+-	struct bpf_perf_link *perf_link;
  
- 	perf_link = container_of(link, struct bpf_perf_link, link);
+-	perf_link = container_of(link, struct bpf_perf_link, link);
++	perf_link = container_of(link, struct bpf_perf_link___local, link);
  	event = BPF_CORE_READ(perf_link, perf_file, private_data);
+ 	return BPF_CORE_READ(event, bpf_cookie);
+ }
 -- 
 2.40.1
 
