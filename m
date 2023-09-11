@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E874711715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB6DC433C8;
-	Mon, 11 Sep 2023 15:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B2B11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D82CC433C9;
+	Mon, 11 Sep 2023 15:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444802;
-	bh=9pP3mGhXVRXjg7VX7ypppd7P70ZFS6op7fOktIAZKvM=;
+	s=korg; t=1694444805;
+	bh=wPyDfPWbr6ka6WjEUtrAuB+iVBAyeeRTl7ZPEwnjMI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=duUHhnABYfgQVWCZEYsloqmvKU0pL6FRZS3lwyhGL4LvQ+6czc2AHg8mCMhuwpYNR
-	 2eeAe/C3C3KfxA81eba11ASbcP0/XIg7YcxekQofE2aj4jDPJ1kcZKQASfjbldyZNR
-	 KoMFJ/ETRJv3S8gomroUpg+mV7QqNYabyQJxw3fc=
+	b=TCsCMU32X0GQ7848DQs365SOimREZCNyP7WG6b8rNKGEptT9d3wttR9Pkem+Px0GN
+	 qL3SZJbniC77VqPQYk0iypB6TG2GMv7LFFr9Y1SYsGtDha612WcUrPdWxdZSUPALTd
+	 Fvw1TQZea9sjnz1vLAVAiNEXAv4f84A5VdtrBM8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/600] arm64/fpsimd: Only provide the length to cpufeature for xCR registers
-Date: Mon, 11 Sep 2023 15:42:33 +0200
-Message-ID: <20230911134637.156474801@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 085/600] drm/amd/display: ensure async flips are only accepted for fast updates
+Date: Mon, 11 Sep 2023 15:41:58 +0200
+Message-ID: <20230911134636.121754356@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,99 +41,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-[ Upstream commit 01948b09edc3fecf8486c57c2d2fb8b80886f3d0 ]
+commit a7c0cad0dc060bb77e9c9d235d68441b0fc69507 upstream.
 
-For both SVE and SME we abuse the generic register field comparison
-support in the cpufeature code as part of our detection of unsupported
-variations in the vector lengths available to PEs, reporting the maximum
-vector lengths via ZCR_EL1.LEN and SMCR_EL1.LEN.  Since these are
-configuration registers rather than identification registers the
-assumptions the cpufeature code makes about how unknown bitfields behave
-are invalid, leading to warnings when SME features like FA64 are enabled
-and we hotplug a CPU:
+We should be checking to see if async flips are supported in
+amdgpu_dm_atomic_check() (i.e. not dm_crtc_helper_atomic_check()). Also,
+async flipping isn't supported if a plane's framebuffer changes memory
+domains during an atomic commit. So, move the check from
+dm_crtc_helper_atomic_check() to amdgpu_dm_atomic_check() and check if
+the memory domain has changed in amdgpu_dm_atomic_check().
 
-  CPU features: SANITY CHECK: Unexpected variation in SYS_SMCR_EL1. Boot CPU: 0x0000000000000f, CPU3: 0x0000008000000f
-  CPU features: Unsupported CPU feature variation detected.
-
-SVE has no controls other than the vector length so is not yet impacted
-but the same issue will apply there if any are defined.
-
-Since the only field we are interested in having the cpufeature code
-handle is the length field and we use a custom read function to obtain
-the value we can avoid these warnings by filtering out all other bits
-when we return the register value, if we're doing that we don't need to
-bother reading the register at all and can simply use the RDVL/RDSVL
-value we were filling in instead.
-
-Fixes: 2e0f2478ea37 ("arm64/sve: Probe SVE capabilities and usable vector lengths")
-FixeS: b42990d3bf77 ("arm64/sme: Identify supported SME vector lengths at boot")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20230731-arm64-sme-fa64-hotplug-v2-1-7714c00dd902@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2733
+Fixes: c1e18c44dc7f ("drm/amd/display: only accept async flips for fast updates")
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c | 22 ++++------------------
- 1 file changed, 4 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      |   24 ++++++++++++++---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   12 --------
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index 4aa579ff3125d..8c226d79abdfc 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1133,9 +1133,6 @@ void sve_kernel_enable(const struct arm64_cpu_capabilities *__always_unused p)
-  */
- u64 read_zcr_features(void)
- {
--	u64 zcr;
--	unsigned int vq_max;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7858,10 +7858,12 @@ static void amdgpu_dm_commit_planes(stru
+ 		 * fast updates.
+ 		 */
+ 		if (crtc->state->async_flip &&
+-		    acrtc_state->update_type != UPDATE_TYPE_FAST)
++		    (acrtc_state->update_type != UPDATE_TYPE_FAST ||
++		     get_mem_type(old_plane_state->fb) != get_mem_type(fb)))
+ 			drm_warn_once(state->dev,
+ 				      "[PLANE:%d:%s] async flip with non-fast update\n",
+ 				      plane->base.id, plane->name);
++
+ 		bundle->flip_addrs[planes_count].flip_immediate =
+ 			crtc->state->async_flip &&
+ 			acrtc_state->update_type == UPDATE_TYPE_FAST &&
+@@ -9813,6 +9815,11 @@ static int amdgpu_dm_atomic_check(struct
+ 
+ 	/* Remove exiting planes if they are modified */
+ 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
++		if (old_plane_state->fb && new_plane_state->fb &&
++		    get_mem_type(old_plane_state->fb) !=
++		    get_mem_type(new_plane_state->fb))
++			lock_and_validation_needed = true;
++
+ 		ret = dm_update_plane_state(dc, state, plane,
+ 					    old_plane_state,
+ 					    new_plane_state,
+@@ -10064,9 +10071,20 @@ static int amdgpu_dm_atomic_check(struct
+ 		struct dm_crtc_state *dm_new_crtc_state =
+ 			to_dm_crtc_state(new_crtc_state);
+ 
++		/*
++		 * Only allow async flips for fast updates that don't change
++		 * the FB pitch, the DCC state, rotation, etc.
++		 */
++		if (new_crtc_state->async_flip && lock_and_validation_needed) {
++			drm_dbg_atomic(crtc->dev,
++				       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
++				       crtc->base.id, crtc->name);
++			ret = -EINVAL;
++			goto fail;
++		}
++
+ 		dm_new_crtc_state->update_type = lock_and_validation_needed ?
+-							 UPDATE_TYPE_FULL :
+-							 UPDATE_TYPE_FAST;
++			UPDATE_TYPE_FULL : UPDATE_TYPE_FAST;
+ 	}
+ 
+ 	/* Must be success */
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -406,18 +406,6 @@ static int dm_crtc_helper_atomic_check(s
+ 		return -EINVAL;
+ 	}
+ 
+-	/*
+-	 * Only allow async flips for fast updates that don't change the FB
+-	 * pitch, the DCC state, rotation, etc.
+-	 */
+-	if (crtc_state->async_flip &&
+-	    dm_crtc_state->update_type != UPDATE_TYPE_FAST) {
+-		drm_dbg_atomic(crtc->dev,
+-			       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
+-			       crtc->base.id, crtc->name);
+-		return -EINVAL;
+-	}
 -
- 	/*
- 	 * Set the maximum possible VL, and write zeroes to all other
- 	 * bits to see if they stick.
-@@ -1143,12 +1140,8 @@ u64 read_zcr_features(void)
- 	sve_kernel_enable(NULL);
- 	write_sysreg_s(ZCR_ELx_LEN_MASK, SYS_ZCR_EL1);
- 
--	zcr = read_sysreg_s(SYS_ZCR_EL1);
--	zcr &= ~(u64)ZCR_ELx_LEN_MASK; /* find sticky 1s outside LEN field */
--	vq_max = sve_vq_from_vl(sve_get_vl());
--	zcr |= vq_max - 1; /* set LEN field to maximum effective value */
--
--	return zcr;
-+	/* Return LEN value that would be written to get the maximum VL */
-+	return sve_vq_from_vl(sve_get_vl()) - 1;
- }
- 
- void __init sve_setup(void)
-@@ -1292,9 +1285,6 @@ void fa64_kernel_enable(const struct arm64_cpu_capabilities *__always_unused p)
-  */
- u64 read_smcr_features(void)
- {
--	u64 smcr;
--	unsigned int vq_max;
--
- 	sme_kernel_enable(NULL);
- 
- 	/*
-@@ -1303,12 +1293,8 @@ u64 read_smcr_features(void)
- 	write_sysreg_s(read_sysreg_s(SYS_SMCR_EL1) | SMCR_ELx_LEN_MASK,
- 		       SYS_SMCR_EL1);
- 
--	smcr = read_sysreg_s(SYS_SMCR_EL1);
--	smcr &= ~(u64)SMCR_ELx_LEN_MASK; /* Only the LEN field */
--	vq_max = sve_vq_from_vl(sme_get_vl());
--	smcr |= vq_max - 1; /* set LEN field to maximum effective value */
--
--	return smcr;
-+	/* Return LEN value that would be written to get the maximum VL */
-+	return sve_vq_from_vl(sme_get_vl()) - 1;
- }
- 
- void __init sme_setup(void)
--- 
-2.40.1
-
+ 	/* In some use cases, like reset, no stream is attached */
+ 	if (!dm_crtc_state->stream)
+ 		return 0;
 
 
