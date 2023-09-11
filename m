@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41711170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56187C433C9;
-	Mon, 11 Sep 2023 14:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DBC1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1795DC433C7;
+	Mon, 11 Sep 2023 14:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441680;
-	bh=35fX18uqjhHv3EwPPAcEA69MHSPWkjUCGwP2F4P6TSI=;
+	s=korg; t=1694441683;
+	bh=O3v4fMQLZLi/mAdmWZ3/DHqjC5pFqYnktSoPz1E3pLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFvf6QJVb2ePzWacvhB3RFwtJGi3XZs2B5tAS1WP4PJ3nyrPkHmD5Fsk+zt94RGId
-	 c+9+dRxv4gKKN9orrehUZCGbSanroI2WbHOXtC0THQebooSbD2EhzXqtR/ZngbxG0b
-	 6xreebZLxqbM6OsM4ljh15Pn4rwc7kVZBd65CdDE=
+	b=bRPClsHM/ndX6+f6Jb9tISWqupKYBgFGmBUdMrcVg/BFP4TXCWK4GN0+LQ7BvtZUG
+	 +WItwBujceX5s4G6e5YtjFr4yQHsI6Bs0jVV9WqA5Gk5szntOoW1sEKnuBQ1FfkdRQ
+	 /O8EezHqHciWQT7ofNZMj/J9ToBEeJ87wANsp8vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	syzbot+2da1965168e7dbcba136@syzkaller.appspotmail.com,
+	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 462/739] RDMA/siw: Fabricate a GID on tun and loopback devices
-Date: Mon, 11 Sep 2023 15:44:21 +0200
-Message-ID: <20230911134704.057866202@linuxfoundation.org>
+Subject: [PATCH 6.5 492/739] RDMA/rxe: Fix unsafe drain work queue code
+Date: Mon, 11 Sep 2023 15:44:51 +0200
+Message-ID: <20230911134704.871675222@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,116 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit bad5b6e34ffbaacc77ad28a0f482e33b3929e635 ]
+[ Upstream commit 5993b75d0bc71cd2b441d174b028fc36180f032c ]
 
-LOOPBACK and NONE (tunnel) devices have all-zero MAC addresses.
-Currently, siw_device_create() falls back to copying the IB device's
-name in those cases, because an all-zero MAC address breaks the RDMA
-core address resolution mechanism.
+If create_qp does not fully succeed it is possible for qp cleanup
+code to attempt to drain the send or recv work queues before the
+queues have been created causing a seg fault. This patch checks
+to see if the queues exist before attempting to drain them.
 
-However, at the point when siw_device_create() constructs a GID, the
-ib_device::name field is uninitialized, leaving the MAC address to
-remain in an all-zero state.
-
-Fabricate a random artificial GID for such devices, and ensure this
-artificial GID is returned for all device query operations.
-
-Link: https://lore.kernel.org/r/168960673260.3007.12378736853793339110.stgit@manet.1015granger.net
-Reported-by: Tom Talpey <tom@talpey.com>
-Fixes: a2d36b02c15d ("RDMA/siw: Enable siw on tunnel devices")
-Reviewed-by: Bernard Metzler <bmt@zurich.ibm.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/20230620135519.9365-3-rpearsonhpe@gmail.com
+Reported-by: syzbot+2da1965168e7dbcba136@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-rdma/00000000000012d89205fe7cfe00@google.com/raw
+Fixes: 49dc9c1f0c7e ("RDMA/rxe: Cleanup reset state handling in rxe_resp.c")
+Fixes: fbdeb828a21f ("RDMA/rxe: Cleanup error state handling in rxe_comp.c")
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw.h       |  1 +
- drivers/infiniband/sw/siw/siw_main.c  | 22 ++++++++--------------
- drivers/infiniband/sw/siw/siw_verbs.c |  4 ++--
- 3 files changed, 11 insertions(+), 16 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_comp.c | 4 ++++
+ drivers/infiniband/sw/rxe/rxe_resp.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw.h b/drivers/infiniband/sw/siw/siw.h
-index 2f3a9cda3850f..8b4a710b82bc1 100644
---- a/drivers/infiniband/sw/siw/siw.h
-+++ b/drivers/infiniband/sw/siw/siw.h
-@@ -74,6 +74,7 @@ struct siw_device {
+diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
+index 5111735aafaed..d0bdc2d8adc82 100644
+--- a/drivers/infiniband/sw/rxe/rxe_comp.c
++++ b/drivers/infiniband/sw/rxe/rxe_comp.c
+@@ -597,6 +597,10 @@ static void flush_send_queue(struct rxe_qp *qp, bool notify)
+ 	struct rxe_queue *q = qp->sq.queue;
+ 	int err;
  
- 	u32 vendor_part_id;
- 	int numa_node;
-+	char raw_gid[ETH_ALEN];
- 
- 	/* physical port state (only one port per device) */
- 	enum ib_port_state state;
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index 65b5cda5457ba..f45600d169ae7 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -75,8 +75,7 @@ static int siw_device_register(struct siw_device *sdev, const char *name)
- 		return rv;
++	/* send queue never got created. nothing to do. */
++	if (!qp->sq.queue)
++		return;
++
+ 	while ((wqe = queue_head(q, q->type))) {
+ 		if (notify) {
+ 			err = flush_send_wqe(qp, wqe);
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index 64c64f5f36a81..da470a925efc7 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -1469,6 +1469,10 @@ static void flush_recv_queue(struct rxe_qp *qp, bool notify)
+ 		return;
  	}
  
--	siw_dbg(base_dev, "HWaddr=%pM\n", sdev->netdev->dev_addr);
--
-+	siw_dbg(base_dev, "HWaddr=%pM\n", sdev->raw_gid);
- 	return 0;
- }
- 
-@@ -313,24 +312,19 @@ static struct siw_device *siw_device_create(struct net_device *netdev)
- 		return NULL;
- 
- 	base_dev = &sdev->base_dev;
--
- 	sdev->netdev = netdev;
- 
--	if (netdev->type != ARPHRD_LOOPBACK && netdev->type != ARPHRD_NONE) {
--		addrconf_addr_eui48((unsigned char *)&base_dev->node_guid,
--				    netdev->dev_addr);
-+	if (netdev->addr_len) {
-+		memcpy(sdev->raw_gid, netdev->dev_addr,
-+		       min_t(unsigned int, netdev->addr_len, ETH_ALEN));
- 	} else {
- 		/*
--		 * This device does not have a HW address,
--		 * but connection mangagement lib expects gid != 0
-+		 * This device does not have a HW address, but
-+		 * connection mangagement requires a unique gid.
- 		 */
--		size_t len = min_t(size_t, strlen(base_dev->name), 6);
--		char addr[6] = { };
--
--		memcpy(addr, base_dev->name, len);
--		addrconf_addr_eui48((unsigned char *)&base_dev->node_guid,
--				    addr);
-+		eth_random_addr(sdev->raw_gid);
- 	}
-+	addrconf_addr_eui48((u8 *)&base_dev->node_guid, sdev->raw_gid);
- 
- 	base_dev->uverbs_cmd_mask |= BIT_ULL(IB_USER_VERBS_CMD_POST_SEND);
- 
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index 398ec13db6248..32b0befd25e27 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -157,7 +157,7 @@ int siw_query_device(struct ib_device *base_dev, struct ib_device_attr *attr,
- 	attr->vendor_part_id = sdev->vendor_part_id;
- 
- 	addrconf_addr_eui48((u8 *)&attr->sys_image_guid,
--			    sdev->netdev->dev_addr);
-+			    sdev->raw_gid);
- 
- 	return 0;
- }
-@@ -218,7 +218,7 @@ int siw_query_gid(struct ib_device *base_dev, u32 port, int idx,
- 
- 	/* subnet_prefix == interface_id == 0; */
- 	memset(gid, 0, sizeof(*gid));
--	memcpy(&gid->raw[0], sdev->netdev->dev_addr, 6);
-+	memcpy(gid->raw, sdev->raw_gid, ETH_ALEN);
- 
- 	return 0;
- }
++	/* recv queue not created. nothing to do. */
++	if (!qp->rq.queue)
++		return;
++
+ 	while ((wqe = queue_head(q, q->type))) {
+ 		if (notify) {
+ 			err = flush_recv_wqe(qp, wqe);
 -- 
 2.40.1
 
