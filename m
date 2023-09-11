@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B2A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66684C433C8;
-	Mon, 11 Sep 2023 14:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FE31170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257F5C433C8;
+	Mon, 11 Sep 2023 14:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442453;
-	bh=7ENhgbNkz0dP5Mu7AiQ5k1peGyLVntQFOO4Bn0+d8T0=;
+	s=korg; t=1694442456;
+	bh=zIPChE5Glg8R6EhGwl/Q3FaPyEmUAdzoNBZNMrHNQ5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTIvsxyRbrBwIabhW/Q7I61O+lMjuKxfC69jMv+VUcehLAgLZ8IjLEGdoexLPMzZb
-	 V20Q6PhydmeIQ+LG8vV+a4Nsl4PNaCgbfGtABNMDOeKEhLKf8X0R6HQoBsWlpNEUa0
-	 lGmd1ap+qGsh/oHE9eWUyJYd2dqsFJVfJg3v5ytY=
+	b=0wgqkBxs4aA4eVPWyZlslcGwEHPWHFu4gFFzjULuBV0SFCc7kzPatjlPXPP9HgtPW
+	 ApIOKw8IEnNYgSrPeBjyLXYbMJWLf4b8G1Af+ArqnIzPZFzdEjKHUwcgKIUK5uTO+C
+	 xqPpzt5tI6g0ysiMXib9fQIQ/wQEsObzpQOvZGUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guiting Shen <aarongt.shen@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 031/737] ASoC: atmel: Fix the 8K sample parameter in I2SC master
-Date: Mon, 11 Sep 2023 15:38:10 +0200
-Message-ID: <20230911134651.269839373@linuxfoundation.org>
+Subject: [PATCH 6.4 032/737] ALSA: usb-audio: Add quirk for Microsoft Modern Wireless Headset
+Date: Mon, 11 Sep 2023 15:38:11 +0200
+Message-ID: <20230911134651.299958414@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,44 +39,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guiting Shen <aarongt.shen@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f85739c0b2b0d98a32f5ca4fcc5501d2b76df4f6 ]
+[ Upstream commit 3da435063777f8d861ba5a165344e3f75f839357 ]
 
-The 8K sample parameter of 12.288Mhz main system bus clock doesn't work
-because the I2SC_MR.IMCKDIV must not be 0 according to the sama5d2
-series datasheet(I2SC Mode Register of Register Summary).
+Microsoft Modern Wireless Headset (appearing on the host as "Microsoft
+USB Link") has a playback and a capture mixer volume/switch, but they
+are fairly broken.  The descriptor reports wrong dB ranges for
+playback, and the capture volume/switch don't influence on the actual
+recording at all.  Moreover, there seem instabilities in the
+connection, and at best, we should disable the runtime PM.
 
-So use the 6.144Mhz instead of 12.288Mhz to support 8K sample.
+So this ended up with a quirk entry for:
+- Correct the playback dB range;
+  I picked up some reasonable values but it's a guess work
+- Disable the capture mixer;
+  it's completely useless and confuses PA/PW
+- Suppress get-sample-rate, apply the delay for message handling,
+  and suppress the auto-suspend
 
-Signed-off-by: Guiting Shen <aarongt.shen@gmail.com>
-Link: https://lore.kernel.org/r/20230715030620.62328-1-aarongt.shen@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The behavior of the wheel control on the headset is somehow flaky,
+too, but it's an issue of HID.
+
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1207129
+Link: https://lore.kernel.org/r/20230725092057.15115-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/usb/mixer_maps.c | 14 ++++++++++++++
+ sound/usb/quirks.c     |  3 +++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 49930baf5e4d6..69a88dc651652 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -163,11 +163,14 @@ struct atmel_i2s_gck_param {
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index f4bd1e8ae4b6c..23260aa1919d3 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -374,6 +374,15 @@ static const struct usbmix_name_map corsair_virtuoso_map[] = {
+ 	{ 0 }
+ };
  
- #define I2S_MCK_12M288		12288000UL
- #define I2S_MCK_11M2896		11289600UL
-+#define I2S_MCK_6M144		6144000UL
- 
- /* mck = (32 * (imckfs+1) / (imckdiv+1)) * fs */
- static const struct atmel_i2s_gck_param gck_params[] = {
-+	/* mck = 6.144Mhz */
-+	{  8000, I2S_MCK_6M144,  1, 47},	/* mck =  768 fs */
++/* Microsoft USB Link headset */
++/* a guess work: raw playback volume values are from 2 to 129 */
++static const struct usbmix_dB_map ms_usb_link_dB = { -3225, 0, true };
++static const struct usbmix_name_map ms_usb_link_map[] = {
++	{ 9, NULL, .dB = &ms_usb_link_dB },
++	{ 10, NULL }, /* Headset Capture volume; seems non-working, disabled */
++	{ 0 }   /* terminator */
++};
 +
- 	/* mck = 12.288MHz */
--	{  8000, I2S_MCK_12M288, 0, 47},	/* mck = 1536 fs */
- 	{ 16000, I2S_MCK_12M288, 1, 47},	/* mck =  768 fs */
- 	{ 24000, I2S_MCK_12M288, 3, 63},	/* mck =  512 fs */
- 	{ 32000, I2S_MCK_12M288, 3, 47},	/* mck =  384 fs */
+ /* ASUS ROG Zenith II with Realtek ALC1220-VB */
+ static const struct usbmix_name_map asus_zenith_ii_map[] = {
+ 	{ 19, NULL, 12 }, /* FU, Input Gain Pad - broken response, disabled */
+@@ -668,6 +677,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.id = USB_ID(0x1395, 0x0025),
+ 		.map = sennheiser_pc8_map,
+ 	},
++	{
++		/* Microsoft USB Link headset */
++		.id = USB_ID(0x045e, 0x083c),
++		.map = ms_usb_link_map,
++	},
+ 	{ 0 } /* terminator */
+ };
+ 
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 6cf55b7f7a041..d4a7ffef82194 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2011,6 +2011,9 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x041e, 0x4080, /* Creative Live Cam VF0610 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	DEVICE_FLG(0x045e, 0x083c, /* MS USB Link headset */
++		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_CTL_MSG_DELAY |
++		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
+ 	DEVICE_FLG(0x046d, 0x084c, /* Logitech ConferenceCam Connect */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x046d, 0x0991, /* Logitech QuickCam Pro */
 -- 
 2.40.1
 
