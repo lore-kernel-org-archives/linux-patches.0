@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE618C433C7;
-	Mon, 11 Sep 2023 15:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2F911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217F1C433C8;
+	Mon, 11 Sep 2023 15:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446063;
-	bh=4FSq9AQdtBlUug64hGXk2B2qoLApNqp2U2Dw2V4rki0=;
+	s=korg; t=1694446066;
+	bh=dxdGTXpkLoQnBg2zEGXBrkWdpMTVIp/F/DQbyHPN6hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=An08aysPjkcXU9ZA6nhL+K+pS1SBmkX/5zfkHMlZvibuIN1EHmCDig5ovJLJ6vQ9p
-	 RRRbbxh/NvWkI4AaqM/iqWoKqEqMZMHBIQvbYW9NGeK7gXEzTfSseIhP58P+V9wdPB
-	 x72rNQvsR7CP12J/29rZKo4D7hoYPQfvrBiTkjvA=
+	b=BhyO4+mbH7gUPnIHTS9KvOGLK77r3Y7WbvkJpjn8Kt6ooYH9cHiN0E6mtF/Y7r72x
+	 hk8+2uaNDoI5yVXy8SOTuxiWwhchSl/IN+mGBYZ9/V0hTFaHuQH/500kz6EHJACral
+	 U1EvOAmqHjLS1qWoZFtCjwuXkEF/2A/0O6hc0X4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.1 542/600] xtensa: PMU: fix base address for the newer hardware
-Date: Mon, 11 Sep 2023 15:49:35 +0200
-Message-ID: <20230911134649.618795402@linuxfoundation.org>
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 6.1 569/600] fsverity: skip PKCS#7 parser when keyring is empty
+Date: Mon, 11 Sep 2023 15:50:02 +0200
+Message-ID: <20230911134650.406257862@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -38,69 +39,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 687eb3c42f4ad81e7c947c50e2d865f692064291 upstream.
+commit 919dc320956ea353a7fb2d84265195ad5ef525ac upstream.
 
-With introduction of ERI access control in RG.0 base address of the PMU
-unit registers has changed. Add support for the new PMU configuration.
+If an fsverity builtin signature is given for a file but the
+".fs-verity" keyring is empty, there's no real reason to run the PKCS#7
+parser.  Skip this to avoid the PKCS#7 attack surface when builtin
+signature support is configured into the kernel but is not being used.
 
+This is a hardening improvement, not a fix per se, but I've added
+Fixes and Cc stable to get it out to more users.
+
+Fixes: 432434c9f8e1 ("fs-verity: support builtin file signatures")
 Cc: stable@vger.kernel.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20230820173237.2579-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/include/asm/core.h  |    9 +++++++++
- arch/xtensa/kernel/perf_event.c |   17 +++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ fs/verity/signature.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/arch/xtensa/include/asm/core.h
-+++ b/arch/xtensa/include/asm/core.h
-@@ -44,4 +44,13 @@
- #define XTENSA_STACK_ALIGNMENT	16
- #endif
+--- a/fs/verity/signature.c
++++ b/fs/verity/signature.c
+@@ -54,6 +54,22 @@ int fsverity_verify_signature(const stru
+ 		return 0;
+ 	}
  
-+#ifndef XCHAL_HW_MIN_VERSION
-+#if defined(XCHAL_HW_MIN_VERSION_MAJOR) && defined(XCHAL_HW_MIN_VERSION_MINOR)
-+#define XCHAL_HW_MIN_VERSION (XCHAL_HW_MIN_VERSION_MAJOR * 100 + \
-+			      XCHAL_HW_MIN_VERSION_MINOR)
-+#else
-+#define XCHAL_HW_MIN_VERSION 0
-+#endif
-+#endif
++	if (fsverity_keyring->keys.nr_leaves_on_tree == 0) {
++		/*
++		 * The ".fs-verity" keyring is empty, due to builtin signatures
++		 * being supported by the kernel but not actually being used.
++		 * In this case, verify_pkcs7_signature() would always return an
++		 * error, usually ENOKEY.  It could also be EBADMSG if the
++		 * PKCS#7 is malformed, but that isn't very important to
++		 * distinguish.  So, just skip to ENOKEY to avoid the attack
++		 * surface of the PKCS#7 parser, which would otherwise be
++		 * reachable by any task able to execute FS_IOC_ENABLE_VERITY.
++		 */
++		fsverity_err(inode,
++			     "fs-verity keyring is empty, rejecting signed file!");
++		return -ENOKEY;
++	}
 +
- #endif
---- a/arch/xtensa/kernel/perf_event.c
-+++ b/arch/xtensa/kernel/perf_event.c
-@@ -13,17 +13,26 @@
- #include <linux/perf_event.h>
- #include <linux/platform_device.h>
- 
-+#include <asm/core.h>
- #include <asm/processor.h>
- #include <asm/stacktrace.h>
- 
-+#define XTENSA_HWVERSION_RG_2015_0	260000
-+
-+#if XCHAL_HW_MIN_VERSION >= XTENSA_HWVERSION_RG_2015_0
-+#define XTENSA_PMU_ERI_BASE		0x00101000
-+#else
-+#define XTENSA_PMU_ERI_BASE		0x00001000
-+#endif
-+
- /* Global control/status for all perf counters */
--#define XTENSA_PMU_PMG			0x1000
-+#define XTENSA_PMU_PMG			XTENSA_PMU_ERI_BASE
- /* Perf counter values */
--#define XTENSA_PMU_PM(i)		(0x1080 + (i) * 4)
-+#define XTENSA_PMU_PM(i)		(XTENSA_PMU_ERI_BASE + 0x80 + (i) * 4)
- /* Perf counter control registers */
--#define XTENSA_PMU_PMCTRL(i)		(0x1100 + (i) * 4)
-+#define XTENSA_PMU_PMCTRL(i)		(XTENSA_PMU_ERI_BASE + 0x100 + (i) * 4)
- /* Perf counter status registers */
--#define XTENSA_PMU_PMSTAT(i)		(0x1180 + (i) * 4)
-+#define XTENSA_PMU_PMSTAT(i)		(XTENSA_PMU_ERI_BASE + 0x180 + (i) * 4)
- 
- #define XTENSA_PMU_PMG_PMEN		0x1
- 
+ 	d = kzalloc(sizeof(*d) + hash_alg->digest_size, GFP_KERNEL);
+ 	if (!d)
+ 		return -ENOMEM;
 
 
