@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85771170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B589C433CA;
-	Mon, 11 Sep 2023 14:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04C01170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DA8C433C9;
+	Mon, 11 Sep 2023 14:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442390;
-	bh=6EhDP97OldCtiUtbovKwlr+VpE+umM+WisJzZpstFRI=;
+	s=korg; t=1694442393;
+	bh=sNqsJWHwYZbIQqeabJa8QNGGCKUbqeMN3F31TD8w430=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJNFUNRw6tRKkGkrVQNqpK4eIjr6GMW4ev9pFo7XCNqKn+Te0KJoBpn0icHpnnYii
-	 1CVIQP5+FOj39QdV6A4QQ2X+jBS95FjCIH80r6lRw1nhyGZRmtZOh2a8XaYzdomadu
-	 fkxMOJOa+OPBwVspVd+3GzH0NR3Y/ADmu/ilNHT0=
+	b=m2eDrRBQsSp+mFWcTz1MYhOj0xkLKm1NEZMIwHJtmR9laHPbTzzPsnu0l+QIS4s/O
+	 8J44rjMq14LhbcDl/A6XXZV2AzujY6wp8od3Fb0oh96/Pkpqe2xj/tqqwsDhYxm4b3
+	 hieM7tLunyhCFgslCphNKOVpY4xTGKvx/TIu35zU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 001/737] Revert "bridge: Add extack warning when enabling STP in netns."
-Date: Mon, 11 Sep 2023 15:37:40 +0200
-Message-ID: <20230911134650.337689634@linuxfoundation.org>
+Subject: [PATCH 6.4 010/737] 9p: virtio: make sure offs is initialized in zc_request
+Date: Mon, 11 Sep 2023 15:37:49 +0200
+Message-ID: <20230911134650.609078636@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,65 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 7ebd00a5a20c48e6020d49a3b2afb3cdfd2da8b7 ]
+[ Upstream commit 4a73edab69d3a6623f03817fe950a2d9585f80e4 ]
 
-This reverts commit 56a16035bb6effb37177867cea94c13a8382f745.
+Similarly to the previous patch: offs can be used in handle_rerrors
+without initializing on small payloads; in this case handle_rerrors will
+not use it because of the size check, but it doesn't hurt to make sure
+it is zero to please scan-build.
 
-Since the previous commit, STP works on bridge in netns.
+This fixes the following warning:
+net/9p/trans_virtio.c:539:3: warning: 3rd function call argument is an uninitialized value [core.CallAndMessage]
+                handle_rerror(req, in_hdr_len, offs, in_pages);
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  # unshare -n
-  # ip link add br0 type bridge
-  # ip link add veth0 type veth peer name veth1
-
-  # ip link set veth0 master br0 up
-  [   50.558135] br0: port 1(veth0) entered blocking state
-  [   50.558366] br0: port 1(veth0) entered disabled state
-  [   50.558798] veth0: entered allmulticast mode
-  [   50.564401] veth0: entered promiscuous mode
-
-  # ip link set veth1 master br0 up
-  [   54.215487] br0: port 2(veth1) entered blocking state
-  [   54.215657] br0: port 2(veth1) entered disabled state
-  [   54.215848] veth1: entered allmulticast mode
-  [   54.219577] veth1: entered promiscuous mode
-
-  # ip link set br0 type bridge stp_state 1
-  # ip link set br0 up
-  [   61.960726] br0: port 2(veth1) entered blocking state
-  [   61.961097] br0: port 2(veth1) entered listening state
-  [   61.961495] br0: port 1(veth0) entered blocking state
-  [   61.961653] br0: port 1(veth0) entered listening state
-  [   63.998835] br0: port 2(veth1) entered blocking state
-  [   77.437113] br0: port 1(veth0) entered learning state
-  [   86.653501] br0: received packet on veth0 with own address as source address (addr:6e:0f:e7:6f:5f:5f, vlan:0)
-  [   92.797095] br0: port 1(veth0) entered forwarding state
-  [   92.797398] br0: topology change detected, propagating
-
-Let's remove the warning.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_stp_if.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/9p/trans_virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_stp_if.c b/net/bridge/br_stp_if.c
-index b65962682771f..75204d36d7f90 100644
---- a/net/bridge/br_stp_if.c
-+++ b/net/bridge/br_stp_if.c
-@@ -201,9 +201,6 @@ int br_stp_set_enabled(struct net_bridge *br, unsigned long val,
- {
- 	ASSERT_RTNL();
+diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
+index 2c9495ccda6ba..f3f6782894239 100644
+--- a/net/9p/trans_virtio.c
++++ b/net/9p/trans_virtio.c
+@@ -428,7 +428,7 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
+ 	struct page **in_pages = NULL, **out_pages = NULL;
+ 	struct virtio_chan *chan = client->trans;
+ 	struct scatterlist *sgs[4];
+-	size_t offs;
++	size_t offs = 0;
+ 	int need_drop = 0;
+ 	int kicked = 0;
  
--	if (!net_eq(dev_net(br->dev), &init_net))
--		NL_SET_ERR_MSG_MOD(extack, "STP does not work in non-root netns");
--
- 	if (br_mrp_enabled(br)) {
- 		NL_SET_ERR_MSG_MOD(extack,
- 				   "STP can't be enabled if MRP is already enabled");
 -- 
 2.40.1
 
