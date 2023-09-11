@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801B811705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A34C433C8;
-	Mon, 11 Sep 2023 14:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488B611705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCCBC433C7;
+	Mon, 11 Sep 2023 14:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443181;
-	bh=kxcY3V7CKOx5Fiu8TnmWbYu6RrviJE3XoNtLaD0AJRs=;
+	s=korg; t=1694443184;
+	bh=5FStGcfLBJQaZObbOevclynX8LTRrIbVeV7ZaLAm9Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9GgjOszFx1v0YNBxmh+T6FqwQTVZMjl1cnZ99K8l2x9ZX97Oq9L+f92mG6kNyP/s
-	 HA6ZPZukNCSOIPoiUBMLNurtT+RUwvDzwSRfPKvQaJiLF59BJYuBN2snWoRHhcphiM
-	 1B7LkySZY1JWgI9z4pDkyzDX87F+n4DTT60oIVf4=
+	b=DnXWKu6BfVViSlLUe4pEPlLVSVuff9p+qHliEB13124QfDfIgbkKMuqGL6jFD8HcQ
+	 PuZaLMotBAFLH6hxKxv7/gQbvMwjbCBm8x2P8XX/WICurZVmi7ZeDlPW1938wArirD
+	 LYHH2+CRwk5jz+uHjW1vCvV0UyWi42rSQ+LMTS6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ondrej Jirman <megi@xff.cz>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 287/737] arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
-Date: Mon, 11 Sep 2023 15:42:26 +0200
-Message-ID: <20230911134658.581387607@linuxfoundation.org>
+Subject: [PATCH 6.4 270/737] drm: bridge: dw-mipi-dsi: Fix enable/disable of DSI controller
+Date: Mon, 11 Sep 2023 15:42:09 +0200
+Message-ID: <20230911134658.121174369@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,124 +41,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Ondrej Jirman <megi@xff.cz>
 
-[ Upstream commit a422c6a91a667b309ca1a6c08b30dbfcf7d4e866 ]
+[ Upstream commit 05aa61334592adb230749ff465b103ee10e63936 ]
 
-Set up the corresponding GPIOs properly and add the leftover hardware
-buttons to mark this piece of the puzzle complete.
+Before this patch, booting to Linux VT and doing a simple:
 
-Fixes: 46e14907c716 ("arm64: dts: qcom: sm8250-edo: Add hardware keys")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230614-topic-edo_pinsgpiopmic-v2-4-6f90bba54c53@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  echo 2 > /sys/class/graphics/fb0/blank
+  echo 0 > /sys/class/graphics/fb0/blank
+
+would result in failures to re-enable the panel. Mode set callback is
+called only once during boot in this scenario, while calls to
+enable/disable callbacks are balanced afterwards. The driver doesn't
+work unless userspace calls modeset before enabling the CRTC/connector.
+
+This patch moves enabling of the DSI host from mode_set into pre_enable
+callback, and removes some old hacks where this bridge driver is
+directly calling into other bridge driver's callbacks.
+
+pre_enable_prev_first flag is set on the panel's bridge so that panel
+drivers will get their prepare function called between DSI host's
+pre_enable and enable callbacks, so that they get a chance to
+perform panel setup while DSI host is already enabled in command
+mode. Otherwise panel's prepare would be called before DSI host
+is enabled, and any DSI communication used in prepare callback
+would fail.
+
+With all these changes, the enable/disable sequence is now well
+balanced, and host's and panel's callbacks are called in proper order
+documented in the drm_panel API documentation without needing the old
+hacks. (Mainly that panel->prepare is called when DSI host is ready to
+allow the panel driver to send DSI commands and vice versa during
+disable.)
+
+Tested on Pinephone Pro. Trace of the callbacks follows.
+
+Before:
+
+[    1.253882] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
+[    1.290732] panel-himax-hx8394 ff960000.dsi.0: prepare
+[    1.475576] dw-mipi-dsi-rockchip ff960000.dsi: enable
+[    1.475593] panel-himax-hx8394 ff960000.dsi.0: enable
+
+echo 2 > /sys/class/graphics/fb0/blank
+
+[   13.722799] panel-himax-hx8394 ff960000.dsi.0: disable
+[   13.774502] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
+[   13.774526] panel-himax-hx8394 ff960000.dsi.0: unprepare
+
+echo 0 > /sys/class/graphics/fb0/blank
+
+[   17.735796] panel-himax-hx8394 ff960000.dsi.0: prepare
+[   17.923522] dw-mipi-dsi-rockchip ff960000.dsi: enable
+[   17.923540] panel-himax-hx8394 ff960000.dsi.0: enable
+[   17.944330] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
+[   17.944335] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
+[   17.944340] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
+
+echo 2 > /sys/class/graphics/fb0/blank
+
+[  431.148583] panel-himax-hx8394 ff960000.dsi.0: disable
+[  431.169259] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
+[  431.169268] panel-himax-hx8394 ff960000.dsi.0: Failed to enter sleep mode: -110
+[  431.169282] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
+[  431.169316] panel-himax-hx8394 ff960000.dsi.0: unprepare
+[  431.169357] pclk_mipi_dsi0 already disabled
+
+echo 0 > /sys/class/graphics/fb0/blank
+
+[  432.796851] panel-himax-hx8394 ff960000.dsi.0: prepare
+[  432.981537] dw-mipi-dsi-rockchip ff960000.dsi: enable
+[  432.981568] panel-himax-hx8394 ff960000.dsi.0: enable
+[  433.002290] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
+[  433.002299] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
+[  433.002312] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
+
+-----------------------------------------------------------------------
+
+After:
+
+[    1.248372] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
+[    1.248704] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
+[    1.285377] panel-himax-hx8394 ff960000.dsi.0: prepare
+[    1.468392] dw-mipi-dsi-rockchip ff960000.dsi: enable
+[    1.468421] panel-himax-hx8394 ff960000.dsi.0: enable
+
+echo 2 > /sys/class/graphics/fb0/blank
+
+[   16.210357] panel-himax-hx8394 ff960000.dsi.0: disable
+[   16.261315] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
+[   16.261339] panel-himax-hx8394 ff960000.dsi.0: unprepare
+
+echo 0 > /sys/class/graphics/fb0/blank
+
+[   19.161453] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
+[   19.197869] panel-himax-hx8394 ff960000.dsi.0: prepare
+[   19.382141] dw-mipi-dsi-rockchip ff960000.dsi: enable
+[   19.382158] panel-himax-hx8394 ff960000.dsi.0: enable
+
+       (But depends on functionality intorduced in Linux 6.3, so this patch will
+        not build on older kernels when applied to older stable branches.)
+
+Fixes: 46fc51546d44 ("drm/bridge/synopsys: Add MIPI DSI host controller bridge")
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230617224915.1923630-1-megi@xff.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../qcom/sm8250-sony-xperia-edo-pdx206.dts    | 10 ++++
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 54 ++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 28 +++++++++++--------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-index ea4571bf4fbf0..58a521046f5f5 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
-@@ -20,6 +20,8 @@ &framebuffer {
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+index b2efecf7d1603..4291798bd70f5 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+@@ -265,6 +265,7 @@ struct dw_mipi_dsi {
+ 	struct dw_mipi_dsi *master; /* dual-dsi master ptr */
+ 	struct dw_mipi_dsi *slave; /* dual-dsi slave ptr */
+ 
++	struct drm_display_mode mode;
+ 	const struct dw_mipi_dsi_plat_data *plat_data;
  };
  
- &gpio_keys {
-+	pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
-+
- 	g-assist-key {
- 		label = "Google Assistant Key";
- 		linux,code = <KEY_LEFTMETA>;
-@@ -48,6 +50,14 @@ &pm8150_gpios {
- 			  "SP_ARI_PWR_ALARM",
- 			  "NC",
- 			  "NC"; /* GPIO_10 */
-+
-+	g_assist_n: g-assist-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
- };
+@@ -332,6 +333,7 @@ static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
+ 	if (IS_ERR(bridge))
+ 		return PTR_ERR(bridge);
  
- &pm8150b_gpios {
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index dcabb714f0f35..eb82247131c10 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -51,12 +51,26 @@ framebuffer: framebuffer@9c000000 {
- 	gpio_keys: gpio-keys {
- 		compatible = "gpio-keys";
++	bridge->pre_enable_prev_first = true;
+ 	dsi->panel_bridge = bridge;
  
--		/*
--		 * Camera focus (light press) and camera snapshot (full press)
--		 * seem not to work properly.. Adding the former one stalls the CPU
--		 * and the latter kills the volume down key for whatever reason. In any
--		 * case, they are both on &pm8150b_gpios: camera focus(2), camera snapshot(1).
--		 */
-+		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-camera-focus {
-+			label = "Camera Focus";
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
-+
-+		key-camera-snapshot {
-+			label = "Camera Snapshot";
-+			linux,code = <KEY_CAMERA>;
-+			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
+ 	drm_bridge_add(&dsi->bridge);
+@@ -859,15 +861,6 @@ static void dw_mipi_dsi_bridge_post_atomic_disable(struct drm_bridge *bridge,
+ 	 */
+ 	dw_mipi_dsi_set_mode(dsi, 0);
  
- 		key-vol-down {
- 			label = "Volume Down";
-@@ -551,6 +565,34 @@ &pcie2_phy {
- 	vdda-pll-supply = <&vreg_l9a_1p2>;
- };
+-	/*
+-	 * TODO Only way found to call panel-bridge post_disable &
+-	 * panel unprepare before the dsi "final" disable...
+-	 * This needs to be fixed in the drm_bridge framework and the API
+-	 * needs to be updated to manage our own call chains...
+-	 */
+-	if (dsi->panel_bridge->funcs->post_disable)
+-		dsi->panel_bridge->funcs->post_disable(dsi->panel_bridge);
+-
+ 	if (phy_ops->power_off)
+ 		phy_ops->power_off(dsi->plat_data->priv_data);
  
-+&pm8150_gpios {
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
+@@ -942,15 +935,25 @@ static void dw_mipi_dsi_mode_set(struct dw_mipi_dsi *dsi,
+ 		phy_ops->power_on(dsi->plat_data->priv_data);
+ }
+ 
++static void dw_mipi_dsi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
++						 struct drm_bridge_state *old_bridge_state)
++{
++	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
 +
-+&pm8150b_gpios {
-+	snapshot_n: snapshot-n-state {
-+		pins = "gpio1";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
++	/* Power up the dsi ctl into a command mode */
++	dw_mipi_dsi_mode_set(dsi, &dsi->mode);
++	if (dsi->slave)
++		dw_mipi_dsi_mode_set(dsi->slave, &dsi->mode);
++}
 +
-+	focus_n: focus-n-state {
-+		pins = "gpio2";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
- &pon_pwrkey {
- 	status = "okay";
- };
+ static void dw_mipi_dsi_bridge_mode_set(struct drm_bridge *bridge,
+ 					const struct drm_display_mode *mode,
+ 					const struct drm_display_mode *adjusted_mode)
+ {
+ 	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
+ 
+-	dw_mipi_dsi_mode_set(dsi, adjusted_mode);
+-	if (dsi->slave)
+-		dw_mipi_dsi_mode_set(dsi->slave, adjusted_mode);
++	/* Store the display mode for later use in pre_enable callback */
++	drm_mode_copy(&dsi->mode, adjusted_mode);
+ }
+ 
+ static void dw_mipi_dsi_bridge_atomic_enable(struct drm_bridge *bridge,
+@@ -1004,6 +1007,7 @@ static const struct drm_bridge_funcs dw_mipi_dsi_bridge_funcs = {
+ 	.atomic_duplicate_state	= drm_atomic_helper_bridge_duplicate_state,
+ 	.atomic_destroy_state	= drm_atomic_helper_bridge_destroy_state,
+ 	.atomic_reset		= drm_atomic_helper_bridge_reset,
++	.atomic_pre_enable	= dw_mipi_dsi_bridge_atomic_pre_enable,
+ 	.atomic_enable		= dw_mipi_dsi_bridge_atomic_enable,
+ 	.atomic_post_disable	= dw_mipi_dsi_bridge_post_atomic_disable,
+ 	.mode_set		= dw_mipi_dsi_bridge_mode_set,
 -- 
 2.40.1
 
