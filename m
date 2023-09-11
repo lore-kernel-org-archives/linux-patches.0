@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455691170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6DC433C7;
-	Mon, 11 Sep 2023 13:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0562B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:55:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780C3C433C8;
+	Mon, 11 Sep 2023 13:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440506;
-	bh=JqL5N+Cq3gxhLx0eYtaKxpvLpm5//cvRVyKcgfFYTQk=;
+	s=korg; t=1694440508;
+	bh=L2EwtVJH+LhN/VY7ehBN9GHuR027UxgzVq6Iig3S3L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KnHOotjzToSM6WQvDf+Bph/A0FVtEEhC3SPOhIua4JF9FT+dV9SSfBQPTnaGxtbN/
-	 NhQGeIZc33U48NotrzeaQ4HTkUdZ+a7fpnLh5vlQ8yIotzouBfdX0q19/d035Xhanc
-	 yssmHAjjYHgwebIUPGh/tlkqN93MoNFqdD4wRQyw=
+	b=JLEc58bQs4fS4ZTHB+RtSLt+pS+N0ucQSWWxkBhYRs/VQixXeB6uO7Qu8AmDp7yTL
+	 ZIzpmqOw8a1qDCXsmHGLZsKnOZjI8LmLSm+IyD0TLwhX1PBlGJ0WwTKTSJl7fuu+g4
+	 YVoFAsQ3DWoqDMWpo8b6JE040WOxghFmLPXxaQbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 086/739] wifi: mt76: mt7996: use correct phy for background radar event
-Date: Mon, 11 Sep 2023 15:38:05 +0200
-Message-ID: <20230911134653.510371462@linuxfoundation.org>
+Subject: [PATCH 6.5 087/739] wifi: mt76: mt7996: fix WA event ring size
+Date: Mon, 11 Sep 2023 15:38:06 +0200
+Message-ID: <20230911134653.537899483@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,11 +43,10 @@ Content-Transfer-Encoding: 8bit
 
 From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit 9ffe0d5690ed916e09baad2cc9ee7ec65b110038 ]
+[ Upstream commit 1634de418b3048c5f435b6ffd37f75943c554c04 ]
 
-If driver directly uses the band_idx reported from the radar event to
-access mt76_phy array, it will get the wrong phy for background radar.
-Fix this by adjusting the statement.
+Fix rx ring size of WA event to get rid of event loss and queue overflow
+problems.
 
 Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
 Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
@@ -55,26 +54,35 @@ Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/dma.c    | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index cd54e81d73044..62a02b03d83ba 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -339,7 +339,11 @@ mt7996_mcu_rx_radar_detected(struct mt7996_dev *dev, struct sk_buff *skb)
- 	if (r->band_idx >= ARRAY_SIZE(dev->mt76.phys))
- 		return;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
+index 534143465d9b3..fbedaacffbba5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
+@@ -293,7 +293,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
+ 	/* event from WA */
+ 	ret = mt76_queue_alloc(dev, &dev->mt76.q_rx[MT_RXQ_MCU_WA],
+ 			       MT_RXQ_ID(MT_RXQ_MCU_WA),
+-			       MT7996_RX_MCU_RING_SIZE,
++			       MT7996_RX_MCU_RING_SIZE_WA,
+ 			       MT_RX_BUF_SIZE,
+ 			       MT_RXQ_RING_BASE(MT_RXQ_MCU_WA));
+ 	if (ret)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 4d7dcb95a620a..b8bcad717d89f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -26,6 +26,7 @@
  
--	mphy = dev->mt76.phys[r->band_idx];
-+	if (dev->rdd2_phy && r->band_idx == MT_RX_SEL2)
-+		mphy = dev->rdd2_phy->mt76;
-+	else
-+		mphy = dev->mt76.phys[r->band_idx];
-+
- 	if (!mphy)
- 		return;
+ #define MT7996_RX_RING_SIZE		1536
+ #define MT7996_RX_MCU_RING_SIZE		512
++#define MT7996_RX_MCU_RING_SIZE_WA	1024
  
+ #define MT7996_FIRMWARE_WA		"mediatek/mt7996/mt7996_wa.bin"
+ #define MT7996_FIRMWARE_WM		"mediatek/mt7996/mt7996_wm.bin"
 -- 
 2.40.1
 
