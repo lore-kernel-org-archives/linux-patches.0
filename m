@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDC011706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFE1C433C7;
-	Mon, 11 Sep 2023 14:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7466A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:54:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75C5C433C8;
+	Mon, 11 Sep 2023 14:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444078;
-	bh=6k+YPnSfRoqD3a3tB73kKxaDzI83Ua8mKnbg+cZLGJg=;
+	s=korg; t=1694444081;
+	bh=cazFKfkeESIOPPc0Naq8WY2Keka8KP4wQHTGdfWqTds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2psPgqd6aGu5ee5lE2aLSuSisP1bQZncsB1NotCYHU3r5V/4Lgd+vRyYW+O7jcQt
-	 n/PAF0wZR0hKfGePpTcAp1Nv+qLKUJg3bJB9L/AzqFggOrF8DfifFXLnEAaAtmr4t+
-	 mQplckqzUnpkf+j0wlBZtRoRZ9cF6CGhFIZqPl/I=
+	b=H6HEIa07N4vJBdD4DRXkVQu6ak2yeC9K7aGrGV7zd8Cn5VKD8he/dZX95Iqwv6XO+
+	 MHebTdKi3i/aEX7bI7CZ6rNQXXsfCVezRtikhzn88IBvZWEES5RPmVJKE8+FdVY3Gq
+	 BjNr5B3IQE9ucKQPd6LSil/GkEP0TSCKwDZzeGew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	mhiramat@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 602/737] tracing: Remove extra space at the end of hwlat_detector/mode
-Date: Mon, 11 Sep 2023 15:47:41 +0200
-Message-ID: <20230911134707.352776322@linuxfoundation.org>
+Subject: [PATCH 6.4 603/737] tracing: Fix race issue between cpu buffer write and swap
+Date: Mon, 11 Sep 2023 15:47:42 +0200
+Message-ID: <20230911134707.380984247@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,42 +41,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kobuk <m.kobuk@ispras.ru>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 2cf0dee989a8b2501929eaab29473b6b1fa11057 ]
+[ Upstream commit 3163f635b20e9e1fb4659e74f47918c9dddfe64e ]
 
-Space is printed after each mode value including the last one:
-$ echo \"$(sudo cat /sys/kernel/tracing/hwlat_detector/mode)\"
-"none [round-robin] per-cpu "
+Warning happened in rb_end_commit() at code:
+	if (RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing)))
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+  WARNING: CPU: 0 PID: 139 at kernel/trace/ring_buffer.c:3142
+	rb_commit+0x402/0x4a0
+  Call Trace:
+   ring_buffer_unlock_commit+0x42/0x250
+   trace_buffer_unlock_commit_regs+0x3b/0x250
+   trace_event_buffer_commit+0xe5/0x440
+   trace_event_buffer_reserve+0x11c/0x150
+   trace_event_raw_event_sched_switch+0x23c/0x2c0
+   __traceiter_sched_switch+0x59/0x80
+   __schedule+0x72b/0x1580
+   schedule+0x92/0x120
+   worker_thread+0xa0/0x6f0
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230825103432.7750-1-m.kobuk@ispras.ru
+It is because the race between writing event into cpu buffer and swapping
+cpu buffer through file per_cpu/cpu0/snapshot:
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 8fa826b7344d ("trace/hwlat: Implement the mode config option")
-Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Reviewed-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+  Write on CPU 0             Swap buffer by per_cpu/cpu0/snapshot on CPU 1
+  --------                   --------
+                             tracing_snapshot_write()
+                               [...]
+
+  ring_buffer_lock_reserve()
+    cpu_buffer = buffer->buffers[cpu]; // 1. Suppose find 'cpu_buffer_a';
+    [...]
+    rb_reserve_next_event()
+      [...]
+
+                               ring_buffer_swap_cpu()
+                                 if (local_read(&cpu_buffer_a->committing))
+                                     goto out_dec;
+                                 if (local_read(&cpu_buffer_b->committing))
+                                     goto out_dec;
+                                 buffer_a->buffers[cpu] = cpu_buffer_b;
+                                 buffer_b->buffers[cpu] = cpu_buffer_a;
+                                 // 2. cpu_buffer has swapped here.
+
+      rb_start_commit(cpu_buffer);
+      if (unlikely(READ_ONCE(cpu_buffer->buffer)
+          != buffer)) { // 3. This check passed due to 'cpu_buffer->buffer'
+        [...]           //    has not changed here.
+        return NULL;
+      }
+                                 cpu_buffer_b->buffer = buffer_a;
+                                 cpu_buffer_a->buffer = buffer_b;
+                                 [...]
+
+      // 4. Reserve event from 'cpu_buffer_a'.
+
+  ring_buffer_unlock_commit()
+    [...]
+    cpu_buffer = buffer->buffers[cpu]; // 5. Now find 'cpu_buffer_b' !!!
+    rb_commit(cpu_buffer)
+      rb_end_commit()  // 6. WARN for the wrong 'committing' state !!!
+
+Based on above analysis, we can easily reproduce by following testcase:
+  ``` bash
+  #!/bin/bash
+
+  dmesg -n 7
+  sysctl -w kernel.panic_on_warn=1
+  TR=/sys/kernel/tracing
+  echo 7 > ${TR}/buffer_size_kb
+  echo "sched:sched_switch" > ${TR}/set_event
+  while [ true ]; do
+          echo 1 > ${TR}/per_cpu/cpu0/snapshot
+  done &
+  while [ true ]; do
+          echo 1 > ${TR}/per_cpu/cpu0/snapshot
+  done &
+  while [ true ]; do
+          echo 1 > ${TR}/per_cpu/cpu0/snapshot
+  done &
+  ```
+
+To fix it, IIUC, we can use smp_call_function_single() to do the swap on
+the target cpu where the buffer is located, so that above race would be
+avoided.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230831132739.4070878-1-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Fixes: f1affcaaa861 ("tracing: Add snapshot in the per_cpu trace directories")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_hwlat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/trace/trace_hwlat.c b/kernel/trace/trace_hwlat.c
-index 2f37a6e68aa9f..b791524a6536a 100644
---- a/kernel/trace/trace_hwlat.c
-+++ b/kernel/trace/trace_hwlat.c
-@@ -635,7 +635,7 @@ static int s_mode_show(struct seq_file *s, void *v)
- 	else
- 		seq_printf(s, "%s", thread_mode_str[mode]);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 9614248b98f1a..133be5a19b920 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7590,6 +7590,11 @@ static int tracing_snapshot_open(struct inode *inode, struct file *file)
+ 	return ret;
+ }
  
--	if (mode != MODE_MAX)
-+	if (mode < MODE_MAX - 1) /* if mode is any but last */
- 		seq_puts(s, " ");
- 
- 	return 0;
++static void tracing_swap_cpu_buffer(void *tr)
++{
++	update_max_tr_single((struct trace_array *)tr, current, smp_processor_id());
++}
++
+ static ssize_t
+ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 		       loff_t *ppos)
+@@ -7648,13 +7653,15 @@ tracing_snapshot_write(struct file *filp, const char __user *ubuf, size_t cnt,
+ 			ret = tracing_alloc_snapshot_instance(tr);
+ 		if (ret < 0)
+ 			break;
+-		local_irq_disable();
+ 		/* Now, we're going to swap */
+-		if (iter->cpu_file == RING_BUFFER_ALL_CPUS)
++		if (iter->cpu_file == RING_BUFFER_ALL_CPUS) {
++			local_irq_disable();
+ 			update_max_tr(tr, current, smp_processor_id(), NULL);
+-		else
+-			update_max_tr_single(tr, current, iter->cpu_file);
+-		local_irq_enable();
++			local_irq_enable();
++		} else {
++			smp_call_function_single(iter->cpu_file, tracing_swap_cpu_buffer,
++						 (void *)tr, 1);
++		}
+ 		break;
+ 	default:
+ 		if (tr->allocated_snapshot) {
 -- 
 2.40.1
 
