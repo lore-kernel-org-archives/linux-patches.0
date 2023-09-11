@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F2611715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAC6C433C9;
-	Mon, 11 Sep 2023 15:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F8511715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED20C433CA;
+	Mon, 11 Sep 2023 15:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444982;
-	bh=z1Mpkfdkg+2aiFXbDLkD9ejiRnBGXQUQtM4xHhYXSxQ=;
+	s=korg; t=1694444984;
+	bh=NPqbVrC8EztM/pXf+JSr5rfxHSiR1D3SWlu5B3lOmmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdhcOi2w/RNy0evuB39meVLGqAq5u4MYiUEpDy82xs/8/+eVKhkjmWKY2ELS1JE+L
-	 kyx20MJsKPyka+akAfUzP0bjBpu9LXoHmHTbXiY3Rg9m0ib2pvrRJU6aNpiTqnbMBa
-	 pBUAovZZAOi1XqfPwKptvsA3LR5O4qFeeN+Y9opU=
+	b=WLC55sNS3pHFsQVjDJ4Ym6fdODIHqJtWg2R0cgyh7FpIKmMjF6D2bPx7n+zzPHHft
+	 GfqOBmLaN/JYQEy86gkZzyB5J7ABuXjqgJA53kSVXXbpaKA6eyAeuu2GerIjyfc7/f
+	 SjxUQFAVsyGy8qJh1wphFjpTkmu3prgVkiG1ldxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/600] net: annotate data-races around sk->sk_lingertime
-Date: Mon, 11 Sep 2023 15:43:38 +0200
-Message-ID: <20230911134639.077046455@linuxfoundation.org>
+Subject: [PATCH 6.1 186/600] wifi: mwifiex: fix memory leak in mwifiex_histogram_read()
+Date: Mon, 11 Sep 2023 15:43:39 +0200
+Message-ID: <20230911134639.116237363@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,131 +41,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit bc1fb82ae11753c5dec53c667a055dc37796dbd2 ]
+[ Upstream commit 9c8fd72a5c2a031cbc680a2990107ecd958ffcdb ]
 
-sk_getsockopt() runs locklessly. This means sk->sk_lingertime
-can be read while other threads are changing its value.
+Always free the zeroed page on return from 'mwifiex_histogram_read()'.
 
-Other reads also happen without socket lock being held,
-and must be annotated.
+Fixes: cbf6e05527a7 ("mwifiex: add rx histogram statistics support")
 
-Remove preprocessor logic using BITS_PER_LONG, compilers
-are smart enough to figure this by themselves.
-
-v2: fixed a clang W=1 (-Wtautological-constant-out-of-range-compare) warning
-    (Jakub)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230802160726.85545-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c |  2 +-
- net/bluetooth/sco.c |  2 +-
- net/core/sock.c     | 18 +++++++++---------
- net/sched/em_meta.c |  2 +-
- net/smc/af_smc.c    |  2 +-
- 5 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/debugfs.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 699e4f400df29..5cd2e775915be 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1394,7 +1394,7 @@ static int iso_sock_release(struct socket *sock)
+diff --git a/drivers/net/wireless/marvell/mwifiex/debugfs.c b/drivers/net/wireless/marvell/mwifiex/debugfs.c
+index bda53cb91f376..63f232c723374 100644
+--- a/drivers/net/wireless/marvell/mwifiex/debugfs.c
++++ b/drivers/net/wireless/marvell/mwifiex/debugfs.c
+@@ -253,8 +253,11 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
+ 	if (!p)
+ 		return -ENOMEM;
  
- 	iso_sock_close(sk);
- 
--	if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
-+	if (sock_flag(sk, SOCK_LINGER) && READ_ONCE(sk->sk_lingertime) &&
- 	    !(current->flags & PF_EXITING)) {
- 		lock_sock(sk);
- 		err = bt_sock_wait_state(sk, BT_CLOSED, sk->sk_lingertime);
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 1755f91a66f6a..6d4168cfeb563 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -1255,7 +1255,7 @@ static int sco_sock_release(struct socket *sock)
- 
- 	sco_sock_close(sk);
- 
--	if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
-+	if (sock_flag(sk, SOCK_LINGER) && READ_ONCE(sk->sk_lingertime) &&
- 	    !(current->flags & PF_EXITING)) {
- 		lock_sock(sk);
- 		err = bt_sock_wait_state(sk, BT_CLOSED, sk->sk_lingertime);
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 8b91d9f911336..fc475845c94d5 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -793,7 +793,7 @@ EXPORT_SYMBOL(sock_set_reuseport);
- void sock_no_linger(struct sock *sk)
- {
- 	lock_sock(sk);
--	sk->sk_lingertime = 0;
-+	WRITE_ONCE(sk->sk_lingertime, 0);
- 	sock_set_flag(sk, SOCK_LINGER);
- 	release_sock(sk);
- }
-@@ -1219,15 +1219,15 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 			ret = -EFAULT;
- 			break;
- 		}
--		if (!ling.l_onoff)
-+		if (!ling.l_onoff) {
- 			sock_reset_flag(sk, SOCK_LINGER);
--		else {
--#if (BITS_PER_LONG == 32)
--			if ((unsigned int)ling.l_linger >= MAX_SCHEDULE_TIMEOUT/HZ)
--				sk->sk_lingertime = MAX_SCHEDULE_TIMEOUT;
-+		} else {
-+			unsigned long t_sec = ling.l_linger;
+-	if (!priv || !priv->hist_data)
+-		return -EFAULT;
++	if (!priv || !priv->hist_data) {
++		ret = -EFAULT;
++		goto free_and_exit;
++	}
 +
-+			if (t_sec >= MAX_SCHEDULE_TIMEOUT / HZ)
-+				WRITE_ONCE(sk->sk_lingertime, MAX_SCHEDULE_TIMEOUT);
- 			else
--#endif
--				sk->sk_lingertime = (unsigned int)ling.l_linger * HZ;
-+				WRITE_ONCE(sk->sk_lingertime, t_sec * HZ);
- 			sock_set_flag(sk, SOCK_LINGER);
- 		}
- 		break;
-@@ -1678,7 +1678,7 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
- 	case SO_LINGER:
- 		lv		= sizeof(v.ling);
- 		v.ling.l_onoff	= sock_flag(sk, SOCK_LINGER);
--		v.ling.l_linger	= sk->sk_lingertime / HZ;
-+		v.ling.l_linger	= READ_ONCE(sk->sk_lingertime) / HZ;
- 		break;
+ 	phist_data = priv->hist_data;
  
- 	case SO_BSDCOMPAT:
-diff --git a/net/sched/em_meta.c b/net/sched/em_meta.c
-index b1f1b49d35edf..6f2f135aab676 100644
---- a/net/sched/em_meta.c
-+++ b/net/sched/em_meta.c
-@@ -502,7 +502,7 @@ META_COLLECTOR(int_sk_lingertime)
- 		*err = -1;
- 		return;
- 	}
--	dst->value = sk->sk_lingertime / HZ;
-+	dst->value = READ_ONCE(sk->sk_lingertime) / HZ;
+ 	p += sprintf(p, "\n"
+@@ -309,6 +312,8 @@ mwifiex_histogram_read(struct file *file, char __user *ubuf,
+ 	ret = simple_read_from_buffer(ubuf, count, ppos, (char *)page,
+ 				      (unsigned long)p - page);
+ 
++free_and_exit:
++	free_page(page);
+ 	return ret;
  }
  
- META_COLLECTOR(int_sk_err_qlen)
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 84219c5121bc2..f774d840759d6 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1807,7 +1807,7 @@ void smc_close_non_accepted(struct sock *sk)
- 	lock_sock(sk);
- 	if (!sk->sk_lingertime)
- 		/* wait for peer closing */
--		sk->sk_lingertime = SMC_MAX_STREAM_WAIT_TIMEOUT;
-+		WRITE_ONCE(sk->sk_lingertime, SMC_MAX_STREAM_WAIT_TIMEOUT);
- 	__smc_release(smc);
- 	release_sock(sk);
- 	sock_put(sk); /* sock_hold above */
 -- 
 2.40.1
 
