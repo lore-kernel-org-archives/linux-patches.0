@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB24A11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE8FC433C8;
-	Mon, 11 Sep 2023 15:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B453311710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CA3C433C9;
+	Mon, 11 Sep 2023 15:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445260;
-	bh=ZVuSkgCoN5olPjdIxgp71sjNdG+Ad9fmpqrwBto8vUU=;
+	s=korg; t=1694445263;
+	bh=72f6KxTWOE7jifzfCmaptl2xkmhcEs6B6zDxOl7We8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4JhuFXd6Zjh2MPTqFCdXLPTmH31GvHzx1KT3ATKxGL14nAp8heI+Qr/paRPzpbaG
-	 MkqFCnYVQURJFGzbxQh+Up/DnpJdfZNttcY5blSC8yR3fitLjwE2/dXdnT2N+Gr7ke
-	 AFR8gHL776/StQ5f7H+Nx64DTUBXAJK9bhFCr98w=
+	b=eUkdOh0VNDTdlzXIAgj7oWYj6jJ2vTpqhfH6kHDsEu1vfn3QXj4ijqdpUdrCtZuOQ
+	 sOsPBkV2WkSKMUZTvvAuTjaKBDdZl/sNXwUieP7mYTJwm+69eq7819nuD1iPD13kA2
+	 HM1Z7a/17UYUqa/iXT0Sbo8FBgctJEn12n2LcYiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangtao Li <frank.li@vivo.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 283/600] drm/tegra: dpaux: Fix incorrect return value of platform_get_irq
-Date: Mon, 11 Sep 2023 15:45:16 +0200
-Message-ID: <20230911134641.963823446@linuxfoundation.org>
+Subject: [PATCH 6.1 284/600] of: unittest: fix null pointer dereferencing in of_unittest_find_node_by_name()
+Date: Mon, 11 Sep 2023 15:45:17 +0200
+Message-ID: <20230911134641.993274458@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,35 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 2a1ca44b654346cadfc538c4fb32eecd8daf3140 ]
+[ Upstream commit d6ce4f0ea19c32f10867ed93d8386924326ab474 ]
 
-When platform_get_irq fails, we should return dpaux->irq
-instead of -ENXIO.
+when kmalloc() fail to allocate memory in kasprintf(), name
+or full_name will be NULL, strcmp() will cause
+null pointer dereference.
 
-Fixes: 6b6b604215c6 ("drm/tegra: Add eDP support")
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230710032355.72914-13-frank.li@vivo.com
+Fixes: 0d638a07d3a1 ("of: Convert to using %pOF instead of full_name")
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230727080246.519539-1-ruanjinjie@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/dpaux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/unittest.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/dpaux.c b/drivers/gpu/drm/tegra/dpaux.c
-index 7dc681e2ee90b..d773ef4854188 100644
---- a/drivers/gpu/drm/tegra/dpaux.c
-+++ b/drivers/gpu/drm/tegra/dpaux.c
-@@ -468,7 +468,7 @@ static int tegra_dpaux_probe(struct platform_device *pdev)
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index 9be6ed47a1ce4..b815b8862e187 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -70,7 +70,7 @@ static void __init of_unittest_find_node_by_name(void)
  
- 	dpaux->irq = platform_get_irq(pdev, 0);
- 	if (dpaux->irq < 0)
--		return -ENXIO;
-+		return dpaux->irq;
+ 	np = of_find_node_by_path("/testcase-data");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data", name),
++	unittest(np && name && !strcmp("/testcase-data", name),
+ 		"find /testcase-data failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+@@ -81,14 +81,14 @@ static void __init of_unittest_find_node_by_name(void)
  
- 	if (!pdev->dev.pm_domain) {
- 		dpaux->rst = devm_reset_control_get(&pdev->dev, "dpaux");
+ 	np = of_find_node_by_path("/testcase-data/phandle-tests/consumer-a");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
++	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
+ 		"find /testcase-data/phandle-tests/consumer-a failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+ 
+ 	np = of_find_node_by_path("testcase-alias");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data", name),
++	unittest(np && name && !strcmp("/testcase-data", name),
+ 		"find testcase-alias failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+@@ -99,7 +99,7 @@ static void __init of_unittest_find_node_by_name(void)
+ 
+ 	np = of_find_node_by_path("testcase-alias/phandle-tests/consumer-a");
+ 	name = kasprintf(GFP_KERNEL, "%pOF", np);
+-	unittest(np && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
++	unittest(np && name && !strcmp("/testcase-data/phandle-tests/consumer-a", name),
+ 		"find testcase-alias/phandle-tests/consumer-a failed\n");
+ 	of_node_put(np);
+ 	kfree(name);
+@@ -1379,6 +1379,8 @@ static void attach_node_and_children(struct device_node *np)
+ 	const char *full_name;
+ 
+ 	full_name = kasprintf(GFP_KERNEL, "%pOF", np);
++	if (!full_name)
++		return;
+ 
+ 	if (!strcmp(full_name, "/__local_fixups__") ||
+ 	    !strcmp(full_name, "/__fixups__")) {
 -- 
 2.40.1
 
