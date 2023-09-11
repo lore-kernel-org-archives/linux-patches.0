@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A55A1172F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0A2C433C8;
-	Mon, 11 Sep 2023 15:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AAC11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B88C433C9;
+	Mon, 11 Sep 2023 15:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445688;
-	bh=Sif3HuVy/Cl595s7itlCMYRWlsmlQsVoVm8KFl4aLM8=;
+	s=korg; t=1694445691;
+	bh=VdCOEZVsrUEH8b48GhUb+mKrAddOcLNQeYTcyJMUb18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZEr8v/8PBaii2yRUBheMyYg7lboiko0tmKxRVu3fc9XBxc11N/EkULtNsIpr3l60
-	 hrpwo3SWpN70G/MdFqqWK1+gQLT+4GvP/jex6jduFRODEOXofiNOGVSKAOLtLUctw4
-	 zYJCyt+1pEZ6hcqR+QvQEPnLn7q9gi3C132nFQXg=
+	b=wMVW+FURmrtRDGTaRnErB8BiJ+JH9SM3kwiFcfKmfeqlAgXS0ehjWVe2IiSnQy4DS
+	 yjcdSb+PtidUKlomnvAg4zG/LjFH3HAqX0/mEIsmUz2rSaSp25DriFkVXeE96uM/jn
+	 N2rs2+EybYYu5YrSCO++o7dx3AjACtelT5nC8NV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 437/600] driver core: test_async: fix an error code
-Date: Mon, 11 Sep 2023 15:47:50 +0200
-Message-ID: <20230911134646.551603693@linuxfoundation.org>
+Subject: [PATCH 6.1 438/600] driver core: Call dma_cleanup() on the test_remove path
+Date: Mon, 11 Sep 2023 15:47:51 +0200
+Message-ID: <20230911134646.580663727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,35 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 22d2381bbd70a5853c2ee77522f4965139672db9 ]
+[ Upstream commit f429378a9bf84d79a7e2cae05d2e3384cf7d68ba ]
 
-The test_platform_device_register_node() function should return error
-pointers instead of NULL.  That is what the callers are expecting.
+When test_remove is enabled really_probe() does not properly pair
+dma_configure() with dma_remove(), it will end up calling dma_configure()
+twice. This corrupts the owner_cnt and renders the group unusable with
+VFIO/etc.
 
-Fixes: 57ea974fb871 ("driver core: Rewrite test_async_driver_probe to cover serialization and NUMA affinity")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/1e11ed19-e1f6-43d8-b352-474134b7c008@moroto.mountain
+Add the missing cleanup before going back to re_probe.
+
+Fixes: 25f3bcfc54bc ("driver core: Add dma_cleanup callback in bus_type")
+Reported-by: Zenghui Yu <yuzenghui@huawei.com>
+Tested-by: Zenghui Yu <yuzenghui@huawei.com>
+Closes: https://lore.kernel.org/all/6472f254-c3c4-8610-4a37-8d9dfdd54ce8@huawei.com/
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/0-v2-4deed94e283e+40948-really_probe_dma_cleanup_jgg@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/test/test_async_driver_probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/dd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/base/test/test_async_driver_probe.c b/drivers/base/test/test_async_driver_probe.c
-index 929410d0dd6fe..3465800baa6c8 100644
---- a/drivers/base/test/test_async_driver_probe.c
-+++ b/drivers/base/test/test_async_driver_probe.c
-@@ -84,7 +84,7 @@ test_platform_device_register_node(char *name, int id, int nid)
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 97ab1468a8760..380a53b6aee81 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -674,6 +674,8 @@ static int really_probe(struct device *dev, struct device_driver *drv)
  
- 	pdev = platform_device_alloc(name, id);
- 	if (!pdev)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
+ 		device_remove(dev);
+ 		driver_sysfs_remove(dev);
++		if (dev->bus && dev->bus->dma_cleanup)
++			dev->bus->dma_cleanup(dev);
+ 		device_unbind_cleanup(dev);
  
- 	if (nid != NUMA_NO_NODE)
- 		set_dev_node(&pdev->dev, nid);
+ 		goto re_probe;
 -- 
 2.40.1
 
