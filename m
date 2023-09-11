@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A7A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:45:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CD8C433C7;
-	Mon, 11 Sep 2023 14:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E8C11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F701C433C9;
+	Mon, 11 Sep 2023 14:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443554;
-	bh=92w0w1a/TXZMI9PT8llNX3hRwoDz2EtWaXlNivzP28E=;
+	s=korg; t=1694443556;
+	bh=e8NQ5omQ9sHRiPD5CdWwWbnf8cd5GRVoD8JVqYYttwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oc0F+92ZEJbC7jy0fW1mgXrEEwFQkQBQurJbcYbI6V5NZDogF3v7Eva5cka3ALZln
-	 d+g473VgfUuonwjBhRPGwKXYPrkPdg8Tsd+65Ogo1snnF3z66lFt/Ga3Sdg1hsCHwd
-	 EhW34l0efFMmMglV2jXoqhilu9Y7Y2EgpwSsV9Hs=
+	b=MTnUuZwybrHYUtGt6JbYj9BDiT2wSu9Kj9mVJly5jl8vri1Lwy9UU3ObIKb2WM9+d
+	 TG6b4Hb7DoO8zAga+chLrXX7A0DRxB+KK5y8etUsSjjw/w4PMSl0cNJHU2LCM/iosU
+	 p9bIqGfUsxAC1ARCXzK8FHkQ+GFYohfiguaoTCqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wronek <davidwronek@gmail.com>,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Minjie Du <duminjie@vivo.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 391/737] arm64: dts: qcom: msm8996: Fix dsi1 interrupts
-Date: Mon, 11 Sep 2023 15:44:10 +0200
-Message-ID: <20230911134701.515153922@linuxfoundation.org>
+Subject: [PATCH 6.4 418/737] drivers: clk: keystone: Fix parameter judgment in _of_pll_clk_init()
+Date: Mon, 11 Sep 2023 15:44:37 +0200
+Message-ID: <20230911134702.285717545@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,37 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wronek <davidwronek@gmail.com>
+From: Minjie Du <duminjie@vivo.com>
 
-[ Upstream commit bd3b4ac11845b428996cfd2c7b8302ba6a07340d ]
+[ Upstream commit a995c50db887ef97f3160775aef7d772635a6f6e ]
 
-Fix IRQ flags mismatch which was keeping dsi1 from probing by changing
-interrupts = <4> to interrupts = <5>.
+The function clk_register_pll() may return NULL or an ERR_PTR. Don't
+treat an ERR_PTR as valid.
 
-Fixes: 2752bb7d9b58 ("arm64: dts: qcom: msm8996: add second DSI interface")
-Signed-off-by: David Wronek <davidwronek@gmail.com>
-Acked-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230805130936.359860-2-davidwronek@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Minjie Du <duminjie@vivo.com>
+Link: https://lore.kernel.org/r/20230712102246.10348-1-duminjie@vivo.com
+Fixes: b9e0d40c0d83 ("clk: keystone: add Keystone PLL clock driver")
+[sboyd@kernel.org: Reword commit text]
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ drivers/clk/keystone/pll.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 157d2a2ec32ad..61da7fc281b32 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1075,7 +1075,7 @@ dsi1: dsi@996000 {
- 				reg-names = "dsi_ctrl";
+diff --git a/drivers/clk/keystone/pll.c b/drivers/clk/keystone/pll.c
+index d59a7621bb204..ee5c72369334f 100644
+--- a/drivers/clk/keystone/pll.c
++++ b/drivers/clk/keystone/pll.c
+@@ -209,7 +209,7 @@ static void __init _of_pll_clk_init(struct device_node *node, bool pllctrl)
+ 	}
  
- 				interrupt-parent = <&mdss>;
--				interrupts = <4>;
-+				interrupts = <5>;
- 
- 				clocks = <&mmcc MDSS_MDP_CLK>,
- 					 <&mmcc MDSS_BYTE1_CLK>,
+ 	clk = clk_register_pll(NULL, node->name, parent_name, pll_data);
+-	if (clk) {
++	if (!IS_ERR_OR_NULL(clk)) {
+ 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ 		return;
+ 	}
 -- 
 2.40.1
 
