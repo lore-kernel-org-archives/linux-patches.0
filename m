@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB281170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E45C433C8;
-	Mon, 11 Sep 2023 14:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D195E1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552CDC433C7;
+	Mon, 11 Sep 2023 14:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441595;
-	bh=AbwiWjaYMsJfe0YQua/ztPzpdSU4H0GAbpUqpa21mlE=;
+	s=korg; t=1694441598;
+	bh=yXBezTM4l84KrdeQRcJGaHK7HdkbG9uJ4hakC7gFtxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFt+nnJE6XwT8FuSm8XY/VjKfNEPkCB/qv7jjHTZz+aUS5GbouaiiELPstTj2Srwq
-	 DZRQoyvqw+lCEF+ebnsmqZ1RfBS0Mzyj7Ky/pno/fEqXYtDXCimkmRflKXK7RbUT4O
-	 zbyz/u1+XXXVfS8UFZaKrbLQN/ASFQFcbJQKbocM=
+	b=mgCJBN7gwS3bjCmmmJDnZT2jiH2xrG6YZB0HE9j1yqrtJEqlxEhSLDpva8PTqghjM
+	 EjeGTm2giVDq8AhZmgTlhsorviCEo0k7UITBkjWLIKIgflIyvbdLx6Lkj08f8FFPQA
+	 /QRWt8+jM3xucRdPtSv/gIobIYXy06uKyCRmI1DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 437/739] powerpc/pseries: Fix hcall tracepoints with JUMP_LABEL=n
-Date: Mon, 11 Sep 2023 15:43:56 +0200
-Message-ID: <20230911134703.376877620@linuxfoundation.org>
+Subject: [PATCH 6.5 428/739] wifi: ath12k: Use RMW accessors for changing LNKCTL
+Date: Mon, 11 Sep 2023 15:43:47 +0200
+Message-ID: <20230911134703.131846053@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,41 +37,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 750bd41aeaeb1f0e0128aa4f8fcd6dd759713641 ]
+[ Upstream commit f5a7ac118faf6d4f794975947b3300717eae8fc5 ]
 
-With JUMP_LABEL=n, hcall_tracepoint_refcount's address is being tested
-instead of its value. This results in the tracing slowpath always being
-taken unnecessarily.
+Don't assume that only the driver would be accessing LNKCTL. ASPM policy
+changes can trigger write to LNKCTL outside of driver's control.
 
-Fixes: 9a10ccb29c0a2 ("powerpc/pseries: move hcall_tracepoint_refcount out of .toc")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230509091600.70994-1-npiggin@gmail.com
+Use RMW capability accessors which do proper locking to avoid losing
+concurrent updates to the register value. On restore, clear the ASPMC field
+properly.
+
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Link: https://lore.kernel.org/r/20230717120503.15276-10-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/hvCall.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath12k/pci.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/hvCall.S b/arch/powerpc/platforms/pseries/hvCall.S
-index 35254ac7af5ee..ca0674b0b683e 100644
---- a/arch/powerpc/platforms/pseries/hvCall.S
-+++ b/arch/powerpc/platforms/pseries/hvCall.S
-@@ -91,6 +91,7 @@ BEGIN_FTR_SECTION;						\
- 	b	1f;						\
- END_FTR_SECTION(0, 1);						\
- 	LOAD_REG_ADDR(r12, hcall_tracepoint_refcount) ;		\
-+	ld	r12,0(r12);					\
- 	std	r12,32(r1);					\
- 	cmpdi	r12,0;						\
- 	bne-	LABEL;						\
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index 5990a55801f0a..e4f08a066ca10 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -794,8 +794,8 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+ 		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+ 
+ 	/* disable L0s and L1 */
+-	pcie_capability_write_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+-				   ab_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
++	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
++				   PCI_EXP_LNKCTL_ASPMC);
+ 
+ 	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+ }
+@@ -803,8 +803,10 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+ {
+ 	if (test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+-		pcie_capability_write_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+-					   ab_pci->link_ctl);
++		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
++						   PCI_EXP_LNKCTL_ASPMC,
++						   ab_pci->link_ctl &
++						   PCI_EXP_LNKCTL_ASPMC);
+ }
+ 
+ static void ath12k_pci_kill_tasklets(struct ath12k_base *ab)
 -- 
 2.40.1
 
