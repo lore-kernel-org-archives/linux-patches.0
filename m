@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C68C121
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:15:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AA0C433C8;
-	Mon, 11 Sep 2023 14:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF2AE57F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:15:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039F0C433C9;
+	Mon, 11 Sep 2023 14:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441725;
-	bh=hAvH60x8nTtIkWJ784yfG4sOZCPJAplmrFQzQQtwHJk=;
+	s=korg; t=1694441728;
+	bh=RdG5XIvh+6/6ZEYTjkUtDVH4G+rUgnAIYEzI7xBv4L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dy4MUD4LMzUrvWWN2r9yxAobfjHLyCJ02YkJUSm+AkZH7dD5fp6nJUy4Nd5URv2x9
-	 pTFpEToieGvZIbYa44tSktccS6sEV3DlWH2A4OiLnHQx40LWudlZ96QuhkCj9j9ibj
-	 5Ydsx1zOiMgmR2WhwIrIcvZMKG/zB13vdxNJFONQ=
+	b=1f9vMRjjxYXH2AsBBoBBsOk3X/SaBcXPGHhu9YBcK8wXLPrbHJfrBvgs2D8l77+Te
+	 MUA29dCKie2AdT59Hl+KMGHxGE1EYDuno+S0hR87KjBmG+heRibGTShJ+tdvkj53ov
+	 OC0pMz45p804s7StAUOWRm3mTTrEJnRWrvs3ybm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 514/739] RDMA/hns: Fix port active speed
-Date: Mon, 11 Sep 2023 15:45:13 +0200
-Message-ID: <20230911134705.478047366@linuxfoundation.org>
+Subject: [PATCH 6.5 515/739] RDMA/hns: Fix incorrect post-send with direct wqe of wr-list
+Date: Mon, 11 Sep 2023 15:45:14 +0200
+Message-ID: <20230911134705.504450951@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,50 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit df1bcf90a66a10967a3a43510b42cb3566208011 ]
+[ Upstream commit 706efac4477cdb8be857f6322457de524acc02ff ]
 
-HW supports a variety of different speed, but the current speed
-is fixed.
+Currently, direct wqe is not supported for wr-list. RoCE driver excludes
+direct wqe for wr-list by judging whether the number of wr is 1.
 
-The real speed should be querried from ethernet.
+For a wr-list where the second wr is a length-error atomic wr, the
+post-send driver handles the first wr and adds 1 to the wr number counter
+firstly. While handling the second wr, the driver finds out a length error
+and terminates the wr handle process, remaining the counter at 1. This
+causes the driver mistakenly judges there is only 1 wr and thus enters
+the direct wqe process, carrying the current length-error atomic wqe.
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+This patch fixes the error by adding a judgement whether the current wr
+is a bad wr. If so, use the normal doorbell process but not direct wqe
+despite the wr number is 1.
+
+Fixes: 01584a5edcc4 ("RDMA/hns: Add support of direct wqe")
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20230804012711.808069-2-huangjunxian6@hisilicon.com
+Link: https://lore.kernel.org/r/20230804012711.808069-3-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 485e110ca4333..9141eadf33d2a 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -219,6 +219,7 @@ static int hns_roce_query_port(struct ib_device *ib_dev, u32 port_num,
- 	unsigned long flags;
- 	enum ib_mtu mtu;
- 	u32 port;
-+	int ret;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 8f7eb11066b43..f95551b6d4072 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -750,7 +750,8 @@ static int hns_roce_v2_post_send(struct ib_qp *ibqp,
+ 		qp->sq.head += nreq;
+ 		qp->next_sge = sge_idx;
  
- 	port = port_num - 1;
- 
-@@ -231,8 +232,10 @@ static int hns_roce_query_port(struct ib_device *ib_dev, u32 port_num,
- 				IB_PORT_BOOT_MGMT_SUP;
- 	props->max_msg_sz = HNS_ROCE_MAX_MSG_LEN;
- 	props->pkey_tbl_len = 1;
--	props->active_width = IB_WIDTH_4X;
--	props->active_speed = 1;
-+	ret = ib_get_eth_speed(ib_dev, port_num, &props->active_speed,
-+			       &props->active_width);
-+	if (ret)
-+		ibdev_warn(ib_dev, "failed to get speed, ret = %d.\n", ret);
- 
- 	spin_lock_irqsave(&hr_dev->iboe.lock, flags);
- 
+-		if (nreq == 1 && (qp->en_flags & HNS_ROCE_QP_CAP_DIRECT_WQE))
++		if (nreq == 1 && !ret &&
++		    (qp->en_flags & HNS_ROCE_QP_CAP_DIRECT_WQE))
+ 			write_dwqe(hr_dev, qp, wqe);
+ 		else
+ 			update_sq_db(hr_dev, qp);
 -- 
 2.40.1
 
