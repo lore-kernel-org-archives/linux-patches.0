@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C709411184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F80C433C7;
-	Mon, 11 Sep 2023 14:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F5411184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082EAC433C7;
+	Mon, 11 Sep 2023 14:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440944;
-	bh=MmO1/eXh8MeRcAG/cRUpINwI0HOzgPt3jytH3Io4OmE=;
+	s=korg; t=1694440947;
+	bh=i5Piw8eGOouA2dydSQ9Oj1HiBwOGeYB4UsKn9LXLIGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqI/AB+QJ5m4mCsbOQw+SYHB96kQpIDacp7xyxm3s5conrKvuvyuitFKphxZehkXR
-	 +0Rb5apse/pLfr69Hhst1YcTegYxniNE5NMa3wojLuRCG2OU03sHj+J9Cu4h+VJyFm
-	 B3A6Wyse59YCITwwiALOPQhzSLsewrM693RIJzGA=
+	b=DHvw6v0hKjE2urS867Yg/s3yYhqhVJ1MS2Y48GmF7LSHUQTP2dxDW/PW5J/hIE0oJ
+	 FwmOGyXiff+K1PfRjWcp0FIWIcmhCKpJmqXboqQByGtwU1bPmXrCbMdlXFIwq/rJQs
+	 tA0zpAnVsayn4Aycv5BHGaz+vkdVXyiJSuKUX9k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Vasut <marex@denx.de>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 241/739] ARM: dts: stm32: Add missing detach mailbox for Odyssey SoM
-Date: Mon, 11 Sep 2023 15:40:40 +0200
-Message-ID: <20230911134657.896445046@linuxfoundation.org>
+Subject: [PATCH 6.5 242/739] ARM: dts: stm32: Add missing detach mailbox for DHCOM SoM
+Date: Mon, 11 Sep 2023 15:40:41 +0200
+Message-ID: <20230911134657.923186400@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,7 +42,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 966f04a89d77548e673de2c400abe0b2cf5c15db ]
+[ Upstream commit deb7edbc27a6ec4d8f5edfd8519b7ed13cbd2a52 ]
 
 Add missing "detach" mailbox to this board to permit the CPU to inform
 the remote processor on a detach. This signal allows the remote processor
@@ -61,14 +61,14 @@ Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp157c-odyssey-som.dtsi | 4 ++--
+ arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp157c-odyssey-som.dtsi b/arch/arm/boot/dts/st/stm32mp157c-odyssey-som.dtsi
-index e22871dc580c8..cf74852514906 100644
---- a/arch/arm/boot/dts/st/stm32mp157c-odyssey-som.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp157c-odyssey-som.dtsi
-@@ -230,8 +230,8 @@ &iwdg2 {
+diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
+index e61df23d361a7..74a11ccc5333f 100644
+--- a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
+@@ -416,8 +416,8 @@ &iwdg2 {
  &m4_rproc {
  	memory-region = <&retram>, <&mcuram>, <&mcuram2>, <&vdev0vring0>,
  			<&vdev0vring1>, <&vdev0buffer>;
