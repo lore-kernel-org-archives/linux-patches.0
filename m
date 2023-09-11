@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B111170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBBBC433C7;
-	Mon, 11 Sep 2023 14:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C96F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C242DC433C8;
+	Mon, 11 Sep 2023 14:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441857;
-	bh=8vONUe1tyQCdIB+KTR7VFeJqezrP1QCSG/kvTqxQ54M=;
+	s=korg; t=1694441860;
+	bh=BHeKoNpG4vxnTcX/vfhBydn+JQDr+HjzJyJL/3FDg8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgScrEYlJBhdVbnGJ/FQC/h09ao7lCVsExX/+XQwt39D9JwTvd8O4oBE58ebwtZn+
-	 Xdhb6FISmDXpP+FcPD/sGOdTROi7O3OQqRK38rKa8pUSPG8UMUZo9Df1GBKQWDyUnR
-	 f1kTlToa8VTY+OZ/JMAat/7SE4sfA0askRyVUJHs=
+	b=fuTsg1wbOuPiKxIuwMwSEyCcFYy0hYo2yFWx5pkK1hAbncoGXts9BngKFpT4PXqH0
+	 BBztl17ZV91iqdOwCr8qSgNu/91grMfQRprWOjTyrhm5Da6I22e5nMc+JRJV0ZIsi/
+	 bH/Xrf/x3WiOVOHO9bA1IoYhkhsmzVTZOvqIRBqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Junhao He <hejunhao3@huawei.com>,
-	James Clark <james.clark@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 561/739] coresight: Fix memory leak in acpi_buffer->pointer
-Date: Mon, 11 Sep 2023 15:46:00 +0200
-Message-ID: <20230911134706.748693902@linuxfoundation.org>
+Subject: [PATCH 6.5 562/739] coresight: trbe: Fix TRBE potential sleep in atomic context
+Date: Mon, 11 Sep 2023 15:46:01 +0200
+Message-ID: <20230911134706.776965586@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,144 +42,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Junhao He <hejunhao3@huawei.com>
 
-[ Upstream commit 1a9e02673e2550f5612099e64e8761f0c8fc0f50 ]
+[ Upstream commit c0a232f1e19e378c5c4e5973a996392942c80090 ]
 
-There are memory leaks reported by kmemleak:
-...
-unreferenced object 0xffff00213c141000 (size 1024):
-  comm "systemd-udevd", pid 2123, jiffies 4294909467 (age 6062.160s)
-  hex dump (first 32 bytes):
-    04 00 00 00 02 00 00 00 18 10 14 3c 21 00 ff ff  ...........<!...
-    00 00 00 00 00 00 00 00 03 00 00 00 10 00 00 00  ................
-  backtrace:
-    [<000000004b7c9001>] __kmem_cache_alloc_node+0x2f8/0x348
-    [<00000000b0fc7ceb>] __kmalloc+0x58/0x108
-    [<0000000064ff4695>] acpi_os_allocate+0x2c/0x68
-    [<000000007d57d116>] acpi_ut_initialize_buffer+0x54/0xe0
-    [<0000000024583908>] acpi_evaluate_object+0x388/0x438
-    [<0000000017b2e72b>] acpi_evaluate_object_typed+0xe8/0x240
-    [<000000005df0eac2>] coresight_get_platform_data+0x1b4/0x988 [coresight]
-...
+smp_call_function_single() will allocate an IPI interrupt vector to
+the target processor and send a function call request to the interrupt
+vector. After the target processor receives the IPI interrupt, it will
+execute arm_trbe_remove_coresight_cpu() call request in the interrupt
+handler.
 
-The ACPI buffer memory (buf.pointer) should be freed. But the buffer
-is also used after returning from acpi_get_dsd_graph().
-Move the temporary variables buf to acpi_coresight_parse_graph(),
-and free it before the function return to prevent memory leak.
+According to the device_unregister() stack information, if other process
+is useing the device, the down_write() may sleep, and trigger deadlocks
+or unexpected errors.
 
-Fixes: 76ffa5ab5b79 ("coresight: Support for ACPI bindings")
+  arm_trbe_remove_coresight_cpu
+    coresight_unregister
+      device_unregister
+        device_del
+          kobject_del
+            __kobject_del
+              sysfs_remove_dir
+                kernfs_remove
+                  down_write ---------> it may sleep
+
+Add a helper arm_trbe_disable_cpu() to disable TRBE precpu irq and reset
+per TRBE.
+Simply call arm_trbe_remove_coresight_cpu() directly without useing the
+smp_call_function_single(), which is the same as registering the TRBE
+coresight device.
+
+Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
 Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Reviewed-by: James Clark <james.clark@arm.com>
+Link: https://lore.kernel.org/r/20230814093813.19152-2-hejunhao3@huawei.com
+[ Remove duplicate cpumask checks during removal ]
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230817085937.55590-2-hejunhao3@huawei.com
+[ v3 - Remove the operation of assigning NULL to cpudata->drvdata ]
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230818084052.10116-1-hejunhao3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-platform.c  | 40 ++++++++++++-------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ drivers/hwtracing/coresight/coresight-trbe.c | 32 +++++++++++---------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index c8940314cceb8..dbf508fdd8d16 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -494,19 +494,18 @@ static inline bool acpi_validate_dsd_graph(const union acpi_object *graph)
- 
- /* acpi_get_dsd_graph	- Find the _DSD Graph property for the given device. */
- static const union acpi_object *
--acpi_get_dsd_graph(struct acpi_device *adev)
-+acpi_get_dsd_graph(struct acpi_device *adev, struct acpi_buffer *buf)
- {
- 	int i;
--	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER };
- 	acpi_status status;
- 	const union acpi_object *dsd;
- 
- 	status = acpi_evaluate_object_typed(adev->handle, "_DSD", NULL,
--					    &buf, ACPI_TYPE_PACKAGE);
-+					    buf, ACPI_TYPE_PACKAGE);
- 	if (ACPI_FAILURE(status))
- 		return NULL;
- 
--	dsd = buf.pointer;
-+	dsd = buf->pointer;
- 
- 	/*
- 	 * _DSD property consists tuples { Prop_UUID, Package() }
-@@ -557,12 +556,12 @@ acpi_validate_coresight_graph(const union acpi_object *cs_graph)
-  * returns NULL.
-  */
- static const union acpi_object *
--acpi_get_coresight_graph(struct acpi_device *adev)
-+acpi_get_coresight_graph(struct acpi_device *adev, struct acpi_buffer *buf)
- {
- 	const union acpi_object *graph_list, *graph;
- 	int i, nr_graphs;
- 
--	graph_list = acpi_get_dsd_graph(adev);
-+	graph_list = acpi_get_dsd_graph(adev, buf);
- 	if (!graph_list)
- 		return graph_list;
- 
-@@ -663,22 +662,24 @@ static int acpi_coresight_parse_graph(struct device *dev,
- 				      struct acpi_device *adev,
- 				      struct coresight_platform_data *pdata)
- {
-+	int ret = 0;
- 	int i, nlinks;
- 	const union acpi_object *graph;
- 	struct coresight_connection conn, zero_conn = {};
- 	struct coresight_connection *new_conn;
-+	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER, NULL };
- 
--	graph = acpi_get_coresight_graph(adev);
-+	graph = acpi_get_coresight_graph(adev, &buf);
- 	/*
- 	 * There are no graph connections, which is fine for some components.
- 	 * e.g., ETE
- 	 */
- 	if (!graph)
--		return 0;
-+		goto free;
- 
- 	nlinks = graph->package.elements[2].integer.value;
- 	if (!nlinks)
--		return 0;
-+		goto free;
- 
- 	for (i = 0; i < nlinks; i++) {
- 		const union acpi_object *link = &graph->package.elements[3 + i];
-@@ -686,17 +687,28 @@ static int acpi_coresight_parse_graph(struct device *dev,
- 
- 		conn = zero_conn;
- 		dir = acpi_coresight_parse_link(adev, link, &conn);
--		if (dir < 0)
--			return dir;
-+		if (dir < 0) {
-+			ret = dir;
-+			goto free;
-+		}
- 
- 		if (dir == ACPI_CORESIGHT_LINK_MASTER) {
- 			new_conn = coresight_add_out_conn(dev, pdata, &conn);
--			if (IS_ERR(new_conn))
--				return PTR_ERR(new_conn);
-+			if (IS_ERR(new_conn)) {
-+				ret = PTR_ERR(new_conn);
-+				goto free;
-+			}
- 		}
- 	}
- 
--	return 0;
-+free:
-+	/*
-+	 * When ACPI fails to alloc a buffer, it will free the buffer
-+	 * created via ACPI_ALLOCATE_BUFFER and set to NULL.
-+	 * ACPI_FREE can handle NULL pointers, so free it directly.
-+	 */
-+	ACPI_FREE(buf.pointer);
-+	return ret;
+diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
+index 8e4eb37e66e82..e20c1c6acc731 100644
+--- a/drivers/hwtracing/coresight/coresight-trbe.c
++++ b/drivers/hwtracing/coresight/coresight-trbe.c
+@@ -1225,6 +1225,16 @@ static void arm_trbe_enable_cpu(void *info)
+ 	enable_percpu_irq(drvdata->irq, IRQ_TYPE_NONE);
  }
  
- /*
++static void arm_trbe_disable_cpu(void *info)
++{
++	struct trbe_drvdata *drvdata = info;
++	struct trbe_cpudata *cpudata = this_cpu_ptr(drvdata->cpudata);
++
++	disable_percpu_irq(drvdata->irq);
++	trbe_reset_local(cpudata);
++}
++
++
+ static void arm_trbe_register_coresight_cpu(struct trbe_drvdata *drvdata, int cpu)
+ {
+ 	struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
+@@ -1329,18 +1339,12 @@ static void arm_trbe_probe_cpu(void *info)
+ 	cpumask_clear_cpu(cpu, &drvdata->supported_cpus);
+ }
+ 
+-static void arm_trbe_remove_coresight_cpu(void *info)
++static void arm_trbe_remove_coresight_cpu(struct trbe_drvdata *drvdata, int cpu)
+ {
+-	int cpu = smp_processor_id();
+-	struct trbe_drvdata *drvdata = info;
+-	struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
+ 	struct coresight_device *trbe_csdev = coresight_get_percpu_sink(cpu);
+ 
+-	disable_percpu_irq(drvdata->irq);
+-	trbe_reset_local(cpudata);
+ 	if (trbe_csdev) {
+ 		coresight_unregister(trbe_csdev);
+-		cpudata->drvdata = NULL;
+ 		coresight_set_percpu_sink(cpu, NULL);
+ 	}
+ }
+@@ -1369,8 +1373,10 @@ static int arm_trbe_remove_coresight(struct trbe_drvdata *drvdata)
+ {
+ 	int cpu;
+ 
+-	for_each_cpu(cpu, &drvdata->supported_cpus)
+-		smp_call_function_single(cpu, arm_trbe_remove_coresight_cpu, drvdata, 1);
++	for_each_cpu(cpu, &drvdata->supported_cpus) {
++		smp_call_function_single(cpu, arm_trbe_disable_cpu, drvdata, 1);
++		arm_trbe_remove_coresight_cpu(drvdata, cpu);
++	}
+ 	free_percpu(drvdata->cpudata);
+ 	return 0;
+ }
+@@ -1409,12 +1415,8 @@ static int arm_trbe_cpu_teardown(unsigned int cpu, struct hlist_node *node)
+ {
+ 	struct trbe_drvdata *drvdata = hlist_entry_safe(node, struct trbe_drvdata, hotplug_node);
+ 
+-	if (cpumask_test_cpu(cpu, &drvdata->supported_cpus)) {
+-		struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
+-
+-		disable_percpu_irq(drvdata->irq);
+-		trbe_reset_local(cpudata);
+-	}
++	if (cpumask_test_cpu(cpu, &drvdata->supported_cpus))
++		arm_trbe_disable_cpu(drvdata);
+ 	return 0;
+ }
+ 
 -- 
 2.40.1
 
