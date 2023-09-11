@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B215A4C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B43C433C7;
-	Mon, 11 Sep 2023 14:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E2F11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E23C433C7;
+	Mon, 11 Sep 2023 14:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443701;
-	bh=iI652H1WuiBaJC/lHrxSgqs4nS3eZ+iIxnWIPUwl9EI=;
+	s=korg; t=1694443704;
+	bh=614sSuU6EqiYWnNgiV9rEnflNg9GnuZsc3ts2eTLIc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhCCn4HvZ+AvW2NYDMloHWL5gXGArlWEXHDwSed02lxe+ZqvzmwMvNSM2TKv5ugz3
-	 8ocouBbbabf2tRDexlI75IwftHWSpkcSe9bITuL2U9L6bc5IphorGl6XuGfKynaxRG
-	 Y+sDX31Ah0RKLQ+gjd+6gsk4qIbL6jojPsSq+gpE=
+	b=TIIxy6PpOY0fIPIlABvzdqBfmjpvqun9hsXePm/A6usgGXyYKJu2/TLvdgsKPmxPw
+	 7wnY/ZcIz2Hlq+yvxMgs07q8b5CT/bWSedQCYiSXvgm3svPLvcnHU115URuvgDdr7Q
+	 bMvQJnnSxn5+UrFhC3HoPDONn3k71u/1rUMt0h7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 471/737] ext4: fix unttached inode after power cut with orphan file feature enabled
-Date: Mon, 11 Sep 2023 15:45:30 +0200
-Message-ID: <20230911134703.744530278@linuxfoundation.org>
+Subject: [PATCH 6.4 454/737] pinctrl: mediatek: fix pull_type data for MT7981
+Date: Mon, 11 Sep 2023 15:45:13 +0200
+Message-ID: <20230911134703.282148874@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,88 +40,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 1524773425ae8113b0b782886366e68656b34e53 ]
+[ Upstream commit 8f6f16fe1553ce63edfb98a39ef9d4754a0c39bf ]
 
-Running generic/475(filesystem consistent tests after power cut) could
-easily trigger unattached inode error while doing fsck:
-  Unattached zero-length inode 39405.  Clear? no
+MediaTek has released pull_type data for MT7981 in their SDK.
+Use it and set functions to configure pin bias.
 
-  Unattached inode 39405
-  Connect to /lost+found? no
-
-Above inconsistence is caused by following process:
-       P1                       P2
-ext4_create
- inode = ext4_new_inode_start_handle  // itable records nlink=1
- ext4_add_nondir
-   err = ext4_add_entry  // ENOSPC
-    ext4_append
-     ext4_bread
-      ext4_getblk
-       ext4_map_blocks // returns ENOSPC
-   drop_nlink(inode) // won't be updated into disk inode
-   ext4_orphan_add(handle, inode)
-    ext4_orphan_file_add
- ext4_journal_stop(handle)
-		      jbd2_journal_commit_transaction // commit success
-              >> power cut <<
-ext4_fill_super
- ext4_load_and_init_journal   // itable records nlink=1
- ext4_orphan_cleanup
-  ext4_process_orphan
-   if (inode->i_nlink)        // true, inode won't be deleted
-
-Then, allocated inode will be reserved on disk and corresponds to no
-dentries, so e2fsck reports 'unattached inode' problem.
-
-The problem won't happen if orphan file feature is disabled, because
-ext4_orphan_add() will update disk inode in orphan list mode. There
-are several places not updating disk inode while putting inode into
-orphan area, such as ext4_add_nondir(), ext4_symlink() and whiteout
-in ext4_rename(). Fix it by updating inode into disk in all error
-branches of these places.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217605
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230628132011.650383-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 6c83b2d94fcc ("pinctrl: add mt7981 pinctrl driver")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/7bcc8ead25dbfabc7f5a85d066224a926fbb4941.1692327317.git.daniel@makrotopia.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/mediatek/pinctrl-mt7981.c | 44 +++++++----------------
+ 1 file changed, 13 insertions(+), 31 deletions(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index 0caf6c730ce34..6bcc3770ee19f 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2799,6 +2799,7 @@ static int ext4_add_nondir(handle_t *handle,
- 		return err;
- 	}
- 	drop_nlink(inode);
-+	ext4_mark_inode_dirty(handle, inode);
- 	ext4_orphan_add(handle, inode);
- 	unlock_new_inode(inode);
- 	return err;
-@@ -3436,6 +3437,7 @@ static int ext4_symlink(struct mnt_idmap *idmap, struct inode *dir,
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt7981.c b/drivers/pinctrl/mediatek/pinctrl-mt7981.c
+index 18abc57800111..0fd2c0c451f95 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt7981.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt7981.c
+@@ -457,37 +457,15 @@ static const unsigned int mt7981_pull_type[] = {
+ 	MTK_PULL_PUPD_R1R0_TYPE,/*34*/ MTK_PULL_PUPD_R1R0_TYPE,/*35*/
+ 	MTK_PULL_PUPD_R1R0_TYPE,/*36*/ MTK_PULL_PUPD_R1R0_TYPE,/*37*/
+ 	MTK_PULL_PUPD_R1R0_TYPE,/*38*/ MTK_PULL_PUPD_R1R0_TYPE,/*39*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*40*/ MTK_PULL_PUPD_R1R0_TYPE,/*41*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*42*/ MTK_PULL_PUPD_R1R0_TYPE,/*43*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*44*/ MTK_PULL_PUPD_R1R0_TYPE,/*45*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*46*/ MTK_PULL_PUPD_R1R0_TYPE,/*47*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*48*/ MTK_PULL_PUPD_R1R0_TYPE,/*49*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*50*/ MTK_PULL_PUPD_R1R0_TYPE,/*51*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*52*/ MTK_PULL_PUPD_R1R0_TYPE,/*53*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*54*/ MTK_PULL_PUPD_R1R0_TYPE,/*55*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*56*/ MTK_PULL_PUPD_R1R0_TYPE,/*57*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*58*/ MTK_PULL_PUPD_R1R0_TYPE,/*59*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*60*/ MTK_PULL_PUPD_R1R0_TYPE,/*61*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*62*/ MTK_PULL_PUPD_R1R0_TYPE,/*63*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*64*/ MTK_PULL_PUPD_R1R0_TYPE,/*65*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*66*/ MTK_PULL_PUPD_R1R0_TYPE,/*67*/
+-	MTK_PULL_PUPD_R1R0_TYPE,/*68*/ MTK_PULL_PU_PD_TYPE,/*69*/
+-	MTK_PULL_PU_PD_TYPE,/*70*/ MTK_PULL_PU_PD_TYPE,/*71*/
+-	MTK_PULL_PU_PD_TYPE,/*72*/ MTK_PULL_PU_PD_TYPE,/*73*/
+-	MTK_PULL_PU_PD_TYPE,/*74*/ MTK_PULL_PU_PD_TYPE,/*75*/
+-	MTK_PULL_PU_PD_TYPE,/*76*/ MTK_PULL_PU_PD_TYPE,/*77*/
+-	MTK_PULL_PU_PD_TYPE,/*78*/ MTK_PULL_PU_PD_TYPE,/*79*/
+-	MTK_PULL_PU_PD_TYPE,/*80*/ MTK_PULL_PU_PD_TYPE,/*81*/
+-	MTK_PULL_PU_PD_TYPE,/*82*/ MTK_PULL_PU_PD_TYPE,/*83*/
+-	MTK_PULL_PU_PD_TYPE,/*84*/ MTK_PULL_PU_PD_TYPE,/*85*/
+-	MTK_PULL_PU_PD_TYPE,/*86*/ MTK_PULL_PU_PD_TYPE,/*87*/
+-	MTK_PULL_PU_PD_TYPE,/*88*/ MTK_PULL_PU_PD_TYPE,/*89*/
+-	MTK_PULL_PU_PD_TYPE,/*90*/ MTK_PULL_PU_PD_TYPE,/*91*/
+-	MTK_PULL_PU_PD_TYPE,/*92*/ MTK_PULL_PU_PD_TYPE,/*93*/
+-	MTK_PULL_PU_PD_TYPE,/*94*/ MTK_PULL_PU_PD_TYPE,/*95*/
+-	MTK_PULL_PU_PD_TYPE,/*96*/ MTK_PULL_PU_PD_TYPE,/*97*/
+-	MTK_PULL_PU_PD_TYPE,/*98*/ MTK_PULL_PU_PD_TYPE,/*99*/
+-	MTK_PULL_PU_PD_TYPE,/*100*/
++	MTK_PULL_PU_PD_TYPE,/*40*/ MTK_PULL_PU_PD_TYPE,/*41*/
++	MTK_PULL_PU_PD_TYPE,/*42*/ MTK_PULL_PU_PD_TYPE,/*43*/
++	MTK_PULL_PU_PD_TYPE,/*44*/ MTK_PULL_PU_PD_TYPE,/*45*/
++	MTK_PULL_PU_PD_TYPE,/*46*/ MTK_PULL_PU_PD_TYPE,/*47*/
++	MTK_PULL_PU_PD_TYPE,/*48*/ MTK_PULL_PU_PD_TYPE,/*49*/
++	MTK_PULL_PU_PD_TYPE,/*50*/ MTK_PULL_PU_PD_TYPE,/*51*/
++	MTK_PULL_PU_PD_TYPE,/*52*/ MTK_PULL_PU_PD_TYPE,/*53*/
++	MTK_PULL_PU_PD_TYPE,/*54*/ MTK_PULL_PU_PD_TYPE,/*55*/
++	MTK_PULL_PU_PD_TYPE,/*56*/
+ };
  
- err_drop_inode:
- 	clear_nlink(inode);
-+	ext4_mark_inode_dirty(handle, inode);
- 	ext4_orphan_add(handle, inode);
- 	unlock_new_inode(inode);
- 	if (handle)
-@@ -4021,6 +4023,7 @@ static int ext4_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 			ext4_resetent(handle, &old,
- 				      old.inode->i_ino, old_file_type);
- 			drop_nlink(whiteout);
-+			ext4_mark_inode_dirty(handle, whiteout);
- 			ext4_orphan_add(handle, whiteout);
- 		}
- 		unlock_new_inode(whiteout);
+ static const struct mtk_pin_reg_calc mt7981_reg_cals[] = {
+@@ -1014,6 +992,10 @@ static struct mtk_pin_soc mt7981_data = {
+ 	.ies_present = false,
+ 	.base_names = mt7981_pinctrl_register_base_names,
+ 	.nbase_names = ARRAY_SIZE(mt7981_pinctrl_register_base_names),
++	.bias_disable_set = mtk_pinconf_bias_disable_set,
++	.bias_disable_get = mtk_pinconf_bias_disable_get,
++	.bias_set = mtk_pinconf_bias_set,
++	.bias_get = mtk_pinconf_bias_get,
+ 	.pull_type = mt7981_pull_type,
+ 	.bias_set_combo = mtk_pinconf_bias_set_combo,
+ 	.bias_get_combo = mtk_pinconf_bias_get_combo,
 -- 
 2.40.1
 
