@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EE211710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1927FC433C7;
-	Mon, 11 Sep 2023 14:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A6C153
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CF3C433CA;
+	Mon, 11 Sep 2023 14:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443220;
-	bh=QGFTx03Z70xAAKY88w9wNAStUxJA8+FMasmGtsT63KM=;
+	s=korg; t=1694443223;
+	bh=bk/n1is+SsXooN1p/kF91Czhezvgg802uZL7cpoI3AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwJ1YhJ8VF+vDvyUaS4RISi+LTyziQ8uDHl0ec5+ny/jD39uAX2tGZJJ86vi9AbqZ
-	 6WtcNGoQYBKZ4eirHEGU1+aDQhnPIINTAOfLN07kcTS87n2tQwt6YyzSw1PqaJxd0T
-	 GmceDnqzsaiJjzruCpYA85qSP/0854QeCM7qAfkM=
+	b=I9f8jHenlJqHwuAJdPff4whFWly9PIElvhclODTWaNqxUbVvFZWqIw7dJUFrf9G1z
+	 uDgGEGEC0eGPXBEmhRPcZ48By7fEK/ujlEdWZDc8OXZbQwhdNfD1RL/H/lM5SXdx07
+	 W4zVYr4tmUDL6xqW6qwo3jcCoSd2X4aj7nk1safM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Wesley Chalmers <Wesley.Chalmers@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 274/737] quota: fix dqput() to follow the guarantees dquot_srcu should provide
-Date: Mon, 11 Sep 2023 15:42:13 +0200
-Message-ID: <20230911134658.228865329@linuxfoundation.org>
+Subject: [PATCH 6.4 275/737] drm/amd/display: Do not set drr on pipe commit
+Date: Mon, 11 Sep 2023 15:42:14 +0200
+Message-ID: <20230911134658.257359075@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,246 +42,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Wesley Chalmers <Wesley.Chalmers@amd.com>
 
-[ Upstream commit dabc8b20756601b9e1cc85a81d47d3f98ed4d13a ]
+[ Upstream commit e101bf95ea87ccc03ac2f48dfc0757c6364ff3c7 ]
 
-The dquot_mark_dquot_dirty() using dquot references from the inode
-should be protected by dquot_srcu. quota_off code takes care to call
-synchronize_srcu(&dquot_srcu) to not drop dquot references while they
-are used by other users. But dquot_transfer() breaks this assumption.
-We call dquot_transfer() to drop the last reference of dquot and add
-it to free_dquots, but there may still be other users using the dquot
-at this time, as shown in the function graph below:
+[WHY]
+Writing to DRR registers such as OTG_V_TOTAL_MIN on the same frame as a
+pipe commit can cause underflow.
 
-       cpu1              cpu2
-_________________|_________________
-wb_do_writeback         CHOWN(1)
- ...
-  ext4_da_update_reserve_space
-   dquot_claim_block
-    ...
-     dquot_mark_dquot_dirty // try to dirty old quota
-      test_bit(DQ_ACTIVE_B, &dquot->dq_flags) // still ACTIVE
-      if (test_bit(DQ_MOD_B, &dquot->dq_flags))
-      // test no dirty, wait dq_list_lock
-                    ...
-                     dquot_transfer
-                      __dquot_transfer
-                      dqput_all(transfer_from) // rls old dquot
-                       dqput // last dqput
-                        dquot_release
-                         clear_bit(DQ_ACTIVE_B, &dquot->dq_flags)
-                        atomic_dec(&dquot->dq_count)
-                        put_dquot_last(dquot)
-                         list_add_tail(&dquot->dq_free, &free_dquots)
-                         // add the dquot to free_dquots
-      if (!test_and_set_bit(DQ_MOD_B, &dquot->dq_flags))
-        add dqi_dirty_list // add released dquot to dirty_list
+[HOW]
+Move DMUB p-state delegate into optimze_bandwidth; enabling FAMS sets
+optimized_required.
 
-This can cause various issues, such as dquot being destroyed by
-dqcache_shrink_scan() after being added to free_dquots, which can trigger
-a UAF in dquot_mark_dquot_dirty(); or after dquot is added to free_dquots
-and then to dirty_list, it is added to free_dquots again after
-dquot_writeback_dquots() is executed, which causes the free_dquots list to
-be corrupted and triggers a UAF when dqcache_shrink_scan() is called for
-freeing dquot twice.
+This change expects that Freesync requests are blocked when
+optimized_required is true.
 
-As Honza said, we need to fix dquot_transfer() to follow the guarantees
-dquot_srcu should provide. But calling synchronize_srcu() directly from
-dquot_transfer() is too expensive (and mostly unnecessary). So we add
-dquot whose last reference should be dropped to the new global dquot
-list releasing_dquots, and then queue work item which would call
-synchronize_srcu() and after that perform the final cleanup of all the
-dquots on releasing_dquots.
-
-Fixes: 4580b30ea887 ("quota: Do not dirty bad dquots")
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230630110822.3881712-5-libaokun1@huawei.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 96 +++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 78 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 6 ++++++
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c | 7 +++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 88aa747f48008..c7afe433d991a 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -225,13 +225,22 @@ static void put_quota_format(struct quota_format_type *fmt)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index a621b6a27c1fc..1ed30eba152e1 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -2124,6 +2124,12 @@ void dcn20_optimize_bandwidth(
+ 	if (hubbub->funcs->program_compbuf_size)
+ 		hubbub->funcs->program_compbuf_size(hubbub, context->bw_ctx.bw.dcn.compbuf_size_kb, true);
  
- /*
-  * Dquot List Management:
-- * The quota code uses four lists for dquot management: the inuse_list,
-- * free_dquots, dqi_dirty_list, and dquot_hash[] array. A single dquot
-- * structure may be on some of those lists, depending on its current state.
-+ * The quota code uses five lists for dquot management: the inuse_list,
-+ * releasing_dquots, free_dquots, dqi_dirty_list, and dquot_hash[] array.
-+ * A single dquot structure may be on some of those lists, depending on
-+ * its current state.
-  *
-  * All dquots are placed to the end of inuse_list when first created, and this
-  * list is used for invalidate operation, which must look at every dquot.
-  *
-+ * When the last reference of a dquot will be dropped, the dquot will be
-+ * added to releasing_dquots. We'd then queue work item which would call
-+ * synchronize_srcu() and after that perform the final cleanup of all the
-+ * dquots on the list. Both releasing_dquots and free_dquots use the
-+ * dq_free list_head in the dquot struct. When a dquot is removed from
-+ * releasing_dquots, a reference count is always subtracted, and if
-+ * dq_count == 0 at that point, the dquot will be added to the free_dquots.
-+ *
-  * Unused dquots (dq_count == 0) are added to the free_dquots list when freed,
-  * and this list is searched whenever we need an available dquot.  Dquots are
-  * removed from the list as soon as they are used again, and
-@@ -250,6 +259,7 @@ static void put_quota_format(struct quota_format_type *fmt)
- 
- static LIST_HEAD(inuse_list);
- static LIST_HEAD(free_dquots);
-+static LIST_HEAD(releasing_dquots);
- static unsigned int dq_hash_bits, dq_hash_mask;
- static struct hlist_head *dquot_hash;
- 
-@@ -260,6 +270,9 @@ static qsize_t inode_get_rsv_space(struct inode *inode);
- static qsize_t __inode_get_rsv_space(struct inode *inode);
- static int __dquot_initialize(struct inode *inode, int type);
- 
-+static void quota_release_workfn(struct work_struct *work);
-+static DECLARE_DELAYED_WORK(quota_release_work, quota_release_workfn);
-+
- static inline unsigned int
- hashfn(const struct super_block *sb, struct kqid qid)
- {
-@@ -305,12 +318,18 @@ static inline void put_dquot_last(struct dquot *dquot)
- 	dqstats_inc(DQST_FREE_DQUOTS);
- }
- 
-+static inline void put_releasing_dquots(struct dquot *dquot)
-+{
-+	list_add_tail(&dquot->dq_free, &releasing_dquots);
-+}
-+
- static inline void remove_free_dquot(struct dquot *dquot)
- {
- 	if (list_empty(&dquot->dq_free))
- 		return;
- 	list_del_init(&dquot->dq_free);
--	dqstats_dec(DQST_FREE_DQUOTS);
-+	if (!atomic_read(&dquot->dq_count))
-+		dqstats_dec(DQST_FREE_DQUOTS);
- }
- 
- static inline void put_inuse(struct dquot *dquot)
-@@ -552,6 +571,8 @@ static void invalidate_dquots(struct super_block *sb, int type)
- 	struct dquot *dquot, *tmp;
- 
- restart:
-+	flush_delayed_work(&quota_release_work);
-+
- 	spin_lock(&dq_list_lock);
- 	list_for_each_entry_safe(dquot, tmp, &inuse_list, dq_inuse) {
- 		if (dquot->dq_sb != sb)
-@@ -560,6 +581,12 @@ static void invalidate_dquots(struct super_block *sb, int type)
- 			continue;
- 		/* Wait for dquot users */
- 		if (atomic_read(&dquot->dq_count)) {
-+			/* dquot in releasing_dquots, flush and retry */
-+			if (!list_empty(&dquot->dq_free)) {
-+				spin_unlock(&dq_list_lock);
-+				goto restart;
-+			}
-+
- 			atomic_inc(&dquot->dq_count);
- 			spin_unlock(&dq_list_lock);
- 			/*
-@@ -770,6 +797,49 @@ static struct shrinker dqcache_shrinker = {
- 	.seeks = DEFAULT_SEEKS,
- };
- 
-+/*
-+ * Safely release dquot and put reference to dquot.
-+ */
-+static void quota_release_workfn(struct work_struct *work)
-+{
-+	struct dquot *dquot;
-+	struct list_head rls_head;
-+
-+	spin_lock(&dq_list_lock);
-+	/* Exchange the list head to avoid livelock. */
-+	list_replace_init(&releasing_dquots, &rls_head);
-+	spin_unlock(&dq_list_lock);
-+
-+restart:
-+	synchronize_srcu(&dquot_srcu);
-+	spin_lock(&dq_list_lock);
-+	while (!list_empty(&rls_head)) {
-+		dquot = list_first_entry(&rls_head, struct dquot, dq_free);
-+		/* Dquot got used again? */
-+		if (atomic_read(&dquot->dq_count) > 1) {
-+			remove_free_dquot(dquot);
-+			atomic_dec(&dquot->dq_count);
-+			continue;
-+		}
-+		if (dquot_dirty(dquot)) {
-+			spin_unlock(&dq_list_lock);
-+			/* Commit dquot before releasing */
-+			dquot_write_dquot(dquot);
-+			goto restart;
-+		}
-+		if (dquot_active(dquot)) {
-+			spin_unlock(&dq_list_lock);
-+			dquot->dq_sb->dq_op->release_dquot(dquot);
-+			goto restart;
-+		}
-+		/* Dquot is inactive and clean, now move it to free list */
-+		remove_free_dquot(dquot);
-+		atomic_dec(&dquot->dq_count);
-+		put_dquot_last(dquot);
++	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching) {
++		dc_dmub_srv_p_state_delegate(dc,
++			true, context);
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
 +	}
-+	spin_unlock(&dq_list_lock);
-+}
 +
- /*
-  * Put reference to dquot
-  */
-@@ -786,7 +856,7 @@ void dqput(struct dquot *dquot)
- 	}
- #endif
- 	dqstats_inc(DQST_DROPS);
--we_slept:
+ 	dc->clk_mgr->funcs->update_clocks(
+ 			dc->clk_mgr,
+ 			context,
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+index 32121db2851e6..f923224e85fc6 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -985,11 +985,18 @@ void dcn30_set_disp_pattern_generator(const struct dc *dc,
+ void dcn30_prepare_bandwidth(struct dc *dc,
+ 			     struct dc_state *context)
+ {
++	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching) {
++		dc->optimized_required = true;
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = false;
++	}
 +
- 	spin_lock(&dq_list_lock);
- 	if (atomic_read(&dquot->dq_count) > 1) {
- 		/* We have more than one user... nothing to do */
-@@ -798,25 +868,15 @@ void dqput(struct dquot *dquot)
- 		spin_unlock(&dq_list_lock);
- 		return;
- 	}
+ 	if (dc->clk_mgr->dc_mode_softmax_enabled)
+ 		if (dc->clk_mgr->clks.dramclk_khz <= dc->clk_mgr->bw_params->dc_mode_softmax_memclk * 1000 &&
+ 				context->bw_ctx.bw.dcn.clk.dramclk_khz > dc->clk_mgr->bw_params->dc_mode_softmax_memclk * 1000)
+ 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
+ 
+ 	dcn20_prepare_bandwidth(dc, context);
 +
- 	/* Need to release dquot? */
--	if (dquot_dirty(dquot)) {
--		spin_unlock(&dq_list_lock);
--		/* Commit dquot before releasing */
--		dquot_write_dquot(dquot);
--		goto we_slept;
--	}
--	if (dquot_active(dquot)) {
--		spin_unlock(&dq_list_lock);
--		dquot->dq_sb->dq_op->release_dquot(dquot);
--		goto we_slept;
--	}
--	atomic_dec(&dquot->dq_count);
- #ifdef CONFIG_QUOTA_DEBUG
- 	/* sanity check */
- 	BUG_ON(!list_empty(&dquot->dq_free));
- #endif
--	put_dquot_last(dquot);
-+	put_releasing_dquots(dquot);
- 	spin_unlock(&dq_list_lock);
-+	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
++	dc_dmub_srv_p_state_delegate(dc, false, context);
  }
- EXPORT_SYMBOL(dqput);
  
 -- 
 2.40.1
