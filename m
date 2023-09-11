@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDCA11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0873EC433C8;
-	Mon, 11 Sep 2023 15:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7676D11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB3CC433C7;
+	Mon, 11 Sep 2023 15:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445744;
-	bh=1/J/nUuQ89SJmDKI9w4Yzveptl9co7zbzpn/NM0dReQ=;
+	s=korg; t=1694445747;
+	bh=jWil5r8hC2kk7Ipb61J0HtRkHziZU/KAFAnX2L+MWaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbDwPFrir6EGIx/Cig2KO4zowahyRn6YGxaWhszKq3jN4EUaIWuyimPXx907G8YO1
-	 T7okgDtkvvEEyg1gffagZXLw3TLi5npEhCnyGG3POVGao/QN4m/UGmA/Dbat8/pHfd
-	 3YM74nVDSL3O90RJBnNJ6lwZxO/3Wkih3gruA2Rk=
+	b=yOJZMYCzs5VkKoLAfN9yLLh8qWbtcNQWX8z36tOXhEHUe+J3EttbC8l//4eYWfbV+
+	 GWKoMaqVTvjfIp68Q4TgAg2TC1GDfN2xl1qCwq8npwLxf+6PT7T+wQB5DSKsVqTXWv
+	 h0O8Z4JwQfwqWpyy3PsyzD8D0C0ZwZH33+SN7V8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -29,9 +29,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Oleksandr Natalenko <oleksandr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 430/600] scsi: qedf: Do not touch __user pointer in qedf_dbg_stop_io_on_error_cmd_read() directly
-Date: Mon, 11 Sep 2023 15:47:43 +0200
-Message-ID: <20230911134646.353882519@linuxfoundation.org>
+Subject: [PATCH 6.1 431/600] scsi: qedf: Do not touch __user pointer in qedf_dbg_debug_cmd_read() directly
+Date: Mon, 11 Sep 2023 15:47:44 +0200
+Message-ID: <20230911134646.382475283@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -52,10 +52,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 
-[ Upstream commit 7d3d20dee4f648ec44e9717d5f647d594d184433 ]
+[ Upstream commit 31b5991a9a91ba97237ac9da509d78eec453ff72 ]
 
-The qedf_dbg_stop_io_on_error_cmd_read() function invokes sprintf()
-directly on a __user pointer, which may crash the kernel.
+The qedf_dbg_debug_cmd_read() function invokes sprintf() directly on a
+__user pointer, which may crash the kernel.
 
 Avoid doing that by using a small on-stack buffer for scnprintf() and then
 calling simple_read_from_buffer() which does a proper copy_to_user() call.
@@ -78,7 +78,7 @@ Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Tested-by: Laurence Oberman <loberman@redhat.com>
 Acked-by: Saurav Kashyap <skashyap@marvell.com>
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
-Link: https://lore.kernel.org/r/20230731084034.37021-2-oleksandr@redhat.com
+Link: https://lore.kernel.org/r/20230731084034.37021-3-oleksandr@redhat.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -86,23 +86,20 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/scsi/qedf/qedf_debugfs.c b/drivers/scsi/qedf/qedf_debugfs.c
-index a3ed681c8ce3f..3eb4334ac6a32 100644
+index 3eb4334ac6a32..1c5716540e465 100644
 --- a/drivers/scsi/qedf/qedf_debugfs.c
 +++ b/drivers/scsi/qedf/qedf_debugfs.c
-@@ -185,18 +185,17 @@ qedf_dbg_stop_io_on_error_cmd_read(struct file *filp, char __user *buffer,
- 				   size_t count, loff_t *ppos)
+@@ -138,15 +138,14 @@ qedf_dbg_debug_cmd_read(struct file *filp, char __user *buffer, size_t count,
+ 			loff_t *ppos)
  {
  	int cnt;
-+	char cbuf[7];
++	char cbuf[32];
  	struct qedf_dbg_ctx *qedf_dbg =
  				(struct qedf_dbg_ctx *)filp->private_data;
- 	struct qedf_ctx *qedf = container_of(qedf_dbg,
- 	    struct qedf_ctx, dbg_ctx);
  
- 	QEDF_INFO(qedf_dbg, QEDF_LOG_DEBUGFS, "entered\n");
--	cnt = sprintf(buffer, "%s\n",
-+	cnt = scnprintf(cbuf, sizeof(cbuf), "%s\n",
- 	    qedf->stop_io_on_error ? "true" : "false");
+ 	QEDF_INFO(qedf_dbg, QEDF_LOG_DEBUGFS, "debug mask=0x%x\n", qedf_debug);
+-	cnt = sprintf(buffer, "debug mask = 0x%x\n", qedf_debug);
++	cnt = scnprintf(cbuf, sizeof(cbuf), "debug mask = 0x%x\n", qedf_debug);
  
 -	cnt = min_t(int, count, cnt - *ppos);
 -	*ppos += cnt;
