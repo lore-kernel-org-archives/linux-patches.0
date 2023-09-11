@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002B011706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791B8C433C8;
-	Mon, 11 Sep 2023 15:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE78011706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41632C433C9;
+	Mon, 11 Sep 2023 15:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444605;
-	bh=IOwUX6DX6gPbRLkc3sHj0FOCsJE8wHgOyN2KWdCK3UQ=;
+	s=korg; t=1694444608;
+	bh=OzrzZD42RVgeWDDW4ZyWEZ9S5DCA8VFzHIyUn+rhfeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1qckHnmUlJU/j4y+iCPFqMTJh7bBD/mv4QLmYnveNpWn0nhYq3dqbGSXGCwvj6Rz
-	 C1wDLChphpJ8YqUTfmbpRxDbMa3j8mFwvcx9VkRhDdrJT6zDgFLZs33vFaOiQqzFAo
-	 tsJbjQl7PdvGNg2epZitWXg4tFMDV7BrYK5cJk9U=
+	b=qdSfLiE25g7OtRZambYC5pJdC6wyHbXv2jaMgEv/PxFnp8Fh7N3moiuXJX+yd8rt7
+	 O7sSl68jrKcyy3CSguBU0gwp0JL9nYCN3ywEIrhdZsO6yknApFGPuxJ6zC0ocWATbW
+	 vL9rWAmWh10Mgf1NIeebJGwEfp2qYSHxkVipsEUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ben Hutchings <benh@debian.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/600] ethernet: atheros: fix return value check in atl1c_tso_csum()
-Date: Mon, 11 Sep 2023 15:40:56 +0200
-Message-ID: <20230911134634.297009164@linuxfoundation.org>
+Subject: [PATCH 6.1 024/600] m68k: Fix invalid .section syntax
+Date: Mon, 11 Sep 2023 15:40:57 +0200
+Message-ID: <20230911134634.325703454@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,40 +41,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit 8d01da0a1db237c44c92859ce3612df7af8d3a53 ]
+[ Upstream commit 922a9bd138101e3e5718f0f4d40dba68ef89bb43 ]
 
-in atl1c_tso_csum, it should check the return value of pskb_trim(),
-and return an error code if an unexpected value is returned
-by pskb_trim().
+gas supports several different forms for .section for ELF targets,
+including:
+    .section NAME [, "FLAGS"[, @TYPE[,FLAG_SPECIFIC_ARGUMENTS]]]
+and:
+    .section "NAME"[, #FLAGS...]
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+In several places we use a mix of these two forms:
+    .section NAME, #FLAGS...
+
+A current development snapshot of binutils (2.40.50.20230611) treats
+this mixed syntax as an error.
+
+Change to consistently use:
+    .section NAME, "FLAGS"
+as is used elsewhere in the kernel.
+
+Link: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=m68k&ver=6.4%7Erc6-1%7Eexp1&stamp=1686907300&raw=1
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Tested-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Link: https://lore.kernel.org/r/ZIyBaueWT9jnTwRC@decadent.org.uk
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/atl1c/atl1c_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/m68k/fpsp040/skeleton.S       | 4 ++--
+ arch/m68k/ifpsp060/os.S            | 4 ++--
+ arch/m68k/kernel/relocate_kernel.S | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index 40c781695d581..7762e532c6a4f 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -2104,8 +2104,11 @@ static int atl1c_tso_csum(struct atl1c_adapter *adapter,
- 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
- 					+ ntohs(ip_hdr(skb)->tot_len));
+diff --git a/arch/m68k/fpsp040/skeleton.S b/arch/m68k/fpsp040/skeleton.S
+index 439395aa6fb42..081922c72daaa 100644
+--- a/arch/m68k/fpsp040/skeleton.S
++++ b/arch/m68k/fpsp040/skeleton.S
+@@ -499,13 +499,13 @@ in_ea:
+ 	dbf	%d0,morein
+ 	rts
  
--			if (real_len < skb->len)
--				pskb_trim(skb, real_len);
-+			if (real_len < skb->len) {
-+				err = pskb_trim(skb, real_len);
-+				if (err)
-+					return err;
-+			}
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:
+ 	jbsr	fpsp040_die
+ 	jbra	.Lnotkern
  
- 			hdr_len = skb_tcp_all_headers(skb);
- 			if (unlikely(skb->len == hdr_len)) {
+-	.section __ex_table,#alloc
++	.section __ex_table,"a"
+ 	.align	4
+ 
+ 	.long	in_ea,1b
+diff --git a/arch/m68k/ifpsp060/os.S b/arch/m68k/ifpsp060/os.S
+index 7a0d6e4280665..89e2ec224ab6c 100644
+--- a/arch/m68k/ifpsp060/os.S
++++ b/arch/m68k/ifpsp060/os.S
+@@ -379,11 +379,11 @@ _060_real_access:
+ 
+ 
+ | Execption handling for movs access to illegal memory
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:	moveq		#-1,%d1
+ 	rts
+-.section __ex_table,#alloc
++.section __ex_table,"a"
+ 	.align 4
+ 	.long	dmrbuae,1b
+ 	.long	dmrwuae,1b
+diff --git a/arch/m68k/kernel/relocate_kernel.S b/arch/m68k/kernel/relocate_kernel.S
+index ab0f1e7d46535..f7667079e08e9 100644
+--- a/arch/m68k/kernel/relocate_kernel.S
++++ b/arch/m68k/kernel/relocate_kernel.S
+@@ -26,7 +26,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcopy),%a4
+ 2:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 2b+2
+ 	.previous
+ 
+@@ -49,7 +49,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcont040),%a4
+ 5:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 5b+2
+ 	.previous
+ 
 -- 
 2.40.1
 
