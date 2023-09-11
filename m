@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3B71170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B631C433C9;
-	Mon, 11 Sep 2023 14:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BFC1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:19:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467AAC433C7;
+	Mon, 11 Sep 2023 14:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441971;
-	bh=95obcNaR33gsGKV0eKqUxu6hgJrybVLrURpk0qdtMhM=;
+	s=korg; t=1694441974;
+	bh=+d/jcUWk6XWoDM1IVeTYd05MWBzcbMGfJi72ZMYlBxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aU6pzTvQNDzd0qLno6fjPq7uu9nVBB6eBUnAqW314nz5+G1zrE+IbeT/SMUDxbeDL
-	 tu6hCBt/a8MMRpVnmPtvWw46BiLhnalcfI177GG644ddDNLtzr3OrfoNQtdeK/yTih
-	 4pD7et6XvE0pVKKb8gUpjVLg0w3kqyBf01AqVaUQ=
+	b=ZxiPKYaATzMbN4yT+tYEmctlEiHHPa9X9QLgeSMbBKxI8u5EELj5tnVVdHxW9XqlB
+	 OJnsTDCxpg1Shc29tqcx2xAVJ/hK0zHebDDSKkhjY2XFhsITlRSLuK6BeNBOW1IEmz
+	 VIpF8P67uoyiYHI5DY4l9Aohxy60i/mGT3YscxGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 600/739] rpmsg: glink: Add check for kstrdup
-Date: Mon, 11 Sep 2023 15:46:39 +0200
-Message-ID: <20230911134707.860064863@linuxfoundation.org>
+Subject: [PATCH 6.5 601/739] leds: aw200xx: Fix error code in probe()
+Date: Mon, 11 Sep 2023 15:46:40 +0200
+Message-ID: <20230911134707.887482336@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,37 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit b5c9ee8296a3760760c7b5d2e305f91412adc795 ]
+[ Upstream commit ad5152b85e8bc7dacb1e6e237553fbe779c938e0 ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+The "ret" variable is zero/success here.  Don't return that, return
+-EINVAL instead.
 
-Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230619030631.12361-1-jiasheng@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 36a87f371b7a ("leds: Add AW20xx driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/4d791b69-01c7-4532-818c-63712d3f63e1@moroto.mountain
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/leds/leds-aw200xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 1beb40a1d3df2..e4015db99899d 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -221,6 +221,10 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
+diff --git a/drivers/leds/leds-aw200xx.c b/drivers/leds/leds-aw200xx.c
+index 96979b8e09b7d..7b996bc01c469 100644
+--- a/drivers/leds/leds-aw200xx.c
++++ b/drivers/leds/leds-aw200xx.c
+@@ -368,7 +368,7 @@ static int aw200xx_probe_fw(struct device *dev, struct aw200xx *chip)
  
- 	channel->glink = glink;
- 	channel->name = kstrdup(name, GFP_KERNEL);
-+	if (!channel->name) {
-+		kfree(channel);
-+		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	init_completion(&channel->open_req);
- 	init_completion(&channel->open_ack);
+ 	if (!chip->display_rows ||
+ 	    chip->display_rows > chip->cdef->display_size_rows_max) {
+-		return dev_err_probe(dev, ret,
++		return dev_err_probe(dev, -EINVAL,
+ 				     "Invalid leds display size %u\n",
+ 				     chip->display_rows);
+ 	}
 -- 
 2.40.1
 
