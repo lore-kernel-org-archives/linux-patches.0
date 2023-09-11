@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB8F11729
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9105FC433C8;
-	Mon, 11 Sep 2023 14:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45EA4C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B1BC433CA;
+	Mon, 11 Sep 2023 14:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442712;
-	bh=3WItYjx6EVcy3ON/hR2hdQTFgQO8S8zuOhCJaQQoGCE=;
+	s=korg; t=1694442715;
+	bh=3ShxS7cLbqyGZHxCe1yQM3PsyIHYVwhy42n2+3b8hFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeYyvWWyXS2s17R1nVOWbvE4X29TF3dB1FZrgOP3snTM85O9an/cXnFKIVLKA3D5r
-	 q4pEm1JyBxJGne38ot/4T5VQVYzLy9AkyUp8PtBOJlxZPV/bGMtB1QicbDvUMeVhz1
-	 pBiHkkBpRGskdUQ+ZrDnKF1nugO1bnpZVhk8Csdo=
+	b=KiOTo6Jtc7WU3QxPhPe5TR9hMeOx+LT3+dTIlB4MnvFR3o9A/6YbKdzB5NAkQ4YuP
+	 fSlmTJPrgu2gGfqfIoGq4+KUwTx0x1augtyr7Uc9Rt/p8LpQuGfLXQ+5Wg6z4U6E8C
+	 i40UkV9bqDTM6kCqrdeZA97VZJcFuJzARyAF6Qn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.4 095/737] Revert "PCI: tegra194: Enable support for 256 Byte payload"
-Date: Mon, 11 Sep 2023 15:39:14 +0200
-Message-ID: <20230911134653.166625790@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.4 096/737] Revert "net: macsec: preserve ingress frame ordering"
+Date: Mon, 11 Sep 2023 15:39:15 +0200
+Message-ID: <20230911134653.194041075@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,80 +33,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit ebfde1584d9f037b6309fc682c96e22dac7bcb7a upstream.
+commit d3287e4038ca4f81e02067ab72d087af7224c68b upstream.
 
-After commit 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte
-payload"), we initialize MPS=256 for tegra194 Root Ports before enumerating
-the hierarchy.
+This reverts commit ab046a5d4be4c90a3952a0eae75617b49c0cb01b.
 
-Consider an Endpoint that supports only MPS=128.  In the default situation
-(CONFIG_PCIE_BUS_DEFAULT set and no "pci=pcie_bus_*" parameter), Linux
-tries to configure the MPS of every device to match the upstream bridge.
-If the Endpoint is directly below the Root Port, Linux can reduce the Root
-Port MPS to 128 to match the Endpoint.  But if there's a switch in the
-middle, Linux doesn't reduce the Root Port MPS because other devices below
-the switch may already be configured with MPS larger than 128.
+It was trying to work around an issue at the crypto layer by excluding
+ASYNC implementations of gcm(aes), because a bug in the AESNI version
+caused reordering when some requests bypassed the cryptd queue while
+older requests were still pending on the queue.
 
-This scenario results in uncorrectable Malformed TLP errors if the Root
-Port sends TLPs with payloads larger than 128 bytes.  These errors can
-be avoided by using the "pci=pcie_bus_safe" parameter, but it doesn't
-seem to be a good idea to always have this parameter even for basic
-functionality to work.
+This was fixed by commit 38b2f68b4264 ("crypto: aesni - Fix cryptd
+reordering problem on gcm"), which pre-dates ab046a5d4be4.
 
-Revert commit 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte
-payload") so the Root Ports default to MPS=128, which all devices
-support.
+Herbert Xu confirmed that all ASYNC implementations are expected to
+maintain the ordering of completions wrt requests, so we can use them
+in MACsec.
 
-If peer-to-peer DMA is not required, one can use "pci=pcie_bus_perf" to
-get the benefit of larger MPS settings.
+On my test machine, this restores the performance of a single netperf
+instance, from 1.4Gbps to 4.4Gbps.
 
-[bhelgaas: commit log; kwilczynski: retain "u16 val_16" declaration at
-the top, add missing acked by tag]
-Fixes: 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte payload")
-Link: https://lore.kernel.org/linux-pci/20230619102604.3735001-1-vidyas@nvidia.com
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable@vger.kernel.org # v6.0-rc1+
+Link: https://lore.kernel.org/netdev/9328d206c5d9f9239cae27e62e74de40b258471d.1692279161.git.sd@queasysnail.net/T/
+Link: https://lore.kernel.org/netdev/1b0cec71-d084-8153-2ba4-72ce71abeb65@byu.edu/
+Link: https://lore.kernel.org/netdev/d335ddaa-18dc-f9f0-17ee-9783d3b2ca29@mailbox.tu-dresden.de/
+Fixes: ab046a5d4be4 ("net: macsec: preserve ingress frame ordering")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/11c952469d114db6fb29242e1d9545e61f52f512.1693757159.git.sd@queasysnail.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/net/macsec.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -883,11 +883,6 @@ static int tegra_pcie_dw_host_init(struc
- 		pcie->pcie_cap_base = dw_pcie_find_capability(&pcie->pci,
- 							      PCI_CAP_ID_EXP);
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1341,8 +1341,7 @@ static struct crypto_aead *macsec_alloc_
+ 	struct crypto_aead *tfm;
+ 	int ret;
  
--	val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
--	val_16 &= ~PCI_EXP_DEVCTL_PAYLOAD;
--	val_16 |= PCI_EXP_DEVCTL_PAYLOAD_256B;
--	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_16);
--
- 	val = dw_pcie_readl_dbi(pci, PCI_IO_BASE);
- 	val &= ~(IO_BASE_IO_DECODE | IO_BASE_IO_DECODE_BIT8);
- 	dw_pcie_writel_dbi(pci, PCI_IO_BASE, val);
-@@ -1876,11 +1871,6 @@ static void pex_ep_event_pex_rst_deasser
- 	pcie->pcie_cap_base = dw_pcie_find_capability(&pcie->pci,
- 						      PCI_CAP_ID_EXP);
+-	/* Pick a sync gcm(aes) cipher to ensure order is preserved. */
+-	tfm = crypto_alloc_aead("gcm(aes)", 0, CRYPTO_ALG_ASYNC);
++	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
  
--	val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
--	val_16 &= ~PCI_EXP_DEVCTL_PAYLOAD;
--	val_16 |= PCI_EXP_DEVCTL_PAYLOAD_256B;
--	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_16);
--
- 	/* Clear Slot Clock Configuration bit if SRNS configuration */
- 	if (pcie->enable_srns) {
- 		val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base +
+ 	if (IS_ERR(tfm))
+ 		return tfm;
 
 
