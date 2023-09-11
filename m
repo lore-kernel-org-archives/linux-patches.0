@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BEC11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D1CC433C7;
-	Mon, 11 Sep 2023 14:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC27E11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E112C433C8;
+	Mon, 11 Sep 2023 14:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444358;
-	bh=TyXKBzDPyX+1LfhuRgM5Mq5C45oByi295AR6crWR8vo=;
+	s=korg; t=1694444360;
+	bh=9Bb66hOitf0wxhWdVLtpITnoY6oDR2EnPZz7bJffL9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PqJIYQQjtuXfKJ5Z6ounnUPa/W78BeZUhIF4epXofFx5PMAHU+WuRVkAMzwSwRh5d
-	 /v5Mx6L47W2GWlS6bU6ttas/KEFuD01oEpZlQ4gKO3a0upRKfF7T4KtMrXYukmSB1r
-	 JYpmRaMgMgbto6SEbd4xqivzQPKuAmnfA/QgqCMg=
+	b=SK30ik5Li9BpswvfgOiNRYJqu/JrJe+Q4ve5Rq7SavQ8wQ27RB88JnKt5V5GNB2Yu
+	 +m68Y2aLUj2TW3rXtaaJ+Ol79D49zUNYXY3W5mAevXukm+3PfeZHBuJOEm7GhRzBl4
+	 WhtfO/yM8tX08JrUlM3SWBtXTfVtZrMXY2aB/6wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederick Lawler <fred@cloudflare.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.4 700/737] crypto: af_alg - Decrement struct key.usage in alg_set_by_key_serial()
-Date: Mon, 11 Sep 2023 15:49:19 +0200
-Message-ID: <20230911134710.077434458@linuxfoundation.org>
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.4 673/737] ALSA: hda/cirrus: Fix broken audio on hardware with two CS42L42 codecs.
+Date: Mon, 11 Sep 2023 15:48:52 +0200
+Message-ID: <20230911134709.338540805@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,46 +39,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederick Lawler <fred@cloudflare.com>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-commit 6b4b53ca0b7300ba2af98a49dbce22054bf034fe upstream.
+commit 99bf5b0baac941176a6a3d5cef7705b29808de34 upstream.
 
-Calls to lookup_user_key() require a corresponding key_put() to
-decrement the usage counter. Once it reaches zero, we schedule key GC.
-Therefore decrement struct key.usage in alg_set_by_key_serial().
+Recently in v6.3-rc1 there was a change affecting behaviour of hrtimers
+(commit 0c52310f260014d95c1310364379772cb74cf82d) and causing
+few issues on platforms with two CS42L42 codecs. Canonical/Dell
+has reported an issue with Vostro-3910.
+We need to increase this value by 15ms.
 
-Fixes: 7984ceb134bf ("crypto: af_alg - Support symmetric encryption via keyring keys")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Frederick Lawler <fred@cloudflare.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://bugs.launchpad.net/somerville/+bug/2031060
+Fixes: 9fb9fa18fb50 ("ALSA: hda/cirrus: Add extra 10 ms delay to allow PLL settle and lock.")
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230904160033.908135-1-vitalyr@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/af_alg.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_cs8409.c |    2 +-
+ sound/pci/hda/patch_cs8409.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -320,18 +320,21 @@ static int alg_setkey_by_key_serial(stru
+--- a/sound/pci/hda/patch_cs8409.c
++++ b/sound/pci/hda/patch_cs8409.c
+@@ -888,7 +888,7 @@ static void cs42l42_resume(struct sub_co
  
- 	if (IS_ERR(ret)) {
- 		up_read(&key->sem);
-+		key_put(key);
- 		return PTR_ERR(ret);
- 	}
+ 	/* Initialize CS42L42 companion codec */
+ 	cs8409_i2c_bulk_write(cs42l42, cs42l42->init_seq, cs42l42->init_seq_num);
+-	usleep_range(30000, 35000);
++	msleep(CS42L42_INIT_TIMEOUT_MS);
  
- 	key_data = sock_kmalloc(&ask->sk, key_datalen, GFP_KERNEL);
- 	if (!key_data) {
- 		up_read(&key->sem);
-+		key_put(key);
- 		return -ENOMEM;
- 	}
- 
- 	memcpy(key_data, ret, key_datalen);
- 
- 	up_read(&key->sem);
-+	key_put(key);
- 
- 	err = type->setkey(ask->private, key_data, key_datalen);
- 
+ 	/* Clear interrupts, by reading interrupt status registers */
+ 	cs8409_i2c_bulk_read(cs42l42, irq_regs, ARRAY_SIZE(irq_regs));
+--- a/sound/pci/hda/patch_cs8409.h
++++ b/sound/pci/hda/patch_cs8409.h
+@@ -229,6 +229,7 @@ enum cs8409_coefficient_index_registers
+ #define CS42L42_I2C_SLEEP_US			(2000)
+ #define CS42L42_PDN_TIMEOUT_US			(250000)
+ #define CS42L42_PDN_SLEEP_US			(2000)
++#define CS42L42_INIT_TIMEOUT_MS			(45)
+ #define CS42L42_FULL_SCALE_VOL_MASK		(2)
+ #define CS42L42_FULL_SCALE_VOL_0DB		(1)
+ #define CS42L42_FULL_SCALE_VOL_MINUS6DB		(0)
 
 
