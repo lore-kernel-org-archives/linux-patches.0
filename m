@@ -1,37 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7511706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DEBC433C7;
-	Mon, 11 Sep 2023 15:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DF411706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6B0C433C8;
+	Mon, 11 Sep 2023 15:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444439;
-	bh=1fss1qIGbUz6/f4QCzbJIglAZMPC13vLC09XPpGR9LE=;
+	s=korg; t=1694444442;
+	bh=ZV1FXQedMu6XjFkaVl/wc/dGVBosvQumBHJZGKXANIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl9U9zdEebezurzQDenRqWKhmwBejFxyKA9VF5vQiid9bHYIOtWwOKlUDoFW7catd
-	 ZDanNQrnltfasnsJ8MwJsvhFcFnms8doYrlJLYO5R0lgGVg93ElaJ1vPpZSvN/5IjV
-	 gtSpr9EnrHnO2uyKIXWyekXnoyu0tCE0DpZsixlM=
+	b=iKBDKZ4E97sQRA24DpOjb0AS5WkglXoQrDR0Xlmyxm3wWfdtk454AJgfIt3sW4PyD
+	 3+j0UuClB14sif+hFp0VnthqKGn/b1IUvVooiJJ42jaO73j+On0ZooAaa3O/eNLw+a
+	 nQwyNBJwQpRYXcD1u5Tj+oC+jkPwK55rKAcZUjIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	kernel test robot <lkp@intel.com>,
-	Jeff Xu <jeffxu@google.com>,
-	Daniel Verkamp <dverkamp@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Hugh Dickins <hughd@google.com>,
-	Jann Horn <jannh@google.com>,
-	Jorge Lucangeli Obes <jorgelo@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 730/737] mm/memfd: sysctl: fix MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED
-Date: Mon, 11 Sep 2023 15:49:49 +0200
-Message-ID: <20230911134710.901810156@linuxfoundation.org>
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	James Morse <james.morse@arm.com>,
+	Mihai Carabas <mihai.carabas@oracle.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.4 704/737] arm64: sdei: abort running SDEI handlers during crash
+Date: Mon, 11 Sep 2023 15:49:23 +0200
+Message-ID: <20230911134710.185661870@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -50,136 +41,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Xu <jeffxu@google.com>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-[ Upstream commit 72de259130229412ca49871e70ffaf17dc9fba98 ]
+commit 5cd474e57368f0957c343bb21e309cf82826b1ef upstream.
 
-Patch series "mm/memfd: fix sysctl MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED", v2.
+Interrupts are blocked in SDEI context, per the SDEI spec: "The client
+interrupts cannot preempt the event handler." If we crashed in the SDEI
+handler-running context (as with ACPI's AGDI) then we need to clean up the
+SDEI state before proceeding to the crash kernel so that the crash kernel
+can have working interrupts.
 
-When sysctl vm.memfd_noexec is 2 (MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED),
-memfd_create(.., MFD_EXEC) should fail.
+Track the active SDEI handler per-cpu so that we can COMPLETE_AND_RESUME
+the handler, discarding the interrupted context.
 
-This complies with how MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED is defined -
-"memfd_create() without MFD_NOEXEC_SEAL will be rejected"
-
-Thanks to Dominique Martinet <asmadeus@codewreck.org> who reported the bug.
-see [1] for context.
-
-[1] https://lore.kernel.org/linux-mm/CABi2SkXUX_QqTQ10Yx9bBUGpN1wByOi_=gZU6WEy5a8MaQY3Jw@mail.gmail.com/T/
-
-This patch (of 2):
-
-When vm.memfd_noexec is 2 (MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED),
-memfd_create(.., MFD_EXEC) should fail.
-
-This complies with how MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED is
-defined - "memfd_create() without MFD_NOEXEC_SEAL will be rejected"
-
-Link: https://lkml.kernel.org/r/20230705063315.3680666-1-jeffxu@google.com
-Link: https://lkml.kernel.org/r/20230705063315.3680666-2-jeffxu@google.com
-Fixes: 105ff5339f49 ("mm/memfd: add MFD_NOEXEC_SEAL and MFD_EXEC")
-Reported-by: Dominique Martinet <asmadeus@codewreck.org>
-Closes: https://lore.kernel.org/linux-mm/CABi2SkXUX_QqTQ10Yx9bBUGpN1wByOi_=gZU6WEy5a8MaQY3Jw@mail.gmail.com/T/
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306301351.kkbSegQW-lkp@intel.com/
-Signed-off-by: Jeff Xu <jeffxu@google.com>
-Cc: Daniel Verkamp <dverkamp@chromium.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jorge Lucangeli Obes <jorgelo@chromium.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 202e14222fad ("memfd: do not -EACCES old memfd_create() users with vm.memfd_noexec=2")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f5df26961853 ("arm64: kernel: Add arch-specific SDEI entry code and CPU masking")
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: James Morse <james.morse@arm.com>
+Tested-by: Mihai Carabas <mihai.carabas@oracle.com>
+Link: https://lore.kernel.org/r/20230627002939.2758-1-scott@os.amperecomputing.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memfd.c | 57 +++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 33 insertions(+), 24 deletions(-)
+ arch/arm64/include/asm/sdei.h |    6 ++++++
+ arch/arm64/kernel/entry.S     |   27 +++++++++++++++++++++++++--
+ arch/arm64/kernel/sdei.c      |    3 +++
+ arch/arm64/kernel/smp.c       |    8 ++++----
+ drivers/firmware/arm_sdei.c   |   19 +++++++++++++++++++
+ include/linux/arm_sdei.h      |    2 ++
+ 6 files changed, 59 insertions(+), 6 deletions(-)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index e763e76f11064..0bdbd2335af75 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -268,6 +268,36 @@ long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg)
+--- a/arch/arm64/include/asm/sdei.h
++++ b/arch/arm64/include/asm/sdei.h
+@@ -17,6 +17,9 @@
  
- #define MFD_ALL_FLAGS (MFD_CLOEXEC | MFD_ALLOW_SEALING | MFD_HUGETLB | MFD_NOEXEC_SEAL | MFD_EXEC)
+ #include <asm/virt.h>
  
-+static int check_sysctl_memfd_noexec(unsigned int *flags)
-+{
-+#ifdef CONFIG_SYSCTL
-+	char comm[TASK_COMM_LEN];
-+	int sysctl = MEMFD_NOEXEC_SCOPE_EXEC;
-+	struct pid_namespace *ns;
++DECLARE_PER_CPU(struct sdei_registered_event *, sdei_active_normal_event);
++DECLARE_PER_CPU(struct sdei_registered_event *, sdei_active_critical_event);
 +
-+	ns = task_active_pid_ns(current);
-+	if (ns)
-+		sysctl = ns->memfd_noexec_scope;
-+
-+	if (!(*flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
-+		if (sysctl == MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
-+			*flags |= MFD_NOEXEC_SEAL;
-+		else
-+			*flags |= MFD_EXEC;
-+	}
-+
-+	if (*flags & MFD_EXEC && sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED) {
-+		pr_warn_once(
-+			"memfd_create(): MFD_NOEXEC_SEAL is enforced, pid=%d '%s'\n",
-+			task_pid_nr(current), get_task_comm(comm, current));
-+
-+		return -EACCES;
-+	}
-+#endif
-+
-+	return 0;
-+}
-+
- SYSCALL_DEFINE2(memfd_create,
- 		const char __user *, uname,
- 		unsigned int, flags)
-@@ -294,35 +324,14 @@ SYSCALL_DEFINE2(memfd_create,
- 		return -EINVAL;
+ extern unsigned long sdei_exit_mode;
  
- 	if (!(flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
--#ifdef CONFIG_SYSCTL
--		int sysctl = MEMFD_NOEXEC_SCOPE_EXEC;
--		struct pid_namespace *ns;
--
--		ns = task_active_pid_ns(current);
--		if (ns)
--			sysctl = ns->memfd_noexec_scope;
--
--		switch (sysctl) {
--		case MEMFD_NOEXEC_SCOPE_EXEC:
--			flags |= MFD_EXEC;
--			break;
--		case MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL:
--			flags |= MFD_NOEXEC_SEAL;
--			break;
--		default:
--			pr_warn_once(
--				"memfd_create(): MFD_NOEXEC_SEAL is enforced, pid=%d '%s'\n",
--				task_pid_nr(current), get_task_comm(comm, current));
--			return -EINVAL;
--		}
--#else
--		flags |= MFD_EXEC;
+ /* Software Delegated Exception entry point from firmware*/
+@@ -29,6 +32,9 @@ asmlinkage void __sdei_asm_entry_trampol
+ 						   unsigned long pc,
+ 						   unsigned long pstate);
+ 
++/* Abort a running handler. Context is discarded. */
++void __sdei_handler_abort(void);
++
+ /*
+  * The above entry point does the minimum to call C code. This function does
+  * anything else, before calling the driver.
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -1003,9 +1003,13 @@ SYM_CODE_START(__sdei_asm_handler)
+ 
+ 	mov	x19, x1
+ 
+-#if defined(CONFIG_VMAP_STACK) || defined(CONFIG_SHADOW_CALL_STACK)
++	/* Store the registered-event for crash_smp_send_stop() */
+ 	ldrb	w4, [x19, #SDEI_EVENT_PRIORITY]
 -#endif
- 		pr_warn_once(
- 			"memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL, pid=%d '%s'\n",
- 			task_pid_nr(current), get_task_comm(comm, current));
- 	}
++	cbnz	w4, 1f
++	adr_this_cpu dst=x5, sym=sdei_active_normal_event, tmp=x6
++	b	2f
++1:	adr_this_cpu dst=x5, sym=sdei_active_critical_event, tmp=x6
++2:	str	x19, [x5]
  
-+	if (check_sysctl_memfd_noexec(&flags) < 0)
-+		return -EACCES;
+ #ifdef CONFIG_VMAP_STACK
+ 	/*
+@@ -1072,6 +1076,14 @@ SYM_CODE_START(__sdei_asm_handler)
+ 
+ 	ldr_l	x2, sdei_exit_mode
+ 
++	/* Clear the registered-event seen by crash_smp_send_stop() */
++	ldrb	w3, [x4, #SDEI_EVENT_PRIORITY]
++	cbnz	w3, 1f
++	adr_this_cpu dst=x5, sym=sdei_active_normal_event, tmp=x6
++	b	2f
++1:	adr_this_cpu dst=x5, sym=sdei_active_critical_event, tmp=x6
++2:	str	xzr, [x5]
 +
- 	/* length includes terminating zero */
- 	len = strnlen_user(uname, MFD_NAME_MAX_LEN + 1);
- 	if (len <= 0)
--- 
-2.40.1
-
+ alternative_if_not ARM64_UNMAP_KERNEL_AT_EL0
+ 	sdei_handler_exit exit_mode=x2
+ alternative_else_nop_endif
+@@ -1082,4 +1094,15 @@ alternative_else_nop_endif
+ #endif
+ SYM_CODE_END(__sdei_asm_handler)
+ NOKPROBE(__sdei_asm_handler)
++
++SYM_CODE_START(__sdei_handler_abort)
++	mov_q	x0, SDEI_1_0_FN_SDEI_EVENT_COMPLETE_AND_RESUME
++	adr	x1, 1f
++	ldr_l	x2, sdei_exit_mode
++	sdei_handler_exit exit_mode=x2
++	// exit the handler and jump to the next instruction.
++	// Exit will stomp x0-x17, PSTATE, ELR_ELx, and SPSR_ELx.
++1:	ret
++SYM_CODE_END(__sdei_handler_abort)
++NOKPROBE(__sdei_handler_abort)
+ #endif /* CONFIG_ARM_SDE_INTERFACE */
+--- a/arch/arm64/kernel/sdei.c
++++ b/arch/arm64/kernel/sdei.c
+@@ -47,6 +47,9 @@ DEFINE_PER_CPU(unsigned long *, sdei_sha
+ DEFINE_PER_CPU(unsigned long *, sdei_shadow_call_stack_critical_ptr);
+ #endif
+ 
++DEFINE_PER_CPU(struct sdei_registered_event *, sdei_active_normal_event);
++DEFINE_PER_CPU(struct sdei_registered_event *, sdei_active_critical_event);
++
+ static void _free_sdei_stack(unsigned long * __percpu *ptr, int cpu)
+ {
+ 	unsigned long *p;
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -1048,10 +1048,8 @@ void crash_smp_send_stop(void)
+ 	 * If this cpu is the only one alive at this point in time, online or
+ 	 * not, there are no stop messages to be sent around, so just back out.
+ 	 */
+-	if (num_other_online_cpus() == 0) {
+-		sdei_mask_local_cpu();
+-		return;
+-	}
++	if (num_other_online_cpus() == 0)
++		goto skip_ipi;
+ 
+ 	cpumask_copy(&mask, cpu_online_mask);
+ 	cpumask_clear_cpu(smp_processor_id(), &mask);
+@@ -1070,7 +1068,9 @@ void crash_smp_send_stop(void)
+ 		pr_warn("SMP: failed to stop secondary CPUs %*pbl\n",
+ 			cpumask_pr_args(&mask));
+ 
++skip_ipi:
+ 	sdei_mask_local_cpu();
++	sdei_handler_abort();
+ }
+ 
+ bool smp_crash_stop_failed(void)
+--- a/drivers/firmware/arm_sdei.c
++++ b/drivers/firmware/arm_sdei.c
+@@ -1095,3 +1095,22 @@ int sdei_event_handler(struct pt_regs *r
+ 	return err;
+ }
+ NOKPROBE_SYMBOL(sdei_event_handler);
++
++void sdei_handler_abort(void)
++{
++	/*
++	 * If the crash happened in an SDEI event handler then we need to
++	 * finish the handler with the firmware so that we can have working
++	 * interrupts in the crash kernel.
++	 */
++	if (__this_cpu_read(sdei_active_critical_event)) {
++	        pr_warn("still in SDEI critical event context, attempting to finish handler.\n");
++	        __sdei_handler_abort();
++	        __this_cpu_write(sdei_active_critical_event, NULL);
++	}
++	if (__this_cpu_read(sdei_active_normal_event)) {
++	        pr_warn("still in SDEI normal event context, attempting to finish handler.\n");
++	        __sdei_handler_abort();
++	        __this_cpu_write(sdei_active_normal_event, NULL);
++	}
++}
+--- a/include/linux/arm_sdei.h
++++ b/include/linux/arm_sdei.h
+@@ -47,10 +47,12 @@ int sdei_unregister_ghes(struct ghes *gh
+ int sdei_mask_local_cpu(void);
+ int sdei_unmask_local_cpu(void);
+ void __init sdei_init(void);
++void sdei_handler_abort(void);
+ #else
+ static inline int sdei_mask_local_cpu(void) { return 0; }
+ static inline int sdei_unmask_local_cpu(void) { return 0; }
+ static inline void sdei_init(void) { }
++static inline void sdei_handler_abort(void) { }
+ #endif /* CONFIG_ARM_SDE_INTERFACE */
+ 
+ 
 
 
