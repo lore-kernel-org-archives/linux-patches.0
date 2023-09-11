@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BC01170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50B0C433C8;
-	Mon, 11 Sep 2023 13:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426661170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB15C433C7;
+	Mon, 11 Sep 2023 13:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440735;
-	bh=5avGPtb9klhTJQ9DsdyIMPMZw2tvtNPSWpcwxvYA6Us=;
+	s=korg; t=1694440738;
+	bh=ugYk4hXk/ZFHMfuxMjHI+dO5Af9uyP12TN/BLKBXAqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Me1Es0xwcsC7jG8hsuDGmnc9RLYQI6TP4zHdnqWUhRsdcVs+BQ2l/DaC+/SuWXWSm
-	 QlnY5QaRlMTgfhbvKagHCqR+25h+zVJHKs7fvCaVh+Mk7v/DAncAmK+VAC6QOubgXr
-	 g5iFRFxVn0sYquxxRktFoX4PcJ0fFMXuP8Y8zNLk=
+	b=I/LjOiLuAyW56yA+YTCl8p28WwqpbrvA/u56udHBaU7q+qtMaLtZcDZm4hnr0QKoh
+	 qVs2cul8akuAvulhwRCrmKdxEbeQmLRBhwzS/H8rVt0S38MUuHtJ0JJjtj1V5M8XRk
+	 QA0Y0D/O5+jjlttnzw4g4SEmDfavXhe9CcxD42YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.5 140/739] ice: ice_aq_check_events: fix off-by-one check when filling buffer
-Date: Mon, 11 Sep 2023 15:38:59 +0200
-Message-ID: <20230911134655.016936854@linuxfoundation.org>
+	Gaurav Jain <gaurav.jain@nxp.com>,
+	Meenakshi Aggarwal <meenakshi.aggarwal@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 141/739] crypto: caam - fix unchecked return value error
+Date: Mon, 11 Sep 2023 15:39:00 +0200
+Message-ID: <20230911134655.051476171@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,58 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+From: Gaurav Jain <gaurav.jain@nxp.com>
 
-[ Upstream commit e1e8a142c43336e3d25bfa1cb3a4ae7d00875c48 ]
+[ Upstream commit e30685204711a6be40dec2622606950ccd37dafe ]
 
-Allow task's event buffer to be filled also in the case that it's size
-is exactly the size of the message.
+error:
+Unchecked return value (CHECKED_RETURN)
+check_return: Calling sg_miter_next without checking return value
 
-Fixes: d69ea414c9b4 ("ice: implement device flash update via devlink")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+fix:
+added check if(!sg_miter_next)
+
+Fixes: 8a2a0dd35f2e ("crypto: caam - strip input zeros from RSA input buffer")
+Signed-off-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Meenakshi Aggarwal <meenakshi.aggarwal@nxp.com>
+Reviewed-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/crypto/caam/caampkc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index b40dfe6ae3217..c2cdc79308dc1 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -1346,6 +1346,7 @@ int ice_aq_wait_for_event(struct ice_pf *pf, u16 opcode, unsigned long timeout,
- static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
- 				struct ice_rq_event_info *event)
- {
-+	struct ice_rq_event_info *task_ev;
- 	struct ice_aq_task *task;
- 	bool found = false;
+diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
+index 72afc249d42fb..7e08af751e4ea 100644
+--- a/drivers/crypto/caam/caampkc.c
++++ b/drivers/crypto/caam/caampkc.c
+@@ -225,7 +225,9 @@ static int caam_rsa_count_leading_zeros(struct scatterlist *sgl,
+ 		if (len && *buff)
+ 			break;
  
-@@ -1354,15 +1355,15 @@ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
- 		if (task->state || task->opcode != opcode)
- 			continue;
+-		sg_miter_next(&miter);
++		if (!sg_miter_next(&miter))
++			break;
++
+ 		buff = miter.addr;
+ 		len = miter.length;
  
--		memcpy(&task->event->desc, &event->desc, sizeof(event->desc));
--		task->event->msg_len = event->msg_len;
-+		task_ev = task->event;
-+		memcpy(&task_ev->desc, &event->desc, sizeof(event->desc));
-+		task_ev->msg_len = event->msg_len;
- 
- 		/* Only copy the data buffer if a destination was set */
--		if (task->event->msg_buf &&
--		    task->event->buf_len > event->buf_len) {
--			memcpy(task->event->msg_buf, event->msg_buf,
-+		if (task_ev->msg_buf && task_ev->buf_len >= event->buf_len) {
-+			memcpy(task_ev->msg_buf, event->msg_buf,
- 			       event->buf_len);
--			task->event->buf_len = event->buf_len;
-+			task_ev->buf_len = event->buf_len;
- 		}
- 
- 		task->state = ICE_AQ_TASK_COMPLETE;
 -- 
 2.40.1
 
