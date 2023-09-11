@@ -1,236 +1,102 @@
-Received: from vps.xff.cz (vps.xff.cz [195.181.215.36])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280611172B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:56:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xff.cz; s=mail;
-	t=1694447371; bh=LYI/5atAF0JSa1mHt9bwuHQXtG/R6iV+GdNNrijftlg=;
-	h=Date:From:To:Cc:Subject:X-My-GPG-KeyId:References:From;
-	b=yF78+/pYBghOE7Jaa3iosLX2Ef+0glDuGEpNcvCCM11ygv7U3eUiDjplx5BqUAQLr
-	 c8AJcpyZsSszhTCNz5Rx6Y3u8dWUECO3lr1ZA/uPpe4jiP46kfSpBJBBdKTlmIDMTP
-	 mb+uKPv7GYF03UIysYYijujtE+JRbXTtbjaOqiQY=
-Date: Mon, 11 Sep 2023 17:49:30 +0200
-From: =?utf-8?Q?Ond=C5=99ej?= Jirman <megi@xff.cz>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Sam Ravnborg <sam@ravnborg.org>, Robert Foss <rfoss@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 213/600] drm: bridge: dw-mipi-dsi: Fix enable/disable
- of DSI controller
-Message-ID: <6xoqdk4sttjv5pskf67r5gc24ttsuspb6bnip5o35xcfmdtilp@72qguymwyt7y>
-X-My-GPG-KeyId: EBFBDDE11FB918D44D1F56C1F9F0A873BE9777ED
- <https://xff.cz/key.txt>
-References: <20230911134633.619970489@linuxfoundation.org>
- <20230911134639.905252752@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3429C154AE
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 19:39:40 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-273d10d3df3so2972579a91.3
+        for <patches@lists.linux.dev>; Mon, 11 Sep 2023 12:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1694461180; x=1695065980; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U3kmuOgV1MqL70eyPKBwPx+gEeRsYvUgeQvC+nXxSq0=;
+        b=FMlg+XHo1Ua/SOe1Mf7JCqAg9msZEg0u+M3Zr4LHB9TbgpAcvbC7nSJSNhmEwb9R9w
+         CKrAUihGFlA0ILbaTOwg9OL9mB+ny4PS+PL1Xjtlc+XYLGBPxlQQn4P+pL+/6oZjbCp0
+         DFbDiUmj0nFoh3zTyv+SVLOnCVDsaN3p+J/G4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694461180; x=1695065980;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U3kmuOgV1MqL70eyPKBwPx+gEeRsYvUgeQvC+nXxSq0=;
+        b=QayBndT5qZPLhHSsYXplH5DzUMWz2ez3ANCXnvEuah5L/RIYA/hktAc3aJCgV7gD/t
+         WSQ3KW/tbjk+NeWnkJa3O4HlKPUR1LQTSXHFz5iYsY2IjbTehngwXRaiyiWWy8lrRuO9
+         4b64v5XAJ3owgYI07Kq5y7JNhtF7VLfRrvhqtnTu6kEuGf4qvTh7EjtkldXdhAPww8bZ
+         wQkt7mFg0I5hixZnuZfjZcw1T1IVtrmM3gYOO5k1xCz1xdT7L0Qc4GllXjpt4J1dSPxP
+         +cjYX2kQZoNwh4No8l6BF9QizIMlUrnMRF9HFFIX78ovDsl24ju3w3U4rb/Gt7EpLO8T
+         lgdw==
+X-Gm-Message-State: AOJu0Ywo4xIzyroNq4kKBFT2NguNJyHB0EGzlNW742SFEw5nJMoAU4qA
+	+RUWmCAPDBhf/G1OYbll6BZkCg==
+X-Google-Smtp-Source: AGHT+IE1KCz2PPBtztjQa6r5F5mW8DpeJaFNItpLjTVRsOtt8Oshgk1XrqynXDOck4L9xWpjZ39/nw==
+X-Received: by 2002:a17:90a:7003:b0:273:fa72:ba83 with SMTP id f3-20020a17090a700300b00273fa72ba83mr4056419pjk.47.1694461180415;
+        Mon, 11 Sep 2023 12:39:40 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:d487:5e33:6656:3711])
+        by smtp.gmail.com with ESMTPSA id fu8-20020a17090ad18800b00262e485156esm7736543pjb.57.2023.09.11.12.39.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 12:39:39 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Gross <markgross@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	platform-driver-x86@vger.kernel.org,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>
+Subject: [PATCH v3 0/4] platform/x86: intel_scu_ipc: Timeout fixes
+Date: Mon, 11 Sep 2023 12:39:32 -0700
+Message-ID: <20230911193937.302552-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230911134639.905252752@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 11, 2023 at 03:44:06PM +0200, Greg Kroah-Hartman wrote:
-> 
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
+I recently looked at some crash reports on ChromeOS devices that call
+into this intel_scu_ipc driver. They were hitting timeouts, and it
+certainly looks possible for those timeouts to be triggering because of
+scheduling issues. Once things started going south, the timeouts kept
+coming. Maybe that's because the other side got seriously confused? I
+don't know.
 
-See patch message comment:
+I added some sleeps to these paths to trigger the timeout behavior to
+make sure the code works. Simply sleeping for a long time in busy_loop()
+hits the timeout, which could happen if the system is scheduling lots of
+other things at the time.
 
-       (But depends on functionality intorduced in Linux 6.3, so this patch will
-        not build on older kernels when applied to older stable branches.)
+I couldn't really test the third patch because forcing a timeout or
+returning immediately wasn't fast enough to trigger the second
+transaction to run into the first one being processed.
 
-kind regards,
-	o.
+Changes from v2 (https://lore.kernel.org/r/20230906180944.2197111-1-swboyd@chromium.org):
+ * Use read_poll_timeout() helper in patch #1 (again)
+ * New patch #3 to fix bug pointed out by Andy
+ * Consolidate more code into busy check in patch #4
 
-> ------------------
-> 
-> From: Ondrej Jirman <megi@xff.cz>
-> 
-> [ Upstream commit 05aa61334592adb230749ff465b103ee10e63936 ]
-> 
-> Before this patch, booting to Linux VT and doing a simple:
-> 
->   echo 2 > /sys/class/graphics/fb0/blank
->   echo 0 > /sys/class/graphics/fb0/blank
-> 
-> would result in failures to re-enable the panel. Mode set callback is
-> called only once during boot in this scenario, while calls to
-> enable/disable callbacks are balanced afterwards. The driver doesn't
-> work unless userspace calls modeset before enabling the CRTC/connector.
-> 
-> This patch moves enabling of the DSI host from mode_set into pre_enable
-> callback, and removes some old hacks where this bridge driver is
-> directly calling into other bridge driver's callbacks.
-> 
-> pre_enable_prev_first flag is set on the panel's bridge so that panel
-> drivers will get their prepare function called between DSI host's
-> pre_enable and enable callbacks, so that they get a chance to
-> perform panel setup while DSI host is already enabled in command
-> mode. Otherwise panel's prepare would be called before DSI host
-> is enabled, and any DSI communication used in prepare callback
-> would fail.
-> 
-> With all these changes, the enable/disable sequence is now well
-> balanced, and host's and panel's callbacks are called in proper order
-> documented in the drm_panel API documentation without needing the old
-> hacks. (Mainly that panel->prepare is called when DSI host is ready to
-> allow the panel driver to send DSI commands and vice versa during
-> disable.)
-> 
-> Tested on Pinephone Pro. Trace of the callbacks follows.
-> 
-> Before:
-> 
-> [    1.253882] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
-> [    1.290732] panel-himax-hx8394 ff960000.dsi.0: prepare
-> [    1.475576] dw-mipi-dsi-rockchip ff960000.dsi: enable
-> [    1.475593] panel-himax-hx8394 ff960000.dsi.0: enable
-> 
-> echo 2 > /sys/class/graphics/fb0/blank
-> 
-> [   13.722799] panel-himax-hx8394 ff960000.dsi.0: disable
-> [   13.774502] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
-> [   13.774526] panel-himax-hx8394 ff960000.dsi.0: unprepare
-> 
-> echo 0 > /sys/class/graphics/fb0/blank
-> 
-> [   17.735796] panel-himax-hx8394 ff960000.dsi.0: prepare
-> [   17.923522] dw-mipi-dsi-rockchip ff960000.dsi: enable
-> [   17.923540] panel-himax-hx8394 ff960000.dsi.0: enable
-> [   17.944330] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
-> [   17.944335] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
-> [   17.944340] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
-> 
-> echo 2 > /sys/class/graphics/fb0/blank
-> 
-> [  431.148583] panel-himax-hx8394 ff960000.dsi.0: disable
-> [  431.169259] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
-> [  431.169268] panel-himax-hx8394 ff960000.dsi.0: Failed to enter sleep mode: -110
-> [  431.169282] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
-> [  431.169316] panel-himax-hx8394 ff960000.dsi.0: unprepare
-> [  431.169357] pclk_mipi_dsi0 already disabled
-> 
-> echo 0 > /sys/class/graphics/fb0/blank
-> 
-> [  432.796851] panel-himax-hx8394 ff960000.dsi.0: prepare
-> [  432.981537] dw-mipi-dsi-rockchip ff960000.dsi: enable
-> [  432.981568] panel-himax-hx8394 ff960000.dsi.0: enable
-> [  433.002290] dw-mipi-dsi-rockchip ff960000.dsi: failed to write command FIFO
-> [  433.002299] panel-himax-hx8394 ff960000.dsi.0: sending command 0xb9 failed: -110
-> [  433.002312] panel-himax-hx8394 ff960000.dsi.0: Panel init sequence failed: -110
-> 
-> -----------------------------------------------------------------------
-> 
-> After:
-> 
-> [    1.248372] dw-mipi-dsi-rockchip ff960000.dsi: mode_set
-> [    1.248704] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
-> [    1.285377] panel-himax-hx8394 ff960000.dsi.0: prepare
-> [    1.468392] dw-mipi-dsi-rockchip ff960000.dsi: enable
-> [    1.468421] panel-himax-hx8394 ff960000.dsi.0: enable
-> 
-> echo 2 > /sys/class/graphics/fb0/blank
-> 
-> [   16.210357] panel-himax-hx8394 ff960000.dsi.0: disable
-> [   16.261315] dw-mipi-dsi-rockchip ff960000.dsi: post_disable
-> [   16.261339] panel-himax-hx8394 ff960000.dsi.0: unprepare
-> 
-> echo 0 > /sys/class/graphics/fb0/blank
-> 
-> [   19.161453] dw-mipi-dsi-rockchip ff960000.dsi: pre_enable
-> [   19.197869] panel-himax-hx8394 ff960000.dsi.0: prepare
-> [   19.382141] dw-mipi-dsi-rockchip ff960000.dsi: enable
-> [   19.382158] panel-himax-hx8394 ff960000.dsi.0: enable
-> 
->        (But depends on functionality intorduced in Linux 6.3, so this patch will
->         not build on older kernels when applied to older stable branches.)
-> 
-> Fixes: 46fc51546d44 ("drm/bridge/synopsys: Add MIPI DSI host controller bridge")
-> Signed-off-by: Ondrej Jirman <megi@xff.cz>
-> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-> Signed-off-by: Robert Foss <rfoss@kernel.org>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20230617224915.1923630-1-megi@xff.cz
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 28 +++++++++++--------
->  1 file changed, 16 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-> index b2efecf7d1603..4291798bd70f5 100644
-> --- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-> +++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-> @@ -265,6 +265,7 @@ struct dw_mipi_dsi {
->  	struct dw_mipi_dsi *master; /* dual-dsi master ptr */
->  	struct dw_mipi_dsi *slave; /* dual-dsi slave ptr */
->  
-> +	struct drm_display_mode mode;
->  	const struct dw_mipi_dsi_plat_data *plat_data;
->  };
->  
-> @@ -332,6 +333,7 @@ static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
->  	if (IS_ERR(bridge))
->  		return PTR_ERR(bridge);
->  
-> +	bridge->pre_enable_prev_first = true;
->  	dsi->panel_bridge = bridge;
->  
->  	drm_bridge_add(&dsi->bridge);
-> @@ -859,15 +861,6 @@ static void dw_mipi_dsi_bridge_post_atomic_disable(struct drm_bridge *bridge,
->  	 */
->  	dw_mipi_dsi_set_mode(dsi, 0);
->  
-> -	/*
-> -	 * TODO Only way found to call panel-bridge post_disable &
-> -	 * panel unprepare before the dsi "final" disable...
-> -	 * This needs to be fixed in the drm_bridge framework and the API
-> -	 * needs to be updated to manage our own call chains...
-> -	 */
-> -	if (dsi->panel_bridge->funcs->post_disable)
-> -		dsi->panel_bridge->funcs->post_disable(dsi->panel_bridge);
-> -
->  	if (phy_ops->power_off)
->  		phy_ops->power_off(dsi->plat_data->priv_data);
->  
-> @@ -942,15 +935,25 @@ static void dw_mipi_dsi_mode_set(struct dw_mipi_dsi *dsi,
->  		phy_ops->power_on(dsi->plat_data->priv_data);
->  }
->  
-> +static void dw_mipi_dsi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
-> +						 struct drm_bridge_state *old_bridge_state)
-> +{
-> +	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
-> +
-> +	/* Power up the dsi ctl into a command mode */
-> +	dw_mipi_dsi_mode_set(dsi, &dsi->mode);
-> +	if (dsi->slave)
-> +		dw_mipi_dsi_mode_set(dsi->slave, &dsi->mode);
-> +}
-> +
->  static void dw_mipi_dsi_bridge_mode_set(struct drm_bridge *bridge,
->  					const struct drm_display_mode *mode,
->  					const struct drm_display_mode *adjusted_mode)
->  {
->  	struct dw_mipi_dsi *dsi = bridge_to_dsi(bridge);
->  
-> -	dw_mipi_dsi_mode_set(dsi, adjusted_mode);
-> -	if (dsi->slave)
-> -		dw_mipi_dsi_mode_set(dsi->slave, adjusted_mode);
-> +	/* Store the display mode for later use in pre_enable callback */
-> +	drm_mode_copy(&dsi->mode, adjusted_mode);
->  }
->  
->  static void dw_mipi_dsi_bridge_atomic_enable(struct drm_bridge *bridge,
-> @@ -1004,6 +1007,7 @@ static const struct drm_bridge_funcs dw_mipi_dsi_bridge_funcs = {
->  	.atomic_duplicate_state	= drm_atomic_helper_bridge_duplicate_state,
->  	.atomic_destroy_state	= drm_atomic_helper_bridge_destroy_state,
->  	.atomic_reset		= drm_atomic_helper_bridge_reset,
-> +	.atomic_pre_enable	= dw_mipi_dsi_bridge_atomic_pre_enable,
->  	.atomic_enable		= dw_mipi_dsi_bridge_atomic_enable,
->  	.atomic_post_disable	= dw_mipi_dsi_bridge_post_atomic_disable,
->  	.mode_set		= dw_mipi_dsi_bridge_mode_set,
-> -- 
-> 2.40.1
-> 
-> 
-> 
+Changes from v1 (https://lore.kernel.org/r/20230831011405.3246849-1-swboyd@chromium.org):
+ * Don't use read_poll_timeout() helper in patch 1, just add code
+ * Rewrite patch 2 to be simpler
+ * Make intel_scu_ipc_busy() return -EBUSY when busy
+ * Downgrade dev_err() to dev_dbg() in intel_scu_ipc_busy()
+
+Stephen Boyd (4):
+  platform/x86: intel_scu_ipc: Check status after timeout in busy_loop()
+  platform/x86: intel_scu_ipc: Check status upon timeout in
+    ipc_wait_for_interrupt()
+  platform/x86: intel_scu_ipc: Don't override scu in
+    intel_scu_ipc_dev_simple_command()
+  platform/x86: intel_scu_ipc: Fail IPC send if still busy
+
+ drivers/platform/x86/intel_scu_ipc.c | 66 +++++++++++++++++-----------
+ 1 file changed, 40 insertions(+), 26 deletions(-)
+
+Cc: Prashant Malani <pmalani@chromium.org>
+
+base-commit: 2dde18cd1d8fac735875f2e4987f11817cc0bc2c
+-- 
+https://chromeos.dev
+
