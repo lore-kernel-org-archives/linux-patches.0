@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC00B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC83C433C9;
-	Mon, 11 Sep 2023 13:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC191170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38393C433C8;
+	Mon, 11 Sep 2023 13:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440698;
-	bh=wFz8VkyA+LhA40IUrwxxMX8GkqpRUT5A76CmuDfDnmg=;
+	s=korg; t=1694440701;
+	bh=22fv3Pl/WZ+PWAgQIir+5gj3nChaUOexSNFxilvmlJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuycfLjaYkxFKFJvdjGaDVI2yvnq6K8werH9NmUsirv5wksdEd/TTB0tHITLo5/m+
-	 SiX9/Lot8v7T9+o6zrq0IaYUIZ5eRKEL9Q3FoTsQ9skgw20w7zLpKXAr1s2uYiJ8zT
-	 eGVIAkACZKotWJJdECl4CTwGUCTCghTf0gJOD0mg=
+	b=ewOtsD/VTO5/yj7zGhQ9UruVuRkd9UX8wbSnzqwgazSWg89KYFRXJNSE6dIdA7FHz
+	 VRiSMYDKmkccviy3EbE0C/OlHvxH4fuoCBcZgySJBq3mAZwP7X2kmQouIMLbf+nAFW
+	 JiM0sR4fu4zSVlLZElE2gzFTa7Bw7lAR0Au04HmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 154/739] net: lan966x: Fix return value check for vcap_get_rule()
-Date: Mon, 11 Sep 2023 15:39:13 +0200
-Message-ID: <20230911134655.444407013@linuxfoundation.org>
+Subject: [PATCH 6.5 137/739] net: hns3: Support tlv in regs data for HNS3 PF driver
+Date: Mon, 11 Sep 2023 15:38:56 +0200
+Message-ID: <20230911134654.924850834@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -36,52 +35,346 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit ab104318f63997113b0ce7ac288e51359925ed79 ]
+[ Upstream commit d8634b7c3f62d265fc2ecf29286aa9c5b78f969f ]
 
-As Simon Horman suggests, update vcap_get_rule() to always
-return an ERR_PTR() and update the error detection conditions to
-use IS_ERR(), so use IS_ERR() to fix the return value issue.
+The dump register function is being refactored.
+The second step in refactoring is to support tlv info in regs data for
+HNS3 PF driver.
 
-Fixes: 72df3489fb10 ("net: lan966x: Add ptp trap rules")
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Suggested-by: Simon Horman <horms@kernel.org>
+Currently, if we use "ethtool -d" to dump regs value,
+the output is as follows:
+  offset1: 00 01 02 03 04 05 ...
+  offset2：10 11 12 13 14 15 ...
+  ......
+
+We can't get the value of a register directly.
+
+This patch deletes the original separator information and
+add tag_len_value information in regs data.
+ethtool can parse register data in key-value format by -d command.
+
+a patch will be added to the ethtool to parse regs data
+in the following format:
+  reg1 : value2
+  reg2 : value2
+  ......
+
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 36122201eeae ("net: hns3: fix wrong rpu tln reg issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../hisilicon/hns3/hns3pf/hclge_regs.c        | 167 +++++++++++-------
+ 1 file changed, 102 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index 266a21a2d1246..1da2b1f82ae93 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -59,7 +59,7 @@ static int lan966x_ptp_add_trap(struct lan966x_port *port,
- 	int err;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c
+index e566443948756..734e5f757b9c5 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_regs.c
+@@ -106,12 +106,66 @@ static const enum hclge_opcode_type hclge_dfx_reg_opcode_list[] = {
+ 	HCLGE_OPC_DFX_SSU_REG_2
+ };
  
- 	vrule = vcap_get_rule(lan966x->vcap_ctrl, rule_id);
--	if (vrule) {
-+	if (!IS_ERR(vrule)) {
- 		u32 value, mask;
+-#define MAX_SEPARATE_NUM	4
+-#define SEPARATOR_VALUE		0xFDFCFBFA
+-#define REG_NUM_PER_LINE	4
+-#define REG_LEN_PER_LINE	(REG_NUM_PER_LINE * sizeof(u32))
+-#define REG_SEPARATOR_LINE	1
+-#define REG_NUM_REMAIN_MASK	3
++enum hclge_reg_tag {
++	HCLGE_REG_TAG_CMDQ = 0,
++	HCLGE_REG_TAG_COMMON,
++	HCLGE_REG_TAG_RING,
++	HCLGE_REG_TAG_TQP_INTR,
++	HCLGE_REG_TAG_QUERY_32_BIT,
++	HCLGE_REG_TAG_QUERY_64_BIT,
++	HCLGE_REG_TAG_DFX_BIOS_COMMON,
++	HCLGE_REG_TAG_DFX_SSU_0,
++	HCLGE_REG_TAG_DFX_SSU_1,
++	HCLGE_REG_TAG_DFX_IGU_EGU,
++	HCLGE_REG_TAG_DFX_RPU_0,
++	HCLGE_REG_TAG_DFX_RPU_1,
++	HCLGE_REG_TAG_DFX_NCSI,
++	HCLGE_REG_TAG_DFX_RTC,
++	HCLGE_REG_TAG_DFX_PPP,
++	HCLGE_REG_TAG_DFX_RCB,
++	HCLGE_REG_TAG_DFX_TQP,
++	HCLGE_REG_TAG_DFX_SSU_2,
++};
++
++#pragma pack(4)
++struct hclge_reg_tlv {
++	u16 tag;
++	u16 len;
++};
++
++struct hclge_reg_header {
++	u64 magic_number;
++	u8 is_vf;
++	u8 rsv[7];
++};
++
++#pragma pack()
++
++#define HCLGE_REG_TLV_SIZE	sizeof(struct hclge_reg_tlv)
++#define HCLGE_REG_HEADER_SIZE	sizeof(struct hclge_reg_header)
++#define HCLGE_REG_TLV_SPACE	(sizeof(struct hclge_reg_tlv) / sizeof(u32))
++#define HCLGE_REG_HEADER_SPACE	(sizeof(struct hclge_reg_header) / sizeof(u32))
++#define HCLGE_REG_MAGIC_NUMBER	0x686e733372656773 /* meaning is hns3regs */
++
++static u32 hclge_reg_get_header(void *data)
++{
++	struct hclge_reg_header *header = data;
++
++	header->magic_number = HCLGE_REG_MAGIC_NUMBER;
++	header->is_vf = 0x0;
++
++	return HCLGE_REG_HEADER_SPACE;
++}
++
++static u32 hclge_reg_get_tlv(u32 tag, u32 regs_num, void *data)
++{
++	struct hclge_reg_tlv *tlv = data;
++
++	tlv->tag = tag;
++	tlv->len = regs_num * sizeof(u32) + HCLGE_REG_TLV_SIZE;
++
++	return HCLGE_REG_TLV_SPACE;
++}
  
- 		/* Just modify the ingress port mask and exit */
-@@ -106,7 +106,7 @@ static int lan966x_ptp_del_trap(struct lan966x_port *port,
- 	int err;
+ static int hclge_get_32_bit_regs(struct hclge_dev *hdev, u32 regs_num,
+ 				 void *data)
+@@ -291,31 +345,28 @@ static int hclge_dfx_reg_cmd_send(struct hclge_dev *hdev,
+ static int hclge_dfx_reg_fetch_data(struct hclge_desc *desc_src, int bd_num,
+ 				    void *data)
+ {
+-	int entries_per_desc, reg_num, separator_num, desc_index, index, i;
++	int entries_per_desc, reg_num, desc_index, index, i;
+ 	struct hclge_desc *desc = desc_src;
+ 	u32 *reg = data;
  
- 	vrule = vcap_get_rule(lan966x->vcap_ctrl, rule_id);
--	if (!vrule)
-+	if (IS_ERR(vrule))
- 		return -EEXIST;
+ 	entries_per_desc = ARRAY_SIZE(desc->data);
+ 	reg_num = entries_per_desc * bd_num;
+-	separator_num = REG_NUM_PER_LINE - (reg_num & REG_NUM_REMAIN_MASK);
+ 	for (i = 0; i < reg_num; i++) {
+ 		index = i % entries_per_desc;
+ 		desc_index = i / entries_per_desc;
+ 		*reg++ = le32_to_cpu(desc[desc_index].data[index]);
+ 	}
+-	for (i = 0; i < separator_num; i++)
+-		*reg++ = SEPARATOR_VALUE;
  
- 	vcap_rule_get_key_u32(vrule, VCAP_KF_IF_IGR_PORT_MASK, &value, &mask);
+-	return reg_num + separator_num;
++	return reg_num;
+ }
+ 
+ static int hclge_get_dfx_reg_len(struct hclge_dev *hdev, int *len)
+ {
+ 	u32 dfx_reg_type_num = ARRAY_SIZE(hclge_dfx_bd_offset_list);
+-	int data_len_per_desc, bd_num;
++	int data_len_per_desc;
+ 	int *bd_num_list;
+-	u32 data_len, i;
+ 	int ret;
++	u32 i;
+ 
+ 	bd_num_list = kcalloc(dfx_reg_type_num, sizeof(int), GFP_KERNEL);
+ 	if (!bd_num_list)
+@@ -330,11 +381,8 @@ static int hclge_get_dfx_reg_len(struct hclge_dev *hdev, int *len)
+ 
+ 	data_len_per_desc = sizeof_field(struct hclge_desc, data);
+ 	*len = 0;
+-	for (i = 0; i < dfx_reg_type_num; i++) {
+-		bd_num = bd_num_list[i];
+-		data_len = data_len_per_desc * bd_num;
+-		*len += (data_len / REG_LEN_PER_LINE + 1) * REG_LEN_PER_LINE;
+-	}
++	for (i = 0; i < dfx_reg_type_num; i++)
++		*len += bd_num_list[i] * data_len_per_desc + HCLGE_REG_TLV_SIZE;
+ 
+ out:
+ 	kfree(bd_num_list);
+@@ -383,6 +431,9 @@ static int hclge_get_dfx_reg(struct hclge_dev *hdev, void *data)
+ 			break;
+ 		}
+ 
++		reg += hclge_reg_get_tlv(HCLGE_REG_TAG_DFX_BIOS_COMMON + i,
++					 ARRAY_SIZE(desc_src->data) * bd_num,
++					 reg);
+ 		reg += hclge_dfx_reg_fetch_data(desc_src, bd_num, reg);
+ 	}
+ 
+@@ -398,50 +449,43 @@ static int hclge_fetch_pf_reg(struct hclge_dev *hdev, void *data,
+ #define HCLGE_RING_REG_OFFSET		0x200
+ #define HCLGE_RING_INT_REG_OFFSET	0x4
+ 
+-	int i, j, reg_num, separator_num;
++	int i, j, reg_num;
+ 	int data_num_sum;
+ 	u32 *reg = data;
+ 
+ 	/* fetching per-PF registers valus from PF PCIe register space */
+ 	reg_num = ARRAY_SIZE(cmdq_reg_addr_list);
+-	separator_num = MAX_SEPARATE_NUM - (reg_num & REG_NUM_REMAIN_MASK);
++	reg += hclge_reg_get_tlv(HCLGE_REG_TAG_CMDQ, reg_num, reg);
+ 	for (i = 0; i < reg_num; i++)
+ 		*reg++ = hclge_read_dev(&hdev->hw, cmdq_reg_addr_list[i]);
+-	for (i = 0; i < separator_num; i++)
+-		*reg++ = SEPARATOR_VALUE;
+-	data_num_sum = reg_num + separator_num;
++	data_num_sum = reg_num + HCLGE_REG_TLV_SPACE;
+ 
+ 	reg_num = ARRAY_SIZE(common_reg_addr_list);
+-	separator_num = MAX_SEPARATE_NUM - (reg_num & REG_NUM_REMAIN_MASK);
++	reg += hclge_reg_get_tlv(HCLGE_REG_TAG_COMMON, reg_num, reg);
+ 	for (i = 0; i < reg_num; i++)
+ 		*reg++ = hclge_read_dev(&hdev->hw, common_reg_addr_list[i]);
+-	for (i = 0; i < separator_num; i++)
+-		*reg++ = SEPARATOR_VALUE;
+-	data_num_sum += reg_num + separator_num;
++	data_num_sum += reg_num + HCLGE_REG_TLV_SPACE;
+ 
+ 	reg_num = ARRAY_SIZE(ring_reg_addr_list);
+-	separator_num = MAX_SEPARATE_NUM - (reg_num & REG_NUM_REMAIN_MASK);
+ 	for (j = 0; j < kinfo->num_tqps; j++) {
++		reg += hclge_reg_get_tlv(HCLGE_REG_TAG_RING, reg_num, reg);
+ 		for (i = 0; i < reg_num; i++)
+ 			*reg++ = hclge_read_dev(&hdev->hw,
+ 						ring_reg_addr_list[i] +
+ 						HCLGE_RING_REG_OFFSET * j);
+-		for (i = 0; i < separator_num; i++)
+-			*reg++ = SEPARATOR_VALUE;
+ 	}
+-	data_num_sum += (reg_num + separator_num) * kinfo->num_tqps;
++	data_num_sum += (reg_num + HCLGE_REG_TLV_SPACE) * kinfo->num_tqps;
+ 
+ 	reg_num = ARRAY_SIZE(tqp_intr_reg_addr_list);
+-	separator_num = MAX_SEPARATE_NUM - (reg_num & REG_NUM_REMAIN_MASK);
+ 	for (j = 0; j < hdev->num_msi_used - 1; j++) {
++		reg += hclge_reg_get_tlv(HCLGE_REG_TAG_TQP_INTR, reg_num, reg);
+ 		for (i = 0; i < reg_num; i++)
+ 			*reg++ = hclge_read_dev(&hdev->hw,
+ 						tqp_intr_reg_addr_list[i] +
+ 						HCLGE_RING_INT_REG_OFFSET * j);
+-		for (i = 0; i < separator_num; i++)
+-			*reg++ = SEPARATOR_VALUE;
+ 	}
+-	data_num_sum += (reg_num + separator_num) * (hdev->num_msi_used - 1);
++	data_num_sum += (reg_num + HCLGE_REG_TLV_SPACE) *
++			(hdev->num_msi_used - 1);
+ 
+ 	return data_num_sum;
+ }
+@@ -473,12 +517,12 @@ static int hclge_get_regs_num(struct hclge_dev *hdev, u32 *regs_num_32_bit,
+ 
+ int hclge_get_regs_len(struct hnae3_handle *handle)
+ {
+-	int cmdq_lines, common_lines, ring_lines, tqp_intr_lines;
+ 	struct hnae3_knic_private_info *kinfo = &handle->kinfo;
+ 	struct hclge_vport *vport = hclge_get_vport(handle);
+-	struct hclge_dev *hdev = vport->back;
+ 	int regs_num_32_bit, regs_num_64_bit, dfx_regs_len;
+-	int regs_lines_32_bit, regs_lines_64_bit;
++	int cmdq_len, common_len, ring_len, tqp_intr_len;
++	int regs_len_32_bit, regs_len_64_bit;
++	struct hclge_dev *hdev = vport->back;
+ 	int ret;
+ 
+ 	ret = hclge_get_regs_num(hdev, &regs_num_32_bit, &regs_num_64_bit);
+@@ -495,22 +539,17 @@ int hclge_get_regs_len(struct hnae3_handle *handle)
+ 		return ret;
+ 	}
+ 
+-	cmdq_lines = sizeof(cmdq_reg_addr_list) / REG_LEN_PER_LINE +
+-		REG_SEPARATOR_LINE;
+-	common_lines = sizeof(common_reg_addr_list) / REG_LEN_PER_LINE +
+-		REG_SEPARATOR_LINE;
+-	ring_lines = sizeof(ring_reg_addr_list) / REG_LEN_PER_LINE +
+-		REG_SEPARATOR_LINE;
+-	tqp_intr_lines = sizeof(tqp_intr_reg_addr_list) / REG_LEN_PER_LINE +
+-		REG_SEPARATOR_LINE;
+-	regs_lines_32_bit = regs_num_32_bit * sizeof(u32) / REG_LEN_PER_LINE +
+-		REG_SEPARATOR_LINE;
+-	regs_lines_64_bit = regs_num_64_bit * sizeof(u64) / REG_LEN_PER_LINE +
+-		REG_SEPARATOR_LINE;
+-
+-	return (cmdq_lines + common_lines + ring_lines * kinfo->num_tqps +
+-		tqp_intr_lines * (hdev->num_msi_used - 1) + regs_lines_32_bit +
+-		regs_lines_64_bit) * REG_LEN_PER_LINE + dfx_regs_len;
++	cmdq_len = HCLGE_REG_TLV_SIZE + sizeof(cmdq_reg_addr_list);
++	common_len = HCLGE_REG_TLV_SIZE + sizeof(common_reg_addr_list);
++	ring_len = HCLGE_REG_TLV_SIZE + sizeof(ring_reg_addr_list);
++	tqp_intr_len = HCLGE_REG_TLV_SIZE + sizeof(tqp_intr_reg_addr_list);
++	regs_len_32_bit = HCLGE_REG_TLV_SIZE + regs_num_32_bit * sizeof(u32);
++	regs_len_64_bit = HCLGE_REG_TLV_SIZE + regs_num_64_bit * sizeof(u64);
++
++	/* return the total length of all register values */
++	return HCLGE_REG_HEADER_SIZE + cmdq_len + common_len + ring_len *
++		kinfo->num_tqps + tqp_intr_len * (hdev->num_msi_used - 1) +
++		regs_len_32_bit + regs_len_64_bit + dfx_regs_len;
+ }
+ 
+ void hclge_get_regs(struct hnae3_handle *handle, u32 *version,
+@@ -522,8 +561,8 @@ void hclge_get_regs(struct hnae3_handle *handle, u32 *version,
+ 	struct hclge_vport *vport = hclge_get_vport(handle);
+ 	struct hclge_dev *hdev = vport->back;
+ 	u32 regs_num_32_bit, regs_num_64_bit;
+-	int i, reg_num, separator_num, ret;
+ 	u32 *reg = data;
++	int ret;
+ 
+ 	*version = hdev->fw_version;
+ 
+@@ -534,31 +573,29 @@ void hclge_get_regs(struct hnae3_handle *handle, u32 *version,
+ 		return;
+ 	}
+ 
++	reg += hclge_reg_get_header(reg);
+ 	reg += hclge_fetch_pf_reg(hdev, reg, kinfo);
+ 
++	reg += hclge_reg_get_tlv(HCLGE_REG_TAG_QUERY_32_BIT,
++				 regs_num_32_bit, reg);
+ 	ret = hclge_get_32_bit_regs(hdev, regs_num_32_bit, reg);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"Get 32 bit register failed, ret = %d.\n", ret);
+ 		return;
+ 	}
+-	reg_num = regs_num_32_bit;
+-	reg += reg_num;
+-	separator_num = MAX_SEPARATE_NUM - (reg_num & REG_NUM_REMAIN_MASK);
+-	for (i = 0; i < separator_num; i++)
+-		*reg++ = SEPARATOR_VALUE;
++	reg += regs_num_32_bit;
+ 
++	reg += hclge_reg_get_tlv(HCLGE_REG_TAG_QUERY_64_BIT,
++				 regs_num_64_bit *
++				 HCLGE_REG_64_BIT_SPACE_MULTIPLE, reg);
+ 	ret = hclge_get_64_bit_regs(hdev, regs_num_64_bit, reg);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"Get 64 bit register failed, ret = %d.\n", ret);
+ 		return;
+ 	}
+-	reg_num = regs_num_64_bit * HCLGE_REG_64_BIT_SPACE_MULTIPLE;
+-	reg += reg_num;
+-	separator_num = MAX_SEPARATE_NUM - (reg_num & REG_NUM_REMAIN_MASK);
+-	for (i = 0; i < separator_num; i++)
+-		*reg++ = SEPARATOR_VALUE;
++	reg += regs_num_64_bit * HCLGE_REG_64_BIT_SPACE_MULTIPLE;
+ 
+ 	ret = hclge_get_dfx_reg(hdev, reg);
+ 	if (ret)
 -- 
 2.40.1
 
