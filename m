@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3AC1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE535C433C8;
-	Mon, 11 Sep 2023 14:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D432291E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2ACC433C7;
+	Mon, 11 Sep 2023 14:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441115;
-	bh=PZ/VrB+mkpnz9F2oLSaTfpWKq7lX09tVAcgZqfXba7Q=;
+	s=korg; t=1694441117;
+	bh=UVZPdC9KeBGteeBasYVfxFsgVk4zeIKED3LgvAe1r/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9BtTSS8b3jz/BVwJIEkC7rkYzU+1pdFdFeVKeJx++8GbSR6/naJd3NoUtbIoF96w
-	 827VksmKwl0MLDUwptVhM9tXBZ5jAOzZ0P/vg5NPlivgp5gMxNOApACnWeIM7O/Odx
-	 uFOw7NDE/a1R4EcwemdGZ2sIsWcgzbPYDvr/T05U=
+	b=GATf7NNiEE5yN/T+1eBBsucwSnnFZhIHxOpjnWL0LLq/zSN+xtIeztG4A+cmV62/a
+	 oT1BPcGwIvLLVpAdMzXNXqu2UMBCxRGGXLWwoO7+U5tWFYPylXFNjtXVxBpzs5Mf39
+	 KC7pd0ACeL2WuOi4Jrfs957Ub/jfolYVcOdpLJvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	YingKun Meng <mengyingkun@loongson.cn>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 283/739] ASoC: loongson: drop of_match_ptr for OF device id
-Date: Mon, 11 Sep 2023 15:41:22 +0200
-Message-ID: <20230911134659.026910721@linuxfoundation.org>
+	Jonathan Marek <jonathan@marek.ca>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.5 301/739] drm/msm/dpu: increase memtype count to 16 for sm8550
+Date: Mon, 11 Sep 2023 15:41:40 +0200
+Message-ID: <20230911134659.534608612@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,43 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YingKun Meng <mengyingkun@loongson.cn>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit c17bd30d0ba5ca59266771cdfc387f26271a7042 ]
+[ Upstream commit 42d0d253ed03b961c325ff756eec0480cb4adc6b ]
 
-The ASoC Sound Card driver can be compile tested with !CONFIG_OF
-making 'loongson_asoc_dt_ids' unused:
+sm8550 has 16 vbif clients.
 
-sound/soc/loongson/loongson_card.c:200:34: warning: unused variable 'loongson_asoc_dt_ids' [-Wunused-const-variable]
+This fixes the extra 2 clients (DMA4/DMA5) not having their memtype
+initialized. This fixes DMA4/DMA5 planes not displaying correctly.
 
-As krzysztof advice, we drop of_match_ptr so the device id
-can also be used on ACPI.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307242008.xqdjgk04-lkp@intel.com
-Fixes: d24028606e76 ("ASoC: loongson: Add Loongson ASoC Sound Card Support")
-Signed-off-by: YingKun Meng <mengyingkun@loongson.cn>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230726110516.703342-1-mengyingkun@loongson.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Patchwork: https://patchwork.freedesktop.org/patch/550968/
+Link: https://lore.kernel.org/r/20230802134900.30435-1-jonathan@marek.ca
+[DB: fixed the Fixes tag]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/loongson/loongson_card.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  4 ++--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 20 +++++++++++++++++++
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/loongson/loongson_card.c b/sound/soc/loongson/loongson_card.c
-index 9ded163297477..406ee8db1a3c5 100644
---- a/sound/soc/loongson/loongson_card.c
-+++ b/sound/soc/loongson/loongson_card.c
-@@ -208,7 +208,7 @@ static struct platform_driver loongson_audio_driver = {
- 	.driver = {
- 		.name = "loongson-asoc-card",
- 		.pm = &snd_soc_pm_ops,
--		.of_match_table = of_match_ptr(loongson_asoc_dt_ids),
-+		.of_match_table = loongson_asoc_dt_ids,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+index f17b9a7fee851..89a2ac1e840d5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+@@ -245,8 +245,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+ 	.merge_3d = sm8550_merge_3d,
+ 	.intf_count = ARRAY_SIZE(sm8550_intf),
+ 	.intf = sm8550_intf,
+-	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+-	.vbif = sdm845_vbif,
++	.vbif_count = ARRAY_SIZE(sm8550_vbif),
++	.vbif = sm8550_vbif,
+ 	.perf = &sm8550_perf_data,
+ 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+ 		     BIT(MDP_SSPP_TOP0_INTR2) | \
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 0de507d4d7b7a..8b17a4a9b438c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -663,6 +663,26 @@ static const struct dpu_vbif_cfg sdm845_vbif[] = {
  	},
  };
- module_platform_driver(loongson_audio_driver);
+ 
++static const struct dpu_vbif_cfg sm8550_vbif[] = {
++	{
++	.name = "vbif_rt", .id = VBIF_RT,
++	.base = 0, .len = 0x1040,
++	.features = BIT(DPU_VBIF_QOS_REMAP),
++	.xin_halt_timeout = 0x4000,
++	.qos_rp_remap_size = 0x40,
++	.qos_rt_tbl = {
++		.npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
++		.priority_lvl = sdm845_rt_pri_lvl,
++		},
++	.qos_nrt_tbl = {
++		.npriority_lvl = ARRAY_SIZE(sdm845_nrt_pri_lvl),
++		.priority_lvl = sdm845_nrt_pri_lvl,
++		},
++	.memtype_count = 16,
++	.memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
++	},
++};
++
+ /*************************************************************
+  * PERF data config
+  *************************************************************/
 -- 
 2.40.1
 
