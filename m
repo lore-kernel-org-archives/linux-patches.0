@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8482811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01898C433C7;
-	Mon, 11 Sep 2023 15:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4890E11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEC7C433C9;
+	Mon, 11 Sep 2023 15:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446038;
-	bh=LiOKM0Jz3ZgCG5xhegVLCOpwYsNmYSfXjYi2r0qAUhw=;
+	s=korg; t=1694446041;
+	bh=W1Ao2O0ktT3eDvOpbS2kSJIW2KJvMZLISGRDMW3pIDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmSLcmw7smsM5XeaOfxUVze/XXwLFW0gMAaaMLN4bCnMkOni98Z1Dvo3eQm3xfael
-	 MvMK/t1TP3GVTgAovXT8819Px+6/ULsi7kNFqTfsJCiGjTAlWy5Kz/03euwZB3Bv+S
-	 3RVJwkYWyhKDHBBfMKoH2JVCnemwocTNZecuMZi4=
+	b=szKwGKDe5tK/4dGZddmKpBuP9gx5ET/Junidje+jPEUv1CCG3WYJnYUXlW7IiSRE+
+	 YwfVHj685/ankPW1BHYL55g0AIyx45WCScGBXkh/CapNP5u3FMq9Aw8BwJStZED5KI
+	 ejOSkN31wDdilFpeCie5xpy5jkvNlwLkJ3ReqBTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 560/600] parisc: Fix /proc/cpuinfo output for lscpu
-Date: Mon, 11 Sep 2023 15:49:53 +0200
-Message-ID: <20230911134650.142360029@linuxfoundation.org>
+	Charlene Liu <charlene.liu@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Fudong Wang <fudong.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 561/600] drm/amd/display: Add smu write msg id fail retry process
+Date: Mon, 11 Sep 2023 15:49:54 +0200
+Message-ID: <20230911134650.171505598@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -38,61 +41,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Fudong Wang <fudong.wang@amd.com>
 
-commit 9f5ba4b3e1b3c123eeca5d2d09161e8720048b5c upstream.
+commit 72105dcfa3d12b5af49311f857e3490baa225135 upstream.
 
-The lscpu command is broken since commit cab56b51ec0e ("parisc: Fix
-device names in /proc/iomem") added the PA pathname to all PA
-devices, includig the CPUs.
+A benchmark stress test (12-40 machines x 48hours) found that DCN315 has
+cases where DC writes to an indirect register to set the smu clock msg
+id, but when we go to read the same indirect register the returned msg
+id doesn't match with what we just set it to. So, to fix this retry the
+write until the register's value matches with the requested value.
 
-lscpu parses /proc/cpuinfo and now believes it found different CPU
-types since every CPU is listed with an unique identifier (PA
-pathname).
-
-Fix this problem by simply dropping the PA pathname when listing the
-CPUs in /proc/cpuinfo. There is no need to show the pathname in this
-procfs file.
-
-Fixes: cab56b51ec0e ("parisc: Fix device names in /proc/iomem")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v4.9+
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: f94903996140 ("drm/amd/display: Add DCN315 CLK_MGR")
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Fudong Wang <fudong.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/processor.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c |   20 ++++++++++---
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/arch/parisc/kernel/processor.c
-+++ b/arch/parisc/kernel/processor.c
-@@ -372,10 +372,18 @@ int
- show_cpuinfo (struct seq_file *m, void *v)
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
+@@ -32,6 +32,7 @@
+ 
+ #define MAX_INSTANCE                                        6
+ #define MAX_SEGMENT                                         6
++#define SMU_REGISTER_WRITE_RETRY_COUNT                      5
+ 
+ struct IP_BASE_INSTANCE
  {
- 	unsigned long cpu;
-+	char cpu_name[60], *p;
-+
-+	/* strip PA path from CPU name to not confuse lscpu */
-+	strlcpy(cpu_name, per_cpu(cpu_data, 0).dev->name, sizeof(cpu_name));
-+	p = strrchr(cpu_name, '[');
-+	if (p)
-+		*(--p) = 0;
+@@ -134,6 +135,8 @@ static int dcn315_smu_send_msg_with_para
+ 		unsigned int msg_id, unsigned int param)
+ {
+ 	uint32_t result;
++	uint32_t i = 0;
++	uint32_t read_back_data;
  
- 	for_each_online_cpu(cpu) {
--		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
- #ifdef CONFIG_SMP
-+		const struct cpuinfo_parisc *cpuinfo = &per_cpu(cpu_data, cpu);
-+
- 		if (0 == cpuinfo->hpa)
- 			continue;
- #endif
-@@ -420,8 +428,7 @@ show_cpuinfo (struct seq_file *m, void *
+ 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
  
- 		seq_printf(m, "model\t\t: %s - %s\n",
- 				 boot_cpu_data.pdc.sys_model_name,
--				 cpuinfo->dev ?
--				 cpuinfo->dev->name : "Unknown");
-+				 cpu_name);
+@@ -150,10 +153,19 @@ static int dcn315_smu_send_msg_with_para
+ 	/* Set the parameter register for the SMU message, unit is Mhz */
+ 	REG_WRITE(MP1_SMN_C2PMSG_37, param);
  
- 		seq_printf(m, "hversion\t: 0x%08x\n"
- 			        "sversion\t: 0x%08x\n",
+-	/* Trigger the message transaction by writing the message ID */
+-	generic_write_indirect_reg(CTX,
+-		REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
+-		mmMP1_C2PMSG_3, msg_id);
++	for (i = 0; i < SMU_REGISTER_WRITE_RETRY_COUNT; i++) {
++		/* Trigger the message transaction by writing the message ID */
++		generic_write_indirect_reg(CTX,
++			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
++			mmMP1_C2PMSG_3, msg_id);
++		read_back_data = generic_read_indirect_reg(CTX,
++			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
++			mmMP1_C2PMSG_3);
++		if (read_back_data == msg_id)
++			break;
++		udelay(2);
++		smu_print("SMU msg id write fail %x times. \n", i + 1);
++	}
+ 
+ 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
+ 
 
 
