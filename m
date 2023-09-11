@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243C11170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9AFC433C8;
-	Mon, 11 Sep 2023 14:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5AE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC9CC433C7;
+	Mon, 11 Sep 2023 14:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442235;
-	bh=efUZNdNcl5ftBEpsgWVpuLeDT/cIrusn6YqUlRI2cyM=;
+	s=korg; t=1694442237;
+	bh=YtNpg308qCTfnkJQWbaFNWxUENChlsj8l5J12I0Zlj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNXOwhxdigjRCS6J+TA0QFnc9xprNlsgCO+TKSwm4v2JgmONk1p1/TgpBdbBy1NUy
-	 AMnNUxcRJAe2iu974IRMqwMXoSNDWO6c+IAIP9Prl8FJdVlNuOnQ66yVSiDpA4kviu
-	 sxqgJvj3Ar6mCtEDvf8xu834UrakMnUnj2hRIP/M=
+	b=2Vk7iEFKgPMoPq62kN1QVLs3WehDvVk7ag8rmOMO32cZWy0DfcIQAXHe/ZYAYDo9c
+	 aIq++doJrCpPjyfVB2LnW3nv+pFpZrnw375+cs/jJ/YrgcS0QlSmAR/ESoUJpWSGhy
+	 YU6ZGcpblF1LiRA8KnZRvfcFZbaaBdd/gZmKEP5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 693/739] block: dont add or resize partition on the disk with GENHD_FL_NO_PART
-Date: Mon, 11 Sep 2023 15:48:12 +0200
-Message-ID: <20230911134710.452943948@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.5 694/739] procfs: block chmod on /proc/thread-self/comm
+Date: Mon, 11 Sep 2023 15:48:13 +0200
+Message-ID: <20230911134710.479629581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,38 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 1a721de8489fa559ff4471f73c58bb74ac5580d3 upstream.
+commit ccf61486fe1e1a48e18c638d1813cda77b3c0737 upstream.
 
-Commit a33df75c6328 ("block: use an xarray for disk->part_tbl") remove
-disk_expand_part_tbl() in add_partition(), which means all kinds of
-devices will support extended dynamic `dev_t`.
-However, some devices with GENHD_FL_NO_PART are not expected to add or
-resize partition.
-Fix this by adding check of GENHD_FL_NO_PART before add or resize
-partition.
+Due to an oversight in commit 1b3044e39a89 ("procfs: fix pthread
+cross-thread naming if !PR_DUMPABLE") in switching from REG to NOD,
+chmod operations on /proc/thread-self/comm were no longer blocked as
+they are on almost all other procfs files.
 
-Fixes: a33df75c6328 ("block: use an xarray for disk->part_tbl")
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230831075900.1725842-1-lilingfeng@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+A very similar situation with /proc/self/environ was used to as a root
+exploit a long time ago, but procfs has SB_I_NOEXEC so this is simply a
+correctness issue.
+
+Ref: https://lwn.net/Articles/191954/
+Ref: 6d76fa58b050 ("Don't allow chmod() on the /proc/<pid>/ files")
+Fixes: 1b3044e39a89 ("procfs: fix pthread cross-thread naming if !PR_DUMPABLE")
+Cc: stable@vger.kernel.org # v4.7+
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Message-Id: <20230713141001.27046-1-cyphar@cyphar.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/proc/base.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -20,6 +20,8 @@ static int blkpg_do_ioctl(struct block_d
- 	struct blkpg_partition p;
- 	long long start, length;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -3583,7 +3583,8 @@ static int proc_tid_comm_permission(stru
+ }
  
-+	if (disk->flags & GENHD_FL_NO_PART)
-+		return -EINVAL;
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EACCES;
- 	if (copy_from_user(&p, upart, sizeof(struct blkpg_partition)))
+ static const struct inode_operations proc_tid_comm_inode_operations = {
+-		.permission = proc_tid_comm_permission,
++		.setattr	= proc_setattr,
++		.permission	= proc_tid_comm_permission,
+ };
+ 
+ /*
 
 
