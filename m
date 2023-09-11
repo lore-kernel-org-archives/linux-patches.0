@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF1E11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69284C433C8;
-	Mon, 11 Sep 2023 14:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54DA11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A64C433C8;
+	Mon, 11 Sep 2023 14:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444194;
-	bh=oDURCKqlTcUMyenF6chXdWdNO9hWEm0ZzKjEwOqp6Cc=;
+	s=korg; t=1694444197;
+	bh=r5mEYeUDjwXlCAUzn9jdewtq2sjvcQszpcDzN3mqDxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVZEFbrJQe8sFKZXWggi0dFeIEAMeoL4R4NcVc7ECJAfYuBQePxEV9wryL5pxNnQb
-	 huZCxfPJi8wXVOEY+/r5VwRUh0wO3jgKkhYdKDWS5TpjM/W6RQe/nlTqNaLyT/bTbq
-	 zAQNUv36gnTcI1716er3QzSut//hrJUmkFFIpLns=
+	b=aE2oW1KcQZxV92GQHlLROYkxskmYk0D9XATgb+PXKHabDlSaJyg6A/me3ZVqt3eOD
+	 ZEV3M4xCjHdU+qpJDOkjpXlQ/2JMlzn4d8FDZmK8nDzv/97mk0omyU8qSXKduCjiYe
+	 7BS1ZRe6Id3vBqygbQVQue2cWaZqal13dBrkW9ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 615/737] thermal/drivers/mediatek/lvts_thermal: Dont leave threshold zeroed
-Date: Mon, 11 Sep 2023 15:47:54 +0200
-Message-ID: <20230911134707.712019297@linuxfoundation.org>
+Subject: [PATCH 6.4 616/737] thermal/drivers/mediatek/lvts_thermal: Manage threshold between sensors
+Date: Mon, 11 Sep 2023 15:47:55 +0200
+Message-ID: <20230911134707.738907642@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -45,71 +45,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 77354eaef8218bc40d6b37e783b0b8dcca22a7d9 ]
+[ Upstream commit 2bba1acf7a4cbe62abbb4c686e0414209ec5943b ]
 
-The thermal framework might leave the low threshold unset if there
-aren't any lower trip points. This leaves the register zeroed, which
-translates to a very high temperature for the low threshold. The
-interrupt for this threshold is then immediately triggered, and the
-state machine gets stuck, preventing any other temperature monitoring
-interrupts to ever trigger.
+Each LVTS thermal controller can have up to four sensors, each capable
+of triggering its own interrupt when its measured temperature crosses
+the configured threshold. The threshold for each sensor is handled
+separately by the thermal framework, since each one is registered with
+its own thermal zone and trips. However, the temperature thresholds are
+configured on the controller, and therefore are shared between all
+sensors on that controller.
 
-(The same happens by not setting the Cold or Hot to Normal thresholds
-when using those)
+When the temperature measured by the sensors is different enough to
+cause the thermal framework to configure different thresholds for each
+one, interrupts start triggering on sensors outside the last threshold
+configured.
 
-Set the unused threshold to a valid low value. This value was chosen so
-that for any valid golden temperature read from the efuse, when the
-value is converted to raw and back again to milliCelsius, the result
-doesn't underflow.
+To address the issue, track the thresholds required by each sensor and
+only actually set the highest one in the hardware, and disable
+interrupts for all sensors outside the current configured range.
 
 Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
 Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230706153823.201943-6-nfraprado@collabora.com
+Link: https://lore.kernel.org/r/20230706153823.201943-7-nfraprado@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/thermal/mediatek/lvts_thermal.c | 69 +++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
 diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index 0fa90ac6ed41f..a6bdcdfffa333 100644
+index a6bdcdfffa333..d4f160e8c7dbc 100644
 --- a/drivers/thermal/mediatek/lvts_thermal.c
 +++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -81,6 +81,8 @@
+@@ -65,6 +65,11 @@
+ #define LVTS_CALSCALE_CONF			0x300
+ #define LVTS_MONINT_CONF			0x8300318C
  
- #define LVTS_HW_SHUTDOWN_MT8195		105000
- 
-+#define LVTS_MINIMUM_THRESHOLD		20000
++#define LVTS_MONINT_OFFSET_SENSOR0		0xC
++#define LVTS_MONINT_OFFSET_SENSOR1		0x180
++#define LVTS_MONINT_OFFSET_SENSOR2		0x3000
++#define LVTS_MONINT_OFFSET_SENSOR3		0x3000000
 +
- static int golden_temp = LVTS_GOLDEN_TEMP_DEFAULT;
- static int coeff_b = LVTS_COEFF_B;
+ #define LVTS_INT_SENSOR0			0x0009001F
+ #define LVTS_INT_SENSOR1			0x001203E0
+ #define LVTS_INT_SENSOR2			0x00247C00
+@@ -110,6 +115,8 @@ struct lvts_sensor {
+ 	void __iomem *base;
+ 	int id;
+ 	int dt_id;
++	int low_thresh;
++	int high_thresh;
+ };
  
-@@ -292,7 +294,7 @@ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
+ struct lvts_ctrl {
+@@ -119,6 +126,8 @@ struct lvts_ctrl {
+ 	int num_lvts_sensor;
+ 	int mode;
+ 	void __iomem *base;
++	int low_thresh;
++	int high_thresh;
+ };
+ 
+ struct lvts_domain {
+@@ -290,12 +299,66 @@ static int lvts_get_temp(struct thermal_zone_device *tz, int *temp)
+ 	return 0;
+ }
+ 
++static void lvts_update_irq_mask(struct lvts_ctrl *lvts_ctrl)
++{
++	u32 masks[] = {
++		LVTS_MONINT_OFFSET_SENSOR0,
++		LVTS_MONINT_OFFSET_SENSOR1,
++		LVTS_MONINT_OFFSET_SENSOR2,
++		LVTS_MONINT_OFFSET_SENSOR3,
++	};
++	u32 value = 0;
++	int i;
++
++	value = readl(LVTS_MONINT(lvts_ctrl->base));
++
++	for (i = 0; i < ARRAY_SIZE(masks); i++) {
++		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
++		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
++			value |= masks[i];
++		else
++			value &= ~masks[i];
++	}
++
++	writel(value, LVTS_MONINT(lvts_ctrl->base));
++}
++
++static bool lvts_should_update_thresh(struct lvts_ctrl *lvts_ctrl, int high)
++{
++	int i;
++
++	if (high > lvts_ctrl->high_thresh)
++		return true;
++
++	for (i = 0; i < lvts_ctrl->num_lvts_sensor; i++)
++		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
++		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
++			return false;
++
++	return true;
++}
++
+ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
  {
  	struct lvts_sensor *lvts_sensor = thermal_zone_device_priv(tz);
++	struct lvts_ctrl *lvts_ctrl = container_of(lvts_sensor, struct lvts_ctrl, sensors[lvts_sensor->id]);
  	void __iomem *base = lvts_sensor->base;
--	u32 raw_low = lvts_temp_to_raw(low);
-+	u32 raw_low = lvts_temp_to_raw(low != -INT_MAX ? low : LVTS_MINIMUM_THRESHOLD);
+ 	u32 raw_low = lvts_temp_to_raw(low != -INT_MAX ? low : LVTS_MINIMUM_THRESHOLD);
  	u32 raw_high = lvts_temp_to_raw(high);
++	bool should_update_thresh;
++
++	lvts_sensor->low_thresh = low;
++	lvts_sensor->high_thresh = high;
++
++	should_update_thresh = lvts_should_update_thresh(lvts_ctrl, high);
++	if (should_update_thresh) {
++		lvts_ctrl->high_thresh = high;
++		lvts_ctrl->low_thresh = low;
++	}
++	lvts_update_irq_mask(lvts_ctrl);
++
++	if (!should_update_thresh)
++		return 0;
  
  	/*
-@@ -304,11 +306,9 @@ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
- 	 *
- 	 * 14-0 : Raw temperature for threshold
- 	 */
--	if (low != -INT_MAX) {
--		pr_debug("%s: Setting low limit temperature interrupt: %d\n",
--			 thermal_zone_device_type(tz), low);
--		writel(raw_low, LVTS_OFFSETL(base));
--	}
-+	pr_debug("%s: Setting low limit temperature interrupt: %d\n",
-+		 thermal_zone_device_type(tz), low);
-+	writel(raw_low, LVTS_OFFSETL(base));
+ 	 * Low offset temperature threshold
+@@ -519,6 +582,9 @@ static int lvts_sensor_init(struct device *dev, struct lvts_ctrl *lvts_ctrl,
+ 		 */
+ 		lvts_sensor[i].msr = lvts_ctrl_data->mode == LVTS_MSR_IMMEDIATE_MODE ?
+ 			imm_regs[i] : msr_regs[i];
++
++		lvts_sensor[i].low_thresh = INT_MIN;
++		lvts_sensor[i].high_thresh = INT_MIN;
+ 	};
+ 
+ 	lvts_ctrl->num_lvts_sensor = lvts_ctrl_data->num_lvts_sensor;
+@@ -686,6 +752,9 @@ static int lvts_ctrl_init(struct device *dev, struct lvts_domain *lvts_td,
+ 		 */
+ 		lvts_ctrl[i].hw_tshut_raw_temp =
+ 			lvts_temp_to_raw(lvts_data->lvts_ctrl[i].hw_tshut_temp);
++
++		lvts_ctrl[i].low_thresh = INT_MIN;
++		lvts_ctrl[i].high_thresh = INT_MIN;
+ 	}
  
  	/*
- 	 * High offset temperature threshold
 -- 
 2.40.1
 
