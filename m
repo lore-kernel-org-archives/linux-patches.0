@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABF41170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9B1C433C9;
-	Mon, 11 Sep 2023 14:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE1E11184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F91FC433C9;
+	Mon, 11 Sep 2023 14:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440859;
-	bh=sM3B8Nb3JnG9/KHaM1jDticpvBUhm+Zc4twnrgrARa4=;
+	s=korg; t=1694440861;
+	bh=LEtcJZDUs+ZZFPpT3/7tYltmCkdJEWyC0QEduPwILck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayE6W+4O1bOzAeM25c+f5VPFyUQoBkSwBOTfKtnp+EfDakBwMRI/+mVOXiWuWYOzk
-	 03oEB9n9RPP6bhzZPZFgMbjRWT4BlC3Wnl1apsu4T0oaFVbdPOBexW80Mx4taT+YVC
-	 YKennt/l1yTgr8mq4ayhka5i4ReI1ulSenclF7ok=
+	b=sS7k/YG96k/3OR3O/gKeepi7+eWb5ZH7g6YjXQKAhMExolvjLegry98UJ+LHBHpRy
+	 Ir8yAr0/QU5WvJiNcqHLRM19RNiwRcAKZrXD2Z2bjY1WEIyTwRn5UlxLb8DheeoqvO
+	 P903Impu28NvYwyewKeW7JchVb08m3ZoeXh1GXlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Luca Weiss <luca@z3ntu.xyz>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 211/739] soc: qcom: ocmem: Fix NUM_PORTS & NUM_MACROS macros
-Date: Mon, 11 Sep 2023 15:40:10 +0200
-Message-ID: <20230911134657.081446718@linuxfoundation.org>
+Subject: [PATCH 6.5 212/739] arm64: defconfig: enable Qualcomm MSM8996 Global Clock Controller as built-in
+Date: Mon, 11 Sep 2023 15:40:11 +0200
+Message-ID: <20230911134657.112687957@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,48 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a7b484b1c9332a1ee12e8799d62a11ee3f8e0801 ]
+[ Upstream commit dc015a3a6d6986c41a7bd12fb205a282f685e328 ]
 
-Since we're using these two macros to read a value from a register, we
-need to use the FIELD_GET instead of the FIELD_PREP macro, otherwise
-we're getting wrong values.
+The commit 8f680c287445 ("arm64: defconfig: Switch msm8996 clk drivers
+to module") switched CONFIG_MSM_MMCC_8996 to module, which also resulted
+in CONFIG_MSM_GCC_8996 being switched to module. This breaks useful
+bootflow for Qualcomm MSM8996 / APQ8096 platforms, because the serial is
+not enabled anymore until the GCC module is loaded.
 
-So instead of:
-
-  [    3.111779] ocmem fdd00000.sram: 2 ports, 1 regions, 512 macros, not interleaved
-
-we now get the correct value of:
-
-  [    3.129672] ocmem fdd00000.sram: 2 ports, 1 regions, 2 macros, not interleaved
-
-Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reported-by: Rob Clark <robdclark@gmail.com>
+Fixes: 8f680c287445 ("arm64: defconfig: Switch msm8996 clk drivers to module")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Link: https://lore.kernel.org/r/20230506-msm8226-ocmem-v3-1-79da95a2581f@z3ntu.xyz
+Link: https://lore.kernel.org/r/20230619125404.562137-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ocmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-index aaddc3cc53b7f..ef7c1748242ac 100644
---- a/drivers/soc/qcom/ocmem.c
-+++ b/drivers/soc/qcom/ocmem.c
-@@ -80,8 +80,8 @@ struct ocmem {
- #define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
- #define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
- 
--#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_PREP(0x0000000f, (val))
--#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_PREP(0x00003f00, (val))
-+#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
-+#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
- 
- #define OCMEM_HW_PROFILE_LAST_REGN_HALFSIZE	0x00010000
- #define OCMEM_HW_PROFILE_INTERLEAVING		0x00020000
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index a25d783dfb955..28714382ce3f5 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1182,6 +1182,7 @@ CONFIG_IPQ_GCC_8074=y
+ CONFIG_IPQ_GCC_9574=y
+ CONFIG_MSM_GCC_8916=y
+ CONFIG_MSM_GCC_8994=y
++CONFIG_MSM_GCC_8996=y
+ CONFIG_MSM_MMCC_8994=m
+ CONFIG_MSM_MMCC_8996=m
+ CONFIG_MSM_MMCC_8998=m
 -- 
 2.40.1
 
