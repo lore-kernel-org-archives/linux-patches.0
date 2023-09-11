@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376391428E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE8C433AD;
-	Mon, 11 Sep 2023 15:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238F514AB2
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DDFC433C9;
+	Mon, 11 Sep 2023 15:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446156;
-	bh=nXJKOWuJivfRWmD0H9eRSd7N1UWemOTS2A0XJxgneoY=;
+	s=korg; t=1694446158;
+	bh=NqgXe3JzTOZf3oco7kemUKIOGUy36und71TXzUHpda0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2+twzHantcAGS2cBM/zCLJgP8GoV1495513MohkF8S3fPaQJ4m+J/rJckVt14zc/
-	 kcCmh3u1HENg5jzWz+PzUNFS0go+yqLJ8Do1ONAfgZ0RONGwoV7D/n0p+s/NegLyxp
-	 8tRF8rKZd8G3uN2echclaXv68Ya7My8JOLs49/jo=
+	b=V+rCxnihy6Z9a3IRjfn4Ba7pVj2PwctbGCAteLp9RGKOWMGYwfbi9SBIj3aW5btcb
+	 JckQ75OBVTKgTHKuMRs0Rf83qD7QzT5IOZvkgTPLRViXdBUvPUexE4Upc74auCUBUM
+	 5WD7DIy3PSQBNGubQcjPOxL15lhrN2fHyl91FMzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Subject: [PATCH 6.1 575/600] s390/dcssblk: fix kernel crash with list_add corruption
-Date: Mon, 11 Sep 2023 15:50:08 +0200
-Message-ID: <20230911134650.590266644@linuxfoundation.org>
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.1 576/600] s390/ipl: add missing secure/has_secure file to ipl type unknown
+Date: Mon, 11 Sep 2023 15:50:09 +0200
+Message-ID: <20230911134650.620392113@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,70 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit c8f40a0bccefd613748d080147469a4652d6e74c upstream.
+commit ea5717cb13468323a7c3dd394748301802991f39 upstream.
 
-Commit fb08a1908cb1 ("dax: simplify the dax_device <-> gendisk
-association") introduced new logic for gendisk association, requiring
-drivers to explicitly call dax_add_host() and dax_remove_host().
+OS installers are relying on /sys/firmware/ipl/has_secure to be
+present on machines supporting secure boot. This file is present
+for all IPL types, but not the unknown type, which prevents a secure
+installation when an LPAR is booted in HMC via FTP(s), because
+this is an unknown IPL type in linux. While at it, also add the secure
+file.
 
-For dcssblk driver, some dax_remove_host() calls were missing, e.g. in
-device remove path. The commit also broke error handling for out_dax case
-in device add path, resulting in an extra put_device() w/o the previous
-get_device() in that case.
-
-This lead to stale xarray entries after device add / remove cycles. In the
-case when a previously used struct gendisk pointer (xarray index) would be
-used again, because blk_alloc_disk() happened to return such a pointer, the
-xa_insert() in dax_add_host() would fail and go to out_dax, doing the extra
-put_device() in the error path. In combination with an already flawed error
-handling in dcssblk (device_register() cleanup), which needs to be
-addressed in a separate patch, this resulted in a missing device_del() /
-klist_del(), and eventually in the kernel crash with list_add corruption on
-a subsequent device_add() / klist_add().
-
-Fix this by adding the missing dax_remove_host() calls, and also move the
-put_device() in the error path to restore the previous logic.
-
-Fixes: fb08a1908cb1 ("dax: simplify the dax_device <-> gendisk association")
-Cc: <stable@vger.kernel.org> # 5.17+
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Fixes: c9896acc7851 ("s390/ipl: Provide has_secure sysfs attribute")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dcssblk.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/ipl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/s390/block/dcssblk.c
-+++ b/drivers/s390/block/dcssblk.c
-@@ -411,6 +411,7 @@ removeseg:
- 	}
- 	list_del(&dev_info->lh);
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -503,6 +503,8 @@ static struct attribute_group ipl_ccw_at
  
-+	dax_remove_host(dev_info->gd);
- 	kill_dax(dev_info->dax_dev);
- 	put_dax(dev_info->dax_dev);
- 	del_gendisk(dev_info->gd);
-@@ -706,9 +707,9 @@ dcssblk_add_store(struct device *dev, st
- 	goto out;
+ static struct attribute *ipl_unknown_attrs[] = {
+ 	&sys_ipl_type_attr.attr,
++	&sys_ipl_secure_attr.attr,
++	&sys_ipl_has_secure_attr.attr,
+ 	NULL,
+ };
  
- out_dax_host:
-+	put_device(&dev_info->dev);
- 	dax_remove_host(dev_info->gd);
- out_dax:
--	put_device(&dev_info->dev);
- 	kill_dax(dev_info->dax_dev);
- 	put_dax(dev_info->dax_dev);
- put_dev:
-@@ -788,6 +789,7 @@ dcssblk_remove_store(struct device *dev,
- 	}
- 
- 	list_del(&dev_info->lh);
-+	dax_remove_host(dev_info->gd);
- 	kill_dax(dev_info->dax_dev);
- 	put_dax(dev_info->dax_dev);
- 	del_gendisk(dev_info->gd);
 
 
