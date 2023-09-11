@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0FA291E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF70C433C7;
-	Mon, 11 Sep 2023 13:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D4A291E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75692C433C8;
+	Mon, 11 Sep 2023 13:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440783;
-	bh=D9kERBqc1W21zkaYNu1lRL1+406AT24ykVpoM4jrg6s=;
+	s=korg; t=1694440785;
+	bh=3t2BoGaPyniXSBiB40EU5084WlX1WgTgzE1ta99Kg0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGCU3wNz3AA5CYIyP/q7KlfJkF2tIW6RS9APBWH9sKvqslkppFaL8IPidLv1C2Dkq
-	 TqcvG5vbVa0WWmc3Gh7q+PwOgZIq1V4jBpnLs1NI49mCos462lgq0w2Y15vEvXf5lJ
-	 4ijz+OvYS1uFUiLABzeGRXgG4ZCWx3SEPX4l2gNE=
+	b=0JlEFFsbugGevA0ZbJcNjFDTuAlEPN2emSNkXfQ2GlNtGXuNWvhu3IMPZuKcu3r9t
+	 L72c8whk2vBugcdfvNasAEsAdlbySqwhQJd8qOsQqkhvEEpycDob3d4YDwu4dhQA6J
+	 WZGaS4KlNArkLty4dhkDLuR1oqNysE8MPhiX9Ug4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 166/739] wifi: mac80211: fix puncturing bitmap handling in CSA
-Date: Mon, 11 Sep 2023 15:39:25 +0200
-Message-ID: <20230911134655.810869958@linuxfoundation.org>
+Subject: [PATCH 6.5 184/739] mlxsw: i2c: Fix chunk size setting in output mailbox buffer
+Date: Mon, 11 Sep 2023 15:39:43 +0200
+Message-ID: <20230911134656.335653245@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,52 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit 927521170c4a18c620f97865f7bad48f17c48967 ]
+[ Upstream commit 146c7c330507c0384bf29d567186632bfe975927 ]
 
-Code inspection reveals that we switch the puncturing bitmap
-before the real channel switch, since that happens only in
-the second round of the worker after the channel context is
-switched by ieee80211_link_use_reserved_context().
+The driver reads commands output from the output mailbox. If the size
+of the output mailbox is not a multiple of the transaction /
+block size, then the driver will not issue enough read transactions
+to read the entire output, which can result in driver initialization
+errors.
 
-Fixes: 2cc25e4b2a04 ("wifi: mac80211: configure puncturing bitmap")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix by determining the number of transactions using DIV_ROUND_UP().
+
+Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index e7ac246038925..d354b32a20f8f 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -3648,12 +3648,6 @@ static int __ieee80211_csa_finalize(struct ieee80211_sub_if_data *sdata)
- 	lockdep_assert_held(&local->mtx);
- 	lockdep_assert_held(&local->chanctx_mtx);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
+index 41298835a11e1..47af7ef7e4eee 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
+@@ -444,7 +444,7 @@ mlxsw_i2c_cmd(struct device *dev, u16 opcode, u32 in_mod, size_t in_mbox_size,
+ 	} else {
+ 		/* No input mailbox is case of initialization query command. */
+ 		reg_size = MLXSW_I2C_MAX_DATA_SIZE;
+-		num = reg_size / mlxsw_i2c->block_size;
++		num = DIV_ROUND_UP(reg_size, mlxsw_i2c->block_size);
  
--	if (sdata->vif.bss_conf.eht_puncturing != sdata->vif.bss_conf.csa_punct_bitmap) {
--		sdata->vif.bss_conf.eht_puncturing =
--					sdata->vif.bss_conf.csa_punct_bitmap;
--		changed |= BSS_CHANGED_EHT_PUNCTURING;
--	}
--
- 	/*
- 	 * using reservation isn't immediate as it may be deferred until later
- 	 * with multi-vif. once reservation is complete it will re-schedule the
-@@ -3683,6 +3677,12 @@ static int __ieee80211_csa_finalize(struct ieee80211_sub_if_data *sdata)
- 	if (err)
- 		return err;
- 
-+	if (sdata->vif.bss_conf.eht_puncturing != sdata->vif.bss_conf.csa_punct_bitmap) {
-+		sdata->vif.bss_conf.eht_puncturing =
-+					sdata->vif.bss_conf.csa_punct_bitmap;
-+		changed |= BSS_CHANGED_EHT_PUNCTURING;
-+	}
-+
- 	ieee80211_link_info_change_notify(sdata, &sdata->deflink, changed);
- 
- 	if (sdata->deflink.csa_block_tx) {
+ 		if (mutex_lock_interruptible(&mlxsw_i2c->cmd.lock) < 0) {
+ 			dev_err(&client->dev, "Could not acquire lock");
 -- 
 2.40.1
 
