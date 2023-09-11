@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2E711710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACC0C433C7;
-	Mon, 11 Sep 2023 15:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1779411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C650C433C7;
+	Mon, 11 Sep 2023 15:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445322;
-	bh=AwmRuq+wYqpk85GftRvpjlCtAaL7hr+lW26GV9twmpk=;
+	s=korg; t=1694445324;
+	bh=reL90i/2eg3GPeJ/8BwBQro4K2BteXQvWNH2RLMivIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhGh2gsiGwgMJsxJGCgXo8I2xs+/avp0Bgzdn6rbfpiPuw2lbSmRCzO67YMJmua14
-	 w76xqrqtnOF/2OunENV2eSq0XsW+5uujkmFtKxuDmGDexS9qMJlEkan1BGe1YmyXaq
-	 1lsGjcGGjQZnjvcnbpxD/rNwWgBYkjLNWA/RAHAg=
+	b=Q0bzr5fv4JdZRCVwMDGNuHh33Y5Lv7A4ntaH/SlRL1f1QZB/ZV4XJjDby88Y+zjro
+	 rkYIIDCsPknowgprKRvNyvyM/LsDw4dP4VUNffzH02LXUiw1qDLsflNH3leYY/nhS3
+	 lYisSppfGOC8iSXOz1BlWaPn2nBSmBswr6lC1y8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 307/600] arm64: dts: qcom: apq8016-sbc: Fix ov5640 regulator supply names
-Date: Mon, 11 Sep 2023 15:45:40 +0200
-Message-ID: <20230911134642.696792525@linuxfoundation.org>
+Subject: [PATCH 6.1 308/600] arm64: dts: qcom: msm8998: Drop bus clock reference from MMSS SMMU
+Date: Mon, 11 Sep 2023 15:45:41 +0200
+Message-ID: <20230911134642.728718266@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,47 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 43a684580819e7f35b6cb38236be63c4cba26ef4 ]
+[ Upstream commit a3ce236364b82688ca4c7605f63c4efd68e9589c ]
 
-The ov5640 driver expects DOVDD, AVDD and DVDD as regulator supply names.
+The MMSS SMMU has been abusingly consuming the exposed RPM interconnect
+clock. Drop it.
 
-The ov5640 has depended on these names since the driver was committed
-upstream in 2017. Similarly apq8016-sbc.dtsi has had completely different
-regulator names since its own initial commit in 2020.
-
-Perhaps the regulators were left on in previous 410c bootloaders. In any
-case today on 6.5 we won't switch on the ov5640 without correctly naming
-the regulators.
-
-Fixes: 39e0ce6cd1bf ("arm64: dts: qcom: apq8016-sbc: Add CCI/Sensor nodes")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811234738.2859417-3-bryan.odonoghue@linaro.org
+Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu")
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-1-ba1b1fd9ee75@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 6 +++---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index e3e90ad92cc59..9650ae70c8723 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -289,9 +289,9 @@ camera_rear@3b {
- 		clock-names = "xclk";
- 		clock-frequency = <23880000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 29c60bb56ed5f..3d6c7940d2a04 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -2418,10 +2418,10 @@ mmss_smmu: iommu@cd00000 {
  
--		vdddo-supply = <&camera_vdddo_1v8>;
--		vdda-supply = <&camera_vdda_2v8>;
--		vddd-supply = <&camera_vddd_1v5>;
-+		DOVDD-supply = <&camera_vdddo_1v8>;
-+		AVDD-supply = <&camera_vdda_2v8>;
-+		DVDD-supply = <&camera_vddd_1v5>;
+ 			clocks = <&mmcc MNOC_AHB_CLK>,
+ 				 <&mmcc BIMC_SMMU_AHB_CLK>,
+-				 <&rpmcc RPM_SMD_MMAXI_CLK>,
+ 				 <&mmcc BIMC_SMMU_AXI_CLK>;
+-			clock-names = "iface-mm", "iface-smmu",
+-				      "bus-mm", "bus-smmu";
++			clock-names = "iface-mm",
++				      "iface-smmu",
++				      "bus-smmu";
  
- 		/* No camera mezzanine by default */
- 		status = "disabled";
+ 			#global-interrupts = <0>;
+ 			interrupts =
 -- 
 2.40.1
 
