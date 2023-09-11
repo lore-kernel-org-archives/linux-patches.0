@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683B31170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE78C433C8;
-	Mon, 11 Sep 2023 13:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FF81170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB246C433C7;
+	Mon, 11 Sep 2023 13:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440360;
-	bh=+lzfGrJaJMgOWDnMOH8hZ5qi8NLnfSQkTk8Re3afKIw=;
+	s=korg; t=1694440363;
+	bh=NOZSNRDAskRlYaVvUXNZwgg58UgQm/SmTRGPCwPXSTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoqxbcUVM5ueUyIGBbSuU5HlvfimAxhSsc252Jk84aoLeuQ3nV79moaJDwyp1yvhG
-	 kSAcb493pFodHmMYxa+q6FleJTDH/QMcVDlzsDtvTV9m5T2+9bPDPoo8ZqtS/mc0Kn
-	 tsQlxX9m3MfilRz2ZxZf9ZDCyAONOXRjG0KucACQ=
+	b=cr43nOe3ZdLW29ZETunurD34YijhIqaWTky/z8pK8wugk5f3zivbX6eLn0cRhn8Yt
+	 KqTZXDDa7ZyFmhUNQYrvEca1hIYYXW9fQQPGyHDNlc0xtKBHetCm3rJEUCcSSPCYne
+	 qZCmkSMhOB9dQuO+JkXRec1Gnl2W/drUc+2k0puk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 034/739] selftests/resctrl: Close perf value read fd on errors
-Date: Mon, 11 Sep 2023 15:37:13 +0200
-Message-ID: <20230911134652.043816218@linuxfoundation.org>
+Subject: [PATCH 6.5 035/739] sched/fair: remove util_est boosting
+Date: Mon, 11 Sep 2023 15:37:14 +0200
+Message-ID: <20230911134652.074551890@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -36,89 +35,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
+[ Upstream commit c2e164ac33f75e0acb93004960c73bd9166d3d35 ]
 
-Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
+There is no need to use runnable_avg when estimating util_est and that
+even generates wrong behavior because one includes blocked tasks whereas
+the other one doesn't. This can lead to accounting twice the waking task p,
+once with the blocked runnable_avg and another one when adding its
+util_est.
 
-Close fd_lm only in cat_val() to make it easier to track it is always
-closed.
+cpu's runnable_avg is already used when computing util_avg which is then
+compared with util_est.
 
-Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+In some situation, feec will not select prev_cpu but another one on the
+same performance domain because of higher max_util
+
+Fixes: 7d0583cf9ec7 ("sched/fair, cpufreq: Introduce 'runnable boosting'")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Link: https://lore.kernel.org/r/20230706135144.324311-1-vincent.guittot@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ kernel/sched/fair.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 8a4fe8693be63..289b619116fec 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -87,21 +87,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
- static int get_llc_perf(unsigned long *llc_perf_miss)
- {
- 	__u64 total_misses;
-+	int ret;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index b3e25be58e2b7..1d9c2482c5a35 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7289,9 +7289,6 @@ cpu_util(int cpu, struct task_struct *p, int dst_cpu, int boost)
  
- 	/* Stop counters after one span to get miss rate */
+ 		util_est = READ_ONCE(cfs_rq->avg.util_est.enqueued);
  
- 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
- 
--	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
-+	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
-+	if (ret == -1) {
- 		perror("Could not get llc misses through perf");
+-		if (boost)
+-			util_est = max(util_est, runnable);
 -
- 		return -1;
- 	}
- 
- 	total_misses = rf_cqm.values[0].value;
--
--	close(fd_lm);
--
- 	*llc_perf_miss = total_misses;
- 
- 	return 0;
-@@ -253,19 +251,25 @@ int cat_val(struct resctrl_val_param *param)
- 					 memflush, operation, resctrl_val)) {
- 				fprintf(stderr, "Error-running fill buffer\n");
- 				ret = -1;
--				break;
-+				goto pe_close;
- 			}
- 
- 			sleep(1);
- 			ret = measure_cache_vals(param, bm_pid);
- 			if (ret)
--				break;
-+				goto pe_close;
-+
-+			close(fd_lm);
- 		} else {
- 			break;
- 		}
- 	}
- 
- 	return ret;
-+
-+pe_close:
-+	close(fd_lm);
-+	return ret;
- }
- 
- /*
+ 		/*
+ 		 * During wake-up @p isn't enqueued yet and doesn't contribute
+ 		 * to any cpu_rq(cpu)->cfs.avg.util_est.enqueued.
 -- 
 2.40.1
 
