@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9C811706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C189C433C7;
-	Mon, 11 Sep 2023 14:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D511706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E77C433C8;
+	Mon, 11 Sep 2023 14:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444146;
-	bh=GwH/pKxsGl2EJnxf9TIc5vtWrNkaMOmAtcqQkagf7Xk=;
+	s=korg; t=1694444149;
+	bh=aXydvdwLnMpw6D+J0CJ4SeBxaRD9C9Jkw5cuwqWncEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJylyhHCtf/jaAqfDVmZB/GU4XIKV3YjHdOPVMni+ingIgYCO4waF0jddVM51aGne
-	 478xjMaYvAOAtWw1ETx0oHRYSidzY/tajlz5eR2yiufLcYZYGLXSOZ+PKYG/2SEchJ
-	 XEVhr5A1cpqcDbb+TcC2O2npuvNVHfl4HBIZmgaA=
+	b=wEqnABnUBwuaSQVGUURO+K9V+0iXJj1szK+DkfbsbGq53kHfaQjjUzG5TqldGQZ+q
+	 NCF+Va1lwJdNqC9bFQzHN5ASb79sJ2YFNFtrwWVHj8u5VegW9O76NaNydlk+wtX+KE
+	 KaGkzOppd4ZbxwjK+aZQglLk1I3mWYqYxVkOlyZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 627/737] dmaengine: idxd: Allow ATS disable update only for configurable devices
-Date: Mon, 11 Sep 2023 15:48:06 +0200
-Message-ID: <20230911134708.045102000@linuxfoundation.org>
+Subject: [PATCH 6.4 610/737] leds: pwm: Fix error code in led_pwm_create_fwnode()
+Date: Mon, 11 Sep 2023 15:47:49 +0200
+Message-ID: <20230911134707.571516322@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,45 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0056a7f07b0a63e6cee815a789eabba6f3a710f0 ]
+[ Upstream commit cadb2de2a7fd9e955381307de3eddfcc386c208e ]
 
-ATS disable status in a WQ is read-only if the device is not configurable.
-This change ensures that the ATS disable attribute can be modified via
-sysfs only on configurable devices.
+Negative -EINVAL was intended, not positive EINVAL.  Fix it.
 
-Fixes: 92de5fa2dc39 ("dmaengine: idxd: add ATS disable knob for work queues")
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230811012635.535413-1-fenghua.yu@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 95138e01275e ("leds: pwm: Make error handling more robust")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/a33b981a-b2c4-4dc2-b00a-626a090d2f11@moroto.mountain
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/sysfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/leds/leds-pwm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index d16c16445c4f9..66c89b07b3f7b 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1088,12 +1088,16 @@ static ssize_t wq_ats_disable_store(struct device *dev, struct device_attribute
- 				    const char *buf, size_t count)
- {
- 	struct idxd_wq *wq = confdev_to_wq(dev);
-+	struct idxd_device *idxd = wq->idxd;
- 	bool ats_dis;
- 	int rc;
+diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
+index 29194cc382afb..87c199242f3c8 100644
+--- a/drivers/leds/leds-pwm.c
++++ b/drivers/leds/leds-pwm.c
+@@ -146,7 +146,7 @@ static int led_pwm_create_fwnode(struct device *dev, struct led_pwm_priv *priv)
+ 			led.name = to_of_node(fwnode)->name;
  
- 	if (wq->state != IDXD_WQ_DISABLED)
- 		return -EPERM;
+ 		if (!led.name) {
+-			ret = EINVAL;
++			ret = -EINVAL;
+ 			goto err_child_out;
+ 		}
  
-+	if (!test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
-+		return -EPERM;
-+
- 	rc = kstrtobool(buf, &ats_dis);
- 	if (rc < 0)
- 		return rc;
 -- 
 2.40.1
 
