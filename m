@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0240E11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705DAC433C7;
-	Mon, 11 Sep 2023 14:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82A311705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366BFC433C7;
+	Mon, 11 Sep 2023 14:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443203;
-	bh=35YJJJ3lYBTCZ+jwFKmO/C58DyNWDJxzSJLxGx2/axw=;
+	s=korg; t=1694443206;
+	bh=87RG6x/xH5Wnb+01vjVrOKNziBGLbGoOtw2XZFcg8LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B7wLig0kONsrhCACQBvnMDuSRcfyu0SaPSwicpOVmEnxpPF6x3InSSLcq6PPxcaBd
-	 2GZNfhddnA+QOtULlV8TKEC/CG0Jfxa8/Cx8J++kOnfjJruBQv19Q2ijpWuuqMe7vh
-	 k7O7ybjiM88H3EJp7aTc5A+5Cop2JmSOU2zIbbyU=
+	b=ZYv46OqFY67c2GBW5Fjdr3s40CPxMinwT4Nb0b2e0j7UiShN4k0yygiY4OoZEG4iJ
+	 kKqQ/dvM1kacGD5OfLwUG28lOC91YYwl+TmmJvvq2NnfdMkdpGtugEel9n+z/B25wx
+	 cU7CSsDpKsbv5zz27HpgNpWS/U8B5wt1jhkXM1wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 294/737] arm64: dts: qcom: sm8350: Use proper CPU compatibles
-Date: Mon, 11 Sep 2023 15:42:33 +0200
-Message-ID: <20230911134658.772627259@linuxfoundation.org>
+Subject: [PATCH 6.4 295/737] arm64: dts: qcom: pm8350: fix thermal zone name
+Date: Mon, 11 Sep 2023 15:42:34 +0200
+Message-ID: <20230911134658.799702219@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,103 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4390730cc12af25f7c997f477795f5f4200149c0 ]
+[ Upstream commit 64f19c06f704846db5e4885ca63c689d9bef5723 ]
 
-The Kryo names (once again) turned out to be fake. The CPUs report:
+The name of the thermal zone in pm8350.dtsi (pm8350c-thermal) conflicts
+with the thermal zone in pm8350c.dtsi. Rename the thermal zone according
+to the chip name.
 
-0x412fd050 (CA55 r2p0) (0 - 3)
-0x411fd410 (CA78 r1p1) (4 - 6)
-0x411fd440 (CX1  r1p1) (7)
-
-Use the compatibles that reflect that.
-
-Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230706-topic-sm8350-cpu-compat-v1-1-f8d6a1869781@linaro.org
+Fixes: 7a79b95f4288 ("arm64: dts: qcom: pm8350: add temp sensor and thermal zone config")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230707123027.1510723-3-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/pm8350.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 1aede15ec1a5b..f375d960ba85c 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -48,7 +48,7 @@ cpus {
+diff --git a/arch/arm64/boot/dts/qcom/pm8350.dtsi b/arch/arm64/boot/dts/qcom/pm8350.dtsi
+index 2dfeb99300d74..9ed9ba23e81e4 100644
+--- a/arch/arm64/boot/dts/qcom/pm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8350.dtsi
+@@ -8,7 +8,7 @@
  
- 		CPU0: cpu@0 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x0>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -72,7 +72,7 @@ L3_0: l3-cache {
- 
- 		CPU1: cpu@100 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x100>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -91,7 +91,7 @@ L2_100: l2-cache {
- 
- 		CPU2: cpu@200 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x200>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -110,7 +110,7 @@ L2_200: l2-cache {
- 
- 		CPU3: cpu@300 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x300>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
-@@ -129,7 +129,7 @@ L2_300: l2-cache {
- 
- 		CPU4: cpu@400 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x400>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
-@@ -148,7 +148,7 @@ L2_400: l2-cache {
- 
- 		CPU5: cpu@500 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x500>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
-@@ -167,7 +167,7 @@ L2_500: l2-cache {
- 
- 		CPU6: cpu@600 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x600>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
-@@ -186,7 +186,7 @@ L2_600: l2-cache {
- 
- 		CPU7: cpu@700 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-x1";
- 			reg = <0x0 0x700>;
- 			clocks = <&cpufreq_hw 2>;
- 			enable-method = "psci";
+ / {
+ 	thermal-zones {
+-		pm8350_thermal: pm8350c-thermal {
++		pm8350_thermal: pm8350-thermal {
+ 			polling-delay-passive = <100>;
+ 			polling-delay = <0>;
+ 			thermal-sensors = <&pm8350_temp_alarm>;
 -- 
 2.40.1
 
