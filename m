@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE30E1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DE3C433C9;
-	Mon, 11 Sep 2023 14:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB2F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE65C433C8;
+	Mon, 11 Sep 2023 14:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442519;
-	bh=gZ6CBj0FDNnEsOMhoeNctjqEUpr+z3BROmGKOuggT9Q=;
+	s=korg; t=1694442522;
+	bh=Zr51eHRsLI89P98zUSj1IibWiA/wT7BLD5rWK0F23Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDushILIABXEoRDSGS4CdGOG6slVjZZquJoQTspnkgR3P5zBPmWoG/T5dI5a+IHxq
-	 XjlSCmVVrzu505000xrc6GxNTgPZiwrXZjY2D/A4xSOAACPXfT0nPQVoO3sRg0Hh4A
-	 GXaOflvt0/wYL2NByXrNkG19DY9v+A9O/9JrtVsc=
+	b=GeOeLc16gbgPru+PCuXnHSURMGG4qW+34a1TOeoyuHwfydYgl2kDwTAExkrOKpXYz
+	 wAlKqBaN8wHoxI6TbyFSjhWi97AzQ9KEk5KhTd0trCVV+EjOF8f8yu6jT94N4uiP6c
+	 iH/K5EJRqkGUK8YJsRm/6MsMWPkO8fGlWn3a8/0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Majewski <lukma@denx.de>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 052/737] net: dsa: microchip: KSZ9477 register regmap alignment to 32 bit boundaries
-Date: Mon, 11 Sep 2023 15:38:31 +0200
-Message-ID: <20230911134651.926619927@linuxfoundation.org>
+Subject: [PATCH 6.4 053/737] net: annotate data-races around sk->sk_{rcv|snd}timeo
+Date: Mon, 11 Sep 2023 15:38:32 +0200
+Message-ID: <20230911134651.957412722@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,114 +40,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Majewski <lukma@denx.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8d7ae22ae9f8c8a4407f8e993df64440bdbd0cee ]
+[ Upstream commit 285975dd674258ccb33e77a1803e8f2015e67105 ]
 
-The commit (SHA1: 5c844d57aa7894154e49cf2fc648bfe2f1aefc1c) provided code
-to apply "Module 6: Certain PHY registers must be written as pairs instead
-of singly" errata for KSZ9477 as this chip for certain PHY registers
-(0xN120 to 0xN13F, N=1,2,3,4,5) must be accesses as 32 bit words instead
-of 16 or 8 bit access.
-Otherwise, adjacent registers (no matter if reserved or not) are
-overwritten with 0x0.
+sk_getsockopt() runs without locks, we must add annotations
+to sk->sk_rcvtimeo and sk->sk_sndtimeo.
 
-Without this patch some registers (e.g. 0x113c or 0x1134) required for 32
-bit access are out of valid regmap ranges.
+In the future we might allow fetching these fields before
+we lock the socket in TCP fast path.
 
-As a result, following error is observed and KSZ9477 is not properly
-configured:
-
-ksz-switch spi1.0: can't rmw 32bit reg 0x113c: -EIO
-ksz-switch spi1.0: can't rmw 32bit reg 0x1134: -EIO
-ksz-switch spi1.0 lan1 (uninitialized): failed to connect to PHY: -EIO
-ksz-switch spi1.0 lan1 (uninitialized): error -5 setting up PHY for tree 0, switch 0, port 0
-
-The solution is to modify regmap_reg_range to allow accesses with 4 bytes
-boundaries.
-
-Signed-off-by: Lukasz Majewski <lukma@denx.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 35 +++++++++++---------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+ net/core/sock.c     | 24 ++++++++++++++----------
+ net/sched/em_meta.c |  4 ++--
+ 2 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index a0ba2605bb620..f87ed14fa2ab2 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -635,10 +635,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x1030, 0x1030),
- 	regmap_reg_range(0x1100, 0x1115),
- 	regmap_reg_range(0x111a, 0x111f),
--	regmap_reg_range(0x1122, 0x1127),
--	regmap_reg_range(0x112a, 0x112b),
--	regmap_reg_range(0x1136, 0x1139),
--	regmap_reg_range(0x113e, 0x113f),
-+	regmap_reg_range(0x1120, 0x112b),
-+	regmap_reg_range(0x1134, 0x113b),
-+	regmap_reg_range(0x113c, 0x113f),
- 	regmap_reg_range(0x1400, 0x1401),
- 	regmap_reg_range(0x1403, 0x1403),
- 	regmap_reg_range(0x1410, 0x1417),
-@@ -669,10 +668,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x2030, 0x2030),
- 	regmap_reg_range(0x2100, 0x2115),
- 	regmap_reg_range(0x211a, 0x211f),
--	regmap_reg_range(0x2122, 0x2127),
--	regmap_reg_range(0x212a, 0x212b),
--	regmap_reg_range(0x2136, 0x2139),
--	regmap_reg_range(0x213e, 0x213f),
-+	regmap_reg_range(0x2120, 0x212b),
-+	regmap_reg_range(0x2134, 0x213b),
-+	regmap_reg_range(0x213c, 0x213f),
- 	regmap_reg_range(0x2400, 0x2401),
- 	regmap_reg_range(0x2403, 0x2403),
- 	regmap_reg_range(0x2410, 0x2417),
-@@ -703,10 +701,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x3030, 0x3030),
- 	regmap_reg_range(0x3100, 0x3115),
- 	regmap_reg_range(0x311a, 0x311f),
--	regmap_reg_range(0x3122, 0x3127),
--	regmap_reg_range(0x312a, 0x312b),
--	regmap_reg_range(0x3136, 0x3139),
--	regmap_reg_range(0x313e, 0x313f),
-+	regmap_reg_range(0x3120, 0x312b),
-+	regmap_reg_range(0x3134, 0x313b),
-+	regmap_reg_range(0x313c, 0x313f),
- 	regmap_reg_range(0x3400, 0x3401),
- 	regmap_reg_range(0x3403, 0x3403),
- 	regmap_reg_range(0x3410, 0x3417),
-@@ -737,10 +734,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x4030, 0x4030),
- 	regmap_reg_range(0x4100, 0x4115),
- 	regmap_reg_range(0x411a, 0x411f),
--	regmap_reg_range(0x4122, 0x4127),
--	regmap_reg_range(0x412a, 0x412b),
--	regmap_reg_range(0x4136, 0x4139),
--	regmap_reg_range(0x413e, 0x413f),
-+	regmap_reg_range(0x4120, 0x412b),
-+	regmap_reg_range(0x4134, 0x413b),
-+	regmap_reg_range(0x413c, 0x413f),
- 	regmap_reg_range(0x4400, 0x4401),
- 	regmap_reg_range(0x4403, 0x4403),
- 	regmap_reg_range(0x4410, 0x4417),
-@@ -771,10 +767,9 @@ static const struct regmap_range ksz9477_valid_regs[] = {
- 	regmap_reg_range(0x5030, 0x5030),
- 	regmap_reg_range(0x5100, 0x5115),
- 	regmap_reg_range(0x511a, 0x511f),
--	regmap_reg_range(0x5122, 0x5127),
--	regmap_reg_range(0x512a, 0x512b),
--	regmap_reg_range(0x5136, 0x5139),
--	regmap_reg_range(0x513e, 0x513f),
-+	regmap_reg_range(0x5120, 0x512b),
-+	regmap_reg_range(0x5134, 0x513b),
-+	regmap_reg_range(0x513c, 0x513f),
- 	regmap_reg_range(0x5400, 0x5401),
- 	regmap_reg_range(0x5403, 0x5403),
- 	regmap_reg_range(0x5410, 0x5417),
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 8451a95266bf0..ddcf0630cc3ee 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -425,6 +425,7 @@ static int sock_set_timeout(long *timeo_p, sockptr_t optval, int optlen,
+ {
+ 	struct __kernel_sock_timeval tv;
+ 	int err = sock_copy_user_timeval(&tv, optval, optlen, old_timeval);
++	long val;
+ 
+ 	if (err)
+ 		return err;
+@@ -435,7 +436,7 @@ static int sock_set_timeout(long *timeo_p, sockptr_t optval, int optlen,
+ 	if (tv.tv_sec < 0) {
+ 		static int warned __read_mostly;
+ 
+-		*timeo_p = 0;
++		WRITE_ONCE(*timeo_p, 0);
+ 		if (warned < 10 && net_ratelimit()) {
+ 			warned++;
+ 			pr_info("%s: `%s' (pid %d) tries to set negative timeout\n",
+@@ -443,11 +444,12 @@ static int sock_set_timeout(long *timeo_p, sockptr_t optval, int optlen,
+ 		}
+ 		return 0;
+ 	}
+-	*timeo_p = MAX_SCHEDULE_TIMEOUT;
+-	if (tv.tv_sec == 0 && tv.tv_usec == 0)
+-		return 0;
+-	if (tv.tv_sec < (MAX_SCHEDULE_TIMEOUT / HZ - 1))
+-		*timeo_p = tv.tv_sec * HZ + DIV_ROUND_UP((unsigned long)tv.tv_usec, USEC_PER_SEC / HZ);
++	val = MAX_SCHEDULE_TIMEOUT;
++	if ((tv.tv_sec || tv.tv_usec) &&
++	    (tv.tv_sec < (MAX_SCHEDULE_TIMEOUT / HZ - 1)))
++		val = tv.tv_sec * HZ + DIV_ROUND_UP((unsigned long)tv.tv_usec,
++						    USEC_PER_SEC / HZ);
++	WRITE_ONCE(*timeo_p, val);
+ 	return 0;
+ }
+ 
+@@ -809,9 +811,9 @@ void sock_set_sndtimeo(struct sock *sk, s64 secs)
+ {
+ 	lock_sock(sk);
+ 	if (secs && secs < MAX_SCHEDULE_TIMEOUT / HZ - 1)
+-		sk->sk_sndtimeo = secs * HZ;
++		WRITE_ONCE(sk->sk_sndtimeo, secs * HZ);
+ 	else
+-		sk->sk_sndtimeo = MAX_SCHEDULE_TIMEOUT;
++		WRITE_ONCE(sk->sk_sndtimeo, MAX_SCHEDULE_TIMEOUT);
+ 	release_sock(sk);
+ }
+ EXPORT_SYMBOL(sock_set_sndtimeo);
+@@ -1710,12 +1712,14 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+ 
+ 	case SO_RCVTIMEO_OLD:
+ 	case SO_RCVTIMEO_NEW:
+-		lv = sock_get_timeout(sk->sk_rcvtimeo, &v, SO_RCVTIMEO_OLD == optname);
++		lv = sock_get_timeout(READ_ONCE(sk->sk_rcvtimeo), &v,
++				      SO_RCVTIMEO_OLD == optname);
+ 		break;
+ 
+ 	case SO_SNDTIMEO_OLD:
+ 	case SO_SNDTIMEO_NEW:
+-		lv = sock_get_timeout(sk->sk_sndtimeo, &v, SO_SNDTIMEO_OLD == optname);
++		lv = sock_get_timeout(READ_ONCE(sk->sk_sndtimeo), &v,
++				      SO_SNDTIMEO_OLD == optname);
+ 		break;
+ 
+ 	case SO_RCVLOWAT:
+diff --git a/net/sched/em_meta.c b/net/sched/em_meta.c
+index af85a73c4c545..6fdba069f6bfd 100644
+--- a/net/sched/em_meta.c
++++ b/net/sched/em_meta.c
+@@ -568,7 +568,7 @@ META_COLLECTOR(int_sk_rcvtimeo)
+ 		*err = -1;
+ 		return;
+ 	}
+-	dst->value = sk->sk_rcvtimeo / HZ;
++	dst->value = READ_ONCE(sk->sk_rcvtimeo) / HZ;
+ }
+ 
+ META_COLLECTOR(int_sk_sndtimeo)
+@@ -579,7 +579,7 @@ META_COLLECTOR(int_sk_sndtimeo)
+ 		*err = -1;
+ 		return;
+ 	}
+-	dst->value = sk->sk_sndtimeo / HZ;
++	dst->value = READ_ONCE(sk->sk_sndtimeo) / HZ;
+ }
+ 
+ META_COLLECTOR(int_sk_sendmsg_off)
 -- 
 2.40.1
 
