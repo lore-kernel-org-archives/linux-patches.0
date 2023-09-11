@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163A311710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCC5C433C8;
-	Mon, 11 Sep 2023 15:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D923D11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3D2C433C8;
+	Mon, 11 Sep 2023 15:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445443;
-	bh=wFMbgTVqmIZD3rhZvjyQNIYu12lpcpuPsVV2gJuhBPE=;
+	s=korg; t=1694445446;
+	bh=IRbf+7U/dc7uWa4hoHmQsC74RYGB4384Uh+5FknMuBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttCWdVpZD1UFQ404qgsQ444WAjru6p74ktYONyK8Pbiqd+YK4LDaoAhlXZX1BvmDo
-	 0DN7OHflGM13Gaha9PEAUYBuZhSygL5HiFFUFXfq4Pn9Qz5XYfG8/leN2HVlH/uK3O
-	 gzaCo0mDKdVHBVYT+7LBveIVSPeAC4eh8dBrjQQo=
+	b=tsqewd1ESv/4QAe620xf4Ww7+e2HEukSq0GNgskqjxc/gaycbdOipXOBAEca7Mvh3
+	 a6EN96hLaRpgWTO2goPNk4kfI4mwb0uo5/oa4VdPKhHBYGAEUfQhpjcMf0eWKa71JC
+	 8ljLMWHvOyBZbGfP7Mj7d0umdJO+lgKCuFVEYQuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Wu Zongyong <wuzongyong@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/600] PCI: microchip: Correct the DED and SEC interrupt bit offsets
-Date: Mon, 11 Sep 2023 15:46:22 +0200
-Message-ID: <20230911134643.984133997@linuxfoundation.org>
+Subject: [PATCH 6.1 350/600] PCI: Mark NVIDIA T4 GPUs to avoid bus reset
+Date: Mon, 11 Sep 2023 15:46:23 +0200
+Message-ID: <20230911134644.012582524@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,46 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daire McNamara <daire.mcnamara@microchip.com>
+From: Wu Zongyong <wuzongyong@linux.alibaba.com>
 
-[ Upstream commit 6d473a5a26136edf55c435a1c433e52910e03926 ]
+[ Upstream commit d5af729dc2071273f14cbb94abbc60608142fd83 ]
 
-The SEC and DED interrupt bits are laid out the wrong way round so the SEC
-interrupt handler attempts to mask, unmask, and clear the DED interrupt
-and vice versa. Correct the bit offsets so that each interrupt handler
-operates properly.
+NVIDIA T4 GPUs do not work with SBR. This problem is found when the T4 card
+is direct attached to a Root Port only. Avoid bus reset by marking T4 GPUs
+PCI_DEV_FLAGS_NO_BUS_RESET.
 
-Link: https://lore.kernel.org/r/20230728131401.1615724-2-daire.mcnamara@microchip.com
-Fixes: 6f15a9c9f941 ("PCI: microchip: Add Microchip PolarFire PCIe controller driver")
-Signed-off-by: Daire McNamara <daire.mcnamara@microchip.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 4c207e7121fa ("PCI: Mark some NVIDIA GPUs to avoid bus reset")
+Link: https://lore.kernel.org/r/2dcebea53a6eb9bd212ec6d8974af2e5e0333ef6.1681129861.git.wuzongyong@linux.alibaba.com
+Signed-off-by: Wu Zongyong <wuzongyong@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-microchip-host.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-microchip-host.c b/drivers/pci/controller/pcie-microchip-host.c
-index 7263d175b5adb..5ba101efd9326 100644
---- a/drivers/pci/controller/pcie-microchip-host.c
-+++ b/drivers/pci/controller/pcie-microchip-host.c
-@@ -167,12 +167,12 @@
- #define EVENT_PCIE_DLUP_EXIT			2
- #define EVENT_SEC_TX_RAM_SEC_ERR		3
- #define EVENT_SEC_RX_RAM_SEC_ERR		4
--#define EVENT_SEC_AXI2PCIE_RAM_SEC_ERR		5
--#define EVENT_SEC_PCIE2AXI_RAM_SEC_ERR		6
-+#define EVENT_SEC_PCIE2AXI_RAM_SEC_ERR		5
-+#define EVENT_SEC_AXI2PCIE_RAM_SEC_ERR		6
- #define EVENT_DED_TX_RAM_DED_ERR		7
- #define EVENT_DED_RX_RAM_DED_ERR		8
--#define EVENT_DED_AXI2PCIE_RAM_DED_ERR		9
--#define EVENT_DED_PCIE2AXI_RAM_DED_ERR		10
-+#define EVENT_DED_PCIE2AXI_RAM_DED_ERR		9
-+#define EVENT_DED_AXI2PCIE_RAM_DED_ERR		10
- #define EVENT_LOCAL_DMA_END_ENGINE_0		11
- #define EVENT_LOCAL_DMA_END_ENGINE_1		12
- #define EVENT_LOCAL_DMA_ERROR_ENGINE_0		13
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 472fa2c8ebcec..d6fe44a5270d5 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3631,7 +3631,7 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
+  */
+ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+ {
+-	if ((dev->device & 0xffc0) == 0x2340)
++	if ((dev->device & 0xffc0) == 0x2340 || dev->device == 0x1eb8)
+ 		quirk_no_bus_reset(dev);
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
 -- 
 2.40.1
 
