@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDD611705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC1CC433CA;
-	Mon, 11 Sep 2023 14:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7CD11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1026C433CB;
+	Mon, 11 Sep 2023 14:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443234;
-	bh=wuH9gqXG54yiyTg5OxkfhMg55buDxy2QJA4JlGebBx0=;
+	s=korg; t=1694443237;
+	bh=HGHPOmbdXF+YBO0OLEUG2irlZMlr0L8MIJC2gqjZooI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvN3beumpz3GxQm6LHAykSXqNIZ8EwM5x6Xz/FnS4GNruLvkmC6JwprEkL5yuiWh7
-	 vSvixgkbj3mqjIsItrP9aLphSNIQkp61WpYvRWkRMTRirsX4+D+ciiLadPhrwUHKI5
-	 eUWT0OIbz/CDCvRLLri7t0K2asYxcusdme4oZ1NY=
+	b=ZouBgZF105zaGspL7BLB1kASq+Uv2DgNs9afIL9E93djQLt89C9XH0n7fv7euWux5
+	 9qBT/KDs5SXyVcs7fCL2RLKf6HV9wJl3Vmz+gfwzz1KM31Z6FEQO1XeCkbFRMSyt3G
+	 hjeP+NgfB002uC9oNtU8tOmNQXuXwa+kUZBQ7wkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 298/737] arm64: dts: qcom: pmk8350: fix ADC-TM compatible string
-Date: Mon, 11 Sep 2023 15:42:37 +0200
-Message-ID: <20230911134658.879797248@linuxfoundation.org>
+	Francesco Dolcini <francesco@dolcini.it>,
+	Wadim Egorov <w.egorov@phytec.de>,
+	Nishanth Menon <nm@ti.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>
+Subject: [PATCH 6.4 307/737] firmware: ti_sci: Use system_state to determine polling
+Date: Mon, 11 Sep 2023 15:42:46 +0200
+Message-ID: <20230911134659.147575742@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,39 +42,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit 435a73d7377ceb29c1a22d2711dd85c831b40c45 ]
+[ Upstream commit 9225bcdedf16297a346082e7d23b0e8434aa98ed ]
 
-The commit b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for
-pmk8350") for the ADC TM (thermal monitoring device) have used the
-compatible string from the vendor kernel ("qcom,adc-tm7"). Use the
-proper compatible string that is defined in the upstream kernel
-("qcom,spmi-adc-tm5-gen2").
+Commit b9e8a7d950ff ("firmware: ti_sci: Switch transport to polled
+mode during system suspend") aims to resolve issues with tisci
+operations during system suspend operation. However, the system may
+enter a no_irq stage in various other usage modes, including power-off
+and restart. To determine if polling mode is appropriate, use the
+system_state instead.
 
-Fixes: b2de43136058 ("arm64: dts: qcom: pmk8350: Add peripherals for pmk8350")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230707123027.1510723-6-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+While at this, drop the unused is_suspending state variable and
+related helpers.
+
+Fixes: b9e8a7d950ff ("firmware: ti_sci: Switch transport to polled mode during system suspend")
+Reported-by: Francesco Dolcini <francesco@dolcini.it>
+Reported-by: Wadim Egorov <w.egorov@phytec.de>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Verdin AM62
+Link: https://lore.kernel.org/r/20230620130329.4120443-1-nm@ti.com
+Closes: https://lore.kernel.org/all/ZGeHMjlnob2GFyHF@francesco-nb.int.toradex.com/
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmk8350.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/ti_sci.c | 36 ++----------------------------------
+ 1 file changed, 2 insertions(+), 34 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-index f26fb7d32faf2..767ab7f284608 100644
---- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-@@ -49,7 +49,7 @@ pmk8350_vadc: adc@3100 {
- 		};
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index 039d92a595ec6..91aaa0ca9bde8 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -97,7 +97,6 @@ struct ti_sci_desc {
+  * @node:	list head
+  * @host_id:	Host ID
+  * @users:	Number of users of this instance
+- * @is_suspending: Flag set to indicate in suspend path.
+  */
+ struct ti_sci_info {
+ 	struct device *dev;
+@@ -116,7 +115,6 @@ struct ti_sci_info {
+ 	u8 host_id;
+ 	/* protected by ti_sci_list_mutex */
+ 	int users;
+-	bool is_suspending;
+ };
  
- 		pmk8350_adc_tm: adc-tm@3400 {
--			compatible = "qcom,adc-tm7";
-+			compatible = "qcom,spmi-adc-tm5-gen2";
- 			reg = <0x3400>;
- 			interrupts = <PMK8350_SID 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
- 			#address-cells = <1>;
+ #define cl_to_ti_sci_info(c)	container_of(c, struct ti_sci_info, cl)
+@@ -418,14 +416,14 @@ static inline int ti_sci_do_xfer(struct ti_sci_info *info,
+ 
+ 	ret = 0;
+ 
+-	if (!info->is_suspending) {
++	if (system_state <= SYSTEM_RUNNING) {
+ 		/* And we wait for the response. */
+ 		timeout = msecs_to_jiffies(info->desc->max_rx_timeout_ms);
+ 		if (!wait_for_completion_timeout(&xfer->done, timeout))
+ 			ret = -ETIMEDOUT;
+ 	} else {
+ 		/*
+-		 * If we are suspending, we cannot use wait_for_completion_timeout
++		 * If we are !running, we cannot use wait_for_completion_timeout
+ 		 * during noirq phase, so we must manually poll the completion.
+ 		 */
+ 		ret = read_poll_timeout_atomic(try_wait_for_completion, done_state,
+@@ -3281,35 +3279,6 @@ static int tisci_reboot_handler(struct notifier_block *nb, unsigned long mode,
+ 	return NOTIFY_BAD;
+ }
+ 
+-static void ti_sci_set_is_suspending(struct ti_sci_info *info, bool is_suspending)
+-{
+-	info->is_suspending = is_suspending;
+-}
+-
+-static int ti_sci_suspend(struct device *dev)
+-{
+-	struct ti_sci_info *info = dev_get_drvdata(dev);
+-	/*
+-	 * We must switch operation to polled mode now as drivers and the genpd
+-	 * layer may make late TI SCI calls to change clock and device states
+-	 * from the noirq phase of suspend.
+-	 */
+-	ti_sci_set_is_suspending(info, true);
+-
+-	return 0;
+-}
+-
+-static int ti_sci_resume(struct device *dev)
+-{
+-	struct ti_sci_info *info = dev_get_drvdata(dev);
+-
+-	ti_sci_set_is_suspending(info, false);
+-
+-	return 0;
+-}
+-
+-static DEFINE_SIMPLE_DEV_PM_OPS(ti_sci_pm_ops, ti_sci_suspend, ti_sci_resume);
+-
+ /* Description for K2G */
+ static const struct ti_sci_desc ti_sci_pmmc_k2g_desc = {
+ 	.default_host_id = 2,
+@@ -3516,7 +3485,6 @@ static struct platform_driver ti_sci_driver = {
+ 	.driver = {
+ 		   .name = "ti-sci",
+ 		   .of_match_table = of_match_ptr(ti_sci_of_match),
+-		   .pm = &ti_sci_pm_ops,
+ 	},
+ };
+ module_platform_driver(ti_sci_driver);
 -- 
 2.40.1
 
