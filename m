@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE1E11184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F91FC433C9;
-	Mon, 11 Sep 2023 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED14311184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A3FC433C8;
+	Mon, 11 Sep 2023 14:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440861;
-	bh=LEtcJZDUs+ZZFPpT3/7tYltmCkdJEWyC0QEduPwILck=;
+	s=korg; t=1694440864;
+	bh=jJCv02sNVCt/9ArzvY/YTXuWEa9ev0kncF/B05AcF7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sS7k/YG96k/3OR3O/gKeepi7+eWb5ZH7g6YjXQKAhMExolvjLegry98UJ+LHBHpRy
-	 Ir8yAr0/QU5WvJiNcqHLRM19RNiwRcAKZrXD2Z2bjY1WEIyTwRn5UlxLb8DheeoqvO
-	 P903Impu28NvYwyewKeW7JchVb08m3ZoeXh1GXlo=
+	b=tXpKNQePvAhh53XuGXqQwGG4ITO5R0ioVfc1pz29yMqdQxNrbBWG5/VOOvkRHro1l
+	 JJ93MqmykkG76+fWOC1RqP1hyWAlDDgO6ziR1+r5ZlFvwP8hV7lxCH1anfJDv8aI3G
+	 Ly244LDcmm3Nx7iV3ScmGQOyNElahw9AzAqmSvpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Degdag Mohamed <degdagmohamed@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 212/739] arm64: defconfig: enable Qualcomm MSM8996 Global Clock Controller as built-in
-Date: Mon, 11 Sep 2023 15:40:11 +0200
-Message-ID: <20230911134657.112687957@linuxfoundation.org>
+Subject: [PATCH 6.5 213/739] arm64: dts: qcom: sm8150: use proper DSI PHY compatible
+Date: Mon, 11 Sep 2023 15:40:12 +0200
+Message-ID: <20230911134657.141488453@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -44,37 +45,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit dc015a3a6d6986c41a7bd12fb205a282f685e328 ]
+[ Upstream commit 3091e5820a367f3368132f57e0a9ba6d545da15d ]
 
-The commit 8f680c287445 ("arm64: defconfig: Switch msm8996 clk drivers
-to module") switched CONFIG_MSM_MMCC_8996 to module, which also resulted
-in CONFIG_MSM_GCC_8996 being switched to module. This breaks useful
-bootflow for Qualcomm MSM8996 / APQ8096 platforms, because the serial is
-not enabled anymore until the GCC module is loaded.
+The DSI PHY on the Qualcomm SM8150 platform requires platform-specific
+handling. Use the proper SoC-specific compatible string for the DSI
+PHYs.
 
-Reported-by: Rob Clark <robdclark@gmail.com>
-Fixes: 8f680c287445 ("arm64: defconfig: Switch msm8996 clk drivers to module")
+Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
+Fixes: 2ef3bb17c45c ("arm64: dts: qcom: sm8150: Add DISPCC node")
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230619125404.562137-1-dmitry.baryshkov@linaro.org
+Link: https://lore.kernel.org/r/20230612031623.3620155-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index a25d783dfb955..28714382ce3f5 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1182,6 +1182,7 @@ CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
-+CONFIG_MSM_GCC_8996=y
- CONFIG_MSM_MMCC_8994=m
- CONFIG_MSM_MMCC_8996=m
- CONFIG_MSM_MMCC_8998=m
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index b46e55bb8bdec..0cd580920a92b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3840,7 +3840,7 @@ opp-358000000 {
+ 			};
+ 
+ 			mdss_dsi0_phy: phy@ae94400 {
+-				compatible = "qcom,dsi-phy-7nm";
++				compatible = "qcom,dsi-phy-7nm-8150";
+ 				reg = <0 0x0ae94400 0 0x200>,
+ 				      <0 0x0ae94600 0 0x280>,
+ 				      <0 0x0ae94900 0 0x260>;
+@@ -3914,7 +3914,7 @@ mdss_dsi1_out: endpoint {
+ 			};
+ 
+ 			mdss_dsi1_phy: phy@ae96400 {
+-				compatible = "qcom,dsi-phy-7nm";
++				compatible = "qcom,dsi-phy-7nm-8150";
+ 				reg = <0 0x0ae96400 0 0x200>,
+ 				      <0 0x0ae96600 0 0x280>,
+ 				      <0 0x0ae96900 0 0x260>;
 -- 
 2.40.1
 
