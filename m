@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E3B11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2667FC433C7;
-	Mon, 11 Sep 2023 14:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F6A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:49:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002DDC433C8;
+	Mon, 11 Sep 2023 14:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443764;
-	bh=aEP+7/yQrurB4kMw6Y15N7XSDsIR7Xq6yoEDYk/Xr9c=;
+	s=korg; t=1694443767;
+	bh=Is5B+u2i2DwCkz61vdAhcgm9s+K4e0fImer0/e1ZddU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3fu0mFZpsswR050idjrAVb2TmrPnPl9DuZERzo1Y+VL83YBEjlM7HB/qrV2R9ZI+
-	 YS3YUq7utWkSHuBpoQPBO6XxHzYVLBjI9568NuqJRasBztiDNql9xUTQIe/lNXUwOT
-	 i9cInePvgIrbw/QevqIxUValNgc+GNaN3mRyS2rs=
+	b=ZI0Z1iYqFsX1dOhd+BnejyV3Y7Jde3rr5RsdcvhB8IFkClglI31/MI6qZE/2CHhCp
+	 ImwynR82T4rljXYmXWeViXtv1pX1pN6C3I3JCGQ1FdRM5agMu5338W15rl5u/Tw9e1
+	 IXAWRPJDqqh1pk0gPIeC7ZfHoUILCfgOIpNegjck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 460/737] wifi: ath12k: Use RMW accessors for changing LNKCTL
-Date: Mon, 11 Sep 2023 15:45:19 +0200
-Message-ID: <20230911134703.445145108@linuxfoundation.org>
+Subject: [PATCH 6.4 461/737] wifi: ath10k: Use RMW accessors for changing LNKCTL
+Date: Mon, 11 Sep 2023 15:45:20 +0200
+Message-ID: <20230911134703.472336081@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -46,55 +46,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit f5a7ac118faf6d4f794975947b3300717eae8fc5 ]
+[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
 
 Don't assume that only the driver would be accessing LNKCTL. ASPM policy
 changes can trigger write to LNKCTL outside of driver's control.
 
-Use RMW capability accessors which do proper locking to avoid losing
+Use RMW capability accessors which does proper locking to avoid losing
 concurrent updates to the register value. On restore, clear the ASPMC field
 properly.
 
 Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Link: https://lore.kernel.org/r/20230717120503.15276-10-ilpo.jarvinen@linux.intel.com
+Fixes: 76d870ed09ab ("ath10k: enable ASPM")
+Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Acked-by: Kalle Valo <kvalo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 9f174daf324c9..e1e45eb50f3e3 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -794,8 +794,8 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
- 		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index a7f44f6335fb8..9275a672f90cb 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -1963,8 +1963,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
+ 	ath10k_pci_irq_enable(ar);
+ 	ath10k_pci_rx_post(ar);
  
- 	/* disable L0s and L1 */
--	pcie_capability_write_word(ab_pci->pdev, PCI_EXP_LNKCTL,
--				   ab_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+-	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
+-				   ar_pci->link_ctl);
++	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_ASPMC,
++					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
+ 
+ 	return 0;
+ }
+@@ -2821,8 +2822,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
+ 
+ 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
+ 				  &ar_pci->link_ctl);
+-	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
+-				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
++	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
 +				   PCI_EXP_LNKCTL_ASPMC);
  
- 	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
- }
-@@ -803,8 +803,10 @@ static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
- static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
- {
- 	if (test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
--		pcie_capability_write_word(ab_pci->pdev, PCI_EXP_LNKCTL,
--					   ab_pci->link_ctl);
-+		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_ASPMC,
-+						   ab_pci->link_ctl &
-+						   PCI_EXP_LNKCTL_ASPMC);
- }
- 
- static void ath12k_pci_kill_tasklets(struct ath12k_base *ab)
+ 	/*
+ 	 * Bring the target up cleanly.
 -- 
 2.40.1
 
