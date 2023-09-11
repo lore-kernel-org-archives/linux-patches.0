@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F72011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7AFC433C8;
-	Mon, 11 Sep 2023 14:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE3D11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A04AC433CB;
+	Mon, 11 Sep 2023 14:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443410;
-	bh=CHLsQaCZh0X//MEO2TjILqpkddfmSx7LgS//xYKgV3A=;
+	s=korg; t=1694443413;
+	bh=HCPzBTgJNavylMgwAFeCa5NxM07cv87riA1iZp+apd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/ts89lHK9tEZ6K0vH0Q4zYTfRVDNakN6Mq98E+rt/Mot5TdgLnLcNG2rguRmt9cF
-	 1irh4fPJV8kYBFzxMLiDcsnoXX8VssNZWsUt91t0cR2VCIgrNCGkp5dQYctBu1qywY
-	 NPekp2vxCsMo++L1vVFWvW2w+ffTJtYnMJUXHhfY=
+	b=EdESNHPXKt8nPBTzQHICHoaUVeUb343DVRaHWI0VCU/A4Ra6UU2Np2xF8PqFVBMMP
+	 ufrUnjs2fbkGsn5l1mEtSZIJmQ+lzm2YtvyXVBAci5h1ppB63zfhlMxZ5fmFTfAsFf
+	 BSs7D4sCwivrUY3t83jNfOnsimi9RLkH8BOcFQZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 368/737] audit: fix possible soft lockup in __audit_inode_child()
-Date: Mon, 11 Sep 2023 15:43:47 +0200
-Message-ID: <20230911134700.823312504@linuxfoundation.org>
+Subject: [PATCH 6.4 369/737] block/mq-deadline: use correct way to throttling write requests
+Date: Mon, 11 Sep 2023 15:43:48 +0200
+Message-ID: <20230911134700.852807106@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,78 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit b59bc6e37237e37eadf50cd5de369e913f524463 ]
+[ Upstream commit d47f9717e5cfd0dd8c0ba2ecfa47c38d140f1bb6 ]
 
-Tracefs or debugfs maybe cause hundreds to thousands of PATH records,
-too many PATH records maybe cause soft lockup.
+The original formula was inaccurate:
+dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
 
-For example:
-  1. CONFIG_KASAN=y && CONFIG_PREEMPTION=n
-  2. auditctl -a exit,always -S open -k key
-  3. sysctl -w kernel.watchdog_thresh=5
-  4. mkdir /sys/kernel/debug/tracing/instances/test
+For write requests, when we assign a tags from sched_tags,
+data->shallow_depth will be passed to sbitmap_find_bit,
+see the following code:
 
-There may be a soft lockup as follows:
-  watchdog: BUG: soft lockup - CPU#45 stuck for 7s! [mkdir:15498]
-  Kernel panic - not syncing: softlockup: hung tasks
-  Call trace:
-   dump_backtrace+0x0/0x30c
-   show_stack+0x20/0x30
-   dump_stack+0x11c/0x174
-   panic+0x27c/0x494
-   watchdog_timer_fn+0x2bc/0x390
-   __run_hrtimer+0x148/0x4fc
-   __hrtimer_run_queues+0x154/0x210
-   hrtimer_interrupt+0x2c4/0x760
-   arch_timer_handler_phys+0x48/0x60
-   handle_percpu_devid_irq+0xe0/0x340
-   __handle_domain_irq+0xbc/0x130
-   gic_handle_irq+0x78/0x460
-   el1_irq+0xb8/0x140
-   __audit_inode_child+0x240/0x7bc
-   tracefs_create_file+0x1b8/0x2a0
-   trace_create_file+0x18/0x50
-   event_create_dir+0x204/0x30c
-   __trace_add_new_event+0xac/0x100
-   event_trace_add_tracer+0xa0/0x130
-   trace_array_create_dir+0x60/0x140
-   trace_array_create+0x1e0/0x370
-   instance_mkdir+0x90/0xd0
-   tracefs_syscall_mkdir+0x68/0xa0
-   vfs_mkdir+0x21c/0x34c
-   do_mkdirat+0x1b4/0x1d4
-   __arm64_sys_mkdirat+0x4c/0x60
-   el0_svc_common.constprop.0+0xa8/0x240
-   do_el0_svc+0x8c/0xc0
-   el0_svc+0x20/0x30
-   el0_sync_handler+0xb0/0xb4
-   el0_sync+0x160/0x180
+nr = sbitmap_find_bit_in_word(&sb->map[index],
+			min_t (unsigned int,
+			__map_depth(sb, index),
+			depth),
+			alloc_hint, wrap);
 
-Therefore, we add cond_resched() to __audit_inode_child() to fix it.
+The smaller of data->shallow_depth and __map_depth(sb, index)
+will be used as the maximum range when allocating bits.
 
-Fixes: 5195d8e217a7 ("audit: dynamically allocate audit_names when not enough space is in the names array")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+For a mmc device (one hw queue, deadline I/O scheduler):
+q->nr_requests = sched_tags = 128, so according to the previous
+calculation method, dd->async_depth = data->shallow_depth = 96,
+and the platform is 64bits with 8 cpus, sched_tags.bitmap_tags.sb.shift=5,
+sb.maps[]=32/32/32/32, 32 is smaller than 96, whether it is a read or
+a write I/O, tags can be allocated to the maximum range each time,
+which has not throttling effect.
+
+In addition, refer to the methods of bfg/kyber I/O scheduler,
+limit ratiois are calculated base on sched_tags.bitmap_tags.sb.shift.
+
+This patch can throttle write requests really.
+
+Fixes: 07757588e507 ("block/mq-deadline: Reserve 25% of scheduler tags for synchronous requests")
+
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/1691061162-22898-1-git-send-email-zhiguo.niu@unisoc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/auditsc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/mq-deadline.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/auditsc.c b/kernel/auditsc.c
-index addeed3df15d3..8dfd581cd5543 100644
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -2456,6 +2456,8 @@ void __audit_inode_child(struct inode *parent,
- 		}
- 	}
+diff --git a/block/mq-deadline.c b/block/mq-deadline.c
+index 5839a027e0f05..7e043d4a78f84 100644
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -620,8 +620,9 @@ static void dd_depth_updated(struct blk_mq_hw_ctx *hctx)
+ 	struct request_queue *q = hctx->queue;
+ 	struct deadline_data *dd = q->elevator->elevator_data;
+ 	struct blk_mq_tags *tags = hctx->sched_tags;
++	unsigned int shift = tags->bitmap_tags.sb.shift;
  
-+	cond_resched();
-+
- 	/* is there a matching child entry? */
- 	list_for_each_entry(n, &context->names_list, list) {
- 		/* can only match entries that have a name */
+-	dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
++	dd->async_depth = max(1U, 3 * (1U << shift)  / 4);
+ 
+ 	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, dd->async_depth);
+ }
 -- 
 2.40.1
 
