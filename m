@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F651170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE40C433C7;
-	Mon, 11 Sep 2023 14:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2231A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EF9C433C7;
+	Mon, 11 Sep 2023 14:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442277;
-	bh=WX0MHsCwvTojTgKubD8jUhF3HHKi9n22FSL3p8S6BJM=;
+	s=korg; t=1694442280;
+	bh=lXXY3X3TcAVWOSFe/5a2cO4Yj6yIhctzHvULzWB0ni4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I91iKVw5z1D4OsMzaAyGiHSNsqjDh+aVKTNVQizsXkpI72dtUheHEBalN6j3O2cZ3
-	 f/RK7/nShlWrgeIV+0snrxaD5aPAQTA6UC/wMPw/MubmY+6tXyj7gBxA3ZKoikMNTo
-	 KNkvVVDKoC3Csrq51wkPoam+0BPE/b/H4aRuRXc8=
+	b=n5lCcCC3U6d71Lt1tcC87ULWtBrhHjDui+8nRDAA8No6K2rRCRqNPlxN51fkbh+RV
+	 VRUB+Yvm/yb+t+uYp7oD8my0dgsrm84Rrs0b5Y2Tp5jqs71KCemH0/f1I2CSRa8hLA
+	 bO8L06x2MblTpPAxcgxalvS30p5AUzGKGDz4xexo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 709/739] mmc: renesas_sdhi: register irqs before registering controller
-Date: Mon, 11 Sep 2023 15:48:28 +0200
-Message-ID: <20230911134710.886462878@linuxfoundation.org>
+	Yunlong Xing <yunlong.xing@unisoc.com>,
+	Enlin Mu <enlin.mu@unisoc.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.5 710/739] pstore/ram: Check start of empty przs during init
+Date: Mon, 11 Sep 2023 15:48:29 +0200
+Message-ID: <20230911134710.914028793@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,58 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Enlin Mu <enlin.mu@unisoc.com>
 
-commit 74f45de394d979cc7770271f92fafa53e1ed3119 upstream.
+commit fe8c3623ab06603eb760444a032d426542212021 upstream.
 
-IRQs should be ready to serve when we call mmc_add_host() via
-tmio_mmc_host_probe(). To achieve that, ensure that all irqs are masked
-before registering the handlers.
+After commit 30696378f68a ("pstore/ram: Do not treat empty buffers as
+valid"), initialization would assume a prz was valid after seeing that
+the buffer_size is zero (regardless of the buffer start position). This
+unchecked start value means it could be outside the bounds of the buffer,
+leading to future access panics when written to:
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+ sysdump_panic_event+0x3b4/0x5b8
+ atomic_notifier_call_chain+0x54/0x90
+ panic+0x1c8/0x42c
+ die+0x29c/0x2a8
+ die_kernel_fault+0x68/0x78
+ __do_kernel_fault+0x1c4/0x1e0
+ do_bad_area+0x40/0x100
+ do_translation_fault+0x68/0x80
+ do_mem_abort+0x68/0xf8
+ el1_da+0x1c/0xc0
+ __raw_writeb+0x38/0x174
+ __memcpy_toio+0x40/0xac
+ persistent_ram_update+0x44/0x12c
+ persistent_ram_write+0x1a8/0x1b8
+ ramoops_pstore_write+0x198/0x1e8
+ pstore_console_write+0x94/0xe0
+ ...
+
+To avoid this, also check if the prz start is 0 during the initialization
+phase. If not, the next prz sanity check case will discover it (start >
+size) and zap the buffer back to a sane state.
+
+Fixes: 30696378f68a ("pstore/ram: Do not treat empty buffers as valid")
+Cc: Yunlong Xing <yunlong.xing@unisoc.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230712140011.18602-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Enlin Mu <enlin.mu@unisoc.com>
+Link: https://lore.kernel.org/r/20230801060432.1307717-1-yunlong.xing@unisoc.com
+[kees: update commit log with backtrace and clarifications]
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/pstore/ram_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -1006,6 +1006,8 @@ int renesas_sdhi_probe(struct platform_d
- 		host->sdcard_irq_setbit_mask = TMIO_STAT_ALWAYS_SET_27;
- 		host->sdcard_irq_mask_all = TMIO_MASK_ALL_RCAR2;
- 		host->reset = renesas_sdhi_reset;
-+	} else {
-+		host->sdcard_irq_mask_all = TMIO_MASK_ALL;
- 	}
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -519,7 +519,7 @@ static int persistent_ram_post_init(stru
+ 	sig ^= PERSISTENT_RAM_SIG;
  
- 	/* Orginally registers were 16 bit apart, could be 32 or 64 nowadays */
-@@ -1100,9 +1102,7 @@ int renesas_sdhi_probe(struct platform_d
- 		host->ops.hs400_complete = renesas_sdhi_hs400_complete;
- 	}
- 
--	ret = tmio_mmc_host_probe(host);
--	if (ret < 0)
--		goto edisclk;
-+	sd_ctrl_write32_as_16_and_16(host, CTL_IRQ_MASK, host->sdcard_irq_mask_all);
- 
- 	num_irqs = platform_irq_count(pdev);
- 	if (num_irqs < 0) {
-@@ -1129,6 +1129,10 @@ int renesas_sdhi_probe(struct platform_d
- 			goto eirq;
- 	}
- 
-+	ret = tmio_mmc_host_probe(host);
-+	if (ret < 0)
-+		goto edisclk;
-+
- 	dev_info(&pdev->dev, "%s base at %pa, max clock rate %u MHz\n",
- 		 mmc_hostname(host->mmc), &res->start, host->mmc->f_max / 1000000);
- 
+ 	if (prz->buffer->sig == sig) {
+-		if (buffer_size(prz) == 0) {
++		if (buffer_size(prz) == 0 && buffer_start(prz) == 0) {
+ 			pr_debug("found existing empty buffer\n");
+ 			return 0;
+ 		}
 
 
