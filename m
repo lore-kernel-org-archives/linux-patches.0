@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FE311706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D7C433C8;
-	Mon, 11 Sep 2023 15:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A88F11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE28DC433C8;
+	Mon, 11 Sep 2023 15:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444597;
-	bh=BefLa8fgleMB0/aUIB7Pm3kl1kHxI8ieG7oxkhIojZM=;
+	s=korg; t=1694444600;
+	bh=QoOPl1LJBF/1BPSFlLurcMBfk6zyIbJKCHh+mk4yNOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QwxwUvdi/EtJpUNs7rELcX/oNUU1weeBc4iIE4d2YLy5FSvRpjr5bHH8tyrqz94a7
-	 FzAQm4O/WTrumu3BzASI9LXcsgSY8JQAfcfhHSeOLiGtZorDrjTCm2F8m7vqbEOBjn
-	 GVHVjY9FQ+w2HtO3WDI54t0EP7g/DDi9Zvu9m6u0=
+	b=K++DScaJzGwqb2esVUpZ9S1t8ueOjfsQ2GbWmxW381I9abZefuG4UTaUT3Jqn3Q0C
+	 92Nc2UklogR6P3Q3d09arps+KACKoPhy/pzF4DqCiVwkwIz4T2qRTHhlI1kUqGrzht
+	 onIV2O+FHLUx7JknxF73uIjojQMn0geWIvLAop6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Dmytro Maluka <dmy@semihalf.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/600] kprobes: Prohibit probing on CFI preamble symbol
-Date: Mon, 11 Sep 2023 15:41:20 +0200
-Message-ID: <20230911134634.985642721@linuxfoundation.org>
+Subject: [PATCH 6.1 021/600] ASoC: da7219: Check for failure reading AAD IRQ events
+Date: Mon, 11 Sep 2023 15:40:54 +0200
+Message-ID: <20230911134634.240317661@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,54 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Dmytro Maluka <dmy@semihalf.com>
 
-[ Upstream commit de02f2ac5d8cfb311f44f2bf144cc20002f1fbbd ]
+[ Upstream commit f0691dc16206f21b13c464434366e2cd632b8ed7 ]
 
-Do not allow to probe on "__cfi_" or "__pfx_" started symbol, because those
-are used for CFI and not executed. Probing it will break the CFI.
+When handling an AAD interrupt, if IRQ events read failed (for example,
+due to i2c "Transfer while suspended" failure, i.e. when attempting to
+read it while DA7219 is suspended, which may happen due to a spurious
+AAD interrupt), the events array contains garbage uninitialized values.
+So instead of trying to interprete those values and doing any actions
+based on them (potentially resulting in misbehavior, e.g. reporting
+bogus events), refuse to handle the interrupt.
 
-Link: https://lore.kernel.org/all/168904024679.116016.18089228029322008512.stgit@devnote2/
-
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Dmytro Maluka <dmy@semihalf.com>
+Link: https://lore.kernel.org/r/20230717193737.161784-3-dmy@semihalf.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ sound/soc/codecs/da7219-aad.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 00e177de91ccd..3da9726232ff9 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1545,6 +1545,17 @@ static int check_ftrace_location(struct kprobe *p)
- 	return 0;
- }
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index 49b1622e7bada..9251490548e8c 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -353,11 +353,15 @@ static irqreturn_t da7219_aad_irq_thread(int irq, void *data)
+ 	struct da7219_priv *da7219 = snd_soc_component_get_drvdata(component);
+ 	u8 events[DA7219_AAD_IRQ_REG_MAX];
+ 	u8 statusa;
+-	int i, report = 0, mask = 0;
++	int i, ret, report = 0, mask = 0;
  
-+static bool is_cfi_preamble_symbol(unsigned long addr)
-+{
-+	char symbuf[KSYM_NAME_LEN];
-+
-+	if (lookup_symbol_name(addr, symbuf))
-+		return false;
-+
-+	return str_has_prefix("__cfi_", symbuf) ||
-+		str_has_prefix("__pfx_", symbuf);
-+}
-+
- static int check_kprobe_address_safe(struct kprobe *p,
- 				     struct module **probed_mod)
- {
-@@ -1563,7 +1574,8 @@ static int check_kprobe_address_safe(struct kprobe *p,
- 	    within_kprobe_blacklist((unsigned long) p->addr) ||
- 	    jump_label_text_reserved(p->addr, p->addr) ||
- 	    static_call_text_reserved(p->addr, p->addr) ||
--	    find_bug((unsigned long)p->addr)) {
-+	    find_bug((unsigned long)p->addr) ||
-+	    is_cfi_preamble_symbol((unsigned long)p->addr)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ 	/* Read current IRQ events */
+-	regmap_bulk_read(da7219->regmap, DA7219_ACCDET_IRQ_EVENT_A,
+-			 events, DA7219_AAD_IRQ_REG_MAX);
++	ret = regmap_bulk_read(da7219->regmap, DA7219_ACCDET_IRQ_EVENT_A,
++			       events, DA7219_AAD_IRQ_REG_MAX);
++	if (ret) {
++		dev_warn_ratelimited(component->dev, "Failed to read IRQ events: %d\n", ret);
++		return IRQ_NONE;
++	}
+ 
+ 	if (!events[DA7219_AAD_IRQ_REG_A] && !events[DA7219_AAD_IRQ_REG_B])
+ 		return IRQ_NONE;
 -- 
 2.40.1
 
