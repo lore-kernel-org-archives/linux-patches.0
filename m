@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A491911715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:12:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252EAC433C7;
-	Mon, 11 Sep 2023 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D0B11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:12:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6761C433C7;
+	Mon, 11 Sep 2023 15:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445125;
-	bh=fWLhTpsGi+XWPvOPdDgq1zu47fA5MPrEmk6DXZiu6PI=;
+	s=korg; t=1694445128;
+	bh=Xj3Wbhd5WKySP5f1iYsJuOSqYDlaB/5C4qacAk7oq/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IHdVQ7O3HuECmk7kfzPG89MD23TTtpDgILuVDwrODDqlYBnP/9aWx7tR9XEgBdW4/
-	 seQ8QTDxytsi+FQz9Ga8LRqjcHpRw/iXA3ClUwS8Yk1eLIIx3ykOKS/iGaEyYBGHbm
-	 4qbS/hWvWxji7N84P/puSEb5XSruwpWNLqwBQI98=
+	b=0c4xU9GuFTf7HxqqQ4yMaO9fYG/4ew4+NIUDQD/5B6pN5qgTDVkxYae4kS/kIlvVU
+	 fCln/8yBzlRHF2O4V3aI8cNcYdV38iev5XbzCMqMQu01WI8ZUjY22+Q05Vi6jim20P
+	 u5NxXZxkxhK2o7YNj1/E3NKmI5nQW7L/r14mArLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/600] net/sched: sch_hfsc: Ensure inner classes have fsc curve
-Date: Mon, 11 Sep 2023 15:44:02 +0200
-Message-ID: <20230911134639.786154648@linuxfoundation.org>
+Subject: [PATCH 6.1 236/600] arm64: dts: qcom: pm8350: fix thermal zone name
+Date: Mon, 11 Sep 2023 15:44:29 +0200
+Message-ID: <20230911134640.568365886@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,42 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Budimir Markovic <markovicbudimir@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit b3d26c5702c7d6c45456326e56d2ccf3f103e60f ]
+[ Upstream commit 64f19c06f704846db5e4885ca63c689d9bef5723 ]
 
-HFSC assumes that inner classes have an fsc curve, but it is currently
-possible for classes without an fsc curve to become parents. This leads
-to bugs including a use-after-free.
+The name of the thermal zone in pm8350.dtsi (pm8350c-thermal) conflicts
+with the thermal zone in pm8350c.dtsi. Rename the thermal zone according
+to the chip name.
 
-Don't allow non-root classes without HFSC_FSC to become parents.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20230824084905.422-1-markovicbudimir@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7a79b95f4288 ("arm64: dts: qcom: pm8350: add temp sensor and thermal zone config")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230707123027.1510723-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/pm8350.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 70b0c5873d326..61d52594ff6d8 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -1012,6 +1012,10 @@ hfsc_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 		if (parent == NULL)
- 			return -ENOENT;
- 	}
-+	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
-+		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
-+		return -EINVAL;
-+	}
+diff --git a/arch/arm64/boot/dts/qcom/pm8350.dtsi b/arch/arm64/boot/dts/qcom/pm8350.dtsi
+index 2dfeb99300d74..9ed9ba23e81e4 100644
+--- a/arch/arm64/boot/dts/qcom/pm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8350.dtsi
+@@ -8,7 +8,7 @@
  
- 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
- 		return -EINVAL;
+ / {
+ 	thermal-zones {
+-		pm8350_thermal: pm8350c-thermal {
++		pm8350_thermal: pm8350-thermal {
+ 			polling-delay-passive = <100>;
+ 			polling-delay = <0>;
+ 			thermal-sensors = <&pm8350_temp_alarm>;
 -- 
 2.40.1
 
