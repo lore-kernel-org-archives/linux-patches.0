@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E086411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6209EC433C8;
-	Mon, 11 Sep 2023 15:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD0F11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3B6C433C8;
+	Mon, 11 Sep 2023 15:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445285;
-	bh=wuuQxkqdlaKhAPeF6YfbdiFIk5/T3j6YxfhingqXH+g=;
+	s=korg; t=1694445288;
+	bh=bjNL/FppvAcc/H+XGzELytcvevrDSr9/OSqvzJFMzPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0KPLsM2wZnCWjnjjgQ5n1hQgAGYO1skwTPoz5OdryM2M1zmyq5iUc/rdnehnL+S14
-	 /FkRkWhDXQeezXdBBM1rCUoAVvg5KYNblhCLbQETAwVCUplfqgI5/u6+WUjWcFfgqh
-	 9MPceUAF4vz+peRu66DixcKa7s4LyRjumX1Ms+8U=
+	b=gxHUDA9hZ9quKYQe70SrhVnUCYlw/njTsE2ku2KiNJiquQ0gr8UMcXVSy2LZEnxUV
+	 rC+tpgSzsx+id8kPji9xE637Etm6k0NnLUXG5+MXyGhl+4AzUUM5Xf2I+7KHufKZx/
+	 RIKnH90sgb5GLiU+IxS3EZSTo8nJVG5GA0Q2jLUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 254/600] arm64: tegra: Fix HSUART for Jetson AGX Orin
-Date: Mon, 11 Sep 2023 15:44:47 +0200
-Message-ID: <20230911134641.100924136@linuxfoundation.org>
+Subject: [PATCH 6.1 255/600] arm64: dts: qcom: sm8250-sony-xperia: correct GPIO keys wakeup again
+Date: Mon, 11 Sep 2023 15:44:48 +0200
+Message-ID: <20230911134641.133280136@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,45 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 861dbb2b15b1049113887fb95e856f7123eea0cc ]
+[ Upstream commit b8fbeea0253211d97c579eae787274633d3eaf0d ]
 
-After commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
-reset-names") was applied, the HSUART failed to probe and the following
-error is seen:
+gpio-keys,wakeup is a deprecated property:
 
- serial-tegra 3100000.serial: Couldn't get the reset
- serial-tegra: probe of 3100000.serial failed with error -2
+  m8250-sony-xperia-edo-pdx206.dtb: gpio-keys: key-camera-focus: Unevaluated properties are not allowed ('gpio-key,wakeup' was unexpected)
 
-Commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
-reset-names") is correct because the "reset-names" property is not
-needed for 8250 UARTs. However, the "reset-names" is required for the
-HSUART and should have been populated as part of commit ff578db7b693
-("arm64: tegra: Enable UART instance on 40-pin header") that
-enabled the HSUART for Jetson AGX Orin. Fix this by populating the
-"reset-names" property for the HSUART on Jetson AGX Orin.
-
-Fixes: ff578db7b693 ("arm64: tegra: Enable UART instance on 40-pin header")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: a422c6a91a66 ("arm64: dts: qcom: sm8250-edo: Rectify gpio-keys")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230711063011.16222-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
-index 57ab753288144..f094011be9ed9 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
-@@ -2004,6 +2004,7 @@ interrupt-controller@2a40000 {
- 
- 		serial@3100000 {
- 			compatible = "nvidia,tegra194-hsuart";
-+			reset-names = "serial";
- 			status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+index 259798a959749..3b710c6a326a5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+@@ -60,7 +60,7 @@ key-camera-focus {
+ 			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
+ 			debounce-interval = <15>;
+ 			linux,can-disable;
+-			gpio-key,wakeup;
++			wakeup-source;
  		};
  
+ 		key-camera-snapshot {
+@@ -69,7 +69,7 @@ key-camera-snapshot {
+ 			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
+ 			debounce-interval = <15>;
+ 			linux,can-disable;
+-			gpio-key,wakeup;
++			wakeup-source;
+ 		};
+ 
+ 		key-vol-down {
 -- 
 2.40.1
 
