@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781FE1170E;
-	Mon, 11 Sep 2023 13:57:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DCBC433C7;
-	Mon, 11 Sep 2023 13:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550E51170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C306BC433C9;
+	Mon, 11 Sep 2023 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440653;
-	bh=CU1g8Lrs6EaUNCYAPQHJ7zHQs/cwzFvskhy2PCvPc98=;
+	s=korg; t=1694440656;
+	bh=zNs9SatSEwXaFDGbxX/ytRZawcLCZfOEXWuSSSIdgKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1YVtmnarCG1NzXEslc0QO12B4eWDiAycYzExvbrbPxKyFvPCCAgDkzl19UqGyjTZ
-	 ioVI+/Q03ulHEgj5lZm9pLsIsD1nRv6cYBQPB07OFx8uR6KdPYVDBXIr9tgDskC3nS
-	 77p3jjpI5betd/rMrMr4de6hAKZuPQ7GDclEBTm8=
+	b=mE46kBK48QYkow812/Uyf5JrG4atKISzecb6mzKvKQuVHx3NcHcAJulayKRhfOkvP
+	 BKs8Lni7ql1orQdZ3rntu0vMA0eok8iiQzKgZokos1AbGWLKrzWieCUSCXcNLmh1vP
+	 HQr9/ZOnSMmOzeHZBGpi8fZ1RraMWsHUbTxsE/oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ondrej=20Mosn=C3=A1=C4=8Dek?= <omosnacek@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.vnet.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-crypto@vger.kernel.org,
-	linux-s390@vger.kernel.org,
-	regressions@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Kui-Feng Lee <thinker.li@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 110/739] crypto: af_alg - Fix missing initialisation affecting gcm-aes-s390
-Date: Mon, 11 Sep 2023 15:38:29 +0200
-Message-ID: <20230911134654.173764504@linuxfoundation.org>
+Subject: [PATCH 6.5 111/739] bpf: fix bpf_dynptr_slice() to stop return an ERR_PTR.
+Date: Mon, 11 Sep 2023 15:38:30 +0200
+Message-ID: <20230911134654.200582684@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,87 +37,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kui-Feng Lee <thinker.li@gmail.com>
 
-[ Upstream commit 6a4b8aa0a916b39a39175584c07222434fa6c6ef ]
+[ Upstream commit 5426700e6841bf72e652e34b5cec68eadf442435 ]
 
-Fix af_alg_alloc_areq() to initialise areq->first_rsgl.sgl.sgt.sgl to point
-to the scatterlist array in areq->first_rsgl.sgl.sgl.
+Verify if the pointer obtained from bpf_xdp_pointer() is either an error or
+NULL before returning it.
 
-Without this, the gcm-aes-s390 driver will oops when it tries to do
-gcm_walk_start() on req->dst because req->dst is set to the value of
-areq->first_rsgl.sgl.sgl by _aead_recvmsg() calling
-aead_request_set_crypt().
+The function bpf_dynptr_slice() mistakenly returned an ERR_PTR. Instead of
+solely checking for NULL, it should also verify if the pointer returned by
+bpf_xdp_pointer() is an error or NULL.
 
-The problem comes if an empty ciphertext is passed: the loop in
-af_alg_get_rsgl() just passes straight out and doesn't set areq->first_rsgl
-up.
-
-This isn't a problem on x86_64 using gcmaes_crypt_by_sg() because, as far
-as I can tell, that ignores req->dst and only uses req->src[*].
-
-[*] Is this a bug in aesni-intel_glue.c?
-
-The s390x oops looks something like:
-
- Unable to handle kernel pointer dereference in virtual kernel address space
- Failing address: 0000000a00000000 TEID: 0000000a00000803
- Fault in home space mode while using kernel ASCE.
- AS:00000000a43a0007 R3:0000000000000024
- Oops: 003b ilc:2 [#1] SMP
- ...
- Call Trace:
-  [<000003ff7fc3d47e>] gcm_walk_start+0x16/0x28 [aes_s390]
-  [<00000000a2a342f2>] crypto_aead_decrypt+0x9a/0xb8
-  [<00000000a2a60888>] aead_recvmsg+0x478/0x698
-  [<00000000a2e519a0>] sock_recvmsg+0x70/0xb0
-  [<00000000a2e51a56>] sock_read_iter+0x76/0xa0
-  [<00000000a273e066>] vfs_read+0x26e/0x2a8
-  [<00000000a273e8c4>] ksys_read+0xbc/0x100
-  [<00000000a311d808>] __do_syscall+0x1d0/0x1f8
-  [<00000000a312ff30>] system_call+0x70/0x98
- Last Breaking-Event-Address:
-  [<000003ff7fc3e6b4>] gcm_aes_crypt+0x104/0xa68 [aes_s390]
-
-Fixes: c1abe6f570af ("crypto: af_alg: Use extract_iter_to_sg() to create scatterlists")
-Reported-by: Ondrej Mosnáček <omosnacek@gmail.com>
-Link: https://lore.kernel.org/r/CAAUqJDuRkHE8fPgZJGaKjUjd3QfGwzfumuJBmStPqBhubxyk_A@mail.gmail.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: Sven Schnelle <svens@linux.ibm.com>
-cc: Harald Freudenberger <freude@linux.vnet.ibm.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-crypto@vger.kernel.org
-cc: linux-s390@vger.kernel.org
-cc: regressions@lists.linux.dev
-Tested-by: Sven Schnelle <svens@linux.ibm.com>
-Tested-by: Ondrej Mosnáček <omosnacek@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/bpf/d1360219-85c3-4a03-9449-253ea905f9d1@moroto.mountain/
+Fixes: 66e3a13e7c2c ("bpf: Add bpf_dynptr_slice and bpf_dynptr_slice_rdwr")
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: Kui-Feng Lee <thinker.li@gmail.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20230803231206.1060485-1-thinker.li@gmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index 10efb56d8b481..ad02ca0a8cdde 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1192,6 +1192,7 @@ struct af_alg_async_req *af_alg_alloc_areq(struct sock *sk,
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 9e80efa59a5d6..8812397a5cd96 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2243,7 +2243,7 @@ __bpf_kfunc void *bpf_dynptr_slice(const struct bpf_dynptr_kern *ptr, u32 offset
+ 	case BPF_DYNPTR_TYPE_XDP:
+ 	{
+ 		void *xdp_ptr = bpf_xdp_pointer(ptr->data, ptr->offset + offset, len);
+-		if (xdp_ptr)
++		if (!IS_ERR_OR_NULL(xdp_ptr))
+ 			return xdp_ptr;
  
- 	areq->areqlen = areqlen;
- 	areq->sk = sk;
-+	areq->first_rsgl.sgl.sgt.sgl = areq->first_rsgl.sgl.sgl;
- 	areq->last_rsgl = NULL;
- 	INIT_LIST_HEAD(&areq->rsgl_list);
- 	areq->tsgl = NULL;
+ 		if (!buffer__opt)
 -- 
 2.40.1
 
