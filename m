@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792F811706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC008C433C8;
-	Mon, 11 Sep 2023 14:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B0B11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32C2C433C7;
+	Mon, 11 Sep 2023 14:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444172;
-	bh=e611wtltAL++bViiadXBOZwsEYNprNx33+z1D1cpSy4=;
+	s=korg; t=1694444175;
+	bh=2mJeSsA24BRslvpdi2mToUVRmDy3E7jBf6HqIrLRRW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGqMsf0t9NiEOuhxgyDB2XiDetL1eZ9PPeX47Wk0RPi1ro3+RAlP+WOm2JRZs2y3k
-	 iUNRIX8mbGWew0/MXD07MBkNDOEE+KaEMZTExEJNHu16CMLog/8vEUt65gL/pnb6S5
-	 tTB7T0N3oRJOZtTgV5X9HVoxqAiyEEVovKHI1YHo=
+	b=be42FQT0gNvN2I8sJtGsOivJ8F0fLt9SL2p17eZ999PEjHDPyNbS3zMs18ewHHMwC
+	 RJjvvRIESF+gViwpduZfnzbMSv2Ye1CWFkv0iR2XQkFGsI9snntjmgOJUcMgAuHLTY
+	 IjSGe4SD4wAcdor2CzTp/vGyngBRpEeKvmI5RTmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Laight <David.Laight@ACULAB.COM>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	Kyle Zeng <zengyhkyle@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 635/737] igmp: limit igmpv3_newpack() packet size to IP_MAX_MTU
-Date: Mon, 11 Sep 2023 15:48:14 +0200
-Message-ID: <20230911134708.268207580@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.4 636/737] netfilter: ipset: add the missing IP_SET_HASH_WITH_NET0 macro for ip_set_hash_netportnet.c
+Date: Mon, 11 Sep 2023 15:48:15 +0200
+Message-ID: <20230911134708.297167920@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,42 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kyle Zeng <zengyhkyle@gmail.com>
 
-commit c3b704d4a4a265660e665df51b129e8425216ed1 upstream.
+commit 050d91c03b28ca479df13dfb02bcd2c60dd6a878 upstream.
 
-This is a follow up of commit 915d975b2ffa ("net: deal with integer
-overflows in kmalloc_reserve()") based on David Laight feedback.
+The missing IP_SET_HASH_WITH_NET0 macro in ip_set_hash_netportnet can
+lead to the use of wrong `CIDR_POS(c)` for calculating array offsets,
+which can lead to integer underflow. As a result, it leads to slab
+out-of-bound access.
+This patch adds back the IP_SET_HASH_WITH_NET0 macro to
+ip_set_hash_netportnet to address the issue.
 
-Back in 2010, I failed to realize malicious users could set dev->mtu
-to arbitrary values. This mtu has been since limited to 0x7fffffff but
-regardless of how big dev->mtu is, it makes no sense for igmpv3_newpack()
-to allocate more than IP_MAX_MTU and risk various skb fields overflows.
-
-Fixes: 57e1ab6eaddc ("igmp: refine skb allocations")
-Link: https://lore.kernel.org/netdev/d273628df80f45428e739274ab9ecb72@AcuMS.aculab.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: David Laight <David.Laight@ACULAB.COM>
-Cc: Kyle Zeng <zengyhkyle@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 886503f34d63 ("netfilter: ipset: actually allow allowable CIDR 0 in hash:net,port,net")
+Suggested-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Kyle Zeng <zengyhkyle@gmail.com>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/igmp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_hash_netportnet.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -353,8 +353,9 @@ static struct sk_buff *igmpv3_newpack(st
- 	struct flowi4 fl4;
- 	int hlen = LL_RESERVED_SPACE(dev);
- 	int tlen = dev->needed_tailroom;
--	unsigned int size = mtu;
-+	unsigned int size;
+--- a/net/netfilter/ipset/ip_set_hash_netportnet.c
++++ b/net/netfilter/ipset/ip_set_hash_netportnet.c
+@@ -36,6 +36,7 @@ MODULE_ALIAS("ip_set_hash:net,port,net")
+ #define IP_SET_HASH_WITH_PROTO
+ #define IP_SET_HASH_WITH_NETS
+ #define IPSET_NET_COUNT 2
++#define IP_SET_HASH_WITH_NET0
  
-+	size = min(mtu, IP_MAX_MTU);
- 	while (1) {
- 		skb = alloc_skb(size + hlen + tlen,
- 				GFP_ATOMIC | __GFP_NOWARN);
+ /* IPv4 variant */
+ 
 
 
