@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B0B11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A4CC433C8;
-	Mon, 11 Sep 2023 15:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECF911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8EDC433C8;
+	Mon, 11 Sep 2023 15:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445696;
-	bh=OWETa99FvWRO8Sqmt+/JQRDqKI4SoMeTPTcC8RaqZkM=;
+	s=korg; t=1694445699;
+	bh=PvvSPQPEMuSLN/cNRsK/Xf+tViP9mPd6Jn8ihFGywno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yEIkxn200pwpWOhDt5DH6rYL97uHphQPzXB+AANOuPQ6V1sit5CbOhjvCYmW3TE8w
-	 M5FAbTZdQrmK82E9EXmEBdjqBLqQc15l+n0/npU6TaIScbSpB1ld5DmrGpVY5zpnMd
-	 XVzhshw5eWHDxEZ5nDR4CE/kyyM9ALuzCz6kW3mk=
+	b=cRLlrHkzHmDI6IblxygyzqexEXtzthyG5BxMuWaiuavw+n6fxKgCXPQi523QgJbtS
+	 8H3ekr1N2bcerkta0vcgLQ1ZVro+HczpjVmNigdlc70HUV+s4vNvse2qYmSyHqspom
+	 Q3hALgIxvbyl2/sRTbx3a0K4G6RSdLicHQY79z44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 440/600] extcon: cht_wc: add POWER_SUPPLY dependency
-Date: Mon, 11 Sep 2023 15:47:53 +0200
-Message-ID: <20230911134646.637890366@linuxfoundation.org>
+Subject: [PATCH 6.1 441/600] iommu/mediatek: Remove unused "mapping" member from mtk_iommu_data
+Date: Mon, 11 Sep 2023 15:47:54 +0200
+Message-ID: <20230911134646.665830968@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,45 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Yong Wu <yong.wu@mediatek.com>
 
-[ Upstream commit d20a3a8a32e3fa564ff25da860c5fc1a97642dfe ]
+[ Upstream commit 9ff894edd542618dad2fef538f8272c620a501db ]
 
-The driver fails to link when CONFIG_POWER_SUPPLY is disabled:
+Just remove a unused variable that only is for mtk_iommu_v1.
 
-x86_64-linux-ld: vmlinux.o: in function `cht_wc_extcon_psy_get_prop':
-extcon-intel-cht-wc.c:(.text+0x15ccda7): undefined reference to `power_supply_get_drvdata'
-x86_64-linux-ld: vmlinux.o: in function `cht_wc_extcon_pwrsrc_event':
-extcon-intel-cht-wc.c:(.text+0x15cd3e9): undefined reference to `power_supply_changed'
-x86_64-linux-ld: vmlinux.o: in function `cht_wc_extcon_probe':
-extcon-intel-cht-wc.c:(.text+0x15cd596): undefined reference to `devm_power_supply_register'
-
-It should be possible to change the driver to not require this at
-compile time and still provide other functions, but adding a hard
-Kconfig dependency does not seem to have any practical downsides
-and is simpler since the option is normally enabled anyway.
-
-Fixes: 66e31186cd2aa ("extcon: intel-cht-wc: Add support for registering a power_supply class-device")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20221018024258.19073-7-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: cf69ef46dbd9 ("iommu/mediatek: Fix two IOMMU share pagetable issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/mtk_iommu.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
-index 290186e44e6bd..4dd52a6a5b48d 100644
---- a/drivers/extcon/Kconfig
-+++ b/drivers/extcon/Kconfig
-@@ -62,6 +62,7 @@ config EXTCON_INTEL_CHT_WC
- 	tristate "Intel Cherrytrail Whiskey Cove PMIC extcon driver"
- 	depends on INTEL_SOC_PMIC_CHTWC
- 	depends on USB_SUPPORT
-+	depends on POWER_SUPPLY
- 	select USB_ROLE_SWITCH
- 	help
- 	  Say Y here to enable extcon support for charger detection / control
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 2ae5a6058a34a..5ff8982712e0f 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -223,10 +223,7 @@ struct mtk_iommu_data {
+ 	struct device			*smicomm_dev;
+ 
+ 	struct mtk_iommu_bank_data	*bank;
+-
+-	struct dma_iommu_mapping	*mapping; /* For mtk_iommu_v1.c */
+ 	struct regmap			*pericfg;
+-
+ 	struct mutex			mutex; /* Protect m4u_group/m4u_dom above */
+ 
+ 	/*
 -- 
 2.40.1
 
