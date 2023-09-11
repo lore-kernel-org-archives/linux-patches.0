@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B625C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FC6C433C7;
-	Mon, 11 Sep 2023 14:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04291170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30840C433C8;
+	Mon, 11 Sep 2023 14:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441891;
-	bh=TAq68fyOYYBgGQdRO1d0HisWKQWKt/P9858ocE14wto=;
+	s=korg; t=1694441894;
+	bh=Dh5bkD2v5lO44nje3QGcH0fscoGjOJlJyA60koBFXCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahz0C7XDitCLH73jP57Fe3N6kLsW5Bi8l+PeHp+LDyDhVJe8EJu+U/44LuKLQeIzh
-	 Xa0TP/b+ytw0vtOTD5A6IJJlx7WyhunL4/yiZE3C+KOc2jAQ//aXNJhpjj8bUPGdhr
-	 i8tYtc+TZPp0L83wNthvyR1ST2Z7Zir3ufEv17mY=
+	b=baUieoN11N/9dpQBmHkKAenmTqLbEiDFBTymI2l5K/emH7HEXfxYpSvgKd0FZjtgl
+	 dvsxiXKqsEZLa7/leX5aLKdTzALPv3/U9djOyuMvTXggyzwi8IrdmdXw87jToyaRuN
+	 cZXbrfJsFUllagPkIW5k/5eofjPjqpArKRejpxi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 572/739] serial: tegra: handle clk prepare error in tegra_uart_hw_init()
-Date: Mon, 11 Sep 2023 15:46:11 +0200
-Message-ID: <20230911134707.072159735@linuxfoundation.org>
+Subject: [PATCH 6.5 573/739] Documentation: devices.txt: Remove ttyIOC*
+Date: Mon, 11 Sep 2023 15:46:12 +0200
+Message-ID: <20230911134707.110830987@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,39 +40,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 5abd01145d0cc6cd1b7c2fe6ee0b9ea0fa13671e ]
+[ Upstream commit e327fdc262345ca37b358a51ff0c0046ab1b8d15 ]
 
-In tegra_uart_hw_init(), the return value of clk_prepare_enable() should
-be checked since it might fail.
+IOC4 serial driver was removed, remove associated devices
+from documentation.
 
-Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Link: https://lore.kernel.org/r/20230817105406.228674-1-yiyang13@huawei.com
+Fixes: a017ef17cfd8 ("tty/serial: remove the ioc4_serial driver")
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/b5deb1222eb92017f0efe5b5cae127ac11983b3d.1691992627.git.christophe.leroy@csgroup.eu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/devices.txt | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index 1cf08b33456c9..37e1e05bc87e6 100644
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -998,7 +998,11 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	tup->ier_shadow = 0;
- 	tup->current_baud = 0;
+diff --git a/Documentation/admin-guide/devices.txt b/Documentation/admin-guide/devices.txt
+index b1b57f638b94f..75a408f72402c 100644
+--- a/Documentation/admin-guide/devices.txt
++++ b/Documentation/admin-guide/devices.txt
+@@ -2692,14 +2692,8 @@
+ 		 46 = /dev/ttyCPM0		PPC CPM (SCC or SMC) - port 0
+ 		    ...
+ 		 49 = /dev/ttyCPM5		PPC CPM (SCC or SMC) - port 3
+-		 50 = /dev/ttyIOC0		Altix serial card
+-		    ...
+-		 81 = /dev/ttyIOC31		Altix serial card
+ 		 82 = /dev/ttyVR0		NEC VR4100 series SIU
+ 		 83 = /dev/ttyVR1		NEC VR4100 series DSIU
+-		 84 = /dev/ttyIOC84		Altix ioc4 serial card
+-		    ...
+-		 115 = /dev/ttyIOC115		Altix ioc4 serial card
+ 		 116 = /dev/ttySIOC0		Altix ioc3 serial card
+ 		    ...
+ 		 147 = /dev/ttySIOC31		Altix ioc3 serial card
+@@ -2762,9 +2756,6 @@
+ 		 46 = /dev/cucpm0		Callout device for ttyCPM0
+ 		    ...
+ 		 49 = /dev/cucpm5		Callout device for ttyCPM5
+-		 50 = /dev/cuioc40		Callout device for ttyIOC40
+-		    ...
+-		 81 = /dev/cuioc431		Callout device for ttyIOC431
+ 		 82 = /dev/cuvr0		Callout device for ttyVR0
+ 		 83 = /dev/cuvr1		Callout device for ttyVR1
  
--	clk_prepare_enable(tup->uart_clk);
-+	ret = clk_prepare_enable(tup->uart_clk);
-+	if (ret) {
-+		dev_err(tup->uport.dev, "could not enable clk\n");
-+		return ret;
-+	}
- 
- 	/* Reset the UART controller to clear all previous status.*/
- 	reset_control_assert(tup->rst);
 -- 
 2.40.1
 
