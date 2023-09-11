@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C891170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC272C433C9;
-	Mon, 11 Sep 2023 14:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C87A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17D9C433C8;
+	Mon, 11 Sep 2023 14:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442045;
-	bh=lJmwMQonsXHA3GnCQ1U6FiO521QAHveccFEneDj4X1s=;
+	s=korg; t=1694442048;
+	bh=Xc9SSexNzep9L+H+EJveJBdndh2/+7x24j3XzEECMF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srr7+P7i8LWvWpkiIxGx1/Lwp8JvewYBVlSe+Vxovi1NihCb250RNYmZYP9OW6Elt
-	 2wX0IZjnnzIhJECKdWL9wlUCMnnFMbnpdLG3NsVfri0FLQFbdz5D5knAQ/M+I5glOT
-	 7HWtFlF/hdUGfnQXPC5X7/LEb4igkNIRt8BeeYn4=
+	b=bIuLwo4yFCM2t4SdsSl0AtrSNEtkLmXSWgbqfkqKcH7v9+ak/mpgCjSPNbGH6uCSx
+	 Mlm6Lsov8sxu0I+vcpTwKYgQvYFdaQKxwZcU1gDzALTgaVDeNdJz8bnwheVLYD4R9L
+	 njYavMA+NzwI1AIEE0XlidwTJOG+Jw6NxGM/0JPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Marek Vasut <marex@denx.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 627/739] cpufreq: Fix the race condition while updating the transition_task of policy
-Date: Mon, 11 Sep 2023 15:47:06 +0200
-Message-ID: <20230911134708.610413765@linuxfoundation.org>
+Subject: [PATCH 6.5 610/739] thermal/drivers/imx8mm: Suppress log message on probe deferral
+Date: Mon, 11 Sep 2023 15:46:49 +0200
+Message-ID: <20230911134708.138002070@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,78 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 61bfbf7951ba561dcbdd5357702d3cbc2d447812 ]
+[ Upstream commit 4afcb58ea47e66c025d2b0a5f091dce5aaf95b0f ]
 
-The field 'transition_task' of policy structure is used to track the
-task which is performing the frequency transition. Using this field to
-print a warning once detect a case where the same task is calling
-_begin() again before completing the preivous frequency transition via
-the _end().
+nvmem_cell_read_u32() may return -EPROBE_DEFER if NVMEM supplier has not
+yet been probed. Future reprobe may succeed, so printing:
 
-However, there is a potential race condition in _end() and _begin() APIs
-while updating the field 'transition_task' of policy, the scenario is
-depicted below:
+  i.mx8mm_thermal 30260000.tmu: Failed to read OCOTP nvmem cell (-517).
 
-             Task A                            Task B
+to the log is confusing. Fix this by using dev_err_probe. This also
+elevates the message from warning to error, which is more correct: The
+log message is only ever printed in probe error path and probe aborts
+afterwards, so it really warrants an error-level message.
 
-        /* 1st freq transition */
-        Invoke _begin() {
-                ...
-                ...
-        }
-                                        /* 2nd freq transition */
-                                        Invoke _begin() {
-                                                ... //waiting for A to
-                                                ... //clear
-                                                ... //transition_ongoing
-                                                ... //in _end() for
-                                                ... //the 1st transition
-                                                        |
-        Change the frequency                            |
-                                                        |
-        Invoke _end() {                                 |
-                ...                                     |
-                ...                                     |
-                transition_ongoing = false;             V
-                                                transition_ongoing = true;
-                                                transition_task = current;
-                transition_task = NULL;
-                ... //A overwrites the task
-                ... //performing the transition
-                ... //result in error warning.
-        }
-
-To fix this race condition, the transition_lock of policy structure is
-now acquired before updating policy structure in _end() API. Which ensure
-that only one task can update the 'transition_task' field at a time.
-
-Link: https://lore.kernel.org/all/b3c61d8a-d52d-3136-fbf0-d1de9f1ba411@huawei.com/
-Fixes: ca654dc3a93d ("cpufreq: Catch double invocations of cpufreq_freq_transition_begin/end")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 403291648823 ("thermal/drivers/imx: Add support for loading calibration data from OCOTP")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20230708112647.2897294-1-a.fatoum@pengutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/imx8mm_thermal.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 50bbc969ffe53..5c655d7b96d4f 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -455,8 +455,10 @@ void cpufreq_freq_transition_end(struct cpufreq_policy *policy,
- 			    policy->cur,
- 			    policy->cpuinfo.max_freq);
+diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
+index d4b40869c7d7b..dd474166ca671 100644
+--- a/drivers/thermal/imx8mm_thermal.c
++++ b/drivers/thermal/imx8mm_thermal.c
+@@ -179,10 +179,8 @@ static int imx8mm_tmu_probe_set_calib_v1(struct platform_device *pdev,
+ 	int ret;
  
-+	spin_lock(&policy->transition_lock);
- 	policy->transition_ongoing = false;
- 	policy->transition_task = NULL;
-+	spin_unlock(&policy->transition_lock);
+ 	ret = nvmem_cell_read_u32(&pdev->dev, "calib", &ana0);
+-	if (ret) {
+-		dev_warn(dev, "Failed to read OCOTP nvmem cell (%d).\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to read OCOTP nvmem cell\n");
  
- 	wake_up(&policy->transition_wait);
- }
+ 	writel(FIELD_PREP(TASR_BUF_VREF_MASK,
+ 			  FIELD_GET(ANA0_BUF_VREF_MASK, ana0)) |
 -- 
 2.40.1
 
