@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1E611715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA60C433C8;
-	Mon, 11 Sep 2023 15:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A2E11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C80C433C8;
+	Mon, 11 Sep 2023 15:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444791;
-	bh=0M3DeVVC5f1vcGCNMhrRxvVYnZk2wO7crc23QTzDPtQ=;
+	s=korg; t=1694444794;
+	bh=1Ys1HDMifCoyYMdonIIOdP55VVHEsIP2nS9nHZZbohs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaDex9mm9/Wp295T3RTXXrt9GTw5PuMcSLTzG4UQlqwggSiaFPCXUg5bPkBOT4Gwd
-	 XityDAhLZwfQhTVgme5miDfqNvxIYEc9SJXFJ9CA8XcrY6wcf/WljrWVqrUAwbjtr/
-	 c1N0NWYhYb0nmSF/gHjEj104WG8mZF0GvfvjEA0A=
+	b=W1HInhBc4s+DggDhWJ/o3Ayf5iEP8p2ex75bVFEa/5bwaacYJsK4C3ra1Ea6SyQLQ
+	 oBzio4VI+wNrexSmOk80+HCMflSTNdwZKMxv62AkmID5sL0uBxe0/h+mCoqnunViMg
+	 +/lK6DEDZIhQ0BjT7OgosdtroaspFt51TNtKt1QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Mark Brown <broonie@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/600] arm64/ptrace: Clean up error handling path in sve_set_common()
-Date: Mon, 11 Sep 2023 15:42:29 +0200
-Message-ID: <20230911134637.032027786@linuxfoundation.org>
+Subject: [PATCH 6.1 117/600] sched/psi: Select KERNFS as needed
+Date: Mon, 11 Sep 2023 15:42:30 +0200
+Message-ID: <20230911134637.066539223@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,38 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 5f69ca4229c7d8e23f238174827ee7aa49b0bcb2 ]
+[ Upstream commit 98dfdd9ee93995a408192dbbf3dd219ba23e3738 ]
 
-All error handling paths go to 'out', except this one. Be consistent and
-also branch to 'out' here.
+Users of KERNFS should select it to enforce its being built, so
+do this to prevent a build error.
 
-Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/aa61301ed2dfd079b74b37f7fede5f179ac3087a.1689616473.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Will Deacon <will@kernel.org>
+In file included from ../kernel/sched/build_utility.c:97:
+../kernel/sched/psi.c: In function 'psi_trigger_poll':
+../kernel/sched/psi.c:1479:17: error: implicit declaration of function 'kernfs_generic_poll' [-Werror=implicit-function-declaration]
+ 1479 |                 kernfs_generic_poll(t->of, wait);
+
+Fixes: aff037078eca ("sched/psi: use kernfs polling functions for PSI trigger polling")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Link: lore.kernel.org/r/202307310732.r65EQFY0-lkp@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/ptrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ init/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index f606c942f514e..e1f6366b7ccdf 100644
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -896,7 +896,8 @@ static int sve_set_common(struct task_struct *target,
- 			break;
- 		default:
- 			WARN_ON_ONCE(1);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto out;
- 		}
+diff --git a/init/Kconfig b/init/Kconfig
+index 2028ed4d50f5b..de255842f5d09 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -627,6 +627,7 @@ config TASK_IO_ACCOUNTING
  
- 		/*
+ config PSI
+ 	bool "Pressure stall information tracking"
++	select KERNFS
+ 	help
+ 	  Collect metrics that indicate how overcommitted the CPU, memory,
+ 	  and IO capacity are in the system.
 -- 
 2.40.1
 
