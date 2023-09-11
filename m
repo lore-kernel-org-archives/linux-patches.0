@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD96E1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C51C433C8;
-	Mon, 11 Sep 2023 14:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FC811711
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CEBC433CD;
+	Mon, 11 Sep 2023 14:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441629;
-	bh=CFixSLalqK3HW0X6AxOUd60nlL57UNmh+1ah0w7VWT8=;
+	s=korg; t=1694441632;
+	bh=qf9khgTQ6Ls27khNMmLk4ckh4ufb9wzgSUrIYOFK7sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1pVKv+FBP2WArEXfHvOgjYWOY/C1x06sDCMXPmDUn920QEU5nJPmPFul6l5+d76U
-	 gFHK4ET9czyq9o1ZUQnwqcqS0b6xWB5NLsKgxyEUwWBHaKKkvwcEOEBCd4sPzYFr04
-	 sWj7T6uyWizFDLm0mdQzL3IuZHeEEB3EheUu7L3g=
+	b=OxdLC1RX+qGOro3QDKcJx3pAVxBYR2QxGegj69cjjjE69nMV47XJ3p+L3U0c1+HKQ
+	 IWclRzQgPk698xOt5Q2od6sUbMp23GQPJ6lpUggK/ZaO2Jk6IZk3p93+NYZmplWcee
+	 nR0b7F5kiU8Ljd1ydS/NzaPHzE0/vRbuSgBSkAkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 481/739] scsi: RDMA/srp: Fix residual handling
-Date: Mon, 11 Sep 2023 15:44:40 +0200
-Message-ID: <20230911134704.575952302@linuxfoundation.org>
+Subject: [PATCH 6.5 464/739] dt-bindings: extcon: maxim,max77843: restrict connector properties
+Date: Mon, 11 Sep 2023 15:44:23 +0200
+Message-ID: <20230911134704.111138633@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,47 +40,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 89e637c19b2441aabc8dbf22a8745b932fd6996e ]
+[ Upstream commit fb2c3f72e819254d8c76de95917e5f9ff232586c ]
 
-Although the code for residual handling in the SRP initiator follows the
-SCSI documentation, that documentation has never been correct. Because
-scsi_finish_command() starts from the data buffer length and subtracts the
-residual, scsi_set_resid() must not be called if a residual overflow
-occurs. Hence remove the scsi_set_resid() calls from the SRP initiator if a
-residual overflow occurrs.
+Do not allow any other properties in connector child, except what
+usb-connector.yaml evaluates.
 
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Fixes: 9237f04e12cc ("scsi: core: Fix scsi_get/set_resid() interface")
-Fixes: e714531a349f ("IB/srp: Fix residual handling")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230724200843.3376570-3-bvanassche@acm.org
-Acked-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9729cad0278b ("dt-bindings: extcon: maxim,max77843: Add MAX77843 bindings")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 4 ----
- 1 file changed, 4 deletions(-)
+ Documentation/devicetree/bindings/extcon/maxim,max77843.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 0e513a7e5ac80..1574218764e0a 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -1979,12 +1979,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
+diff --git a/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml b/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
+index 1289605456408..55800fb0221d0 100644
+--- a/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
++++ b/Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
+@@ -23,6 +23,7 @@ properties:
  
- 		if (unlikely(rsp->flags & SRP_RSP_FLAG_DIUNDER))
- 			scsi_set_resid(scmnd, be32_to_cpu(rsp->data_in_res_cnt));
--		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DIOVER))
--			scsi_set_resid(scmnd, -be32_to_cpu(rsp->data_in_res_cnt));
- 		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DOUNDER))
- 			scsi_set_resid(scmnd, be32_to_cpu(rsp->data_out_res_cnt));
--		else if (unlikely(rsp->flags & SRP_RSP_FLAG_DOOVER))
--			scsi_set_resid(scmnd, -be32_to_cpu(rsp->data_out_res_cnt));
+   connector:
+     $ref: /schemas/connector/usb-connector.yaml#
++    unevaluatedProperties: false
  
- 		srp_free_req(ch, req, scmnd,
- 			     be32_to_cpu(rsp->req_lim_delta));
+   ports:
+     $ref: /schemas/graph.yaml#/properties/ports
 -- 
 2.40.1
 
