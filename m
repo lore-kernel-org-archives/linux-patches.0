@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4D711715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6045C433CA;
-	Mon, 11 Sep 2023 15:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E002A11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6428AC433C8;
+	Mon, 11 Sep 2023 15:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444870;
-	bh=7CyeIJq9a94SVp/rE3FrHt9gzqPjpQL/OKfz0YtskxM=;
+	s=korg; t=1694444872;
+	bh=Lwuiwk3u2FBaONPIVbHTNKFQM8ynC/GN5Jf8ElsuEgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+YdGU0P82SYWPjcxl3qjEoDPALGnlD74yjvDrkeVNwYct+ksl8isgEeQn7Z2U4rL
-	 lAD50vNOb4onWolFTQkhCoD76uch8F7MvmFjjkfBFzYeIj1IXm5vwklMOfB/haFRKd
-	 +QIJgble4N2NacZ6bLCFdmQbqZFFw/cxjaHVIiOU=
+	b=WEZFcmMbQByLt0ww8/ylgQq4G0BbrYcKekGPqMrGXtPPSj0Uh4OQOpQZUT7At32QG
+	 x0ybaMzknGtSESHCm78wulCB5av3PBLqT0dZlIxlzA0jV7n7MdVbQRlw4FjnpDMY9L
+	 y0cGzC7fWAU/NVbsiVuEJ2qumg5cJOCVy2M0ykCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/600] tcp: tcp_enter_quickack_mode() should be static
-Date: Mon, 11 Sep 2023 15:42:58 +0200
-Message-ID: <20230911134637.887791526@linuxfoundation.org>
+Subject: [PATCH 6.1 146/600] hwrng: nomadik - keep clock enabled while hwrng is registered
+Date: Mon, 11 Sep 2023 15:42:59 +0200
+Message-ID: <20230911134637.916633418@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,58 +40,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 03b123debcbc8db987bda17ed8412cc011064c22 ]
+[ Upstream commit 039980de89dc9dd757418d6f296e4126cc3f86c3 ]
 
-After commit d2ccd7bc8acd ("tcp: avoid resetting ACK timer in DCTCP"),
-tcp_enter_quickack_mode() is only used from net/ipv4/tcp_input.c.
+The nomadik driver uses devres to register itself with the hwrng core,
+the driver will be unregistered from hwrng when its device goes out of
+scope. This happens after the driver's remove function is called.
 
-Fixes: d2ccd7bc8acd ("tcp: avoid resetting ACK timer in DCTCP")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20230718162049.1444938-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, nomadik's clock is disabled in the remove function. There's a
+short timeframe where nomadik is still registered with the hwrng core
+although its clock is disabled. I suppose the clock must be active to
+access the hardware and serve requests from the hwrng core.
+
+Switch to devm_clk_get_enabled and let devres disable the clock and
+unregister the hwrng. This avoids the race condition.
+
+Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h    | 1 -
- net/ipv4/tcp_input.c | 3 +--
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/char/hw_random/nomadik-rng.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index e9c8f88f47696..5fd69f2342a44 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -355,7 +355,6 @@ ssize_t tcp_splice_read(struct socket *sk, loff_t *ppos,
- struct sk_buff *tcp_stream_alloc_skb(struct sock *sk, int size, gfp_t gfp,
- 				     bool force_schedule);
+diff --git a/drivers/char/hw_random/nomadik-rng.c b/drivers/char/hw_random/nomadik-rng.c
+index e8f9621e79541..3774adf903a83 100644
+--- a/drivers/char/hw_random/nomadik-rng.c
++++ b/drivers/char/hw_random/nomadik-rng.c
+@@ -13,8 +13,6 @@
+ #include <linux/clk.h>
+ #include <linux/err.h>
  
--void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks);
- static inline void tcp_dec_quickack_mode(struct sock *sk,
- 					 const unsigned int pkts)
+-static struct clk *rng_clk;
+-
+ static int nmk_rng_read(struct hwrng *rng, void *data, size_t max, bool wait)
  {
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index e2d3ea2e34561..c697836f2b5b4 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -287,7 +287,7 @@ static void tcp_incr_quickack(struct sock *sk, unsigned int max_quickacks)
- 		icsk->icsk_ack.quick = quickacks;
+ 	void __iomem *base = (void __iomem *)rng->priv;
+@@ -36,21 +34,20 @@ static struct hwrng nmk_rng = {
+ 
+ static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
+ {
++	struct clk *rng_clk;
+ 	void __iomem *base;
+ 	int ret;
+ 
+-	rng_clk = devm_clk_get(&dev->dev, NULL);
++	rng_clk = devm_clk_get_enabled(&dev->dev, NULL);
+ 	if (IS_ERR(rng_clk)) {
+ 		dev_err(&dev->dev, "could not get rng clock\n");
+ 		ret = PTR_ERR(rng_clk);
+ 		return ret;
+ 	}
+ 
+-	clk_prepare_enable(rng_clk);
+-
+ 	ret = amba_request_regions(dev, dev->dev.init_name);
+ 	if (ret)
+-		goto out_clk;
++		return ret;
+ 	ret = -ENOMEM;
+ 	base = devm_ioremap(&dev->dev, dev->res.start,
+ 			    resource_size(&dev->res));
+@@ -64,15 +61,12 @@ static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
+ 
+ out_release:
+ 	amba_release_regions(dev);
+-out_clk:
+-	clk_disable_unprepare(rng_clk);
+ 	return ret;
  }
  
--void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
-+static void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
+ static void nmk_rng_remove(struct amba_device *dev)
  {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 
-@@ -295,7 +295,6 @@ void tcp_enter_quickack_mode(struct sock *sk, unsigned int max_quickacks)
- 	inet_csk_exit_pingpong_mode(sk);
- 	icsk->icsk_ack.ato = TCP_ATO_MIN;
+ 	amba_release_regions(dev);
+-	clk_disable_unprepare(rng_clk);
  }
--EXPORT_SYMBOL(tcp_enter_quickack_mode);
  
- /* Send ACKs quickly, if "quick" count is not exhausted
-  * and the session is not interactive.
+ static const struct amba_id nmk_rng_ids[] = {
 -- 
 2.40.1
 
