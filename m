@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA1211715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DF3C433C7;
-	Mon, 11 Sep 2023 15:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9C711715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B49C433CD;
+	Mon, 11 Sep 2023 15:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445032;
-	bh=q0aJlNgAcq7xHP872McqgivXmJgEwpzWXwBrUv6ZfRk=;
+	s=korg; t=1694445035;
+	bh=lZU8xHzZNTfrrTJoi/4ytrfDcBjS1awDvYcqJ1/reHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/AwG+Lp/UbeyGNb9lKu3C2Vg3qjwByCCrPjyBS18SIma+ziCr8kOfwM8fGeDpjIU
-	 7ZQRUg+xEAER9ZZJmdiqurewirJKBp/Bg7UiHybtin/40ZLAsZWFYl84gUCmT+7Qna
-	 gwVuFH40bFGzI3Dya123tyouVIKHVzaiga+AkvIg=
+	b=bsqRLAEiHs5f99IGrPXE/6fB8ZmlXev1s1idvms/Y2hOSMck5CAlOiaNc+eCwyOgp
+	 m43wfwOGNCcx4LGRwaddTyH2FlN0OB3OFvHB8z8LSNYP7nteGzgWITxMEru7/DM6/Y
+	 rQpW5CpZrosXINk+zceDHcRa4pbdq+Fvz1mgVvek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/600] mlxsw: i2c: Limit single transaction buffer size
-Date: Mon, 11 Sep 2023 15:43:55 +0200
-Message-ID: <20230911134639.581203717@linuxfoundation.org>
+Subject: [PATCH 6.1 167/600] crypto: stm32 - Properly handle pm_runtime_get failing
+Date: Mon, 11 Sep 2023 15:43:20 +0200
+Message-ID: <20230911134638.537838865@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,60 +34,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vadim Pasternak <vadimp@nvidia.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit d7248f1cc835bd80e936dc5b2d94b149bdd0077d ]
+[ Upstream commit aec48805163338f8413118796c1dd035661b9140 ]
 
-Maximum size of buffer is obtained from underlying I2C adapter and in
-case adapter allows I2C transaction buffer size greater than 100 bytes,
-transaction will fail due to firmware limitation.
+If pm_runtime_get() (disguised as pm_runtime_resume_and_get()) fails, this
+means the clk wasn't prepared and enabled. Returning early in this case
+however is wrong as then the following resource frees are skipped and this
+is never catched up. So do all the cleanups but clk_disable_unprepare().
 
-As a result driver will fail initialization.
+Also don't emit a warning, as stm32_hash_runtime_resume() already emitted
+one.
 
-Limit the maximum size of transaction buffer by 100 bytes to fit to
-firmware.
+Note that the return value of stm32_hash_remove() is mostly ignored by
+the device core. The only effect of returning zero instead of an error
+value is to suppress another warning in platform_remove(). So return 0
+even if pm_runtime_resume_and_get() failed.
 
-Remove unnecessary calculation:
-max_t(u16, MLXSW_I2C_BLK_DEF, quirk_size).
-This condition can not happened.
-
-Fixes: 3029a693beda ("mlxsw: i2c: Allow flexible setting of I2C transactions size")
-Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 8b4d566de6a5 ("crypto: stm32/hash - Add power management support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/i2c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/stm32/stm32-hash.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/i2c.c b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-index 26e05f129e35a..3beefc167da91 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/i2c.c
-@@ -48,6 +48,7 @@
- #define MLXSW_I2C_MBOX_SIZE_BITS	12
- #define MLXSW_I2C_ADDR_BUF_SIZE		4
- #define MLXSW_I2C_BLK_DEF		32
-+#define MLXSW_I2C_BLK_MAX		100
- #define MLXSW_I2C_RETRY			5
- #define MLXSW_I2C_TIMEOUT_MSECS		5000
- #define MLXSW_I2C_MAX_DATA_SIZE		256
-@@ -653,7 +654,7 @@ static int mlxsw_i2c_probe(struct i2c_client *client,
- 			return -EOPNOTSUPP;
- 		}
+diff --git a/drivers/crypto/stm32/stm32-hash.c b/drivers/crypto/stm32/stm32-hash.c
+index d33006d43f761..e3f765434d64e 100644
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -1566,9 +1566,7 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	if (!hdev)
+ 		return -ENODEV;
  
--		mlxsw_i2c->block_size = max_t(u16, MLXSW_I2C_BLK_DEF,
-+		mlxsw_i2c->block_size = min_t(u16, MLXSW_I2C_BLK_MAX,
- 					      min_t(u16, quirks->max_read_len,
- 						    quirks->max_write_len));
- 	} else {
+-	ret = pm_runtime_resume_and_get(hdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(hdev->dev);
+ 
+ 	stm32_hash_unregister_algs(hdev);
+ 
+@@ -1584,7 +1582,8 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	pm_runtime_disable(hdev->dev);
+ 	pm_runtime_put_noidle(hdev->dev);
+ 
+-	clk_disable_unprepare(hdev->clk);
++	if (ret >= 0)
++		clk_disable_unprepare(hdev->clk);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
