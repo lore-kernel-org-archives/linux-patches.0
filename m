@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47088291E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0E0C433C9;
-	Mon, 11 Sep 2023 13:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0FA291E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF70C433C7;
+	Mon, 11 Sep 2023 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440780;
-	bh=nLqibSvXToaim1jNjItBghSYduupsBZixV/gyom5vmI=;
+	s=korg; t=1694440783;
+	bh=D9kERBqc1W21zkaYNu1lRL1+406AT24ykVpoM4jrg6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JIypvQ3db7rXH92QAk04ColmjFvHlXvPJbXQuUvUgL1XBve1FjPItliOq3JmC/C4o
-	 Hn9njn9n45UBz8UTPW6qklhsX9EuP84z1Gv8CEFB2G/UYLp8PCdi8Y3C8ORJ/7vqTd
-	 InNy2r0GKXywftnxtRSQSl+MSbUdSohUaxv4WpIQ=
+	b=nGCU3wNz3AA5CYIyP/q7KlfJkF2tIW6RS9APBWH9sKvqslkppFaL8IPidLv1C2Dkq
+	 TqcvG5vbVa0WWmc3Gh7q+PwOgZIq1V4jBpnLs1NI49mCos462lgq0w2Y15vEvXf5lJ
+	 4ijz+OvYS1uFUiLABzeGRXgG4ZCWx3SEPX4l2gNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"David S. Miller" <davem@davemloft.net>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 183/739] kunit: Fix checksum tests on big endian CPUs
-Date: Mon, 11 Sep 2023 15:39:42 +0200
-Message-ID: <20230911134656.307583339@linuxfoundation.org>
+Subject: [PATCH 6.5 166/739] wifi: mac80211: fix puncturing bitmap handling in CSA
+Date: Mon, 11 Sep 2023 15:39:25 +0200
+Message-ID: <20230911134655.810869958@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,211 +39,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b38460bc463c54e0c15ff3b37e81f7e2059bb9bb ]
+[ Upstream commit 927521170c4a18c620f97865f7bad48f17c48967 ]
 
-On powerpc64le checksum kunit tests work:
+Code inspection reveals that we switch the puncturing bitmap
+before the real channel switch, since that happens only in
+the second round of the worker after the channel context is
+switched by ieee80211_link_use_reserved_context().
 
-[    2.011457][    T1]     KTAP version 1
-[    2.011662][    T1]     # Subtest: checksum
-[    2.011848][    T1]     1..3
-[    2.034710][    T1]     ok 1 test_csum_fixed_random_inputs
-[    2.079325][    T1]     ok 2 test_csum_all_carry_inputs
-[    2.127102][    T1]     ok 3 test_csum_no_carry_inputs
-[    2.127202][    T1] # checksum: pass:3 fail:0 skip:0 total:3
-[    2.127533][    T1] # Totals: pass:3 fail:0 skip:0 total:3
-[    2.127956][    T1] ok 1 checksum
-
-But on powerpc64 and powerpc32 they fail:
-
-[    1.859890][    T1]     KTAP version 1
-[    1.860041][    T1]     # Subtest: checksum
-[    1.860201][    T1]     1..3
-[    1.861927][   T58]     # test_csum_fixed_random_inputs: ASSERTION FAILED at lib/checksum_kunit.c:243
-[    1.861927][   T58]     Expected result == expec, but
-[    1.861927][   T58]         result == 54991 (0xd6cf)
-[    1.861927][   T58]         expec == 33316 (0x8224)
-[    1.863742][    T1]     not ok 1 test_csum_fixed_random_inputs
-[    1.864520][   T60]     # test_csum_all_carry_inputs: ASSERTION FAILED at lib/checksum_kunit.c:267
-[    1.864520][   T60]     Expected result == expec, but
-[    1.864520][   T60]         result == 255 (0xff)
-[    1.864520][   T60]         expec == 65280 (0xff00)
-[    1.868820][    T1]     not ok 2 test_csum_all_carry_inputs
-[    1.869977][   T62]     # test_csum_no_carry_inputs: ASSERTION FAILED at lib/checksum_kunit.c:306
-[    1.869977][   T62]     Expected result == expec, but
-[    1.869977][   T62]         result == 64515 (0xfc03)
-[    1.869977][   T62]         expec == 0 (0x0)
-[    1.872060][    T1]     not ok 3 test_csum_no_carry_inputs
-[    1.872102][    T1] # checksum: pass:0 fail:3 skip:0 total:3
-[    1.872458][    T1] # Totals: pass:0 fail:3 skip:0 total:3
-[    1.872791][    T1] not ok 3 checksum
-
-This is because all expected values were calculated for X86 which
-is little endian. On big endian systems all precalculated 16 bits
-halves must be byte swapped.
-
-And this is confirmed by a huge amount of sparse errors when building
-with C=2
-
-So fix all sparse errors and it will naturally work on all endianness.
-
-Fixes: 688eb8191b47 ("x86/csum: Improve performance of `csum_partial`")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2cc25e4b2a04 ("wifi: mac80211: configure puncturing bitmap")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/checksum_kunit.c | 54 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 16 deletions(-)
+ net/mac80211/cfg.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/lib/checksum_kunit.c b/lib/checksum_kunit.c
-index ace3c4799fe15..0eed92b77ba37 100644
---- a/lib/checksum_kunit.c
-+++ b/lib/checksum_kunit.c
-@@ -10,7 +10,8 @@
- #define MAX_ALIGN 64
- #define TEST_BUFLEN (MAX_LEN + MAX_ALIGN)
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index e7ac246038925..d354b32a20f8f 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -3648,12 +3648,6 @@ static int __ieee80211_csa_finalize(struct ieee80211_sub_if_data *sdata)
+ 	lockdep_assert_held(&local->mtx);
+ 	lockdep_assert_held(&local->chanctx_mtx);
  
--static const __wsum random_init_sum = 0x2847aab;
-+/* Values for a little endian CPU. Byte swap each half on big endian CPU. */
-+static const u32 random_init_sum = 0x2847aab;
- static const u8 random_buf[] = {
- 	0xac, 0xd7, 0x76, 0x69, 0x6e, 0xf2, 0x93, 0x2c, 0x1f, 0xe0, 0xde, 0x86,
- 	0x8f, 0x54, 0x33, 0x90, 0x95, 0xbf, 0xff, 0xb9, 0xea, 0x62, 0x6e, 0xb5,
-@@ -56,7 +57,9 @@ static const u8 random_buf[] = {
- 	0xe1, 0xdf, 0x4b, 0xe1, 0x81, 0xe2, 0x17, 0x02, 0x7b, 0x58, 0x8b, 0x92,
- 	0x1a, 0xac, 0x46, 0xdd, 0x2e, 0xce, 0x40, 0x09
- };
--static const __sum16 expected_results[] = {
+-	if (sdata->vif.bss_conf.eht_puncturing != sdata->vif.bss_conf.csa_punct_bitmap) {
+-		sdata->vif.bss_conf.eht_puncturing =
+-					sdata->vif.bss_conf.csa_punct_bitmap;
+-		changed |= BSS_CHANGED_EHT_PUNCTURING;
+-	}
+-
+ 	/*
+ 	 * using reservation isn't immediate as it may be deferred until later
+ 	 * with multi-vif. once reservation is complete it will re-schedule the
+@@ -3683,6 +3677,12 @@ static int __ieee80211_csa_finalize(struct ieee80211_sub_if_data *sdata)
+ 	if (err)
+ 		return err;
+ 
++	if (sdata->vif.bss_conf.eht_puncturing != sdata->vif.bss_conf.csa_punct_bitmap) {
++		sdata->vif.bss_conf.eht_puncturing =
++					sdata->vif.bss_conf.csa_punct_bitmap;
++		changed |= BSS_CHANGED_EHT_PUNCTURING;
++	}
 +
-+/* Values for a little endian CPU. Byte swap on big endian CPU. */
-+static const u16 expected_results[] = {
- 	0x82d0, 0x8224, 0xab23, 0xaaad, 0x41ad, 0x413f, 0x4f3e, 0x4eab, 0x22ab,
- 	0x228c, 0x428b, 0x41ad, 0xbbac, 0xbb1d, 0x671d, 0x66ea, 0xd6e9, 0xd654,
- 	0x1754, 0x1655, 0x5d54, 0x5c6a, 0xfa69, 0xf9fb, 0x44fb, 0x4428, 0xf527,
-@@ -115,7 +118,9 @@ static const __sum16 expected_results[] = {
- 	0x1d47, 0x3c46, 0x3bc5, 0x59c4, 0x59ad, 0x57ad, 0x5732, 0xff31, 0xfea6,
- 	0x6ca6, 0x6c8c, 0xc08b, 0xc045, 0xe344, 0xe316, 0x1516, 0x14d6,
- };
--static const __wsum init_sums_no_overflow[] = {
-+
-+/* Values for a little endian CPU. Byte swap each half on big endian CPU. */
-+static const u32 init_sums_no_overflow[] = {
- 	0xffffffff, 0xfffffffb, 0xfffffbfb, 0xfffffbf7, 0xfffff7f7, 0xfffff7f3,
- 	0xfffff3f3, 0xfffff3ef, 0xffffefef, 0xffffefeb, 0xffffebeb, 0xffffebe7,
- 	0xffffe7e7, 0xffffe7e3, 0xffffe3e3, 0xffffe3df, 0xffffdfdf, 0xffffdfdb,
-@@ -208,7 +213,21 @@ static u8 tmp_buf[TEST_BUFLEN];
+ 	ieee80211_link_info_change_notify(sdata, &sdata->deflink, changed);
  
- #define full_csum(buff, len, sum) csum_fold(csum_partial(buff, len, sum))
- 
--#define CHECK_EQ(lhs, rhs) KUNIT_ASSERT_EQ(test, lhs, rhs)
-+#define CHECK_EQ(lhs, rhs) KUNIT_ASSERT_EQ(test, (__force u64)lhs, (__force u64)rhs)
-+
-+static __sum16 to_sum16(u16 x)
-+{
-+	return (__force __sum16)le16_to_cpu((__force __le16)x);
-+}
-+
-+/* This function swaps the bytes inside each half of a __wsum */
-+static __wsum to_wsum(u32 x)
-+{
-+	u16 hi = le16_to_cpu((__force __le16)(x >> 16));
-+	u16 lo = le16_to_cpu((__force __le16)x);
-+
-+	return (__force __wsum)((hi << 16) | lo);
-+}
- 
- static void assert_setup_correct(struct kunit *test)
- {
-@@ -226,7 +245,8 @@ static void assert_setup_correct(struct kunit *test)
- static void test_csum_fixed_random_inputs(struct kunit *test)
- {
- 	int len, align;
--	__wsum result, expec, sum;
-+	__wsum sum;
-+	__sum16 result, expec;
- 
- 	assert_setup_correct(test);
- 	for (align = 0; align < TEST_BUFLEN; ++align) {
-@@ -237,9 +257,9 @@ static void test_csum_fixed_random_inputs(struct kunit *test)
- 			/*
- 			 * Test the precomputed random input.
- 			 */
--			sum = random_init_sum;
-+			sum = to_wsum(random_init_sum);
- 			result = full_csum(&tmp_buf[align], len, sum);
--			expec = expected_results[len];
-+			expec = to_sum16(expected_results[len]);
- 			CHECK_EQ(result, expec);
- 		}
- 	}
-@@ -251,7 +271,8 @@ static void test_csum_fixed_random_inputs(struct kunit *test)
- static void test_csum_all_carry_inputs(struct kunit *test)
- {
- 	int len, align;
--	__wsum result, expec, sum;
-+	__wsum sum;
-+	__sum16 result, expec;
- 
- 	assert_setup_correct(test);
- 	memset(tmp_buf, 0xff, TEST_BUFLEN);
-@@ -261,9 +282,9 @@ static void test_csum_all_carry_inputs(struct kunit *test)
- 			/*
- 			 * All carries from input and initial sum.
- 			 */
--			sum = 0xffffffff;
-+			sum = to_wsum(0xffffffff);
- 			result = full_csum(&tmp_buf[align], len, sum);
--			expec = (len & 1) ? 0xff00 : 0;
-+			expec = to_sum16((len & 1) ? 0xff00 : 0);
- 			CHECK_EQ(result, expec);
- 
- 			/*
-@@ -272,11 +293,11 @@ static void test_csum_all_carry_inputs(struct kunit *test)
- 			sum = 0;
- 			result = full_csum(&tmp_buf[align], len, sum);
- 			if (len & 1)
--				expec = 0xff00;
-+				expec = to_sum16(0xff00);
- 			else if (len)
- 				expec = 0;
- 			else
--				expec = 0xffff;
-+				expec = to_sum16(0xffff);
- 			CHECK_EQ(result, expec);
- 		}
- 	}
-@@ -290,7 +311,8 @@ static void test_csum_all_carry_inputs(struct kunit *test)
- static void test_csum_no_carry_inputs(struct kunit *test)
- {
- 	int len, align;
--	__wsum result, expec, sum;
-+	__wsum sum;
-+	__sum16 result, expec;
- 
- 	assert_setup_correct(test);
- 	memset(tmp_buf, 0x4, TEST_BUFLEN);
-@@ -300,7 +322,7 @@ static void test_csum_no_carry_inputs(struct kunit *test)
- 			/*
- 			 * Expect no carries.
- 			 */
--			sum = init_sums_no_overflow[len];
-+			sum = to_wsum(init_sums_no_overflow[len]);
- 			result = full_csum(&tmp_buf[align], len, sum);
- 			expec = 0;
- 			CHECK_EQ(result, expec);
-@@ -308,9 +330,9 @@ static void test_csum_no_carry_inputs(struct kunit *test)
- 			/*
- 			 * Expect one carry.
- 			 */
--			sum = init_sums_no_overflow[len] + 1;
-+			sum = to_wsum(init_sums_no_overflow[len] + 1);
- 			result = full_csum(&tmp_buf[align], len, sum);
--			expec = len ? 0xfffe : 0xffff;
-+			expec = to_sum16(len ? 0xfffe : 0xffff);
- 			CHECK_EQ(result, expec);
- 		}
- 	}
+ 	if (sdata->deflink.csa_block_tx) {
 -- 
 2.40.1
 
