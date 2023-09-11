@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241F811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7BAC433C8;
-	Mon, 11 Sep 2023 15:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF56611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538B8C433C8;
+	Mon, 11 Sep 2023 15:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445413;
-	bh=X7H6BghpsAaXmYiLnIpf9NUsH6HgzN8ZhAEw/FINTa4=;
+	s=korg; t=1694445415;
+	bh=TWWuVGd5X3SRhGlxQzU/OrnrLpUQqZyzkODEfF3bPAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EOVQZ1kERwoDCCkcT0VMnbVzVZpwz4cmQqQ5TtfFpnQMXbOEhL2hm0Gz2dQjhUrJD
-	 5EDaeDFwryn8St8WD5ZJSIZyfSdinFcZManvVUeegJEWBxH7C2ABBVWwmE7hEdPxZy
-	 4VPDvPAzvJmw7GVSTnnMEVvSSTyl+jX+E7xINWtc=
+	b=X9BfwGBlmI51iQpots98uFNRXRCPlG8HRcFkaXEulVbWMoJUKF3N8rUxFPgbx7M2x
+	 +CttUK6XHlFYZxRmx+F98m+HWZ9uKrjvmAeGTtvMTlkw73uBl+AiN3PXvKpKXNtt/A
+	 3vBvPZkz7VVq9WF6GLqgePRqzaNWb+6UunPuoNmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Jianhua <chris.zjh@huawei.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	David Wronek <davidwronek@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 339/600] clk: sunxi-ng: Modify mismatched function name
-Date: Mon, 11 Sep 2023 15:46:12 +0200
-Message-ID: <20230911134643.696703081@linuxfoundation.org>
+Subject: [PATCH 6.1 340/600] clk: qcom: gcc-sc7180: Fix up gcc_sdcc2_apps_clk_src
+Date: Mon, 11 Sep 2023 15:46:13 +0200
+Message-ID: <20230911134643.726232478@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,37 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Jianhua <chris.zjh@huawei.com>
+From: David Wronek <davidwronek@gmail.com>
 
-[ Upstream commit 075d9ca5b4e17f84fd1c744a405e69ec743be7f0 ]
+[ Upstream commit fd0b5ba87ad5709f0fd3d2bc4b7870494a75f96a ]
 
-No functional modification involved.
+Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
+didn't update its configuration" error.
 
-drivers/clk/sunxi-ng/ccu_mmc_timing.c:54: warning: expecting prototype for sunxi_ccu_set_mmc_timing_mode(). Prototype was for sunxi_ccu_get_mmc_timing_mode() instead
-
-Fixes: f6f64ed868d3 ("clk: sunxi-ng: Add interface to query or configure MMC timing modes.")
-Signed-off-by: Zhang Jianhua <chris.zjh@huawei.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20230722153107.2078179-1-chris.zjh@huawei.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
+Signed-off-by: David Wronek <davidwronek@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230723190725.1619193-2-davidwronek@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_mmc_timing.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sc7180.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_mmc_timing.c b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-index de33414fc5c28..c6a6ce98ca03a 100644
---- a/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-+++ b/drivers/clk/sunxi-ng/ccu_mmc_timing.c
-@@ -43,7 +43,7 @@ int sunxi_ccu_set_mmc_timing_mode(struct clk *clk, bool new_mode)
- EXPORT_SYMBOL_GPL(sunxi_ccu_set_mmc_timing_mode);
- 
- /**
-- * sunxi_ccu_set_mmc_timing_mode: Get the current MMC clock timing mode
-+ * sunxi_ccu_get_mmc_timing_mode: Get the current MMC clock timing mode
-  * @clk: clock to query
-  *
-  * Returns 0 if the clock is in old timing mode, > 0 if it is in
+diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+index 2d3980251e78e..5822db4f4f358 100644
+--- a/drivers/clk/qcom/gcc-sc7180.c
++++ b/drivers/clk/qcom/gcc-sc7180.c
+@@ -667,6 +667,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.name = "gcc_sdcc2_apps_clk_src",
+ 		.parent_data = gcc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_5),
++		.flags = CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 -- 
 2.40.1
 
