@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5C61170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:18:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C462CC433C8;
-	Mon, 11 Sep 2023 14:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2EA1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:18:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85822C433C7;
+	Mon, 11 Sep 2023 14:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441880;
-	bh=udAOpIMbBqyBv7kg1qssYjbpDgJnxBgsbkcO5ERcvM0=;
+	s=korg; t=1694441882;
+	bh=5brf6djcu2tGil/3BEX53HC+md2Friu3Qq7cO3KfjDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwPWDhUkbSK9zmNo+omcix+d7cf2cxstjLQiSoILzmuIeb3Dj5XA4T0D/B5u506PS
-	 0/IUX9S0Pwo7SJqVLme3DEph3X8Ex1Zudi1vuYOYlMAG49lmzvvgalzeU9SWoXV/jK
-	 +yD/B4z8JF+mdCEKAUGmDzKjVXqNoiX2PCa4m21U=
+	b=T8yUBiXXn8a6q0p2XI1GUpAk6Y62oJpyapWMr1weOgSXUA6gzK7PZuDW6SRvajNIV
+	 nGC7BUsZI5ocX0PMzGFOZJwf12Dy/Hyq0O3Mmh8N+TerGyisb9dGOKIIyjJ3fIckQT
+	 zV4MQzT4D19AizcU6oWuxGosok1siiSlaGtcadcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 551/739] f2fs: fix to avoid mmap vs set_compress_option case
-Date: Mon, 11 Sep 2023 15:45:50 +0200
-Message-ID: <20230911134706.480188958@linuxfoundation.org>
+Subject: [PATCH 6.5 569/739] interconnect: qcom: bcm-voter: Use enable_maks for keepalive voting
+Date: Mon, 11 Sep 2023 15:46:08 +0200
+Message-ID: <20230911134706.966839167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,112 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit b5ab3276eb69cacf44ecfb11b2bfab73096ff4e4 ]
+[ Upstream commit 1a70ca71547be051769f0628aa09717694f508f0 ]
 
-Compression option in inode should not be changed after they have
-been used, however, it may happen in below race case:
+BCMs with an enable_mask expect to only have that specific value written
+to them. The current implementation only works by miracle for BCMs with
+enable mask == BIT(0), as the minimal vote we've been using so far just
+so happens to be equal to that.
 
-Thread A				Thread B
-- f2fs_ioc_set_compress_option
- - check f2fs_is_mmap_file()
- - check get_dirty_pages()
- - check F2FS_HAS_BLOCKS()
-					- f2fs_file_mmap
-					 - set_inode_flag(FI_MMAP_FILE)
-					- fault
-					 - do_page_mkwrite
-					  - f2fs_vm_page_mkwrite
-					  - f2fs_get_block_locked
-					 - fault_dirty_shared_page
-					  - set_page_dirty
- - update i_compress_algorithm
- - update i_log_cluster_size
- - update i_cluster_size
+Use the correct value with keepalive voting.
 
-Avoid such race condition by covering f2fs_file_mmap() w/ i_sem lock,
-meanwhile add mmap file check condition in f2fs_may_compress() as well.
-
-Fixes: e1e8debec656 ("f2fs: add F2FS_IOC_SET_COMPRESS_OPTION ioctl")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: d8630f050d3f ("interconnect: qcom: Add support for mask-based BCMs")
+Reported-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811-topic-icc_fix_1he-v2-2-0620af8ac133@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h |  3 ++-
- fs/f2fs/file.c | 23 ++++++++++++++++++-----
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ drivers/interconnect/qcom/bcm-voter.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index c7cb2177b2527..d372bedb0fe4e 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4483,7 +4483,8 @@ static inline bool f2fs_low_mem_mode(struct f2fs_sb_info *sbi)
- static inline bool f2fs_may_compress(struct inode *inode)
- {
- 	if (IS_SWAPFILE(inode) || f2fs_is_pinned_file(inode) ||
--		f2fs_is_atomic_file(inode) || f2fs_has_inline_data(inode))
-+		f2fs_is_atomic_file(inode) || f2fs_has_inline_data(inode) ||
-+		f2fs_is_mmap_file(inode))
- 		return false;
- 	return S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode);
- }
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 093039dee9920..d9073afe021fd 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -526,7 +526,11 @@ static int f2fs_file_mmap(struct file *file, struct vm_area_struct *vma)
- 
- 	file_accessed(file);
- 	vma->vm_ops = &f2fs_file_vm_ops;
-+
-+	f2fs_down_read(&F2FS_I(inode)->i_sem);
- 	set_inode_flag(inode, FI_MMAP_FILE);
-+	f2fs_up_read(&F2FS_I(inode)->i_sem);
-+
- 	return 0;
- }
- 
-@@ -1919,12 +1923,19 @@ static int f2fs_setflags_common(struct inode *inode, u32 iflags, u32 mask)
- 			int err = f2fs_convert_inline_inode(inode);
- 			if (err)
- 				return err;
--			if (!f2fs_may_compress(inode))
--				return -EINVAL;
--			if (S_ISREG(inode->i_mode) && F2FS_HAS_BLOCKS(inode))
-+
-+			f2fs_down_write(&F2FS_I(inode)->i_sem);
-+			if (!f2fs_may_compress(inode) ||
-+					(S_ISREG(inode->i_mode) &&
-+					F2FS_HAS_BLOCKS(inode))) {
-+				f2fs_up_write(&F2FS_I(inode)->i_sem);
- 				return -EINVAL;
--			if (set_compress_context(inode))
--				return -EOPNOTSUPP;
-+			}
-+			err = set_compress_context(inode);
-+			f2fs_up_write(&F2FS_I(inode)->i_sem);
-+
-+			if (err)
-+				return err;
- 		}
+diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+index d857eb8838b95..a2d437a05a11f 100644
+--- a/drivers/interconnect/qcom/bcm-voter.c
++++ b/drivers/interconnect/qcom/bcm-voter.c
+@@ -81,10 +81,10 @@ static void bcm_aggregate_mask(struct qcom_icc_bcm *bcm)
  	}
  
-@@ -3976,6 +3987,7 @@ static int f2fs_ioc_set_compress_option(struct file *filp, unsigned long arg)
- 	file_start_write(filp);
- 	inode_lock(inode);
- 
-+	f2fs_down_write(&F2FS_I(inode)->i_sem);
- 	if (f2fs_is_mmap_file(inode) || get_dirty_pages(inode)) {
- 		ret = -EBUSY;
- 		goto out;
-@@ -3995,6 +4007,7 @@ static int f2fs_ioc_set_compress_option(struct file *filp, unsigned long arg)
- 		f2fs_warn(sbi, "compression algorithm is successfully set, "
- 			"but current kernel doesn't support this algorithm.");
- out:
-+	f2fs_up_write(&F2FS_I(inode)->i_sem);
- 	inode_unlock(inode);
- 	file_end_write(filp);
+ 	if (bcm->keepalive) {
+-		bcm->vote_x[QCOM_ICC_BUCKET_AMC] = 1;
+-		bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = 1;
+-		bcm->vote_y[QCOM_ICC_BUCKET_AMC] = 1;
+-		bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = 1;
++		bcm->vote_x[QCOM_ICC_BUCKET_AMC] = bcm->enable_mask;
++		bcm->vote_x[QCOM_ICC_BUCKET_WAKE] = bcm->enable_mask;
++		bcm->vote_y[QCOM_ICC_BUCKET_AMC] = bcm->enable_mask;
++		bcm->vote_y[QCOM_ICC_BUCKET_WAKE] = bcm->enable_mask;
+ 	}
+ }
  
 -- 
 2.40.1
