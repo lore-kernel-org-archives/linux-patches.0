@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4552E11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0A2C433C8;
-	Mon, 11 Sep 2023 14:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DE311705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:41:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86920C433C7;
+	Mon, 11 Sep 2023 14:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443271;
-	bh=9O5ZI7KEbyfAjWK8GaIb/o6yaXkZhjGuI/wPpiXpFwg=;
+	s=korg; t=1694443273;
+	bh=wqRevlL1TunWb3hxt+3VpLah62AW3sA3p+MZY5U02uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JE9uJAxnKiW1+u/hmgwL8VlonInr3m53prWjKH/9JP5Xx+wKAL5LEXC1WjqCRnuUf
-	 tKlTZCu57r5gz1VNvn2RR6rKJjHUDC7b92gXji2b+fYuTqYUXWStuNqClEcroj8a/y
-	 VOTCe7uL3WXYeJJ+sHEq4w36gjWBuBCQJvqvl5Ig=
+	b=vasLO5EhzNDhybHBpsH/nRv2ouWL+6QNVo/mvvoRjU4MWD0in4+EIX1Tnuf5OtVG5
+	 awo/rO9OhzGvChaePLXnjutDYrYJ4OHWr1gVJ6VCPVbrSyLEYXy/TmzE20nKiUWFnb
+	 zKCL1/+FlpEY6Lzl753R3IQYG1tXr+U+7kG/qi8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 318/737] arm64: dts: qcom: pmi8994: Add missing OVP interrupt
-Date: Mon, 11 Sep 2023 15:42:57 +0200
-Message-ID: <20230911134659.443057393@linuxfoundation.org>
+Subject: [PATCH 6.4 319/737] arm64: tegra: Fix HSUART for Smaug
+Date: Mon, 11 Sep 2023 15:42:58 +0200
+Message-ID: <20230911134659.469984327@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,39 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-[ Upstream commit 8db94432690371b1736e9a2566a9b3d8a73d5a97 ]
+[ Upstream commit 590bfe51838f6345a6a3288507661dc9b7208464 ]
 
-Add the missing OVP interrupt. This fixes the schema warning:
+After commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") was applied, the HSUART failed to probe and the following
+error is seen:
 
-wled@d800: interrupt-names: ['short'] is too short
+ serial-tegra 70006300.serial: Couldn't get the reset
+ serial-tegra: probe of 70006300.serial failed with error -2
 
-Fixes: 37aa540cbd30 ("arm64: dts: qcom: pmi8994: Add WLED node")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-6-254ae8642e69@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
+reset-names") is correct because the "reset-names" property is not
+needed for 8250 UARTs. However, the "reset-names" is required for the
+HSUART and should have been populated as part of commit a63c0cd83720c
+("arm64: dts: tegra: smaug: Add Bluetooth node") that enabled the HSUART
+for the Pixel C. Fix this by populating the "reset-names" property for
+the HSUART on the Pixel C.
+
+Fixes: a63c0cd83720 ("arm64: dts: tegra: smaug: Add Bluetooth node")
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pmi8994.dtsi | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra210-smaug.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-index 0192968f4d9b3..36d6a1fb553ac 100644
---- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-@@ -54,8 +54,9 @@ pmi8994_spmi_regulators: regulators {
- 		pmi8994_wled: wled@d800 {
- 			compatible = "qcom,pmi8994-wled";
- 			reg = <0xd800>, <0xd900>;
--			interrupts = <3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "short";
-+			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
-+				     <0x3 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "ovp", "short";
- 			qcom,cabc;
- 			qcom,external-pfet;
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+index d7d7c63e62e25..79d294c2ee199 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+@@ -1312,6 +1312,7 @@ serial@70006000 {
+ 
+ 	uartd: serial@70006300 {
+ 		compatible = "nvidia,tegra30-hsuart";
++		reset-names = "serial";
+ 		status = "okay";
+ 
+ 		bluetooth {
 -- 
 2.40.1
 
