@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC844C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D0EC433C7;
-	Mon, 11 Sep 2023 14:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81F54C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02615C433C8;
+	Mon, 11 Sep 2023 14:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443852;
-	bh=+HIVt6HAvE6YErjx7P/n4hPOMROg7bASjmoiQ0QKDvc=;
+	s=korg; t=1694443855;
+	bh=ZmDsxyGj3dGFp5poXOhr2gzee75iZNrUusikavS+SZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4QNOmfx7awZp4s/CJ/yhxznAvwx1FJng0Ln+t/Rj1hKkgEPV1WOFb5vk0knY0DyV
-	 bQUSrDaNnSjZ84HxiOaFT8tsY+M0z7ivSfQGbzR99P05VZ21GJXzp7GjJ0sJOFpgqe
-	 I4W0yKZFeRnLosWEhE7bnR2et3V0fN2P3uKclQ8I=
+	b=V86++AiUpsD8+2JKeZGaDshyL47Ql6hfGmem7X1tX0p+NY8ktvR/zHg7JuNu0zlyl
+	 2v226Q6vFwCCfnTXSRxMBczt9TzJEPfOK2vc8gJAlTMWIQ/T+5/ZdDC8/CrrBX6O9V
+	 BptcvdtfE5uYX1lfCwaEhGfgv4mTQj8JJTzFfdLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Chunyan Zhang <chunyan.zhang@unisoc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 487/737] drivers: usb: smsusb: fix error handling code in smsusb_init_device
-Date: Mon, 11 Sep 2023 15:45:46 +0200
-Message-ID: <20230911134704.178048764@linuxfoundation.org>
+Subject: [PATCH 6.4 517/737] serial: sprd: Assign sprd_port after initialized to avoid wrong access
+Date: Mon, 11 Sep 2023 15:46:16 +0200
+Message-ID: <20230911134704.995199236@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,78 +39,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongliang Mu <dzm91@hust.edu.cn>
+From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-[ Upstream commit b9c7141f384097fa4fa67d2f72e5731d628aef7c ]
+[ Upstream commit f9608f1887568b728839d006024585ab02ef29e5 ]
 
-The previous commit 4b208f8b561f ("[media] siano: register media controller
-earlier")moves siano_media_device_register before smscore_register_device,
-and adds corresponding error handling code if smscore_register_device
-fails. However, it misses the following error handling code of
-smsusb_init_device.
+The global pointer 'sprd_port' may not zero when sprd_probe returns
+failure, that is a risk for sprd_port to be accessed afterward, and
+may lead to unexpected errors.
 
-Fix this by moving error handling code at the end of smsusb_init_device
-and adding a goto statement in the following error handling parts.
+For example:
 
-Fixes: 4b208f8b561f ("[media] siano: register media controller earlier")
-Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+There are two UART ports, UART1 is used for console and configured in
+kernel command line, i.e. "console=";
+
+The UART1 probe failed and the memory allocated to sprd_port[1] was
+released, but sprd_port[1] was not set to NULL;
+
+In UART2 probe, the same virtual address was allocated to sprd_port[2],
+and UART2 probe process finally will go into sprd_console_setup() to
+register UART1 as console since it is configured as preferred console
+(filled to console_cmdline[]), but the console parameters (sprd_port[1])
+belong to UART2.
+
+So move the sprd_port[] assignment to where the port already initialized
+can avoid the above issue.
+
+Fixes: b7396a38fb28 ("tty/serial: Add Spreadtrum sc9836-uart driver support")
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
+Link: https://lore.kernel.org/r/20230725064053.235448-1-chunyan.zhang@unisoc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/siano/smsusb.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/tty/serial/sprd_serial.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
-index 640737d3b8aeb..8a39cac76c585 100644
---- a/drivers/media/usb/siano/smsusb.c
-+++ b/drivers/media/usb/siano/smsusb.c
-@@ -455,12 +455,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smscore_register_device(&params, &dev->coredev, 0, mdev);
- 	if (rc < 0) {
- 		pr_err("smscore_register_device(...) failed, rc %d\n", rc);
--		smsusb_term_device(intf);
--#ifdef CONFIG_MEDIA_CONTROLLER_DVB
--		media_device_unregister(mdev);
--#endif
--		kfree(mdev);
--		return rc;
-+		goto err_unregister_device;
+diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
+index b58f51296ace2..fc1377029021b 100644
+--- a/drivers/tty/serial/sprd_serial.c
++++ b/drivers/tty/serial/sprd_serial.c
+@@ -1106,7 +1106,7 @@ static bool sprd_uart_is_console(struct uart_port *uport)
+ static int sprd_clk_init(struct uart_port *uport)
+ {
+ 	struct clk *clk_uart, *clk_parent;
+-	struct sprd_uart_port *u = sprd_port[uport->line];
++	struct sprd_uart_port *u = container_of(uport, struct sprd_uart_port, port);
+ 
+ 	clk_uart = devm_clk_get(uport->dev, "uart");
+ 	if (IS_ERR(clk_uart)) {
+@@ -1149,22 +1149,22 @@ static int sprd_probe(struct platform_device *pdev)
+ {
+ 	struct resource *res;
+ 	struct uart_port *up;
++	struct sprd_uart_port *sport;
+ 	int irq;
+ 	int index;
+ 	int ret;
+ 
+ 	index = of_alias_get_id(pdev->dev.of_node, "serial");
+-	if (index < 0 || index >= ARRAY_SIZE(sprd_port)) {
++	if (index < 0 || index >= UART_NR_MAX) {
+ 		dev_err(&pdev->dev, "got a wrong serial alias id %d\n", index);
+ 		return -EINVAL;
  	}
  
- 	smscore_set_board_id(dev->coredev, board_id);
-@@ -477,8 +472,7 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smsusb_start_streaming(dev);
- 	if (rc < 0) {
- 		pr_err("smsusb_start_streaming(...) failed\n");
--		smsusb_term_device(intf);
--		return rc;
-+		goto err_unregister_device;
+-	sprd_port[index] = devm_kzalloc(&pdev->dev, sizeof(*sprd_port[index]),
+-					GFP_KERNEL);
+-	if (!sprd_port[index])
++	sport = devm_kzalloc(&pdev->dev, sizeof(*sport), GFP_KERNEL);
++	if (!sport)
+ 		return -ENOMEM;
+ 
+-	up = &sprd_port[index]->port;
++	up = &sport->port;
+ 	up->dev = &pdev->dev;
+ 	up->line = index;
+ 	up->type = PORT_SPRD;
+@@ -1195,7 +1195,7 @@ static int sprd_probe(struct platform_device *pdev)
+ 	 * Allocate one dma buffer to prepare for receive transfer, in case
+ 	 * memory allocation failure at runtime.
+ 	 */
+-	ret = sprd_rx_alloc_buf(sprd_port[index]);
++	ret = sprd_rx_alloc_buf(sport);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1206,14 +1206,23 @@ static int sprd_probe(struct platform_device *pdev)
+ 			return ret;
+ 		}
  	}
- 
- 	dev->state = SMSUSB_ACTIVE;
-@@ -486,13 +480,20 @@ static int smsusb_init_device(struct usb_interface *intf, int board_id)
- 	rc = smscore_start_device(dev->coredev);
- 	if (rc < 0) {
- 		pr_err("smscore_start_device(...) failed\n");
--		smsusb_term_device(intf);
--		return rc;
-+		goto err_unregister_device;
- 	}
- 
- 	pr_debug("device 0x%p created\n", dev);
- 
- 	return rc;
 +
-+err_unregister_device:
-+	smsusb_term_device(intf);
-+#ifdef CONFIG_MEDIA_CONTROLLER_DVB
-+	media_device_unregister(mdev);
-+#endif
-+	kfree(mdev);
-+	return rc;
+ 	sprd_ports_num++;
++	sprd_port[index] = sport;
+ 
+ 	ret = uart_add_one_port(&sprd_uart_driver, up);
+ 	if (ret)
+-		sprd_remove(pdev);
++		goto clean_port;
+ 
+ 	platform_set_drvdata(pdev, up);
+ 
++	return 0;
++
++clean_port:
++	sprd_port[index] = NULL;
++	if (--sprd_ports_num == 0)
++		uart_unregister_driver(&sprd_uart_driver);
++	sprd_rx_free_buf(sport);
+ 	return ret;
  }
  
- static int smsusb_probe(struct usb_interface *intf,
 -- 
 2.40.1
 
