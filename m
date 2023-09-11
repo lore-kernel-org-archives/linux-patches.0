@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AC811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DBBC433C7;
-	Mon, 11 Sep 2023 15:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E182911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:26:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65740C433C8;
+	Mon, 11 Sep 2023 15:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445977;
-	bh=78Gvc+FV32NtYLsJitFpqXSj2QS+qAPVJEEmPu1B5bc=;
+	s=korg; t=1694445979;
+	bh=bfE1IeV+p5R3dKEKg/BJJrL6tDGX4qkH5gRpFqCtkvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhtME26sbZXiWSgSNMSShAos5K038D+gHat+WOtK6i6cR6FwtVyhqVlENmHqdoGZc
-	 Cq2h9JlsQYTdnEU83LBe1rxQ0i7iRjlbGhkG96G0HvFXmM9jpB8yOM+NAqTAn7MUwd
-	 28wrATAMrTWw/GtI1Hafc+t2YRpQslJCsiCkvI8k=
+	b=qKhRlTVWnurkg5saxyZD09rc92jIsPCz8aCrn0tK+1mOMV7bGMRglsllnUpyL0YB4
+	 FMrbSJvnajN21wQZ45GRcPW5qod18ObikswS5Ng6AZNO/+lyrKk+HWaMdxckDJF+yl
+	 p1euOh5sU9T+bInP2GluUqpnD1I0POBFZE2vFEok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Lee Jones <lee@kernel.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	linux-sh@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH 6.1 538/600] backlight/gpio_backlight: Compare against struct fb_info.device
-Date: Mon, 11 Sep 2023 15:49:31 +0200
-Message-ID: <20230911134649.503409040@linuxfoundation.org>
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 513/600] dmaengine: ste_dma40: Add missing IRQ check in d40_probe
+Date: Mon, 11 Sep 2023 15:49:06 +0200
+Message-ID: <20230911134648.758936829@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -47,50 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-commit 7b91d017f77c1bda56f27c2f4bbb70de7c6eca08 upstream.
+[ Upstream commit c05ce6907b3d6e148b70f0bb5eafd61dcef1ddc1 ]
 
-Struct gpio_backlight_platform_data refers to a platform device within
-the Linux device hierarchy. The test in gpio_backlight_check_fb()
-compares it against the fbdev device in struct fb_info.dev, which
-is different. Fix the test by comparing to struct fb_info.device.
+Check for the return value of platform_get_irq(): if no interrupt
+is specified, it wouldn't make sense to call request_irq().
 
-Fixes a bug in the backlight driver and prepares fbdev for making
-struct fb_info.dev optional.
-
-v2:
-	* move renames into separate patch (Javier, Sam, Michael)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 8b770e3c9824 ("backlight: Add GPIO-based backlight driver")
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: Rich Felker <dalias@libc.org>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
-Cc: linux-sh@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.12+
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-4-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230724144108.2582917-1-ruanjinjie@huawei.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/gpio_backlight.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/video/backlight/gpio_backlight.c
-+++ b/drivers/video/backlight/gpio_backlight.c
-@@ -35,7 +35,7 @@ static int gpio_backlight_check_fb(struc
- {
- 	struct gpio_backlight *gbl = bl_get_data(bl);
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index f093e08c23b16..3b09fdc507e04 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3597,6 +3597,10 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	spin_lock_init(&base->lcla_pool.lock);
  
--	return gbl->fbdev == NULL || gbl->fbdev == info->dev;
-+	return gbl->fbdev == NULL || gbl->fbdev == info->device;
- }
+ 	base->irq = platform_get_irq(pdev, 0);
++	if (base->irq < 0) {
++		ret = base->irq;
++		goto destroy_cache;
++	}
  
- static const struct backlight_ops gpio_backlight_ops = {
+ 	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+ 	if (ret) {
+-- 
+2.40.1
+
 
 
