@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9521E1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0387C433C8;
-	Mon, 11 Sep 2023 14:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E21170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28FCC433C7;
+	Mon, 11 Sep 2023 14:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442382;
-	bh=YxHYLFFt+BuS/065XsKuKBO/bSIyP4Pwa7cwfkbTyAw=;
+	s=korg; t=1694442385;
+	bh=7CtJjOjnihvBfe413gBa3vEOGkTkMVg9VSfEKAu6h3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1dUgCxvJFBlVZ5+9wK8/JHVWcomkP0saUlMS9kS7mhjxIBt27BTRaSDT27yk8sEu
-	 rxBYTqwU2bT6P2vgVRd4vgCW8WpUnAsqOabC/RP6E5gZJbs6YmIXIIkqM8wqyGomC5
-	 Zy32wlnbTCYrOxG047rF/G/XXz5lY0j/G+V6xf1c=
+	b=xQnLI+FlZnZOkQQ/5Kv8jullMoLx/N2QLjM9sHSNCJ68OzfNzi8xN+UTsCtnUueKp
+	 Iw1IcwdE2bocKu0dqj5g7y5Ett9v6pJ+5D0qZrtt2UChqgipf96G/XPn3zKHYYATYk
+	 kSwoSxMUCTJR/C3CkhdZ+iD7UVLPb3m9e2aS/bhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -25,9 +25,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 735/739] memfd: do not -EACCES old memfd_create() users with vm.memfd_noexec=2
-Date: Mon, 11 Sep 2023 15:48:54 +0200
-Message-ID: <20230911134711.587508479@linuxfoundation.org>
+Subject: [PATCH 6.5 736/739] memfd: replace ratcheting feature from vm.memfd_noexec with hierarchy
+Date: Mon, 11 Sep 2023 15:48:55 +0200
+Message-ID: <20230911134711.615976373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -48,29 +48,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksa Sarai <cyphar@cyphar.com>
 
-[ Upstream commit 202e14222fadb246dfdf182e67de1518e86a1e20 ]
+[ Upstream commit 9876cfe8ec1cb3c88de31f4d58d57b0e7e22bcc4 ]
 
-Given the difficulty of auditing all of userspace to figure out whether
-every memfd_create() user has switched to passing MFD_EXEC and
-MFD_NOEXEC_SEAL flags, it seems far less distruptive to make it possible
-for older programs that don't make use of executable memfds to run under
-vm.memfd_noexec=2.  Otherwise, a small dependency change can result in
-spurious errors.  For programs that don't use executable memfds, passing
-MFD_NOEXEC_SEAL is functionally a no-op and thus having the same
+This sysctl has the very unusual behaviour of not allowing any user (even
+CAP_SYS_ADMIN) to reduce the restriction setting, meaning that if you were
+to set this sysctl to a more restrictive option in the host pidns you
+would need to reboot your machine in order to reset it.
 
-In addition, every failure under vm.memfd_noexec=2 needs to print to the
-kernel log so that userspace can figure out where the error came from.
-The concerns about pr_warn_ratelimited() spam that caused the switch to
-pr_warn_once()[1,2] do not apply to the vm.memfd_noexec=2 case.
+The justification given in [1] is that this is a security feature and thus
+it should not be possible to disable.  Aside from the fact that we have
+plenty of security-related sysctls that can be disabled after being
+enabled (fs.protected_symlinks for instance), the protection provided by
+the sysctl is to stop users from being able to create a binary and then
+execute it.  A user with CAP_SYS_ADMIN can trivially do this without
+memfd_create(2):
 
-This is a user-visible API change, but as it allows programs to do
-something that would be blocked before, and the sysctl itself was broken
-and recently released, it seems unlikely this will cause any issues.
+  % cat mount-memfd.c
+  #include <fcntl.h>
+  #include <string.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <unistd.h>
+  #include <linux/mount.h>
 
-[1]: https://lore.kernel.org/Y5yS8wCnuYGLHMj4@x1n/
-[2]: https://lore.kernel.org/202212161233.85C9783FB@keescook/
+  #define SHELLCODE "#!/bin/echo this file was executed from this totally private tmpfs:"
 
-Link: https://lkml.kernel.org/r/20230814-memfd-vm-noexec-uapi-fixes-v2-2-7ff9e3e10ba6@cyphar.com
+  int main(void)
+  {
+  	int fsfd = fsopen("tmpfs", FSOPEN_CLOEXEC);
+  	assert(fsfd >= 0);
+  	assert(!fsconfig(fsfd, FSCONFIG_CMD_CREATE, NULL, NULL, 2));
+
+  	int dfd = fsmount(fsfd, FSMOUNT_CLOEXEC, 0);
+  	assert(dfd >= 0);
+
+  	int execfd = openat(dfd, "exe", O_CREAT | O_RDWR | O_CLOEXEC, 0782);
+  	assert(execfd >= 0);
+  	assert(write(execfd, SHELLCODE, strlen(SHELLCODE)) == strlen(SHELLCODE));
+  	assert(!close(execfd));
+
+  	char *execpath = NULL;
+  	char *argv[] = { "bad-exe", NULL }, *envp[] = { NULL };
+  	execfd = openat(dfd, "exe", O_PATH | O_CLOEXEC);
+  	assert(execfd >= 0);
+  	assert(asprintf(&execpath, "/proc/self/fd/%d", execfd) > 0);
+  	assert(!execve(execpath, argv, envp));
+  }
+  % ./mount-memfd
+  this file was executed from this totally private tmpfs: /proc/self/fd/5
+  %
+
+Given that it is possible for CAP_SYS_ADMIN users to create executable
+binaries without memfd_create(2) and without touching the host filesystem
+(not to mention the many other things a CAP_SYS_ADMIN process would be
+able to do that would be equivalent or worse), it seems strange to cause a
+fair amount of headache to admins when there doesn't appear to be an
+actual security benefit to blocking this.  There appear to be concerns
+about confused-deputy-esque attacks[2] but a confused deputy that can
+write to arbitrary sysctls is a bigger security issue than executable
+memfds.
+
+/* New API */
+
+The primary requirement from the original author appears to be more based
+on the need to be able to restrict an entire system in a hierarchical
+manner[3], such that child namespaces cannot re-enable executable memfds.
+
+So, implement that behaviour explicitly -- the vm.memfd_noexec scope is
+evaluated up the pidns tree to &init_pid_ns and you have the most
+restrictive value applied to you.  The new lower limit you can set
+vm.memfd_noexec is whatever limit applies to your parent.
+
+Note that a pidns will inherit a copy of the parent pidns's effective
+vm.memfd_noexec setting at unshare() time.  This matches the existing
+behaviour, and it also ensures that a pidns will never have its
+vm.memfd_noexec setting *lowered* behind its back (but it will be raised
+if the parent raises theirs).
+
+/* Backwards Compatibility */
+
+As the previous version of the sysctl didn't allow you to lower the
+setting at all, there are no backwards compatibility issues with this
+aspect of the change.
+
+However it should be noted that now that the setting is completely
+hierarchical.  Previously, a cloned pidns would just copy the current
+pidns setting, meaning that if the parent's vm.memfd_noexec was changed it
+wouldn't propoagate to existing pid namespaces.  Now, the restriction
+applies recursively.  This is a uAPI change, however:
+
+ * The sysctl is very new, having been merged in 6.3.
+ * Several aspects of the sysctl were broken up until this patchset and
+   the other patchset by Jeff Xu last month.
+
+And thus it seems incredibly unlikely that any real users would run into
+this issue. In the worst case, if this causes userspace isues we could
+make it so that modifying the setting follows the hierarchical rules but
+the restriction checking uses the cached copy.
+
+[1]: https://lore.kernel.org/CABi2SkWnAgHK1i6iqSqPMYuNEhtHBkO8jUuCvmG3RmUB5TKHJw@mail.gmail.com/
+[2]: https://lore.kernel.org/CALmYWFs_dNCzw_pW1yRAo4bGCPEtykroEQaowNULp7svwMLjOg@mail.gmail.com/
+[3]: https://lore.kernel.org/CALmYWFuahdUF7cT4cm7_TGLqPanuHXJ-hVSfZt7vpTnc18DPrw@mail.gmail.com/
+
+Link: https://lkml.kernel.org/r/20230814-memfd-vm-noexec-uapi-fixes-v2-4-7ff9e3e10ba6@cyphar.com
 Fixes: 105ff5339f49 ("mm/memfd: add MFD_NOEXEC_SEAL and MFD_EXEC")
 Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
 Cc: Dominique Martinet <asmadeus@codewreck.org>
@@ -83,138 +163,164 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pid_namespace.h              | 16 +++---------
- mm/memfd.c                                 | 30 ++++++++--------------
- tools/testing/selftests/memfd/memfd_test.c | 22 ++++++++++++----
- 3 files changed, 32 insertions(+), 36 deletions(-)
+ include/linux/pid_namespace.h | 23 ++++++++++++++++++++++-
+ kernel/pid.c                  |  3 +++
+ kernel/pid_namespace.c        |  6 +++---
+ kernel/pid_sysctl.h           | 28 ++++++++++++----------------
+ mm/memfd.c                    |  3 ++-
+ 5 files changed, 42 insertions(+), 21 deletions(-)
 
 diff --git a/include/linux/pid_namespace.h b/include/linux/pid_namespace.h
-index c758809d5bcf3..53974d79d98e8 100644
+index 53974d79d98e8..f9f9931e02d6a 100644
 --- a/include/linux/pid_namespace.h
 +++ b/include/linux/pid_namespace.h
-@@ -17,18 +17,10 @@
- struct fs_pin;
+@@ -39,7 +39,6 @@ struct pid_namespace {
+ 	int reboot;	/* group exit code if this pidns was rebooted */
+ 	struct ns_common ns;
+ #if defined(CONFIG_SYSCTL) && defined(CONFIG_MEMFD_CREATE)
+-	/* sysctl for vm.memfd_noexec */
+ 	int memfd_noexec_scope;
+ #endif
+ } __randomize_layout;
+@@ -56,6 +55,23 @@ static inline struct pid_namespace *get_pid_ns(struct pid_namespace *ns)
+ 	return ns;
+ }
+ 
++#if defined(CONFIG_SYSCTL) && defined(CONFIG_MEMFD_CREATE)
++static inline int pidns_memfd_noexec_scope(struct pid_namespace *ns)
++{
++	int scope = MEMFD_NOEXEC_SCOPE_EXEC;
++
++	for (; ns; ns = ns->parent)
++		scope = max(scope, READ_ONCE(ns->memfd_noexec_scope));
++
++	return scope;
++}
++#else
++static inline int pidns_memfd_noexec_scope(struct pid_namespace *ns)
++{
++	return 0;
++}
++#endif
++
+ extern struct pid_namespace *copy_pid_ns(unsigned long flags,
+ 	struct user_namespace *user_ns, struct pid_namespace *ns);
+ extern void zap_pid_ns_processes(struct pid_namespace *pid_ns);
+@@ -70,6 +86,11 @@ static inline struct pid_namespace *get_pid_ns(struct pid_namespace *ns)
+ 	return ns;
+ }
+ 
++static inline int pidns_memfd_noexec_scope(struct pid_namespace *ns)
++{
++	return 0;
++}
++
+ static inline struct pid_namespace *copy_pid_ns(unsigned long flags,
+ 	struct user_namespace *user_ns, struct pid_namespace *ns)
+ {
+diff --git a/kernel/pid.c b/kernel/pid.c
+index 6a1d23a11026c..fee14a4486a31 100644
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -83,6 +83,9 @@ struct pid_namespace init_pid_ns = {
+ #ifdef CONFIG_PID_NS
+ 	.ns.ops = &pidns_operations,
+ #endif
++#if defined(CONFIG_SYSCTL) && defined(CONFIG_MEMFD_CREATE)
++	.memfd_noexec_scope = MEMFD_NOEXEC_SCOPE_EXEC,
++#endif
+ };
+ EXPORT_SYMBOL_GPL(init_pid_ns);
+ 
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index 0bf44afe04dd1..619972c78774f 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -110,9 +110,9 @@ static struct pid_namespace *create_pid_namespace(struct user_namespace *user_ns
+ 	ns->user_ns = get_user_ns(user_ns);
+ 	ns->ucounts = ucounts;
+ 	ns->pid_allocated = PIDNS_ADDING;
+-
+-	initialize_memfd_noexec_scope(ns);
+-
++#if defined(CONFIG_SYSCTL) && defined(CONFIG_MEMFD_CREATE)
++	ns->memfd_noexec_scope = pidns_memfd_noexec_scope(parent_pid_ns);
++#endif
+ 	return ns;
+ 
+ out_free_idr:
+diff --git a/kernel/pid_sysctl.h b/kernel/pid_sysctl.h
+index b26e027fc9cd4..2ee41a3a1dfde 100644
+--- a/kernel/pid_sysctl.h
++++ b/kernel/pid_sysctl.h
+@@ -5,33 +5,30 @@
+ #include <linux/pid_namespace.h>
  
  #if defined(CONFIG_SYSCTL) && defined(CONFIG_MEMFD_CREATE)
--/*
-- * sysctl for vm.memfd_noexec
-- * 0: memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL
-- *	acts like MFD_EXEC was set.
-- * 1: memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL
-- *	acts like MFD_NOEXEC_SEAL was set.
-- * 2: memfd_create() without MFD_NOEXEC_SEAL will be
-- *	rejected.
-- */
--#define MEMFD_NOEXEC_SCOPE_EXEC			0
--#define MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL		1
--#define MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED	2
-+/* modes for vm.memfd_noexec sysctl */
-+#define MEMFD_NOEXEC_SCOPE_EXEC			0 /* MFD_EXEC implied if unset */
-+#define MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL		1 /* MFD_NOEXEC_SEAL implied if unset */
-+#define MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED	2 /* same as 1, except MFD_EXEC rejected */
+-static inline void initialize_memfd_noexec_scope(struct pid_namespace *ns)
+-{
+-	ns->memfd_noexec_scope =
+-		task_active_pid_ns(current)->memfd_noexec_scope;
+-}
+-
+ static int pid_mfd_noexec_dointvec_minmax(struct ctl_table *table,
+ 	int write, void *buf, size_t *lenp, loff_t *ppos)
+ {
+ 	struct pid_namespace *ns = task_active_pid_ns(current);
+ 	struct ctl_table table_copy;
++	int err, scope, parent_scope;
+ 
+ 	if (write && !ns_capable(ns->user_ns, CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+ 	table_copy = *table;
+-	if (ns != &init_pid_ns)
+-		table_copy.data = &ns->memfd_noexec_scope;
+ 
+-	/*
+-	 * set minimum to current value, the effect is only bigger
+-	 * value is accepted.
+-	 */
+-	if (*(int *)table_copy.data > *(int *)table_copy.extra1)
+-		table_copy.extra1 = table_copy.data;
++	/* You cannot set a lower enforcement value than your parent. */
++	parent_scope = pidns_memfd_noexec_scope(ns->parent);
++	/* Equivalent to pidns_memfd_noexec_scope(ns). */
++	scope = max(READ_ONCE(ns->memfd_noexec_scope), parent_scope);
++
++	table_copy.data = &scope;
++	table_copy.extra1 = &parent_scope;
+ 
+-	return proc_dointvec_minmax(&table_copy, write, buf, lenp, ppos);
++	err = proc_dointvec_minmax(&table_copy, write, buf, lenp, ppos);
++	if (!err && write)
++		WRITE_ONCE(ns->memfd_noexec_scope, scope);
++	return err;
+ }
+ 
+ static struct ctl_table pid_ns_ctl_table_vm[] = {
+@@ -51,7 +48,6 @@ static inline void register_pid_ns_sysctl_table_vm(void)
+ 	register_sysctl("vm", pid_ns_ctl_table_vm);
+ }
+ #else
+-static inline void initialize_memfd_noexec_scope(struct pid_namespace *ns) {}
+ static inline void register_pid_ns_sysctl_table_vm(void) {}
  #endif
  
- struct pid_namespace {
 diff --git a/mm/memfd.c b/mm/memfd.c
-index 0bdbd2335af75..d65485c762def 100644
+index d65485c762def..2dba2cb6f0d0f 100644
 --- a/mm/memfd.c
 +++ b/mm/memfd.c
-@@ -271,30 +271,22 @@ long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg)
+@@ -271,7 +271,8 @@ long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg)
  static int check_sysctl_memfd_noexec(unsigned int *flags)
  {
  #ifdef CONFIG_SYSCTL
--	char comm[TASK_COMM_LEN];
--	int sysctl = MEMFD_NOEXEC_SCOPE_EXEC;
--	struct pid_namespace *ns;
--
--	ns = task_active_pid_ns(current);
--	if (ns)
--		sysctl = ns->memfd_noexec_scope;
-+	int sysctl = task_active_pid_ns(current)->memfd_noexec_scope;
+-	int sysctl = task_active_pid_ns(current)->memfd_noexec_scope;
++	struct pid_namespace *ns = task_active_pid_ns(current);
++	int sysctl = pidns_memfd_noexec_scope(ns);
  
  	if (!(*flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
--		if (sysctl == MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
-+		if (sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
- 			*flags |= MFD_NOEXEC_SEAL;
- 		else
- 			*flags |= MFD_EXEC;
- 	}
- 
--	if (*flags & MFD_EXEC && sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED) {
--		pr_warn_once(
--			"memfd_create(): MFD_NOEXEC_SEAL is enforced, pid=%d '%s'\n",
--			task_pid_nr(current), get_task_comm(comm, current));
--
-+	if (!(*flags & MFD_NOEXEC_SEAL) && sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_ENFORCED) {
-+		pr_err_ratelimited(
-+			"%s[%d]: memfd_create() requires MFD_NOEXEC_SEAL with vm.memfd_noexec=%d\n",
-+			current->comm, task_pid_nr(current), sysctl);
- 		return -EACCES;
- 	}
- #endif
--
- 	return 0;
- }
- 
-@@ -302,7 +294,6 @@ SYSCALL_DEFINE2(memfd_create,
- 		const char __user *, uname,
- 		unsigned int, flags)
- {
--	char comm[TASK_COMM_LEN];
- 	unsigned int *file_seals;
- 	struct file *file;
- 	int fd, error;
-@@ -325,12 +316,13 @@ SYSCALL_DEFINE2(memfd_create,
- 
- 	if (!(flags & (MFD_EXEC | MFD_NOEXEC_SEAL))) {
- 		pr_warn_once(
--			"memfd_create() without MFD_EXEC nor MFD_NOEXEC_SEAL, pid=%d '%s'\n",
--			task_pid_nr(current), get_task_comm(comm, current));
-+			"%s[%d]: memfd_create() called without MFD_EXEC or MFD_NOEXEC_SEAL set\n",
-+			current->comm, task_pid_nr(current));
- 	}
- 
--	if (check_sysctl_memfd_noexec(&flags) < 0)
--		return -EACCES;
-+	error = check_sysctl_memfd_noexec(&flags);
-+	if (error < 0)
-+		return error;
- 
- 	/* length includes terminating zero */
- 	len = strnlen_user(uname, MFD_NAME_MAX_LEN + 1);
-diff --git a/tools/testing/selftests/memfd/memfd_test.c b/tools/testing/selftests/memfd/memfd_test.c
-index 8eb49204f9eac..8b7390ad81d11 100644
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -1145,11 +1145,23 @@ static void test_sysctl_child(void)
- 
- 	printf("%s sysctl 2\n", memfd_str);
- 	sysctl_assert_write("2");
--	mfd_fail_new("kern_memfd_sysctl_2",
--		MFD_CLOEXEC | MFD_ALLOW_SEALING);
--	mfd_fail_new("kern_memfd_sysctl_2_MFD_EXEC",
--		MFD_CLOEXEC | MFD_EXEC);
--	fd = mfd_assert_new("", 0, MFD_NOEXEC_SEAL);
-+	mfd_fail_new("kern_memfd_sysctl_2_exec",
-+		     MFD_EXEC | MFD_CLOEXEC | MFD_ALLOW_SEALING);
-+
-+	fd = mfd_assert_new("kern_memfd_sysctl_2_dfl",
-+			    mfd_def_size,
-+			    MFD_CLOEXEC | MFD_ALLOW_SEALING);
-+	mfd_assert_mode(fd, 0666);
-+	mfd_assert_has_seals(fd, F_SEAL_EXEC);
-+	mfd_fail_chmod(fd, 0777);
-+	close(fd);
-+
-+	fd = mfd_assert_new("kern_memfd_sysctl_2_noexec_seal",
-+			    mfd_def_size,
-+			    MFD_NOEXEC_SEAL | MFD_CLOEXEC | MFD_ALLOW_SEALING);
-+	mfd_assert_mode(fd, 0666);
-+	mfd_assert_has_seals(fd, F_SEAL_EXEC);
-+	mfd_fail_chmod(fd, 0777);
- 	close(fd);
- 
- 	sysctl_fail_write("0");
+ 		if (sysctl >= MEMFD_NOEXEC_SCOPE_NOEXEC_SEAL)
 -- 
 2.40.1
 
