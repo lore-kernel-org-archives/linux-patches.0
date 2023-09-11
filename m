@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E08C1171B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F082C433C7;
-	Mon, 11 Sep 2023 14:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5906D11721
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECFCC433C9;
+	Mon, 11 Sep 2023 14:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442704;
-	bh=QR/sPq8yzVs0KQk9qFWVM9M50aENYHf7bneKEaJkSe8=;
+	s=korg; t=1694442707;
+	bh=Yyx3O1ax8jEd7guDYMeB4OQsVpqZaU0RRC4MGs/Gj3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tprXg0MxroBGQkaMYAQON2/JwV/Aig9jVgmsdioF8zMJXSixmKm8MxLsAcGrxiJV0
-	 hJOWLbuoCzXdLvTkOz2TtrIbcufNKus3YDk4weuOA6LdLJ7xd7f27dIfh3vq8iEEOE
-	 gGm12a6NEKDbFgZGKVmjM3/9FXsO89iU18s8UtlE=
+	b=V7e5C2LKVZPZviiiWCX7R1SL9ajS0afZKQABWx2KkoI0E/YB3ArhRTJmTJxFGZQHX
+	 /mWXxxhaghqHxfKutuEeNRcCb3Y/ke27kMfYckIhGQI+kMegmdaD8LRDET8mKPVg4I
+	 Fj8ov3dgCZf1BDO0ZXlWZ3iaRlWZSCW0qmk1xJnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.4 092/737] drm/amd/display: ensure async flips are only accepted for fast updates
-Date: Mon, 11 Sep 2023 15:39:11 +0200
-Message-ID: <20230911134653.081585084@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.4 093/737] Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN
+Date: Mon, 11 Sep 2023 15:39:12 +0200
+Message-ID: <20230911134653.111380191@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,101 +39,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit a7c0cad0dc060bb77e9c9d235d68441b0fc69507 upstream.
+commit eb09074bdb05ffd6bfe77f8b4a41b76ef78c997b upstream.
 
-We should be checking to see if async flips are supported in
-amdgpu_dm_atomic_check() (i.e. not dm_crtc_helper_atomic_check()). Also,
-async flipping isn't supported if a plane's framebuffer changes memory
-domains during an atomic commit. So, move the check from
-dm_crtc_helper_atomic_check() to amdgpu_dm_atomic_check() and check if
-the memory domain has changed in amdgpu_dm_atomic_check().
+The touchpad of this device is both connected via PS/2 and i2c. This causes
+strange behavior when both driver fight for control. The easy fix is to
+prevent the PS/2 driver from accessing the mouse port as the full feature
+set of the touchpad is only supported in the i2c interface anyway.
 
+The strange behavior in this case is, that when an external screen is
+connected and the notebook is closed, the pointer on the external screen is
+moving to the lower right corner. When the notebook is opened again, this
+movement stops, but the touchpad clicks are unresponsive afterwards until
+reboot.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2733
-Fixes: c1e18c44dc7f ("drm/amd/display: only accept async flips for fast updates")
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230607173331.851192-1-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      |   24 ++++++++++++++---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   12 --------
- 2 files changed, 21 insertions(+), 15 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7993,10 +7993,12 @@ static void amdgpu_dm_commit_planes(stru
- 		 * fast updates.
- 		 */
- 		if (crtc->state->async_flip &&
--		    acrtc_state->update_type != UPDATE_TYPE_FAST)
-+		    (acrtc_state->update_type != UPDATE_TYPE_FAST ||
-+		     get_mem_type(old_plane_state->fb) != get_mem_type(fb)))
- 			drm_warn_once(state->dev,
- 				      "[PLANE:%d:%s] async flip with non-fast update\n",
- 				      plane->base.id, plane->name);
-+
- 		bundle->flip_addrs[planes_count].flip_immediate =
- 			crtc->state->async_flip &&
- 			acrtc_state->update_type == UPDATE_TYPE_FAST &&
-@@ -9953,6 +9955,11 @@ static int amdgpu_dm_atomic_check(struct
- 
- 	/* Remove exiting planes if they are modified */
- 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
-+		if (old_plane_state->fb && new_plane_state->fb &&
-+		    get_mem_type(old_plane_state->fb) !=
-+		    get_mem_type(new_plane_state->fb))
-+			lock_and_validation_needed = true;
-+
- 		ret = dm_update_plane_state(dc, state, plane,
- 					    old_plane_state,
- 					    new_plane_state,
-@@ -10200,9 +10207,20 @@ static int amdgpu_dm_atomic_check(struct
- 		struct dm_crtc_state *dm_new_crtc_state =
- 			to_dm_crtc_state(new_crtc_state);
- 
-+		/*
-+		 * Only allow async flips for fast updates that don't change
-+		 * the FB pitch, the DCC state, rotation, etc.
-+		 */
-+		if (new_crtc_state->async_flip && lock_and_validation_needed) {
-+			drm_dbg_atomic(crtc->dev,
-+				       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
-+				       crtc->base.id, crtc->name);
-+			ret = -EINVAL;
-+			goto fail;
-+		}
-+
- 		dm_new_crtc_state->update_type = lock_and_validation_needed ?
--							 UPDATE_TYPE_FULL :
--							 UPDATE_TYPE_FAST;
-+			UPDATE_TYPE_FULL : UPDATE_TYPE_FAST;
- 	}
- 
- 	/* Must be success */
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -398,18 +398,6 @@ static int dm_crtc_helper_atomic_check(s
- 		return -EINVAL;
- 	}
- 
--	/*
--	 * Only allow async flips for fast updates that don't change the FB
--	 * pitch, the DCC state, rotation, etc.
--	 */
--	if (crtc_state->async_flip &&
--	    dm_crtc_state->update_type != UPDATE_TYPE_FAST) {
--		drm_dbg_atomic(crtc->dev,
--			       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
--			       crtc->base.id, crtc->name);
--		return -EINVAL;
--	}
--
- 	/* In some use cases, like reset, no stream is attached */
- 	if (!dm_crtc_state->stream)
- 		return 0;
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1281,6 +1281,13 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	/* See comment on TUXEDO InfinityBook S17 Gen6 / Clevo NS70MU above */
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "PD5x_7xPNP_PNR_PNN_PNT"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "X170SM"),
 
 
