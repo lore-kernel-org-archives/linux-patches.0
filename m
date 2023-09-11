@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D791170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7367EC433C8;
-	Mon, 11 Sep 2023 14:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315981170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CE2C433C7;
+	Mon, 11 Sep 2023 14:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442265;
-	bh=6Rl6GFHVbzz+gW2bdI27MplD/1sigFHPCXGGGCjQDAU=;
+	s=korg; t=1694442268;
+	bh=U+3OVJbVH3GdJ786cIQeIEKNzyQXcx/Xo9BynLojblg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NimIgUzC7UydmfWTJGuoDEnRF6+lTtbpsSXYEUDKsveYXaVCtHfumLL3f4xHzEaKm
-	 tssUaOGfjzbZtO7SC/qFoJ6mL8gpwJW57S8rATrM/N+KKQymq4oEBeBAOrAxSmc+/x
-	 thBtHYcVuAkZMle+fNaLK0dy4asB0RLSmqXcmxmo=
+	b=Ix2WF9fwFOGhAARkBW8Bak4aVOd/poFF8875yVe8XVSPjVmrVOqTAUMKebVxIOJNf
+	 BBtejLgOTBc7MSCSeyTyUD0cONrbbS8R+l3EOHsd9nLFTcGZdgX6JfeOJwtCoMMngc
+	 V72EDHJohBNnWv2LJRQLhC8AWdOuxyOfqUNZKCnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Fudong Wang <fudong.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.5 697/739] drm/amd/display: Add smu write msg id fail retry process
-Date: Mon, 11 Sep 2023 15:48:16 +0200
-Message-ID: <20230911134710.561366434@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.5 706/739] x86/MCE: Always save CS register on AMD Zen IF Poison errors
+Date: Mon, 11 Sep 2023 15:48:25 +0200
+Message-ID: <20230911134710.806176990@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,69 +39,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fudong Wang <fudong.wang@amd.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 72105dcfa3d12b5af49311f857e3490baa225135 upstream.
+commit 4240e2ebe67941ce2c4f5c866c3af4b5ac7a0c67 upstream.
 
-A benchmark stress test (12-40 machines x 48hours) found that DCN315 has
-cases where DC writes to an indirect register to set the smu clock msg
-id, but when we go to read the same indirect register the returned msg
-id doesn't match with what we just set it to. So, to fix this retry the
-write until the register's value matches with the requested value.
+The Instruction Fetch (IF) units on current AMD Zen-based systems do not
+guarantee a synchronous #MC is delivered for poison consumption errors.
+Therefore, MCG_STATUS[EIPV|RIPV] will not be set. However, the
+microarchitecture does guarantee that the exception is delivered within
+the same context. In other words, the exact rIP is not known, but the
+context is known to not have changed.
 
-Cc: stable@vger.kernel.org # 6.1+
-Fixes: f94903996140 ("drm/amd/display: Add DCN315 CLK_MGR")
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Fudong Wang <fudong.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+There is no architecturally-defined method to determine this behavior.
+
+The Code Segment (CS) register is always valid on such IF unit poison
+errors regardless of the value of MCG_STATUS[EIPV|RIPV].
+
+Add a quirk to save the CS register for poison consumption from the IF
+unit banks.
+
+This is needed to properly determine the context of the error.
+Otherwise, the severity grading function will assume the context is
+IN_KERNEL due to the m->cs value being 0 (the initialized value). This
+leads to unnecessary kernel panics on data poison errors due to the
+kernel believing the poison consumption occurred in kernel context.
+
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230814200853.29258-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c |   20 ++++++++++---
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c     |   26 ++++++++++++++++++++++++++
+ arch/x86/kernel/cpu/mce/internal.h |    5 ++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
-@@ -32,6 +32,7 @@
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -843,6 +843,26 @@ static noinstr bool quirk_skylake_repmov
+ }
  
- #define MAX_INSTANCE                                        6
- #define MAX_SEGMENT                                         6
-+#define SMU_REGISTER_WRITE_RETRY_COUNT                      5
+ /*
++ * Some Zen-based Instruction Fetch Units set EIPV=RIPV=0 on poison consumption
++ * errors. This means mce_gather_info() will not save the "ip" and "cs" registers.
++ *
++ * However, the context is still valid, so save the "cs" register for later use.
++ *
++ * The "ip" register is truly unknown, so don't save it or fixup EIPV/RIPV.
++ *
++ * The Instruction Fetch Unit is at MCA bank 1 for all affected systems.
++ */
++static __always_inline void quirk_zen_ifu(int bank, struct mce *m, struct pt_regs *regs)
++{
++	if (bank != 1)
++		return;
++	if (!(m->status & MCI_STATUS_POISON))
++		return;
++
++	m->cs = regs->cs;
++}
++
++/*
+  * Do a quick check if any of the events requires a panic.
+  * This decides if we keep the events around or clear them.
+  */
+@@ -861,6 +881,9 @@ static __always_inline int mce_no_way_ou
+ 		if (mce_flags.snb_ifu_quirk)
+ 			quirk_sandybridge_ifu(i, m, regs);
  
- struct IP_BASE_INSTANCE
- {
-@@ -134,6 +135,8 @@ static int dcn315_smu_send_msg_with_para
- 		unsigned int msg_id, unsigned int param)
- {
- 	uint32_t result;
-+	uint32_t i = 0;
-+	uint32_t read_back_data;
++		if (mce_flags.zen_ifu_quirk)
++			quirk_zen_ifu(i, m, regs);
++
+ 		m->bank = i;
+ 		if (mce_severity(m, regs, &tmp, true) >= MCE_PANIC_SEVERITY) {
+ 			mce_read_aux(m, i);
+@@ -1842,6 +1865,9 @@ static int __mcheck_cpu_apply_quirks(str
+ 		if (c->x86 == 0x15 && c->x86_model <= 0xf)
+ 			mce_flags.overflow_recov = 1;
  
- 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
++		if (c->x86 >= 0x17 && c->x86 <= 0x1A)
++			mce_flags.zen_ifu_quirk = 1;
++
+ 	}
  
-@@ -150,10 +153,19 @@ static int dcn315_smu_send_msg_with_para
- 	/* Set the parameter register for the SMU message, unit is Mhz */
- 	REG_WRITE(MP1_SMN_C2PMSG_37, param);
+ 	if (c->x86_vendor == X86_VENDOR_INTEL) {
+--- a/arch/x86/kernel/cpu/mce/internal.h
++++ b/arch/x86/kernel/cpu/mce/internal.h
+@@ -157,6 +157,9 @@ struct mce_vendor_flags {
+ 	 */
+ 	smca			: 1,
  
--	/* Trigger the message transaction by writing the message ID */
--	generic_write_indirect_reg(CTX,
--		REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
--		mmMP1_C2PMSG_3, msg_id);
-+	for (i = 0; i < SMU_REGISTER_WRITE_RETRY_COUNT; i++) {
-+		/* Trigger the message transaction by writing the message ID */
-+		generic_write_indirect_reg(CTX,
-+			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
-+			mmMP1_C2PMSG_3, msg_id);
-+		read_back_data = generic_read_indirect_reg(CTX,
-+			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
-+			mmMP1_C2PMSG_3);
-+		if (read_back_data == msg_id)
-+			break;
-+		udelay(2);
-+		smu_print("SMU msg id write fail %x times. \n", i + 1);
-+	}
++	/* Zen IFU quirk */
++	zen_ifu_quirk		: 1,
++
+ 	/* AMD-style error thresholding banks present. */
+ 	amd_threshold		: 1,
  
- 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
+@@ -172,7 +175,7 @@ struct mce_vendor_flags {
+ 	/* Skylake, Cascade Lake, Cooper Lake REP;MOVS* quirk */
+ 	skx_repmov_quirk	: 1,
  
+-	__reserved_0		: 56;
++	__reserved_0		: 55;
+ };
+ 
+ extern struct mce_vendor_flags mce_flags;
 
 
