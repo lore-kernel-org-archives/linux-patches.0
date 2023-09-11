@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DD711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7808AC433C8;
-	Mon, 11 Sep 2023 14:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB1011706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC2CC433C8;
+	Mon, 11 Sep 2023 14:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444180;
-	bh=9vkg7zCGncihF8ZbpQLCzDC/V5OyGKmGxopdaFhFxbo=;
+	s=korg; t=1694444183;
+	bh=q5qhBBHqQgWGzXHawuAeZ7v57ck3d1X1COr5eof8qnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgY91FgMMhkgjc4SiOt0v0+2pLqSjtBGTp6mte4ZX0QSThhSt+uMNuBIM/tkF5GQb
-	 BCiUj5pl5wReP8KXZSBBGT5NHA7Wy373kbUSnqxuGXl8ZJYcH6moK1OF9K4r8u8YKD
-	 RJhXmSIpGlB9phB+bAqIGLNnqGVhEzrjNgYlvZ0M=
+	b=IFySiTp9Drl/dGKfBVkkvlQb3HH3aTxRqW4K7JifisbNUKQUg3zx92GoO9+BUG0/s
+	 8NkUbOHdk/qF4kAhvtw2xnNFot+tphdyg43XIDg3c51jqKLr0dORn7dL4oAwtgQ0sU
+	 GwKFFdEdMI5TFyMm1MqUSbtmXwzUC5cGpnLl+7cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 611/737] thermal/drivers/mediatek/lvts_thermal: Handle IRQ on all controllers
-Date: Mon, 11 Sep 2023 15:47:50 +0200
-Message-ID: <20230911134707.599556934@linuxfoundation.org>
+	Wander Lairson Costa <wander@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.4 638/737] netfilter: xt_u32: validate user space input
+Date: Mon, 11 Sep 2023 15:48:17 +0200
+Message-ID: <20230911134708.352449447@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -38,52 +33,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit cbd8c5aae2a988bafd4586bea710eeddc30a82ce ]
+commit 69c5d284f67089b4750d28ff6ac6f52ec224b330 upstream.
 
-There is a single IRQ handler for each LVTS thermal domain, and it is
-supposed to check each of its underlying controllers for the origin of
-the interrupt and clear its status. However due to a typo, only the
-first controller was ever being handled, which resulted in the interrupt
-never being cleared when it happened on the other controllers. Add the
-missing index so interrupts are handled for all controllers.
+The xt_u32 module doesn't validate the fields in the xt_u32 structure.
+An attacker may take advantage of this to trigger an OOB read by setting
+the size fields with a value beyond the arrays boundaries.
 
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230706153823.201943-2-nfraprado@collabora.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a checkentry function to validate the structure.
+
+This was originally reported by the ZDI project (ZDI-CAN-18408).
+
+Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_u32.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index d0a3f95b7884b..56b24c5b645f3 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -449,7 +449,7 @@ static irqreturn_t lvts_irq_handler(int irq, void *data)
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -96,11 +96,32 @@ static bool u32_mt(const struct sk_buff
+ 	return ret ^ data->invert;
+ }
  
- 	for (i = 0; i < lvts_td->num_lvts_ctrl; i++) {
- 
--		aux = lvts_ctrl_irq_handler(lvts_td->lvts_ctrl);
-+		aux = lvts_ctrl_irq_handler(&lvts_td->lvts_ctrl[i]);
- 		if (aux != IRQ_HANDLED)
- 			continue;
- 
--- 
-2.40.1
-
++static int u32_mt_checkentry(const struct xt_mtchk_param *par)
++{
++	const struct xt_u32 *data = par->matchinfo;
++	const struct xt_u32_test *ct;
++	unsigned int i;
++
++	if (data->ntests > ARRAY_SIZE(data->tests))
++		return -EINVAL;
++
++	for (i = 0; i < data->ntests; ++i) {
++		ct = &data->tests[i];
++
++		if (ct->nnums > ARRAY_SIZE(ct->location) ||
++		    ct->nvalues > ARRAY_SIZE(ct->value))
++			return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static struct xt_match xt_u32_mt_reg __read_mostly = {
+ 	.name       = "u32",
+ 	.revision   = 0,
+ 	.family     = NFPROTO_UNSPEC,
+ 	.match      = u32_mt,
++	.checkentry = u32_mt_checkentry,
+ 	.matchsize  = sizeof(struct xt_u32),
+ 	.me         = THIS_MODULE,
+ };
 
 
