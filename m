@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4A711705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C41C433C8;
-	Mon, 11 Sep 2023 14:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8FF11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6C6C433C8;
+	Mon, 11 Sep 2023 14:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443189;
-	bh=RE9Kb3IB4Q3B4kYxWAwLWN4QEL6iVmnDq/N48Ftmq94=;
+	s=korg; t=1694443192;
+	bh=iwWBU2crDzdP1UM+BHJrCFNVRiaKq/iMqsAZ+jjy2i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpqFAtOT0jrJ8tgpvPSiBev3w7485gmTstU27pRxKlswUOoxGp3+CyBimJKiN0JPb
-	 qLBYFc+M65Uq1X0xjD1xtI2pivU7sHqryHSFYVRK4HD4pujgKyV7EaKNELusES2Wz8
-	 a2Sqhq1kcfPLK3gFlNEWHiPiiY07hrKLTkvRgyR4=
+	b=M5khV896mRqShp9L6y86l2eqnyfFaIsaWEmKxHgjLS59t3zMiubCBfSkEFuMBp2mk
+	 /Ajlq9jIhH/kpbzm5CfALVsMjMV/ArOkfa418/py+nnjdHPLTaEBSg450/hHYGiajI
+	 IarUU+inL6vf2GO9sqs6G/Urnirww6VyWMZCUwIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 289/737] arm64: dts: qcom: sc8280xp: Add missing SCM interconnect
-Date: Mon, 11 Sep 2023 15:42:28 +0200
-Message-ID: <20230911134658.636225636@linuxfoundation.org>
+Subject: [PATCH 6.4 290/737] arm64: dts: qcom: msm8996: Add missing interrupt to the USB2 controller
+Date: Mon, 11 Sep 2023 15:42:29 +0200
+Message-ID: <20230911134658.663269282@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,33 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 0a69ccf20b0837db857abfc94d7e3bacf1cb771b ]
+[ Upstream commit 36541089c4733355ed844c67eebd0c3936953454 ]
 
-The SCM interconnect path was missing. Add it.
+The interrupt line was previously not described. Take care of that.
 
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+Fixes: 1e39255ed29d ("arm64: dts: msm8996: Add device node for qcom,dwc3")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230622-topic-8280scmicc-v1-2-6ef318919ea5@linaro.org
+Link: https://lore.kernel.org/r/20230627-topic-more_bindings-v1-11-6b4b6cd081e5@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index cc4aef21e6172..9c3fb75e06005 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -296,6 +296,7 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
- 	firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sc8280xp", "qcom,scm";
-+			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 25fe2b8552fc7..157d2a2ec32ad 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3336,6 +3336,9 @@ usb2: usb@76f8800 {
+ 			#size-cells = <1>;
+ 			ranges;
  
++			interrupts = <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hs_phy_irq";
++
+ 			clocks = <&gcc GCC_PERIPH_NOC_USB20_AHB_CLK>,
+ 				<&gcc GCC_USB20_MASTER_CLK>,
+ 				<&gcc GCC_USB20_MOCK_UTMI_CLK>,
 -- 
 2.40.1
 
