@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF341170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F555C433C8;
-	Mon, 11 Sep 2023 14:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823B21170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D0BC433C7;
+	Mon, 11 Sep 2023 14:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441601;
-	bh=VS3RU8xZ2ZA4uIdWoA13uHNVsAPmc6wfzasWdDK+vu4=;
+	s=korg; t=1694441604;
+	bh=DBw4hxpdAQwaDF7Vs6exqp4HTlT/LL7Z2lNIymlye9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pG2BQ/aM4+mlpr0PFMS+tgZ7eqD6VI9PvvWfAfG27ugodWFlZCwEUH29BeYp5o84r
-	 IbiTFwSDaZyib1SiHd2oMt0afgcTCSzAq1rkWEkU5ijcUNJ+kBGeWYSLhFsSdvjezr
-	 YgY1nw8NT88VxlaPaVBnLuOY9TX5zhyqRmFljRro=
+	b=fAyXCatERQZNFk7RZ91t+jDLacV/iTGX96LHmN5iMp3ozFFn4KdD8Jjq/NB2cUqBA
+	 RDDxHqDFNuA8uasUqO+9WtgpTxaLyi5HEbGBsBCteAf8Rtp2Jd8q0MvHTjPSyYsIH9
+	 CQZp0n1Y6rTI1RAaf9Q4A5cFnUoQgJplpBD0QI40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Ming Qian <ming.qian@nxp.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 463/739] scsi: hisi_sas: Fix normally completed I/O analysed as failed
-Date: Mon, 11 Sep 2023 15:44:22 +0200
-Message-ID: <20230911134704.084589785@linuxfoundation.org>
+Subject: [PATCH 6.5 472/739] media: amphion: fix REVERSE_INULL issues reported by coverity
+Date: Mon, 11 Sep 2023 15:44:31 +0200
+Message-ID: <20230911134704.328940244@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,88 +41,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit f5393a5602cacfda2014e0ff8220e5a7564e7cd1 ]
+[ Upstream commit 79d3bafaecc13bccab1ebbd28a15e669c5a4cdaf ]
 
-The PIO read command has no response frame and the struct iu[1024] won't be
-filled. I/Os which are normally completed will be treated as failed in
-sas_ata_task_done() when iu contains abnormal dirty data.
+null-checking of a pointor is suggested before dereferencing it
 
-Consequently ending_fis should not be filled by iu when the response frame
-hasn't been written to memory.
-
-Fixes: d380f55503ed ("scsi: hisi_sas: Don't bother clearing status buffer IU in task prep")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1689045300-44318-2-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 11 +++++++++--
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  6 ++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/media/platform/amphion/venc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index 87d8e408ccd1c..404aa7e179cba 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2026,6 +2026,11 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
- 	u16 dma_tx_err_type = le16_to_cpu(err_record->dma_tx_err_type);
- 	u16 sipc_rx_err_type = le16_to_cpu(err_record->sipc_rx_err_type);
- 	u32 dma_rx_err_type = le32_to_cpu(err_record->dma_rx_err_type);
-+	struct hisi_sas_complete_v2_hdr *complete_queue =
-+			hisi_hba->complete_hdr[slot->cmplt_queue];
-+	struct hisi_sas_complete_v2_hdr *complete_hdr =
-+			&complete_queue[slot->cmplt_queue_slot];
-+	u32 dw0 = le32_to_cpu(complete_hdr->dw0);
- 	int error = -1;
+diff --git a/drivers/media/platform/amphion/venc.c b/drivers/media/platform/amphion/venc.c
+index 58480e2755ec4..4eb57d793a9c0 100644
+--- a/drivers/media/platform/amphion/venc.c
++++ b/drivers/media/platform/amphion/venc.c
+@@ -268,7 +268,7 @@ static int venc_g_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
+ {
+ 	struct vpu_inst *inst = to_inst(file);
+ 	struct venc_t *venc = inst->priv;
+-	struct v4l2_fract *timeperframe = &parm->parm.capture.timeperframe;
++	struct v4l2_fract *timeperframe;
  
- 	if (err_phase == 1) {
-@@ -2310,7 +2315,8 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
- 			break;
- 		}
- 		}
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 	}
- 		break;
- 	default:
-@@ -2443,7 +2449,8 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
- 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
- 	{
- 		ts->stat = SAS_SAM_STAT_GOOD;
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 		break;
- 	}
- 	default:
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 20e1607c62828..2f33e6b4a92fb 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2257,7 +2257,8 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
- 			ts->stat = SAS_OPEN_REJECT;
- 			ts->open_rej_reason = SAS_OREJ_RSVD_RETRY;
- 		}
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 		break;
- 	case SAS_PROTOCOL_SMP:
- 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
-@@ -2384,7 +2385,8 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 	case SAS_PROTOCOL_STP:
- 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
- 		ts->stat = SAS_SAM_STAT_GOOD;
--		hisi_sas_sata_done(task, slot);
-+		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
-+			hisi_sas_sata_done(task, slot);
- 		break;
- 	default:
- 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
+ 	if (!parm)
+ 		return -EINVAL;
+@@ -279,6 +279,7 @@ static int venc_g_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
+ 	if (!vpu_helper_check_type(inst, parm->type))
+ 		return -EINVAL;
+ 
++	timeperframe = &parm->parm.capture.timeperframe;
+ 	parm->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
+ 	parm->parm.capture.readbuffers = 0;
+ 	timeperframe->numerator = venc->params.frame_rate.numerator;
+@@ -291,7 +292,7 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
+ {
+ 	struct vpu_inst *inst = to_inst(file);
+ 	struct venc_t *venc = inst->priv;
+-	struct v4l2_fract *timeperframe = &parm->parm.capture.timeperframe;
++	struct v4l2_fract *timeperframe;
+ 	unsigned long n, d;
+ 
+ 	if (!parm)
+@@ -303,6 +304,7 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
+ 	if (!vpu_helper_check_type(inst, parm->type))
+ 		return -EINVAL;
+ 
++	timeperframe = &parm->parm.capture.timeperframe;
+ 	if (!timeperframe->numerator)
+ 		timeperframe->numerator = venc->params.frame_rate.numerator;
+ 	if (!timeperframe->denominator)
 -- 
 2.40.1
 
