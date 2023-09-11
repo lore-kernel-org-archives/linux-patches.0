@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB9911706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:58:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E26BC433C8;
-	Mon, 11 Sep 2023 14:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F7411706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:58:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D33C433C7;
+	Mon, 11 Sep 2023 14:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444324;
-	bh=EmTNqJgdAVOJvuBFCBGKgbecdn2m07FDd4O/J5s7hC8=;
+	s=korg; t=1694444327;
+	bh=ZO5kvKfbi4dn867EwKYHbAOwD0XihALG+4v1s2llqRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVk6d1M0nlalL6YmwSDDxJ1aSzn8tz4pgMeM13rw66sLQUz4ooa8tT9Wl4KQwudzy
-	 nr5Ik152dG8lH4RazxZF5dRO3Iwy71NesRUzLmn8fMeBbO7zyPfrzh1YbiaFIiSGHU
-	 E9fsWNSsyv3hcNFBYcFYq7NYCBvqI3L1aCvj5peE=
+	b=QfjxLLNK11sTtaI4omxXfyqrkX4MNNbpZ1eZq4CLNUOieLrui2B53XB65daxwhpKq
+	 OYpNO0amcCPR18Ff7kHa4HSmYUgDTdiSpK+yQr2lsy7dQQIGa0HxChNqYJZjeo3jZZ
+	 W5CvaLujBRltLXcW6z8zJUCt71y/h+1n0XKt/mJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.4 689/737] misc: fastrpc: Pass proper scm arguments for static process init
-Date: Mon, 11 Sep 2023 15:49:08 +0200
-Message-ID: <20230911134709.777298533@linuxfoundation.org>
+	Charlene Liu <charlene.liu@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Fudong Wang <fudong.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 690/737] drm/amd/display: Add smu write msg id fail retry process
+Date: Mon, 11 Sep 2023 15:49:09 +0200
+Message-ID: <20230911134709.806069692@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,55 +41,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Fudong Wang <fudong.wang@amd.com>
 
-commit fe6518d547fc52ba74201018dc9aeb364072ac78 upstream.
+commit 72105dcfa3d12b5af49311f857e3490baa225135 upstream.
 
-Memory is allocated for dynamic loading when audio daemon is trying
-to attach to audioPD on DSP side. This memory is allocated from
-reserved CMA memory region and needs ownership assignment to
-new VMID in order to use it from audioPD.
+A benchmark stress test (12-40 machines x 48hours) found that DCN315 has
+cases where DC writes to an indirect register to set the smu clock msg
+id, but when we go to read the same indirect register the returned msg
+id doesn't match with what we just set it to. So, to fix this retry the
+write until the register's value matches with the requested value.
 
-In the current implementation, arguments are not correctly passed
-to the scm call which might result in failure of dynamic loading
-on audioPD. Added changes to pass correct arguments during daemon
-attach request.
-
-Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230811115643.38578-4-srinivas.kandagatla@linaro.org
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: f94903996140 ("drm/amd/display: Add DCN315 CLK_MGR")
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Fudong Wang <fudong.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c |   20 ++++++++++---
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1322,13 +1322,18 @@ static int fastrpc_init_create_static_pr
- 	return 0;
- err_invoke:
- 	if (fl->cctx->vmcount) {
--		struct qcom_scm_vmperm perm;
-+		u64 src_perms = 0;
-+		struct qcom_scm_vmperm dst_perms;
-+		u32 i;
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
+@@ -32,6 +32,7 @@
  
--		perm.vmid = QCOM_SCM_VMID_HLOS;
--		perm.perm = QCOM_SCM_PERM_RWX;
-+		for (i = 0; i < fl->cctx->vmcount; i++)
-+			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
-+
-+		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
-+		dst_perms.perm = QCOM_SCM_PERM_RWX;
- 		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
- 						(u64)fl->cctx->remote_heap->size,
--						&fl->cctx->perms, &perm, 1);
-+						&src_perms, &dst_perms, 1);
- 		if (err)
- 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
- 				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+ #define MAX_INSTANCE                                        6
+ #define MAX_SEGMENT                                         6
++#define SMU_REGISTER_WRITE_RETRY_COUNT                      5
+ 
+ struct IP_BASE_INSTANCE
+ {
+@@ -134,6 +135,8 @@ static int dcn315_smu_send_msg_with_para
+ 		unsigned int msg_id, unsigned int param)
+ {
+ 	uint32_t result;
++	uint32_t i = 0;
++	uint32_t read_back_data;
+ 
+ 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
+ 
+@@ -150,10 +153,19 @@ static int dcn315_smu_send_msg_with_para
+ 	/* Set the parameter register for the SMU message, unit is Mhz */
+ 	REG_WRITE(MP1_SMN_C2PMSG_37, param);
+ 
+-	/* Trigger the message transaction by writing the message ID */
+-	generic_write_indirect_reg(CTX,
+-		REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
+-		mmMP1_C2PMSG_3, msg_id);
++	for (i = 0; i < SMU_REGISTER_WRITE_RETRY_COUNT; i++) {
++		/* Trigger the message transaction by writing the message ID */
++		generic_write_indirect_reg(CTX,
++			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
++			mmMP1_C2PMSG_3, msg_id);
++		read_back_data = generic_read_indirect_reg(CTX,
++			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
++			mmMP1_C2PMSG_3);
++		if (read_back_data == msg_id)
++			break;
++		udelay(2);
++		smu_print("SMU msg id write fail %x times. \n", i + 1);
++	}
+ 
+ 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
+ 
 
 
