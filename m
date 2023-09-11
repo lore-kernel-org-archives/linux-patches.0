@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F8711715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA49BC433C8;
-	Mon, 11 Sep 2023 15:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0C011715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5BC433C7;
+	Mon, 11 Sep 2023 15:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444859;
-	bh=QT9ThB/4PdB7WuYSa6O2iulkdjGcg2Y3eqGXN6n8AIY=;
+	s=korg; t=1694444861;
+	bh=lRj0IxsOo0/rlIWE65/dY0927bx3I5/b2RVTJUTegTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqR2zfry1GTVuSRD4/6fnXXdtU/6PMFOO2eXu0nmqKitcrlf5vV5UtwpNQPPRLyOb
-	 +8QIP+VzlJWCAIEtYeSmvGHRmvQZsEgjClmkaP8dxoPYk+MT8A5aEtrlNOTTxO6d2o
-	 fJxHyw0h35Te+lBHp1+AwRgkoX6iBlCQhZ8OOaCY=
+	b=IpFROfxGUvXFQM/rSBhQQ3LDIy+lmKuzRteqMG+I6SZ2e9u6r6FKcFqrLdACuPoYF
+	 gdF3/XoG+7ziX1Aw0btAK50cM3JE1zgyBzkU33flPon1U0esqXhFpYBP427vghQhzy
+	 /G7YftjUQP+obAttf0AZ2pZ9RmBdrl1on5S3rX8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Yonghong Song <yhs@fb.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/600] libbpf: Fix realloc API handling in zero-sized edge cases
-Date: Mon, 11 Sep 2023 15:42:54 +0200
-Message-ID: <20230911134637.771986580@linuxfoundation.org>
+Subject: [PATCH 6.1 142/600] bpf: Clear the probe_addr for uprobe
+Date: Mon, 11 Sep 2023 15:42:55 +0200
+Message-ID: <20230911134637.799961277@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,96 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 8a0260dbf6553c969248b6530cafadac46562f47 ]
+[ Upstream commit 5125e757e62f6c1d5478db4c2b61a744060ddf3f ]
 
-realloc() and reallocarray() can either return NULL or a special
-non-NULL pointer, if their size argument is zero. This requires a bit
-more care to handle NULL-as-valid-result situation differently from
-NULL-as-error case. This has caused real issues before ([0]), and just
-recently bit again in production when performing bpf_program__attach_usdt().
+To avoid returning uninitialized or random values when querying the file
+descriptor (fd) and accessing probe_addr, it is necessary to clear the
+variable prior to its use.
 
-This patch fixes 4 places that do or potentially could suffer from this
-mishandling of NULL, including the reported USDT-related one.
-
-There are many other places where realloc()/reallocarray() is used and
-NULL is always treated as an error value, but all those have guarantees
-that their size is always non-zero, so those spot don't need any extra
-handling.
-
-  [0] d08ab82f59d5 ("libbpf: Fix double-free when linker processes empty sections")
-
-Fixes: 999783c8bbda ("libbpf: Wire up spec management and other arch-independent USDT logic")
-Fixes: b63b3c490eee ("libbpf: Add bpf_program__set_insns function")
-Fixes: 697f104db8a6 ("libbpf: Support custom SEC() handlers")
-Fixes: b12688267280 ("libbpf: Change the order of data and text relocations.")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230711024150.1566433-1-andrii@kernel.org
+Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230709025630.3735-6-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 15 ++++++++++++---
- tools/lib/bpf/usdt.c   |  5 ++++-
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ include/linux/trace_events.h | 3 ++-
+ kernel/trace/bpf_trace.c     | 2 +-
+ kernel/trace/trace_uprobe.c  | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index b9a29d1053765..eeb2693128d8a 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -6063,7 +6063,11 @@ static int append_subprog_relos(struct bpf_program *main_prog, struct bpf_progra
- 	if (main_prog == subprog)
- 		return 0;
- 	relos = libbpf_reallocarray(main_prog->reloc_desc, new_cnt, sizeof(*relos));
--	if (!relos)
-+	/* if new count is zero, reallocarray can return a valid NULL result;
-+	 * in this case the previous pointer will be freed, so we *have to*
-+	 * reassign old pointer to the new value (even if it's NULL)
-+	 */
-+	if (!relos && new_cnt)
- 		return -ENOMEM;
- 	if (subprog->nr_reloc)
- 		memcpy(relos + main_prog->nr_reloc, subprog->reloc_desc,
-@@ -8345,7 +8349,8 @@ int bpf_program__set_insns(struct bpf_program *prog,
- 		return -EBUSY;
- 
- 	insns = libbpf_reallocarray(prog->insns, new_insn_cnt, sizeof(*insns));
--	if (!insns) {
-+	/* NULL is a valid return from reallocarray if the new count is zero */
-+	if (!insns && new_insn_cnt) {
- 		pr_warn("prog '%s': failed to realloc prog code\n", prog->name);
- 		return -ENOMEM;
+diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
+index 04c59f8d801f1..422f4ca656cf9 100644
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -863,7 +863,8 @@ extern int  perf_uprobe_init(struct perf_event *event,
+ extern void perf_uprobe_destroy(struct perf_event *event);
+ extern int bpf_get_uprobe_info(const struct perf_event *event,
+ 			       u32 *fd_type, const char **filename,
+-			       u64 *probe_offset, bool perf_type_tracepoint);
++			       u64 *probe_offset, u64 *probe_addr,
++			       bool perf_type_tracepoint);
+ #endif
+ extern int  ftrace_profile_set_filter(struct perf_event *event, int event_id,
+ 				     char *filter_str);
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index ad04390883ada..9fc5db194027b 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2390,7 +2390,7 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ #ifdef CONFIG_UPROBE_EVENTS
+ 		if (flags & TRACE_EVENT_FL_UPROBE)
+ 			err = bpf_get_uprobe_info(event, fd_type, buf,
+-						  probe_offset,
++						  probe_offset, probe_addr,
+ 						  event->attr.type == PERF_TYPE_TRACEPOINT);
+ #endif
  	}
-@@ -8640,7 +8645,11 @@ int libbpf_unregister_prog_handler(int handler_id)
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index 2ac06a642863a..127c78aec17db 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -1418,7 +1418,7 @@ static void uretprobe_perf_func(struct trace_uprobe *tu, unsigned long func,
  
- 	/* try to shrink the array, but it's ok if we couldn't */
- 	sec_defs = libbpf_reallocarray(custom_sec_defs, custom_sec_def_cnt, sizeof(*sec_defs));
--	if (sec_defs)
-+	/* if new count is zero, reallocarray can return a valid NULL result;
-+	 * in this case the previous pointer will be freed, so we *have to*
-+	 * reassign old pointer to the new value (even if it's NULL)
-+	 */
-+	if (sec_defs || custom_sec_def_cnt == 0)
- 		custom_sec_defs = sec_defs;
- 
+ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
+ 			const char **filename, u64 *probe_offset,
+-			bool perf_type_tracepoint)
++			u64 *probe_addr, bool perf_type_tracepoint)
+ {
+ 	const char *pevent = trace_event_name(event->tp_event);
+ 	const char *group = event->tp_event->class->system;
+@@ -1435,6 +1435,7 @@ int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
+ 				    : BPF_FD_TYPE_UPROBE;
+ 	*filename = tu->filename;
+ 	*probe_offset = tu->offset;
++	*probe_addr = 0;
  	return 0;
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index 49f3c3b7f6095..af1cb30556b46 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -852,8 +852,11 @@ static int bpf_link_usdt_detach(struct bpf_link *link)
- 		 * system is so exhausted on memory, it's the least of user's
- 		 * concerns, probably.
- 		 * So just do our best here to return those IDs to usdt_manager.
-+		 * Another edge case when we can legitimately get NULL is when
-+		 * new_cnt is zero, which can happen in some edge cases, so we
-+		 * need to be careful about that.
- 		 */
--		if (new_free_ids) {
-+		if (new_free_ids || new_cnt == 0) {
- 			memcpy(new_free_ids + man->free_spec_cnt, usdt_link->spec_ids,
- 			       usdt_link->spec_cnt * sizeof(*usdt_link->spec_ids));
- 			man->free_spec_ids = new_free_ids;
+ }
+ #endif	/* CONFIG_PERF_EVENTS */
 -- 
 2.40.1
 
