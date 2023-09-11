@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD4111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0692C433C8;
-	Mon, 11 Sep 2023 14:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FDB11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:59:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCCCC433C8;
+	Mon, 11 Sep 2023 14:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444344;
-	bh=CJ+DLyu7QFhIwDewmlOIhkkJJELt+Rm+ekDK09GWYeo=;
+	s=korg; t=1694444347;
+	bh=K1+TLNrxRZEnGVMpqkfQ1wvukiGWZ7ILGqUj2zvf/iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0LlUk0WQW7BeC+6lszT9bh2730ngeR2Z8nUCug+lVDEhR/lWsgdVdwfcnWk0ppW3
-	 SGs7EZ/nvC4WHZoxsLT6bvD6Le/RZKRpaFEGg46Q6QiPh1MB/2m67Xg9F/ZSgOLwWa
-	 wsyv7QMp9r+rHq5gvYjYktsDd83BLj7FIbeu/cUg=
+	b=vEAWwvOHjrcfE7WoT2P9sc9nqqOZXC1Aun1cCfnqXV4X4OlbIfQcTakaIo+tY8iU0
+	 QOTTlY7IDCoL7BjtlR5433EmKIJ8UVx+45uON3lvnorN601UlZUX6EBuWRsigeG99m
+	 J7LffLV8b0rU9jUTOOMOLbdcLdNxAvzmRLZr68LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thore Sommer <public@thson.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.4 696/737] X.509: if signature is unsupported skip validation
-Date: Mon, 11 Sep 2023 15:49:15 +0200
-Message-ID: <20230911134709.968930370@linuxfoundation.org>
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Siwar Zitouni <siwar.zitouni@6wind.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.4 697/737] net: handle ARPHRD_PPP in dev_is_mac_header_xmit()
+Date: Mon, 11 Sep 2023 15:49:16 +0200
+Message-ID: <20230911134709.996435307@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,45 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thore Sommer <public@thson.de>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-commit ef5b52a631f8c18353e80ccab8408b963305510c upstream.
+commit a4f39c9f14a634e4cd35fcd338c239d11fcc73fc upstream.
 
-When the hash algorithm for the signature is not available the digest size
-is 0 and the signature in the certificate is marked as unsupported.
+The goal is to support a bpf_redirect() from an ethernet device (ingress)
+to a ppp device (egress).
+The l2 header is added automatically by the ppp driver, thus the ethernet
+header should be removed.
 
-When validating a self-signed certificate, this needs to be checked,
-because otherwise trying to validate the signature will fail with an
-warning:
-
-Loading compiled-in X.509 certificates
-WARNING: CPU: 0 PID: 1 at crypto/rsa-pkcs1pad.c:537 \
-pkcs1pad_verify+0x46/0x12c
-...
-Problem loading in-kernel X.509 certificate (-22)
-
-Signed-off-by: Thore Sommer <public@thson.de>
-Cc: stable@vger.kernel.org # v4.7+
-Fixes: 6c2dc5ae4ab7 ("X.509: Extract signature digest and make self-signed cert checks earlier")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+CC: stable@vger.kernel.org
+Fixes: 27b29f63058d ("bpf: add bpf_redirect() helper")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Tested-by: Siwar Zitouni <siwar.zitouni@6wind.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/x509_public_key.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/if_arp.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/crypto/asymmetric_keys/x509_public_key.c
-+++ b/crypto/asymmetric_keys/x509_public_key.c
-@@ -117,6 +117,11 @@ int x509_check_for_self_signed(struct x5
- 			goto out;
- 	}
- 
-+	if (cert->unsupported_sig) {
-+		ret = 0;
-+		goto out;
-+	}
-+
- 	ret = public_key_verify_signature(cert->pub, cert->sig);
- 	if (ret < 0) {
- 		if (ret == -ENOPKG) {
+--- a/include/linux/if_arp.h
++++ b/include/linux/if_arp.h
+@@ -53,6 +53,10 @@ static inline bool dev_is_mac_header_xmi
+ 	case ARPHRD_NONE:
+ 	case ARPHRD_RAWIP:
+ 	case ARPHRD_PIMREG:
++	/* PPP adds its l2 header automatically in ppp_start_xmit().
++	 * This makes it look like an l3 device to __bpf_redirect() and tcf_mirred_init().
++	 */
++	case ARPHRD_PPP:
+ 		return false;
+ 	default:
+ 		return true;
 
 
