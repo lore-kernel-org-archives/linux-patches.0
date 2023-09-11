@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947DC11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143D8C433C7;
-	Mon, 11 Sep 2023 14:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5770C11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC201C433CB;
+	Mon, 11 Sep 2023 14:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443395;
-	bh=weJur1bcVSCT7yVmowpJ95gQkgfIQzmjeY8nBb6Idlo=;
+	s=korg; t=1694443398;
+	bh=8Ha5QwuthDCTuSTdno7NVc2jZVl+XQ8RSS3edhH+Ijo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWWlJ7aLOnIbLfLQ6wOfjlQBuHKWaNQ0uSz0V4VS7Q73hXiLBY171OeZP3H379zie
-	 8sSQ0NK0y+bKB/KpmrBR8u7ifJKGUS+igHKEJVKu6juka/Z+DU5r0kEIPFPDCCZ/gl
-	 4SaFJOcX1PXtAg2X6F6Fx74KYeL4ECBOGbYp/ub4=
+	b=xqiUK2I84wE/GjJFbt4a8TAXt6u9/YljXvxESlXB3Slqx2lskaBe2G8agxUlxJ7qY
+	 GfxAOVxRg4sgv1WnD9ly4CJBQ5CIJZ4kjey/tZ42Xw4A3j7lOol2WlIAb4Z+JqVlKo
+	 oRDRzderOLE0vqUWJ+jkJocXz5DuTIOv1lxeLscg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jonas Karlman <jonas@kwiboo.se>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 335/737] arm64: dts: rockchip: Fix PCIe regulators on Radxa E25
-Date: Mon, 11 Sep 2023 15:43:14 +0200
-Message-ID: <20230911134659.895168428@linuxfoundation.org>
+Subject: [PATCH 6.4 336/737] arm64: dts: rockchip: Enable SATA on Radxa E25
+Date: Mon, 11 Sep 2023 15:43:15 +0200
+Message-ID: <20230911134659.921082198@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,20 +42,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit a87852e37f782257ebc57cc44a0d3fbf806471f6 ]
-
-Despite its name, the regulator vcc3v3_pcie30x1 has nothing to do with
-pcie30x1. Instead, it supply power to VBAT1-5 on the M.2 KEY B port as
-seen on page 8 of the schematic [1].
-
-pcie30x1 is used for the mini PCIe slot, and as seen on page 9 the
-vcc3v3_minipcie regulator is instead related to pcie30x1.
+[ Upstream commit 2bdfe84fbd57a4ed9fd65a67210442559ce078f0 ]
 
 The M.2 KEY B port can be used for WWAN USB2 modules or SATA drives.
 
-Use correct regulator vcc3v3_minipcie for pcie30x1.
-
-[1] https://dl.radxa.com/cm3p/e25/radxa-e25-v1.4-sch.pdf
+Enable sata1 node to fix use of SATA drives on the M.2 slot.
 
 Fixes: 2bf2f4d9f673 ("arm64: dts: rockchip: Add Radxa CM3I E25")
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
@@ -63,64 +54,35 @@ Link: https://lore.kernel.org/r/20230724145213.3833099-1-jonas@kwiboo.se
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/rockchip/rk3568-radxa-e25.dts | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts b/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
-index 63c4bd873188e..f0e4884438e39 100644
+index f0e4884438e39..72ad74c38a2b4 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
-@@ -47,6 +47,9 @@ vbus_typec: vbus-typec-regulator {
- 		vin-supply = <&vcc5v0_sys>;
+@@ -99,6 +99,10 @@ vcc3v3_pi6c_05: vcc3v3-pi6c-05-regulator {
  	};
+ };
  
-+	/* actually fed by vcc5v0_sys, dependent
-+	 * on pi6c clock generator
-+	 */
- 	vcc3v3_minipcie: vcc3v3-minipcie-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -54,9 +57,9 @@ vcc3v3_minipcie: vcc3v3-minipcie-regulator {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&minipcie_enable_h>;
- 		regulator-name = "vcc3v3_minipcie";
--		regulator-min-microvolt = <5000000>;
--		regulator-max-microvolt = <5000000>;
--		vin-supply = <&vcc5v0_sys>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		vin-supply = <&vcc3v3_pi6c_05>;
- 	};
- 
- 	vcc3v3_ngff: vcc3v3-ngff-regulator {
-@@ -71,9 +74,6 @@ vcc3v3_ngff: vcc3v3-ngff-regulator {
- 		vin-supply = <&vcc5v0_sys>;
- 	};
- 
--	/* actually fed by vcc5v0_sys, dependent
--	 * on pi6c clock generator
--	 */
- 	vcc3v3_pcie30x1: vcc3v3-pcie30x1-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -83,7 +83,7 @@ vcc3v3_pcie30x1: vcc3v3-pcie30x1-regulator {
- 		regulator-name = "vcc3v3_pcie30x1";
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
--		vin-supply = <&vcc3v3_pi6c_05>;
-+		vin-supply = <&vcc5v0_sys>;
- 	};
- 
- 	vcc3v3_pi6c_05: vcc3v3-pi6c-05-regulator {
-@@ -117,7 +117,7 @@ &pcie3x1 {
++&combphy1 {
++	phy-supply = <&vcc3v3_pcie30x1>;
++};
++
+ &pcie2x1 {
  	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie30x1m0_pins>;
- 	reset-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
--	vpcie3v3-supply = <&vcc3v3_pcie30x1>;
-+	vpcie3v3-supply = <&vcc3v3_minipcie>;
+ 	pinctrl-0 = <&pcie20_reset_h>;
+@@ -178,6 +182,10 @@ &pwm12 {
  	status = "okay";
  };
  
++&sata1 {
++	status = "okay";
++};
++
+ &sdmmc0 {
+ 	bus-width = <4>;
+ 	cap-sd-highspeed;
 -- 
 2.40.1
 
