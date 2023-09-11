@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817D91097C
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03147C433C8;
-	Mon, 11 Sep 2023 15:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E41311710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:20:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E26C433C8;
+	Mon, 11 Sep 2023 15:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445609;
-	bh=pOYDOzjoVardfd6S4obBJIeYyq5ax8M8LMu6d93QtgA=;
+	s=korg; t=1694445612;
+	bh=9H7FkZ84YpN2u+Ey+DsGM2U4JiS6t9GadpenTOkKsu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGi+Tif9hjMa88S7mRZyrdBA9aKKgIjrpFIrDy7lxlS0XXqJ5pwyOXZH8suwbSB1j
-	 IVE8J0ass9KJzlBLxbrRDV1flY2xxxghvouaCRUoekzYNroY5pTWyNc+/Fl0KpXTuL
-	 AfmMCoZASWFaSatfSX2nkk+xb0n0kqpCRaPLr1ao=
+	b=A0+ZwDtiIz/7CflJwh7oM9yFnGw3DJKZXA0zL8okz8DEm05NLYLPBFyx3bJjPUa/g
+	 6xz1raIR7BHsx5XzPqez4ufY28bXxzlEBF3c4BDuru2Hja1eOO2rEdGmykI88Kpx/R
+	 gZlIy4VVSrDz6P3R/ESW59D65qCfhyYAgmU/bC0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming Qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 409/600] media: amphion: fix CHECKED_RETURN issues reported by coverity
-Date: Mon, 11 Sep 2023 15:47:22 +0200
-Message-ID: <20230911134645.750430208@linuxfoundation.org>
+Subject: [PATCH 6.1 410/600] media: amphion: fix REVERSE_INULL issues reported by coverity
+Date: Mon, 11 Sep 2023 15:47:23 +0200
+Message-ID: <20230911134645.779163997@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,10 +43,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit b237b058adbc7825da9c8f358f1ff3f0467d623a ]
+[ Upstream commit 79d3bafaecc13bccab1ebbd28a15e669c5a4cdaf ]
 
-calling "vpu_cmd_send/vpu_get_buffer_state/vpu_session_alloc_fs"
-without checking return value
+null-checking of a pointor is suggested before dereferencing it
 
 Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
@@ -54,84 +53,47 @@ Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vdec.c     |  5 ++++-
- drivers/media/platform/amphion/vpu_cmds.c |  3 ++-
- drivers/media/platform/amphion/vpu_dbg.c  | 11 +++++++++--
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/media/platform/amphion/venc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
-index b4cdd23c38af2..dc35a87e628ec 100644
---- a/drivers/media/platform/amphion/vdec.c
-+++ b/drivers/media/platform/amphion/vdec.c
-@@ -957,6 +957,7 @@ static int vdec_response_frame_abnormal(struct vpu_inst *inst)
+diff --git a/drivers/media/platform/amphion/venc.c b/drivers/media/platform/amphion/venc.c
+index e8cb22da938e6..1df2b35c1a240 100644
+--- a/drivers/media/platform/amphion/venc.c
++++ b/drivers/media/platform/amphion/venc.c
+@@ -278,7 +278,7 @@ static int venc_g_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
  {
- 	struct vdec_t *vdec = inst->priv;
- 	struct vpu_fs_info info;
-+	int ret;
+ 	struct vpu_inst *inst = to_inst(file);
+ 	struct venc_t *venc = inst->priv;
+-	struct v4l2_fract *timeperframe = &parm->parm.capture.timeperframe;
++	struct v4l2_fract *timeperframe;
  
- 	if (!vdec->req_frame_count)
- 		return 0;
-@@ -964,7 +965,9 @@ static int vdec_response_frame_abnormal(struct vpu_inst *inst)
- 	memset(&info, 0, sizeof(info));
- 	info.type = MEM_RES_FRAME;
- 	info.tag = vdec->seq_tag + 0xf0;
--	vpu_session_alloc_fs(inst, &info);
-+	ret = vpu_session_alloc_fs(inst, &info);
-+	if (ret)
-+		return ret;
- 	vdec->req_frame_count--;
+ 	if (!parm)
+ 		return -EINVAL;
+@@ -289,6 +289,7 @@ static int venc_g_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
+ 	if (!vpu_helper_check_type(inst, parm->type))
+ 		return -EINVAL;
  
- 	return 0;
-diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
-index 647d94554fb5d..7e137f276c3b1 100644
---- a/drivers/media/platform/amphion/vpu_cmds.c
-+++ b/drivers/media/platform/amphion/vpu_cmds.c
-@@ -306,7 +306,8 @@ static void vpu_core_keep_active(struct vpu_core *core)
- 
- 	dev_dbg(core->dev, "try to wake up\n");
- 	mutex_lock(&core->cmd_lock);
--	vpu_cmd_send(core, &pkt);
-+	if (vpu_cmd_send(core, &pkt))
-+		dev_err(core->dev, "fail to keep active\n");
- 	mutex_unlock(&core->cmd_lock);
- }
- 
-diff --git a/drivers/media/platform/amphion/vpu_dbg.c b/drivers/media/platform/amphion/vpu_dbg.c
-index bf8aded76e141..f105da82d92f9 100644
---- a/drivers/media/platform/amphion/vpu_dbg.c
-+++ b/drivers/media/platform/amphion/vpu_dbg.c
-@@ -50,6 +50,13 @@ static char *vpu_stat_name[] = {
- 	[VPU_BUF_STATE_ERROR] = "error",
- };
- 
-+static inline const char *to_vpu_stat_name(int state)
-+{
-+	if (state <= VPU_BUF_STATE_ERROR)
-+		return vpu_stat_name[state];
-+	return "unknown";
-+}
-+
- static int vpu_dbg_instance(struct seq_file *s, void *data)
++	timeperframe = &parm->parm.capture.timeperframe;
+ 	parm->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
+ 	parm->parm.capture.readbuffers = 0;
+ 	timeperframe->numerator = venc->params.frame_rate.numerator;
+@@ -301,7 +302,7 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
  {
- 	struct vpu_inst *inst = s->private;
-@@ -141,7 +148,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
- 		num = scnprintf(str, sizeof(str),
- 				"output [%2d] state = %10s, %8s\n",
- 				i, vb2_stat_name[vb->state],
--				vpu_stat_name[vpu_get_buffer_state(vbuf)]);
-+				to_vpu_stat_name(vpu_get_buffer_state(vbuf)));
- 		if (seq_write(s, str, num))
- 			return 0;
- 	}
-@@ -156,7 +163,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
- 		num = scnprintf(str, sizeof(str),
- 				"capture[%2d] state = %10s, %8s\n",
- 				i, vb2_stat_name[vb->state],
--				vpu_stat_name[vpu_get_buffer_state(vbuf)]);
-+				to_vpu_stat_name(vpu_get_buffer_state(vbuf)));
- 		if (seq_write(s, str, num))
- 			return 0;
- 	}
+ 	struct vpu_inst *inst = to_inst(file);
+ 	struct venc_t *venc = inst->priv;
+-	struct v4l2_fract *timeperframe = &parm->parm.capture.timeperframe;
++	struct v4l2_fract *timeperframe;
+ 	unsigned long n, d;
+ 
+ 	if (!parm)
+@@ -313,6 +314,7 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *parm
+ 	if (!vpu_helper_check_type(inst, parm->type))
+ 		return -EINVAL;
+ 
++	timeperframe = &parm->parm.capture.timeperframe;
+ 	if (!timeperframe->numerator)
+ 		timeperframe->numerator = venc->params.frame_rate.numerator;
+ 	if (!timeperframe->denominator)
 -- 
 2.40.1
 
