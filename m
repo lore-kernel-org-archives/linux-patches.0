@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582491170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6FFC433C7;
-	Mon, 11 Sep 2023 14:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B03F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDF0C433C8;
+	Mon, 11 Sep 2023 14:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440970;
-	bh=ahHlLUptEM/YFBiQTFQ5/WR0oOFN3FXMoj5sDcVwo70=;
+	s=korg; t=1694440973;
+	bh=2+p1u9nU/hc217bj5DygjZuEKhaU5rWVTQeKI7rQwTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fv/7jowqxgL+tQWBMllIGYXB7kC1J+mkyy+S+5MbIoZLptdLheU13DM+N5Sj9C5rd
-	 OpWLlpR5vUPWeSRTUdjqSVEodNXuDJsDmTGfO/iOkpV7mphwyq0GWw2CQIOufgVQ6s
-	 0Ag0XGS5EHLP+I+oxNCXQuPzlvAwCj0BVG/MUga4=
+	b=v8sQ2R2POoPXFxrm0ZbrctM3kv+37TlgAh4xrTiNzEAcmt12VH9qMQ+jr+duSEYZh
+	 5HkWFMw1PE4lOP9CLvcUIOayDPklk0wIjl1NiIdXN8oGNlKffRPc6rXjDU0c2lZ9W6
+	 Wt0xrhrZMH4F/oTYCC09n/LuqV4vDcox1jn5g/bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 249/739] ARM: dts: BCM53573: Use updated "spi-gpio" binding properties
-Date: Mon, 11 Sep 2023 15:40:48 +0200
-Message-ID: <20230911134658.110852811@linuxfoundation.org>
+Subject: [PATCH 6.5 250/739] arm64: tegra: Add missing alias for NVIDIA IGX Orin
+Date: Mon, 11 Sep 2023 15:40:49 +0200
+Message-ID: <20230911134658.137371305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,56 +34,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 2c0fd6b3d0778ceab40205315ccef74568490f17 ]
+[ Upstream commit d97966df30ed8c7df0350b8ff6662e38ee88c39f ]
 
-Switch away from deprecated properties.
+The following error is seen on boot for the NVIDIA IGX Orin platform ...
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-sck: False schema does not allow [[3, 21, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-miso: False schema does not allow [[3, 22, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: gpio-mosi: False schema does not allow [[3, 23, 0]]
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: 'sck-gpios' is a required property
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
-arch/arm/boot/dts/broadcom/bcm947189acdbmr.dtb: spi: Unevaluated properties are not allowed ('gpio-miso', 'gpio-mosi', 'gpio-sck' were unexpected)
-        From schema: Documentation/devicetree/bindings/spi/spi-gpio.yaml
+ serial-tegra 3100000.serial: failed to get alias id, errno -19
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-4-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fix this by populating the necessary alias for the serial device.
+
+Fixes: c95711d7dbc4 ("arm64: tegra: Add support for IGX Orin")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/broadcom/bcm947189acdbmr.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/broadcom/bcm947189acdbmr.dts b/arch/arm/boot/dts/broadcom/bcm947189acdbmr.dts
-index 3709baa2376f5..0b8727ae6f16d 100644
---- a/arch/arm/boot/dts/broadcom/bcm947189acdbmr.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm947189acdbmr.dts
-@@ -60,9 +60,9 @@ button-wps {
- 	spi {
- 		compatible = "spi-gpio";
- 		num-chipselects = <1>;
--		gpio-sck = <&chipcommon 21 0>;
--		gpio-miso = <&chipcommon 22 0>;
--		gpio-mosi = <&chipcommon 23 0>;
-+		sck-gpios = <&chipcommon 21 0>;
-+		miso-gpios = <&chipcommon 22 0>;
-+		mosi-gpios = <&chipcommon 23 0>;
- 		cs-gpios = <&chipcommon 24 0>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
+index 43d797e5544f5..b35044812ecfd 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
+@@ -12,6 +12,7 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &tcu;
++		serial1 = &uarta;
+ 	};
+ 
+ 	chosen {
 -- 
 2.40.1
 
