@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2C21170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C3FC433CA;
-	Mon, 11 Sep 2023 14:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739611170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA61C433C9;
+	Mon, 11 Sep 2023 14:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441149;
-	bh=6OWAg0ZdYXRhBAANZhI73RlElyOPkday7oL+mhUQv18=;
+	s=korg; t=1694441152;
+	bh=hv/d2l7k9iir1YVI35rsx3337b51eZoHXWm6p7AcauI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbFGM0y7XBrFryhmDZyY9vxITFnk7tzzscugOe5GOpJ41uvzZI3SVCRPM6s3bDqju
-	 hoTDgvRAVivggC6aEGC8BL6e/VcTPh1PC5yZyNs3TeJwb8zP2MOm4r2D5rawRMuW6O
-	 ohY39RQpa0CgYUlPoepBHxdrYFImZnnB4UzCaU/Q=
+	b=ibR4mD1+op6tW3piaONW1PkPu8TkNgkOXAn5kXoy+AmqyzgKtNEc5VNqF3zgAfGrM
+	 Xgef57Ob3DkQ7bUT+k6WCJ/FSDmhiroyaKYr9fjuOWAh4t72o6BhPgH7PPRYB6cw7e
+	 xt+rcFbfTvS7rH+GhA3jXUunhHZx4Ca166ER0OLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
+	Li Nan <linan122@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 285/739] md: restore noio_flag for the last mddev_resume()
-Date: Mon, 11 Sep 2023 15:41:24 +0200
-Message-ID: <20230911134659.096575210@linuxfoundation.org>
+Subject: [PATCH 6.5 286/739] md/raid10: factor out dereference_rdev_and_rrdev()
+Date: Mon, 11 Sep 2023 15:41:25 +0200
+Message-ID: <20230911134659.125190022@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,47 +40,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit e24ed04389f9619e0aaef615a8948633c182a8b0 ]
+[ Upstream commit b99f8fd2d91eb734f13098aa1cf337edaca454b7 ]
 
-memalloc_noio_save() is called for the first mddev_suspend(), and
-repeated mddev_suspend() only increase 'suspended'. However,
-memalloc_noio_restore() is also called for the first mddev_resume(),
-which means that memory reclaim will be enabled before the last
-mddev_resume() is called, while the array is still suspended.
+Factor out a helper to get 'rdev' and 'replacement' from config->mirrors.
+Just to make code cleaner and prepare to fix the bug of io loss while
+'replacement' replace 'rdev'.
 
-Fix this problem by restore 'noio_flag' for the last mddev_resume().
+There is no functional change.
 
-Fixes: 78f57ef9d50a ("md: use memalloc scope APIs in mddev_suspend()/mddev_resume()")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230628012931.88911-3-yukuai1@huaweicloud.com
+Signed-off-by: Li Nan <linan122@huawei.com>
+Link: https://lore.kernel.org/r/20230701080529.2684932-3-linan666@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
+Stable-dep-of: 673643490b9a ("md/raid10: use dereference_rdev_and_rrdev() to get devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/md/raid10.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 78be7811a89f5..2a4a3d3039fae 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -465,11 +465,13 @@ EXPORT_SYMBOL_GPL(mddev_suspend);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 5051149e27bbe..e02794d29211e 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1322,6 +1322,25 @@ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
+ 	}
+ }
  
- void mddev_resume(struct mddev *mddev)
++static struct md_rdev *dereference_rdev_and_rrdev(struct raid10_info *mirror,
++						  struct md_rdev **prrdev)
++{
++	struct md_rdev *rdev, *rrdev;
++
++	rrdev = rcu_dereference(mirror->replacement);
++	/*
++	 * Read replacement first to prevent reading both rdev and
++	 * replacement as NULL during replacement replace rdev.
++	 */
++	smp_mb();
++	rdev = rcu_dereference(mirror->rdev);
++	if (rdev == rrdev)
++		rrdev = NULL;
++
++	*prrdev = rrdev;
++	return rdev;
++}
++
+ static void wait_blocked_dev(struct mddev *mddev, struct r10bio *r10_bio)
  {
--	/* entred the memalloc scope from mddev_suspend() */
--	memalloc_noio_restore(mddev->noio_flag);
- 	lockdep_assert_held(&mddev->reconfig_mutex);
- 	if (--mddev->suspended)
- 		return;
-+
-+	/* entred the memalloc scope from mddev_suspend() */
-+	memalloc_noio_restore(mddev->noio_flag);
-+
- 	percpu_ref_resurrect(&mddev->active_io);
- 	wake_up(&mddev->sb_wait);
- 	mddev->pers->quiesce(mddev, 0);
+ 	int i;
+@@ -1465,15 +1484,7 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 		int d = r10_bio->devs[i].devnum;
+ 		struct md_rdev *rdev, *rrdev;
+ 
+-		rrdev = rcu_dereference(conf->mirrors[d].replacement);
+-		/*
+-		 * Read replacement first to prevent reading both rdev and
+-		 * replacement as NULL during replacement replace rdev.
+-		 */
+-		smp_mb();
+-		rdev = rcu_dereference(conf->mirrors[d].rdev);
+-		if (rdev == rrdev)
+-			rrdev = NULL;
++		rdev = dereference_rdev_and_rrdev(&conf->mirrors[d], &rrdev);
+ 		if (rdev && (test_bit(Faulty, &rdev->flags)))
+ 			rdev = NULL;
+ 		if (rrdev && (test_bit(Faulty, &rrdev->flags)))
 -- 
 2.40.1
 
