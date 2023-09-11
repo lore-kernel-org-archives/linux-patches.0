@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631C11184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E9AC433C8;
-	Mon, 11 Sep 2023 14:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0676B11184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB3C433C8;
+	Mon, 11 Sep 2023 14:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440893;
-	bh=AsBXe/jnuD5L+FPiQjZLa1gV8V5visF1Osd1kf155oY=;
+	s=korg; t=1694440895;
+	bh=kZCCUj0234dbRK+rb/7CaFeEGC/vqIh12ot/LQpI2KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pg0Xlvf7uDtUAmFZEWbhAxf7l8zzi/Y1VCXFLjVhon+iEYaETLYCrs5BVXGnopMk
-	 CkEHxWD7Bfq+ouKXmcE2SN6QTJrpDGSsfV3yS+6OqSCC646Zzyt3Ccvungvr9A7jY3
-	 gwo4Rdrn6SsIJbmIr8F0rN/pPfBdmaaxno9ZtJEk=
+	b=QHA0tp/xoGFPVdQ/1bbEysQXtUpfmSN+8zZH7xQHlAlZ/gD7S9BRS1uPlAwpVKuc0
+	 m/GZFWYpBvg/jz/19t+FDM/8OIU3IV3RxuNF4kCsexXJBACKZJyVBdvnqGHHltyWkq
+	 qDW1Htz01XQGbYM8kWyqffVK49IHOhyFvflWViTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 222/739] arm64: dts: qcom: sc8280xp-crd: Correct vreg_misc_3p3 GPIO
-Date: Mon, 11 Sep 2023 15:40:21 +0200
-Message-ID: <20230911134657.384057055@linuxfoundation.org>
+Subject: [PATCH 6.5 197/739] pds_core: check for work queue before use
+Date: Mon, 11 Sep 2023 15:39:56 +0200
+Message-ID: <20230911134656.691289980@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,47 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 9566b5271f68bdf6e69b7c511850e3fb75cd18be ]
+[ Upstream commit 969cfd4c8ca50c32901342cdd3d677c3ffe61371 ]
 
-The vreg_misc_3p3 regulator is controlled by PMC8280_1 GPIO 2, not 1, on
-the CRD.
+Add a check that the wq exists before queuing up work for a
+failed devcmd, as the PF is responsible for health and the VF
+doesn't have a wq.
 
-Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230620203915.141337-1-quic_bjorande@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c2dbb0904310 ("pds_core: health timer and workqueue")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230824161754.34264-5-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/pds_core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index b566e403d1db2..b21b41a066b62 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -167,7 +167,7 @@ vreg_misc_3p3: regulator-misc-3p3 {
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
+diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
+index debe5216fe29e..524f422ee7ace 100644
+--- a/drivers/net/ethernet/amd/pds_core/dev.c
++++ b/drivers/net/ethernet/amd/pds_core/dev.c
+@@ -183,7 +183,7 @@ int pdsc_devcmd_locked(struct pdsc *pdsc, union pds_core_dev_cmd *cmd,
+ 	err = pdsc_devcmd_wait(pdsc, max_seconds);
+ 	memcpy_fromio(comp, &pdsc->cmd_regs->comp, sizeof(*comp));
  
--		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
-+		gpio = <&pmc8280_1_gpios 2 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
+-	if (err == -ENXIO || err == -ETIMEDOUT)
++	if ((err == -ENXIO || err == -ETIMEDOUT) && pdsc->wq)
+ 		queue_work(pdsc->wq, &pdsc->health_work);
  
- 		pinctrl-names = "default";
-@@ -757,7 +757,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
- 	};
- 
- 	misc_3p3_reg_en: misc-3p3-reg-en-state {
--		pins = "gpio1";
-+		pins = "gpio2";
- 		function = "normal";
- 	};
- };
+ 	return err;
 -- 
 2.40.1
 
