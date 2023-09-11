@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C837A1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F86C433C8;
-	Mon, 11 Sep 2023 14:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE0F1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14318C433C8;
+	Mon, 11 Sep 2023 14:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441504;
-	bh=3sl2FYAHSl0N9NSpE078JRwWQJhIsHVrnbZDHo/j404=;
+	s=korg; t=1694441507;
+	bh=mTLrn/ZdcrPF+TgIMXbgwFdg3W/16BHdpXSDRT7jOZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2AzSekJHIsRytmrzL+7z770py52hHZBogi+BUmAzpN4ois0C0yfJjP8zJ4YT6DRt
-	 kRa32ShRf30Kd3iSNtuU9kBmHE9j2vOmkGVdYSsHi/FwHfQbg6lVx1O27RvZRkH9k0
-	 j5aQmX/oMtqILH0lpuMrgGPvMKXlRzTbGJJEL8HQ=
+	b=0r7C73A9ieAgJpTyxWxUniQs0a2TOOMo/RNamFMMRYnzm9myXnZa8FJWFITs/M0f5
+	 Zz6f1Br/onzl0sdWyxtLOb9R+Np4qDAT9N/V8pWRUu+V3HQRrQNyvLA4RgqokSdCIc
+	 6tWeixpbTCtNBhrBk8Rk1/QZrBPwDMfR7AUUElvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Liang He <windhl@126.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 429/739] wifi: ath10k: Use RMW accessors for changing LNKCTL
-Date: Mon, 11 Sep 2023 15:43:48 +0200
-Message-ID: <20230911134703.159783354@linuxfoundation.org>
+Subject: [PATCH 6.5 438/739] powerpc/mpc5xxx: Add missing fwnode_handle_put()
+Date: Mon, 11 Sep 2023 15:43:57 +0200
+Message-ID: <20230911134703.403470752@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -37,63 +34,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit f139492a09f15254fa261245cdbd65555cdf39e3 ]
+[ Upstream commit b9bbbf4979073d5536b7650decd37fcb901e6556 ]
 
-Don't assume that only the driver would be accessing LNKCTL. ASPM policy
-changes can trigger write to LNKCTL outside of driver's control.
+In mpc5xxx_fwnode_get_bus_frequency(), we should add
+fwnode_handle_put() when break out of the iteration
+fwnode_for_each_parent_node() as it will automatically
+increase and decrease the refcounter.
 
-Use RMW capability accessors which does proper locking to avoid losing
-concurrent updates to the register value. On restore, clear the ASPMC field
-properly.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 76d870ed09ab ("ath10k: enable ASPM")
-Link: https://lore.kernel.org/r/20230717120503.15276-11-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
+Fixes: de06fba62af6 ("powerpc/mpc5xxx: Switch mpc5xxx_get_bus_frequency() to use fwnode")
+Signed-off-by: Liang He <windhl@126.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230322030423.1855440-1-windhl@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/powerpc/sysdev/mpc5xxx_clocks.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index a7f44f6335fb8..9275a672f90cb 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -1963,8 +1963,9 @@ static int ath10k_pci_hif_start(struct ath10k *ar)
- 	ath10k_pci_irq_enable(ar);
- 	ath10k_pci_rx_post(ar);
+diff --git a/arch/powerpc/sysdev/mpc5xxx_clocks.c b/arch/powerpc/sysdev/mpc5xxx_clocks.c
+index c5bf7e1b37804..58cee28e23992 100644
+--- a/arch/powerpc/sysdev/mpc5xxx_clocks.c
++++ b/arch/powerpc/sysdev/mpc5xxx_clocks.c
+@@ -25,8 +25,10 @@ unsigned long mpc5xxx_fwnode_get_bus_frequency(struct fwnode_handle *fwnode)
  
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl);
-+	pcie_capability_clear_and_set_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_ASPMC,
-+					   ar_pci->link_ctl & PCI_EXP_LNKCTL_ASPMC);
+ 	fwnode_for_each_parent_node(fwnode, parent) {
+ 		ret = fwnode_property_read_u32(parent, "bus-frequency", &bus_freq);
+-		if (!ret)
++		if (!ret) {
++			fwnode_handle_put(parent);
+ 			return bus_freq;
++		}
+ 	}
  
  	return 0;
- }
-@@ -2821,8 +2822,8 @@ static int ath10k_pci_hif_power_up(struct ath10k *ar,
- 
- 	pcie_capability_read_word(ar_pci->pdev, PCI_EXP_LNKCTL,
- 				  &ar_pci->link_ctl);
--	pcie_capability_write_word(ar_pci->pdev, PCI_EXP_LNKCTL,
--				   ar_pci->link_ctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	pcie_capability_clear_word(ar_pci->pdev, PCI_EXP_LNKCTL,
-+				   PCI_EXP_LNKCTL_ASPMC);
- 
- 	/*
- 	 * Bring the target up cleanly.
 -- 
 2.40.1
 
