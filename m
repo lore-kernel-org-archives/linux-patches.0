@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B840F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304A6C433C7;
-	Mon, 11 Sep 2023 14:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8241170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACF7C433C8;
+	Mon, 11 Sep 2023 14:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442254;
-	bh=i9aH3nMcTI6jsU4laxXJlZho2uaVU1vkTjTzv6aJYbk=;
+	s=korg; t=1694442257;
+	bh=jkoQ726IpYcv50GTILbGDO3L70AmWus3FTa38P1t4JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JF1eD+R1hDaQp3cv8UFrXbaCI/X68IyFPlAlWcc4T5vNNWl6tGHtPDuNfjdSFnXXc
-	 SHAzLyCsVThnMgeMRYjHWHXT+x9tVJ4GF1iGf19KCD+O7g4JX/l2B9ZU/ufU761I1c
-	 AwmhXkgHWQaouvRMIvdfd1dtL6WW2+hmMrY+Rv9U=
+	b=QrELMHLNbDGrnEPeXXr7gV89IvFWuL9sl1SmClLlDwn3L0Gy/v0hcqe1fBFUCvxrK
+	 YgQEDMeboTZtPAFbpBCMoWMMj9W3VWnjVIogM9N6RYg000s+YXe2tyRfdkhrpJ1/o7
+	 VlxXIpib5ZV+z0mknzY3+mLp16xhYBGnXJqqmv9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.5 674/739] arm64: csum: Fix OoB access in IP checksum code for negative lengths
-Date: Mon, 11 Sep 2023 15:47:53 +0200
-Message-ID: <20230911134709.929138633@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.5 675/739] ALSA: usb-audio: Fix potential memory leaks at error path for UMP open
+Date: Mon, 11 Sep 2023 15:47:54 +0200
+Message-ID: <20230911134709.956635132@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,75 +39,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 8bd795fedb8450ecbef18eeadbd23ed8fc7630f5 upstream.
+commit b1757fa30ef14f254f4719bf6f7d54a4c8207216 upstream.
 
-Although commit c2c24edb1d9c ("arm64: csum: Fix pathological zero-length
-calls") added an early return for zero-length input, syzkaller has
-popped up with an example of a _negative_ length which causes an
-undefined shift and an out-of-bounds read:
+The allocation and initialization errors at alloc_midi_urbs() that is
+called at MIDI 2.0 / UMP device are supposed to be handled at the
+caller side by invoking free_midi_urbs().  However, free_midi_urbs()
+loops only for ep->num_urbs entries, and since ep->num_entries wasn't
+updated yet at the allocation / init error in alloc_midi_urbs(), this
+entry won't be released.
 
- | BUG: KASAN: slab-out-of-bounds in do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
- | Read of size 4294966928 at addr ffff0000d7ac0170 by task syz-executor412/5975
- |
- | CPU: 0 PID: 5975 Comm: syz-executor412 Not tainted 6.4.0-rc4-syzkaller-g908f31f2a05b #0
- | Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
- | Call trace:
- |  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:233
- |  show_stack+0x2c/0x44 arch/arm64/kernel/stacktrace.c:240
- |  __dump_stack lib/dump_stack.c:88 [inline]
- |  dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
- |  print_address_description mm/kasan/report.c:351 [inline]
- |  print_report+0x174/0x514 mm/kasan/report.c:462
- |  kasan_report+0xd4/0x130 mm/kasan/report.c:572
- |  kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:187
- |  __kasan_check_read+0x20/0x30 mm/kasan/shadow.c:31
- |  do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
- |  csum_partial+0x30/0x58 lib/checksum.c:128
- |  gso_make_checksum include/linux/skbuff.h:4928 [inline]
- |  __udp_gso_segment+0xaf4/0x1bc4 net/ipv4/udp_offload.c:332
- |  udp6_ufo_fragment+0x540/0xca0 net/ipv6/udp_offload.c:47
- |  ipv6_gso_segment+0x5cc/0x1760 net/ipv6/ip6_offload.c:119
- |  skb_mac_gso_segment+0x2b4/0x5b0 net/core/gro.c:141
- |  __skb_gso_segment+0x250/0x3d0 net/core/dev.c:3401
- |  skb_gso_segment include/linux/netdevice.h:4859 [inline]
- |  validate_xmit_skb+0x364/0xdbc net/core/dev.c:3659
- |  validate_xmit_skb_list+0x94/0x130 net/core/dev.c:3709
- |  sch_direct_xmit+0xe8/0x548 net/sched/sch_generic.c:327
- |  __dev_xmit_skb net/core/dev.c:3805 [inline]
- |  __dev_queue_xmit+0x147c/0x3318 net/core/dev.c:4210
- |  dev_queue_xmit include/linux/netdevice.h:3085 [inline]
- |  packet_xmit+0x6c/0x318 net/packet/af_packet.c:276
- |  packet_snd net/packet/af_packet.c:3081 [inline]
- |  packet_sendmsg+0x376c/0x4c98 net/packet/af_packet.c:3113
- |  sock_sendmsg_nosec net/socket.c:724 [inline]
- |  sock_sendmsg net/socket.c:747 [inline]
- |  __sys_sendto+0x3b4/0x538 net/socket.c:2144
+The intention of free_midi_urbs() is to release the whole elements, so
+change the loop size to NUM_URBS to scan over all elements for fixing
+the missed releases.
 
-Extend the early return to reject negative lengths as well, aligning our
-implementation with the generic code in lib/checksum.c
+Also, the call of free_midi_urbs() is missing at
+snd_usb_midi_v2_open().  Although it'll be released later at
+reopen/close or disconnection, it's better to release immediately at
+the error path.
 
-Cc: Robin Murphy <robin.murphy@arm.com>
-Fixes: 5777eaed566a ("arm64: Implement optimised checksum routine")
-Reported-by: syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/000000000000e0e94c0603f8d213@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: ff49d1df79ae ("ALSA: usb-audio: USB MIDI 2.0 UMP support")
+Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Closes: https://lore.kernel.org/r/fc275ed315b9157952dcf2744ee7bdb78defdb5f.1693746347.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/20230905054511.20502-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/lib/csum.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi2.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/lib/csum.c
-+++ b/arch/arm64/lib/csum.c
-@@ -24,7 +24,7 @@ unsigned int __no_sanitize_address do_cs
- 	const u64 *ptr;
- 	u64 data, sum64 = 0;
+--- a/sound/usb/midi2.c
++++ b/sound/usb/midi2.c
+@@ -265,7 +265,7 @@ static void free_midi_urbs(struct snd_us
  
--	if (unlikely(len == 0))
-+	if (unlikely(len <= 0))
- 		return 0;
+ 	if (!ep)
+ 		return;
+-	for (i = 0; i < ep->num_urbs; ++i) {
++	for (i = 0; i < NUM_URBS; ++i) {
+ 		ctx = &ep->urbs[i];
+ 		if (!ctx->urb)
+ 			break;
+@@ -279,6 +279,7 @@ static void free_midi_urbs(struct snd_us
+ }
  
- 	offset = (unsigned long)buff & 7;
+ /* allocate URBs for an EP */
++/* the callers should handle allocation errors via free_midi_urbs() */
+ static int alloc_midi_urbs(struct snd_usb_midi2_endpoint *ep)
+ {
+ 	struct snd_usb_midi2_urb *ctx;
+@@ -351,8 +352,10 @@ static int snd_usb_midi_v2_open(struct s
+ 		return -EIO;
+ 	if (ep->direction == STR_OUT) {
+ 		err = alloc_midi_urbs(ep);
+-		if (err)
++		if (err) {
++			free_midi_urbs(ep);
+ 			return err;
++		}
+ 	}
+ 	return 0;
+ }
 
 
