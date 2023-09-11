@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7251170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AFDC433C7;
-	Mon, 11 Sep 2023 14:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3E11170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9042FC433C7;
+	Mon, 11 Sep 2023 14:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442000;
-	bh=pRsCyx63h9wzlsa2URGHq4iN7xnBT2Ea64LHoc8ZFbg=;
+	s=korg; t=1694442002;
+	bh=Xtfz33bwtvBTXuNOxNDbg8xsGZeG0xAbBp4DIgEC3eY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=st10hAdDdYFsqO3dhR4SCsm5v7JcSQfBlZnGSrM3v6hPDcC8R8UjoLgVNRqtloxwH
-	 RC4c4Zx6KhiqAFI9wiouUS4WSAmIJqH7w5RcIfT7Vqb/VqM6mYwJa398lXwgmIZVuR
-	 itfcifASrBFP0cAbUvF+zzI1QrsbySOzzlA9MxCU=
+	b=f2TK9Hw5t/m/KjCVTwZXqmbEhgLzFJ8eWThUks/I41vtBlYSmegiAW3Pctn5gAV1V
+	 gO6gpN6otWAYuOw464Gvlw5rb5w2DSGQ9Uu2l+oN2yrD7C6URrzSAgCHY5llHs9sp9
+	 WZP8uRX71wYx3jv8Rd83xLczZ7yVvxomn3Ytkzd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+3a0ebe8a52b89c63739d@syzkaller.appspotmail.com,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 584/739] f2fs: compress: fix to assign compress_level for lz4 correctly
-Date: Mon, 11 Sep 2023 15:46:23 +0200
-Message-ID: <20230911134707.416767582@linuxfoundation.org>
+Subject: [PATCH 6.5 585/739] HID: uclogic: Correct devm device reference for hidinput input_dev name
+Date: Mon, 11 Sep 2023 15:46:24 +0200
+Message-ID: <20230911134707.445214831@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,40 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 
-[ Upstream commit 091a4dfbb1d32b06c031edbfe2a44af100c4604f ]
+[ Upstream commit dd613a4e45f8d35f49a63a2064e5308fa5619e29 ]
 
-After remount, F2FS_OPTION().compress_level was assgin to
-LZ4HC_DEFAULT_CLEVEL incorrectly, result in lz4hc:9 was enabled, fix it.
+Reference the HID device rather than the input device for the devm
+allocation of the input_dev name. Referencing the input_dev would lead to a
+use-after-free when the input_dev was unregistered and subsequently fires a
+uevent that depends on the name. At the point of firing the uevent, the
+name would be freed by devres management.
 
-1. mount /dev/vdb
-/dev/vdb on /mnt/f2fs type f2fs (...,compress_algorithm=lz4,compress_log_size=2,...)
-2. mount -t f2fs -o remount,compress_log_size=3 /mnt/f2fs/
-3. mount|grep f2fs
-/dev/vdb on /mnt/f2fs type f2fs (...,compress_algorithm=lz4:9,compress_log_size=3,...)
+Use devm_kasprintf to simplify the logic for allocating memory and
+formatting the input_dev name string.
 
-Fixes: 00e120b5e4b5 ("f2fs: assign default compression level")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reported-by: syzbot+3a0ebe8a52b89c63739d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/
+Reported-by: Maxime Ripard <mripard@kernel.org>
+Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
+Fixes: cce2dbdf258e ("HID: uclogic: name the input nodes based on their tool")
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20230824061308.222021-2-sergeantsagara@protonmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-uclogic-core.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index a067466a694c9..8d9d2ee7f3c7f 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -591,7 +591,7 @@ static int f2fs_set_lz4hc_level(struct f2fs_sb_info *sbi, const char *str)
- 	unsigned int level;
+diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
+index f67835f9ed4cc..ad74cbc9a0aa5 100644
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -85,10 +85,8 @@ static int uclogic_input_configured(struct hid_device *hdev,
+ {
+ 	struct uclogic_drvdata *drvdata = hid_get_drvdata(hdev);
+ 	struct uclogic_params *params = &drvdata->params;
+-	char *name;
+ 	const char *suffix = NULL;
+ 	struct hid_field *field;
+-	size_t len;
+ 	size_t i;
+ 	const struct uclogic_params_frame *frame;
  
- 	if (strlen(str) == 3) {
--		F2FS_OPTION(sbi).compress_level = LZ4HC_DEFAULT_CLEVEL;
-+		F2FS_OPTION(sbi).compress_level = 0;
- 		return 0;
+@@ -146,14 +144,9 @@ static int uclogic_input_configured(struct hid_device *hdev,
+ 		}
  	}
  
+-	if (suffix) {
+-		len = strlen(hdev->name) + 2 + strlen(suffix);
+-		name = devm_kzalloc(&hi->input->dev, len, GFP_KERNEL);
+-		if (name) {
+-			snprintf(name, len, "%s %s", hdev->name, suffix);
+-			hi->input->name = name;
+-		}
+-	}
++	if (suffix)
++		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
++						 "%s %s", hdev->name, suffix);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
