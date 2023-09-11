@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B6611715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 881DFC433C8;
-	Mon, 11 Sep 2023 15:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0925C11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB0AC433C7;
+	Mon, 11 Sep 2023 15:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444953;
-	bh=r283K8RdGffxmm19eCE+OI1AkspPXD3kyKh373HtvnM=;
+	s=korg; t=1694444956;
+	bh=qkw8NEz5hFemAyJfDb3nvXjDtFVwepeiVhpa50mrUnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NN5VIk9VmkFYMzfpqCkOcNPrXDDkppJwpoch97tuusQsRwjAA5W6LfS0z6xdtUl3X
-	 pk0YMJVcO3wlaTjyKbgjtLI+kWHqokdjfeBGkqKc6ENntmcYQJMwKM5ki3uN2hwcFK
-	 ilEkcf+cG5+D2EVJixZZGRscdtVbLe6ZsO9nsQgM=
+	b=eNIznjdfOeVUwYAWDHbQN520pJw0ewpCzQwQHGLJkGHPwlE85bsPPfBfRaThj9/Ey
+	 62cZmcOpn+v3On1Jtd2s/+ZyoQE9B+hqWAlPf3JRQL6ZTeXCTNJxOzie/p042cvUjk
+	 34K/LmGTt4tNj0lLub5WmlogwgNexC07fzbWJfuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Danilenko <al.b.danilenko@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/600] spi: tegra114: Remove unnecessary NULL-pointer checks
-Date: Mon, 11 Sep 2023 15:43:29 +0200
-Message-ID: <20230911134638.797306182@linuxfoundation.org>
+Subject: [PATCH 6.1 177/600] net: Fix slab-out-of-bounds in inet[6]_steal_sock
+Date: Mon, 11 Sep 2023 15:43:30 +0200
+Message-ID: <20230911134638.826926163@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,71 +41,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Danilenko <al.b.danilenko@gmail.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit 373c36bf7914e3198ac2654dede499f340c52950 ]
+[ Upstream commit 8897562f67b3e61ad736cd5c9f307447d33280e4 ]
 
-cs_setup, cs_hold and cs_inactive points to fields of spi_device struct,
-so there is no sense in checking them for NULL.
+Kumar reported a KASAN splat in tcp_v6_rcv:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+  bash-5.2# ./test_progs -t btf_skc_cls_ingress
+  ...
+  [   51.810085] BUG: KASAN: slab-out-of-bounds in tcp_v6_rcv+0x2d7d/0x3440
+  [   51.810458] Read of size 2 at addr ffff8881053f038c by task test_progs/226
 
-Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
-Signed-off-by: Alexander Danilenko <al.b.danilenko@gmail.com>
-Link: https://lore.kernel.org/r/20230815092058.4083-1-al.b.danilenko@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The problem is that inet[6]_steal_sock accesses sk->sk_protocol without
+accounting for request or timewait sockets. To fix this we can't just
+check sock_common->skc_reuseport since that flag is present on timewait
+sockets.
+
+Instead, add a fullsock check to avoid the out of bands access of sk_protocol.
+
+Fixes: 9c02bec95954 ("bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign")
+Reported-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230815-bpf-next-v2-1-95126eaa4c1b@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ include/net/inet6_hashtables.h | 2 +-
+ include/net/inet_hashtables.h  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index d9be80e3e1bcb..6b56108308fc5 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -723,27 +723,23 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
- 	struct spi_delay *setup = &spi->cs_setup;
- 	struct spi_delay *hold = &spi->cs_hold;
- 	struct spi_delay *inactive = &spi->cs_inactive;
--	u8 setup_dly, hold_dly, inactive_dly;
-+	u8 setup_dly, hold_dly;
- 	u32 setup_hold;
- 	u32 spi_cs_timing;
- 	u32 inactive_cycles;
- 	u8 cs_state;
+diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
+index 475e672b4facc..12780b8fb5630 100644
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -107,7 +107,7 @@ struct sock *inet6_steal_sock(struct net *net, struct sk_buff *skb, int doff,
+ 	if (!sk)
+ 		return NULL;
  
--	if ((setup && setup->unit != SPI_DELAY_UNIT_SCK) ||
--	    (hold && hold->unit != SPI_DELAY_UNIT_SCK) ||
--	    (inactive && inactive->unit != SPI_DELAY_UNIT_SCK)) {
-+	if (setup->unit != SPI_DELAY_UNIT_SCK ||
-+	    hold->unit != SPI_DELAY_UNIT_SCK ||
-+	    inactive->unit != SPI_DELAY_UNIT_SCK) {
- 		dev_err(&spi->dev,
- 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
- 			SPI_DELAY_UNIT_SCK);
- 		return -EINVAL;
- 	}
+-	if (!prefetched)
++	if (!prefetched || !sk_fullsock(sk))
+ 		return sk;
  
--	setup_dly = setup ? setup->value : 0;
--	hold_dly = hold ? hold->value : 0;
--	inactive_dly = inactive ? inactive->value : 0;
--
--	setup_dly = min_t(u8, setup_dly, MAX_SETUP_HOLD_CYCLES);
--	hold_dly = min_t(u8, hold_dly, MAX_SETUP_HOLD_CYCLES);
-+	setup_dly = min_t(u8, setup->value, MAX_SETUP_HOLD_CYCLES);
-+	hold_dly = min_t(u8, hold->value, MAX_SETUP_HOLD_CYCLES);
- 	if (setup_dly && hold_dly) {
- 		setup_hold = SPI_SETUP_HOLD(setup_dly - 1, hold_dly - 1);
- 		spi_cs_timing = SPI_CS_SETUP_HOLD(tspi->spi_cs_timing1,
-@@ -755,7 +751,7 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
- 		}
- 	}
+ 	if (sk->sk_protocol == IPPROTO_TCP) {
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index a1b8eb147ce73..9414cb4e6e624 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -455,7 +455,7 @@ struct sock *inet_steal_sock(struct net *net, struct sk_buff *skb, int doff,
+ 	if (!sk)
+ 		return NULL;
  
--	inactive_cycles = min_t(u8, inactive_dly, MAX_INACTIVE_CYCLES);
-+	inactive_cycles = min_t(u8, inactive->value, MAX_INACTIVE_CYCLES);
- 	if (inactive_cycles)
- 		inactive_cycles--;
- 	cs_state = inactive_cycles ? 0 : 1;
+-	if (!prefetched)
++	if (!prefetched || !sk_fullsock(sk))
+ 		return sk;
+ 
+ 	if (sk->sk_protocol == IPPROTO_TCP) {
 -- 
 2.40.1
 
