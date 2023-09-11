@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE52811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D07CC433C7;
-	Mon, 11 Sep 2023 15:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74E411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A322C433C7;
+	Mon, 11 Sep 2023 15:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445460;
-	bh=iNZz3T3at+IkECW83VCDNBU2SrsA3Nw8CHMtXuoRGTQ=;
+	s=korg; t=1694445463;
+	bh=n1SMUFODBkS+iV/axv3gayL03x0FChHYWeMEkzbM4EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MX0rOH32CwJ64vCk+2+NUB0UiH2s/Cze/1nElK6njx86Q88cKjEqCooKo/cbHp77L
-	 waQ2GBI9s4KgEXhUXWs7yUCfNxkvQoN3tJiKww4D1jLG1DLkesa8HII5F47UgKb3z9
-	 pVrKROWdrV0cDR4WuxxSrVu+UW0lhszX6i0Sul9Q=
+	b=GjZo/oWiTJ2q2uA8Ur9achg03fmm4DOrosTAVeD4ugP64D/8dP04IfNVReg99cw+M
+	 jcjgwKE5fTkuT7A0/Ykthc+3ABN9oyuxfpQvFp0dx3J5kruOYkkrvJEfreDbOEg40F
+	 5B6kfFAIn35sOkCQvc3Ss7KgqusgEQhvEwiNJcr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/600] PCI/ASPM: Use RMW accessors for changing LNKCTL
-Date: Mon, 11 Sep 2023 15:46:28 +0200
-Message-ID: <20230911134644.160247642@linuxfoundation.org>
+Subject: [PATCH 6.1 356/600] clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs
+Date: Mon, 11 Sep 2023 15:46:29 +0200
+Message-ID: <20230911134644.190850074@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -36,106 +35,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
+[ Upstream commit a27ac3806b0a0e6954fb5967223b8635242e5b8f ]
 
-Don't assume that the device is fully under the control of ASPM and use RMW
-capability accessors which do proper locking to avoid losing concurrent
-updates to the register values.
+Use the floor ops to prevent warnings like this at suspend exit and boot:
 
-If configuration fails in pcie_aspm_configure_common_clock(), the
-function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
-only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
-than the content of the whole LNKCTL registers. It aligns better with
-how pcie_lnkctl_clear_and_set() expects its parameter and makes the
-code more obvious to understand.
+mmc0: Card appears overclocked; req 800000 Hz, actual 25000000 Hz
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
-Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
-Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Fixes: db0c944ee92b ("clk: qcom: Add clock driver for SM8450")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230811-topic-8450_clk-v1-1-88031478d548@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/clk/qcom/gcc-sm8450.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 07166a4ec27ad..7e89cdbd446fc 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -250,7 +250,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- {
- 	int same_clock = 1;
--	u16 reg16, parent_reg, child_reg[8];
-+	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
- 	struct pci_dev *child, *parent = link->pdev;
- 	struct pci_bus *linkbus = parent->subordinate;
- 	/*
-@@ -272,6 +272,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
+index 666efa5ff9780..59c567e76d656 100644
+--- a/drivers/clk/qcom/gcc-sm8450.c
++++ b/drivers/clk/qcom/gcc-sm8450.c
+@@ -904,7 +904,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_7,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_7),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
  
- 	/* Port might be already in common clock mode */
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-+	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
- 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
- 		bool consistent = true;
- 
-@@ -288,34 +289,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
- 		pci_info(parent, "ASPM: current common clock configuration is inconsistent, reconfiguring\n");
- 	}
- 
-+	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
- 	/* Configure downstream component, all functions */
- 	list_for_each_entry(child, &linkbus->devices, bus_list) {
- 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
--		child_reg[PCI_FUNC(child->devfn)] = reg16;
--		if (same_clock)
--			reg16 |= PCI_EXP_LNKCTL_CCC;
--		else
--			reg16 &= ~PCI_EXP_LNKCTL_CCC;
--		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
-+		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
-+		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, ccc);
- 	}
- 
- 	/* Configure upstream component */
--	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
--	parent_reg = reg16;
--	if (same_clock)
--		reg16 |= PCI_EXP_LNKCTL_CCC;
--	else
--		reg16 &= ~PCI_EXP_LNKCTL_CCC;
--	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
-+	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+					   PCI_EXP_LNKCTL_CCC, ccc);
- 
- 	if (pcie_retrain_link(link)) {
- 
- 		/* Training failed. Restore common clock configurations */
- 		pci_err(parent, "ASPM: Could not configure common clock\n");
- 		list_for_each_entry(child, &linkbus->devices, bus_list)
--			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
--					   child_reg[PCI_FUNC(child->devfn)]);
--		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
-+			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+							   PCI_EXP_LNKCTL_CCC,
-+							   child_old_ccc[PCI_FUNC(child->devfn)]);
-+		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
-+						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
- 	}
- }
+@@ -926,7 +926,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
  
 -- 
 2.40.1
