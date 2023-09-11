@@ -1,120 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A1F1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C51C433C7;
-	Mon, 11 Sep 2023 14:14:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441646;
-	bh=7X9f7LS4VH4mYN8pdHyfDOwt+mcSQ8fijM9uxhfrlO4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGwiPK8aG7z6JThcMID9+2uoi2KUx9iUDkSg5kQ2yt4fo1A+J5x2miOa/qg85/zcS
-	 /+Gv8zvweMalRjIo//XnGWdVksVRubb5qTxqEzB7nhGyPforpqnhXY4TFSUoT9/y50
-	 WBoS2IrrOTZC+E7telNp1pSkGXE5ROR7w3a2i+xs=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 486/739] scsi: qla4xxx: Add length check when parsing nlattrs
-Date: Mon, 11 Sep 2023 15:44:45 +0200
-Message-ID: <20230911134704.711440975@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
-References: <20230911134650.921299741@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAB61170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:14:08 +0000 (UTC)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-99c93638322so964178866b.1
+        for <patches@lists.linux.dev>; Mon, 11 Sep 2023 07:14:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isovalent.com; s=google; t=1694441647; x=1695046447; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NtfPL2emZ+ThTIXQ737wda+eYe7YeOc3mG8avwXPF00=;
+        b=d44/udH3tlPnBWLbz9ktclZcyF9ALuYcaTiSsvIp8p1mPtI1wd3N45LuVbp4HjJ0/0
+         B+jM/Y43YnI96B2s/Q1m+mERIVYrtCpFvFeKOvhJpqTm4kwutDEVKYHfYk1UdyNSp0FM
+         ruweIbgxQYMfjmbUFMpMzGCfjLtxnPftCzNj1g6aOeOTNz4I+Ab1eCotn9ttTGHRFGiB
+         Ox2Hjx+n9psUdbm5tvf3B6I8oO8NAT75ScKK5nGWlwoUeUKODB0C9T91KgYvvNBZhRbP
+         50S+5DdmQwNGtXpzimnlWrnEsw1P0nuoFwgraL+u92lBIgTuIEru0ePo5yVdkTlP3AGP
+         zO8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694441647; x=1695046447;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NtfPL2emZ+ThTIXQ737wda+eYe7YeOc3mG8avwXPF00=;
+        b=gflvPijp4dYEO5l4RBla9MmNXm7ZOqaRym38+8MHr/GfM1mZB9jKWAl6Se5eVkyxHf
+         LUZSE4oPLAdP6szqYVN0puVGJgrrns1Aoppk0PZwSLhmOmLygRdO67dnE/hHhbyJQRLZ
+         s0xEeUZJFwWnQc04OFFmZmGPj8vIZ9ZRU2uCosWDGeqZhteo36AkzLWYRYpCkAX9KH4D
+         E+sornuszeK9Vsl6lR9mtnXt/NsnEO4WgPWth/Ts1oJ/jcK14AJDHpsstxqcbFqsoXua
+         Ur+A9V+pPKOckBFjx5amjRv1r3cg1YFJtUIygnXsLyE3U8SIRog6Dt6Ac3glcEWw9tp/
+         6mRA==
+X-Gm-Message-State: AOJu0Yxa25lcH3gnWdri7UQdUAgnvx6S2WQTmzTz7otfKBWXn4abHE3b
+	+Ga0SJ4isTYbicUKEAJyLCUt8j3J/MiTP+krzvc6Ig==
+X-Google-Smtp-Source: AGHT+IE05e6MiDP//Kv1NcMJh6gG19EBAAYmMoj9z4lXWNtchtfjTgjw1+YWgi0eny9agYeRN38esqdVXPtIT8/btx0=
+X-Received: by 2002:a17:907:9724:b0:9a5:962c:cb6c with SMTP id
+ jg36-20020a170907972400b009a5962ccb6cmr18545113ejc.31.1694441646773; Mon, 11
+ Sep 2023 07:14:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230911134650.921299741@linuxfoundation.org> <20230911134653.617660874@linuxfoundation.org>
+In-Reply-To: <20230911134653.617660874@linuxfoundation.org>
+From: Lorenz Bauer <lorenz.bauer@isovalent.com>
+Date: Mon, 11 Sep 2023 15:13:56 +0100
+Message-ID: <CAN+4W8jR5vXtgzanqDc2UHYZRC-m87cMFwCAztArENtgqfA9Rw@mail.gmail.com>
+Subject: Re: [PATCH 6.5 090/739] net: export inet_lookup_reuseport and inet6_lookup_reuseport
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Kuniyuki Iwashima <kuniyu@amazon.com>, Lorenz Bauer <lmb@isovalent.com>, 
+	Martin KaFai Lau <martin.lau@kernel.org>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg,
 
-------------------
+I sent the below email to Sasha and stable@ this morning, but I forgot
+to CC you and can't find a copy of it on lore. So here goes a copy:
 
-From: Lin Ma <linma@zju.edu.cn>
+On Mon, Sep 11, 2023 at 2:55=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.5-stable review patch.  If anyone has any objections, please let me kno=
+w.
 
-[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
+This commit is part of the following series
+https://lore.kernel.org/all/20230720-so-reuseport-v6-0-7021b683cdae@isovale=
+nt.com/
+As far as I can tell this was pulled in due to the Fixes tag on patch
+7. I think that tag was misguided, in that the original code
+explicitly rejected SO_REUSEPORT sockets so there isn't a bug to fix
+here. The SO_REUSEPORT code is quite fiddly, so I'm uneasy about
+backporting the change. Could you drop patches 3-8 from 5.15, 6.1, 6.4
+and 6.5 please? Patch 1-2 are good to backport.
 
-There are three places that qla4xxx parses nlattrs:
+This also means that "net: remove duplicate INDIRECT_CALLABLE_DECLARE
+of udp[6]_ehashfn" is not required anymore.
 
- - qla4xxx_set_chap_entry()
-
- - qla4xxx_iface_set_param()
-
- - qla4xxx_sysfs_ddb_set_param()
-
-and each of them directly converts the nlattr to specific pointer of
-structure without length checking. This could be dangerous as those
-attributes are not validated and a malformed nlattr (e.g., length 0) could
-result in an OOB read that leaks heap dirty data.
-
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
-
-Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
-Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
-Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index b2a3988e1e159..675332e49a7b0 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -968,6 +968,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
- 	memset(&chap_rec, 0, sizeof(chap_rec));
- 
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*param_info)) {
-+			rc = -EINVAL;
-+			goto exit_set_chap;
-+		}
-+
- 		param_info = nla_data(attr);
- 
- 		switch (param_info->param) {
-@@ -2750,6 +2755,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
- 	}
- 
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*iface_param)) {
-+			rval = -EINVAL;
-+			goto exit_init_fw_cb;
-+		}
-+
- 		iface_param = nla_data(attr);
- 
- 		if (iface_param->param_type == ISCSI_NET_PARAM) {
-@@ -8104,6 +8114,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
- 
- 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*fnode_param)) {
-+			rc = -EINVAL;
-+			goto exit_set_param;
-+		}
-+
- 		fnode_param = nla_data(attr);
- 
- 		switch (fnode_param->param) {
--- 
-2.40.1
-
-
-
+Sorry for the mess,
+Lorenz
