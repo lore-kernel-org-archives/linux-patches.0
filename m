@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26192F9E5
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7FEC433C9;
-	Mon, 11 Sep 2023 14:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98D71170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65116C433C8;
+	Mon, 11 Sep 2023 14:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442934;
-	bh=ignECAaG82xgGnSqBo8W2FpPRkIhBn4OnYhPLxIEfgU=;
+	s=korg; t=1694442936;
+	bh=ndNycKOeTa45sY+QTdwiUct0jTCZAjE2D1gv40takS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+t5UpIYqHltJqpx+eleOwEPujD/qAmoNRG4qvN66hN8p4WtF/yGr6Ozevxmz2bh7
-	 NCD+y7hRZLZmzpC6ktSgr2+U3QP7unNNylFbAvdbaPHuuQdOT0vG0Piq1DTPo3Wzve
-	 d/wGTqFG5wD7B4iamNVZGrnWBbhQM66RSd3CQ94I=
+	b=y8mB0um/CecinawRgDb+1XvkRS6rniQPGmBXCHtYsLDFew43cWxvJQjug/VcgBaid
+	 pZuciYKU9u/6uEPqCnECYvKdx9gZrXrul41v6iGS/2uOTUN2JYHshUa6tq7U18jrWE
+	 Vc/d5Ka+4DGbm3wMr5ImZLWQcLFyktGHx/huhmTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 199/737] Bluetooth: hci_conn: Fix not allowing valid CIS ID
-Date: Mon, 11 Sep 2023 15:40:58 +0200
-Message-ID: <20230911134656.158492518@linuxfoundation.org>
+Subject: [PATCH 6.4 200/737] Bluetooth: hci_conn: Use kmemdup() to replace kzalloc + memcpy
+Date: Mon, 11 Sep 2023 15:40:59 +0200
+Message-ID: <20230911134656.186154709@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,40 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit f2f84a70f9d0c9a3263194ca9d82e7bc6027d356 ]
+[ Upstream commit 5b6d345d1b65d67624349e5de22227492c637576 ]
 
-Only the number of CIS shall be limited to 0x1f, the CIS ID in the
-other hand is up to 0xef.
+Use kmemdup rather than duplicating its implementation.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+./net/bluetooth/hci_conn.c:1880:7-14: WARNING opportunity for kmemdup.
+
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=5597
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: a09128921820 ("Bluetooth: hci_conn: Fix hci_le_set_cig_params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_conn.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index d481a1d2c0a28..ee9d6ff75246f 100644
+index ee9d6ff75246f..7516166652a08 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -1862,9 +1862,12 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
- 		cis_add(&data, qos);
- 	}
+@@ -1886,12 +1886,10 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET || !data.pdu.cp.num_cis)
+ 		return false;
  
--	/* Reprogram all CIS(s) with the same CIG */
--	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0x11;
--	     data.cis++) {
-+	/* Reprogram all CIS(s) with the same CIG, valid range are:
-+	 * num_cis: 0x00 to 0x1F
-+	 * cis_id: 0x00 to 0xEF
-+	 */
-+	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0xf0 &&
-+	     data.pdu.cp.num_cis < ARRAY_SIZE(data.pdu.cis); data.cis++) {
- 		data.count = 0;
+-	pdu = kzalloc(sizeof(*pdu), GFP_KERNEL);
++	pdu = kmemdup(&data.pdu, sizeof(*pdu), GFP_KERNEL);
+ 	if (!pdu)
+ 		return false;
  
- 		hci_conn_hash_list_state(hdev, cis_list, ISO_LINK, BT_BOUND,
+-	memcpy(pdu, &data.pdu, sizeof(*pdu));
+-
+ 	if (hci_cmd_sync_queue(hdev, set_cig_params_sync, pdu,
+ 			       set_cig_params_complete) < 0) {
+ 		kfree(pdu);
 -- 
 2.40.1
 
