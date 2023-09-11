@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A35A1172A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6928C433C8;
-	Mon, 11 Sep 2023 15:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229721172A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70962C433C8;
+	Mon, 11 Sep 2023 15:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444747;
-	bh=GzQQLjqrWDC/OpNTsk6JlGOCrwiZZoOzm68wdK1wEUs=;
+	s=korg; t=1694444750;
+	bh=u7MkkHj2jXsj867e4hujRxIDesuvCKsimNKlIdaX/N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pnmXr9ODG/USZB7uBvUjgiyvYA7aj7TQSlWqSaRdPRjHRjLiDPP6tr7AkUKd1g40x
-	 EZHr0gtpcsnrOOIbdj7epV4HR3TvDUQodOS+3KlrdcKUf1tg9isPbLX5h69phzbUcX
-	 DIDpwutVZ9m7o5iQjAEmsXQQ9ioGNRmd3IL2572w=
+	b=YSRnd1/kXrCRvIdvCJd/nxDIpFX1j8YgtInf8jTKpDXChBba6uOLva1Vez1yvNGAs
+	 ro4SneVk4RHA3g8b8Gf9/cj21+ibFwmedVc5Nt1caARwgmwvnm5npsEgq1xmKIQM7m
+	 +B7/XbD+cbi7/blm8rilKA1p/EXw4jyM5tYbx0AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
-	Edward Shishkin <edward.shishkin@gmail.com>,
+	Wen Yang <wenyang.linux@foxmail.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jens Axboe <axboe@kernel.dk>,
 	Christian Brauner <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dylan Yudaken <dylany@fb.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Matthew Wilcox <willy@infradead.org>,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/600] reiserfs: Check the return value from __getblk()
-Date: Mon, 11 Sep 2023 15:42:14 +0200
-Message-ID: <20230911134636.584036459@linuxfoundation.org>
+Subject: [PATCH 6.1 102/600] eventfd: prevent underflow for eventfd semaphores
+Date: Mon, 11 Sep 2023 15:42:15 +0200
+Message-ID: <20230911134636.612656955@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,47 +48,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox <willy@infradead.org>
+From: Wen Yang <wenyang.linux@foxmail.com>
 
-[ Upstream commit ba38980add7ffc9e674ada5b4ded4e7d14e76581 ]
+[ Upstream commit 758b492047816a3158d027e9fca660bc5bcf20bf ]
 
-__getblk() can return a NULL pointer if we run out of memory or if we
-try to access beyond the end of the device; check it and handle it
-appropriately.
+For eventfd with flag EFD_SEMAPHORE, when its ctx->count is 0, calling
+eventfd_ctx_do_read will cause ctx->count to overflow to ULLONG_MAX.
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/lkml/CAFcO6XOacq3hscbXevPQP7sXRoYFz34ZdKPYjmd6k5sZuhGFDw@mail.gmail.com/
-Tested-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2") # probably introduced in 2002
-Acked-by: Edward Shishkin <edward.shishkin@gmail.com>
+An underflow can happen with EFD_SEMAPHORE eventfds in at least the
+following three subsystems:
+
+(1) virt/kvm/eventfd.c
+(2) drivers/vfio/virqfd.c
+(3) drivers/virt/acrn/irqfd.c
+
+where (2) and (3) are just modeled after (1). An eventfd must be
+specified for use with the KVM_IRQFD ioctl(). This can also be an
+EFD_SEMAPHORE eventfd. When the eventfd count is zero or has been
+decremented to zero an underflow can be triggered when the irqfd is shut
+down by raising the KVM_IRQFD_FLAG_DEASSIGN flag in the KVM_IRQFD
+ioctl():
+
+        // ctx->count == 0
+        kvm_vm_ioctl()
+        -> kvm_irqfd()
+           -> kvm_irqfd_deassign()
+              -> irqfd_deactivate()
+                 -> irqfd_shutdown()
+                    -> eventfd_ctx_remove_wait_queue(&cnt)
+                       -> eventfd_ctx_do_read(&cnt)
+
+Userspace polling on the eventfd wouldn't notice the underflow because 1
+is always returned as the value from eventfd_read() while ctx->count
+would've underflowed. It's not a huge deal because this should only be
+happening when the irqfd is shutdown but we should still fix it and
+avoid the spurious wakeup.
+
+Fixes: cb289d6244a3 ("eventfd - allow atomic read and waitqueue remove")
+Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dylan Yudaken <dylany@fb.com>
+Cc: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: linux-fsdevel@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Message-Id: <tencent_7588DFD1F365950A757310D764517A14B306@qq.com>
+[brauner: rewrite commit message and add explanation how this underflow can happen]
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/reiserfs/journal.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/eventfd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/reiserfs/journal.c b/fs/reiserfs/journal.c
-index 9f62da7471c9e..eb81b4170cb51 100644
---- a/fs/reiserfs/journal.c
-+++ b/fs/reiserfs/journal.c
-@@ -2326,7 +2326,7 @@ static struct buffer_head *reiserfs_breada(struct block_device *dev,
- 	int i, j;
+diff --git a/fs/eventfd.c b/fs/eventfd.c
+index 249ca6c0b7843..4a60ea932e3d9 100644
+--- a/fs/eventfd.c
++++ b/fs/eventfd.c
+@@ -189,7 +189,7 @@ void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)
+ {
+ 	lockdep_assert_held(&ctx->wqh.lock);
  
- 	bh = __getblk(dev, block, bufsize);
--	if (buffer_uptodate(bh))
-+	if (!bh || buffer_uptodate(bh))
- 		return (bh);
- 
- 	if (block + BUFNR > max_block) {
-@@ -2336,6 +2336,8 @@ static struct buffer_head *reiserfs_breada(struct block_device *dev,
- 	j = 1;
- 	for (i = 1; i < blocks; i++) {
- 		bh = __getblk(dev, block + i, bufsize);
-+		if (!bh)
-+			break;
- 		if (buffer_uptodate(bh)) {
- 			brelse(bh);
- 			break;
+-	*cnt = (ctx->flags & EFD_SEMAPHORE) ? 1 : ctx->count;
++	*cnt = ((ctx->flags & EFD_SEMAPHORE) && ctx->count) ? 1 : ctx->count;
+ 	ctx->count -= *cnt;
+ }
+ EXPORT_SYMBOL_GPL(eventfd_ctx_do_read);
 -- 
 2.40.1
 
