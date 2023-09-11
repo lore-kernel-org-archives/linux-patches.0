@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33FA1172A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F729C433C7;
-	Mon, 11 Sep 2023 14:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD82911718
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED20C433CB;
+	Mon, 11 Sep 2023 14:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442681;
-	bh=DA+fuFp7JU7uQsb+P1ibSBoJq2ReyEaD2DShO3pKY8M=;
+	s=korg; t=1694442684;
+	bh=hlmszkVvPffITMF+gjbhDbfLFWLOCHtGWE76mD08iSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GU9mKaNLrrAhiYKURzXM1N/meKOxBkFvzPF+8J/VtHRaMyA4XjtRrTZmtwkZt2qWr
-	 ac030tHYINgYQVxt//Wl+p86igsgchlmbqC76cb+dtNvtzHCBIR9J0wHIejKRuVh1w
-	 nKo8NGBvXhD7NC4obRFauNR4XXIUwuVeY51Cj+RI=
+	b=tSv3HyyQQX99W88Ar6pAA6mFilNzeNNib2oC4uf/3uUzmYOuz0e92T/jX4gCK2X2O
+	 kxo23P1F5dHCTxpd9/bNrr00H2O8xKv4mwbRPXNCpR0Y3lFMZtCnP6MgPrpaY+b70g
+	 ImmVjRnevJ5VwR7f+sFu0vPMnlDssK6641chyt1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Feng Tang <feng.tang@intel.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 110/737] refscale: Fix uninitalized use of wait_queue_head_t
-Date: Mon, 11 Sep 2023 15:39:29 +0200
-Message-ID: <20230911134653.580231985@linuxfoundation.org>
+Subject: [PATCH 6.4 111/737] clocksource: Handle negative skews in "skew is too large" messages
+Date: Mon, 11 Sep 2023 15:39:30 +0200
+Message-ID: <20230911134653.606695156@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,81 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit f5063e8948dad7f31adb007284a5d5038ae31bb8 ]
+[ Upstream commit e40806e9bcf8aaa86dbf0d484e7cf3cfa09cb86c ]
 
-Running the refscale test occasionally crashes the kernel with the
-following error:
+The nanosecond-to-millisecond skew computation uses unsigned arithmetic,
+which produces user-unfriendly large positive numbers for negative skews.
+Therefore, use signed arithmetic for this computation in order to preserve
+the negativity.
 
-[ 8569.952896] BUG: unable to handle page fault for address: ffffffffffffffe8
-[ 8569.952900] #PF: supervisor read access in kernel mode
-[ 8569.952902] #PF: error_code(0x0000) - not-present page
-[ 8569.952904] PGD c4b048067 P4D c4b049067 PUD c4b04b067 PMD 0
-[ 8569.952910] Oops: 0000 [#1] PREEMPT_RT SMP NOPTI
-[ 8569.952916] Hardware name: Dell Inc. PowerEdge R750/0WMWCR, BIOS 1.2.4 05/28/2021
-[ 8569.952917] RIP: 0010:prepare_to_wait_event+0x101/0x190
-  :
-[ 8569.952940] Call Trace:
-[ 8569.952941]  <TASK>
-[ 8569.952944]  ref_scale_reader+0x380/0x4a0 [refscale]
-[ 8569.952959]  kthread+0x10e/0x130
-[ 8569.952966]  ret_from_fork+0x1f/0x30
-[ 8569.952973]  </TASK>
-
-The likely cause is that init_waitqueue_head() is called after the call to
-the torture_create_kthread() function that creates the ref_scale_reader
-kthread.  Although this init_waitqueue_head() call will very likely
-complete before this kthread is created and starts running, it is
-possible that the calling kthread will be delayed between the calls to
-torture_create_kthread() and init_waitqueue_head().  In this case, the
-new kthread will use the waitqueue head before it is properly initialized,
-which is not good for the kernel's health and well-being.
-
-The above crash happened here:
-
-	static inline void __add_wait_queue(...)
-	{
-		:
-		if (!(wq->flags & WQ_FLAG_PRIORITY)) <=== Crash here
-
-The offset of flags from list_head entry in wait_queue_entry is
--0x18. If reader_tasks[i].wq.head.next is NULL as allocated reader_task
-structure is zero initialized, the instruction will try to access address
-0xffffffffffffffe8, which is exactly the fault address listed above.
-
-This commit therefore invokes init_waitqueue_head() before creating
-the kthread.
-
-Fixes: 653ed64b01dc ("refperf: Add a test to measure performance of read-side synchronization")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Reported-by: Feng Tang <feng.tang@intel.com>
+Fixes: dd029269947a ("clocksource: Improve "skew is too large" messages")
+Reviewed-by: Feng Tang <feng.tang@intel.com>
+Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/refscale.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/time/clocksource.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/rcu/refscale.c b/kernel/rcu/refscale.c
-index 1970ce5f22d40..71d138573856f 100644
---- a/kernel/rcu/refscale.c
-+++ b/kernel/rcu/refscale.c
-@@ -1107,12 +1107,11 @@ ref_scale_init(void)
- 	VERBOSE_SCALEOUT("Starting %d reader threads", nreaders);
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 91836b727cef5..0600e16dbafef 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -473,8 +473,8 @@ static void clocksource_watchdog(struct timer_list *unused)
+ 		/* Check the deviation from the watchdog clocksource. */
+ 		md = cs->uncertainty_margin + watchdog->uncertainty_margin;
+ 		if (abs(cs_nsec - wd_nsec) > md) {
+-			u64 cs_wd_msec;
+-			u64 wd_msec;
++			s64 cs_wd_msec;
++			s64 wd_msec;
+ 			u32 wd_rem;
  
- 	for (i = 0; i < nreaders; i++) {
-+		init_waitqueue_head(&reader_tasks[i].wq);
- 		firsterr = torture_create_kthread(ref_scale_reader, (void *)i,
- 						  reader_tasks[i].task);
- 		if (torture_init_error(firsterr))
- 			goto unwind;
--
--		init_waitqueue_head(&(reader_tasks[i].wq));
- 	}
- 
- 	// Main Task
+ 			pr_warn("timekeeping watchdog on CPU%d: Marking clocksource '%s' as unstable because the skew is too large:\n",
+@@ -483,8 +483,8 @@ static void clocksource_watchdog(struct timer_list *unused)
+ 				watchdog->name, wd_nsec, wdnow, wdlast, watchdog->mask);
+ 			pr_warn("                      '%s' cs_nsec: %lld cs_now: %llx cs_last: %llx mask: %llx\n",
+ 				cs->name, cs_nsec, csnow, cslast, cs->mask);
+-			cs_wd_msec = div_u64_rem(cs_nsec - wd_nsec, 1000U * 1000U, &wd_rem);
+-			wd_msec = div_u64_rem(wd_nsec, 1000U * 1000U, &wd_rem);
++			cs_wd_msec = div_s64_rem(cs_nsec - wd_nsec, 1000 * 1000, &wd_rem);
++			wd_msec = div_s64_rem(wd_nsec, 1000 * 1000, &wd_rem);
+ 			pr_warn("                      Clocksource '%s' skewed %lld ns (%lld ms) over watchdog '%s' interval of %lld ns (%lld ms)\n",
+ 				cs->name, cs_nsec - wd_nsec, cs_wd_msec, watchdog->name, wd_nsec, wd_msec);
+ 			if (curr_clocksource == cs)
 -- 
 2.40.1
 
