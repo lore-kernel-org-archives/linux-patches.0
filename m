@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2801170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A15C433C8;
-	Mon, 11 Sep 2023 14:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AF41170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A914AC433C8;
+	Mon, 11 Sep 2023 14:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442348;
-	bh=wnx6cxvHO5SxPNgCufQQnzlSH+w/UmHlL2oNXSDd6Uc=;
+	s=korg; t=1694442351;
+	bh=1KTjkPdT9unbvvmN7zAnG3a8e16zqtCtDyrlHCmNzlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6NIJqlzr0pGvT7tDVj0K9M49408eJZL6KX5RzKiMYSlOfzFJrk8W2Wvu0FfK70au
-	 YOAqGk5DIWgtAd3M5fVEE/MloXW7m2djeenBe45UQdzkmffzuPDK9kyDTDSymyyZoU
-	 EkYiuKCBLRxgDslKgruMNQ5QRfc8KwQgkbk40h7I=
+	b=rdw7ZJ3Ks2hlZrZGe9EEcai0ULENNF2TVkcBkmOVTsvnNvziuMcPFJd0IN07XBG+K
+	 lvaO6L//lvlq9F6qeYh2dBplpZM2+ObhOByv19NF9uidrBMhhKfib6gTds4hI22Z2U
+	 rXNMRNV+RF68LJ8raEh2fCM21cjytUCmHMnhTW6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 6.5 705/739] fsverity: skip PKCS#7 parser when keyring is empty
-Date: Mon, 11 Sep 2023 15:48:24 +0200
-Message-ID: <20230911134710.778545302@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.5 696/739] misc: fastrpc: Pass proper scm arguments for static process init
+Date: Mon, 11 Sep 2023 15:48:15 +0200
+Message-ID: <20230911134710.534219907@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,52 +40,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit 919dc320956ea353a7fb2d84265195ad5ef525ac upstream.
+commit fe6518d547fc52ba74201018dc9aeb364072ac78 upstream.
 
-If an fsverity builtin signature is given for a file but the
-".fs-verity" keyring is empty, there's no real reason to run the PKCS#7
-parser.  Skip this to avoid the PKCS#7 attack surface when builtin
-signature support is configured into the kernel but is not being used.
+Memory is allocated for dynamic loading when audio daemon is trying
+to attach to audioPD on DSP side. This memory is allocated from
+reserved CMA memory region and needs ownership assignment to
+new VMID in order to use it from audioPD.
 
-This is a hardening improvement, not a fix per se, but I've added
-Fixes and Cc stable to get it out to more users.
+In the current implementation, arguments are not correctly passed
+to the scm call which might result in failure of dynamic loading
+on audioPD. Added changes to pass correct arguments during daemon
+attach request.
 
-Fixes: 432434c9f8e1 ("fs-verity: support builtin file signatures")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20230820173237.2579-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230811115643.38578-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/verity/signature.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/misc/fastrpc.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/verity/signature.c
-+++ b/fs/verity/signature.c
-@@ -62,6 +62,22 @@ int fsverity_verify_signature(const stru
- 		return 0;
- 	}
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1322,13 +1322,18 @@ static int fastrpc_init_create_static_pr
+ 	return 0;
+ err_invoke:
+ 	if (fl->cctx->vmcount) {
+-		struct qcom_scm_vmperm perm;
++		u64 src_perms = 0;
++		struct qcom_scm_vmperm dst_perms;
++		u32 i;
  
-+	if (fsverity_keyring->keys.nr_leaves_on_tree == 0) {
-+		/*
-+		 * The ".fs-verity" keyring is empty, due to builtin signatures
-+		 * being supported by the kernel but not actually being used.
-+		 * In this case, verify_pkcs7_signature() would always return an
-+		 * error, usually ENOKEY.  It could also be EBADMSG if the
-+		 * PKCS#7 is malformed, but that isn't very important to
-+		 * distinguish.  So, just skip to ENOKEY to avoid the attack
-+		 * surface of the PKCS#7 parser, which would otherwise be
-+		 * reachable by any task able to execute FS_IOC_ENABLE_VERITY.
-+		 */
-+		fsverity_err(inode,
-+			     "fs-verity keyring is empty, rejecting signed file!");
-+		return -ENOKEY;
-+	}
+-		perm.vmid = QCOM_SCM_VMID_HLOS;
+-		perm.perm = QCOM_SCM_PERM_RWX;
++		for (i = 0; i < fl->cctx->vmcount; i++)
++			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
 +
- 	d = kzalloc(sizeof(*d) + hash_alg->digest_size, GFP_KERNEL);
- 	if (!d)
- 		return -ENOMEM;
++		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
++		dst_perms.perm = QCOM_SCM_PERM_RWX;
+ 		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
+ 						(u64)fl->cctx->remote_heap->size,
+-						&fl->cctx->perms, &perm, 1);
++						&src_perms, &dst_perms, 1);
+ 		if (err)
+ 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+ 				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
 
 
