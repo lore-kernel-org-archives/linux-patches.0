@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14321170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D5AC433C8;
-	Mon, 11 Sep 2023 14:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC7F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F71AC433C8;
+	Mon, 11 Sep 2023 14:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441208;
-	bh=zrBDYdO/6kyML09neElMp5WiecKii5AbFg9BrJquGi0=;
+	s=korg; t=1694441211;
+	bh=3xw3rTZhVxNuRu+ecXpoOBBQBSgBnPiwwcQHo+APiwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZXbRjQLIpseAqr4Dj583FDkUP4g6Y2D9v3Yfnp60w8Y9xt3Rd/ZHIvlse3NYJyiB
-	 /9yZrtqO5Hjt2SV4Z/coqEPtk+7fJzC//FYrwxtTUeJiTsVkIdhMlDPftBhQQDEdIm
-	 AxqMLwBg3+Uqe7bGmphv25YW+Dj8+IyeYu2G+lqE=
+	b=fO8eOvdomcE0frQLmMYNqpTX3qcO9do+K9mR4+CUpO2e4hQbzEHzY1709a+OqmC88
+	 fexsc90GCCJc6KEmYHcs5UcurN8Scme5ZudsQyCKvIPwgNHqqXCYXNbO1m8EL2pqsi
+	 RzmAvEf9Q9VlFF126hjJ3UTd/2rKqs3GZonDiEn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jinyoung Choi <j-young.choi@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 332/739] bio-integrity: create multi-page bvecs in bio_integrity_add_page()
-Date: Mon, 11 Sep 2023 15:42:11 +0200
-Message-ID: <20230911134700.366193903@linuxfoundation.org>
+Subject: [PATCH 6.5 333/739] drm/mediatek: dp: Add missing error checks in mtk_dp_parse_capabilities
+Date: Mon, 11 Sep 2023 15:42:12 +0200
+Message-ID: <20230911134700.393027592@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,80 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinyoung Choi <j-young.choi@samsung.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 0ece1d649b6dd615925a72bc1824d6b9fa5b998a ]
+[ Upstream commit cfc146137a9f12e883ba64bc496b6da4d23f26d5 ]
 
-In general, the bvec data structure consists of one for physically
-continuous pages. But, in the bvec configuration for bip, physically
-continuous integrity pages are composed of each bvec.
+If reading the RX capabilities fails the training pattern will be set
+wrongly: add error checking for drm_dp_read_dpcd_caps() and return if
+anything went wrong with it.
 
-Allow bio_integrity_add_page() to create multi-page bvecs, just like
-the bio payloads. This simplifies adding larger payloads, and fixes
-support for non-tiny workloads with nvme, which stopped using
-scatterlist for metadata a while ago.
+While at it, also add a less critical error check when writing to
+clear the ESI0 IRQ vector.
 
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-
-Fixes: 783b94bd9250 ("nvme-pci: do not build a scatterlist to map metadata")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jinyoung Choi <j-young.choi@samsung.com>
-Tested-by: "Martin K. Petersen" <martin.petersen@oracle.com>
-Reviewed-by: "Martin K. Petersen" <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20230803025202epcms2p82f57cbfe32195da38c776377b55aed59@epcms2p8
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230725073234.55892-2-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio-integrity.c | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/block/bio-integrity.c b/block/bio-integrity.c
-index 4533eb4916610..6f81c10757fb9 100644
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -123,17 +123,34 @@ void bio_integrity_free(struct bio *bio)
- int bio_integrity_add_page(struct bio *bio, struct page *page,
- 			   unsigned int len, unsigned int offset)
- {
-+	struct request_queue *q = bdev_get_queue(bio->bi_bdev);
- 	struct bio_integrity_payload *bip = bio_integrity(bio);
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 64eee77452c04..c58b775877a31 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -1588,7 +1588,9 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
+ 	u8 val;
+ 	ssize_t ret;
  
--	if (bip->bip_vcnt >= bip->bip_max_vcnt) {
--		printk(KERN_ERR "%s: bip_vec full\n", __func__);
-+	if (((bip->bip_iter.bi_size + len) >> SECTOR_SHIFT) >
-+	    queue_max_hw_sectors(q))
- 		return 0;
--	}
+-	drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
++	ret = drm_dp_read_dpcd_caps(&mtk_dp->aux, mtk_dp->rx_cap);
++	if (ret < 0)
++		return ret;
  
--	if (bip->bip_vcnt &&
--	    bvec_gap_to_prev(&bdev_get_queue(bio->bi_bdev)->limits,
--			     &bip->bip_vec[bip->bip_vcnt - 1], offset))
--		return 0;
-+	if (bip->bip_vcnt > 0) {
-+		struct bio_vec *bv = &bip->bip_vec[bip->bip_vcnt - 1];
-+		bool same_page = false;
-+
-+		if (bvec_try_merge_hw_page(q, bv, page, len, offset,
-+					   &same_page)) {
-+			bip->bip_iter.bi_size += len;
-+			return len;
+ 	if (drm_dp_tps4_supported(mtk_dp->rx_cap))
+ 		mtk_dp->train_info.channel_eq_pattern = DP_TRAINING_PATTERN_4;
+@@ -1615,10 +1617,13 @@ static int mtk_dp_parse_capabilities(struct mtk_dp *mtk_dp)
+ 			return ret == 0 ? -EIO : ret;
+ 		}
+ 
+-		if (val)
+-			drm_dp_dpcd_writeb(&mtk_dp->aux,
+-					   DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
+-					   val);
++		if (val) {
++			ret = drm_dp_dpcd_writeb(&mtk_dp->aux,
++						 DP_DEVICE_SERVICE_IRQ_VECTOR_ESI0,
++						 val);
++			if (ret < 0)
++				return ret;
 +		}
-+
-+		if (bip->bip_vcnt >=
-+		    min(bip->bip_max_vcnt, queue_max_integrity_segments(q)))
-+			return 0;
-+
-+		/*
-+		 * If the queue doesn't support SG gaps and adding this segment
-+		 * would create a gap, disallow it.
-+		 */
-+		if (bvec_gap_to_prev(&q->limits, bv, offset))
-+			return 0;
-+	}
+ 	}
  
- 	bvec_set_page(&bip->bip_vec[bip->bip_vcnt], page, len, offset);
- 	bip->bip_vcnt++;
+ 	return 0;
 -- 
 2.40.1
 
