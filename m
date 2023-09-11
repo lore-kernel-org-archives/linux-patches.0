@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B35E11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA5DC433C7;
-	Mon, 11 Sep 2023 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6478411705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95F6C433C8;
+	Mon, 11 Sep 2023 14:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443347;
-	bh=q2odPgU2HzJBSPgl5kFaqaphxIH0gUtvuGBm5ZAq9q0=;
+	s=korg; t=1694443350;
+	bh=Btc7kPy5dser70DY2gpK8srfkZG7i2oMoeqee4M/Jhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zrn4PgqCcg+nFgvDWiFaxsZo90WThrqm6GaSxGJvgZksUmHLQhrYXkGrauxoEn0vC
-	 +hSScwjQPBPQZ5OXicEdhfEg4REbbiP7Tg7LfOvQzoQJ1mEKIXZ1KB2nTL6VKAaqFm
-	 OWjIEKyLMdRc+tG79Brbx4FKzl7m9MMiZFKTjpQw=
+	b=xYjY+PnRtdsZLW+z+3iDxgEbtZJ9fqZ+77ADoAb8r6L9HN8nhXFY9rqqJ7ml83o1k
+	 1JX5U0LmEH0gV/WLI574RfPzE5b+Sc2fJ1tBQDYlSji0r1ejoT0BPXjaDNFvfzt+00
+	 t1GcujljEifMPpSaqGrU0GFKbtfb3xWu0d6WJnYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeyan Li <qaz6750@outlook.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 346/737] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
-Date: Mon, 11 Sep 2023 15:43:25 +0200
-Message-ID: <20230911134700.189804351@linuxfoundation.org>
+Subject: [PATCH 6.4 347/737] drm/ast: report connection status on Display Port.
+Date: Mon, 11 Sep 2023 15:43:26 +0200
+Message-ID: <20230911134700.217316031@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,36 +40,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeyan Li <qaz6750@outlook.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-[ Upstream commit f9568d22ce06192a7e14bda3a29dc216659554ff ]
+[ Upstream commit f81bb0ac7872893241319ea82504956676ef02fd ]
 
-I2C6 and I2C7 use the same interrupts, which is incorrect.
-In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
+Aspeed always report the display port as "connected", because it
+doesn't set a .detect_ctx callback.
+Fix this by providing the proper detect callback for astdp and dp501.
 
-Fixes: 81bee6953b58 ("arm64: dts: qcom: sm8150: add i2c nodes")
-Signed-off-by: Zeyan Li <qaz6750@outlook.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/SY7P282MB378712225CBCEA95FE71554DB201A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This also fixes the following regression:
+Since commit fae7d186403e ("drm/probe-helper: Default to 640x480 if no
+EDID on DP") The default resolution is now 640x480 when no monitor is
+connected. But Aspeed graphics is mostly used in servers, where no monitor
+is attached. This also affects the remote BMC resolution to 640x480, which
+is inconvenient, and breaks the anaconda installer.
+
+v2: Add .detect callback to the dp/dp501 connector (Jani Nikula)
+v3: Use .detect_ctx callback, and refactors (Thomas Zimmermann)
+    Add a BMC virtual connector
+v4: Better indent detect_ctx() functions (Thomas Zimmermann)
+v5: Enable polling of the dp and dp501 connector status
+    (Thomas Zimmermann)
+v6: Change check order in ast_astdp_is_connected (Jammy Huang)
+
+Fixes: fae7d186403e ("drm/probe-helper: Default to 640x480 if no EDID on DP")
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230713134316.332502-2-jfalempe@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ast/ast_dp.c    | 11 ++++++++++
+ drivers/gpu/drm/ast/ast_dp501.c | 37 ++++++++++++++++++++++-----------
+ drivers/gpu/drm/ast/ast_drv.h   |  2 ++
+ drivers/gpu/drm/ast/ast_mode.c  | 30 ++++++++++++++++++++++++--
+ 4 files changed, 66 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index fe2d401a858a7..c4d87092e6d9c 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1231,7 +1231,7 @@ i2c7: i2c@89c000 {
- 				dma-names = "tx", "rx";
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_i2c7_default>;
--				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				status = "disabled";
+diff --git a/drivers/gpu/drm/ast/ast_dp.c b/drivers/gpu/drm/ast/ast_dp.c
+index 6dc1a09504e13..fdd9a493aa9c0 100644
+--- a/drivers/gpu/drm/ast/ast_dp.c
++++ b/drivers/gpu/drm/ast/ast_dp.c
+@@ -7,6 +7,17 @@
+ #include <drm/drm_print.h>
+ #include "ast_drv.h"
+ 
++bool ast_astdp_is_connected(struct ast_device *ast)
++{
++	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xD1, ASTDP_MCU_FW_EXECUTING))
++		return false;
++	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xDF, ASTDP_HPD))
++		return false;
++	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xDC, ASTDP_LINK_SUCCESS))
++		return false;
++	return true;
++}
++
+ int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata)
+ {
+ 	struct ast_device *ast = to_ast_device(dev);
+diff --git a/drivers/gpu/drm/ast/ast_dp501.c b/drivers/gpu/drm/ast/ast_dp501.c
+index 1bc35a992369d..fa7442b0c2612 100644
+--- a/drivers/gpu/drm/ast/ast_dp501.c
++++ b/drivers/gpu/drm/ast/ast_dp501.c
+@@ -272,11 +272,9 @@ static bool ast_launch_m68k(struct drm_device *dev)
+ 	return true;
+ }
+ 
+-bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
++bool ast_dp501_is_connected(struct ast_device *ast)
+ {
+-	struct ast_device *ast = to_ast_device(dev);
+-	u32 i, boot_address, offset, data;
+-	u32 *pEDIDidx;
++	u32 boot_address, offset, data;
+ 
+ 	if (ast->config_mode == ast_use_p2a) {
+ 		boot_address = get_fw_base(ast);
+@@ -292,14 +290,6 @@ bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
+ 		data = ast_mindwm(ast, boot_address + offset);
+ 		if (!(data & AST_DP501_PNP_CONNECTED))
+ 			return false;
+-
+-		/* Read EDID */
+-		offset = AST_DP501_EDID_DATA;
+-		for (i = 0; i < 128; i += 4) {
+-			data = ast_mindwm(ast, boot_address + offset + i);
+-			pEDIDidx = (u32 *)(ediddata + i);
+-			*pEDIDidx = data;
+-		}
+ 	} else {
+ 		if (!ast->dp501_fw_buf)
+ 			return false;
+@@ -319,7 +309,30 @@ bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
+ 		data = readl(ast->dp501_fw_buf + offset);
+ 		if (!(data & AST_DP501_PNP_CONNECTED))
+ 			return false;
++	}
++	return true;
++}
++
++bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
++{
++	struct ast_device *ast = to_ast_device(dev);
++	u32 i, boot_address, offset, data;
++	u32 *pEDIDidx;
++
++	if (!ast_dp501_is_connected(ast))
++		return false;
++
++	if (ast->config_mode == ast_use_p2a) {
++		boot_address = get_fw_base(ast);
+ 
++		/* Read EDID */
++		offset = AST_DP501_EDID_DATA;
++		for (i = 0; i < 128; i += 4) {
++			data = ast_mindwm(ast, boot_address + offset + i);
++			pEDIDidx = (u32 *)(ediddata + i);
++			*pEDIDidx = data;
++		}
++	} else {
+ 		/* Read EDID */
+ 		offset = AST_DP501_EDID_DATA;
+ 		for (i = 0; i < 128; i += 4) {
+diff --git a/drivers/gpu/drm/ast/ast_drv.h b/drivers/gpu/drm/ast/ast_drv.h
+index 5498a6676f2e8..8a0ffa8b5939b 100644
+--- a/drivers/gpu/drm/ast/ast_drv.h
++++ b/drivers/gpu/drm/ast/ast_drv.h
+@@ -468,6 +468,7 @@ void ast_patch_ahb_2500(struct ast_device *ast);
+ /* ast dp501 */
+ void ast_set_dp501_video_output(struct drm_device *dev, u8 mode);
+ bool ast_backup_fw(struct drm_device *dev, u8 *addr, u32 size);
++bool ast_dp501_is_connected(struct ast_device *ast);
+ bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata);
+ u8 ast_get_dp501_max_clk(struct drm_device *dev);
+ void ast_init_3rdtx(struct drm_device *dev);
+@@ -476,6 +477,7 @@ void ast_init_3rdtx(struct drm_device *dev);
+ struct ast_i2c_chan *ast_i2c_create(struct drm_device *dev);
+ 
+ /* aspeed DP */
++bool ast_astdp_is_connected(struct ast_device *ast);
+ int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata);
+ void ast_dp_launch(struct drm_device *dev);
+ void ast_dp_power_on_off(struct drm_device *dev, bool no);
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index b3c670af6ef2b..0724516f29737 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -1585,8 +1585,20 @@ static int ast_dp501_connector_helper_get_modes(struct drm_connector *connector)
+ 	return 0;
+ }
+ 
++static int ast_dp501_connector_helper_detect_ctx(struct drm_connector *connector,
++						 struct drm_modeset_acquire_ctx *ctx,
++						 bool force)
++{
++	struct ast_device *ast = to_ast_device(connector->dev);
++
++	if (ast_dp501_is_connected(ast))
++		return connector_status_connected;
++	return connector_status_disconnected;
++}
++
+ static const struct drm_connector_helper_funcs ast_dp501_connector_helper_funcs = {
+ 	.get_modes = ast_dp501_connector_helper_get_modes,
++	.detect_ctx = ast_dp501_connector_helper_detect_ctx,
+ };
+ 
+ static const struct drm_connector_funcs ast_dp501_connector_funcs = {
+@@ -1611,7 +1623,7 @@ static int ast_dp501_connector_init(struct drm_device *dev, struct drm_connector
+ 	connector->interlace_allowed = 0;
+ 	connector->doublescan_allowed = 0;
+ 
+-	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
++	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
+ 
+ 	return 0;
+ }
+@@ -1683,8 +1695,20 @@ static int ast_astdp_connector_helper_get_modes(struct drm_connector *connector)
+ 	return 0;
+ }
+ 
++static int ast_astdp_connector_helper_detect_ctx(struct drm_connector *connector,
++						 struct drm_modeset_acquire_ctx *ctx,
++						 bool force)
++{
++	struct ast_device *ast = to_ast_device(connector->dev);
++
++	if (ast_astdp_is_connected(ast))
++		return connector_status_connected;
++	return connector_status_disconnected;
++}
++
+ static const struct drm_connector_helper_funcs ast_astdp_connector_helper_funcs = {
+ 	.get_modes = ast_astdp_connector_helper_get_modes,
++	.detect_ctx = ast_astdp_connector_helper_detect_ctx,
+ };
+ 
+ static const struct drm_connector_funcs ast_astdp_connector_funcs = {
+@@ -1709,7 +1733,7 @@ static int ast_astdp_connector_init(struct drm_device *dev, struct drm_connector
+ 	connector->interlace_allowed = 0;
+ 	connector->doublescan_allowed = 0;
+ 
+-	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
++	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
+ 
+ 	return 0;
+ }
+@@ -1848,5 +1872,7 @@ int ast_mode_config_init(struct ast_device *ast)
+ 
+ 	drm_mode_config_reset(dev);
+ 
++	drm_kms_helper_poll_init(dev);
++
+ 	return 0;
+ }
 -- 
 2.40.1
 
