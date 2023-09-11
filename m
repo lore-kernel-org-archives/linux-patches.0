@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84621170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B68C433C7;
-	Mon, 11 Sep 2023 14:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CFE1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFACC433C9;
+	Mon, 11 Sep 2023 14:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442212;
-	bh=27ptOoRduWt6TqKYnJOO1NcUFmKHKdu1B2yexufW7Pg=;
+	s=korg; t=1694442215;
+	bh=7EI3et6xga1sxyANzgNoSsORJwOIzxXP+esBg6kVyWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzvVGzKU2MJM/9wMOsTmdkCikfZsnjvP8SV/XOwBwu3QpEf6ic6l/DmzEZmP3wphs
-	 PQ4j7NGfksTZMvt/wc1FC6v2m5vt4s5AGZ9ByJ4JdQ/xJ0u7zD3+AcG1xHxpK2XY6r
-	 Mm41Qi21XrB0rIFjCjEhrRtAXlVy/x3sAzGk+C44=
+	b=X2gv0WteyXrL/cSwN8Y9l7PrQMKoLTCoUDP9vNuMVRjitqdtKhUta5C20EnclZHLD
+	 igVRp00TiaTGJ4S/wKPYYkj2Irl6h8wFkyAfp2T2kRtrrRRTm26t/Yv3t4XxpBFZHz
+	 emnRxKNw+L+V8PO/51/uadytCejdVDue01auCvuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feiyang Chen <chenfeiyang@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: [PATCH 6.5 686/739] PCI/PM: Only read PCI_PM_CTRL register when available
-Date: Mon, 11 Sep 2023 15:48:05 +0200
-Message-ID: <20230911134710.261626132@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Hongchen Zhang <zhanghongchen@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.5 669/739] LoongArch: mm: Add p?d_leaf() definitions
+Date: Mon, 11 Sep 2023 15:47:48 +0200
+Message-ID: <20230911134709.790926410@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,73 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feiyang Chen <chenfeiyang@loongson.cn>
+From: Hongchen Zhang <zhanghongchen@loongson.cn>
 
-commit 5694ba13b004eea683c6d4faeb6d6e7a9636bda0 upstream.
+commit 303be4b33562a5b689261ced1616bf16ad49efa7 upstream.
 
-For a device with no Power Management Capability, pci_power_up() previously
-returned 0 (success) if the platform was able to put the device in D0,
-which led to pci_set_full_power_state() trying to read PCI_PM_CTRL, even
-though it doesn't exist.
+When I do LTP test, LTP test case ksm06 caused panic at
+	break_ksm_pmd_entry
+	  -> pmd_leaf (Huge page table but False)
+	  -> pte_present (panic)
 
-Since dev->pm_cap == 0 in this case, pci_set_full_power_state() actually
-read the wrong register, interpreted it as PCI_PM_CTRL, and corrupted
-dev->current_state.  This led to messages like this in some cases:
+The reason is pmd_leaf() is not defined, So like commit 501b81046701
+("mips: mm: add p?d_leaf() definitions") add p?d_leaf() definition for
+LoongArch.
 
-  pci 0000:01:00.0: Refused to change power state from D3hot to D0
-
-To prevent this, make pci_power_up() always return a negative failure code
-if the device lacks a Power Management Capability, even if non-PCI platform
-power management has been able to put the device in D0.  The failure will
-prevent pci_set_full_power_state() from trying to access PCI_PM_CTRL.
-
-Fixes: e200904b275c ("PCI/PM: Split pci_power_up()")
-Link: https://lore.kernel.org/r/20230824013738.1894965-1-chenfeiyang@loongson.cn
-Signed-off-by: Feiyang Chen <chenfeiyang@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: stable@vger.kernel.org	# v5.19+
+Fixes: 09cfefb7fa70 ("LoongArch: Add memory management")
+Cc: stable@vger.kernel.org
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/loongarch/include/asm/pgtable.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1226,6 +1226,10 @@ static int pci_dev_wait(struct pci_dev *
-  *
-  * On success, return 0 or 1, depending on whether or not it is necessary to
-  * restore the device's BARs subsequently (1 is returned in that case).
-+ *
-+ * On failure, return a negative error code.  Always return failure if @dev
-+ * lacks a Power Management Capability, even if the platform was able to
-+ * put the device in D0 via non-PCI means.
-  */
- int pci_power_up(struct pci_dev *dev)
- {
-@@ -1242,9 +1246,6 @@ int pci_power_up(struct pci_dev *dev)
- 		else
- 			dev->current_state = state;
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -593,6 +593,9 @@ static inline long pmd_protnone(pmd_t pm
+ }
+ #endif /* CONFIG_NUMA_BALANCING */
  
--		if (state == PCI_D0)
--			return 0;
--
- 		return -EIO;
- 	}
- 
-@@ -1302,8 +1303,12 @@ static int pci_set_full_power_state(stru
- 	int ret;
- 
- 	ret = pci_power_up(dev);
--	if (ret < 0)
-+	if (ret < 0) {
-+		if (dev->current_state == PCI_D0)
-+			return 0;
++#define pmd_leaf(pmd)		((pmd_val(pmd) & _PAGE_HUGE) != 0)
++#define pud_leaf(pud)		((pud_val(pud) & _PAGE_HUGE) != 0)
 +
- 		return ret;
-+	}
- 
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	dev->current_state = pmcsr & PCI_PM_CTRL_STATE_MASK;
+ /*
+  * We provide our own get_unmapped area to cope with the virtual aliasing
+  * constraints placed on us by the cache architecture.
 
 
