@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4761170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C872C433C8;
-	Mon, 11 Sep 2023 13:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BC01170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50B0C433C8;
+	Mon, 11 Sep 2023 13:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440732;
-	bh=pVcDo/YzhpoPCb27SfHpRkYixWN3Trqw+YeHdCS+jTg=;
+	s=korg; t=1694440735;
+	bh=5avGPtb9klhTJQ9DsdyIMPMZw2tvtNPSWpcwxvYA6Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/yr8HNGFpKFnMKAMmqy6F4VZbaaYtQruYg0qLUObg4Ha1PVSTar05OxrykhWQMqe
-	 4Abh1KqSpqjJ59qWx9E8f9tHngTU6hhX/IwRx3jftxPuzgRYy5va66vv2PQ9HcgeC4
-	 n3GzpHVUANOXnb3Fc8shJqjDNaQiieWPwGUNfuTw=
+	b=Me1Es0xwcsC7jG8hsuDGmnc9RLYQI6TP4zHdnqWUhRsdcVs+BQ2l/DaC+/SuWXWSm
+	 QlnY5QaRlMTgfhbvKagHCqR+25h+zVJHKs7fvCaVh+Mk7v/DAncAmK+VAC6QOubgXr
+	 g5iFRFxVn0sYquxxRktFoX4PcJ0fFMXuP8Y8zNLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 139/739] net-memcg: Fix scope of sockmem pressure indicators
-Date: Mon, 11 Sep 2023 15:38:58 +0200
-Message-ID: <20230911134654.986781376@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.5 140/739] ice: ice_aq_check_events: fix off-by-one check when filling buffer
+Date: Mon, 11 Sep 2023 15:38:59 +0200
+Message-ID: <20230911134655.016936854@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,84 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit ac8a52962164a50e693fa021d3564d7745b83a7f ]
+[ Upstream commit e1e8a142c43336e3d25bfa1cb3a4ae7d00875c48 ]
 
-Now there are two indicators of socket memory pressure sit inside
-struct mem_cgroup, socket_pressure and tcpmem_pressure, indicating
-memory reclaim pressure in memcg->memory and ->tcpmem respectively.
+Allow task's event buffer to be filled also in the case that it's size
+is exactly the size of the message.
 
-When in legacy mode (cgroupv1), the socket memory is charged into
-->tcpmem which is independent of ->memory, so socket_pressure has
-nothing to do with socket's pressure at all. Things could be worse
-by taking socket_pressure into consideration in legacy mode, as a
-pressure in ->memory can lead to premature reclamation/throttling
-in socket.
-
-While for the default mode (cgroupv2), the socket memory is charged
-into ->memory, and ->tcpmem/->tcpmem_pressure are simply not used.
-
-So {socket,tcpmem}_pressure are only used in default/legacy mode
-respectively for indicating socket memory pressure. This patch fixes
-the pieces of code that make mixed use of both.
-
-Fixes: 8e8ae645249b ("mm: memcontrol: hook up vmpressure to socket pressure")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d69ea414c9b4 ("ice: implement device flash update via devlink")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h | 9 +++++++--
- mm/vmpressure.c            | 8 ++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 5818af8eca5a5..dbf26bc89dd46 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -284,6 +284,11 @@ struct mem_cgroup {
- 	atomic_long_t		memory_events[MEMCG_NR_MEMORY_EVENTS];
- 	atomic_long_t		memory_events_local[MEMCG_NR_MEMORY_EVENTS];
- 
-+	/*
-+	 * Hint of reclaim pressure for socket memroy management. Note
-+	 * that this indicator should NOT be used in legacy cgroup mode
-+	 * where socket memory is accounted/charged separately.
-+	 */
- 	unsigned long		socket_pressure;
- 
- 	/* Legacy tcp memory accounting */
-@@ -1727,8 +1732,8 @@ void mem_cgroup_sk_alloc(struct sock *sk);
- void mem_cgroup_sk_free(struct sock *sk);
- static inline bool mem_cgroup_under_socket_pressure(struct mem_cgroup *memcg)
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index b40dfe6ae3217..c2cdc79308dc1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -1346,6 +1346,7 @@ int ice_aq_wait_for_event(struct ice_pf *pf, u16 opcode, unsigned long timeout,
+ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
+ 				struct ice_rq_event_info *event)
  {
--	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && memcg->tcpmem_pressure)
--		return true;
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
-+		return !!memcg->tcpmem_pressure;
- 	do {
- 		if (time_before(jiffies, READ_ONCE(memcg->socket_pressure)))
- 			return true;
-diff --git a/mm/vmpressure.c b/mm/vmpressure.c
-index b52644771cc43..22c6689d93027 100644
---- a/mm/vmpressure.c
-+++ b/mm/vmpressure.c
-@@ -244,6 +244,14 @@ void vmpressure(gfp_t gfp, struct mem_cgroup *memcg, bool tree,
- 	if (mem_cgroup_disabled())
- 		return;
++	struct ice_rq_event_info *task_ev;
+ 	struct ice_aq_task *task;
+ 	bool found = false;
  
-+	/*
-+	 * The in-kernel users only care about the reclaim efficiency
-+	 * for this @memcg rather than the whole subtree, and there
-+	 * isn't and won't be any in-kernel user in a legacy cgroup.
-+	 */
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && !tree)
-+		return;
-+
- 	vmpr = memcg_to_vmpressure(memcg);
+@@ -1354,15 +1355,15 @@ static void ice_aq_check_events(struct ice_pf *pf, u16 opcode,
+ 		if (task->state || task->opcode != opcode)
+ 			continue;
  
- 	/*
+-		memcpy(&task->event->desc, &event->desc, sizeof(event->desc));
+-		task->event->msg_len = event->msg_len;
++		task_ev = task->event;
++		memcpy(&task_ev->desc, &event->desc, sizeof(event->desc));
++		task_ev->msg_len = event->msg_len;
+ 
+ 		/* Only copy the data buffer if a destination was set */
+-		if (task->event->msg_buf &&
+-		    task->event->buf_len > event->buf_len) {
+-			memcpy(task->event->msg_buf, event->msg_buf,
++		if (task_ev->msg_buf && task_ev->buf_len >= event->buf_len) {
++			memcpy(task_ev->msg_buf, event->msg_buf,
+ 			       event->buf_len);
+-			task->event->buf_len = event->buf_len;
++			task_ev->buf_len = event->buf_len;
+ 		}
+ 
+ 		task->state = ICE_AQ_TASK_COMPLETE;
 -- 
 2.40.1
 
