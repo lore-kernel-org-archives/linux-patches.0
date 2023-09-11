@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC311170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84882C433C8;
-	Mon, 11 Sep 2023 14:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA021170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C476C433C7;
+	Mon, 11 Sep 2023 14:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440816;
-	bh=B3mGKoJXjsHx/Vyoniy5lOqNvAvKiDRlVVns+mXr9ew=;
+	s=korg; t=1694440819;
+	bh=nI+/mFhPW7+MpvqvY6aiPUN3MWGBSiKxgFCA6dqyc78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtOkEdfiAtIGiPWdXDM+r/cbiNcsjDFb+uxYH4ocN6ITkcHBTHsfGR0g4ar1EHUd5
-	 8s5SnX1MQ8uos5n+kJI2ZOT4OXMeljlJcEfe1Hu+cNPFFHaNp5od+r1s0bx4wa90nk
-	 Wx81AOKWtXgUHiRMHbZWbVZP6W1+GqpLnml6BKo0=
+	b=m8jY+XQfrZfnMHvpY3MWnAP9zB3suPWxDfh14ubvh887y9ZRKKNtLsEmBMOrL+U1J
+	 5TiIbUwpdhzQl5iJRHKRQXRnhbBQVENvjZ4ipSDAe4OdjwToBMf7EOORLOvTfErt9I
+	 Wh8YOd4YcY7c6EndMIuhBR/pE400aGQqz4DUl898=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 168/739] mac80211: make ieee80211_tx_info padding explicit
-Date: Mon, 11 Sep 2023 15:39:27 +0200
-Message-ID: <20230911134655.870145614@linuxfoundation.org>
+Subject: [PATCH 6.5 169/739] bpf: Fix check_func_arg_reg_off bug for graph root/node
+Date: Mon, 11 Sep 2023 15:39:28 +0200
+Message-ID: <20230911134655.905699940@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,59 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit a7a2ef0c4b3efbd7d6f3fabd87dbbc0b3f2de5af ]
+[ Upstream commit 6785b2edf48c6b1c3ea61fe3b0d2e02b8fbf90c0 ]
 
-While looking at a bug, I got rather confused by the layout of the
-'status' field in ieee80211_tx_info. Apparently, the intention is that
-status_driver_data[] is used for driver specific data, and fills up the
-size of the union to 40 bytes, just like the other ones.
+The commit being fixed introduced a hunk into check_func_arg_reg_off
+that bypasses reg->off == 0 enforcement when offset points to a graph
+node or root. This might possibly be done for treating bpf_rbtree_remove
+and others as KF_RELEASE and then later check correct reg->off in helper
+argument checks.
 
-This is indeed what actually happens, but only because of the
-combination of two mistakes:
+But this is not the case, those helpers are already not KF_RELEASE and
+permit non-zero reg->off and verify it later to match the subobject in
+BTF type.
 
- - "void *status_driver_data[18 / sizeof(void *)];" is intended
-   to be 18 bytes long but is actually two bytes shorter because of
-   rounding-down in the division, to a multiple of the pointer
-   size (4 bytes or 8 bytes).
+However, this logic leads to bpf_obj_drop permitting free of register
+arguments with non-zero offset when they point to a graph root or node
+within them, which is not ok.
 
- - The other fields combined are intended to be 22 bytes long, but
-   are actually 24 bytes because of padding in front of the
-   unaligned tx_time member, and in front of the pointer array.
+For instance:
 
-The two mistakes cancel out. so the size ends up fine, but it seems
-more helpful to make this explicit, by having a multiple of 8 bytes
-in the size calculation and explicitly describing the padding.
+struct foo {
+	int i;
+	int j;
+	struct bpf_rb_node node;
+};
 
-Fixes: ea5907db2a9cc ("mac80211: fix struct ieee80211_tx_info size")
-Fixes: 02219b3abca59 ("mac80211: add WMM admission control support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230623152443.2296825-2-arnd@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+struct foo *f = bpf_obj_new(typeof(*f));
+if (!f) ...
+bpf_obj_drop(f); // OK
+bpf_obj_drop(&f->i); // still ok from verifier PoV
+bpf_obj_drop(&f->node); // Not OK, but permitted right now
+
+Fix this by dropping the whole part of code altogether.
+
+Fixes: 6a3cd3318ff6 ("bpf: Migrate release_on_unlock logic to non-owning ref semantics")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230822175140.1317749-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 2a55ae932c568..ad41581384d9f 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -1192,9 +1192,11 @@ struct ieee80211_tx_info {
- 			u8 ampdu_ack_len;
- 			u8 ampdu_len;
- 			u8 antenna;
-+			u8 pad;
- 			u16 tx_time;
- 			u8 flags;
--			void *status_driver_data[18 / sizeof(void *)];
-+			u8 pad2;
-+			void *status_driver_data[16 / sizeof(void *)];
- 		} status;
- 		struct {
- 			struct ieee80211_tx_rate driver_rates[
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 903de82dec423..ed49ec0675625 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7807,17 +7807,6 @@ int check_func_arg_reg_off(struct bpf_verifier_env *env,
+ 		if (arg_type_is_dynptr(arg_type) && type == PTR_TO_STACK)
+ 			return 0;
+ 
+-		if ((type_is_ptr_alloc_obj(type) || type_is_non_owning_ref(type)) && reg->off) {
+-			if (reg_find_field_offset(reg, reg->off, BPF_GRAPH_NODE_OR_ROOT))
+-				return __check_ptr_off_reg(env, reg, regno, true);
+-
+-			verbose(env, "R%d must have zero offset when passed to release func\n",
+-				regno);
+-			verbose(env, "No graph node or root found at R%d type:%s off:%d\n", regno,
+-				btf_type_name(reg->btf, reg->btf_id), reg->off);
+-			return -EINVAL;
+-		}
+-
+ 		/* Doing check_ptr_off_reg check for the offset will catch this
+ 		 * because fixed_off_ok is false, but checking here allows us
+ 		 * to give the user a better error message.
 -- 
 2.40.1
 
