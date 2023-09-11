@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8864432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7554C433C7;
-	Mon, 11 Sep 2023 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E634432
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B88C433C9;
+	Mon, 11 Sep 2023 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441417;
-	bh=0g62UUPreABlL3Kwo3bRHHKfsBCz9GyKjcn3UOOXPVY=;
+	s=korg; t=1694441419;
+	bh=S0iqzVFt9mWY8/4Hx8NMfT5iDw9NGELxRCxcBolGnQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0b2e+mgyeLab9X+vp6WOSKyu8xMLZrsKKUcFpTFGkG+zJmSfgHvILgB8hsYMvr9R
-	 Ap6NVXxi4ENbBmY8i/dINlEMCMZTFR0Rhqy4kqkX+++/hJ3ctbGTLVlA/mgenkXjkB
-	 OQ2OHiV9+Zglb3t2+Lztjo0Qhig5k2uVNwtPZEMU=
+	b=yuImTUfEutZuHoN7a1kB+FPQKPoO5b2CVbUVfRukCX200q1t0jFh5S3em8eigMlmI
+	 bElri1L7/vXVBJzyy41Mp0yV01pUuVbd2q3lH9lD/cb6Ro/Ko5HBTohrot66ol/hAB
+	 WZ/tyxzfzpYqil51L+M8cIXFksAdXMQIm0OlE7Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Su Hui <suhui@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 369/739] ALSA: ac97: Fix possible error value of *rac97
-Date: Mon, 11 Sep 2023 15:42:48 +0200
-Message-ID: <20230911134701.465026925@linuxfoundation.org>
+Subject: [PATCH 6.5 399/739] kvm/vfio: ensure kvg instance stays around in kvm_vfio_group_add()
+Date: Mon, 11 Sep 2023 15:43:18 +0200
+Message-ID: <20230911134702.327419651@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,50 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 67de40c9df94037769967ba28c7d951afb45b7fb ]
+[ Upstream commit 9e0f4f2918c2ff145d3dedee862d9919a6ed5812 ]
 
-Before committing 79597c8bf64c, *rac97 always be NULL if there is
-an error. When error happens, make sure *rac97 is NULL is safer.
+kvm_vfio_group_add() creates kvg instance, links it to kv->group_list,
+and calls kvm_vfio_file_set_kvm() with kvg->file as an argument after
+dropping kv->lock. If we race group addition and deletion calls, kvg
+instance may get freed by the time we get around to calling
+kvm_vfio_file_set_kvm().
 
-For examble, in snd_vortex_mixer():
-	err = snd_ac97_mixer(pbus, &ac97, &vortex->codec);
-	vortex->isquad = ((vortex->codec == NULL) ?
-		0 : (vortex->codec->ext_id&0x80));
-If error happened but vortex->codec isn't NULL, this may cause some
-problems.
+Previous iterations of the code did not reference kvg->file outside of
+the critical section, but used a temporary variable. Still, they had
+similar problem of the file reference being owned by kvg structure and
+potential for kvm_vfio_group_del() dropping it before
+kvm_vfio_group_add() had a chance to complete.
 
-Move the judgement order to be clearer and better.
+Fix this by moving call to kvm_vfio_file_set_kvm() under the protection
+of kv->lock. We already call it while holding the same lock when vfio
+group is being deleted, so it should be safe here as well.
 
-Fixes: 79597c8bf64c ("ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer")
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20230823025212.1000961-1-suhui@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 2fc1bec15883 ("kvm: set/clear kvm to/from vfio_group when group add/delete")
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20230714224538.404793-1-dmitry.torokhov@gmail.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ virt/kvm/vfio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index 80a65b8ad7b9b..25f93e56cfc7a 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -2069,10 +2069,9 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
- 		.dev_disconnect =	snd_ac97_dev_disconnect,
- 	};
+diff --git a/virt/kvm/vfio.c b/virt/kvm/vfio.c
+index af3d0cf06e4c6..365d30779768a 100644
+--- a/virt/kvm/vfio.c
++++ b/virt/kvm/vfio.c
+@@ -180,10 +180,10 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
+ 	list_add_tail(&kvf->node, &kv->file_list);
  
--	if (!rac97)
--		return -EINVAL;
--	if (snd_BUG_ON(!bus || !template))
-+	if (snd_BUG_ON(!bus || !template || !rac97))
- 		return -EINVAL;
-+	*rac97 = NULL;
- 	if (snd_BUG_ON(template->num >= 4))
- 		return -EINVAL;
- 	if (bus->codec[template->num])
+ 	kvm_arch_start_assignment(dev->kvm);
++	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
+ 
+ 	mutex_unlock(&kv->lock);
+ 
+-	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
+ 	kvm_vfio_update_coherency(dev);
+ 
+ 	return 0;
 -- 
 2.40.1
 
