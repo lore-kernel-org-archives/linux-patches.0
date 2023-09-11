@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48C1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:29:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C644C433C7;
-	Mon, 11 Sep 2023 14:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920971170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:29:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C7DC433C7;
+	Mon, 11 Sep 2023 14:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442594;
-	bh=iybcmXumYn8jC5NqrMTTUK+tY5tn7BlvP+gTJjDSsJE=;
+	s=korg; t=1694442597;
+	bh=3bL5SEGdIm33bdeR9cv8ESqwUKrdY0qcDhdYnvGvMcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMyP4qWwTxS7Ae1Zw0iaNgkVWRByz3A+C1bCUmULbL2X61/xOPllTR0y2RS2/L03h
-	 28y6arzHwK8zUBctakXev+fASGmDSPJarJBcpZhXZFeD9wpLvNoI7EVJMCJddpqQaW
-	 MGbVzLrptOM/5iE7JjNkD1ZcVION8fz+25NouQ0M=
+	b=fqB7wDOsv3X1XcewPr9CCYHbhPQYSFd3E6FN8tIySjG28htNCLuF5mVVqo9QR/coC
+	 PMAkm2n5l9/bsp8JplA4RZbwUuMq3lCPYM7NQ8h2g6SsrMrN45byhM+ullz3RdVFWF
+	 DBAdOjmi0B6mJtM5UOlInHaZLSeLGUtIBSSEeqp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 079/737] broadcom: b44: Use b44_writephy() return value
-Date: Mon, 11 Sep 2023 15:38:58 +0200
-Message-ID: <20230911134652.718190122@linuxfoundation.org>
+Subject: [PATCH 6.4 080/737] gpiolib: fix reference leaks when removing GPIO chips still in use
+Date: Mon, 11 Sep 2023 15:38:59 +0200
+Message-ID: <20230911134652.746505575@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,42 +40,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 9944d203fa63721b87eee84a89f7275dc3d25c05 ]
+[ Upstream commit 3386fb86ecdef0d39ee3306aea8ec290e61b934f ]
 
-Return result of b44_writephy() instead of zero to
-deal with possible error.
+After we remove a GPIO chip that still has some requested descriptors,
+gpiod_free_commit() will fail and we will never put the references to the
+GPIO device and the owning module in gpiod_free().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Rework this function to:
+- not warn on desc == NULL as this is a use-case on which most free
+  functions silently return
+- put the references to desc->gdev and desc->gdev->owner unconditionally
+  so that the release callback actually gets called when the remaining
+  references are dropped by external GPIO users
 
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/b44.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpio/gpiolib.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/b44.c b/drivers/net/ethernet/broadcom/b44.c
-index 392ec09a1d8a6..3e4fb3c3e8342 100644
---- a/drivers/net/ethernet/broadcom/b44.c
-+++ b/drivers/net/ethernet/broadcom/b44.c
-@@ -1793,11 +1793,9 @@ static int b44_nway_reset(struct net_device *dev)
- 	b44_readphy(bp, MII_BMCR, &bmcr);
- 	b44_readphy(bp, MII_BMCR, &bmcr);
- 	r = -EINVAL;
--	if (bmcr & BMCR_ANENABLE) {
--		b44_writephy(bp, MII_BMCR,
--			     bmcr | BMCR_ANRESTART);
--		r = 0;
--	}
-+	if (bmcr & BMCR_ANENABLE)
-+		r = b44_writephy(bp, MII_BMCR,
-+				 bmcr | BMCR_ANRESTART);
- 	spin_unlock_irq(&bp->lock);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 5be8ad61523eb..6e7701f80929f 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2175,12 +2175,18 @@ static bool gpiod_free_commit(struct gpio_desc *desc)
  
- 	return r;
+ void gpiod_free(struct gpio_desc *desc)
+ {
+-	if (desc && desc->gdev && gpiod_free_commit(desc)) {
+-		module_put(desc->gdev->owner);
+-		gpio_device_put(desc->gdev);
+-	} else {
++	/*
++	 * We must not use VALIDATE_DESC_VOID() as the underlying gdev->chip
++	 * may already be NULL but we still want to put the references.
++	 */
++	if (!desc)
++		return;
++
++	if (!gpiod_free_commit(desc))
+ 		WARN_ON(extra_checks);
+-	}
++
++	module_put(desc->gdev->owner);
++	gpio_device_put(desc->gdev);
+ }
+ 
+ /**
 -- 
 2.40.1
 
