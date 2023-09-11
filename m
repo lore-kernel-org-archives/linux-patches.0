@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475DB11184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBE2C433C8;
-	Mon, 11 Sep 2023 14:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1067311184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836E2C433C7;
+	Mon, 11 Sep 2023 14:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440950;
-	bh=JLCvWy+VGpvn/geBsMqKmyO5Qt8E7LNK7NmiEB3Rgto=;
+	s=korg; t=1694440952;
+	bh=ETW/1nhFfISTgB4chXa7ckgy2b3ZW+cHudf9K9WFEG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3ROGY1goc0OOvbVuS7B8WcSnLq7wWpQoCXhG+dyPxlGxhlfeWqDsPJP09Kn9J34U
-	 bJ5qn9HXINCljlhAYqG2MB8o8Bm8D7YoJ4H0TX0Xjbr3f1+sEb46PYbs3xV010fkkS
-	 MGr/KgqPZb0mR8LkMEvjTnXW07qHdl/aKalIIM9A=
+	b=DLlskaH0bNcJ/qt8VJ+Q9HQcfZ+OWw4xoVFxmCwh/DPZiFmjU02hPnpERjy/3LLx9
+	 FRENlMOua+sEduHJ8kYtSQtNYubQQ1Wi/VL8Mxy1WUZ9XFe070UC2frKFBS6WQKwNP
+	 G2PBONppKv/72IoxEphHGln5Ne3Ze5ObsddHx/Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 225/739] arm64: dts: qcom: msm8939: Add missing cache-unified to L2
-Date: Mon, 11 Sep 2023 15:40:24 +0200
-Message-ID: <20230911134657.463800675@linuxfoundation.org>
+Subject: [PATCH 6.5 243/739] ARM: dts: stm32: Add missing detach mailbox for DHCOR SoM
+Date: Mon, 11 Sep 2023 15:40:42 +0200
+Message-ID: <20230911134657.949786503@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,45 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 68a59251f1c590ad567ff7fd799f6634fbab6e16 ]
+[ Upstream commit 2f38de940f072db369edd3e6e8d82bb8f42c5c9b ]
 
-Add the missing property to fix the dt checker warning:
+Add missing "detach" mailbox to this board to permit the CPU to inform
+the remote processor on a detach. This signal allows the remote processor
+firmware to stop IPC communication and to reinitialize the resources for
+a re-attach.
 
-qcom/apq8039-t2.dtb: l2-cache: 'cache-unified' is a required property
+Without this mailbox, detach is not possible and kernel log contains the
+following warning to, so make sure all the STM32MP15xx platform DTs are
+in sync regarding the mailboxes to fix the detach issue and the warning:
+"
+stm32-rproc 10000000.m4: mbox_request_channel_byname() could not locate channel named "detach"
+"
 
-Fixes: 61550c6c156c ("arm64: dts: qcom: Add msm8939 SoC")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20230627-topic-more_bindings-v1-3-6b4b6cd081e5@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 6257dfc1c412 ("ARM: dts: stm32: Add coprocessor detach mbox on stm32mp15x-dkx boards")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/st/stm32mp15xx-dhcor-som.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 8a856bd8e8e92..3d9270b5482b4 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -55,6 +55,7 @@ CPU0: cpu@100 {
- 			L2_1: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-unified;
- 			};
- 		};
- 
-@@ -111,6 +112,7 @@ CPU4: cpu@0 {
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-+				cache-unified;
- 			};
- 		};
- 
+diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dhcor-som.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dhcor-som.dtsi
+index bba19f21e5277..89881a26c6141 100644
+--- a/arch/arm/boot/dts/st/stm32mp15xx-dhcor-som.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15xx-dhcor-som.dtsi
+@@ -227,8 +227,8 @@ &iwdg2 {
+ &m4_rproc {
+ 	memory-region = <&retram>, <&mcuram>, <&mcuram2>, <&vdev0vring0>,
+ 			<&vdev0vring1>, <&vdev0buffer>;
+-	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>;
+-	mbox-names = "vq0", "vq1", "shutdown";
++	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>, <&ipcc 3>;
++	mbox-names = "vq0", "vq1", "shutdown", "detach";
+ 	interrupt-parent = <&exti>;
+ 	interrupts = <68 1>;
+ 	status = "okay";
 -- 
 2.40.1
 
