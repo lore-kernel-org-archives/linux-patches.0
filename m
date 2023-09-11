@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A661170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89980C433C9;
-	Mon, 11 Sep 2023 14:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F6D1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:25:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A81C433C7;
+	Mon, 11 Sep 2023 14:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442319;
-	bh=bghmLmgsxnEnmbiJiC9KqDXs/ixVqMVE6Gv1aSBYiLw=;
+	s=korg; t=1694442322;
+	bh=t+/xVJTAEz+ptlDSXtEKd3GX3L/qMq8VzkN64hMidhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4FFes9Y01GUnmYIw045PaXgEtzJVF8I0K4My0bjeG2eWxtvG215tP70KsA6kDbKh
-	 d111Rd/mpgutmzzy4W7AmuhebtelrPO0fUOlFLuxfRr5wOSE543O1qn6G6fHq9HMjN
-	 n3E01bQN5+zjvMdNerqDOkxrkM8F+Uz/sDdu95g8=
+	b=Lt78wftRD8wRJS7x1uXDf7YjXLJUdWnBtqS8GsK3/Y7JIL6iRlgHC27TgqLrp0eIj
+	 +QE49E6BJrbez5pMMKw2xrzqOM5JgnraEQaeOa+O1ZJwQRIWizWU+VZZ+6JFw/i7XM
+	 oIGTTosjfT1E2qQkykW9C9ZkqG/twI55HmwXpHz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.5 723/739] USB: core: Fix oversight in SuperSpeed initialization
-Date: Mon, 11 Sep 2023 15:48:42 +0200
-Message-ID: <20230911134711.275502682@linuxfoundation.org>
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vasant Hegde <vasant.hegde@amd.com>
+Subject: [PATCH 6.5 724/739] x86/smp: Dont send INIT to non-present and non-booted CPUs
+Date: Mon, 11 Sep 2023 15:48:43 +0200
+Message-ID: <20230911134711.300738950@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,100 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 59cf445754566984fd55af19ba7146c76e6627bc upstream.
+commit 3f874c9b2aae8e30463efc1872bea4baa9ed25dc upstream.
 
-Commit 85d07c556216 ("USB: core: Unite old scheme and new scheme
-descriptor reads") altered the way USB devices are enumerated
-following detection, and in the process it messed up the
-initialization of SuperSpeed (or faster) devices:
+Vasant reported that kexec() can hang or reset the machine when it tries to
+park CPUs via INIT. This happens when the kernel is using extended APIC,
+but the present mask has APIC IDs >= 0x100 enumerated.
 
-[   31.650759] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 2 using xhci_hcd
-[   31.663107] usb 2-1: device descriptor read/8, error -71
-[   31.952697] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 3 using xhci_hcd
-[   31.965122] usb 2-1: device descriptor read/8, error -71
-[   32.080991] usb usb2-port1: attempt power cycle
-...
+As extended APIC can only handle 8 bit of APIC ID sending INIT to APIC ID
+0x100 sends INIT to APIC ID 0x0. That's the boot CPU which is special on
+x86 and INIT causes the system to hang or resets the machine.
 
-The problem was caused by the commit forgetting that in SuperSpeed or
-faster devices, the device descriptor uses a logarithmic encoding of
-the bMaxPacketSize0 value.  (For some reason I thought the 255 case in
-the switch statement was meant for these devices, but it isn't -- it
-was meant for Wireless USB and is no longer needed.)
+Prevent this by sending INIT only to those CPUs which have been booted
+once.
 
-We can fix the oversight by testing for buf->bMaxPacketSize0 = 9
-(meaning 512, the actual maxpacket size for ep0 on all SuperSpeed
-devices) and straightening out the logic that checks and adjusts our
-initial guesses of the maxpacket value.
-
-Reported-and-tested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Closes: https://lore.kernel.org/linux-usb/20230810002257.nadxmfmrobkaxgnz@synopsys.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
-Link: https://lore.kernel.org/r/8809e6c5-59d5-4d2d-ac8f-6d106658ad73@rowland.harvard.edu
+Fixes: 45e34c8af58f ("x86/smp: Put CPUs into INIT on shutdown if possible")
+Reported-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/87cyzwjbff.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   36 ++++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ arch/x86/kernel/smpboot.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -4757,7 +4757,7 @@ static int get_bMaxPacketSize0(struct us
- 				buf, size,
- 				initial_descriptor_timeout);
- 		switch (buf->bMaxPacketSize0) {
--		case 8: case 16: case 32: case 64: case 255:
-+		case 8: case 16: case 32: case 64: case 9:
- 			if (buf->bDescriptorType == USB_DT_DEVICE) {
- 				rc = buf->bMaxPacketSize0;
- 				break;
-@@ -5056,23 +5056,35 @@ hub_port_init(struct usb_hub *hub, struc
- 	if (retval)
- 		goto fail;
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -1356,7 +1356,7 @@ bool smp_park_other_cpus_in_init(void)
+ 	if (this_cpu)
+ 		return false;
  
--	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
--		i = 512;
--	else
--		i = maxp0;
--	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
--		if (udev->speed == USB_SPEED_LOW ||
--				!(i == 8 || i == 16 || i == 32 || i == 64)) {
--			dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", i);
--			retval = -EMSGSIZE;
--			goto fail;
--		}
-+	/*
-+	 * Check the ep0 maxpacket guess and correct it if necessary.
-+	 * maxp0 is the value stored in the device descriptor;
-+	 * i is the value it encodes (logarithmic for SuperSpeed or greater).
-+	 */
-+	i = maxp0;
-+	if (udev->speed >= USB_SPEED_SUPER) {
-+		if (maxp0 <= 16)
-+			i = 1 << maxp0;
-+		else
-+			i = 0;		/* Invalid */
-+	}
-+	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
-+		;	/* Initial ep0 maxpacket guess is right */
-+	} else if ((udev->speed == USB_SPEED_FULL ||
-+				udev->speed == USB_SPEED_HIGH) &&
-+			(i == 8 || i == 16 || i == 32 || i == 64)) {
-+		/* Initial guess is wrong; use the descriptor's value */
- 		if (udev->speed == USB_SPEED_FULL)
- 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
- 		else
- 			dev_warn(&udev->dev, "Using ep0 maxpacket: %d\n", i);
- 		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(i);
- 		usb_ep0_reinit(udev);
-+	} else {
-+		/* Initial guess is wrong and descriptor's value is invalid */
-+		dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", maxp0);
-+		retval = -EMSGSIZE;
-+		goto fail;
- 	}
- 
- 	descr = usb_get_device_descriptor(udev);
+-	for_each_present_cpu(cpu) {
++	for_each_cpu_and(cpu, &cpus_booted_once_mask, cpu_present_mask) {
+ 		if (cpu == this_cpu)
+ 			continue;
+ 		apicid = apic->cpu_present_to_apicid(cpu);
 
 
