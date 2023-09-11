@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C46B11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7D8C433C8;
-	Mon, 11 Sep 2023 15:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFA611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FE0C433C9;
+	Mon, 11 Sep 2023 15:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445330;
-	bh=8As8puNIuxQFwgD+osdT3Zx3+kDGwJVoJxnhTlDdpYQ=;
+	s=korg; t=1694445333;
+	bh=v2RLlClBPypIpf8k0NV5pYAFYRBRymcIaIu3jf+NFS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+mEVP598eX/jByRPt0PvPwqqL+NORz+5cYh1xvtXYEgCxM6jrH7dtxWvMfWBCz/A
-	 W3AxcFYiIKF3rKq9g18VDFUmsQ4AAgUYKFSwkmF+rmVlk2qmm1SClDV/ggSDuckehB
-	 oyolvWDAAXt2NPK7c5EzUISJExwvTsxCzMO/PY+c=
+	b=VodHoQczQNtdZwrtbgQRAdQB6pwoOF5FVtERdawXyluD8WaNsPuiqkPU8X7Eo0hNT
+	 fJLvUusdOJyadwzuYIKaL6fXdSOToIjTybLTMyJZnRxq895tx2XRd15Shb1wMLXmxM
+	 tZSTpnv/XulYJUgJL/MJmwcud9HlDjacgKE6ZFjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wronek <davidwronek@gmail.com>,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	dorum@noisolation.com,
+	Daniel Vetter <daniel.vetter@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 310/600] arm64: dts: qcom: msm8996: Fix dsi1 interrupts
-Date: Mon, 11 Sep 2023 15:45:43 +0200
-Message-ID: <20230911134642.795587845@linuxfoundation.org>
+Subject: [PATCH 6.1 293/600] drm/msm/mdp5: Dont leak some plane state
+Date: Mon, 11 Sep 2023 15:45:26 +0200
+Message-ID: <20230911134642.259066502@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,37 +47,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wronek <davidwronek@gmail.com>
+From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-[ Upstream commit bd3b4ac11845b428996cfd2c7b8302ba6a07340d ]
+[ Upstream commit fd0ad3b2365c1c58aa5a761c18efc4817193beb6 ]
 
-Fix IRQ flags mismatch which was keeping dsi1 from probing by changing
-interrupts = <4> to interrupts = <5>.
+Apparently no one noticed that mdp5 plane states leak like a sieve
+ever since we introduced plane_state->commit refcount a few years ago
+in 21a01abbe32a ("drm/atomic: Fix freeing connector/plane state too
+early by tracking commits, v3.")
 
-Fixes: 2752bb7d9b58 ("arm64: dts: qcom: msm8996: add second DSI interface")
-Signed-off-by: David Wronek <davidwronek@gmail.com>
-Acked-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230805130936.359860-2-davidwronek@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix it by using the right helpers.
+
+Fixes: 21a01abbe32a ("drm/atomic: Fix freeing connector/plane state too early by tracking commits, v3.")
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reported-and-tested-by: dorum@noisolation.com
+Cc: dorum@noisolation.com
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/551236/
+Link: https://lore.kernel.org/r/20230803204521.928582-1-daniel.vetter@ffwll.ch
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 7e381d8257ba1..9de2248a385a5 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1063,7 +1063,7 @@ dsi1: dsi@996000 {
- 				reg-names = "dsi_ctrl";
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+index bd2c4ac456017..0d5ff03cb0910 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+@@ -130,8 +130,7 @@ static void mdp5_plane_destroy_state(struct drm_plane *plane,
+ {
+ 	struct mdp5_plane_state *pstate = to_mdp5_plane_state(state);
  
- 				interrupt-parent = <&mdss>;
--				interrupts = <4>;
-+				interrupts = <5>;
+-	if (state->fb)
+-		drm_framebuffer_put(state->fb);
++	__drm_atomic_helper_plane_destroy_state(state);
  
- 				clocks = <&mmcc MDSS_MDP_CLK>,
- 					 <&mmcc MDSS_BYTE1_CLK>,
+ 	kfree(pstate);
+ }
 -- 
 2.40.1
 
