@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166C91170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C67C433C8;
-	Mon, 11 Sep 2023 13:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB691170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF6AC433C8;
+	Mon, 11 Sep 2023 13:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440348;
-	bh=P0r4nJxCRfFdwFZWMfIv4+OmByslTC7txPZi1Yz+hWs=;
+	s=korg; t=1694440351;
+	bh=RLnomFS5Et5ZuDjwT1EtJpfDvkJG/LRtN42AgmXFIsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SStVv2+alwpPyuAPU5k+kT4xfKcQOoU2XoAvH1AnxlH2ujefZiq6LkXRAzzOpW3/G
-	 e5J3kboKE9XXAl60wYd3z+R4/ncfEOAcOx2C8rnApVTUmFq+bwvXqENos5DSPQpY0f
-	 6q+wCFUN3ZsYBsToRytxXwkhu8otxdKFNIAQ1IGw=
+	b=mQ8D2/uWxS3gxFAwueeVCLobY3xuPFjijBHS3tbPOkrhu1kaoJ2A9C1X13LtE6jIL
+	 oemiqxh6XKB6kb2j7E2r37mK6LJlzpTaK2eaqpprLha+3TTB9X6PyELwCE5Y/MB0J/
+	 rTgvQ/kCFENhZVWpbF5LYOD/brIdKMM0qbTqqICY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Babu Moger <babu.moger@amd.com>,
+	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 030/739] OPP: Fix passing 0 to PTR_ERR in _opp_attach_genpd()
-Date: Mon, 11 Sep 2023 15:37:09 +0200
-Message-ID: <20230911134651.923938278@linuxfoundation.org>
+Subject: [PATCH 6.5 031/739] selftests/resctrl: Add resctrl.h into build deps
+Date: Mon, 11 Sep 2023 15:37:10 +0200
+Message-ID: <20230911134651.954485459@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,45 +37,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit d920920f85a82c1c806a4143871a0e8f534732f2 ]
+[ Upstream commit 8e289f4542890168705219e54f0231dccfabddbe ]
 
-If dev_pm_domain_attach_by_name() returns NULL, then 0 will be passed to
-PTR_ERR() as reported by the smatch warning below:
+Makefile only lists *.c as build dependencies for the resctrl_tests
+executable which excludes resctrl.h.
 
-drivers/opp/core.c:2456 _opp_attach_genpd() warn: passing zero to 'PTR_ERR'
+Add *.h to wildcard() to include resctrl.h.
 
-Fix it by checking for the non-NULL virt_dev pointer before passing it to
-PTR_ERR. Otherwise return -ENODEV.
-
-Fixes: 4ea9496cbc95 ("opp: Fix error check in dev_pm_opp_attach_genpd()")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 591a6e8588fc ("selftests/resctrl: Add basic resctrl file system operations and data")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 2 +-
+ tools/testing/selftests/resctrl/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 98633ccd170a3..ae359ed6a1611 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -2377,7 +2377,7 @@ static int _opp_attach_genpd(struct opp_table *opp_table, struct device *dev,
+diff --git a/tools/testing/selftests/resctrl/Makefile b/tools/testing/selftests/resctrl/Makefile
+index 73d53257df42f..5073dbc961258 100644
+--- a/tools/testing/selftests/resctrl/Makefile
++++ b/tools/testing/selftests/resctrl/Makefile
+@@ -7,4 +7,4 @@ TEST_GEN_PROGS := resctrl_tests
  
- 		virt_dev = dev_pm_domain_attach_by_name(dev, *name);
- 		if (IS_ERR_OR_NULL(virt_dev)) {
--			ret = PTR_ERR(virt_dev) ? : -ENODEV;
-+			ret = virt_dev ? PTR_ERR(virt_dev) : -ENODEV;
- 			dev_err(dev, "Couldn't attach to pm_domain: %d\n", ret);
- 			goto err;
- 		}
+ include ../lib.mk
+ 
+-$(OUTPUT)/resctrl_tests: $(wildcard *.c)
++$(OUTPUT)/resctrl_tests: $(wildcard *.[ch])
 -- 
 2.40.1
 
