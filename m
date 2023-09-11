@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB38511705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E650C433C7;
-	Mon, 11 Sep 2023 14:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE2311705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F77CC433C8;
+	Mon, 11 Sep 2023 14:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443045;
-	bh=MnL/delfwatnVFYU4jy4iMBeSjyHPuKzTnHHFW483Mw=;
+	s=korg; t=1694443048;
+	bh=giysoLaF5LxqrR/pFKBXSdqNwbBm/CQeeYYpCZSOV/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dyo9EVEnA1J5XV3OoD3iSnAb+0zVewQjYitIk9OHO4jdEDuEqTi5c2jWreLXqn/NG
-	 zxBIsmWhJs0Oqgimu7D3CLLuiiq36kRP6DBPebeitLw03D4llr0T4sbrtRgZiiQnEy
-	 vAF8VYmuzTRi/v5+Hb4v6tOBD9erKfTaEAH1ATv4=
+	b=IpbnEwC4zoYU7q47YTqrdGnZOq8kmLtxQFJIr+MKEUb0TXThOcddQ3CsIXXCm3Udr
+	 bXf+POA9tRoQK9c6cBLvhOcPV09ZnjtdWpgMQu+g7HL1Xi2+I+WFs41s+x/kCFj5nq
+	 lCPFk3Ch91d46zyYlfJXjrR6Fi8WAddXoi8epBD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alexander Danilenko <al.b.danilenko@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 237/737] mac80211: make ieee80211_tx_info padding explicit
-Date: Mon, 11 Sep 2023 15:41:36 +0200
-Message-ID: <20230911134657.230430446@linuxfoundation.org>
+Subject: [PATCH 6.4 210/737] spi: tegra114: Remove unnecessary NULL-pointer checks
+Date: Mon, 11 Sep 2023 15:41:09 +0200
+Message-ID: <20230911134656.459110109@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,59 +40,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alexander Danilenko <al.b.danilenko@gmail.com>
 
-[ Upstream commit a7a2ef0c4b3efbd7d6f3fabd87dbbc0b3f2de5af ]
+[ Upstream commit 373c36bf7914e3198ac2654dede499f340c52950 ]
 
-While looking at a bug, I got rather confused by the layout of the
-'status' field in ieee80211_tx_info. Apparently, the intention is that
-status_driver_data[] is used for driver specific data, and fills up the
-size of the union to 40 bytes, just like the other ones.
+cs_setup, cs_hold and cs_inactive points to fields of spi_device struct,
+so there is no sense in checking them for NULL.
 
-This is indeed what actually happens, but only because of the
-combination of two mistakes:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
- - "void *status_driver_data[18 / sizeof(void *)];" is intended
-   to be 18 bytes long but is actually two bytes shorter because of
-   rounding-down in the division, to a multiple of the pointer
-   size (4 bytes or 8 bytes).
-
- - The other fields combined are intended to be 22 bytes long, but
-   are actually 24 bytes because of padding in front of the
-   unaligned tx_time member, and in front of the pointer array.
-
-The two mistakes cancel out. so the size ends up fine, but it seems
-more helpful to make this explicit, by having a multiple of 8 bytes
-in the size calculation and explicitly describing the padding.
-
-Fixes: ea5907db2a9cc ("mac80211: fix struct ieee80211_tx_info size")
-Fixes: 02219b3abca59 ("mac80211: add WMM admission control support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230623152443.2296825-2-arnd@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
+Signed-off-by: Alexander Danilenko <al.b.danilenko@gmail.com>
+Link: https://lore.kernel.org/r/20230815092058.4083-1-al.b.danilenko@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-tegra114.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 67d81f7186660..52b336ada480c 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -1192,9 +1192,11 @@ struct ieee80211_tx_info {
- 			u8 ampdu_ack_len;
- 			u8 ampdu_len;
- 			u8 antenna;
-+			u8 pad;
- 			u16 tx_time;
- 			u8 flags;
--			void *status_driver_data[18 / sizeof(void *)];
-+			u8 pad2;
-+			void *status_driver_data[16 / sizeof(void *)];
- 		} status;
- 		struct {
- 			struct ieee80211_tx_rate driver_rates[
+diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
+index 488df681eaefc..2226d77a5d20a 100644
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -723,27 +723,23 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
+ 	struct spi_delay *setup = &spi->cs_setup;
+ 	struct spi_delay *hold = &spi->cs_hold;
+ 	struct spi_delay *inactive = &spi->cs_inactive;
+-	u8 setup_dly, hold_dly, inactive_dly;
++	u8 setup_dly, hold_dly;
+ 	u32 setup_hold;
+ 	u32 spi_cs_timing;
+ 	u32 inactive_cycles;
+ 	u8 cs_state;
+ 
+-	if ((setup && setup->unit != SPI_DELAY_UNIT_SCK) ||
+-	    (hold && hold->unit != SPI_DELAY_UNIT_SCK) ||
+-	    (inactive && inactive->unit != SPI_DELAY_UNIT_SCK)) {
++	if (setup->unit != SPI_DELAY_UNIT_SCK ||
++	    hold->unit != SPI_DELAY_UNIT_SCK ||
++	    inactive->unit != SPI_DELAY_UNIT_SCK) {
+ 		dev_err(&spi->dev,
+ 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
+ 			SPI_DELAY_UNIT_SCK);
+ 		return -EINVAL;
+ 	}
+ 
+-	setup_dly = setup ? setup->value : 0;
+-	hold_dly = hold ? hold->value : 0;
+-	inactive_dly = inactive ? inactive->value : 0;
+-
+-	setup_dly = min_t(u8, setup_dly, MAX_SETUP_HOLD_CYCLES);
+-	hold_dly = min_t(u8, hold_dly, MAX_SETUP_HOLD_CYCLES);
++	setup_dly = min_t(u8, setup->value, MAX_SETUP_HOLD_CYCLES);
++	hold_dly = min_t(u8, hold->value, MAX_SETUP_HOLD_CYCLES);
+ 	if (setup_dly && hold_dly) {
+ 		setup_hold = SPI_SETUP_HOLD(setup_dly - 1, hold_dly - 1);
+ 		spi_cs_timing = SPI_CS_SETUP_HOLD(tspi->spi_cs_timing1,
+@@ -755,7 +751,7 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
+ 		}
+ 	}
+ 
+-	inactive_cycles = min_t(u8, inactive_dly, MAX_INACTIVE_CYCLES);
++	inactive_cycles = min_t(u8, inactive->value, MAX_INACTIVE_CYCLES);
+ 	if (inactive_cycles)
+ 		inactive_cycles--;
+ 	cs_state = inactive_cycles ? 0 : 1;
 -- 
 2.40.1
 
