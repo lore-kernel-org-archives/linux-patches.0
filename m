@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC1A11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82785C433C9;
-	Mon, 11 Sep 2023 15:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A4411710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4CFC433C8;
+	Mon, 11 Sep 2023 15:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445349;
-	bh=V+VCU+SU2w0510C0YoHImuLkwBcrDYiBNisetO0w0Pc=;
+	s=korg; t=1694445353;
+	bh=m8R4VTar8VwjaIQ2QFTsjKtarTio9evRQx+0ZmTKu+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRCNS1n0cSaZwGxe6VycrHMt+QGtlfAV5H+737GJupF3Itj1gritAH7ojhpqlE0vB
-	 mJEUJnR3jUMN78lMjP1GUlCAxVXtEKSIMCOS9x9Ao31+0rNGnvQVVKuo3Vt7TxnW4G
-	 SJsLJ1F3CDQ4MPEJQBofWlho2CMYGNPY90Tcai40=
+	b=MQF96lvrd6AkVz7MMhwxaWpZXlbxMXvxF850ZCv7yI2Jr5vNk/sZ1N+nN5JGHgNYd
+	 pD59y6e9jQovLOoAZ906e86QFcrTA/FcTdxBAH7hbHHfpPNDKtyiIB+pN2T1u++41w
+	 kFuuXVCxzd0fDJ+yWM9RjRNPbWhKWdFggMAc8qZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xueshi Hu <xueshi.hu@smartx.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 316/600] md/raid1: free the r1bio before waiting for blocked rdev
-Date: Mon, 11 Sep 2023 15:45:49 +0200
-Message-ID: <20230911134643.002804112@linuxfoundation.org>
+Subject: [PATCH 6.1 317/600] md/raid1: hold the barrier until handle_read_error() finishes
+Date: Mon, 11 Sep 2023 15:45:50 +0200
+Message-ID: <20230911134643.038861632@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,51 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Xueshi Hu <xueshi.hu@smartx.com>
 
-[ Upstream commit 992db13a4aee766c8bfbf046ad15c2db5fa7cab8 ]
+[ Upstream commit c069da449a13669ffa754fd971747e7e17e7d691 ]
 
-Raid1 reshape will change mempool and r1conf::raid_disks which are
-needed to free r1bio. allow_barrier() make a concurrent raid1_reshape()
-possible. So, free the in-flight r1bio before waiting blocked rdev.
+handle_read_error() will call allow_barrier() to match the former barrier
+raising. However, it should put the allow_barrier() at the end to avoid a
+concurrent raid reshape.
 
-Fixes: 6bfe0b499082 ("md: support blocking writes to an array on device failure")
+Fixes: 689389a06ce7 ("md/raid1: simplify handle_read_error().")
 Reviewed-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Xueshi Hu <xueshi.hu@smartx.com>
-Link: https://lore.kernel.org/r/20230814135356.1113639-3-xueshi.hu@smartx.com
+Link: https://lore.kernel.org/r/20230814135356.1113639-4-xueshi.hu@smartx.com
 Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/raid1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index ac64c587191b9..433db7007f88b 100644
+index 433db7007f88b..2d9372e6b5961 100644
 --- a/drivers/md/raid1.c
 +++ b/drivers/md/raid1.c
-@@ -1370,6 +1370,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 		return;
+@@ -2495,6 +2495,7 @@ static void handle_read_error(struct r1conf *conf, struct r1bio *r1_bio)
+ 	struct mddev *mddev = conf->mddev;
+ 	struct bio *bio;
+ 	struct md_rdev *rdev;
++	sector_t sector;
+ 
+ 	clear_bit(R1BIO_ReadError, &r1_bio->state);
+ 	/* we got a read error. Maybe the drive is bad.  Maybe just
+@@ -2524,12 +2525,13 @@ static void handle_read_error(struct r1conf *conf, struct r1bio *r1_bio)
  	}
  
-+ retry_write:
- 	r1_bio = alloc_r1bio(mddev, bio);
- 	r1_bio->sectors = max_write_sectors;
+ 	rdev_dec_pending(rdev, conf->mddev);
+-	allow_barrier(conf, r1_bio->sector);
++	sector = r1_bio->sector;
+ 	bio = r1_bio->master_bio;
  
-@@ -1385,7 +1386,6 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 	 */
+ 	/* Reuse the old r1_bio so that the IO_BLOCKED settings are preserved */
+ 	r1_bio->state = 0;
+ 	raid1_read_request(mddev, bio, r1_bio->sectors, r1_bio);
++	allow_barrier(conf, sector);
+ }
  
- 	disks = conf->raid_disks * 2;
-- retry_write:
- 	blocked_rdev = NULL;
- 	rcu_read_lock();
- 	max_sectors = r1_bio->sectors;
-@@ -1465,7 +1465,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
- 		for (j = 0; j < i; j++)
- 			if (r1_bio->bios[j])
- 				rdev_dec_pending(conf->mirrors[j].rdev, mddev);
--		r1_bio->state = 0;
-+		free_r1bio(r1_bio);
- 		allow_barrier(conf, bio->bi_iter.bi_sector);
- 
- 		if (bio->bi_opf & REQ_NOWAIT) {
+ static void raid1d(struct md_thread *thread)
 -- 
 2.40.1
 
