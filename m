@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E331170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE753C433C8;
-	Mon, 11 Sep 2023 14:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535461170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FD7C433C7;
+	Mon, 11 Sep 2023 14:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441132;
-	bh=0e1GQxMrHYGWRQc32m+OE1MgwJ7zD88P+MtSDe9HjjM=;
+	s=korg; t=1694441135;
+	bh=Wj/t95xlibhjbIuvAw3fE4jVlxFM9TOS9F1JRVhpXN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Di2yB7AFYTAILRPUTDQvsVNWnS8rV55dUsfI0WXhYpRf0/4SSx2S7gofmfOM1kwkw
-	 9E+wIm5kp3iDaZkzOgnQi9NSnFGt8oOrxgxBe3P2Uo3CYwy/ZymSMgZyLpxL4ZAsLC
-	 SnuDr/u3f8csF3eNMHc74S6gQ12IUlvPl35+nRW4=
+	b=uPsFmZ8a2R8r3noBnPxhgltgkkrvZ+j7QhEDZ3USA/FYZeTDJbsqpSIBbf+36zrbd
+	 nV0Plltrfojp1ZpBFp0pXnxgK67ltBX6pBtGsPKzWu7ygoUvbqf2uS+cvRhpMuFxhL
+	 DyvDqwhccFGJQcZFnYLIz2RM68CqpsxMkGPpfOiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 306/739] drm/msm/dpu: fix DSC 1.2 enc subblock length
-Date: Mon, 11 Sep 2023 15:41:45 +0200
-Message-ID: <20230911134659.668790318@linuxfoundation.org>
+Subject: [PATCH 6.5 307/739] arm64: dts: qcom: sm8550-mtp: Add missing supply for L1B regulator
+Date: Mon, 11 Sep 2023 15:41:46 +0200
+Message-ID: <20230911134659.695130234@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,45 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 57a1ca6cf73b164ff93c2a541a6fc2337fd07b20 ]
+[ Upstream commit 2c9e45dfeed126488aa73e7b82b3576c4c6f1036 ]
 
-Both struct dpu_dsc_sub_blks instances declare enc subblock length to be
-0x100, while the actual length is 0x9c (last register having offset 0x98).
-Reduce subblock length to remove the empty register space from being
-dumped.
+Even though currently there is no consumer for L1B, add the supply
+for it anyway.
 
-Fixes: 0d1b10c63346 ("drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/550999/
-Link: https://lore.kernel.org/r/20230802183655.4188640-2-dmitry.baryshkov@linaro.org
+Fixes: 71342fb91eae ("arm64: dts: qcom: Add base SM8550 MTP dts")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230801095246.2884770-1-abel.vesa@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 8b7143f2c760d..721c18cf9b1eb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -517,12 +517,12 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
-  * DSC sub blocks config
-  *************************************************************/
- static const struct dpu_dsc_sub_blks dsc_sblk_0 = {
--	.enc = {.name = "enc", .base = 0x100, .len = 0x100},
-+	.enc = {.name = "enc", .base = 0x100, .len = 0x9c},
- 	.ctl = {.name = "ctl", .base = 0xF00, .len = 0x10},
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+index ec86c5f380450..714a2f9497adc 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+@@ -186,6 +186,7 @@ regulators-0 {
  
- static const struct dpu_dsc_sub_blks dsc_sblk_1 = {
--	.enc = {.name = "enc", .base = 0x200, .len = 0x100},
-+	.enc = {.name = "enc", .base = 0x200, .len = 0x9c},
- 	.ctl = {.name = "ctl", .base = 0xF80, .len = 0x10},
- };
- 
+ 		vdd-bob1-supply = <&vph_pwr>;
+ 		vdd-bob2-supply = <&vph_pwr>;
++		vdd-l1-l4-l10-supply = <&vreg_s6g_1p8>;
+ 		vdd-l2-l13-l14-supply = <&vreg_bob1>;
+ 		vdd-l3-supply = <&vreg_s4g_1p3>;
+ 		vdd-l5-l16-supply = <&vreg_bob1>;
 -- 
 2.40.1
 
