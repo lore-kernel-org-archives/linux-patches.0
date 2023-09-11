@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39ECC153
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727C1C433CD;
-	Mon, 11 Sep 2023 14:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17AE11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1FDC433C7;
+	Mon, 11 Sep 2023 14:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443228;
-	bh=K6iNBAprnlrrQdCOhtq57JgHvoe8R7g8lKIIYvP5aZM=;
+	s=korg; t=1694443231;
+	bh=dJdWS+DXbQGTp81XfIF1HUleIs0Ryaj7Ys7zr6oyqEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giyc2yo64aXhbNxhv6ueGMgo1mS+XXCzQdDcvoL3RPEKVXX8jJKhSRvrosLY9rGM/
-	 WL/2FQ/mFG5FBSf5iCF/0fHb5tToCPI51lVt36Tzdu0M8Az1DSJL0ZWhCSJEyN57nE
-	 1gRYccEAEJr8TcVhdQNQ23Qle97ntbzEQccg8yFE=
+	b=ttBOlENYQMGuOE3bC0KQj90RPHdZ2V5p0W39X85xuldF7LEWo+ngAgOQlD/DuNdi4
+	 YG/rJxsY3nWPzHhZM8MDYMbDSIU/eecX4/u460u+jZaesVzrMW7GnmzSjVVHsfwyFJ
+	 qVEzl+M7Qy5O1Xt3puMahGSZBZhcZ7vsuhN9pjBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
+	yixuanjiang <yixuanjiang@google.com>,
 	Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	alsa-devel@alsa-project.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 277/737] ASoC: stac9766: fix build errors with REGMAP_AC97
-Date: Mon, 11 Sep 2023 15:42:16 +0200
-Message-ID: <20230911134658.311384763@linuxfoundation.org>
+Subject: [PATCH 6.4 268/737] ASoC: soc-compress: Fix deadlock in soc_compr_open_fe
+Date: Mon, 11 Sep 2023 15:42:07 +0200
+Message-ID: <20230911134658.067369916@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,40 +40,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: yixuanjiang <yixuanjiang@google.com>
 
-[ Upstream commit c70064b96f509daa78f57992aeabcf274fb2fed4 ]
+[ Upstream commit 2222214749a9969e09454b9ba7febfdfb09c1c8d ]
 
-Select REGMAP_AC97 to fix these build errors:
+Modify the error handling flow by release lock.
+The require mutex will keep holding if open fail.
 
-ERROR: modpost: "regmap_ac97_default_volatile" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
-ERROR: modpost: "__regmap_init_ac97" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
-
-Fixes: 6bbf787bb70c ("ASoC: stac9766: Convert to regmap")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: alsa-devel@alsa-project.org
-Link: https://lore.kernel.org/r/20230701044836.18789-1-rdunlap@infradead.org
+Fixes: aa9ff6a4955f ("ASoC: soc-compress: Reposition and add pcm_mutex")
+Signed-off-by: yixuanjiang <yixuanjiang@google.com>
+Link: https://lore.kernel.org/r/20230619033127.2522477-1-yixuanjiang@google.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Kconfig | 1 +
+ sound/soc/soc-compress.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index 1b50b2d66beb2..3840dd6844974 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -1673,6 +1673,7 @@ config SND_SOC_STA529
- config SND_SOC_STAC9766
- 	tristate
- 	depends on SND_SOC_AC97_BUS
-+	select REGMAP_AC97
- 
- config SND_SOC_STI_SAS
- 	tristate "codec Audio support for STI SAS codec"
+diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
+index d8715db5e415e..2117fd61cf8f3 100644
+--- a/sound/soc/soc-compress.c
++++ b/sound/soc/soc-compress.c
+@@ -194,6 +194,7 @@ static int soc_compr_open_fe(struct snd_compr_stream *cstream)
+ 	snd_soc_dai_compr_shutdown(cpu_dai, cstream, 1);
+ out:
+ 	dpcm_path_put(&list);
++	snd_soc_dpcm_mutex_unlock(fe);
+ be_err:
+ 	fe->dpcm[stream].runtime_update = SND_SOC_DPCM_UPDATE_NO;
+ 	snd_soc_card_mutex_unlock(fe->card);
 -- 
 2.40.1
 
