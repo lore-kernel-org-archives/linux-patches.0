@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9784B1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C8DC433C8;
-	Mon, 11 Sep 2023 14:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8020A1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:12:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18B0C433C7;
+	Mon, 11 Sep 2023 14:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441536;
-	bh=mrjVKdU8NWwFTZWOW4SaoV9ZQPNRQHDVCuqKeAhPOXM=;
+	s=korg; t=1694441539;
+	bh=yIWslXPVhR323JflC16QdGdkHgs0gYFiQ47jHmroDxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W63NjcVwSxWiylLG3ywzGk5jR/TGT9k/D2KHwHXtGyK8+JAySL7s6IIt+QhgLbAnH
-	 AAfQDdXuZmp4d5w1MP2ZuOUgtGa4rjBQap6YfnFX4+V3OCtd0mELWiSTEkFvLgrRE4
-	 vsE/bpsXkO5BnDw6gVMzNiT8PBpJICKp1RcB5fxk=
+	b=QJD9UXUP8tBijlMM9BZ6WFhYnlA8xq9O1purLkPt9XYnwJA8ozGO/16gRuAR4MvZy
+	 iLQtG9hjhmEX4VFuVQM9agriG1LddPc8wmXE7o2OaDviZZDOgjzU7WAk1VeaHAEDol
+	 aLEoLWupCiXw1pyPDW7p1AoUIDvG8IVsZLr2MkEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 430/739] NFSv4.2: Fix READ_PLUS smatch warnings
-Date: Mon, 11 Sep 2023 15:43:49 +0200
-Message-ID: <20230911134703.187202114@linuxfoundation.org>
+Subject: [PATCH 6.5 448/739] pNFS: Fix assignment of xprtdata.cred
+Date: Mon, 11 Sep 2023 15:44:07 +0200
+Message-ID: <20230911134703.676187357@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,46 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-[ Upstream commit bb05a617f06b7a882e19c4f475b8e37f14d9ceac ]
+[ Upstream commit c4a123d2e8c4dc91d581ee7d05c0cd51a0273fab ]
 
-Smatch reports:
-  fs/nfs/nfs42xdr.c:1131 decode_read_plus() warn: missing error code? 'status'
+The comma at the end of the line was leftover from an earlier refactor
+of the _nfs4_pnfs_v3_ds_connect() function. This is technically valid C,
+so the compilers didn't catch it, but if I'm understanding how it works
+correctly it assigns the return value of rpc_clnt_add_xprtr() to
+xprtdata.cred.
 
-Which Dan suggests to fix by doing a hardcoded "return 0" from the
-"if (segments == 0)" check.
-
-Additionally, smatch reports that the "status = -EIO" assignment is not
-used. This patch addresses both these issues.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202305222209.6l5VM2lL-lkp@intel.com/
-Fixes: d3b00a802c845 ("NFS: Replace the READ_PLUS decoding code")
+Reported-by: Olga Kornievskaia <kolga@netapp.com>
+Fixes: a12f996d3413 ("NFSv4/pNFS: Use connections to a DS that are all of the same protocol family")
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42xdr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nfs/pnfs_nfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
-index 95234208dc9ee..d0919c5bf61c7 100644
---- a/fs/nfs/nfs42xdr.c
-+++ b/fs/nfs/nfs42xdr.c
-@@ -1056,13 +1056,12 @@ static int decode_read_plus(struct xdr_stream *xdr, struct nfs_pgio_res *res)
- 	res->eof = be32_to_cpup(p++);
- 	segments = be32_to_cpup(p++);
- 	if (segments == 0)
--		return status;
-+		return 0;
- 
- 	segs = kmalloc_array(segments, sizeof(*segs), GFP_KERNEL);
- 	if (!segs)
- 		return -ENOMEM;
- 
--	status = -EIO;
- 	for (i = 0; i < segments; i++) {
- 		status = decode_read_plus_segment(xdr, &segs[i]);
- 		if (status < 0)
+diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
+index a0112ad4937aa..2e14ce2f82191 100644
+--- a/fs/nfs/pnfs_nfs.c
++++ b/fs/nfs/pnfs_nfs.c
+@@ -943,7 +943,7 @@ static int _nfs4_pnfs_v4_ds_connect(struct nfs_server *mds_srv,
+ 			* Test this address for session trunking and
+ 			* add as an alias
+ 			*/
+-			xprtdata.cred = nfs4_get_clid_cred(clp),
++			xprtdata.cred = nfs4_get_clid_cred(clp);
+ 			rpc_clnt_add_xprt(clp->cl_rpcclient, &xprt_args,
+ 					  rpc_clnt_setup_test_and_add_xprt,
+ 					  &rpcdata);
 -- 
 2.40.1
 
