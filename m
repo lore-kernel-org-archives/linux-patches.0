@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D03C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB0DC433C7;
-	Mon, 11 Sep 2023 13:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5521170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2584C433C7;
+	Mon, 11 Sep 2023 13:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440647;
-	bh=rNy+Pite8bb3hRMkLlH4K1oWTfaGm5oNM/37R0qeLpU=;
+	s=korg; t=1694440650;
+	bh=iswAMcoCAAGBJXZjq2asG4Lp6Q5qFhlNwPnSyXa5psU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T97cVLTuzDaNJg0O2qQq743Ne2zsdgMk7NEKvUrgvEytA82GOObdcujtaATwq1yXr
-	 YW0yev37l9WUt+mveY79zOmfxH3vYOb5Scc4TFVdrxmgRa7NtW8uGEdt0uT2baDyN6
-	 7ZC7NMwCy5P/KfWG5XHQF1Jly87fjTCDDhdIXljI=
+	b=hpAblfExeJGkaUlUiB1rhZllYK3ho4rCISgQ1jXYTPY8Dk6sY0nwDx4owUobsp029
+	 UQorFH+Xwh01Fp8OfL+7XqvZy+7lWARq/rmH8IA+ziQobg3IN0TKcmkrZbNVaAL9qV
+	 N18M8+y2Y+bLDjWMQXiaGRf0Fe7VqLcEmvBiH5Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yu Liao <liaoyu15@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Li Zetao <lizetao1@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 108/739] power: supply: qcom_pmi8998_charger: fix uninitialized variable
-Date: Mon, 11 Sep 2023 15:38:27 +0200
-Message-ID: <20230911134654.115614313@linuxfoundation.org>
+Subject: [PATCH 6.5 109/739] spi: mpc5xxx-psc: Fix unsigned expression compared with zero
+Date: Mon, 11 Sep 2023 15:38:28 +0200
+Message-ID: <20230911134654.145046336@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,44 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Liao <liaoyu15@huawei.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 13a0d1088c8fea1565e30a169188b59bdd77759e ]
+[ Upstream commit de5e92cb5cefd2968b96075995a36e28298edf71 ]
 
-smatch warnings:
-  drivers/power/supply/qcom_pmi8998_charger.c:565 smb2_status_change_work() error: uninitialized symbol 'usb_online'.
+There is two warnings reported by coccinelle:
 
-usb_online is used uninitialized whenever smb2_get_prop_usb_online()
-returns a negative value.
+./drivers/spi/spi-mpc512x-psc.c:493:5-13: WARNING:
+	Unsigned expression compared with zero: mps -> irq     <     0
+./drivers/spi/spi-mpc52xx-psc.c:332:5-13: WARNING:
+	Unsigned expression compared with zero: mps -> irq     <     0
 
-Thus, fix the issue by initializing usb_online to 0.
+The commit "208ee586f862"
+("spi: mpc5xxx-psc: Return immediately if IRQ resource is unavailable")
+was to check whether the IRQ resource is unavailable. When the IRQ
+resource is unavailable, an error code is returned, however, the type
+of "mps->irq" is "unsigned int", causing the error code to flip. Modify
+the type of "mps->irq" to solve this problem.
 
-Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202307280638.556PrzIS-lkp@intel.com/
-Signed-off-by: Yu Liao <liaoyu15@huawei.com>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org
-Link: https://lore.kernel.org/r/20230802023130.2516232-1-liaoyu15@huawei.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 208ee586f862 ("spi: mpc5xxx-psc: Return immediately if IRQ resource is unavailable")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/r/20230803134805.1037251-1-lizetao1@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_pmi8998_charger.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-mpc512x-psc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
-index d16c5ee172496..cac89d233c388 100644
---- a/drivers/power/supply/qcom_pmi8998_charger.c
-+++ b/drivers/power/supply/qcom_pmi8998_charger.c
-@@ -556,7 +556,8 @@ static int smb2_set_current_limit(struct smb2_chip *chip, unsigned int val)
- static void smb2_status_change_work(struct work_struct *work)
- {
- 	unsigned int charger_type, current_ua;
--	int usb_online, count, rc;
-+	int usb_online = 0;
-+	int count, rc;
- 	struct smb2_chip *chip;
+diff --git a/drivers/spi/spi-mpc512x-psc.c b/drivers/spi/spi-mpc512x-psc.c
+index 99aeef28a4774..5cecca1bef026 100644
+--- a/drivers/spi/spi-mpc512x-psc.c
++++ b/drivers/spi/spi-mpc512x-psc.c
+@@ -53,7 +53,7 @@ struct mpc512x_psc_spi {
+ 	int type;
+ 	void __iomem *psc;
+ 	struct mpc512x_psc_fifo __iomem *fifo;
+-	unsigned int irq;
++	int irq;
+ 	u8 bits_per_word;
+ 	u32 mclk_rate;
  
- 	chip = container_of(work, struct smb2_chip, status_change_work.work);
 -- 
 2.40.1
 
