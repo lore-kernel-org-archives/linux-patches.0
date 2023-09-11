@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4A3F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF901C433C7;
-	Mon, 11 Sep 2023 14:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9BF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81135C433C8;
+	Mon, 11 Sep 2023 14:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442758;
-	bh=gpyfLITSOQCcTkSkT2iV2JMNHwdV8cwwUqRhLXCMwxw=;
+	s=korg; t=1694442760;
+	bh=tIMFiffZKRUW3WkZxP46aNBlsfFAhvHkOygP8g4tv8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFROpsvzO22/7o6CMtHP2pUT6poVzGyftGJxVId/btm+BI7bwW8qpV43NS82dIwBX
-	 pGwdFo6dx8vMvFB0IaTaaDg0kApoZQ8gjekhqge1yZOo1sAzvcqcUNofVxZtBh/clU
-	 10Ys6evEqnR8/h24l3Q9Xx0UgW/M4LOd0GtL1Iwk=
+	b=liqlSZO15yYcW8++Q2jOGpnVHQxPTrjlUqZtV3T6IsJnY2w/puIfCD6Ib2xBxKajo
+	 tTEbSXMVhAtlpqXP2u6r4rciFwHPY+2ql72sYVMpnn4QptrkgBCdLJYIB/PM3Q4D8q
+	 RqR8ipjRlnoPkGsY9ITa/LYk84K6iMWn9Z59lxDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sumit Gupta <sumitg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 137/737] cpufreq: powernow-k8: Use related_cpus instead of cpus in driver.exit()
-Date: Mon, 11 Sep 2023 15:39:56 +0200
-Message-ID: <20230911134654.328259024@linuxfoundation.org>
+Subject: [PATCH 6.4 138/737] cpufreq: tegra194: add online/offline hooks
+Date: Mon, 11 Sep 2023 15:39:57 +0200
+Message-ID: <20230911134654.356075505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,36 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 03997da042dac73c69e60d91942c727c76828b65 ]
+[ Upstream commit a3aa97be69a7cc14ddc2bb0add0b9c51cb74bf83 ]
 
-Since the 'cpus' field of policy structure will become empty in the
-cpufreq core API, it is better to use 'related_cpus' in the exit()
-callback of driver.
+Implement the light-weight tear down and bring up helpers to reduce the
+amount of work to do on CPU offline/online operation.
+This change helps to make the hotplugging paths much faster.
 
-Fixes: c3274763bfc3 ("cpufreq: powernow-k8: Initialize per-cpu data-structures properly")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Suggested-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Link: https://lore.kernel.org/lkml/20230816033402.3abmugb5goypvllm@vireshk-i7/
+[ Viresh: Fixed rebase conflict ]
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: de0e85b29edf ("cpufreq: tegra194: remove opp table in exit hook")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/powernow-k8.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/tegra194-cpufreq.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/cpufreq/powernow-k8.c b/drivers/cpufreq/powernow-k8.c
-index d289036beff23..b10f7a1b77f11 100644
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1101,7 +1101,8 @@ static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
- 
- 	kfree(data->powernow_table);
- 	kfree(data);
--	for_each_cpu(cpu, pol->cpus)
-+	/* pol->cpus will be empty here, use related_cpus instead. */
-+	for_each_cpu(cpu, pol->related_cpus)
- 		per_cpu(powernow_data, cpu) = NULL;
- 
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index 36dad5ea59475..4f572eb7842f5 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -508,6 +508,21 @@ static int tegra194_cpufreq_init(struct cpufreq_policy *policy)
  	return 0;
+ }
+ 
++static int tegra194_cpufreq_online(struct cpufreq_policy *policy)
++{
++	/* We did light-weight tear down earlier, nothing to do here */
++	return 0;
++}
++
++static int tegra194_cpufreq_offline(struct cpufreq_policy *policy)
++{
++	/*
++	 * Preserve policy->driver_data and don't free resources on light-weight
++	 * tear down.
++	 */
++	return 0;
++}
++
+ static int tegra194_cpufreq_set_target(struct cpufreq_policy *policy,
+ 				       unsigned int index)
+ {
+@@ -535,6 +550,8 @@ static struct cpufreq_driver tegra194_cpufreq_driver = {
+ 	.target_index = tegra194_cpufreq_set_target,
+ 	.get = tegra194_get_speed,
+ 	.init = tegra194_cpufreq_init,
++	.online = tegra194_cpufreq_online,
++	.offline = tegra194_cpufreq_offline,
+ 	.attr = cpufreq_generic_attr,
+ };
+ 
 -- 
 2.40.1
 
