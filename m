@@ -1,26 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81F54C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02615C433C8;
-	Mon, 11 Sep 2023 14:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D4211706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3171C433CA;
+	Mon, 11 Sep 2023 14:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443855;
-	bh=ZmDsxyGj3dGFp5poXOhr2gzee75iZNrUusikavS+SZs=;
+	s=korg; t=1694443858;
+	bh=udKSbYP3wVvhUEdYIPakGzChRO+pxg48wNgSy+8DnZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V86++AiUpsD8+2JKeZGaDshyL47Ql6hfGmem7X1tX0p+NY8ktvR/zHg7JuNu0zlyl
-	 2v226Q6vFwCCfnTXSRxMBczt9TzJEPfOK2vc8gJAlTMWIQ/T+5/ZdDC8/CrrBX6O9V
-	 BptcvdtfE5uYX1lfCwaEhGfgv4mTQj8JJTzFfdLw=
+	b=1ym9tlPjbsLpmvrpr5y8JxcW5AIaOD0ooYyB/GCglF5IxA+w+EXRcC09nIQoaE04p
+	 y92fVLjdeSzDMPT0jVgNdbfaCi0gY98CwlNLyOpIXRl5WBa3OrWHo0zoWJyk9LMZZq
+	 V1/kWNte+hjjVy7P5S1EQCgiL3x1LT8mA7e9vFX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <chunyan.zhang@unisoc.com>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	Rob Evers <revers@redhat.com>,
+	Johannes Thumshirn <Johannes.Thumshirn@wdc.com>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Jozef Bacik <jobacik@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	GR-QLogic-Storage-Upstream@marvell.com,
+	linux-scsi@vger.kernel.org,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Oleksandr Natalenko <oleksandr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 517/737] serial: sprd: Assign sprd_port after initialized to avoid wrong access
-Date: Mon, 11 Sep 2023 15:46:16 +0200
-Message-ID: <20230911134704.995199236@linuxfoundation.org>
+Subject: [PATCH 6.4 526/737] scsi: qedf: Do not touch __user pointer in qedf_dbg_fp_int_cmd_read() directly
+Date: Mon, 11 Sep 2023 15:46:25 +0200
+Message-ID: <20230911134705.268954907@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,115 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunyan Zhang <chunyan.zhang@unisoc.com>
+From: Oleksandr Natalenko <oleksandr@redhat.com>
 
-[ Upstream commit f9608f1887568b728839d006024585ab02ef29e5 ]
+[ Upstream commit 25dbc20deab5165f847b4eb42f376f725a986ee8 ]
 
-The global pointer 'sprd_port' may not zero when sprd_probe returns
-failure, that is a risk for sprd_port to be accessed afterward, and
-may lead to unexpected errors.
+The qedf_dbg_fp_int_cmd_read() function invokes sprintf() directly on a
+__user pointer, which may crash the kernel.
 
-For example:
+Avoid doing that by vmalloc()'ating a buffer for scnprintf() and then
+calling simple_read_from_buffer() which does a proper copy_to_user() call.
 
-There are two UART ports, UART1 is used for console and configured in
-kernel command line, i.e. "console=";
-
-The UART1 probe failed and the memory allocated to sprd_port[1] was
-released, but sprd_port[1] was not set to NULL;
-
-In UART2 probe, the same virtual address was allocated to sprd_port[2],
-and UART2 probe process finally will go into sprd_console_setup() to
-register UART1 as console since it is configured as preferred console
-(filled to console_cmdline[]), but the console parameters (sprd_port[1])
-belong to UART2.
-
-So move the sprd_port[] assignment to where the port already initialized
-can avoid the above issue.
-
-Fixes: b7396a38fb28 ("tty/serial: Add Spreadtrum sc9836-uart driver support")
-Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
-Link: https://lore.kernel.org/r/20230725064053.235448-1-chunyan.zhang@unisoc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
+Link: https://lore.kernel.org/lkml/20230724120241.40495-1-oleksandr@redhat.com/
+Link: https://lore.kernel.org/linux-scsi/20230726101236.11922-1-skashyap@marvell.com/
+Cc: Saurav Kashyap <skashyap@marvell.com>
+Cc: Rob Evers <revers@redhat.com>
+Cc: Johannes Thumshirn <Johannes.Thumshirn@wdc.com>
+Cc: David Laight <David.Laight@ACULAB.COM>
+Cc: Jozef Bacik <jobacik@redhat.com>
+Cc: Laurence Oberman <loberman@redhat.com>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: GR-QLogic-Storage-Upstream@marvell.com
+Cc: linux-scsi@vger.kernel.org
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Tested-by: Laurence Oberman <loberman@redhat.com>
+Acked-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
+Link: https://lore.kernel.org/r/20230731084034.37021-4-oleksandr@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sprd_serial.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/scsi/qedf/qedf_dbg.h     |  2 ++
+ drivers/scsi/qedf/qedf_debugfs.c | 21 +++++++++++++++------
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
-index b58f51296ace2..fc1377029021b 100644
---- a/drivers/tty/serial/sprd_serial.c
-+++ b/drivers/tty/serial/sprd_serial.c
-@@ -1106,7 +1106,7 @@ static bool sprd_uart_is_console(struct uart_port *uport)
- static int sprd_clk_init(struct uart_port *uport)
- {
- 	struct clk *clk_uart, *clk_parent;
--	struct sprd_uart_port *u = sprd_port[uport->line];
-+	struct sprd_uart_port *u = container_of(uport, struct sprd_uart_port, port);
+diff --git a/drivers/scsi/qedf/qedf_dbg.h b/drivers/scsi/qedf/qedf_dbg.h
+index f4d81127239eb..5ec2b817c694a 100644
+--- a/drivers/scsi/qedf/qedf_dbg.h
++++ b/drivers/scsi/qedf/qedf_dbg.h
+@@ -59,6 +59,8 @@ extern uint qedf_debug;
+ #define QEDF_LOG_NOTICE	0x40000000	/* Notice logs */
+ #define QEDF_LOG_WARN		0x80000000	/* Warning logs */
  
- 	clk_uart = devm_clk_get(uport->dev, "uart");
- 	if (IS_ERR(clk_uart)) {
-@@ -1149,22 +1149,22 @@ static int sprd_probe(struct platform_device *pdev)
- {
- 	struct resource *res;
- 	struct uart_port *up;
-+	struct sprd_uart_port *sport;
- 	int irq;
- 	int index;
- 	int ret;
++#define QEDF_DEBUGFS_LOG_LEN (2 * PAGE_SIZE)
++
+ /* Debug context structure */
+ struct qedf_dbg_ctx {
+ 	unsigned int host_no;
+diff --git a/drivers/scsi/qedf/qedf_debugfs.c b/drivers/scsi/qedf/qedf_debugfs.c
+index 1c5716540e465..451fd236bfd05 100644
+--- a/drivers/scsi/qedf/qedf_debugfs.c
++++ b/drivers/scsi/qedf/qedf_debugfs.c
+@@ -8,6 +8,7 @@
+ #include <linux/uaccess.h>
+ #include <linux/debugfs.h>
+ #include <linux/module.h>
++#include <linux/vmalloc.h>
  
- 	index = of_alias_get_id(pdev->dev.of_node, "serial");
--	if (index < 0 || index >= ARRAY_SIZE(sprd_port)) {
-+	if (index < 0 || index >= UART_NR_MAX) {
- 		dev_err(&pdev->dev, "got a wrong serial alias id %d\n", index);
- 		return -EINVAL;
+ #include "qedf.h"
+ #include "qedf_dbg.h"
+@@ -98,7 +99,9 @@ static ssize_t
+ qedf_dbg_fp_int_cmd_read(struct file *filp, char __user *buffer, size_t count,
+ 			 loff_t *ppos)
+ {
++	ssize_t ret;
+ 	size_t cnt = 0;
++	char *cbuf;
+ 	int id;
+ 	struct qedf_fastpath *fp = NULL;
+ 	struct qedf_dbg_ctx *qedf_dbg =
+@@ -108,19 +111,25 @@ qedf_dbg_fp_int_cmd_read(struct file *filp, char __user *buffer, size_t count,
+ 
+ 	QEDF_INFO(qedf_dbg, QEDF_LOG_DEBUGFS, "entered\n");
+ 
+-	cnt = sprintf(buffer, "\nFastpath I/O completions\n\n");
++	cbuf = vmalloc(QEDF_DEBUGFS_LOG_LEN);
++	if (!cbuf)
++		return 0;
++
++	cnt += scnprintf(cbuf + cnt, QEDF_DEBUGFS_LOG_LEN - cnt, "\nFastpath I/O completions\n\n");
+ 
+ 	for (id = 0; id < qedf->num_queues; id++) {
+ 		fp = &(qedf->fp_array[id]);
+ 		if (fp->sb_id == QEDF_SB_ID_NULL)
+ 			continue;
+-		cnt += sprintf((buffer + cnt), "#%d: %lu\n", id,
+-			       fp->completions);
++		cnt += scnprintf(cbuf + cnt, QEDF_DEBUGFS_LOG_LEN - cnt,
++				 "#%d: %lu\n", id, fp->completions);
  	}
  
--	sprd_port[index] = devm_kzalloc(&pdev->dev, sizeof(*sprd_port[index]),
--					GFP_KERNEL);
--	if (!sprd_port[index])
-+	sport = devm_kzalloc(&pdev->dev, sizeof(*sport), GFP_KERNEL);
-+	if (!sport)
- 		return -ENOMEM;
- 
--	up = &sprd_port[index]->port;
-+	up = &sport->port;
- 	up->dev = &pdev->dev;
- 	up->line = index;
- 	up->type = PORT_SPRD;
-@@ -1195,7 +1195,7 @@ static int sprd_probe(struct platform_device *pdev)
- 	 * Allocate one dma buffer to prepare for receive transfer, in case
- 	 * memory allocation failure at runtime.
- 	 */
--	ret = sprd_rx_alloc_buf(sprd_port[index]);
-+	ret = sprd_rx_alloc_buf(sport);
- 	if (ret)
- 		return ret;
- 
-@@ -1206,14 +1206,23 @@ static int sprd_probe(struct platform_device *pdev)
- 			return ret;
- 		}
- 	}
+-	cnt = min_t(int, count, cnt - *ppos);
+-	*ppos += cnt;
+-	return cnt;
++	ret = simple_read_from_buffer(buffer, count, ppos, cbuf, cnt);
 +
- 	sprd_ports_num++;
-+	sprd_port[index] = sport;
- 
- 	ret = uart_add_one_port(&sprd_uart_driver, up);
- 	if (ret)
--		sprd_remove(pdev);
-+		goto clean_port;
- 
- 	platform_set_drvdata(pdev, up);
- 
-+	return 0;
++	vfree(cbuf);
 +
-+clean_port:
-+	sprd_port[index] = NULL;
-+	if (--sprd_ports_num == 0)
-+		uart_unregister_driver(&sprd_uart_driver);
-+	sprd_rx_free_buf(sport);
- 	return ret;
++	return ret;
  }
  
+ static ssize_t
 -- 
 2.40.1
 
