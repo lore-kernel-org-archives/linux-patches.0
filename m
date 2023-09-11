@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE1F11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB24C433C8;
-	Mon, 11 Sep 2023 15:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4A511706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF767C433C8;
+	Mon, 11 Sep 2023 15:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444563;
-	bh=f5MTWx4+KxIor/GEt8KFBn6SP3bpqjTLNGZhbOYFPU8=;
+	s=korg; t=1694444566;
+	bh=8/miCyw6MFTBO4OXy+eS7Y72BjtwUgpaOAWN8mtIS6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EckRQ5i8J+NiT7QZeDsE16Bk6A7jYE+X5NdGbgGpQnhPqlwtqi+N/BDCLFOCrPLeM
-	 loH8VBz3Ovro1HwiLhK6EuB9QL8F3TWriUv4/ZMBoMM3CQ/VudOUeb2TFD0aQ9wvFg
-	 t2JnNytAtzQrCpPWU/Lb6ocnCnf+FLtkXDWCstPE=
+	b=kFHNWoWRI8684IBMbH9k9c7C2euxLObaW5qxK+VDi3cJP6rzIjj2p+YqDWwYNkNMx
+	 VOEvKrJWThraOZ3xbmOoIFx4zWBcNQsqTlU8wyfSNXsPPzeXX+rG9mjYyx8CCDJLNm
+	 AW3dz1e6Mzx2Rr8tv0ToQUCpOHXcqVEn4+y2bwm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 019/600] ksmbd: fix out of bounds in init_smb2_rsp_hdr()
-Date: Mon, 11 Sep 2023 15:40:52 +0200
-Message-ID: <20230911134634.182889121@linuxfoundation.org>
+	Kristian Angelov <kristiana2000@abv.bg>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 037/600] platform/x86: asus-wmi: Fix setting RGB mode on some TUF laptops
+Date: Mon, 11 Sep 2023 15:41:10 +0200
+Message-ID: <20230911134634.695363646@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,105 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Kristian Angelov <kristiana2000@abv.bg>
 
-[ Upstream commit 536bb492d39bb6c080c92f31e8a55fe9934f452b ]
+[ Upstream commit 6a758a3e831ce1a84c9c209ac6dc755f4c8ce77a ]
 
-If client send smb2 negotiate request and then send smb1 negotiate
-request, init_smb2_rsp_hdr is called for smb1 negotiate request since
-need_neg is set to false. This patch ignore smb1 packets after ->need_neg
-is set to false.
+This patch fixes setting the cmd values to 0xb3 and 0xb4.
+This is necessary on some TUF laptops in order to set the RGB mode.
 
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21541
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Closes: https://lore.kernel.org/platform-driver-x86/443078148.491022.1677576298133@nm83.abv.bg
+Signed-off-by: Kristian Angelov <kristiana2000@abv.bg>
+Reviewed-by: Luke D. Jones <luke@ljones.dev>
+Link: https://lore.kernel.org/r/ZLlS7o6UdTUBkyqa@wyvern.localdomain
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/server.c     |  7 ++++++-
- fs/smb/server/smb_common.c | 19 +++++++++++--------
- fs/smb/server/smb_common.h |  2 +-
- 3 files changed, 18 insertions(+), 10 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index 847ee62afb8a1..9804cabe72a84 100644
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -286,6 +286,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
- static int queue_ksmbd_work(struct ksmbd_conn *conn)
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 02bf286924183..36effe04c6f33 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -738,13 +738,23 @@ static ssize_t kbd_rgb_mode_store(struct device *dev,
+ 				 struct device_attribute *attr,
+ 				 const char *buf, size_t count)
  {
- 	struct ksmbd_work *work;
-+	int err;
+-	u32 cmd, mode, r, g,  b,  speed;
++	u32 cmd, mode, r, g, b, speed;
+ 	int err;
  
- 	work = ksmbd_alloc_work_struct();
- 	if (!work) {
-@@ -297,7 +298,11 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
- 	work->request_buf = conn->request_buf;
- 	conn->request_buf = NULL;
+ 	if (sscanf(buf, "%d %d %d %d %d %d", &cmd, &mode, &r, &g, &b, &speed) != 6)
+ 		return -EINVAL;
  
--	ksmbd_init_smb_server(work);
-+	err = ksmbd_init_smb_server(work);
-+	if (err) {
-+		ksmbd_free_work_struct(work);
-+		return 0;
+-	cmd = !!cmd;
++	/* B3 is set and B4 is save to BIOS */
++	switch (cmd) {
++	case 0:
++		cmd = 0xb3;
++		break;
++	case 1:
++		cmd = 0xb4;
++		break;
++	default:
++		return -EINVAL;
 +	}
  
- 	ksmbd_conn_enqueue_request(work);
- 	atomic_inc(&conn->r_count);
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index d937e2f45c829..a4421d9458d90 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -388,26 +388,29 @@ static struct smb_version_cmds smb1_server_cmds[1] = {
- 	[SMB_COM_NEGOTIATE_EX]	= { .proc = smb1_negotiate, },
- };
- 
--static void init_smb1_server(struct ksmbd_conn *conn)
-+static int init_smb1_server(struct ksmbd_conn *conn)
- {
- 	conn->ops = &smb1_server_ops;
- 	conn->cmds = smb1_server_cmds;
- 	conn->max_cmds = ARRAY_SIZE(smb1_server_cmds);
-+	return 0;
- }
- 
--void ksmbd_init_smb_server(struct ksmbd_work *work)
-+int ksmbd_init_smb_server(struct ksmbd_work *work)
- {
- 	struct ksmbd_conn *conn = work->conn;
- 	__le32 proto;
- 
--	if (conn->need_neg == false)
--		return;
--
- 	proto = *(__le32 *)((struct smb_hdr *)work->request_buf)->Protocol;
-+	if (conn->need_neg == false) {
-+		if (proto == SMB1_PROTO_NUMBER)
-+			return -EINVAL;
-+		return 0;
-+	}
-+
- 	if (proto == SMB1_PROTO_NUMBER)
--		init_smb1_server(conn);
--	else
--		init_smb3_11_server(conn);
-+		return init_smb1_server(conn);
-+	return init_smb3_11_server(conn);
- }
- 
- int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
-diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
-index e63d2a4f466b5..1cbb492cdefec 100644
---- a/fs/smb/server/smb_common.h
-+++ b/fs/smb/server/smb_common.h
-@@ -427,7 +427,7 @@ bool ksmbd_smb_request(struct ksmbd_conn *conn);
- 
- int ksmbd_lookup_dialect_by_id(__le16 *cli_dialects, __le16 dialects_count);
- 
--void ksmbd_init_smb_server(struct ksmbd_work *work);
-+int ksmbd_init_smb_server(struct ksmbd_work *work);
- 
- struct ksmbd_kstat;
- int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work,
+ 	/* These are the known usable modes across all TUF/ROG */
+ 	if (mode >= 12 || mode == 9)
 -- 
 2.40.1
 
