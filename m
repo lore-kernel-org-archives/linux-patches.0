@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115D611710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B82C433C7;
-	Mon, 11 Sep 2023 15:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EE611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACCAC433C8;
+	Mon, 11 Sep 2023 15:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446092;
-	bh=Fm5EDDl58w4KeKRQDYtt623KkF51ZIgboKA3jssPIfg=;
+	s=korg; t=1694446095;
+	bh=vEms9kRf7P3/qYCV2kvDt+PSXdP++XMZe4RgahDR9cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIkkUHR1gWo3ydui2S24zAFtUP2J/9Bft5xNsJoVQ0o5bId+xGFNgtjgo8MWsRgSS
-	 OyV8VgbG86i8+6daq1DPpsKkmW9z5YoOVQ/0t3JLixXiqdnb9fJxzKoNvcolMmTSy/
-	 YC1PCKqKwSpaEEvEPPDcI+axq2+C7ly4q4XAN9lk=
+	b=UsLctLe+dFczCGzMdMXlHtXm0+rq1tGGFxnrna9wqhB+orm89ZEV9NHNatn5nLxQZ
+	 0ECqi5x2QuDB8TbhQoeK6Ssvj2AAHr8utj3lwxD50fjfILv6ej/2d/jCIuRTc46rDB
+	 n/OUJm2/YXjirRt1lme2gOtFmXQguRk5E3re++G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 572/600] mmc: renesas_sdhi: register irqs before registering controller
-Date: Mon, 11 Sep 2023 15:50:05 +0200
-Message-ID: <20230911134650.497422822@linuxfoundation.org>
+	RD Babiera <rdbabiera@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 581/600] usb: typec: tcpm: set initial svdm version based on pd revision
+Date: Mon, 11 Sep 2023 15:50:14 +0200
+Message-ID: <20230911134650.770766936@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,58 +39,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: RD Babiera <rdbabiera@google.com>
 
-commit 74f45de394d979cc7770271f92fafa53e1ed3119 upstream.
+commit c97cd0b4b54eb42aed7f6c3c295a2d137f6d2416 upstream.
 
-IRQs should be ready to serve when we call mmc_add_host() via
-tmio_mmc_host_probe(). To achieve that, ensure that all irqs are masked
-before registering the handlers.
+When sending Discover Identity messages to a Port Partner that uses Power
+Delivery v2 and SVDM v1, we currently send PD v2 messages with SVDM v2.0,
+expecting the port partner to respond with its highest supported SVDM
+version as stated in Section 6.4.4.2.3 in the Power Delivery v3
+specification. However, sending SVDM v2 to some Power Delivery v2 port
+partners results in a NAK whereas sending SVDM v1 does not.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+NAK messages can be handled by the initiator (PD v3 section 6.4.4.2.5.1),
+and one solution could be to resend Discover Identity on a lower SVDM
+version if possible. But, Section 6.4.4.3 of PD v2 states that "A NAK
+response Should be taken as an indication not to retry that particular
+Command."
+
+Instead, we can set the SVDM version to the maximum one supported by the
+negotiated PD revision. When operating in PD v2, this obeys Section
+6.4.4.2.3, which states the SVDM field "Shall be set to zero to indicate
+Version 1.0." In PD v3, the SVDM field "Shall be set to 01b to indicate
+Version 2.0."
+
+Fixes: c34e85fa69b9 ("usb: typec: tcpm: Send DISCOVER_IDENTITY from dedicated work")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230712140011.18602-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230731165926.1815338-1-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |   35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -1006,6 +1006,8 @@ int renesas_sdhi_probe(struct platform_d
- 		host->sdcard_irq_setbit_mask = TMIO_STAT_ALWAYS_SET_27;
- 		host->sdcard_irq_mask_all = TMIO_MASK_ALL_RCAR2;
- 		host->reset = renesas_sdhi_reset;
-+	} else {
-+		host->sdcard_irq_mask_all = TMIO_MASK_ALL;
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -3929,6 +3929,29 @@ static enum typec_cc_status tcpm_pwr_opm
  	}
+ }
  
- 	/* Orginally registers were 16 bit apart, could be 32 or 64 nowadays */
-@@ -1102,9 +1104,7 @@ int renesas_sdhi_probe(struct platform_d
- 		host->ops.hs400_complete = renesas_sdhi_hs400_complete;
- 	}
- 
--	ret = tmio_mmc_host_probe(host);
--	if (ret < 0)
--		goto edisclk;
-+	sd_ctrl_write32_as_16_and_16(host, CTL_IRQ_MASK, host->sdcard_irq_mask_all);
- 
- 	num_irqs = platform_irq_count(pdev);
- 	if (num_irqs < 0) {
-@@ -1131,6 +1131,10 @@ int renesas_sdhi_probe(struct platform_d
- 			goto eirq;
- 	}
- 
-+	ret = tmio_mmc_host_probe(host);
-+	if (ret < 0)
-+		goto edisclk;
++static void tcpm_set_initial_svdm_version(struct tcpm_port *port)
++{
++	switch (port->negotiated_rev) {
++	case PD_REV30:
++		break;
++	/*
++	 * 6.4.4.2.3 Structured VDM Version
++	 * 2.0 states "At this time, there is only one version (1.0) defined.
++	 * This field Shall be set to zero to indicate Version 1.0."
++	 * 3.0 states "This field Shall be set to 01b to indicate Version 2.0."
++	 * To ensure that we follow the Power Delivery revision we are currently
++	 * operating on, downgrade the SVDM version to the highest one supported
++	 * by the Power Delivery revision.
++	 */
++	case PD_REV20:
++		typec_partner_set_svdm_version(port->partner, SVDM_VER_1_0);
++		break;
++	default:
++		typec_partner_set_svdm_version(port->partner, SVDM_VER_1_0);
++		break;
++	}
++}
 +
- 	dev_info(&pdev->dev, "%s base at %pa, max clock rate %u MHz\n",
- 		 mmc_hostname(host->mmc), &res->start, host->mmc->f_max / 1000000);
+ static void run_state_machine(struct tcpm_port *port)
+ {
+ 	int ret;
+@@ -4153,10 +4176,12 @@ static void run_state_machine(struct tcp
+ 		 * For now, this driver only supports SOP for DISCOVER_IDENTITY, thus using
+ 		 * port->explicit_contract to decide whether to send the command.
+ 		 */
+-		if (port->explicit_contract)
++		if (port->explicit_contract) {
++			tcpm_set_initial_svdm_version(port);
+ 			mod_send_discover_delayed_work(port, 0);
+-		else
++		} else {
+ 			port->send_discover = false;
++		}
  
+ 		/*
+ 		 * 6.3.5
+@@ -4439,10 +4464,12 @@ static void run_state_machine(struct tcp
+ 		 * For now, this driver only supports SOP for DISCOVER_IDENTITY, thus using
+ 		 * port->explicit_contract.
+ 		 */
+-		if (port->explicit_contract)
++		if (port->explicit_contract) {
++			tcpm_set_initial_svdm_version(port);
+ 			mod_send_discover_delayed_work(port, 0);
+-		else
++		} else {
+ 			port->send_discover = false;
++		}
+ 
+ 		power_supply_changed(port->psy);
+ 		break;
 
 
