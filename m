@@ -1,94 +1,210 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD17811706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:46:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C17C433C9;
-	Mon, 11 Sep 2023 14:46:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1694443575;
-	bh=Yjy7YKH01ftiFG/yiJlX3AH4v3ZdRvafhPr0P1WBvSg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MID2frJC39GI+1A4q24BA3/gwjo7O6Eomiz5WGAeBJJRuHYkpqc1J+/M9xrf8kIzk
-	 JwGofPvfE13r7LIc8zjvY2nmSghts9r80HkJpNwEC0unxnK5Z8hhyHjoSEkVDb+2fX
-	 H0GEJ/kSaar2Yu9xN2aGqjIy1V1JDnP/zXprhSKRImTqTzUnzx4iXCNP5jUCXfAifA
-	 JvHqJGrpG3tyYUmb0uPXQEuay1oI+CabdN3MWAiu+Vn05yGpm1BXv+q4JUY73y2DNV
-	 x1LWnLfGT3v9jZZO2mFjK296jYd0KyVPWb6GiD7/+0fEIDiHN0AzeCF/ZYLvxnamgg
-	 i8GkyXw2sEt8Q==
-Date: Mon, 11 Sep 2023 15:46:11 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE5811715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:46:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE99C433CC;
+	Mon, 11 Sep 2023 14:46:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1694443576;
+	bh=PuKbteQEmQEb5tkmS3G4q3CBS+mNkwoW/OCalpPgHvg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=q38s0yhcjpiHxrV9Xov+sDT8HPnnomVSdyJ3iZUjq9o8x7W+8lWanGzEQ97zQgsN9
+	 QU8Lj3aerF+mXZd7E66SVpdi31okY52TzObsVaTeOXNNOu76SbK95uVvaofb5Z8Wps
+	 RKUyEW2cTGHp2aOTuof9WN0ulv5EhbLy+1UWL/Qw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.5 364/739] ASoC: soc-dai.h: merge DAI call back
- functions into ops
-Message-ID: <ZP8oM04ucZJkxXCS@finisterre.sirena.org.uk>
-References: <20230911134650.921299741@linuxfoundation.org>
- <20230911134701.316565214@linuxfoundation.org>
+Subject: [PATCH 6.4 397/737] blk-cgroup: Fix NULL deref caused by blkg_policy_data being installed before init
+Date: Mon, 11 Sep 2023 15:44:16 +0200
+Message-ID: <20230911134701.689112298@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
+References: <20230911134650.286315610@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uXgq1JfM9v+Ln2ex"
-Content-Disposition: inline
-In-Reply-To: <20230911134701.316565214@linuxfoundation.org>
-X-Cookie: Save energy:  Drive a smaller shell.
+Content-Transfer-Encoding: 8bit
+
+6.4-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Tejun Heo <tj@kernel.org>
+
+[ Upstream commit ec14a87ee1999b19d8b7ed0fa95fea80644624ae ]
+
+blk-iocost sometimes causes the following crash:
+
+  BUG: kernel NULL pointer dereference, address: 00000000000000e0
+  ...
+  RIP: 0010:_raw_spin_lock+0x17/0x30
+  Code: be 01 02 00 00 e8 79 38 39 ff 31 d2 89 d0 5d c3 0f 1f 00 0f 1f 44 00 00 55 48 89 e5 65 ff 05 48 d0 34 7e b9 01 00 00 00 31 c0 <f0> 0f b1 0f 75 02 5d c3 89 c6 e8 ea 04 00 00 5d c3 0f 1f 84 00 00
+  RSP: 0018:ffffc900023b3d40 EFLAGS: 00010046
+  RAX: 0000000000000000 RBX: 00000000000000e0 RCX: 0000000000000001
+  RDX: ffffc900023b3d20 RSI: ffffc900023b3cf0 RDI: 00000000000000e0
+  RBP: ffffc900023b3d40 R08: ffffc900023b3c10 R09: 0000000000000003
+  R10: 0000000000000064 R11: 000000000000000a R12: ffff888102337000
+  R13: fffffffffffffff2 R14: ffff88810af408c8 R15: ffff8881070c3600
+  FS:  00007faaaf364fc0(0000) GS:ffff88842fdc0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00000000000000e0 CR3: 00000001097b1000 CR4: 0000000000350ea0
+  Call Trace:
+   <TASK>
+   ioc_weight_write+0x13d/0x410
+   cgroup_file_write+0x7a/0x130
+   kernfs_fop_write_iter+0xf5/0x170
+   vfs_write+0x298/0x370
+   ksys_write+0x5f/0xb0
+   __x64_sys_write+0x1b/0x20
+   do_syscall_64+0x3d/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+This happens because iocg->ioc is NULL. The field is initialized by
+ioc_pd_init() and never cleared. The NULL deref is caused by
+blkcg_activate_policy() installing blkg_policy_data before initializing it.
+
+blkcg_activate_policy() was doing the following:
+
+1. Allocate pd's for all existing blkg's and install them in blkg->pd[].
+2. Initialize all pd's.
+3. Online all pd's.
+
+blkcg_activate_policy() only grabs the queue_lock and may release and
+re-acquire the lock as allocation may need to sleep. ioc_weight_write()
+grabs blkcg->lock and iterates all its blkg's. The two can race and if
+ioc_weight_write() runs during #1 or between #1 and #2, it can encounter a
+pd which is not initialized yet, leading to crash.
+
+The crash can be reproduced with the following script:
+
+  #!/bin/bash
+
+  echo +io > /sys/fs/cgroup/cgroup.subtree_control
+  systemd-run --unit touch-sda --scope dd if=/dev/sda of=/dev/null bs=1M count=1 iflag=direct
+  echo 100 > /sys/fs/cgroup/system.slice/io.weight
+  bash -c "echo '8:0 enable=1' > /sys/fs/cgroup/io.cost.qos" &
+  sleep .2
+  echo 100 > /sys/fs/cgroup/system.slice/io.weight
+
+with the following patch applied:
+
+> diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+> index fc49be622e05..38d671d5e10c 100644
+> --- a/block/blk-cgroup.c
+> +++ b/block/blk-cgroup.c
+> @@ -1553,6 +1553,12 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+> 		pd->online = false;
+> 	}
+>
+> +       if (system_state == SYSTEM_RUNNING) {
+> +               spin_unlock_irq(&q->queue_lock);
+> +               ssleep(1);
+> +               spin_lock_irq(&q->queue_lock);
+> +       }
+> +
+> 	/* all allocated, init in the same order */
+> 	if (pol->pd_init_fn)
+> 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
+
+I don't see a reason why all pd's should be allocated, initialized and
+onlined together. The only ordering requirement is that parent blkgs to be
+initialized and onlined before children, which is guaranteed from the
+walking order. Let's fix the bug by allocating, initializing and onlining pd
+for each blkg and holding blkcg->lock over initialization and onlining. This
+ensures that an installed blkg is always fully initialized and onlined
+removing the the race window.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Fixes: 9d179b865449 ("blkcg: Fix multiple bugs in blkcg_activate_policy()")
+Link: https://lore.kernel.org/r/ZN0p5_W-Q9mAHBVY@slm.duckdns.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ block/blk-cgroup.c | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
+
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 9faafcd10e177..4a42ea2972ad8 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1511,7 +1511,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ retry:
+ 	spin_lock_irq(&q->queue_lock);
+ 
+-	/* blkg_list is pushed at the head, reverse walk to allocate parents first */
++	/* blkg_list is pushed at the head, reverse walk to initialize parents first */
+ 	list_for_each_entry_reverse(blkg, &q->blkg_list, q_node) {
+ 		struct blkg_policy_data *pd;
+ 
+@@ -1549,21 +1549,20 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ 				goto enomem;
+ 		}
+ 
+-		blkg->pd[pol->plid] = pd;
++		spin_lock(&blkg->blkcg->lock);
++
+ 		pd->blkg = blkg;
+ 		pd->plid = pol->plid;
+-		pd->online = false;
+-	}
++		blkg->pd[pol->plid] = pd;
+ 
+-	/* all allocated, init in the same order */
+-	if (pol->pd_init_fn)
+-		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
+-			pol->pd_init_fn(blkg->pd[pol->plid]);
++		if (pol->pd_init_fn)
++			pol->pd_init_fn(pd);
+ 
+-	list_for_each_entry_reverse(blkg, &q->blkg_list, q_node) {
+ 		if (pol->pd_online_fn)
+-			pol->pd_online_fn(blkg->pd[pol->plid]);
+-		blkg->pd[pol->plid]->online = true;
++			pol->pd_online_fn(pd);
++		pd->online = true;
++
++		spin_unlock(&blkg->blkcg->lock);
+ 	}
+ 
+ 	__set_bit(pol->plid, q->blkcg_pols);
+@@ -1580,14 +1579,19 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ 	return ret;
+ 
+ enomem:
+-	/* alloc failed, nothing's initialized yet, free everything */
++	/* alloc failed, take down everything */
+ 	spin_lock_irq(&q->queue_lock);
+ 	list_for_each_entry(blkg, &q->blkg_list, q_node) {
+ 		struct blkcg *blkcg = blkg->blkcg;
++		struct blkg_policy_data *pd;
+ 
+ 		spin_lock(&blkcg->lock);
+-		if (blkg->pd[pol->plid]) {
+-			pol->pd_free_fn(blkg->pd[pol->plid]);
++		pd = blkg->pd[pol->plid];
++		if (pd) {
++			if (pd->online && pol->pd_offline_fn)
++				pol->pd_offline_fn(pd);
++			pd->online = false;
++			pol->pd_free_fn(pd);
+ 			blkg->pd[pol->plid] = NULL;
+ 		}
+ 		spin_unlock(&blkcg->lock);
+-- 
+2.40.1
 
 
---uXgq1JfM9v+Ln2ex
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 11, 2023 at 03:42:43PM +0200, Greg Kroah-Hartman wrote:
-> 6.5-stable review patch.  If anyone has any objections, please let me kno=
-w.
->=20
-> ------------------
->=20
-> From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
->=20
-> [ Upstream commit 3e8bcec0787d1a73703c915c31cb00a2fd18ccbf ]
->=20
-> snd_soc_dai_driver has .ops for call back functions (A), but it also
-> has other call back functions (B). It is duplicated and confusable.
-
-
-> Signed-off-by: Mark Brown <broonie@kernel.org>
-> Stable-dep-of: 5e5f68ca836e ("ASoC: fsl: merge DAI call back functions in=
-to ops")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
-
-This is a code refactoring.  It is obviously not suitable for stable,
-it's not even a warning fix or anything - just a refactoring.  You've
-marked it as a dependency of another patch which is doing the
-refactoring in a specific driver which obviously shouldn't be being
-backported either.
-
-To repeat what I said the other day in response to the other wildly
-inappropriate backports (one was an entirely new driver...) I thought
-that there was supposed to be some manual review of the patches being
-included in stable prior to them being sent out.  How on earth are
-things like this getting as far as being even proposed for stable?
-
---uXgq1JfM9v+Ln2ex
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmT/KDMACgkQJNaLcl1U
-h9DBegf/bXtt/AFhswkVETM96dsafrYZEURjfGHLg00kg5CrG9dkJqF+BeYPx0Js
-1MCwyRS4gXU2BSj4MSVkRHQfQGuTbwTqOr3n/rE0emeOqQv+CHhOYDFkOBaKj1ki
-rr2HqToTtdRd4V+5K0Yf6a7157ritUrG2XSfTLrmptRsCfLgGf/37K8w1/sRqXnJ
-6xsmUtMSbQwBDstSuEIjT32gFn4Z9Csx709pFv8uCS7cpxoLuPfMyRwlanvUhRke
-4iJNHt5ZImRZc1gMBupKlz9jcMOCUEFPVNPbref+PYNlRzbQtfYJ8bnduGkdXGTq
-7IDJa3ROD2Wx0gUfc27M4jrxPHE0hQ==
-=AIrR
------END PGP SIGNATURE-----
-
---uXgq1JfM9v+Ln2ex--
