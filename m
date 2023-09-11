@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AAC11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B88C433C9;
-	Mon, 11 Sep 2023 15:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0682E11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A60DC433C7;
+	Mon, 11 Sep 2023 15:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445691;
-	bh=VdCOEZVsrUEH8b48GhUb+mKrAddOcLNQeYTcyJMUb18=;
+	s=korg; t=1694445693;
+	bh=lRGXfnRYhomqShq3n9dHOWPYwR7azhLiuCQGnXKaXZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wMVW+FURmrtRDGTaRnErB8BiJ+JH9SM3kwiFcfKmfeqlAgXS0ehjWVe2IiSnQy4DS
-	 yjcdSb+PtidUKlomnvAg4zG/LjFH3HAqX0/mEIsmUz2rSaSp25DriFkVXeE96uM/jn
-	 N2rs2+EybYYu5YrSCO++o7dx3AjACtelT5nC8NV0=
+	b=a81Bw4+48XF4J0k2lVsp10Y2K4IE7CAP4X9SB+/czmi0J+wdeTxbroYW5fFJNkGNh
+	 KHEM24dRd+cQ+98CrFuS0J87vvBAZZgan9QrL/HzibbLu3eJYXH+7QK/vWD2ANSctg
+	 0cMKmWFKGnGqQGMW2LxlD+1TI+R5Jhs5mQtAjO10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 438/600] driver core: Call dma_cleanup() on the test_remove path
-Date: Mon, 11 Sep 2023 15:47:51 +0200
-Message-ID: <20230911134646.580663727@linuxfoundation.org>
+Subject: [PATCH 6.1 439/600] kernfs: add stub helper for kernfs_generic_poll()
+Date: Mon, 11 Sep 2023 15:47:52 +0200
+Message-ID: <20230911134646.609489371@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,43 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f429378a9bf84d79a7e2cae05d2e3384cf7d68ba ]
+[ Upstream commit 79038a99445f69c5d28494dd4f8c6f0509f65b2e ]
 
-When test_remove is enabled really_probe() does not properly pair
-dma_configure() with dma_remove(), it will end up calling dma_configure()
-twice. This corrupts the owner_cnt and renders the group unusable with
-VFIO/etc.
+In some randconfig builds, kernfs ends up being disabled, so there is no prototype
+for kernfs_generic_poll()
 
-Add the missing cleanup before going back to re_probe.
+In file included from kernel/sched/build_utility.c:97:
+kernel/sched/psi.c:1479:3: error: implicit declaration of function 'kernfs_generic_poll' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+                kernfs_generic_poll(t->of, wait);
+                ^
 
-Fixes: 25f3bcfc54bc ("driver core: Add dma_cleanup callback in bus_type")
-Reported-by: Zenghui Yu <yuzenghui@huawei.com>
-Tested-by: Zenghui Yu <yuzenghui@huawei.com>
-Closes: https://lore.kernel.org/all/6472f254-c3c4-8610-4a37-8d9dfdd54ce8@huawei.com/
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/0-v2-4deed94e283e+40948-really_probe_dma_cleanup_jgg@nvidia.com
+Add a stub helper for it, as we have it for other kernfs functions.
+
+Fixes: aff037078ecae ("sched/psi: use kernfs polling functions for PSI trigger polling")
+Fixes: 147e1a97c4a0b ("fs: kernfs: add poll file operation")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Chengming Zhou <zhouchengming@bytedance.com>
+Link: https://lore.kernel.org/r/20230724121823.1357562-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/kernfs.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 97ab1468a8760..380a53b6aee81 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -674,6 +674,8 @@ static int really_probe(struct device *dev, struct device_driver *drv)
+diff --git a/include/linux/kernfs.h b/include/linux/kernfs.h
+index 73f5c120def88..2a36f3218b510 100644
+--- a/include/linux/kernfs.h
++++ b/include/linux/kernfs.h
+@@ -550,6 +550,10 @@ static inline int kernfs_setattr(struct kernfs_node *kn,
+ 				 const struct iattr *iattr)
+ { return -ENOSYS; }
  
- 		device_remove(dev);
- 		driver_sysfs_remove(dev);
-+		if (dev->bus && dev->bus->dma_cleanup)
-+			dev->bus->dma_cleanup(dev);
- 		device_unbind_cleanup(dev);
++static inline __poll_t kernfs_generic_poll(struct kernfs_open_file *of,
++					   struct poll_table_struct *pt)
++{ return -ENOSYS; }
++
+ static inline void kernfs_notify(struct kernfs_node *kn) { }
  
- 		goto re_probe;
+ static inline int kernfs_xattr_get(struct kernfs_node *kn, const char *name,
 -- 
 2.40.1
 
