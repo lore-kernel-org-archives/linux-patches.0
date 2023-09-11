@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D880711715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A88C433C8;
-	Mon, 11 Sep 2023 15:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13AE11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:08:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3C7C433C8;
+	Mon, 11 Sep 2023 15:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444917;
-	bh=/wpPSe4RFYkGUSVTSEmpv89uaM+Y+eQDzzL/PQdMIXM=;
+	s=korg; t=1694444920;
+	bh=z561DKvYXsQ+cdfwh74yU9z3Z6wxDwP+xjN9ZgWpfC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7aRvHB2ZbcZpmHApwRD0/8esYfoOIdDCOyxdycWvhZUzl3/zPCtiLofUwiwTtxsj
-	 FAFvy0Fi1ssv4fUS6PJ9i5jnwgj1EVeHCZint9rRMhwerrcW9Y+1ide9SYhZ9HkxQ5
-	 zZBVB4q/poIe8rP2fQQnL8yxvY6kNZMdH3dap4rQ=
+	b=qtYmR28qxKhTpz2qfpyLFeAadNiEBWy/5zKLePbUHjqMs1NyZWwb0RIMYZ9LvuE8+
+	 wBvtU+VMZ+AuAyoeUAk2O7w0OgmQcFdZXltr/9wKpeH88CIkUdmChBQhBElL9YRgBW
+	 hWOyKiyLQSj/DlU1PXjogyVJLouxopj37Coskz84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/600] s390/pkey: fix PKEY_TYPE_EP11_AES handling in PKEY_GENSECK2 IOCTL
-Date: Mon, 11 Sep 2023 15:42:38 +0200
-Message-ID: <20230911134637.305632264@linuxfoundation.org>
+Subject: [PATCH 6.1 161/600] wifi: mwifiex: fix error recovery in PCIE buffer descriptor management
+Date: Mon, 11 Sep 2023 15:43:14 +0200
+Message-ID: <20230911134638.361628619@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,274 +41,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit fb249ce7f7bfd8621a38e4ad401ba74b680786d4 ]
+[ Upstream commit 288c63d5cb4667a51a04668b3e2bb0ea499bc5f4 ]
 
-Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
-private keys")' introduced PKEY_TYPE_EP11_AES for the PKEY_GENSECK2
-IOCTL, to enable userspace to generate securekey blobs of this
-type. Unfortunately, all PKEY_GENSECK2 IOCTL requests for
-PKEY_TYPE_EP11_AES return with an error (-EINVAL). Fix the handling
-for PKEY_TYPE_EP11_AES in PKEY_GENSECK2 IOCTL, so that userspace can
-generate securekey blobs of this type.
+Add missing 'kfree_skb()' in 'mwifiex_init_rxq_ring()' and never do
+'kfree(card->rxbd_ring_vbase)' because this area is DMAed and should
+be released with 'dma_free_coherent()'. The latter is performed in
+'mwifiex_pcie_delete_rxbd_ring()', which is now called to recover
+from possible errors in 'mwifiex_pcie_create_rxbd_ring()'. Likewise
+for 'mwifiex_pcie_init_evt_ring()', 'kfree(card->evtbd_ring_vbase)'
+'mwifiex_pcie_delete_evtbd_ring()' and 'mwifiex_pcie_create_rxbd_ring()'.
 
-The start of the header and the keyblob, as well as the length need
-special handling, depending on the internal keyversion. Add a helper
-function that splits an uninitialized buffer into start and size of
-the header as well as start and size of the payload, depending on the
-requested keyversion.
-
-Do the header-related calculations and the raw genkey request handling
-in separate functions. Use the raw genkey request function for
-internal purposes.
-
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: d930faee141b ("mwifiex: add support for Marvell pcie8766 chipset")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230731074334.56463-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c        |  18 +++--
- drivers/s390/crypto/zcrypt_ep11misc.c | 103 ++++++++++++++++++++++----
- drivers/s390/crypto/zcrypt_ep11misc.h |   2 +-
- 3 files changed, 102 insertions(+), 21 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/pcie.c | 25 ++++++++++++++-------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index e650df3fe7ccb..79568da580c67 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -565,6 +565,11 @@ static int pkey_genseckey2(const struct pkey_apqn *apqns, size_t nr_apqns,
- 		if (*keybufsize < MINEP11AESKEYBLOBSIZE)
- 			return -EINVAL;
- 		break;
-+	case PKEY_TYPE_EP11_AES:
-+		if (*keybufsize < (sizeof(struct ep11kblob_header) +
-+				   MINEP11AESKEYBLOBSIZE))
-+			return -EINVAL;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -581,9 +586,10 @@ static int pkey_genseckey2(const struct pkey_apqn *apqns, size_t nr_apqns,
- 	for (i = 0, rc = -ENODEV; i < nr_apqns; i++) {
- 		card = apqns[i].card;
- 		dom = apqns[i].domain;
--		if (ktype == PKEY_TYPE_EP11) {
-+		if (ktype == PKEY_TYPE_EP11 ||
-+		    ktype == PKEY_TYPE_EP11_AES) {
- 			rc = ep11_genaeskey(card, dom, ksize, kflags,
--					    keybuf, keybufsize);
-+					    keybuf, keybufsize, ktype);
- 		} else if (ktype == PKEY_TYPE_CCA_DATA) {
- 			rc = cca_genseckey(card, dom, ksize, keybuf);
- 			*keybufsize = (rc ? 0 : SECKEYBLOBSIZE);
-@@ -1313,7 +1319,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 		apqns = _copy_apqns_from_user(kgs.apqns, kgs.apqn_entries);
- 		if (IS_ERR(apqns))
- 			return PTR_ERR(apqns);
--		kkey = kmalloc(klen, GFP_KERNEL);
-+		kkey = kzalloc(klen, GFP_KERNEL);
- 		if (!kkey) {
- 			kfree(apqns);
+diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
+index 9a698a16a8f38..6697132ecc977 100644
+--- a/drivers/net/wireless/marvell/mwifiex/pcie.c
++++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
+@@ -189,6 +189,8 @@ static int mwifiex_pcie_probe_of(struct device *dev)
+ }
+ 
+ static void mwifiex_pcie_work(struct work_struct *work);
++static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter);
++static int mwifiex_pcie_delete_evtbd_ring(struct mwifiex_adapter *adapter);
+ 
+ static int
+ mwifiex_map_pci_memory(struct mwifiex_adapter *adapter, struct sk_buff *skb,
+@@ -792,14 +794,15 @@ static int mwifiex_init_rxq_ring(struct mwifiex_adapter *adapter)
+ 		if (!skb) {
+ 			mwifiex_dbg(adapter, ERROR,
+ 				    "Unable to allocate skb for RX ring.\n");
+-			kfree(card->rxbd_ring_vbase);
  			return -ENOMEM;
-@@ -1969,7 +1975,8 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
- 	for (i = 0, rc = -ENODEV; i < nr_apqns; i++) {
- 		card = apqns[i] >> 16;
- 		dom = apqns[i] & 0xFFFF;
--		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize);
-+		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
-+				    PKEY_TYPE_EP11);
- 		if (rc == 0)
- 			break;
- 	}
-@@ -1979,7 +1986,8 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
- 	if (is_xts) {
- 		keysize = MAXEP11AESKEYBLOBSIZE;
- 		buf += MAXEP11AESKEYBLOBSIZE;
--		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize);
-+		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
-+				    PKEY_TYPE_EP11);
- 		if (rc == 0)
- 			return 2 * MAXEP11AESKEYBLOBSIZE;
- 	}
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
-index 497de7faa2fc5..20bbeec1a1a22 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.c
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.c
-@@ -113,6 +113,50 @@ static void __exit card_cache_free(void)
- 	spin_unlock_bh(&card_list_lock);
+ 		}
+ 
+ 		if (mwifiex_map_pci_memory(adapter, skb,
+ 					   MWIFIEX_RX_DATA_BUF_SIZE,
+-					   DMA_FROM_DEVICE))
+-			return -1;
++					   DMA_FROM_DEVICE)) {
++			kfree_skb(skb);
++			return -ENOMEM;
++		}
+ 
+ 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
+ 
+@@ -849,7 +852,6 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
+ 		if (!skb) {
+ 			mwifiex_dbg(adapter, ERROR,
+ 				    "Unable to allocate skb for EVENT buf.\n");
+-			kfree(card->evtbd_ring_vbase);
+ 			return -ENOMEM;
+ 		}
+ 		skb_put(skb, MAX_EVENT_SIZE);
+@@ -857,8 +859,7 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
+ 		if (mwifiex_map_pci_memory(adapter, skb, MAX_EVENT_SIZE,
+ 					   DMA_FROM_DEVICE)) {
+ 			kfree_skb(skb);
+-			kfree(card->evtbd_ring_vbase);
+-			return -1;
++			return -ENOMEM;
+ 		}
+ 
+ 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
+@@ -1058,6 +1059,7 @@ static int mwifiex_pcie_delete_txbd_ring(struct mwifiex_adapter *adapter)
+  */
+ static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
+ {
++	int ret;
+ 	struct pcie_service_card *card = adapter->card;
+ 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
+ 
+@@ -1096,7 +1098,10 @@ static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
+ 		    (u32)((u64)card->rxbd_ring_pbase >> 32),
+ 		    card->rxbd_ring_size);
+ 
+-	return mwifiex_init_rxq_ring(adapter);
++	ret = mwifiex_init_rxq_ring(adapter);
++	if (ret)
++		mwifiex_pcie_delete_rxbd_ring(adapter);
++	return ret;
  }
  
-+static int ep11_kb_split(const u8 *kb, size_t kblen, u32 kbver,
-+			 struct ep11kblob_header **kbhdr, size_t *kbhdrsize,
-+			 u8 **kbpl, size_t *kbplsize)
-+{
-+	struct ep11kblob_header *hdr = NULL;
-+	size_t hdrsize, plsize = 0;
-+	int rc = -EINVAL;
-+	u8 *pl = NULL;
-+
-+	if (kblen < sizeof(struct ep11kblob_header))
-+		goto out;
-+	hdr = (struct ep11kblob_header *)kb;
-+
-+	switch (kbver) {
-+	case TOKVER_EP11_AES:
-+		/* header overlays the payload */
-+		hdrsize = 0;
-+		break;
-+	case TOKVER_EP11_ECC_WITH_HEADER:
-+	case TOKVER_EP11_AES_WITH_HEADER:
-+		/* payload starts after the header */
-+		hdrsize = sizeof(struct ep11kblob_header);
-+		break;
-+	default:
-+		goto out;
-+	}
-+
-+	plsize = kblen - hdrsize;
-+	pl = (u8 *)kb + hdrsize;
-+
-+	if (kbhdr)
-+		*kbhdr = hdr;
-+	if (kbhdrsize)
-+		*kbhdrsize = hdrsize;
-+	if (kbpl)
-+		*kbpl = pl;
-+	if (kbplsize)
-+		*kbplsize = plsize;
-+
-+	rc = 0;
-+out:
-+	return rc;
-+}
-+
  /*
-  * Simple check if the key blob is a valid EP11 AES key blob with header.
+@@ -1127,6 +1132,7 @@ static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter)
   */
-@@ -664,8 +708,9 @@ EXPORT_SYMBOL(ep11_get_domain_info);
-  */
- #define KEY_ATTR_DEFAULTS 0x00200c00
- 
--int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
--		   u8 *keybuf, size_t *keybufsize)
-+static int _ep11_genaeskey(u16 card, u16 domain,
-+			   u32 keybitsize, u32 keygenflags,
-+			   u8 *keybuf, size_t *keybufsize)
+ static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
  {
- 	struct keygen_req_pl {
- 		struct pl_head head;
-@@ -701,7 +746,6 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	struct ep11_cprb *req = NULL, *rep = NULL;
- 	struct ep11_target_dev target;
- 	struct ep11_urb *urb = NULL;
--	struct ep11keyblob *kb;
- 	int api, rc = -ENOMEM;
++	int ret;
+ 	struct pcie_service_card *card = adapter->card;
+ 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
  
- 	switch (keybitsize) {
-@@ -780,14 +824,9 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 		goto out;
- 	}
+@@ -1161,7 +1167,10 @@ static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
+ 		    (u32)((u64)card->evtbd_ring_pbase >> 32),
+ 		    card->evtbd_ring_size);
  
--	/* copy key blob and set header values */
-+	/* copy key blob */
- 	memcpy(keybuf, rep_pl->data, rep_pl->data_len);
- 	*keybufsize = rep_pl->data_len;
--	kb = (struct ep11keyblob *)keybuf;
--	kb->head.type = TOKTYPE_NON_CCA;
--	kb->head.len = rep_pl->data_len;
--	kb->head.version = TOKVER_EP11_AES;
--	kb->head.bitlen = keybitsize;
- 
- out:
- 	kfree(req);
-@@ -795,6 +834,43 @@ int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	kfree(urb);
- 	return rc;
+-	return mwifiex_pcie_init_evt_ring(adapter);
++	ret = mwifiex_pcie_init_evt_ring(adapter);
++	if (ret)
++		mwifiex_pcie_delete_evtbd_ring(adapter);
++	return ret;
  }
-+
-+int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
-+		   u8 *keybuf, size_t *keybufsize, u32 keybufver)
-+{
-+	struct ep11kblob_header *hdr;
-+	size_t hdr_size, pl_size;
-+	u8 *pl;
-+	int rc;
-+
-+	switch (keybufver) {
-+	case TOKVER_EP11_AES:
-+	case TOKVER_EP11_AES_WITH_HEADER:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	rc = ep11_kb_split(keybuf, *keybufsize, keybufver,
-+			   &hdr, &hdr_size, &pl, &pl_size);
-+	if (rc)
-+		return rc;
-+
-+	rc = _ep11_genaeskey(card, domain, keybitsize, keygenflags,
-+			     pl, &pl_size);
-+	if (rc)
-+		return rc;
-+
-+	*keybufsize = hdr_size + pl_size;
-+
-+	/* update header information */
-+	hdr->type = TOKTYPE_NON_CCA;
-+	hdr->len = *keybufsize;
-+	hdr->version = keybufver;
-+	hdr->bitlen = keybitsize;
-+
-+	return 0;
-+}
- EXPORT_SYMBOL(ep11_genaeskey);
- 
- static int ep11_cryptsingle(u16 card, u16 domain,
-@@ -1201,7 +1277,6 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 		     const u8 *clrkey, u8 *keybuf, size_t *keybufsize)
- {
- 	int rc;
--	struct ep11keyblob *kb;
- 	u8 encbuf[64], *kek = NULL;
- 	size_t clrkeylen, keklen, encbuflen = sizeof(encbuf);
- 
-@@ -1223,17 +1298,15 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	}
- 
- 	/* Step 1: generate AES 256 bit random kek key */
--	rc = ep11_genaeskey(card, domain, 256,
--			    0x00006c00, /* EN/DECRYPT, WRAP/UNWRAP */
--			    kek, &keklen);
-+	rc = _ep11_genaeskey(card, domain, 256,
-+			     0x00006c00, /* EN/DECRYPT, WRAP/UNWRAP */
-+			     kek, &keklen);
- 	if (rc) {
- 		DEBUG_ERR(
- 			"%s generate kek key failed, rc=%d\n",
- 			__func__, rc);
- 		goto out;
- 	}
--	kb = (struct ep11keyblob *)kek;
--	memset(&kb->head, 0, sizeof(kb->head));
- 
- 	/* Step 2: encrypt clear key value with the kek key */
- 	rc = ep11_cryptsingle(card, domain, 0, 0, def_iv, kek, keklen,
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.h b/drivers/s390/crypto/zcrypt_ep11misc.h
-index 912b3918c10a1..ed328c354bade 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.h
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.h
-@@ -107,7 +107,7 @@ int ep11_get_domain_info(u16 card, u16 domain, struct ep11_domain_info *info);
-  * Generate (random) EP11 AES secure key.
-  */
- int ep11_genaeskey(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
--		   u8 *keybuf, size_t *keybufsize);
-+		   u8 *keybuf, size_t *keybufsize, u32 keybufver);
  
  /*
-  * Generate EP11 AES secure key with given clear key value.
 -- 
 2.40.1
 
