@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686321170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1461C433C7;
-	Mon, 11 Sep 2023 14:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E17411711
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4273C433C7;
+	Mon, 11 Sep 2023 14:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442439;
-	bh=w4SI68hpBfwZ6B6SZs/gIggJr1XxuhnT65Gtqx6K9ZA=;
+	s=korg; t=1694442445;
+	bh=YkpG6+TwycQTQtyS+Bz17xM6O6sg0CJCbJtBtOgQrzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XtVBssqgqGt/iVNpdGMthn6CtefrejBcN4WW3hBtCxua+y9d/zyLLl6wgJL5J5Y1
-	 GiBDi+52DBJ80IB9RxHJBcF7LSUyubZBu+lzbrkwNk3lSEjizONEgGodx2+nYUcNJp
-	 DD/2+6b8Ui4HATAMaJ2g/jbu32f1dnP8EBCm8Umw=
+	b=JP26J4TW4M/A9nnE7uI9/dBMPQ0LkAV3vt4e9Lh/VZfxDEqjGWX8GwnzcPkkyibDV
+	 5J/i3DBFTukkSh5zhP0Yd33R5we7SuWtj7eNQE+x5e1UFG/WAndIvQH6lZoXcaJ6v6
+	 jen5r3xijYvSAaN31Pm4aSj134y0r8ThadYgCjMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 009/737] 9p: virtio: fix unlikely null pointer deref in handle_rerror
-Date: Mon, 11 Sep 2023 15:37:48 +0200
-Message-ID: <20230911134650.579867163@linuxfoundation.org>
+Subject: [PATCH 6.4 020/737] ethernet: atheros: fix return value check in atl1c_tso_csum()
+Date: Mon, 11 Sep 2023 15:37:59 +0200
+Message-ID: <20230911134650.909969562@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,44 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit 13ade4ac5c28e8a014fa85278f5a4270b215f906 ]
+[ Upstream commit 8d01da0a1db237c44c92859ce3612df7af8d3a53 ]
 
-handle_rerror can dereference the pages pointer, but it is not
-necessarily set for small payloads.
-In practice these should be filtered out by the size check, but
-might as well double-check explicitly.
+in atl1c_tso_csum, it should check the return value of pskb_trim(),
+and return an error code if an unexpected value is returned
+by pskb_trim().
 
-This fixes the following scan-build warnings:
-net/9p/trans_virtio.c:401:24: warning: Dereference of null pointer [core.NullDereference]
-                memcpy_from_page(to, *pages++, offs, n);
-                                     ^~~~~~~~
-net/9p/trans_virtio.c:406:23: warning: Dereference of null pointer (loaded from variable 'pages') [core.NullDereference]
-        memcpy_from_page(to, *pages, offs, size);
-                             ^~~~~~
-
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/atheros/atl1c/atl1c_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
-index 3c27ffb781e3e..2c9495ccda6ba 100644
---- a/net/9p/trans_virtio.c
-+++ b/net/9p/trans_virtio.c
-@@ -384,7 +384,7 @@ static void handle_rerror(struct p9_req_t *req, int in_hdr_len,
- 	void *to = req->rc.sdata + in_hdr_len;
+diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+index 4a288799633f8..940c5d1ff9cfc 100644
+--- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
++++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+@@ -2094,8 +2094,11 @@ static int atl1c_tso_csum(struct atl1c_adapter *adapter,
+ 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
+ 					+ ntohs(ip_hdr(skb)->tot_len));
  
- 	// Fits entirely into the static data?  Nothing to do.
--	if (req->rc.size < in_hdr_len)
-+	if (req->rc.size < in_hdr_len || !pages)
- 		return;
+-			if (real_len < skb->len)
+-				pskb_trim(skb, real_len);
++			if (real_len < skb->len) {
++				err = pskb_trim(skb, real_len);
++				if (err)
++					return err;
++			}
  
- 	// Really long error message?  Tough, truncate the reply.  Might get
+ 			hdr_len = skb_tcp_all_headers(skb);
+ 			if (unlikely(skb->len == hdr_len)) {
 -- 
 2.40.1
 
