@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EE11171B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8287DC433C7;
-	Mon, 11 Sep 2023 15:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48B1171B
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40285C433C9;
+	Mon, 11 Sep 2023 15:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444520;
-	bh=xdAC+CB+DVIujqqC77yA8Jx93bjq20TbOUPVJeIvjqI=;
+	s=korg; t=1694444523;
+	bh=Y8VnIeHJk7nfX7Oi5DUWceZHLg5jZDw4gKYuHrMqIZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IaBi+LxINcj7iJQhrib72GEKmoG2dx4Svudhw9+BA7Y1p161SuPekfJD8U5bDzbdd
-	 6yHrukG+/hoy0+lU2ICP78yhBT6VLqdqvG50pX57F4sTExCdsWKsxOsa6Oela7Borh
-	 zBtCQtkP4hQdnMwxH4LYA5NQvf2XrHIo5dFNpDkc=
+	b=GoESj9hQba+6Gvbcyoi+Px6LoonNxiWLTmbSCz/I27ZqlkfxVJEtTgZ1vHQHZD0ON
+	 WF1XKCy0A+9CwJ5Y9+61w87KFzxvFnKmbsFO91+6RXEUPC9QtrndBixrajI+PZvI5t
+	 7y4exx5y9hutaAo3FKtUukkqvHPHu2utJLuFmwCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/600] powerpc/boot: Disable power10 features after BOOTAFLAGS assignment
-Date: Mon, 11 Sep 2023 15:40:40 +0200
-Message-ID: <20230911134633.838090880@linuxfoundation.org>
+Subject: [PATCH 6.1 008/600] media: uapi: HEVC: Add num_delta_pocs_of_ref_rps_idx field
+Date: Mon, 11 Sep 2023 15:40:41 +0200
+Message-ID: <20230911134633.865620166@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,61 +42,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-[ Upstream commit 2b694fc96fe33a7c042e3a142d27d945c8c668b0 ]
+[ Upstream commit ae440c5da33cdb90a109f2df2a0360c67b3fab7e ]
 
-When building the boot wrapper assembly files with clang after
-commit 648a1783fe25 ("powerpc/boot: Fix boot wrapper code generation
-with CONFIG_POWER10_CPU"), the following warnings appear for each file
-built:
+Some drivers firmwares parse by themselves slice header and need
+num_delta_pocs_of_ref_rps_idx value to parse slice header
+short_term_ref_pic_set().
+Use one of the 4 reserved bytes to store this value without
+changing the v4l2_ctrl_hevc_decode_params structure size and padding.
 
-  '-prefixed' is not a recognized feature for this target (ignoring feature)
-  '-pcrel' is not a recognized feature for this target (ignoring feature)
+This value also exist in DXVA API.
 
-While it is questionable whether or not LLVM should be emitting a
-warning when passed negative versions of code generation flags when
-building assembly files (since it does not emit a warning for the
-altivec and vsx flags), it is easy enough to work around this by just
-moving the disabled flags to BOOTCFLAGS after the assignment of
-BOOTAFLAGS, so that they are not added when building assembly files.
-Do so to silence the warnings.
-
-Fixes: 648a1783fe25 ("powerpc/boot: Fix boot wrapper code generation with CONFIG_POWER10_CPU")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1839
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230427-remove-power10-args-from-boot-aflags-clang-v1-1-9107f7c943bc@kernel.org
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: fix typo in num_delta_pocs_of_ref_rps_idx doc]
+Stable-dep-of: 297160d411e3 ("media: mediatek: vcodec: move core context from device to each instance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/Makefile | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../userspace-api/media/v4l/ext-ctrls-codec-stateless.rst  | 7 +++++++
+ include/uapi/linux/v4l2-controls.h                         | 6 +++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/boot/Makefile b/arch/powerpc/boot/Makefile
-index 13fad4f0a6d8f..b13324b1a1696 100644
---- a/arch/powerpc/boot/Makefile
-+++ b/arch/powerpc/boot/Makefile
-@@ -34,8 +34,6 @@ endif
- 
- BOOTCFLAGS    := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
- 		 -fno-strict-aliasing -O2 -msoft-float -mno-altivec -mno-vsx \
--		 $(call cc-option,-mno-prefixed) $(call cc-option,-mno-pcrel) \
--		 $(call cc-option,-mno-mma) \
- 		 $(call cc-option,-mno-spe) $(call cc-option,-mspe=no) \
- 		 -pipe -fomit-frame-pointer -fno-builtin -fPIC -nostdinc \
- 		 $(LINUXINCLUDE)
-@@ -71,6 +69,10 @@ BOOTAFLAGS	:= -D__ASSEMBLY__ $(BOOTCFLAGS) -nostdinc
- 
- BOOTARFLAGS	:= -crD
- 
-+BOOTCFLAGS	+= $(call cc-option,-mno-prefixed) \
-+		   $(call cc-option,-mno-pcrel) \
-+		   $(call cc-option,-mno-mma)
-+
- ifdef CONFIG_CC_IS_CLANG
- BOOTCFLAGS += $(CLANG_FLAGS)
- BOOTAFLAGS += $(CLANG_FLAGS)
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst
+index cd33857d947d3..0ef49647c90bd 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst
+@@ -2923,6 +2923,13 @@ This structure contains all loop filter related parameters. See sections
+       - ``poc_lt_curr[V4L2_HEVC_DPB_ENTRIES_NUM_MAX]``
+       - PocLtCurr as described in section 8.3.2 "Decoding process for reference
+         picture set": provides the index of the long term references in DPB array.
++    * - __u8
++      - ``num_delta_pocs_of_ref_rps_idx``
++      - When the short_term_ref_pic_set_sps_flag in the slice header is equal to 0,
++        it is the same as the derived value NumDeltaPocs[RefRpsIdx]. It can be used to parse
++        the RPS data in slice headers instead of skipping it with @short_term_ref_pic_set_size.
++        When the value of short_term_ref_pic_set_sps_flag in the slice header is
++        equal to 1, num_delta_pocs_of_ref_rps_idx shall be set to 0.
+     * - struct :c:type:`v4l2_hevc_dpb_entry`
+       - ``dpb[V4L2_HEVC_DPB_ENTRIES_NUM_MAX]``
+       - The decoded picture buffer, for meta-data about reference frames.
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index b5e7d082b8adf..d4a4e3cab3c2a 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -2411,6 +2411,9 @@ struct v4l2_ctrl_hevc_slice_params {
+  * @poc_st_curr_after: provides the index of the short term after references
+  *		       in DPB array
+  * @poc_lt_curr: provides the index of the long term references in DPB array
++ * @num_delta_pocs_of_ref_rps_idx: same as the derived value NumDeltaPocs[RefRpsIdx],
++ *				   can be used to parse the RPS data in slice headers
++ *				   instead of skipping it with @short_term_ref_pic_set_size.
+  * @reserved: padding field. Should be zeroed by applications.
+  * @dpb: the decoded picture buffer, for meta-data about reference frames
+  * @flags: see V4L2_HEVC_DECODE_PARAM_FLAG_{}
+@@ -2426,7 +2429,8 @@ struct v4l2_ctrl_hevc_decode_params {
+ 	__u8	poc_st_curr_before[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
+ 	__u8	poc_st_curr_after[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
+ 	__u8	poc_lt_curr[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
+-	__u8	reserved[4];
++	__u8	num_delta_pocs_of_ref_rps_idx;
++	__u8	reserved[3];
+ 	struct	v4l2_hevc_dpb_entry dpb[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
+ 	__u64	flags;
+ };
 -- 
 2.40.1
 
