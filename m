@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017BC153
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426B4C433C7;
-	Mon, 11 Sep 2023 14:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9574AE57C
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158F8C433C9;
+	Mon, 11 Sep 2023 14:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442908;
-	bh=Xslq3NdqREmtREbDPglR2/AlOTvDyxrVGPJav9ekDT4=;
+	s=korg; t=1694442911;
+	bh=BX9mEZ45S9lJ3kaWRRvANVOXvoxzJEzACMCUIqQ8uXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMjx9rn99XO6qaAVKZGnoaaJnK73EUJX0DVxlhYkRQVyUqlxVCyBLRIXVtqlz+1nk
-	 +96umIWiVQ90eAYhGh/dHmyTyMaSYtpUF5rXABX+OFOeABEjR3lXedBo6ZAS3i9Ixl
-	 66T5oJ9j+WcSUygJfe9szoAl3FP44BcevUhB7UII=
+	b=sE2xj0lxRVH3qRkKoFt5GOGifsQMvHPNk5dzJ9uLcOQx/2UQFwXXSrrsHvnmmB3g8
+	 +sdrOsiUzyCI7C2UFUo+6Rd1ms/4FcyVCSMDW1Ae0zcPwyiHDFzqsRCPHVWeDpZnTX
+	 a788G6sDLvz3gbNmzOdmDx/woa0THeiGEp4iBCWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Isaacs <mail@jdisaacs.com>,
-	"Ethan D. Twardy" <ethan.twardy@gmail.com>,
-	Tiago Lam <tiagolam@gmail.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 191/737] kbuild: rust_is_available: fix confusion when a version appears in the path
-Date: Mon, 11 Sep 2023 15:40:50 +0200
-Message-ID: <20230911134655.923874448@linuxfoundation.org>
+Subject: [PATCH 6.4 192/737] crypto: stm32 - Properly handle pm_runtime_get failing
+Date: Mon, 11 Sep 2023 15:40:51 +0200
+Message-ID: <20230911134655.953659438@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -38,63 +34,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 9eb7e20e0c5cd069457845f965b3e8a7d736ecb7 ]
+[ Upstream commit aec48805163338f8413118796c1dd035661b9140 ]
 
-`bindgen`'s output for `libclang`'s version check contains paths, which
-in turn may contain strings that look like version numbers [1][2]:
+If pm_runtime_get() (disguised as pm_runtime_resume_and_get()) fails, this
+means the clk wasn't prepared and enabled. Returning early in this case
+however is wrong as then the following resource frees are skipped and this
+is never catched up. So do all the cleanups but clk_disable_unprepare().
 
-    .../6.1.0-dev/.../rust_is_available_bindgen_libclang.h:2:9: warning: clang version 11.1.0  [-W#pragma-messages], err: false
+Also don't emit a warning, as stm32_hash_runtime_resume() already emitted
+one.
 
-which the script will pick up as the version instead of the latter.
+Note that the return value of stm32_hash_remove() is mostly ignored by
+the device core. The only effect of returning zero instead of an error
+value is to suppress another warning in platform_remove(). So return 0
+even if pm_runtime_resume_and_get() failed.
 
-It is also the case that versions may appear after the actual version
-(e.g. distribution's version text), which was the reason behind `head` [3]:
-
-    .../rust-is-available-bindgen-libclang.h:2:9: warning: clang version 13.0.0 (Fedora 13.0.0-3.fc35) [-W#pragma-messages], err: false
-
-Thus instead ask for a match after the `clang version` string.
-
-Reported-by: Jordan Isaacs <mail@jdisaacs.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/942 [1]
-Reported-by: "Ethan D. Twardy" <ethan.twardy@gmail.com>
-Closes: https://lore.kernel.org/rust-for-linux/20230528131802.6390-2-ethan.twardy@gmail.com/ [2]
-Reported-by: Tiago Lam <tiagolam@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/pull/789 [3]
-Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Ethan Twardy <ethan.twardy@gmail.com>
-Tested-by: Ethan Twardy <ethan.twardy@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230616001631.463536-8-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 8b4d566de6a5 ("crypto: stm32/hash - Add power management support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/crypto/stm32/stm32-hash.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index c965895d80b97..7a925d2b20fc7 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -112,9 +112,7 @@ fi
- # of the `libclang` found by the Rust bindings generator is suitable.
- bindgen_libclang_version=$( \
- 	echo "$bindgen_libclang_output" \
--		| grep -F 'clang version ' \
--		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
--		| head -n 1 \
-+		| sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
- )
- bindgen_libclang_min_version=$($min_tool_version llvm)
- bindgen_libclang_cversion=$(get_canonical_version $bindgen_libclang_version)
+diff --git a/drivers/crypto/stm32/stm32-hash.c b/drivers/crypto/stm32/stm32-hash.c
+index f0df32382719c..342ed46ddf882 100644
+--- a/drivers/crypto/stm32/stm32-hash.c
++++ b/drivers/crypto/stm32/stm32-hash.c
+@@ -1705,9 +1705,7 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	if (!hdev)
+ 		return -ENODEV;
+ 
+-	ret = pm_runtime_resume_and_get(hdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(hdev->dev);
+ 
+ 	stm32_hash_unregister_algs(hdev);
+ 
+@@ -1723,7 +1721,8 @@ static int stm32_hash_remove(struct platform_device *pdev)
+ 	pm_runtime_disable(hdev->dev);
+ 	pm_runtime_put_noidle(hdev->dev);
+ 
+-	clk_disable_unprepare(hdev->clk);
++	if (ret >= 0)
++		clk_disable_unprepare(hdev->clk);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
