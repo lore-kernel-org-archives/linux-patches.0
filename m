@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032FB4C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E3AC433C7;
-	Mon, 11 Sep 2023 14:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B5E4C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:48:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47357C433C9;
+	Mon, 11 Sep 2023 14:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443735;
-	bh=rNspsJQQGqbKPJbYcwJjxSq32JgNcciypHGzRZ9Allc=;
+	s=korg; t=1694443738;
+	bh=z31VtKjXquvF2UKgCk5gwdgEbST1Sg3iKxk/pcbgYAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVqOh2WHCF2BJ8suCtOE7zHRz3BtKsD+77N/bQw8Sz8FNlHiZaaspdLHdbf4d7kt3
-	 k4PwqCCU6KOYafumNw278BO8c3rzKs3ukziOkKaTTkCT911fPXaIhSl4crEXsZ/tko
-	 p8sD8ddTrEKJ1Hk7jHSIRPyY85MdAnZOXW5+AgxY=
+	b=bnFAZ6p26BnMHyhqVXJM1VqlkDiz8Qrm/JCsz6PQlrB55mMV0LfVijHeAIuhsEO/W
+	 O+28rZGmyhYqNiiywnnT+D+MnPn1/fwGjinZ12MzUX0xIVYYdUoLyxxBpEuvWqtz6X
+	 sZRfKGykG4OJ+Ov0z0+312WrnhktVna1BRD5JadY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Pavel Machek <pavel@ucw.cz>,
+	Ricardo Ribalda Delgado <ribalda@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 455/737] pinctrl: mediatek: assign functions to configure pin bias on MT7986
-Date: Mon, 11 Sep 2023 15:45:14 +0200
-Message-ID: <20230911134703.309036503@linuxfoundation.org>
+Subject: [PATCH 6.4 482/737] media: ad5820: Drop unsupported ad5823 from i2c_ and of_device_id tables
+Date: Mon, 11 Sep 2023 15:45:41 +0200
+Message-ID: <20230911134704.043979879@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,48 +44,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 0d8387fba9f151220e48dc3dcdc2335539708f13 ]
+[ Upstream commit f126ff7e4024f6704e6ec0d4137037568708a3c7 ]
 
-Assign bias_disable_get/set and bias_get/set functions to allow
-configuring pin bias on MT7986.
+The supported ad5820 and ad5821 VCMs both use a single 16 bit register
+which is written by sending 2 bytes with the data directly after sending
+the i2c-client address.
 
-Fixes: 2c58d8dc9cd0 ("pinctrl: mediatek: add pull_type attribute for mediatek MT7986 SoC")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/47f72372354312a839b9337e09476aadcc206e8b.1692327317.git.daniel@makrotopia.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+The ad5823 OTOH has a more typical i2c / smbus device setup with multiple
+8 bit registers where the first byte send after the i2c-client address is
+the register address and the actual data only starts from the second byte
+after the i2c-client address.
+
+The ad5823 i2c_ and of_device_id-s was added at the same time as
+the ad5821 ids with as rationale:
+
+"""
+Some camera modules also refer that AD5823 is a replacement of AD5820:
+https://download.kamami.com/p564094-OV8865_DS.pdf
+"""
+
+The AD5823 may be an electrical and functional replacement of the AD5820,
+but from a software pov it is not compatible at all and it is going to
+need its own driver, drop its id from the ad5820 driver.
+
+Fixes: b8bf73136bae ("media: ad5820: Add support for ad5821 and ad5823")
+Cc: Pavel Machek <pavel@ucw.cz>
+Cc: Ricardo Ribalda Delgado <ribalda@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mt7986.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/i2c/ad5820.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mt7986.c b/drivers/pinctrl/mediatek/pinctrl-mt7986.c
-index aa0ccd67f4f4e..acaac9b38aa8a 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mt7986.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mt7986.c
-@@ -922,6 +922,10 @@ static struct mtk_pin_soc mt7986a_data = {
- 	.ies_present = false,
- 	.base_names = mt7986_pinctrl_register_base_names,
- 	.nbase_names = ARRAY_SIZE(mt7986_pinctrl_register_base_names),
-+	.bias_disable_set = mtk_pinconf_bias_disable_set,
-+	.bias_disable_get = mtk_pinconf_bias_disable_get,
-+	.bias_set = mtk_pinconf_bias_set,
-+	.bias_get = mtk_pinconf_bias_get,
- 	.pull_type = mt7986_pull_type,
- 	.bias_set_combo = mtk_pinconf_bias_set_combo,
- 	.bias_get_combo = mtk_pinconf_bias_get_combo,
-@@ -944,6 +948,10 @@ static struct mtk_pin_soc mt7986b_data = {
- 	.ies_present = false,
- 	.base_names = mt7986_pinctrl_register_base_names,
- 	.nbase_names = ARRAY_SIZE(mt7986_pinctrl_register_base_names),
-+	.bias_disable_set = mtk_pinconf_bias_disable_set,
-+	.bias_disable_get = mtk_pinconf_bias_disable_get,
-+	.bias_set = mtk_pinconf_bias_set,
-+	.bias_get = mtk_pinconf_bias_get,
- 	.pull_type = mt7986_pull_type,
- 	.bias_set_combo = mtk_pinconf_bias_set_combo,
- 	.bias_get_combo = mtk_pinconf_bias_get_combo,
+diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
+index 44c26af49071c..786f38b4cbc0e 100644
+--- a/drivers/media/i2c/ad5820.c
++++ b/drivers/media/i2c/ad5820.c
+@@ -349,7 +349,6 @@ static void ad5820_remove(struct i2c_client *client)
+ static const struct i2c_device_id ad5820_id_table[] = {
+ 	{ "ad5820", 0 },
+ 	{ "ad5821", 0 },
+-	{ "ad5823", 0 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
+@@ -357,7 +356,6 @@ MODULE_DEVICE_TABLE(i2c, ad5820_id_table);
+ static const struct of_device_id ad5820_of_table[] = {
+ 	{ .compatible = "adi,ad5820" },
+ 	{ .compatible = "adi,ad5821" },
+-	{ .compatible = "adi,ad5823" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ad5820_of_table);
 -- 
 2.40.1
 
