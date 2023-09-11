@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5DA11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1715C433C8;
-	Mon, 11 Sep 2023 15:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC7E11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2DEC433C8;
+	Mon, 11 Sep 2023 15:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444811;
-	bh=a5W3vHYTYz2avZVXR27SuVVeYQEKAnH1WWG19cnfYgY=;
+	s=korg; t=1694444813;
+	bh=/gHGPAdiOJ2SKoiM8eWEFVkAJqTxWZ2Wj6eJYee0aGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIDGVhqtLm0MKafsUJAtkvwMqh6IQvGcTUvIXKI27Io8GiKQRmO7cDovHH/r7UB7c
-	 DntHU0KmcZ+vq5lV9iBr9uSY0MucZvOYuuKuEDkndWpuRjTNIuyE3CkJdrWsXPi6Lf
-	 Jaxg0oi7GMfNrRvLk1/Ws/nat9pSXVEprSeSdgb4=
+	b=w3ldfQU+7M5DXWNhf9oJTgjx8fUS0UQ4yzjVMjUEqnTWBD/t9uDXbezVy1pJNEl1U
+	 WwVBwx0nbzicACGXYNPxVFaNkQ4xyF2CVkfNE3Yq6HTh/SLwdaWfLwvviBNteMpN+N
+	 NITlaOjBd5ZMQztagAcTKhkHbdaLsVxulz5ZlNI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 087/600] udf: Handle error when adding extent to a file
-Date: Mon, 11 Sep 2023 15:42:00 +0200
-Message-ID: <20230911134636.180429686@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 088/600] Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN
+Date: Mon, 11 Sep 2023 15:42:01 +0200
+Message-ID: <20230911134636.208670478@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -38,124 +39,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit 19fd80de0a8b5170ef34704c8984cca920dffa59 upstream.
+commit eb09074bdb05ffd6bfe77f8b4a41b76ef78c997b upstream.
 
-When adding extent to a file fails, so far we've silently squelshed the
-error. Make sure to propagate it up properly.
+The touchpad of this device is both connected via PS/2 and i2c. This causes
+strange behavior when both driver fight for control. The easy fix is to
+prevent the PS/2 driver from accessing the mouse port as the full feature
+set of the touchpad is only supported in the i2c interface anyway.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
+The strange behavior in this case is, that when an external screen is
+connected and the notebook is closed, the pointer on the external screen is
+moving to the lower right corner. When the notebook is opened again, this
+movement stops, but the touchpad clicks are unresponsive afterwards until
+reboot.
+
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230607173331.851192-1-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -57,15 +57,15 @@ static int udf_update_inode(struct inode
- static int udf_sync_inode(struct inode *inode);
- static int udf_alloc_i_data(struct inode *inode, size_t size);
- static sector_t inode_getblk(struct inode *, sector_t, int *, int *);
--static int8_t udf_insert_aext(struct inode *, struct extent_position,
--			      struct kernel_lb_addr, uint32_t);
-+static int udf_insert_aext(struct inode *, struct extent_position,
-+			   struct kernel_lb_addr, uint32_t);
- static void udf_split_extents(struct inode *, int *, int, udf_pblk_t,
- 			      struct kernel_long_ad *, int *);
- static void udf_prealloc_extents(struct inode *, int, int,
- 				 struct kernel_long_ad *, int *);
- static void udf_merge_extents(struct inode *, struct kernel_long_ad *, int *);
--static void udf_update_extents(struct inode *, struct kernel_long_ad *, int,
--			       int, struct extent_position *);
-+static int udf_update_extents(struct inode *, struct kernel_long_ad *, int,
-+			      int, struct extent_position *);
- static int udf_get_block(struct inode *, sector_t, struct buffer_head *, int);
- 
- static void __udf_clear_extent_cache(struct inode *inode)
-@@ -888,7 +888,9 @@ static sector_t inode_getblk(struct inod
- 	/* write back the new extents, inserting new extents if the new number
- 	 * of extents is greater than the old number, and deleting extents if
- 	 * the new number of extents is less than the old number */
--	udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	*err = udf_update_extents(inode, laarr, startnum, endnum, &prev_epos);
-+	if (*err < 0)
-+		goto out_free;
- 
- 	newblock = udf_get_pblock(inode->i_sb, newblocknum,
- 				iinfo->i_location.partitionReferenceNum, 0);
-@@ -1156,21 +1158,30 @@ static void udf_merge_extents(struct ino
- 	}
- }
- 
--static void udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
--			       int startnum, int endnum,
--			       struct extent_position *epos)
-+static int udf_update_extents(struct inode *inode, struct kernel_long_ad *laarr,
-+			      int startnum, int endnum,
-+			      struct extent_position *epos)
- {
- 	int start = 0, i;
- 	struct kernel_lb_addr tmploc;
- 	uint32_t tmplen;
-+	int err;
- 
- 	if (startnum > endnum) {
- 		for (i = 0; i < (startnum - endnum); i++)
- 			udf_delete_aext(inode, *epos);
- 	} else if (startnum < endnum) {
- 		for (i = 0; i < (endnum - startnum); i++) {
--			udf_insert_aext(inode, *epos, laarr[i].extLocation,
--					laarr[i].extLength);
-+			err = udf_insert_aext(inode, *epos,
-+					      laarr[i].extLocation,
-+					      laarr[i].extLength);
-+			/*
-+			 * If we fail here, we are likely corrupting the extent
-+			 * list and leaking blocks. At least stop early to
-+			 * limit the damage.
-+			 */
-+			if (err < 0)
-+				return err;
- 			udf_next_aext(inode, epos, &laarr[i].extLocation,
- 				      &laarr[i].extLength, 1);
- 			start++;
-@@ -1182,6 +1193,7 @@ static void udf_update_extents(struct in
- 		udf_write_aext(inode, epos, &laarr[i].extLocation,
- 			       laarr[i].extLength, 1);
- 	}
-+	return 0;
- }
- 
- struct buffer_head *udf_bread(struct inode *inode, udf_pblk_t block,
-@@ -2210,12 +2222,13 @@ int8_t udf_current_aext(struct inode *in
- 	return etype;
- }
- 
--static int8_t udf_insert_aext(struct inode *inode, struct extent_position epos,
--			      struct kernel_lb_addr neloc, uint32_t nelen)
-+static int udf_insert_aext(struct inode *inode, struct extent_position epos,
-+			   struct kernel_lb_addr neloc, uint32_t nelen)
- {
- 	struct kernel_lb_addr oeloc;
- 	uint32_t oelen;
- 	int8_t etype;
-+	int err;
- 
- 	if (epos.bh)
- 		get_bh(epos.bh);
-@@ -2225,10 +2238,10 @@ static int8_t udf_insert_aext(struct ino
- 		neloc = oeloc;
- 		nelen = (etype << 30) | oelen;
- 	}
--	udf_add_aext(inode, &epos, &neloc, nelen, 1);
-+	err = udf_add_aext(inode, &epos, &neloc, nelen, 1);
- 	brelse(epos.bh);
- 
--	return (nelen >> 30);
-+	return err;
- }
- 
- int8_t udf_delete_aext(struct inode *inode, struct extent_position epos)
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1281,6 +1281,13 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	/* See comment on TUXEDO InfinityBook S17 Gen6 / Clevo NS70MU above */
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "PD5x_7xPNP_PNR_PNN_PNT"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "X170SM"),
 
 
