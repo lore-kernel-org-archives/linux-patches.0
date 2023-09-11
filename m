@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C87A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17D9C433C8;
-	Mon, 11 Sep 2023 14:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009A61170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75690C433C8;
+	Mon, 11 Sep 2023 14:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442048;
-	bh=Xc9SSexNzep9L+H+EJveJBdndh2/+7x24j3XzEECMF8=;
+	s=korg; t=1694442050;
+	bh=4YCuFZU/uZ9gRhS2hq5PeoG11abTu1DR0U6YnpcAABg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIuLwo4yFCM2t4SdsSl0AtrSNEtkLmXSWgbqfkqKcH7v9+ak/mpgCjSPNbGH6uCSx
-	 Mlm6Lsov8sxu0I+vcpTwKYgQvYFdaQKxwZcU1gDzALTgaVDeNdJz8bnwheVLYD4R9L
-	 njYavMA+NzwI1AIEE0XlidwTJOG+Jw6NxGM/0JPQ=
+	b=Gb23+8m5mtJVKqVginCEmfMe2FpZthhW7hIpngD3LE5Nxz3zJybq8cPJhHnCt6r+O
+	 33wZKXEcFmab7JUJS4MPEurTV7YZYEA8MAj3M9Al+fMBiTBz84DEcxDgQHQDiaaDTN
+	 QpWQClUivpeCLI7sF+V9hjifZ/U6S5ol/+23C5ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Marek Vasut <marex@denx.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 610/739] thermal/drivers/imx8mm: Suppress log message on probe deferral
-Date: Mon, 11 Sep 2023 15:46:49 +0200
-Message-ID: <20230911134708.138002070@linuxfoundation.org>
+Subject: [PATCH 6.5 628/739] virtio_vdpa: build affinity masks conditionally
+Date: Mon, 11 Sep 2023 15:47:07 +0200
+Message-ID: <20230911134708.637678316@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,48 +40,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Jason Wang <jasowang@redhat.com>
 
-[ Upstream commit 4afcb58ea47e66c025d2b0a5f091dce5aaf95b0f ]
+[ Upstream commit ae15aceaa98ad9499763923f7890e345d9f46b60 ]
 
-nvmem_cell_read_u32() may return -EPROBE_DEFER if NVMEM supplier has not
-yet been probed. Future reprobe may succeed, so printing:
+We try to build affinity mask via create_affinity_masks()
+unconditionally which may lead several issues:
 
-  i.mx8mm_thermal 30260000.tmu: Failed to read OCOTP nvmem cell (-517).
+- the affinity mask is not used for parent without affinity support
+  (only VDUSE support the affinity now)
+- the logic of create_affinity_masks() might not work for devices
+  other than block. For example it's not rare in the networking device
+  where the number of queues could exceed the number of CPUs. Such
+  case breaks the current affinity logic which is based on
+  group_cpus_evenly() who assumes the number of CPUs are not less than
+  the number of groups. This can trigger a warning[1]:
 
-to the log is confusing. Fix this by using dev_err_probe. This also
-elevates the message from warning to error, which is more correct: The
-log message is only ever printed in probe error path and probe aborts
-afterwards, so it really warrants an error-level message.
+	if (ret >= 0)
+		WARN_ON(nr_present + nr_others < numgrps);
 
-Fixes: 403291648823 ("thermal/drivers/imx: Add support for loading calibration data from OCOTP")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230708112647.2897294-1-a.fatoum@pengutronix.de
+Fixing this by only build the affinity masks only when
+
+- Driver passes affinity descriptor, driver like virtio-blk can make
+  sure to limit the number of queues when it exceeds the number of CPUs
+- Parent support affinity setting config ops
+
+This help to avoid the warning. More optimizations could be done on
+top.
+
+[1]
+[  682.146655] WARNING: CPU: 6 PID: 1550 at lib/group_cpus.c:400 group_cpus_evenly+0x1aa/0x1c0
+[  682.146668] CPU: 6 PID: 1550 Comm: vdpa Not tainted 6.5.0-rc5jason+ #79
+[  682.146671] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+[  682.146673] RIP: 0010:group_cpus_evenly+0x1aa/0x1c0
+[  682.146676] Code: 4c 89 e0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc e8 1b c4 74 ff 48 89 ef e8 13 ac 98 ff 4c 89 e7 45 31 e4 e8 08 ac 98 ff eb c2 <0f> 0b eb b6 e8 fd 05 c3 00 45 31 e4 eb e5 cc cc cc cc cc cc cc cc
+[  682.146679] RSP: 0018:ffffc9000215f498 EFLAGS: 00010293
+[  682.146682] RAX: 000000000001f1e0 RBX: 0000000000000041 RCX: 0000000000000000
+[  682.146684] RDX: ffff888109922058 RSI: 0000000000000041 RDI: 0000000000000030
+[  682.146686] RBP: ffff888109922058 R08: ffffc9000215f498 R09: ffffc9000215f4a0
+[  682.146687] R10: 00000000000198d0 R11: 0000000000000030 R12: ffff888107e02800
+[  682.146689] R13: 0000000000000030 R14: 0000000000000030 R15: 0000000000000041
+[  682.146692] FS:  00007fef52315740(0000) GS:ffff888237380000(0000) knlGS:0000000000000000
+[  682.146695] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  682.146696] CR2: 00007fef52509000 CR3: 0000000110dbc004 CR4: 0000000000370ee0
+[  682.146698] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  682.146700] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  682.146701] Call Trace:
+[  682.146703]  <TASK>
+[  682.146705]  ? __warn+0x7b/0x130
+[  682.146709]  ? group_cpus_evenly+0x1aa/0x1c0
+[  682.146712]  ? report_bug+0x1c8/0x1e0
+[  682.146717]  ? handle_bug+0x3c/0x70
+[  682.146721]  ? exc_invalid_op+0x14/0x70
+[  682.146723]  ? asm_exc_invalid_op+0x16/0x20
+[  682.146727]  ? group_cpus_evenly+0x1aa/0x1c0
+[  682.146729]  ? group_cpus_evenly+0x15c/0x1c0
+[  682.146731]  create_affinity_masks+0xaf/0x1a0
+[  682.146735]  virtio_vdpa_find_vqs+0x83/0x1d0
+[  682.146738]  ? __pfx_default_calc_sets+0x10/0x10
+[  682.146742]  virtnet_find_vqs+0x1f0/0x370
+[  682.146747]  virtnet_probe+0x501/0xcd0
+[  682.146749]  ? vp_modern_get_status+0x12/0x20
+[  682.146751]  ? get_cap_addr.isra.0+0x10/0xc0
+[  682.146754]  virtio_dev_probe+0x1af/0x260
+[  682.146759]  really_probe+0x1a5/0x410
+
+Fixes: 3dad56823b53 ("virtio-vdpa: Support interrupt affinity spreading mechanism")
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20230811091539.1359865-1-jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx8mm_thermal.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/virtio/virtio_vdpa.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
-index d4b40869c7d7b..dd474166ca671 100644
---- a/drivers/thermal/imx8mm_thermal.c
-+++ b/drivers/thermal/imx8mm_thermal.c
-@@ -179,10 +179,8 @@ static int imx8mm_tmu_probe_set_calib_v1(struct platform_device *pdev,
- 	int ret;
+diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
+index 961161da59000..06ce6d8c2e004 100644
+--- a/drivers/virtio/virtio_vdpa.c
++++ b/drivers/virtio/virtio_vdpa.c
+@@ -366,11 +366,14 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
+ 	struct irq_affinity default_affd = { 0 };
+ 	struct cpumask *masks;
+ 	struct vdpa_callback cb;
++	bool has_affinity = desc && ops->set_vq_affinity;
+ 	int i, err, queue_idx = 0;
  
- 	ret = nvmem_cell_read_u32(&pdev->dev, "calib", &ana0);
--	if (ret) {
--		dev_warn(dev, "Failed to read OCOTP nvmem cell (%d).\n", ret);
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to read OCOTP nvmem cell\n");
+-	masks = create_affinity_masks(nvqs, desc ? desc : &default_affd);
+-	if (!masks)
+-		return -ENOMEM;
++	if (has_affinity) {
++		masks = create_affinity_masks(nvqs, desc ? desc : &default_affd);
++		if (!masks)
++			return -ENOMEM;
++	}
  
- 	writel(FIELD_PREP(TASR_BUF_VREF_MASK,
- 			  FIELD_GET(ANA0_BUF_VREF_MASK, ana0)) |
+ 	for (i = 0; i < nvqs; ++i) {
+ 		if (!names[i]) {
+@@ -386,20 +389,22 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
+ 			goto err_setup_vq;
+ 		}
+ 
+-		if (ops->set_vq_affinity)
++		if (has_affinity)
+ 			ops->set_vq_affinity(vdpa, i, &masks[i]);
+ 	}
+ 
+ 	cb.callback = virtio_vdpa_config_cb;
+ 	cb.private = vd_dev;
+ 	ops->set_config_cb(vdpa, &cb);
+-	kfree(masks);
++	if (has_affinity)
++		kfree(masks);
+ 
+ 	return 0;
+ 
+ err_setup_vq:
+ 	virtio_vdpa_del_vqs(vdev);
+-	kfree(masks);
++	if (has_affinity)
++		kfree(masks);
+ 	return err;
+ }
+ 
 -- 
 2.40.1
 
