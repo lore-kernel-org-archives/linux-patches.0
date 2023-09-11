@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9ED1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90013C433C9;
-	Mon, 11 Sep 2023 14:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B2A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66684C433C8;
+	Mon, 11 Sep 2023 14:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442450;
-	bh=rPHbqRO9wR0H4SWhc3W2INuA5NxhuI23NZfMMnfk0YU=;
+	s=korg; t=1694442453;
+	bh=7ENhgbNkz0dP5Mu7AiQ5k1peGyLVntQFOO4Bn0+d8T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmchFVpRJo1duCwUnNJDFoftzv5f3iB+T3hZGNQFMDffbdNdYMS/2IEMNF4MhZVTn
-	 E/Rhg/K71CJweOqJKvHd+u5RQCVk3BuvCUXGVY1HY64f8UvP9REHJ7GkAN0hEjb690
-	 zTUKn+zGRlNEIICeQZthu0CK0HSe+26YvqZzE/C4=
+	b=fTIvsxyRbrBwIabhW/Q7I61O+lMjuKxfC69jMv+VUcehLAgLZ8IjLEGdoexLPMzZb
+	 V20Q6PhydmeIQ+LG8vV+a4Nsl4PNaCgbfGtABNMDOeKEhLKf8X0R6HQoBsWlpNEUa0
+	 lGmd1ap+qGsh/oHE9eWUyJYd2dqsFJVfJg3v5ytY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Guiting Shen <aarongt.shen@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 030/737] ASoC: rt711-sdca: fix for JD event handling in ClockStop Mode0
-Date: Mon, 11 Sep 2023 15:38:09 +0200
-Message-ID: <20230911134651.239384449@linuxfoundation.org>
+Subject: [PATCH 6.4 031/737] ASoC: atmel: Fix the 8K sample parameter in I2SC master
+Date: Mon, 11 Sep 2023 15:38:10 +0200
+Message-ID: <20230911134651.269839373@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,46 +40,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Guiting Shen <aarongt.shen@gmail.com>
 
-[ Upstream commit 23adeb7056acd4fd866969f4afb91441776cc4f5 ]
+[ Upstream commit f85739c0b2b0d98a32f5ca4fcc5501d2b76df4f6 ]
 
-When the system suspends, peripheral SDCA interrupts are disabled.
-When system level resume is invoked, the peripheral SDCA interrupts
-should be enabled to handle JD events.
-Enable SDCA interrupts in resume sequence when ClockStop Mode0 is applied.
+The 8K sample parameter of 12.288Mhz main system bus clock doesn't work
+because the I2SC_MR.IMCKDIV must not be 0 according to the sama5d2
+series datasheet(I2SC Mode Register of Register Summary).
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Reported-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20230721090711.128247-1-shumingf@realtek.com
+So use the 6.144Mhz instead of 12.288Mhz to support 8K sample.
+
+Signed-off-by: Guiting Shen <aarongt.shen@gmail.com>
+Link: https://lore.kernel.org/r/20230715030620.62328-1-aarongt.shen@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt711-sdca-sdw.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/atmel/atmel-i2s.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt711-sdca-sdw.c b/sound/soc/codecs/rt711-sdca-sdw.c
-index 51f3335343e08..76ed61e47316d 100644
---- a/sound/soc/codecs/rt711-sdca-sdw.c
-+++ b/sound/soc/codecs/rt711-sdca-sdw.c
-@@ -441,8 +441,16 @@ static int __maybe_unused rt711_sdca_dev_resume(struct device *dev)
- 	if (!rt711->first_hw_init)
- 		return 0;
+diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
+index 49930baf5e4d6..69a88dc651652 100644
+--- a/sound/soc/atmel/atmel-i2s.c
++++ b/sound/soc/atmel/atmel-i2s.c
+@@ -163,11 +163,14 @@ struct atmel_i2s_gck_param {
  
--	if (!slave->unattach_request)
-+	if (!slave->unattach_request) {
-+		if (rt711->disable_irq == true) {
-+			mutex_lock(&rt711->disable_irq_lock);
-+			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK1, SDW_SCP_SDCA_INTMASK_SDCA_0);
-+			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK2, SDW_SCP_SDCA_INTMASK_SDCA_8);
-+			rt711->disable_irq = false;
-+			mutex_unlock(&rt711->disable_irq_lock);
-+		}
- 		goto regmap_sync;
-+	}
+ #define I2S_MCK_12M288		12288000UL
+ #define I2S_MCK_11M2896		11289600UL
++#define I2S_MCK_6M144		6144000UL
  
- 	time = wait_for_completion_timeout(&slave->initialization_complete,
- 				msecs_to_jiffies(RT711_PROBE_TIMEOUT));
+ /* mck = (32 * (imckfs+1) / (imckdiv+1)) * fs */
+ static const struct atmel_i2s_gck_param gck_params[] = {
++	/* mck = 6.144Mhz */
++	{  8000, I2S_MCK_6M144,  1, 47},	/* mck =  768 fs */
++
+ 	/* mck = 12.288MHz */
+-	{  8000, I2S_MCK_12M288, 0, 47},	/* mck = 1536 fs */
+ 	{ 16000, I2S_MCK_12M288, 1, 47},	/* mck =  768 fs */
+ 	{ 24000, I2S_MCK_12M288, 3, 63},	/* mck =  512 fs */
+ 	{ 32000, I2S_MCK_12M288, 3, 47},	/* mck =  384 fs */
 -- 
 2.40.1
 
