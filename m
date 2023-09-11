@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905C211706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C41C433C8;
-	Mon, 11 Sep 2023 14:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6423911706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB10AC433C8;
+	Mon, 11 Sep 2023 14:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443926;
-	bh=HqjQDE5XhFvZTynCO+3oMsDcSVVo0ZCjVfbHLHGOpIY=;
+	s=korg; t=1694443929;
+	bh=/7PQcGbXpIXX2suuloLKXiQ2i59Tnd3kNLrysKk/2jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhyMkNjvI7MVfcxbO5hirUIz2Mwl7nHO50qDLRX6STaVpB+XeBnEs0hPx+FZwLNYe
-	 XYOjei9OY/aIGcPqj5d5GJMlfFpTN2g9kZjQ6gc12VzkRPWZiXSrTy7ZjzMoE3c+L9
-	 35JjHJl5KlVGMAYL+8fi41q0pLASZAVvAnuo9aaw=
+	b=RqyPj8fMYqnWQ0TiYDciDmV1FSZflLFxIBf/0yVk7LppTpQ+ddMu+ky+E0r/GH97j
+	 EETYlVLqjP8lAK9scJnzkli7L2svY6OZBF9V7mIkFe4ukFzz83cY9IyAhvRAgANzNK
+	 U7HbLFmzRCiyCpPGS0CCcjC8e2specV7Y1m8Qhbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+2da1965168e7dbcba136@syzkaller.appspotmail.com,
 	Bob Pearson <rpearsonhpe@gmail.com>,
-	Zhu Yanjun <zyjzyj2000@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 520/737] RDMA/rxe: Move work queue code to subroutines
-Date: Mon, 11 Sep 2023 15:46:19 +0200
-Message-ID: <20230911134705.102345057@linuxfoundation.org>
+Subject: [PATCH 6.4 521/737] RDMA/rxe: Fix unsafe drain work queue code
+Date: Mon, 11 Sep 2023 15:46:20 +0200
+Message-ID: <20230911134705.131358244@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,236 +43,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit e0ba8ff46704fc924e2ef0451ba196cbdc0d68f2 ]
+[ Upstream commit 5993b75d0bc71cd2b441d174b028fc36180f032c ]
 
-This patch:
-	- Moves code to initialize a qp send work queue to a
-	  subroutine named rxe_init_sq.
-	- Moves code to initialize a qp recv work queue to a
-	  subroutine named rxe_init_rq.
-	- Moves initialization of qp request and response packet
-	  queues ahead of work queue initialization so that cleanup
-	  of a qp if it is not fully completed can successfully
-	  attempt to drain the packet queues without a seg fault.
-	- Makes minor whitespace cleanups.
+If create_qp does not fully succeed it is possible for qp cleanup
+code to attempt to drain the send or recv work queues before the
+queues have been created causing a seg fault. This patch checks
+to see if the queues exist before attempting to drain them.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20230620135519.9365-2-rpearsonhpe@gmail.com
+Link: https://lore.kernel.org/r/20230620135519.9365-3-rpearsonhpe@gmail.com
+Reported-by: syzbot+2da1965168e7dbcba136@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-rdma/00000000000012d89205fe7cfe00@google.com/raw
+Fixes: 49dc9c1f0c7e ("RDMA/rxe: Cleanup reset state handling in rxe_resp.c")
+Fixes: fbdeb828a21f ("RDMA/rxe: Cleanup error state handling in rxe_comp.c")
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 159 ++++++++++++++++++++---------
- 1 file changed, 108 insertions(+), 51 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_comp.c | 4 ++++
+ drivers/infiniband/sw/rxe/rxe_resp.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index a0f206431cf8e..b66afadbd7c40 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -183,13 +183,63 @@ static void rxe_qp_init_misc(struct rxe_dev *rxe, struct rxe_qp *qp,
- 	atomic_set(&qp->skb_out, 0);
- }
- 
-+static int rxe_init_sq(struct rxe_qp *qp, struct ib_qp_init_attr *init,
-+		       struct ib_udata *udata,
-+		       struct rxe_create_qp_resp __user *uresp)
-+{
-+	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
-+	int wqe_size;
-+	int err;
-+
-+	qp->sq.max_wr = init->cap.max_send_wr;
-+	wqe_size = max_t(int, init->cap.max_send_sge * sizeof(struct ib_sge),
-+			 init->cap.max_inline_data);
-+	qp->sq.max_sge = wqe_size / sizeof(struct ib_sge);
-+	qp->sq.max_inline = wqe_size;
-+	wqe_size += sizeof(struct rxe_send_wqe);
-+
-+	qp->sq.queue = rxe_queue_init(rxe, &qp->sq.max_wr, wqe_size,
-+				      QUEUE_TYPE_FROM_CLIENT);
-+	if (!qp->sq.queue) {
-+		rxe_err_qp(qp, "Unable to allocate send queue");
-+		err = -ENOMEM;
-+		goto err_out;
-+	}
-+
-+	/* prepare info for caller to mmap send queue if user space qp */
-+	err = do_mmap_info(rxe, uresp ? &uresp->sq_mi : NULL, udata,
-+			   qp->sq.queue->buf, qp->sq.queue->buf_size,
-+			   &qp->sq.queue->ip);
-+	if (err) {
-+		rxe_err_qp(qp, "do_mmap_info failed, err = %d", err);
-+		goto err_free;
-+	}
-+
-+	/* return actual capabilities to caller which may be larger
-+	 * than requested
-+	 */
-+	init->cap.max_send_wr = qp->sq.max_wr;
-+	init->cap.max_send_sge = qp->sq.max_sge;
-+	init->cap.max_inline_data = qp->sq.max_inline;
-+
-+	return 0;
-+
-+err_free:
-+	vfree(qp->sq.queue->buf);
-+	kfree(qp->sq.queue);
-+	qp->sq.queue = NULL;
-+err_out:
-+	return err;
-+}
-+
- static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
- 			   struct ib_qp_init_attr *init, struct ib_udata *udata,
- 			   struct rxe_create_qp_resp __user *uresp)
- {
+diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
+index f46c5a5fd0aea..44fece204abdd 100644
+--- a/drivers/infiniband/sw/rxe/rxe_comp.c
++++ b/drivers/infiniband/sw/rxe/rxe_comp.c
+@@ -597,6 +597,10 @@ static void flush_send_queue(struct rxe_qp *qp, bool notify)
+ 	struct rxe_queue *q = qp->sq.queue;
  	int err;
--	int wqe_size;
--	enum queue_type type;
-+
-+	/* if we don't finish qp create make sure queue is valid */
-+	skb_queue_head_init(&qp->req_pkts);
  
- 	err = sock_create_kern(&init_net, AF_INET, SOCK_DGRAM, 0, &qp->sk);
- 	if (err < 0)
-@@ -204,32 +254,10 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
- 	 * (0xc000 - 0xffff).
- 	 */
- 	qp->src_port = RXE_ROCE_V2_SPORT + (hash_32(qp_num(qp), 14) & 0x3fff);
--	qp->sq.max_wr		= init->cap.max_send_wr;
--
--	/* These caps are limited by rxe_qp_chk_cap() done by the caller */
--	wqe_size = max_t(int, init->cap.max_send_sge * sizeof(struct ib_sge),
--			 init->cap.max_inline_data);
--	qp->sq.max_sge = init->cap.max_send_sge =
--		wqe_size / sizeof(struct ib_sge);
--	qp->sq.max_inline = init->cap.max_inline_data = wqe_size;
--	wqe_size += sizeof(struct rxe_send_wqe);
++	/* send queue never got created. nothing to do. */
++	if (!qp->sq.queue)
++		return;
++
+ 	while ((wqe = queue_head(q, q->type))) {
+ 		if (notify) {
+ 			err = flush_send_wqe(qp, wqe);
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index ee68306555b99..ed5af55237d9f 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -1452,6 +1452,10 @@ static void flush_recv_queue(struct rxe_qp *qp, bool notify)
+ 	if (qp->srq)
+ 		return;
  
--	type = QUEUE_TYPE_FROM_CLIENT;
--	qp->sq.queue = rxe_queue_init(rxe, &qp->sq.max_wr,
--				wqe_size, type);
--	if (!qp->sq.queue)
--		return -ENOMEM;
--
--	err = do_mmap_info(rxe, uresp ? &uresp->sq_mi : NULL, udata,
--			   qp->sq.queue->buf, qp->sq.queue->buf_size,
--			   &qp->sq.queue->ip);
--
--	if (err) {
--		vfree(qp->sq.queue->buf);
--		kfree(qp->sq.queue);
--		qp->sq.queue = NULL;
-+	err = rxe_init_sq(qp, init, udata, uresp);
-+	if (err)
- 		return err;
--	}
- 
- 	qp->req.wqe_index = queue_get_producer(qp->sq.queue,
- 					       QUEUE_TYPE_FROM_CLIENT);
-@@ -248,36 +276,65 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
- 	return 0;
- }
- 
-+static int rxe_init_rq(struct rxe_qp *qp, struct ib_qp_init_attr *init,
-+		       struct ib_udata *udata,
-+		       struct rxe_create_qp_resp __user *uresp)
-+{
-+	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
-+	int wqe_size;
-+	int err;
++	/* recv queue not created. nothing to do. */
++	if (!qp->rq.queue)
++		return;
 +
-+	qp->rq.max_wr = init->cap.max_recv_wr;
-+	qp->rq.max_sge = init->cap.max_recv_sge;
-+	wqe_size = sizeof(struct rxe_recv_wqe) +
-+				qp->rq.max_sge*sizeof(struct ib_sge);
-+
-+	qp->rq.queue = rxe_queue_init(rxe, &qp->rq.max_wr, wqe_size,
-+				      QUEUE_TYPE_FROM_CLIENT);
-+	if (!qp->rq.queue) {
-+		rxe_err_qp(qp, "Unable to allocate recv queue");
-+		err = -ENOMEM;
-+		goto err_out;
-+	}
-+
-+	/* prepare info for caller to mmap recv queue if user space qp */
-+	err = do_mmap_info(rxe, uresp ? &uresp->rq_mi : NULL, udata,
-+			   qp->rq.queue->buf, qp->rq.queue->buf_size,
-+			   &qp->rq.queue->ip);
-+	if (err) {
-+		rxe_err_qp(qp, "do_mmap_info failed, err = %d", err);
-+		goto err_free;
-+	}
-+
-+	/* return actual capabilities to caller which may be larger
-+	 * than requested
-+	 */
-+	init->cap.max_recv_wr = qp->rq.max_wr;
-+
-+	return 0;
-+
-+err_free:
-+	vfree(qp->rq.queue->buf);
-+	kfree(qp->rq.queue);
-+	qp->rq.queue = NULL;
-+err_out:
-+	return err;
-+}
-+
- static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
- 			    struct ib_qp_init_attr *init,
- 			    struct ib_udata *udata,
- 			    struct rxe_create_qp_resp __user *uresp)
- {
- 	int err;
--	int wqe_size;
--	enum queue_type type;
-+
-+	/* if we don't finish qp create make sure queue is valid */
-+	skb_queue_head_init(&qp->resp_pkts);
- 
- 	if (!qp->srq) {
--		qp->rq.max_wr		= init->cap.max_recv_wr;
--		qp->rq.max_sge		= init->cap.max_recv_sge;
--
--		wqe_size = rcv_wqe_size(qp->rq.max_sge);
--
--		type = QUEUE_TYPE_FROM_CLIENT;
--		qp->rq.queue = rxe_queue_init(rxe, &qp->rq.max_wr,
--					wqe_size, type);
--		if (!qp->rq.queue)
--			return -ENOMEM;
--
--		err = do_mmap_info(rxe, uresp ? &uresp->rq_mi : NULL, udata,
--				   qp->rq.queue->buf, qp->rq.queue->buf_size,
--				   &qp->rq.queue->ip);
--		if (err) {
--			vfree(qp->rq.queue->buf);
--			kfree(qp->rq.queue);
--			qp->rq.queue = NULL;
-+		err = rxe_init_rq(qp, init, udata, uresp);
-+		if (err)
- 			return err;
--		}
- 	}
- 
- 	rxe_init_task(&qp->resp.task, qp, rxe_responder);
-@@ -307,10 +364,10 @@ int rxe_qp_from_init(struct rxe_dev *rxe, struct rxe_qp *qp, struct rxe_pd *pd,
- 	if (srq)
- 		rxe_get(srq);
- 
--	qp->pd			= pd;
--	qp->rcq			= rcq;
--	qp->scq			= scq;
--	qp->srq			= srq;
-+	qp->pd = pd;
-+	qp->rcq = rcq;
-+	qp->scq = scq;
-+	qp->srq = srq;
- 
- 	atomic_inc(&rcq->num_wq);
- 	atomic_inc(&scq->num_wq);
+ 	while ((wqe = queue_head(q, q->type))) {
+ 		if (notify) {
+ 			err = flush_recv_wqe(qp, wqe);
 -- 
 2.40.1
 
