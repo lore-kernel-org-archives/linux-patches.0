@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5AE11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E277C433C7;
-	Mon, 11 Sep 2023 15:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BC911715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB4EC433C9;
+	Mon, 11 Sep 2023 15:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445004;
-	bh=ohLkHtzAZfqtupwQENYJzGok14wpvn8oXxrFPLruEz8=;
+	s=korg; t=1694445007;
+	bh=pdZNWwVYvrY4o4sWKGZRsFDsakrNaSD0OKucaDU2tkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbwcQddd8fSyeSPPPqBzOvutPIIWDytBs9zJSYU68rD4UMGHgU6LdwZ8gsm1aM4OL
-	 oAVFqJZV8uKr+T1hg/kclVErxg8YqzoSgOTWGmrrV4SXYpBwgFe2wTP9xm0ZZKPiby
-	 LNXljkgyJEJIm3WsdUoVpXZG2XtNERC8HCDW4kh4=
+	b=MMlglZhRpswweKUaASm3/NPAtJTCkXRP19OPdJfaW0JBvIsVw3yHeCiwvFVZukBtj
+	 jRaPqPg9whhgh55jtyeaaEGAKwq75Ik+KxcU4mansd7CCAAQRr70ovmMIAhjMEBDeF
+	 336NwM5n6V1hJMDcp4TOWqlkg/l3RvF2vQv9x+X4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Isaacs <mail@jdisaacs.com>,
-	"Ethan D. Twardy" <ethan.twardy@gmail.com>,
-	Tiago Lam <tiagolam@gmail.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/600] kbuild: rust_is_available: fix confusion when a version appears in the path
-Date: Mon, 11 Sep 2023 15:43:19 +0200
-Message-ID: <20230911134638.506799196@linuxfoundation.org>
+Subject: [PATCH 6.1 193/600] wifi: nl80211/cfg80211: add forgotten nla_policy for BSS color attribute
+Date: Mon, 11 Sep 2023 15:43:46 +0200
+Message-ID: <20230911134639.315752100@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -44,57 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 9eb7e20e0c5cd069457845f965b3e8a7d736ecb7 ]
+[ Upstream commit 218d690c49b7e9c94ad0d317adbdd4af846ea0dc ]
 
-`bindgen`'s output for `libclang`'s version check contains paths, which
-in turn may contain strings that look like version numbers [1][2]:
+The previous commit dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to
+NDP ranging parameters") adds a parameter for NDP ranging by introducing
+a new attribute type named NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR.
 
-    .../6.1.0-dev/.../rust_is_available_bindgen_libclang.h:2:9: warning: clang version 11.1.0  [-W#pragma-messages], err: false
+However, the author forgot to also describe the nla_policy at
+nl80211_pmsr_ftm_req_attr_policy (net/wireless/nl80211.c). Just
+complement it to avoid malformed attribute that causes out-of-attribute
+access.
 
-which the script will pick up as the version instead of the latter.
-
-It is also the case that versions may appear after the actual version
-(e.g. distribution's version text), which was the reason behind `head` [3]:
-
-    .../rust-is-available-bindgen-libclang.h:2:9: warning: clang version 13.0.0 (Fedora 13.0.0-3.fc35) [-W#pragma-messages], err: false
-
-Thus instead ask for a match after the `clang version` string.
-
-Reported-by: Jordan Isaacs <mail@jdisaacs.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/942 [1]
-Reported-by: "Ethan D. Twardy" <ethan.twardy@gmail.com>
-Closes: https://lore.kernel.org/rust-for-linux/20230528131802.6390-2-ethan.twardy@gmail.com/ [2]
-Reported-by: Tiago Lam <tiagolam@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/pull/789 [3]
-Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Ethan Twardy <ethan.twardy@gmail.com>
-Tested-by: Ethan Twardy <ethan.twardy@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230616001631.463536-8-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: dd3e4fc75b4a ("nl80211/cfg80211: add BSS color to NDP ranging parameters")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230809033151.768910-1-linma@zju.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/wireless/nl80211.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index c965895d80b97..7a925d2b20fc7 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -112,9 +112,7 @@ fi
- # of the `libclang` found by the Rust bindings generator is suitable.
- bindgen_libclang_version=$( \
- 	echo "$bindgen_libclang_output" \
--		| grep -F 'clang version ' \
--		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
--		| head -n 1 \
-+		| sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
- )
- bindgen_libclang_min_version=$($min_tool_version llvm)
- bindgen_libclang_cversion=$(get_canonical_version $bindgen_libclang_version)
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index c2363d44a1ffc..12c7c89d5be1d 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -323,6 +323,7 @@ nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
+ 	[NL80211_PMSR_FTM_REQ_ATTR_TRIGGER_BASED] = { .type = NLA_FLAG },
+ 	[NL80211_PMSR_FTM_REQ_ATTR_NON_TRIGGER_BASED] = { .type = NLA_FLAG },
+ 	[NL80211_PMSR_FTM_REQ_ATTR_LMR_FEEDBACK] = { .type = NLA_FLAG },
++	[NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR] = { .type = NLA_U8 },
+ };
+ 
+ static const struct nla_policy
 -- 
 2.40.1
 
