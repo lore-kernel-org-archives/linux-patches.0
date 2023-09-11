@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849941170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C94C433C7;
-	Mon, 11 Sep 2023 14:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1031170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F73C433C7;
+	Mon, 11 Sep 2023 14:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442096;
-	bh=3uRfiLvzK9UlwL4v893Kjlk4FgKq4mcqYCCZmQ3fSFQ=;
+	s=korg; t=1694442098;
+	bh=8h1z8IZq5A00Vc4PwfkDGn/x7MuFJ82siDVvjL4poc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koIbQ4T9vUfCbl3cuzSlDNB1nmrGxmzD+7h7JpFRkuzBCIM5zL87xsYKIvULtsKdh
-	 QHCNJXIDHsy0SpUzZ5qqW6Sb/0/R7rVv4W1bAow4pZmVe5ZQ+K9+hIcwksn5phFwew
-	 tY1LNaZoB2wxT/Dd9UDq1hWheGtzIMubyhptYUcQ=
+	b=wCeHVBkQXfW1mjULMX167fy5n3q5vaYy4GD9JRmsJSVc1uVybB6jRYckZzaKPJwAy
+	 TELPkyzJmtkTpumHqTCzEodW7T60b6nURLXyT2Tp06qiF/K1HLF0XvpHkSZEiczKjy
+	 uA83cV8Rd4kkhBnlueNc82/IwjIchrcHPJwqpRqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 608/739] thermal/drivers/mediatek/lvts_thermal: Dont leave threshold zeroed
-Date: Mon, 11 Sep 2023 15:46:47 +0200
-Message-ID: <20230911134708.081032429@linuxfoundation.org>
+	Daniel Mack <daniel@zonque.org>,
+	stable@kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.5 638/739] gpio: zynq: restore zynq_gpio_irq_reqres/zynq_gpio_irq_relres callbacks
+Date: Mon, 11 Sep 2023 15:47:17 +0200
+Message-ID: <20230911134708.915141134@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -36,82 +34,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Daniel Mack <daniel@zonque.org>
 
-[ Upstream commit 77354eaef8218bc40d6b37e783b0b8dcca22a7d9 ]
+commit 180b10bd160b014448366e5bc86e0558f8acb74f upstream.
 
-The thermal framework might leave the low threshold unset if there
-aren't any lower trip points. This leaves the register zeroed, which
-translates to a very high temperature for the low threshold. The
-interrupt for this threshold is then immediately triggered, and the
-state machine gets stuck, preventing any other temperature monitoring
-interrupts to ever trigger.
+Commit f56914393537 ("gpio: zynq: fix zynqmp_gpio not an immutable chip
+warning") ditched the open-coded resource allocation handlers in favor
+of the generic ones. These generic handlers don't maintain the PM
+runtime anymore, which causes a regression in that level IRQs are no
+longer reported.
 
-(The same happens by not setting the Cold or Hot to Normal thresholds
-when using those)
+Restore the original handlers to fix this.
 
-Set the unused threshold to a valid low value. This value was chosen so
-that for any valid golden temperature read from the efuse, when the
-value is converted to raw and back again to milliCelsius, the result
-doesn't underflow.
-
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230706153823.201943-6-nfraprado@collabora.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Daniel Mack <daniel@zonque.org>
+Fixes: f56914393537 ("gpio: zynq: fix zynqmp_gpio not an immutable chip warning")
+Cc: stable@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-zynq.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index 02e7af4619a2c..064269667fb89 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -83,6 +83,8 @@
+diff --git a/drivers/gpio/gpio-zynq.c b/drivers/gpio/gpio-zynq.c
+index 0a7264aabe48..324e942c0650 100644
+--- a/drivers/gpio/gpio-zynq.c
++++ b/drivers/gpio/gpio-zynq.c
+@@ -575,6 +575,26 @@ static int zynq_gpio_set_wake(struct irq_data *data, unsigned int on)
+ 	return 0;
+ }
  
- #define LVTS_HW_SHUTDOWN_MT8195		105000
- 
-+#define LVTS_MINIMUM_THRESHOLD		20000
++static int zynq_gpio_irq_reqres(struct irq_data *d)
++{
++	struct gpio_chip *chip = irq_data_get_irq_chip_data(d);
++	int ret;
 +
- static int golden_temp = LVTS_GOLDEN_TEMP_DEFAULT;
- static int coeff_b = LVTS_COEFF_B;
++	ret = pm_runtime_resume_and_get(chip->parent);
++	if (ret < 0)
++		return ret;
++
++	return gpiochip_reqres_irq(chip, d->hwirq);
++}
++
++static void zynq_gpio_irq_relres(struct irq_data *d)
++{
++	struct gpio_chip *chip = irq_data_get_irq_chip_data(d);
++
++	gpiochip_relres_irq(chip, d->hwirq);
++	pm_runtime_put(chip->parent);
++}
++
+ /* irq chip descriptor */
+ static const struct irq_chip zynq_gpio_level_irqchip = {
+ 	.name		= DRIVER_NAME,
+@@ -584,9 +604,10 @@ static const struct irq_chip zynq_gpio_level_irqchip = {
+ 	.irq_unmask	= zynq_gpio_irq_unmask,
+ 	.irq_set_type	= zynq_gpio_set_irq_type,
+ 	.irq_set_wake	= zynq_gpio_set_wake,
++	.irq_request_resources = zynq_gpio_irq_reqres,
++	.irq_release_resources = zynq_gpio_irq_relres,
+ 	.flags		= IRQCHIP_EOI_THREADED | IRQCHIP_EOI_IF_HANDLED |
+ 			  IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_IMMUTABLE,
+-	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+ };
  
-@@ -294,7 +296,7 @@ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
- 	struct lvts_sensor *lvts_sensor = thermal_zone_device_priv(tz);
- 	void __iomem *base = lvts_sensor->base;
--	u32 raw_low = lvts_temp_to_raw(low);
-+	u32 raw_low = lvts_temp_to_raw(low != -INT_MAX ? low : LVTS_MINIMUM_THRESHOLD);
- 	u32 raw_high = lvts_temp_to_raw(high);
+ static const struct irq_chip zynq_gpio_edge_irqchip = {
+@@ -597,8 +618,9 @@ static const struct irq_chip zynq_gpio_edge_irqchip = {
+ 	.irq_unmask	= zynq_gpio_irq_unmask,
+ 	.irq_set_type	= zynq_gpio_set_irq_type,
+ 	.irq_set_wake	= zynq_gpio_set_wake,
++	.irq_request_resources = zynq_gpio_irq_reqres,
++	.irq_release_resources = zynq_gpio_irq_relres,
+ 	.flags		= IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_IMMUTABLE,
+-	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+ };
  
- 	/*
-@@ -306,11 +308,9 @@ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
- 	 *
- 	 * 14-0 : Raw temperature for threshold
- 	 */
--	if (low != -INT_MAX) {
--		pr_debug("%s: Setting low limit temperature interrupt: %d\n",
--			 thermal_zone_device_type(tz), low);
--		writel(raw_low, LVTS_OFFSETL(base));
--	}
-+	pr_debug("%s: Setting low limit temperature interrupt: %d\n",
-+		 thermal_zone_device_type(tz), low);
-+	writel(raw_low, LVTS_OFFSETL(base));
- 
- 	/*
- 	 * High offset temperature threshold
+ static void zynq_gpio_handle_bank_irq(struct zynq_gpio *gpio,
 -- 
-2.40.1
+2.42.0
 
 
 
