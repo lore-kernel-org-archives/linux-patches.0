@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B636C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C50C433C7;
-	Mon, 11 Sep 2023 13:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6441170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:52:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F39C433C7;
+	Mon, 11 Sep 2023 13:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440328;
-	bh=jJqhpc8EvOGHiuIEYdtVWNRTJw1+xl8FSl0zJ7igaQ4=;
+	s=korg; t=1694440331;
+	bh=UJ8H1wA8PBIzn8qU+H73b1C+Avn9y1S0i3TQ8+0RLMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2ysDyeRFJ6E28bKh4hp8FLxgvTPi5aL14iUZqsIcCebIRYHqodmuOpGfqcusfvBY
-	 n78VQ3uXgwxXjXOdSluOlJkCFADHl4VM0NUmCd4+xXaMsE7QpKFRYsfAA0+3w/ybJT
-	 aNxoCdZQBKXbKrw7WyLC7TIUfzjWulIQYgnVr5EI=
+	b=W60X4Nff7PBskOHPgC5SUMoIRpmHqEYqtMtQAs7m2RtRF7wWyBWgLP3D1I68WqDnk
+	 hhrrV9Y7ybSWWGXh8vS5e8oRa8savRCEQ/MkiTofdN3NhVLNsV7/dPwfGlDGWYKq17
+	 RkS6HpA1nC2EfHGY0fnT86kQxqXjErCL9XISZCKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	=?UTF-8?q?J=C3=BCrg=20Billeter?= <j@bitron.ch>
-Subject: [PATCH 6.5 007/739] Revert "fuse: in fuse_flush only wait if someone wants the return code"
-Date: Mon, 11 Sep 2023 15:36:46 +0200
-Message-ID: <20230911134651.186658519@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.5 008/739] Revert "f2fs: clean up w/ sbi->log_sectors_per_block"
+Date: Mon, 11 Sep 2023 15:36:47 +0200
+Message-ID: <20230911134651.221827085@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -33,172 +34,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 91ec6c85599b60c00caf4e9a9d6c4d6e5dd5e93c upstream.
+commit 579c7e41507e85dc3eedf998a3dca14a2a1526ad upstream.
 
-This reverts commit 5a8bee63b10f6f2f52f6d22e109a4a147409842a.
+This reverts commit bfd476623999118d9c509cb0fa9380f2912bc225.
 
-Jürg Billeter reports the following regression:
+Shinichiro Kawasaki reported:
 
-  Since v6.3-rc1 commit 5a8bee63b1 ("fuse: in fuse_flush only wait if
-  someone wants the return code") `fput()` is called asynchronously if a
-  file is closed as part of a process exiting, i.e., if there was no
-  explicit `close()` before exit.
+When I ran workloads on f2fs using v6.5-rcX with fixes [1][2] and a zoned block
+devices with 4kb logical block size, I observe mount failure as follows. When
+I revert this commit, the failure goes away.
 
-  If the file was open for writing, also `put_write_access()` is called
-  asynchronously as part of the async `fput()`.
+[  167.781975][ T1555] F2FS-fs (dm-0): IO Block Size:        4 KB
+[  167.890728][ T1555] F2FS-fs (dm-0): Found nat_bits in checkpoint
+[  171.482588][ T1555] F2FS-fs (dm-0): Zone without valid block has non-zero write pointer. Reset the write pointer: wp[0x1300,0x8]
+[  171.496000][ T1555] F2FS-fs (dm-0): (0) : Unaligned zone reset attempted (block 280000 + 80000)
+[  171.505037][ T1555] F2FS-fs (dm-0): Discard zone failed:  (errno=-5)
 
-  If that newly written file is an executable, attempting to `execve()` the
-  new file can fail with `ETXTBSY` if it's called after the writer process
-  exited but before the async `fput()` has run.
+The patch replaced "sbi->log_blocksize - SECTOR_SHIFT" with
+"sbi->log_sectors_per_block". However, I think these two are not equal when the
+device has 4k logical block size. The former uses Linux kernel sector size 512
+byte. The latter use 512b sector size or 4kb sector size depending on the
+device. mkfs.f2fs obtains logical block size via BLKSSZGET ioctl from the device
+and reflects it to the value sbi->log_sector_size_per_block. This causes
+unexpected write pointer calculations in check_zone_write_pointer(). This
+resulted in unexpected zone reset and the mount failure.
 
-Reported-and-tested-by: "Jürg Billeter" <j@bitron.ch>
-Cc: <stable@vger.kernel.org> # v6.3
-Link: https://lore.kernel.org/all/4f66cded234462964899f2a661750d6798a57ec0.camel@bitron.ch/
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[1] https://lkml.kernel.org/linux-f2fs-devel/20230711050101.GA19128@lst.de/
+[2] https://lore.kernel.org/linux-f2fs-devel/20230804091556.2372567-1-shinichiro.kawasaki@wdc.com/
+
+Cc: stable@vger.kernel.org
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: bfd476623999 ("f2fs: clean up w/ sbi->log_sectors_per_block")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |   89 ++++++++++++++++-----------------------------------------
- 1 file changed, 26 insertions(+), 63 deletions(-)
+ fs/f2fs/segment.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -19,7 +19,6 @@
- #include <linux/uio.h>
- #include <linux/fs.h>
- #include <linux/filelock.h>
--#include <linux/file.h>
- 
- static int fuse_send_open(struct fuse_mount *fm, u64 nodeid,
- 			  unsigned int open_flags, int opcode,
-@@ -479,36 +478,48 @@ static void fuse_sync_writes(struct inod
- 	fuse_release_nowrite(inode);
- }
- 
--struct fuse_flush_args {
--	struct fuse_args args;
--	struct fuse_flush_in inarg;
--	struct work_struct work;
--	struct file *file;
--};
--
--static int fuse_do_flush(struct fuse_flush_args *fa)
-+static int fuse_flush(struct file *file, fl_owner_t id)
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 0457d620011f..cbb4bd95ea19 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -4846,17 +4846,17 @@ static int check_zone_write_pointer(struct f2fs_sb_info *sbi,
  {
--	int err;
--	struct inode *inode = file_inode(fa->file);
-+	struct inode *inode = file_inode(file);
- 	struct fuse_mount *fm = get_fuse_mount(inode);
-+	struct fuse_file *ff = file->private_data;
-+	struct fuse_flush_in inarg;
-+	FUSE_ARGS(args);
-+	int err;
-+
-+	if (fuse_is_bad(inode))
-+		return -EIO;
-+
-+	if (ff->open_flags & FOPEN_NOFLUSH && !fm->fc->writeback_cache)
-+		return 0;
+ 	unsigned int wp_segno, wp_blkoff, zone_secno, zone_segno, segno;
+ 	block_t zone_block, wp_block, last_valid_block;
++	unsigned int log_sectors_per_block = sbi->log_blocksize - SECTOR_SHIFT;
+ 	int i, s, b, ret;
+ 	struct seg_entry *se;
  
- 	err = write_inode_now(inode, 1);
- 	if (err)
--		goto out;
-+		return err;
+ 	if (zone->type != BLK_ZONE_TYPE_SEQWRITE_REQ)
+ 		return 0;
  
- 	inode_lock(inode);
- 	fuse_sync_writes(inode);
- 	inode_unlock(inode);
+-	wp_block = fdev->start_blk + (zone->wp >> sbi->log_sectors_per_block);
++	wp_block = fdev->start_blk + (zone->wp >> log_sectors_per_block);
+ 	wp_segno = GET_SEGNO(sbi, wp_block);
+ 	wp_blkoff = wp_block - START_BLOCK(sbi, wp_segno);
+-	zone_block = fdev->start_blk + (zone->start >>
+-						sbi->log_sectors_per_block);
++	zone_block = fdev->start_blk + (zone->start >> log_sectors_per_block);
+ 	zone_segno = GET_SEGNO(sbi, zone_block);
+ 	zone_secno = GET_SEC_FROM_SEG(sbi, zone_segno);
  
--	err = filemap_check_errors(fa->file->f_mapping);
-+	err = filemap_check_errors(file->f_mapping);
- 	if (err)
--		goto out;
-+		return err;
+@@ -4906,7 +4906,7 @@ static int check_zone_write_pointer(struct f2fs_sb_info *sbi,
+ 			    "pointer. Reset the write pointer: wp[0x%x,0x%x]",
+ 			    wp_segno, wp_blkoff);
+ 		ret = __f2fs_issue_discard_zone(sbi, fdev->bdev, zone_block,
+-				zone->len >> sbi->log_sectors_per_block);
++					zone->len >> log_sectors_per_block);
+ 		if (ret)
+ 			f2fs_err(sbi, "Discard zone failed: %s (errno=%d)",
+ 				 fdev->path, ret);
+@@ -4967,6 +4967,7 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
+ 	struct blk_zone zone;
+ 	unsigned int cs_section, wp_segno, wp_blkoff, wp_sector_off;
+ 	block_t cs_zone_block, wp_block;
++	unsigned int log_sectors_per_block = sbi->log_blocksize - SECTOR_SHIFT;
+ 	sector_t zone_sector;
+ 	int err;
  
- 	err = 0;
- 	if (fm->fc->no_flush)
- 		goto inval_attr_out;
+@@ -4978,8 +4979,8 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
+ 		return 0;
  
--	err = fuse_simple_request(fm, &fa->args);
-+	memset(&inarg, 0, sizeof(inarg));
-+	inarg.fh = ff->fh;
-+	inarg.lock_owner = fuse_lock_owner_id(fm->fc, id);
-+	args.opcode = FUSE_FLUSH;
-+	args.nodeid = get_node_id(inode);
-+	args.in_numargs = 1;
-+	args.in_args[0].size = sizeof(inarg);
-+	args.in_args[0].value = &inarg;
-+	args.force = true;
-+
-+	err = fuse_simple_request(fm, &args);
- 	if (err == -ENOSYS) {
- 		fm->fc->no_flush = 1;
- 		err = 0;
-@@ -521,57 +532,9 @@ inval_attr_out:
- 	 */
- 	if (!err && fm->fc->writeback_cache)
- 		fuse_invalidate_attr_mask(inode, STATX_BLOCKS);
--
--out:
--	fput(fa->file);
--	kfree(fa);
- 	return err;
- }
+ 	/* report zone for the sector the curseg points to */
+-	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk) <<
+-						sbi->log_sectors_per_block;
++	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk)
++		<< log_sectors_per_block;
+ 	err = blkdev_report_zones(zbd->bdev, zone_sector, 1,
+ 				  report_one_zone_cb, &zone);
+ 	if (err != 1) {
+@@ -4991,10 +4992,10 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
+ 	if (zone.type != BLK_ZONE_TYPE_SEQWRITE_REQ)
+ 		return 0;
  
--static void fuse_flush_async(struct work_struct *work)
--{
--	struct fuse_flush_args *fa = container_of(work, typeof(*fa), work);
--
--	fuse_do_flush(fa);
--}
--
--static int fuse_flush(struct file *file, fl_owner_t id)
--{
--	struct fuse_flush_args *fa;
--	struct inode *inode = file_inode(file);
--	struct fuse_mount *fm = get_fuse_mount(inode);
--	struct fuse_file *ff = file->private_data;
--
--	if (fuse_is_bad(inode))
--		return -EIO;
--
--	if (ff->open_flags & FOPEN_NOFLUSH && !fm->fc->writeback_cache)
--		return 0;
--
--	fa = kzalloc(sizeof(*fa), GFP_KERNEL);
--	if (!fa)
--		return -ENOMEM;
--
--	fa->inarg.fh = ff->fh;
--	fa->inarg.lock_owner = fuse_lock_owner_id(fm->fc, id);
--	fa->args.opcode = FUSE_FLUSH;
--	fa->args.nodeid = get_node_id(inode);
--	fa->args.in_numargs = 1;
--	fa->args.in_args[0].size = sizeof(fa->inarg);
--	fa->args.in_args[0].value = &fa->inarg;
--	fa->args.force = true;
--	fa->file = get_file(file);
--
--	/* Don't wait if the task is exiting */
--	if (current->flags & PF_EXITING) {
--		INIT_WORK(&fa->work, fuse_flush_async);
--		schedule_work(&fa->work);
--		return 0;
--	}
--
--	return fuse_do_flush(fa);
--}
--
- int fuse_fsync_common(struct file *file, loff_t start, loff_t end,
- 		      int datasync, int opcode)
- {
+-	wp_block = zbd->start_blk + (zone.wp >> sbi->log_sectors_per_block);
++	wp_block = zbd->start_blk + (zone.wp >> log_sectors_per_block);
+ 	wp_segno = GET_SEGNO(sbi, wp_block);
+ 	wp_blkoff = wp_block - START_BLOCK(sbi, wp_segno);
+-	wp_sector_off = zone.wp & GENMASK(sbi->log_sectors_per_block - 1, 0);
++	wp_sector_off = zone.wp & GENMASK(log_sectors_per_block - 1, 0);
+ 
+ 	if (cs->segno == wp_segno && cs->next_blkoff == wp_blkoff &&
+ 		wp_sector_off == 0)
+@@ -5021,8 +5022,8 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
+ 	if (!zbd)
+ 		return 0;
+ 
+-	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk) <<
+-						sbi->log_sectors_per_block;
++	zone_sector = (sector_t)(cs_zone_block - zbd->start_blk)
++		<< log_sectors_per_block;
+ 	err = blkdev_report_zones(zbd->bdev, zone_sector, 1,
+ 				  report_one_zone_cb, &zone);
+ 	if (err != 1) {
+@@ -5040,7 +5041,7 @@ static int fix_curseg_write_pointer(struct f2fs_sb_info *sbi, int type)
+ 			    "Reset the zone: curseg[0x%x,0x%x]",
+ 			    type, cs->segno, cs->next_blkoff);
+ 		err = __f2fs_issue_discard_zone(sbi, zbd->bdev,	cs_zone_block,
+-					zone.len >> sbi->log_sectors_per_block);
++					zone.len >> log_sectors_per_block);
+ 		if (err) {
+ 			f2fs_err(sbi, "Discard zone failed: %s (errno=%d)",
+ 				 zbd->path, err);
+-- 
+2.42.0
+
 
 
