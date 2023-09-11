@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CFE1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFACC433C9;
-	Mon, 11 Sep 2023 14:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360731170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FDDC433C8;
+	Mon, 11 Sep 2023 14:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442215;
-	bh=7EI3et6xga1sxyANzgNoSsORJwOIzxXP+esBg6kVyWI=;
+	s=korg; t=1694442218;
+	bh=9hz0CaZikkbbsW/0wu3mY8Em1ep1bvqKxNB/GE7CqgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2gv0WteyXrL/cSwN8Y9l7PrQMKoLTCoUDP9vNuMVRjitqdtKhUta5C20EnclZHLD
-	 igVRp00TiaTGJ4S/wKPYYkj2Irl6h8wFkyAfp2T2kRtrrRRTm26t/Yv3t4XxpBFZHz
-	 emnRxKNw+L+V8PO/51/uadytCejdVDue01auCvuI=
+	b=TvWW5R8tHCLHPPZTG4hS0zeRgB2AXh2V1ImMPH91OuhZbBuSaGw0WgcJRttk81p9I
+	 KhpgKdt7VrQbc8DglkzCblxCzPnKaWHMQwX8SbXP3cGvPrbCPkLEwCAopvmAkNnjVp
+	 R1eTjxkRgUGOwKWZsO4y3QXc3w1e5bk/Ak/lFbrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Hongchen Zhang <zhanghongchen@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.5 669/739] LoongArch: mm: Add p?d_leaf() definitions
-Date: Mon, 11 Sep 2023 15:47:48 +0200
-Message-ID: <20230911134709.790926410@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 6.5 687/739] dt-bindings: PCI: qcom: Fix SDX65 compatible
+Date: Mon, 11 Sep 2023 15:48:06 +0200
+Message-ID: <20230911134710.289014005@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,46 +34,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongchen Zhang <zhanghongchen@loongson.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 303be4b33562a5b689261ced1616bf16ad49efa7 upstream.
+commit 15d63a897f79f465d71fb55cc11c6b7e20c19391 upstream.
 
-When I do LTP test, LTP test case ksm06 caused panic at
-	break_ksm_pmd_entry
-	  -> pmd_leaf (Huge page table but False)
-	  -> pte_present (panic)
+Commit c0aba9f32801 ("dt-bindings: PCI: qcom: Add SDX65 SoC") adding
+SDX65 was never tested and is clearly bogus.  The qcom,sdx65-pcie-ep
+compatible is followed by a fallback in DTS, and there is no driver
+matched by this compatible.  Driver matches by its fallback
+qcom,sdx55-pcie-ep.  This also fixes dtbs_check warnings like:
 
-The reason is pmd_leaf() is not defined, So like commit 501b81046701
-("mips: mm: add p?d_leaf() definitions") add p?d_leaf() definition for
-LoongArch.
+  qcom-sdx65-mtp.dtb: pcie-ep@1c00000: compatible: ['qcom,sdx65-pcie-ep', 'qcom,sdx55-pcie-ep'] is too long
 
-Fixes: 09cfefb7fa70 ("LoongArch: Add memory management")
+[kwilczynski: commit log]
+Fixes: c0aba9f32801 ("dt-bindings: PCI: qcom: Add SDX65 SoC")
+Link: https://lore.kernel.org/linux-pci/20230827085351.21932-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Cc: stable@vger.kernel.org
-Acked-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/pgtable.h |    3 +++
- 1 file changed, 3 insertions(+)
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml        | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -593,6 +593,9 @@ static inline long pmd_protnone(pmd_t pm
- }
- #endif /* CONFIG_NUMA_BALANCING */
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+index 811112255d7d..c94b49498f69 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+@@ -11,10 +11,13 @@ maintainers:
  
-+#define pmd_leaf(pmd)		((pmd_val(pmd) & _PAGE_HUGE) != 0)
-+#define pud_leaf(pud)		((pud_val(pud) & _PAGE_HUGE) != 0)
-+
- /*
-  * We provide our own get_unmapped area to cope with the virtual aliasing
-  * constraints placed on us by the cache architecture.
+ properties:
+   compatible:
+-    enum:
+-      - qcom,sdx55-pcie-ep
+-      - qcom,sdx65-pcie-ep
+-      - qcom,sm8450-pcie-ep
++    oneOf:
++      - enum:
++          - qcom,sdx55-pcie-ep
++          - qcom,sm8450-pcie-ep
++      - items:
++          - const: qcom,sdx65-pcie-ep
++          - const: qcom,sdx55-pcie-ep
+ 
+   reg:
+     items:
+@@ -110,7 +113,6 @@ allOf:
+           contains:
+             enum:
+               - qcom,sdx55-pcie-ep
+-              - qcom,sdx65-pcie-ep
+     then:
+       properties:
+         clocks:
+-- 
+2.42.0
+
 
 
