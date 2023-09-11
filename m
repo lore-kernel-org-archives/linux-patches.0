@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2B61170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EA1C433C7;
-	Mon, 11 Sep 2023 13:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7357C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:56:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1635C433C8;
+	Mon, 11 Sep 2023 13:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440613;
-	bh=z6H2CmpUoGAAb8cczqBYQd2fit3F20ozlmvSDZlUB5M=;
+	s=korg; t=1694440616;
+	bh=xfQ1I86H8ZyYHtCt5KBb7WWOWArNauwvbcPPq4axhQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsHRw//Cz2ROURc1hnacO7iHW1d4XafqDWHhnyoRlJBioGSH44jegX20WXaXTb6+T
-	 GTPAi6ux+lnYVa0liK7yZZsfoATgaulmIHX1Wc0MVPdXjh7FGPwNW3NCGU0uJCz2xd
-	 ZjfMrrGViAT/Fq74vViFcnCFOsbRm6LAlRWwTGag=
+	b=Mb3vvkMlHynTOLkHb+blyQN/ea171ODwWGO3lnynZFHPRBbtMK2ErbvlVgqESlWZ3
+	 dXGTbCW6Nya6gZaoPctmIcofsLJcMl5Q+zlBQnKxSLaHlPNp3d6QJGSwvT940GmVvT
+	 GtpVkDYRJ+1y2IFzA+BGPI6KJWUZfnwmC28TByC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Colm Harrington <colm.harrington@oracle.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 124/739] Bluetooth: Fix potential use-after-free when clear keys
-Date: Mon, 11 Sep 2023 15:38:43 +0200
-Message-ID: <20230911134654.557099820@linuxfoundation.org>
+Subject: [PATCH 6.5 107/739] selftests/bpf: fix static assert compilation issue for test_cls_*.c
+Date: Mon, 11 Sep 2023 15:38:26 +0200
+Message-ID: <20230911134654.087424214@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,74 +43,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Min Li <lm0963hack@gmail.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 3673952cf0c6cf81b06c66a0b788abeeb02ff3ae ]
+[ Upstream commit 416c6d01244ecbf0abfdb898fd091b50ef951b48 ]
 
-Similar to commit c5d2b6fa26b5 ("Bluetooth: Fix use-after-free in
-hci_remove_ltk/hci_remove_irk"). We can not access k after kfree_rcu()
-call.
+commit bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
 
-Fixes: d7d41682efc2 ("Bluetooth: Fix Suspicious RCU usage warnings")
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+...was backported to stable trees such as 5.15. The problem is that with older
+LLVM/clang (14/15) - which is often used for older kernels - we see compilation
+failures in BPF selftests now:
+
+In file included from progs/test_cls_redirect_subprogs.c:2:
+progs/test_cls_redirect.c:90:2: error: static assertion expression is not an integral constant expression
+        sizeof(flow_ports_t) !=
+        ^~~~~~~~~~~~~~~~~~~~~~~
+progs/test_cls_redirect.c:91:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
+                offsetofend(struct bpf_sock_tuple, ipv4.dport) -
+                ^
+progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
+        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
+         ^
+tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
+                                 ^
+In file included from progs/test_cls_redirect_subprogs.c:2:
+progs/test_cls_redirect.c:95:2: error: static assertion expression is not an integral constant expression
+        sizeof(flow_ports_t) !=
+        ^~~~~~~~~~~~~~~~~~~~~~~
+progs/test_cls_redirect.c:96:3: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
+                offsetofend(struct bpf_sock_tuple, ipv6.dport) -
+                ^
+progs/test_cls_redirect.c:32:3: note: expanded from macro 'offsetofend'
+        (offsetof(TYPE, MEMBER) + sizeof((((TYPE *)0)->MEMBER)))
+         ^
+tools/testing/selftests/bpf/tools/include/bpf/bpf_helpers.h:86:33: note: expanded from macro 'offsetof'
+                                 ^
+2 errors generated.
+make: *** [Makefile:594: tools/testing/selftests/bpf/test_cls_redirect_subprogs.bpf.o] Error 1
+
+The problem is the new offsetof() does not play nice with static asserts.
+Given that the context is a static assert (and CO-RE relocation is not
+needed at compile time), offsetof() usage can be replaced by restoring
+the original offsetof() definition as __builtin_offsetof().
+
+Fixes: bdeeed3498c7 ("libbpf: fix offsetof() and container_of() to work with CO-RE")
+Reported-by: Colm Harrington <colm.harrington@oracle.com>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Tested-by: Yipeng Zou <zouyipeng@huawei.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20230802073906.3197480-1-alan.maguire@oracle.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/testing/selftests/bpf/progs/test_cls_redirect.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 1ec83985f1ab0..793b66da22653 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1074,9 +1074,9 @@ void hci_uuids_clear(struct hci_dev *hdev)
+diff --git a/tools/testing/selftests/bpf/progs/test_cls_redirect.h b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
+index 76eab0aacba0c..233b089d1fbac 100644
+--- a/tools/testing/selftests/bpf/progs/test_cls_redirect.h
++++ b/tools/testing/selftests/bpf/progs/test_cls_redirect.h
+@@ -12,6 +12,15 @@
+ #include <linux/ipv6.h>
+ #include <linux/udp.h>
  
- void hci_link_keys_clear(struct hci_dev *hdev)
- {
--	struct link_key *key;
-+	struct link_key *key, *tmp;
- 
--	list_for_each_entry(key, &hdev->link_keys, list) {
-+	list_for_each_entry_safe(key, tmp, &hdev->link_keys, list) {
- 		list_del_rcu(&key->list);
- 		kfree_rcu(key, rcu);
- 	}
-@@ -1084,9 +1084,9 @@ void hci_link_keys_clear(struct hci_dev *hdev)
- 
- void hci_smp_ltks_clear(struct hci_dev *hdev)
- {
--	struct smp_ltk *k;
-+	struct smp_ltk *k, *tmp;
- 
--	list_for_each_entry(k, &hdev->long_term_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
- 		list_del_rcu(&k->list);
- 		kfree_rcu(k, rcu);
- 	}
-@@ -1094,9 +1094,9 @@ void hci_smp_ltks_clear(struct hci_dev *hdev)
- 
- void hci_smp_irks_clear(struct hci_dev *hdev)
- {
--	struct smp_irk *k;
-+	struct smp_irk *k, *tmp;
- 
--	list_for_each_entry(k, &hdev->identity_resolving_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
- 		list_del_rcu(&k->list);
- 		kfree_rcu(k, rcu);
- 	}
-@@ -1104,9 +1104,9 @@ void hci_smp_irks_clear(struct hci_dev *hdev)
- 
- void hci_blocked_keys_clear(struct hci_dev *hdev)
- {
--	struct blocked_key *b;
-+	struct blocked_key *b, *tmp;
- 
--	list_for_each_entry(b, &hdev->blocked_keys, list) {
-+	list_for_each_entry_safe(b, tmp, &hdev->blocked_keys, list) {
- 		list_del_rcu(&b->list);
- 		kfree_rcu(b, rcu);
- 	}
++/* offsetof() is used in static asserts, and the libbpf-redefined CO-RE
++ * friendly version breaks compilation for older clang versions <= 15
++ * when invoked in a static assert.  Restore original here.
++ */
++#ifdef offsetof
++#undef offsetof
++#define offsetof(type, member) __builtin_offsetof(type, member)
++#endif
++
+ struct gre_base_hdr {
+ 	uint16_t flags;
+ 	uint16_t protocol;
 -- 
 2.40.1
 
