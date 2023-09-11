@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC9A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:03:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E379C433C8;
-	Mon, 11 Sep 2023 14:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937A81170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:03:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A7FC433C8;
+	Mon, 11 Sep 2023 14:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441029;
-	bh=ScfGo4hjFUQcbF0zO7LARwOrmPa7ZLsGBBN7v3slzgQ=;
+	s=korg; t=1694441032;
+	bh=Jbo3JUW7PIdwXcVvj+yJqlS05o64C1LsLq86210zha8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ty1SwaIN+Nv61cmnBD9mhsh2uPe5a5eYzEatgic+qstRRxBFHCL5gktb6H7aCfvf2
-	 Ia2dUgLggaMwskhubE768EDiF3v5NHdD0AMWfQpIjAGCgohV2WekWD1dGV5mlivvP8
-	 NRyQ2YvPiGv2OotL61/S2T8W3Yk/XAMOp6XLEUJg=
+	b=TBPRNWZNWPEXP+uIhv4DWALaSX+R2gBffypTnbRDgk+pRErJj5JSI645oPtB/a7dC
+	 ef7X1P9//KtALCnVGKgip6jY3RD0SWYltSl8Js4ZxboDQdW9EZ3IYPuMdAbQHSe7/H
+	 xBWljh61M3y+9jF/NdIGfXXGTjxYYkE4SXpRr4UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 271/739] arm64: dts: qcom: sdm845: Fix the min frequency of "ice_core_clk"
-Date: Mon, 11 Sep 2023 15:41:10 +0200
-Message-ID: <20230911134658.698248481@linuxfoundation.org>
+Subject: [PATCH 6.5 254/739] arm64: dts: qcom: pm660l: Add missing short interrupt
+Date: Mon, 11 Sep 2023 15:40:53 +0200
+Message-ID: <20230911134658.248975379@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,37 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit bbbef6e24bc4493602df68b052f6f48d48e3184a ]
+[ Upstream commit 9a4ac09db3c7413e334b4abd6b2f6de8930dd781 ]
 
-Minimum frequency of the "ice_core_clk" should be 75MHz as specified in the
-downstream vendor devicetree. So fix it!
+Add the missing short interrupt. This fixes the schema warning:
 
-https://git.codelinaro.org/clo/la/kernel/msm-4.9/-/blob/LA.UM.7.3.r1-09300-sdm845.0/arch/arm64/boot/dts/qcom/sdm845.dtsi
+wled@d800: interrupt-names: ['ovp'] is too short
 
-Fixes: 433f9a57298f ("arm64: dts: sdm845: add Inline Crypto Engine registers and clock")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20230720054100.9940-5-manivannan.sadhasivam@linaro.org
+Fixes: 7b56a804e58b ("arm64: dts: qcom: pm660l: Add WLED support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-4-254ae8642e69@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/pm660l.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 9ed74bf72d05a..89520a9fe1e3d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2614,7 +2614,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<0 0>,
- 				<0 0>,
- 				<0 0>,
--				<0 300000000>;
-+				<75000000 300000000>;
+diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
+index 87b71b7205b85..6fdbf507c262a 100644
+--- a/arch/arm64/boot/dts/qcom/pm660l.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
+@@ -74,8 +74,9 @@ pm660l_lpg: pwm {
+ 		pm660l_wled: leds@d800 {
+ 			compatible = "qcom,pm660l-wled";
+ 			reg = <0xd800>, <0xd900>;
+-			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "ovp";
++			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
++				     <0x3 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ovp", "short";
+ 			label = "backlight";
  
  			status = "disabled";
- 		};
 -- 
 2.40.1
 
