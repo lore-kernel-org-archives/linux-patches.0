@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EED11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB8BC433C8;
-	Mon, 11 Sep 2023 14:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA3D11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739E3C433C8;
+	Mon, 11 Sep 2023 14:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444248;
-	bh=Rtec/up2QynAHEhgODF8TrbMhDV7gwkkN3DT2vGyY0g=;
+	s=korg; t=1694444251;
+	bh=/Zv7PQHeFYBy0u0DhZDccdoAzXvlQsqMa+UO/cYQ1gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cg1UYYfNuprrYdXEz5CWtOQUu+rDCyBzh7rpP/lk0vQvntFzQQafrUMoFT98sJfHg
-	 2J1UQ021V/IJB78sE7Juofcik+TgqThu275UdfbqMeIk07+6tZ2xu+HlHhP171ScwM
-	 vmiGrnjxDR80d1Ab06vbetojSpnAcXHbm/+pTnQI=
+	b=hbN0bdxj/TBPWwXGOOGe2tAUUP7LRFXic0/WT77Q0SP9xqo9EIGc7mhlWb/FcwlsW
+	 bXFxuxvQcKg6etGxJD/+8yqh9voWiRYBHEM3hgjfAQunWb3mNlj0GsMriGQ1kBz7SL
+	 oEfB4eUvs44NbLAh9zc7DcGpm8Vi95UOIzmhXKYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 662/737] io_uring: break out of iowq iopoll on teardown
-Date: Mon, 11 Sep 2023 15:48:41 +0200
-Message-ID: <20230911134709.016984874@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Rich Felker <dalias@libc.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Lee Jones <lee@kernel.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	linux-sh@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH 6.4 663/737] backlight/gpio_backlight: Compare against struct fb_info.device
+Date: Mon, 11 Sep 2023 15:48:42 +0200
+Message-ID: <20230911134709.055998294@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,66 +47,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 45500dc4e01c167ee063f3dcc22f51ced5b2b1e9 upstream.
+commit 7b91d017f77c1bda56f27c2f4bbb70de7c6eca08 upstream.
 
-io-wq will retry iopoll even when it failed with -EAGAIN. If that
-races with task exit, which sets TIF_NOTIFY_SIGNAL for all its workers,
-such workers might potentially infinitely spin retrying iopoll again and
-again and each time failing on some allocation / waiting / etc. Don't
-keep spinning if io-wq is dying.
+Struct gpio_backlight_platform_data refers to a platform device within
+the Linux device hierarchy. The test in gpio_backlight_check_fb()
+compares it against the fbdev device in struct fb_info.dev, which
+is different. Fix the test by comparing to struct fb_info.device.
 
-Fixes: 561fb04a6a225 ("io_uring: replace workqueue usage with io-wq")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes a bug in the backlight driver and prepares fbdev for making
+struct fb_info.dev optional.
+
+v2:
+	* move renames into separate patch (Javier, Sam, Michael)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 8b770e3c9824 ("backlight: Add GPIO-based backlight driver")
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Rich Felker <dalias@libc.org>
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-sh@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.12+
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-4-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c    |   10 ++++++++++
- io_uring/io-wq.h    |    1 +
- io_uring/io_uring.c |    2 ++
- 3 files changed, 13 insertions(+)
+ drivers/video/backlight/gpio_backlight.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -174,6 +174,16 @@ static void io_worker_ref_put(struct io_
- 		complete(&wq->worker_done);
+--- a/drivers/video/backlight/gpio_backlight.c
++++ b/drivers/video/backlight/gpio_backlight.c
+@@ -35,7 +35,7 @@ static int gpio_backlight_check_fb(struc
+ {
+ 	struct gpio_backlight *gbl = bl_get_data(bl);
+ 
+-	return gbl->fbdev == NULL || gbl->fbdev == info->dev;
++	return gbl->fbdev == NULL || gbl->fbdev == info->device;
  }
  
-+bool io_wq_worker_stopped(void)
-+{
-+	struct io_worker *worker = current->worker_private;
-+
-+	if (WARN_ON_ONCE(!io_wq_current_is_worker()))
-+		return true;
-+
-+	return test_bit(IO_WQ_BIT_EXIT, &worker->wq->state);
-+}
-+
- static void io_worker_cancel_cb(struct io_worker *worker)
- {
- 	struct io_wq_acct *acct = io_wq_get_acct(worker);
---- a/io_uring/io-wq.h
-+++ b/io_uring/io-wq.h
-@@ -52,6 +52,7 @@ void io_wq_hash_work(struct io_wq_work *
- 
- int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask);
- int io_wq_max_workers(struct io_wq *wq, int *new_count);
-+bool io_wq_worker_stopped(void);
- 
- static inline bool io_wq_is_hashed(struct io_wq_work *work)
- {
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2050,6 +2050,8 @@ fail:
- 		if (!needs_poll) {
- 			if (!(req->ctx->flags & IORING_SETUP_IOPOLL))
- 				break;
-+			if (io_wq_worker_stopped())
-+				break;
- 			cond_resched();
- 			continue;
- 		}
+ static const struct backlight_ops gpio_backlight_ops = {
 
 
