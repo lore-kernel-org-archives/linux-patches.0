@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C4811705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2695CC433CA;
-	Mon, 11 Sep 2023 14:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D1911705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE393C433C8;
+	Mon, 11 Sep 2023 14:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443327;
-	bh=XPBo8QNI4ToO1XSzr7YPhYNGL74sJGP6MhGG5CbbhXE=;
+	s=korg; t=1694443330;
+	bh=l/m4RKQ0DzSb5yH+GsivYMjJxqX42+74Wo1dvss4j28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+peE8Du74FtwVMiJvBBCl4xNYzFkP8G6pryuQ++JYOzG9xzLYMZR2dRLMFRyNF8f
-	 Pvo5TN7DLNalSFzZNd2SnsqkJUv649wvU1zgjNyDOwZTh/540Y3iuwI4w9j2K0+OYk
-	 m9O1FFPyXR0ZuWVtPOII8P/2Ytrd+fUFfHHsfdfw=
+	b=l19NWAaVKXyjZLBU7g+smgOCMxH2ETzaN3G7cdB39iG6kzbafNfE/n2ArAYeQvm7K
+	 qyObHo0DfuUQFCZSs6dXm7tpB8w2fdSoWj5P6LzIzsznpID7TuFp0b90QGfKLD64xr
+	 UX27inVEklT+L+IyWMT2MtrufJS9aGDj9xeJuaVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li Nan <linan122@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 339/737] md/raid10: factor out dereference_rdev_and_rrdev()
-Date: Mon, 11 Sep 2023 15:43:18 +0200
-Message-ID: <20230911134700.000643074@linuxfoundation.org>
+Subject: [PATCH 6.4 340/737] md/raid10: use dereference_rdev_and_rrdev() to get devices
+Date: Mon, 11 Sep 2023 15:43:19 +0200
+Message-ID: <20230911134700.028899844@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,70 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit b99f8fd2d91eb734f13098aa1cf337edaca454b7 ]
+[ Upstream commit 673643490b9a0eb3b25633abe604f62b8f63dba1 ]
 
-Factor out a helper to get 'rdev' and 'replacement' from config->mirrors.
-Just to make code cleaner and prepare to fix the bug of io loss while
-'replacement' replace 'rdev'.
+Commit 2ae6aaf76912 ("md/raid10: fix io loss while replacement replace
+rdev") reads replacement first to prevent io loss. However, there are same
+issue in wait_blocked_dev() and raid10_handle_discard(), too. Fix it by
+using dereference_rdev_and_rrdev() to get devices.
 
-There is no functional change.
-
+Fixes: d30588b2731f ("md/raid10: improve raid10 discard request")
+Fixes: f2e7e269a752 ("md/raid10: pull the code that wait for blocked dev into one function")
 Signed-off-by: Li Nan <linan122@huawei.com>
-Link: https://lore.kernel.org/r/20230701080529.2684932-3-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230701080529.2684932-4-linan666@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
-Stable-dep-of: 673643490b9a ("md/raid10: use dereference_rdev_and_rrdev() to get devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/md/raid10.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index ee75b058438f3..f47fd50651c45 100644
+index f47fd50651c45..925ab30c15d49 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -1321,6 +1321,25 @@ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
- 	}
- }
- 
-+static struct md_rdev *dereference_rdev_and_rrdev(struct raid10_info *mirror,
-+						  struct md_rdev **prrdev)
-+{
-+	struct md_rdev *rdev, *rrdev;
-+
-+	rrdev = rcu_dereference(mirror->replacement);
-+	/*
-+	 * Read replacement first to prevent reading both rdev and
-+	 * replacement as NULL during replacement replace rdev.
-+	 */
-+	smp_mb();
-+	rdev = rcu_dereference(mirror->rdev);
-+	if (rdev == rrdev)
-+		rrdev = NULL;
-+
-+	*prrdev = rrdev;
-+	return rdev;
-+}
-+
- static void wait_blocked_dev(struct mddev *mddev, struct r10bio *r10_bio)
- {
- 	int i;
-@@ -1464,15 +1483,7 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 		int d = r10_bio->devs[i].devnum;
- 		struct md_rdev *rdev, *rrdev;
- 
--		rrdev = rcu_dereference(conf->mirrors[d].replacement);
--		/*
--		 * Read replacement first to prevent reading both rdev and
--		 * replacement as NULL during replacement replace rdev.
--		 */
--		smp_mb();
--		rdev = rcu_dereference(conf->mirrors[d].rdev);
+@@ -1350,11 +1350,9 @@ static void wait_blocked_dev(struct mddev *mddev, struct r10bio *r10_bio)
+ 	blocked_rdev = NULL;
+ 	rcu_read_lock();
+ 	for (i = 0; i < conf->copies; i++) {
+-		struct md_rdev *rdev = rcu_dereference(conf->mirrors[i].rdev);
+-		struct md_rdev *rrdev = rcu_dereference(
+-			conf->mirrors[i].replacement);
 -		if (rdev == rrdev)
 -			rrdev = NULL;
-+		rdev = dereference_rdev_and_rrdev(&conf->mirrors[d], &rrdev);
- 		if (rdev && (test_bit(Faulty, &rdev->flags)))
- 			rdev = NULL;
- 		if (rrdev && (test_bit(Faulty, &rrdev->flags)))
++		struct md_rdev *rdev, *rrdev;
++
++		rdev = dereference_rdev_and_rrdev(&conf->mirrors[i], &rrdev);
+ 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
+ 			atomic_inc(&rdev->nr_pending);
+ 			blocked_rdev = rdev;
+@@ -1790,10 +1788,9 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	 */
+ 	rcu_read_lock();
+ 	for (disk = 0; disk < geo->raid_disks; disk++) {
+-		struct md_rdev *rdev = rcu_dereference(conf->mirrors[disk].rdev);
+-		struct md_rdev *rrdev = rcu_dereference(
+-			conf->mirrors[disk].replacement);
++		struct md_rdev *rdev, *rrdev;
+ 
++		rdev = dereference_rdev_and_rrdev(&conf->mirrors[disk], &rrdev);
+ 		r10_bio->devs[disk].bio = NULL;
+ 		r10_bio->devs[disk].repl_bio = NULL;
+ 
 -- 
 2.40.1
 
