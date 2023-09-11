@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33761170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706FFC433C8;
-	Mon, 11 Sep 2023 14:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D161170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48781C433C8;
+	Mon, 11 Sep 2023 14:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441171;
-	bh=PfCAi+izycsqbRrdLKCT7TimVbf4gmFkdJThAyJmt3U=;
+	s=korg; t=1694441174;
+	bh=JRBJLejL4ih9XoYetCMU5BeYt7QqjG70n9iWIeTtIhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofYNKhxZmBlX1RUV/jK5mSUUiaZZJ/4NPHpt6qfwLCl94ED8USecua0MY1MrVg+AL
-	 wp3mpZUhOTSpt6+W7ULY0mhNgNLXzWy5ZoC5+MIUXo3LvJFdjBlSgxzUAwd/S+oCna
-	 vnTbvUPV/VoF5aaiVEP+qholKwJ0X7u7hawWWo90=
+	b=z5GvsXXevapshKhJkmGcEdnK1lx9u7QcLvC9bUaZYO6rkYzcb2+5SCmot0WKPPEXt
+	 jOTUx5NC9TzHmyb/UgwDckxkdjbOis/VTy4ujwQG9+ztDEEJN7LNBT3O2BQdl4+mBG
+	 kSTF715NEe/1WJvNgv7kvPTH1KJdbjKP+zTEbufw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udit Kumar <u-kumar1@ti.com>,
-	Vaishnav Achath <vaishnav.a@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 312/739] arm64: dts: ti: k3-j784s4-evm: Correct Pin mux offset for ospi
-Date: Mon, 11 Sep 2023 15:41:51 +0200
-Message-ID: <20230911134659.830890132@linuxfoundation.org>
+Subject: [PATCH 6.5 321/739] ASoC: SOF: Intel: fix u16/32 confusion in LSDIID
+Date: Mon, 11 Sep 2023 15:42:00 +0200
+Message-ID: <20230911134700.071707990@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,79 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Udit Kumar <u-kumar1@ti.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit f10f836ccfea21ae3ad3066eb9576625f1acdea2 ]
+[ Upstream commit 7a52d7062e02af4a479da24b40cfd76b54c0cd6c ]
 
-After splitting wkup_pmx pin mux for J784S4 into four regions.
-Pin mux offset for OSPI nodes were not updated to align with new
-regions, due to this while setting ospi pin muxes out of range
-error was seen.
+Likely a combination of copy-paste and test coverage problem. Oops.
 
-Pin mux offsets for OSPI nodes are corrected in this patch.
-
-Fixes: 14462bd0b247 ("arm64: dts: ti: k3-j784s4: Fix wakeup pinmux range and pinctrl node offsets")
-Signed-off-by: Udit Kumar <u-kumar1@ti.com>
-Tested-by: Vaishnav Achath <vaishnav.a@ti.com>
-Link: https://lore.kernel.org/r/20230802114126.162445-1-u-kumar1@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 87a6ddc0cf1c ("ASoC: SOF: Intel: hda-mlink: program SoundWire LSDIID registers")
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Link: https://lore.kernel.org/r/20230807210959.506849-3-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-evm.dts | 29 +++++++++++++++---------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ sound/soc/sof/intel/hda-mlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts b/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
-index 430b8a2c5df57..cb852031c8027 100644
---- a/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
-@@ -379,21 +379,28 @@ J784S4_WKUP_IOPAD(0x020, PIN_INPUT, 0) /* (D34) MCU_OSPI0_D5 */
- 			J784S4_WKUP_IOPAD(0x024, PIN_INPUT, 0) /* (E34) MCU_OSPI0_D6 */
- 			J784S4_WKUP_IOPAD(0x028, PIN_INPUT, 0) /* (E33) MCU_OSPI0_D7 */
- 			J784S4_WKUP_IOPAD(0x008, PIN_INPUT, 0) /* (C34) MCU_OSPI0_DQS */
--			J784S4_WKUP_IOPAD(0x03c, PIN_OUTPUT, 6) /* (C32) MCU_OSPI0_CSn3.MCU_OSPI0_ECC_FAIL */
--			J784S4_WKUP_IOPAD(0x038, PIN_OUTPUT, 6) /* (B34) MCU_OSPI0_CSn2.MCU_OSPI0_RESET_OUT0 */
-+		>;
-+	};
-+};
-+
-+&wkup_pmx1 {
-+	mcu_fss0_ospi0_1_pins_default: mcu-fss0-ospi0-1-default-pins {
-+		pinctrl-single,pins = <
-+			J784S4_WKUP_IOPAD(0x004, PIN_OUTPUT, 6) /* (C32) MCU_OSPI0_ECC_FAIL */
-+			J784S4_WKUP_IOPAD(0x000, PIN_OUTPUT, 6) /* (B34) MCU_OSPI0_RESET_OUT0 */
- 		>;
- 	};
+diff --git a/sound/soc/sof/intel/hda-mlink.c b/sound/soc/sof/intel/hda-mlink.c
+index acad3ea2f4710..df87b3791c23e 100644
+--- a/sound/soc/sof/intel/hda-mlink.c
++++ b/sound/soc/sof/intel/hda-mlink.c
+@@ -331,14 +331,14 @@ static bool hdaml_link_check_cmdsync(u32 __iomem *lsync, u32 cmdsync_mask)
+ 	return !!(val & cmdsync_mask);
+ }
  
- 	mcu_fss0_ospi1_pins_default: mcu-fss0-ospi1-default-pins {
- 		pinctrl-single,pins = <
--			J784S4_WKUP_IOPAD(0x040, PIN_OUTPUT, 0) /* (F32) MCU_OSPI1_CLK */
--			J784S4_WKUP_IOPAD(0x05c, PIN_OUTPUT, 0) /* (G32) MCU_OSPI1_CSn0 */
--			J784S4_WKUP_IOPAD(0x04c, PIN_INPUT, 0) /* (E35) MCU_OSPI1_D0 */
--			J784S4_WKUP_IOPAD(0x050, PIN_INPUT, 0) /* (D31) MCU_OSPI1_D1 */
--			J784S4_WKUP_IOPAD(0x054, PIN_INPUT, 0) /* (G31) MCU_OSPI1_D2 */
--			J784S4_WKUP_IOPAD(0x058, PIN_INPUT, 0) /* (F33) MCU_OSPI1_D3 */
--			J784S4_WKUP_IOPAD(0x048, PIN_INPUT, 0) /* (F31) MCU_OSPI1_DQS */
--			J784S4_WKUP_IOPAD(0x044, PIN_INPUT, 0) /* (C31) MCU_OSPI1_LBCLKO */
-+			J784S4_WKUP_IOPAD(0x008, PIN_OUTPUT, 0) /* (F32) MCU_OSPI1_CLK */
-+			J784S4_WKUP_IOPAD(0x024, PIN_OUTPUT, 0) /* (G32) MCU_OSPI1_CSn0 */
-+			J784S4_WKUP_IOPAD(0x014, PIN_INPUT, 0) /* (E35) MCU_OSPI1_D0 */
-+			J784S4_WKUP_IOPAD(0x018, PIN_INPUT, 0) /* (D31) MCU_OSPI1_D1 */
-+			J784S4_WKUP_IOPAD(0x01C, PIN_INPUT, 0) /* (G31) MCU_OSPI1_D2 */
-+			J784S4_WKUP_IOPAD(0x020, PIN_INPUT, 0) /* (F33) MCU_OSPI1_D3 */
-+			J784S4_WKUP_IOPAD(0x010, PIN_INPUT, 0) /* (F31) MCU_OSPI1_DQS */
-+			J784S4_WKUP_IOPAD(0x00C, PIN_INPUT, 0) /* (C31) MCU_OSPI1_LBCLKO */
- 		>;
- 	};
- };
-@@ -437,7 +444,7 @@ &fss {
- &ospi0 {
- 	status = "okay";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&mcu_fss0_ospi0_pins_default>;
-+	pinctrl-0 = <&mcu_fss0_ospi0_pins_default>, <&mcu_fss0_ospi0_1_pins_default>;
+-static void hdaml_link_set_lsdiid(u32 __iomem *lsdiid, int dev_num)
++static void hdaml_link_set_lsdiid(u16 __iomem *lsdiid, int dev_num)
+ {
+-	u32 val;
++	u16 val;
  
- 	flash@0 {
- 		compatible = "jedec,spi-nor";
+-	val = readl(lsdiid);
++	val = readw(lsdiid);
+ 	val |= BIT(dev_num);
+ 
+-	writel(val, lsdiid);
++	writew(val, lsdiid);
+ }
+ 
+ static void hdaml_shim_map_stream_ch(u16 __iomem *pcmsycm, int lchan, int hchan,
 -- 
 2.40.1
 
