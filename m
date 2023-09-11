@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081468472
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74859C433C7;
-	Mon, 11 Sep 2023 14:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017BC153
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426B4C433C7;
+	Mon, 11 Sep 2023 14:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442905;
-	bh=dIUnazrLUbgUZyyWMHBHY9AHfl3AWQVgW8mx4qpTYQI=;
+	s=korg; t=1694442908;
+	bh=Xslq3NdqREmtREbDPglR2/AlOTvDyxrVGPJav9ekDT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qY2/2vRfg/8oTFNQBrjXKPxDUljwBMscgGtuq6oRXjE9ocUnNt7z4ZwEpZyjvxLEL
-	 TUu2vfZNEla70iUQaJXNaXiOapLhbynInjLhd1GlnRQkIa1zaSAfWojYP4h0mYKjow
-	 0uilUC9aH6UUVM15F76JlUCUyJGb6UTL9nNuv29Q=
+	b=jMjx9rn99XO6qaAVKZGnoaaJnK73EUJX0DVxlhYkRQVyUqlxVCyBLRIXVtqlz+1nk
+	 +96umIWiVQ90eAYhGh/dHmyTyMaSYtpUF5rXABX+OFOeABEjR3lXedBo6ZAS3i9Ixl
+	 66T5oJ9j+WcSUygJfe9szoAl3FP44BcevUhB7UII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	=?UTF-8?q?Fran=C3=A7ois=20Valenduc?= <francoisvalenduc@gmail.com>,
-	Alexandru Radovici <msg4alex@gmail.com>,
-	Matthew Leach <dev@mattleach.net>,
+	Jordan Isaacs <mail@jdisaacs.com>,
+	"Ethan D. Twardy" <ethan.twardy@gmail.com>,
+	Tiago Lam <tiagolam@gmail.com>,
 	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 190/737] kbuild: rust_is_available: add check for `bindgen` invocation
-Date: Mon, 11 Sep 2023 15:40:49 +0200
-Message-ID: <20230911134655.890956776@linuxfoundation.org>
+Subject: [PATCH 6.4 191/737] kbuild: rust_is_available: fix confusion when a version appears in the path
+Date: Mon, 11 Sep 2023 15:40:50 +0200
+Message-ID: <20230911134655.923874448@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,7 +38,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
@@ -49,85 +46,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 52cae7f28ed6c3992489f16bb355f5b623f0912e ]
+[ Upstream commit 9eb7e20e0c5cd069457845f965b3e8a7d736ecb7 ]
 
-`scripts/rust_is_available.sh` calls `bindgen` with a special
-header in order to check whether the `libclang` version in use
-is suitable.
+`bindgen`'s output for `libclang`'s version check contains paths, which
+in turn may contain strings that look like version numbers [1][2]:
 
-However, the invocation itself may fail if, for instance, `bindgen`
-cannot locate `libclang`. This is fine for Kconfig (since the
-script will still fail and therefore disable Rust as it should),
-but it is pretty confusing for users of the `rustavailable` target
-given the error will be unrelated:
+    .../6.1.0-dev/.../rust_is_available_bindgen_libclang.h:2:9: warning: clang version 11.1.0  [-W#pragma-messages], err: false
 
-    ./scripts/rust_is_available.sh: 21: arithmetic expression: expecting primary: "100000 *  + 100 *  + "
-    make: *** [Makefile:1816: rustavailable] Error 2
+which the script will pick up as the version instead of the latter.
 
-Instead, run the `bindgen` invocation independently in a previous
-step, saving its output and return code. If it fails, then show
-the user a proper error message. Otherwise, continue as usual
-with the saved output.
+It is also the case that versions may appear after the actual version
+(e.g. distribution's version text), which was the reason behind `head` [3]:
 
-Since the previous patch we show a reference to the docs, and
-the docs now explain how `bindgen` looks for `libclang`,
-thus the error message can leverage the documentation, avoiding
-duplication here (and making users aware of the setup guide in
-the documentation).
+    .../rust-is-available-bindgen-libclang.h:2:9: warning: clang version 13.0.0 (Fedora 13.0.0-3.fc35) [-W#pragma-messages], err: false
 
-Reported-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/rust-for-linux/CAKwvOdm5JT4wbdQQYuW+RT07rCi6whGBM2iUAyg8A1CmLXG6Nw@mail.gmail.com/
-Reported-by: François Valenduc <francoisvalenduc@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/934
-Reported-by: Alexandru Radovici <msg4alex@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/pull/921
-Reported-by: Matthew Leach <dev@mattleach.net>
-Closes: https://lore.kernel.org/rust-for-linux/20230507084116.1099067-1-dev@mattleach.net/
+Thus instead ask for a match after the `clang version` string.
+
+Reported-by: Jordan Isaacs <mail@jdisaacs.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/942 [1]
+Reported-by: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Closes: https://lore.kernel.org/rust-for-linux/20230528131802.6390-2-ethan.twardy@gmail.com/ [2]
+Reported-by: Tiago Lam <tiagolam@gmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/pull/789 [3]
 Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
 Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Ethan Twardy <ethan.twardy@gmail.com>
+Tested-by: Ethan Twardy <ethan.twardy@gmail.com>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230616001631.463536-6-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20230616001631.463536-8-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ scripts/rust_is_available.sh | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 0c9be438e4cd3..c965895d80b97 100755
+index c965895d80b97..7a925d2b20fc7 100755
 --- a/scripts/rust_is_available.sh
 +++ b/scripts/rust_is_available.sh
-@@ -90,8 +90,28 @@ if [ "$rust_bindings_generator_cversion" -gt "$rust_bindings_generator_min_cvers
- fi
- 
- # Check that the `libclang` used by the Rust bindings generator is suitable.
-+#
-+# In order to do that, first invoke `bindgen` to get the `libclang` version
-+# found by `bindgen`. This step may already fail if, for instance, `libclang`
-+# is not found, thus inform the user in such a case.
-+bindgen_libclang_output=$( \
-+	LC_ALL=C "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null
-+) || bindgen_libclang_code=$?
-+if [ -n "$bindgen_libclang_code" ]; then
-+	echo >&2 "***"
-+	echo >&2 "*** Running '$BINDGEN' to check the libclang version (used by the Rust"
-+	echo >&2 "*** bindings generator) failed with code $bindgen_libclang_code. This may be caused by"
-+	echo >&2 "*** a failure to locate libclang. See output and docs below for details:"
-+	echo >&2 "***"
-+	echo >&2 "$bindgen_libclang_output"
-+	echo >&2 "***"
-+	exit 1
-+fi
-+
-+# `bindgen` returned successfully, thus use the output to check that the version
-+# of the `libclang` found by the Rust bindings generator is suitable.
+@@ -112,9 +112,7 @@ fi
+ # of the `libclang` found by the Rust bindings generator is suitable.
  bindgen_libclang_version=$( \
--	LC_ALL=C "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null \
-+	echo "$bindgen_libclang_output" \
- 		| grep -F 'clang version ' \
- 		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
- 		| head -n 1 \
+ 	echo "$bindgen_libclang_output" \
+-		| grep -F 'clang version ' \
+-		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+-		| head -n 1 \
++		| sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+ )
+ bindgen_libclang_min_version=$($min_tool_version llvm)
+ bindgen_libclang_cversion=$(get_canonical_version $bindgen_libclang_version)
 -- 
 2.40.1
 
