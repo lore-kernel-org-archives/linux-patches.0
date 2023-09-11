@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4EA1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99400C433C9;
-	Mon, 11 Sep 2023 14:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26CF11714
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4DFC433C8;
+	Mon, 11 Sep 2023 14:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440853;
-	bh=ltYM4EO1opZWCeXSJSZ9l4MN4iMPf0wry74Fl27TL+g=;
+	s=korg; t=1694440856;
+	bh=p5kZRJPy6becEKGze/E8wQRGvbD8Pps2B78lYscLjgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ucGfpOmDW0fpcyuDCFO0dp43wg1uxA46C568DppGoUS7oKZg5R24P7yg/j/0KIigJ
-	 XM4HqtfYFxeDgbtQ3Yh+YzBijRW2srXjh90BkjLBrE38tFfuNi3u/eT7LtPuIXICf9
-	 cBCvOCWXkDIu6bdJIKEcZLf2vZDczXD9LZbagakE=
+	b=2gEUxzg3i7Fv/sYGlRhvZkR9zt580f1oyVwDKsWxzSrTyfJj0/vjZWf7YCA5JE8TA
+	 LWSBnCLxbEz+GXYf6rICJgEUi4ZQwCy+ttE8yh9uA1T5WxW3BpjjYDqca8+dp5d8II
+	 YUnRC+HFO9qiqXXUoKpdlzzcSKg0HnbvWUr9iI08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Mark Brown <broonie@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	alsa-devel@alsa-project.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 209/739] drm/hyperv: Fix a compilation issue because of not including screen_info.h
-Date: Mon, 11 Sep 2023 15:40:08 +0200
-Message-ID: <20230911134657.014116322@linuxfoundation.org>
+Subject: [PATCH 6.5 210/739] ASoC: stac9766: fix build errors with REGMAP_AC97
+Date: Mon, 11 Sep 2023 15:40:09 +0200
+Message-ID: <20230911134657.044890830@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,48 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sui Jingfeng <suijingfeng@loongson.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 8d1077cf2e43b15fefd76ebec2b71541eb27ef2c ]
+[ Upstream commit c70064b96f509daa78f57992aeabcf274fb2fed4 ]
 
-Fixes the following build errors on arm64:
+Select REGMAP_AC97 to fix these build errors:
 
-drivers/video/fbdev/hyperv_fb.c: In function 'hvfb_getmem':
->> drivers/video/fbdev/hyperv_fb.c:1033:24: error: 'screen_info' undeclared (first use in this function)
-    1033 |                 base = screen_info.lfb_base;
-         |                        ^~~~~~~~~~~
-drivers/video/fbdev/hyperv_fb.c:1033:24: note: each undeclared identifier is reported only once for each function it appears in
+ERROR: modpost: "regmap_ac97_default_volatile" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
+ERROR: modpost: "__regmap_init_ac97" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
 
->> drivers/gpu/drm/hyperv/hyperv_drm_drv.c:75:54: error: 'screen_info' undeclared (first use in this function)
-      75 |         drm_aperture_remove_conflicting_framebuffers(screen_info.lfb_base,
-	 |                                                      ^~~~~~~~~~~
-drivers/gpu/drm/hyperv/hyperv_drm_drv.c:75:54: note: each undeclared identifier is reported only once for each function it appears in
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307090823.nxnT8Kk5-lkp@intel.com/
-Fixes: 81d2393485f0 ("fbdev/hyperv-fb: Do not set struct fb_info.apertures")
-Fixes: 8b0d13545b09 ("efi: Do not include <linux/screen_info.h> from EFI header")
-Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230709100514.703759-1-suijingfeng@loongson.cn
+Fixes: 6bbf787bb70c ("ASoC: stac9766: Convert to regmap")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Lars-Peter Clausen <lars@metafoo.de>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: alsa-devel@alsa-project.org
+Link: https://lore.kernel.org/r/20230701044836.18789-1-rdunlap@infradead.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 1 +
+ sound/soc/codecs/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-index a7d2c92d6c6a0..8026118c6e033 100644
---- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-@@ -7,6 +7,7 @@
- #include <linux/hyperv.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-+#include <linux/screen_info.h>
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index c2de4ee721836..947473d2da7d2 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -1708,6 +1708,7 @@ config SND_SOC_STA529
+ config SND_SOC_STAC9766
+ 	tristate
+ 	depends on SND_SOC_AC97_BUS
++	select REGMAP_AC97
  
- #include <drm/drm_aperture.h>
- #include <drm/drm_atomic_helper.h>
+ config SND_SOC_STI_SAS
+ 	tristate "codec Audio support for STI SAS codec"
 -- 
 2.40.1
 
