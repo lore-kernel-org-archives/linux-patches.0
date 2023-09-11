@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244A811C82
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDD4C433C8;
-	Mon, 11 Sep 2023 15:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386CA11C84
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722ADC433C9;
+	Mon, 11 Sep 2023 15:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446124;
-	bh=fZRcsBSp2kqrWrVCcfpr9zniFx29VnO7uXg+5TM0so0=;
+	s=korg; t=1694446126;
+	bh=25GGYIv3aBG3y5EjHVi/8NPPEtPbCz0DL/JtPjzpMV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AS8k5sPfqBdK0r3/POxeYq3F/90b0EMNPsyKRLiCwYjCRfFzBsY/WzVy1PkrTPXnC
-	 Xfn7AMPkBS+r42q9Dnvf6BV0aD2fEy4JkJJUNs0MQuk0zL85wCHvsDYLSa6GYnLx2x
-	 sOwRhPiLgmCjBkIr+ZJz/feVr8PcrbfoEdtq7Qds=
+	b=Dhh9UEVc7JFwfu71pUviT+xu3mjHfCg8f7g7mJaugEb7CR+eBj5Pp6OYCOY0gKICN
+	 /BQYTvYXVbbq/Gnp/rFw/Khz3Ly3f1xeU74a/1qzOdpwxBoI4NJSmh1Bc8dRLRqRAg
+	 HP+p4JcCn2F/d6Ya9B9Wdhl1NTKbBVy9snteGdeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunlong Xing <yunlong.xing@unisoc.com>,
-	Enlin Mu <enlin.mu@unisoc.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 573/600] pstore/ram: Check start of empty przs during init
-Date: Mon, 11 Sep 2023 15:50:06 +0200
-Message-ID: <20230911134650.527240909@linuxfoundation.org>
+	Martin Lau <martin.lau@linux.dev>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 6.1 591/600] net: remove duplicate INDIRECT_CALLABLE_DECLARE of udp[6]_ehashfn
+Date: Mon, 11 Sep 2023 15:50:24 +0200
+Message-ID: <20230911134651.083112308@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,60 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enlin Mu <enlin.mu@unisoc.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-commit fe8c3623ab06603eb760444a032d426542212021 upstream.
+commit 74bdfab4fd7c641e55f7fe9d1be9687eeb01df67 upstream.
 
-After commit 30696378f68a ("pstore/ram: Do not treat empty buffers as
-valid"), initialization would assume a prz was valid after seeing that
-the buffer_size is zero (regardless of the buffer start position). This
-unchecked start value means it could be outside the bounds of the buffer,
-leading to future access panics when written to:
+There are already INDIRECT_CALLABLE_DECLARE in the hashtable
+headers, no need to declare them again.
 
- sysdump_panic_event+0x3b4/0x5b8
- atomic_notifier_call_chain+0x54/0x90
- panic+0x1c8/0x42c
- die+0x29c/0x2a8
- die_kernel_fault+0x68/0x78
- __do_kernel_fault+0x1c4/0x1e0
- do_bad_area+0x40/0x100
- do_translation_fault+0x68/0x80
- do_mem_abort+0x68/0xf8
- el1_da+0x1c/0xc0
- __raw_writeb+0x38/0x174
- __memcpy_toio+0x40/0xac
- persistent_ram_update+0x44/0x12c
- persistent_ram_write+0x1a8/0x1b8
- ramoops_pstore_write+0x198/0x1e8
- pstore_console_write+0x94/0xe0
- ...
-
-To avoid this, also check if the prz start is 0 during the initialization
-phase. If not, the next prz sanity check case will discover it (start >
-size) and zap the buffer back to a sane state.
-
-Fixes: 30696378f68a ("pstore/ram: Do not treat empty buffers as valid")
-Cc: Yunlong Xing <yunlong.xing@unisoc.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Enlin Mu <enlin.mu@unisoc.com>
-Link: https://lore.kernel.org/r/20230801060432.1307717-1-yunlong.xing@unisoc.com
-[kees: update commit log with backtrace and clarifications]
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: 0f495f761722 ("net: remove duplicate reuseport_lookup functions")
+Suggested-by: Martin Lau <martin.lau@linux.dev>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230731-indir-call-v1-1-4cd0aeaee64f@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pstore/ram_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/inet_hashtables.c  |    2 --
+ net/ipv6/inet6_hashtables.c |    2 --
+ 2 files changed, 4 deletions(-)
 
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -518,7 +518,7 @@ static int persistent_ram_post_init(stru
- 	sig ^= PERSISTENT_RAM_SIG;
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -333,8 +333,6 @@ static inline int compute_score(struct s
+ 	return score;
+ }
  
- 	if (prz->buffer->sig == sig) {
--		if (buffer_size(prz) == 0) {
-+		if (buffer_size(prz) == 0 && buffer_start(prz) == 0) {
- 			pr_debug("found existing empty buffer\n");
- 			return 0;
- 		}
+-INDIRECT_CALLABLE_DECLARE(inet_ehashfn_t udp_ehashfn);
+-
+ struct sock *inet_lookup_reuseport(struct net *net, struct sock *sk,
+ 				   struct sk_buff *skb, int doff,
+ 				   __be32 saddr, __be16 sport,
+--- a/net/ipv6/inet6_hashtables.c
++++ b/net/ipv6/inet6_hashtables.c
+@@ -112,8 +112,6 @@ static inline int compute_score(struct s
+ 	return score;
+ }
+ 
+-INDIRECT_CALLABLE_DECLARE(inet6_ehashfn_t udp6_ehashfn);
+-
+ struct sock *inet6_lookup_reuseport(struct net *net, struct sock *sk,
+ 				    struct sk_buff *skb, int doff,
+ 				    const struct in6_addr *saddr,
 
 
