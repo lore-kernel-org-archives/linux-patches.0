@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7641170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF3AC433C8;
-	Mon, 11 Sep 2023 13:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886101170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D56C433CA;
+	Mon, 11 Sep 2023 13:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440684;
-	bh=7MDeBTrJHkH2b3LKAB0xGj3rJgXciWPEsV2/5uDCYco=;
+	s=korg; t=1694440687;
+	bh=dNznVvXsnHJ4j3+N71QtfTo0eW7MOg+YTRF0cACyvXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5czBi1g5xiBqYld2Q/dTh2+SXBnvUg3nBUIYqqqTHAvjFVXcxXGf57CM1TWj5fEp
-	 pxoREexshsKtQ10dnHyz70HoFp1eh/EDwUymQCOfMJ8LN1bgcdFDpSec2rAVx8G3Iq
-	 cVCb/AtAVkKljToYozVlNbOMT7VxpWdT9UEGl0/4=
+	b=nYwrV2umzyJSh6VJka8KXEMYHhauFRovMsiE19p0JBWzow6nM0npOT5ztNbMprrYn
+	 xMNU2X5cDvMNQZw9FoukgDiNFNev+RBC4EyktCf0KVN9sJSU3Pkrj5mC9IMogXy1nz
+	 ZDQ5WnmtIXh/G6j/dr30ZPgcjpAI9MZRDqAAOVU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Khazhy Kumykov <khazhy@google.com>,
-	syzbot+18996170f8096c6174d0@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 149/739] USB: core: Fix race by not overwriting udev->descriptor in hub_port_init()
-Date: Mon, 11 Sep 2023 15:39:08 +0200
-Message-ID: <20230911134655.286578255@linuxfoundation.org>
+	Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chinwen Chang <chinwen.chang@mediatek.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 150/739] scripts/gdb: fix lx-lsmod show the wrong size
+Date: Mon, 11 Sep 2023 15:39:09 +0200
+Message-ID: <20230911134655.316645506@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,277 +48,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
 
-commit ff33299ec8bb80cdcc073ad9c506bd79bb2ed20b upstream.
+[ Upstream commit fb40b0537342e1acd5c2daf2ff6780c1d0d2883c ]
 
-Syzbot reported an out-of-bounds read in sysfs.c:read_descriptors():
+'lsmod' shows total core layout size, so we need to sum up all the
+sections in core layout in gdb scripts.
 
-BUG: KASAN: slab-out-of-bounds in read_descriptors+0x263/0x280 drivers/usb/core/sysfs.c:883
-Read of size 8 at addr ffff88801e78b8c8 by task udevd/5011
+/ # lsmod
+kasan_test 200704 0 - Live 0xffff80007f640000
 
-CPU: 0 PID: 5011 Comm: udevd Not tainted 6.4.0-rc6-syzkaller-00195-g40f71e7cd3c6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
- print_address_description.constprop.0+0x2c/0x3c0 mm/kasan/report.c:351
- print_report mm/kasan/report.c:462 [inline]
- kasan_report+0x11c/0x130 mm/kasan/report.c:572
- read_descriptors+0x263/0x280 drivers/usb/core/sysfs.c:883
-...
-Allocated by task 758:
-...
- __do_kmalloc_node mm/slab_common.c:966 [inline]
- __kmalloc+0x5e/0x190 mm/slab_common.c:979
- kmalloc include/linux/slab.h:563 [inline]
- kzalloc include/linux/slab.h:680 [inline]
- usb_get_configuration+0x1f7/0x5170 drivers/usb/core/config.c:887
- usb_enumerate_device drivers/usb/core/hub.c:2407 [inline]
- usb_new_device+0x12b0/0x19d0 drivers/usb/core/hub.c:2545
+Before patch:
+(gdb) lx-lsmod
+Address            Module                  Size  Used by
+0xffff80007f640000 kasan_test             36864  0
 
-As analyzed by Khazhy Kumykov, the cause of this bug is a race between
-read_descriptors() and hub_port_init(): The first routine uses a field
-in udev->descriptor, not expecting it to change, while the second
-overwrites it.
+After patch:
+(gdb) lx-lsmod
+Address            Module                  Size  Used by
+0xffff80007f640000 kasan_test            200704  0
 
-Prior to commit 45bf39f8df7f ("USB: core: Don't hold device lock while
-reading the "descriptors" sysfs file") this race couldn't occur,
-because the routines were mutually exclusive thanks to the device
-locking.  Removing that locking from read_descriptors() exposed it to
-the race.
-
-The best way to fix the bug is to keep hub_port_init() from changing
-udev->descriptor once udev has been initialized and registered.
-Drivers expect the descriptors stored in the kernel to be immutable;
-we should not undermine this expectation.  In fact, this change should
-have been made long ago.
-
-So now hub_port_init() will take an additional argument, specifying a
-buffer in which to store the device descriptor it reads.  (If udev has
-not yet been initialized, the buffer pointer will be NULL and then
-hub_port_init() will store the device descriptor in udev as before.)
-This eliminates the data race responsible for the out-of-bounds read.
-
-The changes to hub_port_init() appear more extensive than they really
-are, because of indentation changes resulting from an attempt to avoid
-writing to other parts of the usb_device structure after it has been
-initialized.  Similar changes should be made to the code that reads
-the BOS descriptor, but that can be handled in a separate patch later
-on.  This patch is sufficient to fix the bug found by syzbot.
-
-Reported-and-tested-by: syzbot+18996170f8096c6174d0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000c0ffe505fe86c9ca@google.com/#r
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: Khazhy Kumykov <khazhy@google.com>
-Fixes: 45bf39f8df7f ("USB: core: Don't hold device lock while reading the "descriptors" sysfs file")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/b958b47a-9a46-4c22-a9f9-e42e42c31251@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20230710092852.31049-1-Kuan-Ying.Lee@mediatek.com
+Fixes: b4aff7513df3 ("scripts/gdb: use mem instead of core_layout to get the module address")
+Signed-off-by: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Chinwen Chang <chinwen.chang@mediatek.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c |  114 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 70 insertions(+), 44 deletions(-)
+ scripts/gdb/linux/constants.py.in |  3 +++
+ scripts/gdb/linux/modules.py      | 12 +++++++++---
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -4793,10 +4793,17 @@ static int get_bMaxPacketSize0(struct us
-  * the port lock.  For a newly detected device that is not accessible
-  * through any global pointers, it's not necessary to lock the device,
-  * but it is still necessary to lock the port.
-+ *
-+ * For a newly detected device, @dev_descr must be NULL.  The device
-+ * descriptor retrieved from the device will then be stored in
-+ * @udev->descriptor.  For an already existing device, @dev_descr
-+ * must be non-NULL.  The device descriptor will be stored there,
-+ * not in @udev->descriptor, because descriptors for registered
-+ * devices are meant to be immutable.
-  */
- static int
- hub_port_init(struct usb_hub *hub, struct usb_device *udev, int port1,
--		int retry_counter)
-+		int retry_counter, struct usb_device_descriptor *dev_descr)
- {
- 	struct usb_device	*hdev = hub->hdev;
- 	struct usb_hcd		*hcd = bus_to_hcd(hdev->bus);
-@@ -4808,6 +4815,7 @@ hub_port_init(struct usb_hub *hub, struc
- 	int			devnum = udev->devnum;
- 	const char		*driver_name;
- 	bool			do_new_scheme;
-+	const bool		initial = !dev_descr;
- 	int			maxp0;
- 	struct usb_device_descriptor	*buf, *descr;
+diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
+index 50a92c4e9984e..fab74ca9df6fc 100644
+--- a/scripts/gdb/linux/constants.py.in
++++ b/scripts/gdb/linux/constants.py.in
+@@ -64,6 +64,9 @@ LX_GDBPARSED(IRQ_HIDDEN)
  
-@@ -4846,32 +4854,34 @@ hub_port_init(struct usb_hub *hub, struc
- 	}
- 	oldspeed = udev->speed;
+ /* linux/module.h */
+ LX_GDBPARSED(MOD_TEXT)
++LX_GDBPARSED(MOD_DATA)
++LX_GDBPARSED(MOD_RODATA)
++LX_GDBPARSED(MOD_RO_AFTER_INIT)
  
--	/* USB 2.0 section 5.5.3 talks about ep0 maxpacket ...
--	 * it's fixed size except for full speed devices.
--	 * For Wireless USB devices, ep0 max packet is always 512 (tho
--	 * reported as 0xff in the device descriptor). WUSB1.0[4.8.1].
--	 */
--	switch (udev->speed) {
--	case USB_SPEED_SUPER_PLUS:
--	case USB_SPEED_SUPER:
--	case USB_SPEED_WIRELESS:	/* fixed at 512 */
--		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(512);
--		break;
--	case USB_SPEED_HIGH:		/* fixed at 64 */
--		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
--		break;
--	case USB_SPEED_FULL:		/* 8, 16, 32, or 64 */
--		/* to determine the ep0 maxpacket size, try to read
--		 * the device descriptor to get bMaxPacketSize0 and
--		 * then correct our initial guess.
-+	if (initial) {
-+		/* USB 2.0 section 5.5.3 talks about ep0 maxpacket ...
-+		 * it's fixed size except for full speed devices.
-+		 * For Wireless USB devices, ep0 max packet is always 512 (tho
-+		 * reported as 0xff in the device descriptor). WUSB1.0[4.8.1].
- 		 */
--		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
--		break;
--	case USB_SPEED_LOW:		/* fixed at 8 */
--		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(8);
--		break;
--	default:
--		goto fail;
-+		switch (udev->speed) {
-+		case USB_SPEED_SUPER_PLUS:
-+		case USB_SPEED_SUPER:
-+		case USB_SPEED_WIRELESS:	/* fixed at 512 */
-+			udev->ep0.desc.wMaxPacketSize = cpu_to_le16(512);
-+			break;
-+		case USB_SPEED_HIGH:		/* fixed at 64 */
-+			udev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
-+			break;
-+		case USB_SPEED_FULL:		/* 8, 16, 32, or 64 */
-+			/* to determine the ep0 maxpacket size, try to read
-+			 * the device descriptor to get bMaxPacketSize0 and
-+			 * then correct our initial guess.
-+			 */
-+			udev->ep0.desc.wMaxPacketSize = cpu_to_le16(64);
-+			break;
-+		case USB_SPEED_LOW:		/* fixed at 8 */
-+			udev->ep0.desc.wMaxPacketSize = cpu_to_le16(8);
-+			break;
-+		default:
-+			goto fail;
-+		}
- 	}
+ /* linux/mount.h */
+ LX_VALUE(MNT_NOSUID)
+diff --git a/scripts/gdb/linux/modules.py b/scripts/gdb/linux/modules.py
+index 261f28640f4cd..f76a43bfa15fc 100644
+--- a/scripts/gdb/linux/modules.py
++++ b/scripts/gdb/linux/modules.py
+@@ -73,11 +73,17 @@ class LxLsmod(gdb.Command):
+                 "        " if utils.get_long_type().sizeof == 8 else ""))
  
- 	if (udev->speed == USB_SPEED_WIRELESS)
-@@ -4894,22 +4904,24 @@ hub_port_init(struct usb_hub *hub, struc
- 	if (udev->speed < USB_SPEED_SUPER)
- 		dev_info(&udev->dev,
- 				"%s %s USB device number %d using %s\n",
--				(udev->config) ? "reset" : "new", speed,
-+				(initial ? "new" : "reset"), speed,
- 				devnum, driver_name);
- 
--	/* Set up TT records, if needed  */
--	if (hdev->tt) {
--		udev->tt = hdev->tt;
--		udev->ttport = hdev->ttport;
--	} else if (udev->speed != USB_SPEED_HIGH
--			&& hdev->speed == USB_SPEED_HIGH) {
--		if (!hub->tt.hub) {
--			dev_err(&udev->dev, "parent hub has no TT\n");
--			retval = -EINVAL;
--			goto fail;
-+	if (initial) {
-+		/* Set up TT records, if needed  */
-+		if (hdev->tt) {
-+			udev->tt = hdev->tt;
-+			udev->ttport = hdev->ttport;
-+		} else if (udev->speed != USB_SPEED_HIGH
-+				&& hdev->speed == USB_SPEED_HIGH) {
-+			if (!hub->tt.hub) {
-+				dev_err(&udev->dev, "parent hub has no TT\n");
-+				retval = -EINVAL;
-+				goto fail;
-+			}
-+			udev->tt = &hub->tt;
-+			udev->ttport = port1;
- 		}
--		udev->tt = &hub->tt;
--		udev->ttport = port1;
- 	}
- 
- 	/* Why interleave GET_DESCRIPTOR and SET_ADDRESS this way?
-@@ -4943,6 +4955,12 @@ hub_port_init(struct usb_hub *hub, struc
- 
- 			maxp0 = get_bMaxPacketSize0(udev, buf,
- 					GET_DESCRIPTOR_BUFSIZE, retries == 0);
-+			if (maxp0 > 0 && !initial &&
-+					maxp0 != udev->descriptor.bMaxPacketSize0) {
-+				dev_err(&udev->dev, "device reset changed ep0 maxpacket size!\n");
-+				retval = -ENODEV;
-+				goto fail;
-+			}
- 
- 			retval = hub_port_reset(hub, port1, udev, delay, false);
- 			if (retval < 0)		/* error or disconnect */
-@@ -5016,6 +5034,12 @@ hub_port_init(struct usb_hub *hub, struc
- 		} else {
- 			u32 delay;
- 
-+			if (!initial && maxp0 != udev->descriptor.bMaxPacketSize0) {
-+				dev_err(&udev->dev, "device reset changed ep0 maxpacket size!\n");
-+				retval = -ENODEV;
-+				goto fail;
-+			}
+         for module in module_list():
+-            layout = module['mem'][constants.LX_MOD_TEXT]
++            text = module['mem'][constants.LX_MOD_TEXT]
++            text_addr = str(text['base']).split()[0]
++            total_size = 0
 +
- 			delay = udev->parent->hub_delay;
- 			udev->hub_delay = min_t(u32, delay,
- 						USB_TP_TRANSMISSION_DELAY_MAX);
-@@ -5059,7 +5083,10 @@ hub_port_init(struct usb_hub *hub, struc
- 					retval);
- 		goto fail;
- 	}
--	udev->descriptor = *descr;
-+	if (initial)
-+		udev->descriptor = *descr;
-+	else
-+		*dev_descr = *descr;
- 	kfree(descr);
++            for i in range(constants.LX_MOD_TEXT, constants.LX_MOD_RO_AFTER_INIT + 1):
++                total_size += module['mem'][i]['size']
++
+             gdb.write("{address} {name:<19} {size:>8}  {ref}".format(
+-                address=str(layout['base']).split()[0],
++                address=text_addr,
+                 name=module['name'].string(),
+-                size=str(layout['size']),
++                size=str(total_size),
+                 ref=str(module['refcnt']['counter'] - 1)))
  
- 	/*
-@@ -5369,7 +5396,7 @@ static void hub_port_connect(struct usb_
- 		}
- 
- 		/* reset (non-USB 3.0 devices) and get descriptor */
--		status = hub_port_init(hub, udev, port1, i);
-+		status = hub_port_init(hub, udev, port1, i, NULL);
- 		if (status < 0)
- 			goto loop;
- 
-@@ -5999,7 +6026,7 @@ static int usb_reset_and_verify_device(s
- 	struct usb_device		*parent_hdev = udev->parent;
- 	struct usb_hub			*parent_hub;
- 	struct usb_hcd			*hcd = bus_to_hcd(udev->bus);
--	struct usb_device_descriptor	descriptor = udev->descriptor;
-+	struct usb_device_descriptor	descriptor;
- 	struct usb_host_bos		*bos;
- 	int				i, j, ret = 0;
- 	int				port1 = udev->portnum;
-@@ -6035,7 +6062,7 @@ static int usb_reset_and_verify_device(s
- 		/* ep0 maxpacket size may change; let the HCD know about it.
- 		 * Other endpoints will be handled by re-enumeration. */
- 		usb_ep0_reinit(udev);
--		ret = hub_port_init(parent_hub, udev, port1, i);
-+		ret = hub_port_init(parent_hub, udev, port1, i, &descriptor);
- 		if (ret >= 0 || ret == -ENOTCONN || ret == -ENODEV)
- 			break;
- 	}
-@@ -6047,7 +6074,6 @@ static int usb_reset_and_verify_device(s
- 	/* Device might have changed firmware (DFU or similar) */
- 	if (descriptors_changed(udev, &descriptor, bos)) {
- 		dev_info(&udev->dev, "device firmware changed\n");
--		udev->descriptor = descriptor;	/* for disconnect() calls */
- 		goto re_enumerate;
- 	}
- 
+             t = self._module_use_type.get_type().pointer()
+-- 
+2.40.1
+
 
 
