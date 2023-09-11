@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D14F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A637AC433C8;
-	Mon, 11 Sep 2023 14:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849941170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C94C433C7;
+	Mon, 11 Sep 2023 14:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442093;
-	bh=iJncXwidsdrKdbiUpymtuxMDxnCDHIuljyK3dFJq3Ts=;
+	s=korg; t=1694442096;
+	bh=3uRfiLvzK9UlwL4v893Kjlk4FgKq4mcqYCCZmQ3fSFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJAX4GU/+Mg1ydjVARzoCExSfGC+f72hLAQ59KzYUCHCwMMnbkc0DVwLhM7bcpz5a
-	 s82ROE6WHX1rwajwfSZ7iw2ieXBZR4yDJn5TbIyMXcPkN/0X2k2kZjwrQICSl4fvsi
-	 xlS+tSWeP5XfZ70YrmerKcn+wo1LDvy+NOx3kvYo=
+	b=koIbQ4T9vUfCbl3cuzSlDNB1nmrGxmzD+7h7JpFRkuzBCIM5zL87xsYKIvULtsKdh
+	 QHCNJXIDHsy0SpUzZ5qqW6Sb/0/R7rVv4W1bAow4pZmVe5ZQ+K9+hIcwksn5phFwew
+	 tY1LNaZoB2wxT/Dd9UDq1hWheGtzIMubyhptYUcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Lee Jones <lee@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 617/739] mfd: rz-mtu3: Link time dependencies
-Date: Mon, 11 Sep 2023 15:46:56 +0200
-Message-ID: <20230911134708.331974683@linuxfoundation.org>
+Subject: [PATCH 6.5 608/739] thermal/drivers/mediatek/lvts_thermal: Dont leave threshold zeroed
+Date: Mon, 11 Sep 2023 15:46:47 +0200
+Message-ID: <20230911134708.081032429@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -36,159 +36,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 10d3340441bd0db857fc7fcb1733a800acf47a3d ]
+[ Upstream commit 77354eaef8218bc40d6b37e783b0b8dcca22a7d9 ]
 
-The new set of drivers for RZ/G2L MTU3a tries to enable compile-testing the
-individual client drivers even when the MFD portion is disabled but gets it
-wrong, causing a link failure when the core is in a loadable module but the
-other drivers are built-in:
+The thermal framework might leave the low threshold unset if there
+aren't any lower trip points. This leaves the register zeroed, which
+translates to a very high temperature for the low threshold. The
+interrupt for this threshold is then immediately triggered, and the
+state machine gets stuck, preventing any other temperature monitoring
+interrupts to ever trigger.
 
-x86_64-linux-ld: drivers/pwm/pwm-rz-mtu3.o: in function `rz_mtu3_pwm_apply':
-pwm-rz-mtu3.c:(.text+0x4bf): undefined reference to `rz_mtu3_8bit_ch_write'
-x86_64-linux-ld: pwm-rz-mtu3.c:(.text+0x509): undefined reference to `rz_mtu3_disable'
+(The same happens by not setting the Cold or Hot to Normal thresholds
+when using those)
 
-arm-linux-gnueabi-ld: drivers/counter/rz-mtu3-cnt.o: in function `rz_mtu3_cascade_counts_enable_get':
-rz-mtu3-cnt.c:(.text+0xbec): undefined reference to `rz_mtu3_shared_reg_read'
+Set the unused threshold to a valid low value. This value was chosen so
+that for any valid golden temperature read from the efuse, when the
+value is converted to raw and back again to milliCelsius, the result
+doesn't underflow.
 
-It seems better not to add the extra complexity here but instead just use
-a normal hard dependency, so remove the #else portion in the header along
-with the "|| COMPILE_TEST". This could also be fixed by having slightly more
-elaborate Kconfig dependencies or using the cursed 'IS_REACHABLE()' helper,
-but in practice it's already possible to compile-test all these drivers
-by enabling the mtd portion.
-
-Fixes: 254d3a727421c ("pwm: Add Renesas RZ/G2L MTU3a PWM driver")
-Fixes: 0be8907359df4 ("counter: Add Renesas RZ/G2L MTU3a counter driver")
-Fixes: 654c293e1687b ("mfd: Add Renesas RZ/G2L MTU3a core driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Thierry Reding <thierry.reding@gmail.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230719090430.1925182-1-arnd@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20230706153823.201943-6-nfraprado@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/Kconfig     |  2 +-
- drivers/pwm/Kconfig         |  2 +-
- include/linux/mfd/rz-mtu3.h | 66 -------------------------------------
- 3 files changed, 2 insertions(+), 68 deletions(-)
+ drivers/thermal/mediatek/lvts_thermal.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/counter/Kconfig b/drivers/counter/Kconfig
-index 62962ae84b77d..497bc05dca4df 100644
---- a/drivers/counter/Kconfig
-+++ b/drivers/counter/Kconfig
-@@ -92,7 +92,7 @@ config MICROCHIP_TCB_CAPTURE
+diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
+index 02e7af4619a2c..064269667fb89 100644
+--- a/drivers/thermal/mediatek/lvts_thermal.c
++++ b/drivers/thermal/mediatek/lvts_thermal.c
+@@ -83,6 +83,8 @@
  
- config RZ_MTU3_CNT
- 	tristate "Renesas RZ/G2L MTU3a counter driver"
--	depends on RZ_MTU3 || COMPILE_TEST
-+	depends on RZ_MTU3
- 	help
- 	  Enable support for MTU3a counter driver found on Renesas RZ/G2L alike
- 	  SoCs. This IP supports both 16-bit and 32-bit phase counting mode
-diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
-index 6210babb0741a..8ebcddf91f7b7 100644
---- a/drivers/pwm/Kconfig
-+++ b/drivers/pwm/Kconfig
-@@ -505,7 +505,7 @@ config PWM_ROCKCHIP
+ #define LVTS_HW_SHUTDOWN_MT8195		105000
  
- config PWM_RZ_MTU3
- 	tristate "Renesas RZ/G2L MTU3a PWM Timer support"
--	depends on RZ_MTU3 || COMPILE_TEST
-+	depends on RZ_MTU3
- 	depends on HAS_IOMEM
- 	help
- 	  This driver exposes the MTU3a PWM Timer controller found in Renesas
-diff --git a/include/linux/mfd/rz-mtu3.h b/include/linux/mfd/rz-mtu3.h
-index c5173bc062701..8421d49500bf4 100644
---- a/include/linux/mfd/rz-mtu3.h
-+++ b/include/linux/mfd/rz-mtu3.h
-@@ -151,7 +151,6 @@ struct rz_mtu3 {
- 	void *priv_data;
- };
++#define LVTS_MINIMUM_THRESHOLD		20000
++
+ static int golden_temp = LVTS_GOLDEN_TEMP_DEFAULT;
+ static int coeff_b = LVTS_COEFF_B;
  
--#if IS_ENABLED(CONFIG_RZ_MTU3)
- static inline bool rz_mtu3_request_channel(struct rz_mtu3_channel *ch)
+@@ -294,7 +296,7 @@ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
  {
- 	mutex_lock(&ch->lock);
-@@ -188,70 +187,5 @@ void rz_mtu3_32bit_ch_write(struct rz_mtu3_channel *ch, u16 off, u32 val);
- void rz_mtu3_shared_reg_write(struct rz_mtu3_channel *ch, u16 off, u16 val);
- void rz_mtu3_shared_reg_update_bit(struct rz_mtu3_channel *ch, u16 off,
- 				   u16 pos, u8 val);
--#else
--static inline bool rz_mtu3_request_channel(struct rz_mtu3_channel *ch)
--{
--	return false;
--}
--
--static inline void rz_mtu3_release_channel(struct rz_mtu3_channel *ch)
--{
--}
--
--static inline bool rz_mtu3_is_enabled(struct rz_mtu3_channel *ch)
--{
--	return false;
--}
--
--static inline void rz_mtu3_disable(struct rz_mtu3_channel *ch)
--{
--}
--
--static inline int rz_mtu3_enable(struct rz_mtu3_channel *ch)
--{
--	return 0;
--}
--
--static inline u8 rz_mtu3_8bit_ch_read(struct rz_mtu3_channel *ch, u16 off)
--{
--	return 0;
--}
--
--static inline u16 rz_mtu3_16bit_ch_read(struct rz_mtu3_channel *ch, u16 off)
--{
--	return 0;
--}
--
--static inline u32 rz_mtu3_32bit_ch_read(struct rz_mtu3_channel *ch, u16 off)
--{
--	return 0;
--}
--
--static inline u16 rz_mtu3_shared_reg_read(struct rz_mtu3_channel *ch, u16 off)
--{
--	return 0;
--}
--
--static inline void rz_mtu3_8bit_ch_write(struct rz_mtu3_channel *ch, u16 off, u8 val)
--{
--}
--
--static inline void rz_mtu3_16bit_ch_write(struct rz_mtu3_channel *ch, u16 off, u16 val)
--{
--}
--
--static inline void rz_mtu3_32bit_ch_write(struct rz_mtu3_channel *ch, u16 off, u32 val)
--{
--}
--
--static inline void rz_mtu3_shared_reg_write(struct rz_mtu3_channel *ch, u16 off, u16 val)
--{
--}
--
--static inline void rz_mtu3_shared_reg_update_bit(struct rz_mtu3_channel *ch,
--						 u16 off, u16 pos, u8 val)
--{
--}
--#endif
+ 	struct lvts_sensor *lvts_sensor = thermal_zone_device_priv(tz);
+ 	void __iomem *base = lvts_sensor->base;
+-	u32 raw_low = lvts_temp_to_raw(low);
++	u32 raw_low = lvts_temp_to_raw(low != -INT_MAX ? low : LVTS_MINIMUM_THRESHOLD);
+ 	u32 raw_high = lvts_temp_to_raw(high);
  
- #endif /* __MFD_RZ_MTU3_H__ */
+ 	/*
+@@ -306,11 +308,9 @@ static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
+ 	 *
+ 	 * 14-0 : Raw temperature for threshold
+ 	 */
+-	if (low != -INT_MAX) {
+-		pr_debug("%s: Setting low limit temperature interrupt: %d\n",
+-			 thermal_zone_device_type(tz), low);
+-		writel(raw_low, LVTS_OFFSETL(base));
+-	}
++	pr_debug("%s: Setting low limit temperature interrupt: %d\n",
++		 thermal_zone_device_type(tz), low);
++	writel(raw_low, LVTS_OFFSETL(base));
+ 
+ 	/*
+ 	 * High offset temperature threshold
 -- 
 2.40.1
 
