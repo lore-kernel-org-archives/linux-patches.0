@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26CF11714
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4DFC433C8;
-	Mon, 11 Sep 2023 14:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABF41170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9B1C433C9;
+	Mon, 11 Sep 2023 14:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440856;
-	bh=p5kZRJPy6becEKGze/E8wQRGvbD8Pps2B78lYscLjgQ=;
+	s=korg; t=1694440859;
+	bh=sM3B8Nb3JnG9/KHaM1jDticpvBUhm+Zc4twnrgrARa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gEUxzg3i7Fv/sYGlRhvZkR9zt580f1oyVwDKsWxzSrTyfJj0/vjZWf7YCA5JE8TA
-	 LWSBnCLxbEz+GXYf6rICJgEUi4ZQwCy+ttE8yh9uA1T5WxW3BpjjYDqca8+dp5d8II
-	 YUnRC+HFO9qiqXXUoKpdlzzcSKg0HnbvWUr9iI08=
+	b=ayE6W+4O1bOzAeM25c+f5VPFyUQoBkSwBOTfKtnp+EfDakBwMRI/+mVOXiWuWYOzk
+	 03oEB9n9RPP6bhzZPZFgMbjRWT4BlC3Wnl1apsu4T0oaFVbdPOBexW80Mx4taT+YVC
+	 YKennt/l1yTgr8mq4ayhka5i4ReI1ulSenclF7ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	alsa-devel@alsa-project.org,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 210/739] ASoC: stac9766: fix build errors with REGMAP_AC97
-Date: Mon, 11 Sep 2023 15:40:09 +0200
-Message-ID: <20230911134657.044890830@linuxfoundation.org>
+Subject: [PATCH 6.5 211/739] soc: qcom: ocmem: Fix NUM_PORTS & NUM_MACROS macros
+Date: Mon, 11 Sep 2023 15:40:10 +0200
+Message-ID: <20230911134657.081446718@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,40 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit c70064b96f509daa78f57992aeabcf274fb2fed4 ]
+[ Upstream commit a7b484b1c9332a1ee12e8799d62a11ee3f8e0801 ]
 
-Select REGMAP_AC97 to fix these build errors:
+Since we're using these two macros to read a value from a register, we
+need to use the FIELD_GET instead of the FIELD_PREP macro, otherwise
+we're getting wrong values.
 
-ERROR: modpost: "regmap_ac97_default_volatile" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
-ERROR: modpost: "__regmap_init_ac97" [sound/soc/codecs/snd-soc-stac9766.ko] undefined!
+So instead of:
 
-Fixes: 6bbf787bb70c ("ASoC: stac9766: Convert to regmap")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: alsa-devel@alsa-project.org
-Link: https://lore.kernel.org/r/20230701044836.18789-1-rdunlap@infradead.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  [    3.111779] ocmem fdd00000.sram: 2 ports, 1 regions, 512 macros, not interleaved
+
+we now get the correct value of:
+
+  [    3.129672] ocmem fdd00000.sram: 2 ports, 1 regions, 2 macros, not interleaved
+
+Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230506-msm8226-ocmem-v3-1-79da95a2581f@z3ntu.xyz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/ocmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index c2de4ee721836..947473d2da7d2 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -1708,6 +1708,7 @@ config SND_SOC_STA529
- config SND_SOC_STAC9766
- 	tristate
- 	depends on SND_SOC_AC97_BUS
-+	select REGMAP_AC97
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index aaddc3cc53b7f..ef7c1748242ac 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -80,8 +80,8 @@ struct ocmem {
+ #define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
+ #define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
  
- config SND_SOC_STI_SAS
- 	tristate "codec Audio support for STI SAS codec"
+-#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_PREP(0x0000000f, (val))
+-#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_PREP(0x00003f00, (val))
++#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
++#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
+ 
+ #define OCMEM_HW_PROFILE_LAST_REGN_HALFSIZE	0x00010000
+ #define OCMEM_HW_PROFILE_INTERLEAVING		0x00020000
 -- 
 2.40.1
 
