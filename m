@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1101170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927E5C433C7;
-	Mon, 11 Sep 2023 13:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24091170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528F1C433C8;
+	Mon, 11 Sep 2023 13:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440641;
-	bh=vfpAmUWmoaDCieMOhaR4AkLH7OJ1LA8Vd98rlAb0QLI=;
+	s=korg; t=1694440644;
+	bh=ZQu/xz1j6EMKnW1cXVVd56NH6nYsdB2B/5WPjBEXaV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vkp/FNQZPadj3jgrgurIZTrcDMe4DPQwY4gsqsJk/QC61r3Q+C3by0F2obcaqECLZ
-	 +w/MZyP0ZtC3edRd4/bUpxWuSIrf4TwC3VG57dVbM02UeMJ/PLwz3yGK9ORFZwyIYL
-	 Ub4Scd7XbYNQZeUyJ0k4h58+B3/V8uNhPc2r1YNA=
+	b=MGdd9v2DqilyZHJRiIrrtyhBd1aKymvloXZRiNmDZ9cBMMXge3teuoXMb+U33yHLM
+	 GlZEN0oQllhxxqgxLFemMNCcEd+VtzrwHqLg9yB9Sv77NXqkIBmf+rlTzsPVImHkcf
+	 +p5Lts+oprdiI294D+LF9hfnykTm5E1p/6B8cfF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexander Danilenko <al.b.danilenko@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 133/739] selftests/bpf: Clean up fmod_ret in bench_rename test script
-Date: Mon, 11 Sep 2023 15:38:52 +0200
-Message-ID: <20230911134654.803572528@linuxfoundation.org>
+Subject: [PATCH 6.5 134/739] spi: tegra114: Remove unnecessary NULL-pointer checks
+Date: Mon, 11 Sep 2023 15:38:53 +0200
+Message-ID: <20230911134654.832694547@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,54 +34,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Alexander Danilenko <al.b.danilenko@gmail.com>
 
-[ Upstream commit 83a89c4b6ae93481d3f618aba6a29d89208d26ed ]
+[ Upstream commit 373c36bf7914e3198ac2654dede499f340c52950 ]
 
-Running the bench_rename test script, the following error occurs:
+cs_setup, cs_hold and cs_inactive points to fields of spi_device struct,
+so there is no sense in checking them for NULL.
 
-  # ./benchs/run_bench_rename.sh
-  base      :    0.819 ± 0.012M/s
-  kprobe    :    0.538 ± 0.009M/s
-  kretprobe :    0.503 ± 0.004M/s
-  rawtp     :    0.779 ± 0.020M/s
-  fentry    :    0.726 ± 0.007M/s
-  fexit     :    0.691 ± 0.007M/s
-  benchmark 'rename-fmodret' not found
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-The bench_rename_fmodret has been removed in commit b000def2e052
-("selftests: Remove fmod_ret from test_overhead"), thus remove it
-from the runners in the test script.
-
-Fixes: b000def2e052 ("selftests: Remove fmod_ret from test_overhead")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230814030727.3010390-1-zouyipeng@huawei.com
+Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
+Signed-off-by: Alexander Danilenko <al.b.danilenko@gmail.com>
+Link: https://lore.kernel.org/r/20230815092058.4083-1-al.b.danilenko@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/benchs/run_bench_rename.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-tegra114.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/benchs/run_bench_rename.sh b/tools/testing/selftests/bpf/benchs/run_bench_rename.sh
-index 16f774b1cdbed..7b281dbe41656 100755
---- a/tools/testing/selftests/bpf/benchs/run_bench_rename.sh
-+++ b/tools/testing/selftests/bpf/benchs/run_bench_rename.sh
-@@ -2,7 +2,7 @@
+diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
+index 488df681eaefc..2226d77a5d20a 100644
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -723,27 +723,23 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
+ 	struct spi_delay *setup = &spi->cs_setup;
+ 	struct spi_delay *hold = &spi->cs_hold;
+ 	struct spi_delay *inactive = &spi->cs_inactive;
+-	u8 setup_dly, hold_dly, inactive_dly;
++	u8 setup_dly, hold_dly;
+ 	u32 setup_hold;
+ 	u32 spi_cs_timing;
+ 	u32 inactive_cycles;
+ 	u8 cs_state;
  
- set -eufo pipefail
+-	if ((setup && setup->unit != SPI_DELAY_UNIT_SCK) ||
+-	    (hold && hold->unit != SPI_DELAY_UNIT_SCK) ||
+-	    (inactive && inactive->unit != SPI_DELAY_UNIT_SCK)) {
++	if (setup->unit != SPI_DELAY_UNIT_SCK ||
++	    hold->unit != SPI_DELAY_UNIT_SCK ||
++	    inactive->unit != SPI_DELAY_UNIT_SCK) {
+ 		dev_err(&spi->dev,
+ 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
+ 			SPI_DELAY_UNIT_SCK);
+ 		return -EINVAL;
+ 	}
  
--for i in base kprobe kretprobe rawtp fentry fexit fmodret
-+for i in base kprobe kretprobe rawtp fentry fexit
- do
- 	summary=$(sudo ./bench -w2 -d5 -a rename-$i | tail -n1 | cut -d'(' -f1 | cut -d' ' -f3-)
- 	printf "%-10s: %s\n" $i "$summary"
+-	setup_dly = setup ? setup->value : 0;
+-	hold_dly = hold ? hold->value : 0;
+-	inactive_dly = inactive ? inactive->value : 0;
+-
+-	setup_dly = min_t(u8, setup_dly, MAX_SETUP_HOLD_CYCLES);
+-	hold_dly = min_t(u8, hold_dly, MAX_SETUP_HOLD_CYCLES);
++	setup_dly = min_t(u8, setup->value, MAX_SETUP_HOLD_CYCLES);
++	hold_dly = min_t(u8, hold->value, MAX_SETUP_HOLD_CYCLES);
+ 	if (setup_dly && hold_dly) {
+ 		setup_hold = SPI_SETUP_HOLD(setup_dly - 1, hold_dly - 1);
+ 		spi_cs_timing = SPI_CS_SETUP_HOLD(tspi->spi_cs_timing1,
+@@ -755,7 +751,7 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
+ 		}
+ 	}
+ 
+-	inactive_cycles = min_t(u8, inactive_dly, MAX_INACTIVE_CYCLES);
++	inactive_cycles = min_t(u8, inactive->value, MAX_INACTIVE_CYCLES);
+ 	if (inactive_cycles)
+ 		inactive_cycles--;
+ 	cs_state = inactive_cycles ? 0 : 1;
 -- 
 2.40.1
 
