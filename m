@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB411170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAA7C433C7;
-	Mon, 11 Sep 2023 14:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81F01170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3770AC433C8;
+	Mon, 11 Sep 2023 14:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442510;
-	bh=pyR5PsWEn2NNie5H8Ireh8g+wBNLdMRO0Y1mmp0dnus=;
+	s=korg; t=1694442513;
+	bh=m9zuHgsqy+hBnFgqQPRkN/YeTRTaHqO7aSoFVks+rkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWJ0IwTjStPsgMN/KQbvAh0+KB+LoHnaVaHxl8eWgEsZKSz2jHJ2MbHqqfJ81Pm//
-	 RDivkY68YSRI/5YJdReLAe/vH78FTxaWxzr4Na8geeVluafFQhDc14G/ezKOmbgt5n
-	 rQDo3Nso6gt/owljsafGhY2VKnZ1ffHVdjLlu9Io=
+	b=Q605e0PbxRC1oT4znV10I1LCZs7i35yNoOcY3wvoQv23VmwV9o+jiSZmxT6J5E6XP
+	 Z0zC/k4LttoPhelilClL5NUApgkwAoKqBXcyJVjinHRDibpHjVYAzYWNjZgteU9w6N
+	 jiLM6kqt1whEqmJvrPQDU8ef9C6++MFyg5e3eKXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org,
+	Ani Sinha <anisinha@redhat.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 049/737] clk: fixed-mmio: make COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM
-Date: Mon, 11 Sep 2023 15:38:28 +0200
-Message-ID: <20230911134651.829658114@linuxfoundation.org>
+Subject: [PATCH 6.4 050/737] vmbus_testing: fix wrong python syntax for integer value comparison
+Date: Mon, 11 Sep 2023 15:38:29 +0200
+Message-ID: <20230911134651.860299040@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,50 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-[ Upstream commit e7dd44f4f3166db45248414f5df8f615392de47a ]
+[ Upstream commit ed0cf84e9cc42e6310961c87709621f1825c2bb8 ]
 
-On s390 systems (aka mainframes), it has classic channel devices for
-networking and permanent storage that are currently even more common
-than PCI devices. Hence it could have a fully functional s390 kernel
-with CONFIG_PCI=n, then the relevant iomem mapping functions
-[including ioremap(), devm_ioremap(), etc.] are not available.
+It is incorrect in python to compare integer values using the "is" keyword.
+The "is" keyword in python is used to compare references to two objects,
+not their values. Newer version of python3 (version 3.8) throws a warning
+when such incorrect comparison is made. For value comparison, "==" should
+be used.
 
-Here let COMMON_CLK_FIXED_MMIO depend on HAS_IOMEM so that it won't
-be built to cause below compiling error if PCI is unset:
+Fix this in the code and suppress the following warning:
 
-------
-ld: drivers/clk/clk-fixed-mmio.o: in function `fixed_mmio_clk_setup':
-clk-fixed-mmio.c:(.text+0x5e): undefined reference to `of_iomap'
-ld: clk-fixed-mmio.c:(.text+0xba): undefined reference to `iounmap'
-------
+/usr/sbin/vmbus_testing:167: SyntaxWarning: "is" with a literal. Did you mean "=="?
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org
-Link: https://lore.kernel.org/r/20230707135852.24292-8-bhe@redhat.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20230705134408.6302-1-anisinha@redhat.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ tools/hv/vmbus_testing | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-index 016814e15536a..52dfbae4f361c 100644
---- a/drivers/clk/Kconfig
-+++ b/drivers/clk/Kconfig
-@@ -444,6 +444,7 @@ config COMMON_CLK_BD718XX
- config COMMON_CLK_FIXED_MMIO
- 	bool "Clock driver for Memory Mapped Fixed values"
- 	depends on COMMON_CLK && OF
-+	depends on HAS_IOMEM
- 	help
- 	  Support for Memory Mapped IO Fixed clocks
+diff --git a/tools/hv/vmbus_testing b/tools/hv/vmbus_testing
+index e7212903dd1d9..4467979d8f699 100755
+--- a/tools/hv/vmbus_testing
++++ b/tools/hv/vmbus_testing
+@@ -164,7 +164,7 @@ def recursive_file_lookup(path, file_map):
+ def get_all_devices_test_status(file_map):
  
+         for device in file_map:
+-                if (get_test_state(locate_state(device, file_map)) is 1):
++                if (get_test_state(locate_state(device, file_map)) == 1):
+                         print("Testing = ON for: {}"
+                               .format(device.split("/")[5]))
+                 else:
+@@ -203,7 +203,7 @@ def write_test_files(path, value):
+ def set_test_state(state_path, state_value, quiet):
+ 
+         write_test_files(state_path, state_value)
+-        if (get_test_state(state_path) is 1):
++        if (get_test_state(state_path) == 1):
+                 if (not quiet):
+                         print("Testing = ON for device: {}"
+                               .format(state_path.split("/")[5]))
 -- 
 2.40.1
 
