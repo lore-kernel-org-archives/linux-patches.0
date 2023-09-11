@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5086111710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0EFC433C7;
-	Mon, 11 Sep 2023 15:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CE311710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9D8C433C7;
+	Mon, 11 Sep 2023 15:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445799;
-	bh=ZWH2zTdKQq7V0tat9QXhFCoJLDU7NxPsqZYVTLwdtrY=;
+	s=korg; t=1694445801;
+	bh=evktxrsg6PALF2stOMfu9XaC00xCqUpvC0HHjfcxREE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zI3vcZW9ZGQNg2TaFPAu6TRFIeMX5uid31gpO2kKX5++Bv6QVEpv5i/AJK+YOFgmE
-	 aG8wdoJRQZz/wZ59D0PqPu8s3RKIakI2EMYJK0T1/z7VkKNTjN1iV5pMPtJLibtT7M
-	 tH9SCFvECmA4l83i26X8E3ejjHojRTVxOSNyN31A=
+	b=YAIVIVjiKleh9jTVRCBMa0sNJeVLX2nmWuoO4BmR9ID/ncoNtntUPdZEgQ4L5+QPJ
+	 PvsUe+Q+DXoR7kTnIr9hpNvaFEyOcVQDpuHH7g/ly3IStu0R91+JCRG3VcsPj/mifE
+	 avbb4cLcGsZDNFeLWOSrqQi14w49YLgG0MMA130o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangtao Li <frank.li@vivo.com>,
-	Chao Yu <chao@kernel.org>,
+	Chunhai Guo <guochunhai@vivo.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 475/600] f2fs: judge whether discard_unit is section only when have CONFIG_BLK_DEV_ZONED
-Date: Mon, 11 Sep 2023 15:48:28 +0200
-Message-ID: <20230911134647.665642114@linuxfoundation.org>
+Subject: [PATCH 6.1 476/600] f2fs: Only lfs mode is allowed with zoned block device feature
+Date: Mon, 11 Sep 2023 15:48:29 +0200
+Message-ID: <20230911134647.694131743@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,59 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Chunhai Guo <guochunhai@vivo.com>
 
-[ Upstream commit b5a711acab305e04278c136c841ba37c589c16a1 ]
+[ Upstream commit 2bd4df8fcbc72f58ce3c62ed021ab291ca42de0b ]
 
-The current logic, regardless of whether CONFIG_BLK_DEV_ZONED
-is enabled or not, will judge whether discard_unit is SECTION,
-when f2fs_sb_has_blkzoned.
+Now f2fs support four block allocation modes: lfs, adaptive,
+fragment:segment, fragment:block. Only lfs mode is allowed with zoned block
+device feature.
 
-In fact, when CONFIG_BLK_DEV_ZONED is not enabled, this judgment
-is a path that will never be accessed. At this time, -EINVAL will
-be returned in the parse_options function, accompanied by the
-message "Zoned block device support is not enabled".
-
-Let's wrap this discard_unit judgment with CONFIG_BLK_DEV_ZONED.
-
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 6691d940b0e0 ("f2fs: introduce fragment allocation mode mount option")
+Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 2bd4df8fcbc7 ("f2fs: Only lfs mode is allowed with zoned block device feature")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/f2fs/super.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index b6dad389fa144..d616ce3826e7a 100644
+index d616ce3826e7a..2046f633fe57a 100644
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -1285,19 +1285,18 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
- 	 * zone alignment optimization. This is optional for host-aware
- 	 * devices, but mandatory for host-managed zoned block devices.
- 	 */
--#ifndef CONFIG_BLK_DEV_ZONED
--	if (f2fs_sb_has_blkzoned(sbi)) {
--		f2fs_err(sbi, "Zoned block device support is not enabled");
--		return -EINVAL;
--	}
--#endif
- 	if (f2fs_sb_has_blkzoned(sbi)) {
-+#ifdef CONFIG_BLK_DEV_ZONED
- 		if (F2FS_OPTION(sbi).discard_unit !=
- 						DISCARD_UNIT_SECTION) {
- 			f2fs_info(sbi, "Zoned block device doesn't need small discard, set discard_unit=section by default");
+@@ -858,11 +858,6 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
+ 			if (!name)
+ 				return -ENOMEM;
+ 			if (!strcmp(name, "adaptive")) {
+-				if (f2fs_sb_has_blkzoned(sbi)) {
+-					f2fs_warn(sbi, "adaptive mode is not allowed with zoned block device feature");
+-					kfree(name);
+-					return -EINVAL;
+-				}
+ 				F2FS_OPTION(sbi).fs_mode = FS_MODE_ADAPTIVE;
+ 			} else if (!strcmp(name, "lfs")) {
+ 				F2FS_OPTION(sbi).fs_mode = FS_MODE_LFS;
+@@ -1293,6 +1288,11 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
  			F2FS_OPTION(sbi).discard_unit =
  					DISCARD_UNIT_SECTION;
  		}
-+#else
-+		f2fs_err(sbi, "Zoned block device support is not enabled");
-+		return -EINVAL;
-+#endif
- 	}
- 
- #ifdef CONFIG_F2FS_FS_COMPRESSION
++
++		if (F2FS_OPTION(sbi).fs_mode != FS_MODE_LFS) {
++			f2fs_info(sbi, "Only lfs mode is allowed with zoned block device feature");
++			return -EINVAL;
++		}
+ #else
+ 		f2fs_err(sbi, "Zoned block device support is not enabled");
+ 		return -EINVAL;
 -- 
 2.40.1
 
