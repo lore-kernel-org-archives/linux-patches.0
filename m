@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7F9F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D22C433C9;
-	Mon, 11 Sep 2023 14:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954CB8472
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A1DC433C7;
+	Mon, 11 Sep 2023 14:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442868;
-	bh=YyKneoLDc9t8FbA+1tJxBNYFgjckJAs15Gm3N8oISX4=;
+	s=korg; t=1694442871;
+	bh=LQzq85J6k7U7JDduhFkEQHb3A+46YwmCyC5m60Tis5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0zI6Rom5zjvLzyU9Y9/ceBC/zC/aUWv9xkY7FlyhSTj4zVML+oX1RzX/0fYtSHmD
-	 ucXn1UqnizPK6JdQJAPft8mYaSr9C9QCecx/o8HDWyULRNrin+/dTlX1KVjsoSrO1K
-	 ZtEPUbjJV0HjsCA5bhaNWv+XtE9yiLQV/ivwEhaA=
+	b=Vex2SjTIkO9sIbrBq9TcFaYBFy5NpFasBGr4STFtR7B3CfNuOelHa8KYIjnX+X0P6
+	 DaH1R7AoD2FsnrJr3nOp/YcFDJ+QhVO9rhxbIyl+86c1j0CUhlHQ1mMRTOkNeR8RnR
+	 TKJFW2fob4WoTk6Rv9560d3RqYB735s/MQLk5Nu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 149/737] bpf: Fix an error in verifying a field in a union
-Date: Mon, 11 Sep 2023 15:40:08 +0200
-Message-ID: <20230911134654.650509653@linuxfoundation.org>
+Subject: [PATCH 6.4 150/737] crypto: qat - change value of default idle filter
+Date: Mon, 11 Sep 2023 15:40:09 +0200
+Message-ID: <20230911134654.676639303@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,78 +41,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 33937607efa050d9e237e0c4ac4ada02d961c466 ]
+[ Upstream commit 0f942bdfe9d463be3073301519492f8d53c6b2d5 ]
 
-We are utilizing BPF LSM to monitor BPF operations within our container
-environment. When we add support for raw_tracepoint, it hits below
-error.
+The power management configuration of 4xxx devices is too aggressive
+and in some conditions the device might be prematurely put to a low
+power state.
+Increase the idle filter value to prevent that.
+In future, this will be set by firmware.
 
-; (const void *)attr->raw_tracepoint.name);
-27: (79) r3 = *(u64 *)(r2 +0)
-access beyond the end of member map_type (mend:4) in struct (anon) with off 0 size 8
-
-It can be reproduced with below BPF prog.
-
-SEC("lsm/bpf")
-int BPF_PROG(bpf_audit, int cmd, union bpf_attr *attr, unsigned int size)
-{
-	switch (cmd) {
-	case BPF_RAW_TRACEPOINT_OPEN:
-		bpf_printk("raw_tracepoint is %s", attr->raw_tracepoint.name);
-		break;
-	default:
-		break;
-	}
-	return 0;
-}
-
-The reason is that when accessing a field in a union, such as bpf_attr,
-if the field is located within a nested struct that is not the first
-member of the union, it can result in incorrect field verification.
-
-  union bpf_attr {
-      struct {
-          __u32 map_type; <<<< Actually it will find that field.
-          __u32 key_size;
-          __u32 value_size;
-         ...
-      };
-      ...
-      struct {
-          __u64 name;    <<<< We want to verify this field.
-          __u32 prog_fd;
-      } raw_tracepoint;
-  };
-
-Considering the potential deep nesting levels, finding a perfect
-solution to address this issue has proven challenging. Therefore, I
-propose a solution where we simply skip the verification process if the
-field in question is located within a union.
-
-Fixes: 7e3617a72df3 ("bpf: Add array support to btf_struct_access")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Link: https://lore.kernel.org/r/20230713025642.27477-4-laoar.shao@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: e5745f34113b ("crypto: qat - enable power management for QAT GEN4")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 2 +-
+ drivers/crypto/intel/qat/qat_common/adf_gen4_pm.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 5dd8534b778d1..9976149ec42f0 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6359,7 +6359,7 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
- 		 * that also allows using an array of int as a scratch
- 		 * space. e.g. skb->cb[].
- 		 */
--		if (off + size > mtrue_end) {
-+		if (off + size > mtrue_end && !(*flag & PTR_UNTRUSTED)) {
- 			bpf_log(log,
- 				"access beyond the end of member %s (mend:%u) in struct %s with off %u size %u\n",
- 				mname, mtrue_end, tname, off, size);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_pm.h b/drivers/crypto/intel/qat/qat_common/adf_gen4_pm.h
+index f8f8a9ee29e5b..db4326933d1c0 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen4_pm.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_pm.h
+@@ -35,7 +35,7 @@
+ #define ADF_GEN4_PM_MSG_PENDING			BIT(0)
+ #define ADF_GEN4_PM_MSG_PAYLOAD_BIT_MASK	GENMASK(28, 1)
+ 
+-#define ADF_GEN4_PM_DEFAULT_IDLE_FILTER		(0x0)
++#define ADF_GEN4_PM_DEFAULT_IDLE_FILTER		(0x6)
+ #define ADF_GEN4_PM_MAX_IDLE_FILTER		(0x7)
+ 
+ int adf_gen4_enable_pm(struct adf_accel_dev *accel_dev);
 -- 
 2.40.1
 
