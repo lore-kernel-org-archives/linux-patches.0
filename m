@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0676B11184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB3C433C8;
-	Mon, 11 Sep 2023 14:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E966011184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:01:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41169C433C8;
+	Mon, 11 Sep 2023 14:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440895;
-	bh=kZCCUj0234dbRK+rb/7CaFeEGC/vqIh12ot/LQpI2KA=;
+	s=korg; t=1694440898;
+	bh=xaTYycfR837hPpPXOwAPfMj5SyLHIVQLr/Yfm2svnqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHA0tp/xoGFPVdQ/1bbEysQXtUpfmSN+8zZH7xQHlAlZ/gD7S9BRS1uPlAwpVKuc0
-	 m/GZFWYpBvg/jz/19t+FDM/8OIU3IV3RxuNF4kCsexXJBACKZJyVBdvnqGHHltyWkq
-	 qDW1Htz01XQGbYM8kWyqffVK49IHOhyFvflWViTM=
+	b=n/lqqHMktrTpVNfFOXlzQFVQWQDVQrqmLy1cGqPRee+Q819C7zIpgxNMZEf50jYdw
+	 hC4x3bJc/bXlZsz1wNTLf7Dp9c7SnaGAuisqk45fnUXugix+NNRkqWdujX1zW/vByh
+	 tJZXzoYGHY5hysAbwbxp4HU0gxkIfPRcBHWk/sD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 197/739] pds_core: check for work queue before use
-Date: Mon, 11 Sep 2023 15:39:56 +0200
-Message-ID: <20230911134656.691289980@linuxfoundation.org>
+Subject: [PATCH 6.5 198/739] pds_core: pass opcode to devcmd_wait
+Date: Mon, 11 Sep 2023 15:39:57 +0200
+Message-ID: <20230911134656.718471035@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -44,36 +44,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 969cfd4c8ca50c32901342cdd3d677c3ffe61371 ]
+[ Upstream commit 0ea064e74bc8f915aba3f2d0fb3418247a09b73d ]
 
-Add a check that the wq exists before queuing up work for a
-failed devcmd, as the PF is responsible for health and the VF
-doesn't have a wq.
+Don't rely on the PCI memory for the devcmd opcode because we
+read a 0xff value if the PCI bus is broken, which can cause us
+to report a bogus dev_cmd opcode later.
 
-Fixes: c2dbb0904310 ("pds_core: health timer and workqueue")
+Fixes: 523847df1b37 ("pds_core: add devcmd device interfaces")
 Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
 Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230824161754.34264-5-shannon.nelson@amd.com
+Link: https://lore.kernel.org/r/20230824161754.34264-6-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/dev.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
-index debe5216fe29e..524f422ee7ace 100644
+index 524f422ee7ace..f77cd9f5a2fda 100644
 --- a/drivers/net/ethernet/amd/pds_core/dev.c
 +++ b/drivers/net/ethernet/amd/pds_core/dev.c
-@@ -183,7 +183,7 @@ int pdsc_devcmd_locked(struct pdsc *pdsc, union pds_core_dev_cmd *cmd,
- 	err = pdsc_devcmd_wait(pdsc, max_seconds);
+@@ -121,7 +121,7 @@ static const char *pdsc_devcmd_str(int opcode)
+ 	}
+ }
+ 
+-static int pdsc_devcmd_wait(struct pdsc *pdsc, int max_seconds)
++static int pdsc_devcmd_wait(struct pdsc *pdsc, u8 opcode, int max_seconds)
+ {
+ 	struct device *dev = pdsc->dev;
+ 	unsigned long start_time;
+@@ -131,9 +131,6 @@ static int pdsc_devcmd_wait(struct pdsc *pdsc, int max_seconds)
+ 	int done = 0;
+ 	int err = 0;
+ 	int status;
+-	int opcode;
+-
+-	opcode = ioread8(&pdsc->cmd_regs->cmd.opcode);
+ 
+ 	start_time = jiffies;
+ 	max_wait = start_time + (max_seconds * HZ);
+@@ -180,7 +177,7 @@ int pdsc_devcmd_locked(struct pdsc *pdsc, union pds_core_dev_cmd *cmd,
+ 
+ 	memcpy_toio(&pdsc->cmd_regs->cmd, cmd, sizeof(*cmd));
+ 	pdsc_devcmd_dbell(pdsc);
+-	err = pdsc_devcmd_wait(pdsc, max_seconds);
++	err = pdsc_devcmd_wait(pdsc, cmd->opcode, max_seconds);
  	memcpy_fromio(comp, &pdsc->cmd_regs->comp, sizeof(*comp));
  
--	if (err == -ENXIO || err == -ETIMEDOUT)
-+	if ((err == -ENXIO || err == -ETIMEDOUT) && pdsc->wq)
- 		queue_work(pdsc->wq, &pdsc->health_work);
- 
- 	return err;
+ 	if ((err == -ENXIO || err == -ETIMEDOUT) && pdsc->wq)
 -- 
 2.40.1
 
