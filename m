@@ -1,29 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CA61170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7F6C433C7;
-	Mon, 11 Sep 2023 14:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA001170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CB2C433C9;
+	Mon, 11 Sep 2023 14:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442016;
-	bh=5FkymuVd601f5pxD1FxsHB3dtRHVkH1yBrLfUCo4s/E=;
+	s=korg; t=1694442019;
+	bh=JpP4gv6uEdrlOpykRilY6IteShTWWrRS6fPBzRzDhlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTpINjYe7JYPKgRLImr87ZFBaVwTsZewECA5/k2T8S6AfRrbHZp3usuARinWf0pJv
-	 e/gUBuGWCwc9zNuIFciQ8NuFVOPH7gsK/Vgfk6os0yDXdlG0X7HY8qHCfHENDDdD2W
-	 kR61MKQjldcjj0QXmoFKEWWMp8d69rAu+W50l40c=
+	b=k4RQXLvaOUJnISX/OR2Sf9Bzsr18ukNxpfucYz6N5aV91fbWfUQM8Rxx2EKmuWHlc
+	 In78hfPIaRxa1vfJvsiv3YYk8JWxytbviWufSwdp/HmVWsK6HHoaG+TQyw7dj1ONfA
+	 QvUd/AWSZ3w6N8Ma1TXERcaxeiQrnolLbq9T//4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org,
+	Tejun Heo <tj@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	alsa-devel@alsa-project.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 609/739] thermal/drivers/mediatek/lvts_thermal: Manage threshold between sensors
-Date: Mon, 11 Sep 2023 15:46:48 +0200
-Message-ID: <20230911134708.107901812@linuxfoundation.org>
+Subject: [PATCH 6.5 618/739] um: Fix hostaudio build errors
+Date: Mon, 11 Sep 2023 15:46:57 +0200
+Message-ID: <20230911134708.362272167@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -36,166 +47,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 2bba1acf7a4cbe62abbb4c686e0414209ec5943b ]
+[ Upstream commit db4bfcba7bb8d10f00bba2a3da6b9a9c2a1d7b71 ]
 
-Each LVTS thermal controller can have up to four sensors, each capable
-of triggering its own interrupt when its measured temperature crosses
-the configured threshold. The threshold for each sensor is handled
-separately by the thermal framework, since each one is registered with
-its own thermal zone and trips. However, the temperature thresholds are
-configured on the controller, and therefore are shared between all
-sensors on that controller.
+Use "select" to ensure that the required kconfig symbols are set
+as expected.
+Drop HOSTAUDIO since it is now equivalent to UML_SOUND.
 
-When the temperature measured by the sensors is different enough to
-cause the thermal framework to configure different thresholds for each
-one, interrupts start triggering on sensors outside the last threshold
-configured.
+Set CONFIG_SOUND=m in ARCH=um defconfig files to maintain the
+status quo of the default configs.
 
-To address the issue, track the thresholds required by each sensor and
-only actually set the highest one in the hardware, and disable
-interrupts for all sensors outside the current configured range.
+Allow SOUND with UML regardless of HAS_IOMEM. Otherwise there is a
+kconfig warning for unmet dependencies. (This was not an issue when
+SOUND was defined in arch/um/drivers/Kconfig. I have done 50 randconfig
+builds and didn't find any issues.)
 
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230706153823.201943-7-nfraprado@collabora.com
+This fixes build errors when CONFIG_SOUND is not set:
+
+ld: arch/um/drivers/hostaudio_kern.o: in function `hostaudio_cleanup_module':
+hostaudio_kern.c:(.exit.text+0xa): undefined reference to `unregister_sound_mixer'
+ld: hostaudio_kern.c:(.exit.text+0x15): undefined reference to `unregister_sound_dsp'
+ld: arch/um/drivers/hostaudio_kern.o: in function `hostaudio_init_module':
+hostaudio_kern.c:(.init.text+0x19): undefined reference to `register_sound_dsp'
+ld: hostaudio_kern.c:(.init.text+0x31): undefined reference to `register_sound_mixer'
+ld: hostaudio_kern.c:(.init.text+0x49): undefined reference to `unregister_sound_dsp'
+
+and this kconfig warning:
+WARNING: unmet direct dependencies detected for SOUND
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: d886e87cb82b ("sound: make OSS sound core optional")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: lore.kernel.org/r/202307141416.vxuRVpFv-lkp@intel.com
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-um@lists.infradead.org
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: linux-kbuild@vger.kernel.org
+Cc: alsa-devel@alsa-project.org
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 69 +++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
+ arch/um/configs/i386_defconfig   |  1 +
+ arch/um/configs/x86_64_defconfig |  1 +
+ arch/um/drivers/Kconfig          | 16 +++-------------
+ arch/um/drivers/Makefile         |  2 +-
+ sound/Kconfig                    |  2 +-
+ 5 files changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index 064269667fb89..b0d71b74a928e 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -67,6 +67,11 @@
- #define LVTS_CALSCALE_CONF			0x300
- #define LVTS_MONINT_CONF			0x8300318C
+diff --git a/arch/um/configs/i386_defconfig b/arch/um/configs/i386_defconfig
+index 630be793759e2..e543cbac87925 100644
+--- a/arch/um/configs/i386_defconfig
++++ b/arch/um/configs/i386_defconfig
+@@ -34,6 +34,7 @@ CONFIG_TTY_CHAN=y
+ CONFIG_XTERM_CHAN=y
+ CONFIG_CON_CHAN="pts"
+ CONFIG_SSL_CHAN="pts"
++CONFIG_SOUND=m
+ CONFIG_UML_SOUND=m
+ CONFIG_DEVTMPFS=y
+ CONFIG_DEVTMPFS_MOUNT=y
+diff --git a/arch/um/configs/x86_64_defconfig b/arch/um/configs/x86_64_defconfig
+index 8540d33702726..939cb12318cae 100644
+--- a/arch/um/configs/x86_64_defconfig
++++ b/arch/um/configs/x86_64_defconfig
+@@ -32,6 +32,7 @@ CONFIG_TTY_CHAN=y
+ CONFIG_XTERM_CHAN=y
+ CONFIG_CON_CHAN="pts"
+ CONFIG_SSL_CHAN="pts"
++CONFIG_SOUND=m
+ CONFIG_UML_SOUND=m
+ CONFIG_DEVTMPFS=y
+ CONFIG_DEVTMPFS_MOUNT=y
+diff --git a/arch/um/drivers/Kconfig b/arch/um/drivers/Kconfig
+index 36911b1fddcf0..b94b2618e7d84 100644
+--- a/arch/um/drivers/Kconfig
++++ b/arch/um/drivers/Kconfig
+@@ -111,24 +111,14 @@ config SSL_CHAN
  
-+#define LVTS_MONINT_OFFSET_SENSOR0		0xC
-+#define LVTS_MONINT_OFFSET_SENSOR1		0x180
-+#define LVTS_MONINT_OFFSET_SENSOR2		0x3000
-+#define LVTS_MONINT_OFFSET_SENSOR3		0x3000000
-+
- #define LVTS_INT_SENSOR0			0x0009001F
- #define LVTS_INT_SENSOR1			0x001203E0
- #define LVTS_INT_SENSOR2			0x00247C00
-@@ -112,6 +117,8 @@ struct lvts_sensor {
- 	void __iomem *base;
- 	int id;
- 	int dt_id;
-+	int low_thresh;
-+	int high_thresh;
- };
+ config UML_SOUND
+ 	tristate "Sound support"
++	depends on SOUND
++	select SOUND_OSS_CORE
+ 	help
+ 	  This option enables UML sound support.  If enabled, it will pull in
+-	  soundcore and the UML hostaudio relay, which acts as a intermediary
++	  the UML hostaudio relay, which acts as a intermediary
+ 	  between the host's dsp and mixer devices and the UML sound system.
+ 	  It is safe to say 'Y' here.
  
- struct lvts_ctrl {
-@@ -121,6 +128,8 @@ struct lvts_ctrl {
- 	int num_lvts_sensor;
- 	int mode;
- 	void __iomem *base;
-+	int low_thresh;
-+	int high_thresh;
- };
+-config SOUND
+-	tristate
+-	default UML_SOUND
+-
+-config SOUND_OSS_CORE
+-	bool
+-	default UML_SOUND
+-
+-config HOSTAUDIO
+-	tristate
+-	default UML_SOUND
+-
+ endmenu
  
- struct lvts_domain {
-@@ -292,12 +301,66 @@ static int lvts_get_temp(struct thermal_zone_device *tz, int *temp)
- 	return 0;
- }
- 
-+static void lvts_update_irq_mask(struct lvts_ctrl *lvts_ctrl)
-+{
-+	u32 masks[] = {
-+		LVTS_MONINT_OFFSET_SENSOR0,
-+		LVTS_MONINT_OFFSET_SENSOR1,
-+		LVTS_MONINT_OFFSET_SENSOR2,
-+		LVTS_MONINT_OFFSET_SENSOR3,
-+	};
-+	u32 value = 0;
-+	int i;
-+
-+	value = readl(LVTS_MONINT(lvts_ctrl->base));
-+
-+	for (i = 0; i < ARRAY_SIZE(masks); i++) {
-+		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
-+		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
-+			value |= masks[i];
-+		else
-+			value &= ~masks[i];
-+	}
-+
-+	writel(value, LVTS_MONINT(lvts_ctrl->base));
-+}
-+
-+static bool lvts_should_update_thresh(struct lvts_ctrl *lvts_ctrl, int high)
-+{
-+	int i;
-+
-+	if (high > lvts_ctrl->high_thresh)
-+		return true;
-+
-+	for (i = 0; i < lvts_ctrl->num_lvts_sensor; i++)
-+		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
-+		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
-+			return false;
-+
-+	return true;
-+}
-+
- static int lvts_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
- 	struct lvts_sensor *lvts_sensor = thermal_zone_device_priv(tz);
-+	struct lvts_ctrl *lvts_ctrl = container_of(lvts_sensor, struct lvts_ctrl, sensors[lvts_sensor->id]);
- 	void __iomem *base = lvts_sensor->base;
- 	u32 raw_low = lvts_temp_to_raw(low != -INT_MAX ? low : LVTS_MINIMUM_THRESHOLD);
- 	u32 raw_high = lvts_temp_to_raw(high);
-+	bool should_update_thresh;
-+
-+	lvts_sensor->low_thresh = low;
-+	lvts_sensor->high_thresh = high;
-+
-+	should_update_thresh = lvts_should_update_thresh(lvts_ctrl, high);
-+	if (should_update_thresh) {
-+		lvts_ctrl->high_thresh = high;
-+		lvts_ctrl->low_thresh = low;
-+	}
-+	lvts_update_irq_mask(lvts_ctrl);
-+
-+	if (!should_update_thresh)
-+		return 0;
- 
- 	/*
- 	 * Low offset temperature threshold
-@@ -521,6 +584,9 @@ static int lvts_sensor_init(struct device *dev, struct lvts_ctrl *lvts_ctrl,
- 		 */
- 		lvts_sensor[i].msr = lvts_ctrl_data->mode == LVTS_MSR_IMMEDIATE_MODE ?
- 			imm_regs[i] : msr_regs[i];
-+
-+		lvts_sensor[i].low_thresh = INT_MIN;
-+		lvts_sensor[i].high_thresh = INT_MIN;
- 	};
- 
- 	lvts_ctrl->num_lvts_sensor = lvts_ctrl_data->num_lvts_sensor;
-@@ -688,6 +754,9 @@ static int lvts_ctrl_init(struct device *dev, struct lvts_domain *lvts_td,
- 		 */
- 		lvts_ctrl[i].hw_tshut_raw_temp =
- 			lvts_temp_to_raw(lvts_data->lvts_ctrl[i].hw_tshut_temp);
-+
-+		lvts_ctrl[i].low_thresh = INT_MIN;
-+		lvts_ctrl[i].high_thresh = INT_MIN;
- 	}
- 
- 	/*
+ menu "UML Network Devices"
+diff --git a/arch/um/drivers/Makefile b/arch/um/drivers/Makefile
+index a461a950f0518..0e6af81096fd5 100644
+--- a/arch/um/drivers/Makefile
++++ b/arch/um/drivers/Makefile
+@@ -54,7 +54,7 @@ obj-$(CONFIG_UML_NET) += net.o
+ obj-$(CONFIG_MCONSOLE) += mconsole.o
+ obj-$(CONFIG_MMAPPER) += mmapper_kern.o 
+ obj-$(CONFIG_BLK_DEV_UBD) += ubd.o 
+-obj-$(CONFIG_HOSTAUDIO) += hostaudio.o
++obj-$(CONFIG_UML_SOUND) += hostaudio.o
+ obj-$(CONFIG_NULL_CHAN) += null.o 
+ obj-$(CONFIG_PORT_CHAN) += port.o
+ obj-$(CONFIG_PTY_CHAN) += pty.o
+diff --git a/sound/Kconfig b/sound/Kconfig
+index 0ddfb717b81dc..466e848689bd1 100644
+--- a/sound/Kconfig
++++ b/sound/Kconfig
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menuconfig SOUND
+ 	tristate "Sound card support"
+-	depends on HAS_IOMEM
++	depends on HAS_IOMEM || UML
+ 	help
+ 	  If you have a sound card in your computer, i.e. if it can say more
+ 	  than an occasional beep, say Y.
 -- 
 2.40.1
 
