@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8EF11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDE7C433C7;
-	Mon, 11 Sep 2023 15:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47B711706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C15C433C9;
+	Mon, 11 Sep 2023 15:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444422;
-	bh=ZISMgDT3cMFgS831g13yixoZlGtdjwE6e+FnOZnvGzM=;
+	s=korg; t=1694444425;
+	bh=Ao29eAZGGIdCWuRwrX2OJ1hblcnY0rFIbgt2zNQvSgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ALzR6UpRmLh+eGFJRuxfr7Mqp9MhcV+zqFou0o3DjWbRoYbVCdnRTAxAXtxPcORi0
-	 MAZpYWKT1yJtL2VGU08q0QSzLb/2LKyObt6abAS3SJctyVC5hyEAKPRSS4kotAY0dA
-	 OpW0tSg3Hpu0IeGEBy4t0T6LipvHVB7N2eAW4+kY=
+	b=LAHVBIwZQm8tl030bcJZUbpr/nPGgzW8NzFe4L8CPJG/eHOWeSCoCR5Q0Fbn1EONU
+	 kfpdhIZSjSI1v8Zrro5FYykIRZcfWa+p6HZc9eYbzC/Jg7RV3JDLFTa4SDU13MMNk4
+	 THYQhV/S81U5srzQ/TfIAjo3ylJRlWU/hrtlzquM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.4 724/737] media: ipu3-cio2: allow ipu_bridge to be a module again
-Date: Mon, 11 Sep 2023 15:49:43 +0200
-Message-ID: <20230911134710.734386464@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 725/737] LoongArch: Ensure FP/SIMD registers in the core dump file is up to date
+Date: Mon, 11 Sep 2023 15:49:44 +0200
+Message-ID: <20230911134710.762393290@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,119 +39,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@kernel.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 2545a2c02ba1da9cfb9ec218623c71b00eb4a555 upstream.
+[ Upstream commit 656f9aec07dba7c61d469727494a5d1b18d0bef4 ]
 
-This code was previously part of the VIDEO_IPU3_CIO2 driver, which could
-be built-in or a loadable module, but after the move it turned into a
-builtin-only driver. This fails to link when the I2C subsystem is a
-module:
+This is a port of commit 379eb01c21795edb4c ("riscv: Ensure the value
+of FP registers in the core dump file is up to date").
 
-x86_64-linux-ld: drivers/media/pci/intel/ipu-bridge.o: in function `ipu_bridge_unregister_sensors':
-ipu-bridge.c:(.text+0x50): undefined reference to `i2c_unregister_device'
-x86_64-linux-ld: drivers/media/pci/intel/ipu-bridge.o: in function `ipu_bridge_init':
-ipu-bridge.c:(.text+0x9c9): undefined reference to `i2c_acpi_new_device_by_fwnode'
+The values of FP/SIMD registers in the core dump file come from the
+thread.fpu. However, kernel saves the FP/SIMD registers only before
+scheduling out the process. If no process switch happens during the
+exception handling, kernel will not have a chance to save the latest
+values of FP/SIMD registers. So it may cause their values in the core
+dump file incorrect. To solve this problem, force fpr_get()/simd_get()
+to save the FP/SIMD registers into the thread.fpu if the target task
+equals the current task.
 
-In general, drivers should not have to be built-in, so change the option
-to a tristate with the corresponding dependency. This in turn opens a
-new problem with the dependency, as the IPU bridge can be a loadable module
-while the ipu3 driver itself is built-in, producing a new link failure:
-
-86_64-linux-ld: drivers/media/pci/intel/ipu3/ipu3-cio2.o: in function `cio2_pci_probe':
-ipu3-cio2.c:(.text+0x197e): undefined reference to `ipu_bridge_init'
-
-In order to fix this, restore the old Kconfig option that controlled
-the ipu bridge driver before it was split out, but make it select a
-hidden symbol that now corresponds to the bridge driver.
-
-When other drivers get added that share ipu-bridge, this should cover
-all corner cases, and allow any combination of them to be built-in
-or modular.
-
-Link: https://lore.kernel.org/linux-media/20230727122331.2421453-1-arnd@kernel.org
-
-Fixes: 881ca25978c6 ("media: ipu3-cio2: rename cio2 bridge to ipu bridge and move out of ipu3")'
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/Kconfig      |   21 +++++----------------
- drivers/media/pci/intel/ipu-bridge.c |    3 +++
- drivers/media/pci/intel/ipu3/Kconfig |   20 ++++++++++++++++++++
- 3 files changed, 28 insertions(+), 16 deletions(-)
+ arch/loongarch/include/asm/fpu.h | 22 ++++++++++++++++++----
+ arch/loongarch/kernel/ptrace.c   |  2 ++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
---- a/drivers/media/pci/intel/Kconfig
-+++ b/drivers/media/pci/intel/Kconfig
-@@ -1,21 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config IPU_BRIDGE
--	bool "Intel IPU Sensors Bridge"
--	depends on VIDEO_IPU3_CIO2 && ACPI
--	depends on I2C
-+	tristate
-+	depends on I2C && ACPI
- 	help
--	  This extension provides an API for the Intel IPU driver to create
--	  connections to cameras that are hidden in the SSDB buffer in ACPI.
--	  It can be used to enable support for cameras in detachable / hybrid
--	  devices that ship with Windows.
--
--	  Say Y here if your device is a detachable / hybrid laptop that comes
--	  with Windows installed by the OEM, for example:
--
--		- Microsoft Surface models (except Surface Pro 3)
--		- The Lenovo Miix line (for example the 510, 520, 710 and 720)
--		- Dell 7285
--
--	  If in doubt, say N here.
-+	  This is a helper module for the IPU bridge, which can be
-+	  used by ipu3 and other drivers. In order to handle module
-+	  dependencies, this is selected by each driver that needs it.
- 
- source "drivers/media/pci/intel/ipu3/Kconfig"
---- a/drivers/media/pci/intel/ipu-bridge.c
-+++ b/drivers/media/pci/intel/ipu-bridge.c
-@@ -497,3 +497,6 @@ err_free_bridge:
- 	return ret;
+diff --git a/arch/loongarch/include/asm/fpu.h b/arch/loongarch/include/asm/fpu.h
+index 192f8e35d9126..b1dc4200ae6a4 100644
+--- a/arch/loongarch/include/asm/fpu.h
++++ b/arch/loongarch/include/asm/fpu.h
+@@ -117,16 +117,30 @@ static inline void restore_fp(struct task_struct *tsk)
+ 		_restore_fp(&tsk->thread.fpu);
  }
- EXPORT_SYMBOL_NS_GPL(ipu_bridge_init, INTEL_IPU_BRIDGE);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Intel IPU Sensors Bridge driver");
---- a/drivers/media/pci/intel/ipu3/Kconfig
-+++ b/drivers/media/pci/intel/ipu3/Kconfig
-@@ -8,6 +8,7 @@ config VIDEO_IPU3_CIO2
- 	select VIDEO_V4L2_SUBDEV_API
- 	select V4L2_FWNODE
- 	select VIDEOBUF2_DMA_SG
-+	select IPU_BRIDGE if CIO2_BRIDGE
  
- 	help
- 	  This is the Intel IPU3 CIO2 CSI-2 receiver unit, found in Intel
-@@ -17,3 +18,22 @@ config VIDEO_IPU3_CIO2
- 	  Say Y or M here if you have a Skylake/Kaby Lake SoC with MIPI CSI-2
- 	  connected camera.
- 	  The module will be called ipu3-cio2.
+-static inline union fpureg *get_fpu_regs(struct task_struct *tsk)
++static inline void save_fpu_regs(struct task_struct *tsk)
+ {
++	unsigned int euen;
 +
-+config CIO2_BRIDGE
-+	bool "IPU3 CIO2 Sensors Bridge"
-+	depends on VIDEO_IPU3_CIO2 && ACPI
-+	depends on I2C
-+	help
-+	  This extension provides an API for the ipu3-cio2 driver to create
-+	  connections to cameras that are hidden in the SSDB buffer in ACPI.
-+	  It can be used to enable support for cameras in detachable / hybrid
-+	  devices that ship with Windows.
+ 	if (tsk == current) {
+ 		preempt_disable();
+-		if (is_fpu_owner())
 +
-+	  Say Y here if your device is a detachable / hybrid laptop that comes
-+	  with Windows installed by the OEM, for example:
++		euen = csr_read32(LOONGARCH_CSR_EUEN);
 +
-+		- Microsoft Surface models (except Surface Pro 3)
-+		- The Lenovo Miix line (for example the 510, 520, 710 and 720)
-+		- Dell 7285
++#ifdef CONFIG_CPU_HAS_LASX
++		if (euen & CSR_EUEN_LASXEN)
++			_save_lasx(&current->thread.fpu);
++		else
++#endif
++#ifdef CONFIG_CPU_HAS_LSX
++		if (euen & CSR_EUEN_LSXEN)
++			_save_lsx(&current->thread.fpu);
++		else
++#endif
++		if (euen & CSR_EUEN_FPEN)
+ 			_save_fp(&current->thread.fpu);
 +
-+	  If in doubt, say N here.
+ 		preempt_enable();
+ 	}
+-
+-	return tsk->thread.fpu.fpr;
+ }
+ 
+ #endif /* _ASM_FPU_H */
+diff --git a/arch/loongarch/kernel/ptrace.c b/arch/loongarch/kernel/ptrace.c
+index 5fcffb4523676..286c0ca39eae0 100644
+--- a/arch/loongarch/kernel/ptrace.c
++++ b/arch/loongarch/kernel/ptrace.c
+@@ -147,6 +147,8 @@ static int fpr_get(struct task_struct *target,
+ {
+ 	int r;
+ 
++	save_fpu_regs(target);
++
+ 	if (sizeof(target->thread.fpu.fpr[0]) == sizeof(elf_fpreg_t))
+ 		r = gfpr_get(target, &to);
+ 	else
+-- 
+2.40.1
+
 
 
