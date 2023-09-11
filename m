@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D0A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E5BC433C7;
-	Mon, 11 Sep 2023 15:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31BC11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A0FC433C7;
+	Mon, 11 Sep 2023 15:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444637;
-	bh=xEcQg/SANat2oDqK17MSvNUiZtMCzUqgGty0ITivR6o=;
+	s=korg; t=1694444640;
+	bh=4Nmfsf7qrjUI08KaJGXEJejoxdGh42CzDYkykNIQHYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WaLDu3tDXc3/gNR8BvgXpUI2mnVJVd3/vT1EbzKBUHcFstKQ6EMo5TZrAeUP6QZ5g
-	 cHTveWBMRvt9Zn35l48tIM4gYvbAKQHUo2DT2RO54NsD9Lm0U6mTzK7nPwrViv/zUE
-	 Ldn9gW+CyY5nC0bPnARgMP23p/g+YVCVzF0vmRVU=
+	b=O4ZtNn3bzzg3HT8T8wYWSqdeClh0sqHCpi3TIcJuQ4uCWdBIoHU1pQU8mXzWGifdT
+	 WD4B4eW4/bXDYVjvdPPhI5qrgBtRYiZDG1y4uZE2DTCyp9+JDJjq4MMwpSfmdkwqw5
+	 nQi3mFzKoQLIzPpBIgCsDPzGoibb/QMlQxtvaocA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dmitry Mastykin <dmastykin@astralinux.ru>,
+	Paul Moore <paul@paul-moore.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/600] wifi: mac80211: Use active_links instead of valid_links in Tx
-Date: Mon, 11 Sep 2023 15:41:36 +0200
-Message-ID: <20230911134635.483904282@linuxfoundation.org>
+Subject: [PATCH 6.1 064/600] netlabel: fix shift wrapping bug in netlbl_catmap_setlong()
+Date: Mon, 11 Sep 2023 15:41:37 +0200
+Message-ID: <20230911134635.512868616@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,53 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Dmitry Mastykin <dmastykin@astralinux.ru>
 
-[ Upstream commit 7b3b9ac899b54f53f7c9fc07e1c562f56b2187fa ]
+[ Upstream commit b403643d154d15176b060b82f7fc605210033edd ]
 
-Fix few places on the Tx path where the valid_links were used instead
-of active links.
+There is a shift wrapping bug in this code on 32-bit architectures.
+NETLBL_CATMAP_MAPTYPE is u64, bitmap is unsigned long.
+Every second 32-bit word of catmap becomes corrupted.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230608163202.e24832691fc8.I9ac10dc246d7798a8d26b1a94933df5668df63fc@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Dmitry Mastykin <dmastykin@astralinux.ru>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netlabel/netlabel_kapi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 763cefd0cc268..2f9e1abdf375d 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4391,7 +4391,7 @@ static void ieee80211_mlo_multicast_tx(struct net_device *dev,
- 				       struct sk_buff *skb)
- {
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
--	unsigned long links = sdata->vif.valid_links;
-+	unsigned long links = sdata->vif.active_links;
- 	unsigned int link;
- 	u32 ctrl_flags = IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX;
+diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
+index 54c0830039470..27511c90a26f4 100644
+--- a/net/netlabel/netlabel_kapi.c
++++ b/net/netlabel/netlabel_kapi.c
+@@ -857,7 +857,8 @@ int netlbl_catmap_setlong(struct netlbl_lsm_catmap **catmap,
  
-@@ -5827,7 +5827,7 @@ void __ieee80211_tx_skb_tid_band(struct ieee80211_sub_if_data *sdata,
- 		rcu_read_unlock();
+ 	offset -= iter->startbit;
+ 	idx = offset / NETLBL_CATMAP_MAPSIZE;
+-	iter->bitmap[idx] |= bitmap << (offset % NETLBL_CATMAP_MAPSIZE);
++	iter->bitmap[idx] |= (NETLBL_CATMAP_MAPTYPE)bitmap
++			     << (offset % NETLBL_CATMAP_MAPSIZE);
  
- 		if (WARN_ON_ONCE(link == ARRAY_SIZE(sdata->vif.link_conf)))
--			link = ffs(sdata->vif.valid_links) - 1;
-+			link = ffs(sdata->vif.active_links) - 1;
- 	}
- 
- 	IEEE80211_SKB_CB(skb)->control.flags |=
-@@ -5863,7 +5863,7 @@ void ieee80211_tx_skb_tid(struct ieee80211_sub_if_data *sdata,
- 		band = chanctx_conf->def.chan->band;
- 	} else {
- 		WARN_ON(link_id >= 0 &&
--			!(sdata->vif.valid_links & BIT(link_id)));
-+			!(sdata->vif.active_links & BIT(link_id)));
- 		/* MLD transmissions must not rely on the band */
- 		band = 0;
- 	}
+ 	return 0;
+ }
 -- 
 2.40.1
 
