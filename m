@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8C911184
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D345AC433C8;
-	Mon, 11 Sep 2023 14:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2601611184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9993EC433C9;
+	Mon, 11 Sep 2023 14:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440921;
-	bh=e635MxSo+VWf64vPqMCu4gQpSGM3VW5q3pdpwsvE6FE=;
+	s=korg; t=1694440924;
+	bh=iTT3Wi0JQ5FUEzV5SkitRxwNUbtiQKTt1+Cns5eu9qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNxBXghCO/V8Xh5ho73lBFuwqDow1hOijRs3kdGC1mAASvp6Wmh736+gTAOn6STYX
-	 zDQemB8Cp8KhhugFflGA0MzR/WMg4AsIiPsRRM8gThZEX0sAO5RUT+BN9PO2tsoQkK
-	 168c8uSjAVuv9YTLI56PQzYle2/HQrJjnoQiSYQA=
+	b=1SzCutxF580oJc/uzLiN7NCWbqxnT5WMzzO3A0RZF275Vba+lw/+I6VzhuX/DFiJ9
+	 Atv5PleM4qg5zFL3Q4U9Vn+O+uqZtiaP7XKm3aorCQKAndpSARBgzIPeVFpJPXpZBR
+	 CIkiqmCrz3UBjLHLO++YLOAbiUsJLNxDtENeEQAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 233/739] arm64: dts: qcom: pm8350b: fix thermal zone name
-Date: Mon, 11 Sep 2023 15:40:32 +0200
-Message-ID: <20230911134657.675044750@linuxfoundation.org>
+Subject: [PATCH 6.5 234/739] arm64: dts: qcom: pmr735b: fix thermal zone name
+Date: Mon, 11 Sep 2023 15:40:33 +0200
+Message-ID: <20230911134657.701635617@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -43,35 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit aad41d9e6c44dfe299cddab97528a5333f17bdfe ]
+[ Upstream commit 99f8cf491d546cd668236f573c7d846d3e94f2d6 ]
 
-The name of the thermal zone in pm8350b.dtsi (pm8350c-thermal) conflicts
-with the thermal zone in pm8350c.dtsi. Rename the thermal zone according
+The name of the thermal zone in pmr735b.dtsi (pmr735a-thermal) conflicts
+with the thermal zone in pmr735a.dtsi. Rename the thermal zone according
 to the chip name.
 
-Fixes: 5c1399299d9d ("arm64: dts: qcom: pm8350b: add temp sensor and thermal zone config")
+Fixes: 6f3426b3dea4 ("arm64: dts: qcom: pmr735b: add temp sensor and thermal zone config")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230707123027.1510723-4-dmitry.baryshkov@linaro.org
+Link: https://lore.kernel.org/r/20230707123027.1510723-5-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pm8350b.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/pmr735b.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8350b.dtsi b/arch/arm64/boot/dts/qcom/pm8350b.dtsi
-index f1c7bd9d079c2..05c1058988927 100644
---- a/arch/arm64/boot/dts/qcom/pm8350b.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8350b.dtsi
+diff --git a/arch/arm64/boot/dts/qcom/pmr735b.dtsi b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
+index ec24c4478005a..f7473e2473224 100644
+--- a/arch/arm64/boot/dts/qcom/pmr735b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
 @@ -8,7 +8,7 @@
  
  / {
  	thermal-zones {
--		pm8350b_thermal: pm8350c-thermal {
-+		pm8350b_thermal: pm8350b-thermal {
+-		pmr735a_thermal: pmr735a-thermal {
++		pmr735b_thermal: pmr735b-thermal {
  			polling-delay-passive = <100>;
  			polling-delay = <0>;
- 			thermal-sensors = <&pm8350b_temp_alarm>;
+ 			thermal-sensors = <&pmr735b_temp_alarm>;
 -- 
 2.40.1
 
