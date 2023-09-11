@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C672811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF365C433C8;
-	Mon, 11 Sep 2023 15:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AEE11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A17C433C7;
+	Mon, 11 Sep 2023 15:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445758;
-	bh=n0dpMF49s8GZF2nt6khvkhkjHL8s9AxRZqJfKNEu8QM=;
+	s=korg; t=1694445761;
+	bh=EQ7t9iH4xOJDPnsNVMYJYOWM869aCDZq0BUXWrzttB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2hjbQDtXeibUyakUB4dRNQ2GobTJMcgHNvKjllUH5ksG+YJJfTen0Nw1nXhRje4n0
-	 MAT2tZwpccRxVmEuVsXpUWwTcR6POAspJt3OBhVV9PFqG9uER0ZBCaaNqxwqltkFLd
-	 pV/TTsJvXNrDK/Jr9ESGC3tMcax1ZlomKYODuG9g=
+	b=TzvYF1zldPCim8V79nAgke93LsDQ7FgXMrKN8/H2TNdW0IPnVNZX798T0KO6KT1SL
+	 8mSo3dIfB/CK7Oj8TPG61xXfH/w84EHrl5t3/IjMwOqWEpkyWekaBP9hEs5ecGpb0h
+	 BbYiCiIyUeBIpatQaES2StRdbkAbumBzxHR151bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Marek Vasut <marex@denx.de>,
+	Jai Luthra <j-luthra@ti.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Jai Luthra <j-luthra@ti.com>
-Subject: [PATCH 6.1 462/600] media: ov5640: Enable MIPI interface in ov5640_set_power_mipi()
-Date: Mon, 11 Sep 2023 15:48:15 +0200
-Message-ID: <20230911134647.289431201@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 463/600] media: ov5640: Fix initial RESETB state and annotate timings
+Date: Mon, 11 Sep 2023 15:48:16 +0200
+Message-ID: <20230911134647.320355119@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -45,47 +45,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 98cb72d3b9c5e03b10fa993752ecfcbd9c572d8c ]
+[ Upstream commit a210df337c5f5c2cd82f36c9dbb154ec63365c80 ]
 
-Set OV5640_REG_IO_MIPI_CTRL00 bit 2 to 1 instead of 0, since 1 means
-MIPI CSI2 interface, while 0 means CPI parallel interface.
+The initial state of RESETB input signal of OV5640 should be
+asserted, i.e. the sensor should be in reset. This is not the
+case, make it so.
 
-In the ov5640_set_power_mipi() the interface should obviously be set
-to MIPI CSI2 since this functions is used to power up the sensor when
-operated in MIPI CSI2 mode. The sensor should not be in CPI mode in
-that case.
+Since the subsequent assertion of RESETB signal is no longer
+necessary and the timing of the power sequencing could be
+slightly adjusted, add annotations to the delays which match
+OV5640 datasheet rev. 2.03, both:
+  figure 2-3 power up timing with internal DVDD
+  figure 2-4 power up timing with external DVDD source
 
-This fixes a corner case where capturing the first frame on i.MX8MN
-with CSI/ISI resulted in corrupted frame.
+The 5..10ms delay between PWDN assertion and RESETB assertion
+is not even documented in the power sequencing diagram, and
+with this reset fix, it is no longer even necessary.
 
-Fixes: aa4bb8b8838f ("media: ov5640: Re-work MIPI startup sequence")
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Tested-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com> # [Test on imx6q]
+Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
+Reported-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Marek Vasut <marex@denx.de>
-Tested-by: Jai Luthra <j-luthra@ti.com> # [Test on bplay, sk-am62]
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Tested-by: Jai Luthra <j-luthra@ti.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5640.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ov5640.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index cc23ff2067f6a..f76bcb395cffa 100644
+index f76bcb395cffa..2ee832426736d 100644
 --- a/drivers/media/i2c/ov5640.c
 +++ b/drivers/media/i2c/ov5640.c
-@@ -2531,9 +2531,9 @@ static int ov5640_set_power_mipi(struct ov5640_dev *sensor, bool on)
- 	 *		  "ov5640_set_stream_mipi()")
- 	 * [4] = 0	: Power up MIPI HS Tx
- 	 * [3] = 0	: Power up MIPI LS Rx
--	 * [2] = 0	: MIPI interface disabled
-+	 * [2] = 1	: MIPI interface enabled
- 	 */
--	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x40);
-+	ret = ov5640_write_reg(sensor, OV5640_REG_IO_MIPI_CTRL00, 0x44);
- 	if (ret)
- 		return ret;
+@@ -2441,16 +2441,13 @@ static void ov5640_power(struct ov5640_dev *sensor, bool enable)
+ static void ov5640_powerup_sequence(struct ov5640_dev *sensor)
+ {
+ 	if (sensor->pwdn_gpio) {
+-		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
++		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
  
+ 		/* camera power cycle */
+ 		ov5640_power(sensor, false);
+-		usleep_range(5000, 10000);
++		usleep_range(5000, 10000);	/* t2 */
+ 		ov5640_power(sensor, true);
+-		usleep_range(5000, 10000);
+-
+-		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
+-		usleep_range(1000, 2000);
++		usleep_range(1000, 2000);	/* t3 */
+ 
+ 		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
+ 	} else {
+@@ -2458,7 +2455,7 @@ static void ov5640_powerup_sequence(struct ov5640_dev *sensor)
+ 		ov5640_write_reg(sensor, OV5640_REG_SYS_CTRL0,
+ 				 OV5640_REG_SYS_CTRL0_SW_RST);
+ 	}
+-	usleep_range(20000, 25000);
++	usleep_range(20000, 25000);	/* t4 */
+ 
+ 	/*
+ 	 * software standby: allows registers programming;
 -- 
 2.40.1
 
