@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F981170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78E5C433C7;
-	Mon, 11 Sep 2023 14:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1EA1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:18:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF658C433C7;
+	Mon, 11 Sep 2023 14:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441929;
-	bh=f9CPDlreKN04UGv33qvlcR5GMjl/wAQ21SUFRZGAFRk=;
+	s=korg; t=1694441932;
+	bh=cERlT3Bj+A+c3AS9SgJk6L1YMS5ZfHb9KJ6XdRIV7AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEOU6M5Xe8K1HJIOyTel5JGfrlvl+JySg5282EFEViiFudlAUOyOaq8xm8xQPhCol
-	 6wKsaPD7pLRHePIECJ6+mrUar7hsV8Owh+3x+ZUPVra2CVhPHlI5iE88XxxKFfvfEp
-	 R95kzyS5wlxhZi2UTjxCrlpl3MJIxiZMgcJN4g+k=
+	b=m7jSMjUO/CctOLVzVz4ORf/QRjUxlEzSfxsvS/hf0unEo4DjLPUhZX0YaEwg/X4f1
+	 Wb7eXVPGTLw0rsCKSZRYN+U49rHRpsavLyJ8La3mVwqQUl43u9N2H25L9S4zreEKud
+	 ZX7QzYUeCiOQFx9mjBbEzG97REMVEtw3yf36Tjc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Jialin <lujialin4@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 558/739] cgroup:namespace: Remove unused cgroup_namespaces_init()
-Date: Mon, 11 Sep 2023 15:45:57 +0200
-Message-ID: <20230911134706.668248403@linuxfoundation.org>
+Subject: [PATCH 6.5 549/739] media: i2c: rdacm21: Fix uninitialized value
+Date: Mon, 11 Sep 2023 15:45:48 +0200
+Message-ID: <20230911134706.426548374@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,35 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Jialin <lujialin4@huawei.com>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-[ Upstream commit 82b90b6c5b38e457c7081d50dff11ecbafc1e61a ]
+[ Upstream commit 33c7ae8f49e3413c81e879e1fdfcea4c5516e37b ]
 
-cgroup_namspace_init() just return 0. Therefore, there is no need to
-call it during start_kernel. Just remove it.
+Fix the following smatch warning:
 
-Fixes: a79a908fd2b0 ("cgroup: introduce cgroup namespaces")
-Signed-off-by: Lu Jialin <lujialin4@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+drivers/media/i2c/rdacm21.c:373 ov10640_check_id() error: uninitialized
+symbol 'val'.
+
+Initialize 'val' to 0 in the ov10640_check_id() function.
+
+Fixes: 2b821698dc73 ("media: i2c: rdacm21: Power up OV10640 before OV490")
+Reported-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/namespace.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/media/i2c/rdacm21.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/namespace.c b/kernel/cgroup/namespace.c
-index 0d5c29879a50b..144a464e45c66 100644
---- a/kernel/cgroup/namespace.c
-+++ b/kernel/cgroup/namespace.c
-@@ -149,9 +149,3 @@ const struct proc_ns_operations cgroupns_operations = {
- 	.install	= cgroupns_install,
- 	.owner		= cgroupns_owner,
- };
--
--static __init int cgroup_namespaces_init(void)
--{
--	return 0;
--}
--subsys_initcall(cgroup_namespaces_init);
+diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
+index 043fec778a5e5..7a71bb30426b5 100644
+--- a/drivers/media/i2c/rdacm21.c
++++ b/drivers/media/i2c/rdacm21.c
+@@ -351,7 +351,7 @@ static void ov10640_power_up(struct rdacm21_device *dev)
+ static int ov10640_check_id(struct rdacm21_device *dev)
+ {
+ 	unsigned int i;
+-	u8 val;
++	u8 val = 0;
+ 
+ 	/* Read OV10640 ID to test communications. */
+ 	for (i = 0; i < OV10640_PID_TIMEOUT; ++i) {
 -- 
 2.40.1
 
