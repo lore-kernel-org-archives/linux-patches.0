@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660DE11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8217DC433CB;
-	Mon, 11 Sep 2023 15:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4397811715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DD5C433CC;
+	Mon, 11 Sep 2023 15:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445054;
-	bh=86XXqldRbqwjwpXLLeiVOXAkmh+bxxt7Z54jaiopQrk=;
+	s=korg; t=1694445057;
+	bh=vKYzlKUeoGh3gsbQrQKWSRlI6JtCXzYcUh7vuFmmlfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HomcfWGX5jrCgGgCFFtJj4TJE7F58PqgzK+q1T4G6AqbBTXN//XYiTcjpg+5WZH+d
-	 hQWMni/xoW0zhbi1ocY2lXQs52OAKJb0JpbDSkNAB1jf0N2/PxoEqZ07Rmql35L/9q
-	 9+qKsep6u4PrtLMtDRVuVBRODG3xIpZub9fp+/s4=
+	b=05pMw8SGqkGiocCd8me4Qr3qomOiED0XEFXzk9eIfoVpYEeLaoYbX5rTzbWhMy+nK
+	 yn+Gr9eY9u/2zKmIi+HqMpxzm+pn2R4j2kH3ip+YuU0W0Rncc34gRQuth7WLureVI/
+	 71gXg9UWJ/ihk6DVgrUL4GZWmRcDT8Uu9dUU72PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Manish Mandlik <mmandlik@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/600] Bluetooth: hci_sync: Dont double print name in add/remove adv_monitor
-Date: Mon, 11 Sep 2023 15:43:24 +0200
-Message-ID: <20230911134638.656197144@linuxfoundation.org>
+Subject: [PATCH 6.1 172/600] Bluetooth: hci_sync: Avoid use-after-free in dbg for hci_add_adv_monitor()
+Date: Mon, 11 Sep 2023 15:43:25 +0200
+Message-ID: <20230911134638.684831154@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,60 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Manish Mandlik <mmandlik@google.com>
 
-[ Upstream commit 6f55eea116ba3646fb5fbb31de703f8cf79d8214 ]
+[ Upstream commit a2bcd2b63271a93a695fabbfbf459c603d956d48 ]
 
-The hci_add_adv_monitor() hci_remove_adv_monitor() functions call
-bt_dev_dbg() to print some debug statements. The bt_dev_dbg() macro
-automatically adds in the device's name. That means that we shouldn't
-include the name in the bt_dev_dbg() calls.
+KSAN reports use-after-free in hci_add_adv_monitor().
 
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+While adding an adv monitor,
+    hci_add_adv_monitor() calls ->
+    msft_add_monitor_pattern() calls ->
+    msft_add_monitor_sync() calls ->
+    msft_le_monitor_advertisement_cb() calls in an error case ->
+    hci_free_adv_monitor() which frees the *moniter.
+
+This is referenced by bt_dev_dbg() in hci_add_adv_monitor().
+
+Fix the bt_dev_dbg() by using handle instead of monitor->handle.
+
+Fixes: b747a83690c8 ("Bluetooth: hci_sync: Refactor add Adv Monitor")
+Signed-off-by: Manish Mandlik <mmandlik@google.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: a2bcd2b63271 ("Bluetooth: hci_sync: Avoid use-after-free in dbg for hci_add_adv_monitor()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 26884447d72be..561e8a77f64cd 100644
+index 561e8a77f64cd..146553c0054f6 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -1949,14 +1949,14 @@ int hci_add_adv_monitor(struct hci_dev *hdev, struct adv_monitor *monitor)
- 
- 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
- 	case HCI_ADV_MONITOR_EXT_NONE:
--		bt_dev_dbg(hdev, "%s add monitor %d status %d", hdev->name,
-+		bt_dev_dbg(hdev, "add monitor %d status %d",
- 			   monitor->handle, status);
- 		/* Message was not forwarded to controller - not an error */
- 		break;
- 
+@@ -1957,7 +1957,7 @@ int hci_add_adv_monitor(struct hci_dev *hdev, struct adv_monitor *monitor)
  	case HCI_ADV_MONITOR_EXT_MSFT:
  		status = msft_add_monitor_pattern(hdev, monitor);
--		bt_dev_dbg(hdev, "%s add monitor %d msft status %d", hdev->name,
-+		bt_dev_dbg(hdev, "add monitor %d msft status %d",
- 			   monitor->handle, status);
- 		break;
- 	}
-@@ -1976,15 +1976,15 @@ static int hci_remove_adv_monitor(struct hci_dev *hdev,
- 
- 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
- 	case HCI_ADV_MONITOR_EXT_NONE: /* also goes here when powered off */
--		bt_dev_dbg(hdev, "%s remove monitor %d status %d", hdev->name,
-+		bt_dev_dbg(hdev, "remove monitor %d status %d",
- 			   monitor->handle, status);
- 		goto free_monitor;
- 
- 	case HCI_ADV_MONITOR_EXT_MSFT:
- 		handle = monitor->handle;
- 		status = msft_remove_monitor(hdev, monitor);
--		bt_dev_dbg(hdev, "%s remove monitor %d msft status %d",
--			   hdev->name, handle, status);
-+		bt_dev_dbg(hdev, "remove monitor %d msft status %d",
+ 		bt_dev_dbg(hdev, "add monitor %d msft status %d",
+-			   monitor->handle, status);
 +			   handle, status);
  		break;
  	}
