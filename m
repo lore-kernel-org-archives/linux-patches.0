@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0271E11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AE3C433C8;
-	Mon, 11 Sep 2023 15:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1E611715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA60C433C8;
+	Mon, 11 Sep 2023 15:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444788;
-	bh=+XlxvRTT5j2sJ2VGtgXAFVtSm5A0DwRMx+7gLpWSf9I=;
+	s=korg; t=1694444791;
+	bh=0M3DeVVC5f1vcGCNMhrRxvVYnZk2wO7crc23QTzDPtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jq1PGB23JkzJH3mPIfEz00nXNWAQfO/viooo8dMF08dR4XjbdwyVH5Qhh55/ro7M4
-	 Sn2XcsOPH+2Zqe/Ibjxq/0D3B8LgwCl3N2/+gleKkcOZ8bYEjYwQqO2vquBrvbwTQk
-	 K9apLSXxxNEwzkzA7psDpQK+yykj5txrJ8jeQLbY=
+	b=XaDex9mm9/Wp295T3RTXXrt9GTw5PuMcSLTzG4UQlqwggSiaFPCXUg5bPkBOT4Gwd
+	 XityDAhLZwfQhTVgme5miDfqNvxIYEc9SJXFJ9CA8XcrY6wcf/WljrWVqrUAwbjtr/
+	 c1N0NWYhYb0nmSF/gHjEj104WG8mZF0GvfvjEA0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mark Brown <broonie@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/600] selftests/resctrl: Close perf value read fd on errors
-Date: Mon, 11 Sep 2023 15:42:28 +0200
-Message-ID: <20230911134636.999477674@linuxfoundation.org>
+Subject: [PATCH 6.1 116/600] arm64/ptrace: Clean up error handling path in sve_set_common()
+Date: Mon, 11 Sep 2023 15:42:29 +0200
+Message-ID: <20230911134637.032027786@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -36,89 +36,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 51a0c3b7f028169e40db930575dd01fe81c3e765 ]
+[ Upstream commit 5f69ca4229c7d8e23f238174827ee7aa49b0bcb2 ]
 
-Perf event fd (fd_lm) is not closed when run_fill_buf() returns error.
+All error handling paths go to 'out', except this one. Be consistent and
+also branch to 'out' here.
 
-Close fd_lm only in cat_val() to make it easier to track it is always
-closed.
-
-Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/aa61301ed2dfd079b74b37f7fede5f179ac3087a.1689616473.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cache.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ arch/arm64/kernel/ptrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 0485863a169f2..338f714453935 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -89,21 +89,19 @@ static int reset_enable_llc_perf(pid_t pid, int cpu_no)
- static int get_llc_perf(unsigned long *llc_perf_miss)
- {
- 	__u64 total_misses;
-+	int ret;
- 
- 	/* Stop counters after one span to get miss rate */
- 
- 	ioctl(fd_lm, PERF_EVENT_IOC_DISABLE, 0);
- 
--	if (read(fd_lm, &rf_cqm, sizeof(struct read_format)) == -1) {
-+	ret = read(fd_lm, &rf_cqm, sizeof(struct read_format));
-+	if (ret == -1) {
- 		perror("Could not get llc misses through perf");
--
- 		return -1;
- 	}
- 
- 	total_misses = rf_cqm.values[0].value;
--
--	close(fd_lm);
--
- 	*llc_perf_miss = total_misses;
- 
- 	return 0;
-@@ -258,19 +256,25 @@ int cat_val(struct resctrl_val_param *param)
- 					 memflush, operation, resctrl_val)) {
- 				fprintf(stderr, "Error-running fill buffer\n");
- 				ret = -1;
--				break;
-+				goto pe_close;
- 			}
- 
- 			sleep(1);
- 			ret = measure_cache_vals(param, bm_pid);
- 			if (ret)
--				break;
-+				goto pe_close;
-+
-+			close(fd_lm);
- 		} else {
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index f606c942f514e..e1f6366b7ccdf 100644
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -896,7 +896,8 @@ static int sve_set_common(struct task_struct *target,
  			break;
+ 		default:
+ 			WARN_ON_ONCE(1);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto out;
  		}
- 	}
  
- 	return ret;
-+
-+pe_close:
-+	close(fd_lm);
-+	return ret;
- }
- 
- /*
+ 		/*
 -- 
 2.40.1
 
