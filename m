@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB1514F6F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D75FC433CC;
-	Mon, 11 Sep 2023 15:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF3E14F6E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F35C433C8;
+	Mon, 11 Sep 2023 15:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446167;
-	bh=43bCo5cF4IEyc/pCGq7U5ZLS4aA8mcSN96Lazh9ttoI=;
+	s=korg; t=1694446170;
+	bh=myYUqNxiiMcewnA8Ga8ZTYUFO9D2I8LoRtkZLuSiqGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uwbF19zVcTEuS0iJmCZsKfHxFAUixvNeGJpHaZxfYXxqsY1n2zpOcVVrRSZcPfBp0
-	 ROSzPRS808XHQqDsVlZp2Xzmd7hBCc2U11Eibrw+x0Cfio473EUuQBZ9HZjqyAoUgt
-	 Cbvj+SVOiMa7Ew+ZHkfqDNOrKFies467EiK7PF88=
+	b=JSni+XDbZ8S0H4E39pITFs6wTtp0tVlIwNBNeJ6R1UF0IjS29UrNWGC5mvPZ14elD
+	 e6/MZvZ5BN3BFIzZN7rFerIQ9JZP8zxzl3WLoKaD8JqLjFNjUAWgy4yvG+uJy2ojbo
+	 0A5n1pLADzZoMutxJdQO/jjKXPzCgmxlZpaboJg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.1 579/600] cpufreq: brcmstb-avs-cpufreq: Fix -Warray-bounds bug
-Date: Mon, 11 Sep 2023 15:50:12 +0200
-Message-ID: <20230911134650.709305684@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Adam Ford <aford173@gmail.com>
+Subject: [PATCH 6.1 580/600] of: property: fw_devlink: Add a devlink for panel followers
+Date: Mon, 11 Sep 2023 15:50:13 +0200
+Message-ID: <20230911134650.740173557@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,64 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit e520d0b6be950ce3738cf4b9bd3b392be818f1dc upstream.
+commit fbf0ea2da3c7cd0b33ed7ae53a67ab1c24838cba upstream.
 
-Allocate extra space for terminating element at:
+Inform fw_devlink of the fact that a panel follower (like a
+touchscreen) is effectively a consumer of the panel from the purposes
+of fw_devlink.
 
-drivers/cpufreq/brcmstb-avs-cpufreq.c:
-449         table[i].frequency = CPUFREQ_TABLE_END;
+NOTE: this patch isn't required for correctness but instead optimizes
+probe order / helps avoid deferrals.
 
-and add code comment to make this clear.
-
-This fixes the following -Warray-bounds warning seen after building
-ARM with multi_v7_defconfig (GCC 13):
-In function 'brcm_avs_get_freq_table',
-    inlined from 'brcm_avs_cpufreq_init' at drivers/cpufreq/brcmstb-avs-cpufreq.c:623:15:
-drivers/cpufreq/brcmstb-avs-cpufreq.c:449:28: warning: array subscript 5 is outside array bounds of 'void[60]' [-Warray-bounds=]
-  449 |         table[i].frequency = CPUFREQ_TABLE_END;
-In file included from include/linux/node.h:18,
-                 from include/linux/cpu.h:17,
-                 from include/linux/cpufreq.h:12,
-                 from drivers/cpufreq/brcmstb-avs-cpufreq.c:44:
-In function 'devm_kmalloc_array',
-    inlined from 'devm_kcalloc' at include/linux/device.h:328:9,
-    inlined from 'brcm_avs_get_freq_table' at drivers/cpufreq/brcmstb-avs-cpufreq.c:437:10,
-    inlined from 'brcm_avs_cpufreq_init' at drivers/cpufreq/brcmstb-avs-cpufreq.c:623:15:
-include/linux/device.h:323:16: note: at offset 60 into object of size 60 allocated by 'devm_kmalloc'
-  323 |         return devm_kmalloc(dev, bytes, flags);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-routines on memcpy() and help us make progress towards globally
-enabling -Warray-bounds.
-
-Link: https://github.com/KSPP/linux/issues/324
-Fixes: de322e085995 ("cpufreq: brcmstb-avs-cpufreq: AVS CPUfreq driver for Broadcom STB SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230727101636.v4.4.Ibf8e1342b5b7906279db2365aca45e6253857bb3@changeid
+Cc: Adam Ford <aford173@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/brcmstb-avs-cpufreq.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/of/property.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
-+++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-@@ -434,7 +434,11 @@ brcm_avs_get_freq_table(struct device *d
- 	if (ret)
- 		return ERR_PTR(ret);
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1266,6 +1266,7 @@ DEFINE_SIMPLE_PROP(pwms, "pwms", "#pwm-c
+ DEFINE_SIMPLE_PROP(resets, "resets", "#reset-cells")
+ DEFINE_SIMPLE_PROP(leds, "leds", NULL)
+ DEFINE_SIMPLE_PROP(backlight, "backlight", NULL)
++DEFINE_SIMPLE_PROP(panel, "panel", NULL)
+ DEFINE_SUFFIX_PROP(regulators, "-supply", NULL)
+ DEFINE_SUFFIX_PROP(gpio, "-gpio", "#gpio-cells")
  
--	table = devm_kcalloc(dev, AVS_PSTATE_MAX + 1, sizeof(*table),
-+	/*
-+	 * We allocate space for the 5 different P-STATES AVS,
-+	 * plus extra space for a terminating element.
-+	 */
-+	table = devm_kcalloc(dev, AVS_PSTATE_MAX + 1 + 1, sizeof(*table),
- 			     GFP_KERNEL);
- 	if (!table)
- 		return ERR_PTR(-ENOMEM);
+@@ -1354,6 +1355,7 @@ static const struct supplier_bindings of
+ 	{ .parse_prop = parse_resets, },
+ 	{ .parse_prop = parse_leds, },
+ 	{ .parse_prop = parse_backlight, },
++	{ .parse_prop = parse_panel, },
+ 	{ .parse_prop = parse_gpio_compat, },
+ 	{ .parse_prop = parse_interrupts, },
+ 	{ .parse_prop = parse_regulators, },
 
 
