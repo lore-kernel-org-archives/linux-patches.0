@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA588472
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB42C433C8;
-	Mon, 11 Sep 2023 14:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFB18472
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327A2C433C8;
+	Mon, 11 Sep 2023 14:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442891;
-	bh=t1Xzu9Iai1Q9NsQzX5oZVJ9+fxiDHituIb8goMj7nzM=;
+	s=korg; t=1694442894;
+	bh=vgNHfCi9G8wvVDVFTvM2DpsIHv8GNOMb/R9Pz0obdyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hw9oeP4ZfPCDHBnHqdBddm3xnOCy+yRmvcN4Q2zHQwbkq25JoasKfmGsjUXuA0n0g
-	 hF5qMDrwZksi/fsFsEJUgDe2S/+rkV7QSIj+l/K+A3qIVAHDPT9nwFz6LvIu1dtwjb
-	 jGGRPMi5OSFLiZiMuRpyXYDXeBB6DybiqfCIgsZ0=
+	b=PrOQM50ZSFS6LPO9qVtLoSVSEmGPcNyLd2BA/JcHCxVXIl5H9nk6O66UswBLwuzUW
+	 kBtb6L9SlmdMhog/Fse7LTELkO8IW4Nj2Bz4aaonaE9HnREAMKIL3D8G6CSn8J/BNl
+	 1gQ36ug+hLsdV3ocHMtn8dzXTlX+tqZfFDEpIkZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Li Zetao <lizetao1@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 177/737] can: tcan4x5x: Remove reserved register 0x814 from writable table
-Date: Mon, 11 Sep 2023 15:40:36 +0200
-Message-ID: <20230911134655.485443065@linuxfoundation.org>
+Subject: [PATCH 6.4 186/737] spi: mpc5xxx-psc: Fix unsigned expression compared with zero
+Date: Mon, 11 Sep 2023 15:40:45 +0200
+Message-ID: <20230911134655.770564259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,35 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit fbe534f7bf213d485b0ed5362b24a41bf3e18803 ]
+[ Upstream commit de5e92cb5cefd2968b96075995a36e28298edf71 ]
 
-The mentioned register is not writable. It is reserved and should not be
-written.
+There is two warnings reported by coccinelle:
 
-Fixes: 39dbb21b6a29 ("can: tcan4x5x: Specify separate read/write ranges")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/all/20230728141923.162477-3-msp@baylibre.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+./drivers/spi/spi-mpc512x-psc.c:493:5-13: WARNING:
+	Unsigned expression compared with zero: mps -> irq     <     0
+./drivers/spi/spi-mpc52xx-psc.c:332:5-13: WARNING:
+	Unsigned expression compared with zero: mps -> irq     <     0
+
+The commit "208ee586f862"
+("spi: mpc5xxx-psc: Return immediately if IRQ resource is unavailable")
+was to check whether the IRQ resource is unavailable. When the IRQ
+resource is unavailable, an error code is returned, however, the type
+of "mps->irq" is "unsigned int", causing the error code to flip. Modify
+the type of "mps->irq" to solve this problem.
+
+Fixes: 208ee586f862 ("spi: mpc5xxx-psc: Return immediately if IRQ resource is unavailable")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/r/20230803134805.1037251-1-lizetao1@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x-regmap.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/spi/spi-mpc512x-psc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x-regmap.c b/drivers/net/can/m_can/tcan4x5x-regmap.c
-index 2b218ce04e9f2..fafa6daa67e69 100644
---- a/drivers/net/can/m_can/tcan4x5x-regmap.c
-+++ b/drivers/net/can/m_can/tcan4x5x-regmap.c
-@@ -95,7 +95,6 @@ static const struct regmap_range tcan4x5x_reg_table_wr_range[] = {
- 	regmap_reg_range(0x000c, 0x0010),
- 	/* Device configuration registers and Interrupt Flags*/
- 	regmap_reg_range(0x0800, 0x080c),
--	regmap_reg_range(0x0814, 0x0814),
- 	regmap_reg_range(0x0820, 0x0820),
- 	regmap_reg_range(0x0830, 0x0830),
- 	/* M_CAN */
+diff --git a/drivers/spi/spi-mpc512x-psc.c b/drivers/spi/spi-mpc512x-psc.c
+index 99aeef28a4774..5cecca1bef026 100644
+--- a/drivers/spi/spi-mpc512x-psc.c
++++ b/drivers/spi/spi-mpc512x-psc.c
+@@ -53,7 +53,7 @@ struct mpc512x_psc_spi {
+ 	int type;
+ 	void __iomem *psc;
+ 	struct mpc512x_psc_fifo __iomem *fifo;
+-	unsigned int irq;
++	int irq;
+ 	u8 bits_per_word;
+ 	u32 mclk_rate;
+ 
 -- 
 2.40.1
 
