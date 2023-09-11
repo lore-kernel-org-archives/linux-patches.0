@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F8A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77ECC433C7;
-	Mon, 11 Sep 2023 15:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002B011706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791B8C433C8;
+	Mon, 11 Sep 2023 15:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444603;
-	bh=DK/pQR97SGhRxaTy7fBp9qoD4klTSsPiRSTHssXPD20=;
+	s=korg; t=1694444605;
+	bh=IOwUX6DX6gPbRLkc3sHj0FOCsJE8wHgOyN2KWdCK3UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=14YnVZdNIlJ1Bs6In2DY68vEXorfefGAtFe2Vo5j2gydwsKwlMDTOWLbs0ZE4J/a0
-	 VPNFuH5q9G2BodroKGW4Y8Ov67frR8cNAOFORC9TCWiv7V9AMlk28XKq4uPmsre651
-	 hT++8F1a6iy9qlj0t973XL0ZjAKW/hPPtgMiC1Ug=
+	b=h1qckHnmUlJU/j4y+iCPFqMTJh7bBD/mv4QLmYnveNpWn0nhYq3dqbGSXGCwvj6Rz
+	 C1wDLChphpJ8YqUTfmbpRxDbMa3j8mFwvcx9VkRhDdrJT6zDgFLZs33vFaOiQqzFAo
+	 tsJbjQl7PdvGNg2epZitWXg4tFMDV7BrYK5cJk9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/600] ASoC: nau8821: Add DMI quirk mechanism for active-high jack-detect
-Date: Mon, 11 Sep 2023 15:40:55 +0200
-Message-ID: <20230911134634.268471301@linuxfoundation.org>
+Subject: [PATCH 6.1 023/600] ethernet: atheros: fix return value check in atl1c_tso_csum()
+Date: Mon, 11 Sep 2023 15:40:56 +0200
+Message-ID: <20230911134634.297009164@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,97 +41,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit 1bc40efdaf4a0ccfdb10a1c8e4b458f4764e8e5f ]
+[ Upstream commit 8d01da0a1db237c44c92859ce3612df7af8d3a53 ]
 
-Add a quirk mechanism to allow specifying that active-high jack-detection
-should be used on platforms where this info is not available in devicetree.
+in atl1c_tso_csum, it should check the return value of pskb_trim(),
+and return an error code if an unexpected value is returned
+by pskb_trim().
 
-And add an entry for the Positivo CW14Q01P-V2 to the DMI table, so that
-jack-detection will work properly on this laptop.
-
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://lore.kernel.org/r/20230719200241.4865-1-edson.drosdeck@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 41 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/net/ethernet/atheros/atl1c/atl1c_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 4a72b94e84104..efd92656a060d 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -10,6 +10,7 @@
- #include <linux/acpi.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
-+#include <linux/dmi.h>
- #include <linux/init.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
-@@ -25,6 +26,13 @@
- #include <sound/tlv.h>
- #include "nau8821.h"
+diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+index 40c781695d581..7762e532c6a4f 100644
+--- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
++++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+@@ -2104,8 +2104,11 @@ static int atl1c_tso_csum(struct atl1c_adapter *adapter,
+ 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
+ 					+ ntohs(ip_hdr(skb)->tot_len));
  
-+#define NAU8821_JD_ACTIVE_HIGH			BIT(0)
-+
-+static int nau8821_quirk;
-+static int quirk_override = -1;
-+module_param_named(quirk, quirk_override, uint, 0444);
-+MODULE_PARM_DESC(quirk, "Board-specific quirk override");
-+
- #define NAU_FREF_MAX 13500000
- #define NAU_FVCO_MAX 100000000
- #define NAU_FVCO_MIN 90000000
-@@ -1696,6 +1704,33 @@ static int nau8821_setup_irq(struct nau8821 *nau8821)
- 	return 0;
- }
+-			if (real_len < skb->len)
+-				pskb_trim(skb, real_len);
++			if (real_len < skb->len) {
++				err = pskb_trim(skb, real_len);
++				if (err)
++					return err;
++			}
  
-+/* Please keep this list alphabetically sorted */
-+static const struct dmi_system_id nau8821_quirk_table[] = {
-+	{
-+		/* Positivo CW14Q01P-V2 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P-V2"),
-+		},
-+		.driver_data = (void *)(NAU8821_JD_ACTIVE_HIGH),
-+	},
-+	{}
-+};
-+
-+static void nau8821_check_quirks(void)
-+{
-+	const struct dmi_system_id *dmi_id;
-+
-+	if (quirk_override != -1) {
-+		nau8821_quirk = quirk_override;
-+		return;
-+	}
-+
-+	dmi_id = dmi_first_match(nau8821_quirk_table);
-+	if (dmi_id)
-+		nau8821_quirk = (unsigned long)dmi_id->driver_data;
-+}
-+
- static int nau8821_i2c_probe(struct i2c_client *i2c)
- {
- 	struct device *dev = &i2c->dev;
-@@ -1716,6 +1751,12 @@ static int nau8821_i2c_probe(struct i2c_client *i2c)
- 
- 	nau8821->dev = dev;
- 	nau8821->irq = i2c->irq;
-+
-+	nau8821_check_quirks();
-+
-+	if (nau8821_quirk & NAU8821_JD_ACTIVE_HIGH)
-+		nau8821->jkdet_polarity = 0;
-+
- 	nau8821_print_device_properties(nau8821);
- 
- 	nau8821_reset_chip(nau8821->regmap);
+ 			hdr_len = skb_tcp_all_headers(skb);
+ 			if (unlikely(skb->len == hdr_len)) {
 -- 
 2.40.1
 
