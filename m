@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2972D11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDE3C433CA;
-	Mon, 11 Sep 2023 14:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E557D11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:39:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E40BC433C8;
+	Mon, 11 Sep 2023 14:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443153;
-	bh=NZuDjQANBNddqbMJIPF1B6aRs36mdj7kQa1G/iPvBbA=;
+	s=korg; t=1694443155;
+	bh=VEpNAImbAMIUKDVVkR4uJ/w8iw3J7mJq7bRGbjHaWls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlYJxE4T0weyU7nlL8G1b87iAZPpDxGUITOb70BX5zFM21rYVW9CvwqBOLz6hmvJU
-	 ukgXIKVKWCyOZXY/+6AFr7/wXmU9olghS73e1GM4lOgpLC5fX8Ppd8WwgNkOD+h5zs
-	 j7KuAEi+dYIe70wIoALrVclGDsIJRqUujhuonyxw=
+	b=sTH/UGVBFR/+ezk65DtyG68mIS8t6EZYQLUc3wLz50eXkSmlPS+UCHCcHbpHyqpbl
+	 FA030vPj6dscDcbOLbM+hixuHY4NXlE20/cB4zmNpTLrJZMIvNub5Po61axmWPRDai
+	 P9qi5EqoFrxRXMzbZyXOdw0pgJiA5G1NORiqJpOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Elwell <phil@raspberrypi.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 269/737] ASoC: cs43130: Fix numerator/denominator mixup
-Date: Mon, 11 Sep 2023 15:42:08 +0200
-Message-ID: <20230911134658.093420250@linuxfoundation.org>
+Subject: [PATCH 6.4 278/737] soc: qcom: ocmem: Add OCMEM hardware version print
+Date: Mon, 11 Sep 2023 15:42:17 +0200
+Message-ID: <20230911134658.337922185@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,192 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Elwell <phil@raspberrypi.com>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit a9e7c964cea4fb1541cc81a11d1b2fd135f4cf38 ]
+[ Upstream commit e81a16e77259294cd4ff0a9c1fbe5aa0e311a47d ]
 
-In converting to using the standard u16_fract type, commit [1] made the
-obvious mistake and failed to take account of the difference in
-numerator and denominator ordering, breaking all uses of the cs43130
-codec.
+It might be useful to know what hardware version of the OCMEM block the
+SoC contains. Add a debug print for that.
 
-Fix it.
-
-[1] commit e14bd35ef446 ("ASoC: cs43130: Re-use generic struct u16_fract")
-
-Fixes: e14bd35ef446 ("ASoC: cs43130: Re-use generic struct u16_fract")
-Signed-off-by: Phil Elwell <phil@raspberrypi.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230621153229.1944132-1-phil@raspberrypi.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230509-ocmem-hwver-v3-1-e51f3488e0f4@z3ntu.xyz
+Stable-dep-of: a7b484b1c933 ("soc: qcom: ocmem: Fix NUM_PORTS & NUM_MACROS macros")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs43130.h | 138 ++++++++++++++++++-------------------
- 1 file changed, 69 insertions(+), 69 deletions(-)
+ drivers/soc/qcom/ocmem.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/cs43130.h b/sound/soc/codecs/cs43130.h
-index 1dd8936743132..90e8895275e77 100644
---- a/sound/soc/codecs/cs43130.h
-+++ b/sound/soc/codecs/cs43130.h
-@@ -381,88 +381,88 @@ struct cs43130_clk_gen {
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index 199fe98720350..aaddc3cc53b7f 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -76,6 +76,10 @@ struct ocmem {
+ #define OCMEM_REG_GFX_MPU_START			0x00001004
+ #define OCMEM_REG_GFX_MPU_END			0x00001008
  
- /* frm_size = 16 */
- static const struct cs43130_clk_gen cs43130_16_clk_gen[] = {
--	{ 22579200,	32000,		.v = { 441,	10, }, },
--	{ 22579200,	44100,		.v = { 32,	1, }, },
--	{ 22579200,	48000,		.v = { 147,	5, }, },
--	{ 22579200,	88200,		.v = { 16,	1, }, },
--	{ 22579200,	96000,		.v = { 147,	10, }, },
--	{ 22579200,	176400,		.v = { 8,	1, }, },
--	{ 22579200,	192000,		.v = { 147,	20, }, },
--	{ 22579200,	352800,		.v = { 4,	1, }, },
--	{ 22579200,	384000,		.v = { 147,	40, }, },
--	{ 24576000,	32000,		.v = { 48,	1, }, },
--	{ 24576000,	44100,		.v = { 5120,	147, }, },
--	{ 24576000,	48000,		.v = { 32,	1, }, },
--	{ 24576000,	88200,		.v = { 2560,	147, }, },
--	{ 24576000,	96000,		.v = { 16,	1, }, },
--	{ 24576000,	176400,		.v = { 1280,	147, }, },
--	{ 24576000,	192000,		.v = { 8,	1, }, },
--	{ 24576000,	352800,		.v = { 640,	147, }, },
--	{ 24576000,	384000,		.v = { 4,	1, }, },
-+	{ 22579200,	32000,		.v = { 10,	441, }, },
-+	{ 22579200,	44100,		.v = { 1,	32, }, },
-+	{ 22579200,	48000,		.v = { 5,	147, }, },
-+	{ 22579200,	88200,		.v = { 1,	16, }, },
-+	{ 22579200,	96000,		.v = { 10,	147, }, },
-+	{ 22579200,	176400,		.v = { 1,	8, }, },
-+	{ 22579200,	192000,		.v = { 20,	147, }, },
-+	{ 22579200,	352800,		.v = { 1,	4, }, },
-+	{ 22579200,	384000,		.v = { 40,	147, }, },
-+	{ 24576000,	32000,		.v = { 1,	48, }, },
-+	{ 24576000,	44100,		.v = { 147,	5120, }, },
-+	{ 24576000,	48000,		.v = { 1,	32, }, },
-+	{ 24576000,	88200,		.v = { 147,	2560, }, },
-+	{ 24576000,	96000,		.v = { 1,	16, }, },
-+	{ 24576000,	176400,		.v = { 147,	1280, }, },
-+	{ 24576000,	192000,		.v = { 1,	8, }, },
-+	{ 24576000,	352800,		.v = { 147,	640, }, },
-+	{ 24576000,	384000,		.v = { 1,	4, }, },
- };
++#define OCMEM_HW_VERSION_MAJOR(val)		FIELD_GET(GENMASK(31, 28), val)
++#define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
++#define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
++
+ #define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_PREP(0x0000000f, (val))
+ #define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_PREP(0x00003f00, (val))
  
- /* frm_size = 32 */
- static const struct cs43130_clk_gen cs43130_32_clk_gen[] = {
--	{ 22579200,	32000,		.v = { 441,	20, }, },
--	{ 22579200,	44100,		.v = { 16,	1, }, },
--	{ 22579200,	48000,		.v = { 147,	10, }, },
--	{ 22579200,	88200,		.v = { 8,	1, }, },
--	{ 22579200,	96000,		.v = { 147,	20, }, },
--	{ 22579200,	176400,		.v = { 4,	1, }, },
--	{ 22579200,	192000,		.v = { 147,	40, }, },
--	{ 22579200,	352800,		.v = { 2,	1, }, },
--	{ 22579200,	384000,		.v = { 147,	80, }, },
--	{ 24576000,	32000,		.v = { 24,	1, }, },
--	{ 24576000,	44100,		.v = { 2560,	147, }, },
--	{ 24576000,	48000,		.v = { 16,	1, }, },
--	{ 24576000,	88200,		.v = { 1280,	147, }, },
--	{ 24576000,	96000,		.v = { 8,	1, }, },
--	{ 24576000,	176400,		.v = { 640,	147, }, },
--	{ 24576000,	192000,		.v = { 4,	1, }, },
--	{ 24576000,	352800,		.v = { 320,	147, }, },
--	{ 24576000,	384000,		.v = { 2,	1, }, },
-+	{ 22579200,	32000,		.v = { 20,	441, }, },
-+	{ 22579200,	44100,		.v = { 1,	16, }, },
-+	{ 22579200,	48000,		.v = { 10,	147, }, },
-+	{ 22579200,	88200,		.v = { 1,	8, }, },
-+	{ 22579200,	96000,		.v = { 20,	147, }, },
-+	{ 22579200,	176400,		.v = { 1,	4, }, },
-+	{ 22579200,	192000,		.v = { 40,	147, }, },
-+	{ 22579200,	352800,		.v = { 1,	2, }, },
-+	{ 22579200,	384000,		.v = { 80,	147, }, },
-+	{ 24576000,	32000,		.v = { 1,	24, }, },
-+	{ 24576000,	44100,		.v = { 147,	2560, }, },
-+	{ 24576000,	48000,		.v = { 1,	16, }, },
-+	{ 24576000,	88200,		.v = { 147,	1280, }, },
-+	{ 24576000,	96000,		.v = { 1,	8, }, },
-+	{ 24576000,	176400,		.v = { 147,	640, }, },
-+	{ 24576000,	192000,		.v = { 1,	4, }, },
-+	{ 24576000,	352800,		.v = { 147,	320, }, },
-+	{ 24576000,	384000,		.v = { 1,	2, }, },
- };
+@@ -355,6 +359,12 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
- /* frm_size = 48 */
- static const struct cs43130_clk_gen cs43130_48_clk_gen[] = {
--	{ 22579200,	32000,		.v = { 147,	100, }, },
--	{ 22579200,	44100,		.v = { 32,	3, }, },
--	{ 22579200,	48000,		.v = { 49,	5, }, },
--	{ 22579200,	88200,		.v = { 16,	3, }, },
--	{ 22579200,	96000,		.v = { 49,	10, }, },
--	{ 22579200,	176400,		.v = { 8,	3, }, },
--	{ 22579200,	192000,		.v = { 49,	20, }, },
--	{ 22579200,	352800,		.v = { 4,	3, }, },
--	{ 22579200,	384000,		.v = { 49,	40, }, },
--	{ 24576000,	32000,		.v = { 16,	1, }, },
--	{ 24576000,	44100,		.v = { 5120,	441, }, },
--	{ 24576000,	48000,		.v = { 32,	3, }, },
--	{ 24576000,	88200,		.v = { 2560,	441, }, },
--	{ 24576000,	96000,		.v = { 16,	3, }, },
--	{ 24576000,	176400,		.v = { 1280,	441, }, },
--	{ 24576000,	192000,		.v = { 8,	3, }, },
--	{ 24576000,	352800,		.v = { 640,	441, }, },
--	{ 24576000,	384000,		.v = { 4,	3, }, },
-+	{ 22579200,	32000,		.v = { 100,	147, }, },
-+	{ 22579200,	44100,		.v = { 3,	32, }, },
-+	{ 22579200,	48000,		.v = { 5,	49, }, },
-+	{ 22579200,	88200,		.v = { 3,	16, }, },
-+	{ 22579200,	96000,		.v = { 10,	49, }, },
-+	{ 22579200,	176400,		.v = { 3,	8, }, },
-+	{ 22579200,	192000,		.v = { 20,	49, }, },
-+	{ 22579200,	352800,		.v = { 3,	4, }, },
-+	{ 22579200,	384000,		.v = { 40,	49, }, },
-+	{ 24576000,	32000,		.v = { 1,	16, }, },
-+	{ 24576000,	44100,		.v = { 441,	5120, }, },
-+	{ 24576000,	48000,		.v = { 3,	32, }, },
-+	{ 24576000,	88200,		.v = { 441,	2560, }, },
-+	{ 24576000,	96000,		.v = { 3,	16, }, },
-+	{ 24576000,	176400,		.v = { 441,	1280, }, },
-+	{ 24576000,	192000,		.v = { 3,	8, }, },
-+	{ 24576000,	352800,		.v = { 441,	640, }, },
-+	{ 24576000,	384000,		.v = { 3,	4, }, },
- };
- 
- /* frm_size = 64 */
- static const struct cs43130_clk_gen cs43130_64_clk_gen[] = {
--	{ 22579200,	32000,		.v = { 441,	40, }, },
--	{ 22579200,	44100,		.v = { 8,	1, }, },
--	{ 22579200,	48000,		.v = { 147,	20, }, },
--	{ 22579200,	88200,		.v = { 4,	1, }, },
--	{ 22579200,	96000,		.v = { 147,	40, }, },
--	{ 22579200,	176400,		.v = { 2,	1, }, },
--	{ 22579200,	192000,		.v = { 147,	80, }, },
-+	{ 22579200,	32000,		.v = { 40,	441, }, },
-+	{ 22579200,	44100,		.v = { 1,	8, }, },
-+	{ 22579200,	48000,		.v = { 20,	147, }, },
-+	{ 22579200,	88200,		.v = { 1,	4, }, },
-+	{ 22579200,	96000,		.v = { 40,	147, }, },
-+	{ 22579200,	176400,		.v = { 1,	2, }, },
-+	{ 22579200,	192000,		.v = { 80,	147, }, },
- 	{ 22579200,	352800,		.v = { 1,	1, }, },
--	{ 24576000,	32000,		.v = { 12,	1, }, },
--	{ 24576000,	44100,		.v = { 1280,	147, }, },
--	{ 24576000,	48000,		.v = { 8,	1, }, },
--	{ 24576000,	88200,		.v = { 640,	147, }, },
--	{ 24576000,	96000,		.v = { 4,	1, }, },
--	{ 24576000,	176400,		.v = { 320,	147, }, },
--	{ 24576000,	192000,		.v = { 2,	1, }, },
--	{ 24576000,	352800,		.v = { 160,	147, }, },
-+	{ 24576000,	32000,		.v = { 1,	12, }, },
-+	{ 24576000,	44100,		.v = { 147,	1280, }, },
-+	{ 24576000,	48000,		.v = { 1,	8, }, },
-+	{ 24576000,	88200,		.v = { 147,	640, }, },
-+	{ 24576000,	96000,		.v = { 1,	4, }, },
-+	{ 24576000,	176400,		.v = { 147,	320, }, },
-+	{ 24576000,	192000,		.v = { 1,	2, }, },
-+	{ 24576000,	352800,		.v = { 147,	160, }, },
- 	{ 24576000,	384000,		.v = { 1,	1, }, },
- };
- 
++	reg = ocmem_read(ocmem, OCMEM_REG_HW_VERSION);
++	dev_dbg(dev, "OCMEM hardware version: %lu.%lu.%lu\n",
++		OCMEM_HW_VERSION_MAJOR(reg),
++		OCMEM_HW_VERSION_MINOR(reg),
++		OCMEM_HW_VERSION_STEP(reg));
++
+ 	reg = ocmem_read(ocmem, OCMEM_REG_HW_PROFILE);
+ 	ocmem->num_ports = OCMEM_HW_PROFILE_NUM_PORTS(reg);
+ 	ocmem->num_macros = OCMEM_HW_PROFILE_NUM_MACROS(reg);
 -- 
 2.40.1
 
