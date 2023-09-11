@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360081170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA34C433C8;
-	Mon, 11 Sep 2023 14:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D791170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7367EC433C8;
+	Mon, 11 Sep 2023 14:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442263;
-	bh=IQqVLD7H1h8AI1V9zPol9HNtqa3hlw0MhSoQ9y/BxBU=;
+	s=korg; t=1694442265;
+	bh=6Rl6GFHVbzz+gW2bdI27MplD/1sigFHPCXGGGCjQDAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgewablr3ohwbynma6cTkYteOMM/JU5Fo8Az0Q29fxwtaQja9iCu0w8kfg3a7wenI
-	 rVfnL6di7O5NglysFojDEeHhs3Ebs/utSbNzcGt5Zz3xdQjd7feCubNBHL3YsXyb7V
-	 Vkpl3/Q1Vxi07fOXeyoWIA6GGHv9BuhUjkyB2Bp4=
+	b=NimIgUzC7UydmfWTJGuoDEnRF6+lTtbpsSXYEUDKsveYXaVCtHfumLL3f4xHzEaKm
+	 tssUaOGfjzbZtO7SC/qFoJ6mL8gpwJW57S8rATrM/N+KKQymq4oEBeBAOrAxSmc+/x
+	 thBtHYcVuAkZMle+fNaLK0dy4asB0RLSmqXcmxmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Swapnil Patel <swapnil.patel@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
 	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Fudong Wang <fudong.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.5 667/739] drm/amd/display: register edp_backlight_control() for DCN301
-Date: Mon, 11 Sep 2023 15:47:46 +0200
-Message-ID: <20230911134709.737442697@linuxfoundation.org>
+Subject: [PATCH 6.5 697/739] drm/amd/display: Add smu write msg id fail retry process
+Date: Mon, 11 Sep 2023 15:48:16 +0200
+Message-ID: <20230911134710.561366434@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,38 +41,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Fudong Wang <fudong.wang@amd.com>
 
-commit 1611917f39bee1abfc01501238db8ac19649042d upstream.
+commit 72105dcfa3d12b5af49311f857e3490baa225135 upstream.
 
-As made mention of in commit 099303e9a9bd ("drm/amd/display: eDP
-intermittent black screen during PnP"), we need to turn off the
-display's backlight before powering off an eDP display. Not doing so
-will result in undefined behaviour according to the eDP spec. So, set
-DCN301's edp_backlight_control() function pointer to
-dce110_edp_backlight_control().
+A benchmark stress test (12-40 machines x 48hours) found that DCN315 has
+cases where DC writes to an indirect register to set the smu clock msg
+id, but when we go to read the same indirect register the returned msg
+id doesn't match with what we just set it to. So, to fix this retry the
+write until the register's value matches with the requested value.
 
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2765
-Fixes: 9c75891feef0 ("drm/amd/display: rework recent update PHY state commit")
-Suggested-by: Swapnil Patel <swapnil.patel@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: f94903996140 ("drm/amd/display: Add DCN315 CLK_MGR")
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Fudong Wang <fudong.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn301/dcn301_init.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c |   20 ++++++++++---
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_init.c
-@@ -75,6 +75,7 @@ static const struct hw_sequencer_funcs d
- 	.get_hw_state = dcn10_get_hw_state,
- 	.clear_status_bits = dcn10_clear_status_bits,
- 	.wait_for_mpcc_disconnect = dcn10_wait_for_mpcc_disconnect,
-+	.edp_backlight_control = dce110_edp_backlight_control,
- 	.edp_power_control = dce110_edp_power_control,
- 	.edp_wait_for_hpd_ready = dce110_edp_wait_for_hpd_ready,
- 	.set_cursor_position = dcn10_set_cursor_position,
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_smu.c
+@@ -32,6 +32,7 @@
+ 
+ #define MAX_INSTANCE                                        6
+ #define MAX_SEGMENT                                         6
++#define SMU_REGISTER_WRITE_RETRY_COUNT                      5
+ 
+ struct IP_BASE_INSTANCE
+ {
+@@ -134,6 +135,8 @@ static int dcn315_smu_send_msg_with_para
+ 		unsigned int msg_id, unsigned int param)
+ {
+ 	uint32_t result;
++	uint32_t i = 0;
++	uint32_t read_back_data;
+ 
+ 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
+ 
+@@ -150,10 +153,19 @@ static int dcn315_smu_send_msg_with_para
+ 	/* Set the parameter register for the SMU message, unit is Mhz */
+ 	REG_WRITE(MP1_SMN_C2PMSG_37, param);
+ 
+-	/* Trigger the message transaction by writing the message ID */
+-	generic_write_indirect_reg(CTX,
+-		REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
+-		mmMP1_C2PMSG_3, msg_id);
++	for (i = 0; i < SMU_REGISTER_WRITE_RETRY_COUNT; i++) {
++		/* Trigger the message transaction by writing the message ID */
++		generic_write_indirect_reg(CTX,
++			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
++			mmMP1_C2PMSG_3, msg_id);
++		read_back_data = generic_read_indirect_reg(CTX,
++			REG_NBIO(RSMU_INDEX), REG_NBIO(RSMU_DATA),
++			mmMP1_C2PMSG_3);
++		if (read_back_data == msg_id)
++			break;
++		udelay(2);
++		smu_print("SMU msg id write fail %x times. \n", i + 1);
++	}
+ 
+ 	result = dcn315_smu_wait_for_response(clk_mgr, 10, 200000);
+ 
 
 
