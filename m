@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B790F9F3
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B4EC433C8;
-	Mon, 11 Sep 2023 13:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA7FF9F3
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9737AC433C8;
+	Mon, 11 Sep 2023 13:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440450;
-	bh=cw9IngoCM6TR0OEcqt9Nrl3EMBDOLJEnq2fi10ovQg8=;
+	s=korg; t=1694440453;
+	bh=LMtISV337OFr4YN3ZIeY+rSIlfXikcpzSuXJoBHaE8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLoaomEX7mLafLA8Hv1GX1lHFLEYh4D2L69bCK7KmwxGZMntFiNqT6E7lxPX222nX
-	 8OWx1ehNY4Yo1s4zPCYyhVyOiXBpI2sE4CQeRW7ai5Q5hiRu8MhBKME0ftMwnOYDMV
-	 G+D+dp4UqJehgZID43BRKg0OWgNT4TeLL7q53qtY=
+	b=ksyFP9JW3RdzQpuC5pM7SkeSAG2BwuSDrMgy93Q4oc3dtYILq3JR8OcJ+PxR+lo6P
+	 xiYWO0LDfbgFFjpZH0jZ/6vGsZmaguRvEpaUMo5wSF9wNAeKed2KH3clL3ryw99Z8K
+	 E/MN1C+OkbKqlMKj5Mj46UwSRqVOw3E1f3hWl34A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexander Lobakin <alobakin@pm.me>,
-	Quentin Monnet <quentin@isovalent.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 066/739] bpftool: Define a local bpf_perf_link to fix accessing its fields
-Date: Mon, 11 Sep 2023 15:37:45 +0200
-Message-ID: <20230911134652.950916647@linuxfoundation.org>
+Subject: [PATCH 6.5 049/739] s390/pkey: fix PKEY_TYPE_EP11_AES handling for sysfs attributes
+Date: Mon, 11 Sep 2023 15:37:28 +0200
+Message-ID: <20230911134652.489926170@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,74 +41,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <alobakin@pm.me>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 67a43462ee2405c94e985a747bdcb8e3a0d66203 ]
+[ Upstream commit b9352e4b9b9eff949bcc6907b8569b3a1d992f1e ]
 
-When building bpftool with !CONFIG_PERF_EVENTS:
+Commit 'fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC
+private keys")' introduced a new PKEY_TYPE_EP11_AES securekey type as
+a supplement to the existing PKEY_TYPE_EP11 (which won't work in
+environments with session-bound keys). The pkey EP11 securekey
+attributes use PKEY_TYPE_EP11_AES (instead of PKEY_TYPE_EP11)
+keyblobs, to make the generated keyblobs usable also in environments,
+where session-bound keys are required.
 
-skeleton/pid_iter.bpf.c:47:14: error: incomplete definition of type 'struct bpf_perf_link'
-        perf_link = container_of(link, struct bpf_perf_link, link);
-                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:74:22: note: expanded from macro 'container_of'
-                ((type *)(__mptr - offsetof(type, member)));    \
-                                   ^~~~~~~~~~~~~~~~~~~~~~
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:68:60: note: expanded from macro 'offsetof'
- #define offsetof(TYPE, MEMBER)  ((unsigned long)&((TYPE *)0)->MEMBER)
-                                                  ~~~~~~~~~~~^
-skeleton/pid_iter.bpf.c:44:9: note: forward declaration of 'struct bpf_perf_link'
-        struct bpf_perf_link *perf_link;
-               ^
+There should be no negative impacts to userspace because the internal
+structure of the keyblobs is opaque. The increased size of the
+generated keyblobs is reflected by the changed size of the attributes.
 
-&bpf_perf_link is being defined and used only under the ifdef.
-Define struct bpf_perf_link___local with the `preserve_access_index`
-attribute inside the pid_iter BPF prog to allow compiling on any
-configs. CO-RE will substitute it with the real struct bpf_perf_link
-accesses later on.
-container_of() uses offsetof(), which does the necessary CO-RE
-relocation if the field is specified with `preserve_access_index` - as
-is the case for struct bpf_perf_link___local.
-
-Fixes: cbdaf71f7e65 ("bpftool: Add bpf_cookie to link output")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Alexander Lobakin <alobakin@pm.me>
-Signed-off-by: Quentin Monnet <quentin@isovalent.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230707095425.168126-3-quentin@isovalent.com
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/s390/include/uapi/asm/pkey.h | 2 +-
+ drivers/s390/crypto/pkey_api.c    | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-index e2af8e5fb29ec..3a4c4f7d83d86 100644
---- a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-+++ b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-@@ -15,6 +15,11 @@ enum bpf_obj_type {
- 	BPF_OBJ_BTF,
- };
+diff --git a/arch/s390/include/uapi/asm/pkey.h b/arch/s390/include/uapi/asm/pkey.h
+index 5faf0a1d2c167..5ad76471e73ff 100644
+--- a/arch/s390/include/uapi/asm/pkey.h
++++ b/arch/s390/include/uapi/asm/pkey.h
+@@ -26,7 +26,7 @@
+ #define MAXCLRKEYSIZE	32	   /* a clear key value may be up to 32 bytes */
+ #define MAXAESCIPHERKEYSIZE 136  /* our aes cipher keys have always 136 bytes */
+ #define MINEP11AESKEYBLOBSIZE 256  /* min EP11 AES key blob size  */
+-#define MAXEP11AESKEYBLOBSIZE 320  /* max EP11 AES key blob size */
++#define MAXEP11AESKEYBLOBSIZE 336  /* max EP11 AES key blob size */
  
-+struct bpf_perf_link___local {
-+	struct bpf_link link;
-+	struct file *perf_file;
-+} __attribute__((preserve_access_index));
-+
- struct perf_event___local {
- 	u64 bpf_cookie;
- } __attribute__((preserve_access_index));
-@@ -45,10 +50,10 @@ static __always_inline __u32 get_obj_id(void *ent, enum bpf_obj_type type)
- /* could be used only with BPF_LINK_TYPE_PERF_EVENT links */
- static __u64 get_bpf_cookie(struct bpf_link *link)
- {
-+	struct bpf_perf_link___local *perf_link;
- 	struct perf_event___local *event;
--	struct bpf_perf_link *perf_link;
- 
--	perf_link = container_of(link, struct bpf_perf_link, link);
-+	perf_link = container_of(link, struct bpf_perf_link___local, link);
- 	event = BPF_CORE_READ(perf_link, perf_file, private_data);
- 	return BPF_CORE_READ(event, bpf_cookie);
- }
+ /* Minimum size of a key blob */
+ #define MINKEYBLOBSIZE	SECKEYBLOBSIZE
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 8d6f35ccc561d..396a159afdf5b 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -2142,7 +2142,7 @@ static struct attribute_group ccacipher_attr_group = {
+  * (i.e. off != 0 or count < key blob size) -EINVAL is returned.
+  * This function and the sysfs attributes using it provide EP11 key blobs
+  * padded to the upper limit of MAXEP11AESKEYBLOBSIZE which is currently
+- * 320 bytes.
++ * 336 bytes.
+  */
+ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 				       bool is_xts, char *buf, loff_t off,
+@@ -2171,7 +2171,7 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 		card = apqns[i] >> 16;
+ 		dom = apqns[i] & 0xFFFF;
+ 		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
+-				    PKEY_TYPE_EP11);
++				    PKEY_TYPE_EP11_AES);
+ 		if (rc == 0)
+ 			break;
+ 	}
+@@ -2182,7 +2182,7 @@ static ssize_t pkey_ep11_aes_attr_read(enum pkey_key_size keybits,
+ 		keysize = MAXEP11AESKEYBLOBSIZE;
+ 		buf += MAXEP11AESKEYBLOBSIZE;
+ 		rc = ep11_genaeskey(card, dom, keybits, 0, buf, &keysize,
+-				    PKEY_TYPE_EP11);
++				    PKEY_TYPE_EP11_AES);
+ 		if (rc == 0)
+ 			return 2 * MAXEP11AESKEYBLOBSIZE;
+ 	}
 -- 
 2.40.1
 
