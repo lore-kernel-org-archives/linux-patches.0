@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7797C8472
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E886EC433C7;
-	Mon, 11 Sep 2023 14:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1BB8472
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B107C433C9;
+	Mon, 11 Sep 2023 14:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442877;
-	bh=20tWXWI6zxHXThSa3+lUAepywNheU9V0LrQlnxlP9+I=;
+	s=korg; t=1694442880;
+	bh=5YCjcl9HFmQMyHDUYAT2R2RTAbn1H8w1pPqll9GKypY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bfp/4hRuJEDRGdNutf4f2tbYbGcuEwI4CEN/Na2abGoGiXt+GK+tJyNONP8+/jUKq
-	 69urN52HdN2e5EL6G/wP5eHmBDf8YYFcf8S1DoEMnNeufTu72frspPqI44pAqpJWxh
-	 E2wbr+1sIAs8Ozwi6rvGerTqJlD+nswvylpdcj0c=
+	b=Lj4ys45iZGge44KJ8AKqS7BO39VlMRNB0B61J7l6RRnSfOETw8ruhysCDAF1bIUQH
+	 SDt60SpGqsTFAC2dNvbH/vv1UYQwOJ2OxPdqX7xbJdVPf1hRylk50RDP+mA2wj9htY
+	 W8NID/DQdUu+9WzccFiFNy/2Zh+7C0Z1mQFzwnaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Martin Kaiser <martin@kaiser.cx>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 152/737] hwrng: nomadik - keep clock enabled while hwrng is registered
-Date: Mon, 11 Sep 2023 15:40:11 +0200
-Message-ID: <20230911134654.731656300@linuxfoundation.org>
+Subject: [PATCH 6.4 153/737] hwrng: pic32 - use devm_clk_get_enabled
+Date: Mon, 11 Sep 2023 15:40:12 +0200
+Message-ID: <20230911134654.759425455@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,82 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 039980de89dc9dd757418d6f296e4126cc3f86c3 ]
+[ Upstream commit 6755ad74aac0fb1c79b14724feb81b2f6ff25847 ]
 
-The nomadik driver uses devres to register itself with the hwrng core,
-the driver will be unregistered from hwrng when its device goes out of
-scope. This happens after the driver's remove function is called.
+Use devm_clk_get_enabled in the pic32 driver. Ensure that the clock is
+enabled as long as the driver is registered with the hwrng core.
 
-However, nomadik's clock is disabled in the remove function. There's a
-short timeframe where nomadik is still registered with the hwrng core
-although its clock is disabled. I suppose the clock must be active to
-access the hardware and serve requests from the hwrng core.
-
-Switch to devm_clk_get_enabled and let devres disable the clock and
-unregister the hwrng. This avoids the race condition.
-
-Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
+Fixes: 7ea39973d1e5 ("hwrng: pic32 - Use device-managed registration API")
 Signed-off-by: Martin Kaiser <martin@kaiser.cx>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/nomadik-rng.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/char/hw_random/pic32-rng.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/char/hw_random/nomadik-rng.c b/drivers/char/hw_random/nomadik-rng.c
-index e8f9621e79541..3774adf903a83 100644
---- a/drivers/char/hw_random/nomadik-rng.c
-+++ b/drivers/char/hw_random/nomadik-rng.c
-@@ -13,8 +13,6 @@
- #include <linux/clk.h>
- #include <linux/err.h>
+diff --git a/drivers/char/hw_random/pic32-rng.c b/drivers/char/hw_random/pic32-rng.c
+index 99c8bd0859a14..e04a054e89307 100644
+--- a/drivers/char/hw_random/pic32-rng.c
++++ b/drivers/char/hw_random/pic32-rng.c
+@@ -36,7 +36,6 @@
+ struct pic32_rng {
+ 	void __iomem	*base;
+ 	struct hwrng	rng;
+-	struct clk	*clk;
+ };
  
--static struct clk *rng_clk;
--
- static int nmk_rng_read(struct hwrng *rng, void *data, size_t max, bool wait)
+ /*
+@@ -70,6 +69,7 @@ static int pic32_rng_read(struct hwrng *rng, void *buf, size_t max,
+ static int pic32_rng_probe(struct platform_device *pdev)
  {
- 	void __iomem *base = (void __iomem *)rng->priv;
-@@ -36,21 +34,20 @@ static struct hwrng nmk_rng = {
- 
- static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
- {
-+	struct clk *rng_clk;
- 	void __iomem *base;
+ 	struct pic32_rng *priv;
++	struct clk *clk;
+ 	u32 v;
  	int ret;
  
--	rng_clk = devm_clk_get(&dev->dev, NULL);
-+	rng_clk = devm_clk_get_enabled(&dev->dev, NULL);
- 	if (IS_ERR(rng_clk)) {
- 		dev_err(&dev->dev, "could not get rng clock\n");
- 		ret = PTR_ERR(rng_clk);
- 		return ret;
- 	}
+@@ -81,13 +81,9 @@ static int pic32_rng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->base))
+ 		return PTR_ERR(priv->base);
  
--	clk_prepare_enable(rng_clk);
+-	priv->clk = devm_clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(priv->clk))
+-		return PTR_ERR(priv->clk);
 -
- 	ret = amba_request_regions(dev, dev->dev.init_name);
+-	ret = clk_prepare_enable(priv->clk);
+-	if (ret)
+-		return ret;
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
+ 
+ 	/* enable TRNG in enhanced mode */
+ 	v = TRNGEN | TRNGMOD;
+@@ -98,15 +94,11 @@ static int pic32_rng_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
  	if (ret)
--		goto out_clk;
+-		goto err_register;
 +		return ret;
- 	ret = -ENOMEM;
- 	base = devm_ioremap(&dev->dev, dev->res.start,
- 			    resource_size(&dev->res));
-@@ -64,15 +61,12 @@ static int nmk_rng_probe(struct amba_device *dev, const struct amba_id *id)
  
- out_release:
- 	amba_release_regions(dev);
--out_clk:
--	clk_disable_unprepare(rng_clk);
- 	return ret;
+ 	platform_set_drvdata(pdev, priv);
+ 
+ 	return 0;
+-
+-err_register:
+-	clk_disable_unprepare(priv->clk);
+-	return ret;
  }
  
- static void nmk_rng_remove(struct amba_device *dev)
- {
- 	amba_release_regions(dev);
--	clk_disable_unprepare(rng_clk);
+ static int pic32_rng_remove(struct platform_device *pdev)
+@@ -114,7 +106,6 @@ static int pic32_rng_remove(struct platform_device *pdev)
+ 	struct pic32_rng *rng = platform_get_drvdata(pdev);
+ 
+ 	writel(0, rng->base + RNGCON);
+-	clk_disable_unprepare(rng->clk);
+ 	return 0;
  }
  
- static const struct amba_id nmk_rng_ids[] = {
 -- 
 2.40.1
 
