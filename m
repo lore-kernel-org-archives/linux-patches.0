@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137EF1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EECC433C8;
-	Mon, 11 Sep 2023 14:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E5B1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D83EC433C8;
+	Mon, 11 Sep 2023 14:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441868;
-	bh=2ygl7oXEb6RAByZR6F1Ar0dIi5Z7Ze0rBqxNN3DZnP0=;
+	s=korg; t=1694441871;
+	bh=DxpV1Zb2UOvtun3uLEj190L7BuHXnwW1TEWkjMzs58c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYI1m79blvoiT0OOLMo1Gqtr66Cp8AKOGvfALU5FUoPTu7eqvGUB5znRQuGVnJkND
-	 /5PAao1E5Q4LeRShwemo39bwrXY65I7qQiFQojVMU8TyKMBwt05FDoQ+pB2xE9RQsZ
-	 ZfYz4AMPIRszcGhukrekeIk7DssJQRgJEyxggWpQ=
+	b=ZWI7sR1KFIkrMvldSWkcnRgN6HnpS0aLGs1fmOQM7uml2bf1uwiX3NPWgCKVIjuY7
+	 fd3NwwWYLhb9LgN/QdYS+jUj3/HHMxJBiwZcxMrvo5jBm+Q0Nkey7oN8iIhbuzbKfg
+	 ajnLoVgkFyOMX3RuD9t1XM4gzFwxOeQZeY03iKl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Battersby <tonyb@cybernetics.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 565/739] scsi: core: Use 32-bit hostnum in scsi_host_lookup()
-Date: Mon, 11 Sep 2023 15:46:04 +0200
-Message-ID: <20230911134706.858812979@linuxfoundation.org>
+Subject: [PATCH 6.5 566/739] scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock
+Date: Mon, 11 Sep 2023 15:46:05 +0200
+Message-ID: <20230911134706.885308211@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,59 +41,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 62ec2092095b678ff89ce4ba51c2938cd1e8e630 ]
+[ Upstream commit 1a1975551943f681772720f639ff42fbaa746212 ]
 
-Change scsi_host_lookup() hostnum argument type from unsigned short to
-unsigned int to match the type used everywhere else.
+There is a long call chain that &fip->ctlr_lock is acquired by isr
+fnic_isr_msix_wq_copy() under hard IRQ context. Thus other process context
+code acquiring the lock should disable IRQ, otherwise deadlock could happen
+if the IRQ preempts the execution while the lock is held in process context
+on the same CPU.
 
-Fixes: 6d49f63b415c ("[SCSI] Make host_no an unsigned int")
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://lore.kernel.org/r/a02497e7-c12b-ef15-47fc-3f0a0b00ffce@cybernetics.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+[ISR]
+fnic_isr_msix_wq_copy()
+ -> fnic_wq_copy_cmpl_handler()
+ -> fnic_fcpio_cmpl_handler()
+ -> fnic_fcpio_flogi_reg_cmpl_handler()
+ -> fnic_flush_tx()
+ -> fnic_send_frame()
+ -> fcoe_ctlr_els_send()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+[Process Context]
+1. fcoe_ctlr_timer_work()
+ -> fcoe_ctlr_flogi_send()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+2. fcoe_ctlr_recv_work()
+ -> fcoe_ctlr_recv_handler()
+ -> fcoe_ctlr_recv_els()
+ -> fcoe_ctlr_announce()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+3. fcoe_ctlr_recv_work()
+ -> fcoe_ctlr_recv_handler()
+ -> fcoe_ctlr_recv_els()
+ -> fcoe_ctlr_flogi_retry()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+4. -> fcoe_xmit()
+ -> fcoe_ctlr_els_send()
+ -> spin_lock_bh(&fip->ctlr_lock)
+
+spin_lock_bh() is not enough since fnic_isr_msix_wq_copy() is a
+hardirq.
+
+These flaws were found by an experimental static analysis tool I am
+developing for irq-related deadlock.
+
+The patch fix the potential deadlocks by spin_lock_irqsave() to disable
+hard irq.
+
+Fixes: 794d98e77f59 ("[SCSI] libfcoe: retry rejected FLOGI to another FCF if possible")
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://lore.kernel.org/r/20230817074708.7509-1-dg573847474@gmail.com
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c     | 4 ++--
- include/scsi/scsi_host.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/fcoe/fcoe_ctlr.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index 198edf03f9297..d7f51b84f3c78 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -537,7 +537,7 @@ EXPORT_SYMBOL(scsi_host_alloc);
- static int __scsi_host_match(struct device *dev, const void *data)
+diff --git a/drivers/scsi/fcoe/fcoe_ctlr.c b/drivers/scsi/fcoe/fcoe_ctlr.c
+index 5c8d1ba3f8f3c..19eee108db021 100644
+--- a/drivers/scsi/fcoe/fcoe_ctlr.c
++++ b/drivers/scsi/fcoe/fcoe_ctlr.c
+@@ -319,16 +319,17 @@ static void fcoe_ctlr_announce(struct fcoe_ctlr *fip)
  {
- 	struct Scsi_Host *p;
--	const unsigned short *hostnum = data;
-+	const unsigned int *hostnum = data;
+ 	struct fcoe_fcf *sel;
+ 	struct fcoe_fcf *fcf;
++	unsigned long flags;
  
- 	p = class_to_shost(dev);
- 	return p->host_no == *hostnum;
-@@ -554,7 +554,7 @@ static int __scsi_host_match(struct device *dev, const void *data)
-  *	that scsi_host_get() took. The put_device() below dropped
-  *	the reference from class_find_device().
-  **/
--struct Scsi_Host *scsi_host_lookup(unsigned short hostnum)
-+struct Scsi_Host *scsi_host_lookup(unsigned int hostnum)
+ 	mutex_lock(&fip->ctlr_mutex);
+-	spin_lock_bh(&fip->ctlr_lock);
++	spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 
+ 	kfree_skb(fip->flogi_req);
+ 	fip->flogi_req = NULL;
+ 	list_for_each_entry(fcf, &fip->fcfs, list)
+ 		fcf->flogi_sent = 0;
+ 
+-	spin_unlock_bh(&fip->ctlr_lock);
++	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ 	sel = fip->sel_fcf;
+ 
+ 	if (sel && ether_addr_equal(sel->fcf_mac, fip->dest_addr))
+@@ -699,6 +700,7 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
  {
- 	struct device *cdev;
- 	struct Scsi_Host *shost = NULL;
-diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 70b7475dcf56b..a2b8d30c4c803 100644
---- a/include/scsi/scsi_host.h
-+++ b/include/scsi/scsi_host.h
-@@ -769,7 +769,7 @@ extern void scsi_remove_host(struct Scsi_Host *);
- extern struct Scsi_Host *scsi_host_get(struct Scsi_Host *);
- extern int scsi_host_busy(struct Scsi_Host *shost);
- extern void scsi_host_put(struct Scsi_Host *t);
--extern struct Scsi_Host *scsi_host_lookup(unsigned short);
-+extern struct Scsi_Host *scsi_host_lookup(unsigned int hostnum);
- extern const char *scsi_host_state_name(enum scsi_host_state);
- extern void scsi_host_complete_all_commands(struct Scsi_Host *shost,
- 					    enum scsi_host_status status);
+ 	struct fc_frame *fp;
+ 	struct fc_frame_header *fh;
++	unsigned long flags;
+ 	u16 old_xid;
+ 	u8 op;
+ 	u8 mac[ETH_ALEN];
+@@ -732,11 +734,11 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
+ 		op = FIP_DT_FLOGI;
+ 		if (fip->mode == FIP_MODE_VN2VN)
+ 			break;
+-		spin_lock_bh(&fip->ctlr_lock);
++		spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 		kfree_skb(fip->flogi_req);
+ 		fip->flogi_req = skb;
+ 		fip->flogi_req_send = 1;
+-		spin_unlock_bh(&fip->ctlr_lock);
++		spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ 		schedule_work(&fip->timer_work);
+ 		return -EINPROGRESS;
+ 	case ELS_FDISC:
+@@ -1705,10 +1707,11 @@ static int fcoe_ctlr_flogi_send_locked(struct fcoe_ctlr *fip)
+ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
+ {
+ 	struct fcoe_fcf *fcf;
++	unsigned long flags;
+ 	int error;
+ 
+ 	mutex_lock(&fip->ctlr_mutex);
+-	spin_lock_bh(&fip->ctlr_lock);
++	spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 	LIBFCOE_FIP_DBG(fip, "re-sending FLOGI - reselect\n");
+ 	fcf = fcoe_ctlr_select(fip);
+ 	if (!fcf || fcf->flogi_sent) {
+@@ -1719,7 +1722,7 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
+ 		fcoe_ctlr_solicit(fip, NULL);
+ 		error = fcoe_ctlr_flogi_send_locked(fip);
+ 	}
+-	spin_unlock_bh(&fip->ctlr_lock);
++	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ 	mutex_unlock(&fip->ctlr_mutex);
+ 	return error;
+ }
+@@ -1736,8 +1739,9 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
+ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
+ {
+ 	struct fcoe_fcf *fcf;
++	unsigned long flags;
+ 
+-	spin_lock_bh(&fip->ctlr_lock);
++	spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 	fcf = fip->sel_fcf;
+ 	if (!fcf || !fip->flogi_req_send)
+ 		goto unlock;
+@@ -1764,7 +1768,7 @@ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
+ 	} else /* XXX */
+ 		LIBFCOE_FIP_DBG(fip, "No FCF selected - defer send\n");
+ unlock:
+-	spin_unlock_bh(&fip->ctlr_lock);
++	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
+ }
+ 
+ /**
 -- 
 2.40.1
 
