@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DD0C433C7;
-	Mon, 11 Sep 2023 15:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F1A11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:21:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EADFC433C7;
+	Mon, 11 Sep 2023 15:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445682;
-	bh=DqIqwfHTUuY+lMgxjQs4vaMEGH/P0hy4TfiI/eDVdo8=;
+	s=korg; t=1694445685;
+	bh=V6/IqAMGM2T5I+zfZN1UmP4PNNEbbFZJPyIQhCkacFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVmoRbW5EMFDhnW2vDsG4F+yNgFJLZGzMqhIm2nKRamVpvOibTrHaTWk/4xSR4SPk
-	 gIWNG430Pd73lMVVFq6qrOuoDWKS0K4buvYbvyGDNSOTofonJeglH7cLYoUVIMRgmH
-	 c93udOJWoJM1hAmffT12WRjZpb9BakakPthJCDIo=
+	b=hVwkUf6CHgIQ8OGUj/o1cMFr27xbqsqQ6zTDjKrEG5w2hqluWLat/KHHfJRl7egQe
+	 WgRGZOIR+T+7er/5uqz+UgShoO28OVVk/BT2TAjdKOfwJXH3LBXzw/vvPXalTIEjtz
+	 YbBBF/LsULazIdGwpNnV4IegJMEOnN6AkpAfvew8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 435/600] interconnect: qcom: qcm2290: Enable sync state
-Date: Mon, 11 Sep 2023 15:47:48 +0200
-Message-ID: <20230911134646.496191532@linuxfoundation.org>
+Subject: [PATCH 6.1 436/600] dma-buf/sync_file: Fix docs syntax
+Date: Mon, 11 Sep 2023 15:47:49 +0200
+Message-ID: <20230911134646.523547779@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,38 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 4e048e9b7a160f7112069c0ec2947be15f3e8154 ]
+[ Upstream commit 05d56d8079d510a2994039470f65bea85f0075ee ]
 
-Enable the generic .sync_state callback to ensure there are no
-outstanding votes that would waste power.
+Fixes the warning:
 
-Generally one would need a bunch of interface clocks to access the QoS
-registers when trying to go over all possible nodes during sync_state,
-but QCM2290 surprisingly does not seem to require any such handling.
+  include/uapi/linux/sync_file.h:77: warning: Function parameter or member 'num_fences' not described in 'sync_file_info'
 
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230720-topic-qcm2290_icc-v2-2-a2ceb9d3e713@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 2d75c88fefb2 ("staging/android: refactor SYNC IOCTLs")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20230724145000.125880-1-robdclark@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/qcm2290.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/uapi/linux/sync_file.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index a29cdb4fac03f..82a2698ad66b1 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -1355,6 +1355,7 @@ static struct platform_driver qcm2290_noc_driver = {
- 	.driver = {
- 		.name = "qnoc-qcm2290",
- 		.of_match_table = qcm2290_noc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qcm2290_noc_driver);
+diff --git a/include/uapi/linux/sync_file.h b/include/uapi/linux/sync_file.h
+index ee2dcfb3d6602..d7f7c04a6e0c1 100644
+--- a/include/uapi/linux/sync_file.h
++++ b/include/uapi/linux/sync_file.h
+@@ -52,7 +52,7 @@ struct sync_fence_info {
+  * @name:	name of fence
+  * @status:	status of fence. 1: signaled 0:active <0:error
+  * @flags:	sync_file_info flags
+- * @num_fences	number of fences in the sync_file
++ * @num_fences:	number of fences in the sync_file
+  * @pad:	padding for 64-bit alignment, should always be zero
+  * @sync_fence_info: pointer to array of structs sync_fence_info with all
+  *		 fences in the sync_file
 -- 
 2.40.1
 
