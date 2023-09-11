@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85024C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A892C433C8;
-	Mon, 11 Sep 2023 14:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753F64C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:50:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDE3C433C8;
+	Mon, 11 Sep 2023 14:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443846;
-	bh=dr8C2c8JleVUZd4cXnMecdEpH+nUJZeBamfBIY0tc0k=;
+	s=korg; t=1694443849;
+	bh=P3rAe5h+veRBbPse/pZLZG2g4bZRJpWtPuzSDckYB68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSAraXEN4zoR0jZ/Xsh0B5dVuesvRIW/s3aSuFEaOl/Ue3Fu1DgGYtcxXDImb2/80
-	 Dt4PxoJjIgmjzDxLTjMuUP3/LWLJALKB06UdUR5Qx2iM4IILbUtmSZx2H8uTkmBv49
-	 sWJgvwhuWBiSCtwh6zJ1rwzspYyvxewGzyyw1mC4=
+	b=snb+Nuu3Avg91sWnx8RIebWpH2LEu8hvKIvhvWa9cgF0WAY5fuJ99trmcMauokzvs
+	 65FUokr5GEWzH3F01veay5I5LmP5o4rGKIz4i153MrIEW2wkdIputQvAAcFFstF2/4
+	 ATDgL5YpbEYtjC/djPSL+LxfCtPF8pY2mbZfUjjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 495/737] media: amphion: reinit vpu if reqbufs output 0
-Date: Mon, 11 Sep 2023 15:45:54 +0200
-Message-ID: <20230911134704.402649149@linuxfoundation.org>
+Subject: [PATCH 6.4 496/737] media: amphion: add helper function to get id name
+Date: Mon, 11 Sep 2023 15:45:55 +0200
+Message-ID: <20230911134704.429479334@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,66 +43,236 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit 73e3f09292a0492a3fe0f87a8170a74f12624c5e ]
+[ Upstream commit 12cd8b8ac02525977b2e860a877add10e8ce7468 ]
 
-according to v4l2 stateful decoder document 4.5.1.3. State Machine,
-the state should change from seek to initialization
-if call VIDIOC_REQBUFS(OUTPUT, 0).
+convert numbers into meaningful names,
+then it can improve the log readability
 
-so reinit the vpu decoder if reqbufs output 0
-
-Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
+Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
 Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Tested-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vdec.c     | 2 --
- drivers/media/platform/amphion/vpu_v4l2.c | 7 ++++++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/media/platform/amphion/vdec.c        |  9 +--
+ drivers/media/platform/amphion/vpu.h         |  3 +
+ drivers/media/platform/amphion/vpu_cmds.c    | 11 ++--
+ drivers/media/platform/amphion/vpu_dbg.c     |  6 +-
+ drivers/media/platform/amphion/vpu_helpers.c | 61 ++++++++++++++++++++
+ drivers/media/platform/amphion/vpu_msgs.c    |  2 +-
+ 6 files changed, 79 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
-index 6515f3cdb7a74..56c4deea4494d 100644
+index 56c4deea4494d..60f3a73c6a8ad 100644
 --- a/drivers/media/platform/amphion/vdec.c
 +++ b/drivers/media/platform/amphion/vdec.c
-@@ -1453,9 +1453,7 @@ static void vdec_release(struct vpu_inst *inst)
- {
- 	if (inst->id != VPU_INST_NULL_ID)
- 		vpu_trace(inst->dev, "[%d]\n", inst->id);
--	vpu_inst_lock(inst);
- 	vdec_stop(inst, true);
--	vpu_inst_unlock(inst);
- }
+@@ -299,7 +299,8 @@ static int vdec_update_state(struct vpu_inst *inst, enum vpu_codec_state state,
+ 		vdec->state = VPU_CODEC_STATE_DYAMIC_RESOLUTION_CHANGE;
  
- static void vdec_cleanup(struct vpu_inst *inst)
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index 810e93d2c954a..8c9028df3bf42 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -489,6 +489,11 @@ static int vpu_vb2_queue_setup(struct vb2_queue *vq,
- 	for (i = 0; i < cur_fmt->mem_planes; i++)
- 		psize[i] = vpu_get_fmt_plane_size(cur_fmt, i);
+ 	if (inst->state != pre_state)
+-		vpu_trace(inst->dev, "[%d] %d -> %d\n", inst->id, pre_state, inst->state);
++		vpu_trace(inst->dev, "[%d] %s -> %s\n", inst->id,
++			  vpu_codec_state_name(pre_state), vpu_codec_state_name(inst->state));
  
-+	if (V4L2_TYPE_IS_OUTPUT(vq->type) && inst->state == VPU_CODEC_STATE_SEEK) {
-+		vpu_trace(inst->dev, "reinit when VIDIOC_REQBUFS(OUTPUT, 0)\n");
-+		call_void_vop(inst, release);
-+	}
-+
- 	return 0;
- }
- 
-@@ -773,9 +778,9 @@ int vpu_v4l2_close(struct file *file)
- 		v4l2_m2m_ctx_release(inst->fh.m2m_ctx);
- 		inst->fh.m2m_ctx = NULL;
+ 	if (inst->state == VPU_CODEC_STATE_DYAMIC_RESOLUTION_CHANGE)
+ 		vdec_handle_resolution_change(inst);
+@@ -1037,8 +1038,8 @@ static int vdec_response_frame(struct vpu_inst *inst, struct vb2_v4l2_buffer *vb
+ 		return -EINVAL;
  	}
-+	call_void_vop(inst, release);
- 	vpu_inst_unlock(inst);
  
--	call_void_vop(inst, release);
- 	vpu_inst_unregister(inst);
- 	vpu_inst_put(inst);
+-	dev_dbg(inst->dev, "[%d] state = %d, alloc fs %d, tag = 0x%x\n",
+-		inst->id, inst->state, vbuf->vb2_buf.index, vdec->seq_tag);
++	dev_dbg(inst->dev, "[%d] state = %s, alloc fs %d, tag = 0x%x\n",
++		inst->id, vpu_codec_state_name(inst->state), vbuf->vb2_buf.index, vdec->seq_tag);
+ 	vpu_buf = to_vpu_vb2_buffer(vbuf);
  
+ 	memset(&info, 0, sizeof(info));
+@@ -1400,7 +1401,7 @@ static void vdec_abort(struct vpu_inst *inst)
+ 	struct vpu_rpc_buffer_desc desc;
+ 	int ret;
+ 
+-	vpu_trace(inst->dev, "[%d] state = %d\n", inst->id, inst->state);
++	vpu_trace(inst->dev, "[%d] state = %s\n", inst->id, vpu_codec_state_name(inst->state));
+ 
+ 	vdec->aborting = true;
+ 	vpu_iface_add_scode(inst, SCODE_PADDING_ABORT);
+diff --git a/drivers/media/platform/amphion/vpu.h b/drivers/media/platform/amphion/vpu.h
+index 3bfe193722af4..5a701f64289ef 100644
+--- a/drivers/media/platform/amphion/vpu.h
++++ b/drivers/media/platform/amphion/vpu.h
+@@ -355,6 +355,9 @@ void vpu_inst_record_flow(struct vpu_inst *inst, u32 flow);
+ int vpu_core_driver_init(void);
+ void vpu_core_driver_exit(void);
+ 
++const char *vpu_id_name(u32 id);
++const char *vpu_codec_state_name(enum vpu_codec_state state);
++
+ extern bool debug;
+ #define vpu_trace(dev, fmt, arg...)					\
+ 	do {								\
+diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
+index fa581ba6bab2d..647d94554fb5d 100644
+--- a/drivers/media/platform/amphion/vpu_cmds.c
++++ b/drivers/media/platform/amphion/vpu_cmds.c
+@@ -98,7 +98,7 @@ static struct vpu_cmd_t *vpu_alloc_cmd(struct vpu_inst *inst, u32 id, void *data
+ 	cmd->id = id;
+ 	ret = vpu_iface_pack_cmd(inst->core, cmd->pkt, inst->id, id, data);
+ 	if (ret) {
+-		dev_err(inst->dev, "iface pack cmd(%d) fail\n", id);
++		dev_err(inst->dev, "iface pack cmd %s fail\n", vpu_id_name(id));
+ 		vfree(cmd->pkt);
+ 		vfree(cmd);
+ 		return NULL;
+@@ -125,14 +125,14 @@ static int vpu_session_process_cmd(struct vpu_inst *inst, struct vpu_cmd_t *cmd)
+ {
+ 	int ret;
+ 
+-	dev_dbg(inst->dev, "[%d]send cmd(0x%x)\n", inst->id, cmd->id);
++	dev_dbg(inst->dev, "[%d]send cmd %s\n", inst->id, vpu_id_name(cmd->id));
+ 	vpu_iface_pre_send_cmd(inst);
+ 	ret = vpu_cmd_send(inst->core, cmd->pkt);
+ 	if (!ret) {
+ 		vpu_iface_post_send_cmd(inst);
+ 		vpu_inst_record_flow(inst, cmd->id);
+ 	} else {
+-		dev_err(inst->dev, "[%d] iface send cmd(0x%x) fail\n", inst->id, cmd->id);
++		dev_err(inst->dev, "[%d] iface send cmd %s fail\n", inst->id, vpu_id_name(cmd->id));
+ 	}
+ 
+ 	return ret;
+@@ -149,7 +149,8 @@ static void vpu_process_cmd_request(struct vpu_inst *inst)
+ 	list_for_each_entry_safe(cmd, tmp, &inst->cmd_q, list) {
+ 		list_del_init(&cmd->list);
+ 		if (vpu_session_process_cmd(inst, cmd))
+-			dev_err(inst->dev, "[%d] process cmd(%d) fail\n", inst->id, cmd->id);
++			dev_err(inst->dev, "[%d] process cmd %s fail\n",
++				inst->id, vpu_id_name(cmd->id));
+ 		if (cmd->request) {
+ 			inst->pending = (void *)cmd;
+ 			break;
+@@ -339,7 +340,7 @@ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
+ 
+ exit:
+ 	if (ret)
+-		dev_err(inst->dev, "[%d] send cmd(0x%x) fail\n", inst->id, id);
++		dev_err(inst->dev, "[%d] send cmd %s fail\n", inst->id, vpu_id_name(id));
+ 
+ 	return ret;
+ }
+diff --git a/drivers/media/platform/amphion/vpu_dbg.c b/drivers/media/platform/amphion/vpu_dbg.c
+index 44b830ae01d8c..adc523b950618 100644
+--- a/drivers/media/platform/amphion/vpu_dbg.c
++++ b/drivers/media/platform/amphion/vpu_dbg.c
+@@ -67,7 +67,7 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
+ 	num = scnprintf(str, sizeof(str), "tgig = %d,pid = %d\n", inst->tgid, inst->pid);
+ 	if (seq_write(s, str, num))
+ 		return 0;
+-	num = scnprintf(str, sizeof(str), "state = %d\n", inst->state);
++	num = scnprintf(str, sizeof(str), "state = %s\n", vpu_codec_state_name(inst->state));
+ 	if (seq_write(s, str, num))
+ 		return 0;
+ 	num = scnprintf(str, sizeof(str),
+@@ -188,9 +188,9 @@ static int vpu_dbg_instance(struct seq_file *s, void *data)
+ 
+ 		if (!inst->flows[idx])
+ 			continue;
+-		num = scnprintf(str, sizeof(str), "\t[%s]0x%x\n",
++		num = scnprintf(str, sizeof(str), "\t[%s] %s\n",
+ 				inst->flows[idx] >= VPU_MSG_ID_NOOP ? "M" : "C",
+-				inst->flows[idx]);
++				vpu_id_name(inst->flows[idx]));
+ 		if (seq_write(s, str, num)) {
+ 			mutex_unlock(&inst->core->cmd_lock);
+ 			return 0;
+diff --git a/drivers/media/platform/amphion/vpu_helpers.c b/drivers/media/platform/amphion/vpu_helpers.c
+index 019c77e84514c..af3b336e5dc32 100644
+--- a/drivers/media/platform/amphion/vpu_helpers.c
++++ b/drivers/media/platform/amphion/vpu_helpers.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include "vpu.h"
++#include "vpu_defs.h"
+ #include "vpu_core.h"
+ #include "vpu_rpc.h"
+ #include "vpu_helpers.h"
+@@ -447,3 +448,63 @@ int vpu_find_src_by_dst(struct vpu_pair *pairs, u32 cnt, u32 dst)
+ 
+ 	return -EINVAL;
+ }
++
++const char *vpu_id_name(u32 id)
++{
++	switch (id) {
++	case VPU_CMD_ID_NOOP: return "noop";
++	case VPU_CMD_ID_CONFIGURE_CODEC: return "configure codec";
++	case VPU_CMD_ID_START: return "start";
++	case VPU_CMD_ID_STOP: return "stop";
++	case VPU_CMD_ID_ABORT: return "abort";
++	case VPU_CMD_ID_RST_BUF: return "reset buf";
++	case VPU_CMD_ID_SNAPSHOT: return "snapshot";
++	case VPU_CMD_ID_FIRM_RESET: return "reset firmware";
++	case VPU_CMD_ID_UPDATE_PARAMETER: return "update parameter";
++	case VPU_CMD_ID_FRAME_ENCODE: return "encode frame";
++	case VPU_CMD_ID_SKIP: return "skip";
++	case VPU_CMD_ID_FS_ALLOC: return "alloc fb";
++	case VPU_CMD_ID_FS_RELEASE: return "release fb";
++	case VPU_CMD_ID_TIMESTAMP: return "timestamp";
++	case VPU_CMD_ID_DEBUG: return "debug";
++	case VPU_MSG_ID_RESET_DONE: return "reset done";
++	case VPU_MSG_ID_START_DONE: return "start done";
++	case VPU_MSG_ID_STOP_DONE: return "stop done";
++	case VPU_MSG_ID_ABORT_DONE: return "abort done";
++	case VPU_MSG_ID_BUF_RST: return "buf reset done";
++	case VPU_MSG_ID_MEM_REQUEST: return "mem request";
++	case VPU_MSG_ID_PARAM_UPD_DONE: return "param upd done";
++	case VPU_MSG_ID_FRAME_INPUT_DONE: return "frame input done";
++	case VPU_MSG_ID_ENC_DONE: return "encode done";
++	case VPU_MSG_ID_DEC_DONE: return "frame display";
++	case VPU_MSG_ID_FRAME_REQ: return "fb request";
++	case VPU_MSG_ID_FRAME_RELEASE: return "fb release";
++	case VPU_MSG_ID_SEQ_HDR_FOUND: return "seq hdr found";
++	case VPU_MSG_ID_RES_CHANGE: return "resolution change";
++	case VPU_MSG_ID_PIC_HDR_FOUND: return "pic hdr found";
++	case VPU_MSG_ID_PIC_DECODED: return "picture decoded";
++	case VPU_MSG_ID_PIC_EOS: return "eos";
++	case VPU_MSG_ID_FIFO_LOW: return "fifo low";
++	case VPU_MSG_ID_BS_ERROR: return "bs error";
++	case VPU_MSG_ID_UNSUPPORTED: return "unsupported";
++	case VPU_MSG_ID_FIRMWARE_XCPT: return "exception";
++	case VPU_MSG_ID_PIC_SKIPPED: return "skipped";
++	}
++	return "<unknown>";
++}
++
++const char *vpu_codec_state_name(enum vpu_codec_state state)
++{
++	switch (state) {
++	case VPU_CODEC_STATE_DEINIT: return "initialization";
++	case VPU_CODEC_STATE_CONFIGURED: return "configured";
++	case VPU_CODEC_STATE_START: return "start";
++	case VPU_CODEC_STATE_STARTED: return "started";
++	case VPU_CODEC_STATE_ACTIVE: return "active";
++	case VPU_CODEC_STATE_SEEK: return "seek";
++	case VPU_CODEC_STATE_STOP: return "stop";
++	case VPU_CODEC_STATE_DRAIN: return "drain";
++	case VPU_CODEC_STATE_DYAMIC_RESOLUTION_CHANGE: return "resolution change";
++	}
++	return "<unknown>";
++}
+diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
+index 92672a802b492..f9eb488d1b5e2 100644
+--- a/drivers/media/platform/amphion/vpu_msgs.c
++++ b/drivers/media/platform/amphion/vpu_msgs.c
+@@ -210,7 +210,7 @@ static int vpu_session_handle_msg(struct vpu_inst *inst, struct vpu_rpc_event *m
+ 		return -EINVAL;
+ 
+ 	msg_id = ret;
+-	dev_dbg(inst->dev, "[%d] receive event(0x%x)\n", inst->id, msg_id);
++	dev_dbg(inst->dev, "[%d] receive event(%s)\n", inst->id, vpu_id_name(msg_id));
+ 
+ 	for (i = 0; i < ARRAY_SIZE(handlers); i++) {
+ 		if (handlers[i].id == msg_id) {
 -- 
 2.40.1
 
