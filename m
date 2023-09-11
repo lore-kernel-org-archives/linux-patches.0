@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35641170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2345CC433C7;
-	Mon, 11 Sep 2023 14:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718381170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D6AC433C7;
+	Mon, 11 Sep 2023 14:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442291;
-	bh=dB8fWRTGrGUkudCpmeqDTB/B8g0n3raoqZpYdR/Ei6s=;
+	s=korg; t=1694442294;
+	bh=frl/p3tOpteIvwr/V9ZrKQ+8c1icHAdKwnFP5ijGTuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKC7o9xjKaUx4NRhBbl3XIzulpOj4lal3AUDWl78XbeltWDES8u9rsu7P1w7USYg5
-	 4BS8y/jRLlOCFB0wvWVieDeg+BjejGW1oobqnzWYgbKMhJWKRmwfvcsjBtlz8TFjc9
-	 AiGeCUAgjmQQ4qZ0lSr6cwIkk04GyBNJGBUZMb58=
+	b=P2E/shmUWOzFUuUd/Bgt6Il+XFIoX7WEKxYAh5cSHWqdO0r+pVyP+46YwxlXZUcZd
+	 QdWNr5+X2voZR5TmzPZw7C6sNuRAxeBqdtokSfvQ579uKWjCkMSQkFTq/UxGx59Z2e
+	 PSE2HrG7chd4GNvG83bmu4wVR+Qg/8vRBsRG9f38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.5 714/739] RISC-V: Add ptrace support for vectors
-Date: Mon, 11 Sep 2023 15:48:33 +0200
-Message-ID: <20230911134711.022846164@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Subject: [PATCH 6.5 715/739] s390/dcssblk: fix kernel crash with list_add corruption
+Date: Mon, 11 Sep 2023 15:48:34 +0200
+Message-ID: <20230911134711.056986504@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,178 +39,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Chiu <andy.chiu@sifive.com>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-commit 9300f00439743c4a34d735e1a27118eb68a1504e upstream.
+commit c8f40a0bccefd613748d080147469a4652d6e74c upstream.
 
-This patch add back the ptrace support with the following fix:
- - Define NT_RISCV_CSR and re-number NT_RISCV_VECTOR to prevent
-   conflicting with gdb's NT_RISCV_CSR.
- - Use struct __riscv_v_regset_state to handle ptrace requests
+Commit fb08a1908cb1 ("dax: simplify the dax_device <-> gendisk
+association") introduced new logic for gendisk association, requiring
+drivers to explicitly call dax_add_host() and dax_remove_host().
 
-Since gdb does not directly include the note description header in
-Linux and has already defined NT_RISCV_CSR as 0x900, we decide to
-sync with gdb and renumber NT_RISCV_VECTOR to solve and prevent future
-conflicts.
+For dcssblk driver, some dax_remove_host() calls were missing, e.g. in
+device remove path. The commit also broke error handling for out_dax case
+in device add path, resulting in an extra put_device() w/o the previous
+get_device() in that case.
 
-Fixes: 0c59922c769a ("riscv: Add ptrace vector support")
-Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
-Link: https://lore.kernel.org/r/20230825050248.32681-1-andy.chiu@sifive.com
-[Palmer: Drop the unused "size" variable in riscv_vr_set().]
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+This lead to stale xarray entries after device add / remove cycles. In the
+case when a previously used struct gendisk pointer (xarray index) would be
+used again, because blk_alloc_disk() happened to return such a pointer, the
+xa_insert() in dax_add_host() would fail and go to out_dax, doing the extra
+put_device() in the error path. In combination with an already flawed error
+handling in dcssblk (device_register() cleanup), which needs to be
+addressed in a separate patch, this resulted in a missing device_del() /
+klist_del(), and eventually in the kernel crash with list_add corruption on
+a subsequent device_add() / klist_add().
+
+Fix this by adding the missing dax_remove_host() calls, and also move the
+put_device() in the error path to restore the previous logic.
+
+Fixes: fb08a1908cb1 ("dax: simplify the dax_device <-> gendisk association")
+Cc: <stable@vger.kernel.org> # 5.17+
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/uapi/asm/ptrace.h | 13 +++--
- arch/riscv/kernel/ptrace.c           | 79 ++++++++++++++++++++++++++++
- include/uapi/linux/elf.h             |  2 +
- 3 files changed, 90 insertions(+), 4 deletions(-)
+ drivers/s390/block/dcssblk.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/uapi/asm/ptrace.h b/arch/riscv/include/uapi/asm/ptrace.h
-index 283800130614..575e95bb1bc3 100644
---- a/arch/riscv/include/uapi/asm/ptrace.h
-+++ b/arch/riscv/include/uapi/asm/ptrace.h
-@@ -103,13 +103,18 @@ struct __riscv_v_ext_state {
- 	 * In signal handler, datap will be set a correct user stack offset
- 	 * and vector registers will be copied to the address of datap
- 	 * pointer.
--	 *
--	 * In ptrace syscall, datap will be set to zero and the vector
--	 * registers will be copied to the address right after this
--	 * structure.
- 	 */
- };
+--- a/drivers/s390/block/dcssblk.c
++++ b/drivers/s390/block/dcssblk.c
+@@ -412,6 +412,7 @@ removeseg:
+ 	}
+ 	list_del(&dev_info->lh);
  
-+struct __riscv_v_regset_state {
-+	unsigned long vstart;
-+	unsigned long vl;
-+	unsigned long vtype;
-+	unsigned long vcsr;
-+	unsigned long vlenb;
-+	char vreg[];
-+};
-+
- /*
-  * According to spec: The number of bits in a single vector register,
-  * VLEN >= ELEN, which must be a power of 2, and must be no greater than
-diff --git a/arch/riscv/kernel/ptrace.c b/arch/riscv/kernel/ptrace.c
-index 487303e3ef22..2afe460de16a 100644
---- a/arch/riscv/kernel/ptrace.c
-+++ b/arch/riscv/kernel/ptrace.c
-@@ -25,6 +25,9 @@ enum riscv_regset {
- #ifdef CONFIG_FPU
- 	REGSET_F,
- #endif
-+#ifdef CONFIG_RISCV_ISA_V
-+	REGSET_V,
-+#endif
- };
++	dax_remove_host(dev_info->gd);
+ 	kill_dax(dev_info->dax_dev);
+ 	put_dax(dev_info->dax_dev);
+ 	del_gendisk(dev_info->gd);
+@@ -707,9 +708,9 @@ dcssblk_add_store(struct device *dev, st
+ 	goto out;
  
- static int riscv_gpr_get(struct task_struct *target,
-@@ -81,6 +84,71 @@ static int riscv_fpr_set(struct task_struct *target,
- }
- #endif
+ out_dax_host:
++	put_device(&dev_info->dev);
+ 	dax_remove_host(dev_info->gd);
+ out_dax:
+-	put_device(&dev_info->dev);
+ 	kill_dax(dev_info->dax_dev);
+ 	put_dax(dev_info->dax_dev);
+ put_dev:
+@@ -789,6 +790,7 @@ dcssblk_remove_store(struct device *dev,
+ 	}
  
-+#ifdef CONFIG_RISCV_ISA_V
-+static int riscv_vr_get(struct task_struct *target,
-+			const struct user_regset *regset,
-+			struct membuf to)
-+{
-+	struct __riscv_v_ext_state *vstate = &target->thread.vstate;
-+	struct __riscv_v_regset_state ptrace_vstate;
-+
-+	if (!riscv_v_vstate_query(task_pt_regs(target)))
-+		return -EINVAL;
-+
-+	/*
-+	 * Ensure the vector registers have been saved to the memory before
-+	 * copying them to membuf.
-+	 */
-+	if (target == current)
-+		riscv_v_vstate_save(current, task_pt_regs(current));
-+
-+	ptrace_vstate.vstart = vstate->vstart;
-+	ptrace_vstate.vl = vstate->vl;
-+	ptrace_vstate.vtype = vstate->vtype;
-+	ptrace_vstate.vcsr = vstate->vcsr;
-+	ptrace_vstate.vlenb = vstate->vlenb;
-+
-+	/* Copy vector header from vstate. */
-+	membuf_write(&to, &ptrace_vstate, sizeof(struct __riscv_v_regset_state));
-+
-+	/* Copy all the vector registers from vstate. */
-+	return membuf_write(&to, vstate->datap, riscv_v_vsize);
-+}
-+
-+static int riscv_vr_set(struct task_struct *target,
-+			const struct user_regset *regset,
-+			unsigned int pos, unsigned int count,
-+			const void *kbuf, const void __user *ubuf)
-+{
-+	int ret;
-+	struct __riscv_v_ext_state *vstate = &target->thread.vstate;
-+	struct __riscv_v_regset_state ptrace_vstate;
-+
-+	if (!riscv_v_vstate_query(task_pt_regs(target)))
-+		return -EINVAL;
-+
-+	/* Copy rest of the vstate except datap */
-+	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ptrace_vstate, 0,
-+				 sizeof(struct __riscv_v_regset_state));
-+	if (unlikely(ret))
-+		return ret;
-+
-+	if (vstate->vlenb != ptrace_vstate.vlenb)
-+		return -EINVAL;
-+
-+	vstate->vstart = ptrace_vstate.vstart;
-+	vstate->vl = ptrace_vstate.vl;
-+	vstate->vtype = ptrace_vstate.vtype;
-+	vstate->vcsr = ptrace_vstate.vcsr;
-+
-+	/* Copy all the vector registers. */
-+	pos = 0;
-+	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, vstate->datap,
-+				 0, riscv_v_vsize);
-+	return ret;
-+}
-+#endif
-+
- static const struct user_regset riscv_user_regset[] = {
- 	[REGSET_X] = {
- 		.core_note_type = NT_PRSTATUS,
-@@ -100,6 +168,17 @@ static const struct user_regset riscv_user_regset[] = {
- 		.set = riscv_fpr_set,
- 	},
- #endif
-+#ifdef CONFIG_RISCV_ISA_V
-+	[REGSET_V] = {
-+		.core_note_type = NT_RISCV_VECTOR,
-+		.align = 16,
-+		.n = ((32 * RISCV_MAX_VLENB) +
-+		      sizeof(struct __riscv_v_regset_state)) / sizeof(__u32),
-+		.size = sizeof(__u32),
-+		.regset_get = riscv_vr_get,
-+		.set = riscv_vr_set,
-+	},
-+#endif
- };
- 
- static const struct user_regset_view riscv_user_native_view = {
-diff --git a/include/uapi/linux/elf.h b/include/uapi/linux/elf.h
-index e0e159138331..20e285fdbc46 100644
---- a/include/uapi/linux/elf.h
-+++ b/include/uapi/linux/elf.h
-@@ -443,6 +443,8 @@ typedef struct elf64_shdr {
- #define NT_MIPS_DSP	0x800		/* MIPS DSP ASE registers */
- #define NT_MIPS_FP_MODE	0x801		/* MIPS floating-point mode */
- #define NT_MIPS_MSA	0x802		/* MIPS SIMD registers */
-+#define NT_RISCV_CSR	0x900		/* RISC-V Control and Status Registers */
-+#define NT_RISCV_VECTOR	0x901		/* RISC-V vector registers */
- #define NT_LOONGARCH_CPUCFG	0xa00	/* LoongArch CPU config registers */
- #define NT_LOONGARCH_CSR	0xa01	/* LoongArch control and status registers */
- #define NT_LOONGARCH_LSX	0xa02	/* LoongArch Loongson SIMD Extension registers */
--- 
-2.42.0
-
+ 	list_del(&dev_info->lh);
++	dax_remove_host(dev_info->gd);
+ 	kill_dax(dev_info->dax_dev);
+ 	put_dax(dev_info->dax_dev);
+ 	del_gendisk(dev_info->gd);
 
 
