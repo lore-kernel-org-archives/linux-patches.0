@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883DFF9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D060BC433C8;
-	Mon, 11 Sep 2023 15:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C33F9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:05:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57F0C433C8;
+	Mon, 11 Sep 2023 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444702;
-	bh=MANyaW5yfqYbm3mmACfEe//Xs06xOCs7FU8tkfuhkJc=;
+	s=korg; t=1694444705;
+	bh=Eke6vzY+4rv3Xy5ZQ8sgEBGPJaRRvS9QwFVpXs9ynYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pikci2Ii+lyzo6i27N6IUQbBA+C84M2CzO1gOLz2N4G09dgfrf8oQ59uk9WUlkUqw
-	 QU6XZTinzQu+nABybEMyk+GS9BTgpmFfhm+MhGAyMNOKrQYv3vQ+F5O/IHALNaKhYP
-	 BdlmPHkavD6l/xt4S12q2qZjXL1hm1rjcnmTgq34=
+	b=mR1j40N6Mo/GBUimiWdSGuTRNfX86PhlDozup+mk7Y0A2Yn6Mnb6N0jVvXLHuuIOs
+	 qjBChOPcqdJjyQitFKq3pQTfGhs1KS/xnada9elSfQazJqs5Ro3+WPgcnEkUraGY8D
+	 9aLQdRb2h9IiM1q0UeNCqkpV6LcFDE/2zP9kOAlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/600] powerpc/powermac: Use early_* IO variants in via_calibrate_decr()
-Date: Mon, 11 Sep 2023 15:41:28 +0200
-Message-ID: <20230911134635.246232708@linuxfoundation.org>
+Subject: [PATCH 6.1 056/600] idmaengine: make FSL_EDMA and INTEL_IDMA64 depends on HAS_IOMEM
+Date: Mon, 11 Sep 2023 15:41:29 +0200
+Message-ID: <20230911134635.279688322@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,67 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit 86582e6189dd8f9f52c25d46c70fe5d111da6345 ]
+[ Upstream commit b1e213a9e31c20206f111ec664afcf31cbfe0dbb ]
 
-On a powermac platform, via the call path:
+On s390 systems (aka mainframes), it has classic channel devices for
+networking and permanent storage that are currently even more common
+than PCI devices. Hence it could have a fully functional s390 kernel
+with CONFIG_PCI=n, then the relevant iomem mapping functions
+[including ioremap(), devm_ioremap(), etc.] are not available.
 
-  start_kernel()
-    time_init()
-      ppc_md.calibrate_decr() (pmac_calibrate_decr)
-        via_calibrate_decr()
+Here let FSL_EDMA and INTEL_IDMA64 depend on HAS_IOMEM so that it
+won't be built to cause below compiling error if PCI is unset.
 
-ioremap() and iounmap() are called. The unmap can enable interrupts
-unexpectedly (cond_resched() in vunmap_pmd_range()), which causes a
-warning later in the boot sequence in start_kernel().
+--------
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/idma64.ko] undefined!
+--------
 
-Use the early_* variants of these IO functions to prevent this.
-
-The issue is pre-existing, but is surfaced by commit 721255b9826b
-("genirq: Use a maple tree for interrupt descriptor management").
-
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230706010816.72682-1-bgray@linux.ibm.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306211329.ticOJCSv-lkp@intel.com/
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Link: https://lore.kernel.org/r/20230707135852.24292-2-bhe@redhat.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powermac/time.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/platforms/powermac/time.c b/arch/powerpc/platforms/powermac/time.c
-index 4c5790aff1b54..8633891b7aa58 100644
---- a/arch/powerpc/platforms/powermac/time.c
-+++ b/arch/powerpc/platforms/powermac/time.c
-@@ -26,8 +26,8 @@
- #include <linux/rtc.h>
- #include <linux/of_address.h>
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index b64ae02c26f8c..81de833ccd041 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -210,6 +210,7 @@ config FSL_DMA
+ config FSL_EDMA
+ 	tristate "Freescale eDMA engine support"
+ 	depends on OF
++	depends on HAS_IOMEM
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
+ 	help
+@@ -279,6 +280,7 @@ config IMX_SDMA
  
-+#include <asm/early_ioremap.h>
- #include <asm/sections.h>
--#include <asm/io.h>
- #include <asm/machdep.h>
- #include <asm/time.h>
- #include <asm/nvram.h>
-@@ -182,7 +182,7 @@ static int __init via_calibrate_decr(void)
- 		return 0;
- 	}
- 	of_node_put(vias);
--	via = ioremap(rsrc.start, resource_size(&rsrc));
-+	via = early_ioremap(rsrc.start, resource_size(&rsrc));
- 	if (via == NULL) {
- 		printk(KERN_ERR "Failed to map VIA for timer calibration !\n");
- 		return 0;
-@@ -207,7 +207,7 @@ static int __init via_calibrate_decr(void)
- 
- 	ppc_tb_freq = (dstart - dend) * 100 / 6;
- 
--	iounmap(via);
-+	early_iounmap((void *)via, resource_size(&rsrc));
- 
- 	return 1;
- }
+ config INTEL_IDMA64
+ 	tristate "Intel integrated DMA 64-bit support"
++	depends on HAS_IOMEM
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
+ 	help
 -- 
 2.40.1
 
