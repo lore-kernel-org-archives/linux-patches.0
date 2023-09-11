@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE85F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3559AC433CD;
-	Mon, 11 Sep 2023 15:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59BFF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0223FC433C8;
+	Mon, 11 Sep 2023 15:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445589;
-	bh=lE/Z8szWwnvmmEpjil8VmyOA0C0m9AxcSBZRtkXGGhM=;
+	s=korg; t=1694445592;
+	bh=QdJQL/9DPFT/h3TPHn2ZE3IiDh/BU23BNvrrpnjomYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFPlZGqohJDIOIL8J3+d1UOSVcvfkQeMYBf/3g+/558Gol78gPOisR3uUIadtklzR
-	 6+LxXj0P1TENDpoHpLdRJUgZD8K4EnOtp8p7o2BZ2D+IOs+WfbPJh7S68ifWp3STj6
-	 9OqPhNq84wHUO2D0cU3apnCtT2usmBngHR3vv78Q=
+	b=alr128qZZmpQRZ24hAE9PvFi+X5VaWLKXfJROpoOpB3zzCJ7VifOPFjmAGlzHqgjt
+	 dh26m35GbQfaT9p4fBm9YQYXEiaEGMNo5SrNZElQgXFSG9k1TTXpRA7dDV5Si+o3EN
+	 aj9lH98aXtlZSWHRAjMnX1KXmCeoGHtMj4zQfhk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Xingui Yang <yangxingui@huawei.com>,
 	Xiang Chen <chenxiang66@hisilicon.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 402/600] scsi: hisi_sas: Fix warnings detected by sparse
-Date: Mon, 11 Sep 2023 15:47:15 +0200
-Message-ID: <20230911134645.542159385@linuxfoundation.org>
+Subject: [PATCH 6.1 403/600] scsi: hisi_sas: Fix normally completed I/O analysed as failed
+Date: Mon, 11 Sep 2023 15:47:16 +0200
+Message-ID: <20230911134645.572179375@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -44,56 +43,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit c0328cc595124579328462fc45d7a29a084cf357 ]
+[ Upstream commit f5393a5602cacfda2014e0ff8220e5a7564e7cd1 ]
 
-This patch fixes the following warning:
+The PIO read command has no response frame and the struct iu[1024] won't be
+filled. I/Os which are normally completed will be treated as failed in
+sas_ata_task_done() when iu contains abnormal dirty data.
 
-drivers/scsi/hisi_sas/hisi_sas_v3_hw.c:2168:43: sparse: sparse: restricted __le32 degrades to integer
+Consequently ending_fis should not be filled by iu when the response frame
+hasn't been written to memory.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304161254.NztCVZIO-lkp@intel.com/
+Fixes: d380f55503ed ("scsi: hisi_sas: Don't bother clearing status buffer IU in task prep")
 Signed-off-by: Xingui Yang <yangxingui@huawei.com>
 Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1684118481-95908-4-git-send-email-chenxiang66@hisilicon.com
+Link: https://lore.kernel.org/r/1689045300-44318-2-git-send-email-chenxiang66@hisilicon.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: f5393a5602ca ("scsi: hisi_sas: Fix normally completed I/O analysed as failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 11 +++++++++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  6 ++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index 02575d81afca2..50697672146ad 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2026,6 +2026,11 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
+ 	u16 dma_tx_err_type = le16_to_cpu(err_record->dma_tx_err_type);
+ 	u16 sipc_rx_err_type = le16_to_cpu(err_record->sipc_rx_err_type);
+ 	u32 dma_rx_err_type = le32_to_cpu(err_record->dma_rx_err_type);
++	struct hisi_sas_complete_v2_hdr *complete_queue =
++			hisi_hba->complete_hdr[slot->cmplt_queue];
++	struct hisi_sas_complete_v2_hdr *complete_hdr =
++			&complete_queue[slot->cmplt_queue_slot];
++	u32 dw0 = le32_to_cpu(complete_hdr->dw0);
+ 	int error = -1;
+ 
+ 	if (err_phase == 1) {
+@@ -2310,7 +2315,8 @@ static void slot_err_v2_hw(struct hisi_hba *hisi_hba,
+ 			break;
+ 		}
+ 		}
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 	}
+ 		break;
+ 	default:
+@@ -2443,7 +2449,8 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
+ 	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
+ 	{
+ 		ts->stat = SAS_SAM_STAT_GOOD;
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 		break;
+ 	}
+ 	default:
 diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index e8a3511040af2..8544c1554f5ff 100644
+index 8544c1554f5ff..c0e74d768716d 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
 +++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2163,6 +2163,7 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
- 	u32 trans_tx_fail_type = le32_to_cpu(record->trans_tx_fail_type);
- 	u16 sipc_rx_err_type = le16_to_cpu(record->sipc_rx_err_type);
- 	u32 dw3 = le32_to_cpu(complete_hdr->dw3);
-+	u32 dw0 = le32_to_cpu(complete_hdr->dw0);
- 
- 	switch (task->task_proto) {
- 	case SAS_PROTOCOL_SSP:
-@@ -2172,8 +2173,8 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
- 			 * but I/O information has been written to the host memory, we examine
- 			 * response IU.
- 			 */
--			if (!(complete_hdr->dw0 & CMPLT_HDR_RSPNS_GOOD_MSK) &&
--				(complete_hdr->dw0 & CMPLT_HDR_RSPNS_XFRD_MSK))
-+			if (!(dw0 & CMPLT_HDR_RSPNS_GOOD_MSK) &&
-+			    (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK))
- 				return false;
- 
- 			ts->residual = trans_tx_fail_type;
-@@ -2189,7 +2190,7 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
- 	case SAS_PROTOCOL_SATA:
+@@ -2203,7 +2203,8 @@ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 			ts->stat = SAS_OPEN_REJECT;
+ 			ts->open_rej_reason = SAS_OREJ_RSVD_RETRY;
+ 		}
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 		break;
+ 	case SAS_PROTOCOL_SMP:
+ 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
+@@ -2330,7 +2331,8 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
  	case SAS_PROTOCOL_STP:
  	case SAS_PROTOCOL_SATA | SAS_PROTOCOL_STP:
--		if ((complete_hdr->dw0 & CMPLT_HDR_RSPNS_XFRD_MSK) &&
-+		if ((dw0 & CMPLT_HDR_RSPNS_XFRD_MSK) &&
- 		    (sipc_rx_err_type & RX_FIS_STATUS_ERR_MSK)) {
- 			ts->stat = SAS_PROTO_RESPONSE;
- 		} else if (dma_rx_err_type & RX_DATA_LEN_UNDERFLOW_MSK) {
+ 		ts->stat = SAS_SAM_STAT_GOOD;
+-		hisi_sas_sata_done(task, slot);
++		if (dw0 & CMPLT_HDR_RSPNS_XFRD_MSK)
++			hisi_sas_sata_done(task, slot);
+ 		break;
+ 	default:
+ 		ts->stat = SAS_SAM_STAT_CHECK_CONDITION;
 -- 
 2.40.1
 
