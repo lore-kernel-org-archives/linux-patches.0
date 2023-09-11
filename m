@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1000E11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DECC433C7;
-	Mon, 11 Sep 2023 15:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD35511706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42322C433C8;
+	Mon, 11 Sep 2023 15:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444557;
-	bh=78ni0kbTx0POg0XnLhC/vMAeqKmtNkTpXY+nxrByBrI=;
+	s=korg; t=1694444560;
+	bh=Khniuww7dWpYkvCDWlP6N5IidQ3iZwBXbLWQn0MC/OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lANguFn6dVwsE06WTPwwPX39+ByRzHEP1IeG/fvqunwJCA1mcWsXPwoe64MHgM4H5
-	 KZrjKm5spZIKjpUhYJvSJMW5RLK3WaA+Y4ibSRxhaArz6KsS70BLjaMyyxKJAQfFmz
-	 +NMtCQuh0GAaiMnzoEN9frvp/RoqGQPNIJLniIqs=
+	b=VLcE6S/SVxDFKU+CEItj9+4zdBhGLTFAX2FQO241IwW7w1NJE71cIIfodbykVebSI
+	 UAVWcd522X5/arqYrIAwgxmNgfdm2SrEqsdZdP1REiIGe5Ey6enB09UImwAMR84l6H
+	 KKqqZlzTqqPN/2EUDaWMdQ5F5kXYxOYj8jxpv9bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Wang Ming <machel@vivo.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/600] platform/x86/intel/hid: Add HP Dragonfly G2 to VGBS DMI quirks
-Date: Mon, 11 Sep 2023 15:41:08 +0200
-Message-ID: <20230911134634.638748502@linuxfoundation.org>
+Subject: [PATCH 6.1 036/600] platform/x86: think-lmi: Use kfree_sensitive instead of kfree
+Date: Mon, 11 Sep 2023 15:41:09 +0200
+Message-ID: <20230911134634.667447458@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,49 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Wang Ming <machel@vivo.com>
 
-[ Upstream commit 7783e97f8558ad7a4d1748922461bc88483fbcdf ]
+[ Upstream commit 1da0893aed2e48e2bdf37c29b029f2e060d25927 ]
 
-HP Elite Dragonfly G2 (a convertible laptop/tablet) has a reliable VGBS
-method. If VGBS is not called on boot, the firmware sends an initial
-0xcd event shortly after calling the BTNL method, but only if the device
-is booted in the laptop mode. However, if the device is booted in the
-tablet mode and VGBS is not called, there is no initial 0xcc event, and
-the input device for SW_TABLET_MODE is not registered up until the user
-turns the device into the laptop mode.
+key might contain private part of the key, so better use
+kfree_sensitive to free it.
 
-Call VGBS on boot on this device to get the initial state of
-SW_TABLET_MODE in a reliable way.
-
-Tested with BIOS 1.13.1.
-
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20230716183213.64173-1-maxtram95@gmail.com
+Signed-off-by: Wang Ming <machel@vivo.com>
+Link: https://lore.kernel.org/r/20230717101114.18966-1-machel@vivo.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/platform/x86/think-lmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index df533b277b999..b96ef0eb82aff 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -131,6 +131,12 @@ static const struct dmi_system_id dmi_vgbs_allow_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go"),
- 		},
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP Elite Dragonfly G2 Notebook PC"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index 3cbb92b6c5215..f6290221d139d 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -719,12 +719,12 @@ static ssize_t cert_to_password_store(struct kobject *kobj,
+ 	/* Format: 'Password,Signature' */
+ 	auth_str = kasprintf(GFP_KERNEL, "%s,%s", passwd, setting->signature);
+ 	if (!auth_str) {
+-		kfree(passwd);
++		kfree_sensitive(passwd);
+ 		return -ENOMEM;
+ 	}
+ 	ret = tlmi_simple_call(LENOVO_CERT_TO_PASSWORD_GUID, auth_str);
+ 	kfree(auth_str);
+-	kfree(passwd);
++	kfree_sensitive(passwd);
  
+ 	return ret ?: count;
+ }
 -- 
 2.40.1
 
