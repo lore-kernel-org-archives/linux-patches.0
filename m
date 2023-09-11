@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7098D11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60E9C433C9;
-	Mon, 11 Sep 2023 14:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2FF11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:57:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6562C433C7;
+	Mon, 11 Sep 2023 14:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444276;
-	bh=wl+gMjPD3zQrC/q4pQoLBrfiuMgJQ5qijoqFMXrS3Os=;
+	s=korg; t=1694444279;
+	bh=ZxOO45pm8lC6zTjcakLqliiWTnzm+Dj+8BTFA+QOFL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SshwLrOTOIffmN9Kr9cBb/zOoK4YZd4M/JG9oU2yZvOGiinA9w6CxxpzJI5RJGSi9
-	 JFIc1f3rnDULoXPptC5rrbn5O4x1bvcM5xLOh1+2ByEP9xayKLfr3LnC4+oJ00ocPM
-	 NpsMhMcFfLsEhtCLHTkACvQzMGGXcTFOcfWP9o04=
+	b=EcyxmcSSFWMvZllKyUC8xExfdqchuKyLr2BKz5Zia8btJ51mBZjkfNlYEj13Yyzlq
+	 BRvIUNtieZ33HPIdexPyVEKeHnU+EQEREXrijDZsiO1eEd/4Xy6obYTLsP+24/sQc5
+	 rGk64kVCiE9zIufZrzsqpkLfdAH2mhE1DxEPknKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Hou Tao <houtao1@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.4 645/737] virtio_pmem: add the missing REQ_OP_WRITE for flush bio
-Date: Mon, 11 Sep 2023 15:48:24 +0200
-Message-ID: <20230911134708.550166726@linuxfoundation.org>
+	Zqiang <qiang.zhang1211@gmail.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Zhen Lei <thunder.leizhen@huaweicloud.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 646/737] rcu: dump vmalloc memory info safely
+Date: Mon, 11 Sep 2023 15:48:25 +0200
+Message-ID: <20230911134708.577935474@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,71 +44,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-commit c1dbd8a849183b9c12d257ad3043ecec50db50b3 upstream.
+commit c83ad36a18c02c0f51280b50272327807916987f upstream.
 
-When doing mkfs.xfs on a pmem device, the following warning was
-reported:
+Currently, for double invoke call_rcu(), will dump rcu_head objects memory
+info, if the objects is not allocated from the slab allocator, the
+vmalloc_dump_obj() will be invoke and the vmap_area_lock spinlock need to
+be held, since the call_rcu() can be invoked in interrupt context,
+therefore, there is a possibility of spinlock deadlock scenarios.
 
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 384 at block/blk-core.c:751 submit_bio_noacct
- Modules linked in:
- CPU: 2 PID: 384 Comm: mkfs.xfs Not tainted 6.4.0-rc7+ #154
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
- RIP: 0010:submit_bio_noacct+0x340/0x520
- ......
- Call Trace:
-  <TASK>
-  ? submit_bio_noacct+0xd5/0x520
-  submit_bio+0x37/0x60
-  async_pmem_flush+0x79/0xa0
-  nvdimm_flush+0x17/0x40
-  pmem_submit_bio+0x370/0x390
-  __submit_bio+0xbc/0x190
-  submit_bio_noacct_nocheck+0x14d/0x370
-  submit_bio_noacct+0x1ef/0x520
-  submit_bio+0x55/0x60
-  submit_bio_wait+0x5a/0xc0
-  blkdev_issue_flush+0x44/0x60
+And in Preempt-RT kernel, the rcutorture test also trigger the following
+lockdep warning:
 
-The root cause is that submit_bio_noacct() needs bio_op() is either
-WRITE or ZONE_APPEND for flush bio and async_pmem_flush() doesn't assign
-REQ_OP_WRITE when allocating flush bio, so submit_bio_noacct just fail
-the flush bio.
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 1, name: swapper/0
+preempt_count: 1, expected: 0
+RCU nest depth: 1, expected: 1
+3 locks held by swapper/0/1:
+ #0: ffffffffb534ee80 (fullstop_mutex){+.+.}-{4:4}, at: torture_init_begin+0x24/0xa0
+ #1: ffffffffb5307940 (rcu_read_lock){....}-{1:3}, at: rcu_torture_init+0x1ec7/0x2370
+ #2: ffffffffb536af40 (vmap_area_lock){+.+.}-{3:3}, at: find_vmap_area+0x1f/0x70
+irq event stamp: 565512
+hardirqs last  enabled at (565511): [<ffffffffb379b138>] __call_rcu_common+0x218/0x940
+hardirqs last disabled at (565512): [<ffffffffb5804262>] rcu_torture_init+0x20b2/0x2370
+softirqs last  enabled at (399112): [<ffffffffb36b2586>] __local_bh_enable_ip+0x126/0x170
+softirqs last disabled at (399106): [<ffffffffb43fef59>] inet_register_protosw+0x9/0x1d0
+Preemption disabled at:
+[<ffffffffb58040c3>] rcu_torture_init+0x1f13/0x2370
+CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W          6.5.0-rc4-rt2-yocto-preempt-rt+ #15
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x68/0xb0
+ dump_stack+0x14/0x20
+ __might_resched+0x1aa/0x280
+ ? __pfx_rcu_torture_err_cb+0x10/0x10
+ rt_spin_lock+0x53/0x130
+ ? find_vmap_area+0x1f/0x70
+ find_vmap_area+0x1f/0x70
+ vmalloc_dump_obj+0x20/0x60
+ mem_dump_obj+0x22/0x90
+ __call_rcu_common+0x5bf/0x940
+ ? debug_smp_processor_id+0x1b/0x30
+ call_rcu_hurry+0x14/0x20
+ rcu_torture_init+0x1f82/0x2370
+ ? __pfx_rcu_torture_leak_cb+0x10/0x10
+ ? __pfx_rcu_torture_leak_cb+0x10/0x10
+ ? __pfx_rcu_torture_init+0x10/0x10
+ do_one_initcall+0x6c/0x300
+ ? debug_smp_processor_id+0x1b/0x30
+ kernel_init_freeable+0x2b9/0x540
+ ? __pfx_kernel_init+0x10/0x10
+ kernel_init+0x1f/0x150
+ ret_from_fork+0x40/0x50
+ ? __pfx_kernel_init+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
 
-Simply fix it by adding the missing REQ_OP_WRITE for flush bio. And we
-could fix the flush order issue and do flush optimization later.
+The previous patch fixes this by using the deadlock-safe best-effort
+version of find_vm_area.  However, in case of failure print the fact that
+the pointer was a vmalloc pointer so that we print at least something.
 
-Cc: stable@vger.kernel.org # 6.3+
-Fixes: b4a6bb3a67aa ("block: add a sanity check for non-write flush/fua bios")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Tested-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lkml.kernel.org/r/20230904180806.1002832-2-joel@joelfernandes.org
+Fixes: 98f180837a89 ("mm: Make mem_dump_obj() handle vmalloc() memory")
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Reported-by: Zhen Lei <thunder.leizhen@huaweicloud.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/nd_virtio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/util.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
-index c6a648fd8744..1f8c667c6f1e 100644
---- a/drivers/nvdimm/nd_virtio.c
-+++ b/drivers/nvdimm/nd_virtio.c
-@@ -105,7 +105,8 @@ int async_pmem_flush(struct nd_region *nd_region, struct bio *bio)
- 	 * parent bio. Otherwise directly call nd_region flush.
- 	 */
- 	if (bio && bio->bi_iter.bi_sector != -1) {
--		struct bio *child = bio_alloc(bio->bi_bdev, 0, REQ_PREFLUSH,
-+		struct bio *child = bio_alloc(bio->bi_bdev, 0,
-+					      REQ_OP_WRITE | REQ_PREFLUSH,
- 					      GFP_ATOMIC);
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -1071,7 +1071,9 @@ void mem_dump_obj(void *object)
+ 	if (vmalloc_dump_obj(object))
+ 		return;
  
- 		if (!child)
--- 
-2.42.0
-
+-	if (virt_addr_valid(object))
++	if (is_vmalloc_addr(object))
++		type = "vmalloc memory";
++	else if (virt_addr_valid(object))
+ 		type = "non-slab/vmalloc memory";
+ 	else if (object == NULL)
+ 		type = "NULL pointer";
 
 
