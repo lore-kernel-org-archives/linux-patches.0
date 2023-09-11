@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2368411706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DF7C433C7;
-	Mon, 11 Sep 2023 14:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E424B11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:52:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675AFC433C8;
+	Mon, 11 Sep 2023 14:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443976;
-	bh=WLOhHJltd36RCKgFeuCywEHiHdDJ2y9EudiT6Pu8XDw=;
+	s=korg; t=1694443978;
+	bh=R3BZ+UoYH4N+bjLj8oCNP44X2z4G+d+52AxFMb3bjGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhQRyc9fd5R5YSKKo+GKNQP3MSptsxkxQ0RYpcNptYKuwjyEUcWE+vqYyNiDcw0Ee
-	 aVVcWqXm2koQINN1EDv1k2yY2yWZ58U/qaBpsWIPkL2IL1UnM8Iknm6AsnAeoj/rVz
-	 /xmPUrNKRXXZhmgzhHqG8kGMVwra4CTpwhecXOgo=
+	b=JIWv5dkB2Bz4m20S4woBC2Oq0jplpsgv/CC7D0jbLzBHKDXrPj6ogoezScxkggU+Z
+	 tCopMAo6mmqMte0QYUJl5w0BmTOh2Vw6NIG6YwYPmAX4mxmgZsFr2APzXxwXzhLU6+
+	 TYFHzkj8nFMSgsmIsol1j8MzHnUF9f58H1PagcVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 567/737] media: ov2680: Fix vflip / hflip set functions
-Date: Mon, 11 Sep 2023 15:47:06 +0200
-Message-ID: <20230911134706.384997660@linuxfoundation.org>
+Subject: [PATCH 6.4 550/737] media: cec: core: add adap_unconfigured() callback
+Date: Mon, 11 Sep 2023 15:46:49 +0200
+Message-ID: <20230911134705.921180189@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,116 +40,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit d5d08ad330c9ccebc5e066fda815423a290f48b0 ]
+[ Upstream commit 948a77aaecf202f722cf2264025f9987e5bd5c26 ]
 
-ov2680_vflip_disable() / ov2680_hflip_disable() pass BIT(0) instead of
-0 as value to ov2680_mod_reg().
+The adap_configured() callback was called with the adap->lock mutex
+held if the 'configured' argument was false, and without the adap->lock
+mutex held if that argument was true.
 
-While fixing this also:
+That was very confusing, and so split this up in a adap_unconfigured()
+callback and a high-level configured() callback.
 
-1. Stop having separate enable/disable functions for hflip / vflip
-2. Move the is_streaming check, which is unique to hflip / vflip
-   into the ov2680_set_?flip() functions.
+This also makes it easier to understand when the mutex is held: all
+low-level adap_* callbacks are called with the mutex held. All other
+callbacks are called without that mutex held.
 
-for a nice code cleanup.
-
-Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: f1b57164305d ("media: cec: add optional adap_configured callback")
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 50 +++++++++-----------------------------
- 1 file changed, 12 insertions(+), 38 deletions(-)
+ drivers/media/cec/core/cec-adap.c | 4 ++--
+ include/media/cec.h               | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index 7d072448c8530..c999a898dfe77 100644
---- a/drivers/media/i2c/ov2680.c
-+++ b/drivers/media/i2c/ov2680.c
-@@ -328,23 +328,15 @@ static void ov2680_set_bayer_order(struct ov2680_dev *sensor)
- 	sensor->fmt.code = ov2680_hv_flip_bayer_order[hv_flip];
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index a9b73fb33888d..09ca83c233299 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -1348,7 +1348,7 @@ static void cec_adap_unconfigure(struct cec_adapter *adap)
+ 	cec_flush(adap);
+ 	wake_up_interruptible(&adap->kthread_waitq);
+ 	cec_post_state_event(adap);
+-	call_void_op(adap, adap_configured, false);
++	call_void_op(adap, adap_unconfigured);
  }
  
--static int ov2680_vflip_enable(struct ov2680_dev *sensor)
-+static int ov2680_set_vflip(struct ov2680_dev *sensor, s32 val)
- {
- 	int ret;
- 
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT1, BIT(2), BIT(2));
--	if (ret < 0)
--		return ret;
--
--	ov2680_set_bayer_order(sensor);
--	return 0;
--}
--
--static int ov2680_vflip_disable(struct ov2680_dev *sensor)
--{
--	int ret;
-+	if (sensor->is_streaming)
-+		return -EBUSY;
- 
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT1, BIT(2), BIT(0));
-+	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT1,
-+			     BIT(2), val ? BIT(2) : 0);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -352,23 +344,15 @@ static int ov2680_vflip_disable(struct ov2680_dev *sensor)
+ /*
+@@ -1539,7 +1539,7 @@ static int cec_config_thread_func(void *arg)
+ 	adap->kthread_config = NULL;
+ 	complete(&adap->config_completion);
+ 	mutex_unlock(&adap->lock);
+-	call_void_op(adap, adap_configured, true);
++	call_void_op(adap, configured);
  	return 0;
- }
  
--static int ov2680_hflip_enable(struct ov2680_dev *sensor)
-+static int ov2680_set_hflip(struct ov2680_dev *sensor, s32 val)
- {
- 	int ret;
+ unconfigure:
+diff --git a/include/media/cec.h b/include/media/cec.h
+index 6556cc161dc0a..9c007f83569aa 100644
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -113,12 +113,12 @@ struct cec_fh {
+ #define CEC_FREE_TIME_TO_USEC(ft)		((ft) * 2400)
  
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT2, BIT(2), BIT(2));
--	if (ret < 0)
--		return ret;
--
--	ov2680_set_bayer_order(sensor);
--	return 0;
--}
--
--static int ov2680_hflip_disable(struct ov2680_dev *sensor)
--{
--	int ret;
-+	if (sensor->is_streaming)
-+		return -EBUSY;
+ struct cec_adap_ops {
+-	/* Low-level callbacks */
++	/* Low-level callbacks, called with adap->lock held */
+ 	int (*adap_enable)(struct cec_adapter *adap, bool enable);
+ 	int (*adap_monitor_all_enable)(struct cec_adapter *adap, bool enable);
+ 	int (*adap_monitor_pin_enable)(struct cec_adapter *adap, bool enable);
+ 	int (*adap_log_addr)(struct cec_adapter *adap, u8 logical_addr);
+-	void (*adap_configured)(struct cec_adapter *adap, bool configured);
++	void (*adap_unconfigured)(struct cec_adapter *adap);
+ 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
+ 			     u32 signal_free_time, struct cec_msg *msg);
+ 	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
+@@ -131,6 +131,7 @@ struct cec_adap_ops {
+ 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
  
--	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT2, BIT(2), BIT(0));
-+	ret = ov2680_mod_reg(sensor, OV2680_REG_FORMAT2,
-+			     BIT(2), val ? BIT(2) : 0);
- 	if (ret < 0)
- 		return ret;
+ 	/* High-level CEC message callback, called without adap->lock held */
++	void (*configured)(struct cec_adapter *adap);
+ 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
+ };
  
-@@ -722,19 +706,9 @@ static int ov2680_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_EXPOSURE:
- 		return ov2680_exposure_set(sensor, ctrl->val);
- 	case V4L2_CID_VFLIP:
--		if (sensor->is_streaming)
--			return -EBUSY;
--		if (ctrl->val)
--			return ov2680_vflip_enable(sensor);
--		else
--			return ov2680_vflip_disable(sensor);
-+		return ov2680_set_vflip(sensor, ctrl->val);
- 	case V4L2_CID_HFLIP:
--		if (sensor->is_streaming)
--			return -EBUSY;
--		if (ctrl->val)
--			return ov2680_hflip_enable(sensor);
--		else
--			return ov2680_hflip_disable(sensor);
-+		return ov2680_set_hflip(sensor, ctrl->val);
- 	case V4L2_CID_TEST_PATTERN:
- 		return ov2680_test_pattern_set(sensor, ctrl->val);
- 	default:
 -- 
 2.40.1
 
