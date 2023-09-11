@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3DC11713
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C22C433C7;
-	Mon, 11 Sep 2023 14:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB8F11729
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9105FC433C8;
+	Mon, 11 Sep 2023 14:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442710;
-	bh=S8OBCCQ11BcTNAbxs89SF73krj/r0uL1v2vyQAPMnYo=;
+	s=korg; t=1694442712;
+	bh=3WItYjx6EVcy3ON/hR2hdQTFgQO8S8zuOhCJaQQoGCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHO3Ltonb0kOCPdKVlzbrmpdkyRhwFbPiNAmUMfe/cqT91v+aKU4OeLCjpejlGnGl
-	 o26cK6Fv6zqGP8fzo0N/RnvYCZuSSjahcTCvc9B8C3Uu3b26F07nehpGeUSfOgqO5n
-	 38G0q3EnRayERgsS3dD0FKCm+D2zQXuzHEPcMVDo=
+	b=IeYyvWWyXS2s17R1nVOWbvE4X29TF3dB1FZrgOP3snTM85O9an/cXnFKIVLKA3D5r
+	 q4pEm1JyBxJGne38ot/4T5VQVYzLy9AkyUp8PtBOJlxZPV/bGMtB1QicbDvUMeVhz1
+	 pBiHkkBpRGskdUQ+ZrDnKF1nugO1bnpZVhk8Csdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	=?UTF-8?q?J=C3=BCrg=20Billeter?= <j@bitron.ch>
-Subject: [PATCH 6.4 094/737] Revert "fuse: in fuse_flush only wait if someone wants the return code"
-Date: Mon, 11 Sep 2023 15:39:13 +0200
-Message-ID: <20230911134653.138059957@linuxfoundation.org>
+	Vidya Sagar <vidyas@nvidia.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 6.4 095/737] Revert "PCI: tegra194: Enable support for 256 Byte payload"
+Date: Mon, 11 Sep 2023 15:39:14 +0200
+Message-ID: <20230911134653.166625790@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,170 +41,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-commit 91ec6c85599b60c00caf4e9a9d6c4d6e5dd5e93c upstream.
+commit ebfde1584d9f037b6309fc682c96e22dac7bcb7a upstream.
 
-This reverts commit 5a8bee63b10f6f2f52f6d22e109a4a147409842a.
+After commit 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte
+payload"), we initialize MPS=256 for tegra194 Root Ports before enumerating
+the hierarchy.
 
-Jürg Billeter reports the following regression:
+Consider an Endpoint that supports only MPS=128.  In the default situation
+(CONFIG_PCIE_BUS_DEFAULT set and no "pci=pcie_bus_*" parameter), Linux
+tries to configure the MPS of every device to match the upstream bridge.
+If the Endpoint is directly below the Root Port, Linux can reduce the Root
+Port MPS to 128 to match the Endpoint.  But if there's a switch in the
+middle, Linux doesn't reduce the Root Port MPS because other devices below
+the switch may already be configured with MPS larger than 128.
 
-  Since v6.3-rc1 commit 5a8bee63b1 ("fuse: in fuse_flush only wait if
-  someone wants the return code") `fput()` is called asynchronously if a
-  file is closed as part of a process exiting, i.e., if there was no
-  explicit `close()` before exit.
+This scenario results in uncorrectable Malformed TLP errors if the Root
+Port sends TLPs with payloads larger than 128 bytes.  These errors can
+be avoided by using the "pci=pcie_bus_safe" parameter, but it doesn't
+seem to be a good idea to always have this parameter even for basic
+functionality to work.
 
-  If the file was open for writing, also `put_write_access()` is called
-  asynchronously as part of the async `fput()`.
+Revert commit 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte
+payload") so the Root Ports default to MPS=128, which all devices
+support.
 
-  If that newly written file is an executable, attempting to `execve()` the
-  new file can fail with `ETXTBSY` if it's called after the writer process
-  exited but before the async `fput()` has run.
+If peer-to-peer DMA is not required, one can use "pci=pcie_bus_perf" to
+get the benefit of larger MPS settings.
 
-Reported-and-tested-by: "Jürg Billeter" <j@bitron.ch>
-Cc: <stable@vger.kernel.org> # v6.3
-Link: https://lore.kernel.org/all/4f66cded234462964899f2a661750d6798a57ec0.camel@bitron.ch/
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[bhelgaas: commit log; kwilczynski: retain "u16 val_16" declaration at
+the top, add missing acked by tag]
+Fixes: 4fb8e46c1bc4 ("PCI: tegra194: Enable support for 256 Byte payload")
+Link: https://lore.kernel.org/linux-pci/20230619102604.3735001-1-vidyas@nvidia.com
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Cc: stable@vger.kernel.org # v6.0-rc1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c | 89 +++++++++++++++-----------------------------------
- 1 file changed, 26 insertions(+), 63 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index bc4115288eec..1c7599ed9062 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -19,7 +19,6 @@
- #include <linux/uio.h>
- #include <linux/fs.h>
- #include <linux/filelock.h>
--#include <linux/file.h>
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -883,11 +883,6 @@ static int tegra_pcie_dw_host_init(struc
+ 		pcie->pcie_cap_base = dw_pcie_find_capability(&pcie->pci,
+ 							      PCI_CAP_ID_EXP);
  
- static int fuse_send_open(struct fuse_mount *fm, u64 nodeid,
- 			  unsigned int open_flags, int opcode,
-@@ -479,36 +478,48 @@ static void fuse_sync_writes(struct inode *inode)
- 	fuse_release_nowrite(inode);
- }
+-	val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
+-	val_16 &= ~PCI_EXP_DEVCTL_PAYLOAD;
+-	val_16 |= PCI_EXP_DEVCTL_PAYLOAD_256B;
+-	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_16);
+-
+ 	val = dw_pcie_readl_dbi(pci, PCI_IO_BASE);
+ 	val &= ~(IO_BASE_IO_DECODE | IO_BASE_IO_DECODE_BIT8);
+ 	dw_pcie_writel_dbi(pci, PCI_IO_BASE, val);
+@@ -1876,11 +1871,6 @@ static void pex_ep_event_pex_rst_deasser
+ 	pcie->pcie_cap_base = dw_pcie_find_capability(&pcie->pci,
+ 						      PCI_CAP_ID_EXP);
  
--struct fuse_flush_args {
--	struct fuse_args args;
--	struct fuse_flush_in inarg;
--	struct work_struct work;
--	struct file *file;
--};
+-	val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL);
+-	val_16 &= ~PCI_EXP_DEVCTL_PAYLOAD;
+-	val_16 |= PCI_EXP_DEVCTL_PAYLOAD_256B;
+-	dw_pcie_writew_dbi(pci, pcie->pcie_cap_base + PCI_EXP_DEVCTL, val_16);
 -
--static int fuse_do_flush(struct fuse_flush_args *fa)
-+static int fuse_flush(struct file *file, fl_owner_t id)
- {
--	int err;
--	struct inode *inode = file_inode(fa->file);
-+	struct inode *inode = file_inode(file);
- 	struct fuse_mount *fm = get_fuse_mount(inode);
-+	struct fuse_file *ff = file->private_data;
-+	struct fuse_flush_in inarg;
-+	FUSE_ARGS(args);
-+	int err;
-+
-+	if (fuse_is_bad(inode))
-+		return -EIO;
-+
-+	if (ff->open_flags & FOPEN_NOFLUSH && !fm->fc->writeback_cache)
-+		return 0;
- 
- 	err = write_inode_now(inode, 1);
- 	if (err)
--		goto out;
-+		return err;
- 
- 	inode_lock(inode);
- 	fuse_sync_writes(inode);
- 	inode_unlock(inode);
- 
--	err = filemap_check_errors(fa->file->f_mapping);
-+	err = filemap_check_errors(file->f_mapping);
- 	if (err)
--		goto out;
-+		return err;
- 
- 	err = 0;
- 	if (fm->fc->no_flush)
- 		goto inval_attr_out;
- 
--	err = fuse_simple_request(fm, &fa->args);
-+	memset(&inarg, 0, sizeof(inarg));
-+	inarg.fh = ff->fh;
-+	inarg.lock_owner = fuse_lock_owner_id(fm->fc, id);
-+	args.opcode = FUSE_FLUSH;
-+	args.nodeid = get_node_id(inode);
-+	args.in_numargs = 1;
-+	args.in_args[0].size = sizeof(inarg);
-+	args.in_args[0].value = &inarg;
-+	args.force = true;
-+
-+	err = fuse_simple_request(fm, &args);
- 	if (err == -ENOSYS) {
- 		fm->fc->no_flush = 1;
- 		err = 0;
-@@ -521,57 +532,9 @@ static int fuse_do_flush(struct fuse_flush_args *fa)
- 	 */
- 	if (!err && fm->fc->writeback_cache)
- 		fuse_invalidate_attr_mask(inode, STATX_BLOCKS);
--
--out:
--	fput(fa->file);
--	kfree(fa);
- 	return err;
- }
- 
--static void fuse_flush_async(struct work_struct *work)
--{
--	struct fuse_flush_args *fa = container_of(work, typeof(*fa), work);
--
--	fuse_do_flush(fa);
--}
--
--static int fuse_flush(struct file *file, fl_owner_t id)
--{
--	struct fuse_flush_args *fa;
--	struct inode *inode = file_inode(file);
--	struct fuse_mount *fm = get_fuse_mount(inode);
--	struct fuse_file *ff = file->private_data;
--
--	if (fuse_is_bad(inode))
--		return -EIO;
--
--	if (ff->open_flags & FOPEN_NOFLUSH && !fm->fc->writeback_cache)
--		return 0;
--
--	fa = kzalloc(sizeof(*fa), GFP_KERNEL);
--	if (!fa)
--		return -ENOMEM;
--
--	fa->inarg.fh = ff->fh;
--	fa->inarg.lock_owner = fuse_lock_owner_id(fm->fc, id);
--	fa->args.opcode = FUSE_FLUSH;
--	fa->args.nodeid = get_node_id(inode);
--	fa->args.in_numargs = 1;
--	fa->args.in_args[0].size = sizeof(fa->inarg);
--	fa->args.in_args[0].value = &fa->inarg;
--	fa->args.force = true;
--	fa->file = get_file(file);
--
--	/* Don't wait if the task is exiting */
--	if (current->flags & PF_EXITING) {
--		INIT_WORK(&fa->work, fuse_flush_async);
--		schedule_work(&fa->work);
--		return 0;
--	}
--
--	return fuse_do_flush(fa);
--}
--
- int fuse_fsync_common(struct file *file, loff_t start, loff_t end,
- 		      int datasync, int opcode)
- {
--- 
-2.42.0
-
+ 	/* Clear Slot Clock Configuration bit if SRNS configuration */
+ 	if (pcie->enable_srns) {
+ 		val_16 = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base +
 
 
