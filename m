@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD56411706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B778C433C7;
-	Mon, 11 Sep 2023 14:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B422011706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0445DC433C8;
+	Mon, 11 Sep 2023 14:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444103;
-	bh=IasPQFZLcfNSSPzDBQjrhZNp0yaXiIyf2pIs0CQMufE=;
+	s=korg; t=1694444106;
+	bh=PDqRJaRyvbq51dlpY3FbyZooE53VY1mcYL1o/Vtqckk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDw0jB+nrfFKKjMOA2rmMBZVGFMfOMAKpgFYyrzheOTMErjBQACcVxSCou+hhaJC1
-	 LuyV2Gyl/EAPkbtyARUTez0p+EQlbCbJOgg6cp/hPm/pZDUhjVU1usMlduTyNEjDse
-	 UwetwC/CsWUgpEvzMVTCTnlPvdPvQPKUyrva3GCM=
+	b=iMWqAUd15BTochzvsnicN8hPQsSUAghZRz9wn0oZhczQgokyz+5JsIFymsPzTnZ4s
+	 TPDJgmmg1GFjOt3Frf3US9D/sc8N3oCHIVHPKnrt8flzSvILZqZQCwoimSCsSc/4Gh
+	 Z0BqRQWvh6ktlPU8BBcltvWRoFUm+yL+r0PPtTYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 585/737] scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock
-Date: Mon, 11 Sep 2023 15:47:24 +0200
-Message-ID: <20230911134706.868111746@linuxfoundation.org>
+Subject: [PATCH 6.4 586/737] interconnect: qcom: sm8450: Enable sync_state
+Date: Mon, 11 Sep 2023 15:47:25 +0200
+Message-ID: <20230911134706.895084141@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,154 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 1a1975551943f681772720f639ff42fbaa746212 ]
+[ Upstream commit 16862f1b2110eca6330e5be6d804e1a08e06a202 ]
 
-There is a long call chain that &fip->ctlr_lock is acquired by isr
-fnic_isr_msix_wq_copy() under hard IRQ context. Thus other process context
-code acquiring the lock should disable IRQ, otherwise deadlock could happen
-if the IRQ preempts the execution while the lock is held in process context
-on the same CPU.
+Enable sync_state on sm8450 so that the interconnect votes actually mean
+anything and aren't just pinned to INT_MAX.
 
-[ISR]
-fnic_isr_msix_wq_copy()
- -> fnic_wq_copy_cmpl_handler()
- -> fnic_fcpio_cmpl_handler()
- -> fnic_fcpio_flogi_reg_cmpl_handler()
- -> fnic_flush_tx()
- -> fnic_send_frame()
- -> fcoe_ctlr_els_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-[Process Context]
-1. fcoe_ctlr_timer_work()
- -> fcoe_ctlr_flogi_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-2. fcoe_ctlr_recv_work()
- -> fcoe_ctlr_recv_handler()
- -> fcoe_ctlr_recv_els()
- -> fcoe_ctlr_announce()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-3. fcoe_ctlr_recv_work()
- -> fcoe_ctlr_recv_handler()
- -> fcoe_ctlr_recv_els()
- -> fcoe_ctlr_flogi_retry()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-4. -> fcoe_xmit()
- -> fcoe_ctlr_els_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-spin_lock_bh() is not enough since fnic_isr_msix_wq_copy() is a
-hardirq.
-
-These flaws were found by an experimental static analysis tool I am
-developing for irq-related deadlock.
-
-The patch fix the potential deadlocks by spin_lock_irqsave() to disable
-hard irq.
-
-Fixes: 794d98e77f59 ("[SCSI] libfcoe: retry rejected FLOGI to another FCF if possible")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230817074708.7509-1-dg573847474@gmail.com
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230811-topic-8450_syncstate-v1-1-69ae5552a18b@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe_ctlr.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/interconnect/qcom/sm8450.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/fcoe/fcoe_ctlr.c b/drivers/scsi/fcoe/fcoe_ctlr.c
-index 5c8d1ba3f8f3c..19eee108db021 100644
---- a/drivers/scsi/fcoe/fcoe_ctlr.c
-+++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -319,16 +319,17 @@ static void fcoe_ctlr_announce(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *sel;
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
+diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
+index e64c214b40209..d6e582a02e628 100644
+--- a/drivers/interconnect/qcom/sm8450.c
++++ b/drivers/interconnect/qcom/sm8450.c
+@@ -1886,6 +1886,7 @@ static struct platform_driver qnoc_driver = {
+ 	.driver = {
+ 		.name = "qnoc-sm8450",
+ 		.of_match_table = qnoc_of_match,
++		.sync_state = icc_sync_state,
+ 	},
+ };
  
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 
- 	kfree_skb(fip->flogi_req);
- 	fip->flogi_req = NULL;
- 	list_for_each_entry(fcf, &fip->fcfs, list)
- 		fcf->flogi_sent = 0;
- 
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 	sel = fip->sel_fcf;
- 
- 	if (sel && ether_addr_equal(sel->fcf_mac, fip->dest_addr))
-@@ -699,6 +700,7 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
- {
- 	struct fc_frame *fp;
- 	struct fc_frame_header *fh;
-+	unsigned long flags;
- 	u16 old_xid;
- 	u8 op;
- 	u8 mac[ETH_ALEN];
-@@ -732,11 +734,11 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
- 		op = FIP_DT_FLOGI;
- 		if (fip->mode == FIP_MODE_VN2VN)
- 			break;
--		spin_lock_bh(&fip->ctlr_lock);
-+		spin_lock_irqsave(&fip->ctlr_lock, flags);
- 		kfree_skb(fip->flogi_req);
- 		fip->flogi_req = skb;
- 		fip->flogi_req_send = 1;
--		spin_unlock_bh(&fip->ctlr_lock);
-+		spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 		schedule_work(&fip->timer_work);
- 		return -EINPROGRESS;
- 	case ELS_FDISC:
-@@ -1705,10 +1707,11 @@ static int fcoe_ctlr_flogi_send_locked(struct fcoe_ctlr *fip)
- static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
- 	int error;
- 
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 	LIBFCOE_FIP_DBG(fip, "re-sending FLOGI - reselect\n");
- 	fcf = fcoe_ctlr_select(fip);
- 	if (!fcf || fcf->flogi_sent) {
-@@ -1719,7 +1722,7 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- 		fcoe_ctlr_solicit(fip, NULL);
- 		error = fcoe_ctlr_flogi_send_locked(fip);
- 	}
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 	mutex_unlock(&fip->ctlr_mutex);
- 	return error;
- }
-@@ -1736,8 +1739,9 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
- 
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 	fcf = fip->sel_fcf;
- 	if (!fcf || !fip->flogi_req_send)
- 		goto unlock;
-@@ -1764,7 +1768,7 @@ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- 	} else /* XXX */
- 		LIBFCOE_FIP_DBG(fip, "No FCF selected - defer send\n");
- unlock:
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- }
- 
- /**
 -- 
 2.40.1
 
