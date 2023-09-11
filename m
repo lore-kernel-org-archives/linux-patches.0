@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2554511710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEFAC433C7;
-	Mon, 11 Sep 2023 15:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E2511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C565C433C8;
+	Mon, 11 Sep 2023 15:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445492;
-	bh=LF5WJOwWVQjvGKAJxW4cL9Ty+GWVB4T4zLBXZ8lgwWo=;
+	s=korg; t=1694445494;
+	bh=npBSIXcGa/DR47Zj3NDq2hgqtHjTWn3g0IYIfIXR/u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cz0MvlaJoTtZjgAYsWvUCjn98OvRrvxlR1VC6GC8ds9bZfUlozDpWiTfmKh+HMiet
-	 EyaCQqz6ROF839bb7w3I/hA700g0A5Xq0ypuBIvqz1J4pwa6bX/uQDLRfH+sPlor6I
-	 LUlOkUtOmce2bpFaTqboo3LeOJH62EzG8KbVnuA0=
+	b=MXnhE4NBAl/kh3dprS/Aj8gBtyeG2eMsmcyYGqsQw4HBLl4TWADK/cglHuZvaZG2W
+	 ALGcSzwB6nF7bWFT3GEZgdCSFm5QIhb1ftEluxgnQLRtSWqxM8UDA3OsuQ7mQ1mp1M
+	 SUW1jy4p7q02HKj3oKLVR+O6x5N5cIA3Ih+zkf7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 359/600] clk: imx8mp: fix sai4 clock
-Date: Mon, 11 Sep 2023 15:46:32 +0200
-Message-ID: <20230911134644.277282302@linuxfoundation.org>
+Subject: [PATCH 6.1 368/600] drm/radeon: Use RMW accessors for changing LNKCTL
+Date: Mon, 11 Sep 2023 15:46:41 +0200
+Message-ID: <20230911134644.547046131@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,53 +36,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit c30f600f1f41dcf5ef0fb02e9a201f9b2e8f31bd ]
+[ Upstream commit 7189576e8a829130192b33c5b64e8a475369c776 ]
 
-The reference manual don't mention a SAI4 hardware block. This would be
-clock slice 78 which is skipped (TRM, page 237). Remove any reference to
-this clock to align the driver with the reality.
+Don't assume that only the driver would be accessing LNKCTL. ASPM policy
+changes can trigger write to LNKCTL outside of driver's control.  And in
+the case of upstream bridge, the driver does not even own the device it's
+changing the registers for.
 
-Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Link: https://lore.kernel.org/r/20230731142150.3186650-1-m.felsch@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Use RMW capability accessors which do proper locking to avoid losing
+concurrent updates to the register value.
+
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 8a7cd27679d0 ("drm/radeon/cik: add support for pcie gen1/2/3 switching")
+Fixes: b9d305dfb66c ("drm/radeon: implement pcie gen2/3 support for SI")
+Link: https://lore.kernel.org/r/20230717120503.15276-7-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/gpu/drm/radeon/cik.c | 36 ++++++++++-------------------------
+ drivers/gpu/drm/radeon/si.c  | 37 ++++++++++--------------------------
+ 2 files changed, 20 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 05c02f4e2a143..3d0d8f2c02dc1 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -177,10 +177,6 @@ static const char * const imx8mp_sai3_sels[] = {"osc_24m", "audio_pll1_out", "au
- 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
- 						"clk_ext3", "clk_ext4", };
+diff --git a/drivers/gpu/drm/radeon/cik.c b/drivers/gpu/drm/radeon/cik.c
+index 5819737c21c67..a6f3c811ceb8e 100644
+--- a/drivers/gpu/drm/radeon/cik.c
++++ b/drivers/gpu/drm/radeon/cik.c
+@@ -9534,17 +9534,8 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
+ 			u16 bridge_cfg2, gpu_cfg2;
+ 			u32 max_lw, current_lw, tmp;
  
--static const char * const imx8mp_sai4_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
--						"clk_ext1", "clk_ext2", };
+-			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-						  &bridge_cfg);
+-			pcie_capability_read_word(rdev->pdev, PCI_EXP_LNKCTL,
+-						  &gpu_cfg);
 -
- static const char * const imx8mp_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
- 						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
- 						"clk_ext2", "clk_ext3", };
-@@ -566,7 +562,6 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MP_CLK_SAI1] = imx8m_clk_hw_composite("sai1", imx8mp_sai1_sels, ccm_base + 0xa580);
- 	hws[IMX8MP_CLK_SAI2] = imx8m_clk_hw_composite("sai2", imx8mp_sai2_sels, ccm_base + 0xa600);
- 	hws[IMX8MP_CLK_SAI3] = imx8m_clk_hw_composite("sai3", imx8mp_sai3_sels, ccm_base + 0xa680);
--	hws[IMX8MP_CLK_SAI4] = imx8m_clk_hw_composite("sai4", imx8mp_sai4_sels, ccm_base + 0xa700);
- 	hws[IMX8MP_CLK_SAI5] = imx8m_clk_hw_composite("sai5", imx8mp_sai5_sels, ccm_base + 0xa780);
- 	hws[IMX8MP_CLK_SAI6] = imx8m_clk_hw_composite("sai6", imx8mp_sai6_sels, ccm_base + 0xa800);
- 	hws[IMX8MP_CLK_ENET_QOS] = imx8m_clk_hw_composite("enet_qos", imx8mp_enet_qos_sels, ccm_base + 0xa880);
+-			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
+-
+-			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(rdev->pdev, PCI_EXP_LNKCTL,
+-						   tmp16);
++			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
++			pcie_capability_set_word(rdev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
+ 
+ 			tmp = RREG32_PCIE_PORT(PCIE_LC_STATUS1);
+ 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
+@@ -9591,21 +9582,14 @@ static void cik_pcie_gen3_enable(struct radeon_device *rdev)
+ 				msleep(100);
+ 
+ 				/* linkctl */
+-				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(root, PCI_EXP_LNKCTL,
+-							   tmp16);
+-
+-				pcie_capability_read_word(rdev->pdev,
+-							  PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(rdev->pdev,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
++				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   bridge_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
++				pcie_capability_clear_and_set_word(rdev->pdev, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   gpu_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
+ 
+ 				/* linkctl2 */
+ 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
+diff --git a/drivers/gpu/drm/radeon/si.c b/drivers/gpu/drm/radeon/si.c
+index 8d5e4b25609d5..a91012447b56e 100644
+--- a/drivers/gpu/drm/radeon/si.c
++++ b/drivers/gpu/drm/radeon/si.c
+@@ -7131,17 +7131,8 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
+ 			u16 bridge_cfg2, gpu_cfg2;
+ 			u32 max_lw, current_lw, tmp;
+ 
+-			pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-						  &bridge_cfg);
+-			pcie_capability_read_word(rdev->pdev, PCI_EXP_LNKCTL,
+-						  &gpu_cfg);
+-
+-			tmp16 = bridge_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(root, PCI_EXP_LNKCTL, tmp16);
+-
+-			tmp16 = gpu_cfg | PCI_EXP_LNKCTL_HAWD;
+-			pcie_capability_write_word(rdev->pdev, PCI_EXP_LNKCTL,
+-						   tmp16);
++			pcie_capability_set_word(root, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
++			pcie_capability_set_word(rdev->pdev, PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_HAWD);
+ 
+ 			tmp = RREG32_PCIE(PCIE_LC_STATUS1);
+ 			max_lw = (tmp & LC_DETECTED_LINK_WIDTH_MASK) >> LC_DETECTED_LINK_WIDTH_SHIFT;
+@@ -7188,22 +7179,14 @@ static void si_pcie_gen3_enable(struct radeon_device *rdev)
+ 				msleep(100);
+ 
+ 				/* linkctl */
+-				pcie_capability_read_word(root, PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (bridge_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(root,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
+-
+-				pcie_capability_read_word(rdev->pdev,
+-							  PCI_EXP_LNKCTL,
+-							  &tmp16);
+-				tmp16 &= ~PCI_EXP_LNKCTL_HAWD;
+-				tmp16 |= (gpu_cfg & PCI_EXP_LNKCTL_HAWD);
+-				pcie_capability_write_word(rdev->pdev,
+-							   PCI_EXP_LNKCTL,
+-							   tmp16);
++				pcie_capability_clear_and_set_word(root, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   bridge_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
++				pcie_capability_clear_and_set_word(rdev->pdev, PCI_EXP_LNKCTL,
++								   PCI_EXP_LNKCTL_HAWD,
++								   gpu_cfg &
++								   PCI_EXP_LNKCTL_HAWD);
+ 
+ 				/* linkctl2 */
+ 				pcie_capability_read_word(root, PCI_EXP_LNKCTL2,
 -- 
 2.40.1
 
