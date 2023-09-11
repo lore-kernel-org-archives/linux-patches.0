@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEDD1170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E048BC433C8;
-	Mon, 11 Sep 2023 14:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EBD1170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A1EC433C7;
+	Mon, 11 Sep 2023 14:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441482;
-	bh=XjLynAFD1tL8tC49l+AyDhesGfp5tnnXrb+f4RWzW9M=;
+	s=korg; t=1694441485;
+	bh=62AUO7oK6rwmZnOgCBnAnqXOU8ugySOKp8uhrI80vl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIdpVOGsMU2TV2S4YzpM7Xrremdk8YX7A+L8k2dFwPovyxJxQVs52uV6wwcyzvL0d
-	 n5ecPvizrUTbNXGKdgfhaaWxaRQhYLdXcn4XWWF3s8PHIoEqzEmZxBOFQDHyH3WFrl
-	 5YGUa7bNHxfsFX0ohOgQUCyyMRgiiqEzZr2r7xz8=
+	b=x10JBIb1Av6RV+QwRMdbT8SZ6SgrXrpfL62yhnbWOkgQaPaFFwPRHcJJQcsnkDj+j
+	 +cAxoYKS53D2z1F8DpMlTmbfxyzNPT3VwTZ4jtATXAbxC8gq94wfjorN8kRHTNN7q8
+	 3Tfju+sPRDxOi26znA6gr6jJ0p7yaC7MyPVi+ZYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Daire McNamara <daire.mcnamara@microchip.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 401/739] clk: qcom: gcc-sm6350: Fix gcc_sdcc2_apps_clk_src
-Date: Mon, 11 Sep 2023 15:43:20 +0200
-Message-ID: <20230911134702.381311220@linuxfoundation.org>
+Subject: [PATCH 6.5 402/739] PCI: microchip: Correct the DED and SEC interrupt bit offsets
+Date: Mon, 11 Sep 2023 15:43:21 +0200
+Message-ID: <20230911134702.408141456@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,36 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Daire McNamara <daire.mcnamara@microchip.com>
 
-[ Upstream commit df04d166d1f346dbf740bbea64a3bed3e7f14c8d ]
+[ Upstream commit 6d473a5a26136edf55c435a1c433e52910e03926 ]
 
-GPLL7 is not on by default, which causes a "gcc_sdcc2_apps_clk_src: rcg
-didn't update its configuration" error when booting. Set .flags =
-CLK_OPS_PARENT_ENABLE to fix the error.
+The SEC and DED interrupt bits are laid out the wrong way round so the SEC
+interrupt handler attempts to mask, unmask, and clear the DED interrupt
+and vice versa. Correct the bit offsets so that each interrupt handler
+operates properly.
 
-Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230804-sm6350-sdcc2-v1-1-3d946927d37d@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230728131401.1615724-2-daire.mcnamara@microchip.com
+Fixes: 6f15a9c9f941 ("PCI: microchip: Add Microchip PolarFire PCIe controller driver")
+Signed-off-by: Daire McNamara <daire.mcnamara@microchip.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm6350.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/pcie-microchip-host.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
-index 9b4e4bb059635..cf4a7b6e0b23a 100644
---- a/drivers/clk/qcom/gcc-sm6350.c
-+++ b/drivers/clk/qcom/gcc-sm6350.c
-@@ -641,6 +641,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parent_data_8,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_8),
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/pci/controller/pcie-microchip-host.c b/drivers/pci/controller/pcie-microchip-host.c
+index 5e710e4854646..dd5245904c874 100644
+--- a/drivers/pci/controller/pcie-microchip-host.c
++++ b/drivers/pci/controller/pcie-microchip-host.c
+@@ -167,12 +167,12 @@
+ #define EVENT_PCIE_DLUP_EXIT			2
+ #define EVENT_SEC_TX_RAM_SEC_ERR		3
+ #define EVENT_SEC_RX_RAM_SEC_ERR		4
+-#define EVENT_SEC_AXI2PCIE_RAM_SEC_ERR		5
+-#define EVENT_SEC_PCIE2AXI_RAM_SEC_ERR		6
++#define EVENT_SEC_PCIE2AXI_RAM_SEC_ERR		5
++#define EVENT_SEC_AXI2PCIE_RAM_SEC_ERR		6
+ #define EVENT_DED_TX_RAM_DED_ERR		7
+ #define EVENT_DED_RX_RAM_DED_ERR		8
+-#define EVENT_DED_AXI2PCIE_RAM_DED_ERR		9
+-#define EVENT_DED_PCIE2AXI_RAM_DED_ERR		10
++#define EVENT_DED_PCIE2AXI_RAM_DED_ERR		9
++#define EVENT_DED_AXI2PCIE_RAM_DED_ERR		10
+ #define EVENT_LOCAL_DMA_END_ENGINE_0		11
+ #define EVENT_LOCAL_DMA_END_ENGINE_1		12
+ #define EVENT_LOCAL_DMA_ERROR_ENGINE_0		13
 -- 
 2.40.1
 
