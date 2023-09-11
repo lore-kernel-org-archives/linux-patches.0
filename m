@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C316A11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452D7C433C8;
-	Mon, 11 Sep 2023 15:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB3B1171B
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE11C433C8;
+	Mon, 11 Sep 2023 15:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444509;
-	bh=YPqmbEIYTFvLj3mW8HCOa37jnQRf5cjRssdqFc3OEH4=;
+	s=korg; t=1694444512;
+	bh=UoQd5jayEi8d5kM4O0PQ609q0Zfdv1zYwxmMiI/VoiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9rURQd7MGdZr4wcSogmSR1gRVF6kQjMJGuJTRv86v21ITQmf93B5+ZOQ1AuSxtWd
-	 HzEWXQPD+2mMV4AX71ODtjYirKRZtHLW+bnLMQvp3/E2N/KU7XfPN8/aMgb9khoFFs
-	 vJWqzs8Zb99/XHhWS0uk/yybrP6XnVNxTR4A8mTk=
+	b=iF3jeonTG4a6yrz17D4ueAtxWP7T52DV4BqrdH98It+2zwyUgn2bBFEhXuavlIIyi
+	 XcjWo89tyXEv0+dI1ykAnR7vlv/BZ0ijERcsNcCVfvBQZfFe9vEynfH96gPED+a5az
+	 ApfJIxzbCPJTTKChIRWslCIh1KBv86wQkMmVuKhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <rjordrigo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/600] scsi: ufs: Try harder to change the power mode
-Date: Mon, 11 Sep 2023 15:40:36 +0200
-Message-ID: <20230911134633.727473100@linuxfoundation.org>
+Subject: [PATCH 6.1 004/600] Revert "Revert drm/amd/display: Enable Freesync Video Mode by default"
+Date: Mon, 11 Sep 2023 15:40:37 +0200
+Message-ID: <20230911134633.754524708@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,42 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 579a4e9dbd53978cad8df88dc612837cdd210ce0 ]
+[ Upstream commit 11b92df8a2f7f4605ccc764ce6ae4a72760674df ]
 
-Instead of only retrying the START STOP UNIT command if a unit attention is
-reported, repeat it if any SCSI error is reported by the device or if the
-command timed out.
+This reverts commit 4243c84aa082d8fba70c45f48eb2bb5c19799060.
 
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221018202958.1902564-8-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: fe8637f7708c ("scsi: ufs: core: Increase the START STOP UNIT timeout from one to ten seconds")
+Enables freesync video by default, since the hang and corruption issue
+on eDP panels are now fixed.
+
+Acked-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Rodrigo Siqueira <rjordrigo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 977bd4b9dd0b4..36437d39b93c8 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8830,9 +8830,11 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 	for (retries = 3; retries > 0; --retries) {
- 		ret = scsi_execute(sdp, cmd, DMA_NONE, NULL, 0, NULL, &sshdr,
- 				   HZ, 0, 0, RQF_PM, NULL);
--		if (!scsi_status_is_check_condition(ret) ||
--				!scsi_sense_valid(&sshdr) ||
--				sshdr.sense_key != UNIT_ATTENTION)
-+		/*
-+		 * scsi_execute() only returns a negative value if the request
-+		 * queue is dying.
-+		 */
-+		if (ret <= 0)
- 			break;
- 	}
- 	if (ret) {
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 249b269e2cc53..9beb326a9528e 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5921,8 +5921,7 @@ create_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+ 		 */
+ 		DRM_DEBUG_DRIVER("No preferred mode found\n");
+ 	} else {
+-		recalculate_timing = amdgpu_freesync_vid_mode &&
+-				 is_freesync_video_mode(&mode, aconnector);
++		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
+ 		if (recalculate_timing) {
+ 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
+ 			drm_mode_copy(&saved_mode, &mode);
+@@ -7016,7 +7015,7 @@ static void amdgpu_dm_connector_add_freesync_modes(struct drm_connector *connect
+ 	struct amdgpu_dm_connector *amdgpu_dm_connector =
+ 		to_amdgpu_dm_connector(connector);
+ 
+-	if (!(amdgpu_freesync_vid_mode && edid))
++	if (!edid)
+ 		return;
+ 
+ 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
+@@ -9022,8 +9021,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 		 * TODO: Refactor this function to allow this check to work
+ 		 * in all conditions.
+ 		 */
+-		if (amdgpu_freesync_vid_mode &&
+-		    dm_new_crtc_state->stream &&
++		if (dm_new_crtc_state->stream &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
+ 			goto skip_modeset;
+ 
+@@ -9063,7 +9061,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 		}
+ 
+ 		/* Now check if we should set freesync video mode */
+-		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
++		if (dm_new_crtc_state->stream &&
+ 		    dc_is_stream_unchanged(new_stream, dm_old_crtc_state->stream) &&
+ 		    dc_is_stream_scaling_unchanged(new_stream, dm_old_crtc_state->stream) &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state,
+@@ -9076,7 +9074,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 			set_freesync_fixed_config(dm_new_crtc_state);
+ 
+ 			goto skip_modeset;
+-		} else if (amdgpu_freesync_vid_mode && aconnector &&
++		} else if (aconnector &&
+ 			   is_freesync_video_mode(&new_crtc_state->mode,
+ 						  aconnector)) {
+ 			struct drm_display_mode *high_mode;
 -- 
 2.40.1
 
