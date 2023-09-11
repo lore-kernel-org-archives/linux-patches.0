@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B42C11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:45:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B024FC433C8;
-	Mon, 11 Sep 2023 14:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A7A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:45:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CD8C433C7;
+	Mon, 11 Sep 2023 14:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443551;
-	bh=1tv5lHnphvqCEYI4ai3v7Jx0SuaNthjjvbemHWnI/U8=;
+	s=korg; t=1694443554;
+	bh=92w0w1a/TXZMI9PT8llNX3hRwoDz2EtWaXlNivzP28E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CH+ndZv6y5bI5JTSRVLd4IFEQv1AcPQy+fkgRkvKKqw6OkYycMG0JUC1H8bTQTDy/
-	 lEx27M1VDb+62g/35N5FkWYLahV5e3AGjiCfA9KzcAwReZnsAgFGFEJxnsI6+dxK16
-	 H5wkdZcA9FA3i+S/JHhksJ2ihhbRA9jpA6PWXS/E=
+	b=oc0F+92ZEJbC7jy0fW1mgXrEEwFQkQBQurJbcYbI6V5NZDogF3v7Eva5cka3ALZln
+	 d+g473VgfUuonwjBhRPGwKXYPrkPdg8Tsd+65Ogo1snnF3z66lFt/Ga3Sdg1hsCHwd
+	 EhW34l0efFMmMglV2jXoqhilu9Y7Y2EgpwSsV9Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	David Wronek <davidwronek@gmail.com>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 417/737] PCI: qcom-ep: Switch MHI bus master clock off during L1SS
-Date: Mon, 11 Sep 2023 15:44:36 +0200
-Message-ID: <20230911134702.259587267@linuxfoundation.org>
+Subject: [PATCH 6.4 391/737] arm64: dts: qcom: msm8996: Fix dsi1 interrupts
+Date: Mon, 11 Sep 2023 15:44:10 +0200
+Message-ID: <20230911134701.515153922@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,51 +36,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: David Wronek <davidwronek@gmail.com>
 
-[ Upstream commit b9cbc06049cb6b7a322d708c2098195fb9fdcc4c ]
+[ Upstream commit bd3b4ac11845b428996cfd2c7b8302ba6a07340d ]
 
-Currently, as part of the qcom_pcie_perst_deassert() function, instead
-of writing the updated value to clear PARF_MSTR_AXI_CLK_EN, the variable
-"val" is re-read.
+Fix IRQ flags mismatch which was keeping dsi1 from probing by changing
+interrupts = <4> to interrupts = <5>.
 
-This must be fixed to ensure that the master clock supplied to the MHI
-bus is correctly gated during L1.1/L1.2 to save power.
-
-Thus, replace the line that re-reads "val" with a line that writes the
-updated value to the register to clear PARF_MSTR_AXI_CLK_EN.
-
-[kwilczynski: commit log]
-Fixes: c457ac029e44 ("PCI: qcom-ep: Gate Master AXI clock to MHI bus during L1SS")
-Link: https://lore.kernel.org/linux-pci/20230627141036.11600-1-manivannan.sadhasivam@linaro.org
-Reported-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fixes: 2752bb7d9b58 ("arm64: dts: qcom: msm8996: add second DSI interface")
+Signed-off-by: David Wronek <davidwronek@gmail.com>
+Acked-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230805130936.359860-2-davidwronek@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 19b32839ea261..043b356d7d72d 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -415,7 +415,7 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 	/* Gate Master AXI clock to MHI bus during L1SS */
- 	val = readl_relaxed(pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
- 	val &= ~PARF_MSTR_AXI_CLK_EN;
--	val = readl_relaxed(pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
-+	writel_relaxed(val, pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 157d2a2ec32ad..61da7fc281b32 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1075,7 +1075,7 @@ dsi1: dsi@996000 {
+ 				reg-names = "dsi_ctrl";
  
- 	dw_pcie_ep_init_notify(&pcie_ep->pci.ep);
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4>;
++				interrupts = <5>;
  
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_BYTE1_CLK>,
 -- 
 2.40.1
 
