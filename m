@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C6011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019D1C433C9;
-	Mon, 11 Sep 2023 15:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D54611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:13:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F2BC433C8;
+	Mon, 11 Sep 2023 15:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445232;
-	bh=uBZ8+scG1ZeyTz5USd/W8aisXwumTDK0fL4LtBz3r/E=;
+	s=korg; t=1694445235;
+	bh=v2zBGQUyyx7eUZ4dJMk6AuhhnAIoHC77HN5out458bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KX24wLFnsRKvg0NbPQ/VzxT9P8ShHlbuuR7uCPeeVCB4q5LLNQ2CTztHnF+w6Le+0
-	 VnpEjZc9qcGJyf3GEneqBBQNdZzR2RT2GSbf/Y0I8Y6a/L2M5Mvh+yMPq0Kb9goRSO
-	 9o/Nv+4qjf7cZEdQSAbcVX47fR4Ahyx+IGXRiLxk=
+	b=xcBw9lxC/3dXl+scozuOndirxw8m0uFFIN7wC99XvKE3fysoK4DGqOo48NGu5P8b0
+	 nI+ljrglI6HbFBt22LkaKitdGh/4t/hrL/14D/MzfAi/WR61lG0LCFFNXN6uIapXsO
+	 q3w4siIRDo9OpYdazaB7M/lO0NaSoyjLm/TzY3f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Xiao Ni <xni@redhat.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 274/600] drm/amdgpu: Update min() to min_t() in amdgpu_info_ioctl
-Date: Mon, 11 Sep 2023 15:45:07 +0200
-Message-ID: <20230911134641.693639399@linuxfoundation.org>
+Subject: [PATCH 6.1 275/600] md: Factor out is_md_suspended helper
+Date: Mon, 11 Sep 2023 15:45:08 +0200
+Message-ID: <20230911134641.723842572@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,90 +34,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit a0cc8e1512ad72c9f97cdcb76d42715730adaf62 ]
+[ Upstream commit d19329133d25ad3dc32f8a62635692cb2f189014 ]
 
-Fixes the following:
+This helper function will be used in next patch. It's easy for
+understanding.
 
-WARNING: min() should probably be min_t(size_t, size, sizeof(ip))
-+               ret = copy_to_user(out, &ip, min((size_t)size, sizeof(ip)));
-
-And other style fixes:
-
-WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
-WARNING: Missing a blank line after declarations
-
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Stable-dep-of: e24ed04389f9 ("md: restore 'noio_flag' for the last mddev_resume()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/md/md.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 4e42dcb1950f7..9e3313dd956ae 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -554,6 +554,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 			crtc = (struct drm_crtc *)minfo->crtcs[i];
- 			if (crtc && crtc->base.id == info->mode_crtc.id) {
- 				struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
-+
- 				ui32 = amdgpu_crtc->crtc_id;
- 				found = 1;
- 				break;
-@@ -572,7 +573,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		if (ret)
- 			return ret;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 45daba0eb9310..abb6c03c85b29 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -368,6 +368,13 @@ EXPORT_SYMBOL_GPL(md_new_event);
+ static LIST_HEAD(all_mddevs);
+ static DEFINE_SPINLOCK(all_mddevs_lock);
  
--		ret = copy_to_user(out, &ip, min((size_t)size, sizeof(ip)));
-+		ret = copy_to_user(out, &ip, min_t(size_t, size, sizeof(ip)));
- 		return ret ? -EFAULT : 0;
++static bool is_md_suspended(struct mddev *mddev)
++{
++	if (mddev->suspended)
++		return true;
++	else
++		return false;
++}
+ /* Rather than calling directly into the personality make_request function,
+  * IO requests come here first so that we can check if the device is
+  * being suspended pending a reconfiguration.
+@@ -377,7 +384,7 @@ static DEFINE_SPINLOCK(all_mddevs_lock);
+  */
+ static bool is_suspended(struct mddev *mddev, struct bio *bio)
+ {
+-	if (mddev->suspended)
++	if (is_md_suspended(mddev))
+ 		return true;
+ 	if (bio_data_dir(bio) != WRITE)
+ 		return false;
+@@ -422,7 +429,7 @@ void md_handle_request(struct mddev *mddev, struct bio *bio)
+ 		goto check_suspended;
  	}
- 	case AMDGPU_INFO_HW_IP_COUNT: {
-@@ -718,17 +719,18 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 				    ? -EFAULT : 0;
- 	}
- 	case AMDGPU_INFO_READ_MMR_REG: {
--		unsigned n, alloc_size;
-+		unsigned int n, alloc_size;
- 		uint32_t *regs;
--		unsigned se_num = (info->read_mmr_reg.instance >>
-+		unsigned int se_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SE_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SE_INDEX_MASK;
--		unsigned sh_num = (info->read_mmr_reg.instance >>
-+		unsigned int sh_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
  
- 		/* set full masks if the userspace set all bits
--		 * in the bitfields */
-+		 * in the bitfields
-+		 */
- 		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
- 			se_num = 0xffffffff;
- 		else if (se_num >= AMDGPU_GFX_MAX_SE)
-@@ -852,7 +854,7 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		return ret;
+-	if (atomic_dec_and_test(&mddev->active_io) && mddev->suspended)
++	if (atomic_dec_and_test(&mddev->active_io) && is_md_suspended(mddev))
+ 		wake_up(&mddev->sb_wait);
+ }
+ EXPORT_SYMBOL(md_handle_request);
+@@ -6238,7 +6245,7 @@ EXPORT_SYMBOL_GPL(md_stop_writes);
+ static void mddev_detach(struct mddev *mddev)
+ {
+ 	md_bitmap_wait_behind_writes(mddev);
+-	if (mddev->pers && mddev->pers->quiesce && !mddev->suspended) {
++	if (mddev->pers && mddev->pers->quiesce && !is_md_suspended(mddev)) {
+ 		mddev->pers->quiesce(mddev, 1);
+ 		mddev->pers->quiesce(mddev, 0);
  	}
- 	case AMDGPU_INFO_VCE_CLOCK_TABLE: {
--		unsigned i;
-+		unsigned int i;
- 		struct drm_amdgpu_info_vce_clock_table vce_clk_table = {};
- 		struct amd_vce_state *vce_state;
+@@ -8548,7 +8555,7 @@ bool md_write_start(struct mddev *mddev, struct bio *bi)
+ 		return true;
+ 	wait_event(mddev->sb_wait,
+ 		   !test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags) ||
+-		   mddev->suspended);
++		   is_md_suspended(mddev));
+ 	if (test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags)) {
+ 		percpu_ref_put(&mddev->writes_pending);
+ 		return false;
+@@ -9276,7 +9283,7 @@ void md_check_recovery(struct mddev *mddev)
+ 		wake_up(&mddev->sb_wait);
+ 	}
  
+-	if (mddev->suspended)
++	if (is_md_suspended(mddev))
+ 		return;
+ 
+ 	if (mddev->bitmap)
 -- 
 2.40.1
 
