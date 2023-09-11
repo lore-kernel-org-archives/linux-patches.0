@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48B1171B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40285C433C9;
-	Mon, 11 Sep 2023 15:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2EE1171B
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3333C433C8;
+	Mon, 11 Sep 2023 15:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444523;
-	bh=Y8VnIeHJk7nfX7Oi5DUWceZHLg5jZDw4gKYuHrMqIZ8=;
+	s=korg; t=1694444526;
+	bh=Lt1DKVdQWbJn/6aPuY3u5XWxJ3qu7InJMh4b+tQNUr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GoESj9hQba+6Gvbcyoi+Px6LoonNxiWLTmbSCz/I27ZqlkfxVJEtTgZ1vHQHZD0ON
-	 WF1XKCy0A+9CwJ5Y9+61w87KFzxvFnKmbsFO91+6RXEUPC9QtrndBixrajI+PZvI5t
-	 7y4exx5y9hutaAo3FKtUukkqvHPHu2utJLuFmwCA=
+	b=QuJol/dRDdn67F8Sk+Mu9X6nfh002ieyTdYqgmLLlYBSbXvuXky/mfop6y8t8ETH+
+	 t9k77Es65Sq428jncE1x694hKG21PjC50Gk7fKKzDytM32viqOEY4Se6lQQlvnUIrp
+	 O2z90PSEvgSzMmZ7QMmsm37dYFEQdtzXcINbplq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/600] media: uapi: HEVC: Add num_delta_pocs_of_ref_rps_idx field
-Date: Mon, 11 Sep 2023 15:40:41 +0200
-Message-ID: <20230911134633.865620166@linuxfoundation.org>
+Subject: [PATCH 6.1 009/600] Revert "MIPS: unhide PATA_PLATFORM"
+Date: Mon, 11 Sep 2023 15:40:42 +0200
+Message-ID: <20230911134633.893259953@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,72 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit ae440c5da33cdb90a109f2df2a0360c67b3fab7e ]
+[ Upstream commit 1e13da548fbffb807633df85a244b70caa90bdf7 ]
 
-Some drivers firmwares parse by themselves slice header and need
-num_delta_pocs_of_ref_rps_idx value to parse slice header
-short_term_ref_pic_set().
-Use one of the 4 reserved bytes to store this value without
-changing the v4l2_ctrl_hevc_decode_params structure size and padding.
+Revert commit 75b18aac6fa3 ("MIPS: unhide PATA_PLATFORM") now that
+HAVE_PATA_PLATFORM is set selectively for all the relevant platforms.
 
-This value also exist in DXVA API.
+Verified with `db1xxx_defconfig' and `sb1250_swarm_defconfig' by making
+sure PATA_PLATFORM is still there in `.config' with this change applied,
+and with `malta_defconfig' by making sure it's now gone.
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-[hverkuil: fix typo in num_delta_pocs_of_ref_rps_idx doc]
-Stable-dep-of: 297160d411e3 ("media: mediatek: vcodec: move core context from device to each instance")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec-stateless.rst  | 7 +++++++
- include/uapi/linux/v4l2-controls.h                         | 6 +++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ arch/mips/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst
-index cd33857d947d3..0ef49647c90bd 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec-stateless.rst
-@@ -2923,6 +2923,13 @@ This structure contains all loop filter related parameters. See sections
-       - ``poc_lt_curr[V4L2_HEVC_DPB_ENTRIES_NUM_MAX]``
-       - PocLtCurr as described in section 8.3.2 "Decoding process for reference
-         picture set": provides the index of the long term references in DPB array.
-+    * - __u8
-+      - ``num_delta_pocs_of_ref_rps_idx``
-+      - When the short_term_ref_pic_set_sps_flag in the slice header is equal to 0,
-+        it is the same as the derived value NumDeltaPocs[RefRpsIdx]. It can be used to parse
-+        the RPS data in slice headers instead of skipping it with @short_term_ref_pic_set_size.
-+        When the value of short_term_ref_pic_set_sps_flag in the slice header is
-+        equal to 1, num_delta_pocs_of_ref_rps_idx shall be set to 0.
-     * - struct :c:type:`v4l2_hevc_dpb_entry`
-       - ``dpb[V4L2_HEVC_DPB_ENTRIES_NUM_MAX]``
-       - The decoded picture buffer, for meta-data about reference frames.
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index b5e7d082b8adf..d4a4e3cab3c2a 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -2411,6 +2411,9 @@ struct v4l2_ctrl_hevc_slice_params {
-  * @poc_st_curr_after: provides the index of the short term after references
-  *		       in DPB array
-  * @poc_lt_curr: provides the index of the long term references in DPB array
-+ * @num_delta_pocs_of_ref_rps_idx: same as the derived value NumDeltaPocs[RefRpsIdx],
-+ *				   can be used to parse the RPS data in slice headers
-+ *				   instead of skipping it with @short_term_ref_pic_set_size.
-  * @reserved: padding field. Should be zeroed by applications.
-  * @dpb: the decoded picture buffer, for meta-data about reference frames
-  * @flags: see V4L2_HEVC_DECODE_PARAM_FLAG_{}
-@@ -2426,7 +2429,8 @@ struct v4l2_ctrl_hevc_decode_params {
- 	__u8	poc_st_curr_before[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
- 	__u8	poc_st_curr_after[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
- 	__u8	poc_lt_curr[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
--	__u8	reserved[4];
-+	__u8	num_delta_pocs_of_ref_rps_idx;
-+	__u8	reserved[3];
- 	struct	v4l2_hevc_dpb_entry dpb[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
- 	__u64	flags;
- };
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index cf1fbf4eaa8a0..0e62f5edaee2e 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -83,7 +83,6 @@ config MIPS
+ 	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
+ 	select HAVE_MOD_ARCH_SPECIFIC
+ 	select HAVE_NMI
+-	select HAVE_PATA_PLATFORM
+ 	select HAVE_PERF_EVENTS
+ 	select HAVE_PERF_REGS
+ 	select HAVE_PERF_USER_STACK_DUMP
 -- 
 2.40.1
 
