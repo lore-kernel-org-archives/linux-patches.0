@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909B611710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1454EC433C8;
-	Mon, 11 Sep 2023 15:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5744511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD87C433C8;
+	Mon, 11 Sep 2023 15:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445266;
-	bh=DLac8zRKvget7OzyxUqIsVExlNmQOS18JFZlgucc1rA=;
+	s=korg; t=1694445269;
+	bh=zZ/Hs/Tg573edVUCpgoTtzsh55tpZ4K0kC0Lwk10sHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0TNcCry/QITCa/uJsXfY3HZn9xvfRk6yvjyoemMaIEEfqyCM0vMhkhND+1VDCilw
-	 8jHkjDmVCLzMm09rNEsmrEgunLLIJ3MBLYXNgiLxGUfKpyWNyCkEfAecV2+ae1edjq
-	 ErNUSorJSTi5p0/shupSi1BMaQATrgJWHy0nrSXI=
+	b=qyTl9ORGkPRuqF5UGDjGoCyx+53p3dTPWnVSsrhZdiWQiDoFXwDGASeh2eC8MZTvq
+	 uhQi5LORX/YUCPoOeqzbvW4Tr433dZPYXDcLv/PYXJNKfVPQsjx3XhqY/HKQMHkKW1
+	 hQo1nw35Zm4yzMvI8+vf/PcvvQLzYv+NyHnkDUPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeyan Li <qaz6750@outlook.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 285/600] arm64: dts: qcom: sm8150: Fix the I2C7 interrupt
-Date: Mon, 11 Sep 2023 15:45:18 +0200
-Message-ID: <20230911134642.024574063@linuxfoundation.org>
+Subject: [PATCH 6.1 286/600] ARM: dts: BCM53573: Fix Tenda AC9 switch CPU port
+Date: Mon, 11 Sep 2023 15:45:19 +0200
+Message-ID: <20230911134642.054874902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,42 +34,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zeyan Li <qaz6750@outlook.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit f9568d22ce06192a7e14bda3a29dc216659554ff ]
+[ Upstream commit 7141209db9c335ab261a17933809a3e660ebdc12 ]
 
-I2C6 and I2C7 use the same interrupts, which is incorrect.
-In the downstream kernel, I2C7 has interrupts of 608 instead of 607.
+Primary Ethernet interface is connected to the port 8 (not 5).
 
-Fixes: 81bee6953b58 ("arm64: dts: qcom: sm8150: add i2c nodes")
-Signed-off-by: Zeyan Li <qaz6750@outlook.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/SY7P282MB378712225CBCEA95FE71554DB201A@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 64612828628c ("ARM: dts: BCM53573: Add Tenda AC9 switch ports")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230723195416.7831-1-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/bcm47189-tenda-ac9.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 78ae4b9eaa106..f049fb42e3ca8 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1196,7 +1196,7 @@ i2c7: i2c@89c000 {
- 				dma-names = "tx", "rx";
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_i2c7_default>;
--				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				status = "disabled";
+diff --git a/arch/arm/boot/dts/bcm47189-tenda-ac9.dts b/arch/arm/boot/dts/bcm47189-tenda-ac9.dts
+index 55b92645b0f1f..b7c7bf0be76f4 100644
+--- a/arch/arm/boot/dts/bcm47189-tenda-ac9.dts
++++ b/arch/arm/boot/dts/bcm47189-tenda-ac9.dts
+@@ -135,8 +135,8 @@ port@4 {
+ 			label = "lan4";
+ 		};
+ 
+-		port@5 {
+-			reg = <5>;
++		port@8 {
++			reg = <8>;
+ 			label = "cpu";
+ 			ethernet = <&gmac0>;
+ 		};
 -- 
 2.40.1
 
