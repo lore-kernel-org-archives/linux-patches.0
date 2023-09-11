@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC101170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D31AC433C7;
-	Mon, 11 Sep 2023 14:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B840F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304A6C433C7;
+	Mon, 11 Sep 2023 14:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442251;
-	bh=G/G+u6IsulNRZWBS0S4rD91Na2a41MiVEYd05AHSv2Q=;
+	s=korg; t=1694442254;
+	bh=i9aH3nMcTI6jsU4laxXJlZho2uaVU1vkTjTzv6aJYbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8GJugz3rxi2UcLHzypQ5NFVKGUXFosjvkXvm0UQmtwRmVttA6EeJW1kjDl6yBOnF
-	 fuih9o4j1se31LakDgxh0di/zww/14J0u2S5P7PYyRzq0CUWLET3HY8qWMo3Unf6/S
-	 yI1PlvhzlOMHS2JRaLa0e1hZdCwGZv8Pr7BSyRkk=
+	b=JF1eD+R1hDaQp3cv8UFrXbaCI/X68IyFPlAlWcc4T5vNNWl6tGHtPDuNfjdSFnXXc
+	 SHAzLyCsVThnMgeMRYjHWHXT+x9tVJ4GF1iGf19KCD+O7g4JX/l2B9ZU/ufU761I1c
+	 AwmhXkgHWQaouvRMIvdfd1dtL6WW2+hmMrY+Rv9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c74fea926a78b8a91042@syzkaller.appspotmail.com,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.5 673/739] io_uring: Dont set affinity on a dying sqpoll thread
-Date: Mon, 11 Sep 2023 15:47:52 +0200
-Message-ID: <20230911134709.902365697@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.5 674/739] arm64: csum: Fix OoB access in IP checksum code for negative lengths
+Date: Mon, 11 Sep 2023 15:47:53 +0200
+Message-ID: <20230911134709.929138633@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,105 +40,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Will Deacon <will@kernel.org>
 
-commit bd6fc5da4c51107e1e0cec4a3a07963d1dae2c84 upstream.
+commit 8bd795fedb8450ecbef18eeadbd23ed8fc7630f5 upstream.
 
-Syzbot reported a null-ptr-deref of sqd->thread inside
-io_sqpoll_wq_cpu_affinity.  It turns out the sqd->thread can go away
-from under us during io_uring_register, in case the process gets a
-fatal signal during io_uring_register.
+Although commit c2c24edb1d9c ("arm64: csum: Fix pathological zero-length
+calls") added an early return for zero-length input, syzkaller has
+popped up with an example of a _negative_ length which causes an
+undefined shift and an out-of-bounds read:
 
-It is not particularly hard to hit the race, and while I am not sure
-this is the exact case hit by syzbot, it solves it.  Finally, checking
-->thread is enough to close the race because we locked sqd while
-"parking" the thread, thus preventing it from going away.
+ | BUG: KASAN: slab-out-of-bounds in do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
+ | Read of size 4294966928 at addr ffff0000d7ac0170 by task syz-executor412/5975
+ |
+ | CPU: 0 PID: 5975 Comm: syz-executor412 Not tainted 6.4.0-rc4-syzkaller-g908f31f2a05b #0
+ | Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
+ | Call trace:
+ |  dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:233
+ |  show_stack+0x2c/0x44 arch/arm64/kernel/stacktrace.c:240
+ |  __dump_stack lib/dump_stack.c:88 [inline]
+ |  dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
+ |  print_address_description mm/kasan/report.c:351 [inline]
+ |  print_report+0x174/0x514 mm/kasan/report.c:462
+ |  kasan_report+0xd4/0x130 mm/kasan/report.c:572
+ |  kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:187
+ |  __kasan_check_read+0x20/0x30 mm/kasan/shadow.c:31
+ |  do_csum+0x44/0x254 arch/arm64/lib/csum.c:39
+ |  csum_partial+0x30/0x58 lib/checksum.c:128
+ |  gso_make_checksum include/linux/skbuff.h:4928 [inline]
+ |  __udp_gso_segment+0xaf4/0x1bc4 net/ipv4/udp_offload.c:332
+ |  udp6_ufo_fragment+0x540/0xca0 net/ipv6/udp_offload.c:47
+ |  ipv6_gso_segment+0x5cc/0x1760 net/ipv6/ip6_offload.c:119
+ |  skb_mac_gso_segment+0x2b4/0x5b0 net/core/gro.c:141
+ |  __skb_gso_segment+0x250/0x3d0 net/core/dev.c:3401
+ |  skb_gso_segment include/linux/netdevice.h:4859 [inline]
+ |  validate_xmit_skb+0x364/0xdbc net/core/dev.c:3659
+ |  validate_xmit_skb_list+0x94/0x130 net/core/dev.c:3709
+ |  sch_direct_xmit+0xe8/0x548 net/sched/sch_generic.c:327
+ |  __dev_xmit_skb net/core/dev.c:3805 [inline]
+ |  __dev_queue_xmit+0x147c/0x3318 net/core/dev.c:4210
+ |  dev_queue_xmit include/linux/netdevice.h:3085 [inline]
+ |  packet_xmit+0x6c/0x318 net/packet/af_packet.c:276
+ |  packet_snd net/packet/af_packet.c:3081 [inline]
+ |  packet_sendmsg+0x376c/0x4c98 net/packet/af_packet.c:3113
+ |  sock_sendmsg_nosec net/socket.c:724 [inline]
+ |  sock_sendmsg net/socket.c:747 [inline]
+ |  __sys_sendto+0x3b4/0x538 net/socket.c:2144
 
-I reproduced it fairly consistently with a program that does:
+Extend the early return to reject negative lengths as well, aligning our
+implementation with the generic code in lib/checksum.c
 
-int main(void) {
-  ...
-  io_uring_queue_init(RING_LEN, &ring1, IORING_SETUP_SQPOLL);
-  while (1) {
-    io_uring_register_iowq_aff(ring, 1, &mask);
-  }
-}
-
-Executed in a loop with timeout to trigger SIGTERM:
-  while true; do timeout 1 /a.out ; done
-
-This will hit the following BUG() in very few attempts.
-
-BUG: kernel NULL pointer dereference, address: 00000000000007a8
-PGD 800000010e949067 P4D 800000010e949067 PUD 10e46e067 PMD 0
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 0 PID: 15715 Comm: dead-sqpoll Not tainted 6.5.0-rc7-next-20230825-g193296236fa0-dirty #23
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-RIP: 0010:io_sqpoll_wq_cpu_affinity+0x27/0x70
-Code: 90 90 90 0f 1f 44 00 00 55 53 48 8b 9f 98 03 00 00 48 85 db 74 4f
-48 89 df 48 89 f5 e8 e2 f8 ff ff 48 8b 43 38 48 85 c0 74 22 <48> 8b b8
-a8 07 00 00 48 89 ee e8 ba b1 00 00 48 89 df 89 c5 e8 70
-RSP: 0018:ffffb04040ea7e70 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff93c010749e40 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: ffffffffa7653331 RDI: 00000000ffffffff
-RBP: ffffb04040ea7eb8 R08: 0000000000000000 R09: c0000000ffffdfff
-R10: ffff93c01141b600 R11: ffffb04040ea7d18 R12: ffff93c00ea74840
-R13: 0000000000000011 R14: 0000000000000000 R15: ffff93c00ea74800
-FS:  00007fb7c276ab80(0000) GS:ffff93c36f200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000000007a8 CR3: 0000000111634003 CR4: 0000000000370ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? __die_body+0x1a/0x60
- ? page_fault_oops+0x154/0x440
- ? do_user_addr_fault+0x174/0x7b0
- ? exc_page_fault+0x63/0x140
- ? asm_exc_page_fault+0x22/0x30
- ? io_sqpoll_wq_cpu_affinity+0x27/0x70
- __io_register_iowq_aff+0x2b/0x60
- __io_uring_register+0x614/0xa70
- __x64_sys_io_uring_register+0xaa/0x1a0
- do_syscall_64+0x3a/0x90
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-RIP: 0033:0x7fb7c226fec9
-Code: 2e 00 b8 ca 00 00 00 0f 05 eb a5 66 0f 1f 44 00 00 48 89 f8 48 89
-f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
-f0 ff ff 73 01 c3 48 8b 0d 97 7f 2d 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffe2c0674f8 EFLAGS: 00000246 ORIG_RAX: 00000000000001ab
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fb7c226fec9
-RDX: 00007ffe2c067530 RSI: 0000000000000011 RDI: 0000000000000003
-RBP: 00007ffe2c0675d0 R08: 00007ffe2c067550 R09: 00007ffe2c067550
-R10: 0000000000000001 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffe2c067750 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-Modules linked in:
-CR2: 00000000000007a8
----[ end trace 0000000000000000 ]---
-
-Reported-by: syzbot+c74fea926a78b8a91042@syzkaller.appspotmail.com
-Fixes: ebdfefc09c6d ("io_uring/sqpoll: fix io-wq affinity when IORING_SETUP_SQPOLL is used")
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://lore.kernel.org/r/87v8cybuo6.fsf@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Fixes: 5777eaed566a ("arm64: Implement optimised checksum routine")
+Reported-by: syzbot+4a9f9820bd8d302e22f7@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/000000000000e0e94c0603f8d213@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/sqpoll.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/lib/csum.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -430,7 +430,9 @@ __cold int io_sqpoll_wq_cpu_affinity(str
+--- a/arch/arm64/lib/csum.c
++++ b/arch/arm64/lib/csum.c
+@@ -24,7 +24,7 @@ unsigned int __no_sanitize_address do_cs
+ 	const u64 *ptr;
+ 	u64 data, sum64 = 0;
  
- 	if (sqd) {
- 		io_sq_thread_park(sqd);
--		ret = io_wq_cpu_affinity(sqd->thread->io_uring, mask);
-+		/* Don't set affinity for a dying thread */
-+		if (sqd->thread)
-+			ret = io_wq_cpu_affinity(sqd->thread->io_uring, mask);
- 		io_sq_thread_unpark(sqd);
- 	}
+-	if (unlikely(len == 0))
++	if (unlikely(len <= 0))
+ 		return 0;
  
+ 	offset = (unsigned long)buff & 7;
 
 
