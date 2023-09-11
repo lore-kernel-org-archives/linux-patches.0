@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0463811728
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79624C433C9;
-	Mon, 11 Sep 2023 14:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E20011723
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B25C433C7;
+	Mon, 11 Sep 2023 14:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442658;
-	bh=hMicBlBqso5KABRHRv4YU72C2VWl2i3k2A7ayqBAVnM=;
+	s=korg; t=1694442661;
+	bh=cjcYQXvUF6qxiCd49fMDnv3JwUyngK+DEgfQOK/dFdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKYo2xbNZrbKOaYpVqDb1a0GKX9J663kH3t79pINoaKAo1dJhiNrgKiqK7w9Tm2YA
-	 A5JxredsQBmIhopToDjYlMyyQ4Rq+uy93VC0v1tUQfVvdok+NVeWfaCQpoNILUE3UF
-	 vlh3J8Nos6i9iD/E7f7Do6s7f8teV/30utaadUE0=
+	b=ARF/Ga9oe9S/Y1tHr4pGnaEHGxrwXHLfsja6mFTMbhnXRyu+5pJs+1ve0uW5q2q6u
+	 lWvxXNqjlov/zT2xpIw6KvNqNXit+lnne58J9SotSArYtoT7GZEmEY2CnRvl8Ysmy2
+	 FYqs+yZroq/lLyNtMl7Xcfwi+5fzoUTZHb5FapBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
+	Seth Jenkins <sethjenkins@google.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 103/737] iomap: Remove large folio handling in iomap_invalidate_folio()
-Date: Mon, 11 Sep 2023 15:39:22 +0200
-Message-ID: <20230911134653.390665656@linuxfoundation.org>
+Subject: [PATCH 6.4 104/737] tmpfs: verify {g,u}id mount options correctly
+Date: Mon, 11 Sep 2023 15:39:23 +0200
+Message-ID: <20230911134653.416593727@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,44 +41,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit a221ab717c43147f728d93513923ba3528f861bf ]
+[ Upstream commit 0200679fc7953177941e41c2a4241d0b6c2c5de8 ]
 
-We do not need to release the iomap_page in iomap_invalidate_folio()
-to allow the folio to be split.  The splitting code will call
-->release_folio() if there is still per-fs private data attached to
-the folio.  At that point, we will check if the folio is still dirty
-and decline to release the iomap_page.  It is possible to trigger the
-warning in perfectly legitimate circumstances (eg if a disk read fails,
-we do a partial write to the folio, then we truncate the folio), which
-will cause those writes to be lost.
+A while ago we received the following report:
 
-Fixes: 60d8231089f0 ("iomap: Support large folios in invalidatepage")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+"The other outstanding issue I noticed comes from the fact that
+fsconfig syscalls may occur in a different userns than that which
+called fsopen. That means that resolving the uid/gid via
+current_user_ns() can save a kuid that isn't mapped in the associated
+namespace when the filesystem is finally mounted. This means that it
+is possible for an unprivileged user to create files owned by any
+group in a tmpfs mount (since we can set the SUID bit on the tmpfs
+directory), or a tmpfs that is owned by any user, including the root
+group/user."
+
+The contract for {g,u}id mount options and {g,u}id values in general set
+from userspace has always been that they are translated according to the
+caller's idmapping. In so far, tmpfs has been doing the correct thing.
+But since tmpfs is mountable in unprivileged contexts it is also
+necessary to verify that the resulting {k,g}uid is representable in the
+namespace of the superblock to avoid such bugs as above.
+
+The new mount api's cross-namespace delegation abilities are already
+widely used. After having talked to a bunch of userspace this is the
+most faithful solution with minimal regression risks. I know of one
+users - systemd - that makes use of the new mount api in this way and
+they don't set unresolable {g,u}ids. So the regression risk is minimal.
+
+Link: https://lore.kernel.org/lkml/CALxfFW4BXhEwxR0Q5LSkg-8Vb4r2MONKCcUCVioehXQKr35eHg@mail.gmail.com
+Fixes: f32356261d44 ("vfs: Convert ramfs, shmem, tmpfs, devtmpfs, rootfs to use the new mount API")
+Reviewed-by: "Seth Forshee (DigitalOcean)" <sforshee@kernel.org>
+Reported-by: Seth Jenkins <sethjenkins@google.com>
+Message-Id: <20230801-vfs-fs_context-uidgid-v1-1-daf46a050bbf@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 5 -----
- 1 file changed, 5 deletions(-)
+ mm/shmem.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 063133ec77f49..08ee293c4117c 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -508,11 +508,6 @@ void iomap_invalidate_folio(struct folio *folio, size_t offset, size_t len)
- 		WARN_ON_ONCE(folio_test_writeback(folio));
- 		folio_cancel_dirty(folio);
- 		iomap_page_release(folio);
--	} else if (folio_test_large(folio)) {
--		/* Must release the iop so the page can be split */
--		WARN_ON_ONCE(!folio_test_uptodate(folio) &&
--			     folio_test_dirty(folio));
--		iomap_page_release(folio);
- 	}
- }
- EXPORT_SYMBOL_GPL(iomap_invalidate_folio);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index fe208a072e594..87cc98a9a014a 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -3506,6 +3506,8 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
+ 	unsigned long long size;
+ 	char *rest;
+ 	int opt;
++	kuid_t kuid;
++	kgid_t kgid;
+ 
+ 	opt = fs_parse(fc, shmem_fs_parameters, param, &result);
+ 	if (opt < 0)
+@@ -3541,14 +3543,32 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
+ 		ctx->mode = result.uint_32 & 07777;
+ 		break;
+ 	case Opt_uid:
+-		ctx->uid = make_kuid(current_user_ns(), result.uint_32);
+-		if (!uid_valid(ctx->uid))
++		kuid = make_kuid(current_user_ns(), result.uint_32);
++		if (!uid_valid(kuid))
+ 			goto bad_value;
++
++		/*
++		 * The requested uid must be representable in the
++		 * filesystem's idmapping.
++		 */
++		if (!kuid_has_mapping(fc->user_ns, kuid))
++			goto bad_value;
++
++		ctx->uid = kuid;
+ 		break;
+ 	case Opt_gid:
+-		ctx->gid = make_kgid(current_user_ns(), result.uint_32);
+-		if (!gid_valid(ctx->gid))
++		kgid = make_kgid(current_user_ns(), result.uint_32);
++		if (!gid_valid(kgid))
+ 			goto bad_value;
++
++		/*
++		 * The requested gid must be representable in the
++		 * filesystem's idmapping.
++		 */
++		if (!kgid_has_mapping(fc->user_ns, kgid))
++			goto bad_value;
++
++		ctx->gid = kgid;
+ 		break;
+ 	case Opt_huge:
+ 		ctx->huge = result.uint_32;
 -- 
 2.40.1
 
