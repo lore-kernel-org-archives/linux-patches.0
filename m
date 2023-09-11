@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB47B11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2D3C433C8;
-	Mon, 11 Sep 2023 14:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B923B11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DEFC433C7;
+	Mon, 11 Sep 2023 14:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444157;
-	bh=GVsi5Rh4VOtvve2Ohb5tgopq3uJf4mHuk+CTNvauALQ=;
+	s=korg; t=1694444160;
+	bh=/rfLeDycxAxbLgCu7hJnCB4ooTvNgZYvK6R467TmaCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2Rs2GuxQBmSYqMoMm2Fhh/A5xXSjHCBx/8hHBLVWO/SmHo+Qev+WQ0QpbMh3HSbT
-	 jgGTbTtzhr7gXWPN59ZLqUHJSzPKB/tpB/NsDi+Cl8dTkLycxGGpnYhc5dx9buaFke
-	 1rxsuwAJNXb5StHJ1FkPAuQwMas3mrPBjDuGcmXE=
+	b=jshnLREEtW5u1jINdKyHxyV7T6dhZqhxHUSflp25cQOC+IngoDIVzKvn1xNvD2fwJ
+	 ORCUy6DmQL7Pg2dVppKKtMpPLlNfSO9yxKSvJFpKWX8C7csYaiqhvwbEJIdfHUuuOg
+	 UjmAX7wEe74oo9eShaipoSs1B9TXh+PeDZ7+4eUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	Richard Weinberger <richard@nod.at>,
+	Liao Chang <liaochang1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 630/737] um: virt-pci: fix missing declaration warning
-Date: Mon, 11 Sep 2023 15:48:09 +0200
-Message-ID: <20230911134708.127403607@linuxfoundation.org>
+Subject: [PATCH 6.4 631/737] cpufreq: Fix the race condition while updating the transition_task of policy
+Date: Mon, 11 Sep 2023 15:48:10 +0200
+Message-ID: <20230911134708.157960802@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,44 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Whitchurch <vincent.whitchurch@axis.com>
+From: Liao Chang <liaochang1@huawei.com>
 
-[ Upstream commit 974b808d85abbc03c3914af63d60d5816aabf2ca ]
+[ Upstream commit 61bfbf7951ba561dcbdd5357702d3cbc2d447812 ]
 
-Fix this warning which appears with W=1 and without CONFIG_OF:
+The field 'transition_task' of policy structure is used to track the
+task which is performing the frequency transition. Using this field to
+print a warning once detect a case where the same task is calling
+_begin() again before completing the preivous frequency transition via
+the _end().
 
- warning: no previous declaration for 'pcibios_get_phb_of_node'
+However, there is a potential race condition in _end() and _begin() APIs
+while updating the field 'transition_task' of policy, the scenario is
+depicted below:
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202308230949.PphIIlhq-lkp@intel.com/
-Fixes: 314a1408b79a ("um: virt-pci: implement pcibios_get_phb_of_node()")
-Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+             Task A                            Task B
+
+        /* 1st freq transition */
+        Invoke _begin() {
+                ...
+                ...
+        }
+                                        /* 2nd freq transition */
+                                        Invoke _begin() {
+                                                ... //waiting for A to
+                                                ... //clear
+                                                ... //transition_ongoing
+                                                ... //in _end() for
+                                                ... //the 1st transition
+                                                        |
+        Change the frequency                            |
+                                                        |
+        Invoke _end() {                                 |
+                ...                                     |
+                ...                                     |
+                transition_ongoing = false;             V
+                                                transition_ongoing = true;
+                                                transition_task = current;
+                transition_task = NULL;
+                ... //A overwrites the task
+                ... //performing the transition
+                ... //result in error warning.
+        }
+
+To fix this race condition, the transition_lock of policy structure is
+now acquired before updating policy structure in _end() API. Which ensure
+that only one task can update the 'transition_task' field at a time.
+
+Link: https://lore.kernel.org/all/b3c61d8a-d52d-3136-fbf0-d1de9f1ba411@huawei.com/
+Fixes: ca654dc3a93d ("cpufreq: Catch double invocations of cpufreq_freq_transition_begin/end")
+Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/virt-pci.c | 2 ++
+ drivers/cpufreq/cpufreq.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/um/drivers/virt-pci.c b/arch/um/drivers/virt-pci.c
-index 7699ca5f35d48..ffe2ee8a02465 100644
---- a/arch/um/drivers/virt-pci.c
-+++ b/arch/um/drivers/virt-pci.c
-@@ -544,6 +544,7 @@ static void um_pci_irq_vq_cb(struct virtqueue *vq)
- 	}
- }
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 6b52ebe5a8904..f11b01b25e8d5 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -455,8 +455,10 @@ void cpufreq_freq_transition_end(struct cpufreq_policy *policy,
+ 			    policy->cur,
+ 			    policy->cpuinfo.max_freq);
  
-+#ifdef CONFIG_OF
- /* Copied from arch/x86/kernel/devicetree.c */
- struct device_node *pcibios_get_phb_of_node(struct pci_bus *bus)
- {
-@@ -562,6 +563,7 @@ struct device_node *pcibios_get_phb_of_node(struct pci_bus *bus)
- 	}
- 	return NULL;
- }
-+#endif
++	spin_lock(&policy->transition_lock);
+ 	policy->transition_ongoing = false;
+ 	policy->transition_task = NULL;
++	spin_unlock(&policy->transition_lock);
  
- static int um_pci_init_vqs(struct um_pci_device *dev)
- {
+ 	wake_up(&policy->transition_wait);
+ }
 -- 
 2.40.1
 
