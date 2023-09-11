@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0531170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:22:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD117C433C8;
-	Mon, 11 Sep 2023 14:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBF21170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:22:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97ECBC433C8;
+	Mon, 11 Sep 2023 14:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442133;
-	bh=Xpnk0MworczfrsllZkl+7jZdRZmd1OD9ER5rPLnEQrY=;
+	s=korg; t=1694442136;
+	bh=uK6B+E+MEo2nobXMhOl0ICGnD4aF0mNB5RLoXeypuu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ylron4kCf/KLD81HNO5hEWDV4vuxNcVjgdv0Ojx1pXXy38syMT1BTkGglEmO+AZ+
-	 o2+iTqF7hHdBCs6lW3Lmbav9bV+nOgq6ue4N71yd4Tw0P+suC/5LMebLHIIgW3QvMk
-	 9KspyU6e/RDfHJpV4rOWf+nxPNje7uUAg+pFG0c8=
+	b=B7YtKr1WTF09XhM/ct3Ej6YOfuehtr77p5UZVsDGbWZ/cvcC9UIKGDU/6XkarbJt7
+	 yZ7EoHuKn8loGd6/lpixX/4DFXd05ZIF9L2QMVjdq5k5Cc+7I0uThfldKqo5Fx7PjH
+	 WxXqsLwUJfiBKdsWDLEQgSyrNbyEiWrbaWZhra0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>
-Subject: [PATCH 6.5 657/739] XArray: Do not return sibling entries from xa_load()
-Date: Mon, 11 Sep 2023 15:47:36 +0200
-Message-ID: <20230911134709.462207338@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.5 658/739] io_uring: fix false positive KASAN warnings
+Date: Mon, 11 Sep 2023 15:47:37 +0200
+Message-ID: <20230911134709.489927597@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -38,150 +39,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit cbc02854331edc6dc22d8b77b6e22e38ebc7dd51 upstream.
+commit 569f5308e54352a12181cc0185f848024c5443e8 upstream.
 
-It is possible for xa_load() to observe a sibling entry pointing to
-another sibling entry.  An example:
+io_req_local_work_add() peeks into the work list, which can be executed
+in the meanwhile. It's completely fine without KASAN as we're in an RCU
+read section and it's SLAB_TYPESAFE_BY_RCU. With KASAN though it may
+trigger a false positive warning because internal io_uring caches are
+sanitised.
 
-Thread A:		Thread B:
-			xa_store_range(xa, entry, 188, 191, gfp);
-xa_load(xa, 191);
-entry = xa_entry(xa, node, 63);
-[entry is a sibling of 188]
-			xa_store_range(xa, entry, 184, 191, gfp);
-if (xa_is_sibling(entry))
-offset = xa_to_sibling(entry);
-entry = xa_entry(xas->xa, node, offset);
-[entry is now a sibling of 184]
+Remove sanitisation from the io_uring request cache for now.
 
-It is sufficient to go around this loop until we hit a non-sibling entry.
-Sibling entries always point earlier in the node, so we are guaranteed
-to terminate this search.
-
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
 Cc: stable@vger.kernel.org
+Fixes: 8751d15426a31 ("io_uring: reduce scheduling due to tw")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/c6fbf7a82a341e66a0007c76eefd9d57f2d3ba51.1691541473.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/xarray.c                          |    2 -
- tools/testing/radix-tree/multiorder.c |   68 +++++++++++++++++++++++++++++++++-
- 2 files changed, 67 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c |    1 -
+ io_uring/io_uring.h |    1 -
+ 2 files changed, 2 deletions(-)
 
---- a/lib/xarray.c
-+++ b/lib/xarray.c
-@@ -206,7 +206,7 @@ static void *xas_descend(struct xa_state
- 	void *entry = xa_entry(xas->xa, node, offset);
- 
- 	xas->xa_node = node;
--	if (xa_is_sibling(entry)) {
-+	while (xa_is_sibling(entry)) {
- 		offset = xa_to_sibling(entry);
- 		entry = xa_entry(xas->xa, node, offset);
- 		if (node->shift && xa_is_node(entry))
---- a/tools/testing/radix-tree/multiorder.c
-+++ b/tools/testing/radix-tree/multiorder.c
-@@ -159,7 +159,7 @@ void multiorder_tagged_iteration(struct
- 	item_kill_tree(xa);
- }
- 
--bool stop_iteration = false;
-+bool stop_iteration;
- 
- static void *creator_func(void *ptr)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -229,7 +229,6 @@ static inline void req_fail_link_node(st
+ static inline void io_req_add_to_cache(struct io_kiocb *req, struct io_ring_ctx *ctx)
  {
-@@ -201,6 +201,7 @@ static void multiorder_iteration_race(st
- 	pthread_t worker_thread[num_threads];
- 	int i;
- 
-+	stop_iteration = false;
- 	pthread_create(&worker_thread[0], NULL, &creator_func, xa);
- 	for (i = 1; i < num_threads; i++)
- 		pthread_create(&worker_thread[i], NULL, &iterator_func, xa);
-@@ -211,6 +212,61 @@ static void multiorder_iteration_race(st
- 	item_kill_tree(xa);
+ 	wq_stack_add_head(&req->comp_list, &ctx->submit_state.free_list);
+-	kasan_poison_object_data(req_cachep, req);
  }
  
-+static void *load_creator(void *ptr)
-+{
-+	/* 'order' is set up to ensure we have sibling entries */
-+	unsigned int order;
-+	struct radix_tree_root *tree = ptr;
-+	int i;
-+
-+	rcu_register_thread();
-+	item_insert_order(tree, 3 << RADIX_TREE_MAP_SHIFT, 0);
-+	item_insert_order(tree, 2 << RADIX_TREE_MAP_SHIFT, 0);
-+	for (i = 0; i < 10000; i++) {
-+		for (order = 1; order < RADIX_TREE_MAP_SHIFT; order++) {
-+			unsigned long index = (3 << RADIX_TREE_MAP_SHIFT) -
-+						(1 << order);
-+			item_insert_order(tree, index, order);
-+			item_delete_rcu(tree, index);
-+		}
-+	}
-+	rcu_unregister_thread();
-+
-+	stop_iteration = true;
-+	return NULL;
-+}
-+
-+static void *load_worker(void *ptr)
-+{
-+	unsigned long index = (3 << RADIX_TREE_MAP_SHIFT) - 1;
-+
-+	rcu_register_thread();
-+	while (!stop_iteration) {
-+		struct item *item = xa_load(ptr, index);
-+		assert(!xa_is_internal(item));
-+	}
-+	rcu_unregister_thread();
-+
-+	return NULL;
-+}
-+
-+static void load_race(struct xarray *xa)
-+{
-+	const int num_threads = sysconf(_SC_NPROCESSORS_ONLN) * 4;
-+	pthread_t worker_thread[num_threads];
-+	int i;
-+
-+	stop_iteration = false;
-+	pthread_create(&worker_thread[0], NULL, &load_creator, xa);
-+	for (i = 1; i < num_threads; i++)
-+		pthread_create(&worker_thread[i], NULL, &load_worker, xa);
-+
-+	for (i = 0; i < num_threads; i++)
-+		pthread_join(worker_thread[i], NULL);
-+
-+	item_kill_tree(xa);
-+}
-+
- static DEFINE_XARRAY(array);
+ static __cold void io_ring_ctx_ref_free(struct percpu_ref *ref)
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -354,7 +354,6 @@ static inline struct io_kiocb *io_extrac
+ 	struct io_kiocb *req;
  
- void multiorder_checks(void)
-@@ -218,12 +274,20 @@ void multiorder_checks(void)
- 	multiorder_iteration(&array);
- 	multiorder_tagged_iteration(&array);
- 	multiorder_iteration_race(&array);
-+	load_race(&array);
- 
- 	radix_tree_cpu_dead(0);
+ 	req = container_of(ctx->submit_state.free_list.next, struct io_kiocb, comp_list);
+-	kasan_unpoison_object_data(req_cachep, req);
+ 	wq_stack_extract(&ctx->submit_state.free_list);
+ 	return req;
  }
- 
--int __weak main(void)
-+int __weak main(int argc, char **argv)
- {
-+	int opt;
-+
-+	while ((opt = getopt(argc, argv, "ls:v")) != -1) {
-+		if (opt == 'v')
-+			test_verbose++;
-+	}
-+
- 	rcu_register_thread();
- 	radix_tree_init();
- 	multiorder_checks();
 
 
