@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B813C11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFAEC433C7;
-	Mon, 11 Sep 2023 15:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3B311706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4053C433C8;
+	Mon, 11 Sep 2023 15:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444408;
-	bh=N0eaU7AmMbIrOOqLYQlTKD79Vb7qRiFL+XK4WXgGusA=;
+	s=korg; t=1694444411;
+	bh=A5R10nuCdMOKJJ30O9kEIBoUJlnRfor0y7GjoTMv4sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fw8lj4vl8BxJBCDOCgCDGWG2sdEG1RbRQul+gl6M33bPOtr2UEBROYZkSRDq3hNi
-	 c8hmm08ARx0XcOJHBmj8r/TZ2e7N7Bm65V+IOK3nAVoCCc1AzzTt5j58LGB9VpxbBd
-	 44Mhx14UlzYdID+BJZQuZz6AzLmJAg8iLDJUkQWU=
+	b=ygRTLBG133GBgUuDQgCjHH9KS+nsRV+4Yizj1XvxUjxf5IWGF25sWp/3gC3XW1x3B
+	 iWw+TjOl7tit8Tm8GwcTtN5l7fiNI87OVlIqSHoCiGuRwA845S0oACDfHJo+bFz+Gk
+	 QLSkXB2J1m7bqdEBXk2stFY3nUVdxH3WSt354ZS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.4 720/737] USB: core: Fix oversight in SuperSpeed initialization
-Date: Mon, 11 Sep 2023 15:49:39 +0200
-Message-ID: <20230911134710.628263702@linuxfoundation.org>
+	Yunlong Xing <yunlong.xing@unisoc.com>,
+	Enlin Mu <enlin.mu@unisoc.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.4 703/737] pstore/ram: Check start of empty przs during init
+Date: Mon, 11 Sep 2023 15:49:22 +0200
+Message-ID: <20230911134710.159047777@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,100 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Enlin Mu <enlin.mu@unisoc.com>
 
-commit 59cf445754566984fd55af19ba7146c76e6627bc upstream.
+commit fe8c3623ab06603eb760444a032d426542212021 upstream.
 
-Commit 85d07c556216 ("USB: core: Unite old scheme and new scheme
-descriptor reads") altered the way USB devices are enumerated
-following detection, and in the process it messed up the
-initialization of SuperSpeed (or faster) devices:
+After commit 30696378f68a ("pstore/ram: Do not treat empty buffers as
+valid"), initialization would assume a prz was valid after seeing that
+the buffer_size is zero (regardless of the buffer start position). This
+unchecked start value means it could be outside the bounds of the buffer,
+leading to future access panics when written to:
 
-[   31.650759] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 2 using xhci_hcd
-[   31.663107] usb 2-1: device descriptor read/8, error -71
-[   31.952697] usb 2-1: new SuperSpeed Plus Gen 2x1 USB device number 3 using xhci_hcd
-[   31.965122] usb 2-1: device descriptor read/8, error -71
-[   32.080991] usb usb2-port1: attempt power cycle
-...
+ sysdump_panic_event+0x3b4/0x5b8
+ atomic_notifier_call_chain+0x54/0x90
+ panic+0x1c8/0x42c
+ die+0x29c/0x2a8
+ die_kernel_fault+0x68/0x78
+ __do_kernel_fault+0x1c4/0x1e0
+ do_bad_area+0x40/0x100
+ do_translation_fault+0x68/0x80
+ do_mem_abort+0x68/0xf8
+ el1_da+0x1c/0xc0
+ __raw_writeb+0x38/0x174
+ __memcpy_toio+0x40/0xac
+ persistent_ram_update+0x44/0x12c
+ persistent_ram_write+0x1a8/0x1b8
+ ramoops_pstore_write+0x198/0x1e8
+ pstore_console_write+0x94/0xe0
+ ...
 
-The problem was caused by the commit forgetting that in SuperSpeed or
-faster devices, the device descriptor uses a logarithmic encoding of
-the bMaxPacketSize0 value.  (For some reason I thought the 255 case in
-the switch statement was meant for these devices, but it isn't -- it
-was meant for Wireless USB and is no longer needed.)
+To avoid this, also check if the prz start is 0 during the initialization
+phase. If not, the next prz sanity check case will discover it (start >
+size) and zap the buffer back to a sane state.
 
-We can fix the oversight by testing for buf->bMaxPacketSize0 = 9
-(meaning 512, the actual maxpacket size for ep0 on all SuperSpeed
-devices) and straightening out the logic that checks and adjusts our
-initial guesses of the maxpacket value.
-
-Reported-and-tested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Closes: https://lore.kernel.org/linux-usb/20230810002257.nadxmfmrobkaxgnz@synopsys.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
-Link: https://lore.kernel.org/r/8809e6c5-59d5-4d2d-ac8f-6d106658ad73@rowland.harvard.edu
+Fixes: 30696378f68a ("pstore/ram: Do not treat empty buffers as valid")
+Cc: Yunlong Xing <yunlong.xing@unisoc.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Enlin Mu <enlin.mu@unisoc.com>
+Link: https://lore.kernel.org/r/20230801060432.1307717-1-yunlong.xing@unisoc.com
+[kees: update commit log with backtrace and clarifications]
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   36 ++++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ fs/pstore/ram_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -4742,7 +4742,7 @@ static int get_bMaxPacketSize0(struct us
- 				buf, size,
- 				initial_descriptor_timeout);
- 		switch (buf->bMaxPacketSize0) {
--		case 8: case 16: case 32: case 64: case 255:
-+		case 8: case 16: case 32: case 64: case 9:
- 			if (buf->bDescriptorType == USB_DT_DEVICE) {
- 				rc = buf->bMaxPacketSize0;
- 				break;
-@@ -5041,23 +5041,35 @@ hub_port_init(struct usb_hub *hub, struc
- 	if (retval)
- 		goto fail;
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -519,7 +519,7 @@ static int persistent_ram_post_init(stru
+ 	sig ^= PERSISTENT_RAM_SIG;
  
--	if (maxp0 == 0xff || udev->speed >= USB_SPEED_SUPER)
--		i = 512;
--	else
--		i = maxp0;
--	if (usb_endpoint_maxp(&udev->ep0.desc) != i) {
--		if (udev->speed == USB_SPEED_LOW ||
--				!(i == 8 || i == 16 || i == 32 || i == 64)) {
--			dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", i);
--			retval = -EMSGSIZE;
--			goto fail;
--		}
-+	/*
-+	 * Check the ep0 maxpacket guess and correct it if necessary.
-+	 * maxp0 is the value stored in the device descriptor;
-+	 * i is the value it encodes (logarithmic for SuperSpeed or greater).
-+	 */
-+	i = maxp0;
-+	if (udev->speed >= USB_SPEED_SUPER) {
-+		if (maxp0 <= 16)
-+			i = 1 << maxp0;
-+		else
-+			i = 0;		/* Invalid */
-+	}
-+	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
-+		;	/* Initial ep0 maxpacket guess is right */
-+	} else if ((udev->speed == USB_SPEED_FULL ||
-+				udev->speed == USB_SPEED_HIGH) &&
-+			(i == 8 || i == 16 || i == 32 || i == 64)) {
-+		/* Initial guess is wrong; use the descriptor's value */
- 		if (udev->speed == USB_SPEED_FULL)
- 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
- 		else
- 			dev_warn(&udev->dev, "Using ep0 maxpacket: %d\n", i);
- 		udev->ep0.desc.wMaxPacketSize = cpu_to_le16(i);
- 		usb_ep0_reinit(udev);
-+	} else {
-+		/* Initial guess is wrong and descriptor's value is invalid */
-+		dev_err(&udev->dev, "Invalid ep0 maxpacket: %d\n", maxp0);
-+		retval = -EMSGSIZE;
-+		goto fail;
- 	}
- 
- 	descr = usb_get_device_descriptor(udev);
+ 	if (prz->buffer->sig == sig) {
+-		if (buffer_size(prz) == 0) {
++		if (buffer_size(prz) == 0 && buffer_start(prz) == 0) {
+ 			pr_debug("found existing empty buffer\n");
+ 			return 0;
+ 		}
 
 
