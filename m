@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81F01170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3770AC433C8;
-	Mon, 11 Sep 2023 14:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D5E1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:28:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14753C433CB;
+	Mon, 11 Sep 2023 14:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442513;
-	bh=m9zuHgsqy+hBnFgqQPRkN/YeTRTaHqO7aSoFVks+rkw=;
+	s=korg; t=1694442516;
+	bh=RfOXefkb/ViyT7bHHFPcyY542dVq93YXHY10GlDpZA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q605e0PbxRC1oT4znV10I1LCZs7i35yNoOcY3wvoQv23VmwV9o+jiSZmxT6J5E6XP
-	 Z0zC/k4LttoPhelilClL5NUApgkwAoKqBXcyJVjinHRDibpHjVYAzYWNjZgteU9w6N
-	 jiLM6kqt1whEqmJvrPQDU8ef9C6++MFyg5e3eKXo=
+	b=XCSZE70mkjVIQLVk8yQUtMWHxYKWuPDwavqAcBgTVN8MQF32YDotFOdHzIvCZm5M6
+	 3fcq6XaeubiSYdFHInHfMYQOId0yWkAF4qDmUjMvBPFz6OWKhVxlBO6OFzWStalUO5
+	 BNJEtK9sIEqw0yiDXrpR8WRUzw8/y3dIEAWUv+ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ani Sinha <anisinha@redhat.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 050/737] vmbus_testing: fix wrong python syntax for integer value comparison
-Date: Mon, 11 Sep 2023 15:38:29 +0200
-Message-ID: <20230911134651.860299040@linuxfoundation.org>
+Subject: [PATCH 6.4 051/737] Revert "wifi: ath6k: silence false positive -Wno-dangling-pointer warning on GCC 12"
+Date: Mon, 11 Sep 2023 15:38:30 +0200
+Message-ID: <20230911134651.893327767@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,50 +39,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Kalle Valo <kvalo@kernel.org>
 
-[ Upstream commit ed0cf84e9cc42e6310961c87709621f1825c2bb8 ]
+[ Upstream commit a1ce186db7f0e449f35d12fb55ae0da2a1b400e2 ]
 
-It is incorrect in python to compare integer values using the "is" keyword.
-The "is" keyword in python is used to compare references to two objects,
-not their values. Newer version of python3 (version 3.8) throws a warning
-when such incorrect comparison is made. For value comparison, "==" should
-be used.
+This reverts commit bd1d129daa3ede265a880e2c6a7f91eab0f4dc62.
 
-Fix this in the code and suppress the following warning:
+The dangling-pointer warnings were disabled kernel-wide by commit 49beadbd47c2
+("gcc-12: disable '-Wdangling-pointer' warning for now") for v5.19. So this
+hack in ath6kl is not needed anymore.
 
-/usr/sbin/vmbus_testing:167: SyntaxWarning: "is" with a literal. Did you mean "=="?
-
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20230705134408.6302-1-anisinha@redhat.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230724100823.2948804-1-kvalo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/hv/vmbus_testing | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath6kl/Makefile | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/tools/hv/vmbus_testing b/tools/hv/vmbus_testing
-index e7212903dd1d9..4467979d8f699 100755
---- a/tools/hv/vmbus_testing
-+++ b/tools/hv/vmbus_testing
-@@ -164,7 +164,7 @@ def recursive_file_lookup(path, file_map):
- def get_all_devices_test_status(file_map):
+diff --git a/drivers/net/wireless/ath/ath6kl/Makefile b/drivers/net/wireless/ath/ath6kl/Makefile
+index a75bfa9fd1cfd..dc2b3b46781e1 100644
+--- a/drivers/net/wireless/ath/ath6kl/Makefile
++++ b/drivers/net/wireless/ath/ath6kl/Makefile
+@@ -36,11 +36,6 @@ ath6kl_core-y += wmi.o
+ ath6kl_core-y += core.o
+ ath6kl_core-y += recovery.o
  
-         for device in file_map:
--                if (get_test_state(locate_state(device, file_map)) is 1):
-+                if (get_test_state(locate_state(device, file_map)) == 1):
-                         print("Testing = ON for: {}"
-                               .format(device.split("/")[5]))
-                 else:
-@@ -203,7 +203,7 @@ def write_test_files(path, value):
- def set_test_state(state_path, state_value, quiet):
+-# FIXME: temporarily silence -Wdangling-pointer on non W=1+ builds
+-ifndef KBUILD_EXTRA_WARN
+-CFLAGS_htc_mbox.o += $(call cc-disable-warning, dangling-pointer)
+-endif
+-
+ ath6kl_core-$(CONFIG_NL80211_TESTMODE) += testmode.o
+ ath6kl_core-$(CONFIG_ATH6KL_TRACING) += trace.o
  
-         write_test_files(state_path, state_value)
--        if (get_test_state(state_path) is 1):
-+        if (get_test_state(state_path) == 1):
-                 if (not quiet):
-                         print("Testing = ON for device: {}"
-                               .format(state_path.split("/")[5]))
 -- 
 2.40.1
 
