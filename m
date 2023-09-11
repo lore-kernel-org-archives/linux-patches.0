@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709251170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55ECC433C7;
-	Mon, 11 Sep 2023 14:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4BD1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF29BC433C8;
+	Mon, 11 Sep 2023 14:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441200;
-	bh=KGDFfqeGMG8RbEVZ3GkPgBiP326N5HGZ/UB6fyJ7kL8=;
+	s=korg; t=1694441203;
+	bh=XW9nSDnE6u/E/rq2d1bLvUgSBPBeDFRfc0vn2NtvSJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCJIp80/8RMAYVk6mbu3mb+aEpaVRjoD14LMr5AsYiMBOfqHluxLshEvn+MRCzj17
-	 /ccjyH00d2eJA8zOdgNKv+Kk3JnEygnL8SBXiBd4eRGv7MhI4nmpZxP68A05vokMYt
-	 Z+c+trltpHBQ8JRm6+J6b1m49rSG68t7VEyug8bg=
+	b=dWKMii13k9KcQPi21Il8nUZifTmRUwjYfV/gPjr23q67E1GPYFnMz6ihL6KV71o7h
+	 OGDZhWoSDVGw6xpnXfPitOMgiNwhlYIGXZzb/pHP3Y7CZ7qtKLampj/GwOYKI7k2XP
+	 CY/6aRp2rqpn/0raX/vK0dLreGFaXuZp7OFhFKMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jinyoung Choi <j-young.choi@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vaishnav Achath <vaishnav.a@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 330/739] block: dont pass a bio to bio_try_merge_hw_seg
-Date: Mon, 11 Sep 2023 15:42:09 +0200
-Message-ID: <20230911134700.313660557@linuxfoundation.org>
+Subject: [PATCH 6.5 313/739] arm64: dts: ti: k3-j721s2: correct pinmux offset for ospi
+Date: Mon, 11 Sep 2023 15:41:52 +0200
+Message-ID: <20230911134659.857021099@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,74 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Udit Kumar <u-kumar1@ti.com>
 
-[ Upstream commit ae42f0b3bf65912e122fc2e8d5f6d94b51156dba ]
+[ Upstream commit 06c4e7aa4af0682910ea52d7c23d85f59ea7dcc6 ]
 
-There is no good reason to pass the bio to bio_try_merge_hw_seg.  Just
-pass the current bvec and rename the function to bvec_try_merge_hw_page.
-This will allow reusing this function for supporting multi-page integrity
-payload bvecs.
+Due to non-addressable regions in J721S2 SOC wkup_pmx was split
+into four regions from wkup_pmx0 to wkup_pmx3.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jinyoung Choi <j-young.choi@samsung.com>
-Link: https://lore.kernel.org/r/20230724165433.117645-9-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 0ece1d649b6d ("bio-integrity: create multi-page bvecs in bio_integrity_add_page()")
+Correcting OSPI1 pin mux, which now falls under wkup_pmx1.
+Along with that removing unused pin mux for OSPI-0.
+
+Fixes: 6bc829ceea41 ("arm64: dts: ti: k3-j721s2: Fix wkup pinmux range")
+
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Reviewed-by: Vaishnav Achath <vaishnav.a@ti.com>
+Link: https://lore.kernel.org/r/20230804075341.3858488-1-u-kumar1@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ .../dts/ti/k3-j721s2-common-proc-board.dts    | 19 ++++++++++---------
+ arch/arm64/boot/dts/ti/k3-j721s2-som-p0.dtsi  |  3 ---
+ 2 files changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index c30f7489e4482..0766584563f6e 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -934,11 +934,10 @@ static bool bvec_try_merge_page(struct bio_vec *bv, struct page *page,
-  * size limit.  This is not for normal read/write bios, but for passthrough
-  * or Zone Append operations that we can't split.
-  */
--static bool bio_try_merge_hw_seg(struct request_queue *q, struct bio *bio,
--				 struct page *page, unsigned len,
--				 unsigned offset, bool *same_page)
-+static bool bvec_try_merge_hw_page(struct request_queue *q, struct bio_vec *bv,
-+		struct page *page, unsigned len, unsigned offset,
-+		bool *same_page)
- {
--	struct bio_vec *bv = &bio->bi_io_vec[bio->bi_vcnt - 1];
- 	unsigned long mask = queue_segment_boundary(q);
- 	phys_addr_t addr1 = page_to_phys(bv->bv_page) + bv->bv_offset;
- 	phys_addr_t addr2 = page_to_phys(page) + offset + len - 1;
-@@ -967,8 +966,6 @@ int bio_add_hw_page(struct request_queue *q, struct bio *bio,
- 		struct page *page, unsigned int len, unsigned int offset,
- 		unsigned int max_sectors, bool *same_page)
- {
--	struct bio_vec *bvec;
--
- 	if (WARN_ON_ONCE(bio_flagged(bio, BIO_CLONED)))
- 		return 0;
+diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-common-proc-board.dts b/arch/arm64/boot/dts/ti/k3-j721s2-common-proc-board.dts
+index 04d4739d72457..2a5000645752d 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721s2-common-proc-board.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721s2-common-proc-board.dts
+@@ -249,18 +249,19 @@ J721S2_WKUP_IOPAD(0x104, PIN_INPUT, 0) /* (N26) MCU_ADC1_AIN6 */
+ 			J721S2_WKUP_IOPAD(0x108, PIN_INPUT, 0) /* (N27) MCU_ADC1_AIN7 */
+ 		>;
+ 	};
++};
  
-@@ -976,7 +973,9 @@ int bio_add_hw_page(struct request_queue *q, struct bio *bio,
- 		return 0;
- 
- 	if (bio->bi_vcnt > 0) {
--		if (bio_try_merge_hw_seg(q, bio, page, len, offset,
-+		struct bio_vec *bv = &bio->bi_io_vec[bio->bi_vcnt - 1];
-+
-+		if (bvec_try_merge_hw_page(q, bv, page, len, offset,
- 				same_page)) {
- 			bio->bi_iter.bi_size += len;
- 			return len;
-@@ -986,8 +985,7 @@ int bio_add_hw_page(struct request_queue *q, struct bio *bio,
- 		 * If the queue doesn't support SG gaps and adding this segment
- 		 * would create a gap, disallow it.
- 		 */
--		bvec = &bio->bi_io_vec[bio->bi_vcnt - 1];
--		if (bvec_gap_to_prev(&q->limits, bvec, offset))
-+		if (bvec_gap_to_prev(&q->limits, bv, offset))
- 			return 0;
- 	}
- 
++&wkup_pmx1 {
+ 	mcu_fss0_ospi1_pins_default: mcu-fss0-ospi1-default-pins {
+ 		pinctrl-single,pins = <
+-			J721S2_WKUP_IOPAD(0x040, PIN_OUTPUT, 0) /* (A19) MCU_OSPI1_CLK */
+-			J721S2_WKUP_IOPAD(0x05c, PIN_OUTPUT, 0) /* (D20) MCU_OSPI1_CSn0 */
+-			J721S2_WKUP_IOPAD(0x060, PIN_OUTPUT, 0) /* (C21) MCU_OSPI1_CSn1 */
+-			J721S2_WKUP_IOPAD(0x04c, PIN_INPUT, 0) /* (D21) MCU_OSPI1_D0 */
+-			J721S2_WKUP_IOPAD(0x050, PIN_INPUT, 0) /* (G20) MCU_OSPI1_D1 */
+-			J721S2_WKUP_IOPAD(0x054, PIN_INPUT, 0) /* (C20) MCU_OSPI1_D2 */
+-			J721S2_WKUP_IOPAD(0x058, PIN_INPUT, 0) /* (A20) MCU_OSPI1_D3 */
+-			J721S2_WKUP_IOPAD(0x048, PIN_INPUT, 0) /* (B19) MCU_OSPI1_DQS */
+-			J721S2_WKUP_IOPAD(0x044, PIN_INPUT, 0) /* (B20) MCU_OSPI1_LBCLKO */
++			J721S2_WKUP_IOPAD(0x008, PIN_OUTPUT, 0) /* (A19) MCU_OSPI1_CLK */
++			J721S2_WKUP_IOPAD(0x024, PIN_OUTPUT, 0) /* (D20) MCU_OSPI1_CSn0 */
++			J721S2_WKUP_IOPAD(0x014, PIN_INPUT, 0) /* (D21) MCU_OSPI1_D0 */
++			J721S2_WKUP_IOPAD(0x018, PIN_INPUT, 0) /* (G20) MCU_OSPI1_D1 */
++			J721S2_WKUP_IOPAD(0x01c, PIN_INPUT, 0) /* (C20) MCU_OSPI1_D2 */
++			J721S2_WKUP_IOPAD(0x020, PIN_INPUT, 0) /* (A20) MCU_OSPI1_D3 */
++			J721S2_WKUP_IOPAD(0x010, PIN_INPUT, 0) /* (B19) MCU_OSPI1_DQS */
++			J721S2_WKUP_IOPAD(0x00c, PIN_INPUT, 0) /* (B20) MCU_OSPI1_LBCLKO */
+ 		>;
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-som-p0.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-som-p0.dtsi
+index d57dd43da0ef4..17ae27eac39ad 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721s2-som-p0.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721s2-som-p0.dtsi
+@@ -44,9 +44,6 @@ mcu_fss0_ospi0_pins_default: mcu-fss0-ospi0-default-pins {
+ 		pinctrl-single,pins = <
+ 			J721S2_WKUP_IOPAD(0x000, PIN_OUTPUT, 0) /* (D19) MCU_OSPI0_CLK */
+ 			J721S2_WKUP_IOPAD(0x02c, PIN_OUTPUT, 0) /* (F15) MCU_OSPI0_CSn0 */
+-			J721S2_WKUP_IOPAD(0x030, PIN_OUTPUT, 0) /* (G17) MCU_OSPI0_CSn1 */
+-			J721S2_WKUP_IOPAD(0x038, PIN_OUTPUT, 0) /* (F14) MCU_OSPI0_CSn2 */
+-			J721S2_WKUP_IOPAD(0x03c, PIN_OUTPUT, 0) /* (F17) MCU_OSPI0_CSn3 */
+ 			J721S2_WKUP_IOPAD(0x00c, PIN_INPUT, 0) /* (C19) MCU_OSPI0_D0 */
+ 			J721S2_WKUP_IOPAD(0x010, PIN_INPUT, 0) /* (F16) MCU_OSPI0_D1 */
+ 			J721S2_WKUP_IOPAD(0x014, PIN_INPUT, 0) /* (G15) MCU_OSPI0_D2 */
 -- 
 2.40.1
 
