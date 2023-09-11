@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1F51170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:03:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A27C433CA;
-	Mon, 11 Sep 2023 14:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A341170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E72C433C8;
+	Mon, 11 Sep 2023 14:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440987;
-	bh=lI43M3o8MaSl4Gl0wyYl26uLCRABMF5017jQrIYHFec=;
+	s=korg; t=1694440989;
+	bh=ewJ0/MnH0f818qozDCHMjlrNXYbyXQ0TcClzhjEYAXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZi8WzuzUV5fHqX7x+F74Bta4y2zGUXF553+0fvjqIamsYlAPkyXVHlq8vy0mQmqO
-	 KV6390rgjFiYVmuf+uZ5n5x0VsBg3r0xfq16UiypgMWd3TTpW2fJAxbRLofxxNl/DK
-	 fbVAJZZdghKdtJhTd++oevXpbUsvodUzu4ofYZDU=
+	b=qWTaxqMFEDpZ9H/6LbjMb8FNvRjsfnUYC1S4Lvj7yAUUe8UcgBXkga6R2bNjZtaFf
+	 LQQvSQR8CD9niIdQgA7+etuLXRPaVH431A/9lVd28h6YeDaIcGWjysSvYIuW9qFOMb
+	 N7BRlte4EPuEDjE8hpQ2ypXuc3hNvJwvTGEtA9r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 229/739] arm64: dts: qcom: sm8350: Add missing LMH interrupts to cpufreq
-Date: Mon, 11 Sep 2023 15:40:28 +0200
-Message-ID: <20230911134657.569780871@linuxfoundation.org>
+Subject: [PATCH 6.5 230/739] arm64: dts: qcom: sc8180x: Fix cluster PSCI suspend param
+Date: Mon, 11 Sep 2023 15:40:29 +0200
+Message-ID: <20230911134657.596604960@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,38 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 951151c2bb548e0f6b2c40ab4c48675f5342c914 ]
+[ Upstream commit 9c31a3f5abc9eeb6509d06041b1e5f12deb39c4d ]
 
-Add the missing interrupts that communicate the hardware-managed
-throttling to Linux.
+The value was copypasted from 8150, but 8180 expects a different one.
+Confirmed with both downstream device tree and Windows DSDT, not tested
+on hardware (sorry, I don't have any).
 
-Fixes: ccbb3abb23a5 ("arm64: dts: qcom: sm8350: Add cpufreq node")
+Fix it.
+
+Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230705-topic-sm8350_fixes-v1-3-0f69f70ccb6a@linaro.org
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230705-topic-8180_sleep-v1-1-c5dce117364e@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 318ec37da5cd6..35b68de50e227 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -3399,6 +3399,13 @@ cpufreq_hw: cpufreq@18591000 {
- 			      <0 0x18593000 0 0x1000>;
- 			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
- 
-+			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "dcvsh-irq-0",
-+					  "dcvsh-irq-1",
-+					  "dcvsh-irq-2";
-+
- 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
- 			clock-names = "xo", "alternate";
- 
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index be78a933d8eb2..e58f931c2e459 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -298,7 +298,7 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 		domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+-				arm,psci-suspend-param = <0x4100c244>;
++				arm,psci-suspend-param = <0x4100a344>;
+ 				entry-latency-us = <3263>;
+ 				exit-latency-us = <6562>;
+ 				min-residency-us = <9987>;
 -- 
 2.40.1
 
