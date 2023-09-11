@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C473F11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4365AC433C8;
-	Mon, 11 Sep 2023 15:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB19611706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABD2C433C7;
+	Mon, 11 Sep 2023 15:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444495;
-	bh=nu9KOZoZe745EMg92uZBF11uD9L8fC47brwPcGE62TQ=;
+	s=korg; t=1694444498;
+	bh=8G7Avf1NypFZ9vK1dYsZr2oCWOfmBeMX+ygWvs5tgF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vpELkqAoOphHyUWpHn5VeLXh6lmZvw9NNOHisvUSU6LVvXYDHmiR8P4SQ8e7MoIK
-	 SqnHlfi8zprhRco8s6/Q+ifyWg7FFVqIJtzCcg/YHaGolseacbeQ8wQG8vKK9qy32Y
-	 PfgeMVmr/X/VbP32/IStZlTgJQIli4i7dGQ+PnvU=
+	b=yrJclz+FwXAsZitfushmBatGwPHKkDkk/ojhc2qYSfTIyRy9H9dqBwjvrjflqS58E
+	 Vnn+4ZrvG9Z0dqx/E5CzRci6EARSdVIQVhqofuBbYVrJ5lO5guY4p0+0ZLZE01NgBT
+	 q6In245PfifIp3ytHJK5UYCV1fVIlpFXMOxr778Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Burykin <burikin@ivk.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/600] media: pci: cx23885: fix error handling for cx23885 ATSC boards
-Date: Mon, 11 Sep 2023 15:40:46 +0200
-Message-ID: <20230911134634.008785100@linuxfoundation.org>
+Subject: [PATCH 6.1 014/600] 9p: virtio: fix unlikely null pointer deref in handle_rerror
+Date: Mon, 11 Sep 2023 15:40:47 +0200
+Message-ID: <20230911134634.037805470@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,61 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Burykin <burikin@ivk.ru>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 4aaa96b59df5fac41ba891969df6b092061ea9d7 ]
+[ Upstream commit 13ade4ac5c28e8a014fa85278f5a4270b215f906 ]
 
-After having been assigned to NULL value at cx23885-dvb.c:1202,
-pointer '0' is dereferenced at cx23885-dvb.c:2469.
+handle_rerror can dereference the pages pointer, but it is not
+necessarily set for small payloads.
+In practice these should be filtered out by the size check, but
+might as well double-check explicitly.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This fixes the following scan-build warnings:
+net/9p/trans_virtio.c:401:24: warning: Dereference of null pointer [core.NullDereference]
+                memcpy_from_page(to, *pages++, offs, n);
+                                     ^~~~~~~~
+net/9p/trans_virtio.c:406:23: warning: Dereference of null pointer (loaded from variable 'pages') [core.NullDereference]
+        memcpy_from_page(to, *pages, offs, size);
+                             ^~~~~~
 
-Signed-off-by: Nikolay Burykin <burikin@ivk.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx23885/cx23885-dvb.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ net/9p/trans_virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/cx23885/cx23885-dvb.c b/drivers/media/pci/cx23885/cx23885-dvb.c
-index 8fd5b6ef24282..7551ca4a322a4 100644
---- a/drivers/media/pci/cx23885/cx23885-dvb.c
-+++ b/drivers/media/pci/cx23885/cx23885-dvb.c
-@@ -2459,16 +2459,10 @@ static int dvb_register(struct cx23885_tsport *port)
- 			request_module("%s", info.type);
- 			client_tuner = i2c_new_client_device(&dev->i2c_bus[1].i2c_adap, &info);
- 			if (!i2c_client_has_driver(client_tuner)) {
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			if (!try_module_get(client_tuner->dev.driver->owner)) {
- 				i2c_unregister_device(client_tuner);
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			port->i2c_client_tuner = client_tuner;
-@@ -2505,16 +2499,10 @@ static int dvb_register(struct cx23885_tsport *port)
- 			request_module("%s", info.type);
- 			client_tuner = i2c_new_client_device(&dev->i2c_bus[1].i2c_adap, &info);
- 			if (!i2c_client_has_driver(client_tuner)) {
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			if (!try_module_get(client_tuner->dev.driver->owner)) {
- 				i2c_unregister_device(client_tuner);
--				module_put(client_demod->dev.driver->owner);
--				i2c_unregister_device(client_demod);
--				port->i2c_client_demod = NULL;
- 				goto frontend_detach;
- 			}
- 			port->i2c_client_tuner = client_tuner;
+diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
+index 3f3eb03cda7d6..6a4a29a2703de 100644
+--- a/net/9p/trans_virtio.c
++++ b/net/9p/trans_virtio.c
+@@ -385,7 +385,7 @@ static void handle_rerror(struct p9_req_t *req, int in_hdr_len,
+ 	void *to = req->rc.sdata + in_hdr_len;
+ 
+ 	// Fits entirely into the static data?  Nothing to do.
+-	if (req->rc.size < in_hdr_len)
++	if (req->rc.size < in_hdr_len || !pages)
+ 		return;
+ 
+ 	// Really long error message?  Tough, truncate the reply.  Might get
 -- 
 2.40.1
 
