@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A7D1172B
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CF1C433C8;
-	Mon, 11 Sep 2023 14:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F3411722
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:31:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A21C433C8;
+	Mon, 11 Sep 2023 14:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442695;
-	bh=noxRCndVVyYfwNM9DeyuetqniHdW9GW9Z+yCfk7RpbY=;
+	s=korg; t=1694442698;
+	bh=yiaXGXD3T/lR3L4DN1Bfjv+i/g+ovVqFUzzXTwcOgnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYU5m7Ql4Yh2DjH0qeHhDsJuhLEq/jE+Gj6zOlpJqPdpalcfXeoi7NMxixfVUk3UZ
-	 NYhReqzCS7apQaUAtrGoFqb4k8hnYA5AsR3TtzDwEmEeMZitbahIkjVOTmK3/1q9tj
-	 aWLP6KsNMdb/XdrIufX/DOKk2z7JSllbHH2lmcBo=
+	b=rYMmIyaefDcfY1npfCIY2fmuKp8Lw2vJEYuSFsd25eowchwKuaywSXkS+bLJF7JvS
+	 72cf4ihEDl4wvZnbQYNeTnR22iBJ3Mtv+eiAqg8ShsqnBpo+mOIjT0XO3NISAMlNwb
+	 hWP+W4OiGLwuho+B4Vv+L8Yi/Wd9xNmRmDAnDd2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 115/737] selftests/resctrl: Dont leak buffer in fill_cache()
-Date: Mon, 11 Sep 2023 15:39:34 +0200
-Message-ID: <20230911134653.715841034@linuxfoundation.org>
+	Jordan Rife <jrife@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.4 090/737] net: Avoid address overwrite in kernel_connect
+Date: Mon, 11 Sep 2023 15:39:09 +0200
+Message-ID: <20230911134653.015047667@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -37,59 +33,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jordan Rife <jrife@google.com>
 
-[ Upstream commit 2d320b1029ee7329ee0638181be967789775b962 ]
+commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
 
-The error path in fill_cache() does return before the allocated buffer
-is freed leaking the buffer.
+BPF programs that run on connect can rewrite the connect address. For
+the connect system call this isn't a problem, because a copy of the address
+is made when it is moved into kernel space. However, kernel_connect
+simply passes through the address it is given, so the caller may observe
+its address value unexpectedly change.
 
-The leak was introduced when fill_cache_read() started to return errors
-in commit c7b607fa9325 ("selftests/resctrl: Fix null pointer
-dereference on open failed"), before that both fill functions always
-returned 0.
+A practical example where this is problematic is where NFS is combined
+with a system such as Cilium which implements BPF-based load balancing.
+A common pattern in software-defined storage systems is to have an NFS
+mount that connects to a persistent virtual IP which in turn maps to an
+ephemeral server IP. This is usually done to achieve high availability:
+if your server goes down you can quickly spin up a replacement and remap
+the virtual IP to that endpoint. With BPF-based load balancing, mounts
+will forget the virtual IP address when the address rewrite occurs
+because a pointer to the only copy of that address is passed down the
+stack. Server failover then breaks, because clients have forgotten the
+virtual IP address. Reconnects fail and mounts remain broken. This patch
+was tested by setting up a scenario like this and ensuring that NFS
+reconnects worked after applying the patch.
 
-Move free() earlier to prevent the mem leak.
-
-Fixes: c7b607fa9325 ("selftests/resctrl: Fix null pointer dereference on open failed")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Shaopeng Tan (Fujitsu) <tan.shaopeng@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/socket.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index 341cc93ca84c4..3b328c8448964 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -177,12 +177,13 @@ fill_cache(unsigned long long buf_size, int malloc_and_init, int memflush,
- 	else
- 		ret = fill_cache_write(start_ptr, end_ptr, resctrl_val);
- 
-+	free(startptr);
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -3528,7 +3528,11 @@ EXPORT_SYMBOL(kernel_accept);
+ int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
+ 		   int flags)
+ {
+-	return sock->ops->connect(sock, addr, addrlen, flags);
++	struct sockaddr_storage address;
 +
- 	if (ret) {
- 		printf("\n Error in fill cache read/write...\n");
- 		return -1;
- 	}
- 
--	free(startptr);
- 
- 	return 0;
++	memcpy(&address, addr, addrlen);
++
++	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
  }
--- 
-2.40.1
-
+ EXPORT_SYMBOL(kernel_connect);
+ 
 
 
