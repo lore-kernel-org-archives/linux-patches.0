@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17981170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F36C433C8;
-	Mon, 11 Sep 2023 14:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F138C1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:02:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D21C433C8;
+	Mon, 11 Sep 2023 14:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440975;
-	bh=8h8x9x0spwTkrVwfiiJGLQWYchtYi+VlFVGTExybF1s=;
+	s=korg; t=1694440978;
+	bh=ipmZR02bvnI0RzJ3kVrJG+zR1sfI49Qd1xKGaVuGo5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDavieyfKJqIru6pAZgYkOSr1F8crRiipKMGCnTM38C4aGwMTNhsfS2CkW/mzt6sN
-	 5C6Lbysh5qMlaD/+T/fx40GSPXbUG8TG+bPWT0BHbNyh5gic8fd3GjYhmkDsUfStcW
-	 Kg9r0d0xfaC5GpYSY7/ZekgRcN2bf9rusGEMvnac=
+	b=ziGcCRHFd/03L9V9VjW1bCdFcrWWY3jrfJRj2ohTAd/d3EVDu1qWanzBs8z9qXGwN
+	 1Vs/0J9fpJoiUlWPrNTlNfHtYC6Aqeq69DKb7Wp570JRlG+hdKQ+uEa3wH7R/R5CFw
+	 KXY9J3fZKIaM0TbfJ+64X/dpyB9tiHDcojH8h5mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 251/739] arm64: tegra: Fix HSUART for Jetson AGX Orin
-Date: Mon, 11 Sep 2023 15:40:50 +0200
-Message-ID: <20230911134658.164753762@linuxfoundation.org>
+Subject: [PATCH 6.5 226/739] arm64: dts: qcom: msm8996: Add missing interrupt to the USB2 controller
+Date: Mon, 11 Sep 2023 15:40:25 +0200
+Message-ID: <20230911134657.490179826@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,45 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 861dbb2b15b1049113887fb95e856f7123eea0cc ]
+[ Upstream commit 36541089c4733355ed844c67eebd0c3936953454 ]
 
-After commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
-reset-names") was applied, the HSUART failed to probe and the following
-error is seen:
+The interrupt line was previously not described. Take care of that.
 
- serial-tegra 3100000.serial: Couldn't get the reset
- serial-tegra: probe of 3100000.serial failed with error -2
-
-Commit 71de0a054d0e ("arm64: tegra: Drop serial clock-names and
-reset-names") is correct because the "reset-names" property is not
-needed for 8250 UARTs. However, the "reset-names" is required for the
-HSUART and should have been populated as part of commit ff578db7b693
-("arm64: tegra: Enable UART instance on 40-pin header") that
-enabled the HSUART for Jetson AGX Orin. Fix this by populating the
-"reset-names" property for the HSUART on Jetson AGX Orin.
-
-Fixes: ff578db7b693 ("arm64: tegra: Enable UART instance on 40-pin header")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 1e39255ed29d ("arm64: dts: msm8996: Add device node for qcom,dwc3")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230627-topic-more_bindings-v1-11-6b4b6cd081e5@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
-index cd13cf2381dde..513cc2cd0b668 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra234-p3737-0000+p3701-0000.dts
-@@ -2010,6 +2010,7 @@ interrupt-controller@2a40000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 3855366ca89fd..dd5f2b9677832 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3336,6 +3336,9 @@ usb2: usb@76f8800 {
+ 			#size-cells = <1>;
+ 			ranges;
  
- 		serial@3100000 {
- 			compatible = "nvidia,tegra194-hsuart";
-+			reset-names = "serial";
- 			status = "okay";
- 		};
- 
++			interrupts = <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hs_phy_irq";
++
+ 			clocks = <&gcc GCC_PERIPH_NOC_USB20_AHB_CLK>,
+ 				<&gcc GCC_USB20_MASTER_CLK>,
+ 				<&gcc GCC_USB20_MOCK_UTMI_CLK>,
 -- 
 2.40.1
 
