@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9C811719
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F110C433C8;
-	Mon, 11 Sep 2023 14:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313E311719
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D8DC433D9;
+	Mon, 11 Sep 2023 14:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443993;
-	bh=AJQ+peReRXy1WW93+2lI6jPVbdNWWM/9b7J+wGECIi4=;
+	s=korg; t=1694443996;
+	bh=0uQ5coB8JkwXZZP2mGozqlDZECEjDxJihQ+wpYX+nNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIQpQZ8qxdGHDGcN9xsM6KROzmhbBBwTqgZchT8ZfdlQJu3crcyH9oABQ/gqc2VW2
-	 ofFbMb8z0pNvL522HH4Jz4saKuJhEnd0W2NFKlR/FfeZYxE8WBsbMaPknFNsaUZCRL
-	 bn2K/bAPgRkFNNSXneBqXiPHlbe0VPzjyRveSbAQ=
+	b=EoaARjYnzikXnDs9Kxpy/ixV9MkEkT0AJyvqhyQ2rDW35//N/64SLJkA85bkXbGvK
+	 +JlvHUKPuDycSNXXYgIniJaymzSucwpbSy5ZRBDZSv+5BuCuNLMh+kD/U5frIQzFt6
+	 rYPjceiA5XqCH2ap+DIqN3BmnSqyODyU9ljZotq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 572/737] media: ov2680: Fix regulators being left enabled on ov2680_power_on() errors
-Date: Mon, 11 Sep 2023 15:47:11 +0200
-Message-ID: <20230911134706.517503947@linuxfoundation.org>
+Subject: [PATCH 6.4 573/737] media: i2c: rdacm21: Fix uninitialized value
+Date: Mon, 11 Sep 2023 15:47:12 +0200
+Message-ID: <20230911134706.544411130@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,61 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-[ Upstream commit 84b4bd7e0d98166aa32fd470e672721190492eae ]
+[ Upstream commit 33c7ae8f49e3413c81e879e1fdfcea4c5516e37b ]
 
-When the ov2680_power_on() "sensor soft reset failed" path is hit during
-probe() the WARN() about putting an enabled regulator at
-drivers/regulator/core.c:2398 triggers 3 times (once for each regulator),
-filling dmesg with backtraces.
+Fix the following smatch warning:
 
-Fix this by properly disabling the regulators on ov2680_power_on() errors.
+drivers/media/i2c/rdacm21.c:373 ov10640_check_id() error: uninitialized
+symbol 'val'.
 
-Fixes: 3ee47cad3e69 ("media: ov2680: Add Omnivision OV2680 sensor driver")
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Initialize 'val' to 0 in the ov10640_check_id() function.
+
+Fixes: 2b821698dc73 ("media: i2c: rdacm21: Power up OV10640 before OV490")
+Reported-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/i2c/rdacm21.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index a24344ef9852c..8943e4e78a0df 100644
---- a/drivers/media/i2c/ov2680.c
-+++ b/drivers/media/i2c/ov2680.c
-@@ -475,7 +475,7 @@ static int ov2680_power_on(struct ov2680_dev *sensor)
- 		ret = ov2680_write_reg(sensor, OV2680_REG_SOFT_RESET, 0x01);
- 		if (ret != 0) {
- 			dev_err(dev, "sensor soft reset failed\n");
--			return ret;
-+			goto err_disable_regulators;
- 		}
- 		usleep_range(1000, 2000);
- 	} else {
-@@ -485,7 +485,7 @@ static int ov2680_power_on(struct ov2680_dev *sensor)
+diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
+index 9ccc56c30d3b0..d269c541ebe4c 100644
+--- a/drivers/media/i2c/rdacm21.c
++++ b/drivers/media/i2c/rdacm21.c
+@@ -351,7 +351,7 @@ static void ov10640_power_up(struct rdacm21_device *dev)
+ static int ov10640_check_id(struct rdacm21_device *dev)
+ {
+ 	unsigned int i;
+-	u8 val;
++	u8 val = 0;
  
- 	ret = clk_prepare_enable(sensor->xvclk);
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_regulators;
- 
- 	sensor->is_enabled = true;
- 
-@@ -495,6 +495,10 @@ static int ov2680_power_on(struct ov2680_dev *sensor)
- 	ov2680_stream_disable(sensor);
- 
- 	return 0;
-+
-+err_disable_regulators:
-+	regulator_bulk_disable(OV2680_NUM_SUPPLIES, sensor->supplies);
-+	return ret;
- }
- 
- static int ov2680_s_power(struct v4l2_subdev *sd, int on)
+ 	/* Read OV10640 ID to test communications. */
+ 	for (i = 0; i < OV10640_PID_TIMEOUT; ++i) {
 -- 
 2.40.1
 
