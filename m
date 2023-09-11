@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0725E11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D2FC433C7;
-	Mon, 11 Sep 2023 15:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8142A11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C40C433C8;
+	Mon, 11 Sep 2023 15:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444945;
-	bh=SdiobAsLAjlJ9JIu65yYeLUQSrchlBJ4+p3f2f0Sdic=;
+	s=korg; t=1694444948;
+	bh=BVTObnbdlrZ+R2Gx+7m/EyPMjFEP4pXYBvA5VqKJndY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEchn39Fc8rVXuBTKMJG3RqemeW4ujA5KdTn480G3P5Prv2tPRkkGnEwi1FjAMmSi
-	 tbV0IcTi/52cMGI//aT3ToZ7VQ1OR+peEDZnqbl93R7YWjfx5gM+MEgXDSpMjnZvoM
-	 p1oZakku76ADfOo7D1ht1DTPa0MMHACCvJQMdiCM=
+	b=HeSqAXJ4gXLaNulAkPG8Aie0HV41hAWTxLNsKVgspYaKwbLT0XP2ezwlEys3CDoMM
+	 M0WW6bRV5qlu804ikektoWae6qCcBQPghM75sCV2/MnDQDxOTkGLMMKqjp5+jZPgQ8
+	 BK5fxt5F5spewwxiHni9xBHFxcQqgkP8s6pN0o3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <imagedong@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Li Zetao <lizetao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 173/600] net: tcp: fix unexcepted socket die when snd_wnd is 0
-Date: Mon, 11 Sep 2023 15:43:26 +0200
-Message-ID: <20230911134638.713115949@linuxfoundation.org>
+Subject: [PATCH 6.1 174/600] selftests/bpf: Fix repeat option when kfunc_call verification fails
+Date: Mon, 11 Sep 2023 15:43:27 +0200
+Message-ID: <20230911134638.740910141@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,81 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <imagedong@tencent.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit e89688e3e97868451a5d05b38a9d2633d6785cd4 ]
+[ Upstream commit 811915db674f8daf19bb4fcb67da9017235ce26d ]
 
-In tcp_retransmit_timer(), a window shrunk connection will be regarded
-as timeout if 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX'. This is not
-right all the time.
+There is no way where topts.repeat can be set to 1 when tc_test fails.
+Fix the typo where the break statement slipped by one line.
 
-The retransmits will become zero-window probes in tcp_retransmit_timer()
-if the 'snd_wnd==0'. Therefore, the icsk->icsk_rto will come up to
-TCP_RTO_MAX sooner or later.
-
-However, the timer can be delayed and be triggered after 122877ms, not
-TCP_RTO_MAX, as I tested.
-
-Therefore, 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX' is always true
-once the RTO come up to TCP_RTO_MAX, and the socket will die.
-
-Fix this by replacing the 'tcp_jiffies32' with '(u32)icsk->icsk_timeout',
-which is exact the timestamp of the timeout.
-
-However, "tp->rcv_tstamp" can restart from idle, then tp->rcv_tstamp
-could already be a long time (minutes or hours) in the past even on the
-first RTO. So we double check the timeout with the duration of the
-retransmission.
-
-Meanwhile, making "2 * TCP_RTO_MAX" as the timeout to avoid the socket
-dying too soon.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/netdev/CADxym3YyMiO+zMD4zj03YPM3FBi-1LHi6gSD2XT8pyAMM096pg@mail.gmail.com/
-Signed-off-by: Menglong Dong <imagedong@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: fb66223a244f ("selftests/bpf: add test for accessing ctx from syscall program type")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/bpf/20230814031434.3077944-1-zouyipeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/kfunc_call.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index cf354c29ec123..44b49f7d1a9e6 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -441,6 +441,22 @@ static void tcp_fastopen_synack_timer(struct sock *sk, struct request_sock *req)
- 			  req->timeout << req->num_timeout, TCP_RTO_MAX);
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_call.c b/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
+index 5af1ee8f0e6ee..36071f3f15ba1 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
++++ b/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
+@@ -171,8 +171,8 @@ static void verify_fail(struct kfunc_test_params *param)
+ 	case tc_test:
+ 		topts.data_in = &pkt_v4;
+ 		topts.data_size_in = sizeof(pkt_v4);
+-		break;
+ 		topts.repeat = 1;
++		break;
+ 	}
  
-+static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
-+				     const struct sk_buff *skb)
-+{
-+	const struct tcp_sock *tp = tcp_sk(sk);
-+	const int timeout = TCP_RTO_MAX * 2;
-+	u32 rcv_delta, rtx_delta;
-+
-+	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
-+	if (rcv_delta <= timeout)
-+		return false;
-+
-+	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
-+			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
-+
-+	return rtx_delta > timeout;
-+}
- 
- /**
-  *  tcp_retransmit_timer() - The TCP retransmit timeout handler
-@@ -506,7 +522,7 @@ void tcp_retransmit_timer(struct sock *sk)
- 					    tp->snd_una, tp->snd_nxt);
- 		}
- #endif
--		if (tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX) {
-+		if (tcp_rtx_probe0_timed_out(sk, skb)) {
- 			tcp_write_err(sk);
- 			goto out;
- 		}
+ 	skel = kfunc_call_fail__open_opts(&opts);
 -- 
 2.40.1
 
