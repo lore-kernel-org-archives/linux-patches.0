@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCFC11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4897C433C7;
-	Mon, 11 Sep 2023 15:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2396B11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:01:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB9DC433C8;
+	Mon, 11 Sep 2023 15:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444501;
-	bh=EtExqsOOX2f0wc3frbzvZLvjMffY2QKVUNsTWPDBt8k=;
+	s=korg; t=1694444504;
+	bh=892gBVZR7Jdfhgt7AKIIlSxYzNONqjTtHj4kilNB8Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFW4k6y3MPOUN5JbEdvqm0S7/NvM070X05Gcnx/wg++XpDhJeupfkqpmihQoxuBML
-	 Ig/p+lDfNZ/zcax/ADRf64a+zlq7WxtRIeD9BcbJ3042itlSp8Ad4KPVzpSMhzdhR9
-	 NJjk/z6WfTrQXOXM6UtVQbU+astCzav71umOItX4=
+	b=F+ia7uMmVWC04O1OFilgH3qt3TbWjztTyu77IKp9Vx3b8a1gB2CyABX071VidJNlu
+	 SKpPpH+hjWXGvy0xVSZHdjtAa7xMyvYUo+Z/cdacW/+M7YYVcIpdlU/mHz8kkK/HCx
+	 w5AekrKg7dYxmU7xB48sHhSgTY3wEch+KziWDsWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <simon.horman@corigine.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/600] 9p: virtio: make sure offs is initialized in zc_request
-Date: Mon, 11 Sep 2023 15:40:48 +0200
-Message-ID: <20230911134634.066933639@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 016/600] ksmbd: fix out of bounds in smb3_decrypt_req()
+Date: Mon, 11 Sep 2023 15:40:49 +0200
+Message-ID: <20230911134634.095217743@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,41 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 4a73edab69d3a6623f03817fe950a2d9585f80e4 ]
+[ Upstream commit dc318846f3dd54574a36ae97fc8d8b75dd7cdb1e ]
 
-Similarly to the previous patch: offs can be used in handle_rerrors
-without initializing on small payloads; in this case handle_rerrors will
-not use it because of the size check, but it doesn't hurt to make sure
-it is zero to please scan-build.
+smb3_decrypt_req() validate if pdu_length is smaller than
+smb2_transform_hdr size.
 
-This fixes the following warning:
-net/9p/trans_virtio.c:539:3: warning: 3rd function call argument is an uninitialized value [core.CallAndMessage]
-                handle_rerror(req, in_hdr_len, offs, in_pages);
-                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21589
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
-index 6a4a29a2703de..3cf660d8a0a7b 100644
---- a/net/9p/trans_virtio.c
-+++ b/net/9p/trans_virtio.c
-@@ -429,7 +429,7 @@ p9_virtio_zc_request(struct p9_client *client, struct p9_req_t *req,
- 	struct page **in_pages = NULL, **out_pages = NULL;
- 	struct virtio_chan *chan = client->trans;
- 	struct scatterlist *sgs[4];
--	size_t offs;
-+	size_t offs = 0;
- 	int need_drop = 0;
- 	int kicked = 0;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 9b621fd993bb7..ee954c5ab9c2b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8713,7 +8713,8 @@ int smb3_decrypt_req(struct ksmbd_work *work)
+ 	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(buf);
+ 	int rc = 0;
  
+-	if (buf_data_size < sizeof(struct smb2_hdr)) {
++	if (pdu_length < sizeof(struct smb2_transform_hdr) ||
++	    buf_data_size < sizeof(struct smb2_hdr)) {
+ 		pr_err("Transform message is too small (%u)\n",
+ 		       pdu_length);
+ 		return -ECONNABORTED;
 -- 
 2.40.1
 
