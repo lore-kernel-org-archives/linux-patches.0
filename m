@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C911711
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4FBC433C9;
-	Mon, 11 Sep 2023 14:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1355F1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:23:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC86C433C7;
+	Mon, 11 Sep 2023 14:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442195;
-	bh=wuQGo0AqQXKfDN26I1GBqEEag0sy/HUm5Ed2Px1UtCQ=;
+	s=korg; t=1694442198;
+	bh=Lv1NKOg82lki41tgK0SHqljC2HbKVyyCERc2RsVr6kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PFeVGktc6Bx8ZO+jFaH/y3l8nxsi/0eIsQu+JtEaZ7sAuUBSH59vGUsMXoGtriXrl
-	 J+YyEUDl59NPsSbCVzM0LtOuSYfK7OvGS2ANPSLd3grDsenL6yUAKx6R8rKH9p+qGX
-	 NTbIoVj5cYzWK+j3qaOJoBpnO5q1hWvXCGMXreXk=
+	b=c3pU75jms3vy4wkA1QOr8NyK9Kka4RcmA3WRM9WRnGKgTo8NI1dPOuvmUi+As6QCC
+	 hbdNVh2qaFo3W43zT1Mad7e+AIRQAguMnIrgmB0M8dl0V5pxyFLSuHeke877RkuZ00
+	 I/UGfRDNHbxhnrGI0QQKni6ocB71ss1/PELmz3Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.5 680/739] media: venus: hfi_venus: Write to VIDC_CTRL_INIT after unmasking interrupts
-Date: Mon, 11 Sep 2023 15:47:59 +0200
-Message-ID: <20230911134710.092068716@linuxfoundation.org>
+Subject: [PATCH 6.5 681/739] media: nxp: Fix wrong return pointer check in mxc_isi_crossbar_init()
+Date: Mon, 11 Sep 2023 15:48:00 +0200
+Message-ID: <20230911134710.120144229@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,42 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit d74e481609808330b4625b3691cf01e1f56e255e upstream.
+commit 4b60db99babad0254129ddc58e0927ffa9e93e35 upstream.
 
-The startup procedure shouldn't be started with interrupts masked, as that
-may entail silent failures.
+It should check 'xbar->inputs', when allocate memory for it.
 
-Kick off initialization only after the interrupts are unmasked.
-
-Cc: stable@vger.kernel.org # v4.12+
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    2 +-
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -453,7 +453,6 @@ static int venus_boot_core(struct venus_
- 	void __iomem *wrapper_base = hdev->core->wrapper_base;
- 	int ret = 0;
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
+@@ -483,7 +483,7 @@ int mxc_isi_crossbar_init(struct mxc_isi
  
--	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	if (IS_V6(hdev->core)) {
- 		mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
- 		mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
-@@ -464,6 +463,7 @@ static int venus_boot_core(struct venus_
- 	writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
- 	writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
- 
-+	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	while (!ctrl_status && count < max_tries) {
- 		ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
- 		if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
+ 	xbar->inputs = kcalloc(xbar->num_sinks, sizeof(*xbar->inputs),
+ 			       GFP_KERNEL);
+-	if (!xbar->pads) {
++	if (!xbar->inputs) {
+ 		ret = -ENOMEM;
+ 		goto err_free;
+ 	}
 
 
