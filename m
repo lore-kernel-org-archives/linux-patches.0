@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE951170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DFE1C433C8;
-	Mon, 11 Sep 2023 14:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906BB1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8CBC433C8;
+	Mon, 11 Sep 2023 14:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441106;
-	bh=gKEuVuuVE7Ub/2E+Xn5fjoJ/9+CbWSPEIZiKuxLKQH0=;
+	s=korg; t=1694441109;
+	bh=/M7vtCyJ/D8qYzdiFRgTG5SzsaP7K/j+hHmUeai/iv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nut4AzeeaSINqHK4DtEKzFUBAh8CcFUryJNwTLRhQT09g+C7MWjChOe7KqkfmXwH6
-	 TtPe2kGcSJI8kgbH/s+ejdKMhx26IfomHnXPJgaNpHyqOYAONi+is9ykeoH8q6Zf7q
-	 YK+mJKDtc2Ri61Ez3esR2AU//X2TFHiMf2xBloP0=
+	b=IZF5elV1oFJIkcCFD/s+rLyFh49mYfmjhCPzWRq6qJWUbc8oMWv26ttgm4QEjY8N6
+	 38vKqciinhyhquhm0eAdPhUJCRzT+q/N2Mf2c2P7JUeF2wa3a5M8KQ3t9OgaeHf9QW
+	 Gx7mt4Vujmp2jyuoud3H5VMLbtu1j106Uc9nTPE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Nayna Jain <nayna@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 298/739] drm/panel: simple: Add missing connector type and pixel format for AUO T215HVN01
-Date: Mon, 11 Sep 2023 15:41:37 +0200
-Message-ID: <20230911134659.453421179@linuxfoundation.org>
+Subject: [PATCH 6.5 299/739] ima: Remove deprecated IMA_TRUSTED_KEYRING Kconfig
+Date: Mon, 11 Sep 2023 15:41:38 +0200
+Message-ID: <20230911134659.480040197@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,38 +40,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Nayna Jain <nayna@linux.ibm.com>
 
-[ Upstream commit 7a675a8fa598edb29a664a91adb80f0340649f6f ]
+[ Upstream commit 5087fd9e80e539d2163accd045b73da64de7de95 ]
 
-The connector type and pixel format are missing for this panel,
-add them to prevent various drivers from failing to determine
-either of those parameters.
+Time to remove "IMA_TRUSTED_KEYRING".
 
-Fixes: 7ee933a1d5c4 ("drm/panel: simple: Add support for AUO T215HVN01")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230709134914.449328-1-marex@denx.de
+Fixes: f4dc37785e9b ("integrity: define '.evm' as a builtin 'trusted' keyring") # v4.5+
+Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/integrity/ima/Kconfig | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index b38d0e95cd542..03196fbfa4d79 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1189,7 +1189,9 @@ static const struct panel_desc auo_t215hvn01 = {
- 	.delay = {
- 		.disable = 5,
- 		.unprepare = 1000,
--	}
-+	},
-+	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/security/integrity/ima/Kconfig b/security/integrity/ima/Kconfig
+index 60a511c6b583e..c17660bf5f347 100644
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -248,18 +248,6 @@ config IMA_APPRAISE_MODSIG
+ 	   The modsig keyword can be used in the IMA policy to allow a hook
+ 	   to accept such signatures.
  
- static const struct drm_display_mode avic_tm070ddh03_mode = {
+-config IMA_TRUSTED_KEYRING
+-	bool "Require all keys on the .ima keyring be signed (deprecated)"
+-	depends on IMA_APPRAISE && SYSTEM_TRUSTED_KEYRING
+-	depends on INTEGRITY_ASYMMETRIC_KEYS
+-	select INTEGRITY_TRUSTED_KEYRING
+-	default y
+-	help
+-	   This option requires that all keys added to the .ima
+-	   keyring be signed by a key on the system trusted keyring.
+-
+-	   This option is deprecated in favor of INTEGRITY_TRUSTED_KEYRING
+-
+ config IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
+ 	bool "Permit keys validly signed by a built-in or secondary CA cert (EXPERIMENTAL)"
+ 	depends on SYSTEM_TRUSTED_KEYRING
 -- 
 2.40.1
 
