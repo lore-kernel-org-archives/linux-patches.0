@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A6C1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DA0C433C8;
-	Mon, 11 Sep 2023 14:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3B41170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:27:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DB5C433C9;
+	Mon, 11 Sep 2023 14:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442473;
-	bh=XK2pJ0tu36OttgdUCty2/wAOvIUdXUwg1FOpwaru6Qg=;
+	s=korg; t=1694442476;
+	bh=OXLuKdLpyfGuTvn93KHAOrGN/Qg+4yfwaaDhnl6nRjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=seQGoh+jvXNYfuuhvo95LpYfztMm7o69QeGDCQJJC7UdwpS/f2Bimzqy8ltX055SR
-	 0OdzFkqLBMkZ2J115IMd1jUH41Y+AiYTQ6ouZfOfLRMEdXVGLTtlv6MYJXvYBFdMHz
-	 9ERRZl0U0tuaOS+iWcJ4sf+sQBkkm+dPNrna1UNI=
+	b=oWsTTbfcBM0iUfOQxOz13GqTQjq1pd62ldT0uDUX+jpSrkjfGNrginiCVgzTjzjK8
+	 Estn8My78P2j2I5xXd8vqUMEPni/PmwtF2zr2ADlV6aDlVWlxWeTUX78bNBcrUaJTs
+	 QU5C43iN7Rf4XOty5n33i7Kwr7dwhOvRmkr3T1Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Jian <Jane.Jian@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ben Hutchings <benh@debian.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 038/737] drm/amd/smu: use AverageGfxclkFrequency* to replace previous GFX Curr Clock
-Date: Mon, 11 Sep 2023 15:38:17 +0200
-Message-ID: <20230911134651.485709588@linuxfoundation.org>
+Subject: [PATCH 6.4 021/737] m68k: Fix invalid .section syntax
+Date: Mon, 11 Sep 2023 15:38:00 +0200
+Message-ID: <20230911134650.940159792@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,34 +41,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jane Jian <Jane.Jian@amd.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit 4a37c55b859a69f429bfa7fab4fc43ee470b60ed ]
+[ Upstream commit 922a9bd138101e3e5718f0f4d40dba68ef89bb43 ]
 
-Report current GFX clock also from average clock value as the original
-CurrClock data is not valid/accurate any more as per FW team
+gas supports several different forms for .section for ELF targets,
+including:
+    .section NAME [, "FLAGS"[, @TYPE[,FLAG_SPECIFIC_ARGUMENTS]]]
+and:
+    .section "NAME"[, #FLAGS...]
 
-Signed-off-by: Jane Jian <Jane.Jian@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In several places we use a mix of these two forms:
+    .section NAME, #FLAGS...
+
+A current development snapshot of binutils (2.40.50.20230611) treats
+this mixed syntax as an error.
+
+Change to consistently use:
+    .section NAME, "FLAGS"
+as is used elsewhere in the kernel.
+
+Link: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=m68k&ver=6.4%7Erc6-1%7Eexp1&stamp=1686907300&raw=1
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Tested-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Link: https://lore.kernel.org/r/ZIyBaueWT9jnTwRC@decadent.org.uk
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/m68k/fpsp040/skeleton.S       | 4 ++--
+ arch/m68k/ifpsp060/os.S            | 4 ++--
+ arch/m68k/kernel/relocate_kernel.S | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index d7f09af2fb018..419a247dfbbf2 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -1323,7 +1323,7 @@ static ssize_t smu_v13_0_0_get_gpu_metrics(struct smu_context *smu,
- 	gpu_metrics->average_vclk1_frequency = metrics->AverageVclk1Frequency;
- 	gpu_metrics->average_dclk1_frequency = metrics->AverageDclk1Frequency;
+diff --git a/arch/m68k/fpsp040/skeleton.S b/arch/m68k/fpsp040/skeleton.S
+index 439395aa6fb42..081922c72daaa 100644
+--- a/arch/m68k/fpsp040/skeleton.S
++++ b/arch/m68k/fpsp040/skeleton.S
+@@ -499,13 +499,13 @@ in_ea:
+ 	dbf	%d0,morein
+ 	rts
  
--	gpu_metrics->current_gfxclk = metrics->CurrClock[PPCLK_GFXCLK];
-+	gpu_metrics->current_gfxclk = gpu_metrics->average_gfxclk_frequency;
- 	gpu_metrics->current_socclk = metrics->CurrClock[PPCLK_SOCCLK];
- 	gpu_metrics->current_uclk = metrics->CurrClock[PPCLK_UCLK];
- 	gpu_metrics->current_vclk0 = metrics->CurrClock[PPCLK_VCLK_0];
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:
+ 	jbsr	fpsp040_die
+ 	jbra	.Lnotkern
+ 
+-	.section __ex_table,#alloc
++	.section __ex_table,"a"
+ 	.align	4
+ 
+ 	.long	in_ea,1b
+diff --git a/arch/m68k/ifpsp060/os.S b/arch/m68k/ifpsp060/os.S
+index 7a0d6e4280665..89e2ec224ab6c 100644
+--- a/arch/m68k/ifpsp060/os.S
++++ b/arch/m68k/ifpsp060/os.S
+@@ -379,11 +379,11 @@ _060_real_access:
+ 
+ 
+ | Execption handling for movs access to illegal memory
+-	.section .fixup,#alloc,#execinstr
++	.section .fixup,"ax"
+ 	.even
+ 1:	moveq		#-1,%d1
+ 	rts
+-.section __ex_table,#alloc
++.section __ex_table,"a"
+ 	.align 4
+ 	.long	dmrbuae,1b
+ 	.long	dmrwuae,1b
+diff --git a/arch/m68k/kernel/relocate_kernel.S b/arch/m68k/kernel/relocate_kernel.S
+index ab0f1e7d46535..f7667079e08e9 100644
+--- a/arch/m68k/kernel/relocate_kernel.S
++++ b/arch/m68k/kernel/relocate_kernel.S
+@@ -26,7 +26,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcopy),%a4
+ 2:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 2b+2
+ 	.previous
+ 
+@@ -49,7 +49,7 @@ ENTRY(relocate_new_kernel)
+ 	lea %pc@(.Lcont040),%a4
+ 5:	addl #0x00000000,%a4		/* virt_to_phys() */
+ 
+-	.section ".m68k_fixup","aw"
++	.section .m68k_fixup,"aw"
+ 	.long M68K_FIXUP_MEMOFFSET, 5b+2
+ 	.previous
+ 
 -- 
 2.40.1
 
