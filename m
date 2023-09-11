@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17EA1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:08:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36139C433C7;
-	Mon, 11 Sep 2023 14:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3421170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:08:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003FEC433C7;
+	Mon, 11 Sep 2023 14:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441311;
-	bh=EO6ome8Ma72Nn/jn2f7wF3EBXEbVoKO9HzwEAA4uGxM=;
+	s=korg; t=1694441314;
+	bh=N3GPBUEBj7SfhhcTAqnWlZ6igchrr4/X+PBnba5eN0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxIcBY+4KICikNJv0kHLeOi1/dlXlxbLyoV9Qg99ScRZC/J9bIm9QSjJAAA06bMXv
-	 +V2GStug5u9KXz7pBu4rdg4aEy1xneg3ly/OrKhswsqqRLo1GKHaFSNs4f7STTPj0d
-	 QovXAv/PyJRMy1shAROun8q0nTkw2M6TCa/tHLVA=
+	b=n3bPT/xhhsvw2k+nQwKl+7ueDoVinOV4toakdnT2l73bbhELtAcQa9kS3IAWXK4oo
+	 VbAb7v/CtoPboABNYwwYxQK0sup5Iasv2UZjx8Jrf2cKMltKOAVUm22KVdp7Tz8p3h
+	 vbnpjYXHj1EMB7uZAB1mlhHbcNFhg+4S1Iu0QYss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Rob Herring <robh@kernel.org>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	kernel test robot <lkp@intel.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 368/739] of: unittest: Fix overlay type in apply/revert check
-Date: Mon, 11 Sep 2023 15:42:47 +0200
-Message-ID: <20230911134701.435522853@linuxfoundation.org>
+Subject: [PATCH 6.5 343/739] drm/mediatek: Fix void-pointer-to-enum-cast warning
+Date: Mon, 11 Sep 2023 15:42:22 +0200
+Message-ID: <20230911134700.691783293@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,40 +42,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 6becf8f845ae1f0b1cfed395bbeccbd23654162d ]
+[ Upstream commit 89cba955f879b1c6a9a71f67c8fb92ea8f5dfdc4 ]
 
-The removal check in of_unittest_apply_revert_overlay_check()
-always uses the platform device overlay type, while it should use the
-actual overlay type, as passed as a parameter to the function.
+1. Fix build warning message in mtk_disp_ovl_adaptor.c
+>> drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c:415:10:
+  warning: cast to smaller integer type 'enum mtk_ovl_adaptor_comp_type'
+  from 'const void *' [-Wvoid-pointer-to-enum-cast]
 
-This has no impact on any current test, as all tests calling
-of_unittest_apply_revert_overlay_check() use the platform device overlay
-type.
+  type = (enum mtk_ovl_adaptor_comp_type)of_id->data;
 
-Fixes: d5e75500ca401d31 ("of: unitest: Add I2C overlay unit tests.")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/ba0234c41ba808f10112094f88792beeb6dbaedf.1690533838.git.geert+renesas@glider.be
-Signed-off-by: Rob Herring <robh@kernel.org>
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         1 warning generated.
+
+2. Also fix the same warning message in mtk_drm_drv.c
+>> drivers/gpu/drm/mediatek/mtk_drm_drv.c:832:15:
+   warning: cast to smaller integer type 'enum mtk_ddp_comp_type'
+   from 'const void *' [-Wvoid-pointer-to-enum-cast]
+
+   comp_type = (enum mtk_ddp_comp_type)of_id->data;
+
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+               1 warning generated.
+
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202305042054.ZtWME9OU-lkp@intel.com/
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230621075421.1982-1-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c | 2 +-
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c          | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index d943bf87c94dd..f6784cce8369b 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -2182,7 +2182,7 @@ static int __init of_unittest_apply_revert_overlay_check(int overlay_nr,
- 	of_unittest_untrack_overlay(save_ovcs_id);
+diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
+index c0a38f5217eee..f2f6a5c01a6d2 100644
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
+@@ -426,7 +426,7 @@ static int ovl_adaptor_comp_init(struct device *dev, struct component_match **ma
+ 			continue;
+ 		}
  
- 	/* unittest device must be again in before state */
--	if (of_unittest_device_exists(unittest_nr, PDEV_OVERLAY) != before) {
-+	if (of_unittest_device_exists(unittest_nr, ovtype) != before) {
- 		unittest(0, "%s with device @\"%s\" %s\n",
- 				overlay_name_from_nr(overlay_nr),
- 				unittest_path(unittest_nr, ovtype),
+-		type = (enum mtk_ovl_adaptor_comp_type)of_id->data;
++		type = (enum mtk_ovl_adaptor_comp_type)(uintptr_t)of_id->data;
+ 		id = ovl_adaptor_comp_get_id(dev, node, type);
+ 		if (id < 0) {
+ 			dev_warn(dev, "Skipping unknown component %pOF\n",
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index fc217e0acd45d..30d10f21562f4 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -832,7 +832,7 @@ static int mtk_drm_probe(struct platform_device *pdev)
+ 			continue;
+ 		}
+ 
+-		comp_type = (enum mtk_ddp_comp_type)of_id->data;
++		comp_type = (enum mtk_ddp_comp_type)(uintptr_t)of_id->data;
+ 
+ 		if (comp_type == MTK_DISP_MUTEX) {
+ 			int id;
 -- 
 2.40.1
 
