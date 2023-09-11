@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D7711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:46:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EBEC433C7;
-	Mon, 11 Sep 2023 14:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40F11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:46:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D3CC433C7;
+	Mon, 11 Sep 2023 14:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443585;
-	bh=1KY3kd7GY8b+tA/RZnlHpKrZnmhQCPvtNmBwSGoLT20=;
+	s=korg; t=1694443588;
+	bh=/28Nya9QsJGg2UVbD5EIRUQQi4eP7XVNNseIRuNmaEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocPcpiQdTLXREnzmD0m+JEVDTRJkOv1pGq4TSDy00J4Bl9ONgJIrnTEYKJtLFjG62
-	 xFSiYAx62FrEhLbvFseFzNq5bAxLiae/9vC0RYHlrcRWuMkWdY696O7qZkqwWXf9Fi
-	 ttdL9u6buNhg2kM8VRL/xtXZroWTmZjGIAtHIIwA=
+	b=KHk4G8PvtrmEN0jd9VRK2HVKzkI5iqNZA7MfBf5vddJE6P3E1mBhMWl3ZzzLBiskB
+	 VdNxzq/rGwfzzZUJ0uDpIBadXn8K0rtwM0XYVxyvDQUcM36wqPhsSw90OVXTJaqlYL
+	 tD01Eztmj6fUUCCPRY5MOCJTN1ci4/t7Wybl3gMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 430/737] kvm/vfio: ensure kvg instance stays around in kvm_vfio_group_add()
-Date: Mon, 11 Sep 2023 15:44:49 +0200
-Message-ID: <20230911134702.610160806@linuxfoundation.org>
+Subject: [PATCH 6.4 431/737] clk: qcom: reset: Use the correct type of sleep/delay based on length
+Date: Mon, 11 Sep 2023 15:44:50 +0200
+Message-ID: <20230911134702.637266136@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,53 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 9e0f4f2918c2ff145d3dedee862d9919a6ed5812 ]
+[ Upstream commit 181b66ee7cdd824797fc99b53bec29cf5630a04f ]
 
-kvm_vfio_group_add() creates kvg instance, links it to kv->group_list,
-and calls kvm_vfio_file_set_kvm() with kvg->file as an argument after
-dropping kv->lock. If we race group addition and deletion calls, kvg
-instance may get freed by the time we get around to calling
-kvm_vfio_file_set_kvm().
+Use the fsleep() helper that (based on the length of the delay, see: [1])
+chooses the correct sleep/delay functions.
 
-Previous iterations of the code did not reference kvg->file outside of
-the critical section, but used a temporary variable. Still, they had
-similar problem of the file reference being owned by kvg structure and
-potential for kvm_vfio_group_del() dropping it before
-kvm_vfio_group_add() had a chance to complete.
+[1] https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
 
-Fix this by moving call to kvm_vfio_file_set_kvm() under the protection
-of kv->lock. We already call it while holding the same lock when vfio
-group is being deleted, so it should be safe here as well.
-
-Fixes: 2fc1bec15883 ("kvm: set/clear kvm to/from vfio_group when group add/delete")
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20230714224538.404793-1-dmitry.torokhov@gmail.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: 2cb8a39b6781 ("clk: qcom: reset: Allow specifying custom reset delay")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230726-topic-qcom_reset-v3-1-5958facd5db2@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/vfio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/reset.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/virt/kvm/vfio.c b/virt/kvm/vfio.c
-index af3d0cf06e4c6..365d30779768a 100644
---- a/virt/kvm/vfio.c
-+++ b/virt/kvm/vfio.c
-@@ -180,10 +180,10 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
- 	list_add_tail(&kvf->node, &kv->file_list);
+diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
+index 0e914ec7aeae1..e45e32804d2c7 100644
+--- a/drivers/clk/qcom/reset.c
++++ b/drivers/clk/qcom/reset.c
+@@ -16,7 +16,8 @@ static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
+ 	struct qcom_reset_controller *rst = to_qcom_reset_controller(rcdev);
  
- 	kvm_arch_start_assignment(dev->kvm);
-+	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
- 
- 	mutex_unlock(&kv->lock);
- 
--	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
- 	kvm_vfio_update_coherency(dev);
- 
+ 	rcdev->ops->assert(rcdev, id);
+-	udelay(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
++	fsleep(rst->reset_map[id].udelay ?: 1); /* use 1 us as default */
++
+ 	rcdev->ops->deassert(rcdev, id);
  	return 0;
+ }
 -- 
 2.40.1
 
