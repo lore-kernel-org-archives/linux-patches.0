@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9797A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C9AC433C8;
-	Mon, 11 Sep 2023 14:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDF41170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61C7C433C7;
+	Mon, 11 Sep 2023 14:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441177;
-	bh=vxqOg9zK5nlxHwx1QEbApMFakIp/+Zu96Fu+YcDjEoQ=;
+	s=korg; t=1694441180;
+	bh=OJ0JVI/R068BfEcwIEc2CSn7/li1VdXA+EPea4HnHSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UT/cov25IGCAt2P8wp0RmOrT1Zv/tYgyqc2hsZtpz/Ph/e2X7uuAKpF+oDroSCuBd
-	 bjqenk52JrtJIoc1FUAnSF3ZiYhn4/rn1wFQue48QsOwelG9u0hzf5bZuebZ75PvXQ
-	 32nU4QNoVCfvwaNam3D+NbIJMHQjVqX3BXM+khwg=
+	b=uqAV8YQ0RW4YCRwCYTGP0G0k3YY53mPAKVt4EbDXR0ZaDMo350DRd8j3sl+eY7so5
+	 KaIDBs60XyFLtItmRE43AO0PE1twbUFCbVhQUoaCaMiFPuL0b+sF/fOxFDaJBouq5D
+	 yCLf88+EALKRlBsHfFUjzBfJtz6dq8rhdOvOuX1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nancy.Lin" <nancy.lin@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 322/739] drm/mediatek: Fix uninitialized symbol
-Date: Mon, 11 Sep 2023 15:42:01 +0200
-Message-ID: <20230911134700.098932869@linuxfoundation.org>
+Subject: [PATCH 6.5 323/739] audit: fix possible soft lockup in __audit_inode_child()
+Date: Mon, 11 Sep 2023 15:42:02 +0200
+Message-ID: <20230911134700.125716126@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,57 +40,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nancy.Lin <nancy.lin@mediatek.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 63ee9438f2aeffb2d1b2df2599c168ca08d35025 ]
+[ Upstream commit b59bc6e37237e37eadf50cd5de369e913f524463 ]
 
-Fix Smatch static checker warning
-  -Fix uninitialized symbol comp_pdev in mtk_ddp_comp_init.
+Tracefs or debugfs maybe cause hundreds to thousands of PATH records,
+too many PATH records maybe cause soft lockup.
 
-Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
-Signed-off-by: Nancy.Lin <nancy.lin@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230803094843.4439-1-nancy.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+For example:
+  1. CONFIG_KASAN=y && CONFIG_PREEMPTION=n
+  2. auditctl -a exit,always -S open -k key
+  3. sysctl -w kernel.watchdog_thresh=5
+  4. mkdir /sys/kernel/debug/tracing/instances/test
+
+There may be a soft lockup as follows:
+  watchdog: BUG: soft lockup - CPU#45 stuck for 7s! [mkdir:15498]
+  Kernel panic - not syncing: softlockup: hung tasks
+  Call trace:
+   dump_backtrace+0x0/0x30c
+   show_stack+0x20/0x30
+   dump_stack+0x11c/0x174
+   panic+0x27c/0x494
+   watchdog_timer_fn+0x2bc/0x390
+   __run_hrtimer+0x148/0x4fc
+   __hrtimer_run_queues+0x154/0x210
+   hrtimer_interrupt+0x2c4/0x760
+   arch_timer_handler_phys+0x48/0x60
+   handle_percpu_devid_irq+0xe0/0x340
+   __handle_domain_irq+0xbc/0x130
+   gic_handle_irq+0x78/0x460
+   el1_irq+0xb8/0x140
+   __audit_inode_child+0x240/0x7bc
+   tracefs_create_file+0x1b8/0x2a0
+   trace_create_file+0x18/0x50
+   event_create_dir+0x204/0x30c
+   __trace_add_new_event+0xac/0x100
+   event_trace_add_tracer+0xa0/0x130
+   trace_array_create_dir+0x60/0x140
+   trace_array_create+0x1e0/0x370
+   instance_mkdir+0x90/0xd0
+   tracefs_syscall_mkdir+0x68/0xa0
+   vfs_mkdir+0x21c/0x34c
+   do_mkdirat+0x1b4/0x1d4
+   __arm64_sys_mkdirat+0x4c/0x60
+   el0_svc_common.constprop.0+0xa8/0x240
+   do_el0_svc+0x8c/0xc0
+   el0_svc+0x20/0x30
+   el0_sync_handler+0xb0/0xb4
+   el0_sync+0x160/0x180
+
+Therefore, we add cond_resched() to __audit_inode_child() to fix it.
+
+Fixes: 5195d8e217a7 ("audit: dynamically allocate audit_names when not enough space is in the names array")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ kernel/auditsc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c b/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
-index f114da4d36a96..771f4e1733539 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
-@@ -563,14 +563,15 @@ int mtk_ddp_comp_init(struct device_node *node, struct mtk_ddp_comp *comp,
- 	/* Not all drm components have a DTS device node, such as ovl_adaptor,
- 	 * which is the drm bring up sub driver
- 	 */
--	if (node) {
--		comp_pdev = of_find_device_by_node(node);
--		if (!comp_pdev) {
--			DRM_INFO("Waiting for device %s\n", node->full_name);
--			return -EPROBE_DEFER;
--		}
--		comp->dev = &comp_pdev->dev;
-+	if (!node)
-+		return 0;
-+
-+	comp_pdev = of_find_device_by_node(node);
-+	if (!comp_pdev) {
-+		DRM_INFO("Waiting for device %s\n", node->full_name);
-+		return -EPROBE_DEFER;
+diff --git a/kernel/auditsc.c b/kernel/auditsc.c
+index addeed3df15d3..8dfd581cd5543 100644
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -2456,6 +2456,8 @@ void __audit_inode_child(struct inode *parent,
+ 		}
  	}
-+	comp->dev = &comp_pdev->dev;
  
- 	if (type == MTK_DISP_AAL ||
- 	    type == MTK_DISP_BLS ||
-@@ -580,7 +581,6 @@ int mtk_ddp_comp_init(struct device_node *node, struct mtk_ddp_comp *comp,
- 	    type == MTK_DISP_MERGE ||
- 	    type == MTK_DISP_OVL ||
- 	    type == MTK_DISP_OVL_2L ||
--	    type == MTK_DISP_OVL_ADAPTOR ||
- 	    type == MTK_DISP_PWM ||
- 	    type == MTK_DISP_RDMA ||
- 	    type == MTK_DPI ||
++	cond_resched();
++
+ 	/* is there a matching child entry? */
+ 	list_for_each_entry(n, &context->names_list, list) {
+ 		/* can only match entries that have a name */
 -- 
 2.40.1
 
