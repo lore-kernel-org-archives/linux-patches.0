@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFBE11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A788FC433C8;
-	Mon, 11 Sep 2023 15:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BD211715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:07:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78664C433C9;
+	Mon, 11 Sep 2023 15:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444853;
-	bh=TIBDME20L3oVlxEEN2CZ06QAj40eLiRxu6ir5lSB5tU=;
+	s=korg; t=1694444855;
+	bh=4okI+ydUurJhT/wlH+GhmgYCtTUtTpcOLlIX0fEWnHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QdG3gM+IVRk5rQKQsif1yiPz0iq1gsDdyXB1B47CmP0ju96X+Al3y6ypR0pOj0yg7
-	 NqaIg4gZFUIFO4vKMXj3AztozdWIfEyC+R9pn0HVsbHJ1LsPc8XBbJHgazTT6cfrN7
-	 rJtz7OQtG718oB+9m9DWOjILVtpDV39CV6TIpvAQ=
+	b=rejhdVOSfYHx7zHx/rX+LqD3suTBupzWZxxeWwQIxcY34JvG3ZwnkOyZ5ucGPxy/n
+	 PGZjDrsdfLt6hpP2kcTphVKtlc3TSboVNX/W31S1n+oQPqsEEuVM9wUY9ixdeepo9S
+	 FNwFtKF0bblEPd+5yk+sorEaR8Uo5VDhDLZ1CqyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexander Lobakin <alobakin@pm.me>,
-	Quentin Monnet <quentin@isovalent.com>,
+	"Nysal Jan K.A" <nysal@linux.ibm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/600] bpftool: Use a local bpf_perf_event_value to fix accessing its fields
-Date: Mon, 11 Sep 2023 15:42:53 +0200
-Message-ID: <20230911134637.743254728@linuxfoundation.org>
+Subject: [PATCH 6.1 123/600] selftests/futex: Order calls to futex_lock_pi
+Date: Mon, 11 Sep 2023 15:42:36 +0200
+Message-ID: <20230911134637.245592013@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,135 +40,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <alobakin@pm.me>
+From: Nysal Jan K.A <nysal@linux.ibm.com>
 
-[ Upstream commit 658ac06801315b739774a15796ff06913ef5cad5 ]
+[ Upstream commit fbf4dec702774286db409815ffb077711a96b824 ]
 
-Fix the following error when building bpftool:
+Observed occassional failures in the futex_wait_timeout test:
 
-  CLANG   profiler.bpf.o
-  CLANG   pid_iter.bpf.o
-skeleton/profiler.bpf.c:18:21: error: invalid application of 'sizeof' to an incomplete type 'struct bpf_perf_event_value'
-        __uint(value_size, sizeof(struct bpf_perf_event_value));
-                           ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:13:39: note: expanded from macro '__uint'
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helper_defs.h:7:8: note: forward declaration of 'struct bpf_perf_event_value'
-struct bpf_perf_event_value;
-       ^
+ok 1 futex_wait relative succeeds
+ok 2 futex_wait_bitset realtime succeeds
+ok 3 futex_wait_bitset monotonic succeeds
+ok 4 futex_wait_requeue_pi realtime succeeds
+ok 5 futex_wait_requeue_pi monotonic succeeds
+not ok 6 futex_lock_pi realtime returned 0
+......
 
-struct bpf_perf_event_value is being used in the kernel only when
-CONFIG_BPF_EVENTS is enabled, so it misses a BTF entry then.
-Define struct bpf_perf_event_value___local with the
-`preserve_access_index` attribute inside the pid_iter BPF prog to
-allow compiling on any configs. It is a full mirror of a UAPI
-structure, so is compatible both with and w/o CO-RE.
-bpf_perf_event_read_value() requires a pointer of the original type,
-so a cast is needed.
+The test expects the child thread to complete some steps before
+the parent thread gets to run. There is an implicit expectation
+of the order of invocation of futex_lock_pi between the child thread
+and the parent thread. Make this order explicit. If the order is
+not met, the futex_lock_pi call in the parent thread succeeds and
+will not timeout.
 
-Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Alexander Lobakin <alobakin@pm.me>
-Signed-off-by: Quentin Monnet <quentin@isovalent.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230707095425.168126-5-quentin@isovalent.com
+Fixes: f4addd54b161 ("selftests: futex: Expand timeout test")
+Signed-off-by: Nysal Jan K.A <nysal@linux.ibm.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/profiler.bpf.c | 27 ++++++++++++++---------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ .../selftests/futex/functional/futex_wait_timeout.c        | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-index ce5b65e07ab10..2f80edc682f11 100644
---- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
-+++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-@@ -4,6 +4,12 @@
- #include <bpf/bpf_helpers.h>
- #include <bpf/bpf_tracing.h>
+diff --git a/tools/testing/selftests/futex/functional/futex_wait_timeout.c b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
+index 3651ce17beeb9..d183f878360bc 100644
+--- a/tools/testing/selftests/futex/functional/futex_wait_timeout.c
++++ b/tools/testing/selftests/futex/functional/futex_wait_timeout.c
+@@ -24,6 +24,7 @@
  
-+struct bpf_perf_event_value___local {
-+	__u64 counter;
-+	__u64 enabled;
-+	__u64 running;
-+} __attribute__((preserve_access_index));
+ static long timeout_ns = 100000;	/* 100us default timeout */
+ static futex_t futex_pi;
++static pthread_barrier_t barrier;
+ 
+ void usage(char *prog)
+ {
+@@ -48,6 +49,8 @@ void *get_pi_lock(void *arg)
+ 	if (ret != 0)
+ 		error("futex_lock_pi failed\n", ret);
+ 
++	pthread_barrier_wait(&barrier);
 +
- /* map of perf event fds, num_cpu * num_metric entries */
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
-@@ -15,14 +21,14 @@ struct {
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
- 	__uint(key_size, sizeof(u32));
--	__uint(value_size, sizeof(struct bpf_perf_event_value));
-+	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
- } fentry_readings SEC(".maps");
+ 	/* Blocks forever */
+ 	ret = futex_wait(&lock, 0, NULL, 0);
+ 	error("futex_wait failed\n", ret);
+@@ -130,6 +133,7 @@ int main(int argc, char *argv[])
+ 	       basename(argv[0]));
+ 	ksft_print_msg("\tArguments: timeout=%ldns\n", timeout_ns);
  
- /* accumulated readings */
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
- 	__uint(key_size, sizeof(u32));
--	__uint(value_size, sizeof(struct bpf_perf_event_value));
-+	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
- } accum_readings SEC(".maps");
++	pthread_barrier_init(&barrier, NULL, 2);
+ 	pthread_create(&thread, NULL, get_pi_lock, NULL);
  
- /* sample counts, one per cpu */
-@@ -39,7 +45,7 @@ const volatile __u32 num_metric = 1;
- SEC("fentry/XXX")
- int BPF_PROG(fentry_XXX)
- {
--	struct bpf_perf_event_value *ptrs[MAX_NUM_MATRICS];
-+	struct bpf_perf_event_value___local *ptrs[MAX_NUM_MATRICS];
- 	u32 key = bpf_get_smp_processor_id();
- 	u32 i;
+ 	/* initialize relative timeout */
+@@ -163,6 +167,9 @@ int main(int argc, char *argv[])
+ 	res = futex_wait_requeue_pi(&f1, f1, &futex_pi, &to, 0);
+ 	test_timeout(res, &ret, "futex_wait_requeue_pi monotonic", ETIMEDOUT);
  
-@@ -53,10 +59,10 @@ int BPF_PROG(fentry_XXX)
- 	}
- 
- 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
--		struct bpf_perf_event_value reading;
-+		struct bpf_perf_event_value___local reading;
- 		int err;
- 
--		err = bpf_perf_event_read_value(&events, key, &reading,
-+		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
- 						sizeof(reading));
- 		if (err)
- 			return 0;
-@@ -68,14 +74,14 @@ int BPF_PROG(fentry_XXX)
- }
- 
- static inline void
--fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
-+fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
- {
--	struct bpf_perf_event_value *before, diff;
-+	struct bpf_perf_event_value___local *before, diff;
- 
- 	before = bpf_map_lookup_elem(&fentry_readings, &id);
- 	/* only account samples with a valid fentry_reading */
- 	if (before && before->counter) {
--		struct bpf_perf_event_value *accum;
-+		struct bpf_perf_event_value___local *accum;
- 
- 		diff.counter = after->counter - before->counter;
- 		diff.enabled = after->enabled - before->enabled;
-@@ -93,7 +99,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
- SEC("fexit/XXX")
- int BPF_PROG(fexit_XXX)
- {
--	struct bpf_perf_event_value readings[MAX_NUM_MATRICS];
-+	struct bpf_perf_event_value___local readings[MAX_NUM_MATRICS];
- 	u32 cpu = bpf_get_smp_processor_id();
- 	u32 i, zero = 0;
- 	int err;
-@@ -102,7 +108,8 @@ int BPF_PROG(fexit_XXX)
- 	/* read all events before updating the maps, to reduce error */
- 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
- 		err = bpf_perf_event_read_value(&events, cpu + i * num_cpu,
--						readings + i, sizeof(*readings));
-+						(void *)(readings + i),
-+						sizeof(*readings));
- 		if (err)
- 			return 0;
- 	}
++	/* Wait until the other thread calls futex_lock_pi() */
++	pthread_barrier_wait(&barrier);
++	pthread_barrier_destroy(&barrier);
+ 	/*
+ 	 * FUTEX_LOCK_PI with CLOCK_REALTIME
+ 	 * Due to historical reasons, FUTEX_LOCK_PI supports only realtime
 -- 
 2.40.1
 
