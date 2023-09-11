@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0B8E57C
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAB4C433C8;
-	Mon, 11 Sep 2023 14:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F230BF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E7EC433C7;
+	Mon, 11 Sep 2023 14:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442835;
-	bh=4Ifc2RRlMK1ZjySnhHkPuKiC4/uuC/wXlY/vmQuVXgc=;
+	s=korg; t=1694442837;
+	bh=hKWinUgWL/fSSilsNXlHPSf46PyCIOLgCmwVLr6e+ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t//FA6pk26aO6Af09mrqL5rzxN+klsHQh4tdIevNztqWOLk5tS2cwRMAL705T0YOF
-	 hU4CtbNTMzGoRPOa+pL9iD02bfAAcpX8QV9zpfcQNPj3pQ6U30FTOqLFFHtgkVG+d0
-	 8Uw5TG1uaHg11bqz2OnUDtSYNE1LrvhFW5ervJog=
+	b=v391dLlv9yIy9ggnPfXSrCtbXr9VXH0xAH/Sg+54hqEljNhm6VKqx3WPABc1hrfqH
+	 /QjkTShJySDk3m4dcttDI/umvE9dUaqcNygF7J7Cv+/Fd04Jxh03vl469/XFxkt/FG
+	 P2J5b56Gbj5dVGD+z844wssyoiujEBphdZHp4Irk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 165/737] wifi: mt76: mt7996: fix WA event ring size
-Date: Mon, 11 Sep 2023 15:40:24 +0200
-Message-ID: <20230911134655.122096245@linuxfoundation.org>
+Subject: [PATCH 6.4 148/737] bpf: Fix an error around PTR_UNTRUSTED
+Date: Mon, 11 Sep 2023 15:40:07 +0200
+Message-ID: <20230911134654.624103508@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,48 +40,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 1634de418b3048c5f435b6ffd37f75943c554c04 ]
+[ Upstream commit 7ce4dc3e4a9d954c8a1fb483c7a527e9b060b860 ]
 
-Fix rx ring size of WA event to get rid of event loss and queue overflow
-problems.
+Per discussion with Alexei, the PTR_UNTRUSTED flag should not been
+cleared when we start to walk a new struct, because the struct in
+question may be a struct nested in a union. We should also check and set
+this flag before we walk its each member, in case itself is a union.
+We will clear this flag if the field is BTF_TYPE_SAFE_RCU_OR_NULL.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 6fcd486b3a0a ("bpf: Refactor RCU enforcement in the verifier.")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Link: https://lore.kernel.org/r/20230713025642.27477-2-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/dma.c    | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c      | 20 +++++++++-----------
+ kernel/bpf/verifier.c |  5 +++++
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-index 534143465d9b3..fbedaacffbba5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-@@ -293,7 +293,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
- 	/* event from WA */
- 	ret = mt76_queue_alloc(dev, &dev->mt76.q_rx[MT_RXQ_MCU_WA],
- 			       MT_RXQ_ID(MT_RXQ_MCU_WA),
--			       MT7996_RX_MCU_RING_SIZE,
-+			       MT7996_RX_MCU_RING_SIZE_WA,
- 			       MT_RX_BUF_SIZE,
- 			       MT_RXQ_RING_BASE(MT_RXQ_MCU_WA));
- 	if (ret)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 4d7dcb95a620a..b8bcad717d89f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -26,6 +26,7 @@
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 8b4e92439d1d6..5dd8534b778d1 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6126,7 +6126,6 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+ 	const char *tname, *mname, *tag_value;
+ 	u32 vlen, elem_id, mid;
  
- #define MT7996_RX_RING_SIZE		1536
- #define MT7996_RX_MCU_RING_SIZE		512
-+#define MT7996_RX_MCU_RING_SIZE_WA	1024
+-	*flag = 0;
+ again:
+ 	tname = __btf_name_by_offset(btf, t->name_off);
+ 	if (!btf_type_is_struct(t)) {
+@@ -6135,6 +6134,14 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+ 	}
  
- #define MT7996_FIRMWARE_WA		"mediatek/mt7996/mt7996_wa.bin"
- #define MT7996_FIRMWARE_WM		"mediatek/mt7996/mt7996_wm.bin"
+ 	vlen = btf_type_vlen(t);
++	if (BTF_INFO_KIND(t->info) == BTF_KIND_UNION && vlen != 1 && !(*flag & PTR_UNTRUSTED))
++		/*
++		 * walking unions yields untrusted pointers
++		 * with exception of __bpf_md_ptr and other
++		 * unions with a single member
++		 */
++		*flag |= PTR_UNTRUSTED;
++
+ 	if (off + size > t->size) {
+ 		/* If the last element is a variable size array, we may
+ 		 * need to relax the rule.
+@@ -6295,15 +6302,6 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+ 		 * of this field or inside of this struct
+ 		 */
+ 		if (btf_type_is_struct(mtype)) {
+-			if (BTF_INFO_KIND(mtype->info) == BTF_KIND_UNION &&
+-			    btf_type_vlen(mtype) != 1)
+-				/*
+-				 * walking unions yields untrusted pointers
+-				 * with exception of __bpf_md_ptr and other
+-				 * unions with a single member
+-				 */
+-				*flag |= PTR_UNTRUSTED;
+-
+ 			/* our field must be inside that union or struct */
+ 			t = mtype;
+ 
+@@ -6469,7 +6467,7 @@ bool btf_struct_ids_match(struct bpf_verifier_log *log,
+ 			  bool strict)
+ {
+ 	const struct btf_type *type;
+-	enum bpf_type_flag flag;
++	enum bpf_type_flag flag = 0;
+ 	int err;
+ 
+ 	/* Are we already done? */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 4fbfe1d086467..cef173614fc8f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5893,6 +5893,11 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
+ 				   type_is_rcu_or_null(env, reg, field_name, btf_id)) {
+ 				/* __rcu tagged pointers can be NULL */
+ 				flag |= MEM_RCU | PTR_MAYBE_NULL;
++
++				/* We always trust them */
++				if (type_is_rcu_or_null(env, reg, field_name, btf_id) &&
++				    flag & PTR_UNTRUSTED)
++					flag &= ~PTR_UNTRUSTED;
+ 			} else if (flag & (MEM_PERCPU | MEM_USER)) {
+ 				/* keep as-is */
+ 			} else {
 -- 
 2.40.1
 
