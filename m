@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DFF11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A534C433C7;
-	Mon, 11 Sep 2023 14:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05B311706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:55:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DC6C433C8;
+	Mon, 11 Sep 2023 14:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444121;
-	bh=Bi6cjiyGJP2vcSA9UYUDmgma/NREIJ/W+gbiM+kMI5Y=;
+	s=korg; t=1694444123;
+	bh=ndG81x3WV1GDT+U9P2YbTz6+BuHWYRUbdBJ0v7kSi1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FI2Lvjv5ch2kz7oDTgYJ9uVBLxWwSb4QdvfAwAOrp7zxnoVermZoRhlL6NQzD0ybE
-	 3N/91TM2WPZd2itMpg8KBXpfKP9XU4pAPf/Zqig0j+zrKFLs870J/unvYGPO3En8/a
-	 hgC3lL5LOCfzkDGK80rusghCUtbkF6gQFDGuAw4k=
+	b=z1hEREn7HLFVUXPWhivvfsR/UmsyRI3OqfJJ96Mu5VOH4qX+2dImmw2GulmmO+2Tc
+	 HnF7N89nwEtwUVSM9iWTA56FOVGYP0WL/cQGkLkjGYLccrQ3vALa1cB7A7UCgZJlKh
+	 o5beW1drtzQ1QJy4i3MHJGJ7JbN9B6H+q4H7UbkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 618/737] leds: multicolor: Use rounded division when calculating color components
-Date: Mon, 11 Sep 2023 15:47:57 +0200
-Message-ID: <20230911134707.793302323@linuxfoundation.org>
+Subject: [PATCH 6.4 619/737] leds: Fix BUG_ON check for LED_COLOR_ID_MULTI that is always false
+Date: Mon, 11 Sep 2023 15:47:58 +0200
+Message-ID: <20230911134707.821417305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,60 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 065d099f1be58187e6629273c50b948a02b7e1bf ]
+[ Upstream commit c3f853184bed04105682383c2971798c572226b5 ]
 
-Given channel intensity, LED brightness and max LED brightness, the
-multicolor LED framework helper led_mc_calc_color_components() computes
-the color channel brightness as
+At the time we call
+    BUG_ON(props.color == LED_COLOR_ID_MULTI);
+the props variable is still initialized to zero.
 
-    chan_brightness = brightness * chan_intensity / max_brightness
+Call the BUG_ON only after we parse fwnode into props.
 
-Consider the situation when (brightness, intensity, max_brightness) is
-for example (16, 15, 255), then chan_brightness is computed to 0
-although the fractional divison would give 0.94, which should be rounded
-to 1.
-
-Use DIV_ROUND_CLOSEST here for the division to give more realistic
-component computation:
-
-    chan_brightness = DIV_ROUND_CLOSEST(brightness * chan_intensity,
-                                        max_brightness)
-
-Fixes: 55d5d3b46b08 ("leds: multicolor: Introduce a multicolor class definition")
+Fixes: 77dce3a22e89 ("leds: disallow /sys/class/leds/*:multi:* for now")
 Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://lore.kernel.org/r/20230801124931.8661-1-kabel@kernel.org
+Link: https://lore.kernel.org/r/20230801151623.30387-1-kabel@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-class-multicolor.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/leds/led-core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
-index e317408583df9..ec62a48116135 100644
---- a/drivers/leds/led-class-multicolor.c
-+++ b/drivers/leds/led-class-multicolor.c
-@@ -6,6 +6,7 @@
- #include <linux/device.h>
- #include <linux/init.h>
- #include <linux/led-class-multicolor.h>
-+#include <linux/math.h>
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -19,9 +20,10 @@ int led_mc_calc_color_components(struct led_classdev_mc *mcled_cdev,
- 	int i;
+diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
+index 4a97cb7457888..aad8bc44459fe 100644
+--- a/drivers/leds/led-core.c
++++ b/drivers/leds/led-core.c
+@@ -419,15 +419,15 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
+ 	struct fwnode_handle *fwnode = init_data->fwnode;
+ 	const char *devicename = init_data->devicename;
  
- 	for (i = 0; i < mcled_cdev->num_colors; i++)
--		mcled_cdev->subled_info[i].brightness = brightness *
--					mcled_cdev->subled_info[i].intensity /
--					led_cdev->max_brightness;
-+		mcled_cdev->subled_info[i].brightness =
-+			DIV_ROUND_CLOSEST(brightness *
-+					  mcled_cdev->subled_info[i].intensity,
-+					  led_cdev->max_brightness);
+-	/* We want to label LEDs that can produce full range of colors
+-	 * as RGB, not multicolor */
+-	BUG_ON(props.color == LED_COLOR_ID_MULTI);
+-
+ 	if (!led_classdev_name)
+ 		return -EINVAL;
  
- 	return 0;
- }
+ 	led_parse_fwnode_props(dev, fwnode, &props);
+ 
++	/* We want to label LEDs that can produce full range of colors
++	 * as RGB, not multicolor */
++	BUG_ON(props.color == LED_COLOR_ID_MULTI);
++
+ 	if (props.label) {
+ 		/*
+ 		 * If init_data.devicename is NULL, then it indicates that
 -- 
 2.40.1
 
