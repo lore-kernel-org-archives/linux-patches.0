@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A191211706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B6CC433C9;
-	Mon, 11 Sep 2023 14:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D4A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:56:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032B6C433C9;
+	Mon, 11 Sep 2023 14:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444200;
-	bh=wniMVd1Ab9YMOLjSDrTD4Xd/8+xtbCB7+HtF+7ZUC0Q=;
+	s=korg; t=1694444203;
+	bh=Tgt6m+Z9xxOSgcMLJUxjTEJXwN33FQAi7J9p4H8aByU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fk2a3ftEsqnUmdk1Z7kpwVODSp9HRT+wEnUw7N6P7zrarJDnN/GMbAlWuki7t4+sK
-	 Onwkit2j3pw9L811jPdUJ7RehrV2+o7BXCT6hVQv8PN9Iv3A5neeeatu16vrm+tBhY
-	 htrFLoWoFixA2uRNw5eH6KbAZo8mdmz18FyV9RFc=
+	b=bDPkDHqbyn/NxWDM9jnKPg8D0ytjx3v7TCOppV5gtp8xy1EayfvZK9laUODqi6YSC
+	 iq3KR48UTdX2hh5cszF6szawwxDNxPXfS4cbkPyMSdHKjmutru59cpim16OQjDU8KQ
+	 ljWzwBa9mS1+ugd3AQkhbW4xi2dZriTqNAdaaWW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Marek Vasut <marex@denx.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 617/737] thermal/drivers/imx8mm: Suppress log message on probe deferral
-Date: Mon, 11 Sep 2023 15:47:56 +0200
-Message-ID: <20230911134707.766813407@linuxfoundation.org>
+Subject: [PATCH 6.4 608/737] phy/rockchip: inno-hdmi: do not power on rk3328 post pll on reg write
+Date: Mon, 11 Sep 2023 15:47:47 +0200
+Message-ID: <20230911134707.517612443@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,48 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 4afcb58ea47e66c025d2b0a5f091dce5aaf95b0f ]
+[ Upstream commit 19a1d46bd699940a496d3b0d4e142ef99834988c ]
 
-nvmem_cell_read_u32() may return -EPROBE_DEFER if NVMEM supplier has not
-yet been probed. Future reprobe may succeed, so printing:
+inno_write is used to configure 0xaa reg, that also hold the
+POST_PLL_POWER_DOWN bit.
+When POST_PLL_REFCLK_SEL_TMDS is configured the power down bit is not
+taken into consideration.
 
-  i.mx8mm_thermal 30260000.tmu: Failed to read OCOTP nvmem cell (-517).
+Fix this by keeping the power down bit until configuration is complete.
+Also reorder the reg write order for consistency.
 
-to the log is confusing. Fix this by using dev_err_probe. This also
-elevates the message from warning to error, which is more correct: The
-log message is only ever printed in probe error path and probe aborts
-afterwards, so it really warrants an error-level message.
-
-Fixes: 403291648823 ("thermal/drivers/imx: Add support for loading calibration data from OCOTP")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230708112647.2897294-1-a.fatoum@pengutronix.de
+Fixes: 53706a116863 ("phy: add Rockchip Innosilicon hdmi phy")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20230615171005.2251032-5-jonas@kwiboo.se
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx8mm_thermal.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
-index d8005e9ec992b..1f780c4a1c890 100644
---- a/drivers/thermal/imx8mm_thermal.c
-+++ b/drivers/thermal/imx8mm_thermal.c
-@@ -179,10 +179,8 @@ static int imx8mm_tmu_probe_set_calib_v1(struct platform_device *pdev,
- 	int ret;
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+index 7d412f771f6c3..fbdc23953b52e 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-hdmi.c
+@@ -1023,9 +1023,10 @@ inno_hdmi_phy_rk3328_power_on(struct inno_hdmi_phy *inno,
  
- 	ret = nvmem_cell_read_u32(&pdev->dev, "calib", &ana0);
--	if (ret) {
--		dev_warn(dev, "Failed to read OCOTP nvmem cell (%d).\n", ret);
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to read OCOTP nvmem cell\n");
+ 	inno_write(inno, 0xac, RK3328_POST_PLL_FB_DIV_7_0(cfg->fbdiv));
+ 	if (cfg->postdiv == 1) {
+-		inno_write(inno, 0xaa, RK3328_POST_PLL_REFCLK_SEL_TMDS);
+ 		inno_write(inno, 0xab, RK3328_POST_PLL_FB_DIV_8(cfg->fbdiv) |
+ 			   RK3328_POST_PLL_PRE_DIV(cfg->prediv));
++		inno_write(inno, 0xaa, RK3328_POST_PLL_REFCLK_SEL_TMDS |
++			   RK3328_POST_PLL_POWER_DOWN);
+ 	} else {
+ 		v = (cfg->postdiv / 2) - 1;
+ 		v &= RK3328_POST_PLL_POST_DIV_MASK;
+@@ -1033,7 +1034,8 @@ inno_hdmi_phy_rk3328_power_on(struct inno_hdmi_phy *inno,
+ 		inno_write(inno, 0xab, RK3328_POST_PLL_FB_DIV_8(cfg->fbdiv) |
+ 			   RK3328_POST_PLL_PRE_DIV(cfg->prediv));
+ 		inno_write(inno, 0xaa, RK3328_POST_PLL_POST_DIV_ENABLE |
+-			   RK3328_POST_PLL_REFCLK_SEL_TMDS);
++			   RK3328_POST_PLL_REFCLK_SEL_TMDS |
++			   RK3328_POST_PLL_POWER_DOWN);
+ 	}
  
- 	writel(FIELD_PREP(TASR_BUF_VREF_MASK,
- 			  FIELD_GET(ANA0_BUF_VREF_MASK, ana0)) |
+ 	for (v = 0; v < 14; v++)
 -- 
 2.40.1
 
