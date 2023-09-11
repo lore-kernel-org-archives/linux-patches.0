@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CF511715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:12:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45665C433C8;
-	Mon, 11 Sep 2023 15:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A491911715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252EAC433C7;
+	Mon, 11 Sep 2023 15:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445122;
-	bh=TQLiXFqYLvNSe7cF7o3pEjODN3QX51H7rrEfNqVXb/0=;
+	s=korg; t=1694445125;
+	bh=fWLhTpsGi+XWPvOPdDgq1zu47fA5MPrEmk6DXZiu6PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9WxVWmch7LkX3MRtzocg7r/FZrJi5/si0aIycyH86x2TJFhu7nVnIXPx1k1rd6v6
-	 SwXy24SA/Kft5hIYdTahiOuGOlvk2OXTdHm5/iMppf4Tu0CMT6WtK8EVVtDMWnK58i
-	 fOEKypYn3MsolccwYUAS736qOAAnhLFYpnkS7E6g=
+	b=IHdVQ7O3HuECmk7kfzPG89MD23TTtpDgILuVDwrODDqlYBnP/9aWx7tR9XEgBdW4/
+	 seQ8QTDxytsi+FQz9Ga8LRqjcHpRw/iXA3ClUwS8Yk1eLIIx3ykOKS/iGaEyYBGHbm
+	 4qbS/hWvWxji7N84P/puSEb5XSruwpWNLqwBQI98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 235/600] arm64: dts: qcom: sm8350: Use proper CPU compatibles
-Date: Mon, 11 Sep 2023 15:44:28 +0200
-Message-ID: <20230911134640.539716727@linuxfoundation.org>
+Subject: [PATCH 6.1 209/600] net/sched: sch_hfsc: Ensure inner classes have fsc curve
+Date: Mon, 11 Sep 2023 15:44:02 +0200
+Message-ID: <20230911134639.786154648@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,103 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Budimir Markovic <markovicbudimir@gmail.com>
 
-[ Upstream commit 4390730cc12af25f7c997f477795f5f4200149c0 ]
+[ Upstream commit b3d26c5702c7d6c45456326e56d2ccf3f103e60f ]
 
-The Kryo names (once again) turned out to be fake. The CPUs report:
+HFSC assumes that inner classes have an fsc curve, but it is currently
+possible for classes without an fsc curve to become parents. This leads
+to bugs including a use-after-free.
 
-0x412fd050 (CA55 r2p0) (0 - 3)
-0x411fd410 (CA78 r1p1) (4 - 6)
-0x411fd440 (CX1  r1p1) (7)
+Don't allow non-root classes without HFSC_FSC to become parents.
 
-Use the compatibles that reflect that.
-
-Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230706-topic-sm8350-cpu-compat-v1-1-f8d6a1869781@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20230824084905.422-1-markovicbudimir@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/sched/sch_hfsc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 0b5a1841d607d..b3245b13b2611 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -63,7 +63,7 @@ cpus {
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index 70b0c5873d326..61d52594ff6d8 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -1012,6 +1012,10 @@ hfsc_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 		if (parent == NULL)
+ 			return -ENOENT;
+ 	}
++	if (!(parent->cl_flags & HFSC_FSC) && parent != &q->root) {
++		NL_SET_ERR_MSG(extack, "Invalid parent - parent class must have FSC");
++		return -EINVAL;
++	}
  
- 		CPU0: cpu@0 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-@@ -82,7 +82,7 @@ L3_0: l3-cache {
- 
- 		CPU1: cpu@100 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_100>;
-@@ -98,7 +98,7 @@ L2_100: l2-cache {
- 
- 		CPU2: cpu@200 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_200>;
-@@ -114,7 +114,7 @@ L2_200: l2-cache {
- 
- 		CPU3: cpu@300 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_300>;
-@@ -130,7 +130,7 @@ L2_300: l2-cache {
- 
- 		CPU4: cpu@400 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x400>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_400>;
-@@ -146,7 +146,7 @@ L2_400: l2-cache {
- 
- 		CPU5: cpu@500 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x500>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_500>;
-@@ -163,7 +163,7 @@ L2_500: l2-cache {
- 
- 		CPU6: cpu@600 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x600>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_600>;
-@@ -179,7 +179,7 @@ L2_600: l2-cache {
- 
- 		CPU7: cpu@700 {
- 			device_type = "cpu";
--			compatible = "qcom,kryo685";
-+			compatible = "arm,cortex-x1";
- 			reg = <0x0 0x700>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_700>;
+ 	if (classid == 0 || TC_H_MAJ(classid ^ sch->handle) != 0)
+ 		return -EINVAL;
 -- 
 2.40.1
 
