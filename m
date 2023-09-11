@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC1411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC47C433C7;
-	Mon, 11 Sep 2023 15:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EAC11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:15:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0624BC433C8;
+	Mon, 11 Sep 2023 15:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445313;
-	bh=L8raixZjgo4XDuaf0pfw9J87nYP3WdTBsqgZdIGJW/E=;
+	s=korg; t=1694445316;
+	bh=B7eAnGKCly1DMnmAp/N+QMOlE8FO+wCHtfxRVOMT/KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2K5784qj1CDuIggsLBve7R/vEb3G2WZKEA/siQR1UlIxA4BmRikuVH/jr5XhRDKBi
-	 aJZI4fEurc3pH6AL+n/ThQyGvsH/pzMB6zWG5AJV0RfMd3sZZv0OrBis7V6DQdmzKo
-	 Q0vnsvhgwLhxnHFTvYYjgrkALzgcRSyaqegImMrs=
+	b=oqa2Z2GhLtmsYHHucr2u3UBdk1BGxGS+UL0hvzU0bp22S9UIa6IwnWxJbrhQ948u/
+	 8U6E6srNnSJUgyS5ZbFwxXQoVW1JwVQkRqsZWkGXIeT27G2jgp5R2+eXAzH0SbOB9t
+	 wIVU80LTrozHaRAFbjY9ud7pFOAEoTjRSRB/FFcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Robert Marko <robert.marko@sartura.hr>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 304/600] drm/mediatek: Remove freeing not dynamic allocated memory
-Date: Mon, 11 Sep 2023 15:45:37 +0200
-Message-ID: <20230911134642.595283901@linuxfoundation.org>
+Subject: [PATCH 6.1 305/600] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
+Date: Mon, 11 Sep 2023 15:45:38 +0200
+Message-ID: <20230911134642.627948394@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,59 +41,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Robert Marko <robert.marko@sartura.hr>
 
-[ Upstream commit 27b9e2ea3f2757da26bb8280e46f7fdbb1acb219 ]
+[ Upstream commit b5ed7a5c1fdb3981713f7b637b72aa390c3db036 ]
 
-Fixing the coverity issue of:
-mtk_drm_cmdq_pkt_destroy frees address of mtk_crtc->cmdq_handle
+Using GCC_DCD_XO_CLK as the XO clock for SDHCI controller is not correct,
+it seems that I somehow made a mistake of passing it instead of the fixed
+XO clock.
 
-So remove the free function.
-
-Fixes: 7627122fd1c0 ("drm/mediatek: Add cmdq_handle in mtk_crtc")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230714094908.13087-2-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 04b3b72b5b8f ("ARM: dts: qcom: ipq4019: Add SDHCI controller node")
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811110150.229966-1-robert.marko@sartura.hr
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index 5071f1263216b..14ddfe3a6be77 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -115,10 +115,9 @@ static int mtk_drm_cmdq_pkt_create(struct cmdq_client *client, struct cmdq_pkt *
- 	dma_addr_t dma_addr;
- 
- 	pkt->va_base = kzalloc(size, GFP_KERNEL);
--	if (!pkt->va_base) {
--		kfree(pkt);
-+	if (!pkt->va_base)
- 		return -ENOMEM;
--	}
-+
- 	pkt->buf_size = size;
- 	pkt->cl = (void *)client;
- 
-@@ -128,7 +127,6 @@ static int mtk_drm_cmdq_pkt_create(struct cmdq_client *client, struct cmdq_pkt *
- 	if (dma_mapping_error(dev, dma_addr)) {
- 		dev_err(dev, "dma map failed, size=%u\n", (u32)(u64)size);
- 		kfree(pkt->va_base);
--		kfree(pkt);
- 		return -ENOMEM;
- 	}
- 
-@@ -144,7 +142,6 @@ static void mtk_drm_cmdq_pkt_destroy(struct cmdq_pkt *pkt)
- 	dma_unmap_single(client->chan->mbox->dev, pkt->pa_base, pkt->buf_size,
- 			 DMA_TO_DEVICE);
- 	kfree(pkt->va_base);
--	kfree(pkt);
- }
- #endif
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index 02e13d8c222a0..b5e0ed4923b59 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -228,9 +228,12 @@ sdhci: mmc@7824900 {
+ 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "hc_irq", "pwr_irq";
+ 			bus-width = <8>;
+-			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>,
+-				 <&gcc GCC_DCD_XO_CLK>;
+-			clock-names = "iface", "core", "xo";
++			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_SDCC1_APPS_CLK>,
++				 <&xo>;
++			clock-names = "iface",
++				      "core",
++				      "xo";
+ 			status = "disabled";
+ 		};
  
 -- 
 2.40.1
