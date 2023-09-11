@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B86F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2451EC433C8;
-	Mon, 11 Sep 2023 14:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764CFF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:32:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9C7C433C8;
+	Mon, 11 Sep 2023 14:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442752;
-	bh=K2lHHz118fyD0vLOby3UUTGqv1EB+RnX8k+y8HcVrDs=;
+	s=korg; t=1694442755;
+	bh=3tHcRpK6sGazcrjnZK7+25pnEtTWNbsajOdkbCRaejI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9+EFvZHE27oXPkxUPoWTUxK3Elq1W4BCCiR87LIXrqBsBWBqjbzu703qBh3SSgkL
-	 MYlq1GIPtDDBD2p5693uq+U1Y4vTLMzjMVdlZ1wscgeSVu2PC6XRFKfBIh/4r4feia
-	 YWo5S6a2x8aUAb7+tQ0kTqRCz97jTW4grZeCalas=
+	b=VX8+UFTd4QMxrbSAWgGs0TxeeE+x/oZyQo3MJ1IQbfP4PH3xZKeid3E17raDOFoZs
+	 TgeAqXq1VxlscnqmD7oIstb3REgBXEG6kJ9x958oJQgS2RXAbwvwpAWH6tXDo6ymFd
+	 TPEQyxbu7FhCGvGQEpYI1tkCP3HQgegQk2io1Tt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Mark Brown <broonie@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Mikel Rychliski <mikel@mikelr.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 118/737] arm64/ptrace: Clean up error handling path in sve_set_common()
-Date: Mon, 11 Sep 2023 15:39:37 +0200
-Message-ID: <20230911134653.799805120@linuxfoundation.org>
+Subject: [PATCH 6.4 136/737] x86/efistub: Fix PCI ROM preservation in mixed mode
+Date: Mon, 11 Sep 2023 15:39:55 +0200
+Message-ID: <20230911134654.301931447@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,38 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Mikel Rychliski <mikel@mikelr.com>
 
-[ Upstream commit 5f69ca4229c7d8e23f238174827ee7aa49b0bcb2 ]
+[ Upstream commit 8b94da92559f7e403dc7ab81937cc50f949ee2fd ]
 
-All error handling paths go to 'out', except this one. Be consistent and
-also branch to 'out' here.
+preserve_pci_rom_image() was accessing the romsize field in
+efi_pci_io_protocol_t directly instead of using the efi_table_attr()
+helper. This prevents the ROM image from being saved correctly during a
+mixed mode boot.
 
-Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/aa61301ed2dfd079b74b37f7fede5f179ac3087a.1689616473.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 2c3625cb9fa2 ("efi/x86: Fold __setup_efi_pci32() and __setup_efi_pci64() into one function")
+Signed-off-by: Mikel Rychliski <mikel@mikelr.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/ptrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/x86-stub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index 187aa2b175b4f..20d7ef82de90a 100644
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -891,7 +891,8 @@ static int sve_set_common(struct task_struct *target,
- 			break;
- 		default:
- 			WARN_ON_ONCE(1);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto out;
- 		}
+diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
+index a0bfd31358ba9..9ae0d6d0c285f 100644
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -61,7 +61,7 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
+ 	rom->data.type	= SETUP_PCI;
+ 	rom->data.len	= size - sizeof(struct setup_data);
+ 	rom->data.next	= 0;
+-	rom->pcilen	= pci->romsize;
++	rom->pcilen	= romsize;
+ 	*__rom = rom;
  
- 		/*
+ 	status = efi_call_proto(pci, pci.read, EfiPciIoWidthUint16,
 -- 
 2.40.1
 
