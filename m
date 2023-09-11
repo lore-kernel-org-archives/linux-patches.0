@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B33B11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B338DC433C8;
-	Mon, 11 Sep 2023 14:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CCB11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0338C433C7;
+	Mon, 11 Sep 2023 14:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443240;
-	bh=sRoTLzUW8Ewf086wt2zkVl15uS8Mu6yVL+g58Jdf+TA=;
+	s=korg; t=1694443243;
+	bh=/dw0PdWLhq8PXZG/HH3yVgaPHTanHl1qQ8ntVEW5pe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GN1DPwxbzyD7IsydSnUH5dv1kyYH4JXGbEFj+StP3gcsYIHiYWnKgBlboByUePwmj
-	 rd/gQRd+KjBFDX1hCd2CMxAEhyVMYsUGBRGXs636WAEUcO0gf121F325FkUJDsdqQA
-	 dj+bbTHY6s7jMG0erL5NZPmaL7iPG2N9P3wknt6M=
+	b=CyGhZhr6+VlI4J7B9lB8FcrBIfaNcbs68BX/W3sYpj2sRC+BtZyBj3Laa57Nlv2Y5
+	 Snu1upOlkr+Nh+WN5w+N2WK2vpOJUzodAZJ56MKu70VsGUrU2BPbxAFbaBAqk6Qzp+
+	 RQr1koSweKxIeKBmaCSvMe9K8lDPYOdNKv4J2ZTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 308/737] drm/amdgpu: avoid integer overflow warning in amdgpu_device_resize_fb_bar()
-Date: Mon, 11 Sep 2023 15:42:47 +0200
-Message-ID: <20230911134659.175468448@linuxfoundation.org>
+Subject: [PATCH 6.4 309/737] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
+Date: Mon, 11 Sep 2023 15:42:48 +0200
+Message-ID: <20230911134659.201311685@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,46 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 822130b5e8834ab30ad410cf19a582e5014b9a85 ]
+[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
 
-On 32-bit architectures comparing a resource against a value larger than
-U32_MAX can cause a warning:
+There is no such trigger documented or implemented in Linux. It was a
+copy & paste mistake.
 
-drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1344:18: error: result of comparison of constant 4294967296 with expression of type 'resource_size_t' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-                    res->start > 0x100000000ull)
-                    ~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
+This fixes:
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+        'default-off' does not match '^cpu[0-9]*$'
+        'default-off' does not match '^hci[0-9]+-power$'
+        'default-off' does not match '^mmc[0-9]+$'
+        'default-off' does not match '^phy[0-9]+tx$'
+        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
 
-As gcc does not warn about this in dead code, add an IS_ENABLED() check at
-the start of the function. This will always return success but not actually resize
-the BAR on 32-bit architectures without high memory, which is exactly what
-we want here, as the driver can fall back to bank switching the VRAM
-access.
-
-Fixes: 31b8adab3247 ("drm/amdgpu: require a root bus window above 4GB for BAR resize")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
+ arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
+ 2 files changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 3108f5219cf3b..f7770e9c9aaca 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1231,6 +1231,9 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
- 	u16 cmd;
- 	int r;
+diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
+index 0734aa249b8e0..b9dd508444198 100644
+--- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
++++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
+@@ -26,7 +26,6 @@ leds {
+ 		led-wlan {
+ 			label = "bcm53xx:blue:wlan";
+ 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
+-			linux,default-trigger = "default-off";
+ 		};
  
-+	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
-+		return 0;
-+
- 	/* Bypass for VF */
- 	if (amdgpu_sriov_vf(adev))
- 		return 0;
+ 		led-system {
+diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
+index e6fb6cbe69633..cb22ae2a02e54 100644
+--- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
++++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
+@@ -26,7 +26,6 @@ leds-0 {
+ 		led-5ghz {
+ 			label = "bcm53xx:blue:5ghz";
+ 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 
+ 		led-system {
+@@ -42,7 +41,6 @@ leds-1 {
+ 		led-2ghz {
+ 			label = "bcm53xx:blue:2ghz";
+ 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 	};
+ 
 -- 
 2.40.1
 
