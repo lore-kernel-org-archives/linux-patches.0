@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2608011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D73BC433C8;
-	Mon, 11 Sep 2023 15:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA12911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:14:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C363C433C7;
+	Mon, 11 Sep 2023 15:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445294;
-	bh=v6eYp5LfGQwTTZiHiko82uAvLH5lOiaXy8VHbcrcmZ8=;
+	s=korg; t=1694445296;
+	bh=UladTEsnIBnp0VALIiLyVz/d8x/1bhVRTPLdBLb4tJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0MnaT9/AFzmieb8KZgj/LdHU0nIqRNF/tkYgDwfG9Ob4+uaWtFwQdGAsRUd+gxC/
-	 ifhrMCZewcolkeIbhwAol9fFVSFs683UirSyL96JGN2zv7lTXdPeHT8ubRYZ2o+VsC
-	 MwpIXUz/CEGodW69edOSVN+z1GLveS1/HsnTH3FY=
+	b=N8DnEbRln7F85Pw6B08sxFlfDakixDe7WnTBKoSSxA0S/XJNIDgkFioKK/6bTLmOO
+	 R/m4LevJkFGTdfFRGfA0EOqw14fluN39AtQL095moXX7t9RyThXeLvdeRwdJ0qfX6i
+	 w+L73RCtFSnbRjxpX+CvktWincNuaO5OhRZlC74A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 257/600] arm64: dts: qcom: pm660l: Add missing short interrupt
-Date: Mon, 11 Sep 2023 15:44:50 +0200
-Message-ID: <20230911134641.196286523@linuxfoundation.org>
+Subject: [PATCH 6.1 258/600] arm64: dts: qcom: pmi8994: Add missing OVP interrupt
+Date: Mon, 11 Sep 2023 15:44:51 +0200
+Message-ID: <20230911134641.226398892@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,36 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 9a4ac09db3c7413e334b4abd6b2f6de8930dd781 ]
+[ Upstream commit 8db94432690371b1736e9a2566a9b3d8a73d5a97 ]
 
-Add the missing short interrupt. This fixes the schema warning:
+Add the missing OVP interrupt. This fixes the schema warning:
 
-wled@d800: interrupt-names: ['ovp'] is too short
+wled@d800: interrupt-names: ['short'] is too short
 
-Fixes: 7b56a804e58b ("arm64: dts: qcom: pm660l: Add WLED support")
+Fixes: 37aa540cbd30 ("arm64: dts: qcom: pmi8994: Add WLED node")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-4-254ae8642e69@linaro.org
+Link: https://lore.kernel.org/r/20230626-topic-bindingsfixups-v1-6-254ae8642e69@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pm660l.dtsi | 5 +++--
+ arch/arm64/boot/dts/qcom/pmi8994.dtsi | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-index 8aa0a5078772b..88606b996d690 100644
---- a/arch/arm64/boot/dts/qcom/pm660l.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-@@ -74,8 +74,9 @@ pm660l_lpg: pwm {
- 		pm660l_wled: leds@d800 {
- 			compatible = "qcom,pm660l-wled";
+diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+index 82b60e988d0f5..49902a3e161d9 100644
+--- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+@@ -54,8 +54,9 @@ pmi8994_spmi_regulators: regulators {
+ 		pmi8994_wled: wled@d800 {
+ 			compatible = "qcom,pmi8994-wled";
  			reg = <0xd800>, <0xd900>;
--			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "ovp";
+-			interrupts = <3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "short";
 +			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
 +				     <0x3 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
 +			interrupt-names = "ovp", "short";
- 			label = "backlight";
- 
+ 			qcom,cabc;
+ 			qcom,external-pfet;
  			status = "disabled";
 -- 
 2.40.1
