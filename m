@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C43E1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61CCC433C7;
-	Mon, 11 Sep 2023 14:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0490A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE74C433C8;
+	Mon, 11 Sep 2023 14:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441183;
-	bh=mx6wC7BpBDDcFtQSn0S+OyEHLJTBU1q/E4Q/FEOJJPY=;
+	s=korg; t=1694441185;
+	bh=tMHPlk/t8Bi18GfddbmZ0DsrgeAFWlNxonck7mDk6d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZhZKQkqWr+emCXO4h9mtSmG8wqb3uslxX7FiX071wCQ5Ytida1XL7ZTwb0ubMci4
-	 VQ9F+p0BYTM8buTLbp4VximYV7JzuUXUQHrKEwdUvima3V7rZiWYS13zyqutz4MnlH
-	 gCA9nwsTC9EX1Bl4h9rxgzgqVxsQHzt5M8OV514U=
+	b=ZRbn11W5ROSow8/+8F9mKatNAgSPz+edK1oIRxIT+LYsJ+eQ+5jxOcbm5KnMj5Bqw
+	 iZEiH3P3ZE/CyRlCHdYiZEs2/XvKI5pL/4M/b4cYH71d94HtzTmvuEDXpZCrmABM1N
+	 oWFk4Xd4QQv4AORidzg3cz7kUz+Z2glu2bAUB6xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 324/739] block/mq-deadline: use correct way to throttling write requests
-Date: Mon, 11 Sep 2023 15:42:03 +0200
-Message-ID: <20230911134700.152468033@linuxfoundation.org>
+Subject: [PATCH 6.5 325/739] io_uring: fix drain stalls by invalid SQE
+Date: Mon, 11 Sep 2023 15:42:04 +0200
+Message-ID: <20230911134700.179367368@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,65 +40,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit d47f9717e5cfd0dd8c0ba2ecfa47c38d140f1bb6 ]
+[ Upstream commit cfdbaa3a291d6fd2cb4a1a70d74e63b4abc2f5ec ]
 
-The original formula was inaccurate:
-dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
+cq_extra is protected by ->completion_lock, which io_get_sqe() misses.
+The bug is harmless as it doesn't happen in real life, requires invalid
+SQ index array and racing with submission, and only messes up the
+userspace, i.e. stall requests execution but will be cleaned up on
+ring destruction.
 
-For write requests, when we assign a tags from sched_tags,
-data->shallow_depth will be passed to sbitmap_find_bit,
-see the following code:
-
-nr = sbitmap_find_bit_in_word(&sb->map[index],
-			min_t (unsigned int,
-			__map_depth(sb, index),
-			depth),
-			alloc_hint, wrap);
-
-The smaller of data->shallow_depth and __map_depth(sb, index)
-will be used as the maximum range when allocating bits.
-
-For a mmc device (one hw queue, deadline I/O scheduler):
-q->nr_requests = sched_tags = 128, so according to the previous
-calculation method, dd->async_depth = data->shallow_depth = 96,
-and the platform is 64bits with 8 cpus, sched_tags.bitmap_tags.sb.shift=5,
-sb.maps[]=32/32/32/32, 32 is smaller than 96, whether it is a read or
-a write I/O, tags can be allocated to the maximum range each time,
-which has not throttling effect.
-
-In addition, refer to the methods of bfg/kyber I/O scheduler,
-limit ratiois are calculated base on sched_tags.bitmap_tags.sb.shift.
-
-This patch can throttle write requests really.
-
-Fixes: 07757588e507 ("block/mq-deadline: Reserve 25% of scheduler tags for synchronous requests")
-
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/1691061162-22898-1-git-send-email-zhiguo.niu@unisoc.com
+Fixes: 15641e427070f ("io_uring: don't cache number of dropped SQEs")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/66096d54651b1a60534bb2023f2947f09f50ef73.1691538547.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/mq-deadline.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 02a916ba62ee7..f958e79277b8b 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -646,8 +646,9 @@ static void dd_depth_updated(struct blk_mq_hw_ctx *hctx)
- 	struct request_queue *q = hctx->queue;
- 	struct deadline_data *dd = q->elevator->elevator_data;
- 	struct blk_mq_tags *tags = hctx->sched_tags;
-+	unsigned int shift = tags->bitmap_tags.sb.shift;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 93db3e4e7b688..41c0b24db0c0f 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2382,7 +2382,9 @@ static bool io_get_sqe(struct io_ring_ctx *ctx, const struct io_uring_sqe **sqe)
+ 	}
  
--	dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
-+	dd->async_depth = max(1U, 3 * (1U << shift)  / 4);
- 
- 	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, dd->async_depth);
- }
+ 	/* drop invalid entries */
++	spin_lock(&ctx->completion_lock);
+ 	ctx->cq_extra--;
++	spin_unlock(&ctx->completion_lock);
+ 	WRITE_ONCE(ctx->rings->sq_dropped,
+ 		   READ_ONCE(ctx->rings->sq_dropped) + 1);
+ 	return false;
 -- 
 2.40.1
 
