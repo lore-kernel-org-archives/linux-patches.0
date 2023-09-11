@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD5A1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBA6C433C8;
-	Mon, 11 Sep 2023 14:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A9A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:00:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4278FC433C8;
+	Mon, 11 Sep 2023 14:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440830;
-	bh=a2vIo9X9TbtGaDxFXwR+sg+3rb759DCpp10epmfgbkI=;
+	s=korg; t=1694440833;
+	bh=wGTJFxMAKGzIEhdEvGxumrflg96s+fCysP+3r8LKR2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQhcKMzp3JxyVoEV5SEAvkDeD7YX2VK4ZINLEUdBa/G0KXm24tJe448O6VkzbRlhe
-	 JPAtL7Kcz8gfxnPdDP6yiPBa3spDetyWTJHatK5Lh0T+zNjZ75HkiEHYKLRBTCHwPH
-	 81iD2xZd+jSMBoXVZxOFym8S+6hsUCjtvk1LFZVY=
+	b=xORMNa4ip7nfHhhfGDQroN6LA89kmJ88N8VHJCh6YPp7QgW0H/HQHnyhkr7Xj61ab
+	 c/jwau2kMuOguzKlM8LupZDD8Nr6DfCYoejwSs9STTPeYXY1HG5hrr/xywRMO4t9Qg
+	 apv3Xzo45hY5EqUeeGkbumS+WvfRWSumaim1zWPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 173/739] Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync
-Date: Mon, 11 Sep 2023 15:39:32 +0200
-Message-ID: <20230911134656.027151328@linuxfoundation.org>
+Subject: [PATCH 6.5 164/739] wifi: ath9k: protect WMI command response buffer replacement with a lock
+Date: Mon, 11 Sep 2023 15:39:23 +0200
+Message-ID: <20230911134655.750244320@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -33,118 +35,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 5af1f84ed13a416297ab9ced7537f4d5ae7f329a ]
+[ Upstream commit 454994cfa9e4c18b6df9f78b60db8eadc20a6c25 ]
 
-Connections may be cleanup while waiting for the commands to complete so
-this attempts to check if the connection handle remains valid in case of
-errors that would lead to call hci_conn_failed:
+If ath9k_wmi_cmd() has exited with a timeout, it is possible that during
+next ath9k_wmi_cmd() call the wmi_rsp callback for previous wmi command
+writes to new wmi->cmd_rsp_buf and makes a completion. This results in an
+invalid ath9k_wmi_cmd() return value.
 
-BUG: KASAN: slab-use-after-free in hci_conn_failed+0x1f/0x160
-Read of size 8 at addr ffff888001376958 by task kworker/u3:0/52
+Move the replacement of WMI command response buffer and length under
+wmi_lock. Note that last_seq_id value is updated there, too.
 
-CPU: 0 PID: 52 Comm: kworker/u3:0 Not tainted
-6.5.0-rc1-00527-g2dfe76d58d3a #5615
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-1.16.2-1.fc38 04/01/2014
-Workqueue: hci0 hci_cmd_sync_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x1d/0x70
- print_report+0xce/0x620
- ? __virt_addr_valid+0xd4/0x150
- ? hci_conn_failed+0x1f/0x160
- kasan_report+0xd1/0x100
- ? hci_conn_failed+0x1f/0x160
- hci_conn_failed+0x1f/0x160
- hci_abort_conn_sync+0x237/0x360
+Thus, the buffer cannot be written to by a belated wmi_rsp callback
+because that path is properly rejected by the last_seq_id check.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 94d9ba9f9888 ("Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync")
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230425192607.18015-2-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 45 ++++++++++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a9460e34d6883..fa675bacfb309 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5335,27 +5335,20 @@ static int hci_reject_conn_sync(struct hci_dev *hdev, struct hci_conn *conn,
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index 04f363cb90fe5..1476b42b52a91 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -283,7 +283,8 @@ int ath9k_wmi_connect(struct htc_target *htc, struct wmi *wmi,
  
- int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
+ 			       struct sk_buff *skb,
+-			       enum wmi_cmd_id cmd, u16 len)
++			       enum wmi_cmd_id cmd, u16 len,
++			       u8 *rsp_buf, u32 rsp_len)
  {
--	int err;
-+	int err = 0;
-+	u16 handle = conn->handle;
+ 	struct wmi_cmd_hdr *hdr;
+ 	unsigned long flags;
+@@ -293,6 +294,11 @@ static int ath9k_wmi_cmd_issue(struct wmi *wmi,
+ 	hdr->seq_no = cpu_to_be16(++wmi->tx_seq_id);
  
- 	switch (conn->state) {
- 	case BT_CONNECTED:
- 	case BT_CONFIG:
--		return hci_disconnect_sync(hdev, conn, reason);
-+		err = hci_disconnect_sync(hdev, conn, reason);
-+		break;
- 	case BT_CONNECT:
- 		err = hci_connect_cancel_sync(hdev, conn, reason);
--		/* Cleanup hci_conn object if it cannot be cancelled as it
--		 * likelly means the controller and host stack are out of sync
--		 * or in case of LE it was still scanning so it can be cleanup
--		 * safely.
--		 */
--		if (err) {
--			hci_dev_lock(hdev);
--			hci_conn_failed(conn, err);
--			hci_dev_unlock(hdev);
--		}
--		return err;
-+		break;
- 	case BT_CONNECT2:
--		return hci_reject_conn_sync(hdev, conn, reason);
-+		err = hci_reject_conn_sync(hdev, conn, reason);
-+		break;
- 	case BT_OPEN:
- 		/* Cleanup bises that failed to be established */
- 		if (test_and_clear_bit(HCI_CONN_BIG_SYNC_FAILED, &conn->flags)) {
-@@ -5366,10 +5359,30 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 		break;
- 	default:
- 		conn->state = BT_CLOSED;
--		break;
-+		return 0;
+ 	spin_lock_irqsave(&wmi->wmi_lock, flags);
++
++	/* record the rsp buffer and length */
++	wmi->cmd_rsp_buf = rsp_buf;
++	wmi->cmd_rsp_len = rsp_len;
++
+ 	wmi->last_seq_id = wmi->tx_seq_id;
+ 	spin_unlock_irqrestore(&wmi->wmi_lock, flags);
+ 
+@@ -333,11 +339,7 @@ int ath9k_wmi_cmd(struct wmi *wmi, enum wmi_cmd_id cmd_id,
+ 		goto out;
  	}
  
--	return 0;
-+	/* Cleanup hci_conn object if it cannot be cancelled as it
-+	 * likelly means the controller and host stack are out of sync
-+	 * or in case of LE it was still scanning so it can be cleanup
-+	 * safely.
-+	 */
-+	if (err) {
-+		struct hci_conn *c;
-+
-+		/* Check if the connection hasn't been cleanup while waiting
-+		 * commands to complete.
-+		 */
-+		c = hci_conn_hash_lookup_handle(hdev, handle);
-+		if (!c || c != conn)
-+			return 0;
-+
-+		hci_dev_lock(hdev);
-+		hci_conn_failed(conn, err);
-+		hci_dev_unlock(hdev);
-+	}
-+
-+	return err;
- }
+-	/* record the rsp buffer and length */
+-	wmi->cmd_rsp_buf = rsp_buf;
+-	wmi->cmd_rsp_len = rsp_len;
+-
+-	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len);
++	ret = ath9k_wmi_cmd_issue(wmi, skb, cmd_id, cmd_len, rsp_buf, rsp_len);
+ 	if (ret)
+ 		goto out;
  
- static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
 -- 
 2.40.1
 
