@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E7611710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3819C433C7;
-	Mon, 11 Sep 2023 15:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513C711710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EDEC433C9;
+	Mon, 11 Sep 2023 15:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446087;
-	bh=vcMmCl7H8BO9ips9rgO+T9++nr61DQAFR1ZqzUrIVso=;
+	s=korg; t=1694446090;
+	bh=eCPL9xiUhoKWQNUyhX088CC5ek1lXCSbFOnysYwEoCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EF9map52eKgoQGmSgb8Tm2/+G4OR6d6f1xW2MoivUoMvR++xIiQqiG8/bdzzNmFGh
-	 P5H8ju+CbzSgcpmYC/8BrYqgoTyuhjj7kq3WAreUWqTjDlLdtoBHrzGidSstnadWCT
-	 wirFyMpY3kMK98rCRYz5jCyioL6WhsVdkKlGtR2U=
+	b=fSGt3Eis8sHq3/iMESaT2PufXbC/pNP8/l/9IOsIpuhmKqCWf4BR67I6VK1D5IRl4
+	 2Bl60jDNyovj68PoEB3CIivyvYhWyIljmSvcPiXGyBHk6fz6f0ooqGS442WhaGW7Dr
+	 XQyxolxui2iccsEEA0WSNjxe1yf5xJT5+LgyUjQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 548/600] media: venus: hfi_venus: Write to VIDC_CTRL_INIT after unmasking interrupts
-Date: Mon, 11 Sep 2023 15:49:41 +0200
-Message-ID: <20230911134649.795897048@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH 6.1 539/600] backlight/bd6107: Compare against struct fb_info.device
+Date: Mon, 11 Sep 2023 15:49:32 +0200
+Message-ID: <20230911134649.532223192@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,42 +45,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit d74e481609808330b4625b3691cf01e1f56e255e upstream.
+commit 992bdddaabfba19bdc77c1c7a4977b2aa41ec891 upstream.
 
-The startup procedure shouldn't be started with interrupts masked, as that
-may entail silent failures.
+Struct bd6107_platform_data refers to a platform device within
+the Linux device hierarchy. The test in bd6107_backlight_check_fb()
+compares it against the fbdev device in struct fb_info.dev, which
+is different. Fix the test by comparing to struct fb_info.device.
 
-Kick off initialization only after the interrupts are unmasked.
+Fixes a bug in the backlight driver and prepares fbdev for making
+struct fb_info.dev optional.
 
-Cc: stable@vger.kernel.org # v4.12+
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+v2:
+	* move renames into separate patch (Javier, Sam, Michael)
+
+Fixes: 67b43e590415 ("backlight: Add ROHM BD6107 backlight driver")
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.12+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    2 +-
+ drivers/video/backlight/bd6107.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -453,7 +453,6 @@ static int venus_boot_core(struct venus_
- 	void __iomem *wrapper_base = hdev->core->wrapper_base;
- 	int ret = 0;
+--- a/drivers/video/backlight/bd6107.c
++++ b/drivers/video/backlight/bd6107.c
+@@ -104,7 +104,7 @@ static int bd6107_backlight_check_fb(str
+ {
+ 	struct bd6107 *bd = bl_get_data(backlight);
  
--	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	if (IS_V6(hdev->core)) {
- 		mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
- 		mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
-@@ -464,6 +463,7 @@ static int venus_boot_core(struct venus_
- 	writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
- 	writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
+-	return bd->pdata->fbdev == NULL || bd->pdata->fbdev == info->dev;
++	return bd->pdata->fbdev == NULL || bd->pdata->fbdev == info->device;
+ }
  
-+	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	while (!ctrl_status && count < max_tries) {
- 		ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
- 		if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
+ static const struct backlight_ops bd6107_backlight_ops = {
 
 
