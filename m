@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3E11170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9042FC433C7;
-	Mon, 11 Sep 2023 14:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8221170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AEEC433C9;
+	Mon, 11 Sep 2023 14:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442002;
-	bh=Xtfz33bwtvBTXuNOxNDbg8xsGZeG0xAbBp4DIgEC3eY=;
+	s=korg; t=1694442005;
+	bh=oxb8qf0UmaAYCcSnIpjEO8xMqnThVCj8bmaMVGeta4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2TK9Hw5t/m/KjCVTwZXqmbEhgLzFJ8eWThUks/I41vtBlYSmegiAW3Pctn5gAV1V
-	 gO6gpN6otWAYuOw464Gvlw5rb5w2DSGQ9Uu2l+oN2yrD7C6URrzSAgCHY5llHs9sp9
-	 WZP8uRX71wYx3jv8Rd83xLczZ7yVvxomn3Ytkzd4=
+	b=KIOYmI2vI8rqffR2cx2g4wRIa9TdXFwlOzZQ/cHhZiQaI14vtcRgnGFQBQo2826LQ
+	 472gNOKVxpvSJ5G4wE5avNX7/PWVtpnXPTLpxLZnDg8frAL41MNzSH0ITUfxLSGcHA
+	 6CHHUgEg0H5ZEayYSAP8zuyIAQZydwCs+UAVBni0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3a0ebe8a52b89c63739d@syzkaller.appspotmail.com,
 	Maxime Ripard <mripard@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 585/739] HID: uclogic: Correct devm device reference for hidinput input_dev name
-Date: Mon, 11 Sep 2023 15:46:24 +0200
-Message-ID: <20230911134707.445214831@linuxfoundation.org>
+Subject: [PATCH 6.5 586/739] HID: multitouch: Correct devm device reference for hidinput input_dev name
+Date: Mon, 11 Sep 2023 15:46:25 +0200
+Message-ID: <20230911134707.473042713@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -45,7 +44,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 
-[ Upstream commit dd613a4e45f8d35f49a63a2064e5308fa5619e29 ]
+[ Upstream commit 4794394635293a3e74591351fff469cea7ad15a2 ]
 
 Reference the HID device rather than the input device for the devm
 allocation of the input_dev name. Referencing the input_dev would lead to a
@@ -56,46 +55,42 @@ name would be freed by devres management.
 Use devm_kasprintf to simplify the logic for allocating memory and
 formatting the input_dev name string.
 
-Reported-by: syzbot+3a0ebe8a52b89c63739d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/
 Reported-by: Maxime Ripard <mripard@kernel.org>
 Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
-Fixes: cce2dbdf258e ("HID: uclogic: name the input nodes based on their tool")
+Fixes: c08d46aa805b ("HID: multitouch: devm conversion")
 Suggested-by: Maxime Ripard <mripard@kernel.org>
 Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20230824061308.222021-2-sergeantsagara@protonmail.com
+Link: https://lore.kernel.org/r/20230824061308.222021-3-sergeantsagara@protonmail.com
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-core.c | 13 +++----------
+ drivers/hid/hid-multitouch.c | 13 +++----------
  1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
-index f67835f9ed4cc..ad74cbc9a0aa5 100644
---- a/drivers/hid/hid-uclogic-core.c
-+++ b/drivers/hid/hid-uclogic-core.c
-@@ -85,10 +85,8 @@ static int uclogic_input_configured(struct hid_device *hdev,
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index e31be0cb8b850..521b2ffb42449 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1594,7 +1594,6 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app)
+ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
  {
- 	struct uclogic_drvdata *drvdata = hid_get_drvdata(hdev);
- 	struct uclogic_params *params = &drvdata->params;
+ 	struct mt_device *td = hid_get_drvdata(hdev);
 -	char *name;
  	const char *suffix = NULL;
- 	struct hid_field *field;
--	size_t len;
- 	size_t i;
- 	const struct uclogic_params_frame *frame;
- 
-@@ -146,14 +144,9 @@ static int uclogic_input_configured(struct hid_device *hdev,
- 		}
+ 	struct mt_report_data *rdata;
+ 	struct mt_application *mt_application = NULL;
+@@ -1645,15 +1644,9 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
+ 		break;
  	}
  
 -	if (suffix) {
--		len = strlen(hdev->name) + 2 + strlen(suffix);
--		name = devm_kzalloc(&hi->input->dev, len, GFP_KERNEL);
+-		name = devm_kzalloc(&hi->input->dev,
+-				    strlen(hdev->name) + strlen(suffix) + 2,
+-				    GFP_KERNEL);
 -		if (name) {
--			snprintf(name, len, "%s %s", hdev->name, suffix);
+-			sprintf(name, "%s %s", hdev->name, suffix);
 -			hi->input->name = name;
 -		}
 -	}
