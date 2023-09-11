@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32E81170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A24C433C9;
-	Mon, 11 Sep 2023 13:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949C211184
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:59:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D88C433C9;
+	Mon, 11 Sep 2023 13:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440746;
-	bh=JpXQBTZvPQxNAzDPJUr3JDjy0cI2dr7HLblazUYQKZQ=;
+	s=korg; t=1694440749;
+	bh=3C3m55gZM02/Qwnc7DUycRqNc6P8D85g7ID5ZhqCGUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HW5tz8q3mHNfOcAGOwYZv5femQxZmcVCM7gidAAmegRJzaONEeyPTkAYgObCWpOca
-	 djDaDscAwjzqpeab6m7q2yoOtDXOuuGqMt7kD++X+m43rgxH8cgpSVMH2OI7Ax/6QY
-	 rwj3N44lZb6++e7r+bGbs/B58c2DDAw0JBjoFsUo=
+	b=UsxJsN3r0UQuiD7GL+sLSLDSxa0APsp005akpxHSJ9ZuNqB/l30uNYB1++m2I5JBY
+	 0feDiqy3emZGidvVYiOFJc/ha9XUCkuibD0YMv0Szzns7xJlE12OsL3SzepdO9h1+i
+	 pT7fDW0sUV5YxbHEOv2Lc6v19dSZ2Zsys+T768oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Yan Zhai <yan@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 144/739] lwt: Check LWTUNNEL_XMIT_CONTINUE strictly
-Date: Mon, 11 Sep 2023 15:39:03 +0200
-Message-ID: <20230911134655.140516930@linuxfoundation.org>
+Subject: [PATCH 6.5 135/739] net: Fix slab-out-of-bounds in inet[6]_steal_sock
+Date: Mon, 11 Sep 2023 15:38:54 +0200
+Message-ID: <20230911134654.862788030@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,76 +41,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit a171fbec88a2c730b108c7147ac5e7b2f5a02b47 ]
+[ Upstream commit 8897562f67b3e61ad736cd5c9f307447d33280e4 ]
 
-LWTUNNEL_XMIT_CONTINUE is implicitly assumed in ip(6)_finish_output2,
-such that any positive return value from a xmit hook could cause
-unexpected continue behavior, despite that related skb may have been
-freed. This could be error-prone for future xmit hook ops. One of the
-possible errors is to return statuses of dst_output directly.
+Kumar reported a KASAN splat in tcp_v6_rcv:
 
-To make the code safer, redefine LWTUNNEL_XMIT_CONTINUE value to
-distinguish from dst_output statuses and check the continue
-condition explicitly.
+  bash-5.2# ./test_progs -t btf_skc_cls_ingress
+  ...
+  [   51.810085] BUG: KASAN: slab-out-of-bounds in tcp_v6_rcv+0x2d7d/0x3440
+  [   51.810458] Read of size 2 at addr ffff8881053f038c by task test_progs/226
 
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/96b939b85eda00e8df4f7c080f770970a4c5f698.1692326837.git.yan@cloudflare.com
+The problem is that inet[6]_steal_sock accesses sk->sk_protocol without
+accounting for request or timewait sockets. To fix this we can't just
+check sock_common->skc_reuseport since that flag is present on timewait
+sockets.
+
+Instead, add a fullsock check to avoid the out of bands access of sk_protocol.
+
+Fixes: 9c02bec95954 ("bpf, net: Support SO_REUSEPORT sockets with bpf_sk_assign")
+Reported-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230815-bpf-next-v2-1-95126eaa4c1b@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/lwtunnel.h | 5 ++++-
- net/ipv4/ip_output.c   | 2 +-
- net/ipv6/ip6_output.c  | 2 +-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ include/net/inet6_hashtables.h | 2 +-
+ include/net/inet_hashtables.h  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
-index 6f15e6fa154e6..53bd2d02a4f0d 100644
---- a/include/net/lwtunnel.h
-+++ b/include/net/lwtunnel.h
-@@ -16,9 +16,12 @@
- #define LWTUNNEL_STATE_INPUT_REDIRECT	BIT(1)
- #define LWTUNNEL_STATE_XMIT_REDIRECT	BIT(2)
+diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
+index 475e672b4facc..12780b8fb5630 100644
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -107,7 +107,7 @@ struct sock *inet6_steal_sock(struct net *net, struct sk_buff *skb, int doff,
+ 	if (!sk)
+ 		return NULL;
  
-+/* LWTUNNEL_XMIT_CONTINUE should be distinguishable from dst_output return
-+ * values (NET_XMIT_xxx and NETDEV_TX_xxx in linux/netdevice.h) for safety.
-+ */
- enum {
- 	LWTUNNEL_XMIT_DONE,
--	LWTUNNEL_XMIT_CONTINUE,
-+	LWTUNNEL_XMIT_CONTINUE = 0x100,
- };
+-	if (!prefetched)
++	if (!prefetched || !sk_fullsock(sk))
+ 		return sk;
  
+ 	if (sk->sk_protocol == IPPROTO_TCP) {
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index a1b8eb147ce73..9414cb4e6e624 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -455,7 +455,7 @@ struct sock *inet_steal_sock(struct net *net, struct sk_buff *skb, int doff,
+ 	if (!sk)
+ 		return NULL;
  
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 6ba1a0fafbaab..a6e4c82615d7e 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -216,7 +216,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
- 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
- 		int res = lwtunnel_xmit(skb);
+-	if (!prefetched)
++	if (!prefetched || !sk_fullsock(sk))
+ 		return sk;
  
--		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
-+		if (res != LWTUNNEL_XMIT_CONTINUE)
- 			return res;
- 	}
- 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 1e8c90e976080..016b0a513259f 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -113,7 +113,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
- 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
- 		int res = lwtunnel_xmit(skb);
- 
--		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
-+		if (res != LWTUNNEL_XMIT_CONTINUE)
- 			return res;
- 	}
- 
+ 	if (sk->sk_protocol == IPPROTO_TCP) {
 -- 
 2.40.1
 
