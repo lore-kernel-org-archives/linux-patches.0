@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8381170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3F2C433C8;
-	Mon, 11 Sep 2023 13:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546D51170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:57:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75DDC433C8;
+	Mon, 11 Sep 2023 13:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440636;
-	bh=s7UhqM2SnS08/mny9mDQEA1AFgjWlIz4jW1KnQv2fp4=;
+	s=korg; t=1694440639;
+	bh=LN4TVdbKgJsFLzXyrQG7vdjrHSjPri6zpl/n8aTYg7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1ZBS1rIFPmqSQAGgM9eflfxYho7auPkFDZllXE90RXsplgjmNGbis6oSvu0h2+ye
-	 ZtWdtqPQTvP7Gv4R8Rvs0wWDIzXIgn8fR3/y0llA7IpRypACkRhLqT/FNwmJEqjBe/
-	 MIkT0el2kpIhWTIZoZrlCyAIBar/iFzE7yBLcon8=
+	b=JgAI2oqTYiFWggCVFLv1V+039cP5vxPqujWd8t2l2pJGN66okQu6lt3j0TObo0U+p
+	 Fy8wzcOiJOIak+3rVVH0hUh+5R33ilSBN9ioPlatD9KeQTevPb29JA8MRAtCgiG/0k
+	 poVj6Thj1NTqObvHgXFeuEw1VQ4hA7f51m3hI3h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Vedovati <marco.vedovati@crowdstrike.com>,
+	Yipeng Zou <zouyipeng@huawei.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
+	Li Zetao <lizetao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 131/739] libbpf: Set close-on-exec flag on gzopen
-Date: Mon, 11 Sep 2023 15:38:50 +0200
-Message-ID: <20230911134654.746219531@linuxfoundation.org>
+Subject: [PATCH 6.5 132/739] selftests/bpf: Fix repeat option when kfunc_call verification fails
+Date: Mon, 11 Sep 2023 15:38:51 +0200
+Message-ID: <20230911134654.774682599@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,41 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Vedovati <marco.vedovati@crowdstrike.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit 8e50750f122e59ea4cab4b4f696ef22b391bedc9 ]
+[ Upstream commit 811915db674f8daf19bb4fcb67da9017235ce26d ]
 
-Enable the close-on-exec flag when using gzopen. This is especially important
-for multithreaded programs making use of libbpf, where a fork + exec could
-race with libbpf library calls, potentially resulting in a file descriptor
-leaked to the new process. This got missed in 59842c5451fe ("libbpf: Ensure
-libbpf always opens files with O_CLOEXEC").
+There is no way where topts.repeat can be set to 1 when tc_test fails.
+Fix the typo where the break statement slipped by one line.
 
-Fixes: 59842c5451fe ("libbpf: Ensure libbpf always opens files with O_CLOEXEC")
-Signed-off-by: Marco Vedovati <marco.vedovati@crowdstrike.com>
+Fixes: fb66223a244f ("selftests/bpf: add test for accessing ctx from syscall program type")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230810214350.106301-1-martin.kelly@crowdstrike.com
+Reviewed-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/bpf/20230814031434.3077944-1-zouyipeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/kfunc_call.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 7cc79bf764550..e07dff7eba600 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -1975,9 +1975,9 @@ static int bpf_object__read_kconfig_file(struct bpf_object *obj, void *data)
- 		return -ENAMETOOLONG;
+diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_call.c b/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
+index a543742cd7bd1..2eb71559713c9 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
++++ b/tools/testing/selftests/bpf/prog_tests/kfunc_call.c
+@@ -173,8 +173,8 @@ static void verify_fail(struct kfunc_test_params *param)
+ 	case tc_test:
+ 		topts.data_in = &pkt_v4;
+ 		topts.data_size_in = sizeof(pkt_v4);
+-		break;
+ 		topts.repeat = 1;
++		break;
+ 	}
  
- 	/* gzopen also accepts uncompressed files. */
--	file = gzopen(buf, "r");
-+	file = gzopen(buf, "re");
- 	if (!file)
--		file = gzopen("/proc/config.gz", "r");
-+		file = gzopen("/proc/config.gz", "re");
- 
- 	if (!file) {
- 		pr_warn("failed to open system Kconfig\n");
+ 	skel = kfunc_call_fail__open_opts(&opts);
 -- 
 2.40.1
 
