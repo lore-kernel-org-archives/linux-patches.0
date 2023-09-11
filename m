@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1451170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D242C433C8;
-	Mon, 11 Sep 2023 14:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24BA1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D3BC433C8;
+	Mon, 11 Sep 2023 14:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441840;
-	bh=adMwtBaZcgF7HwAgQ9jZ+gIeDcpAgHQCgzBQTQNE+/8=;
+	s=korg; t=1694441842;
+	bh=cFx53V1nR3le4Skggb/jXxBehg0tZgOPMG3qkkdxJ3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=th/VwoKEyuBVvtQ0Gxci7PB15qkmGn41XM/fNhgVIYqFWH3ek3w5EwWoQ0I/4lf7B
-	 RjyUuZB6afBRUZT8v9V44L27et75NBJGCB4t462t4ybELemumyrlTp8Zsx/K/cTboG
-	 7m8KWNCRZR1FNzYBjSGyij8xNwcKI0YD99OGkQSk=
+	b=AeaDa9Kk+b7c4ouk6ZR+AKODEVLEkwIG14w+Lc7I6t06vpEcokGOb28gKQMnCur/K
+	 S7qFsSOVIUpPBfqOsHHTCL+j9h8aZzoUieizS5cMJckmk8T7pr5qlKOI1wyUg6tMg3
+	 wE+6shDFfuHU0oXxSkBYq/SO/7gudmrpi8JQtcM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	=?UTF-8?q?Fabian=20W=C3=BCthrich?= <me@fabwu.ch>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 528/739] arm64: defconfig: Drop CONFIG_VIDEO_IMX_MEDIA
-Date: Mon, 11 Sep 2023 15:45:27 +0200
-Message-ID: <20230911134705.857155465@linuxfoundation.org>
+Subject: [PATCH 6.5 529/739] media: ipu-bridge: Fix null pointer deref on SSDB/PLD parsing warnings
+Date: Mon, 11 Sep 2023 15:45:28 +0200
+Message-ID: <20230911134705.884092553@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,41 +37,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 0ca2fbab99b12bb81fceaafe5495c00d76789a37 ]
+[ Upstream commit 284be5693163343e1cf17c03917eecd1d6681bcf ]
 
-CONFIG_VIDEO_IMX_MEDIA isn't needed on arm64 platforms since commit
-9f257f502c2e ("media: imx: Unstage the imx7-media-csi driver") which
-moved the last arm64 driver depending on that Kconfig symbol out of
-staging. Drop it from the arm64 defconfig.
+When ipu_bridge_parse_rotation() and ipu_bridge_parse_orientation() run
+sensor->adev is not set yet.
 
-Fixes: 9f257f502c2e ("media: imx: Unstage the imx7-media-csi driver")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+So if either of the dev_warn() calls about unknown values are hit this
+will lead to a NULL pointer deref.
+
+Set sensor->adev earlier, with a borrowed ref to avoid making unrolling
+on errors harder, to fix this.
+
+Fixes: 485aa3df0dff ("media: ipu3-cio2: Parse sensor orientation and rotation")
+Cc: Fabian Wüthrich <me@fabwu.ch>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/configs/defconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/pci/intel/ipu3/cio2-bridge.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 28714382ce3f5..d8bae57af16d5 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1129,7 +1129,6 @@ CONFIG_XEN_GNTDEV=y
- CONFIG_XEN_GRANT_DEV_ALLOC=y
- CONFIG_STAGING=y
- CONFIG_STAGING_MEDIA=y
--CONFIG_VIDEO_IMX_MEDIA=m
- CONFIG_VIDEO_MAX96712=m
- CONFIG_CHROME_PLATFORMS=y
- CONFIG_CROS_EC=y
+diff --git a/drivers/media/pci/intel/ipu3/cio2-bridge.c b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+index 3c2accfe54551..7fba87736b6b8 100644
+--- a/drivers/media/pci/intel/ipu3/cio2-bridge.c
++++ b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+@@ -308,6 +308,11 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+ 		}
+ 
+ 		sensor = &bridge->sensors[bridge->n_sensors];
++		/*
++		 * Borrow our adev ref to the sensor for now, on success
++		 * acpi_dev_get(adev) is done further below.
++		 */
++		sensor->adev = adev;
+ 
+ 		ret = cio2_bridge_read_acpi_buffer(adev, "SSDB",
+ 						   &sensor->ssdb,
 -- 
 2.40.1
 
