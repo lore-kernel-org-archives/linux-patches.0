@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CDE11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:44:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A4FC433C7;
-	Mon, 11 Sep 2023 14:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B32211706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:44:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2407C433C7;
+	Mon, 11 Sep 2023 14:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443484;
-	bh=WMzxKv07JmEvhvbEfG0UYktuuSIaOk/A5Flzw+wffb8=;
+	s=korg; t=1694443487;
+	bh=sgssh4JQHgQmfjD3RWzQs1bv1Tr5pL2rZnvx9JRwif8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZmrhzbavs2JR7Pi3Vj0YrfKaZs/Lql6ZgW39TNFztCVZqgmmYkhDwfEU+GV/jLqX
-	 pduD8tyT3z3fkXfT4eIhAQ5IEJy4eIeJPbgrtqI3H7rbD6aIzicbn5e46MSt30ha8p
-	 u/pg0e7691hPN9KJb5D5L7/WzzWe+Yh+Z61hfAZ0=
+	b=C4/LOPzFv/Klq1Nm7LdHewB0HY4n1+Xvh1SPQO/Gye0RO7iN1wkVKWqS0rJX1kFdt
+	 PJMY3LYOxARoVCRTK9LNc4W9I81pRr1JVn73J2kEirXxYaeGW4sa+LwlIKnNaW5wGQ
+	 Jgrt6niPmKmmVW0alIDzElEZSoYrfPH56gxqySE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Nancy.Lin" <nancy.lin@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 366/737] ASoC: SOF: Intel: fix u16/32 confusion in LSDIID
-Date: Mon, 11 Sep 2023 15:43:45 +0200
-Message-ID: <20230911134700.763342515@linuxfoundation.org>
+Subject: [PATCH 6.4 367/737] drm/mediatek: Fix uninitialized symbol
+Date: Mon, 11 Sep 2023 15:43:46 +0200
+Message-ID: <20230911134700.794393212@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,46 +40,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Nancy.Lin <nancy.lin@mediatek.com>
 
-[ Upstream commit 7a52d7062e02af4a479da24b40cfd76b54c0cd6c ]
+[ Upstream commit 63ee9438f2aeffb2d1b2df2599c168ca08d35025 ]
 
-Likely a combination of copy-paste and test coverage problem. Oops.
+Fix Smatch static checker warning
+  -Fix uninitialized symbol comp_pdev in mtk_ddp_comp_init.
 
-Fixes: 87a6ddc0cf1c ("ASoC: SOF: Intel: hda-mlink: program SoundWire LSDIID registers")
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Link: https://lore.kernel.org/r/20230807210959.506849-3-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
+Signed-off-by: Nancy.Lin <nancy.lin@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230803094843.4439-1-nancy.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-mlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-mlink.c b/sound/soc/sof/intel/hda-mlink.c
-index acad3ea2f4710..df87b3791c23e 100644
---- a/sound/soc/sof/intel/hda-mlink.c
-+++ b/sound/soc/sof/intel/hda-mlink.c
-@@ -331,14 +331,14 @@ static bool hdaml_link_check_cmdsync(u32 __iomem *lsync, u32 cmdsync_mask)
- 	return !!(val & cmdsync_mask);
- }
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c b/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
+index f114da4d36a96..771f4e1733539 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_ddp_comp.c
+@@ -563,14 +563,15 @@ int mtk_ddp_comp_init(struct device_node *node, struct mtk_ddp_comp *comp,
+ 	/* Not all drm components have a DTS device node, such as ovl_adaptor,
+ 	 * which is the drm bring up sub driver
+ 	 */
+-	if (node) {
+-		comp_pdev = of_find_device_by_node(node);
+-		if (!comp_pdev) {
+-			DRM_INFO("Waiting for device %s\n", node->full_name);
+-			return -EPROBE_DEFER;
+-		}
+-		comp->dev = &comp_pdev->dev;
++	if (!node)
++		return 0;
++
++	comp_pdev = of_find_device_by_node(node);
++	if (!comp_pdev) {
++		DRM_INFO("Waiting for device %s\n", node->full_name);
++		return -EPROBE_DEFER;
+ 	}
++	comp->dev = &comp_pdev->dev;
  
--static void hdaml_link_set_lsdiid(u32 __iomem *lsdiid, int dev_num)
-+static void hdaml_link_set_lsdiid(u16 __iomem *lsdiid, int dev_num)
- {
--	u32 val;
-+	u16 val;
- 
--	val = readl(lsdiid);
-+	val = readw(lsdiid);
- 	val |= BIT(dev_num);
- 
--	writel(val, lsdiid);
-+	writew(val, lsdiid);
- }
- 
- static void hdaml_shim_map_stream_ch(u16 __iomem *pcmsycm, int lchan, int hchan,
+ 	if (type == MTK_DISP_AAL ||
+ 	    type == MTK_DISP_BLS ||
+@@ -580,7 +581,6 @@ int mtk_ddp_comp_init(struct device_node *node, struct mtk_ddp_comp *comp,
+ 	    type == MTK_DISP_MERGE ||
+ 	    type == MTK_DISP_OVL ||
+ 	    type == MTK_DISP_OVL_2L ||
+-	    type == MTK_DISP_OVL_ADAPTOR ||
+ 	    type == MTK_DISP_PWM ||
+ 	    type == MTK_DISP_RDMA ||
+ 	    type == MTK_DPI ||
 -- 
 2.40.1
 
