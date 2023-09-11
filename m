@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4F2C153
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAEAC433C8;
-	Mon, 11 Sep 2023 14:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B5911705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E4AC433C8;
+	Mon, 11 Sep 2023 14:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443372;
-	bh=rhBwCmZuY8zx0HZEtQxepkwjSAjV+pOfJYRSX70X1sQ=;
+	s=korg; t=1694443375;
+	bh=jpEscFfuugSLXbtfKyVSfSP2yhoahtQqT+ayZ1pWNek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVCoIfMfNLUlizaN2zJOiwBSDed5CDOvndkwKi9IG6gpVxMdCTynlb+3zI6u/WBIt
-	 2qWfAUdOF2hgJPbRIQdXIFERat8NVXRSo8lxKmNjYoe4hJEl/Sof4A02MQ1/719UNb
-	 SbHUS7d1DvGp3JXYHZyZnDhiswEF/QOKdgKKM1r0=
+	b=HAUUYzWaz2f1hIwLNcWSWZlkHCVlCBj/HBbCzzzJ5tx48/9GVFoXkufgQ61eRQdMK
+	 ew+bEAhd6cfQlU0JqqW8GOaNE9dijjMtcnF8+b0qz9BH3vG5tJu4Wn1ZQboBjeNIkT
+	 M9RfMD1qEd7AJmkWJEWSNCyOzgiPbli138eqENE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jonathan Marek <jonathan@marek.ca>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 354/737] drm/msm/dpu: drop the regdma configuration
-Date: Mon, 11 Sep 2023 15:43:33 +0200
-Message-ID: <20230911134700.404917894@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.4 355/737] drm/msm/dpu: increase memtype count to 16 for sm8550
+Date: Mon, 11 Sep 2023 15:43:34 +0200
+Message-ID: <20230911134700.435315885@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,253 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 078f766e165097c03629cc1a8f7e1a7b7ec0e79b ]
+[ Upstream commit 42d0d253ed03b961c325ff756eec0480cb4adc6b ]
 
-The regdma is currently not used by the current driver. We have no way
-to practically verify that the regdma is described correctly. Drop it
-now.
+sm8550 has 16 vbif clients.
 
+This fixes the extra 2 clients (DMA4/DMA5) not having their memtype
+initialized. This fixes DMA4/DMA5 planes not displaying correctly.
+
+Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Patchwork: https://patchwork.freedesktop.org/patch/550968/
+Link: https://lore.kernel.org/r/20230802134900.30435-1-jonathan@marek.ca
+[DB: fixed the Fixes tag]
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/533148/
-Link: https://lore.kernel.org/r/20230420222558.1208887-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Stable-dep-of: 42d0d253ed03 ("drm/msm/dpu: increase memtype count to 16 for sm8550")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  1 -
- .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  2 -
- .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  2 -
- .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  2 -
- .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  2 -
- .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  2 -
- .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  2 -
- .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  2 -
- .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  2 -
- .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  2 -
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 40 -------------------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 18 ---------
- 12 files changed, 77 deletions(-)
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  4 ++--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 20 +++++++++++++++++++
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index ff9ccf72a4bf9..6560eeef00143 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -195,7 +195,6 @@ const struct dpu_mdss_cfg dpu_msm8998_cfg = {
- 	.intf = msm8998_intf,
- 	.vbif_count = ARRAY_SIZE(msm8998_vbif),
- 	.vbif = msm8998_vbif,
--	.reg_dma_count = 0,
- 	.perf = &msm8998_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 5b9b3b99f1b5f..84159f8cbdaeb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -193,8 +193,6 @@ const struct dpu_mdss_cfg dpu_sdm845_cfg = {
- 	.intf = sdm845_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sdm845_regdma,
- 	.perf = &sdm845_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index 074ba54d420f4..266c525f8daaf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -220,8 +220,6 @@ const struct dpu_mdss_cfg dpu_sm8150_cfg = {
- 	.intf = sm8150_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sm8150_regdma,
- 	.perf = &sm8150_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index 0540d21810857..76c5745c2fa1f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -198,8 +198,6 @@ const struct dpu_mdss_cfg dpu_sc8180x_cfg = {
- 	.intf = sc8180x_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sm8150_regdma,
- 	.perf = &sc8180x_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index b3284de35b8fa..8660d04d0f589 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -228,8 +228,6 @@ const struct dpu_mdss_cfg dpu_sm8250_cfg = {
- 	.vbif = sdm845_vbif,
- 	.wb_count = ARRAY_SIZE(sm8250_wb),
- 	.wb = sm8250_wb,
--	.reg_dma_count = 1,
--	.dma_cfg = &sm8250_regdma,
- 	.perf = &sm8250_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index 88c211876516a..9631116f99e9b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -147,8 +147,6 @@ const struct dpu_mdss_cfg dpu_sc7180_cfg = {
- 	.wb = sc7180_wb,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sdm845_regdma,
- 	.perf = &sc7180_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index 4f6a965bcd90b..9e8d6632a1927 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -211,8 +211,6 @@ const struct dpu_mdss_cfg dpu_sm8350_cfg = {
- 	.intf = sm8350_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sm8350_regdma,
- 	.perf = &sm8350_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 706d0f13b598e..cb58b4ec97db4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -202,8 +202,6 @@ const struct dpu_mdss_cfg dpu_sc8280xp_cfg = {
- 	.intf = sc8280xp_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sc8280xp_regdma,
- 	.perf = &sc8280xp_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 8bd4bb97e639c..905b403ffb0fb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -219,8 +219,6 @@ const struct dpu_mdss_cfg dpu_sm8450_cfg = {
- 	.intf = sm8450_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sm8450_regdma,
- 	.perf = &sm8450_perf_data,
- 	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
- 		     BIT(MDP_SSPP_TOP0_INTR2) | \
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index d0ab351b6a8b9..be2f37728aa0c 100644
+index be2f37728aa0c..a6e4763660bb0 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -224,8 +224,6 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+@@ -222,8 +222,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+ 	.merge_3d = sm8550_merge_3d,
+ 	.intf_count = ARRAY_SIZE(sm8550_intf),
  	.intf = sm8550_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--	.reg_dma_count = 1,
--	.dma_cfg = &sm8450_regdma,
+-	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+-	.vbif = sdm845_vbif,
++	.vbif_count = ARRAY_SIZE(sm8550_vbif),
++	.vbif = sm8550_vbif,
  	.perf = &sm8550_perf_data,
  	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
  		     BIT(MDP_SSPP_TOP0_INTR2) | \
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 0b604f31197bb..fc9d2c56d0e11 100644
+index fc9d2c56d0e11..23c16d25b62f5 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -642,46 +642,6 @@ static const struct dpu_vbif_cfg sdm845_vbif[] = {
+@@ -642,6 +642,26 @@ static const struct dpu_vbif_cfg sdm845_vbif[] = {
  	},
  };
  
--static const struct dpu_reg_dma_cfg sc8280xp_regdma = {
--	.base = 0x0,
--	.version = 0x00020000,
--	.trigger_sel_off = 0x119c,
--	.xin_id = 7,
--	.clk_ctrl = DPU_CLK_CTRL_REG_DMA,
--};
--
--static const struct dpu_reg_dma_cfg sdm845_regdma = {
--	.base = 0x0, .version = 0x1, .trigger_sel_off = 0x119c
--};
--
--static const struct dpu_reg_dma_cfg sm8150_regdma = {
--	.base = 0x0, .version = 0x00010001, .trigger_sel_off = 0x119c
--};
--
--static const struct dpu_reg_dma_cfg sm8250_regdma = {
--	.base = 0x0,
--	.version = 0x00010002,
--	.trigger_sel_off = 0x119c,
--	.xin_id = 7,
--	.clk_ctrl = DPU_CLK_CTRL_REG_DMA,
--};
--
--static const struct dpu_reg_dma_cfg sm8350_regdma = {
--	.base = 0x400,
--	.version = 0x00020000,
--	.trigger_sel_off = 0x119c,
--	.xin_id = 7,
--	.clk_ctrl = DPU_CLK_CTRL_REG_DMA,
--};
--
--static const struct dpu_reg_dma_cfg sm8450_regdma = {
--	.base = 0x0,
--	.version = 0x00020000,
--	.trigger_sel_off = 0x119c,
--	.xin_id = 7,
--	.clk_ctrl = DPU_CLK_CTRL_REG_DMA,
--};
--
++static const struct dpu_vbif_cfg sm8550_vbif[] = {
++	{
++	.name = "vbif_rt", .id = VBIF_RT,
++	.base = 0, .len = 0x1040,
++	.features = BIT(DPU_VBIF_QOS_REMAP),
++	.xin_halt_timeout = 0x4000,
++	.qos_rp_remap_size = 0x40,
++	.qos_rt_tbl = {
++		.npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
++		.priority_lvl = sdm845_rt_pri_lvl,
++		},
++	.qos_nrt_tbl = {
++		.npriority_lvl = ARRAY_SIZE(sdm845_nrt_pri_lvl),
++		.priority_lvl = sdm845_nrt_pri_lvl,
++		},
++	.memtype_count = 16,
++	.memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
++	},
++};
++
  /*************************************************************
   * PERF data config
   *************************************************************/
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 71584cd56fd75..8d62c21b051a8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -720,21 +720,6 @@ struct dpu_vbif_cfg {
- 	u32 memtype_count;
- 	u32 memtype[MAX_XIN_COUNT];
- };
--/**
-- * struct dpu_reg_dma_cfg - information of lut dma blocks
-- * @id                 enum identifying this block
-- * @base               register offset of this block
-- * @features           bit mask identifying sub-blocks/features
-- * @version            version of lutdma hw block
-- * @trigger_sel_off    offset to trigger select registers of lutdma
-- */
--struct dpu_reg_dma_cfg {
--	DPU_HW_BLK_INFO;
--	u32 version;
--	u32 trigger_sel_off;
--	u32 xin_id;
--	enum dpu_clk_ctrl_type clk_ctrl;
--};
- 
- /**
-  * Define CDP use cases
-@@ -850,9 +835,6 @@ struct dpu_mdss_cfg {
- 	u32 wb_count;
- 	const struct dpu_wb_cfg *wb;
- 
--	u32 reg_dma_count;
--	const struct dpu_reg_dma_cfg *dma_cfg;
--
- 	u32 ad_count;
- 
- 	u32 dspp_count;
 -- 
 2.40.1
 
