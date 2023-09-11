@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30854432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:09:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46241C433C9;
-	Mon, 11 Sep 2023 14:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FC04432
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A98C433C7;
+	Mon, 11 Sep 2023 14:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441399;
-	bh=2Fhwrp6C5cAyXATr6CY5FVsbqlyxKJ+pzeWLTbe62BA=;
+	s=korg; t=1694441402;
+	bh=7aJQPERL4gzErk7YKK1CG/K0F/GQs0s5FBPiXcRBRKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=to9SPHYn/p1enS5U7WZla0fLAQAXG3iQs6zG6sGdi2Gaz2CLGhj76AQimx1ZstKhQ
-	 XpR/2R72GrNEV4frIQEILqIcgysh4J0qou6kq19cGSA/PAdGQxDiTul+1IgIEqc/TZ
-	 0Ik0GtNv8V7qoj2wRRVcyem/ysw/Rr7rpjYtIJnU=
+	b=BxvCrgWikBk7NWA/EwHtfeM+Qj/jEPZD4uupjDaFrCtn1SAjOUoaiLE7L+ORHAnRt
+	 ElhbPZtOr3TVEvG33kI8KIm0kCk0voVqhrMkQ6IjJBDIcpIXGkICpqY/YZSyzoDX6I
+	 adzV25RRzlFTtRXncZNKpsNlBsEyAe1j9fKmfbDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Corey Minyard <minyard@acm.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 373/739] ALSA: ump: Fix -Wformat-truncation warnings
-Date: Mon, 11 Sep 2023 15:42:52 +0200
-Message-ID: <20230911134701.582160476@linuxfoundation.org>
+Subject: [PATCH 6.5 374/739] ipmi:ssif: Add check for kstrdup
+Date: Mon, 11 Sep 2023 15:42:53 +0200
+Message-ID: <20230911134701.610707736@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,50 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 4aa69d64e43edb51a4ecff7d301e9f881eb2d3f5 ]
+[ Upstream commit c5586d0f711e9744d0cade39b0c4a2d116a333ca ]
 
-Filling the rawmidi name and substream name can be truncated, and this
-leads to spurious compiler warnings due to -Wformat-truncation.
-Although the truncation is the expected behavior, it'd be better to
-truncate the string within "(...)"
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-This patch puts the precision specifies to each %s for fitting the
-words within the size-limited strings.
-
-Fixes: 5f11dd938fe7 ("ALSA: usb-audio: Attach legacy rawmidi after probing all UMP EPs")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202308251844.1FuQYsql-lkp@intel.com/
-Link: https://lore.kernel.org/r/20230826072151.23408-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c4436c9149c5 ("ipmi_ssif: avoid registering duplicate ssif interface")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Message-Id: <20230619092802.35384-1-jiasheng@iscas.ac.cn>
+Signed-off-by: Corey Minyard <minyard@acm.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index 9d6e3e748f7e7..1e4e1e428b205 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -1157,7 +1157,7 @@ static void fill_substream_names(struct snd_ump_endpoint *ump,
- 	struct snd_rawmidi_substream *s;
- 
- 	list_for_each_entry(s, &rmidi->streams[dir].substreams, list)
--		snprintf(s->name, sizeof(s->name), "Group %d (%s)",
-+		snprintf(s->name, sizeof(s->name), "Group %d (%.16s)",
- 			 ump->legacy_mapping[s->number] + 1, ump->info.name);
- }
- 
-@@ -1191,7 +1191,7 @@ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
- 	if (output)
- 		snd_rawmidi_set_ops(rmidi, SNDRV_RAWMIDI_STREAM_OUTPUT,
- 				    &snd_ump_legacy_output_ops);
--	snprintf(rmidi->name, sizeof(rmidi->name), "%s (MIDI 1.0)",
-+	snprintf(rmidi->name, sizeof(rmidi->name), "%.68s (MIDI 1.0)",
- 		 ump->info.name);
- 	rmidi->info_flags = ump->core.info_flags & ~SNDRV_RAWMIDI_INFO_UMP;
- 	rmidi->ops = &snd_ump_legacy_ops;
+diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
+index 3b921c78ba083..3b87a2726e994 100644
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -1600,6 +1600,11 @@ static int ssif_add_infos(struct i2c_client *client)
+ 	info->addr_src = SI_ACPI;
+ 	info->client = client;
+ 	info->adapter_name = kstrdup(client->adapter->name, GFP_KERNEL);
++	if (!info->adapter_name) {
++		kfree(info);
++		return -ENOMEM;
++	}
++
+ 	info->binfo.addr = client->addr;
+ 	list_add_tail(&info->link, &ssif_infos);
+ 	return 0;
 -- 
 2.40.1
 
