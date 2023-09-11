@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01097F9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AFFC433C8;
-	Mon, 11 Sep 2023 14:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7F9F9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D22C433C9;
+	Mon, 11 Sep 2023 14:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442865;
-	bh=gZKVpqwzR+M3Qhg+9wYwC3MXJ+ySZoWqKR7Iw8qAQsc=;
+	s=korg; t=1694442868;
+	bh=YyKneoLDc9t8FbA+1tJxBNYFgjckJAs15Gm3N8oISX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUygmEnSzFO6NKqR+p7wDjS2o4VngOlqpl1B5nqMJT7NhYcbVrDnjKDuELVH/Dd+V
-	 qZk/+5qKeKUptnjkvAxwInC6iqDqRaBk9YrMpJQkVYhqFE0d94M5HcUAgBD7l2cBif
-	 AlL6oL7tmZK1ScC+Eq9Vhxh9zw55ekk1L3lMMA2M=
+	b=J0zI6Rom5zjvLzyU9Y9/ceBC/zC/aUWv9xkY7FlyhSTj4zVML+oX1RzX/0fYtSHmD
+	 ucXn1UqnizPK6JdQJAPft8mYaSr9C9QCecx/o8HDWyULRNrin+/dTlX1KVjsoSrO1K
+	 ZtEPUbjJV0HjsCA5bhaNWv+XtE9yiLQV/ivwEhaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 175/737] spi: tegra20-sflash: fix to check return value of platform_get_irq() in tegra_sflash_probe()
-Date: Mon, 11 Sep 2023 15:40:34 +0200
-Message-ID: <20230911134655.420699470@linuxfoundation.org>
+Subject: [PATCH 6.4 149/737] bpf: Fix an error in verifying a field in a union
+Date: Mon, 11 Sep 2023 15:40:08 +0200
+Message-ID: <20230911134654.650509653@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,41 +40,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 29a449e765ff70a5bd533be94babb6d36985d096 ]
+[ Upstream commit 33937607efa050d9e237e0c4ac4ada02d961c466 ]
 
-The platform_get_irq might be failed and return a negative result. So
-there should have an error handling code.
+We are utilizing BPF LSM to monitor BPF operations within our container
+environment. When we add support for raw_tracepoint, it hits below
+error.
 
-Fixed this by adding an error handling code.
+; (const void *)attr->raw_tracepoint.name);
+27: (79) r3 = *(u64 *)(r2 +0)
+access beyond the end of member map_type (mend:4) in struct (anon) with off 0 size 8
 
-Fixes: 8528547bcc33 ("spi: tegra: add spi driver for sflash controller")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Link: https://lore.kernel.org/r/tencent_71FC162D589E4788C2152AAC84CD8D5C6D06@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+It can be reproduced with below BPF prog.
+
+SEC("lsm/bpf")
+int BPF_PROG(bpf_audit, int cmd, union bpf_attr *attr, unsigned int size)
+{
+	switch (cmd) {
+	case BPF_RAW_TRACEPOINT_OPEN:
+		bpf_printk("raw_tracepoint is %s", attr->raw_tracepoint.name);
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
+
+The reason is that when accessing a field in a union, such as bpf_attr,
+if the field is located within a nested struct that is not the first
+member of the union, it can result in incorrect field verification.
+
+  union bpf_attr {
+      struct {
+          __u32 map_type; <<<< Actually it will find that field.
+          __u32 key_size;
+          __u32 value_size;
+         ...
+      };
+      ...
+      struct {
+          __u64 name;    <<<< We want to verify this field.
+          __u32 prog_fd;
+      } raw_tracepoint;
+  };
+
+Considering the potential deep nesting levels, finding a perfect
+solution to address this issue has proven challenging. Therefore, I
+propose a solution where we simply skip the verification process if the
+field in question is located within a union.
+
+Fixes: 7e3617a72df3 ("bpf: Add array support to btf_struct_access")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Link: https://lore.kernel.org/r/20230713025642.27477-4-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra20-sflash.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-tegra20-sflash.c b/drivers/spi/spi-tegra20-sflash.c
-index 4286310628a2b..0c5507473f972 100644
---- a/drivers/spi/spi-tegra20-sflash.c
-+++ b/drivers/spi/spi-tegra20-sflash.c
-@@ -455,7 +455,11 @@ static int tegra_sflash_probe(struct platform_device *pdev)
- 		goto exit_free_master;
- 	}
- 
--	tsd->irq = platform_get_irq(pdev, 0);
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
-+		goto exit_free_master;
-+	tsd->irq = ret;
-+
- 	ret = request_irq(tsd->irq, tegra_sflash_isr, 0,
- 			dev_name(&pdev->dev), tsd);
- 	if (ret < 0) {
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 5dd8534b778d1..9976149ec42f0 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6359,7 +6359,7 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+ 		 * that also allows using an array of int as a scratch
+ 		 * space. e.g. skb->cb[].
+ 		 */
+-		if (off + size > mtrue_end) {
++		if (off + size > mtrue_end && !(*flag & PTR_UNTRUSTED)) {
+ 			bpf_log(log,
+ 				"access beyond the end of member %s (mend:%u) in struct %s with off %u size %u\n",
+ 				mname, mtrue_end, tname, off, size);
 -- 
 2.40.1
 
