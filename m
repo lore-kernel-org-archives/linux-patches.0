@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C7D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:16:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D282C433C8;
-	Mon, 11 Sep 2023 14:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123AC1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826C2C433C8;
+	Mon, 11 Sep 2023 14:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441773;
-	bh=efHZC7FAh0T4gjRFu9engcza660I0CF8HEuTO/LVPvQ=;
+	s=korg; t=1694441776;
+	bh=KUp4ftQkSnSmMkwrQ4jN1qkiqtUfMTY/9azEiwFChpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzezzXEq/moq1PCaSBmfD5maVAw7sumAX5TzUA+FRns5lPpsKdoGmqZbdcQlZ+1Ss
-	 y7WVDBfMPQ2Nwkm2KIY6QNtG3FgDRxAjp/S21GWMg+IffJ1qhQHndcsXLmAnnVf0dA
-	 HJczcMyo5Blko1HW7Q6udur3sBWJ3tpqWTbb/hbc=
+	b=QORDYu3LbfrxVaZu+Rt3yjKGy9hw2DOb7UTNstx3UAPmjua6GngPrg50DBDIvOisu
+	 NtAAYl5XFETitDXLiPwOQ+V6TnCeulmHsrRQ9aLr+BrHP7OVSNlIFQXbdcQJhxlSl4
+	 BpHHWuL3+ilf877nEgnQnLSlrggj1iw4vMzJG8pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Eddie James <eajames@linux.ibm.com>,
-	Joel Stanley <joel@jms.id.au>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 532/739] docs: ABI: fix spelling/grammar in SBEFIFO timeout interface
-Date: Mon, 11 Sep 2023 15:45:31 +0200
-Message-ID: <20230911134705.967119962@linuxfoundation.org>
+Subject: [PATCH 6.5 533/739] USB: gadget: core: Add missing kerneldoc for vbus_work
+Date: Mon, 11 Sep 2023 15:45:32 +0200
+Message-ID: <20230911134705.995250237@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,38 +39,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 2cd9ec2a51474d4c0b4d2a061f2de7da34eff476 ]
+[ Upstream commit 159a98afc88e88f588077afe818081d67f50a5e0 ]
 
-Correct spelling problems as identified by codespell.
-Correct one grammar error.
+Add a missing kerneldoc description of the vbus_work field in struct usb_udc.
 
-Fixes: 9a93de620e0a ("docs: ABI: testing: Document the SBEFIFO timeout interface")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Eddie James <eajames@linux.ibm.com>
-Cc: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20230710052305.29611-1-rdunlap@infradead.org
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 50966da807c8 ("usb: gadget: udc: core: Offload usb_udc_vbus_handler processing")
+Link: https://lore.kernel.org/r/1e5e7cda-b2c8-4917-9952-4354f365ede0@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-bus-fsi-devices-sbefifo | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/udc/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-fsi-devices-sbefifo b/Documentation/ABI/testing/sysfs-bus-fsi-devices-sbefifo
-index 531fe9d6b40aa..c7393b4dd2d88 100644
---- a/Documentation/ABI/testing/sysfs-bus-fsi-devices-sbefifo
-+++ b/Documentation/ABI/testing/sysfs-bus-fsi-devices-sbefifo
-@@ -5,6 +5,6 @@ Description:
- 		Indicates whether or not this SBE device has experienced a
- 		timeout; i.e. the SBE did not respond within the time allotted
- 		by the driver. A value of 1 indicates that a timeout has
--		ocurred and no transfers have completed since the timeout. A
--		value of 0 indicates that no timeout has ocurred, or if one
--		has, more recent transfers have completed successful.
-+		occurred and no transfers have completed since the timeout. A
-+		value of 0 indicates that no timeout has occurred, or if one
-+		has, more recent transfers have completed successfully.
+diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
+index 7d49d8a0b00c2..7166d1117742a 100644
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -40,6 +40,7 @@ static const struct bus_type gadget_bus_type;
+  * @allow_connect: Indicates whether UDC is allowed to be pulled up.
+  * Set/cleared by gadget_(un)bind_driver() after gadget driver is bound or
+  * unbound.
++ * @vbus_work: work routine to handle VBUS status change notifications.
+  * @connect_lock: protects udc->started, gadget->connect,
+  * gadget->allow_connect and gadget->deactivate. The routines
+  * usb_gadget_connect_locked(), usb_gadget_disconnect_locked(),
 -- 
 2.40.1
 
