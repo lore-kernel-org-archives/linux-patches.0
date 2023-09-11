@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E10711710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50BDC433C7;
-	Mon, 11 Sep 2023 15:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2524011710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C930C433C7;
+	Mon, 11 Sep 2023 15:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445514;
-	bh=hqRtZfUQyxEYv/2VdXGPtqiLOzr1BBvSmruJ8OtLDlo=;
+	s=korg; t=1694445517;
+	bh=WlZKDQ0+mLIwmn97LCJ4uYMk3WqWbDNuT23VWblz2kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axUI8apE53fUwbhV4l6r9urvcrmsbImBtJwxYZ1rdlFzgXQ+xp5skcxJCtATZ7Kys
-	 BgZKA49WJN1WHIZBUKGlih4R43NqjNREyWxzbWCb9VlBYSaVPHNfTT8gEs8gZKZlAF
-	 RK9vFuxvvGFWE+tEwrmVxCCBqqw+ZAOwTTdADZ+8=
+	b=mNhQrJwDl/2wIjnDj9WYfXdUXbxCk2OAi7zmekOoRQ5gVtsu0XSRArBtKNO1bAhPe
+	 1TPbupggFN2GeJyRL5SxhNnM1xv9srHP/XcLZ0KUkBOKhOxfz1/+Rjc6yVN6eRvOzK
+	 SpbG/r60lCbG10ge/rEAN5vw9Pdx3i7iGhyl9WB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 375/600] NFSv4.2: Fix READ_PLUS size calculations
-Date: Mon, 11 Sep 2023 15:46:48 +0200
-Message-ID: <20230911134644.746720665@linuxfoundation.org>
+Subject: [PATCH 6.1 376/600] powerpc: Dont include lppaca.h in paca.h
+Date: Mon, 11 Sep 2023 15:46:49 +0200
+Message-ID: <20230911134644.774775469@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,57 +39,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 8d18f6c5bb864d97a730f471c56cdecf313efe64 ]
+[ Upstream commit 1aa000667669fa855853decbb1c69e974d8ff716 ]
 
-I bump the decode_read_plus_maxsz to account for hole segments, but I
-need to subtract out this increase when calling
-rpc_prepare_reply_pages() so the common case of single data segment
-replies can be directly placed into the xdr pages without needing to be
-shifted around.
+By adding a forward declaration for struct lppaca we can untangle paca.h
+and lppaca.h. Also move get_lppaca() into lppaca.h for consistency.
 
-Reported-by: Chuck Lever <chuck.lever@oracle.com>
-Fixes: d3b00a802c845 ("NFS: Replace the READ_PLUS decoding code")
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Add includes of lppaca.h to some files that need it.
+
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230823055317.751786-3-mpe@ellerman.id.au
+Stable-dep-of: eac030b22ea1 ("powerpc/pseries: Rework lppaca_shared_proc() to avoid DEBUG_PREEMPT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42xdr.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/powerpc/include/asm/lppaca.h         | 4 ++++
+ arch/powerpc/include/asm/paca.h           | 6 +-----
+ arch/powerpc/include/asm/paravirt.h       | 1 +
+ arch/powerpc/include/asm/plpar_wrappers.h | 1 +
+ arch/powerpc/kvm/book3s_hv_ras.c          | 1 +
+ arch/powerpc/mm/book3s64/slb.c            | 1 +
+ arch/powerpc/xmon/xmon.c                  | 1 +
+ 7 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
-index ef3b150970ff6..75765382cc0e6 100644
---- a/fs/nfs/nfs42xdr.c
-+++ b/fs/nfs/nfs42xdr.c
-@@ -51,10 +51,16 @@
- 					(1 /* data_content4 */ + \
- 					 2 /* data_info4.di_offset */ + \
- 					 1 /* data_info4.di_length */)
-+#define NFS42_READ_PLUS_HOLE_SEGMENT_SIZE \
-+					(1 /* data_content4 */ + \
-+					 2 /* data_info4.di_offset */ + \
-+					 2 /* data_info4.di_length */)
-+#define READ_PLUS_SEGMENT_SIZE_DIFF	(NFS42_READ_PLUS_HOLE_SEGMENT_SIZE - \
-+					 NFS42_READ_PLUS_DATA_SEGMENT_SIZE)
- #define decode_read_plus_maxsz		(op_decode_hdr_maxsz + \
- 					 1 /* rpr_eof */ + \
- 					 1 /* rpr_contents count */ + \
--					 NFS42_READ_PLUS_DATA_SEGMENT_SIZE)
-+					 NFS42_READ_PLUS_HOLE_SEGMENT_SIZE)
- #define encode_seek_maxsz		(op_encode_hdr_maxsz + \
- 					 encode_stateid_maxsz + \
- 					 2 /* offset */ + \
-@@ -781,8 +787,8 @@ static void nfs4_xdr_enc_read_plus(struct rpc_rqst *req,
- 	encode_putfh(xdr, args->fh, &hdr);
- 	encode_read_plus(xdr, args, &hdr);
- 
--	rpc_prepare_reply_pages(req, args->pages, args->pgbase,
--				args->count, hdr.replen);
-+	rpc_prepare_reply_pages(req, args->pages, args->pgbase, args->count,
-+				hdr.replen - READ_PLUS_SEGMENT_SIZE_DIFF);
- 	encode_nops(&hdr);
+diff --git a/arch/powerpc/include/asm/lppaca.h b/arch/powerpc/include/asm/lppaca.h
+index 34d44cb17c874..fe278172e9d42 100644
+--- a/arch/powerpc/include/asm/lppaca.h
++++ b/arch/powerpc/include/asm/lppaca.h
+@@ -134,6 +134,10 @@ static inline bool lppaca_shared_proc(struct lppaca *l)
+ 	return !!(l->__old_status & LPPACA_OLD_SHARED_PROC);
  }
  
++#ifdef CONFIG_PPC_PSERIES
++#define get_lppaca()	(get_paca()->lppaca_ptr)
++#endif
++
+ /*
+  * SLB shadow buffer structure as defined in the PAPR.  The save_area
+  * contains adjacent ESID and VSID pairs for each shadowed SLB.  The
+diff --git a/arch/powerpc/include/asm/paca.h b/arch/powerpc/include/asm/paca.h
+index 0ab3511a47d77..183b5a251804c 100644
+--- a/arch/powerpc/include/asm/paca.h
++++ b/arch/powerpc/include/asm/paca.h
+@@ -15,7 +15,6 @@
+ #include <linux/cache.h>
+ #include <linux/string.h>
+ #include <asm/types.h>
+-#include <asm/lppaca.h>
+ #include <asm/mmu.h>
+ #include <asm/page.h>
+ #ifdef CONFIG_PPC_BOOK3E_64
+@@ -47,14 +46,11 @@ extern unsigned int debug_smp_processor_id(void); /* from linux/smp.h */
+ #define get_paca()	local_paca
+ #endif
+ 
+-#ifdef CONFIG_PPC_PSERIES
+-#define get_lppaca()	(get_paca()->lppaca_ptr)
+-#endif
+-
+ #define get_slb_shadow()	(get_paca()->slb_shadow_ptr)
+ 
+ struct task_struct;
+ struct rtas_args;
++struct lppaca;
+ 
+ /*
+  * Defines the layout of the paca.
+diff --git a/arch/powerpc/include/asm/paravirt.h b/arch/powerpc/include/asm/paravirt.h
+index f5ba1a3c41f8e..e08513d731193 100644
+--- a/arch/powerpc/include/asm/paravirt.h
++++ b/arch/powerpc/include/asm/paravirt.h
+@@ -6,6 +6,7 @@
+ #include <asm/smp.h>
+ #ifdef CONFIG_PPC64
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #include <asm/hvcall.h>
+ #endif
+ 
+diff --git a/arch/powerpc/include/asm/plpar_wrappers.h b/arch/powerpc/include/asm/plpar_wrappers.h
+index 8239c0af5eb2b..fe3d0ea0058ac 100644
+--- a/arch/powerpc/include/asm/plpar_wrappers.h
++++ b/arch/powerpc/include/asm/plpar_wrappers.h
+@@ -9,6 +9,7 @@
+ 
+ #include <asm/hvcall.h>
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #include <asm/page.h>
+ 
+ static inline long poll_pending(void)
+diff --git a/arch/powerpc/kvm/book3s_hv_ras.c b/arch/powerpc/kvm/book3s_hv_ras.c
+index ccfd969656306..82be6d87514b7 100644
+--- a/arch/powerpc/kvm/book3s_hv_ras.c
++++ b/arch/powerpc/kvm/book3s_hv_ras.c
+@@ -9,6 +9,7 @@
+ #include <linux/kvm.h>
+ #include <linux/kvm_host.h>
+ #include <linux/kernel.h>
++#include <asm/lppaca.h>
+ #include <asm/opal.h>
+ #include <asm/mce.h>
+ #include <asm/machdep.h>
+diff --git a/arch/powerpc/mm/book3s64/slb.c b/arch/powerpc/mm/book3s64/slb.c
+index 6956f637a38c1..f2708c8629a52 100644
+--- a/arch/powerpc/mm/book3s64/slb.c
++++ b/arch/powerpc/mm/book3s64/slb.c
+@@ -13,6 +13,7 @@
+ #include <asm/mmu.h>
+ #include <asm/mmu_context.h>
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #include <asm/ppc-opcode.h>
+ #include <asm/cputable.h>
+ #include <asm/cacheflush.h>
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index bd8e80936f44d..cd692f399cd18 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -58,6 +58,7 @@
+ #ifdef CONFIG_PPC64
+ #include <asm/hvcall.h>
+ #include <asm/paca.h>
++#include <asm/lppaca.h>
+ #endif
+ 
+ #include "nonstdio.h"
 -- 
 2.40.1
 
