@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE8D1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957BBC433C7;
-	Mon, 11 Sep 2023 14:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68931170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:21:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B92C433C7;
+	Mon, 11 Sep 2023 14:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442064;
-	bh=6hzZ6Iso2ZBhqJODT9DEwc9CWJOSNGHW4Fg5Cygb1r0=;
+	s=korg; t=1694442067;
+	bh=IO27JynWIS/+0ABJUQy0ObduSaOBA/fHn0IdzMuu3Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncaruAVBI490UWA7XJdQWhXHai9zEjNUHo6AS8S5Z1qFU94TApueEHcpQt71tMX7g
-	 lAH0p7rpHTbkXUD9NgRg1u153MCjJ8UzW6ENDIIIwJddxbGUJ0iEOfS792BMO2V/1t
-	 NGMW/QMDLv974FfUS7QRTGhqr6jWWNgrJGaZyXPo=
+	b=ysynsAudSm5XNEbLuZXwQsOTFWT7X05fqk2VxH3zXDDXCAvhIh/VqrXWv8Ob1lskv
+	 R8DaIEEQvWhDkgigqH2R+y77ekPFsACt2JZnUCtiBcBkOqzccCKHYA+uzd0r9n0+xs
+	 +KqHJUd0gAabF9+350X/MqJrx2IYEzTRcFe56TVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
+	Wander Lairson Costa <wander@redhat.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.5 633/739] netfilter: nft_exthdr: Fix non-linear header modification
-Date: Mon, 11 Sep 2023 15:47:12 +0200
-Message-ID: <20230911134708.774571776@linuxfoundation.org>
+Subject: [PATCH 6.5 634/739] netfilter: xt_u32: validate user space input
+Date: Mon, 11 Sep 2023 15:47:13 +0200
+Message-ID: <20230911134708.804571476@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -39,66 +39,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Liang <shaw.leon@gmail.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-commit 28427f368f0e08d504ed06e74bc7cc79d6d06511 upstream.
+commit 69c5d284f67089b4750d28ff6ac6f52ec224b330 upstream.
 
-Fix skb_ensure_writable() size. Don't use nft_tcp_header_pointer() to
-make it explicit that pointers point to the packet (not local buffer).
+The xt_u32 module doesn't validate the fields in the xt_u32 structure.
+An attacker may take advantage of this to trigger an OOB read by setting
+the size fields with a value beyond the arrays boundaries.
 
-Fixes: 99d1712bc41c ("netfilter: exthdr: tcp option set support")
-Fixes: 7890cbea66e7 ("netfilter: exthdr: add support for tcp option removal")
+Add a checkentry function to validate the structure.
+
+This was originally reported by the ZDI project (ZDI-CAN-18408).
+
+Fixes: 1b50b8a371e9 ("[NETFILTER]: Add u32 match")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_exthdr.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ net/netfilter/xt_u32.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -238,7 +238,12 @@ static void nft_exthdr_tcp_set_eval(cons
- 	if (!tcph)
- 		goto err;
+--- a/net/netfilter/xt_u32.c
++++ b/net/netfilter/xt_u32.c
+@@ -96,11 +96,32 @@ static bool u32_mt(const struct sk_buff
+ 	return ret ^ data->invert;
+ }
  
-+	if (skb_ensure_writable(pkt->skb, nft_thoff(pkt) + tcphdr_len))
-+		goto err;
++static int u32_mt_checkentry(const struct xt_mtchk_param *par)
++{
++	const struct xt_u32 *data = par->matchinfo;
++	const struct xt_u32_test *ct;
++	unsigned int i;
 +
-+	tcph = (struct tcphdr *)(pkt->skb->data + nft_thoff(pkt));
- 	opt = (u8 *)tcph;
++	if (data->ntests > ARRAY_SIZE(data->tests))
++		return -EINVAL;
 +
- 	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
- 		union {
- 			__be16 v16;
-@@ -253,15 +258,6 @@ static void nft_exthdr_tcp_set_eval(cons
- 		if (i + optl > tcphdr_len || priv->len + priv->offset > optl)
- 			goto err;
- 
--		if (skb_ensure_writable(pkt->skb,
--					nft_thoff(pkt) + i + priv->len))
--			goto err;
--
--		tcph = nft_tcp_header_pointer(pkt, sizeof(buff), buff,
--					      &tcphdr_len);
--		if (!tcph)
--			goto err;
--
- 		offset = i + priv->offset;
- 
- 		switch (priv->len) {
-@@ -325,9 +321,9 @@ static void nft_exthdr_tcp_strip_eval(co
- 	if (skb_ensure_writable(pkt->skb, nft_thoff(pkt) + tcphdr_len))
- 		goto drop;
- 
--	opt = (u8 *)nft_tcp_header_pointer(pkt, sizeof(buff), buff, &tcphdr_len);
--	if (!opt)
--		goto err;
-+	tcph = (struct tcphdr *)(pkt->skb->data + nft_thoff(pkt));
-+	opt = (u8 *)tcph;
++	for (i = 0; i < data->ntests; ++i) {
++		ct = &data->tests[i];
 +
- 	for (i = sizeof(*tcph); i < tcphdr_len - 1; i += optl) {
- 		unsigned int j;
- 
++		if (ct->nnums > ARRAY_SIZE(ct->location) ||
++		    ct->nvalues > ARRAY_SIZE(ct->value))
++			return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static struct xt_match xt_u32_mt_reg __read_mostly = {
+ 	.name       = "u32",
+ 	.revision   = 0,
+ 	.family     = NFPROTO_UNSPEC,
+ 	.match      = u32_mt,
++	.checkentry = u32_mt_checkentry,
+ 	.matchsize  = sizeof(struct xt_u32),
+ 	.me         = THIS_MODULE,
+ };
 
 
