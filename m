@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B198B1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EC9C433C7;
-	Mon, 11 Sep 2023 13:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B8A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:51:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D3BC433C7;
+	Mon, 11 Sep 2023 13:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440308;
-	bh=8MNNAGqnk86taS1F+tjnaOufYla9Vc184qSxUkJ/hQE=;
+	s=korg; t=1694440311;
+	bh=bWyYbxPzHCQvB8zV9sMvkLYZ4f16+LHKrrBTIv8G1aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FC9jt6Ht8BrXjcCx3j1SfJUHscBgEZfqa5ondK/GsX6mMMT1qJVdvo0ZXpShPetqu
-	 ATQ5Svs7mhW67uPjrN1Zav6qONdsEpvccwsv1Ba6Eo3IN1/0yjJ4zNEHBCh+QLPX1w
-	 yId/lzdrzLBkMyfVz6h3TzYal2jRw6GRGtISNOqI=
+	b=vx5Qz8a/URXUgg489NKms5X39Iluj7Rj7Tzwh2vA4Y6GLHJvmTHaKVNgr8uH7SrZ2
+	 diSF5dHMiQLMrQ3Ixst68twFaa4KWVYt7KAy+pPBenkQGTB0BFLrJeVK7hsJ2P1VEY
+	 Wg+zHxCPidGUHveu7XmcBgIWk1N1hbm3934dTVYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Ming <machel@vivo.com>,
-	Christian Brauner <brauner@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 016/739] fs: Fix error checking for d_hash_and_lookup()
-Date: Mon, 11 Sep 2023 15:36:55 +0200
-Message-ID: <20230911134651.477279790@linuxfoundation.org>
+Subject: [PATCH 6.5 017/739] iomap: Remove large folio handling in iomap_invalidate_folio()
+Date: Mon, 11 Sep 2023 15:36:56 +0200
+Message-ID: <20230911134651.508719528@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,36 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Ming <machel@vivo.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 0d5a4f8f775ff990142cdc810a84eae078589d27 ]
+[ Upstream commit a221ab717c43147f728d93513923ba3528f861bf ]
 
-The d_hash_and_lookup() function returns error pointers or NULL.
-Most incorrect error checks were fixed, but the one in int path_pts()
-was forgotten.
+We do not need to release the iomap_page in iomap_invalidate_folio()
+to allow the folio to be split.  The splitting code will call
+->release_folio() if there is still per-fs private data attached to
+the folio.  At that point, we will check if the folio is still dirty
+and decline to release the iomap_page.  It is possible to trigger the
+warning in perfectly legitimate circumstances (eg if a disk read fails,
+we do a partial write to the folio, then we truncate the folio), which
+will cause those writes to be lost.
 
-Fixes: eedf265aa003 ("devpts: Make each mount of devpts an independent filesystem.")
-Signed-off-by: Wang Ming <machel@vivo.com>
-Message-Id: <20230713120555.7025-1-machel@vivo.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 60d8231089f0 ("iomap: Support large folios in invalidatepage")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namei.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/iomap/buffered-io.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/fs/namei.c b/fs/namei.c
-index e56ff39a79bc8..2bae29ea52ffa 100644
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -2890,7 +2890,7 @@ int path_pts(struct path *path)
- 	dput(path->dentry);
- 	path->dentry = parent;
- 	child = d_hash_and_lookup(parent, &this);
--	if (!child)
-+	if (IS_ERR_OR_NULL(child))
- 		return -ENOENT;
- 
- 	path->dentry = child;
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index aa8967cca1a31..7d2f70708f37d 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -508,11 +508,6 @@ void iomap_invalidate_folio(struct folio *folio, size_t offset, size_t len)
+ 		WARN_ON_ONCE(folio_test_writeback(folio));
+ 		folio_cancel_dirty(folio);
+ 		iomap_page_release(folio);
+-	} else if (folio_test_large(folio)) {
+-		/* Must release the iop so the page can be split */
+-		WARN_ON_ONCE(!folio_test_uptodate(folio) &&
+-			     folio_test_dirty(folio));
+-		iomap_page_release(folio);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(iomap_invalidate_folio);
 -- 
 2.40.1
 
