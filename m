@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CEA11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6B8C433C7;
-	Mon, 11 Sep 2023 15:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D27411715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17ADAC433C7;
+	Mon, 11 Sep 2023 15:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444973;
-	bh=CZDxD//SaIvTmrC0xp2qJTKM3qw5+LMoLp4MXL0ZSTw=;
+	s=korg; t=1694444976;
+	bh=i/VEtmflhIJNrvbR2YTslmERHXgW3zyicCo43Tlutyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLRzoWYg60JqdH6jWKUS/tqWHCHT7YqHiUIzEB2wnrv/tO1gKSXjIaSV7oYVD9256
-	 CXo54YoFwjGj0kg8slh3Hx85vT6EY/zOqC5jzNGmO+7BAKQ+nc/cyuK6NW4wPbeDt+
-	 TGSP/Bz3QACz9eWKke20KuIt4NQzVKF2rVg23uZw=
+	b=bxaEU3O4XbHmLCN5BEaOSK5SIYs2Tiixim8TeWD741VAH3D6+xs3blvS1LUNBeDK0
+	 TOCwNElHQP+lYDW9/Pl3RilPto/LvgqBdCUA7QfPR20G/2x8CEDO2ZmpSfVdfX64QL
+	 n6EGpi7l4wGR7or6sO6OcsApcXsV8NKVrHrDSKTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	=?UTF-8?q?Fran=C3=A7ois=20Valenduc?= <francoisvalenduc@gmail.com>,
-	Alexandru Radovici <msg4alex@gmail.com>,
-	Matthew Leach <dev@mattleach.net>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yan Zhai <yan@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/600] kbuild: rust_is_available: add check for `bindgen` invocation
-Date: Mon, 11 Sep 2023 15:43:18 +0200
-Message-ID: <20230911134638.477817303@linuxfoundation.org>
+Subject: [PATCH 6.1 183/600] lwt: Check LWTUNNEL_XMIT_CONTINUE strictly
+Date: Mon, 11 Sep 2023 15:43:36 +0200
+Message-ID: <20230911134639.002095062@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,94 +35,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit 52cae7f28ed6c3992489f16bb355f5b623f0912e ]
+[ Upstream commit a171fbec88a2c730b108c7147ac5e7b2f5a02b47 ]
 
-`scripts/rust_is_available.sh` calls `bindgen` with a special
-header in order to check whether the `libclang` version in use
-is suitable.
+LWTUNNEL_XMIT_CONTINUE is implicitly assumed in ip(6)_finish_output2,
+such that any positive return value from a xmit hook could cause
+unexpected continue behavior, despite that related skb may have been
+freed. This could be error-prone for future xmit hook ops. One of the
+possible errors is to return statuses of dst_output directly.
 
-However, the invocation itself may fail if, for instance, `bindgen`
-cannot locate `libclang`. This is fine for Kconfig (since the
-script will still fail and therefore disable Rust as it should),
-but it is pretty confusing for users of the `rustavailable` target
-given the error will be unrelated:
+To make the code safer, redefine LWTUNNEL_XMIT_CONTINUE value to
+distinguish from dst_output statuses and check the continue
+condition explicitly.
 
-    ./scripts/rust_is_available.sh: 21: arithmetic expression: expecting primary: "100000 *  + 100 *  + "
-    make: *** [Makefile:1816: rustavailable] Error 2
-
-Instead, run the `bindgen` invocation independently in a previous
-step, saving its output and return code. If it fails, then show
-the user a proper error message. Otherwise, continue as usual
-with the saved output.
-
-Since the previous patch we show a reference to the docs, and
-the docs now explain how `bindgen` looks for `libclang`,
-thus the error message can leverage the documentation, avoiding
-duplication here (and making users aware of the setup guide in
-the documentation).
-
-Reported-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/rust-for-linux/CAKwvOdm5JT4wbdQQYuW+RT07rCi6whGBM2iUAyg8A1CmLXG6Nw@mail.gmail.com/
-Reported-by: François Valenduc <francoisvalenduc@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/934
-Reported-by: Alexandru Radovici <msg4alex@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/pull/921
-Reported-by: Matthew Leach <dev@mattleach.net>
-Closes: https://lore.kernel.org/rust-for-linux/20230507084116.1099067-1-dev@mattleach.net/
-Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230616001631.463536-6-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/96b939b85eda00e8df4f7c080f770970a4c5f698.1692326837.git.yan@cloudflare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ include/net/lwtunnel.h | 5 ++++-
+ net/ipv4/ip_output.c   | 2 +-
+ net/ipv6/ip6_output.c  | 2 +-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 0c9be438e4cd3..c965895d80b97 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -90,8 +90,28 @@ if [ "$rust_bindings_generator_cversion" -gt "$rust_bindings_generator_min_cvers
- fi
+diff --git a/include/net/lwtunnel.h b/include/net/lwtunnel.h
+index 6f15e6fa154e6..53bd2d02a4f0d 100644
+--- a/include/net/lwtunnel.h
++++ b/include/net/lwtunnel.h
+@@ -16,9 +16,12 @@
+ #define LWTUNNEL_STATE_INPUT_REDIRECT	BIT(1)
+ #define LWTUNNEL_STATE_XMIT_REDIRECT	BIT(2)
  
- # Check that the `libclang` used by the Rust bindings generator is suitable.
-+#
-+# In order to do that, first invoke `bindgen` to get the `libclang` version
-+# found by `bindgen`. This step may already fail if, for instance, `libclang`
-+# is not found, thus inform the user in such a case.
-+bindgen_libclang_output=$( \
-+	LC_ALL=C "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null
-+) || bindgen_libclang_code=$?
-+if [ -n "$bindgen_libclang_code" ]; then
-+	echo >&2 "***"
-+	echo >&2 "*** Running '$BINDGEN' to check the libclang version (used by the Rust"
-+	echo >&2 "*** bindings generator) failed with code $bindgen_libclang_code. This may be caused by"
-+	echo >&2 "*** a failure to locate libclang. See output and docs below for details:"
-+	echo >&2 "***"
-+	echo >&2 "$bindgen_libclang_output"
-+	echo >&2 "***"
-+	exit 1
-+fi
-+
-+# `bindgen` returned successfully, thus use the output to check that the version
-+# of the `libclang` found by the Rust bindings generator is suitable.
- bindgen_libclang_version=$( \
--	LC_ALL=C "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null \
-+	echo "$bindgen_libclang_output" \
- 		| grep -F 'clang version ' \
- 		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
- 		| head -n 1 \
++/* LWTUNNEL_XMIT_CONTINUE should be distinguishable from dst_output return
++ * values (NET_XMIT_xxx and NETDEV_TX_xxx in linux/netdevice.h) for safety.
++ */
+ enum {
+ 	LWTUNNEL_XMIT_DONE,
+-	LWTUNNEL_XMIT_CONTINUE,
++	LWTUNNEL_XMIT_CONTINUE = 0x100,
+ };
+ 
+ 
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index acfe58d2f1dd7..ebd2cea5b7d7a 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -214,7 +214,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
+ 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
+ 		int res = lwtunnel_xmit(skb);
+ 
+-		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
++		if (res != LWTUNNEL_XMIT_CONTINUE)
+ 			return res;
+ 	}
+ 
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 95a55c6630add..34192f7a166fb 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -112,7 +112,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+ 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
+ 		int res = lwtunnel_xmit(skb);
+ 
+-		if (res < 0 || res == LWTUNNEL_XMIT_DONE)
++		if (res != LWTUNNEL_XMIT_CONTINUE)
+ 			return res;
+ 	}
+ 
 -- 
 2.40.1
 
