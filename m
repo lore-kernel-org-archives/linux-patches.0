@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D104311C9F
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561C4C433CD;
-	Mon, 11 Sep 2023 15:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F8B11739
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FDDC433CC;
+	Mon, 11 Sep 2023 15:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446129;
-	bh=NvtVzgSc9Om23mpOJmHud+DFVzl9nfq0NV+Bp5x1qqw=;
+	s=korg; t=1694446132;
+	bh=Yr6x8ztoNzEumpOrZtg+6bprAhOBLbSBKZXZCDVak1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwKFVlAKKaveiVqVHoB0+fUf4nUEcCu0EcNxMPS7q4m3rw2YD65rpzrZLa/cO4bgo
-	 I2doZ8Gc+Kx+vEj622F/RCefYu0RVhWeQnF6CJh1i9Mguc5nZis5woz3KVkTtmJukd
-	 tJ5sKCPU6B1sm/lMYS5i7285VaesweO4BAdrH3+Q=
+	b=L6rLGt5YOMyy3hWuC2jy7jNL6IAKzzw+nCZFGYFn8aeMJBgdgw9c75iiG4sAm8yMi
+	 J/d+8HlEOst5bQ+6bMLe5pHSJCCSPbwCpPoHV+tdBn5NnH8zDYJcTpCEURNG9ZQZ5h
+	 JTAvKk0NQYx2+MmqFgoqxavxpBknWdrZ/5f1wBLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Brian Foster <bfoster@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 592/600] tracing: Zero the pipe cpumask on alloc to avoid spurious -EBUSY
-Date: Mon, 11 Sep 2023 15:50:25 +0200
-Message-ID: <20230911134651.118928570@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.1 593/600] Revert "drm/amd/display: Do not set drr on pipe commit"
+Date: Mon, 11 Sep 2023 15:50:26 +0200
+Message-ID: <20230911134651.154533280@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -35,59 +35,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-commit 3d07fa1dd19035eb0b13ae6697efd5caa9033e74 upstream.
+commit 360930985ec9f394c82ba0b235403b4a366d1560 upstream.
 
-The pipe cpumask used to serialize opens between the main and percpu
-trace pipes is not zeroed or initialized. This can result in
-spurious -EBUSY returns if underlying memory is not fully zeroed.
-This has been observed by immediate failure to read the main
-trace_pipe file on an otherwise newly booted and idle system:
+This reverts commit e101bf95ea87ccc03ac2f48dfc0757c6364ff3c7.
 
- # cat /sys/kernel/debug/tracing/trace_pipe
- cat: /sys/kernel/debug/tracing/trace_pipe: Device or resource busy
+Caused a regression:
 
-Zero the allocation of pipe_cpumask to avoid the problem.
+Samsung Odyssey Neo G9, running at 5120x1440@240/VRR, connected to Navi
+21 via DisplayPort, blanks and the GPU hangs while starting the Steam
+game Assetto Corsa Competizione (via Proton 7.0).
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230831125500.986862-1-bfoster@redhat.com
+Example dmesg excerpt:
 
-Cc: stable@vger.kernel.org
-Fixes: c2489bb7e6be ("tracing: Introduce pipe_cpumask to avoid race on trace_pipes")
-Reviewed-by: Zheng Yejian <zhengyejian1@huawei.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+ amdgpu 0000:0c:00.0: [drm] ERROR [CRTC:82:crtc-0] flip_done timed out
+ NMI watchdog: Watchdog detected hard LOCKUP on cpu 6
+ [...]
+ RIP: 0010:amdgpu_device_rreg.part.0+0x2f/0xf0 [amdgpu]
+ Code: 41 54 44 8d 24 b5 00 00 00 00 55 89 f5 53 48 89 fb 4c 3b a7 60 0b 00 00 73 6a 83 e2 02 74 29 4c 03 a3 68 0b 00 00 45 8b 24 24 <48> 8b 43 08 0f b7 70 3e 66 90 44 89 e0 5b 5d 41 5c 31 d2 31 c9 31
+ RSP: 0000:ffffb39a119dfb88 EFLAGS: 00000086
+ RAX: ffffffffc0eb96a0 RBX: ffff9e7963dc0000 RCX: 0000000000007fff
+ RDX: 0000000000000000 RSI: 0000000000004ff6 RDI: ffff9e7963dc0000
+ RBP: 0000000000004ff6 R08: ffffb39a119dfc40 R09: 0000000000000010
+ R10: ffffb39a119dfc40 R11: ffffb39a119dfc44 R12: 00000000000e05ae
+ R13: 0000000000000000 R14: ffff9e7963dc0010 R15: 0000000000000000
+ FS:  000000001012f6c0(0000) GS:ffff9e805eb80000(0000) knlGS:000000007fd40000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00000000461ca000 CR3: 00000002a8a20000 CR4: 0000000000350ee0
+ Call Trace:
+  <TASK>
+  dm_read_reg_func+0x37/0xc0 [amdgpu]
+  generic_reg_get2+0x22/0x60 [amdgpu]
+  optc1_get_crtc_scanoutpos+0x6a/0xc0 [amdgpu]
+  dc_stream_get_scanoutpos+0x74/0x90 [amdgpu]
+  dm_crtc_get_scanoutpos+0x82/0xf0 [amdgpu]
+  amdgpu_display_get_crtc_scanoutpos+0x91/0x190 [amdgpu]
+  ? dm_read_reg_func+0x37/0xc0 [amdgpu]
+  amdgpu_get_vblank_counter_kms+0xb4/0x1a0 [amdgpu]
+  dm_pflip_high_irq+0x213/0x2f0 [amdgpu]
+  amdgpu_dm_irq_handler+0x8a/0x200 [amdgpu]
+  amdgpu_irq_dispatch+0xd4/0x220 [amdgpu]
+  amdgpu_ih_process+0x7f/0x110 [amdgpu]
+  amdgpu_irq_handler+0x1f/0x70 [amdgpu]
+  __handle_irq_event_percpu+0x46/0x1b0
+  handle_irq_event+0x34/0x80
+  handle_edge_irq+0x9f/0x240
+  __common_interrupt+0x66/0x110
+  common_interrupt+0x5c/0xd0
+  asm_common_interrupt+0x22/0x40
+
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c |    6 ------
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    7 -------
+ 2 files changed, 13 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9395,7 +9395,7 @@ static struct trace_array *trace_array_c
- 	if (!alloc_cpumask_var(&tr->tracing_cpumask, GFP_KERNEL))
- 		goto out_free_tr;
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -2032,12 +2032,6 @@ void dcn20_optimize_bandwidth(
+ 	if (hubbub->funcs->program_compbuf_size)
+ 		hubbub->funcs->program_compbuf_size(hubbub, context->bw_ctx.bw.dcn.compbuf_size_kb, true);
  
--	if (!alloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&tr->pipe_cpumask, GFP_KERNEL))
- 		goto out_free_tr;
+-	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching) {
+-		dc_dmub_srv_p_state_delegate(dc,
+-			true, context);
+-		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
+-	}
+-
+ 	dc->clk_mgr->funcs->update_clocks(
+ 			dc->clk_mgr,
+ 			context,
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -987,18 +987,11 @@ void dcn30_set_disp_pattern_generator(co
+ void dcn30_prepare_bandwidth(struct dc *dc,
+  	struct dc_state *context)
+ {
+-	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching) {
+-		dc->optimized_required = true;
+-		context->bw_ctx.bw.dcn.clk.p_state_change_support = false;
+-	}
+-
+ 	if (dc->clk_mgr->dc_mode_softmax_enabled)
+ 		if (dc->clk_mgr->clks.dramclk_khz <= dc->clk_mgr->bw_params->dc_mode_softmax_memclk * 1000 &&
+ 				context->bw_ctx.bw.dcn.clk.dramclk_khz > dc->clk_mgr->bw_params->dc_mode_softmax_memclk * 1000)
+ 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
  
- 	tr->trace_flags = global_trace.trace_flags & ~ZEROED_TRACE_FLAGS;
-@@ -10267,7 +10267,7 @@ __init static int tracer_alloc_buffers(v
- 	if (trace_create_savedcmd() < 0)
- 		goto out_free_temp_buffer;
+ 	dcn20_prepare_bandwidth(dc, context);
+-
+-	dc_dmub_srv_p_state_delegate(dc, false, context);
+ }
  
--	if (!alloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&global_trace.pipe_cpumask, GFP_KERNEL))
- 		goto out_free_savedcmd;
- 
- 	/* TODO: make the number of buffers hot pluggable with CPUS */
 
 
