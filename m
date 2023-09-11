@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA691172A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BF2C433C7;
-	Mon, 11 Sep 2023 15:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E15C11715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F06AC433C8;
+	Mon, 11 Sep 2023 15:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444761;
-	bh=esm69iuRQACi1l3kV/rSJP+4DAXFLFoir62lsDfT7MI=;
+	s=korg; t=1694444764;
+	bh=00WMYsjHJlR7/wfEteVAa1A1AM8qQ5N66ZtObmArVkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTizd1eq6iffpoXJNzJkXKuUDwFqyhTlo2TKk0CuZUoS7OG3gMBlDRbVefEdSIJVZ
-	 kFZkyV7S8EnWX3FbzPPy25Wl8GMD+Qn5uiKyyDYEfR+Ji5bCGqx9ToRddu3z0+jvf4
-	 OcB4d9YmUVOEqFHSAwlJV490yVKxubAnu3qPLwl4=
+	b=NrnewcqF7gh+KGEd8lxeVV11KpoXLFAgqTAZpMrbHxNAjzQnIQukR5KnV1q779GRW
+	 mB7gc2k+nI8L2AEJgnVxMcx3yW2ushgK7M++fBbG7jnzcCJvaEFCAN/6eFw60L2wLM
+	 OWZ1o+EjrMA4gvZEHmm1xp+2bLyFLY3N7T7zJS5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <shuah@kernel.org>,
-	Andy Lutomirski <luto@amacapital.net>,
-	Will Drewry <wad@chromium.org>,
-	linux-kselftest@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	David Howells <dhowells@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/600] selftests/harness: Actually report SKIP for signal tests
-Date: Mon, 11 Sep 2023 15:42:19 +0200
-Message-ID: <20230911134636.727403296@linuxfoundation.org>
+Subject: [PATCH 6.1 107/600] vfs, security: Fix automount superblock LSM init problem, preventing NFS sb sharing
+Date: Mon, 11 Sep 2023 15:42:20 +0200
+Message-ID: <20230911134636.756204210@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,54 +43,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b3d46e11fec0c5a8972e5061bb1462119ae5736d ]
+[ Upstream commit d80a8f1b58c2bc8d7c6bfb65401ea4f7ec8cddc2 ]
 
-Tests that were expecting a signal were not correctly checking for a
-SKIP condition. Move the check before the signal checking when
-processing test result.
+When NFS superblocks are created by automounting, their LSM parameters
+aren't set in the fs_context struct prior to sget_fc() being called,
+leading to failure to match existing superblocks.
 
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Andy Lutomirski <luto@amacapital.net>
-Cc: Will Drewry <wad@chromium.org>
-Cc: linux-kselftest@vger.kernel.org
-Fixes: 9847d24af95c ("selftests/harness: Refactor XFAIL into SKIP")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+This bug leads to messages like the following appearing in dmesg when
+fscache is enabled:
+
+    NFS: Cache volume key already in use (nfs,4.2,2,108,106a8c0,1,,,,100000,100000,2ee,3a98,1d4c,3a98,1)
+
+Fix this by adding a new LSM hook to load fc->security for submount
+creation.
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/165962680944.3334508.6610023900349142034.stgit@warthog.procyon.org.uk/ # v1
+Link: https://lore.kernel.org/r/165962729225.3357250.14350728846471527137.stgit@warthog.procyon.org.uk/ # v2
+Link: https://lore.kernel.org/r/165970659095.2812394.6868894171102318796.stgit@warthog.procyon.org.uk/ # v3
+Link: https://lore.kernel.org/r/166133579016.3678898.6283195019480567275.stgit@warthog.procyon.org.uk/ # v4
+Link: https://lore.kernel.org/r/217595.1662033775@warthog.procyon.org.uk/ # v5
+Fixes: 9bc61ab18b1d ("vfs: Introduce fs_context, switch vfs_kern_mount() to it.")
+Fixes: 779df6a5480f ("NFS: Ensure security label is set for root inode")
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Casey Schaufler <casey@schaufler-ca.com>
+Acked-by: "Christian Brauner (Microsoft)" <brauner@kernel.org>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Message-Id: <20230808-master-v9-1-e0ecde888221@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_harness.h | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/fs_context.c               | 23 +++++++++++++++-
+ include/linux/lsm_hook_defs.h |  1 +
+ include/linux/security.h      |  6 +++++
+ security/security.c           | 14 ++++++++++
+ security/selinux/hooks.c      | 22 +++++++++++++++
+ security/smack/smack_lsm.c    | 51 +++++++++++++++++++++++++++++++++++
+ 6 files changed, 116 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
-index 25f4d54067c0e..584687c3286dd 100644
---- a/tools/testing/selftests/kselftest_harness.h
-+++ b/tools/testing/selftests/kselftest_harness.h
-@@ -937,7 +937,11 @@ void __wait_for_test(struct __test_metadata *t)
- 		fprintf(TH_LOG_STREAM,
- 			"# %s: Test terminated by timeout\n", t->name);
- 	} else if (WIFEXITED(status)) {
--		if (t->termsig != -1) {
-+		if (WEXITSTATUS(status) == 255) {
-+			/* SKIP */
-+			t->passed = 1;
-+			t->skip = 1;
-+		} else if (t->termsig != -1) {
- 			t->passed = 0;
- 			fprintf(TH_LOG_STREAM,
- 				"# %s: Test exited normally instead of by signal (code: %d)\n",
-@@ -949,11 +953,6 @@ void __wait_for_test(struct __test_metadata *t)
- 			case 0:
- 				t->passed = 1;
- 				break;
--			/* SKIP */
--			case 255:
--				t->passed = 1;
--				t->skip = 1;
--				break;
- 			/* Other failure, assume step report. */
- 			default:
- 				t->passed = 0;
+diff --git a/fs/fs_context.c b/fs/fs_context.c
+index 851214d1d013d..375023e40161d 100644
+--- a/fs/fs_context.c
++++ b/fs/fs_context.c
+@@ -315,10 +315,31 @@ struct fs_context *fs_context_for_reconfigure(struct dentry *dentry,
+ }
+ EXPORT_SYMBOL(fs_context_for_reconfigure);
+ 
++/**
++ * fs_context_for_submount: allocate a new fs_context for a submount
++ * @type: file_system_type of the new context
++ * @reference: reference dentry from which to copy relevant info
++ *
++ * Allocate a new fs_context suitable for a submount. This also ensures that
++ * the fc->security object is inherited from @reference (if needed).
++ */
+ struct fs_context *fs_context_for_submount(struct file_system_type *type,
+ 					   struct dentry *reference)
+ {
+-	return alloc_fs_context(type, reference, 0, 0, FS_CONTEXT_FOR_SUBMOUNT);
++	struct fs_context *fc;
++	int ret;
++
++	fc = alloc_fs_context(type, reference, 0, 0, FS_CONTEXT_FOR_SUBMOUNT);
++	if (IS_ERR(fc))
++		return fc;
++
++	ret = security_fs_context_submount(fc, reference->d_sb);
++	if (ret) {
++		put_fs_context(fc);
++		return ERR_PTR(ret);
++	}
++
++	return fc;
+ }
+ EXPORT_SYMBOL(fs_context_for_submount);
+ 
+diff --git a/include/linux/lsm_hook_defs.h b/include/linux/lsm_hook_defs.h
+index ec119da1d89b4..4a97a6db9bcec 100644
+--- a/include/linux/lsm_hook_defs.h
++++ b/include/linux/lsm_hook_defs.h
+@@ -54,6 +54,7 @@ LSM_HOOK(int, 0, bprm_creds_from_file, struct linux_binprm *bprm, struct file *f
+ LSM_HOOK(int, 0, bprm_check_security, struct linux_binprm *bprm)
+ LSM_HOOK(void, LSM_RET_VOID, bprm_committing_creds, struct linux_binprm *bprm)
+ LSM_HOOK(void, LSM_RET_VOID, bprm_committed_creds, struct linux_binprm *bprm)
++LSM_HOOK(int, 0, fs_context_submount, struct fs_context *fc, struct super_block *reference)
+ LSM_HOOK(int, 0, fs_context_dup, struct fs_context *fc,
+ 	 struct fs_context *src_sc)
+ LSM_HOOK(int, -ENOPARAM, fs_context_parse_param, struct fs_context *fc,
+diff --git a/include/linux/security.h b/include/linux/security.h
+index ca1b7109c0dbb..a6c97cc57caa0 100644
+--- a/include/linux/security.h
++++ b/include/linux/security.h
+@@ -293,6 +293,7 @@ int security_bprm_creds_from_file(struct linux_binprm *bprm, struct file *file);
+ int security_bprm_check(struct linux_binprm *bprm);
+ void security_bprm_committing_creds(struct linux_binprm *bprm);
+ void security_bprm_committed_creds(struct linux_binprm *bprm);
++int security_fs_context_submount(struct fs_context *fc, struct super_block *reference);
+ int security_fs_context_dup(struct fs_context *fc, struct fs_context *src_fc);
+ int security_fs_context_parse_param(struct fs_context *fc, struct fs_parameter *param);
+ int security_sb_alloc(struct super_block *sb);
+@@ -625,6 +626,11 @@ static inline void security_bprm_committed_creds(struct linux_binprm *bprm)
+ {
+ }
+ 
++static inline int security_fs_context_submount(struct fs_context *fc,
++					   struct super_block *reference)
++{
++	return 0;
++}
+ static inline int security_fs_context_dup(struct fs_context *fc,
+ 					  struct fs_context *src_fc)
+ {
+diff --git a/security/security.c b/security/security.c
+index 75dc0947ee0cf..5fa286ae9908d 100644
+--- a/security/security.c
++++ b/security/security.c
+@@ -882,6 +882,20 @@ void security_bprm_committed_creds(struct linux_binprm *bprm)
+ 	call_void_hook(bprm_committed_creds, bprm);
+ }
+ 
++/**
++ * security_fs_context_submount() - Initialise fc->security
++ * @fc: new filesystem context
++ * @reference: dentry reference for submount/remount
++ *
++ * Fill out the ->security field for a new fs_context.
++ *
++ * Return: Returns 0 on success or negative error code on failure.
++ */
++int security_fs_context_submount(struct fs_context *fc, struct super_block *reference)
++{
++	return call_int_hook(fs_context_submount, 0, fc, reference);
++}
++
+ int security_fs_context_dup(struct fs_context *fc, struct fs_context *src_fc)
+ {
+ 	return call_int_hook(fs_context_dup, 0, fc, src_fc);
+diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
+index f553c370397ee..26c9e4da4efcf 100644
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -2766,6 +2766,27 @@ static int selinux_umount(struct vfsmount *mnt, int flags)
+ 				   FILESYSTEM__UNMOUNT, NULL);
+ }
+ 
++static int selinux_fs_context_submount(struct fs_context *fc,
++				   struct super_block *reference)
++{
++	const struct superblock_security_struct *sbsec;
++	struct selinux_mnt_opts *opts;
++
++	opts = kzalloc(sizeof(*opts), GFP_KERNEL);
++	if (!opts)
++		return -ENOMEM;
++
++	sbsec = selinux_superblock(reference);
++	if (sbsec->flags & FSCONTEXT_MNT)
++		opts->fscontext_sid = sbsec->sid;
++	if (sbsec->flags & CONTEXT_MNT)
++		opts->context_sid = sbsec->mntpoint_sid;
++	if (sbsec->flags & DEFCONTEXT_MNT)
++		opts->defcontext_sid = sbsec->def_sid;
++	fc->security = opts;
++	return 0;
++}
++
+ static int selinux_fs_context_dup(struct fs_context *fc,
+ 				  struct fs_context *src_fc)
+ {
+@@ -7263,6 +7284,7 @@ static struct security_hook_list selinux_hooks[] __lsm_ro_after_init = {
+ 	/*
+ 	 * PUT "CLONING" (ACCESSING + ALLOCATING) HOOKS HERE
+ 	 */
++	LSM_HOOK_INIT(fs_context_submount, selinux_fs_context_submount),
+ 	LSM_HOOK_INIT(fs_context_dup, selinux_fs_context_dup),
+ 	LSM_HOOK_INIT(fs_context_parse_param, selinux_fs_context_parse_param),
+ 	LSM_HOOK_INIT(sb_eat_lsm_opts, selinux_sb_eat_lsm_opts),
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index b6306d71c9088..67dcd31cd3f3d 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -611,6 +611,56 @@ static int smack_add_opt(int token, const char *s, void **mnt_opts)
+ 	return -EINVAL;
+ }
+ 
++/**
++ * smack_fs_context_submount - Initialise security data for a filesystem context
++ * @fc: The filesystem context.
++ * @reference: reference superblock
++ *
++ * Returns 0 on success or -ENOMEM on error.
++ */
++static int smack_fs_context_submount(struct fs_context *fc,
++				 struct super_block *reference)
++{
++	struct superblock_smack *sbsp;
++	struct smack_mnt_opts *ctx;
++	struct inode_smack *isp;
++
++	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
++	if (!ctx)
++		return -ENOMEM;
++	fc->security = ctx;
++
++	sbsp = smack_superblock(reference);
++	isp = smack_inode(reference->s_root->d_inode);
++
++	if (sbsp->smk_default) {
++		ctx->fsdefault = kstrdup(sbsp->smk_default->smk_known, GFP_KERNEL);
++		if (!ctx->fsdefault)
++			return -ENOMEM;
++	}
++
++	if (sbsp->smk_floor) {
++		ctx->fsfloor = kstrdup(sbsp->smk_floor->smk_known, GFP_KERNEL);
++		if (!ctx->fsfloor)
++			return -ENOMEM;
++	}
++
++	if (sbsp->smk_hat) {
++		ctx->fshat = kstrdup(sbsp->smk_hat->smk_known, GFP_KERNEL);
++		if (!ctx->fshat)
++			return -ENOMEM;
++	}
++
++	if (isp->smk_flags & SMK_INODE_TRANSMUTE) {
++		if (sbsp->smk_root) {
++			ctx->fstransmute = kstrdup(sbsp->smk_root->smk_known, GFP_KERNEL);
++			if (!ctx->fstransmute)
++				return -ENOMEM;
++		}
++	}
++	return 0;
++}
++
+ /**
+  * smack_fs_context_dup - Duplicate the security data on fs_context duplication
+  * @fc: The new filesystem context.
+@@ -4792,6 +4842,7 @@ static struct security_hook_list smack_hooks[] __lsm_ro_after_init = {
+ 	LSM_HOOK_INIT(ptrace_traceme, smack_ptrace_traceme),
+ 	LSM_HOOK_INIT(syslog, smack_syslog),
+ 
++	LSM_HOOK_INIT(fs_context_submount, smack_fs_context_submount),
+ 	LSM_HOOK_INIT(fs_context_dup, smack_fs_context_dup),
+ 	LSM_HOOK_INIT(fs_context_parse_param, smack_fs_context_parse_param),
+ 
 -- 
 2.40.1
 
