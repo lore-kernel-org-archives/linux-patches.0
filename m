@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EF11706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A53C433C8;
-	Mon, 11 Sep 2023 15:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FE311706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:03:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D7C433C8;
+	Mon, 11 Sep 2023 15:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444594;
-	bh=XcNJ1AjaLVccpHTVNTIL1c/wz719v0WGrsWqEEKVoa0=;
+	s=korg; t=1694444597;
+	bh=BefLa8fgleMB0/aUIB7Pm3kl1kHxI8ieG7oxkhIojZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPFF4xw0u69A8kVefBhfzY/ca692W8O9bzljgwL9k+p34VT1RHGPxd5KwZovaeTxn
-	 PzuzgAU6kaHFI+mn4gRjYYUco0T+IQl6I7mN2xnIg8/3KLbXhW0QnLLgyhzkfdUkC2
-	 goiDhFjXZv0R0VBSPCW/GPLoY2CvzNhfhnF5NWFI=
+	b=QwxwUvdi/EtJpUNs7rELcX/oNUU1weeBc4iIE4d2YLy5FSvRpjr5bHH8tyrqz94a7
+	 FzAQm4O/WTrumu3BzASI9LXcsgSY8JQAfcfhHSeOLiGtZorDrjTCm2F8m7vqbEOBjn
+	 GVHVjY9FQ+w2HtO3WDI54t0EP7g/DDi9Zvu9m6u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Maluka <dmy@semihalf.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/600] ASoC: da7219: Flush pending AAD IRQ when suspending
-Date: Mon, 11 Sep 2023 15:40:53 +0200
-Message-ID: <20230911134634.211050892@linuxfoundation.org>
+Subject: [PATCH 6.1 047/600] kprobes: Prohibit probing on CFI preamble symbol
+Date: Mon, 11 Sep 2023 15:41:20 +0200
+Message-ID: <20230911134634.985642721@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,75 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmytro Maluka <dmy@semihalf.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 91e292917dad64ab8d1d5ca2ab3069ad9dac6f72 ]
+[ Upstream commit de02f2ac5d8cfb311f44f2bf144cc20002f1fbbd ]
 
-da7219_aad_suspend() disables jack detection, which should prevent
-generating new interrupts by DA7219 while suspended. However, there is a
-theoretical possibility that there is a pending interrupt generated just
-before suspending DA7219 and not handled yet, so the IRQ handler may
-still run after DA7219 is suspended. To prevent that, wait until the
-pending IRQ handling is done.
+Do not allow to probe on "__cfi_" or "__pfx_" started symbol, because those
+are used for CFI and not executed. Probing it will break the CFI.
 
-This patch arose as an attempt to fix the following I2C failure
-occurring sometimes during system suspend or resume:
+Link: https://lore.kernel.org/all/168904024679.116016.18089228029322008512.stgit@devnote2/
 
-[  355.876211] i2c_designware i2c_designware.3: Transfer while suspended
-[  355.876245] WARNING: CPU: 2 PID: 3576 at drivers/i2c/busses/i2c-designware-master.c:570 i2c_dw_xfer+0x411/0x440
-...
-[  355.876462] Call Trace:
-[  355.876468]  <TASK>
-[  355.876475]  ? update_load_avg+0x1b3/0x615
-[  355.876484]  __i2c_transfer+0x101/0x1d8
-[  355.876494]  i2c_transfer+0x74/0x10d
-[  355.876504]  regmap_i2c_read+0x6a/0x9c
-[  355.876513]  _regmap_raw_read+0x179/0x223
-[  355.876521]  regmap_raw_read+0x1e1/0x28e
-[  355.876527]  regmap_bulk_read+0x17d/0x1ba
-[  355.876532]  ? __wake_up+0xed/0x1bb
-[  355.876542]  da7219_aad_irq_thread+0x54/0x2c9 [snd_soc_da7219 5fb8ebb2179cf2fea29af090f3145d68ed8e2184]
-[  355.876556]  irq_thread+0x13c/0x231
-[  355.876563]  ? irq_forced_thread_fn+0x5f/0x5f
-[  355.876570]  ? irq_thread_fn+0x4d/0x4d
-[  355.876576]  kthread+0x13a/0x152
-[  355.876581]  ? synchronize_irq+0xc3/0xc3
-[  355.876587]  ? kthread_blkcg+0x31/0x31
-[  355.876592]  ret_from_fork+0x1f/0x30
-[  355.876601]  </TASK>
-
-which indicates that the AAD IRQ handler is unexpectedly running when
-DA7219 is suspended, and as a result, is trying to read data from DA7219
-over I2C and is hitting the I2C driver "Transfer while suspended"
-failure.
-
-However, with this patch the above failure is still reproducible. So
-this patch does not fix any real observed issue so far, but at least is
-useful for confirming that the above issue is not caused by a pending
-IRQ but rather looks like a DA7219 hardware issue with an IRQ
-unexpectedly generated after jack detection is already disabled.
-
-Signed-off-by: Dmytro Maluka <dmy@semihalf.com>
-Link: https://lore.kernel.org/r/20230717193737.161784-2-dmy@semihalf.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da7219-aad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/kprobes.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
-index bba73c44c219f..49b1622e7bada 100644
---- a/sound/soc/codecs/da7219-aad.c
-+++ b/sound/soc/codecs/da7219-aad.c
-@@ -863,6 +863,8 @@ void da7219_aad_suspend(struct snd_soc_component *component)
- 			}
- 		}
- 	}
-+
-+	synchronize_irq(da7219_aad->irq);
+diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+index 00e177de91ccd..3da9726232ff9 100644
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1545,6 +1545,17 @@ static int check_ftrace_location(struct kprobe *p)
+ 	return 0;
  }
  
- void da7219_aad_resume(struct snd_soc_component *component)
++static bool is_cfi_preamble_symbol(unsigned long addr)
++{
++	char symbuf[KSYM_NAME_LEN];
++
++	if (lookup_symbol_name(addr, symbuf))
++		return false;
++
++	return str_has_prefix("__cfi_", symbuf) ||
++		str_has_prefix("__pfx_", symbuf);
++}
++
+ static int check_kprobe_address_safe(struct kprobe *p,
+ 				     struct module **probed_mod)
+ {
+@@ -1563,7 +1574,8 @@ static int check_kprobe_address_safe(struct kprobe *p,
+ 	    within_kprobe_blacklist((unsigned long) p->addr) ||
+ 	    jump_label_text_reserved(p->addr, p->addr) ||
+ 	    static_call_text_reserved(p->addr, p->addr) ||
+-	    find_bug((unsigned long)p->addr)) {
++	    find_bug((unsigned long)p->addr) ||
++	    is_cfi_preamble_symbol((unsigned long)p->addr)) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
 -- 
 2.40.1
 
