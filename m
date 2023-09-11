@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF091170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4F6C433C7;
-	Mon, 11 Sep 2023 14:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D461170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:42:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6891FC433C8;
+	Mon, 11 Sep 2023 14:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443353;
-	bh=TujxWuDmrdhWmE0Vxh7oXifrPCMUV9L9ROip0f/IgH0=;
+	s=korg; t=1694443355;
+	bh=wvZT/8yGBABBRySrzf95aou3nQ5JIscheGcgc1jCWpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfd9zuCU9sQc3GhYXvBkL3gH+b7E8O8q/DSVRAT2KsU8F44DvHFE4qzIppfvqlnLl
-	 XTyHFt5YVbbwCeco+8P8B0P4weE54HPYZ8HeMbNU6eRzmRzpyVpOOZH2cqD/FIjgPZ
-	 2L8J89AvuAFu6/twiuOAmMy3auFZGQqEn3qji/Uk=
+	b=dKa8rIaLbvtxdT8x80KlorpQ/5+dmG0cxmUcEd3f6QaU4lw3EPnjQtsi6RqJy8fny
+	 tGQevrIO8ArsBnkA4kH4F9C3Qu3+Jnk+A5Muhud5FwLdJwNT9UX3LAe8QjFfmkBgkI
+	 +TG2wgmCyY9Bsewu9+pfIOzzZ85m5japz0Gi4u9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 330/737] ARM: dts: BCM53573: Fix Ethernet info for Luxul devices
-Date: Mon, 11 Sep 2023 15:43:09 +0200
-Message-ID: <20230911134659.762287288@linuxfoundation.org>
+Subject: [PATCH 6.4 348/737] ARM: dts: BCM53573: Fix Tenda AC9 switch CPU port
+Date: Mon, 11 Sep 2023 15:43:27 +0200
+Message-ID: <20230911134700.245078828@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -43,80 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 44ad8207806973f4e4f7d870fff36cc01f494250 ]
+[ Upstream commit 7141209db9c335ab261a17933809a3e660ebdc12 ]
 
-Both Luxul's XAP devices (XAP-810 and XAP-1440) are access points that
-use a non-default design. They don't include switch but have a single
-Ethernet port and BCM54210E PHY connected to the Ethernet controller's
-MDIO bus.
+Primary Ethernet interface is connected to the port 8 (not 5).
 
-Support for those devices regressed due to two changes:
-
-1. Describing MDIO bus with switch
-After commit 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125
-rev 4 switch") Linux stopped probing for MDIO devices.
-
-2. Dropping hardcoded BCM54210E delays
-In commit fea7fda7f50a ("net: phy: broadcom: Fix RGMII delays
-configuration for BCM54210E") support for other PHY modes was added but
-that requires a proper "phy-mode" value in DT.
-
-Both above changes are correct (they don't need to be reverted or
-anything) but they need this fix for DT data to be correct and for Linux
-to work properly.
-
-Fixes: 9fb90ae6cae7 ("ARM: dts: BCM53573: Describe on-SoC BCM53125 rev 4 switch")
+Fixes: 64612828628c ("ARM: dts: BCM53573: Add Tenda AC9 switch ports")
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230713111145.14864-1-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20230723195416.7831-1-zajec5@gmail.com
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 13 +++++++++++++
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 13 +++++++++++++
- 2 files changed, 26 insertions(+)
+ arch/arm/boot/dts/bcm47189-tenda-ac9.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index b9dd508444198..0f6d7fe30068f 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -45,3 +45,16 @@ button-restart {
+diff --git a/arch/arm/boot/dts/bcm47189-tenda-ac9.dts b/arch/arm/boot/dts/bcm47189-tenda-ac9.dts
+index dab2e5f63a727..06b1a582809ca 100644
+--- a/arch/arm/boot/dts/bcm47189-tenda-ac9.dts
++++ b/arch/arm/boot/dts/bcm47189-tenda-ac9.dts
+@@ -135,8 +135,8 @@ port@4 {
+ 			label = "lan4";
  		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index cb22ae2a02e54..4e0ef0af726f5 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -81,3 +81,16 @@ pcie0_chipcommon: chipcommon@0 {
+ 
+-		port@5 {
+-			reg = <5>;
++		port@8 {
++			reg = <8>;
+ 			label = "cpu";
+ 			ethernet = <&gmac0>;
  		};
- 	};
- };
-+
-+&gmac0 {
-+	phy-mode = "rgmii";
-+	phy-handle = <&bcm54210e>;
-+
-+	mdio {
-+		/delete-node/ switch@1e;
-+
-+		bcm54210e: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
 -- 
 2.40.1
 
