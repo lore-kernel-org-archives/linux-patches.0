@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455351170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7254BC433C7;
-	Mon, 11 Sep 2023 14:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C485A1170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:05:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42239C433C8;
+	Mon, 11 Sep 2023 14:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441100;
-	bh=c+ia0f29xaVBqIQs6WPcLGFR++ExWXBCjTCS2m+g9hs=;
+	s=korg; t=1694441103;
+	bh=yB2kiHdc0SYAkpN8vYLLR1ZLLbOk3s3vCLD3ZkBPsy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6ad39692JqPy+GC6dADKClPy9vy4OwXfkMtIkO00LbIliBmi965MxgiOpB5YTG+r
-	 nlwUKd9MYcX3pXwBgPAl3/0nA9mxHozTrpbRB8l7cRrTGO20ItqAyYKhdSa5+34KGF
-	 KyDmHmNVMP1OHH728olPPL84dsUSdxheEFIVrhoI=
+	b=lLXs94JsNkFh+axNRVgVHxhNwk8YeFKzxSZVhqJNum+TeHjSon3IpwhwqsYL0H+wT
+	 CTWl8ld5O8An4EN/jv50VHrGtwKR0BoVauXrqBFUNR4tS5meO6pYysSFuDJXY0BEG0
+	 oThuvVV6fwEXUOHLpNNP2NDn+KzW3flTqbCSBHJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 296/739] drm/armada: Fix off-by-one error in armada_overlay_get_property()
-Date: Mon, 11 Sep 2023 15:41:35 +0200
-Message-ID: <20230911134659.398702787@linuxfoundation.org>
+Subject: [PATCH 6.5 297/739] drm/repaper: Reduce temporary buffer size in repaper_fb_dirty()
+Date: Mon, 11 Sep 2023 15:41:36 +0200
+Message-ID: <20230911134659.426026692@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,50 +40,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 5f0d984053f74983a287100a9519b2fabb785fb5 ]
+[ Upstream commit fedf429e071f6dbbe7a69dfc342492e037692018 ]
 
-As ffs() returns one more than the index of the first bit set (zero
-means no bits set), the color key mode value is shifted one position too
-much.
+As the temporary buffer is no longer used to store 8-bit grayscale data,
+its size can be reduced to the size needed to store the monochrome
+bitmap data.
 
-Fix this by using FIELD_GET() instead.
-
-Fixes: c96103b6c49ff9a8 ("drm/armada: move colorkey properties into overlay plane state")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 24c6bedefbe71de9 ("drm/repaper: Use format helper for xrgb8888 to monochrome conversion")
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/a4d779d954a7515ddbbf31cb0f0d8184c0e7c879.1689600265.git.geert+renesas@glider.be
+Link: https://patchwork.freedesktop.org/patch/msgid/20220317081830.1211400-6-geert@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/armada/armada_overlay.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/tiny/repaper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/armada/armada_overlay.c b/drivers/gpu/drm/armada/armada_overlay.c
-index f21eb8fb76d87..3b9bd8ecda137 100644
---- a/drivers/gpu/drm/armada/armada_overlay.c
-+++ b/drivers/gpu/drm/armada/armada_overlay.c
-@@ -4,6 +4,8 @@
-  *  Rewritten from the dovefb driver, and Armada510 manuals.
-  */
+diff --git a/drivers/gpu/drm/tiny/repaper.c b/drivers/gpu/drm/tiny/repaper.c
+index c2677d081a7b6..13ae148f59b9b 100644
+--- a/drivers/gpu/drm/tiny/repaper.c
++++ b/drivers/gpu/drm/tiny/repaper.c
+@@ -533,7 +533,7 @@ static int repaper_fb_dirty(struct drm_framebuffer *fb)
+ 	DRM_DEBUG("Flushing [FB:%d] st=%ums\n", fb->base.id,
+ 		  epd->factored_stage_time);
  
-+#include <linux/bitfield.h>
-+
- #include <drm/armada_drm.h>
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
-@@ -445,8 +447,8 @@ static int armada_overlay_get_property(struct drm_plane *plane,
- 			     drm_to_overlay_state(state)->colorkey_ug,
- 			     drm_to_overlay_state(state)->colorkey_vb, 0);
- 	} else if (property == priv->colorkey_mode_prop) {
--		*val = (drm_to_overlay_state(state)->colorkey_mode &
--			CFG_CKMODE_MASK) >> ffs(CFG_CKMODE_MASK);
-+		*val = FIELD_GET(CFG_CKMODE_MASK,
-+				 drm_to_overlay_state(state)->colorkey_mode);
- 	} else if (property == priv->brightness_prop) {
- 		*val = drm_to_overlay_state(state)->brightness + 256;
- 	} else if (property == priv->contrast_prop) {
+-	buf = kmalloc_array(fb->width, fb->height, GFP_KERNEL);
++	buf = kmalloc(fb->width * fb->height / 8, GFP_KERNEL);
+ 	if (!buf) {
+ 		ret = -ENOMEM;
+ 		goto out_exit;
 -- 
 2.40.1
 
