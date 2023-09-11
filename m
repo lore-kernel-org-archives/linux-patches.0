@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86B211710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1CBC433C7;
-	Mon, 11 Sep 2023 15:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180D211710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:22:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40044C433C8;
+	Mon, 11 Sep 2023 15:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445752;
-	bh=/7o+vlA40CKDONAJ+uYfmMmBfcqqaRxxE7KslqHa5XQ=;
+	s=korg; t=1694445755;
+	bh=E1Z/qByRkVvZmYRNE8vw7mlZir2og/booa5Ao3LaBR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJgPJHnDxmGRF3ceedYEKfN3vP42B45tiVV+wicNZPmJxfcb3LTe2fajepNOXNQ1F
-	 eR48SwnUBo7oW+77n6Nc2BYfLe9EGxoYzY4PqBrcp+dcg9FdWksW0nnGVZFsBc0s8p
-	 kx5bvAigky1omwKh2JfQZFi/JiHbQKFXiwDG0HK4=
+	b=GamSf7ASmio6f+FXwjIbGC+ZxW/GI1OZBovud1URVsQPV/CtNe12a1DIFg4nZ91/T
+	 VqO3x/p7zCMF94wWloOfV+znPDDjiqUmM20yhTEspNTRiHMsuF6TUmDeDdiPqxdeuD
+	 kiIJVxgjCw+3RYwVCqO4ah4oqakN0iILPEkzxDnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zheng Zhang <zheng.zhang@email.ucr.edu>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 423/600] scsi: qla4xxx: Add length check when parsing nlattrs
-Date: Mon, 11 Sep 2023 15:47:36 +0200
-Message-ID: <20230911134646.150655166@linuxfoundation.org>
+Subject: [PATCH 6.1 453/600] media: cec: core: add adap_nb_transmit_canceled() callback
+Date: Mon, 11 Sep 2023 15:48:06 +0200
+Message-ID: <20230911134647.021554396@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,78 +41,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 47cd3770e31df942e2bb925a9a855c79ed0662eb ]
+[ Upstream commit da53c36ddd3f118a525a04faa8c47ca471e6c467 ]
 
-There are three places that qla4xxx parses nlattrs:
+A potential deadlock was found by Zheng Zhang with a local syzkaller
+instance.
 
- - qla4xxx_set_chap_entry()
+The problem is that when a non-blocking CEC transmit is canceled by calling
+cec_data_cancel, that in turn can call the high-level received() driver
+callback, which can call cec_transmit_msg() to transmit a new message.
 
- - qla4xxx_iface_set_param()
+The cec_data_cancel() function is called with the adap->lock mutex held,
+and cec_transmit_msg() tries to take that same lock.
 
- - qla4xxx_sysfs_ddb_set_param()
+The root cause is that the received() callback can either be used to pass
+on a received message (and then adap->lock is not held), or to report a
+canceled transmit (and then adap->lock is held).
 
-and each of them directly converts the nlattr to specific pointer of
-structure without length checking. This could be dangerous as those
-attributes are not validated and a malformed nlattr (e.g., length 0) could
-result in an OOB read that leaks heap dirty data.
+This is confusing, so create a new low-level adap_nb_transmit_canceled
+callback that reports back that a non-blocking transmit was canceled.
 
-Add the nla_len check before accessing the nlattr data and return EINVAL if
-the length check fails.
+And the received() callback is only called when a message is received,
+as was the case before commit f9d0ecbf56f4 ("media: cec: correctly pass
+on reply results") complicated matters.
 
-Fixes: 26ffd7b45fe9 ("[SCSI] qla4xxx: Add support to set CHAP entries")
-Fixes: 1e9e2be3ee03 ("[SCSI] qla4xxx: Add flash node mgmt support")
-Fixes: 00c31889f751 ("[SCSI] qla4xxx: fix data alignment and use nl helpers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230723080053.3714534-1-linma@zju.edu.cn
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: f9d0ecbf56f4 ("media: cec: correctly pass on reply results")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/media/cec/core/cec-adap.c | 4 ++--
+ include/media/cec.h               | 6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index 9e849f6b0d0f7..3f2f9734ee42e 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -968,6 +968,11 @@ static int qla4xxx_set_chap_entry(struct Scsi_Host *shost, void *data, int len)
- 	memset(&chap_rec, 0, sizeof(chap_rec));
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index b1512f9c5895c..aed3e51d6d354 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -385,8 +385,8 @@ static void cec_data_cancel(struct cec_data *data, u8 tx_status, u8 rx_status)
+ 	cec_queue_msg_monitor(adap, &data->msg, 1);
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*param_info)) {
-+			rc = -EINVAL;
-+			goto exit_set_chap;
-+		}
-+
- 		param_info = nla_data(attr);
+ 	if (!data->blocking && data->msg.sequence)
+-		/* Allow drivers to process the message first */
+-		call_op(adap, received, &data->msg);
++		/* Allow drivers to react to a canceled transmit */
++		call_void_op(adap, adap_nb_transmit_canceled, &data->msg);
  
- 		switch (param_info->param) {
-@@ -2750,6 +2755,11 @@ qla4xxx_iface_set_param(struct Scsi_Host *shost, void *data, uint32_t len)
- 	}
+ 	cec_data_completed(data);
+ }
+diff --git a/include/media/cec.h b/include/media/cec.h
+index abee41ae02d0e..6556cc161dc0a 100644
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -121,14 +121,16 @@ struct cec_adap_ops {
+ 	void (*adap_configured)(struct cec_adapter *adap, bool configured);
+ 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
+ 			     u32 signal_free_time, struct cec_msg *msg);
++	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
++					  const struct cec_msg *msg);
+ 	void (*adap_status)(struct cec_adapter *adap, struct seq_file *file);
+ 	void (*adap_free)(struct cec_adapter *adap);
  
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*iface_param)) {
-+			rval = -EINVAL;
-+			goto exit_init_fw_cb;
-+		}
-+
- 		iface_param = nla_data(attr);
+-	/* Error injection callbacks */
++	/* Error injection callbacks, called without adap->lock held */
+ 	int (*error_inj_show)(struct cec_adapter *adap, struct seq_file *sf);
+ 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
  
- 		if (iface_param->param_type == ISCSI_NET_PARAM) {
-@@ -8104,6 +8114,11 @@ qla4xxx_sysfs_ddb_set_param(struct iscsi_bus_flash_session *fnode_sess,
+-	/* High-level CEC message callback */
++	/* High-level CEC message callback, called without adap->lock held */
+ 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
+ };
  
- 	memset((void *)&chap_tbl, 0, sizeof(chap_tbl));
- 	nla_for_each_attr(attr, data, len, rem) {
-+		if (nla_len(attr) < sizeof(*fnode_param)) {
-+			rc = -EINVAL;
-+			goto exit_set_param;
-+		}
-+
- 		fnode_param = nla_data(attr);
- 
- 		switch (fnode_param->param) {
 -- 
 2.40.1
 
