@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF92F11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6396EC433C7;
-	Mon, 11 Sep 2023 15:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB1CF9E1
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC8BC433C8;
+	Mon, 11 Sep 2023 15:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445583;
-	bh=R7mbLCGFlvXE6H0CeUqUO1zf1KVufFLigbJS6tMuBGI=;
+	s=korg; t=1694445586;
+	bh=UerXFj3+NfTYICh8/OJD6GXMOfVp6E4hmBKz3bVhmVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLPYKSGhcMZU+zaskQ02nEiVOgScUo+ElXPJhLFtFdhnN176fK3i7XIVcZv1EZfwW
-	 lxmHL3XpdrVSsocrlynCGio3WQ72dwiDrg4bQVaggHVS/HO/rrSac6/xeYdTJJca7c
-	 HYvOpwRryRHqFN6J+UuXG9wEIxih7JmqbHlMMNGI=
+	b=f3b7aymVFu6coBvhfJqP7RcKm9wQ91J2CsOCGRNk/HEILCIyffzjxCRBKe8/6cKZZ
+	 SGoQYZj6OKDHcrzG3x7e7t2YKEmKc/KbS2SryCaVvCoYw2VKvv+WeASft/A/c9wydI
+	 pSE6OPx63UJ0g7/t4Q51JX2mPWjfyYB5R6tJw7Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 358/600] clk: imx: imx8ulp: update SPLL2 type
-Date: Mon, 11 Sep 2023 15:46:31 +0200
-Message-ID: <20230911134644.247112017@linuxfoundation.org>
+Subject: [PATCH 6.1 393/600] media: i2c: tvp5150: check return value of devm_kasprintf()
+Date: Mon, 11 Sep 2023 15:47:06 +0200
+Message-ID: <20230911134645.276946476@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,37 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 7653a59be8af043adc4c09473975a860e6055ff9 ]
+[ Upstream commit 26ce7054d804be73935b9268d6e0ecf2fbbc8aef ]
 
-The SPLL2 on iMX8ULP is different with other frac PLLs, it can
-support VCO from 650Mhz to 1Ghz. Following the changes to pllv4,
-use the new type IMX_PLLV4_IMX8ULP_1GHZ.
+devm_kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: c43a801a5789 ("clk: imx: Add clock driver for imx8ulp")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230625123340.4067536-2-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 0556f1d580d4 ("media: tvp5150: add input source selection of_graph support")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8ulp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/tvp5150.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8ulp.c b/drivers/clk/imx/clk-imx8ulp.c
-index ca0e4a3aa454e..fa9121b3cf36a 100644
---- a/drivers/clk/imx/clk-imx8ulp.c
-+++ b/drivers/clk/imx/clk-imx8ulp.c
-@@ -167,7 +167,7 @@ static int imx8ulp_clk_cgc1_init(struct platform_device *pdev)
- 	clks[IMX8ULP_CLK_SPLL2_PRE_SEL]	= imx_clk_hw_mux_flags("spll2_pre_sel", base + 0x510, 0, 1, pll_pre_sels, ARRAY_SIZE(pll_pre_sels), CLK_SET_PARENT_GATE);
- 	clks[IMX8ULP_CLK_SPLL3_PRE_SEL]	= imx_clk_hw_mux_flags("spll3_pre_sel", base + 0x610, 0, 1, pll_pre_sels, ARRAY_SIZE(pll_pre_sels), CLK_SET_PARENT_GATE);
+diff --git a/drivers/media/i2c/tvp5150.c b/drivers/media/i2c/tvp5150.c
+index 859f1cb2fa744..84f87c016f9b5 100644
+--- a/drivers/media/i2c/tvp5150.c
++++ b/drivers/media/i2c/tvp5150.c
+@@ -2068,6 +2068,10 @@ static int tvp5150_parse_dt(struct tvp5150 *decoder, struct device_node *np)
+ 		tvpc->ent.name = devm_kasprintf(dev, GFP_KERNEL, "%s %s",
+ 						v4l2c->name, v4l2c->label ?
+ 						v4l2c->label : "");
++		if (!tvpc->ent.name) {
++			ret = -ENOMEM;
++			goto err_free;
++		}
+ 	}
  
--	clks[IMX8ULP_CLK_SPLL2] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP, "spll2", "spll2_pre_sel", base + 0x500);
-+	clks[IMX8ULP_CLK_SPLL2] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP_1GHZ, "spll2", "spll2_pre_sel", base + 0x500);
- 	clks[IMX8ULP_CLK_SPLL3] = imx_clk_hw_pllv4(IMX_PLLV4_IMX8ULP, "spll3", "spll3_pre_sel", base + 0x600);
- 	clks[IMX8ULP_CLK_SPLL3_VCODIV] = imx_clk_hw_divider("spll3_vcodiv", "spll3", base + 0x604, 0, 6);
- 
+ 	ep_np = of_graph_get_endpoint_by_regs(np, TVP5150_PAD_VID_OUT, 0);
 -- 
 2.40.1
 
