@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0BEF9F3
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39812C433C9;
-	Mon, 11 Sep 2023 13:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D821170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F56C433C8;
+	Mon, 11 Sep 2023 13:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440458;
-	bh=xDNl72eyRMY7FunEv5tvNOCajkThdn9sL6uX164hbZs=;
+	s=korg; t=1694440461;
+	bh=Ym+rbpL4k/6qXBv22+qjqcig/omEmm+qg9RXzKQgL24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xASjlNMd4rOAYihd7hjvG/yFuqSkRk8msUwb25e3dC4yaiGXeKm84PYqNLt8O+d39
-	 c0oy6dckX63VdZFdYk2+QzC4+xPpXeYgsy0RYOiCUZOSHFUJwqaUkqWKNiNOoq6Li/
-	 RXRU/9+uG6MHuMrPYvtiV1Ng2J6Qn4UJwQAI+++E=
+	b=AIUwRfVUQoCOwA6k2l2MiN1OSNosSq0cyWhFl8xi1uEcJw7sO13tXG1lkDOZhb9tv
+	 3aveqMau6Jc7xIihMjD03R52qCIeZY+3k6dLc5+JB9B0udL3eQ6UbpYJxs1Jj2f2pC
+	 vsSaHK3CieufW+KIQXZ6C04licTdOKHwgN5sG7Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Alexander Lobakin <alobakin@pm.me>,
-	Quentin Monnet <quentin@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 068/739] bpftool: Use a local bpf_perf_event_value to fix accessing its fields
-Date: Mon, 11 Sep 2023 15:37:47 +0200
-Message-ID: <20230911134653.003969946@linuxfoundation.org>
+Subject: [PATCH 6.5 069/739] libbpf: Fix realloc API handling in zero-sized edge cases
+Date: Mon, 11 Sep 2023 15:37:48 +0200
+Message-ID: <20230911134653.039547520@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,135 +40,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <alobakin@pm.me>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 658ac06801315b739774a15796ff06913ef5cad5 ]
+[ Upstream commit 8a0260dbf6553c969248b6530cafadac46562f47 ]
 
-Fix the following error when building bpftool:
+realloc() and reallocarray() can either return NULL or a special
+non-NULL pointer, if their size argument is zero. This requires a bit
+more care to handle NULL-as-valid-result situation differently from
+NULL-as-error case. This has caused real issues before ([0]), and just
+recently bit again in production when performing bpf_program__attach_usdt().
 
-  CLANG   profiler.bpf.o
-  CLANG   pid_iter.bpf.o
-skeleton/profiler.bpf.c:18:21: error: invalid application of 'sizeof' to an incomplete type 'struct bpf_perf_event_value'
-        __uint(value_size, sizeof(struct bpf_perf_event_value));
-                           ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:13:39: note: expanded from macro '__uint'
-tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helper_defs.h:7:8: note: forward declaration of 'struct bpf_perf_event_value'
-struct bpf_perf_event_value;
-       ^
+This patch fixes 4 places that do or potentially could suffer from this
+mishandling of NULL, including the reported USDT-related one.
 
-struct bpf_perf_event_value is being used in the kernel only when
-CONFIG_BPF_EVENTS is enabled, so it misses a BTF entry then.
-Define struct bpf_perf_event_value___local with the
-`preserve_access_index` attribute inside the pid_iter BPF prog to
-allow compiling on any configs. It is a full mirror of a UAPI
-structure, so is compatible both with and w/o CO-RE.
-bpf_perf_event_read_value() requires a pointer of the original type,
-so a cast is needed.
+There are many other places where realloc()/reallocarray() is used and
+NULL is always treated as an error value, but all those have guarantees
+that their size is always non-zero, so those spot don't need any extra
+handling.
 
-Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Alexander Lobakin <alobakin@pm.me>
-Signed-off-by: Quentin Monnet <quentin@isovalent.com>
+  [0] d08ab82f59d5 ("libbpf: Fix double-free when linker processes empty sections")
+
+Fixes: 999783c8bbda ("libbpf: Wire up spec management and other arch-independent USDT logic")
+Fixes: b63b3c490eee ("libbpf: Add bpf_program__set_insns function")
+Fixes: 697f104db8a6 ("libbpf: Support custom SEC() handlers")
+Fixes: b12688267280 ("libbpf: Change the order of data and text relocations.")
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230707095425.168126-5-quentin@isovalent.com
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230711024150.1566433-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/profiler.bpf.c | 27 ++++++++++++++---------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ tools/lib/bpf/libbpf.c | 15 ++++++++++++---
+ tools/lib/bpf/usdt.c   |  5 ++++-
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-index ce5b65e07ab10..2f80edc682f11 100644
---- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
-+++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
-@@ -4,6 +4,12 @@
- #include <bpf/bpf_helpers.h>
- #include <bpf/bpf_tracing.h>
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index bc48ab1695719..7cc79bf764550 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -6157,7 +6157,11 @@ static int append_subprog_relos(struct bpf_program *main_prog, struct bpf_progra
+ 	if (main_prog == subprog)
+ 		return 0;
+ 	relos = libbpf_reallocarray(main_prog->reloc_desc, new_cnt, sizeof(*relos));
+-	if (!relos)
++	/* if new count is zero, reallocarray can return a valid NULL result;
++	 * in this case the previous pointer will be freed, so we *have to*
++	 * reassign old pointer to the new value (even if it's NULL)
++	 */
++	if (!relos && new_cnt)
+ 		return -ENOMEM;
+ 	if (subprog->nr_reloc)
+ 		memcpy(relos + main_prog->nr_reloc, subprog->reloc_desc,
+@@ -8528,7 +8532,8 @@ int bpf_program__set_insns(struct bpf_program *prog,
+ 		return -EBUSY;
  
-+struct bpf_perf_event_value___local {
-+	__u64 counter;
-+	__u64 enabled;
-+	__u64 running;
-+} __attribute__((preserve_access_index));
-+
- /* map of perf event fds, num_cpu * num_metric entries */
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
-@@ -15,14 +21,14 @@ struct {
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
- 	__uint(key_size, sizeof(u32));
--	__uint(value_size, sizeof(struct bpf_perf_event_value));
-+	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
- } fentry_readings SEC(".maps");
- 
- /* accumulated readings */
- struct {
- 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
- 	__uint(key_size, sizeof(u32));
--	__uint(value_size, sizeof(struct bpf_perf_event_value));
-+	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
- } accum_readings SEC(".maps");
- 
- /* sample counts, one per cpu */
-@@ -39,7 +45,7 @@ const volatile __u32 num_metric = 1;
- SEC("fentry/XXX")
- int BPF_PROG(fentry_XXX)
- {
--	struct bpf_perf_event_value *ptrs[MAX_NUM_MATRICS];
-+	struct bpf_perf_event_value___local *ptrs[MAX_NUM_MATRICS];
- 	u32 key = bpf_get_smp_processor_id();
- 	u32 i;
- 
-@@ -53,10 +59,10 @@ int BPF_PROG(fentry_XXX)
+ 	insns = libbpf_reallocarray(prog->insns, new_insn_cnt, sizeof(*insns));
+-	if (!insns) {
++	/* NULL is a valid return from reallocarray if the new count is zero */
++	if (!insns && new_insn_cnt) {
+ 		pr_warn("prog '%s': failed to realloc prog code\n", prog->name);
+ 		return -ENOMEM;
  	}
+@@ -8837,7 +8842,11 @@ int libbpf_unregister_prog_handler(int handler_id)
  
- 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
--		struct bpf_perf_event_value reading;
-+		struct bpf_perf_event_value___local reading;
- 		int err;
+ 	/* try to shrink the array, but it's ok if we couldn't */
+ 	sec_defs = libbpf_reallocarray(custom_sec_defs, custom_sec_def_cnt, sizeof(*sec_defs));
+-	if (sec_defs)
++	/* if new count is zero, reallocarray can return a valid NULL result;
++	 * in this case the previous pointer will be freed, so we *have to*
++	 * reassign old pointer to the new value (even if it's NULL)
++	 */
++	if (sec_defs || custom_sec_def_cnt == 0)
+ 		custom_sec_defs = sec_defs;
  
--		err = bpf_perf_event_read_value(&events, key, &reading,
-+		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
- 						sizeof(reading));
- 		if (err)
- 			return 0;
-@@ -68,14 +74,14 @@ int BPF_PROG(fentry_XXX)
- }
- 
- static inline void
--fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
-+fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
- {
--	struct bpf_perf_event_value *before, diff;
-+	struct bpf_perf_event_value___local *before, diff;
- 
- 	before = bpf_map_lookup_elem(&fentry_readings, &id);
- 	/* only account samples with a valid fentry_reading */
- 	if (before && before->counter) {
--		struct bpf_perf_event_value *accum;
-+		struct bpf_perf_event_value___local *accum;
- 
- 		diff.counter = after->counter - before->counter;
- 		diff.enabled = after->enabled - before->enabled;
-@@ -93,7 +99,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
- SEC("fexit/XXX")
- int BPF_PROG(fexit_XXX)
- {
--	struct bpf_perf_event_value readings[MAX_NUM_MATRICS];
-+	struct bpf_perf_event_value___local readings[MAX_NUM_MATRICS];
- 	u32 cpu = bpf_get_smp_processor_id();
- 	u32 i, zero = 0;
- 	int err;
-@@ -102,7 +108,8 @@ int BPF_PROG(fexit_XXX)
- 	/* read all events before updating the maps, to reduce error */
- 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
- 		err = bpf_perf_event_read_value(&events, cpu + i * num_cpu,
--						readings + i, sizeof(*readings));
-+						(void *)(readings + i),
-+						sizeof(*readings));
- 		if (err)
- 			return 0;
- 	}
+ 	return 0;
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index f1a141555f084..37455d00b239c 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -852,8 +852,11 @@ static int bpf_link_usdt_detach(struct bpf_link *link)
+ 		 * system is so exhausted on memory, it's the least of user's
+ 		 * concerns, probably.
+ 		 * So just do our best here to return those IDs to usdt_manager.
++		 * Another edge case when we can legitimately get NULL is when
++		 * new_cnt is zero, which can happen in some edge cases, so we
++		 * need to be careful about that.
+ 		 */
+-		if (new_free_ids) {
++		if (new_free_ids || new_cnt == 0) {
+ 			memcpy(new_free_ids + man->free_spec_cnt, usdt_link->spec_ids,
+ 			       usdt_link->spec_cnt * sizeof(*usdt_link->spec_ids));
+ 			man->free_spec_ids = new_free_ids;
 -- 
 2.40.1
 
