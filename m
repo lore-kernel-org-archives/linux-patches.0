@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1388F11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB9CC433C7;
-	Mon, 11 Sep 2023 15:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8488311710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:19:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B26C433C7;
+	Mon, 11 Sep 2023 15:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445547;
-	bh=qGcd7qRDux0RXtA1dRWOAh7f0Xz9gPXf5QSalVachBs=;
+	s=korg; t=1694445550;
+	bh=OcjHl9m6+ievBmAkpyIkWEqtYRDoEuYpYZFR5nlcoIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rqFRv0xzHHbiXl4ZSo8SOJcWBTYHnx/3FO3YGFH0I9Wc8t0kMjaYsY8Be/2gRBRt6
-	 rB7RKywo+udNuag5OiGZ3S7kIz55d3xlOJdq0hpe4rU0qBcI6jivpnYj1LYUbWndJI
-	 UsL0IX37cBNloHx9otg3PC/eHGvPMTv7Zqd8WODk=
+	b=Vu1gUwv8VwHLEmLyLg2JSUkTo2+u1RPwcoEPRgVk3TVIKfJmVzEaT2IZPHtLalv86
+	 5F8Om0GkUP/r7ypceI/Os2TNQZbHkzKOSLRMmd7QUs8eGtzfcagVmGtkZ/gRy1+4xs
+	 ND2n1S1edm5PmguyP2VjJo6m7D8Bl+cwPJN3cF74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 386/600] NFS: Guard against READDIR loop when entry names exceed MAXNAMELEN
-Date: Mon, 11 Sep 2023 15:46:59 +0200
-Message-ID: <20230911134645.069997889@linuxfoundation.org>
+Subject: [PATCH 6.1 387/600] NFSv4.2: fix handling of COPY ERR_OFFLOAD_NO_REQ
+Date: Mon, 11 Sep 2023 15:47:00 +0200
+Message-ID: <20230911134645.102743532@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,55 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit f67b55b6588bcf9316a1e6e8d529100a5aa3ebe6 ]
+[ Upstream commit 5690eed941ab7e33c3c3d6b850100cabf740f075 ]
 
-Commit 64cfca85bacd asserts the only valid return values for
-nfs2/3_decode_dirent should not include -ENAMETOOLONG, but for a server
-that sends a filename3 which exceeds MAXNAMELEN in a READDIR response the
-client's behavior will be to endlessly retry the operation.
+If the client sent a synchronous copy and the server replied with
+ERR_OFFLOAD_NO_REQ indicating that it wants an asynchronous
+copy instead, the client should retry with asynchronous copy.
 
-We could map -ENAMETOOLONG into -EBADCOOKIE, but that would produce
-truncated listings without any error.  The client should return an error
-for this case to clearly assert that the server implementation must be
-corrected.
-
-Fixes: 64cfca85bacd ("NFS: Return valid errors from nfs2/3_decode_dirent()")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Fixes: 539f57b3e0fd ("NFS handle COPY ERR_OFFLOAD_NO_REQS")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs2xdr.c | 2 +-
- fs/nfs/nfs3xdr.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/nfs42proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs2xdr.c b/fs/nfs/nfs2xdr.c
-index 05c3b4b2b3dd8..c190938142960 100644
---- a/fs/nfs/nfs2xdr.c
-+++ b/fs/nfs/nfs2xdr.c
-@@ -949,7 +949,7 @@ int nfs2_decode_dirent(struct xdr_stream *xdr, struct nfs_entry *entry,
- 
- 	error = decode_filename_inline(xdr, &entry->name, &entry->len);
- 	if (unlikely(error))
--		return -EAGAIN;
-+		return error == -ENAMETOOLONG ? -ENAMETOOLONG : -EAGAIN;
- 
- 	/*
- 	 * The type (size and byte order) of nfscookie isn't defined in
-diff --git a/fs/nfs/nfs3xdr.c b/fs/nfs/nfs3xdr.c
-index 3b0b650c9c5ab..60f032be805ae 100644
---- a/fs/nfs/nfs3xdr.c
-+++ b/fs/nfs/nfs3xdr.c
-@@ -1991,7 +1991,7 @@ int nfs3_decode_dirent(struct xdr_stream *xdr, struct nfs_entry *entry,
- 
- 	error = decode_inline_filename3(xdr, &entry->name, &entry->len);
- 	if (unlikely(error))
--		return -EAGAIN;
-+		return error == -ENAMETOOLONG ? -ENAMETOOLONG : -EAGAIN;
- 
- 	error = decode_cookie3(xdr, &new_cookie);
- 	if (unlikely(error))
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index 7c33bba179d2f..d903ea10410c2 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -470,8 +470,9 @@ ssize_t nfs42_proc_copy(struct file *src, loff_t pos_src,
+ 				continue;
+ 			}
+ 			break;
+-		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS && !args.sync) {
+-			args.sync = true;
++		} else if (err == -NFS4ERR_OFFLOAD_NO_REQS &&
++				args.sync != res.synchronous) {
++			args.sync = res.synchronous;
+ 			dst_exception.retry = 1;
+ 			continue;
+ 		} else if ((err == -ESTALE ||
 -- 
 2.40.1
 
