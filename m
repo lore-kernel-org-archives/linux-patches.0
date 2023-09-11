@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0686E4432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70797C433C8;
-	Mon, 11 Sep 2023 14:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D3F4432
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AD1C433C7;
+	Mon, 11 Sep 2023 14:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443438;
-	bh=m5ZovS8z5eZDtp84P0m1iaHi8Rb41jSjNgTymHI6BTM=;
+	s=korg; t=1694443441;
+	bh=M85IA7JRZIK5B5dZHgQOw5L6i3ejaDnsBloGPcOfobA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1zmJ6Ehth3LsAHhc/AvoSfkon6w5rLHdlW9hiJMvhmsjiCndPGqaW5juGxtApchr
-	 /6Qw3LaO4WNX94HFIJ8dI8xkwvF+f1ahyR43SE67QPFav0LtOaEJBvBTLFViam433L
-	 YIQ2aTIP3nSjNKEXSeqM/Rx/a0+bgfrhSff0YZ/g=
+	b=fLyjx3FSngPpQlvPgHUaCGlHBIJsEMnpNOBJRD1w8GLc4fkKdVmU7eRgmtipw9Jr/
+	 1cbCgpmQ4Si6qXA76gIexm7pZkqhFd9DWk78/epE9MyB4Y4ImVYKrHTLQ4A+94f4/h
+	 40zFu58k6lXqJLeGkzsDDsAAC2y0BoTIN5I1A6xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 360/737] drm/msm/dpu: fix the irq index in dpu_encoder_phys_wb_wait_for_commit_done
-Date: Mon, 11 Sep 2023 15:43:39 +0200
-Message-ID: <20230911134700.585739405@linuxfoundation.org>
+Subject: [PATCH 6.4 378/737] arm64: dts: ti: k3-am62x-sk-common: Update main-i2c1 frequency
+Date: Mon, 11 Sep 2023 15:43:57 +0200
+Message-ID: <20230911134701.130120857@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -39,40 +40,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Aradhya Bhatia <a-bhatia1@ti.com>
 
-[ Upstream commit d93cf453f51da168f4410ba73656f1e862096973 ]
+[ Upstream commit 73387da70f9c26b6fba4f62371d013cce14663d9 ]
 
-Since commit 1e7ac595fa46 ("drm/msm/dpu: pass irq to
-dpu_encoder_helper_wait_for_irq()") the
-dpu_encoder_phys_wb_wait_for_commit_done expects the IRQ index rather
-than the IRQ index in phys_enc->intr table, however writeback got the
-older invocation in place. This was unnoticed for several releases, but
-now it's time to fix it.
+The Display Data Channel (DDC) transactions between an HDMI transmitter
+(SIL9022A in this case) and an HDMI monitor, occur at a maximum of
+100KHz. That's the maximum supported frequency within DDC standards.
 
-Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/550924/
-Link: https://lore.kernel.org/r/20230802100426.4184892-2-dmitry.baryshkov@linaro.org
+While the SIL9022A can transact with the core at 400KHz, it needs to
+drop the frequency to 100KHz when communicating with the monitor,
+otherwise, the i2c controller times out and shows warning like this.
+
+[  985.773431] omap_i2c 20010000.i2c: controller timed out
+
+That feature, however, has not been enabled in the SIL9022 driver.
+
+Since, dropping the frequency doesn't affect any other devices on the
+bus, drop the main-i2c1 frequency from 400KHz to 100KHz.
+
+Fixes: a841581451af ("arm64: dts: ti: Refractor AM625 SK dts")
+Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20230809084559.17322-2-a-bhatia1@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index bac4aa807b4bc..2553d6374482b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -455,7 +455,8 @@ static int dpu_encoder_phys_wb_wait_for_commit_done(
- 	wait_info.atomic_cnt = &phys_enc->pending_kickoff_cnt;
- 	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
+diff --git a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+index 976f8303c84f4..5629a13d9fc43 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+@@ -248,7 +248,7 @@ &main_i2c1 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_i2c1_pins_default>;
+-	clock-frequency = <400000>;
++	clock-frequency = <100000>;
  
--	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_WB_DONE,
-+	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
-+			phys_enc->irq[INTR_IDX_WB_DONE],
- 			dpu_encoder_phys_wb_done_irq, &wait_info);
- 	if (ret == -ETIMEDOUT)
- 		_dpu_encoder_phys_wb_handle_wbdone_timeout(phys_enc);
+ 	tlv320aic3106: audio-codec@1b {
+ 		#sound-dai-cells = <0>;
 -- 
 2.40.1
 
