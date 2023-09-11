@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22B44C8A
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E5DC433C8;
-	Mon, 11 Sep 2023 14:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933374C8A
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09405C433C7;
+	Mon, 11 Sep 2023 14:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442789;
-	bh=9PZ2/pXZOD5fonr6EZG3xpDml4EabPZPM8WeZjqiJMU=;
+	s=korg; t=1694442792;
+	bh=QKBpYqRE0XXojLkmqHQ6mi4hlWhrMjS4t8z5f92j0Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkzoCUA3uXbeFLglsTUiCqoqSXSHtFkDX+KmXPL2WtIZTFyJ6XmHV7LurvQ/dqN/V
-	 MNJoX+ycgYDrPl2ATpQ5hHqAl6CJma0+sJ8iJpQAvw4Od6rh6EmOedwUV7oYIXbKxI
-	 Ncn6v7C4jrNQV9M4F/7gSPDiOkRueYxiS5sInlRM=
+	b=ueJsy4BfPvWpmuREpCJ5bUwyrI3DeZyh6O2o9yYCNZrAc0GKbMV95e5NwCds0wuW0
+	 M8/mFZyYvKei5GsQH6Cxour5X9uOUCZXo+rgfh8yoi+bcxC712gREft1/4NYdsPQ99
+	 tdNk2giBb6IaGIxL+D5WBquiVyxcSo5dVQdRjPd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 121/737] x86/decompressor: Dont rely on upper 32 bits of GPRs being preserved
-Date: Mon, 11 Sep 2023 15:39:40 +0200
-Message-ID: <20230911134653.885034130@linuxfoundation.org>
+Subject: [PATCH 6.4 122/737] arm64/fpsimd: Only provide the length to cpufeature for xCR registers
+Date: Mon, 11 Sep 2023 15:39:41 +0200
+Message-ID: <20230911134653.911710581@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -34,115 +35,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 264b82fdb4989cf6a44a2bcd0c6ea05e8026b2ac ]
+[ Upstream commit 01948b09edc3fecf8486c57c2d2fb8b80886f3d0 ]
 
-The 4-to-5 level mode switch trampoline disables long mode and paging in
-order to be able to flick the LA57 bit. According to section 3.4.1.1 of
-the x86 architecture manual [0], 64-bit GPRs might not retain the upper
-32 bits of their contents across such a mode switch.
+For both SVE and SME we abuse the generic register field comparison
+support in the cpufeature code as part of our detection of unsupported
+variations in the vector lengths available to PEs, reporting the maximum
+vector lengths via ZCR_EL1.LEN and SMCR_EL1.LEN.  Since these are
+configuration registers rather than identification registers the
+assumptions the cpufeature code makes about how unknown bitfields behave
+are invalid, leading to warnings when SME features like FA64 are enabled
+and we hotplug a CPU:
 
-Given that RBP, RBX and RSI are live at this point, preserve them on the
-stack, along with the return address that might be above 4G as well.
+  CPU features: SANITY CHECK: Unexpected variation in SYS_SMCR_EL1. Boot CPU: 0x0000000000000f, CPU3: 0x0000008000000f
+  CPU features: Unsupported CPU feature variation detected.
 
-[0] Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1: Basic Architecture
+SVE has no controls other than the vector length so is not yet impacted
+but the same issue will apply there if any are defined.
 
-  "Because the upper 32 bits of 64-bit general-purpose registers are
-   undefined in 32-bit modes, the upper 32 bits of any general-purpose
-   register are not preserved when switching from 64-bit mode to a 32-bit
-   mode (to protected mode or compatibility mode). Software must not
-   depend on these bits to maintain a value after a 64-bit to 32-bit
-   mode switch."
+Since the only field we are interested in having the cpufeature code
+handle is the length field and we use a custom read function to obtain
+the value we can avoid these warnings by filtering out all other bits
+when we return the register value, if we're doing that we don't need to
+bother reading the register at all and can simply use the RDVL/RDSVL
+value we were filling in instead.
 
-Fixes: 194a9749c73d650c ("x86/boot/compressed/64: Handle 5-level paging boot if kernel is above 4G")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230807162720.545787-2-ardb@kernel.org
+Fixes: 2e0f2478ea37 ("arm64/sve: Probe SVE capabilities and usable vector lengths")
+FixeS: b42990d3bf77 ("arm64/sme: Identify supported SME vector lengths at boot")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20230731-arm64-sme-fa64-hotplug-v2-1-7714c00dd902@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/head_64.S | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ arch/arm64/kernel/fpsimd.c | 22 ++++------------------
+ 1 file changed, 4 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
-index 03c4328a88cbd..f732426d3b483 100644
---- a/arch/x86/boot/compressed/head_64.S
-+++ b/arch/x86/boot/compressed/head_64.S
-@@ -459,11 +459,25 @@ SYM_CODE_START(startup_64)
- 	/* Save the trampoline address in RCX */
- 	movq	%rax, %rcx
- 
-+	/* Set up 32-bit addressable stack */
-+	leaq	TRAMPOLINE_32BIT_STACK_END(%rcx), %rsp
-+
-+	/*
-+	 * Preserve live 64-bit registers on the stack: this is necessary
-+	 * because the architecture does not guarantee that GPRs will retain
-+	 * their full 64-bit values across a 32-bit mode switch.
-+	 */
-+	pushq	%rbp
-+	pushq	%rbx
-+	pushq	%rsi
-+
- 	/*
--	 * Load the address of trampoline_return() into RDI.
--	 * It will be used by the trampoline to return to the main code.
-+	 * Push the 64-bit address of trampoline_return() onto the new stack.
-+	 * It will be used by the trampoline to return to the main code. Due to
-+	 * the 32-bit mode switch, it cannot be kept it in a register either.
- 	 */
- 	leaq	trampoline_return(%rip), %rdi
-+	pushq	%rdi
- 
- 	/* Switch to compatibility mode (CS.L = 0 CS.D = 1) via far return */
- 	pushq	$__KERNEL32_CS
-@@ -471,6 +485,11 @@ SYM_CODE_START(startup_64)
- 	pushq	%rax
- 	lretq
- trampoline_return:
-+	/* Restore live 64-bit registers */
-+	popq	%rsi
-+	popq	%rbx
-+	popq	%rbp
-+
- 	/* Restore the stack, the 32-bit trampoline uses its own stack */
- 	leaq	rva(boot_stack_end)(%rbx), %rsp
- 
-@@ -582,7 +601,7 @@ SYM_FUNC_END(.Lrelocated)
- /*
-  * This is the 32-bit trampoline that will be copied over to low memory.
-  *
-- * RDI contains the return address (might be above 4G).
-+ * Return address is at the top of the stack (might be above 4G).
-  * ECX contains the base address of the trampoline memory.
-  * Non zero RDX means trampoline needs to enable 5-level paging.
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 087c05aa960ea..91e44ac7150f9 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1179,9 +1179,6 @@ void sve_kernel_enable(const struct arm64_cpu_capabilities *__always_unused p)
   */
-@@ -592,9 +611,6 @@ SYM_CODE_START(trampoline_32bit_src)
- 	movl	%eax, %ds
- 	movl	%eax, %ss
- 
--	/* Set up new stack */
--	leal	TRAMPOLINE_32BIT_STACK_END(%ecx), %esp
+ u64 read_zcr_features(void)
+ {
+-	u64 zcr;
+-	unsigned int vq_max;
 -
- 	/* Disable paging */
- 	movl	%cr0, %eax
- 	btrl	$X86_CR0_PG_BIT, %eax
-@@ -671,7 +687,7 @@ SYM_CODE_END(trampoline_32bit_src)
- 	.code64
- SYM_FUNC_START_LOCAL_NOALIGN(.Lpaging_enabled)
- 	/* Return from the trampoline */
--	jmp	*%rdi
-+	retq
- SYM_FUNC_END(.Lpaging_enabled)
+ 	/*
+ 	 * Set the maximum possible VL, and write zeroes to all other
+ 	 * bits to see if they stick.
+@@ -1189,12 +1186,8 @@ u64 read_zcr_features(void)
+ 	sve_kernel_enable(NULL);
+ 	write_sysreg_s(ZCR_ELx_LEN_MASK, SYS_ZCR_EL1);
+ 
+-	zcr = read_sysreg_s(SYS_ZCR_EL1);
+-	zcr &= ~(u64)ZCR_ELx_LEN_MASK; /* find sticky 1s outside LEN field */
+-	vq_max = sve_vq_from_vl(sve_get_vl());
+-	zcr |= vq_max - 1; /* set LEN field to maximum effective value */
+-
+-	return zcr;
++	/* Return LEN value that would be written to get the maximum VL */
++	return sve_vq_from_vl(sve_get_vl()) - 1;
+ }
+ 
+ void __init sve_setup(void)
+@@ -1349,9 +1342,6 @@ void fa64_kernel_enable(const struct arm64_cpu_capabilities *__always_unused p)
+  */
+ u64 read_smcr_features(void)
+ {
+-	u64 smcr;
+-	unsigned int vq_max;
+-
+ 	sme_kernel_enable(NULL);
  
  	/*
+@@ -1360,12 +1350,8 @@ u64 read_smcr_features(void)
+ 	write_sysreg_s(read_sysreg_s(SYS_SMCR_EL1) | SMCR_ELx_LEN_MASK,
+ 		       SYS_SMCR_EL1);
+ 
+-	smcr = read_sysreg_s(SYS_SMCR_EL1);
+-	smcr &= ~(u64)SMCR_ELx_LEN_MASK; /* Only the LEN field */
+-	vq_max = sve_vq_from_vl(sme_get_vl());
+-	smcr |= vq_max - 1; /* set LEN field to maximum effective value */
+-
+-	return smcr;
++	/* Return LEN value that would be written to get the maximum VL */
++	return sve_vq_from_vl(sme_get_vl()) - 1;
+ }
+ 
+ void __init sme_setup(void)
 -- 
 2.40.1
 
