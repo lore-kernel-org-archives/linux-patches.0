@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C96F1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C242DC433C8;
-	Mon, 11 Sep 2023 14:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2471170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91854C433C7;
+	Mon, 11 Sep 2023 14:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441860;
-	bh=BHeKoNpG4vxnTcX/vfhBydn+JQDr+HjzJyJL/3FDg8Q=;
+	s=korg; t=1694441862;
+	bh=I4yCv0c86we53uiBjo7XrMn40w09rmWvsPY2UvFFg/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fuTsg1wbOuPiKxIuwMwSEyCcFYy0hYo2yFWx5pkK1hAbncoGXts9BngKFpT4PXqH0
-	 BBztl17ZV91iqdOwCr8qSgNu/91grMfQRprWOjTyrhm5Da6I22e5nMc+JRJV0ZIsi/
-	 bH/Xrf/x3WiOVOHO9bA1IoYhkhsmzVTZOvqIRBqc=
+	b=fT8VYHgjQuaL6V3jbsdEJqx7aXIT8tIEgTIrNPcyBDU2gVh68kCEa4QKh4bRJdruy
+	 Cv6D+BGGsGWJI/b3l7X0AjpQ2YjRN0MJC2Kj4aTxHOz4vsn1cnfJf8PESHv8wQR8G3
+	 7gVy1c9HdYeoDK624WeQXDs9VxbcmB0CMQmZFvfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 562/739] coresight: trbe: Fix TRBE potential sleep in atomic context
-Date: Mon, 11 Sep 2023 15:46:01 +0200
-Message-ID: <20230911134706.776965586@linuxfoundation.org>
+Subject: [PATCH 6.5 563/739] Revert "f2fs: do not issue small discard commands during checkpoint"
+Date: Mon, 11 Sep 2023 15:46:02 +0200
+Message-ID: <20230911134706.804052817@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,118 +40,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit c0a232f1e19e378c5c4e5973a996392942c80090 ]
+[ Upstream commit 005abf9e5e0d4dcfce318ae5dbcac32b7bf6b647 ]
 
-smp_call_function_single() will allocate an IPI interrupt vector to
-the target processor and send a function call request to the interrupt
-vector. After the target processor receives the IPI interrupt, it will
-execute arm_trbe_remove_coresight_cpu() call request in the interrupt
-handler.
+Previously, we have two mechanisms to cache & submit small discards:
 
-According to the device_unregister() stack information, if other process
-is useing the device, the down_write() may sleep, and trigger deadlocks
-or unexpected errors.
+a) set max small discard number in /sys/fs/f2fs/vdb/max_small_discards,
+and checkpoint will cache small discard candidates w/ configured maximum
+number.
 
-  arm_trbe_remove_coresight_cpu
-    coresight_unregister
-      device_unregister
-        device_del
-          kobject_del
-            __kobject_del
-              sysfs_remove_dir
-                kernfs_remove
-                  down_write ---------> it may sleep
+b) call FITRIM ioctl, also, checkpoint in f2fs_trim_fs() will cache small
+discard candidates w/ configured discard granularity, but w/o limitation
+of number. FSTRIM interface is asynchronized, so it won't submit discard
+directly.
 
-Add a helper arm_trbe_disable_cpu() to disable TRBE precpu irq and reset
-per TRBE.
-Simply call arm_trbe_remove_coresight_cpu() directly without useing the
-smp_call_function_single(), which is the same as registering the TRBE
-coresight device.
+Finally, discard thread will submit them in background periodically.
 
-Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Link: https://lore.kernel.org/r/20230814093813.19152-2-hejunhao3@huawei.com
-[ Remove duplicate cpumask checks during removal ]
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-[ v3 - Remove the operation of assigning NULL to cpudata->drvdata ]
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230818084052.10116-1-hejunhao3@huawei.com
+However, after commit 9ac00e7cef10 ("f2fs: do not issue small discard
+commands during checkpoint"), the mechanism a) is broken, since no matter
+how we configure the sysfs entry /sys/fs/f2fs/vdb/max_small_discards,
+checkpoint will not cache small discard candidates any more.
+
+echo 0 > /sys/fs/f2fs/vdb/max_small_discards
+xfs_io -f /mnt/f2fs/file -c "pwrite 0 2m" -c "fsync"
+xfs_io /mnt/f2fs/file -c "fpunch 0 4k"
+sync
+cat /proc/fs/f2fs/vdb/discard_plist_info |head -2
+
+echo 100 > /sys/fs/f2fs/vdb/max_small_discards
+rm /mnt/f2fs/file
+xfs_io -f /mnt/f2fs/file -c "pwrite 0 2m" -c "fsync"
+xfs_io /mnt/f2fs/file -c "fpunch 0 4k"
+sync
+cat /proc/fs/f2fs/vdb/discard_plist_info |head -2
+
+Before the patch:
+Discard pend list(Show diacrd_cmd count on each entry, .:not exist):
+  0         .       .       .       .       .       .       .       .
+Discard pend list(Show diacrd_cmd count on each entry, .:not exist):
+  0         3       1       .       .       .       .       .       .
+
+After the patch:
+Discard pend list(Show diacrd_cmd count on each entry, .:not exist):
+  0         .       .       .       .       .       .       .       .
+Discard pend list(Show diacrd_cmd count on each entry, .:not exist):
+  0         .       .       .       .       .       .       .       .
+
+This patch reverts commit 9ac00e7cef10 ("f2fs: do not issue small discard
+commands during checkpoint") in order to fix this issue.
+
+Fixes: 9ac00e7cef10 ("f2fs: do not issue small discard commands during checkpoint")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-trbe.c | 32 +++++++++++---------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
-index 8e4eb37e66e82..e20c1c6acc731 100644
---- a/drivers/hwtracing/coresight/coresight-trbe.c
-+++ b/drivers/hwtracing/coresight/coresight-trbe.c
-@@ -1225,6 +1225,16 @@ static void arm_trbe_enable_cpu(void *info)
- 	enable_percpu_irq(drvdata->irq, IRQ_TYPE_NONE);
- }
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index a31a47b066d1d..be08be6f4bfd6 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2211,7 +2211,7 @@ void f2fs_clear_prefree_segments(struct f2fs_sb_info *sbi,
+ 			len = next_pos - cur_pos;
  
-+static void arm_trbe_disable_cpu(void *info)
-+{
-+	struct trbe_drvdata *drvdata = info;
-+	struct trbe_cpudata *cpudata = this_cpu_ptr(drvdata->cpudata);
-+
-+	disable_percpu_irq(drvdata->irq);
-+	trbe_reset_local(cpudata);
-+}
-+
-+
- static void arm_trbe_register_coresight_cpu(struct trbe_drvdata *drvdata, int cpu)
- {
- 	struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
-@@ -1329,18 +1339,12 @@ static void arm_trbe_probe_cpu(void *info)
- 	cpumask_clear_cpu(cpu, &drvdata->supported_cpus);
- }
+ 			if (f2fs_sb_has_blkzoned(sbi) ||
+-					!force || len < cpc->trim_minlen)
++			    (force && len < cpc->trim_minlen))
+ 				goto skip;
  
--static void arm_trbe_remove_coresight_cpu(void *info)
-+static void arm_trbe_remove_coresight_cpu(struct trbe_drvdata *drvdata, int cpu)
- {
--	int cpu = smp_processor_id();
--	struct trbe_drvdata *drvdata = info;
--	struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
- 	struct coresight_device *trbe_csdev = coresight_get_percpu_sink(cpu);
- 
--	disable_percpu_irq(drvdata->irq);
--	trbe_reset_local(cpudata);
- 	if (trbe_csdev) {
- 		coresight_unregister(trbe_csdev);
--		cpudata->drvdata = NULL;
- 		coresight_set_percpu_sink(cpu, NULL);
- 	}
- }
-@@ -1369,8 +1373,10 @@ static int arm_trbe_remove_coresight(struct trbe_drvdata *drvdata)
- {
- 	int cpu;
- 
--	for_each_cpu(cpu, &drvdata->supported_cpus)
--		smp_call_function_single(cpu, arm_trbe_remove_coresight_cpu, drvdata, 1);
-+	for_each_cpu(cpu, &drvdata->supported_cpus) {
-+		smp_call_function_single(cpu, arm_trbe_disable_cpu, drvdata, 1);
-+		arm_trbe_remove_coresight_cpu(drvdata, cpu);
-+	}
- 	free_percpu(drvdata->cpudata);
- 	return 0;
- }
-@@ -1409,12 +1415,8 @@ static int arm_trbe_cpu_teardown(unsigned int cpu, struct hlist_node *node)
- {
- 	struct trbe_drvdata *drvdata = hlist_entry_safe(node, struct trbe_drvdata, hotplug_node);
- 
--	if (cpumask_test_cpu(cpu, &drvdata->supported_cpus)) {
--		struct trbe_cpudata *cpudata = per_cpu_ptr(drvdata->cpudata, cpu);
--
--		disable_percpu_irq(drvdata->irq);
--		trbe_reset_local(cpudata);
--	}
-+	if (cpumask_test_cpu(cpu, &drvdata->supported_cpus))
-+		arm_trbe_disable_cpu(drvdata);
- 	return 0;
- }
- 
+ 			f2fs_issue_discard(sbi, entry->start_blkaddr + cur_pos,
 -- 
 2.40.1
 
