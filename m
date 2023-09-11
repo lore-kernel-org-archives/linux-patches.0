@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7891170D
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB86C433C9;
-	Mon, 11 Sep 2023 14:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3321170D
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:11:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21475C433C8;
+	Mon, 11 Sep 2023 14:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441459;
-	bh=gRKNJAI1Vcwkq6tZ2Lv9YjAWjziSku13HY8Zi+yXvxs=;
+	s=korg; t=1694441462;
+	bh=iZhlbBgPWoFM8oMSXmectafHF1OQtskAtMYZVLmWaWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahw6X+GO8CMhgayb0FO8Gy4TGW/cjgivH4v4U7rQNzq5bq+Ydg5z1VDISSj1E1blt
-	 eCQ0mIZNR3qsJrKP/x5NksZPt03/VVSDt+Cx+E/T6m5SMAm136E7GvEOx7rAaYK9oU
-	 ZsAnJCIIpX5odClqddooEwAOBu8JL2VKMh2OT49g=
+	b=NCkugtUE9Ad6vX24+pJdjGDQdxMKaK5b9Rqo8KbjGx4y7z4WfISLR6R0AOD8UWwQj
+	 whpopTh85t4/m6H3f2MxEcbfPxFOiP70tnu4BjiN25VRP24wb9bAXvEEicTw/U4ORh
+	 OYgPdR/+yM3viy81YI8LJinQIAsOWizCHR0HBEGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 420/739] powerpc/fadump: reset dump area size if fadump memory reserve fails
-Date: Mon, 11 Sep 2023 15:43:39 +0200
-Message-ID: <20230911134702.908137778@linuxfoundation.org>
+Subject: [PATCH 6.5 421/739] powerpc/perf: Convert fsl_emb notifier to state machine callbacks
+Date: Mon, 11 Sep 2023 15:43:40 +0200
+Message-ID: <20230911134702.935475004@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -41,40 +40,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit d1eb75e0dfed80d2d85b664e28a39f65b290ab55 ]
+[ Upstream commit 34daf445f82bd3a4df852bb5f1dffd792ac830a0 ]
 
-In case fadump_reserve_mem() fails to reserve memory, the
-reserve_dump_area_size variable will retain the reserve area size. This
-will lead to /sys/kernel/fadump/mem_reserved node displaying an incorrect
-memory reserved by fadump.
+  CC      arch/powerpc/perf/core-fsl-emb.o
+arch/powerpc/perf/core-fsl-emb.c:675:6: error: no previous prototype for 'hw_perf_event_setup' [-Werror=missing-prototypes]
+  675 | void hw_perf_event_setup(int cpu)
+      |      ^~~~~~~~~~~~~~~~~~~
 
-To fix this problem, reserve dump area size variable is set to 0 if fadump
-failed to reserve memory.
+Looks like fsl_emb was completely missed by commit 3f6da3905398 ("perf:
+Rework and fix the arch CPU-hotplug hooks")
 
-Fixes: 8255da95e545 ("powerpc/fadump: release all the memory above boot memory size")
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+So, apply same changes as commit 3f6da3905398 ("perf: Rework and fix
+the arch CPU-hotplug hooks") then commit 57ecde42cc74 ("powerpc/perf:
+Convert book3s notifier to state machine callbacks")
+
+While at it, also fix following error:
+
+arch/powerpc/perf/core-fsl-emb.c: In function 'perf_event_interrupt':
+arch/powerpc/perf/core-fsl-emb.c:648:13: error: variable 'found' set but not used [-Werror=unused-but-set-variable]
+  648 |         int found = 0;
+      |             ^~~~~
+
+Fixes: 3f6da3905398 ("perf: Rework and fix the arch CPU-hotplug hooks")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230704050715.203581-1-sourabhjain@linux.ibm.com
+Link: https://msgid.link/603e1facb32608f88f40b7d7b9094adc50e7b2dc.1692349125.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/fadump.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/perf/core-fsl-emb.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
-index ea0a073abd969..3ff2da7b120b5 100644
---- a/arch/powerpc/kernel/fadump.c
-+++ b/arch/powerpc/kernel/fadump.c
-@@ -654,6 +654,7 @@ int __init fadump_reserve_mem(void)
- 	return ret;
- error_out:
- 	fw_dump.fadump_enabled = 0;
-+	fw_dump.reserve_dump_area_size = 0;
- 	return 0;
+diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
+index ee721f420a7ba..1a53ab08447cb 100644
+--- a/arch/powerpc/perf/core-fsl-emb.c
++++ b/arch/powerpc/perf/core-fsl-emb.c
+@@ -645,7 +645,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
+ 	struct cpu_hw_events *cpuhw = this_cpu_ptr(&cpu_hw_events);
+ 	struct perf_event *event;
+ 	unsigned long val;
+-	int found = 0;
+ 
+ 	for (i = 0; i < ppmu->n_counter; ++i) {
+ 		event = cpuhw->event[i];
+@@ -654,7 +653,6 @@ static void perf_event_interrupt(struct pt_regs *regs)
+ 		if ((int)val < 0) {
+ 			if (event) {
+ 				/* event has overflowed */
+-				found = 1;
+ 				record_and_restart(event, val, regs);
+ 			} else {
+ 				/*
+@@ -672,11 +670,13 @@ static void perf_event_interrupt(struct pt_regs *regs)
+ 	isync();
  }
  
+-void hw_perf_event_setup(int cpu)
++static int fsl_emb_pmu_prepare_cpu(unsigned int cpu)
+ {
+ 	struct cpu_hw_events *cpuhw = &per_cpu(cpu_hw_events, cpu);
+ 
+ 	memset(cpuhw, 0, sizeof(*cpuhw));
++
++	return 0;
+ }
+ 
+ int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
+@@ -689,6 +689,8 @@ int register_fsl_emb_pmu(struct fsl_emb_pmu *pmu)
+ 		pmu->name);
+ 
+ 	perf_pmu_register(&fsl_emb_pmu, "cpu", PERF_TYPE_RAW);
++	cpuhp_setup_state(CPUHP_PERF_POWER, "perf/powerpc:prepare",
++			  fsl_emb_pmu_prepare_cpu, NULL);
+ 
+ 	return 0;
+ }
 -- 
 2.40.1
 
