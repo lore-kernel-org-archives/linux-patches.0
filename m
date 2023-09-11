@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8824432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4B2C433C8;
-	Mon, 11 Sep 2023 14:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205144432
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:43:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0DDC433C8;
+	Mon, 11 Sep 2023 14:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443433;
-	bh=8YWaVQkft7UrS8ElJ3FfErUMGgGk56J2r1R+wEBR+F0=;
+	s=korg; t=1694443435;
+	bh=/vJ8Kt3PKBK/kHx3NG+c35hyIct0noXuk6tulHHOuCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkxf8P5kotc9tCGxM/4OhELDbKj7nwCe+4YgYgtrSYmIS1PP6LyHLnVCEnClUm+FB
-	 U2QZwtfJwdp8Lh/EOOz+Dsuaqj/8b0U0yv9xKKMsk8AdxhllJJbJz0INe9JjO0Khcd
-	 edpgprei94FRQC+2jNrzfxWd6RYTjcQmq5tWMrLs=
+	b=2BqMoACsxlslE+jXKWrt2+yATxu9R16lXRshrPVXg6osBt1fQF860HTTrMTLrh+Hh
+	 E8c+/GpyeqHVxSeLmbAmFqx3dfkBmq7hkVnyhLZGZXaPoSEj7hmOMcRzGtQHBgffVy
+	 4VkPqtugiXePtJ2ndJ2ELUFVuLML19h/dQH03WP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Robert Marko <robert.marko@sartura.hr>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 376/737] arm64: dts: imx8mp-debix: remove unused fec pinctrl node
-Date: Mon, 11 Sep 2023 15:43:55 +0200
-Message-ID: <20230911134701.069387581@linuxfoundation.org>
+Subject: [PATCH 6.4 377/737] ARM: dts: qcom: ipq4019: correct SDHCI XO clock
+Date: Mon, 11 Sep 2023 15:43:56 +0200
+Message-ID: <20230911134701.098904985@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,55 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Robert Marko <robert.marko@sartura.hr>
 
-[ Upstream commit 574e4099d787c2eb41a43f14c453e422515bf658 ]
+[ Upstream commit b5ed7a5c1fdb3981713f7b637b72aa390c3db036 ]
 
-The SoM A uses the EQOS ethernet interface and not the FEC, so drop the
-interface pinctrl node from the device tree.
+Using GCC_DCD_XO_CLK as the XO clock for SDHCI controller is not correct,
+it seems that I somehow made a mistake of passing it instead of the fixed
+XO clock.
 
-Fixes: c86d350aae68 ("arm64: dts: Add device tree for the Debix Model A Board")
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 04b3b72b5b8f ("ARM: dts: qcom: ipq4019: Add SDHCI controller node")
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811110150.229966-1-robert.marko@sartura.hr
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/freescale/imx8mp-debix-model-a.dts    | 22 -------------------
- 1 file changed, 22 deletions(-)
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts b/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts
-index b4409349eb3f6..1004ab0abb131 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-debix-model-a.dts
-@@ -355,28 +355,6 @@ MX8MP_IOMUXC_SAI1_TXD6__GPIO4_IO18				0x19
- 		>;
- 	};
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index f0ef86fadc9d9..e328216443135 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -230,9 +230,12 @@ sdhci: mmc@7824900 {
+ 			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "hc_irq", "pwr_irq";
+ 			bus-width = <8>;
+-			clocks = <&gcc GCC_SDCC1_AHB_CLK>, <&gcc GCC_SDCC1_APPS_CLK>,
+-				 <&gcc GCC_DCD_XO_CLK>;
+-			clock-names = "iface", "core", "xo";
++			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_SDCC1_APPS_CLK>,
++				 <&xo>;
++			clock-names = "iface",
++				      "core",
++				      "xo";
+ 			status = "disabled";
+ 		};
  
--	pinctrl_fec: fecgrp {
--		fsl,pins = <
--			MX8MP_IOMUXC_SAI1_RXD2__ENET1_MDC				0x3
--			MX8MP_IOMUXC_SAI1_RXD3__ENET1_MDIO				0x3
--			MX8MP_IOMUXC_SAI1_RXD4__ENET1_RGMII_RD0				0x91
--			MX8MP_IOMUXC_SAI1_RXD5__ENET1_RGMII_RD1				0x91
--			MX8MP_IOMUXC_SAI1_RXD6__ENET1_RGMII_RD2				0x91
--			MX8MP_IOMUXC_SAI1_RXD7__ENET1_RGMII_RD3				0x91
--			MX8MP_IOMUXC_SAI1_TXC__ENET1_RGMII_RXC				0x91
--			MX8MP_IOMUXC_SAI1_TXFS__ENET1_RGMII_RX_CTL			0x91
--			MX8MP_IOMUXC_SAI1_TXD0__ENET1_RGMII_TD0				0x1f
--			MX8MP_IOMUXC_SAI1_TXD1__ENET1_RGMII_TD1				0x1f
--			MX8MP_IOMUXC_SAI1_TXD2__ENET1_RGMII_TD2				0x1f
--			MX8MP_IOMUXC_SAI1_TXD3__ENET1_RGMII_TD3				0x1f
--			MX8MP_IOMUXC_SAI1_TXD4__ENET1_RGMII_TX_CTL			0x1f
--			MX8MP_IOMUXC_SAI1_TXD5__ENET1_RGMII_TXC				0x1f
--			MX8MP_IOMUXC_SAI1_RXD1__ENET1_1588_EVENT1_OUT			0x1f
--			MX8MP_IOMUXC_SAI1_RXD0__ENET1_1588_EVENT1_IN			0x1f
--			MX8MP_IOMUXC_SAI1_TXD7__GPIO4_IO19				0x19
--		>;
--	};
--
- 	pinctrl_gpio_led: gpioledgrp {
- 		fsl,pins = <
- 			MX8MP_IOMUXC_NAND_READY_B__GPIO3_IO16				0x19
 -- 
 2.40.1
 
