@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F230BF9E1
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:33:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E7EC433C7;
-	Mon, 11 Sep 2023 14:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F7AC2FD
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:34:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447B8C433C8;
+	Mon, 11 Sep 2023 14:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442837;
-	bh=hKWinUgWL/fSSilsNXlHPSf46PyCIOLgCmwVLr6e+ow=;
+	s=korg; t=1694442840;
+	bh=iX3obZny8ndnEUgHY+rkvm5ocbb6U+6D+I/eVel8ops=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v391dLlv9yIy9ggnPfXSrCtbXr9VXH0xAH/Sg+54hqEljNhm6VKqx3WPABc1hrfqH
-	 /QjkTShJySDk3m4dcttDI/umvE9dUaqcNygF7J7Cv+/Fd04Jxh03vl469/XFxkt/FG
-	 P2J5b56Gbj5dVGD+z844wssyoiujEBphdZHp4Irk=
+	b=tuEKEpCEdB3MM9lNizV/g262Xs2Hs0CYKGF5bvmop0Ub9dGKVyFjyC/cjBETa8QGO
+	 twJ/HKWhExd8xP2GnZbge5M9BiBx18I86zaLhQ/a1+27/6QM/mrpOW4ywbj/Etlqcr
+	 OaScQRO6+GaJ21R0o+YJfDHrneceCSv6VCjoGdqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 148/737] bpf: Fix an error around PTR_UNTRUSTED
-Date: Mon, 11 Sep 2023 15:40:07 +0200
-Message-ID: <20230911134654.624103508@linuxfoundation.org>
+Subject: [PATCH 6.4 166/737] udp: re-score reuseport groups when connected sockets are present
+Date: Mon, 11 Sep 2023 15:40:25 +0200
+Message-ID: <20230911134655.150792408@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,94 +41,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit 7ce4dc3e4a9d954c8a1fb483c7a527e9b060b860 ]
+[ Upstream commit f0ea27e7bfe1c34e1f451a63eb68faa1d4c3a86d ]
 
-Per discussion with Alexei, the PTR_UNTRUSTED flag should not been
-cleared when we start to walk a new struct, because the struct in
-question may be a struct nested in a union. We should also check and set
-this flag before we walk its each member, in case itself is a union.
-We will clear this flag if the field is BTF_TYPE_SAFE_RCU_OR_NULL.
+Contrary to TCP, UDP reuseport groups can contain TCP_ESTABLISHED
+sockets. To support these properly we remember whether a group has
+a connected socket and skip the fast reuseport early-return. In
+effect we continue scoring all reuseport sockets and then choose the
+one with the highest score.
 
-Fixes: 6fcd486b3a0a ("bpf: Refactor RCU enforcement in the verifier.")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Link: https://lore.kernel.org/r/20230713025642.27477-2-laoar.shao@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The current code fails to re-calculate the score for the result of
+lookup_reuseport. According to Kuniyuki Iwashima:
+
+    1) SO_INCOMING_CPU is set
+       -> selected sk might have +1 score
+
+    2) BPF prog returns ESTABLISHED and/or SO_INCOMING_CPU sk
+       -> selected sk will have more than 8
+
+  Using the old score could trigger more lookups depending on the
+  order that sockets are created.
+
+    sk -> sk (SO_INCOMING_CPU) -> sk (ESTABLISHED)
+    |     |
+    `-> select the next SO_INCOMING_CPU sk
+          |
+          `-> select itself (We should save this lookup)
+
+Fixes: efc6b6f6c311 ("udp: Improve load balancing for SO_REUSEPORT.")
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-1-7021b683cdae@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c      | 20 +++++++++-----------
- kernel/bpf/verifier.c |  5 +++++
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ net/ipv4/udp.c | 20 +++++++++++++++-----
+ net/ipv6/udp.c | 19 ++++++++++++++-----
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 8b4e92439d1d6..5dd8534b778d1 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6126,7 +6126,6 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
- 	const char *tname, *mname, *tag_value;
- 	u32 vlen, elem_id, mid;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 6d327d6d978c5..a3302136ce92e 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -452,14 +452,24 @@ static struct sock *udp4_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
++
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
--	*flag = 0;
- again:
- 	tname = __btf_name_by_offset(btf, t->name_off);
- 	if (!btf_type_is_struct(t)) {
-@@ -6135,6 +6134,14 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
++
++			badness = compute_score(result, net, saddr, sport,
++						daddr, hnum, dif, sdif);
++
+ 		}
  	}
- 
- 	vlen = btf_type_vlen(t);
-+	if (BTF_INFO_KIND(t->info) == BTF_KIND_UNION && vlen != 1 && !(*flag & PTR_UNTRUSTED))
-+		/*
-+		 * walking unions yields untrusted pointers
-+		 * with exception of __bpf_md_ptr and other
-+		 * unions with a single member
-+		 */
-+		*flag |= PTR_UNTRUSTED;
+ 	return result;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 8521729fb2375..9c7457823eb97 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -195,14 +195,23 @@ static struct sock *udp6_lib_lookup2(struct net *net,
+ 		score = compute_score(sk, net, saddr, sport,
+ 				      daddr, hnum, dif, sdif);
+ 		if (score > badness) {
+-			result = lookup_reuseport(net, sk, skb,
+-						  saddr, sport, daddr, hnum);
++			badness = score;
++			result = lookup_reuseport(net, sk, skb, saddr, sport, daddr, hnum);
++			if (!result) {
++				result = sk;
++				continue;
++			}
 +
- 	if (off + size > t->size) {
- 		/* If the last element is a variable size array, we may
- 		 * need to relax the rule.
-@@ -6295,15 +6302,6 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
- 		 * of this field or inside of this struct
- 		 */
- 		if (btf_type_is_struct(mtype)) {
--			if (BTF_INFO_KIND(mtype->info) == BTF_KIND_UNION &&
--			    btf_type_vlen(mtype) != 1)
--				/*
--				 * walking unions yields untrusted pointers
--				 * with exception of __bpf_md_ptr and other
--				 * unions with a single member
--				 */
--				*flag |= PTR_UNTRUSTED;
--
- 			/* our field must be inside that union or struct */
- 			t = mtype;
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk))
++			if (!reuseport_has_conns(sk))
+ 				return result;
  
-@@ -6469,7 +6467,7 @@ bool btf_struct_ids_match(struct bpf_verifier_log *log,
- 			  bool strict)
- {
- 	const struct btf_type *type;
--	enum bpf_type_flag flag;
-+	enum bpf_type_flag flag = 0;
- 	int err;
- 
- 	/* Are we already done? */
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4fbfe1d086467..cef173614fc8f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5893,6 +5893,11 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 				   type_is_rcu_or_null(env, reg, field_name, btf_id)) {
- 				/* __rcu tagged pointers can be NULL */
- 				flag |= MEM_RCU | PTR_MAYBE_NULL;
+-			result = result ? : sk;
+-			badness = score;
++			/* Reuseport logic returned an error, keep original score. */
++			if (IS_ERR(result))
++				continue;
 +
-+				/* We always trust them */
-+				if (type_is_rcu_or_null(env, reg, field_name, btf_id) &&
-+				    flag & PTR_UNTRUSTED)
-+					flag &= ~PTR_UNTRUSTED;
- 			} else if (flag & (MEM_PERCPU | MEM_USER)) {
- 				/* keep as-is */
- 			} else {
++			badness = compute_score(sk, net, saddr, sport,
++						daddr, hnum, dif, sdif);
+ 		}
+ 	}
+ 	return result;
 -- 
 2.40.1
 
