@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97F6F9F3
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58449C433C8;
-	Mon, 11 Sep 2023 13:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0BEF9F3
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 13:54:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39812C433C9;
+	Mon, 11 Sep 2023 13:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694440455;
-	bh=hEz8FR8mLBKaotlYJZj91tMBEikZtjpGrxopvT0jebg=;
+	s=korg; t=1694440458;
+	bh=xDNl72eyRMY7FunEv5tvNOCajkThdn9sL6uX164hbZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jELarS+w6C5X+2Nl0KkAVXnzcEFGOCkdOlTeiA0NuRZKo529AvihIuwOcSFvN7qwi
-	 Zt39tfHNZmlVJPI6eXe+SWNGLvugd3A30agz7ZsaRx9wDKTrXEbGC+AmiOxKNMTdco
-	 67Tg0VutedI28OuR+BDJq95B1qb4k3uOF/jJ+jNI=
+	b=xASjlNMd4rOAYihd7hjvG/yFuqSkRk8msUwb25e3dC4yaiGXeKm84PYqNLt8O+d39
+	 c0oy6dckX63VdZFdYk2+QzC4+xPpXeYgsy0RYOiCUZOSHFUJwqaUkqWKNiNOoq6Li/
+	 RXRU/9+uG6MHuMrPYvtiV1Ng2J6Qn4UJwQAI+++E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <quentin@isovalent.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Alexander Lobakin <alobakin@pm.me>,
+	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 067/739] bpftool: Use a local copy of BPF_LINK_TYPE_PERF_EVENT in pid_iter.bpf.c
-Date: Mon, 11 Sep 2023 15:37:46 +0200
-Message-ID: <20230911134652.977435700@linuxfoundation.org>
+Subject: [PATCH 6.5 068/739] bpftool: Use a local bpf_perf_event_value to fix accessing its fields
+Date: Mon, 11 Sep 2023 15:37:47 +0200
+Message-ID: <20230911134653.003969946@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,56 +41,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Monnet <quentin@isovalent.com>
+From: Alexander Lobakin <alobakin@pm.me>
 
-[ Upstream commit 44ba7b30e84fb40da2295e85a6d209e199fdc977 ]
+[ Upstream commit 658ac06801315b739774a15796ff06913ef5cad5 ]
 
-In order to allow the BPF program in bpftool's pid_iter.bpf.c to compile
-correctly on hosts where vmlinux.h does not define
-BPF_LINK_TYPE_PERF_EVENT (running kernel versions lower than 5.15, for
-example), define and use a local copy of the enum value. This requires
-LLVM 12 or newer to build the BPF program.
+Fix the following error when building bpftool:
 
-Fixes: cbdaf71f7e65 ("bpftool: Add bpf_cookie to link output")
+  CLANG   profiler.bpf.o
+  CLANG   pid_iter.bpf.o
+skeleton/profiler.bpf.c:18:21: error: invalid application of 'sizeof' to an incomplete type 'struct bpf_perf_event_value'
+        __uint(value_size, sizeof(struct bpf_perf_event_value));
+                           ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helpers.h:13:39: note: expanded from macro '__uint'
+tools/bpf/bpftool/bootstrap/libbpf/include/bpf/bpf_helper_defs.h:7:8: note: forward declaration of 'struct bpf_perf_event_value'
+struct bpf_perf_event_value;
+       ^
+
+struct bpf_perf_event_value is being used in the kernel only when
+CONFIG_BPF_EVENTS is enabled, so it misses a BTF entry then.
+Define struct bpf_perf_event_value___local with the
+`preserve_access_index` attribute inside the pid_iter BPF prog to
+allow compiling on any configs. It is a full mirror of a UAPI
+structure, so is compatible both with and w/o CO-RE.
+bpf_perf_event_read_value() requires a pointer of the original type,
+so a cast is needed.
+
+Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Alexander Lobakin <alobakin@pm.me>
 Signed-off-by: Quentin Monnet <quentin@isovalent.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230707095425.168126-4-quentin@isovalent.com
+Link: https://lore.kernel.org/bpf/20230707095425.168126-5-quentin@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/skeleton/pid_iter.bpf.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/bpf/bpftool/skeleton/profiler.bpf.c | 27 ++++++++++++++---------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-index 3a4c4f7d83d86..26004f0c5a6ae 100644
---- a/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-+++ b/tools/bpf/bpftool/skeleton/pid_iter.bpf.c
-@@ -24,6 +24,10 @@ struct perf_event___local {
- 	u64 bpf_cookie;
- } __attribute__((preserve_access_index));
+diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+index ce5b65e07ab10..2f80edc682f11 100644
+--- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
++++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+@@ -4,6 +4,12 @@
+ #include <bpf/bpf_helpers.h>
+ #include <bpf/bpf_tracing.h>
  
-+enum bpf_link_type___local {
-+	BPF_LINK_TYPE_PERF_EVENT___local = 7,
-+};
++struct bpf_perf_event_value___local {
++	__u64 counter;
++	__u64 enabled;
++	__u64 running;
++} __attribute__((preserve_access_index));
 +
- extern const void bpf_link_fops __ksym;
- extern const void bpf_map_fops __ksym;
- extern const void bpf_prog_fops __ksym;
-@@ -93,10 +97,13 @@ int iter(struct bpf_iter__task_file *ctx)
- 	e.pid = task->tgid;
- 	e.id = get_obj_id(file->private_data, obj_type);
+ /* map of perf event fds, num_cpu * num_metric entries */
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
+@@ -15,14 +21,14 @@ struct {
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
+ 	__uint(key_size, sizeof(u32));
+-	__uint(value_size, sizeof(struct bpf_perf_event_value));
++	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
+ } fentry_readings SEC(".maps");
  
--	if (obj_type == BPF_OBJ_LINK) {
-+	if (obj_type == BPF_OBJ_LINK &&
-+	    bpf_core_enum_value_exists(enum bpf_link_type___local,
-+				       BPF_LINK_TYPE_PERF_EVENT___local)) {
- 		struct bpf_link *link = (struct bpf_link *) file->private_data;
+ /* accumulated readings */
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
+ 	__uint(key_size, sizeof(u32));
+-	__uint(value_size, sizeof(struct bpf_perf_event_value));
++	__uint(value_size, sizeof(struct bpf_perf_event_value___local));
+ } accum_readings SEC(".maps");
  
--		if (BPF_CORE_READ(link, type) == BPF_LINK_TYPE_PERF_EVENT) {
-+		if (link->type == bpf_core_enum_value(enum bpf_link_type___local,
-+						      BPF_LINK_TYPE_PERF_EVENT___local)) {
- 			e.has_bpf_cookie = true;
- 			e.bpf_cookie = get_bpf_cookie(link);
- 		}
+ /* sample counts, one per cpu */
+@@ -39,7 +45,7 @@ const volatile __u32 num_metric = 1;
+ SEC("fentry/XXX")
+ int BPF_PROG(fentry_XXX)
+ {
+-	struct bpf_perf_event_value *ptrs[MAX_NUM_MATRICS];
++	struct bpf_perf_event_value___local *ptrs[MAX_NUM_MATRICS];
+ 	u32 key = bpf_get_smp_processor_id();
+ 	u32 i;
+ 
+@@ -53,10 +59,10 @@ int BPF_PROG(fentry_XXX)
+ 	}
+ 
+ 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
+-		struct bpf_perf_event_value reading;
++		struct bpf_perf_event_value___local reading;
+ 		int err;
+ 
+-		err = bpf_perf_event_read_value(&events, key, &reading,
++		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
+ 						sizeof(reading));
+ 		if (err)
+ 			return 0;
+@@ -68,14 +74,14 @@ int BPF_PROG(fentry_XXX)
+ }
+ 
+ static inline void
+-fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
++fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
+ {
+-	struct bpf_perf_event_value *before, diff;
++	struct bpf_perf_event_value___local *before, diff;
+ 
+ 	before = bpf_map_lookup_elem(&fentry_readings, &id);
+ 	/* only account samples with a valid fentry_reading */
+ 	if (before && before->counter) {
+-		struct bpf_perf_event_value *accum;
++		struct bpf_perf_event_value___local *accum;
+ 
+ 		diff.counter = after->counter - before->counter;
+ 		diff.enabled = after->enabled - before->enabled;
+@@ -93,7 +99,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value *after)
+ SEC("fexit/XXX")
+ int BPF_PROG(fexit_XXX)
+ {
+-	struct bpf_perf_event_value readings[MAX_NUM_MATRICS];
++	struct bpf_perf_event_value___local readings[MAX_NUM_MATRICS];
+ 	u32 cpu = bpf_get_smp_processor_id();
+ 	u32 i, zero = 0;
+ 	int err;
+@@ -102,7 +108,8 @@ int BPF_PROG(fexit_XXX)
+ 	/* read all events before updating the maps, to reduce error */
+ 	for (i = 0; i < num_metric && i < MAX_NUM_MATRICS; i++) {
+ 		err = bpf_perf_event_read_value(&events, cpu + i * num_cpu,
+-						readings + i, sizeof(*readings));
++						(void *)(readings + i),
++						sizeof(*readings));
+ 		if (err)
+ 			return 0;
+ 	}
 -- 
 2.40.1
 
