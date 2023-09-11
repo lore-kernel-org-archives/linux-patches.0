@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AE211710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A6EC433C9;
-	Mon, 11 Sep 2023 15:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99E01172F
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE40C433CD;
+	Mon, 11 Sep 2023 15:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445866;
-	bh=qDc9kZb1kcGGha3tfG54m4cWXTOkxCgDM9BZ5bTonYc=;
+	s=korg; t=1694445869;
+	bh=fiZwzahtWLV5s9LXsFez11UsJt2aJ85w2vBmX4N3DsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPoxUd80DVR59zuIUIgOtVAgBRYszVX3LFBxMKohuloo5lgBYgC8qsz5uURTQ6r3B
-	 UdQm+p3xew4Xsgy3PBQAZadQWHOrjJjO5bblBCk//UWRgzQ7i9+npKqUBRw5fcXryb
-	 TwMO2eYvLFtb2X+cmn10eMpY2ReXbDAZUpwiytok=
+	b=pkupRfRjQSulMZSQIaUyPAj9O/68FutxmCGQnyEPLREMACl5DXMFrhK3eZLH6zAH1
+	 wMwY4mauOgWbk1lbnFgMH20uD218OWjQsq7yaBGd7frQRhzi817L5rcDkJA7TlZmnR
+	 ZP60TtnGbt/vgC1JKO+ewgtKrHjLS11xYsi76qF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 500/600] mtd: rawnand: brcmnand: Fix mtd oobsize
-Date: Mon, 11 Sep 2023 15:48:53 +0200
-Message-ID: <20230911134648.384926001@linuxfoundation.org>
+Subject: [PATCH 6.1 483/600] interconnect: qcom: sm8450: Enable sync_state
+Date: Mon, 11 Sep 2023 15:48:36 +0200
+Message-ID: <20230911134647.900514255@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,60 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 60177390fa061c62d156f4a546e3efd90df3c183 ]
+[ Upstream commit 16862f1b2110eca6330e5be6d804e1a08e06a202 ]
 
-brcmnand controller can only access the flash spare area up to certain
-bytes based on the ECC level. It can be less than the actual flash spare
-area size. For example, for many NAND chip supporting ECC BCH-8, it has
-226 bytes spare area. But controller can only uses 218 bytes. So brcmand
-driver overrides the mtd oobsize with the controller's accessible spare
-area size. When the nand base driver utilizes the nand_device object, it
-resets the oobsize back to the actual flash spare aprea size from
-nand_memory_organization structure and controller may not able to access
-all the oob area as mtd advises.
+Enable sync_state on sm8450 so that the interconnect votes actually mean
+anything and aren't just pinned to INT_MAX.
 
-This change fixes the issue by overriding the oobsize in the
-nand_memory_organization structure to the controller's accessible spare
-area size.
-
-Fixes: a7ab085d7c16 ("mtd: rawnand: Initialize the nand_device object")
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230706182909.79151-6-william.zhang@broadcom.com
+Fixes: fafc114a468e ("interconnect: qcom: Add SM8450 interconnect provider driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230811-topic-8450_syncstate-v1-1-69ae5552a18b@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/sm8450.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index 2e9c2e2d9c9f7..d8418d7fcc372 100644
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -2612,6 +2612,8 @@ static int brcmnand_setup_dev(struct brcmnand_host *host)
- 	struct nand_chip *chip = &host->chip;
- 	const struct nand_ecc_props *requirements =
- 		nanddev_get_ecc_requirements(&chip->base);
-+	struct nand_memory_organization *memorg =
-+		nanddev_get_memorg(&chip->base);
- 	struct brcmnand_controller *ctrl = host->ctrl;
- 	struct brcmnand_cfg *cfg = &host->hwcfg;
- 	char msg[128];
-@@ -2633,10 +2635,11 @@ static int brcmnand_setup_dev(struct brcmnand_host *host)
- 	if (cfg->spare_area_size > ctrl->max_oob)
- 		cfg->spare_area_size = ctrl->max_oob;
- 	/*
--	 * Set oobsize to be consistent with controller's spare_area_size, as
--	 * the rest is inaccessible.
-+	 * Set mtd and memorg oobsize to be consistent with controller's
-+	 * spare_area_size, as the rest is inaccessible.
- 	 */
- 	mtd->oobsize = cfg->spare_area_size * (mtd->writesize >> FC_SHIFT);
-+	memorg->oobsize = mtd->oobsize;
+diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
+index e64c214b40209..d6e582a02e628 100644
+--- a/drivers/interconnect/qcom/sm8450.c
++++ b/drivers/interconnect/qcom/sm8450.c
+@@ -1886,6 +1886,7 @@ static struct platform_driver qnoc_driver = {
+ 	.driver = {
+ 		.name = "qnoc-sm8450",
+ 		.of_match_table = qnoc_of_match,
++		.sync_state = icc_sync_state,
+ 	},
+ };
  
- 	cfg->device_size = mtd->size;
- 	cfg->block_size = mtd->erasesize;
 -- 
 2.40.1
 
