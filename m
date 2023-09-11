@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FF3C433C9;
-	Mon, 11 Sep 2023 14:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9591A11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C1EC433C8;
+	Mon, 11 Sep 2023 14:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444007;
-	bh=2apWznmeqda62+KEgk7a6h1U5WOSh8IFtLJXUMmTdhU=;
+	s=korg; t=1694444010;
+	bh=+hlaxlLw7V5nxNRN6LOT6M+5l86aGJVdm5fN/f73DQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FkJhbLnHBXiG1TJFAhZkO4JMZLA5Bg5M0gMRL3EnaE4nGZRh7mn3SYSCeqOwKCOQa
-	 nS+Wyai3RxhzB86l44CddLKiYWfI8M5YWhHgItm5S+epqLjUUTvnBIfVZm+fcT3kMr
-	 /TdmMT3oTOzXIUSBpw9UUQUe7T0hs31hfy3TQ++U=
+	b=pg17dZaQDjnXR74YEIvKjrzgEgZQQtvfqc5gBAiL5XzE6RXAx1ccG6ZJaEyyANjq6
+	 m+FIyX8r7hrVQBSk9KjbdolxeXj61ugK3cpKepaC4v8/s3xKJLDzVQbe/Sqy+NDtHX
+	 vTbU/lFhdy3GMFwlRFr92ogN5jPGgbS4zpFkcEMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+601018296973a481f302@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 577/737] Revert "f2fs: fix to do sanity check on extent cache correctly"
-Date: Mon, 11 Sep 2023 15:47:16 +0200
-Message-ID: <20230911134706.650724721@linuxfoundation.org>
+Subject: [PATCH 6.4 551/737] media: go7007: Remove redundant if statement
+Date: Mon, 11 Sep 2023 15:46:50 +0200
+Message-ID: <20230911134705.948077088@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,94 +40,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 958ccbbf1ce716d77c7cfa79ace50a421c1eed73 ]
+[ Upstream commit f33cb49081da0ec5af0888f8ecbd566bd326eed1 ]
 
-syzbot reports a f2fs bug as below:
+The if statement that compares msgs[i].len != 3 is always false because
+it is in a code block where msg[i].len is equal to 3. The check is
+redundant and can be removed.
 
-UBSAN: array-index-out-of-bounds in fs/f2fs/f2fs.h:3275:19
-index 1409 is out of range for type '__le32[923]' (aka 'unsigned int[923]')
-Call Trace:
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
- ubsan_epilogue lib/ubsan.c:217 [inline]
- __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
- inline_data_addr fs/f2fs/f2fs.h:3275 [inline]
- __recover_inline_status fs/f2fs/inode.c:113 [inline]
- do_read_inode fs/f2fs/inode.c:480 [inline]
- f2fs_iget+0x4730/0x48b0 fs/f2fs/inode.c:604
- f2fs_fill_super+0x640e/0x80c0 fs/f2fs/super.c:4601
- mount_bdev+0x276/0x3b0 fs/super.c:1391
- legacy_get_tree+0xef/0x190 fs/fs_context.c:611
- vfs_get_tree+0x8c/0x270 fs/super.c:1519
- do_new_mount+0x28f/0xae0 fs/namespace.c:3335
- do_mount fs/namespace.c:3675 [inline]
- __do_sys_mount fs/namespace.c:3884 [inline]
- __se_sys_mount+0x2d9/0x3c0 fs/namespace.c:3861
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+As detected by cppcheck static analysis:
+drivers/media/usb/go7007/go7007-i2c.c:168:20: warning: Opposite inner
+'if' condition leads to a dead code block. [oppositeInnerCondition]
 
-The issue was bisected to:
+Link: https://lore.kernel.org/linux-media/20230727174007.635572-1-colin.i.king@gmail.com
 
-commit d48a7b3a72f121655d95b5157c32c7d555e44c05
-Author: Chao Yu <chao@kernel.org>
-Date:   Mon Jan 9 03:49:20 2023 +0000
-
-    f2fs: fix to do sanity check on extent cache correctly
-
-The root cause is we applied both v1 and v2 of the patch, v2 is the right
-fix, so it needs to revert v1 in order to fix reported issue.
-
-v1:
-commit d48a7b3a72f1 ("f2fs: fix to do sanity check on extent cache correctly")
-https://lore.kernel.org/lkml/20230109034920.492914-1-chao@kernel.org/
-
-v2:
-commit 269d11948100 ("f2fs: fix to do sanity check on extent cache correctly")
-https://lore.kernel.org/lkml/20230207134808.1827869-1-chao@kernel.org/
-
-Reported-by: syzbot+601018296973a481f302@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000fcf0690600e4d04d@google.com/
-Fixes: d48a7b3a72f1 ("f2fs: fix to do sanity check on extent cache correctly")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/usb/go7007/go7007-i2c.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index cf4327ad106c0..a99c151e3bdcf 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -396,6 +396,12 @@ static int do_read_inode(struct inode *inode)
- 		fi->i_inline_xattr_size = 0;
- 	}
- 
-+	if (!sanity_check_inode(inode, node_page)) {
-+		f2fs_put_page(node_page, 1);
-+		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	/* check data exist */
- 	if (f2fs_has_inline_data(inode) && !f2fs_exist_data(inode))
- 		__recover_inline_status(inode, node_page);
-@@ -465,12 +471,6 @@ static int do_read_inode(struct inode *inode)
- 	f2fs_init_read_extent_tree(inode, node_page);
- 	f2fs_init_age_extent_tree(inode);
- 
--	if (!sanity_check_inode(inode, node_page)) {
--		f2fs_put_page(node_page, 1);
--		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
--		return -EFSCORRUPTED;
--	}
--
- 	if (!sanity_check_extent_cache(inode)) {
- 		f2fs_put_page(node_page, 1);
- 		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
+diff --git a/drivers/media/usb/go7007/go7007-i2c.c b/drivers/media/usb/go7007/go7007-i2c.c
+index 38339dd2f83f7..2880370e45c8b 100644
+--- a/drivers/media/usb/go7007/go7007-i2c.c
++++ b/drivers/media/usb/go7007/go7007-i2c.c
+@@ -165,8 +165,6 @@ static int go7007_i2c_master_xfer(struct i2c_adapter *adapter,
+ 		} else if (msgs[i].len == 3) {
+ 			if (msgs[i].flags & I2C_M_RD)
+ 				return -EIO;
+-			if (msgs[i].len != 3)
+-				return -EIO;
+ 			if (go7007_i2c_xfer(go, msgs[i].addr, 0,
+ 					(msgs[i].buf[0] << 8) | msgs[i].buf[1],
+ 					0x01, &msgs[i].buf[2]) < 0)
 -- 
 2.40.1
 
