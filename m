@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EE611710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACCAC433C8;
-	Mon, 11 Sep 2023 15:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8198511710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:28:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021F3C433C9;
+	Mon, 11 Sep 2023 15:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446095;
-	bh=vEms9kRf7P3/qYCV2kvDt+PSXdP++XMZe4RgahDR9cY=;
+	s=korg; t=1694446098;
+	bh=g+r2QTXP1nMVJInCJQ8FGsrjY+0EVISl8wLyscPgbRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UsLctLe+dFczCGzMdMXlHtXm0+rq1tGGFxnrna9wqhB+orm89ZEV9NHNatn5nLxQZ
-	 0ECqi5x2QuDB8TbhQoeK6Ssvj2AAHr8utj3lwxD50fjfILv6ej/2d/jCIuRTc46rDB
-	 n/OUJm2/YXjirRt1lme2gOtFmXQguRk5E3re++G0=
+	b=2E//iZEEFqsJFE/fFTV731jfgEnia1wJmEgSe2ZLkmxS2CN0ZbVX4Ffh8eLxKnkfm
+	 BfAUXc1kiIObKY6g1Gh1n5FhOmAKSYj2VGzqV0JEaT5XLwbWfU0GgXbgK8m0FOtnS4
+	 qVvAGxywx90bQeie0CB3/VsPpvXU9E/Ww2xU/8og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 581/600] usb: typec: tcpm: set initial svdm version based on pd revision
-Date: Mon, 11 Sep 2023 15:50:14 +0200
-Message-ID: <20230911134650.770766936@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 582/600] usb: typec: bus: verify partner exists in typec_altmode_attention
+Date: Mon, 11 Sep 2023 15:50:15 +0200
+Message-ID: <20230911134650.802140057@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,98 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 From: RD Babiera <rdbabiera@google.com>
 
-commit c97cd0b4b54eb42aed7f6c3c295a2d137f6d2416 upstream.
+commit f23643306430f86e2f413ee2b986e0773e79da31 upstream.
 
-When sending Discover Identity messages to a Port Partner that uses Power
-Delivery v2 and SVDM v1, we currently send PD v2 messages with SVDM v2.0,
-expecting the port partner to respond with its highest supported SVDM
-version as stated in Section 6.4.4.2.3 in the Power Delivery v3
-specification. However, sending SVDM v2 to some Power Delivery v2 port
-partners results in a NAK whereas sending SVDM v1 does not.
+Some usb hubs will negotiate DisplayPort Alt mode with the device
+but will then negotiate a data role swap after entering the alt
+mode. The data role swap causes the device to unregister all alt
+modes, however the usb hub will still send Attention messages
+even after failing to reregister the Alt Mode. type_altmode_attention
+currently does not verify whether or not a device's altmode partner
+exists, which results in a NULL pointer error when dereferencing
+the typec_altmode and typec_altmode_ops belonging to the altmode
+partner.
 
-NAK messages can be handled by the initiator (PD v3 section 6.4.4.2.5.1),
-and one solution could be to resend Discover Identity on a lower SVDM
-version if possible. But, Section 6.4.4.3 of PD v2 states that "A NAK
-response Should be taken as an indication not to retry that particular
-Command."
+Verify the presence of a device's altmode partner before sending
+the Attention message to the Alt Mode driver.
 
-Instead, we can set the SVDM version to the maximum one supported by the
-negotiated PD revision. When operating in PD v2, this obeys Section
-6.4.4.2.3, which states the SVDM field "Shall be set to zero to indicate
-Version 1.0." In PD v3, the SVDM field "Shall be set to 01b to indicate
-Version 2.0."
-
-Fixes: c34e85fa69b9 ("usb: typec: tcpm: Send DISCOVER_IDENTITY from dedicated work")
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
 Cc: stable@vger.kernel.org
 Signed-off-by: RD Babiera <rdbabiera@google.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230731165926.1815338-1-rdbabiera@google.com
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230814180559.923475-1-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   35 +++++++++++++++++++++++++++++++----
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ drivers/usb/typec/bus.c           |   12 ++++++++++--
+ drivers/usb/typec/tcpm/tcpm.c     |    3 ++-
+ include/linux/usb/typec_altmode.h |    2 +-
+ 3 files changed, 13 insertions(+), 4 deletions(-)
 
+--- a/drivers/usb/typec/bus.c
++++ b/drivers/usb/typec/bus.c
+@@ -154,12 +154,20 @@ EXPORT_SYMBOL_GPL(typec_altmode_exit);
+  *
+  * Notifies the partner of @adev about Attention command.
+  */
+-void typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
++int typec_altmode_attention(struct typec_altmode *adev, u32 vdo)
+ {
+-	struct typec_altmode *pdev = &to_altmode(adev)->partner->adev;
++	struct altmode *partner = to_altmode(adev)->partner;
++	struct typec_altmode *pdev;
++
++	if (!partner)
++		return -ENODEV;
++
++	pdev = &partner->adev;
+ 
+ 	if (pdev->ops && pdev->ops->attention)
+ 		pdev->ops->attention(pdev, vdo);
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(typec_altmode_attention);
+ 
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -3929,6 +3929,29 @@ static enum typec_cc_status tcpm_pwr_opm
+@@ -1871,7 +1871,8 @@ static void tcpm_handle_vdm_request(stru
+ 			}
+ 			break;
+ 		case ADEV_ATTENTION:
+-			typec_altmode_attention(adev, p[1]);
++			if (typec_altmode_attention(adev, p[1]))
++				tcpm_log(port, "typec_altmode_attention no port partner altmode");
+ 			break;
+ 		}
  	}
- }
+--- a/include/linux/usb/typec_altmode.h
++++ b/include/linux/usb/typec_altmode.h
+@@ -67,7 +67,7 @@ struct typec_altmode_ops {
  
-+static void tcpm_set_initial_svdm_version(struct tcpm_port *port)
-+{
-+	switch (port->negotiated_rev) {
-+	case PD_REV30:
-+		break;
-+	/*
-+	 * 6.4.4.2.3 Structured VDM Version
-+	 * 2.0 states "At this time, there is only one version (1.0) defined.
-+	 * This field Shall be set to zero to indicate Version 1.0."
-+	 * 3.0 states "This field Shall be set to 01b to indicate Version 2.0."
-+	 * To ensure that we follow the Power Delivery revision we are currently
-+	 * operating on, downgrade the SVDM version to the highest one supported
-+	 * by the Power Delivery revision.
-+	 */
-+	case PD_REV20:
-+		typec_partner_set_svdm_version(port->partner, SVDM_VER_1_0);
-+		break;
-+	default:
-+		typec_partner_set_svdm_version(port->partner, SVDM_VER_1_0);
-+		break;
-+	}
-+}
-+
- static void run_state_machine(struct tcpm_port *port)
- {
- 	int ret;
-@@ -4153,10 +4176,12 @@ static void run_state_machine(struct tcp
- 		 * For now, this driver only supports SOP for DISCOVER_IDENTITY, thus using
- 		 * port->explicit_contract to decide whether to send the command.
- 		 */
--		if (port->explicit_contract)
-+		if (port->explicit_contract) {
-+			tcpm_set_initial_svdm_version(port);
- 			mod_send_discover_delayed_work(port, 0);
--		else
-+		} else {
- 			port->send_discover = false;
-+		}
- 
- 		/*
- 		 * 6.3.5
-@@ -4439,10 +4464,12 @@ static void run_state_machine(struct tcp
- 		 * For now, this driver only supports SOP for DISCOVER_IDENTITY, thus using
- 		 * port->explicit_contract.
- 		 */
--		if (port->explicit_contract)
-+		if (port->explicit_contract) {
-+			tcpm_set_initial_svdm_version(port);
- 			mod_send_discover_delayed_work(port, 0);
--		else
-+		} else {
- 			port->send_discover = false;
-+		}
- 
- 		power_supply_changed(port->psy);
- 		break;
+ int typec_altmode_enter(struct typec_altmode *altmode, u32 *vdo);
+ int typec_altmode_exit(struct typec_altmode *altmode);
+-void typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
++int typec_altmode_attention(struct typec_altmode *altmode, u32 vdo);
+ int typec_altmode_vdm(struct typec_altmode *altmode,
+ 		      const u32 header, const u32 *vdo, int count);
+ int typec_altmode_notify(struct typec_altmode *altmode, unsigned long conf,
 
 
