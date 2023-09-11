@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C9111706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4483AC433C8;
-	Mon, 11 Sep 2023 15:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961EF11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D35C433C7;
+	Mon, 11 Sep 2023 15:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444668;
-	bh=dM7jmBI/JuA7QmMv8kFAjtyJyhWV8PqGXyGISHWMhF8=;
+	s=korg; t=1694444671;
+	bh=pdP9r4lYMpW82qrC38bgOaH3K3Jr4WxbtUEkAUpOv3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlPhLE3uaXZAvtCEXV1CWSr6vavtIsMvQk4skpRLiS0EDoPX8bUOodbMX3//V97qe
-	 TXYM09mtsT9W/7EzVNhcQNinjfrTFQmZ0Cgin1k82CgdovpSfkYK7SOjPTyTzyebPV
-	 726J5LiFwag8uQ832Lp8rCu/2VkOUoWeOXvxGVXc=
+	b=COask8eH+wMWA6OpVKp+LTe+DnsREZ1Jg64rmJTwwr6QBjM7jrZEDit8mS1TSpn7u
+	 iyyQUJQ+oTvrOigXakWd6Fb6BEx+bZpn6/GHJi4nCXjerZcomg06rCWzxwl26inoRc
+	 8d1pomkBtu8B2YqvxPxlV/Z9ScT3zz+TVmGaViOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao HAO <haomiao19@mails.ucas.ac.cn>,
-	Qi Hu <huqi@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	"Gong, Sishuai" <sishuai@purdue.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/600] LoongArch: Fix the write_fcsr() macro
-Date: Mon, 11 Sep 2023 15:41:46 +0200
-Message-ID: <20230911134635.773404675@linuxfoundation.org>
+Subject: [PATCH 6.1 074/600] ALSA: seq: oss: Fix racy open/close of MIDI devices
+Date: Mon, 11 Sep 2023 15:41:47 +0200
+Message-ID: <20230911134635.802215959@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,34 +40,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Hu <huqi@loongson.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 346dc929623cef70ff7832a4fa0ffd1b696e312a ]
+[ Upstream commit 297224fc0922e7385573a30c29ffdabb67f27b7d ]
 
-The "write_fcsr()" macro uses wrong the positions for val and dest in
-asm. Fix it!
+Although snd_seq_oss_midi_open() and snd_seq_oss_midi_close() can be
+called concurrently from different code paths, we have no proper data
+protection against races.  Introduce open_mutex to each seq_oss_midi
+object for avoiding the races.
 
-Reported-by: Miao HAO <haomiao19@mails.ucas.ac.cn>
-Signed-off-by: Qi Hu <huqi@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reported-by: "Gong, Sishuai" <sishuai@purdue.edu>
+Closes: https://lore.kernel.org/r/7DC9AF71-F481-4ABA-955F-76C535661E33@purdue.edu
+Link: https://lore.kernel.org/r/20230612125533.27461-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/loongarch.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/oss/seq_oss_midi.c | 35 +++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/loongarch.h b/arch/loongarch/include/asm/loongarch.h
-index 62835d84a647d..3d15fa5bef37d 100644
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -1488,7 +1488,7 @@ __BUILD_CSR_OP(tlbidx)
- #define write_fcsr(dest, val) \
- do {	\
- 	__asm__ __volatile__(	\
--	"	movgr2fcsr	%0, "__stringify(dest)"	\n"	\
-+	"	movgr2fcsr	"__stringify(dest)", %0	\n"	\
- 	: : "r" (val));	\
- } while (0)
+diff --git a/sound/core/seq/oss/seq_oss_midi.c b/sound/core/seq/oss/seq_oss_midi.c
+index 07efb38f58ac1..f2940b29595f0 100644
+--- a/sound/core/seq/oss/seq_oss_midi.c
++++ b/sound/core/seq/oss/seq_oss_midi.c
+@@ -37,6 +37,7 @@ struct seq_oss_midi {
+ 	struct snd_midi_event *coder;	/* MIDI event coder */
+ 	struct seq_oss_devinfo *devinfo;	/* assigned OSSseq device */
+ 	snd_use_lock_t use_lock;
++	struct mutex open_mutex;
+ };
  
+ 
+@@ -172,6 +173,7 @@ snd_seq_oss_midi_check_new_port(struct snd_seq_port_info *pinfo)
+ 	mdev->flags = pinfo->capability;
+ 	mdev->opened = 0;
+ 	snd_use_lock_init(&mdev->use_lock);
++	mutex_init(&mdev->open_mutex);
+ 
+ 	/* copy and truncate the name of synth device */
+ 	strscpy(mdev->name, pinfo->name, sizeof(mdev->name));
+@@ -322,15 +324,17 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
+ 	int perm;
+ 	struct seq_oss_midi *mdev;
+ 	struct snd_seq_port_subscribe subs;
++	int err;
+ 
+ 	mdev = get_mididev(dp, dev);
+ 	if (!mdev)
+ 		return -ENODEV;
+ 
++	mutex_lock(&mdev->open_mutex);
+ 	/* already used? */
+ 	if (mdev->opened && mdev->devinfo != dp) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return -EBUSY;
++		err = -EBUSY;
++		goto unlock;
+ 	}
+ 
+ 	perm = 0;
+@@ -340,14 +344,14 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
+ 		perm |= PERM_READ;
+ 	perm &= mdev->flags;
+ 	if (perm == 0) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return -ENXIO;
++		err = -ENXIO;
++		goto unlock;
+ 	}
+ 
+ 	/* already opened? */
+ 	if ((mdev->opened & perm) == perm) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return 0;
++		err = 0;
++		goto unlock;
+ 	}
+ 
+ 	perm &= ~mdev->opened;
+@@ -372,13 +376,17 @@ snd_seq_oss_midi_open(struct seq_oss_devinfo *dp, int dev, int fmode)
+ 	}
+ 
+ 	if (! mdev->opened) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return -ENXIO;
++		err = -ENXIO;
++		goto unlock;
+ 	}
+ 
+ 	mdev->devinfo = dp;
++	err = 0;
++
++ unlock:
++	mutex_unlock(&mdev->open_mutex);
+ 	snd_use_lock_free(&mdev->use_lock);
+-	return 0;
++	return err;
+ }
+ 
+ /*
+@@ -393,10 +401,9 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
+ 	mdev = get_mididev(dp, dev);
+ 	if (!mdev)
+ 		return -ENODEV;
+-	if (! mdev->opened || mdev->devinfo != dp) {
+-		snd_use_lock_free(&mdev->use_lock);
+-		return 0;
+-	}
++	mutex_lock(&mdev->open_mutex);
++	if (!mdev->opened || mdev->devinfo != dp)
++		goto unlock;
+ 
+ 	memset(&subs, 0, sizeof(subs));
+ 	if (mdev->opened & PERM_WRITE) {
+@@ -415,6 +422,8 @@ snd_seq_oss_midi_close(struct seq_oss_devinfo *dp, int dev)
+ 	mdev->opened = 0;
+ 	mdev->devinfo = NULL;
+ 
++ unlock:
++	mutex_unlock(&mdev->open_mutex);
+ 	snd_use_lock_free(&mdev->use_lock);
+ 	return 0;
+ }
 -- 
 2.40.1
 
