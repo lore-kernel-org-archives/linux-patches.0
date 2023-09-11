@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492E711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:51:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0C1C433C8;
-	Mon, 11 Sep 2023 14:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1334711706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:51:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AAFC433C8;
+	Mon, 11 Sep 2023 14:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443861;
-	bh=tCOc+fC+3XhhUtxg5IDNLL33nnYkq7ZyZjW6aRakGPU=;
+	s=korg; t=1694443863;
+	bh=VDHD27MMPcPd1oOXN9AXKu/beBeFc6/R7HFAiZrwvoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UxpJtExd/k/CWPMrgNNcFW/OShwS8L0YRIE9kEL+37n71zvQ+OPgEQd/LgsOZNVQV
-	 kcHZEdTCvxttzhNlSTAnvOp9S+owlpAxbB/LYLuA9vW3Gi6zrxBnxFVNkaYikGlXuW
-	 0nG39XRFMvURzKq4qDiLVioVxOZ0F0PEB/Y4+Nk8=
+	b=AZ+JXpQ25cWC4Fr623kydUjabCrToMqD7MthHXOn8bRyC5oGrec2kQPJiLEd0kzOV
+	 wHjFd71LyWliWF5TagowjB4d6zEEeBtCIW5QHv3ymo5OgfLtObpP8bgQtAspcQ3lej
+	 FSJt3qKs2lizI+FaWvLAc3Hnyn+AqvMymjJPemyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ruidong Tian <tianruidong@linux.alibaba.com>,
+	James Clark <james.clark@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 527/737] RDMA/irdma: Replace one-element array with flexible-array member
-Date: Mon, 11 Sep 2023 15:46:26 +0200
-Message-ID: <20230911134705.296161661@linuxfoundation.org>
+Subject: [PATCH 6.4 528/737] coresight: tmc: Explicit type conversions to prevent integer overflow
+Date: Mon, 11 Sep 2023 15:46:27 +0200
+Message-ID: <20230911134705.327016209@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,72 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Ruidong Tian <tianruidong@linux.alibaba.com>
 
-[ Upstream commit 38313c6d2a02c28162e06753b01bd885caf9386d ]
+[ Upstream commit fd380097cdb305582b7a1f9476391330299d2c59 ]
 
-One-element and zero-length arrays are deprecated. So, replace
-one-element array in struct irdma_qvlist_info with flexible-array
-member.
+Perf cs_etm session executed unexpectedly when AUX buffer > 1G.
 
-A patch for this was sent a while ago[1]. However, it seems that, at
-the time, the changes were partially folded[2][3], and the actual
-flexible-array transformation was omitted. This patch fixes that.
+  perf record -C 0 -m ,2G -e cs_etm// -- <workload>
+  [ perf record: Captured and wrote 2.615 MB perf.data ]
 
-The only binary difference seen before/after changes is shown below:
+Perf only collect about 2M perf data rather than 2G. This is becasuse
+the operation, "nr_pages << PAGE_SHIFT", in coresight tmc driver, will
+overflow when nr_pages >= 0x80000(correspond to 1G AUX buffer). The
+overflow cause buffer allocation to fail, and TMC driver will alloc
+minimal buffer size(1M). You can just get about 2M perf data(1M AUX
+buffer + perf data header) at least.
 
-|  drivers/infiniband/hw/irdma/hw.o
-| @@ -868,7 +868,7 @@
-| drivers/infiniband/hw/irdma/hw.c:484 (discriminator 2)
-|	size += struct_size(iw_qvlist, qv_info, rf->msix_count);
-|      55b:      imul   $0x45c,%rdi,%rdi
-|-     562:      add    $0x10,%rdi
-|+     562:      add    $0x4,%rdi
+Explicit convert nr_pages to 64 bit to avoid overflow.
 
-which is, of course, expected as it reflects the mistake made
-while folding the patch I've mentioned above.
-
-Worth mentioning is the fact that with this change we save 12 bytes
-of memory, as can be inferred from the diff snapshot above. Notice
-that:
-
-$ pahole -C rdma_qv_info idrivers/infiniband/hw/irdma/hw.o
-struct irdma_qv_info {
-	u32                        v_idx;                /*     0     4 */
-	u16                        ceq_idx;              /*     4     2 */
-	u16                        aeq_idx;              /*     6     2 */
-	u8                         itr_idx;              /*     8     1 */
-
-	/* size: 12, cachelines: 1, members: 4 */
-	/* padding: 3 */
-	/* last cacheline: 12 bytes */
-};
-
-Link: https://lore.kernel.org/linux-hardening/20210525230038.GA175516@embeddedor/ [1]
-Link: https://lore.kernel.org/linux-hardening/bf46b428deef4e9e89b0ea1704b1f0e5@intel.com/ [2]
-Link: https://lore.kernel.org/linux-rdma/20210520143809.819-1-shiraz.saleem@intel.com/T/#u [3]
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/ZMpsQrZadBaJGkt4@work
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 22f429f19c41 ("coresight: etm-perf: Add support for ETR backend")
+Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
+Fixes: 2e499bbc1a92 ("coresight: tmc: implementing TMC-ETF AUX space API")
+Signed-off-by: Ruidong Tian <tianruidong@linux.alibaba.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230804081514.120171-2-tianruidong@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/main.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-tmc-etf.c | 2 +-
+ drivers/hwtracing/coresight/coresight-tmc-etr.c | 5 +++--
+ drivers/hwtracing/coresight/coresight-tmc.h     | 2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
-index 2323962cdeacb..de2f4c0514118 100644
---- a/drivers/infiniband/hw/irdma/main.h
-+++ b/drivers/infiniband/hw/irdma/main.h
-@@ -239,7 +239,7 @@ struct irdma_qv_info {
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+index 0ab1f73c2d06a..e374b02d98be3 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+@@ -450,7 +450,7 @@ static int tmc_set_etf_buffer(struct coresight_device *csdev,
+ 		return -EINVAL;
  
- struct irdma_qvlist_info {
- 	u32 num_vectors;
--	struct irdma_qv_info qv_info[1];
-+	struct irdma_qv_info qv_info[];
+ 	/* wrap head around to the amount of space we have */
+-	head = handle->head & ((buf->nr_pages << PAGE_SHIFT) - 1);
++	head = handle->head & (((unsigned long)buf->nr_pages << PAGE_SHIFT) - 1);
+ 
+ 	/* find the page to write to */
+ 	buf->cur = head / PAGE_SIZE;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index eaa296ced1678..8ef4a2a13427e 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -45,7 +45,8 @@ struct etr_perf_buffer {
  };
  
- struct irdma_gen_ops {
+ /* Convert the perf index to an offset within the ETR buffer */
+-#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
++#define PERF_IDX2OFF(idx, buf)		\
++		((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
+ 
+ /* Lower limit for ETR hardware buffer */
+ #define TMC_ETR_PERF_MIN_BUF_SIZE	SZ_1M
+@@ -1262,7 +1263,7 @@ alloc_etr_buf(struct tmc_drvdata *drvdata, struct perf_event *event,
+ 	 * than the size requested via sysfs.
+ 	 */
+ 	if ((nr_pages << PAGE_SHIFT) > drvdata->size) {
+-		etr_buf = tmc_alloc_etr_buf(drvdata, (nr_pages << PAGE_SHIFT),
++		etr_buf = tmc_alloc_etr_buf(drvdata, ((ssize_t)nr_pages << PAGE_SHIFT),
+ 					    0, node, NULL);
+ 		if (!IS_ERR(etr_buf))
+ 			goto done;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+index 01c0382a29c0a..26e6356261c11 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc.h
++++ b/drivers/hwtracing/coresight/coresight-tmc.h
+@@ -325,7 +325,7 @@ ssize_t tmc_sg_table_get_data(struct tmc_sg_table *sg_table,
+ static inline unsigned long
+ tmc_sg_table_buf_size(struct tmc_sg_table *sg_table)
+ {
+-	return sg_table->data_pages.nr_pages << PAGE_SHIFT;
++	return (unsigned long)sg_table->data_pages.nr_pages << PAGE_SHIFT;
+ }
+ 
+ struct coresight_device *tmc_etr_get_catu_device(struct tmc_drvdata *drvdata);
 -- 
 2.40.1
 
