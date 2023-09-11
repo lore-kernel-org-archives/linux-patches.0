@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC15511705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5E6C433C7;
-	Mon, 11 Sep 2023 14:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF43811705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEE6C433CA;
+	Mon, 11 Sep 2023 14:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443065;
-	bh=8lA31x8XKI6F5gNAdU0Cb9eZQKsj1VHA02fri5jwt84=;
+	s=korg; t=1694443068;
+	bh=MDLZHXcLO/4SpTPqy+WOE15aFXNokNw1+BCbL4rBYZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCQmenIp/pjlPqG2pNtgPOsPYKmH7/4KQ0bTm0IOL2bDhkMt5Uvfx4s3oBDI9UdDH
-	 MeZpbGT4fQWW0sdzjPcEuE9ytG5v5FNxJXfRk4gTRU5Scus//jxvX2s5FN3CjNaogp
-	 HDVXtaL5uhb+J7FIUTLpL0u8uyPW5nQu21xDkK6o=
+	b=XOUSuZsiPvcUpSfBBCmpree6S9tk1ektPLTLyy/Kyu0pfGYCMUir3Oji03XTkLZAI
+	 rdN+NRwJFnMQ/P9DvdVEnX4kujTj/O+LgBHDgKJ4vqmMF0FrZGwgcugctTREtSFka/
+	 R+mkQqZ4mgao+nbg4RvlEdadc9olh+nQ1iKyyvZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 206/737] Bluetooth: hci_event: drop only unbound CIS if Set CIG Parameters fails
-Date: Mon, 11 Sep 2023 15:41:05 +0200
-Message-ID: <20230911134656.351107644@linuxfoundation.org>
+Subject: [PATCH 6.4 239/737] wifi: mwifiex: avoid possible NULL skb pointer dereference
+Date: Mon, 11 Sep 2023 15:41:38 +0200
+Message-ID: <20230911134657.284459635@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,76 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 66dee21524d9ac6461ec3052652b7bc0603ee0c5 ]
+[ Upstream commit 35a7a1ce7c7d61664ee54f5239a1f120ab95a87e ]
 
-When user tries to connect a new CIS when its CIG is not configurable,
-that connection shall fail, but pre-existing connections shall not be
-affected.  However, currently hci_cc_le_set_cig_params deletes all CIS
-of the CIG on error so it doesn't work, even though controller shall not
-change CIG/CIS configuration if the command fails.
+In 'mwifiex_handle_uap_rx_forward()', always check the value
+returned by 'skb_copy()' to avoid potential NULL pointer
+dereference in 'mwifiex_uap_queue_bridged_pkt()', and drop
+original skb in case of copying failure.
 
-Fix by failing on command error only the connections that are not yet
-bound, so that we keep the previous CIS configuration like the
-controller does.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 838e4f449297 ("mwifiex: improve uAP RX handling")
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230814095041.16416-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/uap_txrx.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 22fb9f9da866b..866d2cd43bf78 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3803,6 +3803,22 @@ static u8 hci_cc_le_read_buffer_size_v2(struct hci_dev *hdev, void *data,
- 	return rp->status;
- }
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+index c1b8d41dd7536..b8b9a0fcb19cd 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+@@ -253,7 +253,15 @@ int mwifiex_handle_uap_rx_forward(struct mwifiex_private *priv,
  
-+static void hci_unbound_cis_failed(struct hci_dev *hdev, u8 cig, u8 status)
-+{
-+	struct hci_conn *conn, *tmp;
-+
-+	lockdep_assert_held(&hdev->lock);
-+
-+	list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
-+		if (conn->type != ISO_LINK || !bacmp(&conn->dst, BDADDR_ANY) ||
-+		    conn->state == BT_OPEN || conn->iso_qos.ucast.cig != cig)
-+			continue;
-+
-+		if (HCI_CONN_HANDLE_UNSET(conn->handle))
-+			hci_conn_failed(conn, status);
-+	}
-+}
-+
- static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
- 				   struct sk_buff *skb)
- {
-@@ -3823,12 +3839,15 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
- 
- 	hci_dev_lock(hdev);
- 
-+	/* BLUETOOTH CORE SPECIFICATION Version 5.4 | Vol 4, Part E page 2554
-+	 *
-+	 * If the Status return parameter is non-zero, then the state of the CIG
-+	 * and its CIS configurations shall not be changed by the command. If
-+	 * the CIG did not already exist, it shall not be created.
-+	 */
- 	if (status) {
--		while ((conn = hci_conn_hash_lookup_cig(hdev, rp->cig_id))) {
--			conn->state = BT_CLOSED;
--			hci_connect_cfm(conn, status);
--			hci_conn_del(conn);
--		}
-+		/* Keep current configuration, fail only the unbound CIS */
-+		hci_unbound_cis_failed(hdev, rp->cig_id, status);
- 		goto unlock;
- 	}
- 
+ 	if (is_multicast_ether_addr(ra)) {
+ 		skb_uap = skb_copy(skb, GFP_ATOMIC);
+-		mwifiex_uap_queue_bridged_pkt(priv, skb_uap);
++		if (likely(skb_uap)) {
++			mwifiex_uap_queue_bridged_pkt(priv, skb_uap);
++		} else {
++			mwifiex_dbg(adapter, ERROR,
++				    "failed to copy skb for uAP\n");
++			priv->stats.rx_dropped++;
++			dev_kfree_skb_any(skb);
++			return -1;
++		}
+ 	} else {
+ 		if (mwifiex_get_sta_entry(priv, ra)) {
+ 			/* Requeue Intra-BSS packet */
 -- 
 2.40.1
 
