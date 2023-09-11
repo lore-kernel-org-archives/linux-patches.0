@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582B414F6E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A95C433C7;
-	Mon, 11 Sep 2023 15:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B4714F81
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:29:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC2EC43395;
+	Mon, 11 Sep 2023 15:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446173;
-	bh=kN0ilVn/WfDYWcQIObvS7ZR6aACEk5c9TCgyL83El5I=;
+	s=korg; t=1694446176;
+	bh=8ABMsgVXMHDcQXJPDfm8BrOSo7OCB7e9pcicEahb8g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zPp4XYB2VkIOBgcJGzhYmRf3ICegp/n+pXYVe8SJFpPoDh/mlzF8EJ/40fcY0D0uj
-	 t9lNY/tTYtgekzlvJbEa12UmnNsGwBwCG+a7cy+00wn967nqnivSeRpFwmOx19hMAS
-	 rVUK06D/X6sMldhW3NL8NZJZX53eDJoExloobuD0=
+	b=ToqA4yMwdJmlsoasWcJqw8THT7mwG0npOBPUEM11f7UrJy5K0bFzaNaMxryIVwRLc
+	 Yq2YV+IKyWAA0jFcrn8+3fG6NMTlVoDyCYRVDebFujKsDU5ElPvr0YC2FsObj43DD4
+	 9SRYty0tr+YlEm4XnVaY164mqWIewnotDOf8F7A0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.1 571/600] platform/chrome: chromeos_acpi: print hex string for ACPI_TYPE_BUFFER
-Date: Mon, 11 Sep 2023 15:50:04 +0200
-Message-ID: <20230911134650.467322535@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.1 600/600] clk: Avoid invalid function names in CLK_OF_DECLARE()
+Date: Mon, 11 Sep 2023 15:50:33 +0200
+Message-ID: <20230911134651.374782834@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,74 +41,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 0820debb7d489e9eb1f68b7bb69e6ae210699b3f upstream.
+commit 5cf9d015be160e2d90d29ae74ef1364390e8fce8 upstream.
 
-`element->buffer.pointer` should be binary blob.  `%s` doesn't work
-perfect for them.
+After commit c28cd1f3433c ("clk: Mark a fwnode as initialized when using
+CLK_OF_DECLARE() macro"), drivers/clk/mvebu/kirkwood.c fails to build:
 
-Print hex string for ACPI_TYPE_BUFFER.  Also update the documentation
-to reflect this.
+ drivers/clk/mvebu/kirkwood.c:358:1: error: expected identifier or '('
+ CLK_OF_DECLARE(98dx1135_clk, "marvell,mv98dx1135-core-clock",
+ ^
+ include/linux/clk-provider.h:1367:21: note: expanded from macro 'CLK_OF_DECLARE'
+         static void __init name##_of_clk_init_declare(struct device_node *np) \
+                            ^
+ <scratch space>:124:1: note: expanded from here
+ 98dx1135_clk_of_clk_init_declare
+ ^
+ drivers/clk/mvebu/kirkwood.c:358:1: error: invalid digit 'd' in decimal constant
+ include/linux/clk-provider.h:1372:34: note: expanded from macro 'CLK_OF_DECLARE'
+         OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
+                                         ^
+ <scratch space>:125:3: note: expanded from here
+ 98dx1135_clk_of_clk_init_declare
+   ^
+ drivers/clk/mvebu/kirkwood.c:358:1: error: invalid digit 'd' in decimal constant
+ include/linux/clk-provider.h:1372:34: note: expanded from macro 'CLK_OF_DECLARE'
+         OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
+                                         ^
+ <scratch space>:125:3: note: expanded from here
+ 98dx1135_clk_of_clk_init_declare
+   ^
+ drivers/clk/mvebu/kirkwood.c:358:1: error: invalid digit 'd' in decimal constant
+ include/linux/clk-provider.h:1372:34: note: expanded from macro 'CLK_OF_DECLARE'
+         OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
+                                         ^
+ <scratch space>:125:3: note: expanded from here
+ 98dx1135_clk_of_clk_init_declare
+   ^
 
-Fixes: 0a4cad9c11ad ("platform/chrome: Add ChromeOS ACPI device driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230803011245.3773756-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+C function names must start with either an alphabetic letter or an
+underscore. To avoid generating invalid function names from clock names,
+add two underscores to the beginning of the identifier.
+
+Fixes: c28cd1f3433c ("clk: Mark a fwnode as initialized when using CLK_OF_DECLARE() macro")
+Suggested-by: Saravana Kannan <saravanak@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230308-clk_of_declare-fix-v1-1-317b741e2532@kernel.org
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/testing/sysfs-driver-chromeos-acpi |    2 -
- drivers/platform/chrome/chromeos_acpi.c              |   31 ++++++++++++++++++-
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ include/linux/clk-provider.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
-+++ b/Documentation/ABI/testing/sysfs-driver-chromeos-acpi
-@@ -134,4 +134,4 @@ KernelVersion:	5.19
- Description:
- 		Returns the verified boot data block shared between the
- 		firmware verification step and the kernel verification step
--		(binary).
-+		(hex dump).
---- a/drivers/platform/chrome/chromeos_acpi.c
-+++ b/drivers/platform/chrome/chromeos_acpi.c
-@@ -90,7 +90,36 @@ static int chromeos_acpi_handle_package(
- 	case ACPI_TYPE_STRING:
- 		return sysfs_emit(buf, "%s\n", element->string.pointer);
- 	case ACPI_TYPE_BUFFER:
--		return sysfs_emit(buf, "%s\n", element->buffer.pointer);
-+		{
-+			int i, r, at, room_left;
-+			const int byte_per_line = 16;
-+
-+			at = 0;
-+			room_left = PAGE_SIZE - 1;
-+			for (i = 0; i < element->buffer.length && room_left; i += byte_per_line) {
-+				r = hex_dump_to_buffer(element->buffer.pointer + i,
-+						       element->buffer.length - i,
-+						       byte_per_line, 1, buf + at, room_left,
-+						       false);
-+				if (r > room_left)
-+					goto truncating;
-+				at += r;
-+				room_left -= r;
-+
-+				r = sysfs_emit_at(buf, at, "\n");
-+				if (!r)
-+					goto truncating;
-+				at += r;
-+				room_left -= r;
-+			}
-+
-+			buf[at] = 0;
-+			return at;
-+truncating:
-+			dev_info_once(dev, "truncating sysfs content for %s\n", name);
-+			sysfs_emit_at(buf, PAGE_SIZE - 4, "..\n");
-+			return PAGE_SIZE - 1;
-+		}
- 	default:
- 		dev_err(dev, "element type %d not supported\n", element->type);
- 		return -EINVAL;
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -1362,12 +1362,12 @@ struct clk_hw_onecell_data {
+ };
+ 
+ #define CLK_OF_DECLARE(name, compat, fn) \
+-	static void __init name##_of_clk_init_declare(struct device_node *np) \
++	static void __init __##name##_of_clk_init_declare(struct device_node *np) \
+ 	{								\
+ 		fn(np);							\
+ 		fwnode_dev_initialized(of_fwnode_handle(np), true);	\
+ 	}								\
+-	OF_DECLARE_1(clk, name, compat, name##_of_clk_init_declare)
++	OF_DECLARE_1(clk, name, compat, __##name##_of_clk_init_declare)
+ 
+ /*
+  * Use this macro when you have a driver that requires two initialization
 
 
