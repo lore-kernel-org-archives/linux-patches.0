@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2B711706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86772C433C7;
-	Mon, 11 Sep 2023 15:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7FD11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:04:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9EAC433C8;
+	Mon, 11 Sep 2023 15:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444652;
-	bh=79KIJCex9NAsdMIKK9Cxcm8l+FRTCmEYIHqErbkhUP4=;
+	s=korg; t=1694444654;
+	bh=IqexUTo+4g0P+AceFcjRmYB2bvNKcodogTGBQgks5NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TblReKV4cM4NKgojvuRU+CkDLFSX03P+Zxi3xFax9LxwHfMDiwX/ZxurwsCtlTG7l
-	 2vrTVByVHnykjJ31vgDtFb69bBVuNpnGWEYtfFbBJ7tNRriV3vhl5w1m4EmUErry7J
-	 4l0YlgRW/e6papE/NoTfosjx2LON9nYwm0X+2j7s=
+	b=ahh5oARqpu2FtZOF1aLsjQmnScWpxU73DV1uyRYyj1xs3uWrJ3E/EsK9TS7nEHWeQ
+	 9y2ZLfateI6U9s2Oa2jGxtHgaMuw6GuKU/ooFYoih3bzV7XD88P2HdFZB6ICTMQW26
+	 pjw17lSEUR+8MyVohoC6wBec8B+ESquYpvViSsnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/600] Revert "wifi: ath6k: silence false positive -Wno-dangling-pointer warning on GCC 12"
-Date: Mon, 11 Sep 2023 15:41:23 +0200
-Message-ID: <20230911134635.088510831@linuxfoundation.org>
+Subject: [PATCH 6.1 068/600] sctp: handle invalid error codes without calling BUG()
+Date: Mon, 11 Sep 2023 15:41:41 +0200
+Message-ID: <20230911134635.628775368@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,38 +40,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalle Valo <kvalo@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit a1ce186db7f0e449f35d12fb55ae0da2a1b400e2 ]
+[ Upstream commit a0067dfcd9418fd3b0632bc59210d120d038a9c6 ]
 
-This reverts commit bd1d129daa3ede265a880e2c6a7f91eab0f4dc62.
+The sctp_sf_eat_auth() function is supposed to return enum sctp_disposition
+values but if the call to sctp_ulpevent_make_authkey() fails, it returns
+-ENOMEM.
 
-The dangling-pointer warnings were disabled kernel-wide by commit 49beadbd47c2
-("gcc-12: disable '-Wdangling-pointer' warning for now") for v5.19. So this
-hack in ath6kl is not needed anymore.
+This results in calling BUG() inside the sctp_side_effects() function.
+Calling BUG() is an over reaction and not helpful.  Call WARN_ON_ONCE()
+instead.
 
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230724100823.2948804-1-kvalo@kernel.org
+This code predates git.
+
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/Makefile | 5 -----
- 1 file changed, 5 deletions(-)
+ net/sctp/sm_sideeffect.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/Makefile b/drivers/net/wireless/ath/ath6kl/Makefile
-index a75bfa9fd1cfd..dc2b3b46781e1 100644
---- a/drivers/net/wireless/ath/ath6kl/Makefile
-+++ b/drivers/net/wireless/ath/ath6kl/Makefile
-@@ -36,11 +36,6 @@ ath6kl_core-y += wmi.o
- ath6kl_core-y += core.o
- ath6kl_core-y += recovery.o
- 
--# FIXME: temporarily silence -Wdangling-pointer on non W=1+ builds
--ifndef KBUILD_EXTRA_WARN
--CFLAGS_htc_mbox.o += $(call cc-disable-warning, dangling-pointer)
--endif
--
- ath6kl_core-$(CONFIG_NL80211_TESTMODE) += testmode.o
- ath6kl_core-$(CONFIG_ATH6KL_TRACING) += trace.o
+diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
+index 463c4a58d2c36..970c6a486a9b0 100644
+--- a/net/sctp/sm_sideeffect.c
++++ b/net/sctp/sm_sideeffect.c
+@@ -1251,7 +1251,10 @@ static int sctp_side_effects(enum sctp_event_type event_type,
+ 	default:
+ 		pr_err("impossible disposition %d in state %d, event_type %d, event_id %d\n",
+ 		       status, state, event_type, subtype.chunk);
+-		BUG();
++		error = status;
++		if (error >= 0)
++			error = -EINVAL;
++		WARN_ON_ONCE(1);
+ 		break;
+ 	}
  
 -- 
 2.40.1
