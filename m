@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2D111705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:38:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E53C433CA;
-	Mon, 11 Sep 2023 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4D211705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CA4C433C8;
+	Mon, 11 Sep 2023 14:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443094;
-	bh=rOhADxcN4T/4HeOas3SR6QRHhB25peYjjC0kMKeGsyo=;
+	s=korg; t=1694443096;
+	bh=slyrtxkywAwkQ0x+4+vR1w2mJd7k7L9xfBWbZ5AqHCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KP3gEI9BQklcyKyDTPfaqUMtMY/fhbVRFHwbBehHDZ65F6pdL91cus+PeKN5HipWJ
-	 2osvvg/epeUiwOTPuErUOe5Y7PsdilRdUoe+NAQ1dpiHgsOduat+TCBTsg+W5qZZ8G
-	 nkBGRsgRbxwcZo1ZwFdcJtpPyLfmOwqdUoeE+e9I=
+	b=jmq3luhTQf8tdS0IcsKXprkk2JYftSY1NzUyByt1Kp+06h3sPw4Z+dXqUUDMi2KtK
+	 uPYWlypnZsBIeafWFDEptyAnG5E4b39dT8PGp8m6kVxLfbFww3u8Jv0tXBKp6zxTfd
+	 Qr3QAUdd4TRoRiJcyL/XrrIqU3ji6OKgFu9vYW6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 256/737] octeontx2-pf: Fix PFC TX scheduler free
-Date: Mon, 11 Sep 2023 15:41:55 +0200
-Message-ID: <20230911134657.741156714@linuxfoundation.org>
+Subject: [PATCH 6.4 257/737] octeontx2-af: CN10KB: fix PFC configuration
+Date: Mon, 11 Sep 2023 15:41:56 +0200
+Message-ID: <20230911134657.768104163@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,64 +41,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit a9ac2e18779597f280d68a5b5f5bdd51a34080fa ]
+[ Upstream commit 47bcc9c1cf6aa60156c7532983090e86d9d171b6 ]
 
-During PFC TX schedulers free, flag TXSCHQ_FREE_ALL was being set
-which caused free up all schedulers other than the PFC schedulers.
-This patch fixes that to free only the PFC Tx schedulers.
+Suppose user has enabled pfc with prio 0,1 on a PF netdev(eth0)
+	dcb pfc set dev eth0 prio-pfc o:on 1:on
+later user enabled pfc priorities 2 and 3 on the VF interface(eth1)
+	dcb pfc set dev eth1 prio-pfc 2:on 3:on
 
-Fixes: 99c969a83d82 ("octeontx2-pf: Add egress PFC support")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Instead of enabling pfc on all priorities (0..3), the driver only
+enables on priorities 2,3. This patch corrects the issue by using
+the proper CSR address.
+
+Fixes: b9d0fedc6234 ("octeontx2-af: cn10kb: Add RPM_USX MAC support")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230824081032.436432-2-sumang@marvell.com
+Link: https://lore.kernel.org/r/20230824081032.436432-3-sumang@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_common.c  |  1 +
- .../ethernet/marvell/octeontx2/nic/otx2_dcbnl.c   | 15 ++++-----------
- 2 files changed, 5 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rpm.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index dd97731f81698..011355e73696e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -773,6 +773,7 @@ void otx2_txschq_free_one(struct otx2_nic *pfvf, u16 lvl, u16 schq)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+index b4fcb20c3f4fd..af21e2030cff2 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rpm.c
+@@ -355,8 +355,8 @@ int rpm_lmac_enadis_pause_frm(void *rpmd, int lmac_id, u8 tx_pause,
  
- 	mutex_unlock(&pfvf->mbox.lock);
+ void rpm_lmac_pause_frm_config(void *rpmd, int lmac_id, bool enable)
+ {
++	u64 cfg, pfc_class_mask_cfg;
+ 	rpm_t *rpm = rpmd;
+-	u64 cfg;
+ 
+ 	/* ALL pause frames received are completely ignored */
+ 	cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
+@@ -380,9 +380,11 @@ void rpm_lmac_pause_frm_config(void *rpmd, int lmac_id, bool enable)
+ 		rpm_write(rpm, 0, RPMX_CMR_CHAN_MSK_OR, ~0ULL);
+ 
+ 	/* Disable all PFC classes */
+-	cfg = rpm_read(rpm, lmac_id, RPMX_CMRX_PRT_CBFC_CTL);
++	pfc_class_mask_cfg = is_dev_rpm2(rpm) ? RPM2_CMRX_PRT_CBFC_CTL :
++						RPMX_CMRX_PRT_CBFC_CTL;
++	cfg = rpm_read(rpm, lmac_id, pfc_class_mask_cfg);
+ 	cfg = FIELD_SET(RPM_PFC_CLASS_MASK, 0, cfg);
+-	rpm_write(rpm, lmac_id, RPMX_CMRX_PRT_CBFC_CTL, cfg);
++	rpm_write(rpm, lmac_id, pfc_class_mask_cfg, cfg);
  }
-+EXPORT_SYMBOL(otx2_txschq_free_one);
  
- void otx2_txschq_stop(struct otx2_nic *pfvf)
- {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
-index ccaf97bb1ce03..6492749dd7c89 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_dcbnl.c
-@@ -125,19 +125,12 @@ int otx2_pfc_txschq_alloc(struct otx2_nic *pfvf)
+ int rpm_get_rx_stats(void *rpmd, int lmac_id, int idx, u64 *rx_stat)
+@@ -605,8 +607,11 @@ int rpm_lmac_pfc_config(void *rpmd, int lmac_id, u8 tx_pause, u8 rx_pause, u16 p
+ 	if (!is_lmac_valid(rpm, lmac_id))
+ 		return -ENODEV;
  
- static int otx2_pfc_txschq_stop_one(struct otx2_nic *pfvf, u8 prio)
- {
--	struct nix_txsch_free_req *free_req;
-+	int lvl;
++	pfc_class_mask_cfg = is_dev_rpm2(rpm) ? RPM2_CMRX_PRT_CBFC_CTL :
++						RPMX_CMRX_PRT_CBFC_CTL;
++
+ 	cfg = rpm_read(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG);
+-	class_en = rpm_read(rpm, lmac_id, RPMX_CMRX_PRT_CBFC_CTL);
++	class_en = rpm_read(rpm, lmac_id, pfc_class_mask_cfg);
+ 	pfc_en |= FIELD_GET(RPM_PFC_CLASS_MASK, class_en);
  
--	mutex_lock(&pfvf->mbox.lock);
- 	/* free PFC TLx nodes */
--	free_req = otx2_mbox_alloc_msg_nix_txsch_free(&pfvf->mbox);
--	if (!free_req) {
--		mutex_unlock(&pfvf->mbox.lock);
--		return -ENOMEM;
--	}
+ 	if (rx_pause) {
+@@ -635,10 +640,6 @@ int rpm_lmac_pfc_config(void *rpmd, int lmac_id, u8 tx_pause, u8 rx_pause, u16 p
+ 		cfg |= RPMX_MTI_MAC100X_COMMAND_CONFIG_PFC_MODE;
+ 
+ 	rpm_write(rpm, lmac_id, RPMX_MTI_MAC100X_COMMAND_CONFIG, cfg);
 -
--	free_req->flags = TXSCHQ_FREE_ALL;
--	otx2_sync_mbox_msg(&pfvf->mbox);
--	mutex_unlock(&pfvf->mbox.lock);
-+	for (lvl = 0; lvl < pfvf->hw.txschq_link_cfg_lvl; lvl++)
-+		otx2_txschq_free_one(pfvf, lvl,
-+				     pfvf->pfc_schq_list[lvl][prio]);
+-	pfc_class_mask_cfg = is_dev_rpm2(rpm) ? RPM2_CMRX_PRT_CBFC_CTL :
+-						RPMX_CMRX_PRT_CBFC_CTL;
+-
+ 	rpm_write(rpm, lmac_id, pfc_class_mask_cfg, class_en);
  
- 	pfvf->pfc_alloc_status[prio] = false;
  	return 0;
 -- 
 2.40.1
