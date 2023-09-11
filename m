@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F861170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C71C433C8;
-	Mon, 11 Sep 2023 14:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E221170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450A3C433C8;
+	Mon, 11 Sep 2023 14:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442036;
-	bh=p/yrFdpZMwmvbg8yHlHxcp6YldmacgrlppBFHJiSmig=;
+	s=korg; t=1694442039;
+	bh=0naeuQQxX0Y2m5YfVdEaboOoZ/LTt3NSvR6ci7u6qaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjO7ZB4kp9pjeOGq3Oa6jlEHY9dfmPO5T5yW31HrFS7h7Zogn1WbYmBdd9Erl8qFY
-	 95gQxEVhGd0ct1wqmjRL1tLAciQhFWFIH0S3sRij7PToIllFovy1P7iRTK9Yl13b5o
-	 P1h9i+l+lajKlgR/cJBPtxBKTTieakAFY8FIc1Is=
+	b=Fy4zhJ7NzjbPTXlJG+NqwXIELxXzeEmOOcVdkG0NAez1b5EHYpdSvwDLvE6nU1IS/
+	 6Yk8w6/Lp/mD3zoXCrXaefDq69NVLY1SrLyUyxVKqsyDMfWt2/gvlT/W/LWAJcRCL1
+	 Fd0MC1U+gN2uzfG96TsBTwgDSei+WE804siuqtNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 624/739] remoteproc: stm32: fix incorrect optional pointers
-Date: Mon, 11 Sep 2023 15:47:03 +0200
-Message-ID: <20230911134708.527662343@linuxfoundation.org>
+Subject: [PATCH 6.5 625/739] Drivers: hv: vmbus: Dont dereference ACPI root object handle
+Date: Mon, 11 Sep 2023 15:47:04 +0200
+Message-ID: <20230911134708.555517703@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -42,80 +41,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-[ Upstream commit fb2bdd32b231b70e6a3f1054528692f604db25d8 ]
+[ Upstream commit 78e04bbff849b51b56f5925b1945db2c6e128b61 ]
 
-Compile-testing without CONFIG_OF shows that the of_match_ptr() macro
-was used incorrectly here:
+Since the commit referenced in the Fixes: tag below the VMBus client driver
+is walking the ACPI namespace up from the VMBus ACPI device to the ACPI
+namespace root object trying to find Hyper-V MMIO ranges.
 
-drivers/remoteproc/stm32_rproc.c:662:34: warning: unused variable 'stm32_rproc_match' [-Wunused-const-variable]
+However, if it is not able to find them it ends trying to walk resources of
+the ACPI namespace root object itself.
+This object has all-ones handle, which causes a NULL pointer dereference
+in the ACPI code (from dereferencing this pointer with an offset).
 
-As in almost every driver, the solution is simply to remove the
-use of this macro. The same thing happened with the deprecated
-SIMPLE_DEV_PM_OPS(), but the corresponding warning was already shut
-up with __maybe_unused annotations, so fix those as well by using the
-correct DEFINE_SIMPLE_DEV_PM_OPS() macros and removing the extraneous
-__maybe_unused modifiers. For completeness, also add a pm_ptr() to let
-the PM ops be eliminated completely when CONFIG_PM is turned off.
+This in turn causes an oops on boot with VMBus host implementations that do
+not provide Hyper-V MMIO ranges in their VMBus ACPI device or its
+ancestors.
+The QEMU VMBus implementation is an example of such implementation.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307242300.ia82qBTp-lkp@intel.com
-Fixes: 03bd158e1535 ("remoteproc: stm32: use correct format strings on 64-bit")
-Fixes: 410119ee29b6 ("remoteproc: stm32: wakeup the system by wdg irq")
-Fixes: 13140de09cc2 ("remoteproc: stm32: add an ST stm32_rproc driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Link: https://lore.kernel.org/r/20230724195704.2432382-1-arnd@kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+I guess providing these ranges is optional, since all tested Windows
+versions seem to be able to use VMBus devices without them.
+
+Fix this by explicitly terminating the lookup at the ACPI namespace root
+object.
+
+Note that Linux guests under KVM/QEMU do not use the Hyper-V PV interface
+by default - they only do so if the KVM PV interface is missing or
+disabled.
+
+Example stack trace of such oops:
+[ 3.710827] ? __die+0x1f/0x60
+[ 3.715030] ? page_fault_oops+0x159/0x460
+[ 3.716008] ? exc_page_fault+0x73/0x170
+[ 3.716959] ? asm_exc_page_fault+0x22/0x30
+[ 3.717957] ? acpi_ns_lookup+0x7a/0x4b0
+[ 3.718898] ? acpi_ns_internalize_name+0x79/0xc0
+[ 3.720018] acpi_ns_get_node_unlocked+0xb5/0xe0
+[ 3.721120] ? acpi_ns_check_object_type+0xfe/0x200
+[ 3.722285] ? acpi_rs_convert_aml_to_resource+0x37/0x6e0
+[ 3.723559] ? down_timeout+0x3a/0x60
+[ 3.724455] ? acpi_ns_get_node+0x3a/0x60
+[ 3.725412] acpi_ns_get_node+0x3a/0x60
+[ 3.726335] acpi_ns_evaluate+0x1c3/0x2c0
+[ 3.727295] acpi_ut_evaluate_object+0x64/0x1b0
+[ 3.728400] acpi_rs_get_method_data+0x2b/0x70
+[ 3.729476] ? vmbus_platform_driver_probe+0x1d0/0x1d0 [hv_vmbus]
+[ 3.730940] ? vmbus_platform_driver_probe+0x1d0/0x1d0 [hv_vmbus]
+[ 3.732411] acpi_walk_resources+0x78/0xd0
+[ 3.733398] vmbus_platform_driver_probe+0x9f/0x1d0 [hv_vmbus]
+[ 3.734802] platform_probe+0x3d/0x90
+[ 3.735684] really_probe+0x19b/0x400
+[ 3.736570] ? __device_attach_driver+0x100/0x100
+[ 3.737697] __driver_probe_device+0x78/0x160
+[ 3.738746] driver_probe_device+0x1f/0x90
+[ 3.739743] __driver_attach+0xc2/0x1b0
+[ 3.740671] bus_for_each_dev+0x70/0xc0
+[ 3.741601] bus_add_driver+0x10e/0x210
+[ 3.742527] driver_register+0x55/0xf0
+[ 3.744412] ? 0xffffffffc039a000
+[ 3.745207] hv_acpi_init+0x3c/0x1000 [hv_vmbus]
+
+Fixes: 7f163a6fd957 ("drivers:hv: Modify hv_vmbus to search for all MMIO ranges available.")
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Link: https://lore.kernel.org/r/fd8e64ceeecfd1d95ff49021080cf699e88dbbde.1691606267.git.maciej.szmigiero@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/stm32_rproc.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hv/vmbus_drv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm32_rproc.c
-index cf073bac79f73..48dca3503fa45 100644
---- a/drivers/remoteproc/stm32_rproc.c
-+++ b/drivers/remoteproc/stm32_rproc.c
-@@ -921,7 +921,7 @@ static void stm32_rproc_remove(struct platform_device *pdev)
- 	rproc_free(rproc);
- }
- 
--static int __maybe_unused stm32_rproc_suspend(struct device *dev)
-+static int stm32_rproc_suspend(struct device *dev)
- {
- 	struct rproc *rproc = dev_get_drvdata(dev);
- 	struct stm32_rproc *ddata = rproc->priv;
-@@ -932,7 +932,7 @@ static int __maybe_unused stm32_rproc_suspend(struct device *dev)
- 	return 0;
- }
- 
--static int __maybe_unused stm32_rproc_resume(struct device *dev)
-+static int stm32_rproc_resume(struct device *dev)
- {
- 	struct rproc *rproc = dev_get_drvdata(dev);
- 	struct stm32_rproc *ddata = rproc->priv;
-@@ -943,16 +943,16 @@ static int __maybe_unused stm32_rproc_resume(struct device *dev)
- 	return 0;
- }
- 
--static SIMPLE_DEV_PM_OPS(stm32_rproc_pm_ops,
--			 stm32_rproc_suspend, stm32_rproc_resume);
-+static DEFINE_SIMPLE_DEV_PM_OPS(stm32_rproc_pm_ops,
-+				stm32_rproc_suspend, stm32_rproc_resume);
- 
- static struct platform_driver stm32_rproc_driver = {
- 	.probe = stm32_rproc_probe,
- 	.remove_new = stm32_rproc_remove,
- 	.driver = {
- 		.name = "stm32-rproc",
--		.pm = &stm32_rproc_pm_ops,
--		.of_match_table = of_match_ptr(stm32_rproc_match),
-+		.pm = pm_ptr(&stm32_rproc_pm_ops),
-+		.of_match_table = stm32_rproc_match,
- 	},
- };
- module_platform_driver(stm32_rproc_driver);
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 67f95a29aeca5..edbb38f6956b9 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2287,7 +2287,8 @@ static int vmbus_acpi_add(struct platform_device *pdev)
+ 	 * Some ancestor of the vmbus acpi device (Gen1 or Gen2
+ 	 * firmware) is the VMOD that has the mmio ranges. Get that.
+ 	 */
+-	for (ancestor = acpi_dev_parent(device); ancestor;
++	for (ancestor = acpi_dev_parent(device);
++	     ancestor && ancestor->handle != ACPI_ROOT_OBJECT;
+ 	     ancestor = acpi_dev_parent(ancestor)) {
+ 		result = acpi_walk_resources(ancestor->handle, METHOD_NAME__CRS,
+ 					     vmbus_walk_resources, NULL);
 -- 
 2.40.1
 
