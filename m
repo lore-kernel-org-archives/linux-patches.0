@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CA311706
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6143FC433C8;
-	Mon, 11 Sep 2023 14:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79AA11706
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:53:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E75DC433C7;
+	Mon, 11 Sep 2023 14:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444001;
-	bh=hNBwZtF4d/OdSDpaywte4+zYM78PZhRzU9gGOv6Hvm8=;
+	s=korg; t=1694444004;
+	bh=rfMiuZx2ORAiiXxIXbIi+5kBj7sgkYIfHb41+OR2lTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIBfNDeZEAegypchYts1OFa1iS2EKRW0P2T4c2H8yCeNWZQUczNKQuNAo8V4ct70U
-	 XfR8n0Ru0g0Yehp5Is2PF6OXxYUFz4XmBp0yBmHtCXN7SME+JvlF9oUi682NhcG9KO
-	 u3i6okJzEfJsOrAaqpKh0aJ6GmEl+Wm6PC+T8B/4=
+	b=elK1dP+C6oipXF2Xz1De1eRwkQLL3QAyWUjPZOLztpzRk8bEUdd8CrbvZDuKrf0+c
+	 U5e+ARkkwZe3ux8UpHb2suJ22Xzq3cysOHcAF/utnqZLvsUaHphuorGBVD3XcLs05x
+	 E89OZaRs1n4cdCuJdCiw0V4AnNzpUR31hi5S7Sgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
+	Chunhai Guo <guochunhai@vivo.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 575/737] f2fs: fix to avoid mmap vs set_compress_option case
-Date: Mon, 11 Sep 2023 15:47:14 +0200
-Message-ID: <20230911134706.596899720@linuxfoundation.org>
+Subject: [PATCH 6.4 576/737] f2fs: Only lfs mode is allowed with zoned block device feature
+Date: Mon, 11 Sep 2023 15:47:15 +0200
+Message-ID: <20230911134706.623916253@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,113 +40,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Chunhai Guo <guochunhai@vivo.com>
 
-[ Upstream commit b5ab3276eb69cacf44ecfb11b2bfab73096ff4e4 ]
+[ Upstream commit 2bd4df8fcbc72f58ce3c62ed021ab291ca42de0b ]
 
-Compression option in inode should not be changed after they have
-been used, however, it may happen in below race case:
+Now f2fs support four block allocation modes: lfs, adaptive,
+fragment:segment, fragment:block. Only lfs mode is allowed with zoned block
+device feature.
 
-Thread A				Thread B
-- f2fs_ioc_set_compress_option
- - check f2fs_is_mmap_file()
- - check get_dirty_pages()
- - check F2FS_HAS_BLOCKS()
-					- f2fs_file_mmap
-					 - set_inode_flag(FI_MMAP_FILE)
-					- fault
-					 - do_page_mkwrite
-					  - f2fs_vm_page_mkwrite
-					  - f2fs_get_block_locked
-					 - fault_dirty_shared_page
-					  - set_page_dirty
- - update i_compress_algorithm
- - update i_log_cluster_size
- - update i_cluster_size
-
-Avoid such race condition by covering f2fs_file_mmap() w/ i_sem lock,
-meanwhile add mmap file check condition in f2fs_may_compress() as well.
-
-Fixes: e1e8debec656 ("f2fs: add F2FS_IOC_SET_COMPRESS_OPTION ioctl")
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: 6691d940b0e0 ("f2fs: introduce fragment allocation mode mount option")
+Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h |  3 ++-
- fs/f2fs/file.c | 23 ++++++++++++++++++-----
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ fs/f2fs/super.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 271d4e7b22c91..395d23ab149da 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4469,7 +4469,8 @@ static inline bool f2fs_low_mem_mode(struct f2fs_sb_info *sbi)
- static inline bool f2fs_may_compress(struct inode *inode)
- {
- 	if (IS_SWAPFILE(inode) || f2fs_is_pinned_file(inode) ||
--		f2fs_is_atomic_file(inode) || f2fs_has_inline_data(inode))
-+		f2fs_is_atomic_file(inode) || f2fs_has_inline_data(inode) ||
-+		f2fs_is_mmap_file(inode))
- 		return false;
- 	return S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode);
- }
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index ead75c4e833d2..f1be41014180a 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -528,7 +528,11 @@ static int f2fs_file_mmap(struct file *file, struct vm_area_struct *vma)
- 
- 	file_accessed(file);
- 	vma->vm_ops = &f2fs_file_vm_ops;
-+
-+	f2fs_down_read(&F2FS_I(inode)->i_sem);
- 	set_inode_flag(inode, FI_MMAP_FILE);
-+	f2fs_up_read(&F2FS_I(inode)->i_sem);
-+
- 	return 0;
- }
- 
-@@ -1920,12 +1924,19 @@ static int f2fs_setflags_common(struct inode *inode, u32 iflags, u32 mask)
- 			int err = f2fs_convert_inline_inode(inode);
- 			if (err)
- 				return err;
--			if (!f2fs_may_compress(inode))
--				return -EINVAL;
--			if (S_ISREG(inode->i_mode) && F2FS_HAS_BLOCKS(inode))
-+
-+			f2fs_down_write(&F2FS_I(inode)->i_sem);
-+			if (!f2fs_may_compress(inode) ||
-+					(S_ISREG(inode->i_mode) &&
-+					F2FS_HAS_BLOCKS(inode))) {
-+				f2fs_up_write(&F2FS_I(inode)->i_sem);
- 				return -EINVAL;
--			if (set_compress_context(inode))
--				return -EOPNOTSUPP;
-+			}
-+			err = set_compress_context(inode);
-+			f2fs_up_write(&F2FS_I(inode)->i_sem);
-+
-+			if (err)
-+				return err;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 3d91b5313947f..72b7ea71f55df 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -860,11 +860,6 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
+ 			if (!name)
+ 				return -ENOMEM;
+ 			if (!strcmp(name, "adaptive")) {
+-				if (f2fs_sb_has_blkzoned(sbi)) {
+-					f2fs_warn(sbi, "adaptive mode is not allowed with zoned block device feature");
+-					kfree(name);
+-					return -EINVAL;
+-				}
+ 				F2FS_OPTION(sbi).fs_mode = FS_MODE_ADAPTIVE;
+ 			} else if (!strcmp(name, "lfs")) {
+ 				F2FS_OPTION(sbi).fs_mode = FS_MODE_LFS;
+@@ -1329,6 +1324,11 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
+ 			F2FS_OPTION(sbi).discard_unit =
+ 					DISCARD_UNIT_SECTION;
  		}
- 	}
- 
-@@ -3953,6 +3964,7 @@ static int f2fs_ioc_set_compress_option(struct file *filp, unsigned long arg)
- 	file_start_write(filp);
- 	inode_lock(inode);
- 
-+	f2fs_down_write(&F2FS_I(inode)->i_sem);
- 	if (f2fs_is_mmap_file(inode) || get_dirty_pages(inode)) {
- 		ret = -EBUSY;
- 		goto out;
-@@ -3972,6 +3984,7 @@ static int f2fs_ioc_set_compress_option(struct file *filp, unsigned long arg)
- 		f2fs_warn(sbi, "compression algorithm is successfully set, "
- 			"but current kernel doesn't support this algorithm.");
- out:
-+	f2fs_up_write(&F2FS_I(inode)->i_sem);
- 	inode_unlock(inode);
- 	file_end_write(filp);
- 
++
++		if (F2FS_OPTION(sbi).fs_mode != FS_MODE_LFS) {
++			f2fs_info(sbi, "Only lfs mode is allowed with zoned block device feature");
++			return -EINVAL;
++		}
+ #else
+ 		f2fs_err(sbi, "Zoned block device support is not enabled");
+ 		return -EINVAL;
 -- 
 2.40.1
 
