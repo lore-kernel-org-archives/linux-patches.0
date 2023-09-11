@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC0611705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8F3C433C8;
-	Mon, 11 Sep 2023 14:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0240E11705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705DAC433C7;
+	Mon, 11 Sep 2023 14:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443200;
-	bh=7gn0IlRaCny4WaCoCWiOpcwmgRlBDAOD/eORzs07c6M=;
+	s=korg; t=1694443203;
+	bh=35YJJJ3lYBTCZ+jwFKmO/C58DyNWDJxzSJLxGx2/axw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MugTPttlUPsmo6TTJTjLB15dkECQ/ls/xqeBDhpTQV12wXc6ktaCuL6GG5KO84byk
-	 B+jfFmghcPs/2rLgNn6ddUMDwJTWL88ARMLdCmKMhfp2NJJw1TXy6DW2kXZT+U+QBY
-	 BOiBUH6WcQWDgfHLMTXCAUZxHgJJZ/BqNgEJBK7g=
+	b=B7wLig0kONsrhCACQBvnMDuSRcfyu0SaPSwicpOVmEnxpPF6x3InSSLcq6PPxcaBd
+	 2GZNfhddnA+QOtULlV8TKEC/CG0Jfxa8/Cx8J++kOnfjJruBQv19Q2ijpWuuqMe7vh
+	 k7O7ybjiM88H3EJp7aTc5A+5Cop2JmSOU2zIbbyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 293/737] arm64: dts: qcom: sm8350: Add missing LMH interrupts to cpufreq
-Date: Mon, 11 Sep 2023 15:42:32 +0200
-Message-ID: <20230911134658.746279125@linuxfoundation.org>
+Subject: [PATCH 6.4 294/737] arm64: dts: qcom: sm8350: Use proper CPU compatibles
+Date: Mon, 11 Sep 2023 15:42:33 +0200
+Message-ID: <20230911134658.772627259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -42,38 +42,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 951151c2bb548e0f6b2c40ab4c48675f5342c914 ]
+[ Upstream commit 4390730cc12af25f7c997f477795f5f4200149c0 ]
 
-Add the missing interrupts that communicate the hardware-managed
-throttling to Linux.
+The Kryo names (once again) turned out to be fake. The CPUs report:
 
-Fixes: ccbb3abb23a5 ("arm64: dts: qcom: sm8350: Add cpufreq node")
+0x412fd050 (CA55 r2p0) (0 - 3)
+0x411fd410 (CA78 r1p1) (4 - 6)
+0x411fd440 (CX1  r1p1) (7)
+
+Use the compatibles that reflect that.
+
+Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230705-topic-sm8350_fixes-v1-3-0f69f70ccb6a@linaro.org
+Link: https://lore.kernel.org/r/20230706-topic-sm8350-cpu-compat-v1-1-f8d6a1869781@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 24eec0eacc3d5..1aede15ec1a5b 100644
+index 1aede15ec1a5b..f375d960ba85c 100644
 --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -3339,6 +3339,13 @@ cpufreq_hw: cpufreq@18591000 {
- 			      <0 0x18593000 0 0x1000>;
- 			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
+@@ -48,7 +48,7 @@ cpus {
  
-+			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "dcvsh-irq-0",
-+					  "dcvsh-irq-1",
-+					  "dcvsh-irq-2";
-+
- 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
- 			clock-names = "xo", "alternate";
+ 		CPU0: cpu@0 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a55";
+ 			reg = <0x0 0x0>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+@@ -72,7 +72,7 @@ L3_0: l3-cache {
  
+ 		CPU1: cpu@100 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a55";
+ 			reg = <0x0 0x100>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+@@ -91,7 +91,7 @@ L2_100: l2-cache {
+ 
+ 		CPU2: cpu@200 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a55";
+ 			reg = <0x0 0x200>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+@@ -110,7 +110,7 @@ L2_200: l2-cache {
+ 
+ 		CPU3: cpu@300 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a55";
+ 			reg = <0x0 0x300>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			enable-method = "psci";
+@@ -129,7 +129,7 @@ L2_300: l2-cache {
+ 
+ 		CPU4: cpu@400 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a78";
+ 			reg = <0x0 0x400>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			enable-method = "psci";
+@@ -148,7 +148,7 @@ L2_400: l2-cache {
+ 
+ 		CPU5: cpu@500 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a78";
+ 			reg = <0x0 0x500>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			enable-method = "psci";
+@@ -167,7 +167,7 @@ L2_500: l2-cache {
+ 
+ 		CPU6: cpu@600 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-a78";
+ 			reg = <0x0 0x600>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			enable-method = "psci";
+@@ -186,7 +186,7 @@ L2_600: l2-cache {
+ 
+ 		CPU7: cpu@700 {
+ 			device_type = "cpu";
+-			compatible = "qcom,kryo685";
++			compatible = "arm,cortex-x1";
+ 			reg = <0x0 0x700>;
+ 			clocks = <&cpufreq_hw 2>;
+ 			enable-method = "psci";
 -- 
 2.40.1
 
