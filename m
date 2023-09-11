@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9CB8472
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACBDC433C7;
-	Mon, 11 Sep 2023 14:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04BBC153
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:35:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FACFC433C8;
+	Mon, 11 Sep 2023 14:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442942;
-	bh=9tj/vUqEtAm76syuOqIVBwByBrikyt8t0Cn1/fhURHs=;
+	s=korg; t=1694442945;
+	bh=COixVYk3EV3/zxYDLCdbLf8C7jIke5QA0LhJkegqatA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktAftgySALxoBvkrq7yLpjnjymhuK3OcvWPoqERxvuoXKXvssnd9SDP/2UqrHs5X1
-	 lnjGwJCM2hGBLmFM+ZCzQjjTWRs0uwhBsYA6ssMyfUks6Vki9SFg2QwDZY/pTFtvSj
-	 xJ8OlbDrwPn1E79+JwFBTcDnbj9q5MsxohAJPzVo=
+	b=tY0P/ZXSnvD5XGjqtrUKzO3JzSTkPjOqJutEMKG7MA8/ooLbWHmKzUggTDNdXNSXQ
+	 QJs7QtqBudKv3EJtZ56aFSvxx68JPp7vK8Ia56B1zfcBHe9l17E/65+z/t/VL8dimC
+	 i+H2Co1hOy4OnTX6haRks1nRfa3sdf0y+bjS08IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 202/737] Bluetooth: Fix potential use-after-free when clear keys
-Date: Mon, 11 Sep 2023 15:41:01 +0200
-Message-ID: <20230911134656.240787728@linuxfoundation.org>
+Subject: [PATCH 6.4 203/737] Bluetooth: hci_sync: Dont double print name in add/remove adv_monitor
+Date: Mon, 11 Sep 2023 15:41:02 +0200
+Message-ID: <20230911134656.269695654@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -40,74 +41,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Min Li <lm0963hack@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 3673952cf0c6cf81b06c66a0b788abeeb02ff3ae ]
+[ Upstream commit 6f55eea116ba3646fb5fbb31de703f8cf79d8214 ]
 
-Similar to commit c5d2b6fa26b5 ("Bluetooth: Fix use-after-free in
-hci_remove_ltk/hci_remove_irk"). We can not access k after kfree_rcu()
-call.
+The hci_add_adv_monitor() hci_remove_adv_monitor() functions call
+bt_dev_dbg() to print some debug statements. The bt_dev_dbg() macro
+automatically adds in the device's name. That means that we shouldn't
+include the name in the bt_dev_dbg() calls.
 
-Fixes: d7d41682efc2 ("Bluetooth: Fix Suspicious RCU usage warnings")
-Signed-off-by: Min Li <lm0963hack@gmail.com>
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a2bcd2b63271 ("Bluetooth: hci_sync: Avoid use-after-free in dbg for hci_add_adv_monitor()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/bluetooth/hci_core.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 1ec83985f1ab0..793b66da22653 100644
+index 793b66da22653..04b51ffd946b7 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -1074,9 +1074,9 @@ void hci_uuids_clear(struct hci_dev *hdev)
+@@ -1949,14 +1949,14 @@ int hci_add_adv_monitor(struct hci_dev *hdev, struct adv_monitor *monitor)
  
- void hci_link_keys_clear(struct hci_dev *hdev)
- {
--	struct link_key *key;
-+	struct link_key *key, *tmp;
+ 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
+ 	case HCI_ADV_MONITOR_EXT_NONE:
+-		bt_dev_dbg(hdev, "%s add monitor %d status %d", hdev->name,
++		bt_dev_dbg(hdev, "add monitor %d status %d",
+ 			   monitor->handle, status);
+ 		/* Message was not forwarded to controller - not an error */
+ 		break;
  
--	list_for_each_entry(key, &hdev->link_keys, list) {
-+	list_for_each_entry_safe(key, tmp, &hdev->link_keys, list) {
- 		list_del_rcu(&key->list);
- 		kfree_rcu(key, rcu);
+ 	case HCI_ADV_MONITOR_EXT_MSFT:
+ 		status = msft_add_monitor_pattern(hdev, monitor);
+-		bt_dev_dbg(hdev, "%s add monitor %d msft status %d", hdev->name,
++		bt_dev_dbg(hdev, "add monitor %d msft status %d",
+ 			   monitor->handle, status);
+ 		break;
  	}
-@@ -1084,9 +1084,9 @@ void hci_link_keys_clear(struct hci_dev *hdev)
+@@ -1976,15 +1976,15 @@ static int hci_remove_adv_monitor(struct hci_dev *hdev,
  
- void hci_smp_ltks_clear(struct hci_dev *hdev)
- {
--	struct smp_ltk *k;
-+	struct smp_ltk *k, *tmp;
+ 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
+ 	case HCI_ADV_MONITOR_EXT_NONE: /* also goes here when powered off */
+-		bt_dev_dbg(hdev, "%s remove monitor %d status %d", hdev->name,
++		bt_dev_dbg(hdev, "remove monitor %d status %d",
+ 			   monitor->handle, status);
+ 		goto free_monitor;
  
--	list_for_each_entry(k, &hdev->long_term_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
- 		list_del_rcu(&k->list);
- 		kfree_rcu(k, rcu);
+ 	case HCI_ADV_MONITOR_EXT_MSFT:
+ 		handle = monitor->handle;
+ 		status = msft_remove_monitor(hdev, monitor);
+-		bt_dev_dbg(hdev, "%s remove monitor %d msft status %d",
+-			   hdev->name, handle, status);
++		bt_dev_dbg(hdev, "remove monitor %d msft status %d",
++			   handle, status);
+ 		break;
  	}
-@@ -1094,9 +1094,9 @@ void hci_smp_ltks_clear(struct hci_dev *hdev)
  
- void hci_smp_irks_clear(struct hci_dev *hdev)
- {
--	struct smp_irk *k;
-+	struct smp_irk *k, *tmp;
- 
--	list_for_each_entry(k, &hdev->identity_resolving_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
- 		list_del_rcu(&k->list);
- 		kfree_rcu(k, rcu);
- 	}
-@@ -1104,9 +1104,9 @@ void hci_smp_irks_clear(struct hci_dev *hdev)
- 
- void hci_blocked_keys_clear(struct hci_dev *hdev)
- {
--	struct blocked_key *b;
-+	struct blocked_key *b, *tmp;
- 
--	list_for_each_entry(b, &hdev->blocked_keys, list) {
-+	list_for_each_entry_safe(b, tmp, &hdev->blocked_keys, list) {
- 		list_del_rcu(&b->list);
- 		kfree_rcu(b, rcu);
- 	}
 -- 
 2.40.1
 
