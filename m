@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D091170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F555C433C8;
-	Mon, 11 Sep 2023 14:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85771170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B589C433CA;
+	Mon, 11 Sep 2023 14:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442388;
-	bh=BML5QJbF1wpznZpZWR/4jQSZRGTU5a8LjED5AQTOPsY=;
+	s=korg; t=1694442390;
+	bh=6EhDP97OldCtiUtbovKwlr+VpE+umM+WisJzZpstFRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdWcHCY8k7AnxrMymOb7GGCMzhpOQehykFTKjQNRUD4+hNWMzQVZy5uG+FEGzDrPf
-	 1KBlD08E2qcj5nG/Bz8/8r5tE1OO/1vFC64ZK62WTy71k47o4P/QkLMH8Mhi99xeMN
-	 kHkOPPTIDF/BIK/HMn40ShWm/w3ie8R4C9yCIfeo=
+	b=DJNFUNRw6tRKkGkrVQNqpK4eIjr6GMW4ev9pFo7XCNqKn+Te0KJoBpn0icHpnnYii
+	 1CVIQP5+FOj39QdV6A4QQ2X+jBS95FjCIH80r6lRw1nhyGZRmtZOh2a8XaYzdomadu
+	 fkxMOJOa+OPBwVspVd+3GzH0NR3Y/ADmu/ilNHT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Yunying Sun <yunying.sun@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.5 727/739] perf/x86/uncore: Correct the number of CHAs on EMR
-Date: Mon, 11 Sep 2023 15:48:46 +0200
-Message-ID: <20230911134711.376785081@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 001/737] Revert "bridge: Add extack warning when enabling STP in netns."
+Date: Mon, 11 Sep 2023 15:37:40 +0200
+Message-ID: <20230911134650.337689634@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
-References: <20230911134650.921299741@linuxfoundation.org>
+In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
+References: <20230911134650.286315610@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,65 +36,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 6f7f984fa85b305799076a1bcec941b9377587de upstream.
+[ Upstream commit 7ebd00a5a20c48e6020d49a3b2afb3cdfd2da8b7 ]
 
-Starting from SPR, the basic uncore PMON information is retrieved from
-the discovery table (resides in an MMIO space populated by BIOS). It is
-called the discovery method. The existing value of the type->num_boxes
-is from the discovery table.
+This reverts commit 56a16035bb6effb37177867cea94c13a8382f745.
 
-On some SPR variants, there is a firmware bug that makes the value from the
-discovery table incorrect. We use the value from the
-SPR_MSR_UNC_CBO_CONFIG MSR to replace the one from the discovery table:
+Since the previous commit, STP works on bridge in netns.
 
-   38776cc45eb7 ("perf/x86/uncore: Correct the number of CHAs on SPR")
+  # unshare -n
+  # ip link add br0 type bridge
+  # ip link add veth0 type veth peer name veth1
 
-Unfortunately, the SPR_MSR_UNC_CBO_CONFIG isn't available for the EMR
-XCC (Always returns 0), but the above firmware bug doesn't impact the
-EMR XCC.
+  # ip link set veth0 master br0 up
+  [   50.558135] br0: port 1(veth0) entered blocking state
+  [   50.558366] br0: port 1(veth0) entered disabled state
+  [   50.558798] veth0: entered allmulticast mode
+  [   50.564401] veth0: entered promiscuous mode
 
-Don't let the value from the MSR replace the existing value from the
-discovery table.
+  # ip link set veth1 master br0 up
+  [   54.215487] br0: port 2(veth1) entered blocking state
+  [   54.215657] br0: port 2(veth1) entered disabled state
+  [   54.215848] veth1: entered allmulticast mode
+  [   54.219577] veth1: entered promiscuous mode
 
-Fixes: 38776cc45eb7 ("perf/x86/uncore: Correct the number of CHAs on SPR")
-Reported-by: Stephane Eranian <eranian@google.com>
-Reported-by: Yunying Sun <yunying.sun@intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Yunying Sun <yunying.sun@intel.com>
-Link: https://lore.kernel.org/r/20230905134248.496114-1-kan.liang@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  # ip link set br0 type bridge stp_state 1
+  # ip link set br0 up
+  [   61.960726] br0: port 2(veth1) entered blocking state
+  [   61.961097] br0: port 2(veth1) entered listening state
+  [   61.961495] br0: port 1(veth0) entered blocking state
+  [   61.961653] br0: port 1(veth0) entered listening state
+  [   63.998835] br0: port 2(veth1) entered blocking state
+  [   77.437113] br0: port 1(veth0) entered learning state
+  [   86.653501] br0: received packet on veth0 with own address as source address (addr:6e:0f:e7:6f:5f:5f, vlan:0)
+  [   92.797095] br0: port 1(veth0) entered forwarding state
+  [   92.797398] br0: topology change detected, propagating
+
+Let's remove the warning.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/bridge/br_stp_if.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -6474,8 +6474,18 @@ void spr_uncore_cpu_init(void)
+diff --git a/net/bridge/br_stp_if.c b/net/bridge/br_stp_if.c
+index b65962682771f..75204d36d7f90 100644
+--- a/net/bridge/br_stp_if.c
++++ b/net/bridge/br_stp_if.c
+@@ -201,9 +201,6 @@ int br_stp_set_enabled(struct net_bridge *br, unsigned long val,
+ {
+ 	ASSERT_RTNL();
  
- 	type = uncore_find_type_by_id(uncore_msr_uncores, UNCORE_SPR_CHA);
- 	if (type) {
-+		/*
-+		 * The value from the discovery table (stored in the type->num_boxes
-+		 * of UNCORE_SPR_CHA) is incorrect on some SPR variants because of a
-+		 * firmware bug. Using the value from SPR_MSR_UNC_CBO_CONFIG to replace it.
-+		 */
- 		rdmsrl(SPR_MSR_UNC_CBO_CONFIG, num_cbo);
--		type->num_boxes = num_cbo;
-+		/*
-+		 * The MSR doesn't work on the EMR XCC, but the firmware bug doesn't impact
-+		 * the EMR XCC. Don't let the value from the MSR replace the existing value.
-+		 */
-+		if (num_cbo)
-+			type->num_boxes = num_cbo;
- 	}
- 	spr_uncore_iio_free_running.num_boxes = uncore_type_max_boxes(uncore_msr_uncores, UNCORE_SPR_IIO);
- }
+-	if (!net_eq(dev_net(br->dev), &init_net))
+-		NL_SET_ERR_MSG_MOD(extack, "STP does not work in non-root netns");
+-
+ 	if (br_mrp_enabled(br)) {
+ 		NL_SET_ERR_MSG_MOD(extack,
+ 				   "STP can't be enabled if MRP is already enabled");
+-- 
+2.40.1
+
 
 
