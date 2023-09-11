@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED6C11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7CEC433C7;
-	Mon, 11 Sep 2023 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F2611715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:09:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAC6C433C9;
+	Mon, 11 Sep 2023 15:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444979;
-	bh=sX2uwmEVEKVibcAYUFcqQWlwx5ZhJ1o8lDZRuihExxc=;
+	s=korg; t=1694444982;
+	bh=z1Mpkfdkg+2aiFXbDLkD9ejiRnBGXQUQtM4xHhYXSxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1wSHyYYF+lATt5dSPFY2xjhxGbEsf6Wi/32qwKlMcu2RhyvWIvrY2ZNBOSBOyJQV
-	 UJ/cix09RhAeuGRUmdPMXNW5xnzTIGeiAA3V4fj2Wha+FuElyJcDkZHwFPFdXOum3r
-	 Y3A1b+4WTJtGlOB/2MGnXfY7ilNsYHHSA+P9J6SU=
+	b=ZdhcOi2w/RNy0evuB39meVLGqAq5u4MYiUEpDy82xs/8/+eVKhkjmWKY2ELS1JE+L
+	 kyx20MJsKPyka+akAfUzP0bjBpu9LXoHmHTbXiY3Rg9m0ib2pvrRJU6aNpiTqnbMBa
+	 pBUAovZZAOi1XqfPwKptvsA3LR5O4qFeeN+Y9opU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 184/600] fs: ocfs2: namei: check return value of ocfs2_add_entry()
-Date: Mon, 11 Sep 2023 15:43:37 +0200
-Message-ID: <20230911134639.033193789@linuxfoundation.org>
+Subject: [PATCH 6.1 185/600] net: annotate data-races around sk->sk_lingertime
+Date: Mon, 11 Sep 2023 15:43:38 +0200
+Message-ID: <20230911134639.077046455@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -48,48 +40,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6b72e5f9e79360fce4f2be7fe81159fbdf4256a5 ]
+[ Upstream commit bc1fb82ae11753c5dec53c667a055dc37796dbd2 ]
 
-Process result of ocfs2_add_entry() in case we have an error
-value.
+sk_getsockopt() runs locklessly. This means sk->sk_lingertime
+can be read while other threads are changing its value.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Other reads also happen without socket lock being held,
+and must be annotated.
 
-Link: https://lkml.kernel.org/r/20230803145417.177649-1-artem.chernyshev@red-soft.ru
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kurt Hackel <kurt.hackel@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Remove preprocessor logic using BITS_PER_LONG, compilers
+are smart enough to figure this by themselves.
+
+v2: fixed a clang W=1 (-Wtautological-constant-out-of-range-compare) warning
+    (Jakub)
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/iso.c |  2 +-
+ net/bluetooth/sco.c |  2 +-
+ net/core/sock.c     | 18 +++++++++---------
+ net/sched/em_meta.c |  2 +-
+ net/smc/af_smc.c    |  2 +-
+ 5 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index 1c7ac433667df..04a8505bd97af 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -1535,6 +1535,10 @@ static int ocfs2_rename(struct user_namespace *mnt_userns,
- 		status = ocfs2_add_entry(handle, new_dentry, old_inode,
- 					 OCFS2_I(old_inode)->ip_blkno,
- 					 new_dir_bh, &target_insert);
-+		if (status < 0) {
-+			mlog_errno(status);
-+			goto bail;
-+		}
- 	}
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 699e4f400df29..5cd2e775915be 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1394,7 +1394,7 @@ static int iso_sock_release(struct socket *sock)
  
- 	old_inode->i_ctime = current_time(old_inode);
+ 	iso_sock_close(sk);
+ 
+-	if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
++	if (sock_flag(sk, SOCK_LINGER) && READ_ONCE(sk->sk_lingertime) &&
+ 	    !(current->flags & PF_EXITING)) {
+ 		lock_sock(sk);
+ 		err = bt_sock_wait_state(sk, BT_CLOSED, sk->sk_lingertime);
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 1755f91a66f6a..6d4168cfeb563 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1255,7 +1255,7 @@ static int sco_sock_release(struct socket *sock)
+ 
+ 	sco_sock_close(sk);
+ 
+-	if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
++	if (sock_flag(sk, SOCK_LINGER) && READ_ONCE(sk->sk_lingertime) &&
+ 	    !(current->flags & PF_EXITING)) {
+ 		lock_sock(sk);
+ 		err = bt_sock_wait_state(sk, BT_CLOSED, sk->sk_lingertime);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 8b91d9f911336..fc475845c94d5 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -793,7 +793,7 @@ EXPORT_SYMBOL(sock_set_reuseport);
+ void sock_no_linger(struct sock *sk)
+ {
+ 	lock_sock(sk);
+-	sk->sk_lingertime = 0;
++	WRITE_ONCE(sk->sk_lingertime, 0);
+ 	sock_set_flag(sk, SOCK_LINGER);
+ 	release_sock(sk);
+ }
+@@ -1219,15 +1219,15 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 			ret = -EFAULT;
+ 			break;
+ 		}
+-		if (!ling.l_onoff)
++		if (!ling.l_onoff) {
+ 			sock_reset_flag(sk, SOCK_LINGER);
+-		else {
+-#if (BITS_PER_LONG == 32)
+-			if ((unsigned int)ling.l_linger >= MAX_SCHEDULE_TIMEOUT/HZ)
+-				sk->sk_lingertime = MAX_SCHEDULE_TIMEOUT;
++		} else {
++			unsigned long t_sec = ling.l_linger;
++
++			if (t_sec >= MAX_SCHEDULE_TIMEOUT / HZ)
++				WRITE_ONCE(sk->sk_lingertime, MAX_SCHEDULE_TIMEOUT);
+ 			else
+-#endif
+-				sk->sk_lingertime = (unsigned int)ling.l_linger * HZ;
++				WRITE_ONCE(sk->sk_lingertime, t_sec * HZ);
+ 			sock_set_flag(sk, SOCK_LINGER);
+ 		}
+ 		break;
+@@ -1678,7 +1678,7 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+ 	case SO_LINGER:
+ 		lv		= sizeof(v.ling);
+ 		v.ling.l_onoff	= sock_flag(sk, SOCK_LINGER);
+-		v.ling.l_linger	= sk->sk_lingertime / HZ;
++		v.ling.l_linger	= READ_ONCE(sk->sk_lingertime) / HZ;
+ 		break;
+ 
+ 	case SO_BSDCOMPAT:
+diff --git a/net/sched/em_meta.c b/net/sched/em_meta.c
+index b1f1b49d35edf..6f2f135aab676 100644
+--- a/net/sched/em_meta.c
++++ b/net/sched/em_meta.c
+@@ -502,7 +502,7 @@ META_COLLECTOR(int_sk_lingertime)
+ 		*err = -1;
+ 		return;
+ 	}
+-	dst->value = sk->sk_lingertime / HZ;
++	dst->value = READ_ONCE(sk->sk_lingertime) / HZ;
+ }
+ 
+ META_COLLECTOR(int_sk_err_qlen)
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 84219c5121bc2..f774d840759d6 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1807,7 +1807,7 @@ void smc_close_non_accepted(struct sock *sk)
+ 	lock_sock(sk);
+ 	if (!sk->sk_lingertime)
+ 		/* wait for peer closing */
+-		sk->sk_lingertime = SMC_MAX_STREAM_WAIT_TIMEOUT;
++		WRITE_ONCE(sk->sk_lingertime, SMC_MAX_STREAM_WAIT_TIMEOUT);
+ 	__smc_release(smc);
+ 	release_sock(sk);
+ 	sock_put(sk); /* sock_hold above */
 -- 
 2.40.1
 
