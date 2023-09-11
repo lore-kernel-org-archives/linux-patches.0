@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E8011710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:23:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D74C433C8;
-	Mon, 11 Sep 2023 15:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C9D11710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:24:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6A2C433C7;
+	Mon, 11 Sep 2023 15:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445838;
-	bh=JODkoDCa3jNZIBI6n0a03kP1QAEHKU1iyn79rYkPcBw=;
+	s=korg; t=1694445841;
+	bh=/TgsauaKS2duA+UvbNHHKCOHIis6GAIIKvnh0wBt1jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKNE+pO23mhSRN0RQ1UtLMA+ZOoEqWWN/9JscBoReCmJvdaAu9i5+wH0aoLW2m0pm
-	 r9ifKHyHSPbhgTWmXpq8R55SiVYijL30Z052Dw1Znff88IawbXipbAyHYUajoEWwEi
-	 4bejmUTcGLJ5ept2A5hRGTNvYIsDzNVrtMnb41e8=
+	b=f6v+qnWxm4pekTqfPGhROh7oIIsO/zx0M4a76GzQWslI8nN0VOn4Ju9sMTk/MUzjC
+	 IIs74ws15vXhVxsfajI3i/s+QMK/1/k3YmQoyB+wSJ1RbMehPX6oCJPpXhXZiEmbow
+	 NA3bNY8A292NHGFFKu0P1Grag/63Zpuh/87LrLM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Yossi Leybovich <sleybo@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 482/600] scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock
-Date: Mon, 11 Sep 2023 15:48:35 +0200
-Message-ID: <20230911134647.867040142@linuxfoundation.org>
+Subject: [PATCH 6.1 491/600] RDMA/efa: Fix wrong resources deallocation order
+Date: Mon, 11 Sep 2023 15:48:44 +0200
+Message-ID: <20230911134648.126139943@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,154 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Yonatan Nachum <ynachum@amazon.com>
 
-[ Upstream commit 1a1975551943f681772720f639ff42fbaa746212 ]
+[ Upstream commit dc202c57e9a1423aed528e4b8dc949509cd32191 ]
 
-There is a long call chain that &fip->ctlr_lock is acquired by isr
-fnic_isr_msix_wq_copy() under hard IRQ context. Thus other process context
-code acquiring the lock should disable IRQ, otherwise deadlock could happen
-if the IRQ preempts the execution while the lock is held in process context
-on the same CPU.
+When trying to destroy QP or CQ, we first decrease the refcount and
+potentially free memory regions allocated for the object and then
+request the device to destroy the object. If the device fails, the
+object isn't fully destroyed so the user/IB core can try to destroy the
+object again which will lead to underflow when trying to decrease an
+already zeroed refcount.
 
-[ISR]
-fnic_isr_msix_wq_copy()
- -> fnic_wq_copy_cmpl_handler()
- -> fnic_fcpio_cmpl_handler()
- -> fnic_fcpio_flogi_reg_cmpl_handler()
- -> fnic_flush_tx()
- -> fnic_send_frame()
- -> fcoe_ctlr_els_send()
- -> spin_lock_bh(&fip->ctlr_lock)
+Deallocate resources in reverse order of allocating them to safely free
+them.
 
-[Process Context]
-1. fcoe_ctlr_timer_work()
- -> fcoe_ctlr_flogi_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-2. fcoe_ctlr_recv_work()
- -> fcoe_ctlr_recv_handler()
- -> fcoe_ctlr_recv_els()
- -> fcoe_ctlr_announce()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-3. fcoe_ctlr_recv_work()
- -> fcoe_ctlr_recv_handler()
- -> fcoe_ctlr_recv_els()
- -> fcoe_ctlr_flogi_retry()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-4. -> fcoe_xmit()
- -> fcoe_ctlr_els_send()
- -> spin_lock_bh(&fip->ctlr_lock)
-
-spin_lock_bh() is not enough since fnic_isr_msix_wq_copy() is a
-hardirq.
-
-These flaws were found by an experimental static analysis tool I am
-developing for irq-related deadlock.
-
-The patch fix the potential deadlocks by spin_lock_irqsave() to disable
-hard irq.
-
-Fixes: 794d98e77f59 ("[SCSI] libfcoe: retry rejected FLOGI to another FCF if possible")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230817074708.7509-1-dg573847474@gmail.com
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: ff6629f88c52 ("RDMA/efa: Do not delay freeing of DMA pages")
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Reviewed-by: Yossi Leybovich <sleybo@amazon.com>
+Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
+Link: https://lore.kernel.org/r/20230822082725.31719-1-ynachum@amazon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe_ctlr.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/efa/efa_verbs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/fcoe/fcoe_ctlr.c b/drivers/scsi/fcoe/fcoe_ctlr.c
-index ddc048069af25..8a4124e7d2043 100644
---- a/drivers/scsi/fcoe/fcoe_ctlr.c
-+++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -319,16 +319,17 @@ static void fcoe_ctlr_announce(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *sel;
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index f9526a4c75b26..90d5f1a96f3e5 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -443,12 +443,12 @@ int efa_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
  
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
+ 	ibdev_dbg(&dev->ibdev, "Destroy qp[%u]\n", ibqp->qp_num);
  
- 	kfree_skb(fip->flogi_req);
- 	fip->flogi_req = NULL;
- 	list_for_each_entry(fcf, &fip->fcfs, list)
- 		fcf->flogi_sent = 0;
+-	efa_qp_user_mmap_entries_remove(qp);
+-
+ 	err = efa_destroy_qp_handle(dev, qp->qp_handle);
+ 	if (err)
+ 		return err;
  
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 	sel = fip->sel_fcf;
++	efa_qp_user_mmap_entries_remove(qp);
++
+ 	if (qp->rq_cpu_addr) {
+ 		ibdev_dbg(&dev->ibdev,
+ 			  "qp->cpu_addr[0x%p] freed: size[%lu], dma[%pad]\n",
+@@ -1007,8 +1007,8 @@ int efa_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
+ 		  "Destroy cq[%d] virt[0x%p] freed: size[%lu], dma[%pad]\n",
+ 		  cq->cq_idx, cq->cpu_addr, cq->size, &cq->dma_addr);
  
- 	if (sel && ether_addr_equal(sel->fcf_mac, fip->dest_addr))
-@@ -699,6 +700,7 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
- {
- 	struct fc_frame *fp;
- 	struct fc_frame_header *fh;
-+	unsigned long flags;
- 	u16 old_xid;
- 	u8 op;
- 	u8 mac[ETH_ALEN];
-@@ -732,11 +734,11 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr *fip, struct fc_lport *lport,
- 		op = FIP_DT_FLOGI;
- 		if (fip->mode == FIP_MODE_VN2VN)
- 			break;
--		spin_lock_bh(&fip->ctlr_lock);
-+		spin_lock_irqsave(&fip->ctlr_lock, flags);
- 		kfree_skb(fip->flogi_req);
- 		fip->flogi_req = skb;
- 		fip->flogi_req_send = 1;
--		spin_unlock_bh(&fip->ctlr_lock);
-+		spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 		schedule_work(&fip->timer_work);
- 		return -EINPROGRESS;
- 	case ELS_FDISC:
-@@ -1705,10 +1707,11 @@ static int fcoe_ctlr_flogi_send_locked(struct fcoe_ctlr *fip)
- static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
- 	int error;
- 
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 	LIBFCOE_FIP_DBG(fip, "re-sending FLOGI - reselect\n");
- 	fcf = fcoe_ctlr_select(fip);
- 	if (!fcf || fcf->flogi_sent) {
-@@ -1719,7 +1722,7 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- 		fcoe_ctlr_solicit(fip, NULL);
- 		error = fcoe_ctlr_flogi_send_locked(fip);
- 	}
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- 	mutex_unlock(&fip->ctlr_mutex);
- 	return error;
- }
-@@ -1736,8 +1739,9 @@ static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
-+	unsigned long flags;
- 
--	spin_lock_bh(&fip->ctlr_lock);
-+	spin_lock_irqsave(&fip->ctlr_lock, flags);
- 	fcf = fip->sel_fcf;
- 	if (!fcf || !fip->flogi_req_send)
- 		goto unlock;
-@@ -1764,7 +1768,7 @@ static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- 	} else /* XXX */
- 		LIBFCOE_FIP_DBG(fip, "No FCF selected - defer send\n");
- unlock:
--	spin_unlock_bh(&fip->ctlr_lock);
-+	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
- }
- 
- /**
+-	efa_cq_user_mmap_entries_remove(cq);
+ 	efa_destroy_cq_idx(dev, cq->cq_idx);
++	efa_cq_user_mmap_entries_remove(cq);
+ 	if (cq->eq) {
+ 		xa_erase(&dev->cqs_xa, cq->cq_idx);
+ 		synchronize_irq(cq->eq->irq.irqn);
 -- 
 2.40.1
 
