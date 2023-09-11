@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9B711705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A5EC433C8;
-	Mon, 11 Sep 2023 14:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC15511705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:37:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5E6C433C7;
+	Mon, 11 Sep 2023 14:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694443062;
-	bh=W0nqTaMHlmwwXpa5Y3y7ljzUIu7/FlR1kuRPtZ6TU2A=;
+	s=korg; t=1694443065;
+	bh=8lA31x8XKI6F5gNAdU0Cb9eZQKsj1VHA02fri5jwt84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4cy+QTvskK/v+x/9YlWSrOxc8LQQe+UlIQxGc4UBJDwNLmklfM9mUt/65wk+JZH5
-	 7jJ6XcFdcyF0eHo8DzSiDk2Xw1nq9y1I05qiJMWYr8utD5VM9w0esXnQz8Opq4cQdG
-	 BQcHPtSl7/qJHoQ+Uj1y0ItqM7bUnPSRtB25dUWk=
+	b=xCQmenIp/pjlPqG2pNtgPOsPYKmH7/4KQ0bTm0IOL2bDhkMt5Uvfx4s3oBDI9UdDH
+	 MeZpbGT4fQWW0sdzjPcEuE9ytG5v5FNxJXfRk4gTRU5Scus//jxvX2s5FN3CjNaogp
+	 HDVXtaL5uhb+J7FIUTLpL0u8uyPW5nQu21xDkK6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 215/737] net-memcg: Fix scope of sockmem pressure indicators
-Date: Mon, 11 Sep 2023 15:41:14 +0200
-Message-ID: <20230911134656.596497945@linuxfoundation.org>
+Subject: [PATCH 6.4 206/737] Bluetooth: hci_event: drop only unbound CIS if Set CIG Parameters fails
+Date: Mon, 11 Sep 2023 15:41:05 +0200
+Message-ID: <20230911134656.351107644@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,84 +40,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit ac8a52962164a50e693fa021d3564d7745b83a7f ]
+[ Upstream commit 66dee21524d9ac6461ec3052652b7bc0603ee0c5 ]
 
-Now there are two indicators of socket memory pressure sit inside
-struct mem_cgroup, socket_pressure and tcpmem_pressure, indicating
-memory reclaim pressure in memcg->memory and ->tcpmem respectively.
+When user tries to connect a new CIS when its CIG is not configurable,
+that connection shall fail, but pre-existing connections shall not be
+affected.  However, currently hci_cc_le_set_cig_params deletes all CIS
+of the CIG on error so it doesn't work, even though controller shall not
+change CIG/CIS configuration if the command fails.
 
-When in legacy mode (cgroupv1), the socket memory is charged into
-->tcpmem which is independent of ->memory, so socket_pressure has
-nothing to do with socket's pressure at all. Things could be worse
-by taking socket_pressure into consideration in legacy mode, as a
-pressure in ->memory can lead to premature reclamation/throttling
-in socket.
+Fix by failing on command error only the connections that are not yet
+bound, so that we keep the previous CIS configuration like the
+controller does.
 
-While for the default mode (cgroupv2), the socket memory is charged
-into ->memory, and ->tcpmem/->tcpmem_pressure are simply not used.
-
-So {socket,tcpmem}_pressure are only used in default/legacy mode
-respectively for indicating socket memory pressure. This patch fixes
-the pieces of code that make mixed use of both.
-
-Fixes: 8e8ae645249b ("mm: memcontrol: hook up vmpressure to socket pressure")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h | 9 +++++++--
- mm/vmpressure.c            | 8 ++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_event.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 222d7370134c7..7f2921217f50b 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -284,6 +284,11 @@ struct mem_cgroup {
- 	atomic_long_t		memory_events[MEMCG_NR_MEMORY_EVENTS];
- 	atomic_long_t		memory_events_local[MEMCG_NR_MEMORY_EVENTS];
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 22fb9f9da866b..866d2cd43bf78 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3803,6 +3803,22 @@ static u8 hci_cc_le_read_buffer_size_v2(struct hci_dev *hdev, void *data,
+ 	return rp->status;
+ }
  
-+	/*
-+	 * Hint of reclaim pressure for socket memroy management. Note
-+	 * that this indicator should NOT be used in legacy cgroup mode
-+	 * where socket memory is accounted/charged separately.
-+	 */
- 	unsigned long		socket_pressure;
- 
- 	/* Legacy tcp memory accounting */
-@@ -1743,8 +1748,8 @@ void mem_cgroup_sk_alloc(struct sock *sk);
- void mem_cgroup_sk_free(struct sock *sk);
- static inline bool mem_cgroup_under_socket_pressure(struct mem_cgroup *memcg)
- {
--	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && memcg->tcpmem_pressure)
--		return true;
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
-+		return !!memcg->tcpmem_pressure;
- 	do {
- 		if (time_before(jiffies, READ_ONCE(memcg->socket_pressure)))
- 			return true;
-diff --git a/mm/vmpressure.c b/mm/vmpressure.c
-index b52644771cc43..22c6689d93027 100644
---- a/mm/vmpressure.c
-+++ b/mm/vmpressure.c
-@@ -244,6 +244,14 @@ void vmpressure(gfp_t gfp, struct mem_cgroup *memcg, bool tree,
- 	if (mem_cgroup_disabled())
- 		return;
- 
-+	/*
-+	 * The in-kernel users only care about the reclaim efficiency
-+	 * for this @memcg rather than the whole subtree, and there
-+	 * isn't and won't be any in-kernel user in a legacy cgroup.
-+	 */
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && !tree)
-+		return;
++static void hci_unbound_cis_failed(struct hci_dev *hdev, u8 cig, u8 status)
++{
++	struct hci_conn *conn, *tmp;
 +
- 	vmpr = memcg_to_vmpressure(memcg);
++	lockdep_assert_held(&hdev->lock);
++
++	list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
++		if (conn->type != ISO_LINK || !bacmp(&conn->dst, BDADDR_ANY) ||
++		    conn->state == BT_OPEN || conn->iso_qos.ucast.cig != cig)
++			continue;
++
++		if (HCI_CONN_HANDLE_UNSET(conn->handle))
++			hci_conn_failed(conn, status);
++	}
++}
++
+ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
+ 				   struct sk_buff *skb)
+ {
+@@ -3823,12 +3839,15 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
  
- 	/*
+ 	hci_dev_lock(hdev);
+ 
++	/* BLUETOOTH CORE SPECIFICATION Version 5.4 | Vol 4, Part E page 2554
++	 *
++	 * If the Status return parameter is non-zero, then the state of the CIG
++	 * and its CIS configurations shall not be changed by the command. If
++	 * the CIG did not already exist, it shall not be created.
++	 */
+ 	if (status) {
+-		while ((conn = hci_conn_hash_lookup_cig(hdev, rp->cig_id))) {
+-			conn->state = BT_CLOSED;
+-			hci_connect_cfm(conn, status);
+-			hci_conn_del(conn);
+-		}
++		/* Keep current configuration, fail only the unbound CIS */
++		hci_unbound_cis_failed(hdev, rp->cig_id, status);
+ 		goto unlock;
+ 	}
+ 
 -- 
 2.40.1
 
