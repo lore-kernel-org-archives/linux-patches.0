@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E642411710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684D6C433C7;
-	Mon, 11 Sep 2023 15:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA911710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:18:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A931C433C7;
+	Mon, 11 Sep 2023 15:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445519;
-	bh=V5/pCae+Ce1e5ZNFGYddUVQZCnI8gjbYb0q6YZ+qwSc=;
+	s=korg; t=1694445522;
+	bh=QysvTCLdelS+oIe8onAEe2gatpb9BrdisuSt7gnTZd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUH/SRT7IFPfTuLi3RSC/+0WAyiDBCn6NrDDxlmC13j1dguyRsg+SKpwwdTJkRbYX
-	 d/7hjWCf9iGU8AISLkdtD6n7mCGeQiFUObJwdyiQHXv5JZEOWlksG2XXMGp1e0FXHF
-	 LaaPLhwGtRqkoMmiJu6sW32nBhCk5k5tky3/WSgU=
+	b=lG8m0Ll30POjL3oDrYO2nDCjP4kQawQl8yRJW1X51pASQ9goErIV+91qUdEd0K02P
+	 H2Fw1s0y8/FuJjsMaBdP5396eOum5q6fuXANho6wcr6zgU+mzBGa7KA+0Sjhp0ToHN
+	 ecAx98+BNB1+uwVEr6SgCC/iUBePA3wlfMBo0844=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Currey <ruscur@russell.cc>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 377/600] powerpc/pseries: Rework lppaca_shared_proc() to avoid DEBUG_PREEMPT
-Date: Mon, 11 Sep 2023 15:46:50 +0200
-Message-ID: <20230911134644.802888309@linuxfoundation.org>
+Subject: [PATCH 6.1 360/600] clk: imx: composite-8m: fix clock pauses when set_rate would be a no-op
+Date: Mon, 11 Sep 2023 15:46:33 +0200
+Message-ID: <20230911134644.305535372@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -40,158 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell Currey <ruscur@russell.cc>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit eac030b22ea12cdfcbb2e941c21c03964403c63f ]
+[ Upstream commit 4dd432d985ef258e3bc436e568fba4b987b59171 ]
 
-lppaca_shared_proc() takes a pointer to the lppaca which is typically
-accessed through get_lppaca().  With DEBUG_PREEMPT enabled, this leads
-to checking if preemption is enabled, for example:
+Reconfiguring the clock divider to the exact same value is observed
+on an i.MX8MN to often cause a longer than usual clock pause, probably
+because the divider restarts counting whenever the register is rewritten.
 
-  BUG: using smp_processor_id() in preemptible [00000000] code: grep/10693
-  caller is lparcfg_data+0x408/0x19a0
-  CPU: 4 PID: 10693 Comm: grep Not tainted 6.5.0-rc3 #2
-  Call Trace:
-    dump_stack_lvl+0x154/0x200 (unreliable)
-    check_preemption_disabled+0x214/0x220
-    lparcfg_data+0x408/0x19a0
-    ...
+This issue doesn't show up normally, because the clock framework will
+take care to not call set_rate when the clock rate is the same.
+However, when we reconfigure an upstream clock, the common code will
+call set_rate with the newly calculated rate on all children, e.g.:
 
-This isn't actually a problem however, as it does not matter which
-lppaca is accessed, the shared proc state will be the same.
-vcpudispatch_stats_procfs_init() already works around this by disabling
-preemption, but the lparcfg code does not, erroring any time
-/proc/powerpc/lparcfg is accessed with DEBUG_PREEMPT enabled.
+  - sai5 is running normally and divides Audio PLL out by 16.
+  - Audio PLL rate is increased by 32Hz (glitch-free kdiv change)
+  - rates for children are recalculated and rates are set recursively
+  - imx8m_clk_composite_divider_set_rate(sai5) is called with
+    32/16 = 2Hz more
+  - imx8m_clk_composite_divider_set_rate computes same divider as before
+  - divider register is written, so it restarts counting from zero and
+    MCLK is briefly paused, so instead of e.g. 40ns, MCLK is low for 120ns.
 
-Instead of disabling preemption on the caller side, rework
-lppaca_shared_proc() to not take a pointer and instead directly access
-the lppaca, bypassing any potential preemption checks.
+Some external clock consumers can be upset by such unexpected clock pauses,
+so let's make sure we only rewrite the divider value when the value to be
+written is actually different.
 
-Fixes: f13c13a00512 ("powerpc: Stop using non-architected shared_proc field in lppaca")
-Signed-off-by: Russell Currey <ruscur@russell.cc>
-[mpe: Rework to avoid needing a definition in paca.h and lppaca.h]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230823055317.751786-4-mpe@ellerman.id.au
+Fixes: d3ff9728134e ("clk: imx: Add imx composite clock")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230807082201.2332746-1-a.fatoum@pengutronix.de
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/lppaca.h        | 11 +++++++++--
- arch/powerpc/platforms/pseries/lpar.c    | 10 +---------
- arch/powerpc/platforms/pseries/lparcfg.c |  4 ++--
- arch/powerpc/platforms/pseries/setup.c   |  2 +-
- drivers/cpuidle/cpuidle-pseries.c        |  8 +-------
- 5 files changed, 14 insertions(+), 21 deletions(-)
+ drivers/clk/imx/clk-composite-8m.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/lppaca.h b/arch/powerpc/include/asm/lppaca.h
-index fe278172e9d42..ee1488d38fdc1 100644
---- a/arch/powerpc/include/asm/lppaca.h
-+++ b/arch/powerpc/include/asm/lppaca.h
-@@ -45,6 +45,7 @@
- #include <asm/types.h>
- #include <asm/mmu.h>
- #include <asm/firmware.h>
-+#include <asm/paca.h>
+diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
+index cbf0d7955a00a..3e9a092e136c1 100644
+--- a/drivers/clk/imx/clk-composite-8m.c
++++ b/drivers/clk/imx/clk-composite-8m.c
+@@ -97,7 +97,7 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+ 	int prediv_value;
+ 	int div_value;
+ 	int ret;
+-	u32 val;
++	u32 orig, val;
  
- /*
-  * The lppaca is the "virtual processor area" registered with the hypervisor,
-@@ -127,14 +128,20 @@ struct lppaca {
-  */
- #define LPPACA_OLD_SHARED_PROC		2
+ 	ret = imx8m_clk_composite_compute_dividers(rate, parent_rate,
+ 						&prediv_value, &div_value);
+@@ -106,13 +106,15 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
  
--static inline bool lppaca_shared_proc(struct lppaca *l)
-+#ifdef CONFIG_PPC_PSERIES
-+/*
-+ * All CPUs should have the same shared proc value, so directly access the PACA
-+ * to avoid false positives from DEBUG_PREEMPT.
-+ */
-+static inline bool lppaca_shared_proc(void)
- {
-+	struct lppaca *l = local_paca->lppaca_ptr;
+ 	spin_lock_irqsave(divider->lock, flags);
+ 
+-	val = readl(divider->reg);
+-	val &= ~((clk_div_mask(divider->width) << divider->shift) |
+-			(clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
++	orig = readl(divider->reg);
++	val = orig & ~((clk_div_mask(divider->width) << divider->shift) |
++		       (clk_div_mask(PCG_DIV_WIDTH) << PCG_DIV_SHIFT));
+ 
+ 	val |= (u32)(prediv_value  - 1) << divider->shift;
+ 	val |= (u32)(div_value - 1) << PCG_DIV_SHIFT;
+-	writel(val, divider->reg);
 +
- 	if (!firmware_has_feature(FW_FEATURE_SPLPAR))
- 		return false;
- 	return !!(l->__old_status & LPPACA_OLD_SHARED_PROC);
- }
++	if (val != orig)
++		writel(val, divider->reg);
  
--#ifdef CONFIG_PPC_PSERIES
- #define get_lppaca()	(get_paca()->lppaca_ptr)
- #endif
+ 	spin_unlock_irqrestore(divider->lock, flags);
  
-diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
-index 97ef6499e5019..2c2812a87d470 100644
---- a/arch/powerpc/platforms/pseries/lpar.c
-+++ b/arch/powerpc/platforms/pseries/lpar.c
-@@ -638,16 +638,8 @@ static const struct proc_ops vcpudispatch_stats_freq_proc_ops = {
- 
- static int __init vcpudispatch_stats_procfs_init(void)
- {
--	/*
--	 * Avoid smp_processor_id while preemptible. All CPUs should have
--	 * the same value for lppaca_shared_proc.
--	 */
--	preempt_disable();
--	if (!lppaca_shared_proc(get_lppaca())) {
--		preempt_enable();
-+	if (!lppaca_shared_proc())
- 		return 0;
--	}
--	preempt_enable();
- 
- 	if (!proc_create("powerpc/vcpudispatch_stats", 0600, NULL,
- 					&vcpudispatch_stats_proc_ops))
-diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
-index 63fd925ccbb83..ca10a3682c46e 100644
---- a/arch/powerpc/platforms/pseries/lparcfg.c
-+++ b/arch/powerpc/platforms/pseries/lparcfg.c
-@@ -205,7 +205,7 @@ static void parse_ppp_data(struct seq_file *m)
- 	           ppp_data.active_system_procs);
- 
- 	/* pool related entries are appropriate for shared configs */
--	if (lppaca_shared_proc(get_lppaca())) {
-+	if (lppaca_shared_proc()) {
- 		unsigned long pool_idle_time, pool_procs;
- 
- 		seq_printf(m, "pool=%d\n", ppp_data.pool_num);
-@@ -616,7 +616,7 @@ static int pseries_lparcfg_data(struct seq_file *m, void *v)
- 		   partition_potential_processors);
- 
- 	seq_printf(m, "shared_processor_mode=%d\n",
--		   lppaca_shared_proc(get_lppaca()));
-+		   lppaca_shared_proc());
- 
- #ifdef CONFIG_PPC_64S_HASH_MMU
- 	if (!radix_enabled())
-diff --git a/arch/powerpc/platforms/pseries/setup.c b/arch/powerpc/platforms/pseries/setup.c
-index 8ef3270515a9b..a0701dbdb1348 100644
---- a/arch/powerpc/platforms/pseries/setup.c
-+++ b/arch/powerpc/platforms/pseries/setup.c
-@@ -846,7 +846,7 @@ static void __init pSeries_setup_arch(void)
- 	if (firmware_has_feature(FW_FEATURE_LPAR)) {
- 		vpa_init(boot_cpuid);
- 
--		if (lppaca_shared_proc(get_lppaca())) {
-+		if (lppaca_shared_proc()) {
- 			static_branch_enable(&shared_processor);
- 			pv_spinlocks_init();
- #ifdef CONFIG_PARAVIRT_TIME_ACCOUNTING
-diff --git a/drivers/cpuidle/cpuidle-pseries.c b/drivers/cpuidle/cpuidle-pseries.c
-index 7e7ab5597d7ac..0590001db6532 100644
---- a/drivers/cpuidle/cpuidle-pseries.c
-+++ b/drivers/cpuidle/cpuidle-pseries.c
-@@ -410,13 +410,7 @@ static int __init pseries_idle_probe(void)
- 		return -ENODEV;
- 
- 	if (firmware_has_feature(FW_FEATURE_SPLPAR)) {
--		/*
--		 * Use local_paca instead of get_lppaca() since
--		 * preemption is not disabled, and it is not required in
--		 * fact, since lppaca_ptr does not need to be the value
--		 * associated to the current CPU, it can be from any CPU.
--		 */
--		if (lppaca_shared_proc(local_paca->lppaca_ptr)) {
-+		if (lppaca_shared_proc()) {
- 			cpuidle_state_table = shared_states;
- 			max_idle_state = ARRAY_SIZE(shared_states);
- 		} else {
 -- 
 2.40.1
 
