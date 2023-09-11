@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009A61170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75690C433C8;
-	Mon, 11 Sep 2023 14:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F301170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:20:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E39C433C7;
+	Mon, 11 Sep 2023 14:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442050;
-	bh=4YCuFZU/uZ9gRhS2hq5PeoG11abTu1DR0U6YnpcAABg=;
+	s=korg; t=1694442053;
+	bh=5qCZuv4FOK8ViwJYPnkVyvrjOLOY4Cw7r9HhE2L09mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gb23+8m5mtJVKqVginCEmfMe2FpZthhW7hIpngD3LE5Nxz3zJybq8cPJhHnCt6r+O
-	 33wZKXEcFmab7JUJS4MPEurTV7YZYEA8MAj3M9Al+fMBiTBz84DEcxDgQHQDiaaDTN
-	 QpWQClUivpeCLI7sF+V9hjifZ/U6S5ol/+23C5ZA=
+	b=Z9b+iMQ14Oxq8sBqdFD6cpgZt5yeBusQ9W946lBiZ8t57l+s+egFJxVNdmJRF83IH
+	 FcvwsWt5P0vHazG3LtVN9xI/n0ZuM3+D770HEX6w/bpjJ4FNShfOrcjQtP3Gt62tkD
+	 1aJySzVVF37AecXC7XbVVscJpZmcRNPmvD75mQ8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuan Yao <yuanyaogoog@chromium.org>,
 	Jason Wang <jasowang@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 628/739] virtio_vdpa: build affinity masks conditionally
-Date: Mon, 11 Sep 2023 15:47:07 +0200
-Message-ID: <20230911134708.637678316@linuxfoundation.org>
+Subject: [PATCH 6.5 629/739] virtio_ring: fix avail_wrap_counter in virtqueue_add_packed
+Date: Mon, 11 Sep 2023 15:47:08 +0200
+Message-ID: <20230911134708.665326359@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -34,134 +35,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Yuan Yao <yuanyaogoog@chromium.org>
 
-[ Upstream commit ae15aceaa98ad9499763923f7890e345d9f46b60 ]
+[ Upstream commit 1acfe2c1225899eab5ab724c91b7e1eb2881b9ab ]
 
-We try to build affinity mask via create_affinity_masks()
-unconditionally which may lead several issues:
+In current packed virtqueue implementation, the avail_wrap_counter won't
+flip, in the case when the driver supplies a descriptor chain with a
+length equals to the queue size; total_sg == vq->packed.vring.num.
 
-- the affinity mask is not used for parent without affinity support
-  (only VDUSE support the affinity now)
-- the logic of create_affinity_masks() might not work for devices
-  other than block. For example it's not rare in the networking device
-  where the number of queues could exceed the number of CPUs. Such
-  case breaks the current affinity logic which is based on
-  group_cpus_evenly() who assumes the number of CPUs are not less than
-  the number of groups. This can trigger a warning[1]:
+Let’s assume the following situation:
+vq->packed.vring.num=4
+vq->packed.next_avail_idx: 1
+vq->packed.avail_wrap_counter: 0
 
-	if (ret >= 0)
-		WARN_ON(nr_present + nr_others < numgrps);
+Then the driver adds a descriptor chain containing 4 descriptors.
 
-Fixing this by only build the affinity masks only when
+We expect the following result with avail_wrap_counter flipped:
+vq->packed.next_avail_idx: 1
+vq->packed.avail_wrap_counter: 1
 
-- Driver passes affinity descriptor, driver like virtio-blk can make
-  sure to limit the number of queues when it exceeds the number of CPUs
-- Parent support affinity setting config ops
+But, the current implementation gives the following result:
+vq->packed.next_avail_idx: 1
+vq->packed.avail_wrap_counter: 0
 
-This help to avoid the warning. More optimizations could be done on
-top.
+To reproduce the bug, you can set a packed queue size as small as
+possible, so that the driver is more likely to provide a descriptor
+chain with a length equal to the packed queue size. For example, in
+qemu run following commands:
+sudo qemu-system-x86_64 \
+-enable-kvm \
+-nographic \
+-kernel "path/to/kernel_image" \
+-m 1G \
+-drive file="path/to/rootfs",if=none,id=disk \
+-device virtio-blk,drive=disk \
+-drive file="path/to/disk_image",if=none,id=rwdisk \
+-device virtio-blk,drive=rwdisk,packed=on,queue-size=4,\
+indirect_desc=off \
+-append "console=ttyS0 root=/dev/vda rw init=/bin/bash"
 
-[1]
-[  682.146655] WARNING: CPU: 6 PID: 1550 at lib/group_cpus.c:400 group_cpus_evenly+0x1aa/0x1c0
-[  682.146668] CPU: 6 PID: 1550 Comm: vdpa Not tainted 6.5.0-rc5jason+ #79
-[  682.146671] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-[  682.146673] RIP: 0010:group_cpus_evenly+0x1aa/0x1c0
-[  682.146676] Code: 4c 89 e0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc e8 1b c4 74 ff 48 89 ef e8 13 ac 98 ff 4c 89 e7 45 31 e4 e8 08 ac 98 ff eb c2 <0f> 0b eb b6 e8 fd 05 c3 00 45 31 e4 eb e5 cc cc cc cc cc cc cc cc
-[  682.146679] RSP: 0018:ffffc9000215f498 EFLAGS: 00010293
-[  682.146682] RAX: 000000000001f1e0 RBX: 0000000000000041 RCX: 0000000000000000
-[  682.146684] RDX: ffff888109922058 RSI: 0000000000000041 RDI: 0000000000000030
-[  682.146686] RBP: ffff888109922058 R08: ffffc9000215f498 R09: ffffc9000215f4a0
-[  682.146687] R10: 00000000000198d0 R11: 0000000000000030 R12: ffff888107e02800
-[  682.146689] R13: 0000000000000030 R14: 0000000000000030 R15: 0000000000000041
-[  682.146692] FS:  00007fef52315740(0000) GS:ffff888237380000(0000) knlGS:0000000000000000
-[  682.146695] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  682.146696] CR2: 00007fef52509000 CR3: 0000000110dbc004 CR4: 0000000000370ee0
-[  682.146698] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  682.146700] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  682.146701] Call Trace:
-[  682.146703]  <TASK>
-[  682.146705]  ? __warn+0x7b/0x130
-[  682.146709]  ? group_cpus_evenly+0x1aa/0x1c0
-[  682.146712]  ? report_bug+0x1c8/0x1e0
-[  682.146717]  ? handle_bug+0x3c/0x70
-[  682.146721]  ? exc_invalid_op+0x14/0x70
-[  682.146723]  ? asm_exc_invalid_op+0x16/0x20
-[  682.146727]  ? group_cpus_evenly+0x1aa/0x1c0
-[  682.146729]  ? group_cpus_evenly+0x15c/0x1c0
-[  682.146731]  create_affinity_masks+0xaf/0x1a0
-[  682.146735]  virtio_vdpa_find_vqs+0x83/0x1d0
-[  682.146738]  ? __pfx_default_calc_sets+0x10/0x10
-[  682.146742]  virtnet_find_vqs+0x1f0/0x370
-[  682.146747]  virtnet_probe+0x501/0xcd0
-[  682.146749]  ? vp_modern_get_status+0x12/0x20
-[  682.146751]  ? get_cap_addr.isra.0+0x10/0xc0
-[  682.146754]  virtio_dev_probe+0x1af/0x260
-[  682.146759]  really_probe+0x1a5/0x410
+Inside the VM, create a directory and mount the rwdisk device on it. The
+rwdisk will hang and mount operation will not complete.
 
-Fixes: 3dad56823b53 ("virtio-vdpa: Support interrupt affinity spreading mechanism")
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20230811091539.1359865-1-jasowang@redhat.com>
+This commit fixes the wrap counter error by flipping the
+packed.avail_wrap_counter, when start of descriptor chain equals to the
+end of descriptor chain (head == i).
+
+Fixes: 1ce9e6055fa0 ("virtio_ring: introduce packed ring support")
+Signed-off-by: Yuan Yao <yuanyaogoog@chromium.org>
+Message-Id: <20230808051110.3492693-1-yuanyaogoog@chromium.org>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_vdpa.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/virtio/virtio_ring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
-index 961161da59000..06ce6d8c2e004 100644
---- a/drivers/virtio/virtio_vdpa.c
-+++ b/drivers/virtio/virtio_vdpa.c
-@@ -366,11 +366,14 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
- 	struct irq_affinity default_affd = { 0 };
- 	struct cpumask *masks;
- 	struct vdpa_callback cb;
-+	bool has_affinity = desc && ops->set_vq_affinity;
- 	int i, err, queue_idx = 0;
- 
--	masks = create_affinity_masks(nvqs, desc ? desc : &default_affd);
--	if (!masks)
--		return -ENOMEM;
-+	if (has_affinity) {
-+		masks = create_affinity_masks(nvqs, desc ? desc : &default_affd);
-+		if (!masks)
-+			return -ENOMEM;
-+	}
- 
- 	for (i = 0; i < nvqs; ++i) {
- 		if (!names[i]) {
-@@ -386,20 +389,22 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
- 			goto err_setup_vq;
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index c5310eaf8b468..da1150d127c24 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -1461,7 +1461,7 @@ static inline int virtqueue_add_packed(struct virtqueue *_vq,
  		}
- 
--		if (ops->set_vq_affinity)
-+		if (has_affinity)
- 			ops->set_vq_affinity(vdpa, i, &masks[i]);
  	}
  
- 	cb.callback = virtio_vdpa_config_cb;
- 	cb.private = vd_dev;
- 	ops->set_config_cb(vdpa, &cb);
--	kfree(masks);
-+	if (has_affinity)
-+		kfree(masks);
+-	if (i < head)
++	if (i <= head)
+ 		vq->packed.avail_wrap_counter ^= 1;
  
- 	return 0;
- 
- err_setup_vq:
- 	virtio_vdpa_del_vqs(vdev);
--	kfree(masks);
-+	if (has_affinity)
-+		kfree(masks);
- 	return err;
- }
- 
+ 	/* We're using some buffers from the free list. */
 -- 
 2.40.1
 
