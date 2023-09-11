@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A3F11715
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F02C433C7;
-	Mon, 11 Sep 2023 15:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F8111715
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:06:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8704C433C8;
+	Mon, 11 Sep 2023 15:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694444772;
-	bh=saofTuUKWPvIhRGQT3owU++5dblPwoXF2HwrapxZGi8=;
+	s=korg; t=1694444775;
+	bh=khEPc4bLW2D7weoxvEdF01fPzk/siH09qMm5PX0nPgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdF385c58AmkvBJzwzVkGpnfXiKvXHa8YlOyK30ZnMsEezeAL37cXlvBa5XkKTbnT
-	 C74evrWVLcL1e+9+whIirYYodJo36sod9UC0pv1JCZoct40Ywi8cpmcYoN2IqUa/QW
-	 ZvqtU113zTCNBV/YjATuEVApi+a3OxAr29j0J0wk=
+	b=aN+5PhTn/ZxNYveRTSN+nZuGvLTiM3ub9MDQrJTzm1au+XzFRp3fJSTxbWwtOc9CS
+	 tz1nylXik+taAC62lxWg94M4cTBmfLRPM8B2Tvy4V9MiH0/lub7disBvr1VG0Wb+hl
+	 +J2llKre3DhAdycNX9UUPMMnO9W1ATnqaJB6tpR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/600] refscale: Fix uninitalized use of wait_queue_head_t
-Date: Mon, 11 Sep 2023 15:42:23 +0200
-Message-ID: <20230911134636.847908855@linuxfoundation.org>
+	Jordan Rife <jrife@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 084/600] net: Avoid address overwrite in kernel_connect
+Date: Mon, 11 Sep 2023 15:41:57 +0200
+Message-ID: <20230911134636.093043679@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -43,83 +39,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Jordan Rife <jrife@google.com>
 
-[ Upstream commit f5063e8948dad7f31adb007284a5d5038ae31bb8 ]
+commit 0bdf399342c5acbd817c9098b6c7ed21f1974312 upstream.
 
-Running the refscale test occasionally crashes the kernel with the
-following error:
+BPF programs that run on connect can rewrite the connect address. For
+the connect system call this isn't a problem, because a copy of the address
+is made when it is moved into kernel space. However, kernel_connect
+simply passes through the address it is given, so the caller may observe
+its address value unexpectedly change.
 
-[ 8569.952896] BUG: unable to handle page fault for address: ffffffffffffffe8
-[ 8569.952900] #PF: supervisor read access in kernel mode
-[ 8569.952902] #PF: error_code(0x0000) - not-present page
-[ 8569.952904] PGD c4b048067 P4D c4b049067 PUD c4b04b067 PMD 0
-[ 8569.952910] Oops: 0000 [#1] PREEMPT_RT SMP NOPTI
-[ 8569.952916] Hardware name: Dell Inc. PowerEdge R750/0WMWCR, BIOS 1.2.4 05/28/2021
-[ 8569.952917] RIP: 0010:prepare_to_wait_event+0x101/0x190
-  :
-[ 8569.952940] Call Trace:
-[ 8569.952941]  <TASK>
-[ 8569.952944]  ref_scale_reader+0x380/0x4a0 [refscale]
-[ 8569.952959]  kthread+0x10e/0x130
-[ 8569.952966]  ret_from_fork+0x1f/0x30
-[ 8569.952973]  </TASK>
+A practical example where this is problematic is where NFS is combined
+with a system such as Cilium which implements BPF-based load balancing.
+A common pattern in software-defined storage systems is to have an NFS
+mount that connects to a persistent virtual IP which in turn maps to an
+ephemeral server IP. This is usually done to achieve high availability:
+if your server goes down you can quickly spin up a replacement and remap
+the virtual IP to that endpoint. With BPF-based load balancing, mounts
+will forget the virtual IP address when the address rewrite occurs
+because a pointer to the only copy of that address is passed down the
+stack. Server failover then breaks, because clients have forgotten the
+virtual IP address. Reconnects fail and mounts remain broken. This patch
+was tested by setting up a scenario like this and ensuring that NFS
+reconnects worked after applying the patch.
 
-The likely cause is that init_waitqueue_head() is called after the call to
-the torture_create_kthread() function that creates the ref_scale_reader
-kthread.  Although this init_waitqueue_head() call will very likely
-complete before this kthread is created and starts running, it is
-possible that the calling kthread will be delayed between the calls to
-torture_create_kthread() and init_waitqueue_head().  In this case, the
-new kthread will use the waitqueue head before it is properly initialized,
-which is not good for the kernel's health and well-being.
-
-The above crash happened here:
-
-	static inline void __add_wait_queue(...)
-	{
-		:
-		if (!(wq->flags & WQ_FLAG_PRIORITY)) <=== Crash here
-
-The offset of flags from list_head entry in wait_queue_entry is
--0x18. If reader_tasks[i].wq.head.next is NULL as allocated reader_task
-structure is zero initialized, the instruction will try to access address
-0xffffffffffffffe8, which is exactly the fault address listed above.
-
-This commit therefore invokes init_waitqueue_head() before creating
-the kthread.
-
-Fixes: 653ed64b01dc ("refperf: Add a test to measure performance of read-side synchronization")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jordan Rife <jrife@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/refscale.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/socket.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/refscale.c b/kernel/rcu/refscale.c
-index d49a9d66e0000..3a93c53f615f0 100644
---- a/kernel/rcu/refscale.c
-+++ b/kernel/rcu/refscale.c
-@@ -867,12 +867,11 @@ ref_scale_init(void)
- 	VERBOSE_SCALEOUT("Starting %d reader threads", nreaders);
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -3507,7 +3507,11 @@ EXPORT_SYMBOL(kernel_accept);
+ int kernel_connect(struct socket *sock, struct sockaddr *addr, int addrlen,
+ 		   int flags)
+ {
+-	return sock->ops->connect(sock, addr, addrlen, flags);
++	struct sockaddr_storage address;
++
++	memcpy(&address, addr, addrlen);
++
++	return sock->ops->connect(sock, (struct sockaddr *)&address, addrlen, flags);
+ }
+ EXPORT_SYMBOL(kernel_connect);
  
- 	for (i = 0; i < nreaders; i++) {
-+		init_waitqueue_head(&reader_tasks[i].wq);
- 		firsterr = torture_create_kthread(ref_scale_reader, (void *)i,
- 						  reader_tasks[i].task);
- 		if (torture_init_error(firsterr))
- 			goto unwind;
--
--		init_waitqueue_head(&(reader_tasks[i].wq));
- 	}
- 
- 	// Main Task
--- 
-2.40.1
-
 
 
