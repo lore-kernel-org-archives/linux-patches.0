@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10ADB11710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B0EC433C8;
-	Mon, 11 Sep 2023 15:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A0211710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580F9C433C7;
+	Mon, 11 Sep 2023 15:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446043;
-	bh=fRgyktZ/+SUlJj2Sk2XII7uAnvBmrSzqqzv31vKDBcM=;
+	s=korg; t=1694446046;
+	bh=8dPwhGagPqsMetn4PMn7Z/jpd9swBuWgZgRzCpoOz9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVfwF8gzc0V/LZ9zYJYI31SZA13wwm/JZ7SDbTzIKyL4bqX3/yUqFO+NAf8bx1+4j
-	 BbbOFECv+vhBXvI5RE3bQZX6aDQwM6QBOXI7VNlmMyOU8UvWUkfOj/NWyIMAKyd0dV
-	 E+5mVWNkcrel9oMH0t0AvuBI3hkHH3d9KcmsRVtQ=
+	b=S63+MOTKB8HQxIjlkBLEAJKeyky6WTOpqn7XuVgDcox+sZqK8BpBp6vaMetWFGvQ8
+	 9eGnniTNbAoz2Rn5gWpIrIwop7OrvpBe6PADJQjnkWV+g11jQjNOs1n7jNKWA7I5wS
+	 L0T2vEknQWB1mjT9b40JbptMAJF4L7182HD4haDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.1 562/600] bpf: Fix issue in verifying allow_ptr_leaks
-Date: Mon, 11 Sep 2023 15:49:55 +0200
-Message-ID: <20230911134650.200439213@linuxfoundation.org>
+	Barry Marson <bmarson@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.1 563/600] dlm: fix plock lookup when using multiple lockspaces
+Date: Mon, 11 Sep 2023 15:49:56 +0200
+Message-ID: <20230911134650.229093211@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -42,90 +40,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit d75e30dddf73449bc2d10bb8e2f1a2c446bc67a2 upstream.
+commit 7c53e847ff5e97f033fdd31f71949807633d506b upstream.
 
-After we converted the capabilities of our networking-bpf program from
-cap_sys_admin to cap_net_admin+cap_bpf, our networking-bpf program
-failed to start. Because it failed the bpf verifier, and the error log
-is "R3 pointer comparison prohibited".
+All posix lock ops, for all lockspaces (gfs2 file systems) are
+sent to userspace (dlm_controld) through a single misc device.
+The dlm_controld daemon reads the ops from the misc device
+and sends them to other cluster nodes using separate, per-lockspace
+cluster api communication channels.  The ops for a single lockspace
+are ordered at this level, so that the results are received in
+the same sequence that the requests were sent.  When the results
+are sent back to the kernel via the misc device, they are again
+funneled through the single misc device for all lockspaces.  When
+the dlm code in the kernel processes the results from the misc
+device, these results will be returned in the same sequence that
+the requests were sent, on a per-lockspace basis.  A recent change
+in this request/reply matching code missed the "per-lockspace"
+check (fsid comparison) when matching request and reply, so replies
+could be incorrectly matched to requests from other lockspaces.
 
-A simple reproducer as follows,
-
-SEC("cls-ingress")
-int ingress(struct __sk_buff *skb)
-{
-	struct iphdr *iph = (void *)(long)skb->data + sizeof(struct ethhdr);
-
-	if ((long)(iph + 1) > (long)skb->data_end)
-		return TC_ACT_STOLEN;
-	return TC_ACT_OK;
-}
-
-Per discussion with Yonghong and Alexei [1], comparison of two packet
-pointers is not a pointer leak. This patch fixes it.
-
-Our local kernel is 6.1.y and we expect this fix to be backported to
-6.1.y, so stable is CCed.
-
-[1]. https://lore.kernel.org/bpf/CAADnVQ+Nmspr7Si+pxWn8zkE7hX-7s93ugwC+94aXSy4uQ9vBg@mail.gmail.com/
-
-Suggested-by: Yonghong Song <yonghong.song@linux.dev>
-Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230823020703.3790-2-laoar.shao@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: Barry Marson <bmarson@redhat.com>
+Fixes: 57e2c2f2d94c ("fs: dlm: fix mismatch of plock results from userspace")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/dlm/plock.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10401,6 +10401,12 @@ static int check_cond_jmp_op(struct bpf_
- 		return -EINVAL;
- 	}
- 
-+	/* check src2 operand */
-+	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
-+	if (err)
-+		return err;
-+
-+	dst_reg = &regs[insn->dst_reg];
- 	if (BPF_SRC(insn->code) == BPF_X) {
- 		if (insn->imm != 0) {
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
-@@ -10412,12 +10418,13 @@ static int check_cond_jmp_op(struct bpf_
- 		if (err)
- 			return err;
- 
--		if (is_pointer_value(env, insn->src_reg)) {
-+		src_reg = &regs[insn->src_reg];
-+		if (!(reg_is_pkt_pointer_any(dst_reg) && reg_is_pkt_pointer_any(src_reg)) &&
-+		    is_pointer_value(env, insn->src_reg)) {
- 			verbose(env, "R%d pointer comparison prohibited\n",
- 				insn->src_reg);
- 			return -EACCES;
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -455,7 +455,8 @@ static ssize_t dev_write(struct file *fi
  		}
--		src_reg = &regs[insn->src_reg];
  	} else {
- 		if (insn->src_reg != BPF_REG_0) {
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
-@@ -10425,12 +10432,6 @@ static int check_cond_jmp_op(struct bpf_
- 		}
- 	}
+ 		list_for_each_entry(iter, &recv_list, list) {
+-			if (!iter->info.wait) {
++			if (!iter->info.wait &&
++			    iter->info.fsid == info.fsid) {
+ 				op = iter;
+ 				break;
+ 			}
+@@ -467,8 +468,7 @@ static ssize_t dev_write(struct file *fi
+ 		if (info.wait)
+ 			WARN_ON(op->info.optype != DLM_PLOCK_OP_LOCK);
+ 		else
+-			WARN_ON(op->info.fsid != info.fsid ||
+-				op->info.number != info.number ||
++			WARN_ON(op->info.number != info.number ||
+ 				op->info.owner != info.owner ||
+ 				op->info.optype != info.optype);
  
--	/* check src2 operand */
--	err = check_reg_arg(env, insn->dst_reg, SRC_OP);
--	if (err)
--		return err;
--
--	dst_reg = &regs[insn->dst_reg];
- 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
- 
- 	if (BPF_SRC(insn->code) == BPF_K) {
 
 
