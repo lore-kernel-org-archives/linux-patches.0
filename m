@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C610811710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA10C433C8;
-	Mon, 11 Sep 2023 15:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25A611710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:16:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E84CC433C7;
+	Mon, 11 Sep 2023 15:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694445401;
-	bh=dnJ+JXoY28KnH2Hk0bN1SBNKR23u3lCdkpcy29283M8=;
+	s=korg; t=1694445404;
+	bh=XcTKGLAp+5dh+5pLKZRXbbiz/rpnpH0ZbWMmUz00J0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdQ5RAnTIYHkAC4FFwTxLntnLQuquiwu+kolWWfgEanF1WixzB3kNT96DeTyVMVj8
-	 R+fiz8bL98hGotcI2Kkwvx3r1vahAiPaGBvkbR/wPWTo+rB/kCAAhAM1Y4NMAFWhIQ
-	 PDNBwHJheDlLxOOxktdiWwWkV54sZjQslOIRnRvQ=
+	b=uKK5rV7eB2H+79I5Yns+0nbz8s5cZuBV7Fvg78kWsKO81DbxgpHYSElO35pOhnm4v
+	 7Z2ku8lKoW0uEWQZUyuXd+rLgZalpFdCz0sLBJq+iDZi0/Ll5HVWdBSjCxrIVD11ZC
+	 QMh+4il/0EUEEj2x1tAPxax/YJoYbQpGfU4DtSZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 300/600] block/mq-deadline: use correct way to throttling write requests
-Date: Mon, 11 Sep 2023 15:45:33 +0200
-Message-ID: <20230911134642.467507998@linuxfoundation.org>
+Subject: [PATCH 6.1 291/600] drm: xlnx: zynqmp_dpsub: Add missing check for dma_set_mask
+Date: Mon, 11 Sep 2023 15:45:24 +0200
+Message-ID: <20230911134642.197965232@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -41,65 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit d47f9717e5cfd0dd8c0ba2ecfa47c38d140f1bb6 ]
+[ Upstream commit 1832fba7f9780aff67c96ad30f397c2d76141833 ]
 
-The original formula was inaccurate:
-dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
+Add check for dma_set_mask() and return the error if it fails.
 
-For write requests, when we assign a tags from sched_tags,
-data->shallow_depth will be passed to sbitmap_find_bit,
-see the following code:
-
-nr = sbitmap_find_bit_in_word(&sb->map[index],
-			min_t (unsigned int,
-			__map_depth(sb, index),
-			depth),
-			alloc_hint, wrap);
-
-The smaller of data->shallow_depth and __map_depth(sb, index)
-will be used as the maximum range when allocating bits.
-
-For a mmc device (one hw queue, deadline I/O scheduler):
-q->nr_requests = sched_tags = 128, so according to the previous
-calculation method, dd->async_depth = data->shallow_depth = 96,
-and the platform is 64bits with 8 cpus, sched_tags.bitmap_tags.sb.shift=5,
-sb.maps[]=32/32/32/32, 32 is smaller than 96, whether it is a read or
-a write I/O, tags can be allocated to the maximum range each time,
-which has not throttling effect.
-
-In addition, refer to the methods of bfg/kyber I/O scheduler,
-limit ratiois are calculated base on sched_tags.bitmap_tags.sb.shift.
-
-This patch can throttle write requests really.
-
-Fixes: 07757588e507 ("block/mq-deadline: Reserve 25% of scheduler tags for synchronous requests")
-
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/1691061162-22898-1-git-send-email-zhiguo.niu@unisoc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/mq-deadline.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index f10c2a0d18d41..55e26065c2e27 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -622,8 +622,9 @@ static void dd_depth_updated(struct blk_mq_hw_ctx *hctx)
- 	struct request_queue *q = hctx->queue;
- 	struct deadline_data *dd = q->elevator->elevator_data;
- 	struct blk_mq_tags *tags = hctx->sched_tags;
-+	unsigned int shift = tags->bitmap_tags.sb.shift;
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+index 1de2d927c32b0..fcaa958d841c9 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+@@ -201,7 +201,9 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
+ 	dpsub->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, dpsub);
  
--	dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
-+	dd->async_depth = max(1U, 3 * (1U << shift)  / 4);
+-	dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
++	ret = dma_set_mask(dpsub->dev, DMA_BIT_MASK(ZYNQMP_DISP_MAX_DMA_BIT));
++	if (ret)
++		return ret;
  
- 	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, dd->async_depth);
- }
+ 	/* Try the reserved memory. Proceed if there's none. */
+ 	of_reserved_mem_device_init(&pdev->dev);
 -- 
 2.40.1
 
