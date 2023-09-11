@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E634432
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B88C433C9;
-	Mon, 11 Sep 2023 14:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23774432
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E5CC433C8;
+	Mon, 11 Sep 2023 14:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441419;
-	bh=S0iqzVFt9mWY8/4Hx8NMfT5iDw9NGELxRCxcBolGnQs=;
+	s=korg; t=1694441422;
+	bh=NNX6mrbcUJy3vU1tTg7AnGB4NAHVO21pU7JLecE/qM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuImTUfEutZuHoN7a1kB+FPQKPoO5b2CVbUVfRukCX200q1t0jFh5S3em8eigMlmI
-	 bElri1L7/vXVBJzyy41Mp0yV01pUuVbd2q3lH9lD/cb6Ro/Ko5HBTohrot66ol/hAB
-	 WZ/tyxzfzpYqil51L+M8cIXFksAdXMQIm0OlE7Bk=
+	b=rPhFHWtbURUUSwQhdnHPjpcLcHR7J7b24/V1wiGTe7HFIhZMUTNK1FL+wiFFAyxFb
+	 rhJ8v6HgbJibXFiom15bi32Zzmdw59+fj410hjTlfj256QkpUwYinp5iPogaJ9cSWD
+	 /WTeTOixbP7yTAhHH/0b2EAgfj6Yb+1NePNKNsc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 399/739] kvm/vfio: ensure kvg instance stays around in kvm_vfio_group_add()
-Date: Mon, 11 Sep 2023 15:43:18 +0200
-Message-ID: <20230911134702.327419651@linuxfoundation.org>
+Subject: [PATCH 6.5 408/739] PCI/ASPM: Use RMW accessors for changing LNKCTL
+Date: Mon, 11 Sep 2023 15:43:27 +0200
+Message-ID: <20230911134702.573324577@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -35,59 +36,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 9e0f4f2918c2ff145d3dedee862d9919a6ed5812 ]
+[ Upstream commit e09060b3b6b4661278ff8e1b7b81a37d5ea86eae ]
 
-kvm_vfio_group_add() creates kvg instance, links it to kv->group_list,
-and calls kvm_vfio_file_set_kvm() with kvg->file as an argument after
-dropping kv->lock. If we race group addition and deletion calls, kvg
-instance may get freed by the time we get around to calling
-kvm_vfio_file_set_kvm().
+Don't assume that the device is fully under the control of ASPM and use RMW
+capability accessors which do proper locking to avoid losing concurrent
+updates to the register values.
 
-Previous iterations of the code did not reference kvg->file outside of
-the critical section, but used a temporary variable. Still, they had
-similar problem of the file reference being owned by kvg structure and
-potential for kvm_vfio_group_del() dropping it before
-kvm_vfio_group_add() had a chance to complete.
+If configuration fails in pcie_aspm_configure_common_clock(), the
+function attempts to restore the old PCI_EXP_LNKCTL_CCC settings. Store
+only the old PCI_EXP_LNKCTL_CCC bit for the relevant devices rather
+than the content of the whole LNKCTL registers. It aligns better with
+how pcie_lnkctl_clear_and_set() expects its parameter and makes the
+code more obvious to understand.
 
-Fix this by moving call to kvm_vfio_file_set_kvm() under the protection
-of kv->lock. We already call it while holding the same lock when vfio
-group is being deleted, so it should be safe here as well.
-
-Fixes: 2fc1bec15883 ("kvm: set/clear kvm to/from vfio_group when group add/delete")
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20230714224538.404793-1-dmitry.torokhov@gmail.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 2a42d9dba784 ("PCIe: ASPM: Break out of endless loop waiting for PCI config bits to switch")
+Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
+Link: https://lore.kernel.org/r/20230717120503.15276-5-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/vfio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/aspm.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/virt/kvm/vfio.c b/virt/kvm/vfio.c
-index af3d0cf06e4c6..365d30779768a 100644
---- a/virt/kvm/vfio.c
-+++ b/virt/kvm/vfio.c
-@@ -180,10 +180,10 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
- 	list_add_tail(&kvf->node, &kv->file_list);
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 3dafba0b5f411..1bf6300592644 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -199,7 +199,7 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+ {
+ 	int same_clock = 1;
+-	u16 reg16, parent_reg, child_reg[8];
++	u16 reg16, ccc, parent_old_ccc, child_old_ccc[8];
+ 	struct pci_dev *child, *parent = link->pdev;
+ 	struct pci_bus *linkbus = parent->subordinate;
+ 	/*
+@@ -221,6 +221,7 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
  
- 	kvm_arch_start_assignment(dev->kvm);
-+	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
+ 	/* Port might be already in common clock mode */
+ 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
++	parent_old_ccc = reg16 & PCI_EXP_LNKCTL_CCC;
+ 	if (same_clock && (reg16 & PCI_EXP_LNKCTL_CCC)) {
+ 		bool consistent = true;
  
- 	mutex_unlock(&kv->lock);
+@@ -237,34 +238,29 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+ 		pci_info(parent, "ASPM: current common clock configuration is inconsistent, reconfiguring\n");
+ 	}
  
--	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
- 	kvm_vfio_update_coherency(dev);
++	ccc = same_clock ? PCI_EXP_LNKCTL_CCC : 0;
+ 	/* Configure downstream component, all functions */
+ 	list_for_each_entry(child, &linkbus->devices, bus_list) {
+ 		pcie_capability_read_word(child, PCI_EXP_LNKCTL, &reg16);
+-		child_reg[PCI_FUNC(child->devfn)] = reg16;
+-		if (same_clock)
+-			reg16 |= PCI_EXP_LNKCTL_CCC;
+-		else
+-			reg16 &= ~PCI_EXP_LNKCTL_CCC;
+-		pcie_capability_write_word(child, PCI_EXP_LNKCTL, reg16);
++		child_old_ccc[PCI_FUNC(child->devfn)] = reg16 & PCI_EXP_LNKCTL_CCC;
++		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++						   PCI_EXP_LNKCTL_CCC, ccc);
+ 	}
  
- 	return 0;
+ 	/* Configure upstream component */
+-	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
+-	parent_reg = reg16;
+-	if (same_clock)
+-		reg16 |= PCI_EXP_LNKCTL_CCC;
+-	else
+-		reg16 &= ~PCI_EXP_LNKCTL_CCC;
+-	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
++	pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_CCC, ccc);
+ 
+ 	if (pcie_retrain_link(link->pdev, true)) {
+ 
+ 		/* Training failed. Restore common clock configurations */
+ 		pci_err(parent, "ASPM: Could not configure common clock\n");
+ 		list_for_each_entry(child, &linkbus->devices, bus_list)
+-			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
+-					   child_reg[PCI_FUNC(child->devfn)]);
+-		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
++			pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++							   PCI_EXP_LNKCTL_CCC,
++							   child_old_ccc[PCI_FUNC(child->devfn)]);
++		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
++						   PCI_EXP_LNKCTL_CCC, parent_old_ccc);
+ 	}
+ }
+ 
 -- 
 2.40.1
 
