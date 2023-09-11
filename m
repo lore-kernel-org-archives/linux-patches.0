@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3395F9E5
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C983CC433CB;
-	Mon, 11 Sep 2023 14:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2E211705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7346C433C8;
+	Mon, 11 Sep 2023 14:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442994;
-	bh=YuOxKlLGS5eD/wJel0mUY7vO6YlQ8GccahIwrHrhslY=;
+	s=korg; t=1694442997;
+	bh=70eH4StgCFuqcPTq4uL3qMD+rwGUPTjbFgr33/nT6S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2632ThBG/uxjl35DiNg4rKB5ZsyIkU9+xjlygdFPFSdiruTalzWb44DPh1e42T/k
-	 qb4rZorJDCJ0praG3BF+PNPkiZG4/adaxpuZszKw/TohUw8ccl6l5vSFLlXHKu6+69
-	 /SWIhWC9VZG/hX6hPNCwJQSBaT9LX8BZfy+AwgOA=
+	b=M/GFPk3v0NINhjp+Es/lqsiiWDOgt2qbpbexBIUXzKfqQfBYiu/NkUBb0G2iQbNk6
+	 9R+7Btuk4+p4skuoHzh09EI5Pti3GW4tTSvAAQZQXeV8fhrX06eCw0EVlbFEMdchvm
+	 pFOOp2+LS2Kt7AZ2vScR53JDIAzeXfgecaG2Azuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chinwen Chang <chinwen.chang@mediatek.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 221/737] scripts/gdb: fix lx-lsmod show the wrong size
-Date: Mon, 11 Sep 2023 15:41:20 +0200
-Message-ID: <20230911134656.758863474@linuxfoundation.org>
+Subject: [PATCH 6.4 222/737] fs: ocfs2: namei: check return value of ocfs2_add_entry()
+Date: Mon, 11 Sep 2023 15:41:21 +0200
+Message-ID: <20230911134656.785890783@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -48,83 +48,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit fb40b0537342e1acd5c2daf2ff6780c1d0d2883c ]
+[ Upstream commit 6b72e5f9e79360fce4f2be7fe81159fbdf4256a5 ]
 
-'lsmod' shows total core layout size, so we need to sum up all the
-sections in core layout in gdb scripts.
+Process result of ocfs2_add_entry() in case we have an error
+value.
 
-/ # lsmod
-kasan_test 200704 0 - Live 0xffff80007f640000
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Before patch:
-(gdb) lx-lsmod
-Address            Module                  Size  Used by
-0xffff80007f640000 kasan_test             36864  0
-
-After patch:
-(gdb) lx-lsmod
-Address            Module                  Size  Used by
-0xffff80007f640000 kasan_test            200704  0
-
-Link: https://lkml.kernel.org/r/20230710092852.31049-1-Kuan-Ying.Lee@mediatek.com
-Fixes: b4aff7513df3 ("scripts/gdb: use mem instead of core_layout to get the module address")
-Signed-off-by: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Chinwen Chang <chinwen.chang@mediatek.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+Link: https://lkml.kernel.org/r/20230803145417.177649-1-artem.chernyshev@red-soft.ru
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/constants.py.in |  3 +++
- scripts/gdb/linux/modules.py      | 12 +++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ fs/ocfs2/namei.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
-index 50a92c4e9984e..fab74ca9df6fc 100644
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -64,6 +64,9 @@ LX_GDBPARSED(IRQ_HIDDEN)
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index 17c52225b87d4..03bccfd183f3c 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -1535,6 +1535,10 @@ static int ocfs2_rename(struct mnt_idmap *idmap,
+ 		status = ocfs2_add_entry(handle, new_dentry, old_inode,
+ 					 OCFS2_I(old_inode)->ip_blkno,
+ 					 new_dir_bh, &target_insert);
++		if (status < 0) {
++			mlog_errno(status);
++			goto bail;
++		}
+ 	}
  
- /* linux/module.h */
- LX_GDBPARSED(MOD_TEXT)
-+LX_GDBPARSED(MOD_DATA)
-+LX_GDBPARSED(MOD_RODATA)
-+LX_GDBPARSED(MOD_RO_AFTER_INIT)
- 
- /* linux/mount.h */
- LX_VALUE(MNT_NOSUID)
-diff --git a/scripts/gdb/linux/modules.py b/scripts/gdb/linux/modules.py
-index 261f28640f4cd..f76a43bfa15fc 100644
---- a/scripts/gdb/linux/modules.py
-+++ b/scripts/gdb/linux/modules.py
-@@ -73,11 +73,17 @@ class LxLsmod(gdb.Command):
-                 "        " if utils.get_long_type().sizeof == 8 else ""))
- 
-         for module in module_list():
--            layout = module['mem'][constants.LX_MOD_TEXT]
-+            text = module['mem'][constants.LX_MOD_TEXT]
-+            text_addr = str(text['base']).split()[0]
-+            total_size = 0
-+
-+            for i in range(constants.LX_MOD_TEXT, constants.LX_MOD_RO_AFTER_INIT + 1):
-+                total_size += module['mem'][i]['size']
-+
-             gdb.write("{address} {name:<19} {size:>8}  {ref}".format(
--                address=str(layout['base']).split()[0],
-+                address=text_addr,
-                 name=module['name'].string(),
--                size=str(layout['size']),
-+                size=str(total_size),
-                 ref=str(module['refcnt']['counter'] - 1)))
- 
-             t = self._module_use_type.get_type().pointer()
+ 	old_inode->i_ctime = current_time(old_inode);
 -- 
 2.40.1
 
