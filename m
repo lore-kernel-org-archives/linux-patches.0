@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9F711710
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B252FC433C8;
-	Mon, 11 Sep 2023 15:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E6011710
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 15:27:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB6FC433C8;
+	Mon, 11 Sep 2023 15:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694446055;
-	bh=pyZptmg5CeisOi6+y90mBDEWDa+UmFmM/uqZ2rQl8Gs=;
+	s=korg; t=1694446057;
+	bh=w01WcnMTM3nb8SzvA+gVYZrorUt7dbiJrHAGOQXZvys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnNZWvrtkCHdu2rExZJ6BSs6SlHC/k+bGUhS0AGH3u0mg1lqLW1G9GMr2EVxBVcP4
-	 71/ZL5D270IYT7bYPpdcYtzzfwhxhJnKu6XU9DkjIMdngv13rKOTpJQQF2sq8viLMt
-	 i/1WnJLEzouU7UdJ+ZlmVKXenzdrBhLPpaDuHucA=
+	b=T5tzDQhmp6N6r3tCH29M2AElfIPZabV/GOXfnvZiBOzjEgdL1ls8dPchFWjT2zS5d
+	 1mvVUEaH6D9xAXkKLVxZM0WbekCxu18XYryYRZQrkT1EHJJZ0gChzKgyxnl1Yrlc6Y
+	 D1hIUW8+dfdd1wnPnW6I67XSMI4llCso6fq2UbA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 566/600] r8169: fix ASPM-related issues on a number of systems with NIC version from RTL8168h
-Date: Mon, 11 Sep 2023 15:49:59 +0200
-Message-ID: <20230911134650.317817205@linuxfoundation.org>
+	Thore Sommer <public@thson.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 567/600] X.509: if signature is unsupported skip validation
+Date: Mon, 11 Sep 2023 15:50:00 +0200
+Message-ID: <20230911134650.346005346@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
 References: <20230911134633.619970489@linuxfoundation.org>
@@ -39,38 +39,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Thore Sommer <public@thson.de>
 
-commit 90ca51e8c654699b672ba61aeaa418dfb3252e5e upstream.
+commit ef5b52a631f8c18353e80ccab8408b963305510c upstream.
 
-This effectively reverts 4b5f82f6aaef. On a number of systems ASPM L1
-causes tx timeouts with RTL8168h, see referenced bug report.
+When the hash algorithm for the signature is not available the digest size
+is 0 and the signature in the certificate is marked as unsupported.
 
-Fixes: 4b5f82f6aaef ("r8169: enable ASPM L1/L1.1 from RTL8168h")
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217814
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+When validating a self-signed certificate, this needs to be checked,
+because otherwise trying to validate the signature will fail with an
+warning:
+
+Loading compiled-in X.509 certificates
+WARNING: CPU: 0 PID: 1 at crypto/rsa-pkcs1pad.c:537 \
+pkcs1pad_verify+0x46/0x12c
+...
+Problem loading in-kernel X.509 certificate (-22)
+
+Signed-off-by: Thore Sommer <public@thson.de>
+Cc: stable@vger.kernel.org # v4.7+
+Fixes: 6c2dc5ae4ab7 ("X.509: Extract signature digest and make self-signed cert checks earlier")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    4 ----
- 1 file changed, 4 deletions(-)
+ crypto/asymmetric_keys/x509_public_key.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -5201,13 +5201,9 @@ static int rtl_init_one(struct pci_dev *
+--- a/crypto/asymmetric_keys/x509_public_key.c
++++ b/crypto/asymmetric_keys/x509_public_key.c
+@@ -117,6 +117,11 @@ int x509_check_for_self_signed(struct x5
+ 			goto out;
+ 	}
  
- 	/* Disable ASPM L1 as that cause random device stop working
- 	 * problems as well as full system hangs for some PCIe devices users.
--	 * Chips from RTL8168h partially have issues with L1.2, but seem
--	 * to work fine with L1 and L1.1.
- 	 */
- 	if (rtl_aspm_is_safe(tp))
- 		rc = 0;
--	else if (tp->mac_version >= RTL_GIGA_MAC_VER_46)
--		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
- 	else
- 		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1);
- 	tp->aspm_manageable = !rc;
++	if (cert->unsupported_sig) {
++		ret = 0;
++		goto out;
++	}
++
+ 	ret = public_key_verify_signature(cert->pub, cert->sig);
+ 	if (ret < 0) {
+ 		if (ret == -ENOPKG) {
 
 
