@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2AF1170E
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876E7C433C8;
-	Mon, 11 Sep 2023 14:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33761170E
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:06:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706FFC433C8;
+	Mon, 11 Sep 2023 14:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694441168;
-	bh=vw3qlOfWDHQNNCkg6JMZ67DssPZQzgUXd7GowLMJ19A=;
+	s=korg; t=1694441171;
+	bh=PfCAi+izycsqbRrdLKCT7TimVbf4gmFkdJThAyJmt3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r20+T/SnjnaH6cjkSZgNia3JoLinr7q6byeuMMgvvzQwxbxjHBzQSyS/xTL+TSg9+
-	 NS+5yCk8n6CWpFpcpQuitq4rhgtEfVpQpk4NxN0Rxp7BmHcJdT3BRYgzjGXqT3kgqI
-	 8DCX8uNPAmHESv9iLf3NXdlQNMeXo2bUg3plSojQ=
+	b=ofYNKhxZmBlX1RUV/jK5mSUUiaZZJ/4NPHpt6qfwLCl94ED8USecua0MY1MrVg+AL
+	 wp3mpZUhOTSpt6+W7ULY0mhNgNLXzWy5ZoC5+MIUXo3LvJFdjBlSgxzUAwd/S+oCna
+	 vnTbvUPV/VoF5aaiVEP+qholKwJ0X7u7hawWWo90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vaishnav Achath <vaishnav.a@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 281/739] arm64: dts: rockchip: Fix PCIe regulators on Radxa E25
-Date: Mon, 11 Sep 2023 15:41:20 +0200
-Message-ID: <20230911134658.971073004@linuxfoundation.org>
+Subject: [PATCH 6.5 312/739] arm64: dts: ti: k3-j784s4-evm: Correct Pin mux offset for ospi
+Date: Mon, 11 Sep 2023 15:41:51 +0200
+Message-ID: <20230911134659.830890132@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
 References: <20230911134650.921299741@linuxfoundation.org>
@@ -40,87 +41,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Udit Kumar <u-kumar1@ti.com>
 
-[ Upstream commit a87852e37f782257ebc57cc44a0d3fbf806471f6 ]
+[ Upstream commit f10f836ccfea21ae3ad3066eb9576625f1acdea2 ]
 
-Despite its name, the regulator vcc3v3_pcie30x1 has nothing to do with
-pcie30x1. Instead, it supply power to VBAT1-5 on the M.2 KEY B port as
-seen on page 8 of the schematic [1].
+After splitting wkup_pmx pin mux for J784S4 into four regions.
+Pin mux offset for OSPI nodes were not updated to align with new
+regions, due to this while setting ospi pin muxes out of range
+error was seen.
 
-pcie30x1 is used for the mini PCIe slot, and as seen on page 9 the
-vcc3v3_minipcie regulator is instead related to pcie30x1.
+Pin mux offsets for OSPI nodes are corrected in this patch.
 
-The M.2 KEY B port can be used for WWAN USB2 modules or SATA drives.
-
-Use correct regulator vcc3v3_minipcie for pcie30x1.
-
-[1] https://dl.radxa.com/cm3p/e25/radxa-e25-v1.4-sch.pdf
-
-Fixes: 2bf2f4d9f673 ("arm64: dts: rockchip: Add Radxa CM3I E25")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20230724145213.3833099-1-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 14462bd0b247 ("arm64: dts: ti: k3-j784s4: Fix wakeup pinmux range and pinctrl node offsets")
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Tested-by: Vaishnav Achath <vaishnav.a@ti.com>
+Link: https://lore.kernel.org/r/20230802114126.162445-1-u-kumar1@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/rockchip/rk3568-radxa-e25.dts | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j784s4-evm.dts | 29 +++++++++++++++---------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts b/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
-index 63c4bd873188e..f0e4884438e39 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-radxa-e25.dts
-@@ -47,6 +47,9 @@ vbus_typec: vbus-typec-regulator {
- 		vin-supply = <&vcc5v0_sys>;
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts b/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
+index 430b8a2c5df57..cb852031c8027 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-evm.dts
+@@ -379,21 +379,28 @@ J784S4_WKUP_IOPAD(0x020, PIN_INPUT, 0) /* (D34) MCU_OSPI0_D5 */
+ 			J784S4_WKUP_IOPAD(0x024, PIN_INPUT, 0) /* (E34) MCU_OSPI0_D6 */
+ 			J784S4_WKUP_IOPAD(0x028, PIN_INPUT, 0) /* (E33) MCU_OSPI0_D7 */
+ 			J784S4_WKUP_IOPAD(0x008, PIN_INPUT, 0) /* (C34) MCU_OSPI0_DQS */
+-			J784S4_WKUP_IOPAD(0x03c, PIN_OUTPUT, 6) /* (C32) MCU_OSPI0_CSn3.MCU_OSPI0_ECC_FAIL */
+-			J784S4_WKUP_IOPAD(0x038, PIN_OUTPUT, 6) /* (B34) MCU_OSPI0_CSn2.MCU_OSPI0_RESET_OUT0 */
++		>;
++	};
++};
++
++&wkup_pmx1 {
++	mcu_fss0_ospi0_1_pins_default: mcu-fss0-ospi0-1-default-pins {
++		pinctrl-single,pins = <
++			J784S4_WKUP_IOPAD(0x004, PIN_OUTPUT, 6) /* (C32) MCU_OSPI0_ECC_FAIL */
++			J784S4_WKUP_IOPAD(0x000, PIN_OUTPUT, 6) /* (B34) MCU_OSPI0_RESET_OUT0 */
+ 		>;
  	};
  
-+	/* actually fed by vcc5v0_sys, dependent
-+	 * on pi6c clock generator
-+	 */
- 	vcc3v3_minipcie: vcc3v3-minipcie-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -54,9 +57,9 @@ vcc3v3_minipcie: vcc3v3-minipcie-regulator {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&minipcie_enable_h>;
- 		regulator-name = "vcc3v3_minipcie";
--		regulator-min-microvolt = <5000000>;
--		regulator-max-microvolt = <5000000>;
--		vin-supply = <&vcc5v0_sys>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		vin-supply = <&vcc3v3_pi6c_05>;
+ 	mcu_fss0_ospi1_pins_default: mcu-fss0-ospi1-default-pins {
+ 		pinctrl-single,pins = <
+-			J784S4_WKUP_IOPAD(0x040, PIN_OUTPUT, 0) /* (F32) MCU_OSPI1_CLK */
+-			J784S4_WKUP_IOPAD(0x05c, PIN_OUTPUT, 0) /* (G32) MCU_OSPI1_CSn0 */
+-			J784S4_WKUP_IOPAD(0x04c, PIN_INPUT, 0) /* (E35) MCU_OSPI1_D0 */
+-			J784S4_WKUP_IOPAD(0x050, PIN_INPUT, 0) /* (D31) MCU_OSPI1_D1 */
+-			J784S4_WKUP_IOPAD(0x054, PIN_INPUT, 0) /* (G31) MCU_OSPI1_D2 */
+-			J784S4_WKUP_IOPAD(0x058, PIN_INPUT, 0) /* (F33) MCU_OSPI1_D3 */
+-			J784S4_WKUP_IOPAD(0x048, PIN_INPUT, 0) /* (F31) MCU_OSPI1_DQS */
+-			J784S4_WKUP_IOPAD(0x044, PIN_INPUT, 0) /* (C31) MCU_OSPI1_LBCLKO */
++			J784S4_WKUP_IOPAD(0x008, PIN_OUTPUT, 0) /* (F32) MCU_OSPI1_CLK */
++			J784S4_WKUP_IOPAD(0x024, PIN_OUTPUT, 0) /* (G32) MCU_OSPI1_CSn0 */
++			J784S4_WKUP_IOPAD(0x014, PIN_INPUT, 0) /* (E35) MCU_OSPI1_D0 */
++			J784S4_WKUP_IOPAD(0x018, PIN_INPUT, 0) /* (D31) MCU_OSPI1_D1 */
++			J784S4_WKUP_IOPAD(0x01C, PIN_INPUT, 0) /* (G31) MCU_OSPI1_D2 */
++			J784S4_WKUP_IOPAD(0x020, PIN_INPUT, 0) /* (F33) MCU_OSPI1_D3 */
++			J784S4_WKUP_IOPAD(0x010, PIN_INPUT, 0) /* (F31) MCU_OSPI1_DQS */
++			J784S4_WKUP_IOPAD(0x00C, PIN_INPUT, 0) /* (C31) MCU_OSPI1_LBCLKO */
+ 		>;
  	};
- 
- 	vcc3v3_ngff: vcc3v3-ngff-regulator {
-@@ -71,9 +74,6 @@ vcc3v3_ngff: vcc3v3-ngff-regulator {
- 		vin-supply = <&vcc5v0_sys>;
- 	};
- 
--	/* actually fed by vcc5v0_sys, dependent
--	 * on pi6c clock generator
--	 */
- 	vcc3v3_pcie30x1: vcc3v3-pcie30x1-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -83,7 +83,7 @@ vcc3v3_pcie30x1: vcc3v3-pcie30x1-regulator {
- 		regulator-name = "vcc3v3_pcie30x1";
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
--		vin-supply = <&vcc3v3_pi6c_05>;
-+		vin-supply = <&vcc5v0_sys>;
- 	};
- 
- 	vcc3v3_pi6c_05: vcc3v3-pi6c-05-regulator {
-@@ -117,7 +117,7 @@ &pcie3x1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie30x1m0_pins>;
- 	reset-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
--	vpcie3v3-supply = <&vcc3v3_pcie30x1>;
-+	vpcie3v3-supply = <&vcc3v3_minipcie>;
- 	status = "okay";
  };
+@@ -437,7 +444,7 @@ &fss {
+ &ospi0 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&mcu_fss0_ospi0_pins_default>;
++	pinctrl-0 = <&mcu_fss0_ospi0_pins_default>, <&mcu_fss0_ospi0_1_pins_default>;
  
+ 	flash@0 {
+ 		compatible = "jedec,spi-nor";
 -- 
 2.40.1
 
