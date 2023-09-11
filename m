@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2FF11705
-	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA21C433C8;
-	Mon, 11 Sep 2023 14:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E9311705
+	for <patches@lists.linux.dev>; Mon, 11 Sep 2023 14:36:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F5FC433C8;
+	Mon, 11 Sep 2023 14:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1694442963;
-	bh=xL/Ku9ITF/dmwYq9GjZXN9JiHsWxhy7sh07Vs0oSycg=;
+	s=korg; t=1694442966;
+	bh=g6J4utbLk7qFmNiHXaJHwwUZ8L+gtW7MuavgOOqZVHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLdoPFkOr13Of5WRL324/yLJc0pM9s9nMjI0zlXe6wEHX11nohSybTFUVIJpVTgRA
-	 egxb2ASyze0FwQtp+wfkxgxYGQlkiT3PyGn17n2Ja792nUMD0VBLE6hQlKd2G4OdDr
-	 tNlEYvnPssmxw6llM1YblRbHDv/xD6dS+BL3pBV4=
+	b=UjOrg6pi17k6tAVXYE0WhNertuuiJZ/YXdbXtlGB4GfkLyVaCBMKFjl79XkU3WS+W
+	 x7wUk3FARJNhZh9bR0N2D/eGqvR6WonwlaYkLXy9W+X4nPF9uzLUdmMYzKo9krltOZ
+	 FkQiNOdw0favMDqHf0Y2A3AZjMAEdH3yudD3IpyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 182/737] wifi: mwifiex: fix error recovery in PCIE buffer descriptor management
-Date: Mon, 11 Sep 2023 15:40:41 +0200
-Message-ID: <20230911134655.647435317@linuxfoundation.org>
+Subject: [PATCH 6.4 183/737] wifi: ath11k: fix band selection for ppdu received in channel 177 of 5 GHz
+Date: Mon, 11 Sep 2023 15:40:42 +0200
+Message-ID: <20230911134655.677399841@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
 References: <20230911134650.286315610@linuxfoundation.org>
@@ -41,118 +40,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit 288c63d5cb4667a51a04668b3e2bb0ea499bc5f4 ]
+[ Upstream commit 72c8caf904aed2caed5d6e75233294b6159ddb5d ]
 
-Add missing 'kfree_skb()' in 'mwifiex_init_rxq_ring()' and never do
-'kfree(card->rxbd_ring_vbase)' because this area is DMAed and should
-be released with 'dma_free_coherent()'. The latter is performed in
-'mwifiex_pcie_delete_rxbd_ring()', which is now called to recover
-from possible errors in 'mwifiex_pcie_create_rxbd_ring()'. Likewise
-for 'mwifiex_pcie_init_evt_ring()', 'kfree(card->evtbd_ring_vbase)'
-'mwifiex_pcie_delete_evtbd_ring()' and 'mwifiex_pcie_create_rxbd_ring()'.
+5 GHz band channel 177 support was added with the commit e5e94d10c856 ("wifi:
+ath11k: add channel 177 into 5 GHz channel list"). However, during processing
+for the received ppdu in ath11k_dp_rx_h_ppdu(), channel number is checked only
+till 173. This leads to driver code checking for channel and then fetching the
+band from it which is extra effort since firmware has already given the channel
+number in the metadata.
 
-Fixes: d930faee141b ("mwifiex: add support for Marvell pcie8766 chipset")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230731074334.56463-1-dmantipov@yandex.ru
+Fix this issue by checking the channel number till 177 since we support
+it now.
+
+Found via code review. Compile tested only.
+
+Fixes: e5e94d10c856 ("wifi: ath11k: add channel 177 into 5 GHz channel list")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230726044624.20507-1-quic_adisi@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/pcie.c | 25 ++++++++++++++-------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
-index 9a698a16a8f38..6697132ecc977 100644
---- a/drivers/net/wireless/marvell/mwifiex/pcie.c
-+++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
-@@ -189,6 +189,8 @@ static int mwifiex_pcie_probe_of(struct device *dev)
- }
- 
- static void mwifiex_pcie_work(struct work_struct *work);
-+static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter);
-+static int mwifiex_pcie_delete_evtbd_ring(struct mwifiex_adapter *adapter);
- 
- static int
- mwifiex_map_pci_memory(struct mwifiex_adapter *adapter, struct sk_buff *skb,
-@@ -792,14 +794,15 @@ static int mwifiex_init_rxq_ring(struct mwifiex_adapter *adapter)
- 		if (!skb) {
- 			mwifiex_dbg(adapter, ERROR,
- 				    "Unable to allocate skb for RX ring.\n");
--			kfree(card->rxbd_ring_vbase);
- 			return -ENOMEM;
- 		}
- 
- 		if (mwifiex_map_pci_memory(adapter, skb,
- 					   MWIFIEX_RX_DATA_BUF_SIZE,
--					   DMA_FROM_DEVICE))
--			return -1;
-+					   DMA_FROM_DEVICE)) {
-+			kfree_skb(skb);
-+			return -ENOMEM;
-+		}
- 
- 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
- 
-@@ -849,7 +852,6 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
- 		if (!skb) {
- 			mwifiex_dbg(adapter, ERROR,
- 				    "Unable to allocate skb for EVENT buf.\n");
--			kfree(card->evtbd_ring_vbase);
- 			return -ENOMEM;
- 		}
- 		skb_put(skb, MAX_EVENT_SIZE);
-@@ -857,8 +859,7 @@ static int mwifiex_pcie_init_evt_ring(struct mwifiex_adapter *adapter)
- 		if (mwifiex_map_pci_memory(adapter, skb, MAX_EVENT_SIZE,
- 					   DMA_FROM_DEVICE)) {
- 			kfree_skb(skb);
--			kfree(card->evtbd_ring_vbase);
--			return -1;
-+			return -ENOMEM;
- 		}
- 
- 		buf_pa = MWIFIEX_SKB_DMA_ADDR(skb);
-@@ -1058,6 +1059,7 @@ static int mwifiex_pcie_delete_txbd_ring(struct mwifiex_adapter *adapter)
-  */
- static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
- {
-+	int ret;
- 	struct pcie_service_card *card = adapter->card;
- 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
- 
-@@ -1096,7 +1098,10 @@ static int mwifiex_pcie_create_rxbd_ring(struct mwifiex_adapter *adapter)
- 		    (u32)((u64)card->rxbd_ring_pbase >> 32),
- 		    card->rxbd_ring_size);
- 
--	return mwifiex_init_rxq_ring(adapter);
-+	ret = mwifiex_init_rxq_ring(adapter);
-+	if (ret)
-+		mwifiex_pcie_delete_rxbd_ring(adapter);
-+	return ret;
- }
- 
- /*
-@@ -1127,6 +1132,7 @@ static int mwifiex_pcie_delete_rxbd_ring(struct mwifiex_adapter *adapter)
-  */
- static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
- {
-+	int ret;
- 	struct pcie_service_card *card = adapter->card;
- 	const struct mwifiex_pcie_card_reg *reg = card->pcie.reg;
- 
-@@ -1161,7 +1167,10 @@ static int mwifiex_pcie_create_evtbd_ring(struct mwifiex_adapter *adapter)
- 		    (u32)((u64)card->evtbd_ring_pbase >> 32),
- 		    card->evtbd_ring_size);
- 
--	return mwifiex_pcie_init_evt_ring(adapter);
-+	ret = mwifiex_pcie_init_evt_ring(adapter);
-+	if (ret)
-+		mwifiex_pcie_delete_evtbd_ring(adapter);
-+	return ret;
- }
- 
- /*
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index f67ce62b2b48d..c5ff1bc02999e 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -2408,7 +2408,7 @@ static void ath11k_dp_rx_h_ppdu(struct ath11k *ar, struct hal_rx_desc *rx_desc,
+ 		rx_status->freq = center_freq;
+ 	} else if (channel_num >= 1 && channel_num <= 14) {
+ 		rx_status->band = NL80211_BAND_2GHZ;
+-	} else if (channel_num >= 36 && channel_num <= 173) {
++	} else if (channel_num >= 36 && channel_num <= 177) {
+ 		rx_status->band = NL80211_BAND_5GHZ;
+ 	} else {
+ 		spin_lock_bh(&ar->data_lock);
 -- 
 2.40.1
 
